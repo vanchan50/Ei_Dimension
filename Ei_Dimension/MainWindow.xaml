@@ -4,10 +4,13 @@
     xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
     xmlns:Views="clr-namespace:Ei_Dimension.Views"
     xmlns:ViewModels="clr-namespace:Ei_Dimension.ViewModels" 
+    xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors" 
+    xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol" 
+    xmlns:dxr="http://schemas.devexpress.com/winfx/2008/xaml/ribbon" 
     x:Class="Ei_Dimension.MainWindow"
     Title="Ei_Dimension"
-    Height="900"
-    Width="1600"
+    Height="800"
+    Width="1500"
     SnapsToDevicePixels="True"
     ResizeMode="NoResize"
     SizeToContent="Manual"
@@ -20,10 +23,96 @@
     ShowStatusPanel="False"
     WindowKind="Normal"
     UseGlowColors="False">
+
   <dx:ThemedWindow.DataContext>
     <ViewModels:MainViewModel/>
   </dx:ThemedWindow.DataContext>
+
   <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="0.5*"/>
+      <RowDefinition Height="1*"/>
+      <RowDefinition Height="8*"/>
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="4*"/>
+      <ColumnDefinition Width="1*"/>
+    </Grid.ColumnDefinitions>
+    
     <Views:MainView/>
+    
+    <Image Grid.Row="0" Grid.Column="1"
+           Source="Emission_Logo.png"
+           Stretch="Fill"/>
+
+    <StackPanel Grid.Row="1" Grid.Column="0"
+                Orientation="Horizontal">
+      <dxlc:Tile Header="Dashboard"
+                   FontSize="22"
+                   HorizontalAlignment="Stretch"
+                   VerticalAlignment="Stretch"
+                   Background="#295296"
+                   Width="230"
+                   Margin="0,0,2,0">
+        <Image HorizontalAlignment="Right"
+               Margin="0,0,40,0"
+               Width="50"
+               Height="50"
+               Source="{dx:DXImage 'SvgImages/Chart/ChartType_Pie3D.svg'}"/>
+      </dxlc:Tile>
+      <dxlc:Tile Header="Experiment"
+                   FontSize="22"
+                   HorizontalAlignment="Stretch"
+                   VerticalAlignment="Stretch"
+                   Background="#295296"
+                   Width="230"
+                   Margin="0,0,2,0">
+        <Image HorizontalAlignment="Right"
+               Margin="0,0,40,0"
+               Width="50"
+               Height="50"
+               Source="{dx:DXImage 'SvgImages/Reports/GaugeStyleFullCircular.svg'}"/>
+      </dxlc:Tile>
+      <dxlc:Tile Header="Results"
+                   FontSize="22"
+                   HorizontalAlignment="Stretch"
+                   VerticalAlignment="Stretch"
+                   Background="#295296"
+                   Width="230"
+                   Margin="0,0,2,0">
+        <Image HorizontalAlignment="Right"
+               Margin="0,0,40,0"
+               Width="50"
+               Height="50"
+               Source="{dx:DXImage 'SvgImages/Chart/Chart.svg'}"/>
+      </dxlc:Tile>
+        <dxlc:Tile Header="Maintenance"
+                   FontSize="22"
+                   HorizontalAlignment="Stretch"
+                   VerticalAlignment="Stretch"
+                   Background="#295296"
+                   Width="230"
+                   Margin="0,0,2,0">
+        <Image HorizontalAlignment="Right"
+               Margin="0,0,40,0"
+               Width="50"
+               Height="50"
+               Source="{dx:DXImage 'SvgImages/Setup/PageSetup.svg'}"/>
+      </dxlc:Tile>
+        <dxlc:Tile Header="Settings"
+                   FontSize="22"
+                   HorizontalAlignment="Stretch"
+                   VerticalAlignment="Stretch"
+                   Background="#295296"
+                   Width="230">
+        <Image HorizontalAlignment="Right"
+               Margin="0,0,40,0"
+               Width="50"
+               Height="50"
+               Source="{dx:DXImage 'Images/Programming/Technology_32x32.png'}"/>
+      </dxlc:Tile>
+
+    </StackPanel>
+
   </Grid>
 </dx:ThemedWindow>
