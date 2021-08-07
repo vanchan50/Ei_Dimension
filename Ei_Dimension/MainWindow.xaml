@@ -40,11 +40,24 @@
     </Grid.ColumnDefinitions>
     
     <Views:MainView/>
+
+
+
+    <TextBlock Text="Ei Dimension"
+               Foreground="White"
+               FontSize="28"
+               FontFamily="Mathcad UniMath"
+               Grid.Row="0" Grid.Column="0"
+               HorizontalAlignment="Left"
+               VerticalAlignment="Center"
+               Margin="5,0,0,0"
+               TextWrapping="Wrap" />
     
+    <!-- Company Logo -->
     <Image Grid.Row="0" Grid.Column="1"
            Source="Emission_Logo.png"
            Stretch="Fill"/>
-
+    <!--Tile Ribbon-->
     <StackPanel Grid.Row="1" Grid.Column="0"
                 Orientation="Horizontal">
       <dxlc:Tile Header="Dashboard"
