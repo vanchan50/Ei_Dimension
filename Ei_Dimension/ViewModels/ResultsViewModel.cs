@@ -4,6 +4,7 @@ using System;
 using DevExpress.Mvvm.POCO;
 using System.Collections.ObjectModel;
 using DevExpress.Xpf.Charts;
+using Ei_Dimension.Models;
 
 namespace Ei_Dimension.ViewModels
 {
@@ -24,8 +25,11 @@ namespace Ei_Dimension.ViewModels
     public void AddItem()
     {
       var r = new Random();
-      
-      SampleX.Add(new Scatter(r.Next(400,1000),r.Next(1,100)));
+      foreach(var sc in SampleX)
+      {
+        sc.Intensity = r.Next(1,100);
+      }
+    //  SampleX.Add(new Scatter(r.Next(400,1000),r.Next(1,100)));
     }
 
   }

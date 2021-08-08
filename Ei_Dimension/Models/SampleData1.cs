@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ei_Dimension
+namespace Ei_Dimension.Models
 {
   public class SampleData1 : ObservableCollection<Scatter>
   {
