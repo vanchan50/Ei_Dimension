@@ -6,10 +6,12 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm" 
     xmlns:ViewModels="clr-namespace:Ei_Dimension.ViewModels"
-    mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="300">
+    mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="300"
+  >
     <UserControl.DataContext>
         <ViewModels:MainViewModel/>
     </UserControl.DataContext>
-    <Grid>
-    </Grid>
+  <Grid>
+
+  </Grid>
 </UserControl>

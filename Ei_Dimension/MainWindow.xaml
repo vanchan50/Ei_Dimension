@@ -7,6 +7,7 @@
     xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors" 
     xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol" 
     xmlns:dxr="http://schemas.devexpress.com/winfx/2008/xaml/ribbon" 
+    xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
     x:Class="Ei_Dimension.MainWindow"
     Title="Ei_Dimension"
     Height="800"
@@ -22,11 +23,8 @@
     ShowTitle="False"
     ShowStatusPanel="False"
     WindowKind="Normal"
-    UseGlowColors="False">
-
-  <dx:ThemedWindow.DataContext>
-    <ViewModels:MainViewModel/>
-  </dx:ThemedWindow.DataContext>
+    UseGlowColors="False"
+    DataContext="{dxmvvm:ViewModelSource Type=ViewModels:MainViewModel}">
 
   <Grid>
     <Grid.RowDefinitions>
@@ -38,10 +36,8 @@
       <ColumnDefinition Width="4*"/>
       <ColumnDefinition Width="1*"/>
     </Grid.ColumnDefinitions>
-    
+
     <Views:MainView/>
-
-
 
     <TextBlock Text="Ei Dimension"
                Foreground="White"
@@ -56,70 +52,52 @@
     <!-- Company Logo -->
     <Image Grid.Row="0" Grid.Column="1"
            Source="Emission_Logo.png"
-           Stretch="Fill"/>
+           Stretch="Fill"
+           RenderOptions.BitmapScalingMode="HighQuality"/>
     <!--Tile Ribbon-->
     <StackPanel Grid.Row="1" Grid.Column="0"
                 Orientation="Horizontal">
       <dxlc:Tile Header="Dashboard"
-                   FontSize="22"
-                   HorizontalAlignment="Stretch"
-                   VerticalAlignment="Stretch"
-                   Background="#295296"
-                   Width="230"
-                   Margin="0,0,2,0">
+                 Style="{StaticResource RibbonTileStyle}">
         <Image HorizontalAlignment="Right"
-               Margin="0,0,40,0"
+               VerticalAlignment="Top"
+               Margin="0,6,4,0"
                Width="50"
                Height="50"
                Source="{dx:DXImage 'SvgImages/Chart/ChartType_Pie3D.svg'}"/>
       </dxlc:Tile>
       <dxlc:Tile Header="Experiment"
-                   FontSize="22"
-                   HorizontalAlignment="Stretch"
-                   VerticalAlignment="Stretch"
-                   Background="#295296"
-                   Width="230"
-                   Margin="0,0,2,0">
+                 Style="{StaticResource RibbonTileStyle}">
         <Image HorizontalAlignment="Right"
-               Margin="0,0,40,0"
+               VerticalAlignment="Top"
+               Margin="0,6,4,0"
                Width="50"
                Height="50"
                Source="{dx:DXImage 'SvgImages/Reports/GaugeStyleFullCircular.svg'}"/>
       </dxlc:Tile>
       <dxlc:Tile Header="Results"
-                   FontSize="22"
-                   HorizontalAlignment="Stretch"
-                   VerticalAlignment="Stretch"
-                   Background="#295296"
-                   Width="230"
-                   Margin="0,0,2,0">
+                 Style="{StaticResource RibbonTileStyle}">
         <Image HorizontalAlignment="Right"
-               Margin="0,0,40,0"
+               VerticalAlignment="Top"
+               Margin="0,6,4,0"
                Width="50"
                Height="50"
                Source="{dx:DXImage 'SvgImages/Chart/Chart.svg'}"/>
       </dxlc:Tile>
-        <dxlc:Tile Header="Maintenance"
-                   FontSize="22"
-                   HorizontalAlignment="Stretch"
-                   VerticalAlignment="Stretch"
-                   Background="#295296"
-                   Width="230"
-                   Margin="0,0,2,0">
+      <dxlc:Tile Header="Maintenance"
+                 Style="{StaticResource RibbonTileStyle}">
         <Image HorizontalAlignment="Right"
-               Margin="0,0,40,0"
+               VerticalAlignment="Top"
+               Margin="0,6,4,0"
                Width="50"
                Height="50"
                Source="{dx:DXImage 'SvgImages/Setup/PageSetup.svg'}"/>
       </dxlc:Tile>
-        <dxlc:Tile Header="Settings"
-                   FontSize="22"
-                   HorizontalAlignment="Stretch"
-                   VerticalAlignment="Stretch"
-                   Background="#295296"
-                   Width="230">
+      <dxlc:Tile Header="Settings"
+                 Style="{StaticResource RibbonTileStyle}">
         <Image HorizontalAlignment="Right"
-               Margin="0,0,40,0"
+               VerticalAlignment="Top"
+               Margin="0,6,4,0"
                Width="50"
                Height="50"
                Source="{dx:DXImage 'Images/Programming/Technology_32x32.png'}"/>
@@ -127,5 +105,9 @@
 
     </StackPanel>
 
+    <Grid Grid.Row="2" Grid.Column="0">
+      <Views:ResultsView/>
+    </Grid>
+    
   </Grid>
 </dx:ThemedWindow>
