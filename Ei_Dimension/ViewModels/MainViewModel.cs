@@ -1,20 +1,44 @@
 ﻿using DevExpress.Mvvm;
 using System;
+using DevExpress.Mvvm.DataAnnotations;
+using DevExpress.Mvvm.POCO;
 
 namespace Ei_Dimension.ViewModels
 {
+//  [POCOViewModel]
   public class MainViewModel : ViewModelBase
   {
-    public ResultsViewModel ResultsVM { get; set; }
-//    public object CurrentView
-//    {
-//      get { return _currentView; }
-//      set
-//      {
-//        _currentView = value;
-//        OnPropertyChanged();
-//      }
-//    }
-//    private object _currentView;
+    private INavigationService NavigationService { get { return this.GetService<INavigationService>(); } }
+
+    public void OnViewLoaded()
+    {
+      NavigationService.Navigate("ResultsView", null, this);
+    }
+
+    public void NavigateDashboard()
+    {
+      NavigationService.Navigate("DashboardView", null, this);
+    }
+
+    public void NavigateExperiment()
+    {
+      NavigationService.Navigate("ExperimentView", null, this);
+    }
+
+    public void NavigateResults()
+    {
+      NavigationService.Navigate("ResultsView", null, this);
+    }
+
+    public void NavigateMaintenance()
+    {
+      NavigationService.Navigate("MaintenanceView", null, this);
+    }
+
+    public void NavigateSettings()
+    {
+      NavigationService.Navigate("SettingsView", null, this);
+    }
+
   }
 }
