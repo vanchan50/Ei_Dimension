@@ -105,7 +105,7 @@
 
     </StackPanel>
 
-    <Grid Grid.Row="2" Grid.Column="0">
+    <Grid Grid.Row="2" Grid.ColumnSpan="2">
       <Views:ResultsView/>
     </Grid>
     
