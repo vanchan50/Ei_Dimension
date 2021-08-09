@@ -23,6 +23,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -76,6 +77,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Core\ObservableObject.cs" />
+    <Compile Include="Models\BeadInfoStruct.cs" />
+    <Compile Include="Models\HistogramData.cs" />
     <Compile Include="Models\SampleData1.cs" />
     <Compile Include="Models\Scatter.cs" />
     <Compile Include="ViewModels\DashboardViewModel.cs" />

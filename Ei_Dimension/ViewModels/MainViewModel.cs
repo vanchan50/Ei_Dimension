@@ -5,14 +5,18 @@ using DevExpress.Mvvm.POCO;
 
 namespace Ei_Dimension.ViewModels
 {
-//  [POCOViewModel]
-  public class MainViewModel : ViewModelBase
+  [POCOViewModel]
+  public class MainViewModel 
   {
     private INavigationService NavigationService { get { return this.GetService<INavigationService>(); } }
 
-    public void OnViewLoaded()
+    protected MainViewModel()
     {
-      NavigationService.Navigate("ResultsView", null, this);
+    }
+
+    public static MainViewModel Create()
+    {
+      return ViewModelSource.Create(() => new MainViewModel());
     }
 
     public void NavigateDashboard()
