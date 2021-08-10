@@ -8,33 +8,29 @@ using Ei_Dimension.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.ComponentModel;
+using System.IO;
 
 namespace Ei_Dimension.ViewModels
 {
   [POCOViewModel]
   public class ResultsViewModel
   {
-    public virtual SampleData1 SampleForward {get;set; }
-    public virtual SampleData1 SampleViolet { get; set; }
-    public virtual SampleData1 SampleGreen { get; set; }
-    public virtual SampleData1 SampleRed { get; set; }
+    public virtual ObservableCollection<HistogramData> ForwardSsc { get; set; }
     public virtual ObservableCollection<HistogramData> VioletSsc { get; set; }
     public virtual ObservableCollection<HistogramData> RedSsc { get; set; }
     public virtual ObservableCollection<HistogramData> GreenSsc { get; set; }
     public virtual ObservableCollection<HistogramData> Reporter { get; set; }
-    public virtual ObservableCollection<HistogramData> GreenC { get; set; }
-    private List<BeadInfoStruct> BeadStructs { get; set; }
+    public virtual ObservableCollection<ResultFile> AvailableResults { get; set; }
+    public virtual ObservableCollection<ResultFile> SelectedItem { get; set; }
+
+    private List<BeadInfoStruct> _beadStructsList;
+    private List<SortedDictionary<int, int>> _histoDicts;
 
     protected ResultsViewModel()
     {
-      SampleViolet = new SampleData1();
-      SampleGreen = new SampleData1();
-      SampleRed = new SampleData1();
-
-      BeadStructs = new List<BeadInfoStruct>();
-
-
-      ParseBeadInfo(@"C:\Users\Admin\Desktop\WorkC#\SampleData\Mon Run 2AA3_0.csv");
+      GetAvailableResults();
+      SelectedItem = new ObservableCollection<ResultFile>();
+      
 
     }
 
@@ -43,115 +39,71 @@ namespace Ei_Dimension.ViewModels
       return ViewModelSource.Create(() => new ResultsViewModel());
     }
 
-    public void AddScatterItem()
+    public void GetAvailableResults()
     {
-      var r = new Random();
-      foreach(var sc in SampleViolet)
+      if(AvailableResults == null)
       {
-        sc.Intensity = r.Next(1,100);
-        sc.Wavelength = r.Next(400, 1000);
+        AvailableResults = new ObservableCollection<ResultFile>();
       }
-      SampleViolet.Add(new Scatter(r.Next(400,1000),r.Next(1,100)));
-      foreach (var sc in SampleGreen)
+      AvailableResults.Clear();
+      string[] files = Directory.GetFiles(@"C:\Users\Admin\Desktop\WorkC#\SampleData", "*.csv");
+      foreach(var f in files)
       {
-        sc.Intensity = r.Next(1, 100);
-        sc.Wavelength = r.Next(400, 1000);
+        AvailableResults.Add(new ResultFile(f));
       }
-      SampleGreen.Add(new Scatter(r.Next(400, 1000), r.Next(1, 100)));
-      foreach (var sc in SampleRed)
-      {
-        sc.Intensity = r.Next(1, 100);
-        sc.Wavelength = r.Next(400, 1000);
-      }
-      SampleRed.Add(new Scatter(r.Next(400, 1000), r.Next(1, 100)));
-    }
-
-    public async void FillReporter()
-    {
-      Task<ObservableCollection<HistogramData>> t = new Task<ObservableCollection<HistogramData>>(AddReporterItem);
-      t.Start();
-      await t;
-      Reporter = t.Result;
-    }
-
-    private ObservableCollection<HistogramData> AddReporterItem()
-    {
-      var lst = MakeDictionariesFromData();
-      ObservableCollection<HistogramData> col = new ObservableCollection<HistogramData>();
-      foreach (var x in lst[3])
-      {
-        col.Add(new HistogramData(x.Value, x.Key));
-      }
-      return col;
-    }
-
-    private List<SortedDictionary<int, int>> MakeDictionariesFromData()
-    {
-      SortedDictionary<int, int> dictVioletssc = new SortedDictionary<int, int>(); //value,bin
-      SortedDictionary<int, int> dictRedssc = new SortedDictionary<int, int>(); //value,bin
-      SortedDictionary<int, int> dictGreenssc = new SortedDictionary<int, int>(); //value,bin
-      SortedDictionary<int, int> dictReporter = new SortedDictionary<int, int>(); //value,bin
-      int key;
-      foreach (var bs in BeadStructs)
-      {
-        key = (int)bs.reporter;
-        if (dictReporter.ContainsKey(key))
-        {
-          dictReporter[key]++;
-        }
-        else
-        {
-          dictReporter.Add(key, 1);
-        }
-
-        key = (int)bs.violetssc;
-        if (dictVioletssc.ContainsKey(key))
-        {
-          dictVioletssc[key]++;
-        }
-        else
-        {
-          dictVioletssc.Add(key, 1);
-        }
-
-        key = (int)bs.redssc;
-        if (dictRedssc.ContainsKey(key))
-        {
-          dictRedssc[key]++;
-        }
-        else
-        {
-          dictRedssc.Add(key, 1);
-        }
-
-        key = (int)bs.greenssc;
-        if (dictGreenssc.ContainsKey(key))
-        {
-          dictGreenssc[key]++;
-        }
-        else
-        {
-          dictGreenssc.Add(key, 1);
-        }
-      }
-
-      var lst = new List<SortedDictionary<int, int>>();
-      lst.Add(dictVioletssc);
-      lst.Add(dictRedssc);
-      lst.Add(dictGreenssc);
-      lst.Add(dictReporter);
-      return lst;
     }
 
     public void ParseBeadInfo(string path)
     {
+      if(_beadStructsList == null)
+      {
+        _beadStructsList = new List<BeadInfoStruct>();
+      }
+      else
+      {
+        _beadStructsList.Clear();
+      }
       string contents = GetDataFromFile(path);
 
       while (contents.Length > 0)
       {
         BeadInfoStruct bs = ParseRow(ref contents);
-        BeadStructs.Add(bs);
+        _beadStructsList.Add(bs);
       }
+    }
+    [AsyncCommand(UseCommandManager = false)]
+    public async void FillReporterAsync()
+    {
+      if (_histoDicts != null)
+      {
+        foreach (var d in _histoDicts)
+        {
+          d.Clear();
+        }
+        _histoDicts.Clear();
+      }
+      await Task.Run(()=> { ParseBeadInfo(SelectedItem[0].Path); } );
+      _histoDicts = MakeDictionariesFromData();
+      Task<ObservableCollection<HistogramData>> ForwardTask = new Task<ObservableCollection<HistogramData>>(AddForwardItem);
+      ForwardTask.Start();
+      Task<ObservableCollection<HistogramData>> VioletTask = new Task<ObservableCollection<HistogramData>>(AddVioletItem);
+      VioletTask.Start();
+      Task<ObservableCollection<HistogramData>> RedTask = new Task<ObservableCollection<HistogramData>>(AddRedItem);
+      RedTask.Start();
+      Task<ObservableCollection<HistogramData>> GreenTask = new Task<ObservableCollection<HistogramData>>(AddGreenItem);
+      GreenTask.Start();
+      Task<ObservableCollection<HistogramData>> ReporterTask = new Task<ObservableCollection<HistogramData>>(AddReporterItem);
+      ReporterTask.Start();
+      await ForwardTask;
+      ForwardSsc = ForwardTask.Result;
+      await VioletTask;
+      VioletSsc = VioletTask.Result;
+      await RedTask;
+      RedSsc = RedTask.Result;
+      await GreenTask;
+      GreenSsc = GreenTask.Result;
+      await ReporterTask;
+      Reporter = ReporterTask.Result;
     }
 
     private string GetDataFromFile(string path)
@@ -166,7 +118,7 @@ namespace Ei_Dimension.ViewModels
       return str;
     }
 
-    private BeadInfoStruct ParseRow(ref string data )
+    private BeadInfoStruct ParseRow(ref string data)
     {
       BeadInfoStruct Binfo;
       Binfo.Header = uint.Parse(data.Substring(0, data.IndexOf(',')));
@@ -223,5 +175,122 @@ namespace Ei_Dimension.ViewModels
       data = data.Remove(0, data.IndexOf('\r') + 1);
       return Binfo;
     }
+
+    private List<SortedDictionary<int, int>> MakeDictionariesFromData()
+    {
+      SortedDictionary<int, int> dictForward = new SortedDictionary<int, int>(); //value,bin
+      SortedDictionary<int, int> dictVioletssc = new SortedDictionary<int, int>(); //value,bin
+      SortedDictionary<int, int> dictRedssc = new SortedDictionary<int, int>(); //value,bin
+      SortedDictionary<int, int> dictGreenssc = new SortedDictionary<int, int>(); //value,bin
+      SortedDictionary<int, int> dictReporter = new SortedDictionary<int, int>(); //value,bin
+      int key;
+      foreach (var bs in _beadStructsList)
+      {
+        key = (int)bs.reporter;
+        if (dictReporter.ContainsKey(key))
+        {
+          dictReporter[key]++;
+        }
+        else
+        {
+          dictReporter.Add(key, 1);
+        }
+
+        key = (int)bs.fsc;
+        if (dictForward.ContainsKey(key))
+        {
+          dictForward[key]++;
+        }
+        else
+        {
+          dictForward.Add(key, 1);
+        }
+
+        key = (int)bs.violetssc;
+        if (dictVioletssc.ContainsKey(key))
+        {
+          dictVioletssc[key]++;
+        }
+        else
+        {
+          dictVioletssc.Add(key, 1);
+        }
+
+        key = (int)bs.redssc;
+        if (dictRedssc.ContainsKey(key))
+        {
+          dictRedssc[key]++;
+        }
+        else
+        {
+          dictRedssc.Add(key, 1);
+        }
+
+        key = (int)bs.greenssc;
+        if (dictGreenssc.ContainsKey(key))
+        {
+          dictGreenssc[key]++;
+        }
+        else
+        {
+          dictGreenssc.Add(key, 1);
+        }
+      }
+
+      var lst = new List<SortedDictionary<int, int>>();
+      lst.Add(dictForward);
+      lst.Add(dictVioletssc);
+      lst.Add(dictRedssc);
+      lst.Add(dictGreenssc);
+      lst.Add(dictReporter);
+      return lst;
+    }
+    #region Ugly
+    private ObservableCollection<HistogramData> AddForwardItem()
+    {
+      ObservableCollection<HistogramData> col = new ObservableCollection<HistogramData>();
+      foreach (var x in _histoDicts[0])
+      {
+        col.Add(new HistogramData(x.Value, x.Key));
+      }
+      return col;
+    }
+    private ObservableCollection<HistogramData> AddVioletItem()
+    {
+      ObservableCollection<HistogramData> col = new ObservableCollection<HistogramData>();
+      foreach (var x in _histoDicts[1])
+      {
+        col.Add(new HistogramData(x.Value, x.Key));
+      }
+      return col;
+    }
+    private ObservableCollection<HistogramData> AddRedItem()
+    {
+      ObservableCollection<HistogramData> col = new ObservableCollection<HistogramData>();
+      foreach (var x in _histoDicts[2])
+      {
+        col.Add(new HistogramData(x.Value, x.Key));
+      }
+      return col;
+    }
+    private ObservableCollection<HistogramData> AddGreenItem()
+    {
+      ObservableCollection<HistogramData> col = new ObservableCollection<HistogramData>();
+      foreach (var x in _histoDicts[3])
+      {
+        col.Add(new HistogramData(x.Value, x.Key));
+      }
+      return col;
+    }
+    private ObservableCollection<HistogramData> AddReporterItem()
+    {
+      ObservableCollection<HistogramData> col = new ObservableCollection<HistogramData>();
+      foreach (var x in _histoDicts[4])
+      {
+        col.Add(new HistogramData(x.Value, x.Key));
+      }
+      return col;
+    }
+    #endregion
   }
 }
