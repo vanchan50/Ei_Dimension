@@ -12,6 +12,9 @@
              mc:Ignorable="d"
              DataContext="{dxmvvm:ViewModelSource Type={x:Type ViewModels:ResultsViewModel}}"
              d:DesignHeight="674" d:DesignWidth="1500">
+  <dxmvvm:Interaction.Behaviors>
+    <dxmvvm:DispatcherService/>
+  </dxmvvm:Interaction.Behaviors>
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="1*"/>
@@ -67,7 +70,7 @@
             </dxc:AxisX2D>
           </dxc:XYDiagram2D.AxisX>
           <dxc:XYDiagram2D.Series>
-            <dxc:LineSeries2D DataSource="{Binding GreenC}"
+            <dxc:LineSeries2D DataSource="{Binding Reporter}"
                                        ValueDataMember="Value"
                                        ArgumentDataMember="Argument"/>
           </dxc:XYDiagram2D.Series>
@@ -79,7 +82,8 @@
                      Grid.Column="1" Grid.Row="0"
                      HorizontalAlignment="Center"
                      VerticalAlignment="Center"
-                     Command="{Binding AddReporterItemCommand}"/>
+                     Command="{Binding FillReporterCommand}"
+                     CommandParameter="this"/>
 
     <Border Grid.Column="2" Grid.Row="1" Background="BlanchedAlmond">
       <TextBlock Text="HeatMap placeholder"

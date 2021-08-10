@@ -6,6 +6,8 @@ using System.Collections.ObjectModel;
 using DevExpress.Xpf.Charts;
 using Ei_Dimension.Models;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.ComponentModel;
 
 namespace Ei_Dimension.ViewModels
 {
@@ -16,7 +18,10 @@ namespace Ei_Dimension.ViewModels
     public virtual SampleData1 SampleViolet { get; set; }
     public virtual SampleData1 SampleGreen { get; set; }
     public virtual SampleData1 SampleRed { get; set; }
-    public virtual ObservableCollection<float> Reporter { get; set; }
+    public virtual ObservableCollection<HistogramData> VioletSsc { get; set; }
+    public virtual ObservableCollection<HistogramData> RedSsc { get; set; }
+    public virtual ObservableCollection<HistogramData> GreenSsc { get; set; }
+    public virtual ObservableCollection<HistogramData> Reporter { get; set; }
     public virtual ObservableCollection<HistogramData> GreenC { get; set; }
     private List<BeadInfoStruct> BeadStructs { get; set; }
 
@@ -28,10 +33,8 @@ namespace Ei_Dimension.ViewModels
 
       BeadStructs = new List<BeadInfoStruct>();
 
-      Reporter = new ObservableCollection<float>();
-      GreenC = new ObservableCollection<HistogramData>();
 
-    //  ParseBeadInfo(@"C:\Users\Admin\Desktop\WorkC#\SampleData\Mon Run 2AA3_0.csv");
+      ParseBeadInfo(@"C:\Users\Admin\Desktop\WorkC#\SampleData\Mon Run 2AA3_0.csv");
 
     }
 
@@ -63,103 +66,162 @@ namespace Ei_Dimension.ViewModels
       SampleRed.Add(new Scatter(r.Next(400, 1000), r.Next(1, 100)));
     }
 
-    public void AddReporterItem()
+    public async void FillReporter()
     {
-      ParseBeadInfo(@"C:\Users\Admin\Desktop\WorkC#\SampleData\Mon Run 2AA3_0.csv");
+      Task<ObservableCollection<HistogramData>> t = new Task<ObservableCollection<HistogramData>>(AddReporterItem);
+      t.Start();
+      await t;
+      Reporter = t.Result;
+    }
 
-      SortedDictionary<int, int> dict = new SortedDictionary<int, int>(); //value,bin
+    private ObservableCollection<HistogramData> AddReporterItem()
+    {
+      var lst = MakeDictionariesFromData();
+      ObservableCollection<HistogramData> col = new ObservableCollection<HistogramData>();
+      foreach (var x in lst[3])
+      {
+        col.Add(new HistogramData(x.Value, x.Key));
+      }
+      return col;
+    }
+
+    private List<SortedDictionary<int, int>> MakeDictionariesFromData()
+    {
+      SortedDictionary<int, int> dictVioletssc = new SortedDictionary<int, int>(); //value,bin
+      SortedDictionary<int, int> dictRedssc = new SortedDictionary<int, int>(); //value,bin
+      SortedDictionary<int, int> dictGreenssc = new SortedDictionary<int, int>(); //value,bin
+      SortedDictionary<int, int> dictReporter = new SortedDictionary<int, int>(); //value,bin
       int key;
       foreach (var bs in BeadStructs)
       {
-        key = (int)bs.greenC;
-        if (dict.ContainsKey(key))
+        key = (int)bs.reporter;
+        if (dictReporter.ContainsKey(key))
         {
-          dict[key]++;
+          dictReporter[key]++;
         }
         else
         {
-          dict.Add(key, 1);
+          dictReporter.Add(key, 1);
+        }
+
+        key = (int)bs.violetssc;
+        if (dictVioletssc.ContainsKey(key))
+        {
+          dictVioletssc[key]++;
+        }
+        else
+        {
+          dictVioletssc.Add(key, 1);
+        }
+
+        key = (int)bs.redssc;
+        if (dictRedssc.ContainsKey(key))
+        {
+          dictRedssc[key]++;
+        }
+        else
+        {
+          dictRedssc.Add(key, 1);
+        }
+
+        key = (int)bs.greenssc;
+        if (dictGreenssc.ContainsKey(key))
+        {
+          dictGreenssc[key]++;
+        }
+        else
+        {
+          dictGreenssc.Add(key, 1);
         }
       }
 
-      foreach (var x in dict)
-      {
-        GreenC.Add(new HistogramData(x.Value, x.Key));
-      }
+      var lst = new List<SortedDictionary<int, int>>();
+      lst.Add(dictVioletssc);
+      lst.Add(dictRedssc);
+      lst.Add(dictGreenssc);
+      lst.Add(dictReporter);
+      return lst;
     }
 
     public void ParseBeadInfo(string path)
     {
-      string contents;
+      string contents = GetDataFromFile(path);
+
+      while (contents.Length > 0)
+      {
+        BeadInfoStruct bs = ParseRow(ref contents);
+        BeadStructs.Add(bs);
+      }
+    }
+
+    private string GetDataFromFile(string path)
+    {
+      string str;
       using (System.IO.FileStream fin = new System.IO.FileStream(path, System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.Read))
       using (System.IO.StreamReader sr = new System.IO.StreamReader(fin))
       {
         sr.ReadLine();
-        contents = sr.ReadToEnd();
+        str = sr.ReadToEnd();
       }
-
-      while (contents.Length > 0)
-      {
-        BeadInfoStruct bs = new BeadInfoStruct();
-        ParseRow(ref bs, ref contents);
-        BeadStructs.Add(bs);
-      }
-
+      return str;
     }
-    private void ParseRow(ref BeadInfoStruct struc, ref string data )
+
+    private BeadInfoStruct ParseRow(ref string data )
     {
-      struc.Header = uint.Parse(data.Substring(0, data.IndexOf(',')));
+      BeadInfoStruct Binfo;
+      Binfo.Header = uint.Parse(data.Substring(0, data.IndexOf(',')));
       data = data.Remove(0, data.IndexOf(',') + 1);
-      struc.EventTime = uint.Parse(data.Substring(0, data.IndexOf(',')));
+      Binfo.EventTime = uint.Parse(data.Substring(0, data.IndexOf(',')));
       data = data.Remove(0, data.IndexOf(',') + 1);
-      struc.fsc_bg = byte.Parse(data.Substring(0, data.IndexOf(',')));
+      Binfo.fsc_bg = byte.Parse(data.Substring(0, data.IndexOf(',')));
       data = data.Remove(0, data.IndexOf(',') + 1);
-      struc.vssc_bg = byte.Parse(data.Substring(0, data.IndexOf(',')));
+      Binfo.vssc_bg = byte.Parse(data.Substring(0, data.IndexOf(',')));
       data = data.Remove(0, data.IndexOf(',') + 1);
-      struc.cl0_bg = byte.Parse(data.Substring(0, data.IndexOf(',')));
+      Binfo.cl0_bg = byte.Parse(data.Substring(0, data.IndexOf(',')));
       data = data.Remove(0, data.IndexOf(',') + 1);
-      struc.cl1_bg = byte.Parse(data.Substring(0, data.IndexOf(',')));
+      Binfo.cl1_bg = byte.Parse(data.Substring(0, data.IndexOf(',')));
       data = data.Remove(0, data.IndexOf(',') + 1);
-      struc.cl2_bg = byte.Parse(data.Substring(0, data.IndexOf(',')));
+      Binfo.cl2_bg = byte.Parse(data.Substring(0, data.IndexOf(',')));
       data = data.Remove(0, data.IndexOf(',') + 1);
-      struc.cl3_bg = byte.Parse(data.Substring(0, data.IndexOf(',')));
+      Binfo.cl3_bg = byte.Parse(data.Substring(0, data.IndexOf(',')));
       data = data.Remove(0, data.IndexOf(',') + 1);
-      struc.rssc_bg = byte.Parse(data.Substring(0, data.IndexOf(',')));
+      Binfo.rssc_bg = byte.Parse(data.Substring(0, data.IndexOf(',')));
       data = data.Remove(0, data.IndexOf(',') + 1);
-      struc.gssc_bg = byte.Parse(data.Substring(0, data.IndexOf(',')));
+      Binfo.gssc_bg = byte.Parse(data.Substring(0, data.IndexOf(',')));
       data = data.Remove(0, data.IndexOf(',') + 1);
-      struc.greenB_bg = ushort.Parse(data.Substring(0, data.IndexOf(',')));
+      Binfo.greenB_bg = ushort.Parse(data.Substring(0, data.IndexOf(',')));
       data = data.Remove(0, data.IndexOf(',') + 1);
-      struc.greenC_bg = ushort.Parse(data.Substring(0, data.IndexOf(',')));
+      Binfo.greenC_bg = ushort.Parse(data.Substring(0, data.IndexOf(',')));
       data = data.Remove(0, data.IndexOf(',') + 1);
-      struc.greenB = ushort.Parse(data.Substring(0, data.IndexOf(',')));
+      Binfo.greenB = ushort.Parse(data.Substring(0, data.IndexOf(',')));
       data = data.Remove(0, data.IndexOf(',') + 1);
-      struc.greenC = ushort.Parse(data.Substring(0, data.IndexOf(',')));
+      Binfo.greenC = ushort.Parse(data.Substring(0, data.IndexOf(',')));
       data = data.Remove(0, data.IndexOf(',') + 1);
-      struc.l_offset_rg = byte.Parse(data.Substring(0, data.IndexOf(',')));
+      Binfo.l_offset_rg = byte.Parse(data.Substring(0, data.IndexOf(',')));
       data = data.Remove(0, data.IndexOf(',') + 1);
-      struc.l_offset_gv = byte.Parse(data.Substring(0, data.IndexOf(',')));
+      Binfo.l_offset_gv = byte.Parse(data.Substring(0, data.IndexOf(',')));
       data = data.Remove(0, data.IndexOf(',') + 1);
-      struc.region = ushort.Parse(data.Substring(0, data.IndexOf(',')));
+      Binfo.region = ushort.Parse(data.Substring(0, data.IndexOf(',')));
       data = data.Remove(0, data.IndexOf(',') + 1);
-      struc.fsc = float.Parse(data.Substring(0, data.IndexOf(',')), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
+      Binfo.fsc = float.Parse(data.Substring(0, data.IndexOf(',')), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
       data = data.Remove(0, data.IndexOf(',') + 1);
-      struc.violetssc = float.Parse(data.Substring(0, data.IndexOf(',')), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
+      Binfo.violetssc = float.Parse(data.Substring(0, data.IndexOf(',')), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
       data = data.Remove(0, data.IndexOf(',') + 1);
-      struc.cl0 = float.Parse(data.Substring(0, data.IndexOf(',')), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
+      Binfo.cl0 = float.Parse(data.Substring(0, data.IndexOf(',')), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
       data = data.Remove(0, data.IndexOf(',') + 1);
-      struc.redssc = float.Parse(data.Substring(0, data.IndexOf(',')), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
+      Binfo.redssc = float.Parse(data.Substring(0, data.IndexOf(',')), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
       data = data.Remove(0, data.IndexOf(',') + 1);
-      struc.cl1 = float.Parse(data.Substring(0, data.IndexOf(',')), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
+      Binfo.cl1 = float.Parse(data.Substring(0, data.IndexOf(',')), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
       data = data.Remove(0, data.IndexOf(',') + 1);
-      struc.cl2 = float.Parse(data.Substring(0, data.IndexOf(',')), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
+      Binfo.cl2 = float.Parse(data.Substring(0, data.IndexOf(',')), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
       data = data.Remove(0, data.IndexOf(',') + 1);
-      struc.cl3 = float.Parse(data.Substring(0, data.IndexOf(',')), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
+      Binfo.cl3 = float.Parse(data.Substring(0, data.IndexOf(',')), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
       data = data.Remove(0, data.IndexOf(',') + 1);
-      struc.greenssc = float.Parse(data.Substring(0, data.IndexOf(',')), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
+      Binfo.greenssc = float.Parse(data.Substring(0, data.IndexOf(',')), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
       data = data.Remove(0, data.IndexOf(',') + 1);
-      struc.reporter = float.Parse(data.Substring(0, data.IndexOf('\r')), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
+      Binfo.reporter = float.Parse(data.Substring(0, data.IndexOf('\r')), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
       data = data.Remove(0, data.IndexOf('\r') + 1);
+      return Binfo;
     }
   }
 }
