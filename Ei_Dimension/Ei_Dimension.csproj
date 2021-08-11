@@ -80,10 +80,9 @@
     </ApplicationDefinition>
     <Compile Include="Core\ObservableObject.cs" />
     <Compile Include="Models\BeadInfoStruct.cs" />
+    <Compile Include="Models\MapData.cs" />
     <Compile Include="Models\HistogramData.cs" />
     <Compile Include="Models\ResultFile.cs" />
-    <Compile Include="Models\SampleData1.cs" />
-    <Compile Include="Models\Scatter.cs" />
     <Compile Include="ViewModels\DashboardViewModel.cs" />
     <Compile Include="ViewModels\ExperimentViewModel.cs" />
     <Compile Include="ViewModels\MaintenanceViewModel.cs" />
