@@ -6,12 +6,14 @@ namespace Ei_Dimension.Models
   {
     public int X { get; set; }
     public int Y { get; set; }
-    public byte intensity { get; set; }
+    public byte IntensityX { get; set; }
+    public byte IntensityY { get; set; }
     public HeatMapData(int x, int y)
     {
       X = x;
       Y = y;
-      intensity = 0;
+      IntensityX = 0;
+      IntensityY = 0;
     }
   }
 }

@@ -31,6 +31,11 @@ namespace Ei_Dimension.ViewModels
     public virtual ObservableCollection<HeatMapData> HeatMapSeriesXY { get; set; }
     public virtual string HeatmapAxisXTitle { get; set; }
     public virtual string HeatmapAxisYTitle { get; set; }
+    public virtual ObservableCollection<HeatMapData> HeatLevel1 { get; set; }
+    public virtual ObservableCollection<HeatMapData> HeatLevel2 { get; set; }
+    public virtual ObservableCollection<HeatMapData> HeatLevel3 { get; set; }
+    public virtual ObservableCollection<HeatMapData> HeatLevel4 { get; set; }
+    public virtual ObservableCollection<HeatMapData> HeatLevel5 { get; set; }
 
     private List<BeadInfoStruct> _beadStructsList;
     private List<SortedDictionary<int, int>> _histoDicts;
@@ -44,6 +49,12 @@ namespace Ei_Dimension.ViewModels
       HeatmapAxisXTitle = "CL1";
       HeatmapAxisYTitle = "CL2";
       _heatmapAxisXY = (1,2);
+
+      HeatLevel1 = new ObservableCollection<HeatMapData>(); // Min     outside of bin
+      HeatLevel2 = new ObservableCollection<HeatMapData>(); //         70%
+      HeatLevel3 = new ObservableCollection<HeatMapData>(); // Medium  50%
+      HeatLevel4 = new ObservableCollection<HeatMapData>(); //         30% of binwidth
+      HeatLevel5 = new ObservableCollection<HeatMapData>(); // Max     bin center
     }
 
     public static ResultsViewModel Create()
@@ -122,6 +133,7 @@ namespace Ei_Dimension.ViewModels
       await MapTask;
       (SeriesCL0, SeriesCL1, SeriesCL2, SeriesCL3) = MapTask.Result;
       UpdateHeatmap();
+      MakeHeatmap();
     }
 
     public void ChangeHeatmapX(int index)
@@ -214,7 +226,8 @@ namespace Ei_Dimension.ViewModels
     }
 
     private string GetDataFromFile(string path)
-    {
+    { 
+      //TODO: parallelize to string[]
       string str;
       using (System.IO.FileStream fin = new System.IO.FileStream(path, System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.Read))
       using (System.IO.StreamReader sr = new System.IO.StreamReader(fin))
@@ -294,6 +307,18 @@ namespace Ei_Dimension.ViewModels
       SortedDictionary<int, int> dictCl1 = new SortedDictionary<int, int>(); //value,bin
       SortedDictionary<int, int> dictCl2 = new SortedDictionary<int, int>(); //value,bin
       SortedDictionary<int, int> dictCl3 = new SortedDictionary<int, int>(); //value,bin
+
+
+      int binsize = 50;
+      int maxlength = 10050;
+      for (var i = binsize; i < maxlength; i += binsize)
+      {
+        dictCl0.Add(i, 0);
+        dictCl1.Add(i, 0);
+        dictCl2.Add(i, 0);
+        dictCl3.Add(i, 0);
+      }
+
       int key;
       foreach (var bs in _beadStructsList)
       {
@@ -347,63 +372,82 @@ namespace Ei_Dimension.ViewModels
           dictGreenssc.Add(key, 1);
         }
 
-        //bin these into 50 point bins
-        for(var i = 50; i < 10050; i += 50)
-        {
-          dictCl0.Add(i, 0);
-          dictCl1.Add(i, 0);
-          dictCl2.Add(i, 0);
-          dictCl3.Add(i, 0);
-        }
-
-        for (var i = 50; i < 10050; i += 50)
+        //bin these into binsize point bins
+        for (var i = binsize; i < maxlength; i += binsize)
         {
           if(bs.cl0 > i)
           {
             continue;
           }
           dictCl0[i]++;
+          break;
         }
+        for (var i = binsize; i < maxlength; i += binsize)
+        {
+          if (bs.cl1 > i)
+          {
+            continue;
+          }
+          dictCl1[i]++;
+          break;
+        }
+        for (var i = binsize; i < maxlength; i += binsize)
+        {
+          if (bs.cl2 > i)
+          {
+            continue;
+          }
+          dictCl2[i]++;
+          break;
+        }
+        for (var i = binsize; i < maxlength; i += binsize)
+        {
+          if (bs.cl3 > i)
+          {
+            continue;
+          }
+          dictCl3[i]++;
+          break;
+        }
+        //  key = (int)bs.cl0;
+        //  if (dictCl0.ContainsKey(key))
+        //  {
+        //    dictCl0[key]++;
+        //  }
+        //  else
+        //  {
+        //    dictCl0.Add(key, 1);
+        //  }
 
-      //  key = (int)bs.cl0;
-      //  if (dictCl0.ContainsKey(key))
-      //  {
-      //    dictCl0[key]++;
-      //  }
-      //  else
-      //  {
-      //    dictCl0.Add(key, 1);
-      //  }
-
-      //  key = (int)bs.cl1;
-      //  if (dictCl1.ContainsKey(key))
-      //  {
-      //    dictCl1[key]++;
-      //  }
-      //  else
-      //  {
-      //    dictCl1.Add(key, 1);
-      //  }
-      //
-      //  key = (int)bs.cl2;
-      //  if (dictCl2.ContainsKey(key))
-      //  {
-      //    dictCl2[key]++;
-      //  }
-      //  else
-      //  {
-      //    dictCl2.Add(key, 1);
-      //  }
-      //
-      //  key = (int)bs.cl3;
-      //  if (dictCl3.ContainsKey(key))
-      //  {
-      //    dictCl3[key]++;
-      //  }
-      //  else
-      //  {
-      //    dictCl3.Add(key, 1);
-      //  }
+        //  key = (int)bs.cl1;
+        //  if (dictCl1.ContainsKey(key))
+        //  {
+        //    dictCl1[key]++;
+        //  }
+        //  else
+        //  {
+        //    dictCl1.Add(key, 1);
+        //  }
+        //
+        //  key = (int)bs.cl2;
+        //  if (dictCl2.ContainsKey(key))
+        //  {
+        //    dictCl2[key]++;
+        //  }
+        //  else
+        //  {
+        //    dictCl2.Add(key, 1);
+        //  }
+        //
+        //  key = (int)bs.cl3;
+        //  if (dictCl3.ContainsKey(key))
+        //  {
+        //    dictCl3[key]++;
+        //  }
+        //  else
+        //  {
+        //    dictCl3.Add(key, 1);
+        //  }
       }
 
       var lst = new List<SortedDictionary<int, int>>();
@@ -484,60 +528,164 @@ namespace Ei_Dimension.ViewModels
 
     public void MakeHeatmap()  //should return several collections of diff color series
     {
-      //_histoDicts[5];678;
-      List<HistogramData> CL1Hist = new List<HistogramData>();
-    //  foreach(var x in _histoDicts[6])
-    //  {
-    //    CL1Hist.Add(new HistogramData(x.Value, x.Key));
-    //  }
-      int max = _histoDicts[6].ElementAt(_histoDicts[6].Count - 1).Key; //to include zero points => average properly
-      for (var i = 1; i <= max; i++)
-      {
-        int temp=0;
-        _histoDicts[6].TryGetValue(i, out temp);
-        CL1Hist.Add(new HistogramData(temp, i));
-      }
-      List<HistogramData> CL2Hist = new List<HistogramData>();
-    //  foreach (var x in _histoDicts[7])
-    //  {
-    //    CL2Hist.Add(new HistogramData(x.Value, x.Key));
-    //  }
-      max = _histoDicts[7].ElementAt(_histoDicts[7].Count - 1).Key;
-      for (var i = 1; i <= max; i++)
-      {
-        int temp = 0;
-        _histoDicts[7].TryGetValue(i, out temp);
-        CL2Hist.Add(new HistogramData(temp, i));
-      }
+      //radiobutton bound fields will serve as arguments
 
-
-      CL1Hist = HeatmapDataProcessor.MovAvgFilter(CL1Hist);
-      CL2Hist = HeatmapDataProcessor.MovAvgFilter(CL2Hist);
+      List<HistogramData> XAxisHist = DataProcessor.LinearizeDictionary(_histoDicts[6]);
+      List<HistogramData> YAxisHist = DataProcessor.LinearizeDictionary(_histoDicts[7]);
       #region quicktest
-    //  using (System.IO.FileStream str = new FileStream(@"C:\Users\Admin\Desktop\WorkC#\data3.csv", FileMode.Create))
-    //  using (StreamWriter sw = new StreamWriter(str))
-    //  {
-    //    foreach (var x in CL1Hist)
-    //    {
-    //      sw.WriteLine($"{x.Argument},{x.Value}");
-    //    }
-    //  }
-      using (System.IO.FileStream str = new FileStream(@"C:\Users\Admin\Desktop\WorkC#\data4.csv", FileMode.Create))
-        using (StreamWriter sw = new StreamWriter(str))
-        {
-          foreach (var x in CL2Hist)
-          {
-            sw.WriteLine($"{x.Argument},{x.Value}");
-          }
-        }
+      //  using (System.IO.FileStream str = new FileStream(@"C:\Users\Admin\Desktop\WorkC#\data3.csv", FileMode.Create))
+      //  using (StreamWriter sw = new StreamWriter(str))
+      //  {
+      //    foreach (var x in CL1Hist)
+      //    {
+      //      sw.WriteLine($"{x.Argument},{x.Value}");
+      //    }
+      //  }
+      //  using (System.IO.FileStream str = new FileStream(@"C:\Users\Admin\Desktop\WorkC#\data4.csv", FileMode.Create))
+      //    using (StreamWriter sw = new StreamWriter(str))
+      //    {
+      //      foreach (var x in CL2Hist)
+      //      {
+      //        sw.WriteLine($"{x.Argument},{x.Value}");
+      //      }
+      //    }
       //mmaybe should search dictionaries
       #endregion
-      //need 5 gradations (very hot, hot, medium, cool, cold)
-      //need histogramdata for cl0-cl3
-      //from histogramdata define heatregions [cold][cool][medium][hot][very hot][hot][medium][cool][cold] x3
-      //attach a property to points based on region belonging
-      //fill pointsources with necessary points
-      //that's part1- result would be circular'ish
+
+      //identify peaks
+      var XAxisPeaks = DataProcessor.IdentifyPeaks(XAxisHist);
+      var YAxisPeaks = DataProcessor.IdentifyPeaks(YAxisHist);
+
+      HeatLevel1.Clear();
+      HeatLevel2.Clear();
+      HeatLevel3.Clear();
+      HeatLevel4.Clear();
+      HeatLevel5.Clear();
+
+      double Heat1 = 0.15;
+      double Heat2 = 0.25;
+      double Heat3 = 0.35;
+      double Heat4 = 0.5;
+
+      //assign heat level to points based on binning
+      for (var i = 0; i < HeatMapSeriesXY.Count - 1; i++)
+      {
+        var pointX = HeatMapSeriesXY[i].X;
+        var pointY = HeatMapSeriesXY[i].Y;
+        foreach (var peak in XAxisPeaks)
+        { 
+          //already assigned value
+          if(HeatMapSeriesXY[i].IntensityX != 0)
+          {
+            break;
+          }
+          // identify which peak it corresponds to
+          if (pointX < peak.Item3)
+          {
+            //check if in bounds
+            if(pointX > peak.Item1)
+            {
+              //in 30%
+              if(pointX > peak.Item2 - Heat1 * (peak.Item2 - peak.Item1) && pointX < peak.Item2 + Heat1 * (peak.Item3 - peak.Item2))
+              {
+                HeatMapSeriesXY[i].IntensityX = 5;
+                continue;
+              }
+              //in 50%
+              if (pointX > peak.Item2 - Heat2 * (peak.Item2 - peak.Item1) && pointX < peak.Item2 + Heat2 * (peak.Item3 - peak.Item2))
+              {
+                HeatMapSeriesXY[i].IntensityX = 4;
+                continue;
+              }
+              //in 70%
+              if (pointX > peak.Item2 - Heat3 * (peak.Item2 - peak.Item1) && pointX < peak.Item2 + Heat3 * (peak.Item3 - peak.Item2))
+              {
+                HeatMapSeriesXY[i].IntensityX = 3;
+                continue;
+              }
+              //in bin at all
+              if (pointX > peak.Item2 - Heat4 * (peak.Item2 - peak.Item1) && pointX < peak.Item2 + Heat4 * (peak.Item3 - peak.Item2))
+              {
+                HeatMapSeriesXY[i].IntensityX = 2;
+                continue;
+              }
+            }
+            //less than start - assign to min
+            HeatMapSeriesXY[i].IntensityX = 1;
+          }
+        }
+
+        foreach (var peak in YAxisPeaks)
+        {
+          //already assigned value
+          if (HeatMapSeriesXY[i].IntensityY != 0)
+          {
+            break;
+          }
+          // identify which peak it corresponds to
+          if (pointY < peak.Item3)
+          {
+            //check if in bounds
+            if (pointY > peak.Item1)
+            {
+              //in 30%
+              if (pointY > peak.Item2 - Heat1 * (peak.Item2 - peak.Item1) && pointY < peak.Item2 + Heat1 * (peak.Item3 - peak.Item2))
+              {
+                HeatMapSeriesXY[i].IntensityY = 5;
+                continue;
+              }
+              //in 50%
+              if (pointY > peak.Item2 - Heat2 * (peak.Item2 - peak.Item1) && pointY < peak.Item2 + Heat2 * (peak.Item3 - peak.Item2))
+              {
+                HeatMapSeriesXY[i].IntensityY = 4;
+                continue;
+              }
+              //in 70%
+              if (pointY > peak.Item2 - Heat3 * (peak.Item2 - peak.Item1) && pointY < peak.Item2 + Heat3 * (peak.Item3 - peak.Item2))
+              {
+                HeatMapSeriesXY[i].IntensityY = 3;
+                continue;
+              }
+              //in bin at all
+              if (pointY > peak.Item2 - Heat4 * (peak.Item2 - peak.Item1) && pointY < peak.Item2 + Heat4 * (peak.Item3 - peak.Item2))
+              {
+                HeatMapSeriesXY[i].IntensityY = 2;
+                continue;
+              }
+            }
+            //less than start - assign to min
+            HeatMapSeriesXY[i].IntensityY = 1;
+          }
+        }
+      }
+
+      //sort points into HeatLevelX arrays
+      foreach (var point in HeatMapSeriesXY)
+      {
+        int colorValue = point.IntensityX * point.IntensityY;
+
+        if(colorValue >= 10)
+        {
+          HeatLevel5.Add(point);
+          continue;
+        }
+        if (colorValue >= 5)
+        {
+          HeatLevel4.Add(point);
+          continue;
+        }
+        if (colorValue >= 3)
+        {
+          HeatLevel3.Add(point);
+          continue;
+        }
+        if (colorValue >= 2)
+        {
+          HeatLevel2.Add(point);
+          continue;
+        }
+        HeatLevel1.Add(point);
+      }
 
       //add nearbyneighbor analysis for better result
     }

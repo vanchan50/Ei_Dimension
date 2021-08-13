@@ -80,7 +80,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Core\HeatmapDataProcessor.cs" />
+    <Compile Include="Core\DataProcessor.cs" />
     <Compile Include="Core\ObservableObject.cs" />
     <Compile Include="Models\BeadInfoStruct.cs" />
     <Compile Include="Models\HeatMapData.cs" />

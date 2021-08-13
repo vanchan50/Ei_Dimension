@@ -142,10 +142,31 @@
             </dxc:AxisX2D.Title>
           </dxc:AxisX2D>
         </dxc:XYDiagram2D.AxisX>
-        <dxc:PointSeries2D DataSource="{Binding HeatMapSeriesXY}"
+        <dxc:PointSeries2D DataSource="{Binding HeatLevel1}"
                            ArgumentDataMember="X"
                            ValueDataMember="Y"
-                           MarkerSize="1"/>
+                           MarkerSize="3"
+                           Brush="Aqua"/>
+        <dxc:PointSeries2D DataSource="{Binding HeatLevel2}"
+                           ArgumentDataMember="X"
+                           ValueDataMember="Y"
+                           MarkerSize="3"
+                           Brush="Green"/>
+        <dxc:PointSeries2D DataSource="{Binding HeatLevel3}"
+                           ArgumentDataMember="X"
+                           ValueDataMember="Y"
+                           MarkerSize="3"
+                           Brush="Orange"/>
+        <dxc:PointSeries2D DataSource="{Binding HeatLevel4}"
+                           ArgumentDataMember="X"
+                           ValueDataMember="Y"
+                           MarkerSize="3"
+                           Brush="OrangeRed"/>
+        <dxc:PointSeries2D DataSource="{Binding HeatLevel5}"
+                           ArgumentDataMember="X"
+                           ValueDataMember="Y"
+                           MarkerSize="3"
+                           Brush="#FFEB2323"/>
       </dxc:XYDiagram2D>
     </dxc:ChartControl>
 
