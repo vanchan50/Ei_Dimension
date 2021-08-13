@@ -89,7 +89,7 @@
     <dxc:ChartControl Grid.Row="1" Grid.Column="2">
       <dxc:XYDiagram2D>
         <dxc:XYDiagram2D.AxisY>
-          <dxc:AxisY2D Logarithmic="True">
+          <dxc:AxisY2D Logarithmic="True" GridLinesMinorVisible="True" MinorCount="9" Interlaced="False">
             <dxc:AxisY2D.WholeRange>
               <dxc:Range dxc:AxisY2D.AlwaysShowZeroLevel="False" >
                 <dxc:Range.MaxValue>
@@ -116,7 +116,7 @@
           </dxc:AxisY2D>
         </dxc:XYDiagram2D.AxisY>
         <dxc:XYDiagram2D.AxisX>
-          <dxc:AxisX2D Logarithmic="True">
+          <dxc:AxisX2D Logarithmic="True" GridLinesMinorVisible="True" MinorCount="9" GridLinesVisible="True" Interlaced="False">
             <dxc:AxisX2D.VisualRange>
               <dxc:Range >
                 <dxc:Range.MaxValue>
@@ -144,7 +144,8 @@
         </dxc:XYDiagram2D.AxisX>
         <dxc:PointSeries2D DataSource="{Binding HeatMapSeriesXY}"
                            ArgumentDataMember="X"
-                           ValueDataMember="Y"/>
+                           ValueDataMember="Y"
+                           MarkerSize="1"/>
       </dxc:XYDiagram2D>
     </dxc:ChartControl>
 
@@ -170,6 +171,14 @@
                      VerticalAlignment="Bottom"
                      Margin="0,10"
                      Command="{Binding FillAllDataAsyncCommand}"
+                     CommandParameter="this"/>
+
+    <dx:SimpleButton Content="GOTO heatmap"
+                     Grid.Column="2" Grid.Row="0"
+                     HorizontalAlignment="Center"
+                     VerticalAlignment="Bottom"
+                     Margin="0,0,0,10"
+                     Command="{Binding MakeHeatmapCommand}"
                      CommandParameter="this"/>
 
   </Grid>

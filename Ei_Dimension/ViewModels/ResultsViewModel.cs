@@ -5,10 +5,12 @@ using DevExpress.Mvvm.POCO;
 using System.Collections.ObjectModel;
 using DevExpress.Xpf.Charts;
 using Ei_Dimension.Models;
+using Ei_Dimension.Core;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
 
 namespace Ei_Dimension.ViewModels
 {
@@ -26,7 +28,7 @@ namespace Ei_Dimension.ViewModels
     public virtual ObservableCollection<int> SeriesCL3 { get; set; }
     public virtual ObservableCollection<ResultFile> AvailableResults { get; set; }
     public virtual ObservableCollection<ResultFile> SelectedItem { get; set; }
-    public virtual ObservableCollection<MapData> HeatMapSeriesXY { get; set; }
+    public virtual ObservableCollection<HeatMapData> HeatMapSeriesXY { get; set; }
     public virtual string HeatmapAxisXTitle { get; set; }
     public virtual string HeatmapAxisYTitle { get; set; }
 
@@ -38,7 +40,7 @@ namespace Ei_Dimension.ViewModels
     {
       GetAvailableResults();
       SelectedItem = new ObservableCollection<ResultFile>();
-      HeatMapSeriesXY = new ObservableCollection<MapData>();
+      HeatMapSeriesXY = new ObservableCollection<HeatMapData>();
       HeatmapAxisXTitle = "CL1";
       HeatmapAxisYTitle = "CL2";
       _heatmapAxisXY = (1,2);
@@ -206,7 +208,7 @@ namespace Ei_Dimension.ViewModels
       int i = 0;
       while (i < x.Count)
       {
-        HeatMapSeriesXY.Add(new MapData(x[i],y[i]));
+        HeatMapSeriesXY.Add(new HeatMapData(x[i],y[i]));
         i++;
       }
     }
@@ -288,6 +290,10 @@ namespace Ei_Dimension.ViewModels
       SortedDictionary<int, int> dictRedssc = new SortedDictionary<int, int>(); //value,bin
       SortedDictionary<int, int> dictGreenssc = new SortedDictionary<int, int>(); //value,bin
       SortedDictionary<int, int> dictReporter = new SortedDictionary<int, int>(); //value,bin
+      SortedDictionary<int, int> dictCl0 = new SortedDictionary<int, int>(); //value,bin
+      SortedDictionary<int, int> dictCl1 = new SortedDictionary<int, int>(); //value,bin
+      SortedDictionary<int, int> dictCl2 = new SortedDictionary<int, int>(); //value,bin
+      SortedDictionary<int, int> dictCl3 = new SortedDictionary<int, int>(); //value,bin
       int key;
       foreach (var bs in _beadStructsList)
       {
@@ -340,6 +346,64 @@ namespace Ei_Dimension.ViewModels
         {
           dictGreenssc.Add(key, 1);
         }
+
+        //bin these into 50 point bins
+        for(var i = 50; i < 10050; i += 50)
+        {
+          dictCl0.Add(i, 0);
+          dictCl1.Add(i, 0);
+          dictCl2.Add(i, 0);
+          dictCl3.Add(i, 0);
+        }
+
+        for (var i = 50; i < 10050; i += 50)
+        {
+          if(bs.cl0 > i)
+          {
+            continue;
+          }
+          dictCl0[i]++;
+        }
+
+      //  key = (int)bs.cl0;
+      //  if (dictCl0.ContainsKey(key))
+      //  {
+      //    dictCl0[key]++;
+      //  }
+      //  else
+      //  {
+      //    dictCl0.Add(key, 1);
+      //  }
+
+      //  key = (int)bs.cl1;
+      //  if (dictCl1.ContainsKey(key))
+      //  {
+      //    dictCl1[key]++;
+      //  }
+      //  else
+      //  {
+      //    dictCl1.Add(key, 1);
+      //  }
+      //
+      //  key = (int)bs.cl2;
+      //  if (dictCl2.ContainsKey(key))
+      //  {
+      //    dictCl2[key]++;
+      //  }
+      //  else
+      //  {
+      //    dictCl2.Add(key, 1);
+      //  }
+      //
+      //  key = (int)bs.cl3;
+      //  if (dictCl3.ContainsKey(key))
+      //  {
+      //    dictCl3[key]++;
+      //  }
+      //  else
+      //  {
+      //    dictCl3.Add(key, 1);
+      //  }
       }
 
       var lst = new List<SortedDictionary<int, int>>();
@@ -348,6 +412,10 @@ namespace Ei_Dimension.ViewModels
       lst.Add(dictRedssc);
       lst.Add(dictGreenssc);
       lst.Add(dictReporter);
+      lst.Add(dictCl0);
+      lst.Add(dictCl1);
+      lst.Add(dictCl2);
+      lst.Add(dictCl3);
       return lst;
     }
     #region Ugly
@@ -413,5 +481,65 @@ namespace Ei_Dimension.ViewModels
       return (CL0, CL1, CL2, CL3);
     }
     #endregion
+
+    public void MakeHeatmap()  //should return several collections of diff color series
+    {
+      //_histoDicts[5];678;
+      List<HistogramData> CL1Hist = new List<HistogramData>();
+    //  foreach(var x in _histoDicts[6])
+    //  {
+    //    CL1Hist.Add(new HistogramData(x.Value, x.Key));
+    //  }
+      int max = _histoDicts[6].ElementAt(_histoDicts[6].Count - 1).Key; //to include zero points => average properly
+      for (var i = 1; i <= max; i++)
+      {
+        int temp=0;
+        _histoDicts[6].TryGetValue(i, out temp);
+        CL1Hist.Add(new HistogramData(temp, i));
+      }
+      List<HistogramData> CL2Hist = new List<HistogramData>();
+    //  foreach (var x in _histoDicts[7])
+    //  {
+    //    CL2Hist.Add(new HistogramData(x.Value, x.Key));
+    //  }
+      max = _histoDicts[7].ElementAt(_histoDicts[7].Count - 1).Key;
+      for (var i = 1; i <= max; i++)
+      {
+        int temp = 0;
+        _histoDicts[7].TryGetValue(i, out temp);
+        CL2Hist.Add(new HistogramData(temp, i));
+      }
+
+
+      CL1Hist = HeatmapDataProcessor.MovAvgFilter(CL1Hist);
+      CL2Hist = HeatmapDataProcessor.MovAvgFilter(CL2Hist);
+      #region quicktest
+    //  using (System.IO.FileStream str = new FileStream(@"C:\Users\Admin\Desktop\WorkC#\data3.csv", FileMode.Create))
+    //  using (StreamWriter sw = new StreamWriter(str))
+    //  {
+    //    foreach (var x in CL1Hist)
+    //    {
+    //      sw.WriteLine($"{x.Argument},{x.Value}");
+    //    }
+    //  }
+      using (System.IO.FileStream str = new FileStream(@"C:\Users\Admin\Desktop\WorkC#\data4.csv", FileMode.Create))
+        using (StreamWriter sw = new StreamWriter(str))
+        {
+          foreach (var x in CL2Hist)
+          {
+            sw.WriteLine($"{x.Argument},{x.Value}");
+          }
+        }
+      //mmaybe should search dictionaries
+      #endregion
+      //need 5 gradations (very hot, hot, medium, cool, cold)
+      //need histogramdata for cl0-cl3
+      //from histogramdata define heatregions [cold][cool][medium][hot][very hot][hot][medium][cool][cold] x3
+      //attach a property to points based on region belonging
+      //fill pointsources with necessary points
+      //that's part1- result would be circular'ish
+
+      //add nearbyneighbor analysis for better result
+    }
   }
 }

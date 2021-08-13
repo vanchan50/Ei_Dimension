@@ -2,14 +2,16 @@
 
 namespace Ei_Dimension.Models
 {
-  public class MapData : ObservableObject
+  public class HeatMapData : ObservableObject
   {
     public int X { get; set; }
     public int Y { get; set; }
-    public MapData(int x, int y)
+    public byte intensity { get; set; }
+    public HeatMapData(int x, int y)
     {
       X = x;
       Y = y;
+      intensity = 0;
     }
   }
 }

@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Ei_Dimension.Views.DashboardView"
+﻿<UserControl
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -6,21 +6,96 @@
              xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
              xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
              xmlns:ViewModels="clr-namespace:Ei_Dimension.ViewModels"
+             xmlns:dxm="http://schemas.devexpress.com/winfx/2008/xaml/map" x:Class="Ei_Dimension.Views.DashboardView"
              mc:Ignorable="d"
-             DataContext="{dxmvvm:ViewModelSource Type=ViewModels:DashboardViewModel}"
+             DataContext="{dxmvvm:ViewModelSource Type={x:Type ViewModels:DashboardViewModel}}"
              d:DesignHeight="674" d:DesignWidth="1500">
   <Grid>
-    <Border BorderBrush="Purple"
-              BorderThickness="200"/>
-    <Image Source="{dx:DXImage 'SvgImages/XAF/State_Validation_Warning.svg'}"
-           HorizontalAlignment="Stretch"
-           VerticalAlignment="Stretch"/>
-    <TextBlock Text="View Under Construction"
-               FontSize="60"
-               FontWeight="UltraBold"
-               Foreground="Wheat"
-               HorizontalAlignment="Center"
-               VerticalAlignment="Bottom"
-               Margin="0,0,0,80"/>
+
+    <dxm:MapControl EnableScrolling="False"
+                    EnableZooming="False"
+                    EnableRotation="False"
+                    EnableDelayedScrolling="False"
+                    CenterPoint="0,0">
+      <dxm:MapControl.ZoomTrackbarOptions >
+        <dxm:ZoomTrackbarOptions Visible="False"/>
+      </dxm:MapControl.ZoomTrackbarOptions>
+      <dxm:MapControl.ScrollButtonsOptions>
+        <dxm:ScrollButtonsOptions Visible="False" />
+      </dxm:MapControl.ScrollButtonsOptions>
+      <dxm:MapControl.ScalePanelOptions>
+        <dxm:ScalePanelOptions Visible="False" />
+      </dxm:MapControl.ScalePanelOptions>
+
+      <!--
+      <dxm:MapControl.CoordinateSystem>
+        <dxm:CartesianMapCoordinateSystem/>
+      </dxm:MapControl.CoordinateSystem>
+      -->
+      <!--
+      <dxm:MapControl.CoordinatesPanelOptions>
+      </dxm:MapControl.CoordinatesPanelOptions>
+      -->
+      <dxm:MapControl.Layers>
+        <!--
+        <dxm:VectorLayer Background="White">
+          <dxm:MapItemStorage>
+            
+            <dxm:MapCustomElement>
+              <dxm:MapCustomElement.ContentTemplate>
+                <DataTemplate>
+                  <Border Name="border"
+                          Background="White"
+                          HorizontalAlignment="Stretch"
+                          VerticalAlignment="Stretch" Height="674" Width="1500">
+                    <StackPanel Orientation="Horizontal">
+                      <Image Source="/Emission_Logo.png"
+                             HorizontalAlignment="Stretch" 
+                             VerticalAlignment="Stretch" />
+                    </StackPanel>
+                  </Border>
+                </DataTemplate>
+              </dxm:MapCustomElement.ContentTemplate>
+            </dxm:MapCustomElement>
+            
+            <dxm:MapEllipse Location="10, -10" Width="20" Height="10" Fill="Green"/>
+            <dxm:MapDot Location="0, 0" Size="20" Fill="Red"/>
+          </dxm:MapItemStorage>
+            
+        </dxm:VectorLayer>
+        -->
+        <dxm:ImageLayer Name="heatmapLayer" Opacity="0.75">
+          <dxm:HeatmapProvider>
+            
+            <dxm:HeatmapProvider.Colorizer>
+              <dxm:ChoroplethColorizer RangeStops="0.1, 0.2, 0.7, 1.0" 
+                                                 ApproximateColors="True">
+                <dxm:ChoroplethColorizer.Colors>
+                  <Color A="50"  R="128"  G="255"  B="0"/>
+                  <Color A="255" R="255"  G="255"  B="0"/>
+                  <Color A="255" R="234"  G="72"   B="58"/>
+                  <Color A="255" R="162"  G="36"   B="25"/>
+                </dxm:ChoroplethColorizer.Colors>
+              </dxm:ChoroplethColorizer>
+              
+            </dxm:HeatmapProvider.Colorizer>
+            <dxm:HeatmapProvider.PointSource>
+              <dxm:HeatmapDataSourceAdapter DataSource="{Binding Path=Items}">
+                <dxm:HeatmapDataSourceAdapter.Mappings>
+                  <dxm:HeatmapPointMappingInfo XCoordinate="X" 
+                                                        YCoordinate="Y"/>
+                </dxm:HeatmapDataSourceAdapter.Mappings>
+              </dxm:HeatmapDataSourceAdapter>
+            </dxm:HeatmapProvider.PointSource>
+            
+            <dxm:HeatmapProvider.Algorithm>
+              <dxm:HeatmapDensityBasedAlgorithm PointRadius="10"/>
+            </dxm:HeatmapProvider.Algorithm>
+            
+          </dxm:HeatmapProvider>
+        </dxm:ImageLayer>
+      </dxm:MapControl.Layers>
+    </dxm:MapControl>
+
   </Grid>
 </UserControl>
