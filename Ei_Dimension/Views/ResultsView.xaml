@@ -56,12 +56,6 @@
       </dxc:XYDiagram2D>
     </dxc:ChartControl>
 
-    <dx:SimpleButton Content="TEST"
-                     Grid.Column="0" Grid.Row="0"
-                     HorizontalAlignment="Center"
-                     VerticalAlignment="Center"
-                     Command="{Binding GetAvailableResultsCommand}"/>
-
     <!--Reporter Chart-->
     <dxc:ChartControl Grid.Row="1" Grid.Column="1">
       <dxc:XYDiagram2D>
@@ -87,7 +81,7 @@
 
     <!--Heatmap Chart-->
     <dxc:ChartControl Grid.Row="1" Grid.Column="2">
-      <dxc:XYDiagram2D>
+      <dxc:XYDiagram2D Height="297" Width="446">
         <dxc:XYDiagram2D.AxisY>
           <dxc:AxisY2D Logarithmic="True" GridLinesMinorVisible="True" MinorCount="9" Interlaced="False">
             <dxc:AxisY2D.WholeRange>
@@ -101,7 +95,7 @@
               </dxc:Range>
             </dxc:AxisY2D.WholeRange>
             <dxc:AxisY2D.Title>
-              <dxc:AxisTitle Content="{Binding HeatmapAxisYTitle}" Visible="True"/>
+              <dxc:AxisTitle Content="{Binding HeatmapAxisYTitle}" Visible="False"/>
             </dxc:AxisY2D.Title>
             <dxc:AxisY2D.VisualRange>
               <dxc:Range dxc:AxisY2D.AlwaysShowZeroLevel="False">
@@ -138,7 +132,7 @@
               </dxc:Range>
             </dxc:AxisX2D.WholeRange>
             <dxc:AxisX2D.Title>
-              <dxc:AxisTitle Content="{Binding HeatmapAxisXTitle}"  Visible="True"/>
+              <dxc:AxisTitle Content="{Binding HeatmapAxisXTitle}"  Visible="False"/>
             </dxc:AxisX2D.Title>
           </dxc:AxisX2D>
         </dxc:XYDiagram2D.AxisX>
@@ -170,6 +164,97 @@
       </dxc:XYDiagram2D>
     </dxc:ChartControl>
 
+    <!--Data Selector Y-->
+    <StackPanel Grid.Row="1" Grid.Column="2"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Margin="1,0,0,0">
+      <RadioButton Content="CL3"
+                   FontSize="18"
+                   Margin="0,0,0,10"
+                   Command="{Binding ChangeHeatmapYCommand}">
+        <RadioButton.CommandParameter>
+          <System:Int32>3</System:Int32>
+        </RadioButton.CommandParameter>
+        <RadioButton.LayoutTransform>
+          <RotateTransform CenterX="0.5" CenterY="0.5" Angle="-90"/>
+        </RadioButton.LayoutTransform>
+      </RadioButton>
+      <RadioButton Content="CL2"
+                   FontSize="18"
+                   Margin="0,0,0,10"
+                   IsChecked="True"
+                   Command="{Binding ChangeHeatmapYCommand}">
+        <RadioButton.CommandParameter>
+          <System:Int32>2</System:Int32>
+        </RadioButton.CommandParameter>
+        <RadioButton.LayoutTransform>
+          <RotateTransform CenterX="0.5" CenterY="0.5" Angle="-90"/>
+        </RadioButton.LayoutTransform>
+      </RadioButton>
+      <RadioButton Content="CL1"
+                   FontSize="18"
+                   Margin="0,0,0,10"
+                   Command="{Binding ChangeHeatmapYCommand}">
+        <RadioButton.CommandParameter>
+          <System:Int32>1</System:Int32>
+        </RadioButton.CommandParameter>
+        <RadioButton.LayoutTransform>
+          <RotateTransform CenterX="0.5" CenterY="0.5" Angle="-90"/>
+        </RadioButton.LayoutTransform>
+      </RadioButton>
+      <RadioButton Content="CL0"
+                   FontSize="18"
+                   Command="{Binding ChangeHeatmapYCommand}">
+        <RadioButton.CommandParameter>
+          <System:Int32>0</System:Int32>
+        </RadioButton.CommandParameter>
+        <RadioButton.LayoutTransform>
+          <RotateTransform CenterX="0.5" CenterY="0.5" Angle="-90"/>
+        </RadioButton.LayoutTransform>
+      </RadioButton>
+    </StackPanel>
+    
+    <!--Data Selector X-->
+    <StackPanel Grid.Row="1" Grid.Column="2"
+                Orientation="Horizontal"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Bottom"
+                Margin="150,0,0,00">
+      <RadioButton Content="CL0"
+                   FontSize="18"
+                   Margin="0,0,10,0"
+                   Command="{Binding ChangeHeatmapXCommand}">
+        <RadioButton.CommandParameter>
+          <System:Int32>0</System:Int32>
+        </RadioButton.CommandParameter>
+      </RadioButton>
+      <RadioButton Content="CL1"
+                   FontSize="18"
+                   Margin="0,0,10,0"
+                   IsChecked="True"
+                   Command="{Binding ChangeHeatmapXCommand}">
+        <RadioButton.CommandParameter>
+          <System:Int32>1</System:Int32>
+        </RadioButton.CommandParameter>
+      </RadioButton>
+      <RadioButton Content="CL2"
+                   FontSize="18"
+                   Margin="0,0,10,0"
+                   Command="{Binding ChangeHeatmapXCommand}">
+        <RadioButton.CommandParameter>
+          <System:Int32>2</System:Int32>
+        </RadioButton.CommandParameter>
+      </RadioButton>
+      <RadioButton Content="CL3"
+                   FontSize="18"
+                   Command="{Binding ChangeHeatmapXCommand}">
+        <RadioButton.CommandParameter>
+          <System:Int32>3</System:Int32>
+        </RadioButton.CommandParameter>
+      </RadioButton>
+    </StackPanel>
+    
     <!--could be spreadsheet-->
     <dxg:GridControl x:Name="gridControl" Grid.ColumnSpan="3" Grid.Row="0"
                      HorizontalAlignment="Stretch"
@@ -192,14 +277,6 @@
                      VerticalAlignment="Bottom"
                      Margin="0,10"
                      Command="{Binding FillAllDataAsyncCommand}"
-                     CommandParameter="this"/>
-
-    <dx:SimpleButton Content="GOTO heatmap"
-                     Grid.Column="2" Grid.Row="0"
-                     HorizontalAlignment="Center"
-                     VerticalAlignment="Bottom"
-                     Margin="0,0,0,10"
-                     Command="{Binding MakeHeatmapCommand}"
                      CommandParameter="this"/>
 
   </Grid>

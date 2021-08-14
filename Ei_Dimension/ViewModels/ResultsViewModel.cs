@@ -28,7 +28,6 @@ namespace Ei_Dimension.ViewModels
     public virtual ObservableCollection<int> SeriesCL3 { get; set; }
     public virtual ObservableCollection<ResultFile> AvailableResults { get; set; }
     public virtual ObservableCollection<ResultFile> SelectedItem { get; set; }
-    public virtual ObservableCollection<HeatMapData> HeatMapSeriesXY { get; set; }
     public virtual string HeatmapAxisXTitle { get; set; }
     public virtual string HeatmapAxisYTitle { get; set; }
     public virtual ObservableCollection<HeatMapData> HeatLevel1 { get; set; }
@@ -38,14 +37,15 @@ namespace Ei_Dimension.ViewModels
     public virtual ObservableCollection<HeatMapData> HeatLevel5 { get; set; }
 
     private List<BeadInfoStruct> _beadStructsList;
+    private ObservableCollection<HeatMapData> _heatMapSeriesXY;
     private List<SortedDictionary<int, int>> _histoDicts;
-    private (int, int) _heatmapAxisXY;
+    private (int, int) _heatmapAxisXY;  //holds selected values for heatmap data
 
     protected ResultsViewModel()
     {
       GetAvailableResults();
       SelectedItem = new ObservableCollection<ResultFile>();
-      HeatMapSeriesXY = new ObservableCollection<HeatMapData>();
+      _heatMapSeriesXY = new ObservableCollection<HeatMapData>();
       HeatmapAxisXTitle = "CL1";
       HeatmapAxisYTitle = "CL2";
       _heatmapAxisXY = (1,2);
@@ -130,7 +130,6 @@ namespace Ei_Dimension.ViewModels
       Reporter = await ReporterTask;
       (SeriesCL0, SeriesCL1, SeriesCL2, SeriesCL3) = await MapTask;
       UpdateHeatmap();
-      MakeHeatmapAsync();
     }
 
     public void ChangeHeatmapX(int index)
@@ -181,7 +180,7 @@ namespace Ei_Dimension.ViewModels
     }
     public void UpdateHeatmap()
     {
-      HeatMapSeriesXY.Clear();
+      _heatMapSeriesXY.Clear();
       ObservableCollection<int> x = new ObservableCollection<int>();
       ObservableCollection<int> y = new ObservableCollection<int>();
       switch (_heatmapAxisXY.Item1)
@@ -215,10 +214,14 @@ namespace Ei_Dimension.ViewModels
           break;
       }
       int i = 0;
-      while (i < x.Count)
+      if (x != null)
       {
-        HeatMapSeriesXY.Add(new HeatMapData(x[i],y[i]));
-        i++;
+        while (i < x.Count)
+        {
+          _heatMapSeriesXY.Add(new HeatMapData(x[i], y[i]));
+          i++;
+        }
+        MakeHeatmapAsync();
       }
     }
 
@@ -288,11 +291,11 @@ namespace Ei_Dimension.ViewModels
 
     public async Task MakeHeatmapAsync()  //should return several collections of diff color series
     {
-      //radiobutton bound fields will serve as arguments
-
-      Task<List<HistogramData>> t1 = new Task<List<HistogramData>>(()=> { return DataProcessor.LinearizeDictionary(_histoDicts[6]);});
+      int xDict = _heatmapAxisXY.Item1 + 5; // 5 comes from DataProcessor.MakeDictionariesFromData
+      int yDict = _heatmapAxisXY.Item2 + 5; // 5 comes from DataProcessor.MakeDictionariesFromData
+      Task<List<HistogramData>> t1 = new Task<List<HistogramData>>(()=> { return DataProcessor.LinearizeDictionary(_histoDicts[xDict]);});
       t1.Start();
-      Task<List<HistogramData>> t2 = new Task<List<HistogramData>>(() => { return DataProcessor.LinearizeDictionary(_histoDicts[7]); });
+      Task<List<HistogramData>> t2 = new Task<List<HistogramData>>(() => { return DataProcessor.LinearizeDictionary(_histoDicts[yDict]); });
       t2.Start();
       List<HistogramData> XAxisHist;
       List<HistogramData> YAxisHist;
@@ -329,21 +332,21 @@ namespace Ei_Dimension.ViewModels
       double[] HeatLevels = {0.15, 0.25, 0.35, 0.5};
 
       //assign heat level to points based on binning
-      for (var i = 0; i < HeatMapSeriesXY.Count - 1; i++)
+      for (var i = 0; i < _heatMapSeriesXY.Count - 1; i++)
       {
-        var pointX = HeatMapSeriesXY[i].X;
-        var pointY = HeatMapSeriesXY[i].Y;
+        var pointX = _heatMapSeriesXY[i].X;
+        var pointY = _heatMapSeriesXY[i].Y;
         foreach (var peak in XAxisPeaks)
         { 
           //already assigned value
-          if(HeatMapSeriesXY[i].IntensityX != 0)
+          if(_heatMapSeriesXY[i].IntensityX != 0)
           {
             break;
           }
           // identify which peak it corresponds to
           if (pointX < peak.Item3)
           {
-            HeatMapSeriesXY[i].IntensityX = DataProcessor.AssignIntensity(pointX, peak, HeatLevels);
+            _heatMapSeriesXY[i].IntensityX = DataProcessor.AssignIntensity(pointX, peak, HeatLevels);
            // HeatMapSeriesXY[i].IntensityX = await Task<byte>.Run(() => { return DataProcessor.AssignIntensity(pointX, peak, HeatLevels); });
           }
         }
@@ -351,21 +354,21 @@ namespace Ei_Dimension.ViewModels
         foreach (var peak in YAxisPeaks)
         {
           //already assigned value
-          if (HeatMapSeriesXY[i].IntensityY != 0)
+          if (_heatMapSeriesXY[i].IntensityY != 0)
           {
             break;
           }
           // identify which peak it corresponds to
           if (pointY < peak.Item3)
           {
-            HeatMapSeriesXY[i].IntensityY = DataProcessor.AssignIntensity(pointY, peak, HeatLevels);
+            _heatMapSeriesXY[i].IntensityY = DataProcessor.AssignIntensity(pointY, peak, HeatLevels);
           //  HeatMapSeriesXY[i].IntensityY = await Task<byte>.Run(() => { return DataProcessor.AssignIntensity(pointY, peak, HeatLevels); });
           }
         }
       }
 
       //sort points into HeatLevelX arrays
-      foreach (var point in HeatMapSeriesXY)
+      foreach (var point in _heatMapSeriesXY)
       {
         int colorValue = point.IntensityX * point.IntensityY;
 

@@ -282,15 +282,15 @@ namespace Ei_Dimension.Core
       }
 
       var lst = new List<SortedDictionary<int, int>>();
-      lst.Add(dictForward);
-      lst.Add(dictVioletssc);
-      lst.Add(dictRedssc);
-      lst.Add(dictGreenssc);
-      lst.Add(dictReporter);
-      lst.Add(dictCl0);
-      lst.Add(dictCl1);
-      lst.Add(dictCl2);
-      lst.Add(dictCl3);
+      lst.Add(dictForward);     //0
+      lst.Add(dictVioletssc);   //1
+      lst.Add(dictRedssc);      //2
+      lst.Add(dictGreenssc);    //3
+      lst.Add(dictReporter);    //4
+      lst.Add(dictCl0);         //5
+      lst.Add(dictCl1);         //6
+      lst.Add(dictCl2);         //7
+      lst.Add(dictCl3);         //8
       return lst;
     }
 
