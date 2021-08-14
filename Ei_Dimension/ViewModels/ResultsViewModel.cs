@@ -76,7 +76,7 @@ namespace Ei_Dimension.ViewModels
       }
     }
 
-    public void ParseBeadInfo(string path)
+    public async Task ParseBeadInfoAsync(string path)
     {
       if(_beadStructsList == null)
       {
@@ -86,14 +86,16 @@ namespace Ei_Dimension.ViewModels
       {
         _beadStructsList.Clear();
       }
-      string contents = GetDataFromFile(path);
+      List<string> contents = await DataProcessor.GetDataFromFileAsync(path);
 
-      while (contents.Length > 0)
+      for (var i = 0; i < contents.Count; i++)
       {
-        BeadInfoStruct bs = ParseRow(ref contents);
-        _beadStructsList.Add(bs);
+        _beadStructsList.Add(await Task.Run(() => {
+          BeadInfoStruct bs;
+          return bs = DataProcessor.ParseRow(contents[i]); }));
       }
     }
+
     [AsyncCommand(UseCommandManager = false)]
     public async void FillAllDataAsync()
     {
@@ -105,8 +107,8 @@ namespace Ei_Dimension.ViewModels
         }
         _histoDicts.Clear();
       }
-      await Task.Run(()=> { ParseBeadInfo(SelectedItem[0].Path); } );
-      _histoDicts = MakeDictionariesFromData();
+      await ParseBeadInfoAsync(SelectedItem[0].Path);
+      _histoDicts = DataProcessor.MakeDictionariesFromData(_beadStructsList);
       Task<ObservableCollection<HistogramData>> ForwardTask = new Task<ObservableCollection<HistogramData>>(AddForwardItem);
       ForwardTask.Start();
       Task<ObservableCollection<HistogramData>> VioletTask = new Task<ObservableCollection<HistogramData>>(AddVioletItem);
@@ -120,20 +122,15 @@ namespace Ei_Dimension.ViewModels
       Task<(ObservableCollection<int>, ObservableCollection<int>, ObservableCollection<int>, ObservableCollection<int>)> MapTask =
         new Task<(ObservableCollection<int>, ObservableCollection<int>, ObservableCollection<int>, ObservableCollection<int>)>(AddMapItem);
       MapTask.Start();
-      await ForwardTask;
-      ForwardSsc = ForwardTask.Result;
-      await VioletTask;
-      VioletSsc = VioletTask.Result;
-      await RedTask;
-      RedSsc = RedTask.Result;
-      await GreenTask;
-      GreenSsc = GreenTask.Result;
-      await ReporterTask;
-      Reporter = ReporterTask.Result;
-      await MapTask;
-      (SeriesCL0, SeriesCL1, SeriesCL2, SeriesCL3) = MapTask.Result;
+      
+      ForwardSsc = await ForwardTask;
+      VioletSsc = await VioletTask;
+      RedSsc = await RedTask;
+      GreenSsc = await GreenTask;
+      Reporter = await ReporterTask;
+      (SeriesCL0, SeriesCL1, SeriesCL2, SeriesCL3) = await MapTask;
       UpdateHeatmap();
-      MakeHeatmap();
+      MakeHeatmapAsync();
     }
 
     public void ChangeHeatmapX(int index)
@@ -225,243 +222,6 @@ namespace Ei_Dimension.ViewModels
       }
     }
 
-    private string GetDataFromFile(string path)
-    { 
-      //TODO: parallelize to string[]
-      string str;
-      using (System.IO.FileStream fin = new System.IO.FileStream(path, System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.Read))
-      using (System.IO.StreamReader sr = new System.IO.StreamReader(fin))
-      {
-        sr.ReadLine();
-        str = sr.ReadToEnd();
-      }
-      return str;
-    }
-
-    private BeadInfoStruct ParseRow(ref string data)
-    {
-      BeadInfoStruct Binfo;
-      Binfo.Header = uint.Parse(data.Substring(0, data.IndexOf(',')));
-      data = data.Remove(0, data.IndexOf(',') + 1);
-      Binfo.EventTime = uint.Parse(data.Substring(0, data.IndexOf(',')));
-      data = data.Remove(0, data.IndexOf(',') + 1);
-      Binfo.fsc_bg = byte.Parse(data.Substring(0, data.IndexOf(',')));
-      data = data.Remove(0, data.IndexOf(',') + 1);
-      Binfo.vssc_bg = byte.Parse(data.Substring(0, data.IndexOf(',')));
-      data = data.Remove(0, data.IndexOf(',') + 1);
-      Binfo.cl0_bg = byte.Parse(data.Substring(0, data.IndexOf(',')));
-      data = data.Remove(0, data.IndexOf(',') + 1);
-      Binfo.cl1_bg = byte.Parse(data.Substring(0, data.IndexOf(',')));
-      data = data.Remove(0, data.IndexOf(',') + 1);
-      Binfo.cl2_bg = byte.Parse(data.Substring(0, data.IndexOf(',')));
-      data = data.Remove(0, data.IndexOf(',') + 1);
-      Binfo.cl3_bg = byte.Parse(data.Substring(0, data.IndexOf(',')));
-      data = data.Remove(0, data.IndexOf(',') + 1);
-      Binfo.rssc_bg = byte.Parse(data.Substring(0, data.IndexOf(',')));
-      data = data.Remove(0, data.IndexOf(',') + 1);
-      Binfo.gssc_bg = byte.Parse(data.Substring(0, data.IndexOf(',')));
-      data = data.Remove(0, data.IndexOf(',') + 1);
-      Binfo.greenB_bg = ushort.Parse(data.Substring(0, data.IndexOf(',')));
-      data = data.Remove(0, data.IndexOf(',') + 1);
-      Binfo.greenC_bg = ushort.Parse(data.Substring(0, data.IndexOf(',')));
-      data = data.Remove(0, data.IndexOf(',') + 1);
-      Binfo.greenB = ushort.Parse(data.Substring(0, data.IndexOf(',')));
-      data = data.Remove(0, data.IndexOf(',') + 1);
-      Binfo.greenC = ushort.Parse(data.Substring(0, data.IndexOf(',')));
-      data = data.Remove(0, data.IndexOf(',') + 1);
-      Binfo.l_offset_rg = byte.Parse(data.Substring(0, data.IndexOf(',')));
-      data = data.Remove(0, data.IndexOf(',') + 1);
-      Binfo.l_offset_gv = byte.Parse(data.Substring(0, data.IndexOf(',')));
-      data = data.Remove(0, data.IndexOf(',') + 1);
-      Binfo.region = ushort.Parse(data.Substring(0, data.IndexOf(',')));
-      data = data.Remove(0, data.IndexOf(',') + 1);
-      Binfo.fsc = float.Parse(data.Substring(0, data.IndexOf(',')), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
-      data = data.Remove(0, data.IndexOf(',') + 1);
-      Binfo.violetssc = float.Parse(data.Substring(0, data.IndexOf(',')), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
-      data = data.Remove(0, data.IndexOf(',') + 1);
-      Binfo.cl0 = float.Parse(data.Substring(0, data.IndexOf(',')), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
-      data = data.Remove(0, data.IndexOf(',') + 1);
-      Binfo.redssc = float.Parse(data.Substring(0, data.IndexOf(',')), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
-      data = data.Remove(0, data.IndexOf(',') + 1);
-      Binfo.cl1 = float.Parse(data.Substring(0, data.IndexOf(',')), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
-      data = data.Remove(0, data.IndexOf(',') + 1);
-      Binfo.cl2 = float.Parse(data.Substring(0, data.IndexOf(',')), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
-      data = data.Remove(0, data.IndexOf(',') + 1);
-      Binfo.cl3 = float.Parse(data.Substring(0, data.IndexOf(',')), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
-      data = data.Remove(0, data.IndexOf(',') + 1);
-      Binfo.greenssc = float.Parse(data.Substring(0, data.IndexOf(',')), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
-      data = data.Remove(0, data.IndexOf(',') + 1);
-      Binfo.reporter = float.Parse(data.Substring(0, data.IndexOf('\r')), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
-      data = data.Remove(0, data.IndexOf('\r') + 1);
-      return Binfo;
-    }
-
-    private List<SortedDictionary<int, int>> MakeDictionariesFromData()
-    {
-      SortedDictionary<int, int> dictForward = new SortedDictionary<int, int>(); //value,bin
-      SortedDictionary<int, int> dictVioletssc = new SortedDictionary<int, int>(); //value,bin
-      SortedDictionary<int, int> dictRedssc = new SortedDictionary<int, int>(); //value,bin
-      SortedDictionary<int, int> dictGreenssc = new SortedDictionary<int, int>(); //value,bin
-      SortedDictionary<int, int> dictReporter = new SortedDictionary<int, int>(); //value,bin
-      SortedDictionary<int, int> dictCl0 = new SortedDictionary<int, int>(); //value,bin
-      SortedDictionary<int, int> dictCl1 = new SortedDictionary<int, int>(); //value,bin
-      SortedDictionary<int, int> dictCl2 = new SortedDictionary<int, int>(); //value,bin
-      SortedDictionary<int, int> dictCl3 = new SortedDictionary<int, int>(); //value,bin
-
-
-      int binsize = 50;
-      int maxlength = 10050;
-      for (var i = binsize; i < maxlength; i += binsize)
-      {
-        dictCl0.Add(i, 0);
-        dictCl1.Add(i, 0);
-        dictCl2.Add(i, 0);
-        dictCl3.Add(i, 0);
-      }
-
-      int key;
-      foreach (var bs in _beadStructsList)
-      {
-        key = (int)bs.reporter;
-        if (dictReporter.ContainsKey(key))
-        {
-          dictReporter[key]++;
-        }
-        else
-        {
-          dictReporter.Add(key, 1);
-        }
-        
-        key = (int)bs.fsc;
-        if (dictForward.ContainsKey(key))
-        {
-          dictForward[key]++;
-        }
-        else
-        {
-          dictForward.Add(key, 1);
-        }
-
-        key = (int)bs.violetssc;
-        if (dictVioletssc.ContainsKey(key))
-        {
-          dictVioletssc[key]++;
-        }
-        else
-        {
-          dictVioletssc.Add(key, 1);
-        }
-
-        key = (int)bs.redssc;
-        if (dictRedssc.ContainsKey(key))
-        {
-          dictRedssc[key]++;
-        }
-        else
-        {
-          dictRedssc.Add(key, 1);
-        }
-
-        key = (int)bs.greenssc;
-        if (dictGreenssc.ContainsKey(key))
-        {
-          dictGreenssc[key]++;
-        }
-        else
-        {
-          dictGreenssc.Add(key, 1);
-        }
-
-        //bin these into binsize point bins
-        for (var i = binsize; i < maxlength; i += binsize)
-        {
-          if(bs.cl0 > i)
-          {
-            continue;
-          }
-          dictCl0[i]++;
-          break;
-        }
-        for (var i = binsize; i < maxlength; i += binsize)
-        {
-          if (bs.cl1 > i)
-          {
-            continue;
-          }
-          dictCl1[i]++;
-          break;
-        }
-        for (var i = binsize; i < maxlength; i += binsize)
-        {
-          if (bs.cl2 > i)
-          {
-            continue;
-          }
-          dictCl2[i]++;
-          break;
-        }
-        for (var i = binsize; i < maxlength; i += binsize)
-        {
-          if (bs.cl3 > i)
-          {
-            continue;
-          }
-          dictCl3[i]++;
-          break;
-        }
-        //  key = (int)bs.cl0;
-        //  if (dictCl0.ContainsKey(key))
-        //  {
-        //    dictCl0[key]++;
-        //  }
-        //  else
-        //  {
-        //    dictCl0.Add(key, 1);
-        //  }
-
-        //  key = (int)bs.cl1;
-        //  if (dictCl1.ContainsKey(key))
-        //  {
-        //    dictCl1[key]++;
-        //  }
-        //  else
-        //  {
-        //    dictCl1.Add(key, 1);
-        //  }
-        //
-        //  key = (int)bs.cl2;
-        //  if (dictCl2.ContainsKey(key))
-        //  {
-        //    dictCl2[key]++;
-        //  }
-        //  else
-        //  {
-        //    dictCl2.Add(key, 1);
-        //  }
-        //
-        //  key = (int)bs.cl3;
-        //  if (dictCl3.ContainsKey(key))
-        //  {
-        //    dictCl3[key]++;
-        //  }
-        //  else
-        //  {
-        //    dictCl3.Add(key, 1);
-        //  }
-      }
-
-      var lst = new List<SortedDictionary<int, int>>();
-      lst.Add(dictForward);
-      lst.Add(dictVioletssc);
-      lst.Add(dictRedssc);
-      lst.Add(dictGreenssc);
-      lst.Add(dictReporter);
-      lst.Add(dictCl0);
-      lst.Add(dictCl1);
-      lst.Add(dictCl2);
-      lst.Add(dictCl3);
-      return lst;
-    }
     #region Ugly
     private ObservableCollection<HistogramData> AddForwardItem()
     {
@@ -526,12 +286,16 @@ namespace Ei_Dimension.ViewModels
     }
     #endregion
 
-    public void MakeHeatmap()  //should return several collections of diff color series
+    public async Task MakeHeatmapAsync()  //should return several collections of diff color series
     {
       //radiobutton bound fields will serve as arguments
 
-      List<HistogramData> XAxisHist = DataProcessor.LinearizeDictionary(_histoDicts[6]);
-      List<HistogramData> YAxisHist = DataProcessor.LinearizeDictionary(_histoDicts[7]);
+      Task<List<HistogramData>> t1 = new Task<List<HistogramData>>(()=> { return DataProcessor.LinearizeDictionary(_histoDicts[6]);});
+      t1.Start();
+      Task<List<HistogramData>> t2 = new Task<List<HistogramData>>(() => { return DataProcessor.LinearizeDictionary(_histoDicts[7]); });
+      t2.Start();
+      List<HistogramData> XAxisHist;
+      List<HistogramData> YAxisHist;
       #region quicktest
       //  using (System.IO.FileStream str = new FileStream(@"C:\Users\Admin\Desktop\WorkC#\data3.csv", FileMode.Create))
       //  using (StreamWriter sw = new StreamWriter(str))
@@ -553,8 +317,8 @@ namespace Ei_Dimension.ViewModels
       #endregion
 
       //identify peaks
-      var XAxisPeaks = DataProcessor.IdentifyPeaks(XAxisHist);
-      var YAxisPeaks = DataProcessor.IdentifyPeaks(YAxisHist);
+      var XAxisPeaks = DataProcessor.IdentifyPeaks(XAxisHist = await t1);
+      var YAxisPeaks = DataProcessor.IdentifyPeaks(YAxisHist = await t2);
 
       HeatLevel1.Clear();
       HeatLevel2.Clear();
@@ -562,10 +326,7 @@ namespace Ei_Dimension.ViewModels
       HeatLevel4.Clear();
       HeatLevel5.Clear();
 
-      double Heat1 = 0.15;
-      double Heat2 = 0.25;
-      double Heat3 = 0.35;
-      double Heat4 = 0.5;
+      double[] HeatLevels = {0.15, 0.25, 0.35, 0.5};
 
       //assign heat level to points based on binning
       for (var i = 0; i < HeatMapSeriesXY.Count - 1; i++)
@@ -582,36 +343,8 @@ namespace Ei_Dimension.ViewModels
           // identify which peak it corresponds to
           if (pointX < peak.Item3)
           {
-            //check if in bounds
-            if(pointX > peak.Item1)
-            {
-              //in 30%
-              if(pointX > peak.Item2 - Heat1 * (peak.Item2 - peak.Item1) && pointX < peak.Item2 + Heat1 * (peak.Item3 - peak.Item2))
-              {
-                HeatMapSeriesXY[i].IntensityX = 5;
-                continue;
-              }
-              //in 50%
-              if (pointX > peak.Item2 - Heat2 * (peak.Item2 - peak.Item1) && pointX < peak.Item2 + Heat2 * (peak.Item3 - peak.Item2))
-              {
-                HeatMapSeriesXY[i].IntensityX = 4;
-                continue;
-              }
-              //in 70%
-              if (pointX > peak.Item2 - Heat3 * (peak.Item2 - peak.Item1) && pointX < peak.Item2 + Heat3 * (peak.Item3 - peak.Item2))
-              {
-                HeatMapSeriesXY[i].IntensityX = 3;
-                continue;
-              }
-              //in bin at all
-              if (pointX > peak.Item2 - Heat4 * (peak.Item2 - peak.Item1) && pointX < peak.Item2 + Heat4 * (peak.Item3 - peak.Item2))
-              {
-                HeatMapSeriesXY[i].IntensityX = 2;
-                continue;
-              }
-            }
-            //less than start - assign to min
-            HeatMapSeriesXY[i].IntensityX = 1;
+            HeatMapSeriesXY[i].IntensityX = DataProcessor.AssignIntensity(pointX, peak, HeatLevels);
+           // HeatMapSeriesXY[i].IntensityX = await Task<byte>.Run(() => { return DataProcessor.AssignIntensity(pointX, peak, HeatLevels); });
           }
         }
 
@@ -625,36 +358,8 @@ namespace Ei_Dimension.ViewModels
           // identify which peak it corresponds to
           if (pointY < peak.Item3)
           {
-            //check if in bounds
-            if (pointY > peak.Item1)
-            {
-              //in 30%
-              if (pointY > peak.Item2 - Heat1 * (peak.Item2 - peak.Item1) && pointY < peak.Item2 + Heat1 * (peak.Item3 - peak.Item2))
-              {
-                HeatMapSeriesXY[i].IntensityY = 5;
-                continue;
-              }
-              //in 50%
-              if (pointY > peak.Item2 - Heat2 * (peak.Item2 - peak.Item1) && pointY < peak.Item2 + Heat2 * (peak.Item3 - peak.Item2))
-              {
-                HeatMapSeriesXY[i].IntensityY = 4;
-                continue;
-              }
-              //in 70%
-              if (pointY > peak.Item2 - Heat3 * (peak.Item2 - peak.Item1) && pointY < peak.Item2 + Heat3 * (peak.Item3 - peak.Item2))
-              {
-                HeatMapSeriesXY[i].IntensityY = 3;
-                continue;
-              }
-              //in bin at all
-              if (pointY > peak.Item2 - Heat4 * (peak.Item2 - peak.Item1) && pointY < peak.Item2 + Heat4 * (peak.Item3 - peak.Item2))
-              {
-                HeatMapSeriesXY[i].IntensityY = 2;
-                continue;
-              }
-            }
-            //less than start - assign to min
-            HeatMapSeriesXY[i].IntensityY = 1;
+            HeatMapSeriesXY[i].IntensityY = DataProcessor.AssignIntensity(pointY, peak, HeatLevels);
+          //  HeatMapSeriesXY[i].IntensityY = await Task<byte>.Run(() => { return DataProcessor.AssignIntensity(pointY, peak, HeatLevels); });
           }
         }
       }
