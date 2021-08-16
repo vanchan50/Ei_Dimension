@@ -34,6 +34,11 @@ namespace Ei_Dimension.ViewModels
       NavigationService.Navigate("ResultsView", null, this);
     }
 
+    public void NavigateDataAnalysis()
+    {
+      NavigationService.Navigate("DataAnalysisView", null, this);
+    }
+
     public void NavigateMaintenance()
     {
       NavigationService.Navigate("MaintenanceView", null, this);
@@ -41,7 +46,7 @@ namespace Ei_Dimension.ViewModels
 
     public void NavigateSettings()
     {
-      NavigationService.Navigate("SettingsView", null, this);
+      NavigationService.Navigate("ServiceView", null, this);
     }
 
   }

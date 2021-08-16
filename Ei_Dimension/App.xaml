@@ -5,8 +5,11 @@
     <Application.Resources>
 
     <ResourceDictionary>
+      <SolidColorBrush x:Key="AppTextColor" Color="PeachPuff"/>
+      <FontFamily x:Key="AppTextFont" >Mathcad UniMath</FontFamily>
       <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/Styles/RibbonTileStyle.xaml"/>
+        <ResourceDictionary Source="/Styles/HeatmapSelectorStyle.xaml"/>
       </ResourceDictionary.MergedDictionaries>
     </ResourceDictionary>
   </Application.Resources>

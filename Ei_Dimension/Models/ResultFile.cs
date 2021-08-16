@@ -17,7 +17,7 @@ namespace Ei_Dimension.Models
     {
       Path = fname;
       Name = Path.Substring(Path.LastIndexOf('\\') + 1);
-      Created = File.GetCreationTime(Name);
+      Created = File.GetCreationTime(Path);
     }
   }
 }

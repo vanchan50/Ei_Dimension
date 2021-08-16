@@ -40,9 +40,9 @@
     </Grid.ColumnDefinitions>
 
     <TextBlock Text="Ei Dimension"
-               Foreground="White"
+               Foreground="{StaticResource AppTextColor}"
                FontSize="28"
-               FontFamily="Mathcad UniMath"
+               FontFamily="{StaticResource AppTextFont}"
                Grid.Row="0" Grid.Column="0"
                HorizontalAlignment="Left"
                VerticalAlignment="Center"
@@ -55,7 +55,7 @@
            Stretch="Fill"
            RenderOptions.BitmapScalingMode="HighQuality"/>
     <!--Tile Ribbon-->
-    <StackPanel Grid.Row="1" Grid.Column="0"
+    <StackPanel Grid.Row="1" Grid.ColumnSpan="2"
                 Orientation="Horizontal">
       <dxlc:Tile Header="Dashboard"
                  Command="{Binding NavigateDashboardCommand}"
@@ -85,7 +85,17 @@
                Margin="0,6,4,0"
                Width="50"
                Height="50"
-               Source="{dx:DXImage SvgImages/Chart/Chart.svg}"/>
+               Source="{dx:DXImage 'SvgImages/DiagramIcons/ApplyChanges.svg'}"/>
+      </dxlc:Tile>
+      <dxlc:Tile Header="Data Analysis"
+                 Command="{Binding NavigateDataAnalysisCommand}"
+                 Style="{StaticResource RibbonTileStyle}">
+        <Image HorizontalAlignment="Right"
+               VerticalAlignment="Top"
+               Margin="0,6,4,0"
+               Width="50"
+               Height="50"
+               Source="{dx:DXImage 'SvgImages/Spreadsheet/CreateRadarLineChartFilled.svg'}"/>
       </dxlc:Tile>
       <dxlc:Tile Header="Maintenance"
                  Command="{Binding NavigateMaintenanceCommand}"
@@ -97,7 +107,7 @@
                Height="50"
                Source="{dx:DXImage SvgImages/Setup/PageSetup.svg}"/>
       </dxlc:Tile>
-      <dxlc:Tile Header="Settings"
+      <dxlc:Tile Header="Service"
                  Command="{Binding NavigateSettingsCommand}"
                  Style="{StaticResource RibbonTileStyle}">
         <Image HorizontalAlignment="Right"

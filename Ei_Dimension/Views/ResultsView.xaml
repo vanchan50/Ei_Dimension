@@ -32,6 +32,13 @@
 
     <!--Scatter Chart-->
     <dxc:ChartControl Grid.Row="1" Grid.Column="0">
+      <dxc:ChartControl.Legends>
+        <dxc:Legend HorizontalPosition="Center"
+                    MarkerMode="CheckBox"
+                    Orientation="Horizontal"
+                    VerticalPosition="BottomOutside"
+                    Width="280" Visible="True"/>
+      </dxc:ChartControl.Legends>
       <dxc:XYDiagram2D>
         <dxc:XYDiagram2D.AxisY>
           <dxc:AxisY2D>
@@ -49,10 +56,26 @@
         </dxc:XYDiagram2D.AxisX>
         <dxc:LineSeries2D DataSource="{Binding RedSsc}"
                                        ValueDataMember="Value"
-                                       ArgumentDataMember="Argument"/>
+                                       ArgumentDataMember="Argument"
+                                       DisplayName="Red"
+                                       Brush="Red"/>
         <dxc:LineSeries2D DataSource="{Binding GreenSsc}"
                                        ValueDataMember="Value"
-                                       ArgumentDataMember="Argument"/>
+                                       ArgumentDataMember="Argument"
+                                       DisplayName="Green"
+                                       Brush="Green"/>
+        <dxc:LineSeries2D DataSource="{Binding VioletSsc}"
+                                       ValueDataMember="Value"
+                                       ArgumentDataMember="Argument"
+                                       DisplayName="Violet"
+                                       Brush="DarkViolet"
+                                       CheckedInLegend="False"/>
+        <dxc:LineSeries2D DataSource="{Binding ForwardSsc}"
+                                       ValueDataMember="Value"
+                                       ArgumentDataMember="Argument"
+                                       DisplayName="Forward"
+                                       Brush="Black"
+                                       CheckedInLegend="False"/>
       </dxc:XYDiagram2D>
     </dxc:ChartControl>
 
@@ -75,7 +98,8 @@
         </dxc:XYDiagram2D.AxisX>
         <dxc:LineSeries2D DataSource="{Binding Reporter}"
                                        ValueDataMember="Value"
-                                       ArgumentDataMember="Argument"/>
+                                       ArgumentDataMember="Argument"
+                                       Brush="Black"/>
       </dxc:XYDiagram2D>
     </dxc:ChartControl>
 
@@ -168,10 +192,9 @@
     <StackPanel Grid.Row="1" Grid.Column="2"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
-                Margin="1,0,0,0">
+                Margin="3,0,0,0">
       <RadioButton Content="CL3"
-                   FontSize="18"
-                   Margin="0,0,0,10"
+                   Style="{StaticResource HeatmapSelectorStyle}"
                    Command="{Binding ChangeHeatmapYCommand}">
         <RadioButton.CommandParameter>
           <System:Int32>3</System:Int32>
@@ -181,8 +204,7 @@
         </RadioButton.LayoutTransform>
       </RadioButton>
       <RadioButton Content="CL2"
-                   FontSize="18"
-                   Margin="0,0,0,10"
+                   Style="{StaticResource HeatmapSelectorStyle}"
                    IsChecked="True"
                    Command="{Binding ChangeHeatmapYCommand}">
         <RadioButton.CommandParameter>
@@ -193,8 +215,7 @@
         </RadioButton.LayoutTransform>
       </RadioButton>
       <RadioButton Content="CL1"
-                   FontSize="18"
-                   Margin="0,0,0,10"
+                   Style="{StaticResource HeatmapSelectorStyle}"
                    Command="{Binding ChangeHeatmapYCommand}">
         <RadioButton.CommandParameter>
           <System:Int32>1</System:Int32>
@@ -204,7 +225,7 @@
         </RadioButton.LayoutTransform>
       </RadioButton>
       <RadioButton Content="CL0"
-                   FontSize="18"
+                   Style="{StaticResource HeatmapSelectorStyle}"
                    Command="{Binding ChangeHeatmapYCommand}">
         <RadioButton.CommandParameter>
           <System:Int32>0</System:Int32>
@@ -222,16 +243,14 @@
                 VerticalAlignment="Bottom"
                 Margin="150,0,0,00">
       <RadioButton Content="CL0"
-                   FontSize="18"
-                   Margin="0,0,10,0"
+                   Style="{StaticResource HeatmapSelectorStyle}"
                    Command="{Binding ChangeHeatmapXCommand}">
         <RadioButton.CommandParameter>
           <System:Int32>0</System:Int32>
         </RadioButton.CommandParameter>
       </RadioButton>
       <RadioButton Content="CL1"
-                   FontSize="18"
-                   Margin="0,0,10,0"
+                   Style="{StaticResource HeatmapSelectorStyle}"
                    IsChecked="True"
                    Command="{Binding ChangeHeatmapXCommand}">
         <RadioButton.CommandParameter>
@@ -239,15 +258,14 @@
         </RadioButton.CommandParameter>
       </RadioButton>
       <RadioButton Content="CL2"
-                   FontSize="18"
-                   Margin="0,0,10,0"
+                   Style="{StaticResource HeatmapSelectorStyle}"
                    Command="{Binding ChangeHeatmapXCommand}">
         <RadioButton.CommandParameter>
           <System:Int32>2</System:Int32>
         </RadioButton.CommandParameter>
       </RadioButton>
       <RadioButton Content="CL3"
-                   FontSize="18"
+                   Style="{StaticResource HeatmapSelectorStyle}"
                    Command="{Binding ChangeHeatmapXCommand}">
         <RadioButton.CommandParameter>
           <System:Int32>3</System:Int32>
@@ -265,7 +283,14 @@
         <dxg:CardView ShowTotalSummary="True"
                        AllowMoveColumnToDropArea="False"
                        ShowGroupPanel="False"
-                       AllowEditing="False"/>
+                       AllowEditing="False"
+                       AllowSorting="False"
+                       AllowColumnFiltering="False"
+                       AllowPaging="False"
+                       AllowGrouping="False"
+                      ShowSearchPanelMode="Never"
+                      IsGroupPanelMenuEnabled="False"
+                      CardLayout="Columns"/>
       </dxg:GridControl.View>
       <dxg:GridColumn FieldName="Name" IsSmart="True" />
       <dxg:GridColumn FieldName="Created" IsSmart="True"/>

@@ -1,13 +1,10 @@
 ﻿using Ei_Dimension.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Ei_Dimension.Core
 {
-  public class DataProcessor
+  public static class DataProcessor
   //helper class for ResultsViewModel
   {
     static public async Task<List<string>> GetDataFromFileAsync(string path)

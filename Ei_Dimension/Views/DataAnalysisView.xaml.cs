@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace Ei_Dimension.Views
 {
   /// <summary>
-  /// Interaction logic for SettingsView.xaml
+  /// Interaction logic for DataAnalysisView.xaml
   /// </summary>
-  public partial class SettingsView : UserControl
+  public partial class DataAnalysisView : UserControl
   {
-    public SettingsView()
+    public DataAnalysisView()
     {
       InitializeComponent();
     }

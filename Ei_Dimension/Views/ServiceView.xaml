@@ -1,0 +1,302 @@
+﻿<UserControl x:Class="Ei_Dimension.Views.ServiceView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+             xmlns:dxc="http://schemas.devexpress.com/winfx/2008/xaml/charts"
+             xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+             xmlns:ViewModels="clr-namespace:Ei_Dimension.ViewModels"
+             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+             xmlns:dxei="http://schemas.devexpress.com/winfx/2008/xaml/editors/internal"
+             xmlns:dxcn="http://schemas.devexpress.com/winfx/2008/xaml/core/internal"
+             mc:Ignorable="d"
+             DataContext="{dxmvvm:ViewModelSource Type=ViewModels:ServiceViewModel}"
+             d:DesignHeight="674" d:DesignWidth="1500">
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="1*"/>
+      <RowDefinition Height="1*"/>
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="4*"/>
+      <ColumnDefinition Width="5*"/>
+    </Grid.ColumnDefinitions>
+
+
+    <StackPanel Grid.RowSpan="2"  Grid.Column="0"
+                VerticalAlignment="Stretch"
+                HorizontalAlignment="Stretch">
+
+      <TextBlock Text="Motors"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="30"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Center"
+                 VerticalAlignment="Top"
+                 Margin="0,0,0,10"/>
+
+      <StackPanel Orientation="Horizontal"
+                  HorizontalAlignment="Stretch"
+                  VerticalAlignment="Stretch"
+                  Margin="10,0,10,0">
+        <StackPanel VerticalAlignment="Stretch"
+                    Width="150"
+                    Margin="0,0,3,0">
+          <TextBlock Text="Steps"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="20"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Center"
+                 VerticalAlignment="Top"
+                 Margin="0,25,0,0"/>
+          <TextBlock Text="Poll Step"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="20"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Center"
+                 VerticalAlignment="Top"
+                 Margin="0,25,0,0"/>
+          <TextBlock Text="Slope"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="20"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Center"
+                 VerticalAlignment="Top"
+                 Margin="0,105,0,0"/>
+          <TextBlock Text="Start Speed"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="20"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Center"
+                 VerticalAlignment="Top"
+                 Margin="0,15,0,0"/>
+          <TextBlock Text="Run speed"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="20"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Center"
+                 VerticalAlignment="Top"
+                 Margin="0,15,0,0"/>
+          <TextBlock Text="Current Step"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="20"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Center"
+                 VerticalAlignment="Top"
+                 Margin="0,15,0,0"/>
+          <TextBlock Text="Current Limit"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="20"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Center"
+                 VerticalAlignment="Top"
+                 Margin="0,15,0,0"/>
+        </StackPanel>
+        <StackPanel VerticalAlignment="Stretch"
+                    Width="150"
+                    Margin="0,0,3,0">
+          <TextBlock Text="X"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="20"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Center"
+                 VerticalAlignment="Top"
+                 Margin="0,0,0,0"/>
+
+          <dxe:TextEdit HorizontalAlignment="Stretch"
+                        Height="36"
+                        Margin="0,0,0,3"/>
+
+          <Border BorderThickness="2"
+                  BorderBrush="{StaticResource AppTextColor}"
+                  Margin="0,0,0,3">
+            <StackPanel HorizontalAlignment="Center">
+              <RadioButton Content="Left"
+                         FontFamily="{StaticResource AppTextFont}"
+                         FontSize="20"
+                         FontWeight="UltraBold"
+                         IsChecked="True"
+                 Foreground="{StaticResource AppTextColor}"/>
+              <RadioButton Content="Right"
+                         FontFamily="{StaticResource AppTextFont}"
+                         FontSize="20"
+                         FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"/>
+            </StackPanel>
+          </Border>
+          
+          <dx:SimpleButton Content="Run"
+                           Height="36"
+                           FontFamily="{StaticResource AppTextFont}"
+                           FontSize="20"
+                           FontWeight="UltraBold"
+                           Foreground="{StaticResource AppTextColor}"
+                           Margin="0,0,0,3"/>
+          <dx:SimpleButton Content="Halt"
+                           Height="36"
+                           FontFamily="{StaticResource AppTextFont}"
+                           FontSize="20"
+                           FontWeight="UltraBold"
+                           Foreground="{StaticResource AppTextColor}"
+                           Margin="0,0,0,3"/>
+          <dxe:TextEdit HorizontalAlignment="Stretch"
+                        Height="36"
+                        Margin="0,0,0,3"/>
+          <dxe:TextEdit HorizontalAlignment="Stretch"
+                        Height="36"
+                        Margin="0,0,0,3"/>
+          <dxe:TextEdit HorizontalAlignment="Stretch"
+                        Height="36"
+                        Margin="0,0,0,3"/>
+          <dxe:TextEdit HorizontalAlignment="Stretch"
+                        Height="36"
+                        Margin="0,0,0,3"/>
+          <dxe:TextEdit HorizontalAlignment="Stretch"
+                        Height="36"
+                        Margin="0,0,0,3"/>
+
+        </StackPanel>
+        <StackPanel VerticalAlignment="Stretch"
+                    Width="150"
+                    Margin="0,0,3,0">
+          <TextBlock Text="Y"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="20"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Center"
+                 VerticalAlignment="Top"
+                 Margin="0,0,0,0"/>
+
+          <dxe:TextEdit HorizontalAlignment="Stretch"
+                        Height="36"
+                        Margin="0,0,0,3"/>
+
+          <Border BorderThickness="2"
+                  BorderBrush="{StaticResource AppTextColor}"
+                  Margin="0,0,0,3">
+            
+            <StackPanel HorizontalAlignment="Center">
+              <RadioButton Content="Back"
+                         FontFamily="{StaticResource AppTextFont}"
+                         FontSize="20"
+                         FontWeight="UltraBold"
+                         Foreground="{StaticResource AppTextColor}"/>
+              <RadioButton Content="Front"
+                         FontFamily="{StaticResource AppTextFont}"
+                         FontSize="20"
+                         FontWeight="UltraBold"
+                         IsChecked="True"
+                         Foreground="{StaticResource AppTextColor}"/>
+            </StackPanel>
+          </Border>
+
+          <dx:SimpleButton Content="Run"
+                           Height="36"
+                           FontFamily="{StaticResource AppTextFont}"
+                           FontSize="20"
+                           FontWeight="UltraBold"
+                           Foreground="{StaticResource AppTextColor}"
+                           Margin="0,0,0,3"/>
+          <dx:SimpleButton Content="Halt"
+                           Height="36"
+                           FontFamily="{StaticResource AppTextFont}"
+                           FontSize="20"
+                           FontWeight="UltraBold"
+                           Foreground="{StaticResource AppTextColor}"
+                           Margin="0,0,0,3"/>
+          <dxe:TextEdit HorizontalAlignment="Stretch"
+                        Height="36"
+                        Margin="0,0,0,3"/>
+          <dxe:TextEdit HorizontalAlignment="Stretch"
+                        Height="36"
+                        Margin="0,0,0,3"/>
+          <dxe:TextEdit HorizontalAlignment="Stretch"
+                        Height="36"
+                        Margin="0,0,0,3"/>
+          <dxe:TextEdit HorizontalAlignment="Stretch"
+                        Height="36"
+                        Margin="0,0,0,3"/>
+          <dxe:TextEdit HorizontalAlignment="Stretch"
+                        Height="36"
+                        Margin="0,0,0,3"/>
+        </StackPanel>
+        <StackPanel VerticalAlignment="Stretch"
+                    Width="150">
+          <TextBlock Text="Z"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="20"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Center"
+                 VerticalAlignment="Top"
+                 Margin="0,0,0,0"/>
+
+          <dxe:TextEdit HorizontalAlignment="Stretch"
+                        Height="36"
+                        Margin="0,0,0,3"/>
+
+          <Border BorderThickness="2"
+                  BorderBrush="{StaticResource AppTextColor}"
+                  Margin="0,0,0,3">
+            <StackPanel HorizontalAlignment="Center">
+              <RadioButton Content="Up"
+                         FontFamily="{StaticResource AppTextFont}"
+                         FontSize="20"
+                         FontWeight="UltraBold"
+                         IsChecked="True"
+                         Foreground="{StaticResource AppTextColor}"/>
+              <RadioButton Content="Down"
+                         FontFamily="{StaticResource AppTextFont}"
+                         FontSize="20"
+                         FontWeight="UltraBold"
+                         Foreground="{StaticResource AppTextColor}"/>
+            </StackPanel>
+          </Border>
+
+          <dx:SimpleButton Content="Run"
+                           Height="36"
+                           FontFamily="{StaticResource AppTextFont}"
+                           FontSize="20"
+                           FontWeight="UltraBold"
+                           Foreground="{StaticResource AppTextColor}"
+                           Margin="0,0,0,3"/>
+          <dx:SimpleButton Content="Halt"
+                           Height="36"
+                           FontFamily="{StaticResource AppTextFont}"
+                           FontSize="20"
+                           FontWeight="UltraBold"
+                           Foreground="{StaticResource AppTextColor}"
+                           Margin="0,0,0,3"/>
+          <dxe:TextEdit HorizontalAlignment="Stretch"
+                        Height="36"
+                        Margin="0,0,0,3"/>
+          <dxe:TextEdit HorizontalAlignment="Stretch"
+                        Height="36"
+                        Margin="0,0,0,3"/>
+          <dxe:TextEdit HorizontalAlignment="Stretch"
+                        Height="36"
+                        Margin="0,0,0,3"/>
+          <dxe:TextEdit HorizontalAlignment="Stretch"
+                        Height="36"
+                        Margin="0,0,0,3"/>
+          <dxe:TextEdit HorizontalAlignment="Stretch"
+                        Height="36"
+                        Margin="0,0,0,3"/>
+        </StackPanel>
+      </StackPanel>
+    </StackPanel>
+
+
+  </Grid>
+</UserControl>

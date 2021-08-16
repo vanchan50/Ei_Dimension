@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.ComponentModel;
 using System.IO;
-using System.Linq;
 
 namespace Ei_Dimension.ViewModels
 {
@@ -40,6 +39,7 @@ namespace Ei_Dimension.ViewModels
     private ObservableCollection<HeatMapData> _heatMapSeriesXY;
     private List<SortedDictionary<int, int>> _histoDicts;
     private (int, int) _heatmapAxisXY;  //holds selected values for heatmap data
+    private string _savedFilesLocation = @"C:\Users\Admin\Desktop\WorkC#\SampleData";
 
     protected ResultsViewModel()
     {
@@ -69,7 +69,7 @@ namespace Ei_Dimension.ViewModels
         AvailableResults = new ObservableCollection<ResultFile>();
       }
       AvailableResults.Clear();
-      string[] files = Directory.GetFiles(@"C:\Users\Admin\Desktop\WorkC#\SampleData", "*.csv");
+      string[] files = Directory.GetFiles(_savedFilesLocation, "*.csv");
       foreach(var f in files)
       {
         AvailableResults.Add(new ResultFile(f));
@@ -109,15 +109,15 @@ namespace Ei_Dimension.ViewModels
       }
       await ParseBeadInfoAsync(SelectedItem[0].Path);
       _histoDicts = DataProcessor.MakeDictionariesFromData(_beadStructsList);
-      Task<ObservableCollection<HistogramData>> ForwardTask = new Task<ObservableCollection<HistogramData>>(AddForwardItem);
+      Task<ObservableCollection<HistogramData>> ForwardTask = new Task<ObservableCollection<HistogramData>>(() => { return AddScatterItem(0); });
       ForwardTask.Start();
-      Task<ObservableCollection<HistogramData>> VioletTask = new Task<ObservableCollection<HistogramData>>(AddVioletItem);
+      Task<ObservableCollection<HistogramData>> VioletTask = new Task<ObservableCollection<HistogramData>>(() => { return AddScatterItem(1); });
       VioletTask.Start();
-      Task<ObservableCollection<HistogramData>> RedTask = new Task<ObservableCollection<HistogramData>>(AddRedItem);
+      Task<ObservableCollection<HistogramData>> RedTask = new Task<ObservableCollection<HistogramData>>(() => { return AddScatterItem(2); });
       RedTask.Start();
-      Task<ObservableCollection<HistogramData>> GreenTask = new Task<ObservableCollection<HistogramData>>(AddGreenItem);
+      Task<ObservableCollection<HistogramData>> GreenTask = new Task<ObservableCollection<HistogramData>>(() => { return AddScatterItem(3); });
       GreenTask.Start();
-      Task<ObservableCollection<HistogramData>> ReporterTask = new Task<ObservableCollection<HistogramData>>(AddReporterItem);
+      Task<ObservableCollection<HistogramData>> ReporterTask = new Task<ObservableCollection<HistogramData>>(() => { return AddScatterItem(4); });
       ReporterTask.Start();
       Task<(ObservableCollection<int>, ObservableCollection<int>, ObservableCollection<int>, ObservableCollection<int>)> MapTask =
         new Task<(ObservableCollection<int>, ObservableCollection<int>, ObservableCollection<int>, ObservableCollection<int>)>(AddMapItem);
@@ -225,53 +225,19 @@ namespace Ei_Dimension.ViewModels
       }
     }
 
-    #region Ugly
-    private ObservableCollection<HistogramData> AddForwardItem()
+    private ObservableCollection<HistogramData> AddScatterItem(int itemIndex)
     {
       ObservableCollection<HistogramData> col = new ObservableCollection<HistogramData>();
-      foreach (var x in _histoDicts[0])
+      foreach (var x in _histoDicts[itemIndex])
       {
-        col.Add(new HistogramData(x.Value, x.Key));
+        if (true)
+        {
+          col.Add(new HistogramData(x.Value, x.Key));
+        }
       }
       return col;
     }
-    private ObservableCollection<HistogramData> AddVioletItem()
-    {
-      ObservableCollection<HistogramData> col = new ObservableCollection<HistogramData>();
-      foreach (var x in _histoDicts[1])
-      {
-        col.Add(new HistogramData(x.Value, x.Key));
-      }
-      return col;
-    }
-    private ObservableCollection<HistogramData> AddRedItem()
-    {
-      ObservableCollection<HistogramData> col = new ObservableCollection<HistogramData>();
-      foreach (var x in _histoDicts[2])
-      {
-        col.Add(new HistogramData(x.Value, x.Key));
-      }
-      return col;
-    }
-    private ObservableCollection<HistogramData> AddGreenItem()
-    {
-      ObservableCollection<HistogramData> col = new ObservableCollection<HistogramData>();
-      foreach (var x in _histoDicts[3])
-      {
-        col.Add(new HistogramData(x.Value, x.Key));
-      }
-      return col;
-    }
-    private ObservableCollection<HistogramData> AddReporterItem()
-    {
-      ObservableCollection<HistogramData> col = new ObservableCollection<HistogramData>();
-      foreach (var x in _histoDicts[4])
-      {
-        col.Add(new HistogramData(x.Value, x.Key));
-      }
-      return col;
-    }
-    //AddMapItem is different
+
     private (ObservableCollection<int>, ObservableCollection<int>, ObservableCollection<int>, ObservableCollection<int>) AddMapItem()
     {
       ObservableCollection<int> CL0 = new ObservableCollection<int>();
@@ -287,7 +253,6 @@ namespace Ei_Dimension.ViewModels
       }
       return (CL0, CL1, CL2, CL3);
     }
-    #endregion
 
     public async Task MakeHeatmapAsync()  //should return several collections of diff color series
     {

@@ -6,15 +6,15 @@ using System;
 namespace Ei_Dimension.ViewModels
 {
   [POCOViewModel]
-  public class SettingsViewModel
+  public class ServiceViewModel
   {
-    protected SettingsViewModel()
+    protected ServiceViewModel()
     {
     }
 
-    public static SettingsViewModel Create()
+    public static ServiceViewModel Create()
     {
-      return ViewModelSource.Create(() => new SettingsViewModel());
+      return ViewModelSource.Create(() => new ServiceViewModel());
     }
   }
 }

@@ -6,21 +6,25 @@
              xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
              xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
              xmlns:ViewModels="clr-namespace:Ei_Dimension.ViewModels"
+             xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol"
+             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
              mc:Ignorable="d"
-             DataContext="{dxmvvm:ViewModelSource Type=ViewModels:MaintenanceViewModel}"
+             DataContext="{dxmvvm:ViewModelSource Type={x:Type ViewModels:MaintenanceViewModel}}"
              d:DesignHeight="674" d:DesignWidth="1500">
   <Grid>
-    <Border BorderBrush="MistyRose"
-              BorderThickness="63"/>
-    <Image Source="{dx:DXImage 'SvgImages/XAF/State_Validation_Warning.svg'}"
-           HorizontalAlignment="Stretch"
-           VerticalAlignment="Stretch"/>
-    <TextBlock Text="View Under Construction"
-               FontSize="60"
-               FontWeight="UltraBold"
-               Foreground="Wheat"
-               HorizontalAlignment="Center"
-               VerticalAlignment="Bottom"
-               Margin="0,0,0,80"/>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="1*"/>
+      <RowDefinition Height="1*"/>
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="4*"/>
+      <ColumnDefinition Width="5*"/>
+    </Grid.ColumnDefinitions>
+    <TextBlock Text="MainTenance" FontSize="60" Foreground="PeachPuff"/>
+
+
+
+
+
   </Grid>
 </UserControl>
