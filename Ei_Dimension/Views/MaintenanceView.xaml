@@ -8,23 +8,55 @@
              xmlns:ViewModels="clr-namespace:Ei_Dimension.ViewModels"
              xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol"
              xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+             xmlns:dxwui="http://schemas.devexpress.com/winfx/2008/xaml/windowsui"
+             xmlns:dxwuin="http://schemas.devexpress.com/winfx/2008/xaml/windowsui/navigation"
              mc:Ignorable="d"
              DataContext="{dxmvvm:ViewModelSource Type={x:Type ViewModels:MaintenanceViewModel}}"
              d:DesignHeight="674" d:DesignWidth="1500">
   <Grid>
-    <Grid.RowDefinitions>
-      <RowDefinition Height="1*"/>
-      <RowDefinition Height="1*"/>
-    </Grid.RowDefinitions>
     <Grid.ColumnDefinitions>
-      <ColumnDefinition Width="4*"/>
-      <ColumnDefinition Width="5*"/>
+      <ColumnDefinition Width="2*"/>
+      <ColumnDefinition Width="11*"/>
     </Grid.ColumnDefinitions>
-    <TextBlock Text="MainTenance" FontSize="60" Foreground="PeachPuff"/>
 
+    <!--Tile Ribbon-->
+    <StackPanel Margin="30,60,8,0">
+      <dxlc:Tile Header="Calibration"
+                 Command="{Binding NavigateCalibrationCommand}"
+                 Style="{StaticResource RibbonTileStyle}"
+                 Margin="0,0,0,3"
+                 Height="100">
+        <Image HorizontalAlignment="Right"
+               VerticalAlignment="Top"
+               Margin="0,6,4,0"
+               Width="50"
+               Height="50"
+               Source="{dx:DXImage 'SvgImages/Spreadsheet/HighLowLines.svg'}"/>
+      </dxlc:Tile>
+      <dxlc:Tile Header="Channels"
+                 Command="{Binding NavigateChannelsCommand}"
+                 Style="{StaticResource RibbonTileStyle}"
+                 Margin="0,0,0,3"
+                 Height="100">
+        <Image HorizontalAlignment="Right"
+               VerticalAlignment="Top"
+               Margin="0,6,4,0"
+               Width="50"
+               Height="50"
+               Source="{dx:DXImage 'SvgImages/Spreadsheet/CreateBubbleChart.svg'}"/>
+      </dxlc:Tile>
 
+    </StackPanel>
 
-
-
+    <dxwui:NavigationFrame AnimationType="SlideHorizontal"
+                           NavigationCacheMode="Required"
+                           Grid.Row="0" Grid.Column="1">
+      <dxmvvm:Interaction.Triggers>
+        <dxmvvm:EventToCommand EventName="Loaded" Command="{Binding NavigateCalibrationCommand}" />
+      </dxmvvm:Interaction.Triggers>
+      <dxmvvm:Interaction.Behaviors>
+        <dxwuin:FrameNavigationService />
+      </dxmvvm:Interaction.Behaviors>
+    </dxwui:NavigationFrame>
   </Grid>
 </UserControl>

@@ -17,12 +17,13 @@
         <ControlTemplate TargetType="{x:Type TextBoxBase}">
           <Border Name="Border">
             <Grid>
-              <ScrollViewer Margin="0" x:Name="PART_ContentHost"/>
+              <ScrollViewer 
+                    Margin="10,0,10,0" x:Name="PART_ContentHost"/>
               <Line X1="0" X2="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ActualWidth}"
                     Y1="0" Y2="0"
                     VerticalAlignment="Bottom"
                     StrokeThickness="2"
-                    Margin="0,0,0,0"
+                    Margin="10,0,10,0"
                     Stroke="{DynamicResource AppTextColor}"/>
             </Grid>
           </Border>

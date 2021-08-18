@@ -290,7 +290,8 @@
                        AllowGrouping="False"
                       ShowSearchPanelMode="Never"
                       IsGroupPanelMenuEnabled="False"
-                      CardLayout="Columns"/>
+                      CardLayout="Columns"
+                      ShowCardExpandButton="False"/>
       </dxg:GridControl.View>
       <dxg:GridColumn FieldName="Name" IsSmart="True" />
       <dxg:GridColumn FieldName="Created" IsSmart="True"/>

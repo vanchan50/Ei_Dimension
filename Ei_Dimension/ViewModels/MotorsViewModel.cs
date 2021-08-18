@@ -92,22 +92,37 @@ namespace Ei_Dimension.ViewModels
 
     public void RunMotorButtonClick(string s)
     {
-
+      switch (s) { 
+        case "x":
+          break;
+        case "y":
+          break;
+        case "z":
+          break;
+      }
     }
 
     public void HaltMotorButtonClick(string s)
     {
-
+      switch (s)
+      {
+        case "x":
+          break;
+        case "y":
+          break;
+        case "z":
+          break;
+      }
     }
 
     public void WellRowButtonClick()
     {
-
+      //TODO: not necessary to exist
     }
 
     public void WellColumnButtonClick()
     {
-
+      //TODO: not necessary to exist
     }
 
     public void GoToWellButtonClick()

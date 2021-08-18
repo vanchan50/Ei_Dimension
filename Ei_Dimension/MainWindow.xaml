@@ -56,7 +56,8 @@
            RenderOptions.BitmapScalingMode="HighQuality"/>
     <!--Tile Ribbon-->
     <StackPanel Grid.Row="1" Grid.ColumnSpan="2"
-                Orientation="Horizontal">
+                Orientation="Horizontal"
+                Margin="30,0,0,0">
       <dxlc:Tile Header="Dashboard"
                  Command="{Binding NavigateDashboardCommand}"
                  Style="{StaticResource RibbonTileStyle}">

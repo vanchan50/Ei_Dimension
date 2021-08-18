@@ -29,9 +29,7 @@
             VerticalAlignment="Top"
             Margin="0,100,0,00">
 
-      <StackPanel>
-
-        <StackPanel Orientation="Horizontal"
+      <StackPanel Orientation="Horizontal"
                   HorizontalAlignment="Stretch"
                   VerticalAlignment="Stretch"
                   Margin="10,0,10,0">
@@ -53,7 +51,7 @@
                  Foreground="{StaticResource AppTextColor}"
                  HorizontalAlignment="Right"
                  VerticalAlignment="Top"
-                 Margin="0,74,4,0"/>
+                 Margin="0,84,4,0"/>
             <TextBlock Text="Slope"
                  FontFamily="{StaticResource AppTextFont}"
                  FontSize="20"
@@ -109,7 +107,7 @@
 
             <TextBox  Height="36"
                       HorizontalAlignment="Stretch"
-                      Margin="0,0,0,3"
+                      Margin="0,0,0,13"
                       Style="{StaticResource InputFieldStyle}"
                       Text="{Binding ParametersX[0]}"/>
 
@@ -144,18 +142,26 @@
                              Command="{Binding RunMotorButtonClickCommand}"
                              Height="50"
                              FontFamily="{StaticResource AppTextFont}"
-                             FontSize="20"
+                             FontSize="36"
                              FontWeight="UltraBold"
                              Foreground="{StaticResource AppTextColor}"
-                             Margin="0,0,0,3"/>
+                             Margin="0,0,0,3">
+              <dx:SimpleButton.CommandParameter>
+                <System:String>x</System:String>
+              </dx:SimpleButton.CommandParameter>
+            </dx:SimpleButton>
             <dx:SimpleButton Content="Halt"
                              Height="50"
                              Command="{Binding HaltMotorButtonClickCommand}"
                              FontFamily="{StaticResource AppTextFont}"
-                             FontSize="20"
+                             FontSize="36"
                              FontWeight="UltraBold"
                              Foreground="{StaticResource AppTextColor}"
-                             Margin="0,0,0,3"/>
+                             Margin="0,0,0,3">
+              <dx:SimpleButton.CommandParameter>
+                <System:String>x</System:String>
+              </dx:SimpleButton.CommandParameter>
+            </dx:SimpleButton>
             <TextBox  Height="36"
                       HorizontalAlignment="Stretch"
                       Margin="0,0,0,3"
@@ -197,7 +203,7 @@
 
             <TextBox  Height="36"
                       HorizontalAlignment="Stretch"
-                      Margin="0,0,0,3"
+                      Margin="0,0,0,13"
                       Style="{StaticResource InputFieldStyle}"
                       Text="{Binding ParametersY[0]}"/>
 
@@ -233,18 +239,26 @@
                              Command="{Binding RunMotorButtonClickCommand}"
                              Height="50"
                              FontFamily="{StaticResource AppTextFont}"
-                             FontSize="20"
+                             FontSize="36"
                              FontWeight="UltraBold"
                              Foreground="{StaticResource AppTextColor}"
-                             Margin="0,0,0,3"/>
+                             Margin="0,0,0,3">
+              <dx:SimpleButton.CommandParameter>
+                <System:String>y</System:String>
+              </dx:SimpleButton.CommandParameter>
+            </dx:SimpleButton>
             <dx:SimpleButton Content="Halt"
                              Command="{Binding HaltMotorButtonClickCommand}"
                              Height="50"
                              FontFamily="{StaticResource AppTextFont}"
-                             FontSize="20"
+                             FontSize="36"
                              FontWeight="UltraBold"
                              Foreground="{StaticResource AppTextColor}"
-                             Margin="0,0,0,3"/>
+                             Margin="0,0,0,3">
+              <dx:SimpleButton.CommandParameter>
+                <System:String>y</System:String>
+              </dx:SimpleButton.CommandParameter>
+            </dx:SimpleButton>
             <TextBox  Height="36"
                       HorizontalAlignment="Stretch"
                       Margin="0,0,0,3"
@@ -285,7 +299,7 @@
 
             <TextBox  Height="36"
                       HorizontalAlignment="Stretch"
-                      Margin="0,0,0,3"
+                      Margin="0,0,0,13"
                       Style="{StaticResource InputFieldStyle}"
                       Text="{Binding ParametersZ[0]}"/>
 
@@ -320,18 +334,26 @@
                              Command="{Binding RunMotorButtonClickCommand}"
                              Height="50"
                              FontFamily="{StaticResource AppTextFont}"
-                             FontSize="20"
+                             FontSize="36"
                              FontWeight="UltraBold"
                              Foreground="{StaticResource AppTextColor}"
-                             Margin="0,0,0,3"/>
+                             Margin="0,0,0,3">
+              <dx:SimpleButton.CommandParameter>
+                <System:String>z</System:String>
+              </dx:SimpleButton.CommandParameter>
+            </dx:SimpleButton>
             <dx:SimpleButton Content="Halt"
                              Command="{Binding HaltMotorButtonClickCommand}"
                              Height="50"
                              FontFamily="{StaticResource AppTextFont}"
-                             FontSize="20"
+                             FontSize="36"
                              FontWeight="UltraBold"
                              Foreground="{StaticResource AppTextColor}"
-                             Margin="0,0,0,3"/>
+                             Margin="0,0,0,3">
+              <dx:SimpleButton.CommandParameter>
+                <System:String>z</System:String>
+              </dx:SimpleButton.CommandParameter>
+            </dx:SimpleButton>
             <TextBox  Height="36"
                       HorizontalAlignment="Stretch"
                       Margin="0,0,0,3"
@@ -359,7 +381,6 @@
                       Text="{Binding ParametersZ[6]}"/>
           </StackPanel>
         </StackPanel>
-      </StackPanel>
     </Border>
 
     <Border VerticalAlignment="Top"

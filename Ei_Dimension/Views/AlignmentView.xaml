@@ -3,10 +3,239 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm" xmlns:ViewModels="clr-namespace:Ei_Dimension.ViewModels"
+             xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+             xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+             xmlns:System="clr-namespace:System;assembly=mscorlib"
+             xmlns:ViewModels="clr-namespace:Ei_Dimension.ViewModels"
              mc:Ignorable="d"
              DataContext="{dxmvvm:ViewModelSource Type=ViewModels:AlignmentViewModel}"
              d:DesignHeight="674" d:DesignWidth="1312">
-    <Grid>
-    </Grid>
+  <Grid>
+    <TextBlock Text="Alignment"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="50"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Center"
+                 VerticalAlignment="Top"
+                 Margin="0,10,250,0"/>
+
+    <Border HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Margin="120,100,0,00">
+
+      <StackPanel Orientation="Horizontal"
+                  HorizontalAlignment="Stretch"
+                  VerticalAlignment="Stretch"
+                  Margin="10,0,10,0">
+        <StackPanel VerticalAlignment="Stretch"
+                    Width="160"
+                    Margin="0,0,43,0">
+          <TextBlock Text="Last Calibrated&#x0a;        Position"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="36"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Center"
+                 VerticalAlignment="Top"
+                 Margin="0,0,8,0"/>
+          <TextBox  Height="36"
+                      HorizontalAlignment="Stretch"
+                      Margin="0,0,0,13"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding LastCalibratedPosition[0]}"/>
+          <dx:SimpleButton Content="GoTo"
+                             Command="{Binding GoToLastCalibratedPositionClickCommand}"
+                             Height="50"
+                             FontFamily="{StaticResource AppTextFont}"
+                             FontSize="36"
+                             FontWeight="UltraBold"
+                             Foreground="{StaticResource AppTextColor}"
+                             Margin="0,0,0,3"/>
+          <TextBox  Height="36"
+                      HorizontalAlignment="Stretch"
+                      Margin="0,0,0,3"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding LastCalibratedPosition[1]}"/>
+          
+        </StackPanel>
+        <StackPanel VerticalAlignment="Stretch"
+                    Width="150"
+                    Margin="0,0,43,0">
+          <TextBlock Text="       Laser&#x0a;Align Motor"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="36"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Center"
+                 VerticalAlignment="Top"
+                 Margin="0,0,0,0"/>
+
+          <TextBox  Height="36"
+                      HorizontalAlignment="Stretch"
+                      Margin="0,0,0,13"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding LaserAlignMotor}"/>
+
+          <Border BorderThickness="2"
+                  BorderBrush="{StaticResource AppTextColor}"
+                  Margin="0,0,0,13"
+                  CornerRadius="5">
+            <StackPanel HorizontalAlignment="Center">
+              <RadioButton Content="Left"
+                           Style="{StaticResource RadioButtonVerticalThemeStyle}"
+                           IsChecked="True"
+                           Width="150"
+                           Height="44"
+                           Command="{Binding LaserAlignMotorSelectorCommand}">
+                <RadioButton.CommandParameter>
+                  <System:String>Left</System:String>
+                </RadioButton.CommandParameter>
+              </RadioButton>
+              <RadioButton Content="Right"
+                           Style="{StaticResource RadioButtonVerticalThemeStyle}"
+                           Height="44"
+                           Width="150"
+                           Command="{Binding LaserAlignMotorSelectorCommand}">
+                <RadioButton.CommandParameter>
+                  <System:String>Right</System:String>
+                </RadioButton.CommandParameter>
+              </RadioButton>
+            </StackPanel>
+          </Border>
+
+          <dx:SimpleButton Content="Run"
+                             Command="{Binding RunLaserAlignMotorClickCommand}"
+                             Height="50"
+                             FontFamily="{StaticResource AppTextFont}"
+                             FontSize="36"
+                             FontWeight="UltraBold"
+                             Foreground="{StaticResource AppTextColor}"
+                             Margin="0,0,0,3"/>
+          <dx:SimpleButton Content="Halt"
+                             Height="50"
+                             Command="{Binding HaltLaserAlignMotorClickCommand}"
+                             FontFamily="{StaticResource AppTextFont}"
+                             FontSize="36"
+                             FontWeight="UltraBold"
+                             Foreground="{StaticResource AppTextColor}"
+                             Margin="0,0,0,3"/>
+
+        </StackPanel>
+        <StackPanel VerticalAlignment="Stretch"
+                    Width="150"
+                    Margin="0,0,43,0">
+          <TextBlock Text="Auto Align"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="36"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Center"
+                 VerticalAlignment="Top"
+                 Margin="0,0,0,0"/>
+
+          <TextBox  Height="36"
+                      HorizontalAlignment="Stretch"
+                      Margin="0,0,0,13"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding AutoAlign}"/>
+
+          <Border BorderThickness="2"
+                  BorderBrush="{StaticResource AppTextColor}"
+                  Margin="0,0,0,5"
+                  CornerRadius="5">
+
+            <StackPanel HorizontalAlignment="Center">
+              <RadioButton Content="OFF"
+                           Style="{StaticResource RadioButtonVerticalThemeStyle}"
+                           Height="44"
+                           Width="150"
+                           IsChecked="True"
+                           Command="{Binding AutoAlignSelectorCommand}">
+                <RadioButton.CommandParameter>
+                  <System:String>Off</System:String>
+                </RadioButton.CommandParameter>
+              </RadioButton>
+              <RadioButton Content="Green"
+                           Style="{StaticResource RadioButtonVerticalThemeStyle}"
+                           Height="44"
+                           Width="150"
+                           Command="{Binding AutoAlignSelectorCommand}">
+                <RadioButton.CommandParameter>
+                  <System:String>Green</System:String>
+                </RadioButton.CommandParameter>
+              </RadioButton>
+              <RadioButton Content="Red"
+                           Style="{StaticResource RadioButtonVerticalThemeStyle}"
+                           Height="44"
+                           Width="150"
+                           Command="{Binding AutoAlignSelectorCommand}">
+                <RadioButton.CommandParameter>
+                  <System:String>Red</System:String>
+                </RadioButton.CommandParameter>
+              </RadioButton>
+              <RadioButton Content="Violet"
+                           Style="{StaticResource RadioButtonVerticalThemeStyle}"
+                           Height="44"
+                           Width="150"
+                           Command="{Binding AutoAlignSelectorCommand}">
+                <RadioButton.CommandParameter>
+                  <System:String>Violet</System:String>
+                </RadioButton.CommandParameter>
+              </RadioButton>
+            </StackPanel>
+          </Border>
+
+          <dx:SimpleButton Content="Run"
+                             Command="{Binding RunAutoAlignClickCommand}"
+                             Height="50"
+                             FontFamily="{StaticResource AppTextFont}"
+                             FontSize="36"
+                             FontWeight="UltraBold"
+                             Foreground="{StaticResource AppTextColor}"
+                             Margin="0,0,0,3"/>
+
+        </StackPanel>
+        <StackPanel VerticalAlignment="Stretch"
+                    Width="150">
+          <TextBlock Text="Align Sequence"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="36"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Center"
+                 VerticalAlignment="Top"
+                 Margin="0,0,0,10"/>
+
+          <dx:SimpleButton Content="Run"
+                             Command="{Binding RunAlignSequenceClickCommand}"
+                             Height="50"
+                             FontFamily="{StaticResource AppTextFont}"
+                             FontSize="36"
+                             FontWeight="UltraBold"
+                             Foreground="{StaticResource AppTextColor}"
+                             Margin="0,0,0,3"/>
+          <dx:SimpleButton Content="Halt"
+                             Command="{Binding HaltAlignSequenceClickCommand}"
+                             Height="50"
+                             FontFamily="{StaticResource AppTextFont}"
+                             FontSize="36"
+                             FontWeight="UltraBold"
+                             Foreground="{StaticResource AppTextColor}"
+                             Margin="0,0,0,3"/>
+
+          <dx:SimpleButton Content="GoTo&#x0a; Peak"
+                             Command="{Binding GoToAlignSequenceClickCommand}"
+                             Height="50"
+                             FontFamily="{StaticResource AppTextFont}"
+                             FontSize="22"
+                             FontWeight="UltraBold"
+                             Foreground="{StaticResource AppTextColor}"
+                             Margin="0,0,0,3"/>
+
+        </StackPanel>
+      </StackPanel>
+    </Border>
+    
+  </Grid>
 </UserControl>

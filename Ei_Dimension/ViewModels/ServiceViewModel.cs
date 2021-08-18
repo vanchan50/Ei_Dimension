@@ -12,6 +12,7 @@ namespace Ei_Dimension.ViewModels
   public class ServiceViewModel
   {
     private INavigationService NavigationService { get { return this.GetService<INavigationService>(); } }
+
     protected ServiceViewModel()
     {
     }

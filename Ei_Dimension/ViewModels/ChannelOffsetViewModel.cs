@@ -7,8 +7,10 @@ namespace Ei_Dimension.ViewModels
   [POCOViewModel]
   public class ChannelOffsetViewModel
   {
+    public virtual string[] ChannelsOffsetParameters { get; set; }
     protected ChannelOffsetViewModel()
     {
+      ChannelsOffsetParameters = new string[10];
     }
 
     public static ChannelOffsetViewModel Create()

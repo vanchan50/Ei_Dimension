@@ -15,12 +15,12 @@
   <Grid>
 
     <Grid.ColumnDefinitions>
-      <ColumnDefinition Width="1*"/>
-      <ColumnDefinition Width="7*"/>
+      <ColumnDefinition Width="2*"/>
+      <ColumnDefinition Width="11*"/>
     </Grid.ColumnDefinitions>
 
     <!--Tile Ribbon-->
-    <StackPanel Margin="0,60,8,0">
+    <StackPanel Margin="30,60,8,0">
       <dxlc:Tile Header="Motors"
                  Command="{Binding NavigateMotorsCommand}"
                  Style="{StaticResource RibbonTileStyle}"

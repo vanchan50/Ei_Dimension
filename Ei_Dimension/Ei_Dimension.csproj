@@ -94,7 +94,9 @@
     <Compile Include="Models\HistogramData.cs" />
     <Compile Include="Models\ResultFile.cs" />
     <Compile Include="ViewModels\AlignmentViewModel.cs" />
+    <Compile Include="ViewModels\CalibrationViewModel.cs" />
     <Compile Include="ViewModels\ChannelOffsetViewModel.cs" />
+    <Compile Include="ViewModels\ChannelsViewModel.cs" />
     <Compile Include="ViewModels\ComponentsViewModel.cs" />
     <Compile Include="ViewModels\DashboardViewModel.cs" />
     <Compile Include="ViewModels\DataAnalysisViewModel.cs" />
@@ -106,8 +108,14 @@
     <Compile Include="Views\AlignmentView.xaml.cs">
       <DependentUpon>AlignmentView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\CalibrationView.xaml.cs">
+      <DependentUpon>CalibrationView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ChannelOffsetView.xaml.cs">
       <DependentUpon>ChannelOffsetView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ChannelsView.xaml.cs">
+      <DependentUpon>ChannelsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ComponentsView.xaml.cs">
       <DependentUpon>ComponentsView.xaml</DependentUpon>
@@ -174,7 +182,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\CalibrationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\ChannelOffsetView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ChannelsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

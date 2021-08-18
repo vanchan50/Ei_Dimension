@@ -3,10 +3,155 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm" xmlns:ViewModels="clr-namespace:Ei_Dimension.ViewModels"
+             xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+             xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+             xmlns:System="clr-namespace:System;assembly=mscorlib" xmlns:ViewModels="clr-namespace:Ei_Dimension.ViewModels"
              mc:Ignorable="d"
              DataContext="{dxmvvm:ViewModelSource Type=ViewModels:ComponentsViewModel}"
              d:DesignHeight="674" d:DesignWidth="1312">
-    <Grid>
-    </Grid>
+  <Grid>
+    <TextBlock Text="Components"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="50"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Center"
+                 VerticalAlignment="Top"
+                 Margin="0,10,250,0"/>
+    <!--Input Selector-->
+    <Border HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Margin="120,100,0,0">
+
+      <StackPanel VerticalAlignment="Stretch">
+        <TextBlock Text="Input Selector"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="36"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Center"
+                 VerticalAlignment="Top"
+                 Margin="0,0,0,6"/>
+
+        <Border BorderThickness="2"
+                  BorderBrush="{StaticResource AppTextColor}"
+                  Margin="0,0,0,13"
+                  CornerRadius="5">
+          <Grid Width="150" Height="90">
+
+              <TextBlock Text="A"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="20"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Left"
+                 VerticalAlignment="Top"
+                 Margin="10,0,0,0"/>
+
+              <TextBlock Text="{Binding InputSelectorState[0]}"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="20"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Left"
+                 VerticalAlignment="Top"
+                 Margin="40,0,0,0"/>
+
+            <dx:SimpleButton Glyph="{dx:DXImage 'SvgImages/Spreadsheet/SortFields.svg'}"
+                             Command="{Binding InputSelectorSwapButtonClickCommand}"
+                             Height="40" Width="100"
+                             HorizontalAlignment="Center"
+                             VerticalAlignment="Center"
+                             FontFamily="{StaticResource AppTextFont}"
+                             FontSize="16"
+                             FontWeight="UltraBold"
+                             Foreground="{StaticResource AppTextColor}"
+                             Margin="0,0,10,0"/>
+
+              <TextBlock Text="B"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="20"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Left"
+                 VerticalAlignment="Bottom"
+                 Margin="10,0,0,0"/>
+
+            <TextBlock Text="{Binding InputSelectorState[1]}"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="20"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Left"
+                 VerticalAlignment="Bottom"
+                 Margin="40,0,0,0"/>
+          </Grid>
+        </Border>
+
+      </StackPanel>
+    </Border>
+    
+    <!--Valves-->
+    <Border HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Margin="120,300,0,0">
+
+      <StackPanel VerticalAlignment="Stretch">
+        <TextBlock Text="Valves"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="36"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Center"
+                 VerticalAlignment="Top"
+                 Margin="0,0,0,6"/>
+
+        <Border BorderThickness="2"
+                  BorderBrush="{StaticResource AppTextColor}"
+                  Margin="0,0,0,13"
+                  CornerRadius="5">
+          <StackPanel VerticalAlignment="Stretch">
+
+            <TextBlock Text="Valve 1"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="20"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Left"
+                 VerticalAlignment="Top"
+                 Margin="30,0,0,0"/>
+
+            <TextBlock Text="Valve 2"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="20"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Left"
+                 VerticalAlignment="Top"
+                 Margin="30,0,0,0"/>
+
+            <TextBlock Text="Cuvet Drain Open"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="20"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Left"
+                 VerticalAlignment="Bottom"
+                 Margin="30,0,0,0"/>
+
+            <TextBlock Text="Fan"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="20"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Left"
+                 VerticalAlignment="Bottom"
+                 Margin="30,0,0,0"/>
+          </StackPanel>
+        </Border>
+
+      </StackPanel>
+    </Border>
+
+  </Grid>
 </UserControl>
