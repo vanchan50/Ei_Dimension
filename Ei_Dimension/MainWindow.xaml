@@ -95,7 +95,7 @@
                Margin="0,6,4,0"
                Width="50"
                Height="50"
-               Source="{dx:DXImage 'SvgImages/Spreadsheet/CreateRadarLineChartFilled.svg'}"/>
+               Source="{dx:DXImage 'SvgImages/Chart/ChartType_RadarArea.svg'}"/>
       </dxlc:Tile>
       <dxlc:Tile Header="Maintenance"
                  Command="{Binding NavigateMaintenanceCommand}"
@@ -124,7 +124,7 @@
                            NavigationCacheMode="Required"
                            Grid.Row="2" Grid.ColumnSpan="2">
       <dxmvvm:Interaction.Triggers>
-        <dxmvvm:EventToCommand EventName="Loaded" Command="{Binding NavigateResultsCommand}" />
+        <dxmvvm:EventToCommand EventName="Loaded" Command="{Binding NavigateSettingsCommand}" />
       </dxmvvm:Interaction.Triggers>
       <dxmvvm:Interaction.Behaviors>
         <dxwuin:FrameNavigationService />

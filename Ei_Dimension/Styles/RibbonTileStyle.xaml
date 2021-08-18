@@ -8,7 +8,7 @@
     <Style.Setters>
       <Setter Property="FontSize" Value="22"/>
       <Setter Property="FontFamily" Value="{DynamicResource AppTextFont}"/>
-      <Setter Property="HorizontalAlignment" Value="Stretch"/>
+      <Setter Property="HorizontalAlignment" Value="Left"/>
       <Setter Property="VerticalAlignment" Value="Stretch"/>
       <Setter Property="Background" Value="#295296"/>
       <Setter Property="Width" Value="180"/>

@@ -43,7 +43,9 @@
     <Reference Include="DevExpress.Charts.v21.1.Core, Version=21.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.DataVisualization.v21.1.Core, Version=21.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Map.v21.1.Core, Version=21.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.Mvvm.v21.1" />
+    <Reference Include="DevExpress.Mvvm.v21.1">
+      <Private>True</Private>
+    </Reference>
     <Reference Include="DevExpress.Data.Desktop.v21.1" />
     <Reference Include="DevExpress.Data.v21.1" />
     <Reference Include="DevExpress.Printing.v21.1.Core" />
@@ -91,11 +93,25 @@
     <Compile Include="Models\HeatMapData.cs" />
     <Compile Include="Models\HistogramData.cs" />
     <Compile Include="Models\ResultFile.cs" />
+    <Compile Include="ViewModels\AlignmentViewModel.cs" />
+    <Compile Include="ViewModels\ChannelOffsetViewModel.cs" />
+    <Compile Include="ViewModels\ComponentsViewModel.cs" />
     <Compile Include="ViewModels\DashboardViewModel.cs" />
     <Compile Include="ViewModels\DataAnalysisViewModel.cs" />
     <Compile Include="ViewModels\ExperimentViewModel.cs" />
     <Compile Include="ViewModels\MaintenanceViewModel.cs" />
+    <Compile Include="ViewModels\MotorsViewModel.cs" />
     <Compile Include="ViewModels\ServiceViewModel.cs" />
+    <Compile Include="ViewModels\SyringeSpeedsViewModel.cs" />
+    <Compile Include="Views\AlignmentView.xaml.cs">
+      <DependentUpon>AlignmentView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ChannelOffsetView.xaml.cs">
+      <DependentUpon>ChannelOffsetView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ComponentsView.xaml.cs">
+      <DependentUpon>ComponentsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\DashboardView.xaml.cs">
       <DependentUpon>DashboardView.xaml</DependentUpon>
     </Compile>
@@ -108,11 +124,17 @@
     <Compile Include="Views\MaintenanceView.xaml.cs">
       <DependentUpon>MaintenanceView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\MotorsView.xaml.cs">
+      <DependentUpon>MotorsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ResultsView.xaml.cs">
       <DependentUpon>ResultsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ServiceView.xaml.cs">
       <DependentUpon>ServiceView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SyringeSpeedsView.xaml.cs">
+      <DependentUpon>SyringeSpeedsView.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -136,11 +158,27 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Styles\InputFieldStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\RadioButtonThemeStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Styles\RibbonTileStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Styles\ToggleSwitchStyle.xaml">
+    <Page Include="Views\AlignmentView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ChannelOffsetView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ComponentsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -164,11 +202,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\MotorsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\ResultsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ServiceView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SyringeSpeedsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
