@@ -1,0 +1,44 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <Style TargetType="{x:Type ToggleButton}"
+         x:Key="ToggleButtonThemeStyle">
+    <Style.Setters>
+
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="{x:Type ToggleButton}">
+
+            <Grid VerticalAlignment="Stretch"
+                  HorizontalAlignment="Stretch"
+                  Height="{TemplateBinding Property=Height}"
+                  Width="{TemplateBinding Property=Width}">
+              <Rectangle VerticalAlignment="Stretch"
+                  HorizontalAlignment="Stretch"
+                  Fill="{TemplateBinding Background}"/>
+
+              <TextBlock Text="{TemplateBinding Property=Content}"
+                         VerticalAlignment="Center"
+                         HorizontalAlignment="Center"
+                         FontFamily="{DynamicResource AppTextFont}"
+                         FontWeight="ExtraBold"/>
+
+            </Grid>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+
+      <Setter Property="Background" Value="{DynamicResource AppTextColor}"/>
+      <Setter Property="FontSize" Value="10"/>
+      <Setter Property="Foreground" Value="#34558b"/>
+    </Style.Setters>
+
+    <Style.Triggers>
+      <Trigger Property="IsChecked" Value="True">
+        <Setter Property="FontSize" Value="22"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{DynamicResource AppTextColor}"/>
+      </Trigger>
+    </Style.Triggers>
+
+  </Style>
+</ResourceDictionary>

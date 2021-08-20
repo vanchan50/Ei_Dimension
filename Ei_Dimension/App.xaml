@@ -11,6 +11,7 @@
         <ResourceDictionary Source="/Styles/RibbonTileStyle.xaml"/>
         <ResourceDictionary Source="/Styles/HeatmapSelectorStyle.xaml"/>
         <ResourceDictionary Source="/Styles/RadioButtonThemeStyle.xaml"/>
+        <ResourceDictionary Source="/Styles/ToggleButtonThemeStyle.xaml"/>
         <ResourceDictionary Source="/Styles/InputFieldStyle.xaml"/>
       </ResourceDictionary.MergedDictionaries>
     </ResourceDictionary>

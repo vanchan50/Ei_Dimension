@@ -1,9 +1,10 @@
-﻿<UserControl x:Class="Ei_Dimension.Views.ComponentsView"
+﻿<UserControl xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"  x:Class="Ei_Dimension.Views.ComponentsView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+             xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
              xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
              xmlns:System="clr-namespace:System;assembly=mscorlib" xmlns:ViewModels="clr-namespace:Ei_Dimension.ViewModels"
              mc:Ignorable="d"
@@ -21,7 +22,7 @@
     <!--Input Selector-->
     <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Margin="120,100,0,0">
+            Margin="30,100,0,0">
 
       <StackPanel VerticalAlignment="Stretch">
         <TextBlock Text="Input Selector"
@@ -34,7 +35,6 @@
                  Margin="0,0,0,6"/>
 
         <Border BorderThickness="2"
-                  BorderBrush="{StaticResource AppTextColor}"
                   Margin="0,0,0,13"
                   CornerRadius="5">
           <Grid Width="150" Height="90">
@@ -94,7 +94,7 @@
     <!--Valves-->
     <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Margin="120,300,0,0">
+            Margin="70,300,0,0">
 
       <StackPanel VerticalAlignment="Stretch">
         <TextBlock Text="Valves"
@@ -109,48 +109,591 @@
         <Border BorderThickness="2"
                   BorderBrush="{StaticResource AppTextColor}"
                   Margin="0,0,0,13"
-                  CornerRadius="5">
+                  CornerRadius="5"
+                  Width="150">
           <StackPanel VerticalAlignment="Stretch">
 
-            <TextBlock Text="Valve 1"
-                 FontFamily="{StaticResource AppTextFont}"
-                 FontSize="20"
-                 FontWeight="UltraBold"
-                 Foreground="{StaticResource AppTextColor}"
-                 HorizontalAlignment="Left"
-                 VerticalAlignment="Top"
-                 Margin="30,0,0,0"/>
-
-            <TextBlock Text="Valve 2"
-                 FontFamily="{StaticResource AppTextFont}"
-                 FontSize="20"
-                 FontWeight="UltraBold"
-                 Foreground="{StaticResource AppTextColor}"
-                 HorizontalAlignment="Left"
-                 VerticalAlignment="Top"
-                 Margin="30,0,0,0"/>
-
-            <TextBlock Text="Cuvet Drain Open"
-                 FontFamily="{StaticResource AppTextFont}"
-                 FontSize="20"
-                 FontWeight="UltraBold"
-                 Foreground="{StaticResource AppTextColor}"
-                 HorizontalAlignment="Left"
-                 VerticalAlignment="Bottom"
-                 Margin="30,0,0,0"/>
-
-            <TextBlock Text="Fan"
-                 FontFamily="{StaticResource AppTextFont}"
-                 FontSize="20"
-                 FontWeight="UltraBold"
-                 Foreground="{StaticResource AppTextColor}"
-                 HorizontalAlignment="Left"
-                 VerticalAlignment="Bottom"
-                 Margin="30,0,0,0"/>
+            <ToggleButton Style="{StaticResource ToggleButtonThemeStyle}"
+                          Height="60"
+                          Width="150"
+                          Content="Valve 1"
+                          IsChecked="False"
+                          Command="{Binding ValvesButtonClickCommand}">
+              <ToggleButton.CommandParameter>
+                <System:Int32>1</System:Int32>
+              </ToggleButton.CommandParameter>
+            </ToggleButton>
+            <ToggleButton Style="{StaticResource ToggleButtonThemeStyle}"
+                          Height="60"
+                          Width="150"
+                          Content="Valve 2"
+                          IsChecked="False"
+                          Command="{Binding ValvesButtonClickCommand}">
+              <ToggleButton.CommandParameter>
+                <System:Int32>2</System:Int32>
+              </ToggleButton.CommandParameter>
+            </ToggleButton>
+            <ToggleButton Style="{StaticResource ToggleButtonThemeStyle}"
+                          Height="60"
+                          Width="150"
+                          Content="Cuvet Drain&#x0a;       Open"
+                          IsChecked="False"
+                          Command="{Binding ValvesButtonClickCommand}">
+              <ToggleButton.CommandParameter>
+                <System:Int32>3</System:Int32>
+              </ToggleButton.CommandParameter>
+            </ToggleButton>
+            <ToggleButton Style="{StaticResource ToggleButtonThemeStyle}"
+                          Height="60"
+                          Width="150"
+                          Content="Fan"
+                          IsChecked="False"
+                          Command="{Binding ValvesButtonClickCommand}">
+              <ToggleButton.CommandParameter>
+                <System:Int32>4</System:Int32>
+              </ToggleButton.CommandParameter>
+            </ToggleButton>
           </StackPanel>
         </Border>
 
       </StackPanel>
+    </Border>
+
+    <!--Lasers-->
+    <Border HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Margin="380,100,0,0"
+            Width="180">
+
+      <StackPanel VerticalAlignment="Stretch">
+        <TextBlock Text="Lasers"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="36"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Center"
+                 VerticalAlignment="Top"
+                 Margin="0,0,0,6"/>
+
+        <Border Margin="0,0,0,13"
+                Width="150">
+          <StackPanel VerticalAlignment="Stretch">
+            <Border BorderThickness="2"
+                    BorderBrush="{StaticResource AppTextColor}"
+                    Margin="0,0,0,13"
+                    CornerRadius="5"
+                    Width="150">
+              <Grid>
+
+                <ToggleButton Style="{StaticResource ToggleButtonThemeStyle}"
+                              Height="50"
+                              Width="150"
+                              Content="Red"
+                              IsChecked="False"
+                              VerticalAlignment="Top"
+                              HorizontalAlignment="Center"
+                              Command="{Binding LasersButtonClickCommand}">
+                  <ToggleButton.CommandParameter>
+                    <System:Int32>1</System:Int32>
+                  </ToggleButton.CommandParameter>
+                </ToggleButton>
+                <TextBlock Text="Power"
+                           FontFamily="{StaticResource AppTextFont}"
+                           FontSize="20"
+                           FontWeight="UltraBold"
+                           Foreground="{StaticResource AppTextColor}"
+                           HorizontalAlignment="Left"
+                           VerticalAlignment="Bottom"
+                           Margin="20,50,0,0"/>
+
+                <TextBox Height="26"
+                         Margin="80,0,0,3"
+                         HorizontalAlignment="Left"
+                         VerticalAlignment="Bottom"
+                         Style="{StaticResource InputFieldStyle}"
+                         Text="{Binding LaserRedPowerValue}"/>
+              </Grid>
+            </Border>
+            <Border BorderThickness="2"
+                    BorderBrush="{StaticResource AppTextColor}"
+                    Margin="0,0,0,13"
+                    CornerRadius="5"
+                    Width="150">
+              <Grid>
+
+                <ToggleButton Style="{StaticResource ToggleButtonThemeStyle}"
+                              Height="50"
+                              Width="150"
+                              Content="Green"
+                              IsChecked="False"
+                              VerticalAlignment="Top"
+                              HorizontalAlignment="Center"
+                              Command="{Binding LasersButtonClickCommand}">
+                  <ToggleButton.CommandParameter>
+                    <System:Int32>2</System:Int32>
+                  </ToggleButton.CommandParameter>
+                </ToggleButton>
+                <TextBlock Text="Power"
+                           FontFamily="{StaticResource AppTextFont}"
+                           FontSize="20"
+                           FontWeight="UltraBold"
+                           Foreground="{StaticResource AppTextColor}"
+                           HorizontalAlignment="Left"
+                           VerticalAlignment="Bottom"
+                           Margin="20,50,0,0"/>
+
+                <TextBox Height="26"
+                         Margin="80,0,0,3"
+                         HorizontalAlignment="Left"
+                         VerticalAlignment="Bottom"
+                         Style="{StaticResource InputFieldStyle}"
+                         Text="{Binding LaserGreenPowerValue}"/>
+              </Grid>
+            </Border>
+            <Border BorderThickness="2"
+                    BorderBrush="{StaticResource AppTextColor}"
+                    Margin="0,0,0,13"
+                    CornerRadius="5"
+                    Width="150">
+              <Grid>
+
+                <ToggleButton Style="{StaticResource ToggleButtonThemeStyle}"
+                              Height="50"
+                              Width="150"
+                              Content="Violet"
+                              IsChecked="False"
+                              VerticalAlignment="Top"
+                              HorizontalAlignment="Center"
+                              Command="{Binding LasersButtonClickCommand}">
+                  <ToggleButton.CommandParameter>
+                    <System:Int32>3</System:Int32>
+                  </ToggleButton.CommandParameter>
+                </ToggleButton>
+                <TextBlock Text="Power"
+                           FontFamily="{StaticResource AppTextFont}"
+                           FontSize="20"
+                           FontWeight="UltraBold"
+                           Foreground="{StaticResource AppTextColor}"
+                           HorizontalAlignment="Left"
+                           VerticalAlignment="Bottom"
+                           Margin="20,50,0,0"/>
+
+                <TextBox Height="26"
+                         Margin="80,0,0,3"
+                         HorizontalAlignment="Left"
+                         VerticalAlignment="Bottom"
+                         Style="{StaticResource InputFieldStyle}"
+                         Text="{Binding LaserVioletPowerValue}"/>
+              </Grid>
+            </Border>
+          </StackPanel>
+        </Border>
+
+      </StackPanel>
+    </Border>
+
+    <!--Syringe control-->
+    <Border HorizontalAlignment="Right"
+            VerticalAlignment="Top"
+            Margin="0,100,260,0"
+            Width="320">
+      <StackPanel VerticalAlignment="Stretch">
+        
+        <TextBlock Text="Syringe Control"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="36"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Center"
+                 VerticalAlignment="Top"
+                 Margin="0,0,0,6"/>
+        <Border Margin="0,0,0,13"
+                Width="320">
+          <StackPanel VerticalAlignment="Stretch">
+            <Border BorderThickness="2"
+                    BorderBrush="{StaticResource AppTextColor}"
+                    Margin="0,0,0,13"
+                    CornerRadius="5"
+                    Height="90">
+              <Grid>
+
+                <TextBlock Text="Sheath"
+                   FontFamily="{StaticResource AppTextFont}"
+                   FontSize="20"
+                   FontWeight="UltraBold"
+                   Foreground="{StaticResource AppTextColor}"
+                   VerticalAlignment="Top"
+                   HorizontalAlignment="Center"
+                   Margin="20,0,0,0"/>
+                <dx:SplitButton Width="240"
+                                Height="50"
+                                FontSize="25"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Left"
+                                FontFamily="{StaticResource AppTextFont}"
+                                Foreground="{StaticResource AppTextColor}"
+                                Content="{Binding SelectedSheathContent}"  
+                                Command="{Binding SheathRunButtonClickCommand}">
+                  <dxb:PopupMenu ItemLinksSource="{Binding SyringeControlItems}">
+                    <dxb:PopupMenu.ItemTemplate>
+                      <DataTemplate>
+                        <ContentControl>
+                          <dxb:BarButtonItem Content="{Binding Content}"  
+                                   ItemClick="{DXEvent 'Click((int)1)'}"/>
+
+                        </ContentControl>
+                      </DataTemplate>
+                    </dxb:PopupMenu.ItemTemplate>
+                  </dxb:PopupMenu>
+                </dx:SplitButton>
+                <TextBlock Text="Value"
+                   FontFamily="{StaticResource AppTextFont}"
+                   FontSize="20"
+                   FontWeight="UltraBold"
+                   Foreground="{StaticResource AppTextColor}"
+                   VerticalAlignment="Bottom"
+                   HorizontalAlignment="Left"
+                   Margin="247,0,0,26"/>
+                <TextBox Height="26"
+                         Margin="240,0,0,8"
+                         HorizontalAlignment="Left"
+                         VerticalAlignment="Bottom"
+                         Style="{StaticResource InputFieldStyle}"
+                         Text="{Binding SyringeControlSheathValue}"/>
+              </Grid>
+            </Border>
+            <Border BorderThickness="2"
+                    BorderBrush="{StaticResource AppTextColor}"
+                    Margin="0,0,0,13"
+                    CornerRadius="5"
+                    Height="90">
+              <Grid>
+
+                <TextBlock Text="Sample A"
+                   FontFamily="{StaticResource AppTextFont}"
+                   FontSize="20"
+                   FontWeight="UltraBold"
+                   Foreground="{StaticResource AppTextColor}"
+                   VerticalAlignment="Top"
+                   HorizontalAlignment="Center"
+                   Margin="20,0,0,0"/>
+                <dx:SplitButton Width="240"
+                                Height="50"
+                                FontSize="25"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Left"
+                                FontFamily="{StaticResource AppTextFont}"
+                                Foreground="{StaticResource AppTextColor}"
+                                Content="{Binding SelectedSampleAContent}"  
+                                Command="{Binding SampleARunButtonClickCommand}">
+                  <dxb:PopupMenu ItemLinksSource="{Binding SyringeControlItems}">
+                    <dxb:PopupMenu.ItemTemplate>
+                      <DataTemplate>
+                        <ContentControl>
+                          <dxb:BarButtonItem Content="{Binding Content}"  
+                                   ItemClick="{DXEvent 'Click((int)2)'}"/>
+
+                        </ContentControl>
+                      </DataTemplate>
+                    </dxb:PopupMenu.ItemTemplate>
+                  </dxb:PopupMenu>
+                </dx:SplitButton>
+                <TextBlock Text="Value"
+                   FontFamily="{StaticResource AppTextFont}"
+                   FontSize="20"
+                   FontWeight="UltraBold"
+                   Foreground="{StaticResource AppTextColor}"
+                   VerticalAlignment="Bottom"
+                   HorizontalAlignment="Left"
+                   Margin="247,0,0,26"/>
+                <TextBox Height="26"
+                         Margin="240,0,0,8"
+                         HorizontalAlignment="Left"
+                         VerticalAlignment="Bottom"
+                         Style="{StaticResource InputFieldStyle}"
+                         Text="{Binding SyringeControlSampleAValue}"/>
+              </Grid>
+            </Border>
+            <Border BorderThickness="2"
+                    BorderBrush="{StaticResource AppTextColor}"
+                    Margin="0,0,0,13"
+                    CornerRadius="5"
+                    Height="90">
+              <Grid>
+
+                <TextBlock Text="Sample B"
+                   FontFamily="{StaticResource AppTextFont}"
+                   FontSize="20"
+                   FontWeight="UltraBold"
+                   Foreground="{StaticResource AppTextColor}"
+                   VerticalAlignment="Top"
+                   HorizontalAlignment="Center"
+                   Margin="20,0,0,0"/>
+                <dx:SplitButton Width="240"
+                                Height="50"
+                                FontSize="25"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Left"
+                                FontFamily="{StaticResource AppTextFont}"
+                                Foreground="{StaticResource AppTextColor}"
+                                Content="{Binding SelectedSampleBContent}"  
+                                Command="{Binding SampleBRunButtonClickCommand}">
+                  <dxb:PopupMenu ItemLinksSource="{Binding SyringeControlItems}">
+                    <dxb:PopupMenu.ItemTemplate>
+                      <DataTemplate>
+                        <ContentControl>
+                          <dxb:BarButtonItem Content="{Binding Content}"  
+                                   ItemClick="{DXEvent 'Click((int)3)'}"/>
+
+                        </ContentControl>
+                      </DataTemplate>
+                    </dxb:PopupMenu.ItemTemplate>
+                  </dxb:PopupMenu>
+                </dx:SplitButton>
+                <TextBlock Text="Value"
+                   FontFamily="{StaticResource AppTextFont}"
+                   FontSize="20"
+                   FontWeight="UltraBold"
+                   Foreground="{StaticResource AppTextColor}"
+                   VerticalAlignment="Bottom"
+                   HorizontalAlignment="Left"
+                   Margin="247,0,0,26"/>
+                <TextBox Height="26"
+                         Margin="240,0,0,8"
+                         HorizontalAlignment="Left"
+                         VerticalAlignment="Bottom"
+                         Style="{StaticResource InputFieldStyle}"
+                         Text="{Binding SyringeControlSampleBValue}"/>
+              </Grid>
+            </Border>
+          </StackPanel>
+        </Border>
+        
+      </StackPanel>
+    </Border>
+    
+    <!--Get Position-->
+    <Border HorizontalAlignment="Right"
+            VerticalAlignment="Top"
+            Margin="0,455,240,0"
+            Width="340">
+      <Grid>
+        <StackPanel HorizontalAlignment="Left"
+                    Margin="0,0,0,0">
+          <Border BorderThickness="2"
+                  BorderBrush="{StaticResource AppTextColor}"
+                  CornerRadius="5"
+                  Width="96">
+            <ToggleButton Style="{StaticResource ToggleButtonThemeStyle}"
+                        Height="50"
+                        Width="100"
+                        Content="{Binding GetPositionToggleButtonState}"
+                        IsChecked="False"
+                        VerticalAlignment="Top"
+                        HorizontalAlignment="Center"
+                        Command="{Binding GetPositionToggleButtonClickCommand}"/>
+
+          </Border>
+          
+          <dx:SimpleButton Content="Sheath" 
+                           Command="{Binding GetPositionButtonsClickCommand}"
+                           Height="50" Width="100"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           FontFamily="{StaticResource AppTextFont}"
+                           FontSize="16"
+                           FontWeight="UltraBold"
+                           Foreground="{StaticResource AppTextColor}"
+                           Margin="0,3,0,0">
+            <dx:SimpleButton.CommandParameter>
+              <System:Int32>1</System:Int32>
+            </dx:SimpleButton.CommandParameter>
+          </dx:SimpleButton>
+          <dx:SimpleButton Content="Sample A"
+                           Command="{Binding GetPositionButtonsClickCommand}"
+                           Height="50" Width="100"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           FontFamily="{StaticResource AppTextFont}"
+                           FontSize="16"
+                           FontWeight="UltraBold"
+                           Foreground="{StaticResource AppTextColor}"
+                           Margin="0,3,0,0">
+            <dx:SimpleButton.CommandParameter>
+              <System:Int32>2</System:Int32>
+            </dx:SimpleButton.CommandParameter>
+          </dx:SimpleButton>
+          <dx:SimpleButton Content="Sample B"
+                           Command="{Binding GetPositionButtonsClickCommand}"
+                           Height="50" Width="100"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           FontFamily="{StaticResource AppTextFont}"
+                           FontSize="16"
+                           FontWeight="UltraBold"
+                           Foreground="{StaticResource AppTextColor}"
+                           Margin="0,3,0,0">
+            <dx:SimpleButton.CommandParameter>
+              <System:Int32>3</System:Int32>
+            </dx:SimpleButton.CommandParameter>
+          </dx:SimpleButton>
+        </StackPanel>
+        
+        <StackPanel HorizontalAlignment="Left"
+                    Margin="110,0,0,13">
+          <TextBlock Text="Get Position"
+                     FontFamily="{StaticResource AppTextFont}"
+                     FontSize="36"
+                     FontWeight="UltraBold"
+                     Foreground="{StaticResource AppTextColor}"
+                     HorizontalAlignment="Center"
+                     VerticalAlignment="Top"
+                     Margin="0,5,0,6"/>
+          <TextBox Height="26"
+                   Margin="0,10,0,8"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Bottom"
+                   Style="{StaticResource InputFieldStyle}"
+                   Text="{Binding GetPositionTextBoxInputs[0]}"/>
+          <TextBox Height="26"
+                   Margin="0,8,0,8"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Bottom"
+                   Style="{StaticResource InputFieldStyle}"
+                   Text="{Binding GetPositionTextBoxInputs[1]}"/>
+          <TextBox Height="26"
+                   Margin="0,8,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Bottom"
+                   Style="{StaticResource InputFieldStyle}"
+                   Text="{Binding GetPositionTextBoxInputs[2]}"/>
+
+
+        </StackPanel>
+      </Grid>
+    </Border>
+
+    <Border HorizontalAlignment="Left"
+            Margin="530,451,0,0">
+      <StackPanel>
+        <Border BorderThickness="2"
+                  BorderBrush="{StaticResource AppTextColor}"
+                  CornerRadius="5"
+                  Width="126"
+                  Margin="0,0,0,3">
+          <ToggleButton Style="{StaticResource ToggleButtonThemeStyle}"
+                      Height="50"
+                      Width="130"
+                      Content="Sampling&#x0a;      ON"
+                      IsChecked="False"
+                      VerticalAlignment="Top"
+                      HorizontalAlignment="Center"
+                      Command="{Binding SamplingToggleButtonClickCommand}"/>
+        </Border>
+
+        <Border BorderThickness="2"
+                  BorderBrush="{StaticResource AppTextColor}"
+                  CornerRadius="5"
+                  Width="126"
+                  Margin="0,0,0,3">
+          <ToggleButton Style="{StaticResource ToggleButtonThemeStyle}"
+                      Height="50"
+                      Width="130"
+                      Content="Single Step&#x0a;     Debug"
+                      IsChecked="False"
+                      VerticalAlignment="Top"
+                      HorizontalAlignment="Center"
+                      Command="{Binding SingleStepDebugToggleButtonClickCommand}"/>
+        </Border>
+        
+        <dx:SimpleButton Content="Flush" 
+                         Command="{Binding FlushButtonClickCommand}"
+                         Height="50" Width="130"
+                         HorizontalAlignment="Center"
+                         VerticalAlignment="Center"
+                         FontFamily="{StaticResource AppTextFont}"
+                         FontSize="16"
+                         FontWeight="UltraBold"
+                         Foreground="{StaticResource AppTextColor}"
+                         Margin="0,0,0,3"/>
+        <dx:SimpleButton Content="Startup" 
+                         Command="{Binding StartupButtonClickCommand}"
+                         Height="50" Width="130"
+                         HorizontalAlignment="Center"
+                         VerticalAlignment="Center"
+                         FontFamily="{StaticResource AppTextFont}"
+                         FontSize="16"
+                         FontWeight="UltraBold"
+                         Foreground="{StaticResource AppTextColor}"/>
+
+      </StackPanel>
+    </Border>
+
+    <Border HorizontalAlignment="Left"
+            Height="175"
+            Margin="260,409,0,0">
+      <Grid>
+        <StackPanel HorizontalAlignment="Left">
+
+          <dx:SimpleButton Content="Move Idex" 
+                           Command="{Binding MoveIdexButtonClickCommand}"
+                           Height="50" Width="120"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           FontFamily="{StaticResource AppTextFont}"
+                           FontSize="16"
+                           FontWeight="UltraBold"
+                           Foreground="{StaticResource AppTextColor}"
+                           Margin="0,3,0,0"/>
+          <TextBox Height="26"
+                   Width="120"
+                   HorizontalAlignment="Right"
+                   Margin="0,5,0,0"
+                   Style="{StaticResource InputFieldStyle}"
+                   Text="{Binding IdexTextBoxInputs[0]}"/>
+          <TextBox Height="26"
+                   Width="120"
+                   HorizontalAlignment="Right"
+                   Margin="0,5,0,5"
+                   Style="{StaticResource InputFieldStyle}"
+                   Text="{Binding IdexTextBoxInputs[1]}"/>
+          <Border BorderThickness="2"
+                  BorderBrush="{StaticResource AppTextColor}"
+                  CornerRadius="5"
+                  Width="116">
+            <ToggleButton Style="{StaticResource ToggleButtonThemeStyle}"
+                          Height="50"
+                          Width="120"
+                          Content="     CW&#x0a;Direction"
+                          IsChecked="False"
+                          Command="{Binding CWDirectionToggleButtonClickCommand}"/>
+          </Border>
+          
+        </StackPanel>
+
+        <StackPanel HorizontalAlignment="Left"
+                    Margin="130,0,0,0">
+          <dx:SimpleButton Content="Position" 
+                           Command="{Binding IdexPositionButtonClickCommand}"
+                           Height="50" Width="120"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           FontFamily="{StaticResource AppTextFont}"
+                           FontSize="16"
+                           FontWeight="UltraBold"
+                           Foreground="{StaticResource AppTextColor}"
+                           Margin="0,45,0,0"/>
+          <TextBlock Text="Max Steps"
+                     FontFamily="{StaticResource AppTextFont}"
+                     FontSize="16"
+                     FontWeight="UltraBold"
+                     Foreground="{StaticResource AppTextColor}"
+                     HorizontalAlignment="Center"
+                     VerticalAlignment="Top"
+                     Margin="0,5,0,6"/>
+
+        </StackPanel>
+      </Grid>
     </Border>
 
   </Grid>
