@@ -25,6 +25,7 @@
                  VerticalAlignment="Top"
                  Margin="0,10,250,0"/>
 
+    <!--Motors Parameters-->
     <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Margin="0,100,0,00">
@@ -44,15 +45,22 @@
                  HorizontalAlignment="Right"
                  VerticalAlignment="Top"
                  Margin="0,30,8,0"/>
-            <TextBlock Text="Poll Step"
-                 FontFamily="{StaticResource AppTextFont}"
-                 FontSize="20"
-                 FontWeight="UltraBold"
-                 Foreground="{StaticResource AppTextColor}"
-                 HorizontalAlignment="Right"
-                 VerticalAlignment="Top"
-                 Margin="0,84,4,0"/>
-            <TextBlock Text="Slope"
+          <Border BorderThickness="2"
+                  BorderBrush="{StaticResource AppTextColor}"
+                  CornerRadius="5"
+                  HorizontalAlignment="Right"
+                  VerticalAlignment="Top"
+                  Width="116"
+                  Margin="0,19,4,0">
+            <ToggleButton Style="{StaticResource ToggleButtonThemeStyle}"
+                          Height="88"
+                          Width="120"
+                          Content="Poll Step"
+                          IsChecked="False"
+                          Command="{Binding PollStepToggleButtonClickCommand}"/>
+          </Border>
+
+          <TextBlock Text="Slope"
                  FontFamily="{StaticResource AppTextFont}"
                  FontSize="20"
                  FontWeight="UltraBold"
@@ -382,7 +390,8 @@
           </StackPanel>
         </StackPanel>
     </Border>
-
+    
+    <!--Steps-->
     <Border VerticalAlignment="Top"
             HorizontalAlignment="Right"
             Margin="0,80,200,0">
@@ -649,7 +658,8 @@
         </StackPanel>
       </StackPanel>
     </Border>
-
+    
+    <!--Well Selection-->
     <Border VerticalAlignment="Bottom"
             HorizontalAlignment="Right"
             Margin="0,0,290,60">
@@ -696,12 +706,11 @@
                   HorizontalAlignment="Center"
                   Height="60"
                   Width="240">
-          <dx:SplitButton Width="120"
+          <dx:DropDownButton Width="120"
                         FontSize="50"
                         FontFamily="{StaticResource AppTextFont}"
                         Foreground="{StaticResource AppTextColor}"
-                        Content="{Binding SelectedWellRow}"  
-                        Command="{Binding WellRowButtonClickCommand}">
+                        Content="{Binding SelectedWellRow}">
             <dxb:PopupMenu ItemLinksSource="{Binding WellRowButtonItems}">
               <dxb:PopupMenu.ItemTemplate>
                 <DataTemplate>
@@ -713,13 +722,12 @@
                 </DataTemplate>
               </dxb:PopupMenu.ItemTemplate>
             </dxb:PopupMenu>
-          </dx:SplitButton>
-          <dx:SplitButton Width="120"
+          </dx:DropDownButton>
+          <dx:DropDownButton Width="120"
                         FontSize="50"
                         FontFamily="{StaticResource AppTextFont}"
                         Foreground="{StaticResource AppTextColor}"
-                        Content="{Binding SelectedWellColumn}"  
-                        Command="{Binding WellColumnButtonClickCommand}">
+                        Content="{Binding SelectedWellColumn}">
             <dxb:PopupMenu ItemLinksSource="{Binding WellColumnButtonItems}">
               <dxb:PopupMenu.ItemTemplate>
                 <DataTemplate>
@@ -730,7 +738,7 @@
                 </DataTemplate>
               </dxb:PopupMenu.ItemTemplate>
             </dxb:PopupMenu>
-          </dx:SplitButton>
+          </dx:DropDownButton>
         </StackPanel>
 
         <dx:SimpleButton Content="Go to Well"

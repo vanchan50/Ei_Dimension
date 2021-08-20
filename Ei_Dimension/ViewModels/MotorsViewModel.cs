@@ -11,6 +11,7 @@ namespace Ei_Dimension.ViewModels
   [POCOViewModel]
   public class MotorsViewModel
   {
+    public virtual bool PollStepActive { get; set; }
     public virtual ObservableCollection<DropDownButtonContents> WellRowButtonItems { get; set; }
     public virtual ObservableCollection<DropDownButtonContents> WellColumnButtonItems { get; set; }
     public virtual string SelectedWellRow { get; set; }
@@ -27,6 +28,7 @@ namespace Ei_Dimension.ViewModels
 
     protected MotorsViewModel()
     {
+      PollStepActive = false;
       ParametersX = new string[7];
       ParametersY = new string[7];
       ParametersZ = new string[7];
@@ -115,19 +117,14 @@ namespace Ei_Dimension.ViewModels
       }
     }
 
-    public void WellRowButtonClick()
-    {
-      //TODO: not necessary to exist
-    }
-
-    public void WellColumnButtonClick()
-    {
-      //TODO: not necessary to exist
-    }
-
     public void GoToWellButtonClick()
     {
 
+    }
+
+    public void PollStepToggleButtonClick()
+    {
+      PollStepActive = !PollStepActive;
     }
 
     public void PollStepSelector(string s)
@@ -175,11 +172,9 @@ namespace Ei_Dimension.ViewModels
         {
           case 1:
             _vm.SelectedWellRow = Content;
-            _vm.WellRowButtonClick();
             break;
           case 2:
             _vm.SelectedWellColumn = Content;
-            _vm.WellColumnButtonClick();
             break;
         }
       }

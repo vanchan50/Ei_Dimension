@@ -9,11 +9,15 @@ namespace Ei_Dimension.ViewModels
   {
     public virtual string[] LastCalibratedPosition { get; set; }
     public virtual string LaserAlignMotor { get; set; }
+    public virtual string LaserAlignMotorSelectorState { get; set; }
     public virtual string AutoAlign { get; set; }
+    public virtual string AutoAlignSelectorState { get; set; }
 
     protected AlignmentViewModel()
     {
       LastCalibratedPosition = new string[2];
+      LaserAlignMotorSelectorState = "Left";
+      AutoAlignSelectorState = "Off";
     }
 
     public static AlignmentViewModel Create()
@@ -28,7 +32,7 @@ namespace Ei_Dimension.ViewModels
 
     public void LaserAlignMotorSelector(string s)
     {
-
+      LaserAlignMotorSelectorState = s;
     }
 
     public void RunLaserAlignMotorClick()
@@ -43,7 +47,7 @@ namespace Ei_Dimension.ViewModels
 
     public void AutoAlignSelector(string s)
     {
-
+      AutoAlignSelectorState = s;
     }
 
     public void RunAutoAlignClick()
@@ -51,12 +55,12 @@ namespace Ei_Dimension.ViewModels
 
     }
 
-    public void RunAlignSequenceClick()
+    public void ScanAlignSequenceClick()
     {
 
     }
 
-    public void HaltAlignSequenceClick()
+    public void FindPeakAlignSequenceClick()
     {
 
     }

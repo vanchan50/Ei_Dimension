@@ -6,7 +6,8 @@
              xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
              xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
              xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
-             xmlns:System="clr-namespace:System;assembly=mscorlib" xmlns:ViewModels="clr-namespace:Ei_Dimension.ViewModels"
+             xmlns:System="clr-namespace:System;assembly=mscorlib"
+             xmlns:ViewModels="clr-namespace:Ei_Dimension.ViewModels"
              mc:Ignorable="d"
              DataContext="{dxmvvm:ViewModelSource Type=ViewModels:ComponentsViewModel}"
              d:DesignHeight="674" d:DesignWidth="1312">
@@ -39,7 +40,7 @@
                   CornerRadius="5">
           <Grid Width="150" Height="90">
 
-              <TextBlock Text="A"
+            <TextBlock Text="A"
                  FontFamily="{StaticResource AppTextFont}"
                  FontSize="20"
                  FontWeight="UltraBold"
@@ -48,7 +49,7 @@
                  VerticalAlignment="Top"
                  Margin="10,0,0,0"/>
 
-              <TextBlock Text="{Binding InputSelectorState[0]}"
+            <TextBlock Text="{Binding InputSelectorState[0]}"
                  FontFamily="{StaticResource AppTextFont}"
                  FontSize="20"
                  FontWeight="UltraBold"
@@ -68,7 +69,7 @@
                              Foreground="{StaticResource AppTextColor}"
                              Margin="0,0,10,0"/>
 
-              <TextBlock Text="B"
+            <TextBlock Text="B"
                  FontFamily="{StaticResource AppTextFont}"
                  FontSize="20"
                  FontWeight="UltraBold"
@@ -90,7 +91,7 @@
 
       </StackPanel>
     </Border>
-    
+
     <!--Valves-->
     <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"
@@ -298,7 +299,7 @@
             Margin="0,100,260,0"
             Width="320">
       <StackPanel VerticalAlignment="Stretch">
-        
+
         <TextBlock Text="Syringe Control"
                  FontFamily="{StaticResource AppTextFont}"
                  FontSize="36"
@@ -316,6 +317,10 @@
                     CornerRadius="5"
                     Height="90">
               <Grid>
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="119*"/>
+                  <ColumnDefinition Width="39*"/>
+                </Grid.ColumnDefinitions>
 
                 <TextBlock Text="Sheath"
                    FontFamily="{StaticResource AppTextFont}"
@@ -324,7 +329,7 @@
                    Foreground="{StaticResource AppTextColor}"
                    VerticalAlignment="Top"
                    HorizontalAlignment="Center"
-                   Margin="20,0,0,0"/>
+                   Margin="135,0,36,0"/>
                 <dx:SplitButton Width="240"
                                 Height="50"
                                 FontSize="25"
@@ -333,7 +338,7 @@
                                 FontFamily="{StaticResource AppTextFont}"
                                 Foreground="{StaticResource AppTextColor}"
                                 Content="{Binding SelectedSheathContent}"  
-                                Command="{Binding SheathRunButtonClickCommand}">
+                                Command="{Binding SheathRunButtonClickCommand}" Grid.ColumnSpan="2">
                   <dxb:PopupMenu ItemLinksSource="{Binding SyringeControlItems}">
                     <dxb:PopupMenu.ItemTemplate>
                       <DataTemplate>
@@ -353,13 +358,13 @@
                    Foreground="{StaticResource AppTextColor}"
                    VerticalAlignment="Bottom"
                    HorizontalAlignment="Left"
-                   Margin="247,0,0,26"/>
+                   Margin="9,0,0,26" Grid.Column="1"/>
                 <TextBox Height="26"
-                         Margin="240,0,0,8"
+                         Margin="2,0,0,8"
                          HorizontalAlignment="Left"
                          VerticalAlignment="Bottom"
                          Style="{StaticResource InputFieldStyle}"
-                         Text="{Binding SyringeControlSheathValue}"/>
+                         Text="{Binding SyringeControlSheathValue}" Grid.Column="1"/>
               </Grid>
             </Border>
             <Border BorderThickness="2"
@@ -468,10 +473,10 @@
             </Border>
           </StackPanel>
         </Border>
-        
+
       </StackPanel>
     </Border>
-    
+
     <!--Get Position-->
     <Border HorizontalAlignment="Right"
             VerticalAlignment="Top"
@@ -494,7 +499,7 @@
                         Command="{Binding GetPositionToggleButtonClickCommand}"/>
 
           </Border>
-          
+
           <dx:SimpleButton Content="Sheath" 
                            Command="{Binding GetPositionButtonsClickCommand}"
                            Height="50" Width="100"
@@ -538,7 +543,7 @@
             </dx:SimpleButton.CommandParameter>
           </dx:SimpleButton>
         </StackPanel>
-        
+
         <StackPanel HorizontalAlignment="Left"
                     Margin="110,0,0,13">
           <TextBlock Text="Get Position"
@@ -605,7 +610,7 @@
                       HorizontalAlignment="Center"
                       Command="{Binding SingleStepDebugToggleButtonClickCommand}"/>
         </Border>
-        
+
         <dx:SimpleButton Content="Flush" 
                          Command="{Binding FlushButtonClickCommand}"
                          Height="50" Width="130"
@@ -668,7 +673,7 @@
                           IsChecked="False"
                           Command="{Binding CWDirectionToggleButtonClickCommand}"/>
           </Border>
-          
+
         </StackPanel>
 
         <StackPanel HorizontalAlignment="Left"
