@@ -19,7 +19,7 @@
     SizeToContent="Manual"
     Padding="0"
     WindowStyle="None"
-    Background="#34558b"
+    Background="{StaticResource AppBackground}"
     WindowStartupLocation="CenterScreen"
     ShowBackButton="False"
     ShowTitle="False"

@@ -48,6 +48,102 @@
 
     </StackPanel>
 
+    <Border Grid.Column="0"
+            Margin="0,300,0,0">
+      <StackPanel>
+
+        <Border BorderThickness="2"
+                  BorderBrush="{StaticResource AppTextColor}"
+                  CornerRadius="5"
+                  Width="76"
+                  Height="60"
+                  Margin="0,0,0,6">
+          <ToggleButton Style="{StaticResource ToggleButtonThemeStyle}"
+                      Height="60"
+                      Width="80"
+                      Content="LEDs&#x0a;  ON"
+                      IsChecked="False"
+                      VerticalAlignment="Top"
+                      HorizontalAlignment="Center"
+                      Command="{Binding LEDsButtonClickCommand}"/>
+        </Border>
+
+        <StackPanel>
+          <StackPanel.Resources>
+            <Style x:Key="trackBarEditThumbStyle" TargetType="Thumb">
+              <Setter Property="Template">
+                <Setter.Value>
+                  <ControlTemplate>
+                    <Ellipse Width="40" Height="40" Fill="{StaticResource AppTextColor}" Stroke="{StaticResource AppBackground}" StrokeThickness="2"/>
+                  </ControlTemplate>
+                </Setter.Value>
+              </Setter>
+            </Style>
+            <Style x:Key="nearTrackStyle" TargetType="RepeatButton">
+              <Setter Property="Template">
+                <Setter.Value>
+                  <ControlTemplate>
+                    <Border Background="{StaticResource AppTextColor}" Height="20"
+                                    VerticalAlignment="Center" Margin="5,0,-5,0"
+                                    CornerRadius="4" />
+                  </ControlTemplate>
+                </Setter.Value>
+              </Setter>
+            </Style>
+            <Style x:Key="farTrackStyle" TargetType="RepeatButton">
+              <Setter Property="Template">
+                <Setter.Value>
+                  <ControlTemplate>
+                    <Border Background="{StaticResource PressedButtonBackground}" Height="20" VerticalAlignment="Center"
+                                    Margin="-5,0,5,0" CornerRadius="4" />
+                  </ControlTemplate>
+                </Setter.Value>
+              </Setter>
+            </Style>
+          </StackPanel.Resources>
+          <dxe:TrackBarEdit Margin="0,0,0,20" 
+                            Minimum="0" Maximum="100"
+                            Value="0"
+                            Width="200" EditValue="{Binding LEDSliderValue}"
+                            CornerRadius="4" TickPlacement="None"
+                            NearTrackStyle="{StaticResource nearTrackStyle}"
+                            FarTrackStyle="{StaticResource farTrackStyle}"
+                            ThumbStyle="{StaticResource trackBarEditThumbStyle}">
+            <dxmvvm:Interaction.Behaviors>
+              <dxmvvm:EventToCommand EventName="EditValueChanged"
+                                     Command="{Binding LEDSliderValueChangedCommand}"/>
+            </dxmvvm:Interaction.Behaviors>
+          </dxe:TrackBarEdit>
+        </StackPanel>
+
+        <dx:SimpleButton Content="UVC Sanitize"
+                         Width="195"
+                         Command="{Binding UVCSanitizeClickCommand}"
+                         Height="50"
+                         FontFamily="{StaticResource AppTextFont}"
+                         FontSize="26"
+                         FontWeight="UltraBold"
+                         Foreground="{StaticResource AppTextColor}"
+                         Margin="0,0,0,6"/>
+        <StackPanel Orientation="Horizontal">
+          <TextBox  Height="36"
+                      HorizontalAlignment="Left"
+                      Width="80"
+                      Margin="10,0,10,3"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding SanitizeSecondsContent}"/>
+          <TextBlock Text="Seconds"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="30"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Center"
+                 VerticalAlignment="Top"
+                 Margin="0,0,0,0"/>
+        </StackPanel>
+      </StackPanel>
+    </Border>
+
     <dxwui:NavigationFrame AnimationType="SlideHorizontal"
                            NavigationCacheMode="Required"
                            Grid.Row="0" Grid.Column="1">

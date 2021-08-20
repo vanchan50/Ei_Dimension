@@ -12,9 +12,12 @@
                   HorizontalAlignment="Stretch"
                   Height="{TemplateBinding Property=Height}"
                   Width="{TemplateBinding Property=Width}">
-              <Rectangle VerticalAlignment="Stretch"
+              <Rectangle Name="ToggleButtonRect" VerticalAlignment="Stretch"
                   HorizontalAlignment="Stretch"
-                  Fill="{TemplateBinding Background}"/>
+                  Fill="{TemplateBinding Background}"
+                  RadiusX="150" RadiusY="2"
+                  Stroke="{DynamicResource PressedButtonBackground}"
+                  StrokeThickness="1"/>
 
               <TextBlock Text="{TemplateBinding Property=Content}"
                          VerticalAlignment="Center"
@@ -23,22 +26,22 @@
                          FontWeight="ExtraBold"/>
 
             </Grid>
+            <ControlTemplate.Triggers>
+              <Trigger Property="IsChecked" Value="True">
+                <Setter TargetName="ToggleButtonRect" Property="Stroke" Value="{DynamicResource UnpressedButtonBackground}" />
+                <Setter Property="FontSize" Value="15"/>
+                <Setter Property="Background" Value="{DynamicResource PressedButtonBackground}"/>
+              </Trigger>
+            </ControlTemplate.Triggers>
           </ControlTemplate>
         </Setter.Value>
       </Setter>
 
-      <Setter Property="Background" Value="{DynamicResource AppTextColor}"/>
-      <Setter Property="FontSize" Value="10"/>
-      <Setter Property="Foreground" Value="#34558b"/>
+      <Setter Property="FontSize" Value="22"/>
+      <Setter Property="Foreground" Value="{DynamicResource AppTextColor}"/>
+      <Setter Property="Background" Value="{DynamicResource UnpressedButtonBackground}"/>
     </Style.Setters>
 
-    <Style.Triggers>
-      <Trigger Property="IsChecked" Value="True">
-        <Setter Property="FontSize" Value="22"/>
-        <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="Foreground" Value="{DynamicResource AppTextColor}"/>
-      </Trigger>
-    </Style.Triggers>
 
   </Style>
 </ResourceDictionary>

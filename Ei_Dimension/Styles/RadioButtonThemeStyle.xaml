@@ -28,16 +28,15 @@
         </Setter.Value>
       </Setter>
 
-      <Setter Property="Background" Value="{DynamicResource AppTextColor}"/>
-      <Setter Property="FontSize" Value="16"/>
-      <Setter Property="Foreground" Value="#34558b"/>
+      <Setter Property="Background" Value="{DynamicResource UnpressedButtonBackground}"/>
+      <Setter Property="Foreground" Value="{DynamicResource AppTextColor}"/>
+      <Setter Property="FontSize" Value="50"/>
     </Style.Setters>
 
     <Style.Triggers>
       <Trigger Property="IsChecked" Value="True">
-        <Setter Property="FontSize" Value="50"/>
-        <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="Foreground" Value="{DynamicResource AppTextColor}"/>
+        <Setter Property="FontSize" Value="35"/>
+        <Setter Property="Background" Value="{DynamicResource PressedButtonBackground}"/>
       </Trigger>
     </Style.Triggers>
 
@@ -71,16 +70,16 @@
         </Setter.Value>
       </Setter>
 
-      <Setter Property="Background" Value="{DynamicResource AppTextColor}"/>
-      <Setter Property="FontSize" Value="10"/>
-      <Setter Property="Foreground" Value="#34558b"/>
+      <Setter Property="FontSize" Value="30"/>
+      <Setter Property="Background" Value="{DynamicResource UnpressedButtonBackground}"/>
+      <Setter Property="Foreground" Value="{DynamicResource AppTextColor}"/>
+
     </Style.Setters>
 
     <Style.Triggers>
       <Trigger Property="IsChecked" Value="True">
-        <Setter Property="FontSize" Value="30"/>
-        <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="Foreground" Value="{DynamicResource AppTextColor}"/>
+        <Setter Property="FontSize" Value="15"/>
+        <Setter Property="Background" Value="{DynamicResource PressedButtonBackground}"/>
       </Trigger>
     </Style.Triggers>
 

@@ -17,8 +17,12 @@
         <ControlTemplate TargetType="{x:Type TextBoxBase}">
           <Border Name="Border">
             <Grid>
+              <Rectangle Name="ToggleButtonRect" VerticalAlignment="Stretch"
+                  HorizontalAlignment="Stretch"
+                  Fill="{DynamicResource PressedButtonBackground}"
+                  RadiusX="10" RadiusY="15"/>
               <ScrollViewer 
-                    Margin="10,0,10,0" x:Name="PART_ContentHost"/>
+                    Margin="10,5,10,0" x:Name="PART_ContentHost"/>
               <Line X1="0" X2="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ActualWidth}"
                     Y1="0" Y2="0"
                     VerticalAlignment="Bottom"
