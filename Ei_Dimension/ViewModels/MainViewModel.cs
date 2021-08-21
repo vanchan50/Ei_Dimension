@@ -2,6 +2,7 @@
 using System;
 using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
+using Ei_Dimension.Models;
 
 namespace Ei_Dimension.ViewModels
 {
@@ -12,6 +13,9 @@ namespace Ei_Dimension.ViewModels
 
     protected MainViewModel()
     {
+      App.CurrentMap = new CustomMap { mapName = "Placeholder @ MainViewModel" };
+
+      App.Device.LoadMaps();
     }
 
     public static MainViewModel Create()

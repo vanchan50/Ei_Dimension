@@ -12,7 +12,6 @@ namespace Ei_Dimension.ViewModels
     public virtual object LEDSliderValue { get; set; }
     public virtual string SanitizeSecondsContent { get; set; }
 
-
     private INavigationService NavigationService { get { return this.GetService<INavigationService>(); } }
 
     protected MaintenanceViewModel()
@@ -33,7 +32,7 @@ namespace Ei_Dimension.ViewModels
 
     public void LEDSliderValueChanged()
     {
-      SanitizeSecondsContent = LEDSliderValue.ToString();
+
     }
 
     public void UVCSanitizeClick()

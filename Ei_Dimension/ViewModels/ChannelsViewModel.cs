@@ -1,6 +1,7 @@
 ﻿using DevExpress.Mvvm;
 using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
+using System.Collections.ObjectModel;
 
 namespace Ei_Dimension.ViewModels
 {
@@ -12,9 +13,12 @@ namespace Ei_Dimension.ViewModels
     public virtual string[] TempParameters { get; set; }
     public virtual string[] BackgroundParameters { get; set; }
     public virtual string SiPMTempCoeff { get; set; }
+    public virtual ObservableCollection<string> CurrentMapName { get; set; }
 
     protected ChannelsViewModel()
     {
+      CurrentMapName = new ObservableCollection<string> { App.CurrentMap.mapName };
+
       Bias30Parameters = new string[10];
       Bias30Parameters[0] = "1180";
       Bias30Parameters[1] = "1500";

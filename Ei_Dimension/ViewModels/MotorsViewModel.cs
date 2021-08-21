@@ -60,9 +60,15 @@ namespace Ei_Dimension.ViewModels
 
     public void ChangeAmountOfWells(int num)
     {
+      if (_amountOfWells == num)
+      {
+        return;
+      }
       _amountOfWells = num;
       WellRowButtonItems.Clear();
       WellColumnButtonItems.Clear();
+      SelectedWellRow = "A";
+      SelectedWellColumn = "1";
       switch (num)
       {
         case 96:
@@ -94,7 +100,8 @@ namespace Ei_Dimension.ViewModels
 
     public void RunMotorButtonClick(string s)
     {
-      switch (s) { 
+      switch (s)
+      {
         case "x":
           break;
         case "y":

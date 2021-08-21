@@ -90,6 +90,8 @@
     <Compile Include="Core\DataProcessor.cs" />
     <Compile Include="Core\ObservableObject.cs" />
     <Compile Include="Models\BeadInfoStruct.cs" />
+    <Compile Include="Models\BeadRegion.cs" />
+    <Compile Include="Models\CustomMap.cs" />
     <Compile Include="Models\HeatMapData.cs" />
     <Compile Include="Models\HistogramData.cs" />
     <Compile Include="Models\ResultFile.cs" />
@@ -270,6 +272,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="laser-icon-16521-Windows.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MicroCy\MicroCy.csproj">
+      <Project>{a4b56fcd-95dd-44cd-8f5b-6ee456bbd095}</Project>
+      <Name>MicroCy</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
