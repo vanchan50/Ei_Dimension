@@ -279,6 +279,10 @@
                      ItemsSource="{Binding AvailableResults}"
                      SelectionMode="None"
                      SelectedItems="{Binding SelectedItem}">
+      <dxmvvm:Interaction.Behaviors>
+        <dxmvvm:EventToCommand EventName="SelectedItemChanged"
+                               Command="{Binding FillAllDataAsyncCommand}"/>
+      </dxmvvm:Interaction.Behaviors>
       <dxg:GridControl.View>
         <dxg:CardView ShowTotalSummary="True"
                        AllowMoveColumnToDropArea="False"
@@ -288,22 +292,14 @@
                        AllowColumnFiltering="False"
                        AllowPaging="False"
                        AllowGrouping="False"
-                      ShowSearchPanelMode="Never"
-                      IsGroupPanelMenuEnabled="False"
-                      CardLayout="Columns"
-                      ShowCardExpandButton="False"/>
+                       ShowSearchPanelMode="Never"
+                       IsGroupPanelMenuEnabled="False"
+                       CardLayout="Columns"
+                       ShowCardExpandButton="False"/>
       </dxg:GridControl.View>
-      <dxg:GridColumn FieldName="Name" IsSmart="True" />
+      <dxg:GridColumn FieldName="Name" IsSmart="True"/>
       <dxg:GridColumn FieldName="Created" IsSmart="True"/>
     </dxg:GridControl>
-
-    <dx:SimpleButton Content="Load Results"
-                     Grid.Column="1" Grid.Row="0"
-                     HorizontalAlignment="Center"
-                     VerticalAlignment="Bottom"
-                     Margin="0,10"
-                     Command="{Binding FillAllDataAsyncCommand}"
-                     CommandParameter="this"/>
 
   </Grid>
 </UserControl>

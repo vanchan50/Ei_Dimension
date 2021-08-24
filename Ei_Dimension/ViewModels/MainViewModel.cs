@@ -13,9 +13,6 @@ namespace Ei_Dimension.ViewModels
 
     protected MainViewModel()
     {
-      App.CurrentMap = new CustomMap { mapName = "Placeholder @ MainViewModel" };
-
-      App.Device.LoadMaps();
     }
 
     public static MainViewModel Create()

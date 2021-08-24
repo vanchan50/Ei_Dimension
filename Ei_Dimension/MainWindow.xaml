@@ -10,6 +10,7 @@
     xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
     xmlns:dxwui="http://schemas.devexpress.com/winfx/2008/xaml/windowsui"
     xmlns:dxwuin="http://schemas.devexpress.com/winfx/2008/xaml/windowsui/navigation"
+    xmlns:lang="clr-namespace:Ei_Dimension.Language;assembly=Language"
     x:Class="Ei_Dimension.MainWindow"
     Title="Ei_Dimension"
     Height="800"
@@ -39,7 +40,7 @@
       <ColumnDefinition Width="1*"/>
     </Grid.ColumnDefinitions>
 
-    <TextBlock Text="Ei Dimension"
+    <TextBlock Text="{lang:Loc Program_Name}"
                Foreground="{StaticResource AppTextColor}"
                FontSize="28"
                FontFamily="{StaticResource AppTextFont}"
@@ -58,7 +59,7 @@
     <StackPanel Grid.Row="1" Grid.ColumnSpan="2"
                 Orientation="Horizontal"
                 Margin="30,0,0,0">
-      <dxlc:Tile Header="Dashboard"
+      <dxlc:Tile Header="{lang:Loc Ribbon_Dashboard}"
                  Command="{Binding NavigateDashboardCommand}"
                  Style="{StaticResource RibbonTileStyle}">
         <Image HorizontalAlignment="Right"
@@ -68,7 +69,7 @@
                Height="50"
                Source="{dx:DXImage SvgImages/Chart/ChartType_Pie3D.svg}"/>
       </dxlc:Tile>
-      <dxlc:Tile Header="Experiment"
+      <dxlc:Tile Header="{lang:Loc Ribbon_Acquire}"
                  Command="{Binding NavigateExperimentCommand}"
                  Style="{StaticResource RibbonTileStyle}">
         <Image HorizontalAlignment="Right"
@@ -78,7 +79,7 @@
                Height="50"
                Source="{dx:DXImage SvgImages/Reports/GaugeStyleFullCircular.svg}"/>
       </dxlc:Tile>
-      <dxlc:Tile Header="Results"
+      <dxlc:Tile Header="{lang:Loc Ribbon_Results}"
                  Command="{Binding NavigateResultsCommand}"
                  Style="{StaticResource RibbonTileStyle}">
         <Image HorizontalAlignment="Right"
@@ -88,7 +89,7 @@
                Height="50"
                Source="{dx:DXImage 'SvgImages/DiagramIcons/ApplyChanges.svg'}"/>
       </dxlc:Tile>
-      <dxlc:Tile Header="Data Analysis"
+      <dxlc:Tile Header="{lang:Loc Ribbon_Analysis}"
                  Command="{Binding NavigateDataAnalysisCommand}"
                  Style="{StaticResource RibbonTileStyle}">
         <Image HorizontalAlignment="Right"
@@ -98,7 +99,7 @@
                Height="50"
                Source="{dx:DXImage 'SvgImages/Chart/ChartType_RadarArea.svg'}"/>
       </dxlc:Tile>
-      <dxlc:Tile Header="Maintenance"
+      <dxlc:Tile Header="{lang:Loc Ribbon_Maintenance}"
                  Command="{Binding NavigateMaintenanceCommand}"
                  Style="{StaticResource RibbonTileStyle}">
         <Image HorizontalAlignment="Right"
@@ -108,7 +109,7 @@
                Height="50"
                Source="{dx:DXImage SvgImages/Setup/PageSetup.svg}"/>
       </dxlc:Tile>
-      <dxlc:Tile Header="Service"
+      <dxlc:Tile Header="{lang:Loc Ribbon_Service}"
                  Command="{Binding NavigateSettingsCommand}"
                  Style="{StaticResource RibbonTileStyle}">
         <Image HorizontalAlignment="Right"

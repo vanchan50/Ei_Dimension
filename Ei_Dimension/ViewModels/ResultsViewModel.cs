@@ -64,15 +64,22 @@ namespace Ei_Dimension.ViewModels
 
     public void GetAvailableResults()
     {
-      if(AvailableResults == null)
+      if (AvailableResults == null)
       {
         AvailableResults = new ObservableCollection<ResultFile>();
       }
       AvailableResults.Clear();
-      string[] files = Directory.GetFiles(_savedFilesLocation, "*.csv");
-      foreach(var f in files)
+      try
       {
-        AvailableResults.Add(new ResultFile(f));
+        string[] files = Directory.GetFiles(_savedFilesLocation, "*.csv");
+        foreach (var f in files)
+        {
+          AvailableResults.Add(new ResultFile(f));
+        }
+      }
+      catch
+      {
+
       }
     }
 

@@ -8,8 +8,10 @@
              xmlns:ViewModels="clr-namespace:Ei_Dimension.ViewModels"
              xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol"
              xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+             xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
              xmlns:dxwui="http://schemas.devexpress.com/winfx/2008/xaml/windowsui"
              xmlns:dxwuin="http://schemas.devexpress.com/winfx/2008/xaml/windowsui/navigation"
+             xmlns:lang="clr-namespace:Ei_Dimension.Language;assembly=Language"
              mc:Ignorable="d"
              DataContext="{dxmvvm:ViewModelSource Type={x:Type ViewModels:MaintenanceViewModel}}"
              d:DesignHeight="674" d:DesignWidth="1500">
@@ -21,7 +23,7 @@
 
     <!--Tile Ribbon-->
     <StackPanel Margin="30,60,8,0">
-      <dxlc:Tile Header="Calibration"
+      <dxlc:Tile Header="{lang:Loc Maintenance_Calibration}"
                  Command="{Binding NavigateCalibrationCommand}"
                  Style="{StaticResource RibbonTileStyle}"
                  Margin="0,0,0,3"
@@ -33,7 +35,7 @@
                Height="50"
                Source="{dx:DXImage 'SvgImages/Spreadsheet/HighLowLines.svg'}"/>
       </dxlc:Tile>
-      <dxlc:Tile Header="Channels"
+      <dxlc:Tile Header="{lang:Loc Maintenance_Channels}"
                  Command="{Binding NavigateChannelsCommand}"
                  Style="{StaticResource RibbonTileStyle}"
                  Margin="0,0,0,3"
@@ -61,7 +63,7 @@
           <ToggleButton Style="{StaticResource ToggleButtonThemeStyle}"
                       Height="60"
                       Width="80"
-                      Content="LEDs&#x0a;  ON"
+                      Content="{lang:Loc Maintenance_LEDs}"
                       IsChecked="False"
                       VerticalAlignment="Top"
                       HorizontalAlignment="Center"
@@ -116,7 +118,7 @@
           </dxe:TrackBarEdit>
         </StackPanel>
 
-        <dx:SimpleButton Content="UVC Sanitize"
+        <dx:SimpleButton Content="{lang:Loc Maintenance_Sanitize}"
                          Width="195"
                          Command="{Binding UVCSanitizeClickCommand}"
                          Height="50"
@@ -132,7 +134,7 @@
                       Margin="10,0,10,3"
                       Style="{StaticResource InputFieldStyle}"
                       Text="{Binding SanitizeSecondsContent}"/>
-          <TextBlock Text="Seconds"
+          <TextBlock Text="{lang:Loc Seconds}"
                  FontFamily="{StaticResource AppTextFont}"
                  FontSize="30"
                  FontWeight="UltraBold"
@@ -141,6 +143,31 @@
                  VerticalAlignment="Top"
                  Margin="0,0,0,0"/>
         </StackPanel>
+        <TextBlock Text="{lang:Loc Language}"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="30"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Center"
+                 VerticalAlignment="Top"
+                 Margin="0,40,0,0"/>
+        <dx:DropDownButton FontSize="30"
+                           Margin="20,0,20,0"
+                           FontFamily="{StaticResource AppTextFont}"
+                           Foreground="{StaticResource AppTextColor}"
+                           Content="{Binding SelectedLanguage}">
+          <dxb:PopupMenu ItemLinksSource="{Binding LanguageItems}">
+            <dxb:PopupMenu.ItemTemplate>
+              <DataTemplate>
+                <ContentControl>
+                  <dxb:BarButtonItem Content="{Binding Content}"  
+                                   ItemClick="{DXEvent 'Click()'}"/>
+
+                </ContentControl>
+              </DataTemplate>
+            </dxb:PopupMenu.ItemTemplate>
+          </dxb:PopupMenu>
+        </dx:DropDownButton>
       </StackPanel>
     </Border>
 
