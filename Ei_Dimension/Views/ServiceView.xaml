@@ -9,6 +9,7 @@
              xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol"
              xmlns:dxwui="http://schemas.devexpress.com/winfx/2008/xaml/windowsui"
              xmlns:dxwuin="http://schemas.devexpress.com/winfx/2008/xaml/windowsui/navigation"
+             xmlns:lang="clr-namespace:Ei_Dimension.Language;assembly=Language"
              mc:Ignorable="d"
              DataContext="{dxmvvm:ViewModelSource Type=ViewModels:ServiceViewModel}"
              d:DesignHeight="674" d:DesignWidth="1500">
@@ -21,7 +22,7 @@
 
     <!--Tile Ribbon-->
     <StackPanel Margin="30,60,8,0">
-      <dxlc:Tile Header="Motors"
+      <dxlc:Tile Header="{lang:Loc Service_Motors}"
                  Command="{Binding NavigateMotorsCommand}"
                  Style="{StaticResource RibbonTileStyle}"
                  Margin="0,0,0,3"
@@ -33,7 +34,7 @@
                Height="50"
                Source="{dx:DXImage 'SvgImages/Spreadsheet/5ArrowsColored.svg'}"/>
       </dxlc:Tile>
-      <dxlc:Tile Header="Components"
+      <dxlc:Tile Header="{lang:Loc Service_Components}"
                  Command="{Binding NavigateComponentsCommand}"
                  Style="{StaticResource RibbonTileStyle}"
                  Margin="0,0,0,3"
@@ -45,7 +46,7 @@
                Height="50"
                Source="{dx:DXImage 'SvgImages/Dashboards/LocalColors.svg'}"/>
       </dxlc:Tile>
-      <dxlc:Tile Header="Alignment"
+      <dxlc:Tile Header="{lang:Loc Service_Alignment}"
                  Command="{Binding NavigateAlignmentCommand}"
                  Style="{StaticResource RibbonTileStyle}"
                  Margin="0,0,0,3"
@@ -57,7 +58,7 @@
                Height="50"
                Source="{dx:DXImage 'SvgImages/RichEdit/RichEditPageMargins.svg'}"/>
       </dxlc:Tile>
-      <dxlc:Tile Header="Channel&#x0a;Offset"
+      <dxlc:Tile Header="{lang:Loc Service_Ch_Offset}"
                  Command="{Binding NavigateChannelOffsetCommand}"
                  Style="{StaticResource RibbonTileStyle}"
                  Margin="0,0,0,3"
@@ -69,7 +70,7 @@
                Height="50"
                Source="{dx:DXImage 'SvgImages/Snap/GroupFieldsCollection.svg'}"/>
       </dxlc:Tile>
-      <dxlc:Tile Header="Syringe&#x0a;Speeds"
+      <dxlc:Tile Header="{lang:Loc Service_Syringe_Speeds}"
                  Command="{Binding NavigateSyringeSpeedsCommand}"
                  Style="{StaticResource RibbonTileStyle}"
                  Margin="0,0,0,3"

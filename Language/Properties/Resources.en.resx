@@ -120,9 +120,13 @@
   <data name="Calibration_Calibration" xml:space="preserve">
     <value>Calibration</value>
   </data>
+  <data name="Calibration_Classification_targets" xml:space="preserve">
+    <value>Classification
+       Targets</value>
+  </data>
   <data name="Calibration_Classification_To_map" xml:space="preserve">
     <value>Classification
-To
+           To
 Current Map</value>
   </data>
   <data name="Calibration_Compensation_Percent" xml:space="preserve">
@@ -135,6 +139,21 @@ Compensation
   </data>
   <data name="Calibration_Gating" xml:space="preserve">
     <value>Gating</value>
+  </data>
+  <data name="Calibration_Height" xml:space="preserve">
+    <value>Height</value>
+  </data>
+  <data name="Calibration_High_DNR_Coeff" xml:space="preserve">
+    <value>High DNR Coefficient</value>
+  </data>
+  <data name="Calibration_High_DNR_Trans" xml:space="preserve">
+    <value>High DNR Transition</value>
+  </data>
+  <data name="Calibration_Max_SSC" xml:space="preserve">
+    <value>Max SSC</value>
+  </data>
+  <data name="Calibration_Min_SSC" xml:space="preserve">
+    <value>Min SSC</value>
   </data>
   <data name="Calibration_Save_Calibration_To_Map" xml:space="preserve">
     <value>Save Calibration
@@ -192,6 +211,73 @@ Coefficient</value>
   <data name="Channels_Violet_B" xml:space="preserve">
     <value>Violet B (CL0)</value>
   </data>
+  <data name="CL0" xml:space="preserve">
+    <value>CL0</value>
+  </data>
+  <data name="CL1" xml:space="preserve">
+    <value>CL1</value>
+  </data>
+  <data name="CL2" xml:space="preserve">
+    <value>CL2</value>
+  </data>
+  <data name="CL3" xml:space="preserve">
+    <value>CL3</value>
+  </data>
+  <data name="Components_Cuvet_Drain_Open" xml:space="preserve">
+    <value>Cuvet Drain
+       Open</value>
+  </data>
+  <data name="Components_CW_Dir" xml:space="preserve">
+    <value>     CW
+Direction</value>
+  </data>
+  <data name="Components_Fan" xml:space="preserve">
+    <value>Fan</value>
+  </data>
+  <data name="Components_Flush" xml:space="preserve">
+    <value>Flush</value>
+  </data>
+  <data name="Components_Input_Sel" xml:space="preserve">
+    <value>Input Selector</value>
+  </data>
+  <data name="Components_Lasers" xml:space="preserve">
+    <value>Lasers</value>
+  </data>
+  <data name="Components_Max_Steps" xml:space="preserve">
+    <value>Max Steps</value>
+  </data>
+  <data name="Components_Move_Idex" xml:space="preserve">
+    <value>Move Idex</value>
+  </data>
+  <data name="Components_Position" xml:space="preserve">
+    <value>Position</value>
+  </data>
+  <data name="Components_Sampling_ON" xml:space="preserve">
+    <value>Sampling
+      ON</value>
+  </data>
+  <data name="Components_Singl_Step_Deb" xml:space="preserve">
+    <value>Single Step
+     Debug</value>
+  </data>
+  <data name="Components_Startup" xml:space="preserve">
+    <value>Startup</value>
+  </data>
+  <data name="Components_Valve1" xml:space="preserve">
+    <value>Valve 1</value>
+  </data>
+  <data name="Components_Valve2" xml:space="preserve">
+    <value>Valve 2</value>
+  </data>
+  <data name="Components_Valves" xml:space="preserve">
+    <value>Valves</value>
+  </data>
+  <data name="Green" xml:space="preserve">
+    <value>Green</value>
+  </data>
+  <data name="Halt" xml:space="preserve">
+    <value>Halt</value>
+  </data>
   <data name="Language" xml:space="preserve">
     <value>Language</value>
   </data>
@@ -208,11 +294,95 @@ Coefficient</value>
   <data name="Maintenance_Sanitize" xml:space="preserve">
     <value>UVC Sanitize</value>
   </data>
+  <data name="Motors_384W_C1" xml:space="preserve">
+    <value>384W C1</value>
+  </data>
+  <data name="Motors_384W_C24" xml:space="preserve">
+    <value>384W C24</value>
+  </data>
+  <data name="Motors_96W_C1" xml:space="preserve">
+    <value>96W C1</value>
+  </data>
+  <data name="Motors_96W_C12" xml:space="preserve">
+    <value>96W C12</value>
+  </data>
+  <data name="Motors_A1" xml:space="preserve">
+    <value>A1</value>
+  </data>
+  <data name="Motors_A12" xml:space="preserve">
+    <value>A12</value>
+  </data>
+  <data name="Motors_Back" xml:space="preserve">
+    <value>Back</value>
+  </data>
+  <data name="Motors_Cur_Limit" xml:space="preserve">
+    <value>Current Limit</value>
+  </data>
+  <data name="Motors_Cur_Step" xml:space="preserve">
+    <value>Current Step</value>
+  </data>
+  <data name="Motors_Down" xml:space="preserve">
+    <value>Down</value>
+  </data>
+  <data name="Motors_Front" xml:space="preserve">
+    <value>Front</value>
+  </data>
+  <data name="Motors_GoTo_Well" xml:space="preserve">
+    <value>Go to Well</value>
+  </data>
+  <data name="Motors_H1" xml:space="preserve">
+    <value>H1</value>
+  </data>
+  <data name="Motors_H12" xml:space="preserve">
+    <value>H12</value>
+  </data>
+  <data name="Motors_Left" xml:space="preserve">
+    <value>Left</value>
+  </data>
+  <data name="Motors_Man_Well_Sel" xml:space="preserve">
+    <value>Manual Well Selection</value>
+  </data>
+  <data name="Motors_Poll_Step" xml:space="preserve">
+    <value>Poll Step</value>
+  </data>
+  <data name="Motors_Right" xml:space="preserve">
+    <value>Right</value>
+  </data>
+  <data name="Motors_Row_A" xml:space="preserve">
+    <value>Row A</value>
+  </data>
+  <data name="Motors_Row_H" xml:space="preserve">
+    <value>Row H</value>
+  </data>
+  <data name="Motors_Row_P" xml:space="preserve">
+    <value>Row P</value>
+  </data>
+  <data name="Motors_Run_Speed" xml:space="preserve">
+    <value>Run speed</value>
+  </data>
+  <data name="Motors_Slope" xml:space="preserve">
+    <value>Slope</value>
+  </data>
+  <data name="Motors_Start_Speed" xml:space="preserve">
+    <value>Start Speed</value>
+  </data>
+  <data name="Motors_Steps" xml:space="preserve">
+    <value>Steps</value>
+  </data>
+  <data name="Motors_Up" xml:space="preserve">
+    <value>Up</value>
+  </data>
   <data name="OFF" xml:space="preserve">
     <value>OFF</value>
   </data>
+  <data name="Power" xml:space="preserve">
+    <value>Power</value>
+  </data>
   <data name="Program_Name" xml:space="preserve">
     <value>Ei Dimension</value>
+  </data>
+  <data name="Red" xml:space="preserve">
+    <value>Red</value>
   </data>
   <data name="Reporter" xml:space="preserve">
     <value>Reporter</value>
@@ -236,10 +406,48 @@ Sample</value>
   <data name="Ribbon_Service" xml:space="preserve">
     <value>Service</value>
   </data>
+  <data name="RP1" xml:space="preserve">
+    <value>RP1</value>
+  </data>
+  <data name="Run" xml:space="preserve">
+    <value>Run</value>
+  </data>
   <data name="Seconds" xml:space="preserve">
     <value>Seconds</value>
   </data>
+  <data name="Service_Alignment" xml:space="preserve">
+    <value>Alignment</value>
+  </data>
+  <data name="Service_Ch_Offset" xml:space="preserve">
+    <value>Channel
+Offset</value>
+  </data>
+  <data name="Service_Components" xml:space="preserve">
+    <value>Components</value>
+  </data>
+  <data name="Service_Motors" xml:space="preserve">
+    <value>Motors</value>
+  </data>
+  <data name="Service_Syringe_Speeds" xml:space="preserve">
+    <value>Syringe
+Speeds</value>
+  </data>
   <data name="Temp" xml:space="preserve">
     <value>Temp</value>
+  </data>
+  <data name="Tube" xml:space="preserve">
+    <value>Tube</value>
+  </data>
+  <data name="Violet" xml:space="preserve">
+    <value>Violet</value>
+  </data>
+  <data name="X" xml:space="preserve">
+    <value>X</value>
+  </data>
+  <data name="Y" xml:space="preserve">
+    <value>Y</value>
+  </data>
+  <data name="Z" xml:space="preserve">
+    <value>Z</value>
   </data>
 </root>

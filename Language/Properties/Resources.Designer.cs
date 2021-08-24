@@ -61,6 +61,60 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Classification.
+        /// </summary>
+        public static string Calibration_Classification_targets {
+            get {
+                return ResourceManager.GetString("Calibration_Classification_targets", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Height.
+        /// </summary>
+        public static string Calibration_Height {
+            get {
+                return ResourceManager.GetString("Calibration_Height", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to High DNR Coefficient.
+        /// </summary>
+        public static string Calibration_High_DNR_Coeff {
+            get {
+                return ResourceManager.GetString("Calibration_High_DNR_Coeff", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to High DNR Transition.
+        /// </summary>
+        public static string Calibration_High_DNR_Trans {
+            get {
+                return ResourceManager.GetString("Calibration_High_DNR_Trans", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Max SSC.
+        /// </summary>
+        public static string Calibration_Max_SSC {
+            get {
+                return ResourceManager.GetString("Calibration_Max_SSC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Min SSC.
+        /// </summary>
+        public static string Calibration_Min_SSC {
+            get {
+                return ResourceManager.GetString("Calibration_Min_SSC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Background.
         /// </summary>
         public static string Channels_Background {
@@ -209,6 +263,123 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to CL0.
+        /// </summary>
+        public static string CL0 {
+            get {
+                return ResourceManager.GetString("CL0", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CL1.
+        /// </summary>
+        public static string CL1 {
+            get {
+                return ResourceManager.GetString("CL1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CL2.
+        /// </summary>
+        public static string CL2 {
+            get {
+                return ResourceManager.GetString("CL2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CL3.
+        /// </summary>
+        public static string CL3 {
+            get {
+                return ResourceManager.GetString("CL3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cuvet Drain.
+        /// </summary>
+        public static string Components_Cuvet_Drain_Open {
+            get {
+                return ResourceManager.GetString("Components_Cuvet_Drain_Open", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to      CW.
+        /// </summary>
+        public static string Components_CW_Dir {
+            get {
+                return ResourceManager.GetString("Components_CW_Dir", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Вентилятор.
+        /// </summary>
+        public static string Components_Fan {
+            get {
+                return ResourceManager.GetString("Components_Fan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Input Selector.
+        /// </summary>
+        public static string Components_Input_Sel {
+            get {
+                return ResourceManager.GetString("Components_Input_Sel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move Idex.
+        /// </summary>
+        public static string Components_Move_Idex {
+            get {
+                return ResourceManager.GetString("Components_Move_Idex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Valve 1.
+        /// </summary>
+        public static string Components_Valve1 {
+            get {
+                return ResourceManager.GetString("Components_Valve1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Valve 2.
+        /// </summary>
+        public static string Components_Valve2 {
+            get {
+                return ResourceManager.GetString("Components_Valve2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Valves.
+        /// </summary>
+        public static string Components_Valves {
+            get {
+                return ResourceManager.GetString("Components_Valves", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Halt.
+        /// </summary>
+        public static string Halt {
+            get {
+                return ResourceManager.GetString("Halt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Язык.
         /// </summary>
         public static string Language {
@@ -251,6 +422,240 @@ namespace Ei_Dimension.Language {
         public static string Maintenance_Sanitize {
             get {
                 return ResourceManager.GetString("Maintenance_Sanitize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 384W C1.
+        /// </summary>
+        public static string Motors_384W_C1 {
+            get {
+                return ResourceManager.GetString("Motors_384W_C1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 384W C24.
+        /// </summary>
+        public static string Motors_384W_C24 {
+            get {
+                return ResourceManager.GetString("Motors_384W_C24", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 96W C1.
+        /// </summary>
+        public static string Motors_96W_C1 {
+            get {
+                return ResourceManager.GetString("Motors_96W_C1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 96W C12.
+        /// </summary>
+        public static string Motors_96W_C12 {
+            get {
+                return ResourceManager.GetString("Motors_96W_C12", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A1.
+        /// </summary>
+        public static string Motors_A1 {
+            get {
+                return ResourceManager.GetString("Motors_A1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A12.
+        /// </summary>
+        public static string Motors_A12 {
+            get {
+                return ResourceManager.GetString("Motors_A12", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Back.
+        /// </summary>
+        public static string Motors_Back {
+            get {
+                return ResourceManager.GetString("Motors_Back", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current Limit.
+        /// </summary>
+        public static string Motors_Cur_Limit {
+            get {
+                return ResourceManager.GetString("Motors_Cur_Limit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current Step.
+        /// </summary>
+        public static string Motors_Cur_Step {
+            get {
+                return ResourceManager.GetString("Motors_Cur_Step", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Down.
+        /// </summary>
+        public static string Motors_Down {
+            get {
+                return ResourceManager.GetString("Motors_Down", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Front.
+        /// </summary>
+        public static string Motors_Front {
+            get {
+                return ResourceManager.GetString("Motors_Front", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Go to Well.
+        /// </summary>
+        public static string Motors_GoTo_Well {
+            get {
+                return ResourceManager.GetString("Motors_GoTo_Well", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to H1.
+        /// </summary>
+        public static string Motors_H1 {
+            get {
+                return ResourceManager.GetString("Motors_H1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to H12.
+        /// </summary>
+        public static string Motors_H12 {
+            get {
+                return ResourceManager.GetString("Motors_H12", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Left.
+        /// </summary>
+        public static string Motors_Left {
+            get {
+                return ResourceManager.GetString("Motors_Left", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manual Well Selection.
+        /// </summary>
+        public static string Motors_Man_Well_Sel {
+            get {
+                return ResourceManager.GetString("Motors_Man_Well_Sel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Poll Step.
+        /// </summary>
+        public static string Motors_Poll_Step {
+            get {
+                return ResourceManager.GetString("Motors_Poll_Step", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Right.
+        /// </summary>
+        public static string Motors_Right {
+            get {
+                return ResourceManager.GetString("Motors_Right", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Row A.
+        /// </summary>
+        public static string Motors_Row_A {
+            get {
+                return ResourceManager.GetString("Motors_Row_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Row H.
+        /// </summary>
+        public static string Motors_Row_H {
+            get {
+                return ResourceManager.GetString("Motors_Row_H", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Row P.
+        /// </summary>
+        public static string Motors_Row_P {
+            get {
+                return ResourceManager.GetString("Motors_Row_P", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Run speed.
+        /// </summary>
+        public static string Motors_Run_Speed {
+            get {
+                return ResourceManager.GetString("Motors_Run_Speed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Slope.
+        /// </summary>
+        public static string Motors_Slope {
+            get {
+                return ResourceManager.GetString("Motors_Slope", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start Speed.
+        /// </summary>
+        public static string Motors_Start_Speed {
+            get {
+                return ResourceManager.GetString("Motors_Start_Speed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Steps.
+        /// </summary>
+        public static string Motors_Steps {
+            get {
+                return ResourceManager.GetString("Motors_Steps", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Up.
+        /// </summary>
+        public static string Motors_Up {
+            get {
+                return ResourceManager.GetString("Motors_Up", resourceCulture);
             }
         }
         
@@ -320,6 +725,24 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to RP1.
+        /// </summary>
+        public static string RP1 {
+            get {
+                return ResourceManager.GetString("RP1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Run.
+        /// </summary>
+        public static string Run {
+            get {
+                return ResourceManager.GetString("Run", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Сек.
         /// </summary>
         public static string Seconds {
@@ -329,11 +752,128 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Alignment.
+        /// </summary>
+        public static string Service_Alignment {
+            get {
+                return ResourceManager.GetString("Service_Alignment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Channel.
+        /// </summary>
+        public static string Service_Ch_Offset {
+            get {
+                return ResourceManager.GetString("Service_Ch_Offset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Components.
+        /// </summary>
+        public static string Service_Components {
+            get {
+                return ResourceManager.GetString("Service_Components", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Motors.
+        /// </summary>
+        public static string Service_Motors {
+            get {
+                return ResourceManager.GetString("Service_Motors", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Syringe.
+        /// </summary>
+        public static string Service_Syringe_Speeds {
+            get {
+                return ResourceManager.GetString("Service_Syringe_Speeds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Targets.
+        /// </summary>
+        public static string String {
+            get {
+                return ResourceManager.GetString("String", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Offset.
+        /// </summary>
+        public static string String1 {
+            get {
+                return ResourceManager.GetString("String1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Speeds.
+        /// </summary>
+        public static string String2 {
+            get {
+                return ResourceManager.GetString("String2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open.
+        /// </summary>
+        public static string String3 {
+            get {
+                return ResourceManager.GetString("String3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Temp.
         /// </summary>
         public static string Temp {
             get {
                 return ResourceManager.GetString("Temp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tube.
+        /// </summary>
+        public static string Tube {
+            get {
+                return ResourceManager.GetString("Tube", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to X.
+        /// </summary>
+        public static string X {
+            get {
+                return ResourceManager.GetString("X", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Y.
+        /// </summary>
+        public static string Y {
+            get {
+                return ResourceManager.GetString("Y", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Z.
+        /// </summary>
+        public static string Z {
+            get {
+                return ResourceManager.GetString("Z", resourceCulture);
             }
         }
     }

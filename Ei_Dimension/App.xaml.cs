@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Configuration;
 using System.Data;
 using System.Linq;
 using System.Windows;
-using Ei_Dimension.Models;
 
 namespace Ei_Dimension
 {
@@ -16,7 +16,7 @@ namespace Ei_Dimension
     public static MicroCy.MicroCyDevice Device { get; private set; }
     public App()
     {
-      SetLanguage("en-GB");
+      SetLanguage("en-US");
 
       Device = new MicroCy.MicroCyDevice();
       Device.LoadMaps();
@@ -42,7 +42,8 @@ namespace Ei_Dimension
 
     public static void SetLanguage(string locale)
     {
-      if (string.IsNullOrEmpty(locale)) locale = "en-US";
+      if (string.IsNullOrEmpty(locale))
+        locale = "en-US";
       Language.TranslationSource.Instance.CurrentCulture = new System.Globalization.CultureInfo(locale);
     }
   }

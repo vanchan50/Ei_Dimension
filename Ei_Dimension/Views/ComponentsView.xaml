@@ -8,11 +8,12 @@
              xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
              xmlns:System="clr-namespace:System;assembly=mscorlib"
              xmlns:ViewModels="clr-namespace:Ei_Dimension.ViewModels"
+             xmlns:lang="clr-namespace:Ei_Dimension.Language;assembly=Language"
              mc:Ignorable="d"
              DataContext="{dxmvvm:ViewModelSource Type=ViewModels:ComponentsViewModel}"
              d:DesignHeight="674" d:DesignWidth="1312">
   <Grid>
-    <TextBlock Text="Components"
+    <TextBlock Text="{lang:Loc Service_Components}"
                  FontFamily="{StaticResource AppTextFont}"
                  FontSize="50"
                  FontWeight="UltraBold"
@@ -26,7 +27,7 @@
             Margin="30,100,0,0">
 
       <StackPanel VerticalAlignment="Stretch">
-        <TextBlock Text="Input Selector"
+        <TextBlock Text="{lang:Loc Components_Input_Sel}"
                  FontFamily="{StaticResource AppTextFont}"
                  FontSize="36"
                  FontWeight="UltraBold"
@@ -98,7 +99,7 @@
             Margin="70,300,0,0">
 
       <StackPanel VerticalAlignment="Stretch">
-        <TextBlock Text="Valves"
+        <TextBlock Text="{lang:Loc Components_Valves}"
                  FontFamily="{StaticResource AppTextFont}"
                  FontSize="36"
                  FontWeight="UltraBold"
@@ -117,7 +118,7 @@
             <ToggleButton Style="{StaticResource ToggleButtonThemeStyle}"
                           Height="60"
                           Width="150"
-                          Content="Valve 1"
+                          Content="{lang:Loc Components_Valve1}"
                           IsChecked="False"
                           Command="{Binding ValvesButtonClickCommand}">
               <ToggleButton.CommandParameter>
@@ -127,7 +128,7 @@
             <ToggleButton Style="{StaticResource ToggleButtonThemeStyle}"
                           Height="60"
                           Width="150"
-                          Content="Valve 2"
+                          Content="{lang:Loc Components_Valve2}"
                           IsChecked="False"
                           Command="{Binding ValvesButtonClickCommand}">
               <ToggleButton.CommandParameter>
@@ -137,7 +138,7 @@
             <ToggleButton Style="{StaticResource ToggleButtonThemeStyle}"
                           Height="60"
                           Width="150"
-                          Content="Cuvet Drain&#x0a;       Open"
+                          Content="{lang:Loc Components_Cuvet_Drain_Open}"
                           IsChecked="False"
                           Command="{Binding ValvesButtonClickCommand}">
               <ToggleButton.CommandParameter>
@@ -147,7 +148,7 @@
             <ToggleButton Style="{StaticResource ToggleButtonThemeStyle}"
                           Height="60"
                           Width="150"
-                          Content="Fan"
+                          Content="{lang:Loc Components_Fan}"
                           IsChecked="False"
                           Command="{Binding ValvesButtonClickCommand}">
               <ToggleButton.CommandParameter>
@@ -167,7 +168,7 @@
             Width="180">
 
       <StackPanel VerticalAlignment="Stretch">
-        <TextBlock Text="Lasers"
+        <TextBlock Text="{lang:Loc Components_Lasers}"
                  FontFamily="{StaticResource AppTextFont}"
                  FontSize="36"
                  FontWeight="UltraBold"
@@ -189,7 +190,7 @@
                 <ToggleButton Style="{StaticResource ToggleButtonThemeStyle}"
                               Height="50"
                               Width="150"
-                              Content="Red"
+                              Content="{lang:Loc Red}"
                               IsChecked="False"
                               VerticalAlignment="Top"
                               HorizontalAlignment="Center"
@@ -198,7 +199,7 @@
                     <System:Int32>1</System:Int32>
                   </ToggleButton.CommandParameter>
                 </ToggleButton>
-                <TextBlock Text="Power"
+                <TextBlock Text="{lang:Loc Power}"
                            FontFamily="{StaticResource AppTextFont}"
                            FontSize="20"
                            FontWeight="UltraBold"
@@ -225,7 +226,7 @@
                 <ToggleButton Style="{StaticResource ToggleButtonThemeStyle}"
                               Height="50"
                               Width="150"
-                              Content="Green"
+                              Content="{lang:Loc Green}"
                               IsChecked="False"
                               VerticalAlignment="Top"
                               HorizontalAlignment="Center"
@@ -234,7 +235,7 @@
                     <System:Int32>2</System:Int32>
                   </ToggleButton.CommandParameter>
                 </ToggleButton>
-                <TextBlock Text="Power"
+                <TextBlock Text="{lang:Loc Power}"
                            FontFamily="{StaticResource AppTextFont}"
                            FontSize="20"
                            FontWeight="UltraBold"
@@ -261,7 +262,7 @@
                 <ToggleButton Style="{StaticResource ToggleButtonThemeStyle}"
                               Height="50"
                               Width="150"
-                              Content="Violet"
+                              Content="{lang:Loc Violet}"
                               IsChecked="False"
                               VerticalAlignment="Top"
                               HorizontalAlignment="Center"
@@ -270,7 +271,7 @@
                     <System:Int32>3</System:Int32>
                   </ToggleButton.CommandParameter>
                 </ToggleButton>
-                <TextBlock Text="Power"
+                <TextBlock Text="{lang:Loc Power}"
                            FontFamily="{StaticResource AppTextFont}"
                            FontSize="20"
                            FontWeight="UltraBold"
@@ -589,7 +590,7 @@
           <ToggleButton Style="{StaticResource ToggleButtonThemeStyle}"
                       Height="50"
                       Width="130"
-                      Content="Sampling&#x0a;      ON"
+                      Content="{lang:Loc Components_Sampling_ON}"
                       IsChecked="False"
                       VerticalAlignment="Top"
                       HorizontalAlignment="Center"
@@ -604,14 +605,14 @@
           <ToggleButton Style="{StaticResource ToggleButtonThemeStyle}"
                       Height="50"
                       Width="130"
-                      Content="Single Step&#x0a;     Debug"
+                      Content="{lang:Loc Components_Singl_Step_Deb}"
                       IsChecked="False"
                       VerticalAlignment="Top"
                       HorizontalAlignment="Center"
                       Command="{Binding SingleStepDebugToggleButtonClickCommand}"/>
         </Border>
 
-        <dx:SimpleButton Content="Flush" 
+        <dx:SimpleButton Content="{lang:Loc Components_Flush}"
                          Command="{Binding FlushButtonClickCommand}"
                          Height="50" Width="130"
                          HorizontalAlignment="Center"
@@ -621,7 +622,7 @@
                          FontWeight="UltraBold"
                          Foreground="{StaticResource AppTextColor}"
                          Margin="0,0,0,3"/>
-        <dx:SimpleButton Content="Startup" 
+        <dx:SimpleButton Content="{lang:Loc Components_Startup}"
                          Command="{Binding StartupButtonClickCommand}"
                          Height="50" Width="130"
                          HorizontalAlignment="Center"
@@ -630,7 +631,6 @@
                          FontSize="16"
                          FontWeight="UltraBold"
                          Foreground="{StaticResource AppTextColor}"/>
-
       </StackPanel>
     </Border>
 
@@ -640,7 +640,7 @@
       <Grid>
         <StackPanel HorizontalAlignment="Left">
 
-          <dx:SimpleButton Content="Move Idex" 
+          <dx:SimpleButton Content="{lang:Loc Components_Move_Idex}"
                            Command="{Binding MoveIdexButtonClickCommand}"
                            Height="50" Width="120"
                            HorizontalAlignment="Center"
@@ -669,7 +669,7 @@
             <ToggleButton Style="{StaticResource ToggleButtonThemeStyle}"
                           Height="50"
                           Width="120"
-                          Content="     CW&#x0a;Direction"
+                          Content="{lang:Loc Components_CW_Dir}"
                           IsChecked="False"
                           Command="{Binding CWDirectionToggleButtonClickCommand}"/>
           </Border>
@@ -678,7 +678,7 @@
 
         <StackPanel HorizontalAlignment="Left"
                     Margin="130,0,0,0">
-          <dx:SimpleButton Content="Position" 
+          <dx:SimpleButton Content="{lang:Loc Components_Position}"
                            Command="{Binding IdexPositionButtonClickCommand}"
                            Height="50" Width="120"
                            HorizontalAlignment="Center"
@@ -688,7 +688,7 @@
                            FontWeight="UltraBold"
                            Foreground="{StaticResource AppTextColor}"
                            Margin="0,45,0,0"/>
-          <TextBlock Text="Max Steps"
+          <TextBlock Text="{lang:Loc Components_Max_Steps}"
                      FontFamily="{StaticResource AppTextFont}"
                      FontSize="26"
                      FontWeight="UltraBold"

@@ -72,7 +72,7 @@
                  Margin="0,0,0,6"/>
         <StackPanel Orientation="Horizontal">
           <StackPanel Width="100" Margin="0,0,20,0">
-            <TextBlock Text="Height"
+            <TextBlock Text="{lang:Loc Calibration_Height}"
                  FontFamily="{StaticResource AppTextFont}"
                  FontSize="30"
                  FontWeight="UltraBold"
@@ -89,7 +89,7 @@
           </StackPanel>
           <StackPanel Width="140" Margin="0,0,20,0">
 
-            <TextBlock Text="Min SSC"
+            <TextBlock Text="{lang:Loc Calibration_Min_SSC}"
                  FontFamily="{StaticResource AppTextFont}"
                  FontSize="30"
                  FontWeight="UltraBold"
@@ -105,7 +105,7 @@
           </StackPanel>
           <StackPanel Width="140">
 
-            <TextBlock Text="Max SSC"
+            <TextBlock Text="{lang:Loc Calibration_Max_SSC}"
                  FontFamily="{StaticResource AppTextFont}"
                  FontSize="30"
                  FontWeight="UltraBold"
@@ -195,7 +195,7 @@
             VerticalAlignment="Top"
             Margin="700,310,0,0">
       <StackPanel>
-        <TextBlock Text="Classification&#x0a;       Targets"
+        <TextBlock Text="{lang:Loc Calibration_Classification_targets}"
                  FontFamily="{StaticResource AppTextFont}"
                  FontSize="36"
                  FontWeight="UltraBold"
@@ -205,7 +205,7 @@
                  Margin="0,0,0,6"/>
         <StackPanel Orientation="Horizontal">
           <StackPanel Width="100" Margin="100,0,0,0">
-            <TextBlock Text="CL0"
+            <TextBlock Text="{lang:Loc CL0}"
                  FontFamily="{StaticResource AppTextFont}"
                  FontSize="30"
                  FontWeight="UltraBold"
@@ -213,7 +213,7 @@
                  HorizontalAlignment="Center"
                  VerticalAlignment="Top"
                  Margin="0,0,0,3"/>
-            <TextBlock Text="CL1"
+            <TextBlock Text="{lang:Loc CL1}"
                  FontFamily="{StaticResource AppTextFont}"
                  FontSize="30"
                  FontWeight="UltraBold"
@@ -221,7 +221,7 @@
                  HorizontalAlignment="Center"
                  VerticalAlignment="Top"
                  Margin="0,0,0,3"/>
-            <TextBlock Text="CL2"
+            <TextBlock Text="{lang:Loc CL2}"
                  FontFamily="{StaticResource AppTextFont}"
                  FontSize="30"
                  FontWeight="UltraBold"
@@ -229,7 +229,7 @@
                  HorizontalAlignment="Center"
                  VerticalAlignment="Top"
                  Margin="0,0,0,3"/>
-            <TextBlock Text="CL3"
+            <TextBlock Text="{lang:Loc CL3}"
                  FontFamily="{StaticResource AppTextFont}"
                  FontSize="30"
                  FontWeight="UltraBold"
@@ -237,7 +237,7 @@
                  HorizontalAlignment="Center"
                  VerticalAlignment="Top"
                  Margin="0,0,0,3"/>
-            <TextBlock Text="RP1"
+            <TextBlock Text="{lang:Loc RP1}"
                  FontFamily="{StaticResource AppTextFont}"
                  FontSize="30"
                  FontWeight="UltraBold"
@@ -307,7 +307,7 @@
             VerticalAlignment="Top"
             Margin="750,110,0,0">
       <StackPanel>
-        <TextBlock Text="High DNR Coefficient"
+        <TextBlock Text="{lang:Loc Calibration_High_DNR_Coeff}"
                    FontFamily="{StaticResource AppTextFont}"
                    FontSize="26"
                    FontWeight="UltraBold"
@@ -321,7 +321,7 @@
                  Margin="0,0,10,3"
                  Style="{StaticResource InputFieldStyle}"
                  Text="{Binding DNRContents[0]}"/>
-        <TextBlock Text="High DNR Transition"
+        <TextBlock Text="{lang:Loc Calibration_High_DNR_Trans}"
                    FontFamily="{StaticResource AppTextFont}"
                    FontSize="26"
                    FontWeight="UltraBold"

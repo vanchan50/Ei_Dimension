@@ -43,6 +43,7 @@ namespace Ei_Dimension.ViewModels
       InputSelectorState.Add("To Pickup");
       InputSelectorState.Add("To Cuvet");
 
+
       LaserRedActive = false;
       LaserGreenActive = false;
       LaserVioletActive = false;
@@ -73,7 +74,7 @@ namespace Ei_Dimension.ViewModels
 
     public void InputSelectorSwapButtonClick()
     {
-      string temp = InputSelectorState[0];
+      var temp = InputSelectorState[0];
       InputSelectorState[0] = InputSelectorState[1];
       InputSelectorState[1] = temp;
     }
