@@ -21,6 +21,7 @@
                HorizontalAlignment="Center"
                VerticalAlignment="Top"
                Margin="0,10,250,0"/>
+    
     <!--Gating-->
     <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"
@@ -33,15 +34,15 @@
                  Foreground="{StaticResource AppTextColor}"
                  HorizontalAlignment="Center"
                  VerticalAlignment="Top"
-                 Margin="0,00,0,0"/>
+                 Margin="0,0,0,0"/>
         <dx:DropDownButton Width="300"
-                        Height="50"
-                        FontSize="25"
-                        VerticalAlignment="Bottom"
-                        HorizontalAlignment="Left"
-                        FontFamily="{StaticResource AppTextFont}"
-                        Foreground="{StaticResource AppTextColor}"
-                        Content="{Binding SelectedGatingContent}"  >
+                           Height="50"
+                           FontSize="25"
+                           VerticalAlignment="Bottom"
+                           HorizontalAlignment="Left"
+                           FontFamily="{StaticResource AppTextFont}"
+                           Foreground="{StaticResource AppTextColor}"
+                           Content="{Binding SelectedGatingContent}">
           <dxb:PopupMenu ItemLinksSource="{Binding GatingItems}">
             <dxb:PopupMenu.ItemTemplate>
               <DataTemplate>
@@ -84,7 +85,11 @@
                       HorizontalAlignment="Stretch"
                       Margin="10,0,10,3"
                       Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding EventTriggerContents[0]}"/>
+                      Text="{Binding EventTriggerContents[0]}">
+              <dxmvvm:Interaction.Behaviors>
+                <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="1"/>
+              </dxmvvm:Interaction.Behaviors>
+            </TextBox>
           </StackPanel>
           <StackPanel Width="140" Margin="0,0,20,0">
 
@@ -100,7 +105,11 @@
                       HorizontalAlignment="Stretch"
                       Margin="20,0,20,3"
                       Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding EventTriggerContents[1]}"/>
+                      Text="{Binding EventTriggerContents[1]}">
+              <dxmvvm:Interaction.Behaviors>
+                <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="2"/>
+              </dxmvvm:Interaction.Behaviors>
+            </TextBox>
           </StackPanel>
           <StackPanel Width="140">
 
@@ -116,7 +125,11 @@
                       HorizontalAlignment="Stretch"
                       Margin="20,0,20,3"
                       Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding EventTriggerContents[2]}"/>
+                      Text="{Binding EventTriggerContents[2]}">
+              <dxmvvm:Interaction.Behaviors>
+                <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="3"/>
+              </dxmvvm:Interaction.Behaviors>
+            </TextBox>
           </StackPanel>
         </StackPanel>
       </StackPanel>
@@ -185,7 +198,6 @@
                          FontWeight="UltraBold"
                          Foreground="{StaticResource AppTextColor}"
                          Margin="0,0,0,3"/>
-
       </StackPanel>
     </Border>
     
@@ -252,27 +264,47 @@
                       HorizontalAlignment="Stretch"
                       Margin="0,0,40,3"
                       Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding ClassificationTargetsContents[0]}"/>
+                      Text="{Binding ClassificationTargetsContents[0]}">
+              <dxmvvm:Interaction.Behaviors>
+                <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="6"/>
+              </dxmvvm:Interaction.Behaviors>
+            </TextBox>
             <TextBox  Height="36"
                       HorizontalAlignment="Stretch"
                       Margin="0,0,40,3"
                       Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding ClassificationTargetsContents[1]}"/>
+                      Text="{Binding ClassificationTargetsContents[1]}">
+              <dxmvvm:Interaction.Behaviors>
+                <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="7"/>
+              </dxmvvm:Interaction.Behaviors>
+            </TextBox>
             <TextBox  Height="36"
                       HorizontalAlignment="Stretch"
                       Margin="0,0,40,3"
                       Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding ClassificationTargetsContents[2]}"/>
+                      Text="{Binding ClassificationTargetsContents[2]}">
+              <dxmvvm:Interaction.Behaviors>
+                <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="8"/>
+              </dxmvvm:Interaction.Behaviors>
+            </TextBox>
             <TextBox  Height="36"
                       HorizontalAlignment="Stretch"
                       Margin="0,0,40,3"
                       Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding ClassificationTargetsContents[3]}"/>
+                      Text="{Binding ClassificationTargetsContents[3]}">
+              <dxmvvm:Interaction.Behaviors>
+                <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="9"/>
+              </dxmvvm:Interaction.Behaviors>
+            </TextBox>
             <TextBox  Height="36"
                       HorizontalAlignment="Stretch"
                       Margin="0,0,40,3"
                       Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding ClassificationTargetsContents[4]}"/>
+                      Text="{Binding ClassificationTargetsContents[4]}">
+              <dxmvvm:Interaction.Behaviors>
+                <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="10"/>
+              </dxmvvm:Interaction.Behaviors>
+            </TextBox>
           </StackPanel>
         </StackPanel>
       </StackPanel>
@@ -297,7 +329,11 @@
                  HorizontalAlignment="Center"
                  Margin="0,0,10,3"
                  Style="{StaticResource InputFieldStyle}"
-                 Text="{Binding CompensationPercentageContent}"/>
+                 Text="{Binding CompensationPercentageContent[0]}">
+          <dxmvvm:Interaction.Behaviors>
+            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="0"/>
+          </dxmvvm:Interaction.Behaviors>
+        </TextBox>
       </StackPanel>
     </Border>
     
@@ -319,7 +355,11 @@
                  HorizontalAlignment="Center"
                  Margin="0,0,10,3"
                  Style="{StaticResource InputFieldStyle}"
-                 Text="{Binding DNRContents[0]}"/>
+                 Text="{Binding DNRContents[0]}">
+          <dxmvvm:Interaction.Behaviors>
+            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="4"/>
+          </dxmvvm:Interaction.Behaviors>
+        </TextBox>
         <TextBlock Text="{lang:Loc Calibration_High_DNR_Trans}"
                    FontFamily="{StaticResource AppTextFont}"
                    FontSize="26"
@@ -333,7 +373,11 @@
                  HorizontalAlignment="Center"
                  Margin="0,0,10,3"
                  Style="{StaticResource InputFieldStyle}"
-                 Text="{Binding DNRContents[1]}"/>
+                 Text="{Binding DNRContents[1]}">
+          <dxmvvm:Interaction.Behaviors>
+            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="5"/>
+          </dxmvvm:Interaction.Behaviors>
+        </TextBox>
       </StackPanel>
     </Border>
     

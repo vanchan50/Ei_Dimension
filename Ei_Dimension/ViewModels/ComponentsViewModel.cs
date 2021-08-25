@@ -15,25 +15,25 @@ namespace Ei_Dimension.ViewModels
     public virtual bool LaserRedActive { get; set; }
     public virtual bool LaserGreenActive { get; set; }
     public virtual bool LaserVioletActive { get; set; }
-    public virtual string LaserRedPowerValue { get; set; }
-    public virtual string LaserGreenPowerValue { get; set; }
-    public virtual string LaserVioletPowerValue { get; set; }
+    public virtual ObservableCollection<string> LaserRedPowerValue { get; set; }
+    public virtual ObservableCollection<string> LaserGreenPowerValue { get; set; }
+    public virtual ObservableCollection<string> LaserVioletPowerValue { get; set; }
 
     public virtual ObservableCollection<DropDownButtonContents> SyringeControlItems { get; set; }
     public virtual string SelectedSheathContent { get; set; }
     public virtual string SelectedSampleAContent { get; set; }
     public virtual string SelectedSampleBContent { get; set; }
-    public virtual string SyringeControlSheathValue { get; set; }
-    public virtual string SyringeControlSampleAValue { get; set; }
-    public virtual string SyringeControlSampleBValue { get; set; }
+    public virtual ObservableCollection<string> SyringeControlSheathValue { get; set; }
+    public virtual ObservableCollection<string> SyringeControlSampleAValue { get; set; }
+    public virtual ObservableCollection<string> SyringeControlSampleBValue { get; set; }
 
     public virtual string GetPositionToggleButtonState { get; set; }
-    public virtual string[] GetPositionTextBoxInputs { get; set; }
+    public virtual ObservableCollection<string> GetPositionTextBoxInputs { get; set; }
 
     public virtual bool SamplingActive { get; set; }
     public virtual bool SingleStepDebugActive { get; set; }
 
-    public virtual string[] IdexTextBoxInputs { get; set; }
+    public virtual ObservableCollection<string> IdexTextBoxInputs { get; set; }
     public virtual bool CWDirectionActive { get; set; }
 
     public static ComponentsViewModel Instance { get; private set; }
@@ -51,6 +51,9 @@ namespace Ei_Dimension.ViewModels
       LaserRedActive = false;
       LaserGreenActive = false;
       LaserVioletActive = false;
+      LaserRedPowerValue = new ObservableCollection<string> {""};
+      LaserGreenPowerValue = new ObservableCollection<string> {""};
+      LaserVioletPowerValue = new ObservableCollection<string> {""};
 
       var RM = Language.Resources.ResourceManager;
       var curCulture = Language.TranslationSource.Instance.CurrentCulture;
@@ -73,15 +76,19 @@ namespace Ei_Dimension.ViewModels
       SelectedSampleAContent = SyringeControlItems[0].Content;
       SelectedSampleBContent = SyringeControlItems[0].Content;
 
+      SyringeControlSheathValue = new ObservableCollection<string> {""};
+      SyringeControlSampleAValue = new ObservableCollection<string> {""};
+      SyringeControlSampleBValue = new ObservableCollection<string> {""};
+
       GetPositionToggleButtonState = RM.GetString(nameof(Language.Resources.OFF),
         Language.TranslationSource.Instance.CurrentCulture);
 
-      GetPositionTextBoxInputs = new string[3];
+      GetPositionTextBoxInputs = new ObservableCollection<string> {"", "", ""};
 
       SamplingActive = false;
       SingleStepDebugActive = false;
 
-      IdexTextBoxInputs = new string[2];
+      IdexTextBoxInputs = new ObservableCollection<string> { "", "" };
       CWDirectionActive = false;
       Instance = this;
     }
@@ -207,9 +214,48 @@ namespace Ei_Dimension.ViewModels
 
     public void IdexPositionButtonClick()
     {
-
+      App.InjectToFocusedTextbox("LOLKEKCHEBUREK");
     }
 
+    public void FocusedBox(int num)
+    {
+      switch (num)
+      {
+        case 0:
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(IdexTextBoxInputs)), this, 0);
+          break;
+        case 1:
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(IdexTextBoxInputs)), this, 1);
+          break;
+        case 2:
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(LaserRedPowerValue)), this, 0);
+          break;
+        case 3:
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(LaserGreenPowerValue)), this, 0);
+          break;
+        case 4:
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(LaserVioletPowerValue)), this, 0);
+          break;
+        case 5:
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(SyringeControlSheathValue)), this, 0);
+          break;
+        case 6:
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(SyringeControlSampleAValue)), this, 0);
+          break;
+        case 7:
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(SyringeControlSampleBValue)), this, 0);
+          break;
+        case 8:
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(GetPositionTextBoxInputs)), this, 0);
+          break;
+        case 9:
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(GetPositionTextBoxInputs)), this, 1);
+          break;
+        case 10:
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(GetPositionTextBoxInputs)), this, 2);
+          break;
+      }
+    }
 
     public class DropDownButtonContents : Core.ObservableObject
     {

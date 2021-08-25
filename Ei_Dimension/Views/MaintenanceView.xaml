@@ -133,7 +133,11 @@
                       Width="80"
                       Margin="10,0,10,3"
                       Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding SanitizeSecondsContent}"/>
+                      Text="{Binding SanitizeSecondsContent[0]}">
+            <dxmvvm:Interaction.Behaviors>
+              <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="0"/>
+            </dxmvvm:Interaction.Behaviors>
+          </TextBox>
           <TextBlock Text="{lang:Loc Seconds}"
                  FontFamily="{StaticResource AppTextFont}"
                  FontSize="30"

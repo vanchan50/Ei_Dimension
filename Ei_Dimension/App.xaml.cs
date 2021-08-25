@@ -14,6 +14,7 @@ namespace Ei_Dimension
   /// </summary>
   public partial class App : Application
   {
+    public static (System.Reflection.PropertyInfo prop, object VM, int index) SelectedTextBox { get; set; }  //ActiveProperty, VM, index, IsFocused
     public static MicroCy.MicroCyDevice Device { get; private set; }
     public App()
     {
@@ -90,6 +91,12 @@ namespace Ei_Dimension
         CaliVM.GatingItems[7].Content = RM.GetString(nameof(Language.Resources.Dropdown_Green_Red_Rp_bg), curCulture);
         CaliVM.SelectedGatingContent = CaliVM.GatingItems[0].Content;
       }
+    }
+
+    public static void InjectToFocusedTextbox(string input)
+    {
+      if(SelectedTextBox.prop != null)
+        ((ObservableCollection<string>)SelectedTextBox.prop.GetValue(SelectedTextBox.VM))[SelectedTextBox.index] = input;
     }
   }
 }

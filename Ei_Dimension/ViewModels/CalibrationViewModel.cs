@@ -12,10 +12,10 @@ namespace Ei_Dimension.ViewModels
     public virtual ObservableCollection<DropDownButtonContents> GatingItems { get; set; }
     public virtual string CalibrationParameter { get; set; }
 
-    public virtual string[] EventTriggerContents { get; set; }
-    public virtual string[] ClassificationTargetsContents { get; set; }
-    public virtual string CompensationPercentageContent { get; set; }
-    public virtual string[] DNRContents { get; set; }
+    public virtual ObservableCollection<string> EventTriggerContents { get; set; }
+    public virtual ObservableCollection<string> ClassificationTargetsContents { get; set; }
+    public virtual ObservableCollection<string>  CompensationPercentageContent { get; set; }
+    public virtual ObservableCollection<string> DNRContents { get; set; }
 
     public static CalibrationViewModel Instance { get; private set; }
 
@@ -36,16 +36,13 @@ namespace Ei_Dimension.ViewModels
       };
       SelectedGatingContent = GatingItems[0].Content;
 
-      EventTriggerContents = new string[3];
-      EventTriggerContents[1] = "7000";
-      EventTriggerContents[2] = "10000";
+      EventTriggerContents = new ObservableCollection<string> {"", "7000", "10000" };
 
-      ClassificationTargetsContents = new string[5] { "1", "1", "1", "1", "3500"};
+      ClassificationTargetsContents = new ObservableCollection<string> { "1", "1", "1", "1", "3500"};
 
       CalibrationParameter = "Off";
-      CompensationPercentageContent = "1";
-      DNRContents = new string[2];
-      DNRContents[1] = "7200";
+      CompensationPercentageContent = new ObservableCollection<string> { "1" };
+      DNRContents = new ObservableCollection<string> { "", "7200" };
       Instance = this;
     }
 
@@ -62,6 +59,46 @@ namespace Ei_Dimension.ViewModels
     public void SaveCalibrationToMapClick()
     {
 
+    }
+
+    public void FocusedBox(int num)
+    {
+      switch (num)
+      {
+        case 0:
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(CompensationPercentageContent)), this, 0);
+          break;
+        case 1:
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(EventTriggerContents)), this, 0);
+          break;
+        case 2:
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(EventTriggerContents)), this, 1);
+          break;
+        case 3:
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(EventTriggerContents)), this, 2);
+          break;
+        case 4:
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(DNRContents)), this, 0);
+          break;
+        case 5:
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(DNRContents)), this, 1);
+          break;
+        case 6:
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(ClassificationTargetsContents)), this, 0);
+          break;
+        case 7:
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(ClassificationTargetsContents)), this, 1);
+          break;
+        case 8:
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(ClassificationTargetsContents)), this, 2);
+          break;
+        case 9:
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(ClassificationTargetsContents)), this, 3);
+          break;
+        case 10:
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(ClassificationTargetsContents)), this, 4);
+          break;
+      }
     }
 
     public class DropDownButtonContents : Core.ObservableObject

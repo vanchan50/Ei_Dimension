@@ -16,24 +16,36 @@ namespace Ei_Dimension.ViewModels
     public virtual ObservableCollection<DropDownButtonContents> WellColumnButtonItems { get; set; }
     public virtual string SelectedWellRow { get; set; }
     public virtual string SelectedWellColumn { get; set; }
-    public virtual string[] ParametersX { get; set; }
-    public virtual string[] ParametersY { get; set; }
-    public virtual string[] ParametersZ { get; set; }
-    public virtual string[] StepsParametersX { get; set; }
-    public virtual string[] StepsParametersY { get; set; }
-    public virtual string[] StepsParametersZ { get; set; }
+    public virtual ObservableCollection<string> ParametersX { get; set; }
+    public virtual ObservableCollection<string> ParametersY { get; set; }
+    public virtual ObservableCollection<string> ParametersZ { get; set; }
+    public virtual ObservableCollection<string> StepsParametersX { get; set; }
+    public virtual ObservableCollection<string> StepsParametersY { get; set; }
+    public virtual ObservableCollection<string> StepsParametersZ { get; set; }
 
     private int _amountOfWells;
 
     protected MotorsViewModel()
     {
       PollStepActive = false;
-      ParametersX = new string[7];
-      ParametersY = new string[7];
-      ParametersZ = new string[7];
-      StepsParametersX = new string[5];
-      StepsParametersY = new string[5];
-      StepsParametersZ = new string[5];
+      ParametersX = new ObservableCollection<string>();
+      ParametersY = new ObservableCollection<string>();
+      ParametersZ = new ObservableCollection<string>();
+      StepsParametersX = new ObservableCollection<string>();
+      StepsParametersY = new ObservableCollection<string>();
+      StepsParametersZ = new ObservableCollection<string>();
+      for (var i = 0; i < 7; i++)
+      {
+        ParametersX.Add("");
+        ParametersY.Add("");
+        ParametersZ.Add("");
+      }
+      for (var i = 0; i < 5; i++)
+      {
+        StepsParametersX.Add("");
+        StepsParametersY.Add("");
+        StepsParametersZ.Add("");
+      }
       ParametersX[1] = "Left";
       ParametersY[1] = "Front";
       ParametersZ[1] = "Up";
@@ -158,6 +170,111 @@ namespace Ei_Dimension.ViewModels
       }
     }
 
+    public void FocusedBox(int num)
+    {
+      switch (num)
+      {
+        case 0:
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(ParametersX)), this, 0);
+          break;
+        case 1:
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(ParametersX)), this, 2);
+          break;
+        case 2:
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(ParametersX)), this, 3);
+          break;
+        case 3:
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(ParametersX)), this, 4);
+          break;
+        case 4:
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(ParametersX)), this, 5);
+          break;
+        case 5:
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(ParametersX)), this, 6);
+          break;
+        case 6:
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(ParametersY)), this, 0);
+          break;
+        case 7:
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(ParametersY)), this, 2);
+          break;
+        case 8:
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(ParametersY)), this, 3);
+          break;
+        case 9:
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(ParametersY)), this, 4);
+          break;
+        case 10:
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(ParametersY)), this, 5);
+          break;
+        case 11:
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(ParametersY)), this, 6);
+          break;
+        case 12:
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(ParametersZ)), this, 0);
+          break;
+        case 13:
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(ParametersZ)), this, 2);
+          break;
+        case 14:
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(ParametersZ)), this, 3);
+          break;
+        case 15:
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(ParametersZ)), this, 4);
+          break;
+        case 16:
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(ParametersZ)), this, 5);
+          break;
+        case 17:
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(ParametersZ)), this, 6);
+          break;
+        case 18:
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(StepsParametersX)), this, 0);
+          break;
+        case 19:
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(StepsParametersX)), this, 1);
+          break;
+        case 20:
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(StepsParametersX)), this, 2);
+          break;
+        case 21:
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(StepsParametersX)), this, 3);
+          break;
+        case 22:
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(StepsParametersX)), this, 4);
+          break;
+        case 23:
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(StepsParametersY)), this, 0);
+          break;
+        case 24:
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(StepsParametersY)), this, 1);
+          break;
+        case 25:
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(StepsParametersY)), this, 2);
+          break;
+        case 26:
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(StepsParametersY)), this, 3);
+          break;
+        case 27:
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(StepsParametersY)), this, 4);
+          break;
+        case 28:
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(StepsParametersZ)), this, 0);
+          break;
+        case 29:
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(StepsParametersZ)), this, 1);
+          break;
+        case 30:
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(StepsParametersZ)), this, 2);
+          break;
+        case 31:
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(StepsParametersZ)), this, 3);
+          break;
+        case 32:
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(StepsParametersZ)), this, 4);
+          break;
+      }
+    }
 
     public class DropDownButtonContents
     {

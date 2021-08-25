@@ -10,37 +10,6 @@
              DataContext="{dxmvvm:ViewModelSource Type=ViewModels:ExperimentViewModel}"
              d:DesignHeight="674" d:DesignWidth="1500">
   <Grid>
-    <dxc:ChartControl>
-      <dxc:XYDiagram2D>
-        <dxc:XYDiagram2D.AxisY>
-          <dxc:AxisY2D>
-            <dxc:AxisY2D.Title>
-              <dxc:AxisTitle Content="CL2" Visible="True"/>
-            </dxc:AxisY2D.Title>
-          </dxc:AxisY2D>
-        </dxc:XYDiagram2D.AxisY>
-        <dxc:XYDiagram2D.AxisX>
-          <dxc:AxisX2D Logarithmic="True">
-            <dxc:AxisX2D.Title>
-              <dxc:AxisTitle Content="CL1"  Visible="True"/>
-            </dxc:AxisX2D.Title>
-          </dxc:AxisX2D>
-        </dxc:XYDiagram2D.AxisX>
-        <dxc:PointSeries2D DisplayName="Series 1" AggregateFunction="None" Brush="#FFEB2323" MarkerSize="20">
-          <dxc:SeriesPoint Argument="1" Value="6.5"/>
-          <dxc:SeriesPoint Argument="2" Value="5.5"/>
-          <dxc:SeriesPoint Argument="3" Value="12.5"/>
-          <dxc:SeriesPoint Argument="4" Value="11.5"/>
-          <dxc:SeriesPoint Argument="5" Value="18.5"/>
-        </dxc:PointSeries2D>
-        <dxc:PointSeries2D Brush="#FF4EA642" DisplayName="Series 2" MarkerSize="20">
-          <dxc:SeriesPoint Argument="1" Value="6.5"/>
-          <dxc:SeriesPoint Argument="2.5" Value="5"/>
-          <dxc:SeriesPoint Argument="3.5" Value="12"/>
-          <dxc:SeriesPoint Argument="4.5" Value="11"/>
-          <dxc:SeriesPoint Argument="5.5" Value="18"/>
-        </dxc:PointSeries2D>
-      </dxc:XYDiagram2D>
-    </dxc:ChartControl>
+  
   </Grid>
 </UserControl>

@@ -11,7 +11,7 @@ namespace Ei_Dimension.ViewModels
   {
     public virtual bool LEDsToggleButtonState { get; set; }
     public virtual object LEDSliderValue { get; set; }
-    public virtual string SanitizeSecondsContent { get; set; }
+    public virtual ObservableCollection<string> SanitizeSecondsContent { get; set; }
 
     public virtual ObservableCollection<DropDownButtonContents> LanguageItems { get; set; }
     public virtual string SelectedLanguage { get; set; }
@@ -22,6 +22,7 @@ namespace Ei_Dimension.ViewModels
     {
       LEDSliderValue = 0;
       LEDsToggleButtonState = false;
+      SanitizeSecondsContent = new ObservableCollection<string> { "" };
       LanguageItems = new ObservableCollection<DropDownButtonContents>();
       foreach(var lang in Language.Supported.Languages)
       {
@@ -58,6 +59,16 @@ namespace Ei_Dimension.ViewModels
     public void NavigateChannels()
     {
       NavigationService.Navigate("ChannelsView", null, this);
+    }
+
+    public void FocusedBox(int num)
+    {
+      switch (num)
+      {
+        case 0:
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(SanitizeSecondsContent)), this, 0);
+          break;
+      }
     }
 
     public class DropDownButtonContents
