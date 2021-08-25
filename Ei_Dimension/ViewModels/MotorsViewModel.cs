@@ -23,7 +23,6 @@ namespace Ei_Dimension.ViewModels
     public virtual string[] StepsParametersY { get; set; }
     public virtual string[] StepsParametersZ { get; set; }
 
-
     private int _amountOfWells;
 
     protected MotorsViewModel()
@@ -187,6 +186,4 @@ namespace Ei_Dimension.ViewModels
       }
     }
   }
-
-  
 }

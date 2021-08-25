@@ -16,13 +16,24 @@ namespace Ei_Dimension.ViewModels
     public virtual string[] ClassificationTargetsContents { get; set; }
     public virtual string CompensationPercentageContent { get; set; }
     public virtual string[] DNRContents { get; set; }
-    
+
+    public static CalibrationViewModel Instance { get; private set; }
 
     protected CalibrationViewModel()
     {
-      GatingItems = new ObservableCollection<DropDownButtonContents> { new DropDownButtonContents("None", this), new DropDownButtonContents("Green SSC", this),
-      new DropDownButtonContents("Red SSC", this), new DropDownButtonContents("Green + Red SSC", this), new DropDownButtonContents("RP bg", this),
-      new DropDownButtonContents("Green + RP bg", this), new DropDownButtonContents("Red + RP bg", this), new DropDownButtonContents("Green + Red + RP bg", this),};
+      var RM = Language.Resources.ResourceManager;
+      var curCulture = Language.TranslationSource.Instance.CurrentCulture;
+      GatingItems = new ObservableCollection<DropDownButtonContents>
+      {
+        new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_None), curCulture), this),
+        new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_Green_SSC), curCulture), this),
+        new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_Red_SSC), curCulture), this),
+        new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_Green_Red_SSC), curCulture), this),
+        new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_Rp_bg), curCulture), this),
+        new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_Green_Rp_bg), curCulture), this),
+        new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_Red_Rp_bg), curCulture), this),
+        new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_Green_Red_Rp_bg), curCulture), this)
+      };
       SelectedGatingContent = GatingItems[0].Content;
 
       EventTriggerContents = new string[3];
@@ -35,6 +46,7 @@ namespace Ei_Dimension.ViewModels
       CompensationPercentageContent = "1";
       DNRContents = new string[2];
       DNRContents[1] = "7200";
+      Instance = this;
     }
 
     public static CalibrationViewModel Create()
@@ -52,9 +64,18 @@ namespace Ei_Dimension.ViewModels
 
     }
 
-    public class DropDownButtonContents
+    public class DropDownButtonContents : Core.ObservableObject
     {
-      public string Content { get; set; }
+      public string Content
+      {
+        get => _content;
+        set
+        {
+          _content = value;
+          OnPropertyChanged();
+        }
+      }
+      private string _content;
       private static CalibrationViewModel _vm;
       public DropDownButtonContents(string content, CalibrationViewModel vm = null)
       {

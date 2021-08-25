@@ -117,6 +117,38 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Alignment_Align_Seq" xml:space="preserve">
+    <value>Align Sequence</value>
+  </data>
+  <data name="Alignment_Auto_Align" xml:space="preserve">
+    <value>Auto Align</value>
+  </data>
+  <data name="Alignment_Find_Peak" xml:space="preserve">
+    <value>Find Peak</value>
+  </data>
+  <data name="Alignment_GoTo" xml:space="preserve">
+    <value>GoTo</value>
+  </data>
+  <data name="Alignment_GoTo_Peak" xml:space="preserve">
+    <value>GoTo Peak</value>
+  </data>
+  <data name="Alignment_Laser_Align_Motor" xml:space="preserve">
+    <value>       Laser
+Align Motor</value>
+  </data>
+  <data name="Alignment_Last_Calib_Pos" xml:space="preserve">
+    <value>Last Calibrated
+        Position</value>
+  </data>
+  <data name="Alignment_Left" xml:space="preserve">
+    <value>Left</value>
+  </data>
+  <data name="Alignment_Right" xml:space="preserve">
+    <value>Right</value>
+  </data>
+  <data name="Alignment_Scan" xml:space="preserve">
+    <value>Scan</value>
+  </data>
   <data name="Calibration_Calibration" xml:space="preserve">
     <value>Calibration</value>
   </data>
@@ -211,6 +243,9 @@ Coefficient</value>
   <data name="Channels_Violet_B" xml:space="preserve">
     <value>Violet B (CL0)</value>
   </data>
+  <data name="Ch_Offset_Ch_Offset" xml:space="preserve">
+    <value>Channel Offset</value>
+  </data>
   <data name="CL0" xml:space="preserve">
     <value>CL0</value>
   </data>
@@ -237,6 +272,9 @@ Direction</value>
   <data name="Components_Flush" xml:space="preserve">
     <value>Flush</value>
   </data>
+  <data name="Components_Get_Pos" xml:space="preserve">
+    <value>Get Position</value>
+  </data>
   <data name="Components_Input_Sel" xml:space="preserve">
     <value>Input Selector</value>
   </data>
@@ -256,12 +294,24 @@ Direction</value>
     <value>Sampling
       ON</value>
   </data>
+  <data name="Components_Sheath" xml:space="preserve">
+    <value>Sheath</value>
+  </data>
   <data name="Components_Singl_Step_Deb" xml:space="preserve">
     <value>Single Step
      Debug</value>
   </data>
   <data name="Components_Startup" xml:space="preserve">
     <value>Startup</value>
+  </data>
+  <data name="Components_Syringe_Ctrl" xml:space="preserve">
+    <value>Syringe Control</value>
+  </data>
+  <data name="Components_To_Cuvet" xml:space="preserve">
+    <value>To Cuvet</value>
+  </data>
+  <data name="Components_To_Pickup" xml:space="preserve">
+    <value>To Pickup</value>
   </data>
   <data name="Components_Valve1" xml:space="preserve">
     <value>Valve 1</value>
@@ -271,6 +321,66 @@ Direction</value>
   </data>
   <data name="Components_Valves" xml:space="preserve">
     <value>Valves</value>
+  </data>
+  <data name="Dropdown_Boot" xml:space="preserve">
+    <value>Boot</value>
+  </data>
+  <data name="Dropdown_Green_Red_Rp_bg" xml:space="preserve">
+    <value>Green + Red + RP bg</value>
+  </data>
+  <data name="Dropdown_Green_Red_SSC" xml:space="preserve">
+    <value>Green + Red SSC</value>
+  </data>
+  <data name="Dropdown_Green_Rp_bg" xml:space="preserve">
+    <value>Green + RP bg</value>
+  </data>
+  <data name="Dropdown_Green_SSC" xml:space="preserve">
+    <value>Green SSC</value>
+  </data>
+  <data name="Dropdown_Halt" xml:space="preserve">
+    <value>Halt</value>
+  </data>
+  <data name="Dropdown_Initialize" xml:space="preserve">
+    <value>Initialize</value>
+  </data>
+  <data name="Dropdown_Micro_step" xml:space="preserve">
+    <value>Micro Step</value>
+  </data>
+  <data name="Dropdown_Move_Absolute" xml:space="preserve">
+    <value>Move Absolute</value>
+  </data>
+  <data name="Dropdown_None" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="Dropdown_Pickup" xml:space="preserve">
+    <value>Pickup</value>
+  </data>
+  <data name="Dropdown_Pos" xml:space="preserve">
+    <value>Position</value>
+  </data>
+  <data name="Dropdown_Pre_inject" xml:space="preserve">
+    <value>Pre Inject</value>
+  </data>
+  <data name="Dropdown_Red_Rp_bg" xml:space="preserve">
+    <value>Red + RP bg</value>
+  </data>
+  <data name="Dropdown_Red_SSC" xml:space="preserve">
+    <value>Red SSC</value>
+  </data>
+  <data name="Dropdown_Rp_bg" xml:space="preserve">
+    <value>RP bg</value>
+  </data>
+  <data name="Dropdown_Speed" xml:space="preserve">
+    <value>Speed</value>
+  </data>
+  <data name="Dropdown_Speed_Preset" xml:space="preserve">
+    <value>Speed Preset</value>
+  </data>
+  <data name="Dropdown_Valve_Left" xml:space="preserve">
+    <value>Valve Left</value>
+  </data>
+  <data name="Dropdown_Valve_Right" xml:space="preserve">
+    <value>Valve Right</value>
   </data>
   <data name="Green" xml:space="preserve">
     <value>Green</value>
@@ -375,6 +485,9 @@ Direction</value>
   <data name="OFF" xml:space="preserve">
     <value>OFF</value>
   </data>
+  <data name="ON" xml:space="preserve">
+    <value>ON</value>
+  </data>
   <data name="Power" xml:space="preserve">
     <value>Power</value>
   </data>
@@ -412,6 +525,12 @@ Sample</value>
   <data name="Run" xml:space="preserve">
     <value>Run</value>
   </data>
+  <data name="Sample_A" xml:space="preserve">
+    <value>Sample A</value>
+  </data>
+  <data name="Sample_B" xml:space="preserve">
+    <value>Sample B</value>
+  </data>
   <data name="Seconds" xml:space="preserve">
     <value>Seconds</value>
   </data>
@@ -432,11 +551,41 @@ Offset</value>
     <value>Syringe
 Speeds</value>
   </data>
+  <data name="Sheath" xml:space="preserve">
+    <value>Sheath</value>
+  </data>
+  <data name="SyringeSpeeds_Flush" xml:space="preserve">
+    <value>Flush</value>
+  </data>
+  <data name="SyringeSpeeds_HiSens" xml:space="preserve">
+    <value>Hi Sens</value>
+  </data>
+  <data name="SyringeSpeeds_HiSpeed" xml:space="preserve">
+    <value>Hi Speed</value>
+  </data>
+  <data name="SyringeSpeeds_Max_Speed" xml:space="preserve">
+    <value>Max Speed</value>
+  </data>
+  <data name="SyringeSpeeds_Normal" xml:space="preserve">
+    <value>Normal</value>
+  </data>
+  <data name="SyringeSpeeds_Pickup" xml:space="preserve">
+    <value>Pickup</value>
+  </data>
+  <data name="SyringeSpeeds_Samples" xml:space="preserve">
+    <value>Samples</value>
+  </data>
+  <data name="SyringeSpeeds_Speeds" xml:space="preserve">
+    <value>Syringe Speeds</value>
+  </data>
   <data name="Temp" xml:space="preserve">
     <value>Temp</value>
   </data>
   <data name="Tube" xml:space="preserve">
     <value>Tube</value>
+  </data>
+  <data name="Value" xml:space="preserve">
+    <value>Value</value>
   </data>
   <data name="Violet" xml:space="preserve">
     <value>Violet</value>

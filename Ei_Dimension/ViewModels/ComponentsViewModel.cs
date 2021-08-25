@@ -36,28 +36,46 @@ namespace Ei_Dimension.ViewModels
     public virtual string[] IdexTextBoxInputs { get; set; }
     public virtual bool CWDirectionActive { get; set; }
 
+    public static ComponentsViewModel Instance { get; private set; }
+
     protected ComponentsViewModel()
     {
       ValvesStates = new bool[4] { false,false,false,false };
       InputSelectorState = new ObservableCollection<string>();
-      InputSelectorState.Add("To Pickup");
-      InputSelectorState.Add("To Cuvet");
+      InputSelectorState.Add(Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Components_To_Pickup),
+        Language.TranslationSource.Instance.CurrentCulture));
+      InputSelectorState.Add(Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Components_To_Cuvet),
+        Language.TranslationSource.Instance.CurrentCulture));
 
 
       LaserRedActive = false;
       LaserGreenActive = false;
       LaserVioletActive = false;
 
-      SyringeControlItems = new ObservableCollection<DropDownButtonContents> { new DropDownButtonContents("Halt", this), new DropDownButtonContents("Move Absolute", this),
-        new DropDownButtonContents("Pickup", this), new DropDownButtonContents("Pre Inject", this), new DropDownButtonContents("Speed", this),
-        new DropDownButtonContents("Initialize", this), new DropDownButtonContents("Boot", this), new DropDownButtonContents("Valve Left", this),
-        new DropDownButtonContents("Valve Right", this), new DropDownButtonContents("Micro Step", this), new DropDownButtonContents("Speed Preset", this),
-        new DropDownButtonContents("Position", this)};
+      var RM = Language.Resources.ResourceManager;
+      var curCulture = Language.TranslationSource.Instance.CurrentCulture;
+      SyringeControlItems = new ObservableCollection<DropDownButtonContents>
+      { 
+        new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_Halt), curCulture), this),
+        new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_Move_Absolute), curCulture), this),
+        new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_Pickup), curCulture), this),
+        new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_Pre_inject), curCulture), this),
+        new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_Speed), curCulture), this),
+        new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_Initialize), curCulture), this),
+        new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_Boot), curCulture), this),
+        new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_Valve_Left), curCulture), this),
+        new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_Valve_Right), curCulture), this),
+        new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_Micro_step), curCulture), this),
+        new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_Speed_Preset), curCulture), this),
+        new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_Pos), curCulture), this)
+      };
       SelectedSheathContent = SyringeControlItems[0].Content;
       SelectedSampleAContent = SyringeControlItems[0].Content;
       SelectedSampleBContent = SyringeControlItems[0].Content;
 
-      GetPositionToggleButtonState = "OFF";
+      GetPositionToggleButtonState = RM.GetString(nameof(Language.Resources.OFF),
+        Language.TranslationSource.Instance.CurrentCulture);
+
       GetPositionTextBoxInputs = new string[3];
 
       SamplingActive = false;
@@ -65,6 +83,7 @@ namespace Ei_Dimension.ViewModels
 
       IdexTextBoxInputs = new string[2];
       CWDirectionActive = false;
+      Instance = this;
     }
 
     public static ComponentsViewModel Create()
@@ -131,13 +150,15 @@ namespace Ei_Dimension.ViewModels
 
     public void GetPositionToggleButtonClick()
     {
-      if( GetPositionToggleButtonState == "OFF")
+      var RM = Language.Resources.ResourceManager;
+      var curCulture = Language.TranslationSource.Instance.CurrentCulture;
+      if ( GetPositionToggleButtonState == RM.GetString(nameof(Language.Resources.OFF), curCulture))
       {
-        GetPositionToggleButtonState = "ON";
+        GetPositionToggleButtonState = RM.GetString(nameof(Language.Resources.ON), curCulture);
       }
-      else if(GetPositionToggleButtonState == "ON")
+      else if( GetPositionToggleButtonState == RM.GetString(nameof(Language.Resources.ON), curCulture))
       {
-        GetPositionToggleButtonState = "OFF";
+        GetPositionToggleButtonState = RM.GetString(nameof(Language.Resources.OFF), curCulture);
       }
     }
 
@@ -190,9 +211,16 @@ namespace Ei_Dimension.ViewModels
     }
 
 
-    public class DropDownButtonContents
+    public class DropDownButtonContents : Core.ObservableObject
     {
-      public string Content { get; set; }
+      public string Content
+      {
+        get => _content;
+        set {
+          _content = value;
+          OnPropertyChanged();
+        } }
+      private string _content;
       private static ComponentsViewModel _vm;
       public DropDownButtonContents(string content, ComponentsViewModel vm = null)
       {

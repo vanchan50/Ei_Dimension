@@ -5,12 +5,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
              xmlns:System="clr-namespace:System;assembly=mscorlib"
+             xmlns:lang="clr-namespace:Ei_Dimension.Language;assembly=Language"
              xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm" xmlns:ViewModels="clr-namespace:Ei_Dimension.ViewModels"
              mc:Ignorable="d"
              DataContext="{dxmvvm:ViewModelSource Type=ViewModels:SyringeSpeedsViewModel}"
              d:DesignHeight="674" d:DesignWidth="1312">
   <Grid>
-    <TextBlock Text="Syringe Speeds"
+    <TextBlock Text="{lang:Loc SyringeSpeeds_Speeds}"
                  FontFamily="{StaticResource AppTextFont}"
                  FontSize="50"
                  FontWeight="UltraBold"
@@ -29,7 +30,7 @@
         <StackPanel VerticalAlignment="Stretch"
                     Width="140"
                     Margin="0,0,3,0">
-          <TextBlock Text="Normal"
+          <TextBlock Text="{lang:Loc SyringeSpeeds_Normal}"
                  FontFamily="{StaticResource AppTextFont}"
                  FontSize="20"
                  FontWeight="UltraBold"
@@ -37,7 +38,7 @@
                  HorizontalAlignment="Right"
                  VerticalAlignment="Top"
                  Margin="0,34,8,0"/>
-          <TextBlock Text="Hi Speed"
+          <TextBlock Text="{lang:Loc SyringeSpeeds_HiSpeed}"
                  FontFamily="{StaticResource AppTextFont}"
                  FontSize="20"
                  FontWeight="UltraBold"
@@ -45,7 +46,7 @@
                  HorizontalAlignment="Right"
                  VerticalAlignment="Top"
                  Margin="0,16,4,0"/>
-          <TextBlock Text="HI Sens"
+          <TextBlock Text="{lang:Loc SyringeSpeeds_HiSens}"
                  FontFamily="{StaticResource AppTextFont}"
                  FontSize="20"
                  FontWeight="UltraBold"
@@ -53,7 +54,7 @@
                  HorizontalAlignment="Right"
                  VerticalAlignment="Top"
                  Margin="0,16,4,0"/>
-          <TextBlock Text="Flush"
+          <TextBlock Text="{lang:Loc SyringeSpeeds_Flush}"
                  FontFamily="{StaticResource AppTextFont}"
                  FontSize="20"
                  FontWeight="UltraBold"
@@ -61,7 +62,7 @@
                  HorizontalAlignment="Right"
                  VerticalAlignment="Top"
                  Margin="0,16,4,0"/>
-          <TextBlock Text="Pickup"
+          <TextBlock Text="{lang:Loc SyringeSpeeds_Pickup}"
                  FontFamily="{StaticResource AppTextFont}"
                  FontSize="20"
                  FontWeight="UltraBold"
@@ -69,7 +70,7 @@
                  HorizontalAlignment="Right"
                  VerticalAlignment="Top"
                  Margin="0,16,4,0"/>
-          <TextBlock Text="Max Speed"
+          <TextBlock Text="{lang:Loc SyringeSpeeds_Max_Speed}"
                  FontFamily="{StaticResource AppTextFont}"
                  FontSize="20"
                  FontWeight="UltraBold"
@@ -81,7 +82,7 @@
         <StackPanel VerticalAlignment="Stretch"
                     Width="100"
                     Margin="0,0,15,0">
-          <TextBlock Text="Sheath"
+          <TextBlock Text="{lang:Loc Sheath}"
                  FontFamily="{StaticResource AppTextFont}"
                  FontSize="20"
                  FontWeight="UltraBold"
@@ -126,7 +127,7 @@
         <StackPanel VerticalAlignment="Stretch"
                     Width="100"
                     Margin="0,0,15,0">
-          <TextBlock Text="Samples"
+          <TextBlock Text="{lang:Loc SyringeSpeeds_Samples}"
                  FontFamily="{StaticResource AppTextFont}"
                  FontSize="20"
                  FontWeight="UltraBold"

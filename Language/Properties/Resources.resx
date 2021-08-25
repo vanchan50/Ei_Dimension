@@ -214,6 +214,12 @@ Coefficient</value>
   <data name="Components_Move_Idex" xml:space="preserve">
     <value>Move Idex</value>
   </data>
+  <data name="Components_To_Cuvet" xml:space="preserve">
+    <value>В кювет</value>
+  </data>
+  <data name="Components_To_Pickup" xml:space="preserve">
+    <value>To Pickup</value>
+  </data>
   <data name="Components_Valve1" xml:space="preserve">
     <value>Valve 1</value>
   </data>
@@ -222,6 +228,66 @@ Coefficient</value>
   </data>
   <data name="Components_Valves" xml:space="preserve">
     <value>Valves</value>
+  </data>
+  <data name="Dropdown_Boot" xml:space="preserve">
+    <value>Загрузить</value>
+  </data>
+  <data name="Dropdown_Green_Red_Rp_bg" xml:space="preserve">
+    <value>Green + Red + RP bg</value>
+  </data>
+  <data name="Dropdown_Green_Red_SSC" xml:space="preserve">
+    <value>Green + Red SSC</value>
+  </data>
+  <data name="Dropdown_Green_Rp_bg" xml:space="preserve">
+    <value>Green + RP bg</value>
+  </data>
+  <data name="Dropdown_Green_SSC" xml:space="preserve">
+    <value>Green SSC</value>
+  </data>
+  <data name="Dropdown_Halt" xml:space="preserve">
+    <value>Halt</value>
+  </data>
+  <data name="Dropdown_Initialize" xml:space="preserve">
+    <value>Initialize</value>
+  </data>
+  <data name="Dropdown_Micro_step" xml:space="preserve">
+    <value>Micro Step</value>
+  </data>
+  <data name="Dropdown_Move_Absolute" xml:space="preserve">
+    <value>Move Absolute</value>
+  </data>
+  <data name="Dropdown_None" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="Dropdown_Pickup" xml:space="preserve">
+    <value>Pickup</value>
+  </data>
+  <data name="Dropdown_Pos" xml:space="preserve">
+    <value>Position</value>
+  </data>
+  <data name="Dropdown_Pre_inject" xml:space="preserve">
+    <value>Pre Inject</value>
+  </data>
+  <data name="Dropdown_Red_Rp_bg" xml:space="preserve">
+    <value>ТЕст</value>
+  </data>
+  <data name="Dropdown_Red_SSC" xml:space="preserve">
+    <value>Red SSC</value>
+  </data>
+  <data name="Dropdown_Rp_bg" xml:space="preserve">
+    <value>RP bg</value>
+  </data>
+  <data name="Dropdown_Speed" xml:space="preserve">
+    <value>Speed</value>
+  </data>
+  <data name="Dropdown_Speed_Preset" xml:space="preserve">
+    <value>Speed Preset</value>
+  </data>
+  <data name="Dropdown_Valve_Left" xml:space="preserve">
+    <value>Valve Left</value>
+  </data>
+  <data name="Dropdown_Valve_Right" xml:space="preserve">
+    <value>Valve Right</value>
   </data>
   <data name="Halt" xml:space="preserve">
     <value>Halt</value>
@@ -319,6 +385,12 @@ Coefficient</value>
   </data>
   <data name="Motors_Up" xml:space="preserve">
     <value>Up</value>
+  </data>
+  <data name="OFF" xml:space="preserve">
+    <value>Выкл</value>
+  </data>
+  <data name="ON" xml:space="preserve">
+    <value>Вкл</value>
   </data>
   <data name="Program_Name" xml:space="preserve">
     <value>Ei Dimension</value>

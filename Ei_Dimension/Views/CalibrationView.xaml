@@ -48,7 +48,6 @@
                 <ContentControl>
                   <dxb:BarButtonItem Content="{Binding Content}"  
                                    ItemClick="{DXEvent 'Click()'}"/>
-
                 </ContentControl>
               </DataTemplate>
             </dxb:PopupMenu.ItemTemplate>

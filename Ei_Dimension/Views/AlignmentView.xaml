@@ -7,11 +7,12 @@
              xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
              xmlns:System="clr-namespace:System;assembly=mscorlib"
              xmlns:ViewModels="clr-namespace:Ei_Dimension.ViewModels"
+             xmlns:lang="clr-namespace:Ei_Dimension.Language;assembly=Language"
              mc:Ignorable="d"
              DataContext="{dxmvvm:ViewModelSource Type=ViewModels:AlignmentViewModel}"
              d:DesignHeight="674" d:DesignWidth="1312">
   <Grid>
-    <TextBlock Text="Alignment"
+    <TextBlock Text="{lang:Loc Service_Alignment}"
                  FontFamily="{StaticResource AppTextFont}"
                  FontSize="50"
                  FontWeight="UltraBold"
@@ -25,7 +26,7 @@
             Margin="20,100,0,0">
 
       <StackPanel VerticalAlignment="Stretch">
-        <TextBlock Text="Last Calibrated&#x0a;        Position"
+        <TextBlock Text="{lang:Loc Alignment_Last_Calib_Pos}"
                  FontFamily="{StaticResource AppTextFont}"
                  FontSize="36"
                  FontWeight="UltraBold"
@@ -39,7 +40,7 @@
                   Width="160"
                   Style="{StaticResource InputFieldStyle}"
                   Text="{Binding LastCalibratedPosition[0]}"/>
-        <dx:SimpleButton Content="GoTo"
+        <dx:SimpleButton Content="{lang:Loc Alignment_GoTo}"
                          Command="{Binding GoToLastCalibratedPositionClickCommand}"
                          Height="50"
                          Width="160"
@@ -63,7 +64,7 @@
             Margin="300,100,0,0">
 
       <StackPanel VerticalAlignment="Stretch">
-        <TextBlock Text="       Laser&#x0a;Align Motor"
+        <TextBlock Text="{lang:Loc Alignment_Laser_Align_Motor}"
                  FontFamily="{StaticResource AppTextFont}"
                  FontSize="36"
                  FontWeight="UltraBold"
@@ -85,7 +86,7 @@
                 Width="150"
                 CornerRadius="5">
           <StackPanel HorizontalAlignment="Center">
-            <RadioButton Content="Left"
+            <RadioButton Content="{lang:Loc Alignment_Left}"
                            Style="{StaticResource RadioButtonVerticalThemeStyle}"
                            IsChecked="True"
                            Width="150"
@@ -95,7 +96,7 @@
                 <System:String>Left</System:String>
               </RadioButton.CommandParameter>
             </RadioButton>
-            <RadioButton Content="Right"
+            <RadioButton Content="{lang:Loc Alignment_Right}"
                            Style="{StaticResource RadioButtonVerticalThemeStyle}"
                            Height="44"
                            Width="150"
@@ -107,7 +108,7 @@
           </StackPanel>
         </Border>
 
-        <dx:SimpleButton Content="Run"
+        <dx:SimpleButton Content="{lang:Loc Run}"
                          Command="{Binding RunLaserAlignMotorClickCommand}"
                          Height="50"
                          Width="150"
@@ -116,7 +117,7 @@
                          FontWeight="UltraBold"
                          Foreground="{StaticResource AppTextColor}"
                          Margin="0,0,0,3"/>
-        <dx:SimpleButton Content="Halt"
+        <dx:SimpleButton Content="{lang:Loc Halt}"
                          Height="50"
                          Width="150"
                          Command="{Binding HaltLaserAlignMotorClickCommand}"
@@ -134,7 +135,7 @@
             Margin="550,100,0,0">
 
       <StackPanel VerticalAlignment="Stretch">
-        <TextBlock Text="Auto Align"
+        <TextBlock Text="{lang:Loc Alignment_Auto_Align}"
                  FontFamily="{StaticResource AppTextFont}"
                  FontSize="36"
                  FontWeight="UltraBold"
@@ -157,7 +158,7 @@
                 CornerRadius="5">
 
           <StackPanel HorizontalAlignment="Center">
-            <RadioButton Content="OFF"
+            <RadioButton Content="{lang:Loc OFF}"
                            Style="{StaticResource RadioButtonVerticalThemeStyle}"
                            Height="44"
                            Width="150"
@@ -167,7 +168,7 @@
                 <System:String>Off</System:String>
               </RadioButton.CommandParameter>
             </RadioButton>
-            <RadioButton Content="Green"
+            <RadioButton Content="{lang:Loc Green}"
                            Style="{StaticResource RadioButtonVerticalThemeStyle}"
                            Height="44"
                            Width="150"
@@ -176,7 +177,7 @@
                 <System:String>Green</System:String>
               </RadioButton.CommandParameter>
             </RadioButton>
-            <RadioButton Content="Red"
+            <RadioButton Content="{lang:Loc Red}"
                            Style="{StaticResource RadioButtonVerticalThemeStyle}"
                            Height="44"
                            Width="150"
@@ -185,7 +186,7 @@
                 <System:String>Red</System:String>
               </RadioButton.CommandParameter>
             </RadioButton>
-            <RadioButton Content="Violet"
+            <RadioButton Content="{lang:Loc Violet}"
                            Style="{StaticResource RadioButtonVerticalThemeStyle}"
                            Height="44"
                            Width="150"
@@ -197,7 +198,7 @@
           </StackPanel>
         </Border>
 
-        <dx:SimpleButton Content="Run"
+        <dx:SimpleButton Content="{lang:Loc Run}"
                          Width="150"
                          Command="{Binding RunAutoAlignClickCommand}"
                          Height="50"
@@ -215,7 +216,7 @@
             Margin="800,100,0,0">
 
         <StackPanel VerticalAlignment="Stretch">
-          <TextBlock Text="Align Sequence"
+        <TextBlock Text="{lang:Loc Alignment_Align_Seq}"
                      FontFamily="{StaticResource AppTextFont}"
                      FontSize="36"
                      FontWeight="UltraBold"
@@ -224,7 +225,7 @@
                      VerticalAlignment="Top"
                      Margin="0,0,0,10"/>
 
-        <dx:SimpleButton Content="Scan"
+        <dx:SimpleButton Content="{lang:Loc Alignment_Scan}"
                          Width="200"
                          Command="{Binding ScanAlignSequenceClickCommand}"
                          Height="50"
@@ -233,7 +234,7 @@
                          FontWeight="UltraBold"
                          Foreground="{StaticResource AppTextColor}"
                          Margin="0,0,0,3"/>
-        <dx:SimpleButton Content="Find Peak"
+        <dx:SimpleButton Content="{lang:Loc Alignment_Find_Peak}"
                          Width="200"
                          Command="{Binding FindPeakAlignSequenceClickCommand}"
                          Height="50"
@@ -243,7 +244,7 @@
                          Foreground="{StaticResource AppTextColor}"
                          Margin="0,0,0,3"/>
 
-        <dx:SimpleButton Content="GoTo Peak"
+        <dx:SimpleButton Content="{lang:Loc Alignment_GoTo_Peak}"
                          Width="200"
                          Command="{Binding GoToAlignSequenceClickCommand}"
                          Height="50"
@@ -251,7 +252,7 @@
                          FontSize="34"
                          FontWeight="UltraBold"
                          Foreground="{StaticResource AppTextColor}"
-                         Margin="0,0,0,3"/>
+                         Margin="0,0,0,3" Click="SimpleButton_Click"/>
 
         </StackPanel>
     </Border>

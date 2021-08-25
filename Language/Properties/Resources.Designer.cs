@@ -344,6 +344,24 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to В кювет.
+        /// </summary>
+        public static string Components_To_Cuvet {
+            get {
+                return ResourceManager.GetString("Components_To_Cuvet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To Pickup.
+        /// </summary>
+        public static string Components_To_Pickup {
+            get {
+                return ResourceManager.GetString("Components_To_Pickup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Valve 1.
         /// </summary>
         public static string Components_Valve1 {
@@ -367,6 +385,186 @@ namespace Ei_Dimension.Language {
         public static string Components_Valves {
             get {
                 return ResourceManager.GetString("Components_Valves", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Загрузить.
+        /// </summary>
+        public static string Dropdown_Boot {
+            get {
+                return ResourceManager.GetString("Dropdown_Boot", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Green + Red + RP bg.
+        /// </summary>
+        public static string Dropdown_Green_Red_Rp_bg {
+            get {
+                return ResourceManager.GetString("Dropdown_Green_Red_Rp_bg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Green + Red SSC.
+        /// </summary>
+        public static string Dropdown_Green_Red_SSC {
+            get {
+                return ResourceManager.GetString("Dropdown_Green_Red_SSC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Green + RP bg.
+        /// </summary>
+        public static string Dropdown_Green_Rp_bg {
+            get {
+                return ResourceManager.GetString("Dropdown_Green_Rp_bg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Green SSC.
+        /// </summary>
+        public static string Dropdown_Green_SSC {
+            get {
+                return ResourceManager.GetString("Dropdown_Green_SSC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Halt.
+        /// </summary>
+        public static string Dropdown_Halt {
+            get {
+                return ResourceManager.GetString("Dropdown_Halt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Initialize.
+        /// </summary>
+        public static string Dropdown_Initialize {
+            get {
+                return ResourceManager.GetString("Dropdown_Initialize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Micro Step.
+        /// </summary>
+        public static string Dropdown_Micro_step {
+            get {
+                return ResourceManager.GetString("Dropdown_Micro_step", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move Absolute.
+        /// </summary>
+        public static string Dropdown_Move_Absolute {
+            get {
+                return ResourceManager.GetString("Dropdown_Move_Absolute", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to None.
+        /// </summary>
+        public static string Dropdown_None {
+            get {
+                return ResourceManager.GetString("Dropdown_None", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pickup.
+        /// </summary>
+        public static string Dropdown_Pickup {
+            get {
+                return ResourceManager.GetString("Dropdown_Pickup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Position.
+        /// </summary>
+        public static string Dropdown_Pos {
+            get {
+                return ResourceManager.GetString("Dropdown_Pos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pre Inject.
+        /// </summary>
+        public static string Dropdown_Pre_inject {
+            get {
+                return ResourceManager.GetString("Dropdown_Pre_inject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ТЕст.
+        /// </summary>
+        public static string Dropdown_Red_Rp_bg {
+            get {
+                return ResourceManager.GetString("Dropdown_Red_Rp_bg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Red SSC.
+        /// </summary>
+        public static string Dropdown_Red_SSC {
+            get {
+                return ResourceManager.GetString("Dropdown_Red_SSC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to RP bg.
+        /// </summary>
+        public static string Dropdown_Rp_bg {
+            get {
+                return ResourceManager.GetString("Dropdown_Rp_bg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Speed.
+        /// </summary>
+        public static string Dropdown_Speed {
+            get {
+                return ResourceManager.GetString("Dropdown_Speed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Speed Preset.
+        /// </summary>
+        public static string Dropdown_Speed_Preset {
+            get {
+                return ResourceManager.GetString("Dropdown_Speed_Preset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Valve Left.
+        /// </summary>
+        public static string Dropdown_Valve_Left {
+            get {
+                return ResourceManager.GetString("Dropdown_Valve_Left", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Valve Right.
+        /// </summary>
+        public static string Dropdown_Valve_Right {
+            get {
+                return ResourceManager.GetString("Dropdown_Valve_Right", resourceCulture);
             }
         }
         
@@ -656,6 +854,24 @@ namespace Ei_Dimension.Language {
         public static string Motors_Up {
             get {
                 return ResourceManager.GetString("Motors_Up", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Выкл.
+        /// </summary>
+        public static string OFF {
+            get {
+                return ResourceManager.GetString("OFF", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Вкл.
+        /// </summary>
+        public static string ON {
+            get {
+                return ResourceManager.GetString("ON", resourceCulture);
             }
         }
         
