@@ -39,7 +39,11 @@
                   Margin="0,0,0,13"
                   Width="160"
                   Style="{StaticResource InputFieldStyle}"
-                  Text="{Binding LastCalibratedPosition[0]}"/>
+                  Text="{Binding LastCalibratedPosition[0]}">
+          <dxmvvm:Interaction.Behaviors>
+            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="0"/>
+          </dxmvvm:Interaction.Behaviors>
+        </TextBox>
         <dx:SimpleButton Content="{lang:Loc Alignment_GoTo}"
                          Command="{Binding GoToLastCalibratedPositionClickCommand}"
                          Height="50"
@@ -54,7 +58,11 @@
                   Margin="0,0,0,3"
                   Width="160"
                   Style="{StaticResource InputFieldStyle}"
-                  Text="{Binding LastCalibratedPosition[1]}"/>
+                  Text="{Binding LastCalibratedPosition[1]}">
+          <dxmvvm:Interaction.Behaviors>
+            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="1"/>
+          </dxmvvm:Interaction.Behaviors>
+        </TextBox>
 
       </StackPanel>
     </Border>
@@ -78,7 +86,11 @@
                  Margin="0,0,0,13"
                  Width="150"
                  Style="{StaticResource InputFieldStyle}"
-                 Text="{Binding LaserAlignMotor}"/>
+                 Text="{Binding LaserAlignMotor[0]}">
+          <dxmvvm:Interaction.Behaviors>
+            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="2"/>
+          </dxmvvm:Interaction.Behaviors>
+        </TextBox>
 
         <Border BorderThickness="2"
                 BorderBrush="{StaticResource AppTextColor}"
@@ -149,7 +161,11 @@
                  Margin="0,0,0,13"
                  Width="150"
                  Style="{StaticResource InputFieldStyle}"
-                 Text="{Binding AutoAlign}"/>
+                 Text="{Binding AutoAlign[0]}">
+          <dxmvvm:Interaction.Behaviors>
+            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="3"/>
+          </dxmvvm:Interaction.Behaviors>
+        </TextBox>
 
         <Border BorderThickness="2"
                 BorderBrush="{StaticResource AppTextColor}"

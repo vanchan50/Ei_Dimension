@@ -214,7 +214,7 @@ namespace Ei_Dimension.ViewModels
 
     public void IdexPositionButtonClick()
     {
-      App.InjectToFocusedTextbox("LOLKEKCHEBUREK");
+
     }
 
     public void FocusedBox(int num)
