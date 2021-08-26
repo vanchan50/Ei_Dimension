@@ -95,8 +95,17 @@ namespace Ei_Dimension
 
     public static void InjectToFocusedTextbox(string input)
     {
-      if(SelectedTextBox.prop != null)
-        ((ObservableCollection<string>)SelectedTextBox.prop.GetValue(SelectedTextBox.VM))[SelectedTextBox.index] = input;
+      if (SelectedTextBox.prop != null)
+      {
+        var temp = ((ObservableCollection<string>)SelectedTextBox.prop.GetValue(SelectedTextBox.VM))[SelectedTextBox.index];
+        if (input == "")
+        {
+          if(temp.Length > 0)
+            ((ObservableCollection<string>)SelectedTextBox.prop.GetValue(SelectedTextBox.VM))[SelectedTextBox.index] = temp.Remove(temp.Length - 1, 1);
+          return;
+        }
+        ((ObservableCollection<string>)SelectedTextBox.prop.GetValue(SelectedTextBox.VM))[SelectedTextBox.index] = temp + input;
+      }
     }
   }
 }

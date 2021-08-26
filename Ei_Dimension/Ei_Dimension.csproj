@@ -127,6 +127,7 @@
     <Compile Include="ViewModels\ExperimentViewModel.cs" />
     <Compile Include="ViewModels\MaintenanceViewModel.cs" />
     <Compile Include="ViewModels\MotorsViewModel.cs" />
+    <Compile Include="ViewModels\NumpadViewModel.cs" />
     <Compile Include="ViewModels\ServiceViewModel.cs" />
     <Compile Include="ViewModels\SyringeSpeedsViewModel.cs" />
     <Compile Include="Views\AlignmentView.xaml.cs">
@@ -158,6 +159,9 @@
     </Compile>
     <Compile Include="Views\MotorsView.xaml.cs">
       <DependentUpon>MotorsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\NumpadView.xaml.cs">
+      <DependentUpon>NumpadView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ResultsView.xaml.cs">
       <DependentUpon>ResultsView.xaml</DependentUpon>
@@ -247,6 +251,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\MotorsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\NumpadView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

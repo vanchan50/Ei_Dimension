@@ -1,0 +1,141 @@
+﻿<UserControl x:Class="Ei_Dimension.Views.NumpadView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+             xmlns:ViewModels="clr-namespace:Ei_Dimension.ViewModels"
+             mc:Ignorable="d"
+             DataContext="{dxmvvm:ViewModelSource Type=ViewModels:NumpadViewModel}"
+             d:DesignHeight="274" d:DesignWidth="204">
+    <StackPanel>
+      <StackPanel Orientation="Horizontal"
+                  Margin="0,0,0,10">
+      <dx:SimpleButton Content="1"
+                       Command="{Binding NumpadInputClickCommand}"
+                       CommandParameter="1"
+                       Height="60"
+                       Width="60"
+                       FontFamily="{StaticResource AppTextFont}"
+                       FontSize="36"
+                       FontWeight="UltraBold"
+                       Foreground="{StaticResource AppTextColor}"
+                       Margin="0,0,10,0"/>
+      <dx:SimpleButton Content="2"
+                       Command="{Binding NumpadInputClickCommand}"
+                       CommandParameter="2"
+                       Height="60"
+                       Width="60"
+                       FontFamily="{StaticResource AppTextFont}"
+                       FontSize="36"
+                       FontWeight="UltraBold"
+                       Foreground="{StaticResource AppTextColor}"
+                       Margin="0,0,10,0"/>
+      <dx:SimpleButton Content="3"
+                       Command="{Binding NumpadInputClickCommand}"
+                       CommandParameter="3"
+                       Height="60"
+                       Width="60"
+                       FontFamily="{StaticResource AppTextFont}"
+                       FontSize="36"
+                       FontWeight="UltraBold"
+                       Foreground="{StaticResource AppTextColor}"
+                       Margin="0,0,10,0"/>
+    </StackPanel>
+
+      <StackPanel Orientation="Horizontal"
+                  Margin="0,0,0,10">
+      <dx:SimpleButton Content="4"
+                       Command="{Binding NumpadInputClickCommand}"
+                       CommandParameter="4"
+                       Height="60"
+                       Width="60"
+                       FontFamily="{StaticResource AppTextFont}"
+                       FontSize="36"
+                       FontWeight="UltraBold"
+                       Foreground="{StaticResource AppTextColor}"
+                       Margin="0,0,10,0"/>
+      <dx:SimpleButton Content="5"
+                       Command="{Binding NumpadInputClickCommand}"
+                       CommandParameter="5"
+                       Height="60"
+                       Width="60"
+                       FontFamily="{StaticResource AppTextFont}"
+                       FontSize="36"
+                       FontWeight="UltraBold"
+                       Foreground="{StaticResource AppTextColor}"
+                       Margin="0,0,10,0"/>
+      <dx:SimpleButton Content="6"
+                       Command="{Binding NumpadInputClickCommand}"
+                       CommandParameter="6"
+                       Height="60"
+                       Width="60"
+                       FontFamily="{StaticResource AppTextFont}"
+                       FontSize="36"
+                       FontWeight="UltraBold"
+                       Foreground="{StaticResource AppTextColor}"
+                       Margin="0,0,10,0"/>
+    </StackPanel>
+
+      <StackPanel Orientation="Horizontal"
+                Margin="0,0,0,10">
+      <dx:SimpleButton Content="7"
+                       Command="{Binding NumpadInputClickCommand}"
+                       CommandParameter="7"
+                       Height="60"
+                       Width="60"
+                       FontFamily="{StaticResource AppTextFont}"
+                       FontSize="36"
+                       FontWeight="UltraBold"
+                       Foreground="{StaticResource AppTextColor}"
+                       Margin="0,0,10,0"/>
+      <dx:SimpleButton Content="8"
+                       Command="{Binding NumpadInputClickCommand}"
+                       CommandParameter="8"
+                       Height="60"
+                       Width="60"
+                       FontFamily="{StaticResource AppTextFont}"
+                       FontSize="36"
+                       FontWeight="UltraBold"
+                       Foreground="{StaticResource AppTextColor}"
+                       Margin="0,0,10,0"/>
+      <dx:SimpleButton Content="9"
+                       Command="{Binding NumpadInputClickCommand}"
+                       CommandParameter="9"
+                       Height="60"
+                       Width="60"
+                       FontFamily="{StaticResource AppTextFont}"
+                       FontSize="36"
+                       FontWeight="UltraBold"
+                       Foreground="{StaticResource AppTextColor}"
+                       Margin="0,0,10,0"/>
+
+    </StackPanel>
+
+      <StackPanel Orientation="Horizontal"
+                  Margin="40,0,0,0">
+
+      <dx:SimpleButton Content="0"
+                       Command="{Binding NumpadInputClickCommand}"
+                       CommandParameter="0"
+                       Height="60"
+                       Width="60"
+                       FontFamily="{StaticResource AppTextFont}"
+                       FontSize="36"
+                       FontWeight="UltraBold"
+                       Foreground="{StaticResource AppTextColor}"
+                       Margin="0,0,10,0"/>
+      <dx:SimpleButton Content="&lt;"
+                       Command="{Binding NumpadInputClickCommand}"
+                       CommandParameter="10"
+                       Height="60"
+                       Width="60"
+                       FontFamily="{StaticResource AppTextFont}"
+                       FontSize="36"
+                       FontWeight="UltraBold"
+                       Foreground="{StaticResource AppTextColor}"
+                       Margin="0,0,10,0"/>
+    </StackPanel>
+  </StackPanel>
+</UserControl>

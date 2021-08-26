@@ -228,7 +228,7 @@ namespace Ei_Dimension.ViewModels
           _heatMapSeriesXY.Add(new HeatMapData(x[i], y[i]));
           i++;
         }
-        MakeHeatmapAsync();
+        _ = MakeHeatmapAsync();
       }
     }
 
