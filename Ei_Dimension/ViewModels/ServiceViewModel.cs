@@ -11,10 +11,11 @@ namespace Ei_Dimension.ViewModels
   [POCOViewModel]
   public class ServiceViewModel
   {
-    private INavigationService NavigationService { get { return this.GetService<INavigationService>(); } }
+    private INavigationService NavigationService => this.GetService<INavigationService>();
 
     protected ServiceViewModel()
     {
+
     }
 
     public static ServiceViewModel Create()
@@ -24,26 +25,36 @@ namespace Ei_Dimension.ViewModels
 
     public void NavigateMotors()
     {
+      App.ResetFocusedTextbox();
+      App.HideNumpad();
       NavigationService.Navigate("MotorsView", null, this);
     }
 
     public void NavigateComponents()
     {
+      App.ResetFocusedTextbox();
+      App.HideNumpad();
       NavigationService.Navigate("ComponentsView", null, this);
     }
 
     public void NavigateAlignment()
     {
+      App.ResetFocusedTextbox();
+      App.HideNumpad();
       NavigationService.Navigate("AlignmentView", null, this);
     }
 
     public void NavigateChannelOffset()
     {
+      App.ResetFocusedTextbox();
+      App.HideNumpad();
       NavigationService.Navigate("ChannelOffsetView", null, this);
     }
 
     public void NavigateSyringeSpeeds()
     {
+      App.ResetFocusedTextbox();
+      App.HideNumpad();
       NavigationService.Navigate("SyringeSpeedsView", null, this);
     }
   }

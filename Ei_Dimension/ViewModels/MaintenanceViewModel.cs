@@ -16,7 +16,7 @@ namespace Ei_Dimension.ViewModels
     public virtual ObservableCollection<DropDownButtonContents> LanguageItems { get; set; }
     public virtual string SelectedLanguage { get; set; }
 
-    private INavigationService NavigationService { get { return this.GetService<INavigationService>(); } }
+    private INavigationService NavigationService => this.GetService<INavigationService>();
 
     protected MaintenanceViewModel()
     {
@@ -53,11 +53,15 @@ namespace Ei_Dimension.ViewModels
 
     public void NavigateCalibration()
     {
+      App.ResetFocusedTextbox();
+      App.HideNumpad();
       NavigationService.Navigate("CalibrationView", null, this);
     }
 
     public void NavigateChannels()
     {
+      App.ResetFocusedTextbox();
+      App.HideNumpad();
       NavigationService.Navigate("ChannelsView", null, this);
     }
 

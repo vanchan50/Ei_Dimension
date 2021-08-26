@@ -29,27 +29,6 @@
     UseGlowColors="False"
     DataContext="{dxmvvm:ViewModelSource Type=ViewModels:MainViewModel}">
   
-  <!--Numpad-->
-  <dxmvvm:Interaction.Behaviors>
-    <dxmvvm:WindowService WindowStartupLocation="Manual"
-                              WindowShowMode="Default">
-      <dxmvvm:WindowService.WindowStyle>
-        <Style TargetType="Window">
-          <Setter Property="Height" Value="274"/>
-          <Setter Property="Width" Value="204"/>
-          <Setter Property="AllowsTransparency" Value="True"/>
-          <Setter Property="WindowStyle" Value="None"/>
-          <Setter Property="Background" Value="Transparent"/>
-          <Setter Property="Padding" Value="0"/>
-          <Setter Property="ResizeMode" Value="NoResize"/>
-          <Setter Property="Top" Value="400"/>
-          <Setter Property="Left" Value="1300"/>
-          <Setter Property="ShowInTaskbar" Value="False"/>
-        </Style>
-      </dxmvvm:WindowService.WindowStyle>
-    </dxmvvm:WindowService>
-  </dxmvvm:Interaction.Behaviors>
-  
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="0.5*"/>
@@ -154,12 +133,22 @@
       </dxmvvm:Interaction.Behaviors>
     </dxwui:NavigationFrame>
 
-    <dx:SimpleButton Grid.Row="2" Grid.Column ="1"
-                  Height="50" Width="100"
-                  HorizontalAlignment="Right"
-                  VerticalAlignment="Bottom"
-                  Margin="0,0,30,30"
-                  Content="Numpad"
-                  Command="{Binding NumpadToggleButonCommand}"/>
+    <!--Numpad-->
+    <dx:SimpleButton Grid.Row="1" Grid.Column ="1"
+                     Height="40" Width="50"
+                     HorizontalAlignment="Left"
+                     VerticalAlignment="Bottom"
+                     Margin="155,0,0,5"
+                     Glyph="{dx:DXImage 'SvgImages/Icon Builder/Electronics_Keyboard.svg'}"
+                     GlyphHeight="40"
+                     GlyphWidth="40"
+                     Command="{Binding NumpadToggleButonCommand}"/>
+
+    <Grid Grid.Row="2" Grid.Column="1"
+          Visibility="{Binding NumpadVisible}"
+          Margin="80,5,0,0">
+      <Views:NumpadView />
+    </Grid>
+    
   </Grid>
 </dx:ThemedWindow>

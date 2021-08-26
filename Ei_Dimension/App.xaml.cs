@@ -9,17 +9,15 @@ using Ei_Dimension.ViewModels;
 
 namespace Ei_Dimension
 {
-  /// <summary>
-  /// Interaction logic for App.xaml
-  /// </summary>
   public partial class App : Application
   {
-    public static (System.Reflection.PropertyInfo prop, object VM, int index) SelectedTextBox { get; set; }  //ActiveProperty, VM, index, IsFocused
+    public static (System.Reflection.PropertyInfo prop, object VM) NumpadShow { get; set; }
+    public static (System.Reflection.PropertyInfo prop, object VM, int index) SelectedTextBox { get; set; }
     public static MicroCy.MicroCyDevice Device { get; private set; }
     public App()
     {
       SetLanguage("en-US");
-      
+
       Device = new MicroCy.MicroCyDevice();
       Device.LoadMaps();
       Device.activemap = Device.maplist[0];
@@ -106,6 +104,16 @@ namespace Ei_Dimension
         }
         ((ObservableCollection<string>)SelectedTextBox.prop.GetValue(SelectedTextBox.VM))[SelectedTextBox.index] = temp + input;
       }
+    }
+
+    public static void ResetFocusedTextbox()
+    {
+      SelectedTextBox = (null, null, 0);
+    }
+
+    public static void HideNumpad()
+    {
+      NumpadShow.prop.SetValue(NumpadShow.VM, Visibility.Hidden);
     }
   }
 }

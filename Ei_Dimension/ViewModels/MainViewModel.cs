@@ -6,15 +6,15 @@ using DevExpress.Mvvm.POCO;
 namespace Ei_Dimension.ViewModels
 {
   [POCOViewModel]
-  public class MainViewModel 
+  public class MainViewModel
   {
-    public virtual bool NumpadShown { get; set; }
-    private INavigationService NavigationService { get { return this.GetService<INavigationService>(); } }
-    private IWindowService WindowService { get { return this.GetService<IWindowService>(); } }
+    public virtual System.Windows.Visibility NumpadVisible { get; set; }
+    private INavigationService NavigationService => this.GetService<INavigationService>();
 
     protected MainViewModel()
     {
-      NumpadShown = false;
+      App.NumpadShow = (this.GetType().GetProperty(nameof(NumpadVisible)), this);
+      NumpadVisible = System.Windows.Visibility.Hidden;
     }
 
     public static MainViewModel Create()
@@ -24,58 +24,57 @@ namespace Ei_Dimension.ViewModels
 
     public void NavigateDashboard()
     {
-      HideNumpad();
+      App.ResetFocusedTextbox();
+      App.HideNumpad();
       NavigationService.Navigate("DashboardView", null, this);
     }
 
     public void NavigateExperiment()
     {
-      HideNumpad();
+      App.ResetFocusedTextbox();
+      App.HideNumpad();
       NavigationService.Navigate("ExperimentView", null, this);
     }
 
     public void NavigateResults()
     {
-      HideNumpad();
+      App.ResetFocusedTextbox();
+      App.HideNumpad();
       NavigationService.Navigate("ResultsView", null, this);
     }
 
     public void NavigateDataAnalysis()
     {
-      HideNumpad();
+      App.ResetFocusedTextbox();
+      App.HideNumpad();
       NavigationService.Navigate("DataAnalysisView", null, this);
     }
 
     public void NavigateMaintenance()
     {
-      HideNumpad();
+      App.ResetFocusedTextbox();
+      App.HideNumpad();
       NavigationService.Navigate("MaintenanceView", null, this);
     }
 
     public void NavigateSettings()
     {
-      HideNumpad();
+      App.ResetFocusedTextbox();
+      App.HideNumpad();
       NavigationService.Navigate("ServiceView", null, this);
     }
 
     public void NumpadToggleButon()
     {
-      if (NumpadShown)
+      if (NumpadVisible == System.Windows.Visibility.Visible)
       {
-        HideNumpad();
-        return;
+        NumpadVisible = System.Windows.Visibility.Hidden;
       }
       else
       {
-        WindowService.Show("NumpadView", null, this);
-        NumpadShown = true;
+        NumpadVisible = System.Windows.Visibility.Visible;
       }
     }
 
-    public void HideNumpad()
-    {
-      NumpadShown = false;
-      WindowService.Hide();
-    }
   }
 }
