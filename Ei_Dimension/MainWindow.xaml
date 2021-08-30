@@ -126,7 +126,7 @@
                            NavigationCacheMode="Required"
                            Grid.Row="2" Grid.ColumnSpan="2">
       <dxmvvm:Interaction.Triggers>
-        <dxmvvm:EventToCommand EventName="Loaded" Command="{Binding NavigateMaintenanceCommand}" />
+        <dxmvvm:EventToCommand EventName="Loaded" Command="{Binding NavigateExperimentCommand}" />
       </dxmvvm:Interaction.Triggers>
       <dxmvvm:Interaction.Behaviors>
         <dxwuin:FrameNavigationService />

@@ -68,7 +68,10 @@ namespace Ei_Dimension.ViewModels
       {
         AvailableResults = new ObservableCollection<ResultFile>();
       }
-      AvailableResults.Clear();
+      else
+      {
+        AvailableResults.Clear();
+      }
       try
       {
         string[] files = Directory.GetFiles(_savedFilesLocation, "*.csv");
@@ -129,7 +132,7 @@ namespace Ei_Dimension.ViewModels
       Task<(ObservableCollection<int>, ObservableCollection<int>, ObservableCollection<int>, ObservableCollection<int>)> MapTask =
         new Task<(ObservableCollection<int>, ObservableCollection<int>, ObservableCollection<int>, ObservableCollection<int>)>(AddMapItem);
       MapTask.Start();
-      
+
       ForwardSsc = await ForwardTask;
       VioletSsc = await VioletTask;
       RedSsc = await RedTask;
@@ -237,10 +240,7 @@ namespace Ei_Dimension.ViewModels
       ObservableCollection<HistogramData> col = new ObservableCollection<HistogramData>();
       foreach (var x in _histoDicts[itemIndex])
       {
-        if (true)
-        {
-          col.Add(new HistogramData(x.Value, x.Key));
-        }
+        col.Add(new HistogramData(x.Value, x.Key));
       }
       return col;
     }
@@ -271,25 +271,6 @@ namespace Ei_Dimension.ViewModels
       t2.Start();
       List<HistogramData> XAxisHist;
       List<HistogramData> YAxisHist;
-      #region quicktest
-      //  using (System.IO.FileStream str = new FileStream(@"C:\Users\Admin\Desktop\WorkC#\data3.csv", FileMode.Create))
-      //  using (StreamWriter sw = new StreamWriter(str))
-      //  {
-      //    foreach (var x in CL1Hist)
-      //    {
-      //      sw.WriteLine($"{x.Argument},{x.Value}");
-      //    }
-      //  }
-      //  using (System.IO.FileStream str = new FileStream(@"C:\Users\Admin\Desktop\WorkC#\data4.csv", FileMode.Create))
-      //    using (StreamWriter sw = new StreamWriter(str))
-      //    {
-      //      foreach (var x in CL2Hist)
-      //      {
-      //        sw.WriteLine($"{x.Argument},{x.Value}");
-      //      }
-      //    }
-      //mmaybe should search dictionaries
-      #endregion
 
       //identify peaks
       var XAxisPeaks = DataProcessor.IdentifyPeaks(XAxisHist = await t1);
@@ -319,7 +300,6 @@ namespace Ei_Dimension.ViewModels
           if (pointX < peak.Item3)
           {
             _heatMapSeriesXY[i].IntensityX = DataProcessor.AssignIntensity(pointX, peak, HeatLevels);
-           // HeatMapSeriesXY[i].IntensityX = await Task<byte>.Run(() => { return DataProcessor.AssignIntensity(pointX, peak, HeatLevels); });
           }
         }
 
@@ -334,7 +314,6 @@ namespace Ei_Dimension.ViewModels
           if (pointY < peak.Item3)
           {
             _heatMapSeriesXY[i].IntensityY = DataProcessor.AssignIntensity(pointY, peak, HeatLevels);
-          //  HeatMapSeriesXY[i].IntensityY = await Task<byte>.Run(() => { return DataProcessor.AssignIntensity(pointY, peak, HeatLevels); });
           }
         }
       }

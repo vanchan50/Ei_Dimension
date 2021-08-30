@@ -72,9 +72,7 @@ namespace Ei_Dimension.ViewModels
     public void ChangeAmountOfWells(int num)
     {
       if (_amountOfWells == num)
-      {
         return;
-      }
       _amountOfWells = num;
       WellRowButtonItems.Clear();
       WellColumnButtonItems.Clear();

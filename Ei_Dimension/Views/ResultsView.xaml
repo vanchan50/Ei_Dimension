@@ -39,7 +39,7 @@
                     VerticalPosition="BottomOutside"
                     Width="280" Visible="True"/>
       </dxc:ChartControl.Legends>
-      <dxc:XYDiagram2D>
+      <dxc:XYDiagram2D PaneOrientation="Horizontal">
         <dxc:XYDiagram2D.AxisY>
           <dxc:AxisY2D>
             <dxc:AxisY2D.Title>
@@ -235,7 +235,7 @@
         </RadioButton.LayoutTransform>
       </RadioButton>
     </StackPanel>
-    
+
     <!--Data Selector X-->
     <StackPanel Grid.Row="1" Grid.Column="2"
                 Orientation="Horizontal"
@@ -272,7 +272,7 @@
         </RadioButton.CommandParameter>
       </RadioButton>
     </StackPanel>
-    
+
     <!--could be spreadsheet-->
     <dxg:GridControl x:Name="gridControl" Grid.ColumnSpan="3" Grid.Row="0"
                      HorizontalAlignment="Stretch"
@@ -285,17 +285,21 @@
       </dxmvvm:Interaction.Behaviors>
       <dxg:GridControl.View>
         <dxg:CardView ShowTotalSummary="True"
-                       AllowMoveColumnToDropArea="False"
-                       ShowGroupPanel="False"
-                       AllowEditing="False"
-                       AllowSorting="False"
-                       AllowColumnFiltering="False"
-                       AllowPaging="False"
-                       AllowGrouping="False"
-                       ShowSearchPanelMode="Never"
-                       IsGroupPanelMenuEnabled="False"
-                       CardLayout="Columns"
-                       ShowCardExpandButton="False"/>
+                      AllowMoveColumnToDropArea="False"
+                      ShowGroupPanel="False"
+                      ShowColumnHeaders="False"
+                      AllowEditing="False"
+                      AllowSorting="False"
+                      AllowColumnFiltering="False"
+                      AllowPaging="False"
+                      AllowGrouping="False"
+                      AllowCardResizing="False"
+                      SeparatorThickness="0"
+                      
+                      ShowSearchPanelMode="Never"
+                      IsGroupPanelMenuEnabled="False"
+                      CardLayout="Columns"
+                      ShowCardExpandButton="False"/>
       </dxg:GridControl.View>
       <dxg:GridColumn FieldName="Name" IsSmart="True"/>
       <dxg:GridColumn FieldName="Created" IsSmart="True"/>

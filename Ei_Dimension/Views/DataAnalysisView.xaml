@@ -3,10 +3,101 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm" xmlns:ViewModels="clr-namespace:Ei_Dimension.ViewModels"
+             xmlns:dxc="http://schemas.devexpress.com/winfx/2008/xaml/charts"
+             xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+             xmlns:ViewModels="clr-namespace:Ei_Dimension.ViewModels"
+             xmlns:System="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d"
              DataContext="{dxmvvm:ViewModelSource Type=ViewModels:DataAnalysisViewModel}"
              d:DesignHeight="674" d:DesignWidth="1500">
-    <Grid>
-    </Grid>
+  <Grid>
+    <!--Heatmap Chart-->
+    <dxc:ChartControl Grid.Row="1" Grid.Column="2"
+                      Width="800"
+                      HorizontalAlignment="Left">
+      <dxc:XYDiagram2D Height="600" Width="700"
+                       HorizontalAlignment="Left"
+                       Margin="30,0,0,0" PaneOrientation="Vertical">
+        <dxc:XYDiagram2D.AxisY>
+          <dxc:AxisY2D Logarithmic="True" GridLinesMinorVisible="True" MinorCount="9" Interlaced="False">
+            <dxc:AxisY2D.WholeRange>
+              <dxc:Range dxc:AxisY2D.AlwaysShowZeroLevel="False" >
+                <dxc:Range.MaxValue>
+                  <System:Double>10000</System:Double>
+                </dxc:Range.MaxValue>
+                <dxc:Range.MinValue>
+                  <System:Double>1</System:Double>
+                </dxc:Range.MinValue>
+              </dxc:Range>
+            </dxc:AxisY2D.WholeRange>
+            <dxc:AxisY2D.Title>
+              <dxc:AxisTitle Content="{Binding HeatmapAxisYTitle}" Visible="False"/>
+            </dxc:AxisY2D.Title>
+            <dxc:AxisY2D.VisualRange>
+              <dxc:Range dxc:AxisY2D.AlwaysShowZeroLevel="False">
+                <dxc:Range.MaxValue>
+                  <System:Double>10000</System:Double>
+                </dxc:Range.MaxValue>
+                <dxc:Range.MinValue>
+                  <System:Double>1</System:Double>
+                </dxc:Range.MinValue>
+              </dxc:Range>
+            </dxc:AxisY2D.VisualRange>
+          </dxc:AxisY2D>
+        </dxc:XYDiagram2D.AxisY>
+        <dxc:XYDiagram2D.AxisX>
+          <dxc:AxisX2D Logarithmic="True" GridLinesMinorVisible="True" MinorCount="9" GridLinesVisible="True" Interlaced="False">
+            <dxc:AxisX2D.VisualRange>
+              <dxc:Range >
+                <dxc:Range.MaxValue>
+                  <System:Double>10000</System:Double>
+                </dxc:Range.MaxValue>
+                <dxc:Range.MinValue>
+                  <System:Double>1</System:Double>
+                </dxc:Range.MinValue>
+              </dxc:Range>
+            </dxc:AxisX2D.VisualRange>
+            <dxc:AxisX2D.WholeRange>
+              <dxc:Range >
+                <dxc:Range.MaxValue>
+                  <System:Double>10000</System:Double>
+                </dxc:Range.MaxValue>
+                <dxc:Range.MinValue>
+                  <System:Double>1</System:Double>
+                </dxc:Range.MinValue>
+              </dxc:Range>
+            </dxc:AxisX2D.WholeRange>
+            <dxc:AxisX2D.Title>
+              <dxc:AxisTitle Content="{Binding HeatmapAxisXTitle}"  Visible="False"/>
+            </dxc:AxisX2D.Title>
+          </dxc:AxisX2D>
+        </dxc:XYDiagram2D.AxisX>
+        <dxc:PointSeries2D DataSource="{Binding HeatLevel1}"
+                           ArgumentDataMember="X"
+                           ValueDataMember="Y"
+                           MarkerSize="3"
+                           Brush="Aqua"/>
+        <dxc:PointSeries2D DataSource="{Binding HeatLevel2}"
+                           ArgumentDataMember="X"
+                           ValueDataMember="Y"
+                           MarkerSize="3"
+                           Brush="Green"/>
+        <dxc:PointSeries2D DataSource="{Binding HeatLevel3}"
+                           ArgumentDataMember="X"
+                           ValueDataMember="Y"
+                           MarkerSize="3"
+                           Brush="Orange"/>
+        <dxc:PointSeries2D DataSource="{Binding HeatLevel4}"
+                           ArgumentDataMember="X"
+                           ValueDataMember="Y"
+                           MarkerSize="3"
+                           Brush="OrangeRed"/>
+        <dxc:PointSeries2D DataSource="{Binding HeatLevel5}"
+                           ArgumentDataMember="X"
+                           ValueDataMember="Y"
+                           MarkerSize="3"
+                           Brush="#FFEB2323"/>
+      </dxc:XYDiagram2D>
+    </dxc:ChartControl>
+  </Grid>
 </UserControl>

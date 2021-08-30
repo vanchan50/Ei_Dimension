@@ -1,15 +1,426 @@
-﻿<UserControl xmlns:dxc="http://schemas.devexpress.com/winfx/2008/xaml/charts"  x:Class="Ei_Dimension.Views.ExperimentView"
+﻿<UserControl xmlns:dxsps="http://schemas.devexpress.com/winfx/2008/xaml/spreadsheet"
+             xmlns:dxc="http://schemas.devexpress.com/winfx/2008/xaml/charts"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+             xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
              xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+             xmlns:System="clr-namespace:System;assembly=mscorlib"
              xmlns:ViewModels="clr-namespace:Ei_Dimension.ViewModels"
+             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+             x:Class="Ei_Dimension.Views.ExperimentView"
              mc:Ignorable="d"
-             DataContext="{dxmvvm:ViewModelSource Type=ViewModels:ExperimentViewModel}"
+             DataContext="{dxmvvm:ViewModelSource Type={x:Type ViewModels:ExperimentViewModel}}"
              d:DesignHeight="674" d:DesignWidth="1500">
   <Grid>
-  
+    <!--WellTable Size Selector-->
+    <Border HorizontalAlignment="Left" VerticalAlignment="Bottom"
+            BorderThickness="2"
+              BorderBrush="{StaticResource AppTextColor}"
+              Margin="0,0,0,20"
+              Width="240"
+              Height="60"
+              CornerRadius="5">
+      <StackPanel HorizontalAlignment="Center"
+                    Orientation="Horizontal">
+        <RadioButton Content="96"
+                       Style="{StaticResource RadioButtonHorizontalThemeStyle}"
+                       IsChecked="True"
+                       Width="120"
+                       Command="{Binding ChangeWellTableSizeCommand}">
+          <RadioButton.CommandParameter>
+            <System:Int32>96</System:Int32>
+          </RadioButton.CommandParameter>
+        </RadioButton>
+        <RadioButton Content="384"
+                       Style="{StaticResource RadioButtonHorizontalThemeStyle}"
+                       Width="120"
+                       Command="{Binding ChangeWellTableSizeCommand}">
+          <RadioButton.CommandParameter>
+            <System:Int32>384</System:Int32>
+          </RadioButton.CommandParameter>
+        </RadioButton>
+      </StackPanel>
+    </Border>
+
+    <dx:ScrollViewerBase HorizontalAlignment="Left" VerticalAlignment="Top"
+                         Visibility="{Binding Table96Visible}">
+
+      <DataGrid SelectionMode="Extended"
+                SelectionUnit="Cell"
+                AutoGenerateColumns="False"
+                ItemsSource="{Binding TableWells}"
+                HeadersVisibility="All"
+                Background="Transparent"
+                RowBackground="Transparent"
+                AlternatingRowBackground="Transparent">
+        <dxmvvm:Interaction.Behaviors>
+          <dxmvvm:EventToCommand EventName="SelectedCellsChanged"
+                                 Command="{Binding SelectIndicesCommand}"
+                                 PassEventArgsToCommand="True"/>
+        </dxmvvm:Interaction.Behaviors>
+        <DataGrid.CellStyle>
+          <Style TargetType="{x:Type DataGridCell}">
+            <Setter Property="Background" Value="Transparent"/>
+          </Style>
+        </DataGrid.CellStyle>
+        <DataGrid.RowHeaderStyle>
+          <Style TargetType="{x:Type DataGridRowHeader}">
+            <Setter Property="Content" Value="{Binding Header}" />
+          </Style>
+        </DataGrid.RowHeaderStyle>
+        <DataGrid.Columns>
+          <DataGridTemplateColumn Header="1" Width="SizeToCells"
+                                IsReadOnly="True">
+            <DataGridTemplateColumn.CellTemplate>
+              <DataTemplate>
+                <Image Source="{Binding Images[0]}"/>
+              </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+          </DataGridTemplateColumn>
+          <DataGridTemplateColumn Header="2" Width="SizeToCells"
+                                IsReadOnly="True">
+            <DataGridTemplateColumn.CellTemplate>
+              <DataTemplate>
+                <Image Source="{Binding Images[1]}"/>
+              </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+          </DataGridTemplateColumn>
+          <DataGridTemplateColumn Header="3" Width="SizeToCells"
+                                IsReadOnly="True">
+            <DataGridTemplateColumn.CellTemplate>
+              <DataTemplate>
+                <Image Source="{Binding Images[2]}"/>
+              </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+          </DataGridTemplateColumn>
+          <DataGridTemplateColumn Header="4" Width="SizeToCells"
+                                IsReadOnly="True">
+            <DataGridTemplateColumn.CellTemplate>
+              <DataTemplate>
+                <Image Source="{Binding Images[3]}"/>
+              </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+          </DataGridTemplateColumn>
+          <DataGridTemplateColumn Header="5" Width="SizeToCells"
+                                IsReadOnly="True">
+            <DataGridTemplateColumn.CellTemplate>
+              <DataTemplate>
+                <Image Source="{Binding Images[4]}"/>
+              </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+          </DataGridTemplateColumn>
+          <DataGridTemplateColumn Header="6" Width="SizeToCells"
+                                IsReadOnly="True">
+            <DataGridTemplateColumn.CellTemplate>
+              <DataTemplate>
+                <Image Source="{Binding Images[5]}"/>
+              </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+          </DataGridTemplateColumn>
+          <DataGridTemplateColumn Header="7" Width="SizeToCells"
+                                IsReadOnly="True">
+            <DataGridTemplateColumn.CellTemplate>
+              <DataTemplate>
+                <Image Source="{Binding Images[6]}"/>
+              </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+          </DataGridTemplateColumn>
+          <DataGridTemplateColumn Header="8" Width="SizeToCells"
+                                IsReadOnly="True">
+            <DataGridTemplateColumn.CellTemplate>
+              <DataTemplate>
+                <Image Source="{Binding Images[7]}"/>
+              </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+          </DataGridTemplateColumn>
+          <DataGridTemplateColumn Header="9" Width="SizeToCells"
+                                IsReadOnly="True">
+            <DataGridTemplateColumn.CellTemplate>
+              <DataTemplate>
+                <Image Source="{Binding Images[8]}"/>
+              </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+          </DataGridTemplateColumn>
+          <DataGridTemplateColumn Header="10" Width="SizeToCells"
+                                IsReadOnly="True">
+            <DataGridTemplateColumn.CellTemplate>
+              <DataTemplate>
+                <Image Source="{Binding Images[9]}"/>
+              </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+          </DataGridTemplateColumn>
+          <DataGridTemplateColumn Header="11" Width="SizeToCells"
+                                IsReadOnly="True">
+            <DataGridTemplateColumn.CellTemplate>
+              <DataTemplate>
+                <Image Source="{Binding Images[10]}"/>
+              </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+          </DataGridTemplateColumn>
+          <DataGridTemplateColumn Header="12" Width="SizeToCells"
+                                IsReadOnly="True">
+            <DataGridTemplateColumn.CellTemplate>
+              <DataTemplate>
+                <Image Source="{Binding Images[11]}"/>
+              </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+          </DataGridTemplateColumn>
+        </DataGrid.Columns>
+      </DataGrid>
+    </dx:ScrollViewerBase>
+
+    <dx:ScrollViewerBase HorizontalAlignment="Left" VerticalAlignment="Top"
+                         Visibility="{Binding Table384Visible}">
+
+      <DataGrid SelectionMode="Extended"
+                SelectionUnit="Cell"
+                AutoGenerateColumns="False"
+                ItemsSource="{Binding TableWells}"
+                HeadersVisibility="All"
+                Background="Transparent"
+                RowBackground="Transparent"
+                AlternatingRowBackground="Transparent">
+        <dxmvvm:Interaction.Behaviors>
+          <dxmvvm:EventToCommand EventName="SelectedCellsChanged"
+                                 Command="{Binding SelectIndicesCommand}"
+                                 PassEventArgsToCommand="True"/>
+        </dxmvvm:Interaction.Behaviors>
+        <DataGrid.CellStyle>
+          <Style TargetType="{x:Type DataGridCell}">
+            <Setter Property="Background" Value="Transparent"/>
+          </Style>
+        </DataGrid.CellStyle>
+        <DataGrid.RowHeaderStyle>
+          <Style TargetType="{x:Type DataGridRowHeader}">
+            <Setter Property="Content" Value="{Binding Header}" />
+          </Style>
+        </DataGrid.RowHeaderStyle>
+        <DataGrid.Columns>
+          <DataGridTemplateColumn Header="1" Width="SizeToCells"
+                                IsReadOnly="True">
+            <DataGridTemplateColumn.CellTemplate>
+              <DataTemplate>
+                <Image Source="{Binding Images[0]}"/>
+              </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+          </DataGridTemplateColumn>
+          <DataGridTemplateColumn Header="2" Width="SizeToCells"
+                                IsReadOnly="True">
+            <DataGridTemplateColumn.CellTemplate>
+              <DataTemplate>
+                <Image Source="{Binding Images[1]}"/>
+              </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+          </DataGridTemplateColumn>
+          <DataGridTemplateColumn Header="3" Width="SizeToCells"
+                                IsReadOnly="True">
+            <DataGridTemplateColumn.CellTemplate>
+              <DataTemplate>
+                <Image Source="{Binding Images[2]}"/>
+              </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+          </DataGridTemplateColumn>
+          <DataGridTemplateColumn Header="4" Width="SizeToCells"
+                                IsReadOnly="True">
+            <DataGridTemplateColumn.CellTemplate>
+              <DataTemplate>
+                <Image Source="{Binding Images[3]}"/>
+              </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+          </DataGridTemplateColumn>
+          <DataGridTemplateColumn Header="5" Width="SizeToCells"
+                                IsReadOnly="True">
+            <DataGridTemplateColumn.CellTemplate>
+              <DataTemplate>
+                <Image Source="{Binding Images[4]}"/>
+              </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+          </DataGridTemplateColumn>
+          <DataGridTemplateColumn Header="6" Width="SizeToCells"
+                                IsReadOnly="True">
+            <DataGridTemplateColumn.CellTemplate>
+              <DataTemplate>
+                <Image Source="{Binding Images[5]}"/>
+              </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+          </DataGridTemplateColumn>
+          <DataGridTemplateColumn Header="7" Width="SizeToCells"
+                                IsReadOnly="True">
+            <DataGridTemplateColumn.CellTemplate>
+              <DataTemplate>
+                <Image Source="{Binding Images[6]}"/>
+              </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+          </DataGridTemplateColumn>
+          <DataGridTemplateColumn Header="8" Width="SizeToCells"
+                                IsReadOnly="True">
+            <DataGridTemplateColumn.CellTemplate>
+              <DataTemplate>
+                <Image Source="{Binding Images[7]}"/>
+              </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+          </DataGridTemplateColumn>
+          <DataGridTemplateColumn Header="9" Width="SizeToCells"
+                                IsReadOnly="True">
+            <DataGridTemplateColumn.CellTemplate>
+              <DataTemplate>
+                <Image Source="{Binding Images[8]}"/>
+              </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+          </DataGridTemplateColumn>
+          <DataGridTemplateColumn Header="10" Width="SizeToCells"
+                                IsReadOnly="True">
+            <DataGridTemplateColumn.CellTemplate>
+              <DataTemplate>
+                <Image Source="{Binding Images[9]}"/>
+              </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+          </DataGridTemplateColumn>
+          <DataGridTemplateColumn Header="11" Width="SizeToCells"
+                                IsReadOnly="True">
+            <DataGridTemplateColumn.CellTemplate>
+              <DataTemplate>
+                <Image Source="{Binding Images[10]}"/>
+              </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+          </DataGridTemplateColumn>
+          <DataGridTemplateColumn Header="12" Width="SizeToCells"
+                                IsReadOnly="True">
+            <DataGridTemplateColumn.CellTemplate>
+              <DataTemplate>
+                <Image Source="{Binding Images[11]}"/>
+              </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+          </DataGridTemplateColumn>
+
+          <DataGridTemplateColumn Header="13" Width="SizeToCells"
+                                IsReadOnly="True">
+            <DataGridTemplateColumn.CellTemplate>
+              <DataTemplate>
+                <Image Source="{Binding Images[12]}"/>
+              </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+          </DataGridTemplateColumn>
+          <DataGridTemplateColumn Header="14" Width="SizeToCells"
+                                IsReadOnly="True">
+            <DataGridTemplateColumn.CellTemplate>
+              <DataTemplate>
+                <Image Source="{Binding Images[13]}"/>
+              </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+          </DataGridTemplateColumn>
+          <DataGridTemplateColumn Header="15" Width="SizeToCells"
+                                IsReadOnly="True">
+            <DataGridTemplateColumn.CellTemplate>
+              <DataTemplate>
+                <Image Source="{Binding Images[14]}"/>
+              </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+          </DataGridTemplateColumn>
+          <DataGridTemplateColumn Header="16" Width="SizeToCells"
+                                IsReadOnly="True">
+            <DataGridTemplateColumn.CellTemplate>
+              <DataTemplate>
+                <Image Source="{Binding Images[15]}"/>
+              </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+          </DataGridTemplateColumn>
+          <DataGridTemplateColumn Header="17" Width="SizeToCells"
+                                IsReadOnly="True">
+            <DataGridTemplateColumn.CellTemplate>
+              <DataTemplate>
+                <Image Source="{Binding Images[16]}"/>
+              </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+          </DataGridTemplateColumn>
+          <DataGridTemplateColumn Header="18" Width="SizeToCells"
+                                IsReadOnly="True">
+            <DataGridTemplateColumn.CellTemplate>
+              <DataTemplate>
+                <Image Source="{Binding Images[17]}"/>
+              </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+          </DataGridTemplateColumn>
+          <DataGridTemplateColumn Header="19" Width="SizeToCells"
+                                IsReadOnly="True">
+            <DataGridTemplateColumn.CellTemplate>
+              <DataTemplate>
+                <Image Source="{Binding Images[18]}"/>
+              </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+          </DataGridTemplateColumn>
+          <DataGridTemplateColumn Header="20" Width="SizeToCells"
+                                IsReadOnly="True">
+            <DataGridTemplateColumn.CellTemplate>
+              <DataTemplate>
+                <Image Source="{Binding Images[19]}"/>
+              </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+          </DataGridTemplateColumn>
+          <DataGridTemplateColumn Header="21" Width="SizeToCells"
+                                IsReadOnly="True">
+            <DataGridTemplateColumn.CellTemplate>
+              <DataTemplate>
+                <Image Source="{Binding Images[20]}"/>
+              </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+          </DataGridTemplateColumn>
+          <DataGridTemplateColumn Header="22" Width="SizeToCells"
+                                IsReadOnly="True">
+            <DataGridTemplateColumn.CellTemplate>
+              <DataTemplate>
+                <Image Source="{Binding Images[21]}"/>
+              </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+          </DataGridTemplateColumn>
+          <DataGridTemplateColumn Header="23" Width="SizeToCells"
+                                IsReadOnly="True">
+            <DataGridTemplateColumn.CellTemplate>
+              <DataTemplate>
+                <Image Source="{Binding Images[22]}"/>
+              </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+          </DataGridTemplateColumn>
+          <DataGridTemplateColumn Header="24" Width="SizeToCells"
+                                IsReadOnly="True">
+            <DataGridTemplateColumn.CellTemplate>
+              <DataTemplate>
+                <Image Source="{Binding Images[23]}"/>
+              </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+          </DataGridTemplateColumn>
+        </DataGrid.Columns>
+      </DataGrid>
+    </dx:ScrollViewerBase>
+
+    <!--Well Assignment Buttons-->
+    <Border HorizontalAlignment="Left" VerticalAlignment="Bottom"
+            Margin="300,0,0,20">
+      <StackPanel Orientation="Horizontal">
+        <Button Width="50" Height="50"
+                Command="{Binding AssignWellTypeButtonClickCommand}"
+                CommandParameter="0">
+          <Image Source="pack://application:,,,/DevExpress.Images.v21.1;component/Images/Actions/Cancel_32x32.png"/>
+        </Button>
+        <Button Width="50" Height="50"
+                Command="{Binding AssignWellTypeButtonClickCommand}"
+                CommandParameter="1">
+          <Image Source="pack://application:,,,/DevExpress.Images.v21.1;component/Images/Actions/Apply_32x32.png"/>
+        </Button>
+        <Button Width="50" Height="50"
+                Command="{Binding AssignWellTypeButtonClickCommand}"
+                CommandParameter="2">
+          <Image Source="pack://application:,,,/DevExpress.Images.v21.1;component/Images/Media/Media_32x32.png"/>
+        </Button>
+        <Button Width="50" Height="50"
+                Command="{Binding AssignWellTypeButtonClickCommand}"
+                CommandParameter="3">
+          <Image Source="pack://application:,,,/DevExpress.Images.v21.1;component/Images/Find/Find_32x32.png"/>
+        </Button>
+      </StackPanel> 
+    </Border>
   </Grid>
 </UserControl>

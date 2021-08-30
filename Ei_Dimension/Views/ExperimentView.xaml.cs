@@ -23,5 +23,6 @@ namespace Ei_Dimension.Views
     {
       InitializeComponent();
     }
+
   }
 }
