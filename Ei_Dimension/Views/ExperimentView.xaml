@@ -15,64 +15,55 @@
              DataContext="{dxmvvm:ViewModelSource Type={x:Type ViewModels:ExperimentViewModel}}"
              d:DesignHeight="674" d:DesignWidth="1500">
   <Grid>
-    <!--WellTable Size Selector-->
-    <Border HorizontalAlignment="Left" VerticalAlignment="Bottom"
-            BorderThickness="2"
-              BorderBrush="{StaticResource AppTextColor}"
-              Margin="0,0,0,20"
-              Width="240"
-              Height="60"
-              CornerRadius="5">
-      <StackPanel HorizontalAlignment="Center"
-                    Orientation="Horizontal">
-        <RadioButton Content="96"
-                       Style="{StaticResource RadioButtonHorizontalThemeStyle}"
-                       IsChecked="True"
-                       Width="120"
-                       Command="{Binding ChangeWellTableSizeCommand}">
-          <RadioButton.CommandParameter>
-            <System:Int32>96</System:Int32>
-          </RadioButton.CommandParameter>
-        </RadioButton>
-        <RadioButton Content="384"
-                       Style="{StaticResource RadioButtonHorizontalThemeStyle}"
-                       Width="120"
-                       Command="{Binding ChangeWellTableSizeCommand}">
-          <RadioButton.CommandParameter>
-            <System:Int32>384</System:Int32>
-          </RadioButton.CommandParameter>
-        </RadioButton>
-      </StackPanel>
-    </Border>
-
-    <dx:ScrollViewerBase HorizontalAlignment="Left" VerticalAlignment="Top"
-                         Visibility="{Binding Table96Visible}">
-
-      <DataGrid SelectionMode="Extended"
+    <!--WellTable 96-->
+    <DataGrid HorizontalAlignment="Left" VerticalAlignment="Top"
+                SelectionMode="Extended"
                 SelectionUnit="Cell"
                 AutoGenerateColumns="False"
-                ItemsSource="{Binding TableWells}"
+                ItemsSource="{Binding Table96Wells}"
                 HeadersVisibility="All"
                 Background="Transparent"
                 RowBackground="Transparent"
-                AlternatingRowBackground="Transparent">
+                AlternatingRowBackground="Transparent"
+                GridLinesVisibility="None"
+                Visibility="{Binding Table96Visible}">
         <dxmvvm:Interaction.Behaviors>
           <dxmvvm:EventToCommand EventName="SelectedCellsChanged"
                                  Command="{Binding SelectIndicesCommand}"
                                  PassEventArgsToCommand="True"/>
         </dxmvvm:Interaction.Behaviors>
+
         <DataGrid.CellStyle>
           <Style TargetType="{x:Type DataGridCell}">
-            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Template">
+              <Setter.Value>
+                <ControlTemplate TargetType="DataGridCell">
+                  <Border x:Name="border">
+                    <ContentPresenter />
+                  </Border>
+                  <ControlTemplate.Triggers>
+                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsSelected}" Value="true">
+                      <Setter TargetName="border" Property="Background" Value="{StaticResource PressedButtonBackground}"/>
+                    </DataTrigger>
+                  </ControlTemplate.Triggers>
+                </ControlTemplate>
+              </Setter.Value>
+            </Setter>
           </Style>
-        </DataGrid.CellStyle>
-        <DataGrid.RowHeaderStyle>
-          <Style TargetType="{x:Type DataGridRowHeader}">
-            <Setter Property="Content" Value="{Binding Header}" />
-          </Style>
-        </DataGrid.RowHeaderStyle>
-        <DataGrid.Columns>
-          <DataGridTemplateColumn Header="1" Width="SizeToCells"
+      </DataGrid.CellStyle>
+      <DataGrid.RowHeaderStyle>
+        <Style TargetType="{x:Type DataGridRowHeader}">
+          <Setter Property="Content" Value="{Binding Header}" />
+          <Setter Property="Height" Value="33"/>
+          <Style.Triggers>
+            <Trigger Property="IsVisible" Value="true">
+              <Setter Property="Height" Value="32"/>
+            </Trigger>
+          </Style.Triggers>
+        </Style>
+      </DataGrid.RowHeaderStyle>
+      <DataGrid.Columns>
+        <DataGridTemplateColumn Header="1" Width="SizeToCells"
                                 IsReadOnly="True">
             <DataGridTemplateColumn.CellTemplate>
               <DataTemplate>
@@ -170,36 +161,58 @@
           </DataGridTemplateColumn>
         </DataGrid.Columns>
       </DataGrid>
-    </dx:ScrollViewerBase>
 
-    <dx:ScrollViewerBase HorizontalAlignment="Left" VerticalAlignment="Top"
-                         Visibility="{Binding Table384Visible}">
-
-      <DataGrid SelectionMode="Extended"
-                SelectionUnit="Cell"
-                AutoGenerateColumns="False"
-                ItemsSource="{Binding TableWells}"
-                HeadersVisibility="All"
-                Background="Transparent"
-                RowBackground="Transparent"
-                AlternatingRowBackground="Transparent">
+    <!--WellTable 384-->
+    <DataGrid HorizontalAlignment="Left" VerticalAlignment="Top"
+              SelectionMode="Extended"
+              SelectionUnit="Cell"
+              AutoGenerateColumns="False"
+              ItemsSource="{Binding Table384Wells}"
+              HeadersVisibility="All"
+              Background="Transparent"
+              RowBackground="Transparent"
+              AlternatingRowBackground="Transparent"
+              GridLinesVisibility="None"
+              Visibility="{Binding Table384Visible}"
+              CanUserResizeColumns="False"
+              CanUserResizeRows="False">
         <dxmvvm:Interaction.Behaviors>
           <dxmvvm:EventToCommand EventName="SelectedCellsChanged"
                                  Command="{Binding SelectIndicesCommand}"
                                  PassEventArgsToCommand="True"/>
         </dxmvvm:Interaction.Behaviors>
+
         <DataGrid.CellStyle>
           <Style TargetType="{x:Type DataGridCell}">
-            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Template">
+              <Setter.Value>
+                <ControlTemplate TargetType="DataGridCell">
+                  <Border x:Name="border">
+                    <ContentPresenter />
+                  </Border>
+                  <ControlTemplate.Triggers>
+                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsSelected}" Value="true">
+                      <Setter TargetName="border" Property="Background" Value="{StaticResource PressedButtonBackground}"/>
+                    </DataTrigger>
+                  </ControlTemplate.Triggers>
+                </ControlTemplate>
+              </Setter.Value>
+            </Setter>
           </Style>
         </DataGrid.CellStyle>
         <DataGrid.RowHeaderStyle>
           <Style TargetType="{x:Type DataGridRowHeader}">
             <Setter Property="Content" Value="{Binding Header}" />
+            <Setter Property="Height" Value="33"/>
+            <Style.Triggers>
+              <Trigger Property="IsVisible" Value="true">
+                <Setter Property="Height" Value="32"/>
+              </Trigger>
+            </Style.Triggers>
           </Style>
         </DataGrid.RowHeaderStyle>
         <DataGrid.Columns>
-          <DataGridTemplateColumn Header="1" Width="SizeToCells"
+        <DataGridTemplateColumn Header="1" Width="SizeToCells"
                                 IsReadOnly="True">
             <DataGridTemplateColumn.CellTemplate>
               <DataTemplate>
@@ -394,7 +407,37 @@
           </DataGridTemplateColumn>
         </DataGrid.Columns>
       </DataGrid>
-    </dx:ScrollViewerBase>
+
+    <!--WellTable Size Selector-->
+    <Border HorizontalAlignment="Left" VerticalAlignment="Bottom"
+            BorderThickness="2"
+              BorderBrush="{StaticResource AppTextColor}"
+              Margin="20,0,0,20"
+              Width="240"
+              Height="60"
+              CornerRadius="5">
+      <StackPanel HorizontalAlignment="Center"
+                  Orientation="Horizontal">
+        <RadioButton Content="96"
+                     Style="{StaticResource RadioButtonHorizontalThemeStyle}"
+                     IsChecked="{Binding Selected96}"
+                     Width="120"
+                     Command="{Binding ChangeWellTableSizeCommand}">
+          <RadioButton.CommandParameter>
+            <System:Int32>96</System:Int32>
+          </RadioButton.CommandParameter>
+        </RadioButton>
+        <RadioButton Content="384"
+                     Style="{StaticResource RadioButtonHorizontalThemeStyle}"
+                     IsChecked="{Binding Selected384}"
+                     Width="120"
+                     Command="{Binding ChangeWellTableSizeCommand}">
+          <RadioButton.CommandParameter>
+            <System:Int32>384</System:Int32>
+          </RadioButton.CommandParameter>
+        </RadioButton>
+      </StackPanel>
+    </Border>
 
     <!--Well Assignment Buttons-->
     <Border HorizontalAlignment="Left" VerticalAlignment="Bottom"
