@@ -42,7 +42,7 @@ namespace Ei_Dimension.ViewModels
       ClassificationTargetsContents = new ObservableCollection<string> { "1", "1", "1", "1", "3500"};
 
       CalibrationParameter = "Off";
-      CompensationPercentageContent = new ObservableCollection<string> { "1" };
+      CompensationPercentageContent = new ObservableCollection<string> { Settings.Default.Compensation.ToString() };
       DNRContents = new ObservableCollection<string> { "", "7200" };
 
       CurrentMapName = new ObservableCollection<string> { App.Device.ActiveMap.mapName };

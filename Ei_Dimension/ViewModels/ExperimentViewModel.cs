@@ -20,7 +20,7 @@ namespace Ei_Dimension.ViewModels
     public virtual bool Selected384 { get; set; }
 
     public virtual ObservableCollection<string> EndRead { get; set; }
-    public virtual string SystemControlSelectorState { get; set; }
+    public virtual ObservableCollection<bool> SystemControlSelectorState { get; set; }
     public virtual string OrderSelectorState { get; set; }
     public virtual string EndReadSelectorState { get; set; }
     public virtual ObservableCollection<string> Volumes { get; set; }
@@ -43,7 +43,10 @@ namespace Ei_Dimension.ViewModels
       ChangeWellTableSize(384);
 
       EndRead = new ObservableCollection<string> { "100", "500" };
-      SystemControlSelectorState = "Man";
+
+      SystemControlSelectorState = new ObservableCollection<bool> { false, false, false };
+      SystemControlSelectorState[App.Device.SystemControl] = true;
+
       OrderSelectorState = "Row";
       EndReadSelectorState = "MPR";
       Volumes = new ObservableCollection<string> { "0", "", "" };
@@ -161,17 +164,14 @@ namespace Ei_Dimension.ViewModels
       }
     }
 
-    public void SystemControlSelector(string s)
+    public void SystemControlSelector(byte num)
     {
-      switch (s)
-      {
-        case "Man":
-          break;
-        case "WO":
-          break;
-        case "WOPB":
-          break;
-      }
+      SystemControlSelectorState[0] = false;
+      SystemControlSelectorState[1] = false;
+      SystemControlSelectorState[2] = false;
+      SystemControlSelectorState[num] = true;
+      Settings.Default.SystemControl = num;
+      Settings.Default.Save();
     }
 
     public void OrderSelector(string s)

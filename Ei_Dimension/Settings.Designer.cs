@@ -49,18 +49,6 @@ namespace Ei_Dimension {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("MyDocuments")]
-        public string DirPath {
-            get {
-                return ((string)(this["DirPath"]));
-            }
-            set {
-                this["DirPath"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
         public int defaultMap {
             get {
@@ -128,6 +116,18 @@ namespace Ei_Dimension {
             }
             set {
                 this["PltRept"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("SavedFileName")]
+        public string SaveFileName {
+            get {
+                return ((string)(this["SaveFileName"]));
+            }
+            set {
+                this["SaveFileName"] = value;
             }
         }
     }

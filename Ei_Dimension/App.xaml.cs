@@ -17,9 +17,7 @@ namespace Ei_Dimension
       SetLanguage("en-US");
 
       Device = new MicroCy.MicroCyDevice();
-      //reading VM add SetControl(m_MicroCy.SystemControl);
       Device.SystemControl = Settings.Default.SystemControl;
-      Device.Outdir = Settings.Default.DirPath; //TODO: probably not necessary
       Device.SubtRegBg = Settings.Default.SubtRegBg;
       // reading VM add .SelectedIndex = Properties.Settings.Default.defaultMap;
       // calibration VM add Properties.Settings.Default.Compensation.ToString();
@@ -32,6 +30,7 @@ namespace Ei_Dimension
       Device.PltRept = Settings.Default.PltRept;
       // plateResultscb.Checked = m_MicroCy.PltRept;
       // m_MicroCy.InitSTab("readertab");
+      Device.SubtRegBg = Settings.Default.SubtRegBg;
 
 
     }
@@ -109,10 +108,20 @@ namespace Ei_Dimension
         if (input == "")
         {
           if(temp.Length > 0)
-            ((ObservableCollection<string>)SelectedTextBox.prop.GetValue(SelectedTextBox.VM))[SelectedTextBox.index] = temp.Remove(temp.Length - 1, 1);
-          return;
+            ((ObservableCollection<string>)SelectedTextBox.prop.GetValue(SelectedTextBox.VM))[SelectedTextBox.index] = temp = temp.Remove(temp.Length - 1, 1);
         }
-        ((ObservableCollection<string>)SelectedTextBox.prop.GetValue(SelectedTextBox.VM))[SelectedTextBox.index] = temp + input;
+        else
+          ((ObservableCollection<string>)SelectedTextBox.prop.GetValue(SelectedTextBox.VM))[SelectedTextBox.index] = temp = temp + input;
+        //check for settings
+        if(SelectedTextBox.prop.Name == "CompensationPercentageContent")
+        {
+          float res;
+          if(float.TryParse(temp, out res))
+          {
+            Settings.Default.Compensation = res;
+            Settings.Default.Save();
+          }
+        }
       }
     }
 

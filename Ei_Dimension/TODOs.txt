@@ -1,2 +1,6 @@
 ﻿Ctrl+F every "Path." and "Environment." for irrelevant paths
 LoadMaps() if check seems unnecessary
+Calibration & Channels Views don't update Active Map
+When something from Settings changes, use .Save()
+Save settings from textboxes in App.InjectToTextbox
+Add "." to numpad

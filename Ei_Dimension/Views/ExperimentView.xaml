@@ -595,10 +595,10 @@
                          Height="44"
                          Width="150"
                          FontSize="19"
-                         IsChecked="True"
+                         IsChecked="{Binding SystemControlSelectorState[0]}"
                          Command="{Binding SystemControlSelectorCommand}">
               <RadioButton.CommandParameter>
-                <System:String>Man</System:String>
+                <System:Byte>0</System:Byte>
               </RadioButton.CommandParameter>
             </RadioButton>
             <RadioButton Content="{lang:Loc Experiment_Work_Order}"
@@ -606,9 +606,10 @@
                          Height="44"
                          Width="150"
                          FontSize="19"
+                         IsChecked="{Binding SystemControlSelectorState[1]}"
                          Command="{Binding SystemControlSelectorCommand}">
               <RadioButton.CommandParameter>
-                <System:String>WO</System:String>
+                <System:Byte>1</System:Byte>
               </RadioButton.CommandParameter>
             </RadioButton>
             <RadioButton Content="{lang:Loc Experiment_Work_Order_Plus_Bcode}"
@@ -616,9 +617,10 @@
                          Height="44"
                          Width="150"
                          FontSize="19"
+                         IsChecked="{Binding SystemControlSelectorState[2]}"
                          Command="{Binding SystemControlSelectorCommand}">
               <RadioButton.CommandParameter>
-                <System:String>WOPB</System:String>
+                <System:Byte>2</System:Byte>
               </RadioButton.CommandParameter>
             </RadioButton>
           </StackPanel>
