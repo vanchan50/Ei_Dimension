@@ -200,43 +200,43 @@ namespace MicroCy
   #endregion ENUMS
 
   [Serializable]
-  public class BeadRegion
+  public struct BeadRegion
   {
-    public ushort regionNumber { get; set; }
-    public bool isActive { get; set; }
-    public bool isvector { get; set; }          //vector type maps are computed instead of described by map array
-    public byte bitmaptype { get; set; }
-    public int centerhighorderidx { get; set; } //log index of mean value of intesity measured during map create
-    public int centermidorderidx { get; set; }
-    public int centerloworderidx { get; set; }
-    public int meanhighorder { get; set; } //mean value of intesity measured during map create
-    public int meanmidorder { get; set; }
-    public int meanloworder { get; set; }
-    public int meanrp1bg { get; set; }
+    public ushort regionNumber;
+    public bool isActive;
+    public bool isvector;          //vector type maps are computed instead of described by map array
+    public byte bitmaptype;
+    public int centerhighorderidx; //log index of mean value of intesity measured during map create
+    public int centermidorderidx;
+    public int centerloworderidx;
+    public int meanhighorder; //mean value of intesity measured during map create
+    public int meanmidorder;
+    public int meanloworder;
+    public int meanrp1bg;
   }
 
   [Serializable]
-  public class CustomMap
-    {
-        public string mapName { get; set; }
+  public struct CustomMap
+  {
+    public string mapName;
 
-        public bool dimension3 { get; set; }    //is it 3 dimensional
-        public int highorderidx { get; set; }   //is 0 for cl0, 1 for cl1, etc
-        public int midorderidx { get; set; }
-        public int loworderidx { get; set; }
-        public ushort minmapssc { get; set; }
-        public ushort maxmapssc { get; set; }
-        public int calcl0 { get; set; }
-        public int calcl1 { get; set; }
-        public int calcl2 { get; set; }
-        public int calcl3 { get; set; }
-        public int calrpmaj { get; set; }
-        public int calrpmin { get; set; }
-        public int calrssc { get; set; }
-        public int calgssc { get; set; }
-        public int calvssc { get; set; }
-        public List<BeadRegion> mapRegions = new List<BeadRegion>();
-    }
+    public bool dimension3;   //is it 3 dimensional
+    public int highorderidx;   //is 0 for cl0, 1 for cl1, etc
+    public int midorderidx;
+    public int loworderidx;
+    public ushort minmapssc;
+    public ushort maxmapssc;
+    public int calcl0;
+    public int calcl1;
+    public int calcl2;
+    public int calcl3;
+    public int calrpmaj;
+    public int calrpmin;
+    public int calrssc; 
+    public int calgssc;
+    public int calvssc;
+    public List<BeadRegion> mapRegions;
+  }
 
   [Serializable]
   public class WorkOrder
@@ -268,13 +268,13 @@ namespace MicroCy
     }
   [Serializable]
   public class RegionReport
-    {
-        public UInt16 region { get; set; }
-        public UInt32 count { get; set; }
-        public float medfi { get; set; }
-        public float meanfi { get; set; }
-        public float coefVar { get; set; }
-    }
+  {
+    public ushort region { get; set; }
+    public uint count { get; set; }
+    public float medfi { get; set; }
+    public float meanfi { get; set; }
+    public float coefVar { get; set; }
+  }
   [Serializable]
   public class WellResults
     {
@@ -455,7 +455,8 @@ namespace MicroCy
       catch { }
       SetSystemDirectories();
       LoadMaps();
-      SetProperty(1, 1);    //set version as 1 to enable work order handling
+      ActiveMap = MapList[0];
+      MainCommand("Set Property", code: 1, parameter: 1);    //set version as 1 to enable work order handling
       _actPriIdx = 1;  //cl1;
       _actSecIdx = 2;  //cl2;
       Reg0stats = false;
@@ -469,381 +470,6 @@ namespace MicroCy
       Outdir = RootDirectory.FullName;
     }
 
-
-
-    #region Methods
-
-    public void ClearMap()
-    {
-      Array.Clear(_map, 0, _map.Length);
-    }
-
-    private void SetSystemDirectories()
-    {
-      RootDirectory = new DirectoryInfo(Path.Combine(@"C:\Emissioninc", Environment.MachineName));
-      List<string> subDirectories = new List<string>(7) { "Config", "WorkOrder", "Archive", "Result", "Status", "AcquisitionData", "SystemLogs" };
-      foreach (var d in subDirectories)
-      {
-        RootDirectory.CreateSubdirectory(d);
-      }
-    }
-
-
-    #region Main Commands
-    public void SheathPump(byte cmd, ushort parameter)
-    {
-        string sCmd = "Sheath";
-        CommandStruct cs = MainCmdTemplatesDict[sCmd];
-        cs.Command = cmd;
-        cs.Parameter = parameter;
-        RunCmd(sCmd, cs);
-    }
-    public void SampleAPump(byte cmd, ushort parameter)
-    {
-        string sCmd = "SampleA";
-        CommandStruct cs = MainCmdTemplatesDict[sCmd];
-        cs.Command = cmd;
-        cs.Parameter = parameter;
-        RunCmd(sCmd, cs);
-    }
-    public void SampleBPump(byte cmd, ushort parameter)
-    {
-        string sCmd = "SampleB";
-        CommandStruct cs = MainCmdTemplatesDict[sCmd];
-        cs.Command = cmd;
-        cs.Parameter = parameter;
-        RunCmd(sCmd, cs);
-    }
-    public void RefreshDac()
-    {
-        string sCmd = "RefreshDac";
-        CommandStruct cs = MainCmdTemplatesDict[sCmd];
-        RunCmd(sCmd, cs);
-
-    }
-    public void SetNextWell()
-    {
-        string sCmd = "SetNextWell";
-        CommandStruct cs = MainCmdTemplatesDict[sCmd];
-        RunCmd(sCmd, cs);
-    }
-    public void SetBaseline(byte cmd)
-    {
-        string sCmd = "SetBaseline";
-        CommandStruct cs = MainCmdTemplatesDict[sCmd];
-        cs.Command = cmd;
-        RunCmd(sCmd, cs);
-    }
-    public void SaveToFlash()
-    {
-        string sCmd = "SaveToFlash";
-        CommandStruct cs = MainCmdTemplatesDict[sCmd];
-        RunCmd(sCmd, cs);
-    }
-    public void ReadFlash()
-    {
-        string sCmd = "Future1";
-        CommandStruct cs = MainCmdTemplatesDict[sCmd];
-        RunCmd(sCmd, cs);
-    }
-    public void InitOpVars(byte cmd)
-    {
-        string sCmd = "InitOpVars";
-        CommandStruct cs = MainCmdTemplatesDict[sCmd];
-        cs.Command = cmd;   //0 = normal, 1= use factory defaults
-        RunCmd(sCmd, cs);
-    }
-    public void FlushQueue()
-    {
-        string sCmd = "FlushCmdQueue";
-        CommandStruct cs = MainCmdTemplatesDict[sCmd];
-       RunCmd(sCmd, cs);
-    }
-    public void StartSampling()
-    {
-        string sCmd = "Start Sampling";
-        CommandStruct cs = MainCmdTemplatesDict[sCmd];
-        RunCmd(sCmd, cs);
-    }
-    public void EndSampling()
-    {
-        string sCmd = "End Sampling";
-        CommandStruct cs = MainCmdTemplatesDict[sCmd];
-        RunCmd(sCmd, cs);
-    }
-    public void MotorAlign(byte cmd, int parameter)
-    {
-        string sCmd = "AlignMotor";
-        CommandStruct cs = MainCmdTemplatesDict[sCmd];
-        cs.Command = cmd;
-        cs.Parameter = 0;
-        cs.FParameter = (float)parameter;
-        RunCmd(sCmd, cs);
-    }
-
-    public void MotorX(byte cmd, int parameter)
-    {
-        string sCmd = "MotorX";
-        CommandStruct cs = MainCmdTemplatesDict[sCmd];
-        cs.Command = cmd;
-        cs.Parameter = 0;
-        cs.FParameter = (float)parameter;
-        RunCmd(sCmd, cs);
-    }
-    public void MotorY(byte cmd, int parameter)
-    {
-        string sCmd = "MotorY";
-        CommandStruct cs = MainCmdTemplatesDict[sCmd];
-        cs.Command = cmd;
-        cs.Parameter = 0;
-        cs.FParameter = (float)parameter;
-        RunCmd(sCmd, cs);
-    }
-    public void MotorZ(byte cmd, int parameter)
-    {
-        string sCmd = "MotorZ";
-        CommandStruct cs = MainCmdTemplatesDict[sCmd];
-        cs.Command = cmd;
-        cs.Parameter = 0;
-        cs.FParameter = (float)parameter;
-        RunCmd(sCmd, cs);
-    }
-
-    // COMPLEX COMMANDS***********************************************
-   
-    public void Startup()
-    {
-      string sCmd = "Startup";
-      CommandStruct cs = MainCmdTemplatesDict[sCmd];
-      RunCmd(sCmd, cs);
-    }
-    public void Prime()
-    {
-        string sCmd = "Prime";
-        CommandStruct cs = MainCmdTemplatesDict[sCmd];
-        RunCmd(sCmd, cs);
-        
-    }
-    public void MoveIdex()
-    {
-        string sCmd = "Idex";
-        CommandStruct cs = MainCmdTemplatesDict[sCmd];
-        cs.Code = 0xd7;
-        cs.Command = IdexPos;
-        cs.Parameter = IdexSteps;
-        cs.FParameter = IdexDir;   //currently checked is direction high on driver ic
-        RunCmd(sCmd, cs);
-
-    }
-    public void SheathEmptyPrime()
-    {
-        string sCmd = "Sheath Empty Prime";
-        CommandStruct cs = MainCmdTemplatesDict[sCmd];
-        RunCmd(sCmd, cs);
-    }
-    public void WashA()
-    {
-        string sCmd = "Wash A";
-        CommandStruct cs = MainCmdTemplatesDict[sCmd];
-        RunCmd(sCmd, cs);
-    }
-    public void WashB()
-    {
-        string sCmd = "Wash B";
-        CommandStruct cs = MainCmdTemplatesDict[sCmd];
-        RunCmd(sCmd, cs);
-    }
-    public void EjectPlate()
-    {
-        string sCmd = "Eject Plate";
-        CommandStruct cs = MainCmdTemplatesDict[sCmd];
-        RunCmd(sCmd, cs);
-    }
-    public void LoadPlate()
-    {
-        string sCmd = "Load Plate";
-        CommandStruct cs = MainCmdTemplatesDict[sCmd];
-        RunCmd(sCmd, cs);
-    }
-    public void Position()  //next position is set in properties 0xad and 0xae
-    {
-        string sCmd =  "Position Well Plate";
-        CommandStruct cs = MainCmdTemplatesDict[sCmd];
-        RunCmd(sCmd, cs);
-    }
-
-    public void AspirateA()
-    {
-        string sCmd =  "Aspirate Syringe A" ;
-        CommandStruct cs = MainCmdTemplatesDict[sCmd];
-        RunCmd(sCmd, cs);
-    }
-    public void AspirateB()
-    {
-        string sCmd = "Aspirate Syringe B";
-        CommandStruct cs = MainCmdTemplatesDict[sCmd];
-        RunCmd(sCmd, cs);
-    }
-    public void ReadA()
-    {
-        string sCmd = "Read A";
-        CommandStruct cs = MainCmdTemplatesDict[sCmd];
-        _readingA = true;
-        RunCmd(sCmd, cs);
-    }
-    public void ReadB()
-    {
-        string sCmd = "Read B";
-        CommandStruct cs = MainCmdTemplatesDict[sCmd];
-        _readingA = false;
-        RunCmd(sCmd, cs);
-    }
-    public void ReadA_AspirB()
-    {
-        string sCmd = "Read A Aspirate B";
-        CommandStruct cs = MainCmdTemplatesDict[sCmd];
-        _readingA = true;
-        RunCmd(sCmd, cs);
-    }
-    public void ReadB_AspirA()
-    {
-        string sCmd = "Read B Aspirate A";
-        CommandStruct cs = MainCmdTemplatesDict[sCmd];
-        _readingA = false ;
-       RunCmd(sCmd, cs);
-    }
-    public void EndReadA()
-    {
-        string sCmd = "End Bead Read A";
-        CommandStruct cs = MainCmdTemplatesDict[sCmd];
-        RunCmd(sCmd, cs);
-    }
-    public void EndReadB()
-    {
-        string sCmd = "End Bead Read B";
-        CommandStruct cs = MainCmdTemplatesDict[sCmd];
-        RunCmd(sCmd, cs);
-    }
-    public void SetProperty(byte code, ushort parameter)
-    {
-        string sCmd = "Set Property";
-        CommandStruct cs = MainCmdTemplatesDict[sCmd];
-        cs.Code = code;
-        cs.Parameter = parameter;
-        RunCmd(sCmd, cs);
-    }
-    public void SetFProperty(byte code, float fparameter)
-    {
-        string sCmd = "Set FProperty";
-        CommandStruct cs = MainCmdTemplatesDict[sCmd];
-        cs.Code = code;
-        cs.FParameter = fparameter;
-        RunCmd(sCmd, cs);
-    }
-    public void GetProperty(byte code)
-    {
-        string sCmd = "Get Property";
-        CommandStruct cs = MainCmdTemplatesDict[sCmd];
-        cs.Code = code;
-        RunCmd(sCmd, cs);
-    }
-    public void GetFProperty(byte code)
-    {
-        string sCmd = "Get FProperty";
-        CommandStruct cs = MainCmdTemplatesDict[sCmd];
-        cs.Code = code;
-        RunCmd(sCmd, cs);
-    }
-    public void GetFProperty(byte code, UInt16 parameter)
-    {
-        string sCmd = "Get FProperty";
-        CommandStruct cs = MainCmdTemplatesDict[sCmd];
-        cs.Parameter = parameter;
-        cs.Code = code;
-        RunCmd(sCmd, cs);
-    }
-
-    public void InitializePlate(int idx)
-    {
-        switch (idx)
-        {
-            case 0:
-                {
-                    break;
-                }
-            case 1:
-                {
-                    break;
-                }
-            case 2:
-                {
-                    break;
-                }
-        }
-    }
-    public void InitSTab(string tabname)
-    {
-        switch (tabname)
-        {
-            case "readertab":
-                {
-                    foreach (byte code in Readertab)
-                    {
-                        GetProperty(code);
-                    }
-
-                    break;
-                }
-            case "reportingtab":
-                {
-                    foreach (byte code in Reportingtab)
-                    {
-                        GetProperty(code);
-                    }
-
-                    break;
-                }
-            case "calibtab":
-                {
-                    foreach (byte code in Calibtab)
-                    {
-                        GetProperty(code);
-                    }
-
-                    break;
-                }
-            case "channeltab":
-                {
-                    foreach (byte code in Channeltab)
-                    {
-                        GetProperty(code);
-                    }
-
-                    break;
-                }
-            case "motorstab":
-                {
-                    foreach (byte code in Motorstab)
-                    {
-                        GetProperty(code);
-                    }
-
-                    break;
-                }
-            case "componentstab":
-                {
-                    foreach (byte code in Componentstab)
-                    {
-                        GetProperty(code);
-                    }
-
-                    break;
-                }
-        }
-
-    }
-    #endregion Main Commands
-
     public void ConstructMap(CustomMap mmap)
     {
       //build classification map from ActiveMap using bitfield types A-D
@@ -852,8 +478,8 @@ namespace MicroCy
       int[,] bitpoints = new int[32, 2];
       _actPriIdx = (byte)mmap.midorderidx; //what channel cl0 - cl3?
       _actSecIdx = (byte)mmap.loworderidx;
-      SetProperty(0xce, mmap.minmapssc);  //set ssc gates for this map
-      SetProperty(0xcf, mmap.maxmapssc);
+      MainCommand("Set Property", code: 0xce, parameter: mmap.minmapssc);  //set ssc gates for this map
+      MainCommand("Set Property", code: 0xcf, parameter: mmap.maxmapssc);
       Array.Clear(ClassificationMap, 0, ClassificationMap.Length);
       foreach (BeadRegion mapRegions in mmap.mapRegions)
       {
@@ -899,7 +525,7 @@ namespace MicroCy
           if (begidy < 3) begidy = 3;
           for (irow = begidx; irow <= endidx; irow++)
           {
-            for (jcol = begidy+(int)xincer; jcol <= endidy+(int)xincer; jcol++)
+            for (jcol = begidy + (int)xincer; jcol <= endidy + (int)xincer; jcol++)
             {
               if (ClassificationMap[irow, jcol] == 0)
                 ClassificationMap[irow, jcol] = mapRegions.regionNumber;
@@ -981,7 +607,6 @@ namespace MicroCy
             rout.meanfi -= rpbg;
           }
           _summaryout.Append(rout.ToString());
-//          if (SubtRegBg == true) rout.meanfi -= ActiveMap.mapRegions[regionNumber.regionNumber].meanrp1bg;
       
           PlateReport.rpWells[SavingWellIdx].rpReg.Add(new RegionReport(){ region = regionNumber.regionNumber,
             count = (uint)rout.count, medfi = rout.medfi, meanfi = rout.meanfi, coefVar = rout.cv }); 
@@ -994,12 +619,12 @@ namespace MicroCy
         {
 
           string rfilename = SystemControl == 0 ? Outfilename : WorkOrder.plateID.ToString();
-          string resultfilename = Path.Combine(RootDirectory.FullName,"Result", rfilename); 
+          string resultfilename = Path.Combine(RootDirectory.FullName, "Result", rfilename); 
           TextWriter jwriter = null;
           try
           {
             var jcontents = JsonConvert.SerializeObject(PlateReport);   
-            jwriter = new StreamWriter(resultfilename+".json");
+            jwriter = new StreamWriter(resultfilename + ".json");
             jwriter.Write(jcontents);
             if (File.Exists(_workOrderPath)) File.Delete(_workOrderPath);   //result is posted, delete work order
           }
@@ -1016,8 +641,6 @@ namespace MicroCy
         double sumsq = 0;
         double mean = 0;
         double stddev = 0;
-        double min;
-        double max;
         double[] robustcnt = new double[10];
         if (SavBeadCount > 5000)
           SavBeadCount = 5000;
@@ -1030,8 +653,8 @@ namespace MicroCy
           robustcnt[finx] = SavBeadCount; //start with total bead count
           mean = sumit / SavBeadCount;
           //find high and low bounds
-          min = mean * 0.5;
-          max = mean * 2;
+          double min = mean * 0.5;
+          double max = mean * 2;
           sumit = 0;
           for (int beads = 0; beads < SavBeadCount; beads++)
           {
@@ -1065,53 +688,29 @@ namespace MicroCy
       Console.WriteLine(string.Format("{0} Reporting Background File Save Complete", DateTime.Now.ToString()));
     }
 
-        public void SetReadingParamsForWell(int idx)
+    public void SetReadingParamsForWell(int idx)
+    {
+      MainCommand("Set Property", code: 0xaa, parameter: (ushort)WellsInOrder[idx].runSpeed);
+      MainCommand("Set Property", code: 0xc2, parameter: (ushort)WellsInOrder[idx].chanConfig);
+      BeadsToCapture = WellsInOrder[idx].termCnt;
+      MinPerRegion = WellsInOrder[idx].regTermCnt;
+      TerminationType = WellsInOrder[idx].termType;
+      ConstructMap(ActiveMap);
+      _wellResults.Clear();
+      foreach (BeadRegion mapRegions in WellsInOrder[idx].thisWellsMap.mapRegions)
+      {
+        bool isInMap = ActiveMap.mapRegions.Any(xx => mapRegions.regionNumber == xx.regionNumber);
+        if (isInMap==false)
+          Console.WriteLine(string.Format("{0} No Map for Work Order region {1}", DateTime.Now.ToString(),mapRegions.regionNumber));
+        if ((mapRegions.isActive) & (isInMap))
         {
-
-            SetProperty(0xaa, (ushort)WellsInOrder[idx].runSpeed);
-            SetProperty(0xc2, (ushort)WellsInOrder[idx].chanConfig);
-            BeadsToCapture = WellsInOrder[idx].termCnt;
-            MinPerRegion = WellsInOrder[idx].regTermCnt;
-            TerminationType = WellsInOrder[idx].termType;
-            //            ConstructMap(WellsInOrder[idx].thisWellsMap);
-            ConstructMap(ActiveMap);
-            _wellResults.Clear();
-            foreach (BeadRegion mapRegions in WellsInOrder[idx].thisWellsMap.mapRegions)
-            {
-                bool isInMap = ActiveMap.mapRegions.Any(xx => mapRegions.regionNumber == xx.regionNumber);
-                if (isInMap==false)
-                    Console.WriteLine(string.Format("{0} No Map for Work Order region {1}", DateTime.Now.ToString(),mapRegions.regionNumber));
-                if ((mapRegions.isActive) & (isInMap))
-                {
-                    WellResults actreg = new WellResults();
-                    actreg.regionNumber = mapRegions.regionNumber;
-                    _wellResults.Add(actreg);
-                }
-            }
-            if (Reg0stats == true)
-            {
-                WellResults actreg = new WellResults();
-                actreg.regionNumber = 0;
-                _wellResults.Add(actreg);
-
-            }
+          _wellResults.Add(new WellResults { regionNumber = mapRegions.regionNumber });
         }
-
-    public void SetAspirateParamsForWell(int idx)
-    {
-      SetProperty(0xad, (ushort)WellsInOrder[idx].rowIdx);
-      SetProperty(0xae, (ushort)WellsInOrder[idx].colIdx);
-      SetProperty(0xaf, (ushort)WellsInOrder[idx].sampVol);
-      SetProperty(0xac, (ushort)WellsInOrder[idx].washVol);
-      SetProperty(0xc4, (ushort)WellsInOrder[idx].agitateVol);
-      PlateRow = (byte)WellsInOrder[idx].rowIdx;
-      PlateCol = (byte)WellsInOrder[idx].colIdx;
-    }
-
-    public void InitReadPipe()
-    {
-      if (_instrumentConnected)
-        _ = MicroCyUSBDevice.Interfaces[0].Pipes[0x81].BeginRead(_usbInputBuffer, 0, _usbInputBuffer.Length, new AsyncCallback(ReplyFromMC), null);
+      }
+      if (Reg0stats)
+      {
+        _wellResults.Add(new WellResults { regionNumber = 0 });
+      }
     }
 
     private void ReplyFromMC(IAsyncResult result)
@@ -1194,56 +793,48 @@ namespace MicroCy
             switch (XAxisSel)
             {
               case 0:
-                newdp.xyclx = (UInt32)outbead.cl0;
+                newdp.xyclx = (uint)outbead.cl0;
                 break;
               case 1:
-                newdp.xyclx = (UInt32)outbead.cl1;
+                newdp.xyclx = (uint)outbead.cl1;
                 break;
               case 2:
-                newdp.xyclx = (UInt32)outbead.cl2;
+                newdp.xyclx = (uint)outbead.cl2;
                 break;
               default:
-                newdp.xyclx = (UInt32)outbead.cl3;
+                newdp.xyclx = (uint)outbead.cl3;
                 break;
             }
             switch (YAxisSel)
             {
               case 0:
-                newdp.xycly = (UInt32)outbead.cl0;
+                newdp.xycly = (uint)outbead.cl0;
                 break;
               case 1:
-                newdp.xycly = (UInt32)outbead.cl1;
+                newdp.xycly = (uint)outbead.cl1;
                 break;
               case 2:
-                newdp.xycly = (UInt32)outbead.cl2;
+                newdp.xycly = (uint)outbead.cl2;
                 break;
               default:
-                newdp.xycly = (UInt32)outbead.cl3;
+                newdp.xycly = (uint)outbead.cl3;
                 break;
             }
             switch (SscSelected)
-                        {
-                          case 0:
-                              {
-                                sidsel = outbead.fsc;
-                                break;
-                              }
-                          case 1:
-                              {
-                                sidsel = outbead.violetssc;
-                                break;
-                              }
-                          case 2:
-                              {
-                                sidsel = outbead.greenssc;
-                                break;
-                              }
-                          default:
-                              {
-                                sidsel = outbead.redssc;
-                                break;
-                              }
-                        }
+            {
+              case 0:
+                sidsel = outbead.fsc;
+                break;
+              case 1:
+                sidsel = outbead.violetssc;
+                break;
+              case 2:
+                sidsel = outbead.greenssc;
+                break;
+              default:
+                sidsel = outbead.redssc;
+                break;
+            }
             sidesc = Math.Log(sidsel) * 24.526;
             SscData[(byte)sidesc]++;
             grp1 = outbead.reporter;
@@ -1302,27 +893,27 @@ namespace MicroCy
           CreateMapState = 0;
         }
         if (CreateMapState == 3)
+        {
+          zz = 0; savx = 0;savy = 0;
+          for (xx = 0; xx < 256; xx++) //find peak
+          {
+            for (yy = 0; yy < 256; yy++)
             {
-                zz = 0; savx = 0;savy = 0;
-                for (xx = 0; xx < 256; xx++) //find peak
-                {
-                    for (yy = 0; yy < 256; yy++)
-                    {
-                        if (_map[xx, yy] > zz)
-                        {
-                            zz = _map[xx, yy];
-                            savx = xx;
-                            savy = yy;
-                        }
-                    }
-                }
-                MapPeakX = (float)Math.Exp(savx / 24.526);
-                MapPeakY = (float)Math.Exp(savy / 24.526);
-//                avgrpbg = accumrpbg / BeadCount;
-                CreateMapState = 0;
-                
-                //find region peak and fill in text boxes on new region tab
+              if (_map[xx, yy] > zz)
+              {
+                zz = _map[xx, yy];
+                savx = xx;
+                savy = yy;
+              }
             }
+          }
+          MapPeakX = (float)Math.Exp(savx / 24.526);
+          MapPeakY = (float)Math.Exp(savy / 24.526);
+//          avgrpbg = accumrpbg / BeadCount;
+          CreateMapState = 0;
+          
+          //find region peak and fill in text boxes on new region tab
+        }
         Array.Clear(_usbInputBuffer, 0, _usbInputBuffer.Length);
         switch (TerminationType)
         {
@@ -1372,68 +963,6 @@ namespace MicroCy
         }
       }
       _ = MicroCyUSBDevice.Interfaces[0].Pipes[0x81].BeginRead(_usbInputBuffer, 0, _usbInputBuffer.Length, new AsyncCallback(ReplyFromMC), null);
-    }
-
-    /// <summary>
-    /// Sends a command OUT to the USB device, then checks the IN pipe for a return value.
-    /// </summary>
-    /// <param name="sCmdName">A friendly name for the command.</param>
-    /// <param name="cs">The CommandStruct object containing the command parameters.  This will get converted to an 8-byte array.</param>
-    private void RunCmd (string sCmdName, CommandStruct cs)
-    {
-      if (_instrumentConnected)
-      {
-        byte[] buffer = StructToByteArray(cs);
-        //  1: MOVE DUE TO INSTR                Console.WriteLine(string.Format("{0} Sending [{1}]: {2}", DateTime.Now.ToString(), sCmdName, cs.ToString()));
-        MicroCyUSBDevice.Interfaces[0].OutPipe.Write(buffer);
-      }
-      Console.WriteLine(string.Format("{0} Sending [{1}]: {2}", DateTime.Now.ToString(), sCmdName, cs.ToString())); //  MARK1 END
-    }
-
-    /// <summary>
-    /// Converts an object / struct to a byte array
-    /// </summary>
-    /// <param name="obj">The object to convert.</param>
-    /// <returns>The converted object</returns>
-    static byte[] StructToByteArray(object obj)
-    {
-      int len = Marshal.SizeOf(obj);
-      byte[] arrRet = new byte[len];
-
-      IntPtr ptr = Marshal.AllocHGlobal(len);
-      Marshal.StructureToPtr(obj, ptr, true);
-      Marshal.Copy(ptr, arrRet, 0, len);
-      Marshal.FreeHGlobal(ptr);
-
-      return arrRet;
-    }
-
-    static CommandStruct ByteArrayToStruct<CommandStruct>(byte[] inmsg)
-    {
-      IntPtr ptr = Marshal.AllocHGlobal(8);
-      try
-      {
-        Marshal.Copy(inmsg, 0, ptr, 8);
-        return (CommandStruct)Marshal.PtrToStructure(ptr, typeof(CommandStruct));
-      }
-      finally
-      {
-        Marshal.FreeHGlobal(ptr);
-      }
-    }
-
-    static BeadInfoStruct BeadArrayToStruct<BeadInfoStruct>(byte[] beadmsg, byte kk)
-    {
-      IntPtr ptr = Marshal.AllocHGlobal(64);
-      try
-      {
-        Marshal.Copy(beadmsg, kk * 64, ptr, 64);
-        return (BeadInfoStruct)Marshal.PtrToStructure(ptr, typeof(BeadInfoStruct));
-      }
-      finally
-      {
-        Marshal.FreeHGlobal(ptr);
-      }
     }
 
     public void LoadMaps()
@@ -1493,18 +1022,55 @@ namespace MicroCy
 
     //Refactored
 
-    private string PrepareSummaryFile() //  DEBUGINFO: in Legacy was int BtnRead_Click
+    public void ClearMap()
     {
-      string summaryFileName = "";
-      for (var i = 0; i < 1000; i++)
+      Array.Clear(_map, 0, _map.Length);
+    }
+
+    public void InitReadPipe()
+    {
+      if (_instrumentConnected)
+        _ = MicroCyUSBDevice.Interfaces[0].Pipes[0x81].BeginRead(_usbInputBuffer, 0, _usbInputBuffer.Length, new AsyncCallback(ReplyFromMC), null);
+    }
+
+    public void MainCommand(string command, byte? cmd = null, byte? code = null, ushort? parameter = null, float? fparameter = null)
+    {
+      CommandStruct cs = MainCmdTemplatesDict[command];
+      cs.Command = cmd ?? cs.Command;
+      cs.Code = code ?? cs.Code;
+      cs.Parameter = parameter ?? cs.Parameter;
+      cs.FParameter = fparameter ?? cs.FParameter;
+      RunCmd(command, cs);
+    }
+
+    public void InitSTab(string tabname)
+    {
+      List<byte> list = Readertab;
+      switch (tabname)
       {
-        summaryFileName = Outdir + "\\" + "Results__" + Outfilename + '_' + i.ToString() + ".csv";
-        if (!File.Exists(summaryFileName))
+        case "readertab":
+          list = Readertab;
+          break;
+        case "reportingtab":
+          list = Reportingtab;
+          break;
+        case "calibtab":
+          list = Calibtab;
+          break;
+        case "channeltab":
+          list = Channeltab;
+          break;
+        case "motorstab":
+          list = Motorstab;
+          break;
+        case "componentstab":
+          list = Componentstab;
           break;
       }
-      _ = _summaryout.Clear();
-      _ = _summaryout.Append(Sheader);
-      return summaryFileName;
+      foreach (byte Code in list)
+      {
+        MainCommand("Get Property", code: Code);
+      }
     }
 
     public void SaveMaps()
@@ -1532,15 +1098,17 @@ namespace MicroCy
 
     public void SaveCalVals(int idx)
     {
-      MapList[idx].calrpmin = TemprpMin;
-      MapList[idx].calrpmaj = TemprpMaj;
-      MapList[idx].calrssc = TempRedSsc;
-      MapList[idx].calgssc = TempGreenSsc;
-      MapList[idx].calvssc = TempVioletSsc;
-      MapList[idx].calcl0 = TempCl0;
-      MapList[idx].calcl1 = TempCl1;
-      MapList[idx].calcl2 = TempCl2;
-      MapList[idx].calcl3 = TempCl3;
+      var map = MapList[idx];
+      map.calrpmin = TemprpMin;
+      map.calrpmaj = TemprpMaj;
+      map.calrssc = TempRedSsc;
+      map.calgssc = TempGreenSsc;
+      map.calvssc = TempVioletSsc;
+      map.calcl0 = TempCl0;
+      map.calcl1 = TempCl1;
+      map.calcl2 = TempCl2;
+      map.calcl3 = TempCl3;
+      MapList[idx] = map;
       SaveMaps();
     }
 
@@ -1553,10 +1121,59 @@ namespace MicroCy
     public void EndBeadRead()
     {
       if (_readingA)
-        EndReadA();         //sends EE to instrument
+        MainCommand("End Bead Read A");         //sends EE to instrument
       else
-        EndReadB();    //send EF to instrument
+        MainCommand("End Bead Read B");    //send EF to instrument
       WellReset();
+    }
+
+    public void SetAspirateParamsForWell(int idx)
+    {
+      MainCommand("Set Property", code: 0xad, parameter: (ushort)WellsInOrder[idx].rowIdx);
+      MainCommand("Set Property", code: 0xae, parameter: (ushort)WellsInOrder[idx].colIdx);
+      MainCommand("Set Property", code: 0xaf, parameter: (ushort)WellsInOrder[idx].sampVol);
+      MainCommand("Set Property", code: 0xac, parameter: (ushort)WellsInOrder[idx].washVol);
+      MainCommand("Set Property", code: 0xc4, parameter: (ushort)WellsInOrder[idx].agitateVol);
+      PlateRow = (byte)WellsInOrder[idx].rowIdx;
+      PlateCol = (byte)WellsInOrder[idx].colIdx;
+    }
+
+    private void SetSystemDirectories()
+    {
+      RootDirectory = new DirectoryInfo(Path.Combine(@"C:\Emissioninc", Environment.MachineName));
+      List<string> subDirectories = new List<string>(7) { "Config", "WorkOrder", "Archive", "Result", "Status", "AcquisitionData", "SystemLogs" };
+      foreach (var d in subDirectories)
+      {
+        RootDirectory.CreateSubdirectory(d);
+      }
+    }
+    /// <summary>
+    /// Sends a command OUT to the USB device, then checks the IN pipe for a return value.
+    /// </summary>
+    /// <param name="sCmdName">A friendly name for the command.</param>
+    /// <param name="cs">The CommandStruct object containing the command parameters.  This will get converted to an 8-byte array.</param>
+    private void RunCmd(string sCmdName, CommandStruct cs)
+    {
+      if (_instrumentConnected)
+      {
+        byte[] buffer = StructToByteArray(cs);
+        MicroCyUSBDevice.Interfaces[0].OutPipe.Write(buffer);
+      }
+      Console.WriteLine(string.Format("{0} Sending [{1}]: {2}", DateTime.Now.ToString(), sCmdName, cs.ToString())); //  MARK1 END
+    }
+
+    private string PrepareSummaryFile() //  DEBUGINFO: in Legacy was int BtnRead_Click
+    {
+      string summaryFileName = "";
+      for (var i = 0; i < 1000; i++)
+      {
+        summaryFileName = Outdir + "\\" + "Results__" + Outfilename + '_' + i.ToString() + ".csv";
+        if (!File.Exists(summaryFileName))
+          break;
+      }
+      _ = _summaryout.Clear();
+      _ = _summaryout.Append(Sheader);
+      return summaryFileName;
     }
 
     private void WellReset()
@@ -1570,11 +1187,13 @@ namespace MicroCy
           if (CurrentWellIdx < WellsToRead)   //more than one to go
           {
             SetAspirateParamsForWell(CurrentWellIdx + 1);
-            ReadB_AspirA();
+            MainCommand("Read B Aspirate A");
+            _readingA = false;
           }
           else if (CurrentWellIdx == WellsToRead)
           {
-            ReadB();
+            MainCommand("Read B");
+            _readingA = false;
           }
         }
         else
@@ -1582,12 +1201,14 @@ namespace MicroCy
           if (CurrentWellIdx < WellsToRead)
           {
             SetAspirateParamsForWell(CurrentWellIdx + 1);
-            ReadA_AspirB();
+            MainCommand("Read A Aspirate B");
+            _readingA = true;
           }
           else if (CurrentWellIdx == WellsToRead)
           {
             //handle end of plate things
-            ReadA();
+            MainCommand("Read A");
+            _readingA = true;
           }
         }
         InitBeadRead(ReadingRow, ReadingCol);   //gets output file redy
@@ -1599,12 +1220,52 @@ namespace MicroCy
       }
     }
 
+    private static byte[] StructToByteArray(object obj)
+    {
+      int len = Marshal.SizeOf(obj);
+      byte[] arrRet = new byte[len];
+
+      IntPtr ptr = Marshal.AllocHGlobal(len);
+      Marshal.StructureToPtr(obj, ptr, true);
+      Marshal.Copy(ptr, arrRet, 0, len);
+      Marshal.FreeHGlobal(ptr);
+
+      return arrRet;
+    }
+
+    private static CommandStruct ByteArrayToStruct<CommandStruct>(byte[] inmsg)
+    {
+      IntPtr ptr = Marshal.AllocHGlobal(8);
+      try
+      {
+        Marshal.Copy(inmsg, 0, ptr, 8);
+        return (CommandStruct)Marshal.PtrToStructure(ptr, typeof(CommandStruct));
+      }
+      finally
+      {
+        Marshal.FreeHGlobal(ptr);
+      }
+    }
+
+    private static BeadInfoStruct BeadArrayToStruct<BeadInfoStruct>(byte[] beadmsg, byte kk)
+    {
+      IntPtr ptr = Marshal.AllocHGlobal(64);
+      try
+      {
+        Marshal.Copy(beadmsg, kk * 64, ptr, 64);
+        return (BeadInfoStruct)Marshal.PtrToStructure(ptr, typeof(BeadInfoStruct));
+      }
+      finally
+      {
+        Marshal.FreeHGlobal(ptr);
+      }
+    }
+
     private static int Val_2_Idx(int val)
     {
       int retidx;
       retidx = (int)(Math.Log(val) * 24.526);
       return retidx;
     }
-    #endregion Methods
   }
 }

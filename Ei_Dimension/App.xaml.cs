@@ -19,8 +19,6 @@ namespace Ei_Dimension
       SetLanguage("en-US");
 
       Device = new MicroCy.MicroCyDevice();
-      Device.LoadMaps();
-      Device.ActiveMap = Device.MapList[0];
       //reading VM add SetControl(m_MicroCy.SystemControl);
       Device.SystemControl = Settings.Default.SystemControl;
       Device.Outdir = Settings.Default.DirPath; //TODO: probably not necessary
@@ -36,6 +34,7 @@ namespace Ei_Dimension
       Device.PltRept = Settings.Default.PltRept;
       // plateResultscb.Checked = m_MicroCy.PltRept;
       // m_MicroCy.InitSTab("readertab");
+      Device.MainCommand("Get FProperty", code:0x58);
 
     }
 
