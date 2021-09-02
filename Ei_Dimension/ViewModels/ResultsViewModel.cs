@@ -35,7 +35,7 @@ namespace Ei_Dimension.ViewModels
     public virtual ObservableCollection<HeatMapData> HeatLevel4 { get; set; }
     public virtual ObservableCollection<HeatMapData> HeatLevel5 { get; set; }
 
-    private List<BeadInfoStruct> _beadStructsList;
+    private List<MicroCy.BeadInfoStruct> _beadStructsList;
     private ObservableCollection<HeatMapData> _heatMapSeriesXY;
     private List<SortedDictionary<int, int>> _histoDicts;
     private (int, int) _heatmapAxisXY;  //holds selected values for heatmap data
@@ -48,7 +48,7 @@ namespace Ei_Dimension.ViewModels
       _heatMapSeriesXY = new ObservableCollection<HeatMapData>();
       HeatmapAxisXTitle = "CL1";
       HeatmapAxisYTitle = "CL2";
-      _heatmapAxisXY = (1,2);
+      _heatmapAxisXY = (1, 2);
 
       HeatLevel1 = new ObservableCollection<HeatMapData>(); // Min     outside of bin
       HeatLevel2 = new ObservableCollection<HeatMapData>(); //         70%
@@ -90,7 +90,7 @@ namespace Ei_Dimension.ViewModels
     {
       if(_beadStructsList == null)
       {
-        _beadStructsList = new List<BeadInfoStruct>();
+        _beadStructsList = new List<MicroCy.BeadInfoStruct>();
       }
       else
       {
@@ -101,7 +101,7 @@ namespace Ei_Dimension.ViewModels
       for (var i = 0; i < contents.Count; i++)
       {
         _beadStructsList.Add(await Task.Run(() => {
-          BeadInfoStruct bs;
+          MicroCy.BeadInfoStruct bs;
           return bs = DataProcessor.ParseRow(contents[i]); }));
       }
     }

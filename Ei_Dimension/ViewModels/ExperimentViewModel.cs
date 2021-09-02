@@ -59,11 +59,11 @@ namespace Ei_Dimension.ViewModels
       };
       SelectedSpeedContent = SpeedItems[0].Content;
 
-      ClassiMapItems = new ObservableCollection<DropDownButtonContents>
+      ClassiMapItems = new ObservableCollection<DropDownButtonContents>();
+      foreach (var map in App.Device.MapList)
       {
-        new DropDownButtonContents("ULBgMag", this),
-        new DropDownButtonContents("Placeholder in Exp VM", this)
-      };
+        ClassiMapItems.Add(new DropDownButtonContents(map.mapName,this));
+      }
       SelectedClassiMapContent = ClassiMapItems[0].Content;
 
       ChConfigItems = new ObservableCollection<DropDownButtonContents>

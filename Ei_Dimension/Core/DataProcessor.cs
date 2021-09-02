@@ -22,9 +22,9 @@ namespace Ei_Dimension.Core
       return str;
     }
 
-    static public BeadInfoStruct ParseRow(string data)
+    static public MicroCy.BeadInfoStruct ParseRow(string data)
     {
-      BeadInfoStruct Binfo;
+      MicroCy.BeadInfoStruct Binfo;
       string[] words = data.Split(',');
       Binfo.Header = uint.Parse(words[0]);
       Binfo.EventTime = uint.Parse(words[1]);
@@ -124,7 +124,7 @@ namespace Ei_Dimension.Core
       return Peaks;
     }
 
-    static public List<SortedDictionary<int, int>> MakeDictionariesFromData(List<BeadInfoStruct> bsList)
+    static public List<SortedDictionary<int, int>> MakeDictionariesFromData(List<MicroCy.BeadInfoStruct> bsList)
     {
       SortedDictionary<int, int> dictForward = new SortedDictionary<int, int>(); //value,bin
       SortedDictionary<int, int> dictVioletssc = new SortedDictionary<int, int>(); //value,bin

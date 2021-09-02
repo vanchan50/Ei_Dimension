@@ -14,8 +14,9 @@ namespace Ei_Dimension.ViewModels
 
     public virtual ObservableCollection<string> EventTriggerContents { get; set; }
     public virtual ObservableCollection<string> ClassificationTargetsContents { get; set; }
-    public virtual ObservableCollection<string>  CompensationPercentageContent { get; set; }
+    public virtual ObservableCollection<string> CompensationPercentageContent { get; set; }
     public virtual ObservableCollection<string> DNRContents { get; set; }
+    public virtual ObservableCollection<string> CurrentMapName { get; set; }
 
     public static CalibrationViewModel Instance { get; private set; }
 
@@ -43,6 +44,9 @@ namespace Ei_Dimension.ViewModels
       CalibrationParameter = "Off";
       CompensationPercentageContent = new ObservableCollection<string> { "1" };
       DNRContents = new ObservableCollection<string> { "", "7200" };
+
+      CurrentMapName = new ObservableCollection<string> { App.Device.ActiveMap.mapName };
+
       Instance = this;
     }
 

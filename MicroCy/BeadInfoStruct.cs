@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Ei_Dimension.Models
+﻿namespace MicroCy
 {
   public struct BeadInfoStruct
   {
-    public UInt32 Header;
-    public UInt32 EventTime;
+    public uint Header;
+    public uint EventTime;
 
     public byte fsc_bg;
     public byte vssc_bg;
@@ -20,14 +14,14 @@ namespace Ei_Dimension.Models
     public byte rssc_bg;
     public byte gssc_bg;
 
-    public UInt16 greenB_bg;    //measured background used in Compensation 
-    public UInt16 greenC_bg;
-    public UInt16 greenB;   //ADC measurement of optical split on RP1
-    public UInt16 greenC;
+    public ushort greenB_bg;    //measured background used in Compensation 
+    public ushort greenC_bg;
+    public ushort greenB;   //ADC measurement of optical split on RP1
+    public ushort greenC;
 
     public byte l_offset_rg;    //samples between green and red peak
     public byte l_offset_gv;    //samples between green and violet peak
-    public UInt16 region;
+    public ushort region;
     public float fsc;       //Forward Scatter
 
     public float violetssc; //Violet A
@@ -44,7 +38,9 @@ namespace Ei_Dimension.Models
 
     public override string ToString()   //setup for csv output
     {
-      return $"{Header},{EventTime},{fsc_bg},{vssc_bg},{cl0_bg},{cl1_bg},{cl2_bg},{cl3_bg},{rssc_bg},{gssc_bg},{greenB_bg},{greenC_bg},{greenB},{greenC},{l_offset_rg},{l_offset_gv},{region},{fsc},{violetssc},{cl0},{redssc},{cl1},{cl2},{cl3},{greenssc},{reporter}\r";
+      return string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16},{17},{18},{19},{20},{21},{22},{23},{24},{25}\r",
+        Header, EventTime, fsc_bg, vssc_bg, cl0_bg, cl1_bg, cl2_bg, cl3_bg, rssc_bg, gssc_bg, greenB_bg, greenC_bg, greenB, greenC,
+        l_offset_rg, l_offset_gv, region, fsc, violetssc, cl0, redssc, cl1, cl2, cl3, greenssc, reporter);
     }
   }
 }

@@ -39,110 +39,6 @@ using System.Threading.Tasks;
 
 namespace MicroCy
 {
-  #region STRUCTS
-  public unsafe struct BeadInfoStruct
-  {
-    public uint Header;
-    public uint EventTime;
-
-    public byte fsc_bg;
-    public byte vssc_bg;
-    public byte cl0_bg;
-    public byte cl1_bg;
-    public byte cl2_bg;
-    public byte cl3_bg;
-    public byte rssc_bg;
-    public byte gssc_bg;
-
-    public ushort greenB_bg;    //measured background used in Compensation 
-    public ushort greenC_bg;
-    public ushort greenB;   //ADC measurement of optical split on RP1
-    public ushort greenC;
-
-    public byte l_offset_rg;    //samples between green and red peak
-    public byte l_offset_gv;    //samples between green and violet peak
-    public ushort region;
-    public float fsc;       //Forward Scatter
-
-    public float violetssc; //Violet A
-    public float cl0;       //Violet B
-
-    public float redssc;    //Red D
-    public float cl1;       //Red C
-
-    public float cl2;       //Red B
-    public float cl3;       //Red A
-
-    public float greenssc;
-    public float reporter;  //computed from Green B and Green C
-
-    public override string ToString()   //setup for csv output
-    {
-      return string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16},{17},{18},{19},{20},{21},{22},{23},{24},{25}\r",
-        Header, EventTime, fsc_bg, vssc_bg, cl0_bg, cl1_bg, cl2_bg, cl3_bg, rssc_bg, gssc_bg,  greenB_bg, greenC_bg, greenB, greenC,
-        l_offset_rg, l_offset_gv, region, fsc, violetssc, cl0, redssc, cl1, cl2, cl3, greenssc, reporter);
-    }
-  }
-
-  [Serializable]
-  public class Wells
-  {
-    public byte rowIdx { get; set; }
-    public byte colIdx { get; set; }
-    public byte runSpeed { get; set; }
-    public byte termType { get; set; }
-    public byte chanConfig { get; set; }
-    public short sampVol { get; set; }
-    public short washVol { get; set; }
-    public short agitateVol { get; set; }
-    public int termCnt { get; set; }
-    public int regTermCnt { get; set; }
-    public CustomMap thisWellsMap = new CustomMap();
-  }
-
-  public unsafe struct CommandStruct
-  {
-    public byte Code;
-    public byte Command;
-    public ushort Parameter;
-    public float FParameter;
-
-    public override string ToString()
-    {
-      return string.Format("{0:X2},{1:X2},{2},{3:F1}", Code, Command, Parameter, FParameter);
-    }
-  }
-
-  public unsafe struct CLQueue
-  {
-    public uint xyclx;
-    public uint xycly;
-    public uint xycl2;
-    public uint xycl3;
-    public uint hrp1;
-    public uint gssc;
-    public uint rssc;
-    public uint vssc;
-  }
-
-  [Serializable]
-  public struct OutResults
-  {
-    public string row;
-    public int col;
-    public ushort region;
-    public int count;
-    public float medfi;
-    public float meanfi;
-    public float cv;
-    public override string ToString()
-    {
-      return string.Format("{0},{1},{2},{3},{4},{5:F3},{6:F1}\r",
-        row, col, region, count, medfi, meanfi, cv);
-    }
-  }
-  #endregion STRUCTS
-
   #region ENUMS
   public enum USBRequestType
   {
@@ -199,96 +95,6 @@ namespace MicroCy
   }
   #endregion ENUMS
 
-  [Serializable]
-  public struct BeadRegion
-  {
-    public ushort regionNumber;
-    public bool isActive;
-    public bool isvector;          //vector type maps are computed instead of described by map array
-    public byte bitmaptype;
-    public int centerhighorderidx; //log index of mean value of intesity measured during map create
-    public int centermidorderidx;
-    public int centerloworderidx;
-    public int meanhighorder; //mean value of intesity measured during map create
-    public int meanmidorder;
-    public int meanloworder;
-    public int meanrp1bg;
-  }
-
-  [Serializable]
-  public struct CustomMap
-  {
-    public string mapName;
-
-    public bool dimension3;   //is it 3 dimensional
-    public int highorderidx;   //is 0 for cl0, 1 for cl1, etc
-    public int midorderidx;
-    public int loworderidx;
-    public ushort minmapssc;
-    public ushort maxmapssc;
-    public int calcl0;
-    public int calcl1;
-    public int calcl2;
-    public int calcl3;
-    public int calrpmaj;
-    public int calrpmin;
-    public int calrssc; 
-    public int calgssc;
-    public int calvssc;
-    public List<BeadRegion> mapRegions;
-  }
-
-  [Serializable]
-  public class WorkOrder
-  {
-    public Guid plateID { get; set; }
-    public Guid beadMapId { get; set; }
-    public short numberRows { get; set; }
-    public short numberCols { get; set; }
-    public short wellDepth { get; set; }
-    public DateTime createDateTime { get; set; }        //date and time per ISO8601
-    public DateTime scheduleDateTime { get; set; }
-    public List<Wells> woWells = new List<Wells>();
-  }
-
-  [Serializable]
-  public class PlateReport
-  {
-    public Guid plateID { get; set; }
-    public Guid beadMapId { get; set; }
-    public DateTime completedDateTime { get; set; }
-    public List<WellReport> rpWells = new List<WellReport>();
-  }
-  [Serializable]
-  public class WellReport
-    {
-        public UInt16 prow { get; set; }
-        public UInt16 pcol { get; set; }
-        public List<RegionReport> rpReg = new List<RegionReport>();
-    }
-  [Serializable]
-  public class RegionReport
-  {
-    public ushort region { get; set; }
-    public uint count { get; set; }
-    public float medfi { get; set; }
-    public float meanfi { get; set; }
-    public float coefVar { get; set; }
-  }
-  [Serializable]
-  public class WellResults
-    {
-        public UInt16 regionNumber { get; set; }
-        public List<float> RP1vals = new List<float>();
-        public List<float> RP1bgnd = new List<float>();
-    }
-
-  public class Gstats
-  {
-    public double mfi;
-    public double cv;
-  }
-
   public class MicroCyDevice
   {
     public WorkOrder WorkOrder { get; private set; }
@@ -300,12 +106,15 @@ namespace MicroCy
     public List<Wells> Wells { get; } = new List<Wells>();
     public List<CustomMap> MapList { get; private set; } = new List<CustomMap>();
     public List<Gstats> GStats { get; set; } = new List<Gstats>();
-    public ushort[,] ClassificationMap { get;} = new ushort[300, 300];
-    public bool[,] ActWell = new bool[16, 24];  //some property in legacy to mark selected wells
+    public float HDnrCoef { get; set; }
+    public float MapPeakX { get; set; }
+    public float MapPeakY { get; set; }
+    public float Compensation { get; set; }
+    public float HdnrTrans { get; set; }
+    public float IdexDir { get; set; }
     public int[] SscData = new int[256];  //Probably not necessary. was part of chart1 in legacy Only set in ReplyFromMC()
     public int[] Rp1Data = new int[256];  //Probably not necessary. was part of chart3 in legacy Only set in ReplyFromMC()
     public int SavingWellIdx { get; set; }
-    public float HDnrCoef { get; set; }
     public int TempCl0 { get; set; }
     public int TempCl1 { get; set; }
     public int TempCl2 { get; set; }
@@ -316,51 +125,48 @@ namespace MicroCy
     public int TemprpMaj { get; set; }
     public int TemprpMin { get; set; }
     public int WellsToRead { get; set; }
-
-    public string Outdir { get; set; }  //  user selectable
-    public string Outfilename { get; set; } //TODO: prob not necessary
-     
-    public byte PlateRow { get; set; }
-    public byte PlateCol { get; set; }
-    public byte PlateType { get; set; }
     public int BeadsToCapture { get; set; }
     public int BeadCount { get; private set; }
     public int SavBeadCount { get; set; }
     public int CurrentWellIdx { get; set; }
     public int SampleSize { get; set; }
     public int BeadCntMapCreate { get; set; }
-    public float MapPeakX { get; set; }
-    public float MapPeakY { get; set; }
-    public float Compensation { get; set; }
-    public float HdnrTrans { get; set; }
-    public bool RowOrder { get; set; }
     public int ScatterGate { get; set; }
-    public bool NewStats { get; set; }
-    public float IdexDir { get; set; }
-    public ushort IdexSteps { get; set; }
-    public byte IdexPos { get; set; }
     public int MinPerRegion { get; set; }
-    public byte TerminationType { get; set; }
+    public ushort IdexSteps { get; set; }
+    public ushort[,] ClassificationMap { get; } = new ushort[300, 300];
+    public bool RowOrder { get; set; }
+    public bool NewStats { get; set; }
     public bool SubtRegBg { get; set; }
-    public byte ReadingRow { get; set; }
-    public byte ReadingCol { get; set; }
-    public byte SscSelected { get; set; }
-    public byte XAxisSel { get; set; }
-    public byte YAxisSel { get; set; }
     public bool IsTube { get; set; }
     public bool ReadActive { get; set; }
     public bool Everyevent { get; set; }
     public bool RMeans { get; set; }
     public bool CalStats { get; set; }
     public bool PltRept { get; set; }
-    public byte EndState { get; set; }
-    public byte CreateMapState { get; set; }
     public bool OnlyClassified { get; set; }
     public bool Reg0stats { get; set; }
     public bool Newmap { get; set; }
+    public bool[,] ActWell = new bool[16, 24];  //some property in legacy to mark selected wells
+    public byte PlateRow { get; set; }
+    public byte PlateCol { get; set; }
+    public byte PlateType { get; set; }
+    public byte IdexPos { get; set; }
+    public byte TerminationType { get; set; }
+    public byte ReadingRow { get; set; }
+    public byte ReadingCol { get; set; }
+    public byte SscSelected { get; set; }
+    public byte XAxisSel { get; set; }
+    public byte YAxisSel { get; set; }
+    public byte EndState { get; set; }
+    public byte CreateMapState { get; set; }
+    public byte SystemControl { get; set; }
+
+    public string Outdir { get; set; }  //  user selectable
+    public string Outfilename { get; set; } //TODO: prob not necessary
+
     public string[] SyncElements { get; } = { "SHEATH", "SAMPLE_A", "SAMPLE_B", "FLASH", "END_WELL", "VALVES", "X_MOTOR",
       "Y_MOTOR", "Z_MOTOR", "PROXIMITY", "PRESSURE", "WASHING", "FAULT", "ALIGN MOTOR", "MAIN VALVE", "SINGLE STEP" };
-    public byte SystemControl { get; set; }
     public string WorkOrderName { get; private set; }
     public DirectoryInfo RootDirectory { get; private set; }
     private bool _chkRegCnt;
@@ -515,14 +321,15 @@ namespace MicroCy
           cl2 = (float)mapRegions.meanloworder;
           xwidth = (float) 0.33 * mapRegions.meanmidorder + 50;
           ywidth = (float)0.33 * mapRegions.meanloworder + 50;
-
           begidx = Val_2_Idx((int)(mapRegions.meanmidorder - (xwidth * 0.5)));
           endidx = Val_2_Idx((int) (mapRegions.meanmidorder + (xwidth * 0.5 )));
           float xincer = 0;
           begidy = Val_2_Idx((int)(mapRegions.meanloworder - (ywidth /2)));
           endidy = Val_2_Idx((int)(mapRegions.meanloworder + (ywidth/2 ) ));
-          if (begidx < 3) begidx = 3;
-          if (begidy < 3) begidy = 3;
+          if (begidx < 3)
+            begidx = 3;
+          if (begidy < 3)
+            begidy = 3;
           for (irow = begidx; irow <= endidx; irow++)
           {
             for (jcol = begidy + (int)xincer; jcol <= endidy + (int)xincer; jcol++)
@@ -601,32 +408,38 @@ namespace MicroCy
             rout.meanfi = regionNumber.RP1vals.Average();
             double sumsq = regionNumber.RP1vals.Sum(dataout => Math.Pow(dataout - rout.meanfi, 2));
             double stddev = Math.Sqrt(sumsq / regionNumber.RP1vals.Count() - 1);
-            rout.cv = (float)stddev / rout.meanfi*100;
+            rout.cv = (float)stddev / rout.meanfi * 100;
             if (double.IsNaN(rout.cv)) rout.cv = 0;
             rout.medfi = (float) Math.Round(regionNumber.RP1vals[quarter] - rpbg);
             rout.meanfi -= rpbg;
           }
           _summaryout.Append(rout.ToString());
-      
-          PlateReport.rpWells[SavingWellIdx].rpReg.Add(new RegionReport(){ region = regionNumber.regionNumber,
-            count = (uint)rout.count, medfi = rout.medfi, meanfi = rout.meanfi, coefVar = rout.cv }); 
+
+          PlateReport.rpWells[SavingWellIdx].rpReg.Add(new RegionReport
+          {
+            region = regionNumber.regionNumber,
+            count = (uint)rout.count,
+            medfi = rout.medfi,
+            meanfi = rout.meanfi,
+            coefVar = rout.cv
+          });
         }
-        if ((SavingWellIdx == WellsToRead)& (_summaryout.Length>0) & (RMeans==true) )  //end of read session (plate, plate section or tube) write summary stat file
+        if ((SavingWellIdx == WellsToRead) & (_summaryout.Length > 0) & (RMeans) )  //end of read session (plate, plate section or tube) write summary stat file
         {
           File.WriteAllText(bgsummaryFileName, _summaryout.ToString());
         }
-        if ((SavingWellIdx == WellsToRead) & (_summaryout.Length > 0) & (PltRept == true))    //end of read and json results requested
+        if ((SavingWellIdx == WellsToRead) & (_summaryout.Length > 0) & (PltRept))    //end of read and json results requested
         {
-
           string rfilename = SystemControl == 0 ? Outfilename : WorkOrder.plateID.ToString();
-          string resultfilename = Path.Combine(RootDirectory.FullName, "Result", rfilename); 
+          string resultfilename = Path.Combine(RootDirectory.FullName, "Result", rfilename);
           TextWriter jwriter = null;
           try
           {
             var jcontents = JsonConvert.SerializeObject(PlateReport);   
             jwriter = new StreamWriter(resultfilename + ".json");
             jwriter.Write(jcontents);
-            if (File.Exists(_workOrderPath)) File.Delete(_workOrderPath);   //result is posted, delete work order
+            if (File.Exists(_workOrderPath))
+              File.Delete(_workOrderPath);   //result is posted, delete work order
           }
           finally
           {
@@ -676,10 +489,12 @@ namespace MicroCy
             sumsq += Math.Pow(mean - _sfi[beads, finx], 2);
           }
           stddev = Math.Sqrt(sumsq / (robustcnt[finx] - 1));
-          GStats[finx].mfi = mean;
-          GStats[finx].cv = (stddev / mean) * 100;
-          if (double.IsNaN(GStats[finx].cv))
-            GStats[finx].cv = 0;
+          var gstats = GStats[finx];
+          gstats.mfi = mean;
+          gstats.cv = (stddev / mean) * 100;
+          if (double.IsNaN(gstats.cv))
+            gstats.cv = 0;
+          GStats[finx] = gstats;
           sumit = 0;
           sumsq = 0;
         }

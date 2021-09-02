@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Configuration;
-using System.Data;
-using System.Linq;
 using System.Windows;
 using Ei_Dimension.ViewModels;
 
@@ -34,7 +32,7 @@ namespace Ei_Dimension
       Device.PltRept = Settings.Default.PltRept;
       // plateResultscb.Checked = m_MicroCy.PltRept;
       // m_MicroCy.InitSTab("readertab");
-      Device.MainCommand("Get FProperty", code:0x58);
+
 
     }
 
