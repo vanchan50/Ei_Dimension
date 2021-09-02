@@ -199,6 +199,9 @@ Coefficient</value>
   <data name="CL3" xml:space="preserve">
     <value>CL3</value>
   </data>
+  <data name="Column" xml:space="preserve">
+    <value>Column</value>
+  </data>
   <data name="Components_Cuvet_Drain_Open" xml:space="preserve">
     <value>Cuvet Drain</value>
   </data>
@@ -232,6 +235,12 @@ Coefficient</value>
   <data name="Dropdown_Boot" xml:space="preserve">
     <value>Загрузить</value>
   </data>
+  <data name="Dropdown_Cells" xml:space="preserve">
+    <value>Cells</value>
+  </data>
+  <data name="Dropdown_FM3D" xml:space="preserve">
+    <value>FM3D</value>
+  </data>
   <data name="Dropdown_Green_Red_Rp_bg" xml:space="preserve">
     <value>Green + Red + RP bg</value>
   </data>
@@ -247,6 +256,12 @@ Coefficient</value>
   <data name="Dropdown_Halt" xml:space="preserve">
     <value>Halt</value>
   </data>
+  <data name="Dropdown_Hi_Sens" xml:space="preserve">
+    <value>Hi Sensitivity</value>
+  </data>
+  <data name="Dropdown_Hi_Speed" xml:space="preserve">
+    <value>Hi Speed</value>
+  </data>
   <data name="Dropdown_Initialize" xml:space="preserve">
     <value>Initialize</value>
   </data>
@@ -258,6 +273,9 @@ Coefficient</value>
   </data>
   <data name="Dropdown_None" xml:space="preserve">
     <value>None</value>
+  </data>
+  <data name="Dropdown_Normal" xml:space="preserve">
+    <value>Normal</value>
   </data>
   <data name="Dropdown_Pickup" xml:space="preserve">
     <value>Pickup</value>
@@ -283,11 +301,63 @@ Coefficient</value>
   <data name="Dropdown_Speed_Preset" xml:space="preserve">
     <value>Speed Preset</value>
   </data>
+  <data name="Dropdown_Standard" xml:space="preserve">
+    <value>Standard</value>
+  </data>
   <data name="Dropdown_Valve_Left" xml:space="preserve">
     <value>Valve Left</value>
   </data>
   <data name="Dropdown_Valve_Right" xml:space="preserve">
     <value>Valve Right</value>
+  </data>
+  <data name="Experiment_Agitate_Vol" xml:space="preserve">
+    <value>Agitate Vol</value>
+  </data>
+  <data name="Experiment_Ch_Config" xml:space="preserve">
+    <value>Channel Configuration</value>
+  </data>
+  <data name="Experiment_Classific_Map" xml:space="preserve">
+    <value>Classification Map</value>
+  </data>
+  <data name="Experiment_End_of_Sample" xml:space="preserve">
+    <value>End of
+Sample</value>
+  </data>
+  <data name="Experiment_End_Read" xml:space="preserve">
+    <value>End Read</value>
+  </data>
+  <data name="Experiment_Manual" xml:space="preserve">
+    <value>Manual</value>
+  </data>
+  <data name="Experiment_Min_Per_Reg" xml:space="preserve">
+    <value>Min Per
+Region</value>
+  </data>
+  <data name="Experiment_Order" xml:space="preserve">
+    <value>Order</value>
+  </data>
+  <data name="Experiment_Samp_Vol" xml:space="preserve">
+    <value>Samp Vol</value>
+  </data>
+  <data name="Experiment_Speed" xml:space="preserve">
+    <value>Speed</value>
+  </data>
+  <data name="Experiment_System_Control" xml:space="preserve">
+    <value>System Control</value>
+  </data>
+  <data name="Experiment_Total_Events" xml:space="preserve">
+    <value>Total
+Events</value>
+  </data>
+  <data name="Experiment_Wash_Vol" xml:space="preserve">
+    <value>Wash Vol</value>
+  </data>
+  <data name="Experiment_Work_Order" xml:space="preserve">
+    <value>Work Order</value>
+  </data>
+  <data name="Experiment_Work_Order_Plus_Bcode" xml:space="preserve">
+    <value>Work Order +
+  Barcode</value>
   </data>
   <data name="Halt" xml:space="preserve">
     <value>Halt</value>
@@ -414,6 +484,9 @@ Coefficient</value>
   </data>
   <data name="Ribbon_Service" xml:space="preserve">
     <value>Обслуживание</value>
+  </data>
+  <data name="Row" xml:space="preserve">
+    <value>Row</value>
   </data>
   <data name="RP1" xml:space="preserve">
     <value>RP1</value>

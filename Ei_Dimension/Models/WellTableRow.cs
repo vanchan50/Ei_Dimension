@@ -11,7 +11,7 @@ namespace Ei_Dimension.Models
     public ObservableCollection<string> Images { get; set; }
     public List<WellType> Types { get; set; }
 
-    private static Dictionary<WellType, string> _stateDict;
+    private readonly Dictionary<WellType, string> _stateDict;
 
     public WellTableRow(int rowIndex, int size)
     {

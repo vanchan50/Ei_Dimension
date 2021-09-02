@@ -1,0 +1,2 @@
+﻿Ctrl+F every "Path." and "Environment." for irrelevant paths
+LoadMaps() if check seems unnecessary

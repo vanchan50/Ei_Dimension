@@ -19,7 +19,7 @@ namespace Ei_Dimension.ViewModels
 
     protected ChannelsViewModel()
     {
-      CurrentMapName = new ObservableCollection<string> { App.Device.activemap.mapName };
+      CurrentMapName = new ObservableCollection<string> { App.Device.ActiveMap.mapName };
 
       Bias30Parameters = new ObservableCollection<string>();
       Bias30Parameters.Add("1180");

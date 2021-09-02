@@ -20,7 +20,7 @@ namespace Ei_Dimension.Models
     public byte rssc_bg;
     public byte gssc_bg;
 
-    public UInt16 greenB_bg;    //measured background used in compensation 
+    public UInt16 greenB_bg;    //measured background used in Compensation 
     public UInt16 greenC_bg;
     public UInt16 greenB;   //ADC measurement of optical split on RP1
     public UInt16 greenC;

@@ -26,36 +26,24 @@ namespace Ei_Dimension {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public byte systemControl {
+        public byte SystemControl {
             get {
-                return ((byte)(this["systemControl"]));
+                return ((byte)(this["SystemControl"]));
             }
             set {
-                this["systemControl"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("MyDocuments")]
-        public string LISdirPath {
-            get {
-                return ((string)(this["LISdirPath"]));
-            }
-            set {
-                this["LISdirPath"] = value;
+                this["SystemControl"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool subtregbg {
+        public bool SubtRegBg {
             get {
-                return ((bool)(this["subtregbg"]));
+                return ((bool)(this["SubtRegBg"]));
             }
             set {
-                this["subtregbg"] = value;
+                this["SubtRegBg"] = value;
             }
         }
         
@@ -86,12 +74,12 @@ namespace Ei_Dimension {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("1")]
-        public float compensation {
+        public float Compensation {
             get {
-                return ((float)(this["compensation"]));
+                return ((float)(this["Compensation"]));
             }
             set {
-                this["compensation"] = value;
+                this["Compensation"] = value;
             }
         }
         
@@ -110,36 +98,36 @@ namespace Ei_Dimension {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool everyevent {
+        public bool Everyevent {
             get {
-                return ((bool)(this["everyevent"]));
+                return ((bool)(this["Everyevent"]));
             }
             set {
-                this["everyevent"] = value;
+                this["Everyevent"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool rmeans {
+        public bool RMeans {
             get {
-                return ((bool)(this["rmeans"]));
+                return ((bool)(this["RMeans"]));
             }
             set {
-                this["rmeans"] = value;
+                this["RMeans"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool pltrept {
+        public bool PltRept {
             get {
-                return ((bool)(this["pltrept"]));
+                return ((bool)(this["PltRept"]));
             }
             set {
-                this["pltrept"] = value;
+                this["PltRept"] = value;
             }
         }
     }

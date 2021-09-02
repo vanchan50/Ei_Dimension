@@ -18,6 +18,21 @@ namespace Ei_Dimension.ViewModels
     public virtual ObservableCollection<WellTableRow> Table384Wells { get; set; }
     public virtual bool Selected96 { get; set; }
     public virtual bool Selected384 { get; set; }
+
+    public virtual ObservableCollection<string> EndRead { get; set; }
+    public virtual string SystemControlSelectorState { get; set; }
+    public virtual string OrderSelectorState { get; set; }
+    public virtual string EndReadSelectorState { get; set; }
+    public virtual ObservableCollection<string> Volumes { get; set; }
+    public virtual string SelectedSpeedContent { get; set; }
+    public virtual ObservableCollection<DropDownButtonContents> SpeedItems { get; set; }
+    public virtual string SelectedClassiMapContent { get; set; }
+    public virtual ObservableCollection<DropDownButtonContents> ClassiMapItems { get; set; }
+    public virtual string SelectedChConfigContent { get; set; }
+    public virtual ObservableCollection<DropDownButtonContents> ChConfigItems { get; set; }
+
+    public static ExperimentViewModel Instance { get; private set; }
+
     private int _currentTableSize;
     private List<(int row, int col)> _selectedWell96Indices;
     private List<(int row, int col)> _selectedWell384Indices;
@@ -27,8 +42,41 @@ namespace Ei_Dimension.ViewModels
       InitTables();
       ChangeWellTableSize(384);
 
+      EndRead = new ObservableCollection<string> { "100", "500" };
+      SystemControlSelectorState = "Man";
+      OrderSelectorState = "Row";
+      EndReadSelectorState = "MPR";
+      Volumes = new ObservableCollection<string> { "0", "", "" };
+
+
+      var RM = Language.Resources.ResourceManager;
+      var curCulture = Language.TranslationSource.Instance.CurrentCulture;
+      SpeedItems = new ObservableCollection<DropDownButtonContents>
+      {
+        new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_Normal), curCulture), this),
+        new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_Hi_Speed), curCulture), this),
+        new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_Hi_Sens), curCulture), this)
+      };
+      SelectedSpeedContent = SpeedItems[0].Content;
+
+      ClassiMapItems = new ObservableCollection<DropDownButtonContents>
+      {
+        new DropDownButtonContents("ULBgMag", this),
+        new DropDownButtonContents("Placeholder in Exp VM", this)
+      };
+      SelectedClassiMapContent = ClassiMapItems[0].Content;
+
+      ChConfigItems = new ObservableCollection<DropDownButtonContents>
+      {
+        new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_Standard), curCulture), this),
+        new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_Cells), curCulture), this),
+        new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_FM3D), curCulture), this)
+      };
+      SelectedChConfigContent = ChConfigItems[0].Content;
+
       _selectedWell96Indices = new List<(int, int)>();
       _selectedWell384Indices = new List<(int, int)>();
+      Instance = this;
     }
 
     public static ExperimentViewModel Create()
@@ -113,6 +161,37 @@ namespace Ei_Dimension.ViewModels
       }
     }
 
+    public void SystemControlSelector(string s)
+    {
+      switch (s)
+      {
+        case "Man":
+          break;
+        case "WO":
+          break;
+        case "WOPB":
+          break;
+      }
+    }
+
+    public void OrderSelector(string s)
+    {
+      OrderSelectorState = s;
+    }
+
+    public void EndReadSelector(string s)
+    {
+      switch (s)
+      {
+        case "MPR":
+          break;
+        case "Total":
+          break;
+        case "EOS":
+          break;
+      }
+    }
+
     private void InitTables()
     {
       if(_currentTableSize == 96)
@@ -152,6 +231,67 @@ namespace Ei_Dimension.ViewModels
       Table384Wells.Add(new WellTableRow(13, 24)); //N
       Table384Wells.Add(new WellTableRow(14, 24)); //O
       Table384Wells.Add(new WellTableRow(15, 24)); //P
+    }
+
+    public void FocusedBox(int num)
+    {
+      switch (num)
+      {
+        case 0:
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(EndRead)), this, 0);
+          break;
+        case 1:
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(EndRead)), this, 1);
+          break;
+        case 2:
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(Volumes)), this, 0);
+          break;
+        case 3:
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(Volumes)), this, 1);
+          break;
+        case 4:
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(Volumes)), this, 2);
+          break;
+      }
+    }
+
+    public class DropDownButtonContents : Core.ObservableObject
+    {
+      public string Content
+      {
+        get => _content;
+        set
+        {
+          _content = value;
+          OnPropertyChanged();
+        }
+      }
+      private string _content;
+      private static ExperimentViewModel _vm;
+      public DropDownButtonContents(string content, ExperimentViewModel vm = null)
+      {
+        if (_vm == null)
+        {
+          _vm = vm;
+        }
+        Content = content;
+      }
+
+      public void Click(int num)
+      {
+        switch (num)
+        {
+          case 1:
+            _vm.SelectedSpeedContent = Content;
+            break;
+          case 2:
+            _vm.SelectedClassiMapContent = Content;
+            break;
+          case 3:
+            _vm.SelectedChConfigContent = Content;
+            break;
+        }
+      }
     }
   }
 }

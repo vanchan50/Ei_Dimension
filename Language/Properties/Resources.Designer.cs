@@ -299,6 +299,15 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Column.
+        /// </summary>
+        public static string Column {
+            get {
+                return ResourceManager.GetString("Column", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cuvet Drain.
         /// </summary>
         public static string Components_Cuvet_Drain_Open {
@@ -398,6 +407,24 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cells.
+        /// </summary>
+        public static string Dropdown_Cells {
+            get {
+                return ResourceManager.GetString("Dropdown_Cells", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to FM3D.
+        /// </summary>
+        public static string Dropdown_FM3D {
+            get {
+                return ResourceManager.GetString("Dropdown_FM3D", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Green + Red + RP bg.
         /// </summary>
         public static string Dropdown_Green_Red_Rp_bg {
@@ -443,6 +470,24 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hi Sensitivity.
+        /// </summary>
+        public static string Dropdown_Hi_Sens {
+            get {
+                return ResourceManager.GetString("Dropdown_Hi_Sens", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hi Speed.
+        /// </summary>
+        public static string Dropdown_Hi_Speed {
+            get {
+                return ResourceManager.GetString("Dropdown_Hi_Speed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Initialize.
         /// </summary>
         public static string Dropdown_Initialize {
@@ -475,6 +520,15 @@ namespace Ei_Dimension.Language {
         public static string Dropdown_None {
             get {
                 return ResourceManager.GetString("Dropdown_None", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Normal.
+        /// </summary>
+        public static string Dropdown_Normal {
+            get {
+                return ResourceManager.GetString("Dropdown_Normal", resourceCulture);
             }
         }
         
@@ -551,6 +605,15 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Standard.
+        /// </summary>
+        public static string Dropdown_Standard {
+            get {
+                return ResourceManager.GetString("Dropdown_Standard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Valve Left.
         /// </summary>
         public static string Dropdown_Valve_Left {
@@ -565,6 +628,145 @@ namespace Ei_Dimension.Language {
         public static string Dropdown_Valve_Right {
             get {
                 return ResourceManager.GetString("Dropdown_Valve_Right", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Agitate Vol.
+        /// </summary>
+        public static string Experiment_Agitate_Vol {
+            get {
+                return ResourceManager.GetString("Experiment_Agitate_Vol", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Channel Configuration.
+        /// </summary>
+        public static string Experiment_Ch_Config {
+            get {
+                return ResourceManager.GetString("Experiment_Ch_Config", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Classification Map.
+        /// </summary>
+        public static string Experiment_Classific_Map {
+            get {
+                return ResourceManager.GetString("Experiment_Classific_Map", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to End of
+        ///Sample.
+        /// </summary>
+        public static string Experiment_End_of_Sample {
+            get {
+                return ResourceManager.GetString("Experiment_End_of_Sample", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to End Read.
+        /// </summary>
+        public static string Experiment_End_Read {
+            get {
+                return ResourceManager.GetString("Experiment_End_Read", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manual.
+        /// </summary>
+        public static string Experiment_Manual {
+            get {
+                return ResourceManager.GetString("Experiment_Manual", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Min Per
+        ///Region.
+        /// </summary>
+        public static string Experiment_Min_Per_Reg {
+            get {
+                return ResourceManager.GetString("Experiment_Min_Per_Reg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Order.
+        /// </summary>
+        public static string Experiment_Order {
+            get {
+                return ResourceManager.GetString("Experiment_Order", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Samp Vol.
+        /// </summary>
+        public static string Experiment_Samp_Vol {
+            get {
+                return ResourceManager.GetString("Experiment_Samp_Vol", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Speed.
+        /// </summary>
+        public static string Experiment_Speed {
+            get {
+                return ResourceManager.GetString("Experiment_Speed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to System Control.
+        /// </summary>
+        public static string Experiment_System_Control {
+            get {
+                return ResourceManager.GetString("Experiment_System_Control", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total
+        ///Events.
+        /// </summary>
+        public static string Experiment_Total_Events {
+            get {
+                return ResourceManager.GetString("Experiment_Total_Events", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wash Vol.
+        /// </summary>
+        public static string Experiment_Wash_Vol {
+            get {
+                return ResourceManager.GetString("Experiment_Wash_Vol", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Work Order.
+        /// </summary>
+        public static string Experiment_Work_Order {
+            get {
+                return ResourceManager.GetString("Experiment_Work_Order", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Work Order +
+        ///  Barcode.
+        /// </summary>
+        public static string Experiment_Work_Order_Plus_Bcode {
+            get {
+                return ResourceManager.GetString("Experiment_Work_Order_Plus_Bcode", resourceCulture);
             }
         }
         
@@ -937,6 +1139,15 @@ namespace Ei_Dimension.Language {
         public static string Ribbon_Service {
             get {
                 return ResourceManager.GetString("Ribbon_Service", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Row.
+        /// </summary>
+        public static string Row {
+            get {
+                return ResourceManager.GetString("Row", resourceCulture);
             }
         }
         

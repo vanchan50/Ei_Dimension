@@ -20,22 +20,21 @@ namespace Ei_Dimension
 
       Device = new MicroCy.MicroCyDevice();
       Device.LoadMaps();
-      Device.activemap = Device.maplist[0];
-      //reading VM add SetControl(m_MicroCy.systemControl);
-      Device.systemControl = Settings.Default.systemControl;
-      Device.Outdir = Settings.Default.DirPath;
-      Device.subtregbg = Settings.Default.subtregbg;
-      Device.LISInputdir = Settings.Default.LISdirPath;
+      Device.ActiveMap = Device.MapList[0];
+      //reading VM add SetControl(m_MicroCy.SystemControl);
+      Device.SystemControl = Settings.Default.SystemControl;
+      Device.Outdir = Settings.Default.DirPath; //TODO: probably not necessary
+      Device.SubtRegBg = Settings.Default.SubtRegBg;
       // reading VM add .SelectedIndex = Properties.Settings.Default.defaultMap;
-      // calibration VM add Properties.Settings.Default.compensation.ToString();
+      // calibration VM add Properties.Settings.Default.Compensation.ToString();
       // reading VM add slist.DataSource = active_items;
-      Device.sampleSize = Settings.Default.sampleSize;
-      // RegCtr_SampSize.Text = Device.sampleSize.ToString();
-      Device.everyevent = Settings.Default.everyevent;
-      Device.rmeans = Settings.Default.rmeans;
-      // rmeanscb.Checked = m_MicroCy.rmeans;
-      Device.pltrept = Settings.Default.pltrept;
-      // plateResultscb.Checked = m_MicroCy.pltrept;
+      Device.SampleSize = Settings.Default.sampleSize;
+      // RegCtr_SampSize.Text = Device.SampleSize.ToString();
+      Device.Everyevent = Settings.Default.Everyevent;
+      Device.RMeans = Settings.Default.RMeans;
+      // rmeanscb.Checked = m_MicroCy.RMeans;
+      Device.PltRept = Settings.Default.PltRept;
+      // plateResultscb.Checked = m_MicroCy.PltRept;
       // m_MicroCy.InitSTab("readertab");
 
     }
@@ -47,7 +46,9 @@ namespace Ei_Dimension
       var exCulture = Language.TranslationSource.Instance.CurrentCulture;
       var curCulture = Language.TranslationSource.Instance.CurrentCulture = new System.Globalization.CultureInfo(locale);
       var RM = Language.Resources.ResourceManager;
-      //  Translation hack
+
+      #region Translation hack
+
       var ComponentsVM = ComponentsViewModel.Instance;
       if (ComponentsVM != null)
       {
@@ -89,6 +90,18 @@ namespace Ei_Dimension
         CaliVM.GatingItems[7].Content = RM.GetString(nameof(Language.Resources.Dropdown_Green_Red_Rp_bg), curCulture);
         CaliVM.SelectedGatingContent = CaliVM.GatingItems[0].Content;
       }
+      var ExpVM = ExperimentViewModel.Instance;
+      if (ExpVM != null)
+      {
+        ExpVM.SpeedItems[0].Content = RM.GetString(nameof(Language.Resources.Dropdown_Normal), curCulture);
+        ExpVM.SpeedItems[1].Content = RM.GetString(nameof(Language.Resources.Dropdown_Hi_Speed), curCulture);
+        ExpVM.SpeedItems[2].Content = RM.GetString(nameof(Language.Resources.Dropdown_Hi_Sens), curCulture);
+
+        ExpVM.ChConfigItems[0].Content = RM.GetString(nameof(Language.Resources.Dropdown_Standard), curCulture);
+        ExpVM.ChConfigItems[1].Content = RM.GetString(nameof(Language.Resources.Dropdown_Cells), curCulture);
+        ExpVM.ChConfigItems[2].Content = RM.GetString(nameof(Language.Resources.Dropdown_FM3D), curCulture);
+      }
+      #endregion
     }
 
     public static void InjectToFocusedTextbox(string input)
