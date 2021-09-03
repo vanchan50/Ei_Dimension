@@ -34,12 +34,17 @@ namespace Ei_Dimension.ViewModels
     public virtual ObservableCollection<HeatMapData> HeatLevel3 { get; set; }
     public virtual ObservableCollection<HeatMapData> HeatLevel4 { get; set; }
     public virtual ObservableCollection<HeatMapData> HeatLevel5 { get; set; }
+    public virtual ObservableCollection<bool> ScatterSelectorState { get; set; }
+    public virtual ObservableCollection<bool> XAxisSelectorState { get; set; }
+    public virtual ObservableCollection<bool> YAxisSelectorState { get; set; }
 
     private List<MicroCy.BeadInfoStruct> _beadStructsList;
     private ObservableCollection<HeatMapData> _heatMapSeriesXY;
     private List<SortedDictionary<int, int>> _histoDicts;
     private (int, int) _heatmapAxisXY;  //holds selected values for heatmap data
     private string _savedFilesLocation = @"C:\Users\Admin\Desktop\WorkC#\SampleData";
+
+    public static ResultsViewModel Instance { get; private set; }
 
     protected ResultsViewModel()
     {
@@ -55,6 +60,35 @@ namespace Ei_Dimension.ViewModels
       HeatLevel3 = new ObservableCollection<HeatMapData>(); // Medium  50%
       HeatLevel4 = new ObservableCollection<HeatMapData>(); //         30% of binwidth
       HeatLevel5 = new ObservableCollection<HeatMapData>(); // Max     bin center
+
+      ScatterSelectorState = new ObservableCollection<bool> { false, false, false, false };
+      byte temp = Settings.Default.ScatterGraphSelector;
+      if (temp >= 8)
+      {
+        ScatterSelectorState[3] = true;
+        temp -= 8;
+      }
+      if (temp >= 4)
+      {
+        ScatterSelectorState[2] = true;
+        temp -= 4;
+      }
+      if (temp >= 2)
+      {
+        ScatterSelectorState[1] = true;
+        temp -= 2;
+      }
+      if (temp >= 1)
+      {
+        ScatterSelectorState[0] = true;
+      }
+
+      XAxisSelectorState = new ObservableCollection<bool> { false, false, false, false };
+      XAxisSelectorState[Settings.Default.XAxisG] = true;
+      YAxisSelectorState = new ObservableCollection<bool> { false, false, false, false };
+      YAxisSelectorState[Settings.Default.YAxisG] = true;
+
+      Instance = this;
     }
 
     public static ResultsViewModel Create()
@@ -142,9 +176,25 @@ namespace Ei_Dimension.ViewModels
       UpdateHeatmap();
     }
 
-    public void ChangeHeatmapX(int index)
+    public void ChangeScatterLegend(int num)
     {
-      switch (index)
+      ScatterSelectorState[num] = !ScatterSelectorState[num];
+      byte res = 0;
+      res += ScatterSelectorState[0] ? (byte)1 : (byte)0;
+      res += ScatterSelectorState[1] ? (byte)2 : (byte)0;
+      res += ScatterSelectorState[2] ? (byte)4 : (byte)0;
+      res += ScatterSelectorState[3] ? (byte)8 : (byte)0;
+      Settings.Default.ScatterGraphSelector = res;
+      Settings.Default.Save();
+    }
+
+    public void ChangeHeatmapX(byte num)
+    {
+      XAxisSelectorState[0] = false;
+      XAxisSelectorState[1] = false;
+      XAxisSelectorState[2] = false;
+      XAxisSelectorState[3] = false;
+      switch (num)
       {
         case 0:
           _heatmapAxisXY.Item1 = 0;
@@ -163,11 +213,18 @@ namespace Ei_Dimension.ViewModels
           HeatmapAxisXTitle = "CL3";
           break;
       }
+      XAxisSelectorState[num] = true;
+      App.Instance.SetHeatmapX(num);
       UpdateHeatmap();
     }
-    public void ChangeHeatmapY(int index)
+
+    public void ChangeHeatmapY(byte num)
     {
-      switch (index)
+      YAxisSelectorState[0] = false;
+      YAxisSelectorState[1] = false;
+      YAxisSelectorState[2] = false;
+      YAxisSelectorState[3] = false;
+      switch (num)
       {
         case 0:
           _heatmapAxisXY.Item2 = 0;
@@ -186,8 +243,11 @@ namespace Ei_Dimension.ViewModels
           HeatmapAxisYTitle = "CL3";
           break;
       }
+      YAxisSelectorState[num] = true;
+      App.Instance.SetHeatmapY(num);
       UpdateHeatmap();
     }
+
     public void UpdateHeatmap()
     {
       _heatMapSeriesXY.Clear();

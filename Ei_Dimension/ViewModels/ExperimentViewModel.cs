@@ -2,7 +2,7 @@
 using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
 using System.Collections.ObjectModel;
-using System;
+using System.Windows;
 using Ei_Dimension.Models;
 using System.Collections.Generic;
 using System.Windows.Controls;
@@ -12,8 +12,8 @@ namespace Ei_Dimension.ViewModels
   [POCOViewModel]
   public class ExperimentViewModel
   {
-    public virtual System.Windows.Visibility Table96Visible { get; set; }
-    public virtual System.Windows.Visibility Table384Visible { get; set; }
+    public virtual Visibility Table96Visible { get; set; }
+    public virtual Visibility Table384Visible { get; set; }
     public virtual ObservableCollection<WellTableRow> Table96Wells { get; set; }
     public virtual ObservableCollection<WellTableRow> Table384Wells { get; set; }
     public virtual bool Selected96 { get; set; }
@@ -22,7 +22,7 @@ namespace Ei_Dimension.ViewModels
     public virtual ObservableCollection<string> EndRead { get; set; }
     public virtual ObservableCollection<bool> SystemControlSelectorState { get; set; }
     public virtual string OrderSelectorState { get; set; }
-    public virtual string EndReadSelectorState { get; set; }
+    public virtual ObservableCollection<bool> EndReadSelectorState { get; set; }
     public virtual ObservableCollection<string> Volumes { get; set; }
     public virtual string SelectedSpeedContent { get; set; }
     public virtual ObservableCollection<DropDownButtonContents> SpeedItems { get; set; }
@@ -48,7 +48,9 @@ namespace Ei_Dimension.ViewModels
       SystemControlSelectorState[App.Device.SystemControl] = true;
 
       OrderSelectorState = "Row";
-      EndReadSelectorState = "MPR";
+      EndReadSelectorState = new ObservableCollection<bool> { false, false, false};
+      EndReadSelectorState[App.Device.TerminationType] = true;
+
       Volumes = new ObservableCollection<string> { "0", "", "" };
 
 
@@ -63,10 +65,15 @@ namespace Ei_Dimension.ViewModels
       SelectedSpeedContent = SpeedItems[0].Content;
 
       ClassiMapItems = new ObservableCollection<DropDownButtonContents>();
-      foreach (var map in App.Device.MapList)
+      if(App.Device.MapList.Count > 0)
       {
-        ClassiMapItems.Add(new DropDownButtonContents(map.mapName,this));
+        foreach (var map in App.Device.MapList)
+        {
+          ClassiMapItems.Add(new DropDownButtonContents(map.mapName, this));
+        }
       }
+      else
+        ClassiMapItems.Add(new DropDownButtonContents("No maps available", this));
       SelectedClassiMapContent = ClassiMapItems[0].Content;
 
       ChConfigItems = new ObservableCollection<DropDownButtonContents>
@@ -170,8 +177,7 @@ namespace Ei_Dimension.ViewModels
       SystemControlSelectorState[1] = false;
       SystemControlSelectorState[2] = false;
       SystemControlSelectorState[num] = true;
-      Settings.Default.SystemControl = num;
-      Settings.Default.Save();
+      App.Instance.SetSystemControl(num);
     }
 
     public void OrderSelector(string s)
@@ -179,17 +185,13 @@ namespace Ei_Dimension.ViewModels
       OrderSelectorState = s;
     }
 
-    public void EndReadSelector(string s)
+    public void EndReadSelector(byte num)
     {
-      switch (s)
-      {
-        case "MPR":
-          break;
-        case "Total":
-          break;
-        case "EOS":
-          break;
-      }
+      EndReadSelectorState[0] = false;
+      EndReadSelectorState[1] = false;
+      EndReadSelectorState[2] = false;
+      EndReadSelectorState[num] = true;
+      App.Instance.SetTerminationType(num);
     }
 
     private void InitTables()
@@ -286,6 +288,7 @@ namespace Ei_Dimension.ViewModels
             break;
           case 2:
             _vm.SelectedClassiMapContent = Content;
+            App.Instance.SetActiveMap(Content);
             break;
           case 3:
             _vm.SelectedChConfigContent = Content;

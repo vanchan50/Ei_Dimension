@@ -105,7 +105,8 @@ namespace MicroCy
     public List<Wells> WellsInOrder { get; } = new List<Wells>();
     public List<Wells> Wells { get; } = new List<Wells>();
     public List<CustomMap> MapList { get; private set; } = new List<CustomMap>();
-    public List<Gstats> GStats { get; set; } = new List<Gstats>();
+    public List<Gstats> GStats { get; set; } = new List<Gstats> {new Gstats(), new Gstats(), new Gstats(),
+      new Gstats(), new Gstats(), new Gstats(),new Gstats(), new Gstats(), new Gstats(), new Gstats() };
     public float HDnrCoef { get; set; }
     public float MapPeakX { get; set; }
     public float MapPeakY { get; set; }
@@ -155,9 +156,9 @@ namespace MicroCy
     public byte TerminationType { get; set; }
     public byte ReadingRow { get; set; }
     public byte ReadingCol { get; set; }
-    public byte SscSelected { get; set; }
-    public byte XAxisSel { get; set; }
-    public byte YAxisSel { get; set; }
+    public byte SscSelected { get; set; } //TODO: delete this
+    public byte XAxisSel { get; set; }    //TODO: delete this
+    public byte YAxisSel { get; set; }    //TODO: delete this
     public byte EndState { get; set; }
     public byte CreateMapState { get; set; }
     public byte SystemControl { get; set; }
@@ -271,9 +272,10 @@ namespace MicroCy
       MinPerRegion = 100;
       BeadsToCapture = 500;
       IsTube = false;
-      InitReadPipe();
-      TerminationType = 2;     //default termination is end of sample
+      InitReadPipe();    //default termination is end of sample
       Outdir = RootDirectory.FullName;
+      EndState = 0;
+      ReadActive = false;
     }
 
     public void ConstructMap(CustomMap mmap)

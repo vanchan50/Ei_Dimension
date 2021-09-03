@@ -14,7 +14,7 @@
     <Setting Name="Compensation" Type="System.Single" Scope="User">
       <Value Profile="(Default)">1</Value>
     </Setting>
-    <Setting Name="sampleSize" Type="System.Int32" Scope="User">
+    <Setting Name="SampleSize" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">1000</Value>
     </Setting>
     <Setting Name="Everyevent" Type="System.Boolean" Scope="User">
@@ -28,6 +28,24 @@
     </Setting>
     <Setting Name="SaveFileName" Type="System.String" Scope="User">
       <Value Profile="(Default)">SavedFileName</Value>
+    </Setting>
+    <Setting Name="EndRead" Type="System.Byte" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="SscHistSel" Type="System.Byte" Scope="User">
+      <Value Profile="(Default)">3</Value>
+    </Setting>
+    <Setting Name="XAxisG" Type="System.Byte" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="YAxisG" Type="System.Byte" Scope="User">
+      <Value Profile="(Default)">2</Value>
+    </Setting>
+    <Setting Name="HDnrTrans" Type="System.Single" Scope="User">
+      <Value Profile="(Default)">7200</Value>
+    </Setting>
+    <Setting Name="ScatterGraphSelector" Type="System.Byte" Scope="User">
+      <Value Profile="(Default)">3</Value>
     </Setting>
   </Settings>
 </SettingsFile>

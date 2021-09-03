@@ -74,12 +74,12 @@ namespace Ei_Dimension {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("1000")]
-        public int sampleSize {
+        public int SampleSize {
             get {
-                return ((int)(this["sampleSize"]));
+                return ((int)(this["SampleSize"]));
             }
             set {
-                this["sampleSize"] = value;
+                this["SampleSize"] = value;
             }
         }
         
@@ -128,6 +128,78 @@ namespace Ei_Dimension {
             }
             set {
                 this["SaveFileName"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public byte EndRead {
+            get {
+                return ((byte)(this["EndRead"]));
+            }
+            set {
+                this["EndRead"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("3")]
+        public byte SscHistSel {
+            get {
+                return ((byte)(this["SscHistSel"]));
+            }
+            set {
+                this["SscHistSel"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public byte XAxisG {
+            get {
+                return ((byte)(this["XAxisG"]));
+            }
+            set {
+                this["XAxisG"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2")]
+        public byte YAxisG {
+            get {
+                return ((byte)(this["YAxisG"]));
+            }
+            set {
+                this["YAxisG"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("7200")]
+        public float HDnrTrans {
+            get {
+                return ((float)(this["HDnrTrans"]));
+            }
+            set {
+                this["HDnrTrans"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("3")]
+        public byte ScatterGraphSelector {
+            get {
+                return ((byte)(this["ScatterGraphSelector"]));
+            }
+            set {
+                this["ScatterGraphSelector"] = value;
             }
         }
     }

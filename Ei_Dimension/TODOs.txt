@@ -1,6 +1,11 @@
 ﻿Ctrl+F every "Path." and "Environment." for irrelevant paths
 LoadMaps() if check seems unnecessary
-Calibration & Channels Views don't update Active Map
-When something from Settings changes, use .Save()
+Need some way to update Device.MapList if we get to add new maps
+When something from Settings changes, use .Save() and don't forget to change App.[property]
 Save settings from textboxes in App.InjectToTextbox
 Add "." to numpad
+resultsview scatter chart switch legend with buttons so it can be bound to command
+
+Questions:
+what does InitSTab codes do? can I run it all at once?
+calibration statistics -whatis it and where to put it

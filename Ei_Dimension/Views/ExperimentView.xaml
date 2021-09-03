@@ -702,10 +702,10 @@
                          Height="44"
                          Width="100"
                          FontSize="19"
-                         IsChecked="True"
+                         IsChecked="{Binding EndReadSelectorState[0]}"
                          Command="{Binding EndReadSelectorCommand}">
               <RadioButton.CommandParameter>
-                <System:String>MPR</System:String>
+                <System:Byte>0</System:Byte>
               </RadioButton.CommandParameter>
             </RadioButton>
             <RadioButton Content="{lang:Loc Experiment_Total_Events}"
@@ -713,9 +713,10 @@
                          Height="44"
                          Width="100"
                          FontSize="19"
+                         IsChecked="{Binding EndReadSelectorState[1]}"
                          Command="{Binding EndReadSelectorCommand}">
               <RadioButton.CommandParameter>
-                <System:String>Total</System:String>
+                <System:Byte>1</System:Byte>
               </RadioButton.CommandParameter>
             </RadioButton>
             <RadioButton Content="{lang:Loc Experiment_End_of_Sample}"
@@ -723,9 +724,10 @@
                          Height="44"
                          Width="100"
                          FontSize="19"
+                         IsChecked="{Binding EndReadSelectorState[2]}"
                          Command="{Binding EndReadSelectorCommand}">
               <RadioButton.CommandParameter>
-                <System:String>EOS</System:String>
+                <System:Byte>2</System:Byte>
               </RadioButton.CommandParameter>
             </RadioButton>
           </StackPanel>
