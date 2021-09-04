@@ -54,6 +54,9 @@ namespace Ei_Dimension.ViewModels
         case 10:
           App.InjectToFocusedTextbox("");
           break;
+        case 11:
+          App.InjectToFocusedTextbox(".");
+          break;
       }
     }
   }

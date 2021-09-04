@@ -114,8 +114,17 @@
     </StackPanel>
 
       <StackPanel Orientation="Horizontal"
-                  Margin="40,0,0,0">
-
+                  Margin="0,0,0,0">
+      <dx:SimpleButton Content="."
+                       Command="{Binding NumpadInputClickCommand}"
+                       CommandParameter="11"
+                       Height="60"
+                       Width="60"
+                       FontFamily="{StaticResource AppTextFont}"
+                       FontSize="36"
+                       FontWeight="UltraBold"
+                       Foreground="{StaticResource AppTextColor}"
+                       Margin="0,0,10,0"/>
       <dx:SimpleButton Content="0"
                        Command="{Binding NumpadInputClickCommand}"
                        CommandParameter="0"

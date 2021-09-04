@@ -253,13 +253,18 @@ namespace MicroCy
     public MicroCyDevice()
     {
       USBDeviceInfo[] di = USBDevice.GetDevices(InterfaceGuid);   // Get all the MicroCy devices connected
-      try
+      if (di.Length > 0)
       {
-        MicroCyUSBDevice = new USBDevice(di[0].DevicePath);     // just grab the first one for now, but should support multiples
-        Console.WriteLine(string.Format("{0}:{1}", MicroCyUSBDevice.Descriptor.FullName, MicroCyUSBDevice.Descriptor.SerialNumber));
-        _instrumentConnected = true;
+        try
+        {
+          MicroCyUSBDevice = new USBDevice(di[0].DevicePath);     // just grab the first one for now, but should support multiples
+          Console.WriteLine(string.Format("{0}:{1}", MicroCyUSBDevice.Descriptor.FullName, MicroCyUSBDevice.Descriptor.SerialNumber));
+          _instrumentConnected = true;
+        }
+        catch { }
       }
-      catch { }
+      else
+        Console.WriteLine("USB devices not found");
       SetSystemDirectories();
       LoadMaps();
       ActiveMap = MapList[0];
