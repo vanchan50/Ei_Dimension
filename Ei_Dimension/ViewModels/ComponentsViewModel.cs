@@ -199,7 +199,7 @@ namespace Ei_Dimension.ViewModels
 
     public void StartupButtonClick()
     {
-
+      App.Device.MainCommand("Startup");
     }
 
     public void MoveIdexButtonClick()

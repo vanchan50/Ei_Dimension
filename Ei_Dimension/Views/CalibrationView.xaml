@@ -165,7 +165,7 @@
                            IsChecked="True"
                            Command="{Binding CalibrationSelectorCommand}">
               <RadioButton.CommandParameter>
-                <System:String>Off</System:String>
+                <System:Byte>0</System:Byte>
               </RadioButton.CommandParameter>
             </RadioButton>
             <RadioButton Content="{lang:Loc Calibration_Classification_To_map}"
@@ -174,7 +174,7 @@
                            Width="210"
                            Command="{Binding CalibrationSelectorCommand}">
               <RadioButton.CommandParameter>
-                <System:String>ToMap</System:String>
+                <System:Byte>1</System:Byte>
               </RadioButton.CommandParameter>
             </RadioButton>
             <RadioButton Content="{lang:Loc Reporter}"
@@ -183,7 +183,7 @@
                            Width="210"
                            Command="{Binding CalibrationSelectorCommand}">
               <RadioButton.CommandParameter>
-                <System:String>Reporter</System:String>
+                <System:Byte>2</System:Byte>
               </RadioButton.CommandParameter>
             </RadioButton>
           </StackPanel>

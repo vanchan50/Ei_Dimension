@@ -48,7 +48,8 @@ namespace Ei_Dimension.ViewModels
 
     public void UVCSanitizeClick()
     {
-
+      if (int.TryParse(SanitizeSecondsContent[0], out int res))
+        App.Device.MainCommand("Set Property", code: 0x1f, parameter: (ushort)res);
     }
 
     public void NavigateCalibration()

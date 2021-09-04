@@ -53,6 +53,17 @@ namespace Ei_Dimension
       Instance = this;
     }
 
+    public static int GetActiveMapIndex()
+    {
+      int i = 0;
+      for (; i < Device.MapList.Count; i++)
+      {
+        if (Device.MapList[i].mapName == Device.ActiveMap.mapName)
+          break;
+      }
+      return i;
+    }
+
     public void SetActiveMap(string mapName)
     {
       for(var i = 0; i < Device.MapList.Count; i++)
@@ -208,6 +219,14 @@ namespace Ei_Dimension
             }
             break;
           case "DNRContents":
+            if (SelectedTextBox.index == 0)
+            {
+              if (float.TryParse(temp, out fRes))
+              {
+                Device.HDnrCoef = fRes;
+                Device.MainCommand("Set FProperty", code: 0x20, fparameter: fRes);
+              }
+            }
             if (SelectedTextBox.index == 1)
             {
               if (float.TryParse(temp, out fRes))
@@ -255,6 +274,29 @@ namespace Ei_Dimension
               if (int.TryParse(temp, out iRes))
               {
                 Device.MainCommand("Set Property", code: 0xc4, parameter: (ushort)iRes);
+              }
+            }
+            break;
+          case "EventTriggerContents":
+            if (SelectedTextBox.index == 0)
+            {
+              if (int.TryParse(temp, out iRes))
+              {
+                Device.MainCommand("Set Property", code: 0xcd, parameter: (ushort)iRes);
+              }
+            }
+            if (SelectedTextBox.index == 1)
+            {
+              if (int.TryParse(temp, out iRes))
+              {
+                Device.MainCommand("Set Property", code: 0xce, parameter: (ushort)iRes);
+              }
+            }
+            if (SelectedTextBox.index == 2)
+            {
+              if (int.TryParse(temp, out iRes))
+              {
+                Device.MainCommand("Set Property", code: 0xcf, parameter: (ushort)iRes);
               }
             }
             break;

@@ -10,7 +10,7 @@ namespace Ei_Dimension.ViewModels
   {
     public virtual string SelectedGatingContent { get; set; }
     public virtual ObservableCollection<DropDownButtonContents> GatingItems { get; set; }
-    public virtual string CalibrationParameter { get; set; }
+    public virtual byte CalibrationParameter { get; set; }
 
     public virtual ObservableCollection<string> EventTriggerContents { get; set; }
     public virtual ObservableCollection<string> ClassificationTargetsContents { get; set; }
@@ -41,7 +41,7 @@ namespace Ei_Dimension.ViewModels
 
       ClassificationTargetsContents = new ObservableCollection<string> { "1", "1", "1", "1", "3500"};
 
-      CalibrationParameter = "Off";
+      CalibrationParameter = 0;
       CompensationPercentageContent = new ObservableCollection<string> { App.Device.Compensation.ToString() };
       DNRContents = new ObservableCollection<string> { "", App.Device.HdnrTrans.ToString() };
 
@@ -55,14 +55,16 @@ namespace Ei_Dimension.ViewModels
       return ViewModelSource.Create(() => new CalibrationViewModel());
     }
 
-    public void CalibrationSelector(string s)
+    public void CalibrationSelector(byte num)
     {
-      CalibrationParameter = s;
+      CalibrationParameter = num;
+      //chart2.Series["CLTARGET"].Enabled = false; for num=0 and true for num=1
+      App.Device.MainCommand("Set Property", code: 0x1b, parameter: num);
     }
 
     public void SaveCalibrationToMapClick()
     {
-
+      App.Device.SaveCalVals(App.GetActiveMapIndex());
     }
 
     public void FocusedBox(int num)
@@ -116,6 +118,8 @@ namespace Ei_Dimension.ViewModels
           OnPropertyChanged();
         }
       }
+      public byte Index { get; set; }
+      private static byte _nextIndex = 0;
       private string _content;
       private static CalibrationViewModel _vm;
       public DropDownButtonContents(string content, CalibrationViewModel vm = null)
@@ -125,11 +129,19 @@ namespace Ei_Dimension.ViewModels
           _vm = vm;
         }
         Content = content;
+        Index = _nextIndex++;
       }
 
       public void Click()
       {
         _vm.SelectedGatingContent = Content;
+        App.Device.MainCommand("Set Property", code: 0xca, parameter: (ushort)Index);
+        App.Device.ScatterGate = Index;
+      }
+
+      public static void ResetIndex()
+      {
+        _nextIndex = 0;
       }
     }
   }

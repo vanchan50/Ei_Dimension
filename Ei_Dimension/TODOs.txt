@@ -12,6 +12,8 @@ what does InitSTab codes do? can I run it all at once?
 calibration statistics -whatis it and where to put it
 confirm ExperimentVM ordercontrol row =1 col =0 and corresponding MainCommand parameter
 
+what does chart2.Series["CLTARGET"].Enabled mean? another chart displayed? ---> CalibrationVM CalibrationSelector()
+
 when something actually runs, UPDATE:
 
 
