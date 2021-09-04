@@ -144,29 +144,38 @@ namespace Ei_Dimension.ViewModels
       if (_currentTableSize == num)
         return;
       _currentTableSize = num;
-      if (_currentTableSize == 96)
+      switch (_currentTableSize)
       {
-        Selected96 = true;
-        Selected384 = false;
-        foreach (var row in Table384Wells)
-        {
-          for(var i = 0; i < 24; i++)
+        case 1:
+          App.Device.MainCommand("Set Property", code: 0xab, parameter: 2);
+          App.Device.PlateType = 2;
+          break;
+        case 96:
+          Selected96 = true;
+          Selected384 = false;
+          foreach (var row in Table384Wells)
           {
-            row.SetType(i, WellType.Empty);
+            for (var i = 0; i < 24; i++)
+            {
+              row.SetType(i, WellType.Empty);
+            }
           }
-        }
-      }
-      else if(_currentTableSize == 384)
-      {
-        Selected96 = false;
-        Selected384 = true;
-        foreach (var row in Table96Wells)
-        {
-          for (var i = 0; i < 12; i++)
+          App.Device.MainCommand("Set Property", code: 0xab, parameter: 0);
+          App.Device.PlateType = 0;
+          break;
+        case 384:
+          Selected96 = false;
+          Selected384 = true;
+          foreach (var row in Table96Wells)
           {
-            row.SetType(i, WellType.Empty);
+            for (var i = 0; i < 12; i++)
+            {
+              row.SetType(i, WellType.Empty);
+            }
           }
-        }
+          App.Device.MainCommand("Set Property", code: 0xab, parameter: 1);
+          App.Device.PlateType = 1;
+          break;
       }
       ShowActiveTable();
     }

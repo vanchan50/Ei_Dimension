@@ -5,7 +5,7 @@ Save settings from textboxes in App.InjectToTextbox
 resultsview scatter chart switch legend with buttons so it can be bound to command
 DataOut and initStab("reportertab")
 ExperimentVM systemcontrol switch needs buttons visibility implementation
-SetActiveMap need some impelementation
+ExperimentVM ChangeWellTableSize() has tube as case 1; implement in view
 
 Questions:
 what does InitSTab codes do? can I run it all at once?
@@ -13,3 +13,6 @@ calibration statistics -whatis it and where to put it
 confirm ExperimentVM ordercontrol row =1 col =0 and corresponding MainCommand parameter
 
 when something actually runs, UPDATE:
+
+
+in ExperimentVM instead of App.Device.ActWell use Table96Wells and Table384Wells in (btnRead_Click  legacy)   where welltype.empty => false (legacy)

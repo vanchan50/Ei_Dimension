@@ -148,7 +148,6 @@ namespace MicroCy
     public bool OnlyClassified { get; set; }
     public bool Reg0stats { get; set; }
     public bool Newmap { get; set; }
-    public bool[,] ActWell = new bool[16, 24];  //some property in legacy to mark selected wells
     public byte PlateRow { get; set; }
     public byte PlateCol { get; set; }
     public byte PlateType { get; set; }
