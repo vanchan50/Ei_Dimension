@@ -22,16 +22,21 @@ namespace Ei_Dimension.ViewModels
       CurrentMapName = new ObservableCollection<string> { App.Device.ActiveMap.mapName };
 
       Bias30Parameters = new ObservableCollection<string>();
-      Bias30Parameters.Add("1180");
-      Bias30Parameters.Add("1500");
-      Bias30Parameters.Add("1500");
+      Bias30Parameters.Add(App.Device.ActiveMap.calgssc.ToString());
+      Bias30Parameters.Add(App.Device.ActiveMap.calrpmaj.ToString());
+      Bias30Parameters.Add(App.Device.ActiveMap.calrpmin.ToString());
       Bias30Parameters.Add("");
-      Bias30Parameters.Add("1330");
-      Bias30Parameters.Add("1500");
-      Bias30Parameters.Add("1500");
-      Bias30Parameters.Add("1900");
+      Bias30Parameters.Add(App.Device.ActiveMap.calrssc.ToString());
+      Bias30Parameters.Add(App.Device.ActiveMap.calcl1.ToString());
+      Bias30Parameters.Add(App.Device.ActiveMap.calcl2.ToString());
+      Bias30Parameters.Add(App.Device.ActiveMap.calvssc.ToString());
       Bias30Parameters.Add("");
       Bias30Parameters.Add("");
+      if (App.Device.ActiveMap.dimension3)
+      {
+        Bias30Parameters[3] = App.Device.ActiveMap.calcl3.ToString();
+        Bias30Parameters[8] = App.Device.ActiveMap.calcl0.ToString();
+      }
       TcompBiasParameters = new ObservableCollection<string>();
       TempParameters = new ObservableCollection<string>();
       BackgroundParameters = new ObservableCollection<string>();

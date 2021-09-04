@@ -50,12 +50,12 @@ namespace Ei_Dimension {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int defaultMap {
+        public int DefaultMap {
             get {
-                return ((int)(this["defaultMap"]));
+                return ((int)(this["DefaultMap"]));
             }
             set {
-                this["defaultMap"] = value;
+                this["DefaultMap"] = value;
             }
         }
         
@@ -200,6 +200,30 @@ namespace Ei_Dimension {
             }
             set {
                 this["ScatterGraphSelector"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("100")]
+        public int MinPerRegion {
+            get {
+                return ((int)(this["MinPerRegion"]));
+            }
+            set {
+                this["MinPerRegion"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("500")]
+        public int BeadsToCapture {
+            get {
+                return ((int)(this["BeadsToCapture"]));
+            }
+            set {
+                this["BeadsToCapture"] = value;
             }
         }
     }

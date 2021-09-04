@@ -56,6 +56,7 @@ namespace Ei_Dimension.ViewModels
       App.ResetFocusedTextbox();
       App.HideNumpad();
       NavigationService.Navigate("CalibrationView", null, this);
+      App.Device.InitSTab("calibtab");
     }
 
     public void NavigateChannels()
@@ -63,6 +64,7 @@ namespace Ei_Dimension.ViewModels
       App.ResetFocusedTextbox();
       App.HideNumpad();
       NavigationService.Navigate("ChannelsView", null, this);
+      App.Device.InitSTab("channeltab");
     }
 
     public void FocusedBox(int num)

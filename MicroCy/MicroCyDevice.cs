@@ -267,15 +267,12 @@ namespace MicroCy
         Console.WriteLine("USB devices not found");
       SetSystemDirectories();
       LoadMaps();
-      ActiveMap = MapList[0];
       MainCommand("Set Property", code: 1, parameter: 1);    //set version as 1 to enable work order handling
       _actPriIdx = 1;  //cl1;
       _actSecIdx = 2;  //cl2;
       Reg0stats = false;
       CalStats = false;
       Newmap = false;
-      MinPerRegion = 100;
-      BeadsToCapture = 500;
       IsTube = false;
       InitReadPipe();    //default termination is end of sample
       Outdir = RootDirectory.FullName;
@@ -790,27 +787,20 @@ namespace MicroCy
     public void LoadMaps()
     {
       //read the MapList if available
-      string testfilename;
-      testfilename = Path.Combine(RootDirectory.FullName, "Config", "DimensionMaps.txt");
+      string testfilename = Path.Combine(RootDirectory.FullName, "Config", "DimensionMaps.txt");
       if (File.Exists(testfilename))
-          _mapsFileName = testfilename;
-      else _mapsFileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "DimensionMaps.txt");
-      //TODO: if check seems unnecessary
-      if (File.Exists(_mapsFileName))
       {
-        TextReader reader = null;
+        _mapsFileName = testfilename;
         try
         {
-          reader = new StreamReader(_mapsFileName);
-          var fileContents = reader.ReadToEnd();
-          MapList = JsonConvert.DeserializeObject<List<CustomMap>>(fileContents);
+          using (TextReader reader = new StreamReader(_mapsFileName))
+          {
+            var fileContents = reader.ReadToEnd();
+            MapList = JsonConvert.DeserializeObject<List<CustomMap>>(fileContents);
+          }
         }
-        finally
-        {
-          if (reader != null) reader.Close();
-        }
+        catch { }
       }
-      _mapsFileName = testfilename;    //make sure maps is written into new dir struct on first save
     }
 
     public bool IsNewWorkOrder()

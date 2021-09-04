@@ -8,7 +8,7 @@
     <Setting Name="SubtRegBg" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="defaultMap" Type="System.Int32" Scope="User">
+    <Setting Name="DefaultMap" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="Compensation" Type="System.Single" Scope="User">
@@ -46,6 +46,12 @@
     </Setting>
     <Setting Name="ScatterGraphSelector" Type="System.Byte" Scope="User">
       <Value Profile="(Default)">3</Value>
+    </Setting>
+    <Setting Name="MinPerRegion" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">100</Value>
+    </Setting>
+    <Setting Name="BeadsToCapture" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">500</Value>
     </Setting>
   </Settings>
 </SettingsFile>

@@ -19,8 +19,12 @@ namespace Ei_Dimension
       SetLanguage("en-US");
 
       Device = new MicroCyDevice();
+      try
+      {
+        Device.ActiveMap = Device.MapList[Settings.Default.DefaultMap];
+      }
+      catch { }
       Device.SystemControl = Settings.Default.SystemControl;
-      Device.SubtRegBg = Settings.Default.SubtRegBg;
       Device.Compensation = Settings.Default.Compensation;
       // reading VM add slist.DataSource = active_items;    //System monitor control
       //  var regbindinglist = new BindingList<BeadRegion>(m_MicroCy.maplist[0].mapRegions);
@@ -32,9 +36,10 @@ namespace Ei_Dimension
       // rmeanscb.Checked = m_MicroCy.RMeans; //Data out
       Device.PltRept = Settings.Default.PltRept;
       // plateResultscb.Checked = m_MicroCy.PltRept;  //Data out
-      Device.InitSTab("readertab");
       Device.TerminationType = Settings.Default.EndRead;
       Device.SubtRegBg = Settings.Default.SubtRegBg;
+      Device.MinPerRegion = Settings.Default.MinPerRegion;
+      Device.BeadsToCapture = Settings.Default.BeadsToCapture;
       if (!System.Windows.Input.Keyboard.IsKeyDown(System.Windows.Input.Key.LeftCtrl))
         Device.MainCommand("Startup");
       Device.SscSelected = Settings.Default.SscHistSel; //TODO: delete this, when refactor ReplyFromMC. only needed in legacy to build graphs
@@ -55,6 +60,8 @@ namespace Ei_Dimension
         if (Device.MapList[i].mapName == mapName)
         {
           Device.ActiveMap = Device.MapList[i];
+          Settings.Default.DefaultMap = i;
+          Settings.Default.Save();
           break;
         }
       }
@@ -62,11 +69,25 @@ namespace Ei_Dimension
       if (CaliVM != null)
       {
         CaliVM.CurrentMapName[0] = Device.ActiveMap.mapName;
+        CaliVM.EventTriggerContents[1] = Device.ActiveMap.minmapssc.ToString();
+        CaliVM.EventTriggerContents[2] = Device.ActiveMap.maxmapssc.ToString();
       }
       var ChannelsVM = ChannelsViewModel.Instance;
       if (ChannelsVM != null)
       {
         ChannelsVM.CurrentMapName[0] = Device.ActiveMap.mapName;
+        ChannelsVM.Bias30Parameters[0] = Device.ActiveMap.calgssc.ToString();
+        ChannelsVM.Bias30Parameters[1] = Device.ActiveMap.calrpmaj.ToString();
+        ChannelsVM.Bias30Parameters[2] = Device.ActiveMap.calrpmin.ToString();
+        ChannelsVM.Bias30Parameters[4] = Device.ActiveMap.calrssc.ToString();
+        ChannelsVM.Bias30Parameters[5] = Device.ActiveMap.calcl1.ToString();
+        ChannelsVM.Bias30Parameters[6] = Device.ActiveMap.calcl2.ToString();
+        ChannelsVM.Bias30Parameters[7] = Device.ActiveMap.calvssc.ToString();
+        if (Device.ActiveMap.dimension3)
+        {
+          ChannelsVM.Bias30Parameters[3] = Device.ActiveMap.calcl3.ToString();
+          ChannelsVM.Bias30Parameters[8] = Device.ActiveMap.calcl0.ToString();
+        }
       }
     }
 
@@ -174,29 +195,71 @@ namespace Ei_Dimension
             ((ObservableCollection<string>)SelectedTextBox.prop.GetValue(SelectedTextBox.VM))[SelectedTextBox.index] = temp = temp.Remove(temp.Length - 1, 1);
         }
         else
-          ((ObservableCollection<string>)SelectedTextBox.prop.GetValue(SelectedTextBox.VM))[SelectedTextBox.index] = temp = temp + input;
-        float res;
+          ((ObservableCollection<string>)SelectedTextBox.prop.GetValue(SelectedTextBox.VM))[SelectedTextBox.index] = temp += input;
+        float fRes;
+        int iRes;
         switch (SelectedTextBox.prop.Name)
         {
           case "CompensationPercentageContent":
-            if (float.TryParse(temp, out res))
+            if (float.TryParse(temp, out fRes))
             {
-              Settings.Default.Compensation = res;
-              Settings.Default.Save();
+              Device.Compensation = fRes;
+              Settings.Default.Compensation = fRes;
             }
             break;
           case "DNRContents":
             if (SelectedTextBox.index == 1)
             {
-              if (float.TryParse(temp, out res))
+              if (float.TryParse(temp, out fRes))
               {
-                Settings.Default.HDnrTrans = res;
-                Settings.Default.Save();
+                Device.HdnrTrans = fRes;
+                Settings.Default.HDnrTrans = fRes;
               }
             }
             break;
-
+          case "EndRead":
+            if (SelectedTextBox.index == 0)
+            {
+              if (int.TryParse(temp, out iRes))
+              {
+                Device.MinPerRegion = iRes;
+                Settings.Default.MinPerRegion = iRes;
+              }
+            }
+            if (SelectedTextBox.index == 1)
+            {
+              if (int.TryParse(temp, out iRes))
+              {
+                Device.BeadsToCapture = iRes;
+                Settings.Default.BeadsToCapture = iRes;
+              }
+            }
+            break;
+          case "Volumes":
+            if (SelectedTextBox.index == 0)
+            {
+              if (int.TryParse(temp, out iRes))
+              {
+                Device.MainCommand("Set Property", code: 0xaf, parameter: (ushort)iRes);
+              }
+            }
+            if (SelectedTextBox.index == 1)
+            {
+              if (int.TryParse(temp, out iRes))
+              {
+                Device.MainCommand("Set Property", code: 0xac, parameter: (ushort)iRes);
+              }
+            }
+            if (SelectedTextBox.index == 2)
+            {
+              if (int.TryParse(temp, out iRes))
+              {
+                Device.MainCommand("Set Property", code: 0xc4, parameter: (ushort)iRes);
+              }
+            }
+            break;
         }
+        Settings.Default.Save();
       }
     }
 
@@ -209,6 +272,5 @@ namespace Ei_Dimension
     {
       NumpadShow.prop.SetValue(NumpadShow.VM, Visibility.Hidden);
     }
-
   }
 }

@@ -37,7 +37,7 @@ namespace Ei_Dimension.ViewModels
       };
       SelectedGatingContent = GatingItems[0].Content;
 
-      EventTriggerContents = new ObservableCollection<string> {"", "7000", "10000" };
+      EventTriggerContents = new ObservableCollection<string> {"", App.Device.ActiveMap.minmapssc.ToString(), App.Device.ActiveMap.maxmapssc.ToString()};
 
       ClassificationTargetsContents = new ObservableCollection<string> { "1", "1", "1", "1", "3500"};
 

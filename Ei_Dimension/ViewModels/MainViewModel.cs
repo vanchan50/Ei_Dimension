@@ -34,6 +34,7 @@ namespace Ei_Dimension.ViewModels
       App.ResetFocusedTextbox();
       App.HideNumpad();
       NavigationService.Navigate("ExperimentView", null, this);
+      App.Device.InitSTab("readertab");
     }
 
     public void NavigateResults()

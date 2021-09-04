@@ -21,7 +21,7 @@ namespace Ei_Dimension.ViewModels
 
     public virtual ObservableCollection<string> EndRead { get; set; }
     public virtual ObservableCollection<bool> SystemControlSelectorState { get; set; }
-    public virtual string OrderSelectorState { get; set; }
+    public virtual byte OrderSelectorState { get; set; }
     public virtual ObservableCollection<bool> EndReadSelectorState { get; set; }
     public virtual ObservableCollection<string> Volumes { get; set; }
     public virtual string SelectedSpeedContent { get; set; }
@@ -45,11 +45,11 @@ namespace Ei_Dimension.ViewModels
       EndRead = new ObservableCollection<string> { "100", "500" };
 
       SystemControlSelectorState = new ObservableCollection<bool> { false, false, false };
-      SystemControlSelectorState[App.Device.SystemControl] = true;
+      SystemControlSelector(App.Device.SystemControl);
 
-      OrderSelectorState = "Row";
+      OrderSelectorState = 1; //Row
       EndReadSelectorState = new ObservableCollection<bool> { false, false, false};
-      EndReadSelectorState[App.Device.TerminationType] = true;
+      EndReadSelector(App.Device.TerminationType);
 
       Volumes = new ObservableCollection<string> { "0", "", "" };
 
@@ -63,6 +63,7 @@ namespace Ei_Dimension.ViewModels
         new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_Hi_Sens), curCulture), this)
       };
       SelectedSpeedContent = SpeedItems[0].Content;
+      DropDownButtonContents.ResetIndex();
 
       ClassiMapItems = new ObservableCollection<DropDownButtonContents>();
       if(App.Device.MapList.Count > 0)
@@ -74,7 +75,8 @@ namespace Ei_Dimension.ViewModels
       }
       else
         ClassiMapItems.Add(new DropDownButtonContents("No maps available", this));
-      SelectedClassiMapContent = ClassiMapItems[0].Content;
+      SelectedClassiMapContent = App.Device.ActiveMap.mapName;
+      DropDownButtonContents.ResetIndex();
 
       ChConfigItems = new ObservableCollection<DropDownButtonContents>
       {
@@ -83,6 +85,7 @@ namespace Ei_Dimension.ViewModels
         new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_FM3D), curCulture), this)
       };
       SelectedChConfigContent = ChConfigItems[0].Content;
+      DropDownButtonContents.ResetIndex();
 
       _selectedWell96Indices = new List<(int, int)>();
       _selectedWell384Indices = new List<(int, int)>();
@@ -143,8 +146,6 @@ namespace Ei_Dimension.ViewModels
       _currentTableSize = num;
       if (_currentTableSize == 96)
       {
-        Table96Visible = System.Windows.Visibility.Visible;
-        Table384Visible = System.Windows.Visibility.Hidden;
         Selected96 = true;
         Selected384 = false;
         foreach (var row in Table384Wells)
@@ -157,8 +158,6 @@ namespace Ei_Dimension.ViewModels
       }
       else if(_currentTableSize == 384)
       {
-        Table96Visible = System.Windows.Visibility.Hidden;
-        Table384Visible = System.Windows.Visibility.Visible;
         Selected96 = false;
         Selected384 = true;
         foreach (var row in Table96Wells)
@@ -169,6 +168,7 @@ namespace Ei_Dimension.ViewModels
           }
         }
       }
+      ShowActiveTable();
     }
 
     public void SystemControlSelector(byte num)
@@ -178,11 +178,19 @@ namespace Ei_Dimension.ViewModels
       SystemControlSelectorState[2] = false;
       SystemControlSelectorState[num] = true;
       App.Instance.SetSystemControl(num);
+      if (num != 0)
+      {
+        Table96Visible = Visibility.Hidden;
+        Table384Visible = Visibility.Hidden;
+      }
+      else
+        ShowActiveTable();
     }
 
-    public void OrderSelector(string s)
+    public void OrderSelector(byte num)
     {
-      OrderSelectorState = s;
+      OrderSelectorState = num;
+      App.Device.MainCommand("Set Property", code: 0xa8, parameter: num);
     }
 
     public void EndReadSelector(byte num)
@@ -235,6 +243,19 @@ namespace Ei_Dimension.ViewModels
       Table384Wells.Add(new WellTableRow(15, 24)); //P
     }
 
+    private void ShowActiveTable()
+    {
+      if (_currentTableSize == 96)
+      {
+        Table96Visible = Visibility.Visible;
+        Table384Visible = Visibility.Hidden;
+      }
+      else if (_currentTableSize == 384)
+      {
+        Table96Visible = Visibility.Hidden;
+        Table384Visible = Visibility.Visible;
+      }
+    }
     public void FocusedBox(int num)
     {
       switch (num)
@@ -268,6 +289,8 @@ namespace Ei_Dimension.ViewModels
           OnPropertyChanged();
         }
       }
+      public byte Index { get; set; }
+      private static byte _nextIndex = 0;
       private string _content;
       private static ExperimentViewModel _vm;
       public DropDownButtonContents(string content, ExperimentViewModel vm = null)
@@ -277,6 +300,7 @@ namespace Ei_Dimension.ViewModels
           _vm = vm;
         }
         Content = content;
+        Index = _nextIndex++;
       }
 
       public void Click(int num)
@@ -285,15 +309,23 @@ namespace Ei_Dimension.ViewModels
         {
           case 1:
             _vm.SelectedSpeedContent = Content;
+            App.Device.MainCommand("Set Property", code: 0xaa, parameter: (ushort)Index);
             break;
           case 2:
             _vm.SelectedClassiMapContent = Content;
             App.Instance.SetActiveMap(Content);
+            App.Device.MainCommand("Set Property", code: 0xa9, parameter: (ushort)Index);
             break;
           case 3:
             _vm.SelectedChConfigContent = Content;
+            App.Device.MainCommand("Set Property", code: 0xc2, parameter: (ushort)Index);
             break;
         }
+      }
+
+      public static void ResetIndex()
+      {
+        _nextIndex = 0;
       }
     }
   }

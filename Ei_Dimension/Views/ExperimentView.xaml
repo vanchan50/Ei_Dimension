@@ -654,19 +654,19 @@
                          Style="{StaticResource RadioButtonVerticalThemeStyle}"
                          Height="44"
                          Width="150"
-                         IsChecked="True"
                          Command="{Binding OrderSelectorCommand}">
               <RadioButton.CommandParameter>
-                <System:String>Row</System:String>
+                <System:Byte>1</System:Byte>
               </RadioButton.CommandParameter>
             </RadioButton>
             <RadioButton Content="{lang:Loc Column}"
                          Style="{StaticResource RadioButtonVerticalThemeStyle}"
                          Height="44"
                          Width="150"
+                         IsChecked="True"
                          Command="{Binding OrderSelectorCommand}">
               <RadioButton.CommandParameter>
-                <System:String>Column</System:String>
+                <System:Byte>0</System:Byte>
               </RadioButton.CommandParameter>
             </RadioButton>
           </StackPanel>
