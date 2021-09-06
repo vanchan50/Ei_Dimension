@@ -170,6 +170,9 @@
 To Current
        Map</value>
   </data>
+  <data name="Channels_Set_Offset" xml:space="preserve">
+    <value>Set Offset</value>
+  </data>
   <data name="Channels_SiPM_Temp_Coefficient" xml:space="preserve">
     <value>SiPM Temp
 Coefficient</value>

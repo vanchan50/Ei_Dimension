@@ -216,6 +216,15 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Set Offset.
+        /// </summary>
+        public static string Channels_Set_Offset {
+            get {
+                return ResourceManager.GetString("Channels_Set_Offset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SiPM Temp
         ///Coefficient.
         /// </summary>

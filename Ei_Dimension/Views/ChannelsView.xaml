@@ -531,7 +531,7 @@
                      Foreground="{StaticResource AppTextColor}"
                      HorizontalAlignment="Center"
                      VerticalAlignment="Top"
-                     Margin="0,30,0,0"/>
+                     Margin="0,0,0,0"/>
           <TextBox  Height="36"
                     HorizontalAlignment="Stretch"
                     Margin="50,-3,50,13"
@@ -541,9 +541,17 @@
               <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="40"/>
             </dxmvvm:Interaction.Behaviors>
           </TextBox>
+          <dx:SimpleButton Content="{lang:Loc Channels_Set_Offset}"
+                           Command="{Binding SetOffsetButtonClickCommand}"
+                           Height="64"
+                           FontFamily="{StaticResource AppTextFont}"
+                           FontSize="36"
+                           FontWeight="UltraBold"
+                           Foreground="{StaticResource AppTextColor}"
+                           Margin="0,0,0,6"/>
           <dx:SimpleButton Content="{lang:Loc Channels_Update_Bias}"
                            Command="{Binding UpdateBiasButtonClickCommand}"
-                           Height="100"
+                           Height="85"
                            FontFamily="{StaticResource AppTextFont}"
                            FontSize="36"
                            FontWeight="UltraBold"

@@ -301,6 +301,10 @@ namespace Ei_Dimension
           case "ClassificationTargetsContents":
             if (SelectedTextBox.index == 0)
             {
+              if (int.TryParse(temp, out iRes) && iRes > 0 && iRes < 30000)
+              {
+                Device.MainCommand("Set Property", code: 0x8b, parameter: (ushort)iRes);
+              }
             }
             if (SelectedTextBox.index == 1)
             {
@@ -322,6 +326,10 @@ namespace Ei_Dimension
             }
             if (SelectedTextBox.index == 3)
             {
+              if (int.TryParse(temp, out iRes) && iRes > 0 && iRes < 30000)
+              {
+                Device.MainCommand("Set Property", code: 0x8e, parameter: (ushort)iRes);
+              }
             }
             if (SelectedTextBox.index == 4)
             {
@@ -416,6 +424,165 @@ namespace Ei_Dimension
               if (int.TryParse(temp, out iRes))
               {
                 Device.MainCommand("Set Property", code: 0x3d, parameter: (ushort)iRes);
+              }
+            }
+            break;
+          case "SiPMTempCoeff":
+            if (float.TryParse(temp, out fRes))
+            {
+              Device.MainCommand("Set FProperty", code: 0x02, fparameter: fRes);
+            }
+            break;
+          case "Bias30Parameters":
+            if (SelectedTextBox.index == 0)
+            {
+              if (int.TryParse(temp, out iRes))
+              {
+                Device.MainCommand("Set Property", code: 0x28, parameter: (ushort)iRes);
+                Device.TempGreenSsc = iRes;
+              }
+            }
+            if (SelectedTextBox.index == 1)
+            {
+              if (int.TryParse(temp, out iRes))
+              {
+                Device.MainCommand("Set Property", code: 0x29, parameter: (ushort)iRes);
+                Device.TemprpMaj = iRes;
+              }
+            }
+            if (SelectedTextBox.index == 2)
+            {
+              if (int.TryParse(temp, out iRes))
+              {
+                Device.MainCommand("Set Property", code: 0x2a, parameter: (ushort)iRes);
+                Device.TempRpMin = iRes;
+              }
+            }
+            if (SelectedTextBox.index == 3)
+            {
+              if (int.TryParse(temp, out iRes))
+              {
+                Device.MainCommand("Set Property", code: 0x2c, parameter: (ushort)iRes);
+                Device.TempCl3 = iRes;
+              }
+            }
+            if (SelectedTextBox.index == 4)
+            {
+              if (int.TryParse(temp, out iRes))
+              {
+                Device.MainCommand("Set Property", code: 0x2d, parameter: (ushort)iRes);
+                Device.TempRedSsc = iRes;
+              }
+            }
+            if (SelectedTextBox.index == 5)
+            {
+              if (int.TryParse(temp, out iRes))
+              {
+                Device.MainCommand("Set Property", code: 0x2e, parameter: (ushort)iRes);
+                Device.TempCl1 = iRes;
+              }
+            }
+            if (SelectedTextBox.index == 6)
+            {
+              if (int.TryParse(temp, out iRes))
+              {
+                Device.MainCommand("Set Property", code: 0x2f, parameter: (ushort)iRes);
+                Device.TempCl2 = iRes;
+              }
+            }
+            if (SelectedTextBox.index == 7)
+            {
+              if (int.TryParse(temp, out iRes))
+              {
+                Device.MainCommand("Set Property", code: 0x25, parameter: (ushort)iRes);
+                Device.TempVioletSsc = iRes;
+              }
+            }
+            if (SelectedTextBox.index == 8)
+            {
+              if (int.TryParse(temp, out iRes))
+              {
+                Device.MainCommand("Set Property", code: 0x26, parameter: (ushort)iRes);
+                Device.TempCl0 = iRes;
+              }
+            }
+            if (SelectedTextBox.index == 9)
+            {
+              if (int.TryParse(temp, out iRes))
+              {
+                Device.MainCommand("Set Property", code: 0x24, parameter: (ushort)iRes);
+              }
+            }
+            break;
+          case "TempParameters":
+            if (SelectedTextBox.index == 0)
+            {
+              if (int.TryParse(temp, out iRes))
+              {
+                Device.MainCommand("Set Property", code: 0xa0, parameter: (ushort)iRes);
+              }
+            }
+            if (SelectedTextBox.index == 1)
+            {
+              if (int.TryParse(temp, out iRes))
+              {
+                Device.MainCommand("Set Property", code: 0xa4, parameter: (ushort)iRes);
+              }
+            }
+            if (SelectedTextBox.index == 2)
+            {
+              if (int.TryParse(temp, out iRes))
+              {
+                Device.MainCommand("Set Property", code: 0xa5, parameter: (ushort)iRes);
+              }
+            }
+            if (SelectedTextBox.index == 3)
+            {
+              if (int.TryParse(temp, out iRes))
+              {
+                Device.MainCommand("Set Property", code: 0xa3, parameter: (ushort)iRes);
+              }
+            }
+            if (SelectedTextBox.index == 4)
+            {
+              if (int.TryParse(temp, out iRes))
+              {
+                Device.MainCommand("Set Property", code: 0xa2, parameter: (ushort)iRes);
+              }
+            }
+            if (SelectedTextBox.index == 5)
+            {
+              if (int.TryParse(temp, out iRes))
+              {
+                Device.MainCommand("Set Property", code: 0xa1, parameter: (ushort)iRes);
+              }
+            }
+            if (SelectedTextBox.index == 6)
+            {
+              if (int.TryParse(temp, out iRes))
+              {
+                Device.MainCommand("Set Property", code: 0x9f, parameter: (ushort)iRes);
+              }
+            }
+            if (SelectedTextBox.index == 7)
+            {
+              if (int.TryParse(temp, out iRes))
+              {
+                Device.MainCommand("Set Property", code: 0x9d, parameter: (ushort)iRes);
+              }
+            }
+            if (SelectedTextBox.index == 8)
+            {
+              if (int.TryParse(temp, out iRes))
+              {
+                Device.MainCommand("Set Property", code: 0x9c, parameter: (ushort)iRes);
+              }
+            }
+            if (SelectedTextBox.index == 9)
+            {
+              if (int.TryParse(temp, out iRes))
+              {
+                Device.MainCommand("Set Property", code: 0x9e, parameter: (ushort)iRes);
               }
             }
             break;
