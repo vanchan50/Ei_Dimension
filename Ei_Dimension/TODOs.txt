@@ -11,6 +11,10 @@ CalibrationVM Classification targets CL0 and CL3 not implemented in App.InjectTo
 ComponentsView SamplingON button - change behaviour like GetPosition Toggle button. for language swapping
 
 
+Everything set to textboxes is expected to be inserted through numpad. if it is through regular keyboard, Device.Maincommand won't be executed. Fix it
+  Implementations are in App.InjectToTextbox()
+
+
 App.InjectToTextbox() needs cleanup after it is finished
 App.GetActiveMapIndex() might be too much, consider adding a field to Device
 

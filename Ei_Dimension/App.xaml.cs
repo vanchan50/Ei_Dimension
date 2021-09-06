@@ -331,6 +331,94 @@ namespace Ei_Dimension
               }
             }
             break;
+          case "SheathSyringeParameters":
+            if (SelectedTextBox.index == 0)
+            {
+              if (int.TryParse(temp, out iRes))
+              {
+                Device.MainCommand("Set Property", code: 0x30, parameter: (ushort)iRes);
+              }
+            }
+            if (SelectedTextBox.index == 1)
+            {
+              if (int.TryParse(temp, out iRes))
+              {
+                Device.MainCommand("Set Property", code: 0x31, parameter: (ushort)iRes);
+              }
+            }
+            if (SelectedTextBox.index == 2)
+            {
+              if (int.TryParse(temp, out iRes))
+              {
+                Device.MainCommand("Set Property", code: 0x32, parameter: (ushort)iRes);
+              }
+            }
+            if (SelectedTextBox.index == 3)
+            {
+              if (int.TryParse(temp, out iRes))
+              {
+                Device.MainCommand("Set Property", code: 0x33, parameter: (ushort)iRes);
+              }
+            }
+            if (SelectedTextBox.index == 4)
+            {
+              if (int.TryParse(temp, out iRes))
+              {
+                Device.MainCommand("Set Property", code: 0x34, parameter: (ushort)iRes);
+              }
+            }
+            if (SelectedTextBox.index == 5)
+            {
+              if (int.TryParse(temp, out iRes))
+              {
+                Device.MainCommand("Set Property", code: 0x35, parameter: (ushort)iRes);
+              }
+            }
+            break;
+          case "SamplesSyringeParameters":
+            if (SelectedTextBox.index == 0)
+            {
+              if (int.TryParse(temp, out iRes))
+              {
+                Device.MainCommand("Set Property", code: 0x38, parameter: (ushort)iRes);
+              }
+            }
+            if (SelectedTextBox.index == 1)
+            {
+              if (int.TryParse(temp, out iRes))
+              {
+                Device.MainCommand("Set Property", code: 0x39, parameter: (ushort)iRes);
+              }
+            }
+            if (SelectedTextBox.index == 2)
+            {
+              if (int.TryParse(temp, out iRes))
+              {
+                Device.MainCommand("Set Property", code: 0x3a, parameter: (ushort)iRes);
+              }
+            }
+            if (SelectedTextBox.index == 3)
+            {
+              if (int.TryParse(temp, out iRes))
+              {
+                Device.MainCommand("Set Property", code: 0x3b, parameter: (ushort)iRes);
+              }
+            }
+            if (SelectedTextBox.index == 4)
+            {
+              if (int.TryParse(temp, out iRes))
+              {
+                Device.MainCommand("Set Property", code: 0x3c, parameter: (ushort)iRes);
+              }
+            }
+            if (SelectedTextBox.index == 5)
+            {
+              if (int.TryParse(temp, out iRes))
+              {
+                Device.MainCommand("Set Property", code: 0x3d, parameter: (ushort)iRes);
+              }
+            }
+            break;
         }
         Settings.Default.Save();
       }
