@@ -186,7 +186,7 @@ namespace Ei_Dimension.ViewModels
       SystemControlSelectorState[1] = false;
       SystemControlSelectorState[2] = false;
       SystemControlSelectorState[num] = true;
-      App.Instance.SetSystemControl(num);
+      App.SetSystemControl(num);
       if (num != 0)
       {
         Table96Visible = Visibility.Hidden;
@@ -208,7 +208,7 @@ namespace Ei_Dimension.ViewModels
       EndReadSelectorState[1] = false;
       EndReadSelectorState[2] = false;
       EndReadSelectorState[num] = true;
-      App.Instance.SetTerminationType(num);
+      App.SetTerminationType(num);
     }
 
     private void InitTables()
@@ -322,7 +322,7 @@ namespace Ei_Dimension.ViewModels
             break;
           case 2:
             _vm.SelectedClassiMapContent = Content;
-            App.Instance.SetActiveMap(Content);
+            App.SetActiveMap(Content);
             App.Device.MainCommand("Set Property", code: 0xa9, parameter: (ushort)Index);
             break;
           case 3:

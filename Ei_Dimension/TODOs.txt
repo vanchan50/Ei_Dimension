@@ -1,11 +1,18 @@
 ﻿Ctrl+F every "Path." and "Environment." for irrelevant paths
 Need some way to update Device.MapList if we get to add new maps
 When something from Settings changes, use .Save() and don't forget to change App.[property]
-Save settings from textboxes in App.InjectToTextbox
+Save settings from textboxes in App.InjectToTextbox()
 resultsview scatter chart switch legend with buttons so it can be bound to command
 DataOut and initStab("reportertab")
 ExperimentVM systemcontrol switch needs buttons visibility implementation
 ExperimentVM ChangeWellTableSize() has tube as case 1; implement in view
+CalibrationVM Classification targets has a weird legacy chart2series stuff. propbably not necessary
+CalibrationVM Classification targets CL0 and CL3 not implemented in App.InjectToTextbox()
+ComponentsView SamplingON button - change behaviour like GetPosition Toggle button. for language swapping
+
+
+App.InjectToTextbox() needs cleanup after it is finished
+App.GetActiveMapIndex() might be too much, consider adding a field to Device
 
 Questions:
 what does InitSTab codes do? can I run it all at once?

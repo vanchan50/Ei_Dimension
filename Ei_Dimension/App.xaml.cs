@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Reflection;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Configuration;
@@ -10,10 +10,9 @@ namespace Ei_Dimension
 {
   public partial class App : Application
   {
-    public static (System.Reflection.PropertyInfo prop, object VM) NumpadShow { get; set; }
-    public static (System.Reflection.PropertyInfo prop, object VM, int index) SelectedTextBox { get; set; }
+    public static (PropertyInfo prop, object VM) NumpadShow { get; set; }
+    public static (PropertyInfo prop, object VM, int index) SelectedTextBox { get; set; }
     public static MicroCyDevice Device { get; private set; }
-    public static App Instance { get; private set; }
     public App()
     {
       SetLanguage("en-US");
@@ -50,7 +49,6 @@ namespace Ei_Dimension
       //  else tabControl2.SelectedIndex = 3;                               //is showing tube is the correct way to display acquisition?
       Device.MainCommand("Set Property", code: 0x97, parameter: 1170);  //set current limit of aligner motors if leds are off
       Device.MainCommand("Get Property", code: 0xca);
-      Instance = this;
     }
 
     public static int GetActiveMapIndex()
@@ -64,7 +62,7 @@ namespace Ei_Dimension
       return i;
     }
 
-    public void SetActiveMap(string mapName)
+    public static void SetActiveMap(string mapName)
     {
       for(var i = 0; i < Device.MapList.Count; i++)
       {
@@ -102,28 +100,28 @@ namespace Ei_Dimension
       }
     }
 
-    public void SetSystemControl(byte num)
+    public static void SetSystemControl(byte num)
     {
       Device.SystemControl = num;
       Settings.Default.SystemControl = num;
       Settings.Default.Save();
     }
 
-    public void SetTerminationType(byte num)
+    public static void SetTerminationType(byte num)
     {
       Device.TerminationType = num;
       Settings.Default.EndRead = num;
       Settings.Default.Save();
     }
 
-    public void SetHeatmapX(byte num)
+    public static void SetHeatmapX(byte num)
     {
       Device.XAxisSel = num;
       Settings.Default.XAxisG = num;
       Settings.Default.Save();
     }
 
-    public void SetHeatmapY(byte num)
+    public static void SetHeatmapY(byte num)
     {
       Device.YAxisSel = num;
       Settings.Default.YAxisG = num;
@@ -297,6 +295,39 @@ namespace Ei_Dimension
               if (int.TryParse(temp, out iRes))
               {
                 Device.MainCommand("Set Property", code: 0xcf, parameter: (ushort)iRes);
+              }
+            }
+            break;
+          case "ClassificationTargetsContents":
+            if (SelectedTextBox.index == 0)
+            {
+            }
+            if (SelectedTextBox.index == 1)
+            {
+              if (int.TryParse(temp, out iRes) && iRes > 0 && iRes < 30000)
+              {
+                //  chart2.Series["CLTARGET"].Points.RemoveAt(0);
+                //  chart2.Series["CLTARGET"].Points.AddXY(jj, kk);
+                Device.MainCommand("Set Property", code: 0x8c, parameter: (ushort)iRes);
+              }
+            }
+            if (SelectedTextBox.index == 2)
+            {
+              if (int.TryParse(temp, out iRes) && iRes > 0 && iRes < 30000)
+              {
+                //  chart2.Series["CLTARGET"].Points.RemoveAt(0);
+                //  chart2.Series["CLTARGET"].Points.AddXY(jj, kk);
+                Device.MainCommand("Set Property", code: 0x8d, parameter: (ushort)iRes);
+              }
+            }
+            if (SelectedTextBox.index == 3)
+            {
+            }
+            if (SelectedTextBox.index == 4)
+            {
+              if (int.TryParse(temp, out iRes) && iRes > 0 && iRes < 30000)
+              {
+                Device.MainCommand("Set Property", code: 0x8f, parameter: (ushort)iRes);
               }
             }
             break;

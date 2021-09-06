@@ -214,7 +214,7 @@ namespace Ei_Dimension.ViewModels
           break;
       }
       XAxisSelectorState[num] = true;
-      App.Instance.SetHeatmapX(num);
+      App.SetHeatmapX(num);
       UpdateHeatmap();
     }
 
@@ -244,7 +244,7 @@ namespace Ei_Dimension.ViewModels
           break;
       }
       YAxisSelectorState[num] = true;
-      App.Instance.SetHeatmapY(num);
+      App.SetHeatmapY(num);
       UpdateHeatmap();
     }
 
