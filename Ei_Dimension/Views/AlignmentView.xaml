@@ -105,7 +105,7 @@
                            Height="44"
                            Command="{Binding LaserAlignMotorSelectorCommand}">
               <RadioButton.CommandParameter>
-                <System:String>Left</System:String>
+                <System:Byte>1</System:Byte>
               </RadioButton.CommandParameter>
             </RadioButton>
             <RadioButton Content="{lang:Loc Alignment_Right}"
@@ -114,7 +114,7 @@
                            Width="150"
                            Command="{Binding LaserAlignMotorSelectorCommand}">
               <RadioButton.CommandParameter>
-                <System:String>Right</System:String>
+                <System:Byte>2</System:Byte>
               </RadioButton.CommandParameter>
             </RadioButton>
           </StackPanel>
@@ -156,17 +156,6 @@
                  VerticalAlignment="Top"
                  Margin="0,0,0,0"/>
 
-        <TextBox Height="36"
-                 HorizontalAlignment="Stretch"
-                 Margin="0,0,0,13"
-                 Width="150"
-                 Style="{StaticResource InputFieldStyle}"
-                 Text="{Binding AutoAlign[0]}">
-          <dxmvvm:Interaction.Behaviors>
-            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="3"/>
-          </dxmvvm:Interaction.Behaviors>
-        </TextBox>
-
         <Border BorderThickness="2"
                 BorderBrush="{StaticResource AppTextColor}"
                 Margin="0,0,0,5"
@@ -181,7 +170,7 @@
                            IsChecked="True"
                            Command="{Binding AutoAlignSelectorCommand}">
               <RadioButton.CommandParameter>
-                <System:String>Off</System:String>
+                <System:Byte>0</System:Byte>
               </RadioButton.CommandParameter>
             </RadioButton>
             <RadioButton Content="{lang:Loc Green}"
@@ -190,7 +179,7 @@
                            Width="150"
                            Command="{Binding AutoAlignSelectorCommand}">
               <RadioButton.CommandParameter>
-                <System:String>Green</System:String>
+                <System:Byte>1</System:Byte>
               </RadioButton.CommandParameter>
             </RadioButton>
             <RadioButton Content="{lang:Loc Red}"
@@ -199,7 +188,7 @@
                            Width="150"
                            Command="{Binding AutoAlignSelectorCommand}">
               <RadioButton.CommandParameter>
-                <System:String>Red</System:String>
+                <System:Byte>2</System:Byte>
               </RadioButton.CommandParameter>
             </RadioButton>
             <RadioButton Content="{lang:Loc Violet}"
@@ -208,7 +197,7 @@
                            Width="150"
                            Command="{Binding AutoAlignSelectorCommand}">
               <RadioButton.CommandParameter>
-                <System:String>Violet</System:String>
+                <System:Byte>3</System:Byte>
               </RadioButton.CommandParameter>
             </RadioButton>
           </StackPanel>

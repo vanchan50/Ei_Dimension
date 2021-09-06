@@ -45,8 +45,6 @@ namespace Ei_Dimension
       Device.XAxisSel = Settings.Default.XAxisG;        //TODO: delete this, when refactor ReplyFromMC. only needed in legacy to build graphs
       Device.YAxisSel = Settings.Default.YAxisG;        //TODO: delete this, when refactor ReplyFromMC. only needed in legacy to build graphs
       Device.HdnrTrans = Settings.Default.HDnrTrans;
-      //  if (m_MicroCy.systemControl == 0) tabControl2.SelectedIndex = 0;  //is showing tube is the correct way to display acquisition?
-      //  else tabControl2.SelectedIndex = 3;                               //is showing tube is the correct way to display acquisition?
       Device.MainCommand("Set Property", code: 0x97, parameter: 1170);  //set current limit of aligner motors if leds are off
       Device.MainCommand("Get Property", code: 0xca);
     }

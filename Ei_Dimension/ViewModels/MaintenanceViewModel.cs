@@ -10,6 +10,7 @@ namespace Ei_Dimension.ViewModels
   public class MaintenanceViewModel
   {
     public virtual bool LEDsToggleButtonState { get; set; }
+    public virtual bool LEDsEnabled { get; set; }
     public virtual object LEDSliderValue { get; set; }
     public virtual ObservableCollection<string> SanitizeSecondsContent { get; set; }
 
@@ -18,9 +19,12 @@ namespace Ei_Dimension.ViewModels
 
     private INavigationService NavigationService => this.GetService<INavigationService>();
 
+    public static MaintenanceViewModel Instance { get; private set; }
+
     protected MaintenanceViewModel()
     {
       LEDSliderValue = 0;
+      LEDsEnabled = true;
       LEDsToggleButtonState = false;
       SanitizeSecondsContent = new ObservableCollection<string> { "" };
       LanguageItems = new ObservableCollection<DropDownButtonContents>();
@@ -29,6 +33,7 @@ namespace Ei_Dimension.ViewModels
         LanguageItems.Add(new DropDownButtonContents(lang.Item1, lang.Item2, this));
       }
       SelectedLanguage = LanguageItems[0].Content;
+      Instance = this;
     }
 
     public static MaintenanceViewModel Create()
@@ -38,12 +43,16 @@ namespace Ei_Dimension.ViewModels
 
     public void LEDsButtonClick()
     {
-      LEDsToggleButtonState = !LEDsToggleButtonState;
+      if(LEDsEnabled)
+        LEDsToggleButtonState = !LEDsToggleButtonState;
     }
 
     public void LEDSliderValueChanged()
     {
+      if (LEDsEnabled)
+      {
 
+      }
     }
 
     public void UVCSanitizeClick()

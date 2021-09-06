@@ -10,17 +10,15 @@ namespace Ei_Dimension.ViewModels
   {
     public virtual ObservableCollection<string> LastCalibratedPosition { get; set; }
     public virtual ObservableCollection<string> LaserAlignMotor { get; set; }
-    public virtual string LaserAlignMotorSelectorState { get; set; }
-    public virtual ObservableCollection<string> AutoAlign { get; set; }
-    public virtual string AutoAlignSelectorState { get; set; }
+    public virtual byte LaserAlignMotorSelectorState { get; set; }
+    public virtual byte AutoAlignSelectorState { get; set; }
 
     protected AlignmentViewModel()
     {
       LastCalibratedPosition = new ObservableCollection<string> { "", "" };
       LaserAlignMotor = new ObservableCollection<string> { "" };
-      LaserAlignMotorSelectorState = "Left";
-      AutoAlign = new ObservableCollection<string> { "" };
-      AutoAlignSelectorState = "Off";
+      LaserAlignMotorSelectorState = 1;
+      AutoAlignSelectorState = 0;
     }
 
     public static AlignmentViewModel Create()
@@ -33,24 +31,46 @@ namespace Ei_Dimension.ViewModels
 
     }
 
-    public void LaserAlignMotorSelector(string s)
+    public void LaserAlignMotorSelector(byte num)
     {
-      LaserAlignMotorSelectorState = s;
+      LaserAlignMotorSelectorState = num;
     }
 
     public void RunLaserAlignMotorClick()
     {
-
+      if (float.TryParse(LaserAlignMotor[0], out float fRes))
+      {
+        App.Device.MainCommand("AlignMotor", cmd: LaserAlignMotorSelectorState, fparameter: fRes);
+      }
     }
 
     public void HaltLaserAlignMotorClick()
     {
-
+      App.Device.MainCommand("AlignMotor");
     }
 
-    public void AutoAlignSelector(string s)
+    public void AutoAlignSelector(byte num)
     {
-      AutoAlignSelectorState = s;
+      switch (num)
+      {
+        case 0:
+          App.Device.MainCommand("Set Property", code: 0xc5);
+          MaintenanceViewModel.Instance.LEDsEnabled = true;
+          break;
+        case 1:
+          App.Device.MainCommand("Set Property", code: 0xc5, parameter: 1);
+          MaintenanceViewModel.Instance.LEDsEnabled = false;
+          break;
+        case 2:
+          App.Device.MainCommand("Set Property", code: 0xc5, parameter: 2);
+          MaintenanceViewModel.Instance.LEDsEnabled = false;
+          break;
+        case 3:
+          App.Device.MainCommand("Set Property", code: 0xc5, parameter: 3);
+          MaintenanceViewModel.Instance.LEDsEnabled = false;
+          break;
+      }
+      AutoAlignSelectorState = num;
     }
 
     public void RunAutoAlignClick()
@@ -60,17 +80,17 @@ namespace Ei_Dimension.ViewModels
 
     public void ScanAlignSequenceClick()
     {
-
+      App.Device.MainCommand("AlignMotor", cmd: 3);
     }
 
     public void FindPeakAlignSequenceClick()
     {
-
+      App.Device.MainCommand("AlignMotor", cmd: 4);
     }
 
     public void GoToAlignSequenceClick()
     {
-
+      App.Device.MainCommand("AlignMotor", cmd: 5);
     }
 
     public void FocusedBox(int num)
@@ -85,9 +105,6 @@ namespace Ei_Dimension.ViewModels
           break;
         case 2:
           App.SelectedTextBox = (this.GetType().GetProperty(nameof(LaserAlignMotor)), this, 0);
-          break;
-        case 3:
-          App.SelectedTextBox = (this.GetType().GetProperty(nameof(AutoAlign)), this, 0);
           break;
       }
     }

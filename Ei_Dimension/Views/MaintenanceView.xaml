@@ -67,6 +67,7 @@
                       IsChecked="False"
                       VerticalAlignment="Top"
                       HorizontalAlignment="Center"
+                      IsEnabled="{Binding LEDsEnabled}"
                       Command="{Binding LEDsButtonClickCommand}"/>
         </Border>
 
