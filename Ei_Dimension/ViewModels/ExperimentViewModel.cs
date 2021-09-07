@@ -211,6 +211,12 @@ namespace Ei_Dimension.ViewModels
       App.SetTerminationType(num);
     }
 
+    public void SetFixedVolumeButtonClick(ushort num)
+    {
+      App.Device.MainCommand("Set Property", code: 0xaf, parameter: num);
+      Volumes[0] = num.ToString();
+    }
+
     private void InitTables()
     {
       if(_currentTableSize == 96)

@@ -58,16 +58,22 @@ namespace Ei_Dimension.ViewModels
           MaintenanceViewModel.Instance.LEDsEnabled = true;
           break;
         case 1:
-          App.Device.MainCommand("Set Property", code: 0xc5, parameter: 1);
+          MaintenanceViewModel.Instance.LEDsToggleButtonState = true;
+          MaintenanceViewModel.Instance.LEDsButtonClick();
           MaintenanceViewModel.Instance.LEDsEnabled = false;
+          App.Device.MainCommand("Set Property", code: 0xc5, parameter: 1);
           break;
         case 2:
-          App.Device.MainCommand("Set Property", code: 0xc5, parameter: 2);
+          MaintenanceViewModel.Instance.LEDsToggleButtonState = true;
+          MaintenanceViewModel.Instance.LEDsButtonClick();
           MaintenanceViewModel.Instance.LEDsEnabled = false;
+          App.Device.MainCommand("Set Property", code: 0xc5, parameter: 2);
           break;
         case 3:
-          App.Device.MainCommand("Set Property", code: 0xc5, parameter: 3);
+          MaintenanceViewModel.Instance.LEDsToggleButtonState = true;
+          MaintenanceViewModel.Instance.LEDsButtonClick();
           MaintenanceViewModel.Instance.LEDsEnabled = false;
+          App.Device.MainCommand("Set Property", code: 0xc5, parameter: 3);
           break;
       }
       AutoAlignSelectorState = num;
