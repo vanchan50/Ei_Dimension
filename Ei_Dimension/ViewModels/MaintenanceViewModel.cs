@@ -43,15 +43,25 @@ namespace Ei_Dimension.ViewModels
 
     public void LEDsButtonClick()
     {
-      if(LEDsEnabled)
+      if (LEDsEnabled)
+      {
         LEDsToggleButtonState = !LEDsToggleButtonState;
+        var param = LEDsToggleButtonState ? 1 : 0;
+        App.Device.MainCommand("Set Property", code: 0x17, parameter: (ushort)param);
+        if (!LEDsToggleButtonState)
+        {
+          LEDSliderValue = 1170.0;
+          App.Device.MainCommand("Set Property", code: 0x97, parameter: 1170);
+        }
+      }
     }
 
     public void LEDSliderValueChanged()
     {
       if (LEDsEnabled)
       {
-
+        App.Device.MainCommand("Set Property", code: 0x97, parameter: (ushort)(double)LEDSliderValue);
+        App.Device.MainCommand("RefreshDac");
       }
     }
 

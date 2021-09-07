@@ -73,39 +73,50 @@
 
         <StackPanel>
           <StackPanel.Resources>
-            <Style x:Key="trackBarEditThumbStyle" TargetType="Thumb">
+            <Style x:Key="trackBarEditThumbStyle"
+                   TargetType="Thumb">
               <Setter Property="Template">
                 <Setter.Value>
                   <ControlTemplate>
-                    <Ellipse Width="40" Height="40" Fill="{StaticResource AppTextColor}" Stroke="{StaticResource AppBackground}" StrokeThickness="2"/>
+                    <Ellipse Width="40" Height="40"
+                             Fill="{StaticResource AppTextColor}"
+                             Stroke="{StaticResource AppBackground}"
+                             StrokeThickness="2"/>
                   </ControlTemplate>
                 </Setter.Value>
               </Setter>
             </Style>
-            <Style x:Key="nearTrackStyle" TargetType="RepeatButton">
+            <Style x:Key="nearTrackStyle"
+                   TargetType="RepeatButton">
               <Setter Property="Template">
                 <Setter.Value>
                   <ControlTemplate>
-                    <Border Background="{StaticResource AppTextColor}" Height="20"
-                                    VerticalAlignment="Center" Margin="5,0,-5,0"
-                                    CornerRadius="4" />
+                    <Border Background="{StaticResource AppTextColor}"
+                            Height="20"
+                            VerticalAlignment="Center"
+                            Margin="5,0,-5,0"
+                            CornerRadius="4"/>
                   </ControlTemplate>
                 </Setter.Value>
               </Setter>
             </Style>
-            <Style x:Key="farTrackStyle" TargetType="RepeatButton">
+            <Style x:Key="farTrackStyle"
+                   TargetType="RepeatButton">
               <Setter Property="Template">
                 <Setter.Value>
                   <ControlTemplate>
-                    <Border Background="{StaticResource PressedButtonBackground}" Height="20" VerticalAlignment="Center"
-                                    Margin="-5,0,5,0" CornerRadius="4" />
+                    <Border Background="{StaticResource PressedButtonBackground}"
+                            Height="20"
+                            VerticalAlignment="Center"
+                            Margin="-5,0,5,0"
+                            CornerRadius="4" />
                   </ControlTemplate>
                 </Setter.Value>
               </Setter>
             </Style>
           </StackPanel.Resources>
           <dxe:TrackBarEdit Margin="0,0,0,20" 
-                            Minimum="0" Maximum="100"
+                            Minimum="0" Maximum="4095"
                             Value="0"
                             Width="200" EditValue="{Binding LEDSliderValue}"
                             CornerRadius="4" TickPlacement="None"
@@ -130,23 +141,23 @@
                          Margin="0,0,0,6"/>
         <StackPanel Orientation="Horizontal">
           <TextBox  Height="36"
-                      HorizontalAlignment="Left"
-                      Width="80"
-                      Margin="10,0,10,3"
-                      Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding SanitizeSecondsContent[0]}">
+                    HorizontalAlignment="Left"
+                    Width="80"
+                    Margin="10,0,10,3"
+                    Style="{StaticResource InputFieldStyle}"
+                    Text="{Binding SanitizeSecondsContent[0]}">
             <dxmvvm:Interaction.Behaviors>
               <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="0"/>
             </dxmvvm:Interaction.Behaviors>
           </TextBox>
           <TextBlock Text="{lang:Loc Seconds}"
-                 FontFamily="{StaticResource AppTextFont}"
-                 FontSize="30"
-                 FontWeight="UltraBold"
-                 Foreground="{StaticResource AppTextColor}"
-                 HorizontalAlignment="Center"
-                 VerticalAlignment="Top"
-                 Margin="0,0,0,0"/>
+                     FontFamily="{StaticResource AppTextFont}"
+                     FontSize="30"
+                     FontWeight="UltraBold"
+                     Foreground="{StaticResource AppTextColor}"
+                     HorizontalAlignment="Center"
+                     VerticalAlignment="Top"
+                     Margin="0,0,0,0"/>
         </StackPanel>
         <TextBlock Text="{lang:Loc Language}"
                  FontFamily="{StaticResource AppTextFont}"

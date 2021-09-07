@@ -512,7 +512,7 @@ namespace Ei_Dimension
               }
             }
             break;
-          case "TempParameters":
+          case "ChannelsOffsetParameters":
             if (SelectedTextBox.index == 0)
             {
               if (int.TryParse(temp, out iRes))
