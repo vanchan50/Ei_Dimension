@@ -25,6 +25,9 @@ Display a tab related to work order execution where you touch a well
   and all that wells properties (read speed, sample volume, bead map, etc) are displayed,
   During execution, highlight well currently reading and currently aspirating, updating properties as wells are read
 
+
+When finished - delete Program.cs and set startub object as App in properties
+
 Questions:
 calibration statistics -what is it and where to put it
 confirm ExperimentVM ordercontrol row =1 col =0 and corresponding MainCommand parameter

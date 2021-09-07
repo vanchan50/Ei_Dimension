@@ -57,7 +57,7 @@
                           Height="88"
                           Width="120"
                           Content="{lang:Loc Motors_Poll_Step}"
-                          IsChecked="False"
+                          IsChecked="{Binding PollStepActive}"
                           Command="{Binding PollStepToggleButtonClickCommand}"/>
           </Border>
 

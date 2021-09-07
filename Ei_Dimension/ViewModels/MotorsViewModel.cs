@@ -23,6 +23,7 @@ namespace Ei_Dimension.ViewModels
     public virtual ObservableCollection<string> StepsParametersY { get; set; }
     public virtual ObservableCollection<string> StepsParametersZ { get; set; }
 
+    private (byte rowIndex, byte colIndex) _rowColIndex;
     private int _amountOfWells;
 
     protected MotorsViewModel()
@@ -57,11 +58,15 @@ namespace Ei_Dimension.ViewModels
       {
         WellRowButtonItems.Add(new DropDownButtonContents(Convert.ToChar('A' + i).ToString()));
       }
+      DropDownButtonContents.ResetIndex();
+
       WellColumnButtonItems = new ObservableCollection<DropDownButtonContents>();
       for (var i = 1; i < 13; i++)
       {
         WellColumnButtonItems.Add(new DropDownButtonContents(i.ToString()));
       }
+      DropDownButtonContents.ResetIndex();
+      _rowColIndex = (1, 1);
     }
 
     public static MotorsViewModel Create()
@@ -78,6 +83,8 @@ namespace Ei_Dimension.ViewModels
       WellColumnButtonItems.Clear();
       SelectedWellRow = "A";
       SelectedWellColumn = "1";
+      _rowColIndex = (1, 1);
+      //switch only changes dropdown contents
       switch (num)
       {
         case 96:
@@ -86,11 +93,13 @@ namespace Ei_Dimension.ViewModels
           {
             WellRowButtonItems.Add(new DropDownButtonContents(Convert.ToChar('A' + i).ToString()));
           }
+          DropDownButtonContents.ResetIndex();
           WellColumnButtonItems = new ObservableCollection<DropDownButtonContents>();
           for (var i = 1; i < 13; i++)
           {
             WellColumnButtonItems.Add(new DropDownButtonContents(i.ToString()));
           }
+          DropDownButtonContents.ResetIndex();
           break;
         case 384:
           WellRowButtonItems = new ObservableCollection<DropDownButtonContents> { new DropDownButtonContents("A", this) };
@@ -98,24 +107,45 @@ namespace Ei_Dimension.ViewModels
           {
             WellRowButtonItems.Add(new DropDownButtonContents(Convert.ToChar('A' + i).ToString()));
           }
+          DropDownButtonContents.ResetIndex();
           WellColumnButtonItems = new ObservableCollection<DropDownButtonContents>();
           for (var i = 1; i < 25; i++)
           {
             WellColumnButtonItems.Add(new DropDownButtonContents(i.ToString()));
           }
+          DropDownButtonContents.ResetIndex();
           break;
       }
+
+      var param = num == 96 ? 0 : 1;
+      App.Device.MainCommand("Set Property", code: 0xab, parameter: (ushort)param);
     }
 
     public void RunMotorButtonClick(string s)
     {
+      float fRes;
       switch (s)
       {
         case "x":
+          if (float.TryParse(ParametersX[0], out fRes))
+          {
+            var Cmd = ParametersX[1] == "Left" ? 1 : 2;
+            App.Device.MainCommand("MotorX", cmd: (byte)Cmd, fparameter: fRes);
+          }
           break;
         case "y":
+          if (float.TryParse(ParametersY[0], out fRes))
+          {
+            var Cmd = ParametersY[1] == "Back" ? 1 : 2;
+            App.Device.MainCommand("MotorY", cmd: (byte)Cmd, fparameter: fRes);
+          }
           break;
         case "z":
+          if (float.TryParse(ParametersZ[0], out fRes))
+          {
+            var Cmd = ParametersZ[1] == "Up" ? 1 : 2;
+            App.Device.MainCommand("MotorZ", cmd: (byte)Cmd, fparameter: fRes);
+          }
           break;
       }
     }
@@ -125,22 +155,31 @@ namespace Ei_Dimension.ViewModels
       switch (s)
       {
         case "x":
+          App.Device.MainCommand("MotorX");
           break;
         case "y":
+          App.Device.MainCommand("MotorY");
           break;
         case "z":
+          App.Device.MainCommand("MotorZ");
           break;
       }
     }
 
     public void GoToWellButtonClick()
     {
-
+      App.Device.MainCommand("Set Property", code: 0xad, parameter: (ushort)_rowColIndex.rowIndex);
+      App.Device.ReadingRow = _rowColIndex.rowIndex;
+      App.Device.MainCommand("Set Property", code: 0xae, parameter: (ushort)_rowColIndex.colIndex);
+      App.Device.ReadingCol = _rowColIndex.colIndex;
+      App.Device.MainCommand("Position Well Plate");
     }
 
     public void PollStepToggleButtonClick()
     {
       PollStepActive = !PollStepActive;
+      var param = PollStepActive ? 1 : 0;
+      App.Device.MainCommand("Set Property", code: 0x16, parameter: (ushort)param);
     }
 
     public void PollStepSelector(string s)
@@ -277,6 +316,8 @@ namespace Ei_Dimension.ViewModels
     public class DropDownButtonContents
     {
       public string Content { get; set; }
+      public byte Index { get; set; }
+      private static byte _nextIndex = 0;
       private static MotorsViewModel _vm;
       public DropDownButtonContents(string content, MotorsViewModel vm = null)
       {
@@ -285,6 +326,7 @@ namespace Ei_Dimension.ViewModels
           _vm = vm;
         }
         Content = content;
+        Index = _nextIndex++;
       }
 
       public void Click(int num)
@@ -293,11 +335,22 @@ namespace Ei_Dimension.ViewModels
         {
           case 1:
             _vm.SelectedWellRow = Content;
+            App.Device.MainCommand("Set Property", code: 0xad, parameter: (ushort)Index);
+            App.Device.ReadingRow = Index;
+            _vm._rowColIndex.rowIndex = Index;
             break;
           case 2:
             _vm.SelectedWellColumn = Content;
+            App.Device.MainCommand("Set Property", code: 0xae, parameter: (ushort)Index);
+            App.Device.ReadingCol = Index;
+            _vm._rowColIndex.colIndex = Index;
             break;
         }
+      }
+
+      public static void ResetIndex()
+      {
+        _nextIndex = 0;
       }
     }
   }

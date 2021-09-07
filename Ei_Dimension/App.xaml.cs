@@ -584,6 +584,207 @@ namespace Ei_Dimension
               }
             }
             break;
+          case "ParametersX":
+            if (SelectedTextBox.index == 2)
+            {
+              if (int.TryParse(temp, out iRes))
+              {
+                Device.MainCommand("Set Property", code: 0x53, parameter: (ushort)iRes);
+              }
+            }
+            if (SelectedTextBox.index == 3)
+            {
+              if (int.TryParse(temp, out iRes))
+              {
+                Device.MainCommand("Set Property", code: 0x51, parameter: (ushort)iRes);
+              }
+            }
+            if (SelectedTextBox.index == 4)
+            {
+              if (int.TryParse(temp, out iRes))
+              {
+                Device.MainCommand("Set Property", code: 0x52, parameter: (ushort)iRes);
+              }
+            }
+            if (SelectedTextBox.index == 6)
+            {
+              if (int.TryParse(temp, out iRes))
+              {
+                Device.MainCommand("Set Property", code: 0x90, parameter: (ushort)iRes);
+              }
+            }
+            break;
+          case "ParametersY":
+            if (SelectedTextBox.index == 2)
+            {
+              if (int.TryParse(temp, out iRes))
+              {
+                Device.MainCommand("Set Property", code: 0x63, parameter: (ushort)iRes);
+              }
+            }
+            if (SelectedTextBox.index == 3)
+            {
+              if (int.TryParse(temp, out iRes))
+              {
+                Device.MainCommand("Set Property", code: 0x61, parameter: (ushort)iRes);
+              }
+            }
+            if (SelectedTextBox.index == 4)
+            {
+              if (int.TryParse(temp, out iRes))
+              {
+                Device.MainCommand("Set Property", code: 0x62, parameter: (ushort)iRes);
+              }
+            }
+            if (SelectedTextBox.index == 6)
+            {
+              if (int.TryParse(temp, out iRes))
+              {
+                Device.MainCommand("Set Property", code: 0x91, parameter: (ushort)iRes);
+              }
+            }
+            break;
+          case "ParametersZ":
+            if (SelectedTextBox.index == 2)
+            {
+              if (int.TryParse(temp, out iRes))
+              {
+                Device.MainCommand("Set Property", code: 0x43, parameter: (ushort)iRes);
+              }
+            }
+            if (SelectedTextBox.index == 3)
+            {
+              if (int.TryParse(temp, out iRes))
+              {
+                Device.MainCommand("Set Property", code: 0x41, parameter: (ushort)iRes);
+              }
+            }
+            if (SelectedTextBox.index == 4)
+            {
+              if (int.TryParse(temp, out iRes))
+              {
+                Device.MainCommand("Set Property", code: 0x42, parameter: (ushort)iRes);
+              }
+            }
+            if (SelectedTextBox.index == 6)
+            {
+              if (int.TryParse(temp, out iRes))
+              {
+                Device.MainCommand("Set Property", code: 0x92, parameter: (ushort)iRes);
+              }
+            }
+            break;
+          case "StepsParametersX":
+            if (SelectedTextBox.index == 0)
+            {
+              if (float.TryParse(temp, out fRes))
+              {
+                Device.MainCommand("Set FProperty", code: 0x58, fparameter: fRes);
+              }
+            }
+            if (SelectedTextBox.index == 1)
+            {
+              if (float.TryParse(temp, out fRes))
+              {
+                Device.MainCommand("Set FProperty", code: 0x5a, fparameter: fRes);
+              }
+            }
+            if (SelectedTextBox.index == 2)
+            {
+              if (float.TryParse(temp, out fRes))
+              {
+                Device.MainCommand("Set FProperty", code: 0x5c, fparameter: fRes);
+              }
+            }
+            if (SelectedTextBox.index == 3)
+            {
+              if (float.TryParse(temp, out fRes))
+              {
+                Device.MainCommand("Set FProperty", code: 0x5e, fparameter: fRes);
+              }
+            }
+            if (SelectedTextBox.index == 4)
+            {
+              if (float.TryParse(temp, out fRes))
+              {
+                Device.MainCommand("Set FProperty", code: 0x56, fparameter: fRes);
+              }
+            }
+            break;
+          case "StepsParametersY":
+            if (SelectedTextBox.index == 0)
+            {
+              if (float.TryParse(temp, out fRes))
+              {
+                Device.MainCommand("Set FProperty", code: 0x68, fparameter: fRes);
+              }
+            }
+            if (SelectedTextBox.index == 1)
+            {
+              if (float.TryParse(temp, out fRes))
+              {
+                Device.MainCommand("Set FProperty", code: 0x6a, fparameter: fRes);
+              }
+            }
+            if (SelectedTextBox.index == 2)
+            {
+              if (float.TryParse(temp, out fRes))
+              {
+                Device.MainCommand("Set FProperty", code: 0x6c, fparameter: fRes);
+              }
+            }
+            if (SelectedTextBox.index == 3)
+            {
+              if (float.TryParse(temp, out fRes))
+              {
+                Device.MainCommand("Set FProperty", code: 0x6e, fparameter: fRes);
+              }
+            }
+            if (SelectedTextBox.index == 4)
+            {
+              if (float.TryParse(temp, out fRes))
+              {
+                Device.MainCommand("Set FProperty", code: 0x66, fparameter: fRes);
+              }
+            }
+            break;
+          case "StepsParametersZ":
+            if (SelectedTextBox.index == 0)
+            {
+              if (float.TryParse(temp, out fRes))
+              {
+                Device.MainCommand("Set FProperty", code: 0x48, fparameter: fRes);
+              }
+            }
+            if (SelectedTextBox.index == 1)
+            {
+              if (float.TryParse(temp, out fRes))
+              {
+                Device.MainCommand("Set FProperty", code: 0x4a, fparameter: fRes);
+              }
+            }
+            if (SelectedTextBox.index == 2)
+            {
+              if (float.TryParse(temp, out fRes))
+              {
+                Device.MainCommand("Set FProperty", code: 0x4c, fparameter: fRes);
+              }
+            }
+            if (SelectedTextBox.index == 3)
+            {
+              if (float.TryParse(temp, out fRes))
+              {
+                Device.MainCommand("Set FProperty", code: 0x4e, fparameter: fRes);
+              }
+            }
+            if (SelectedTextBox.index == 4)
+            {
+              if (float.TryParse(temp, out fRes))
+              {
+                Device.MainCommand("Set FProperty", code: 0x46, fparameter: fRes);
+              }
+            }
+            break;
         }
         Settings.Default.Save();
       }
