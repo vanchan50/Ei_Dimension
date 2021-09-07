@@ -140,10 +140,21 @@ namespace Ei_Dimension
       if (ComponentsVM != null)
       {
         ComponentsVM.InputSelectorState.Clear();
-        ComponentsVM.InputSelectorState.Add(RM.GetString(nameof(Language.Resources.Components_To_Pickup),
-          curCulture));
-        ComponentsVM.InputSelectorState.Add(RM.GetString(nameof(Language.Resources.Components_To_Cuvet),
-          curCulture));
+        if (ComponentsVM.IInputSelectorState == 0)
+        {
+          ComponentsVM.InputSelectorState.Add(RM.GetString(nameof(Language.Resources.Components_To_Pickup),
+            curCulture));
+          ComponentsVM.InputSelectorState.Add(RM.GetString(nameof(Language.Resources.Components_To_Cuvet),
+            curCulture));
+        }
+        else
+        {
+          ComponentsVM.InputSelectorState.Add(RM.GetString(nameof(Language.Resources.Components_To_Cuvet),
+            curCulture));
+          ComponentsVM.InputSelectorState.Add(RM.GetString(nameof(Language.Resources.Components_To_Pickup),
+            curCulture));
+        }
+
         ComponentsVM.SyringeControlItems[0].Content = RM.GetString(nameof(Language.Resources.Dropdown_Halt), curCulture);
         ComponentsVM.SyringeControlItems[1].Content = RM.GetString(nameof(Language.Resources.Dropdown_Move_Absolute), curCulture);
         ComponentsVM.SyringeControlItems[2].Content = RM.GetString(nameof(Language.Resources.Dropdown_Pickup), curCulture);
@@ -199,12 +210,15 @@ namespace Ei_Dimension
         if (input == "")
         {
           if(temp.Length > 0)
-            ((ObservableCollection<string>)SelectedTextBox.prop.GetValue(SelectedTextBox.VM))[SelectedTextBox.index] = temp = temp.Remove(temp.Length - 1, 1);
+            ((ObservableCollection<string>)SelectedTextBox.prop.GetValue(SelectedTextBox.VM))[SelectedTextBox.index] = temp =
+              temp.Remove(temp.Length - 1, 1);
         }
         else
           ((ObservableCollection<string>)SelectedTextBox.prop.GetValue(SelectedTextBox.VM))[SelectedTextBox.index] = temp += input;
         float fRes;
         int iRes;
+        ushort usRes;
+        byte bRes;
         switch (SelectedTextBox.prop.Name)
         {
           case "CompensationPercentageContent":
@@ -782,6 +796,22 @@ namespace Ei_Dimension
               if (float.TryParse(temp, out fRes))
               {
                 Device.MainCommand("Set FProperty", code: 0x46, fparameter: fRes);
+              }
+            }
+            break;
+          case "IdexTextBoxInputs":
+            if (SelectedTextBox.index == 0)
+            {
+              if (byte.TryParse(temp, out bRes))
+              {
+                Device.IdexPos = bRes;
+              }
+            }
+            if (SelectedTextBox.index == 1)
+            {
+              if (ushort.TryParse(temp, out usRes))
+              {
+                Device.IdexSteps = usRes;
               }
             }
             break;

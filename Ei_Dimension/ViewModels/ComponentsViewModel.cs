@@ -9,6 +9,7 @@ namespace Ei_Dimension.ViewModels
   public class ComponentsViewModel
   {
     public virtual ObservableCollection<string> InputSelectorState { get; set; }
+    public int IInputSelectorState { get; private set; }
 
     public virtual bool[] ValvesStates { get; set; }
 
@@ -38,15 +39,18 @@ namespace Ei_Dimension.ViewModels
 
     public static ComponentsViewModel Instance { get; private set; }
 
+    private int _iGetPositionToggleButtonState;
+    private byte[] _syringeControlStates;
+
     protected ComponentsViewModel()
     {
-      ValvesStates = new bool[4] { false,false,false,false };
+      ValvesStates = new bool[4] { false, false, false, false };
       InputSelectorState = new ObservableCollection<string>();
       InputSelectorState.Add(Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Components_To_Pickup),
         Language.TranslationSource.Instance.CurrentCulture));
       InputSelectorState.Add(Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Components_To_Cuvet),
         Language.TranslationSource.Instance.CurrentCulture));
-
+      IInputSelectorState = 0;
 
       LaserRedActive = false;
       LaserGreenActive = false;
@@ -58,7 +62,7 @@ namespace Ei_Dimension.ViewModels
       var RM = Language.Resources.ResourceManager;
       var curCulture = Language.TranslationSource.Instance.CurrentCulture;
       SyringeControlItems = new ObservableCollection<DropDownButtonContents>
-      { 
+      {
         new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_Halt), curCulture), this),
         new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_Move_Absolute), curCulture), this),
         new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_Pickup), curCulture), this),
@@ -75,6 +79,7 @@ namespace Ei_Dimension.ViewModels
       SelectedSheathContent = SyringeControlItems[0].Content;
       SelectedSampleAContent = SyringeControlItems[0].Content;
       SelectedSampleBContent = SyringeControlItems[0].Content;
+      _syringeControlStates = new byte[]{ 0, 0, 0 };
 
       SyringeControlSheathValue = new ObservableCollection<string> {""};
       SyringeControlSampleAValue = new ObservableCollection<string> {""};
@@ -82,7 +87,7 @@ namespace Ei_Dimension.ViewModels
 
       GetPositionToggleButtonState = RM.GetString(nameof(Language.Resources.OFF),
         Language.TranslationSource.Instance.CurrentCulture);
-
+      _iGetPositionToggleButtonState = 0;
       GetPositionTextBoxInputs = new ObservableCollection<string> {"", "", ""};
 
       SamplingActive = false;
@@ -103,98 +108,133 @@ namespace Ei_Dimension.ViewModels
       var temp = InputSelectorState[0];
       InputSelectorState[0] = InputSelectorState[1];
       InputSelectorState[1] = temp;
+      IInputSelectorState = IInputSelectorState == 0 ? 1 : 0;
+      App.Device.MainCommand("Set Property", code: 0x18, parameter: (ushort)IInputSelectorState);
     }
 
     public void ValvesButtonClick(int num)
     {
+      int param = 0;
+      byte Code = 0x00;
       switch (num)
       {
         case 1:
           ValvesStates[0] = !ValvesStates[0];
+          param = ValvesStates[0] ? 1 : 0;
+          Code = 0x13;
           break;
         case 2:
           ValvesStates[1] = !ValvesStates[1];
+          param = ValvesStates[0] ? 1 : 0;
+          Code = 0x12;
           break;
         case 3:
           ValvesStates[2] = !ValvesStates[2];
+          param = ValvesStates[0] ? 1 : 0;
+          Code = 0x10;
           break;
         case 4:
           ValvesStates[3] = !ValvesStates[3];
+          param = ValvesStates[0] ? 1 : 0;
+          Code = 0x11;
           break;
       }
+      App.Device.MainCommand("Set Property", code: Code, parameter: (ushort)param);
     }
 
     public void LasersButtonClick(int num)
     {
+      ushort param = 0;
       switch (num)
       {
         case 1:
           LaserRedActive = !LaserRedActive;
+          param = 0x01;
           break;
         case 2:
           LaserGreenActive = !LaserGreenActive;
+          param = 0x02;
           break;
         case 3:
           LaserVioletActive = !LaserVioletActive;
+          param = 0x04;
           break;
       }
+      App.Device.MainCommand("Set Property", code: 0xc0, parameter: param);
     }
 
     public void SheathRunButtonClick()
     {
-
+      if (ushort.TryParse(SyringeControlSheathValue[0], out ushort usRes))
+        App.Device.MainCommand("Sheath", cmd: _syringeControlStates[0], parameter: usRes);
     }
 
     public void SampleARunButtonClick()
     {
-
+      if (ushort.TryParse(SyringeControlSampleAValue[0], out ushort usRes))
+        App.Device.MainCommand("SampleA", cmd: _syringeControlStates[1], parameter: usRes);
     }
 
     public void SampleBRunButtonClick()
     {
-
+      if (ushort.TryParse(SyringeControlSampleBValue[0], out ushort usRes))
+        App.Device.MainCommand("SampleB", cmd: _syringeControlStates[2], parameter: usRes);
     }
 
     public void GetPositionToggleButtonClick()
     {
       var RM = Language.Resources.ResourceManager;
       var curCulture = Language.TranslationSource.Instance.CurrentCulture;
-      if ( GetPositionToggleButtonState == RM.GetString(nameof(Language.Resources.OFF), curCulture))
+      if (GetPositionToggleButtonState == RM.GetString(nameof(Language.Resources.OFF), curCulture))
       {
         GetPositionToggleButtonState = RM.GetString(nameof(Language.Resources.ON), curCulture);
+        _iGetPositionToggleButtonState = 1;
       }
-      else if( GetPositionToggleButtonState == RM.GetString(nameof(Language.Resources.ON), curCulture))
+      else if (GetPositionToggleButtonState == RM.GetString(nameof(Language.Resources.ON), curCulture))
       {
         GetPositionToggleButtonState = RM.GetString(nameof(Language.Resources.OFF), curCulture);
+        _iGetPositionToggleButtonState = 0;
       }
+      App.Device.MainCommand("Set Property", code: 0x15, parameter: (ushort)_iGetPositionToggleButtonState);
     }
 
     public void GetPositionButtonsClick(int num)
     {
+      ushort param = 0;
       switch (num)
       {
         case 1:
+          param = 0;
           break;
         case 2:
+          param = 1;
           break;
         case 3:
+          param = 2;
           break;
       }
+      App.Device.MainCommand("Get FProperty", code: 0x14, parameter: param);
     }
 
     public void SamplingToggleButtonClick()
     {
       SamplingActive = !SamplingActive;
+      if(SamplingActive)
+        App.Device.MainCommand("Start Sampling");
+      else
+        App.Device.MainCommand("End Sampling");
     }
 
     public void SingleStepDebugToggleButtonClick()
     {
       SingleStepDebugActive = !SingleStepDebugActive;
+      var param = SingleStepDebugActive ? 1 : 0;
+      App.Device.MainCommand("Set Property", code: 0xf7, parameter: (ushort)param);
     }
 
     public void FlushButtonClick()
     {
-
+      App.Device.MainCommand("Set Property", code: 0xd9);
     }
 
     public void StartupButtonClick()
@@ -204,17 +244,18 @@ namespace Ei_Dimension.ViewModels
 
     public void MoveIdexButtonClick()
     {
-
+      App.Device.MainCommand("Idex", cmd: App.Device.IdexPos, parameter: App.Device.IdexSteps, fparameter: App.Device.IdexDir);
     }
 
     public void CWDirectionToggleButtonClick()
     {
       CWDirectionActive = !CWDirectionActive;
+      App.Device.IdexDir = CWDirectionActive ? 1 : 0;
     }
 
     public void IdexPositionButtonClick()
     {
-
+      App.Device.MainCommand("Get Property", code: 0x04);
     }
 
     public void FocusedBox(int num)
@@ -265,7 +306,10 @@ namespace Ei_Dimension.ViewModels
         set {
           _content = value;
           OnPropertyChanged();
-        } }
+        }
+      }
+      public byte Index { get; set; }
+      private static byte _nextIndex = 0;
       private string _content;
       private static ComponentsViewModel _vm;
       public DropDownButtonContents(string content, ComponentsViewModel vm = null)
@@ -275,6 +319,7 @@ namespace Ei_Dimension.ViewModels
           _vm = vm;
         }
         Content = content;
+        Index = _nextIndex++;
       }
 
       public void Click(int num)
@@ -283,14 +328,22 @@ namespace Ei_Dimension.ViewModels
         {
           case 1:
             _vm.SelectedSheathContent = Content;
+            _vm._syringeControlStates[0] = Index;
             break;
           case 2:
             _vm.SelectedSampleAContent = Content;
+            _vm._syringeControlStates[1] = Index;
             break;
           case 3:
             _vm.SelectedSampleBContent = Content;
+            _vm._syringeControlStates[2] = Index;
             break;
         }
+      }
+
+      public static void ResetIndex()
+      {
+        _nextIndex = 0;
       }
     }
   }

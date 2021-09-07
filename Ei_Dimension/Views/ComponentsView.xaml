@@ -352,7 +352,7 @@
                                 FontFamily="{StaticResource AppTextFont}"
                                 Foreground="{StaticResource AppTextColor}"
                                 Content="{Binding SelectedSheathContent}"  
-                                Command="{Binding SheathRunButtonClickCommand}" Grid.ColumnSpan="2">
+                                Command="{Binding SheathRunButtonClickCommand}">
                   <dxb:PopupMenu ItemLinksSource="{Binding SyringeControlItems}">
                     <dxb:PopupMenu.ItemTemplate>
                       <DataTemplate>
