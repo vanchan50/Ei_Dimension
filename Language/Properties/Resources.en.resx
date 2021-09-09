@@ -574,8 +574,7 @@ Events</value>
     <value>Reporter</value>
   </data>
   <data name="Ribbon_Acquire" xml:space="preserve">
-    <value>Acquire
-Sample</value>
+    <value>Acquire Sample</value>
   </data>
   <data name="Ribbon_Analysis" xml:space="preserve">
     <value>Data Analysis</value>

@@ -785,47 +785,38 @@
                     HorizontalAlignment="Center"
                     Width="192"
                     Margin="0,3,0,20">
-          <dx:SimpleButton Content="25"
-                           Command="{Binding SetFixedVolumeButtonClickCommand}"
-                           Height="50" Width="60"
-                           HorizontalAlignment="Center"
-                           VerticalAlignment="Center"
-                           FontFamily="{StaticResource AppTextFont}"
-                           FontSize="22"
-                           FontWeight="UltraBold"
-                           Foreground="{StaticResource AppTextColor}"
-                           Margin="3,0,3,0">
-            <dx:SimpleButton.CommandParameter>
+          <Button Content="25"
+                  Command="{Binding SetFixedVolumeButtonClickCommand}"
+                  Style="{StaticResource ButtonStyle}"
+                  Height="50" Width="60"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center"
+                  Margin="3,0,3,0">
+            <Button.CommandParameter>
               <System:UInt16>25</System:UInt16>
-            </dx:SimpleButton.CommandParameter>
-          </dx:SimpleButton>
-          <dx:SimpleButton Content="50"
-                           Command="{Binding SetFixedVolumeButtonClickCommand}"
-                           Height="50" Width="60"
-                           HorizontalAlignment="Center"
-                           VerticalAlignment="Center"
-                           FontFamily="{StaticResource AppTextFont}"
-                           FontSize="22"
-                           FontWeight="UltraBold"
-                           Foreground="{StaticResource AppTextColor}"
-                           Margin="0,0,3,0">
-            <dx:SimpleButton.CommandParameter>
+            </Button.CommandParameter>
+          </Button>
+          <Button Content="50"
+                  Command="{Binding SetFixedVolumeButtonClickCommand}"
+                  Style="{StaticResource ButtonStyle}"
+                  Height="50" Width="60"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center"
+                  Margin="0,0,3,0">
+            <Button.CommandParameter>
               <System:UInt16>50</System:UInt16>
-            </dx:SimpleButton.CommandParameter>
-          </dx:SimpleButton>
-          <dx:SimpleButton Content="100"
-                           Command="{Binding SetFixedVolumeButtonClickCommand}"
-                           Height="50" Width="60"
-                           HorizontalAlignment="Center"
-                           VerticalAlignment="Center"
-                           FontFamily="{StaticResource AppTextFont}"
-                           FontSize="22"
-                           FontWeight="UltraBold"
-                           Foreground="{StaticResource AppTextColor}">
-            <dx:SimpleButton.CommandParameter>
+            </Button.CommandParameter>
+          </Button>
+          <Button Content="100"
+                  Command="{Binding SetFixedVolumeButtonClickCommand}"
+                  Style="{StaticResource ButtonStyle}"
+                  Height="50" Width="60"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center">
+            <Button.CommandParameter>
               <System:UInt16>100</System:UInt16>
-            </dx:SimpleButton.CommandParameter>
-          </dx:SimpleButton>
+            </Button.CommandParameter>
+          </Button>
         </StackPanel>
         <TextBlock Text="{lang:Loc Experiment_Wash_Vol}"
                    FontFamily="{StaticResource AppTextFont}"

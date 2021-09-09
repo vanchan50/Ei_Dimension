@@ -23,10 +23,5 @@ namespace Ei_Dimension.Views
     {
       InitializeComponent();
     }
-
-    private void SimpleButton_Click(object sender, RoutedEventArgs e)
-    {
-
-    }
   }
 }

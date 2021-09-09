@@ -109,11 +109,8 @@
                  VerticalAlignment="Top"
                  Margin="0,0,0,6"/>
 
-        <Border BorderThickness="2"
-                  BorderBrush="{StaticResource AppTextColor}"
-                  Margin="0,0,0,13"
-                  CornerRadius="5"
-                  Width="150">
+        <Border Margin="0,0,0,13"
+                Width="150">
           <StackPanel VerticalAlignment="Stretch">
 
             <ToggleButton Style="{StaticResource ToggleButtonThemeStyle}"
@@ -187,7 +184,6 @@
                     CornerRadius="5"
                     Width="150">
               <Grid>
-
                 <ToggleButton Style="{StaticResource ToggleButtonThemeStyle}"
                               Height="50"
                               Width="150"
@@ -209,7 +205,7 @@
                            VerticalAlignment="Bottom"
                            Margin="10,0,0,7"/>
 
-                <TextBox Height="36"
+                <TextBox Height="36" Width="55"
                          Margin="80,53,0,3"
                          HorizontalAlignment="Left"
                          VerticalAlignment="Bottom"
@@ -249,7 +245,7 @@
                            VerticalAlignment="Bottom"
                            Margin="10,0,0,7"/>
 
-                <TextBox Height="36"
+                <TextBox Height="36" Width="55"
                          Margin="80,53,0,3"
                          HorizontalAlignment="Left"
                          VerticalAlignment="Bottom"
@@ -289,7 +285,7 @@
                            VerticalAlignment="Bottom"
                            Margin="10,0,0,7"/>
 
-                <TextBox Height="36"
+                <TextBox Height="36" Width="55"
                          Margin="80,53,0,3"
                          HorizontalAlignment="Left"
                          VerticalAlignment="Bottom"
@@ -331,11 +327,6 @@
                     CornerRadius="5"
                     Height="90">
               <Grid>
-                <Grid.ColumnDefinitions>
-                  <ColumnDefinition Width="119*"/>
-                  <ColumnDefinition Width="39*"/>
-                </Grid.ColumnDefinitions>
-
                 <TextBlock Text="{lang:Loc Components_Sheath}"
                    FontFamily="{StaticResource AppTextFont}"
                    FontSize="20"
@@ -343,7 +334,7 @@
                    Foreground="{StaticResource AppTextColor}"
                    VerticalAlignment="Top"
                    HorizontalAlignment="Center"
-                   Margin="135,5,36,0"/>
+                   Margin="20,5,0,0"/>
                 <dx:SplitButton Width="240"
                                 Height="50"
                                 FontSize="25"
@@ -372,14 +363,13 @@
                    Foreground="{StaticResource AppTextColor}"
                    VerticalAlignment="Bottom"
                    HorizontalAlignment="Left"
-                   Margin="9,0,0,36" Grid.Column="1"/>
-                <TextBox Height="34"
-                         Margin="7,0,5,2"
+                   Margin="247,0,0,36"/>
+                <TextBox Height="34" Width="65"
+                         Margin="245,0,5,2"
                          HorizontalAlignment="Left"
                          VerticalAlignment="Bottom"
                          Style="{StaticResource InputFieldStyle}"
-                         Text="{Binding SyringeControlSheathValue[0]}"
-                         Grid.Column="1">
+                         Text="{Binding SyringeControlSheathValue[0]}">
                   <dxmvvm:Interaction.Behaviors>
                     <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="5"/>
                   </dxmvvm:Interaction.Behaviors>
@@ -430,7 +420,7 @@
                    VerticalAlignment="Bottom"
                    HorizontalAlignment="Left"
                    Margin="247,0,0,36"/>
-                <TextBox Height="34"
+                <TextBox Height="34" Width="65"
                          Margin="245,0,5,2"
                          HorizontalAlignment="Left"
                          VerticalAlignment="Bottom"
@@ -486,7 +476,7 @@
                    VerticalAlignment="Bottom"
                    HorizontalAlignment="Left"
                    Margin="247,0,0,36"/>
-                <TextBox Height="34"
+                <TextBox Height="34" Width="65"
                          Margin="245,0,5,2"
                          HorizontalAlignment="Left"
                          VerticalAlignment="Bottom"
@@ -512,11 +502,8 @@
       <Grid>
         <StackPanel HorizontalAlignment="Left"
                     Margin="0,0,0,0">
-          <Border BorderThickness="2"
-                  BorderBrush="{StaticResource AppTextColor}"
-                  CornerRadius="5"
-                  Width="96">
-            <ToggleButton Style="{StaticResource ToggleButtonThemeStyle}"
+          
+          <ToggleButton Style="{StaticResource ToggleButtonThemeStyle}"
                         Height="50"
                         Width="100"
                         Content="{Binding GetPositionToggleButtonState}"
@@ -525,54 +512,43 @@
                         HorizontalAlignment="Center"
                         Command="{Binding GetPositionToggleButtonClickCommand}"/>
 
-          </Border>
-
-          <dx:SimpleButton Content="{lang:Loc Components_Sheath}"
-                           Command="{Binding GetPositionButtonsClickCommand}"
-                           Height="50" Width="100"
-                           HorizontalAlignment="Center"
-                           VerticalAlignment="Center"
-                           FontFamily="{StaticResource AppTextFont}"
-                           FontSize="16"
-                           FontWeight="UltraBold"
-                           Foreground="{StaticResource AppTextColor}"
-                           Margin="0,3,0,0">
-            <dx:SimpleButton.CommandParameter>
+          <Button Content="{lang:Loc Components_Sheath}"
+                  Style="{StaticResource ButtonStyle}"
+                  Command="{Binding GetPositionButtonsClickCommand}"
+                  Height="50" Width="100"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center"
+                  Margin="0,3,0,0">
+            <Button.CommandParameter>
               <System:Int32>1</System:Int32>
-            </dx:SimpleButton.CommandParameter>
-          </dx:SimpleButton>
-          <dx:SimpleButton Content="{lang:Loc Sample_A}"
-                           Command="{Binding GetPositionButtonsClickCommand}"
-                           Height="50" Width="100"
-                           HorizontalAlignment="Center"
-                           VerticalAlignment="Center"
-                           FontFamily="{StaticResource AppTextFont}"
-                           FontSize="16"
-                           FontWeight="UltraBold"
-                           Foreground="{StaticResource AppTextColor}"
-                           Margin="0,3,0,0">
-            <dx:SimpleButton.CommandParameter>
+            </Button.CommandParameter>
+          </Button>
+          <Button Content="{lang:Loc Sample_A}"
+                  Style="{StaticResource ButtonStyle}"
+                  Command="{Binding GetPositionButtonsClickCommand}"
+                  Height="50" Width="100"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center"
+                  Margin="0,3,0,0">
+            <Button.CommandParameter>
               <System:Int32>2</System:Int32>
-            </dx:SimpleButton.CommandParameter>
-          </dx:SimpleButton>
-          <dx:SimpleButton Content="{lang:Loc Sample_B}"
-                           Command="{Binding GetPositionButtonsClickCommand}"
-                           Height="50" Width="100"
-                           HorizontalAlignment="Center"
-                           VerticalAlignment="Center"
-                           FontFamily="{StaticResource AppTextFont}"
-                           FontSize="16"
-                           FontWeight="UltraBold"
-                           Foreground="{StaticResource AppTextColor}"
-                           Margin="0,3,0,0">
-            <dx:SimpleButton.CommandParameter>
+            </Button.CommandParameter>
+          </Button>
+          <Button Content="{lang:Loc Sample_B}"
+                  Style="{StaticResource ButtonStyle}"
+                  Command="{Binding GetPositionButtonsClickCommand}"
+                  Height="50" Width="100"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center"
+                  Margin="0,3,0,0">
+            <Button.CommandParameter>
               <System:Int32>3</System:Int32>
-            </dx:SimpleButton.CommandParameter>
-          </dx:SimpleButton>
+            </Button.CommandParameter>
+          </Button>
         </StackPanel>
 
         <StackPanel HorizontalAlignment="Left"
-                    Margin="110,0,0,13">
+                    Margin="110,-6,0,0">
           <TextBlock Text="{lang:Loc Components_Get_Pos}"
                      FontFamily="{StaticResource AppTextFont}"
                      FontSize="36"
@@ -581,38 +557,40 @@
                      HorizontalAlignment="Center"
                      VerticalAlignment="Top"
                      Margin="0,5,0,6"/>
-          <TextBox Height="36"
-                   Margin="0,10,0,8"
+          <Border Background="{StaticResource RibbonBackgroundActive}">
+            <StackPanel>
+              <TextBox Height="36" Width="190"
+                   Margin="8,8,8,0"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Bottom"
                    Style="{StaticResource InputFieldStyle}"
                    Text="{Binding GetPositionTextBoxInputs[0]}">
-            <dxmvvm:Interaction.Behaviors>
-              <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="8"/>
-            </dxmvvm:Interaction.Behaviors>
-          </TextBox>
-          <TextBox Height="36"
-                   Margin="0,8,0,8"
+                <dxmvvm:Interaction.Behaviors>
+                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="8"/>
+                </dxmvvm:Interaction.Behaviors>
+              </TextBox>
+              <TextBox Height="36" Width="190"
+                   Margin="8,18,8,0"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Bottom"
                    Style="{StaticResource InputFieldStyle}"
                    Text="{Binding GetPositionTextBoxInputs[1]}">
-            <dxmvvm:Interaction.Behaviors>
-              <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="9"/>
-            </dxmvvm:Interaction.Behaviors>
-          </TextBox>
-          <TextBox Height="36"
-                   Margin="0,6,0,0"
+                <dxmvvm:Interaction.Behaviors>
+                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="9"/>
+                </dxmvvm:Interaction.Behaviors>
+              </TextBox>
+              <TextBox Height="36" Width="190"
+                   Margin="8,18,8,8"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Bottom"
                    Style="{StaticResource InputFieldStyle}"
                    Text="{Binding GetPositionTextBoxInputs[2]}">
-            <dxmvvm:Interaction.Behaviors>
-              <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="10"/>
-            </dxmvvm:Interaction.Behaviors>
-          </TextBox>
-
-
+                <dxmvvm:Interaction.Behaviors>
+                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="10"/>
+                </dxmvvm:Interaction.Behaviors>
+              </TextBox>
+            </StackPanel>
+          </Border>
         </StackPanel>
       </Grid>
     </Border>
@@ -620,55 +598,35 @@
     <Border HorizontalAlignment="Left"
             Margin="580,451,0,0">
       <StackPanel>
-        <Border BorderThickness="2"
-                  BorderBrush="{StaticResource AppTextColor}"
-                  CornerRadius="5"
-                  Width="126"
-                  Margin="0,0,0,3">
-          <ToggleButton Style="{StaticResource ToggleButtonThemeStyle}"
-                      Height="50"
-                      Width="130"
+        <ToggleButton Style="{StaticResource ToggleButtonThemeStyle}"
+                      Height="50" Width="130"
+                      Margin="0,0,0,3"
                       Content="{lang:Loc Components_Sampling_ON}"
                       IsChecked="False"
-                      VerticalAlignment="Top"
-                      HorizontalAlignment="Center"
+                      VerticalAlignment="Top" HorizontalAlignment="Center"
                       Command="{Binding SamplingToggleButtonClickCommand}"/>
-        </Border>
 
-        <Border BorderThickness="2"
-                  BorderBrush="{StaticResource AppTextColor}"
-                  CornerRadius="5"
-                  Width="126"
-                  Margin="0,0,0,3">
-          <ToggleButton Style="{StaticResource ToggleButtonThemeStyle}"
-                      Height="50"
-                      Width="130"
+        <ToggleButton Style="{StaticResource ToggleButtonThemeStyle}"
+                      Height="50" Width="130"
+                      Margin="0,0,0,3"
                       Content="{lang:Loc Components_Singl_Step_Deb}"
                       IsChecked="False"
-                      VerticalAlignment="Top"
-                      HorizontalAlignment="Center"
+                      VerticalAlignment="Top" HorizontalAlignment="Center"
                       Command="{Binding SingleStepDebugToggleButtonClickCommand}"/>
-        </Border>
 
-        <dx:SimpleButton Content="{lang:Loc Components_Flush}"
-                         Command="{Binding FlushButtonClickCommand}"
-                         Height="50" Width="130"
-                         HorizontalAlignment="Center"
-                         VerticalAlignment="Center"
-                         FontFamily="{StaticResource AppTextFont}"
-                         FontSize="16"
-                         FontWeight="UltraBold"
-                         Foreground="{StaticResource AppTextColor}"
-                         Margin="0,0,0,3"/>
-        <dx:SimpleButton Content="{lang:Loc Components_Startup}"
-                         Command="{Binding StartupButtonClickCommand}"
-                         Height="50" Width="130"
-                         HorizontalAlignment="Center"
-                         VerticalAlignment="Center"
-                         FontFamily="{StaticResource AppTextFont}"
-                         FontSize="16"
-                         FontWeight="UltraBold"
-                         Foreground="{StaticResource AppTextColor}"/>
+        <Button Content="{lang:Loc Components_Flush}"
+                Style="{StaticResource ButtonStyle}"
+                Command="{Binding FlushButtonClickCommand}"
+                Height="50" Width="130"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Margin="0,0,0,3"/>
+        <Button Content="{lang:Loc Components_Startup}"
+                Style="{StaticResource ButtonStyle}"
+                Command="{Binding StartupButtonClickCommand}"
+                Height="50" Width="130"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"/>
       </StackPanel>
     </Border>
 
@@ -678,16 +636,13 @@
       <Grid>
         <StackPanel HorizontalAlignment="Left">
 
-          <dx:SimpleButton Content="{lang:Loc Components_Move_Idex}"
-                           Command="{Binding MoveIdexButtonClickCommand}"
-                           Height="50" Width="120"
-                           HorizontalAlignment="Center"
-                           VerticalAlignment="Center"
-                           FontFamily="{StaticResource AppTextFont}"
-                           FontSize="16"
-                           FontWeight="UltraBold"
-                           Foreground="{StaticResource AppTextColor}"
-                           Margin="0,3,0,0"/>
+          <Button Content="{lang:Loc Components_Move_Idex}"
+                  Style="{StaticResource ButtonStyle}"
+                  Command="{Binding MoveIdexButtonClickCommand}"
+                  Height="50" Width="120"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center"
+                  Margin="0,3,0,0"/>
           <TextBox Height="36"
                    Width="120"
                    HorizontalAlignment="Right"
@@ -708,32 +663,24 @@
               <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="1"/>
             </dxmvvm:Interaction.Behaviors>
           </TextBox>
-          <Border BorderThickness="2"
-                  BorderBrush="{StaticResource AppTextColor}"
-                  CornerRadius="5"
-                  Width="116">
-            <ToggleButton Style="{StaticResource ToggleButtonThemeStyle}"
-                          Height="50"
-                          Width="120"
-                          Content="{lang:Loc Components_CW_Dir}"
-                          IsChecked="False"
-                          Command="{Binding CWDirectionToggleButtonClickCommand}"/>
-          </Border>
+          <ToggleButton Style="{StaticResource ToggleButtonThemeStyle}"
+                        Height="50"
+                        Width="120"
+                        Content="{lang:Loc Components_CW_Dir}"
+                        IsChecked="False"
+                        Command="{Binding CWDirectionToggleButtonClickCommand}"/>
 
         </StackPanel>
 
         <StackPanel HorizontalAlignment="Left"
                     Margin="130,0,0,0">
-          <dx:SimpleButton Content="{lang:Loc Components_Position}"
-                           Command="{Binding IdexPositionButtonClickCommand}"
-                           Height="50" Width="120"
-                           HorizontalAlignment="Center"
-                           VerticalAlignment="Center"
-                           FontFamily="{StaticResource AppTextFont}"
-                           FontSize="16"
-                           FontWeight="UltraBold"
-                           Foreground="{StaticResource AppTextColor}"
-                           Margin="0,45,0,0"/>
+          <Button Content="{lang:Loc Components_Position}"
+                  Style="{StaticResource ButtonStyle}"
+                  Command="{Binding IdexPositionButtonClickCommand}"
+                  Height="50" Width="120"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center"
+                  Margin="0,45,0,0"/>
           <TextBlock Text="{lang:Loc Components_Max_Steps}"
                      FontFamily="{StaticResource AppTextFont}"
                      FontSize="26"

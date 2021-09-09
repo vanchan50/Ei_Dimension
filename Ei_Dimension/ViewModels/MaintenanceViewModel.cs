@@ -23,7 +23,7 @@ namespace Ei_Dimension.ViewModels
 
     protected MaintenanceViewModel()
     {
-      LEDSliderValue = 0;
+      LEDSliderValue = 1170;
       LEDsEnabled = true;
       LEDsToggleButtonState = false;
       SanitizeSecondsContent = new ObservableCollection<string> { "" };

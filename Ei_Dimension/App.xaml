@@ -5,17 +5,29 @@
     <Application.Resources>
 
     <ResourceDictionary>
-      <SolidColorBrush x:Key="AppBackground" Color="#34558b"/>
+      <SolidColorBrush x:Key="AppBackground" Color="White"/>
       <SolidColorBrush x:Key="PressedButtonBackground" Color="#2a446f"/>
       <SolidColorBrush x:Key="UnpressedButtonBackground" Color="#416aae"/>
-      <SolidColorBrush x:Key="AppTextColor" Color="white"/>
-      <FontFamily x:Key="AppTextFont" >Mathcad UniMath</FontFamily>
+      <SolidColorBrush x:Key="AppTextColor" Color="Black"/>
+      <SolidColorBrush x:Key="SubRibbonBackground" Color="#f2f5fb"/>
+      <SolidColorBrush x:Key="RibbonBackgroundActive" Color="#d8e1f3"/>
+      <SolidColorBrush x:Key="ButtonBackground" Color="#3e58a7"/>
+      <SolidColorBrush x:Key="ButtonBackgroundHighlighted" Color="#243b70"/>
+      <SolidColorBrush x:Key="ButtonForeground" Color="White"/>
+      <SolidColorBrush x:Key="HaltButtonBackground" Color="#c0c3cc"/>
+      <SolidColorBrush x:Key="HaltButtonBackgroundHighlighted" Color="#9499a9"/>
+      <SolidColorBrush x:Key="MenuButtonBackground" Color="#ededee"/>
+      <SolidColorBrush x:Key="MenuButtonBackgroundActive" Color="#87abda"/>
+      <FontFamily x:Key="AppTextFont">Segoe UI Semilight</FontFamily>
       <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="/Styles/RibbonTileStyle.xaml"/>
         <ResourceDictionary Source="/Styles/HeatmapSelectorStyle.xaml"/>
         <ResourceDictionary Source="/Styles/RadioButtonThemeStyle.xaml"/>
+        <ResourceDictionary Source="/Styles/ButtonStyle.xaml"/>
+        <ResourceDictionary Source="/Styles/HaltButtonStyle.xaml"/>
         <ResourceDictionary Source="/Styles/ToggleButtonThemeStyle.xaml"/>
         <ResourceDictionary Source="/Styles/InputFieldStyle.xaml"/>
+        <ResourceDictionary Source="/Styles/MainRibbonButtonStyle.xaml"/>
+        <ResourceDictionary Source="/Styles/SubRibbonButtonStyle.xaml"/>
       </ResourceDictionary.MergedDictionaries>
     </ResourceDictionary>
   </Application.Resources>

@@ -1,0 +1,51 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:img="clr-namespace:Ei_Dimension.Styles">
+  <Style BasedOn="{StaticResource {x:Type ToggleButton}}"
+         TargetType="{x:Type RadioButton}"
+         x:Key="SubRibbonButtonStyle">
+    <Style.Setters>
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="{x:Type RadioButton}">
+            <Border VerticalAlignment="Stretch"
+                    HorizontalAlignment="Stretch"
+                    Height="{TemplateBinding Property=Height}"
+                    Width="{TemplateBinding Property=Width}"
+                    Background="{TemplateBinding Property=Background}"
+                    BorderBrush="Black"
+                    BorderThickness="1">
+              <Grid>
+
+                <Image HorizontalAlignment="Right"
+                       VerticalAlignment="Center"
+                       Margin="0,15,8,15"
+                       Source="{Binding Path=(img:EmbeddedImg.Image),
+                          RelativeSource={RelativeSource FindAncestor,
+                          AncestorType={x:Type ToggleButton}}}"/>
+                <TextBlock Text="{TemplateBinding Property=Content}"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Left"
+                           FontFamily="{DynamicResource AppTextFont}"
+                           Margin="8,0,0,0"/>
+              </Grid>
+            </Border>
+
+            <ControlTemplate.Triggers>
+              <Trigger Property="IsChecked" Value="True">
+                <Setter Property="Background" Value="{DynamicResource RibbonBackgroundActive}"/>
+              </Trigger>
+            </ControlTemplate.Triggers>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+
+      <Setter Property="FontSize" Value="22"/>
+      <Setter Property="Foreground" Value="{DynamicResource AppTextColor}"/>
+      <Setter Property="Background" Value="{DynamicResource SubRibbonBackground}"/>
+      <Setter Property="Margin" Value="0,0,0,6"/>
+    </Style.Setters>
+
+
+  </Style>
+</ResourceDictionary>

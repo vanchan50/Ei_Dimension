@@ -189,15 +189,11 @@
           </StackPanel>
         </Border>
 
-        <dx:SimpleButton Content="{lang:Loc Calibration_Save_Calibration_To_Map}"
-                         Width="230"
-                         Command="{Binding SaveCalibrationToMapClickCommand}"
-                         Height="100"
-                         FontFamily="{StaticResource AppTextFont}"
-                         FontSize="26"
-                         FontWeight="UltraBold"
-                         Foreground="{StaticResource AppTextColor}"
-                         Margin="0,0,0,3"/>
+        <Button Content="{lang:Loc Calibration_Save_Calibration_To_Map}"
+                Command="{Binding SaveCalibrationToMapClickCommand}"
+                Style="{StaticResource ButtonStyle}"
+                Height="100" Width="230"
+                Margin="0,0,0,3"/>
         <TextBlock Text="{Binding CurrentMapName[0]}"
                      FontFamily="{StaticResource AppTextFont}"
                      FontSize="15"

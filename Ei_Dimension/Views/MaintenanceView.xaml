@@ -12,6 +12,7 @@
              xmlns:dxwui="http://schemas.devexpress.com/winfx/2008/xaml/windowsui"
              xmlns:dxwuin="http://schemas.devexpress.com/winfx/2008/xaml/windowsui/navigation"
              xmlns:lang="clr-namespace:Ei_Dimension.Language;assembly=Language"
+             xmlns:img="clr-namespace:Ei_Dimension.Styles"
              mc:Ignorable="d"
              DataContext="{dxmvvm:ViewModelSource Type={x:Type ViewModels:MaintenanceViewModel}}"
              d:DesignHeight="674" d:DesignWidth="1500">
@@ -22,54 +23,35 @@
     </Grid.ColumnDefinitions>
 
     <!--Tile Ribbon-->
-    <StackPanel Margin="30,60,8,0">
-      <dxlc:Tile Header="{lang:Loc Maintenance_Calibration}"
-                 Command="{Binding NavigateCalibrationCommand}"
-                 Style="{StaticResource RibbonTileStyle}"
-                 Margin="0,0,0,3"
-                 Height="100">
-        <Image HorizontalAlignment="Right"
-               VerticalAlignment="Top"
-               Margin="0,6,4,0"
-               Width="50"
-               Height="50"
-               Source="{dx:DXImage 'SvgImages/Spreadsheet/HighLowLines.svg'}"/>
-      </dxlc:Tile>
-      <dxlc:Tile Header="{lang:Loc Maintenance_Channels}"
-                 Command="{Binding NavigateChannelsCommand}"
-                 Style="{StaticResource RibbonTileStyle}"
-                 Margin="0,0,0,3"
-                 Height="100">
-        <Image HorizontalAlignment="Right"
-               VerticalAlignment="Top"
-               Margin="0,6,4,0"
-               Width="50"
-               Height="50"
-               Source="{dx:DXImage 'SvgImages/Spreadsheet/CreateBubbleChart.svg'}"/>
-      </dxlc:Tile>
+    <StackPanel Grid.Column="0" Margin="30,60,0,0">
+      <RadioButton Content="{lang:Loc Maintenance_Calibration}"
+                   Height="70"
+                   IsChecked="True"
+                   img:EmbeddedImg.Image="/Icons/motors icon.png"
+                   Style="{DynamicResource SubRibbonButtonStyle}"
+                   Command="{Binding NavigateCalibrationCommand}">
+      </RadioButton>
+      <RadioButton Content="{lang:Loc Maintenance_Channels}"
+                   Height="70"
+                   img:EmbeddedImg.Image="/Icons/components icon.png"
+                   Style="{DynamicResource SubRibbonButtonStyle}"
+                   Command="{Binding NavigateChannelsCommand}">
+      </RadioButton>
 
     </StackPanel>
 
     <Border Grid.Column="0"
             Margin="0,300,0,0">
       <StackPanel>
-
-        <Border BorderThickness="2"
-                  BorderBrush="{StaticResource AppTextColor}"
-                  CornerRadius="5"
-                  Width="76"
-                  Height="60"
-                  Margin="0,0,0,6">
-          <ToggleButton Style="{StaticResource ToggleButtonThemeStyle}"
-                      Height="60"
-                      Width="80"
-                      Content="{lang:Loc Maintenance_LEDs}"
-                      IsChecked="False"
-                      VerticalAlignment="Top"
-                      HorizontalAlignment="Center"
-                      IsEnabled="{Binding LEDsEnabled}"
-                      Command="{Binding LEDsButtonClickCommand}"/>
-        </Border>
+        <ToggleButton Style="{StaticResource ToggleButtonThemeStyle}"
+                    Height="60" Width="80"
+                    Margin="0,0,0,6"
+                    Content="{lang:Loc Maintenance_LEDs}"
+                    IsChecked="False"
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Center"
+                    IsEnabled="{Binding LEDsEnabled}"
+                    Command="{Binding LEDsButtonClickCommand}"/>
 
         <StackPanel>
           <StackPanel.Resources>
@@ -117,7 +99,6 @@
           </StackPanel.Resources>
           <dxe:TrackBarEdit Margin="0,0,0,20" 
                             Minimum="0" Maximum="4095"
-                            Value="0"
                             Width="200" EditValue="{Binding LEDSliderValue}"
                             CornerRadius="4" TickPlacement="None"
                             NearTrackStyle="{StaticResource nearTrackStyle}"
@@ -130,15 +111,11 @@
           </dxe:TrackBarEdit>
         </StackPanel>
 
-        <dx:SimpleButton Content="{lang:Loc Maintenance_Sanitize}"
-                         Width="195"
-                         Command="{Binding UVCSanitizeClickCommand}"
-                         Height="50"
-                         FontFamily="{StaticResource AppTextFont}"
-                         FontSize="26"
-                         FontWeight="UltraBold"
-                         Foreground="{StaticResource AppTextColor}"
-                         Margin="0,0,0,6"/>
+        <Button Content="{lang:Loc Maintenance_Sanitize}"
+                Command="{Binding UVCSanitizeClickCommand}"
+                Style="{StaticResource ButtonStyle}"
+                Height="50" Width="195"
+                Margin="0,0,0,6"/>
         <StackPanel Orientation="Horizontal">
           <TextBox  Height="36"
                     HorizontalAlignment="Left"

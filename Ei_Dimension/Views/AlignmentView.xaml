@@ -44,15 +44,12 @@
             <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="0"/>
           </dxmvvm:Interaction.Behaviors>
         </TextBox>
-        <dx:SimpleButton Content="{lang:Loc Alignment_GoTo}"
-                         Command="{Binding GoToLastCalibratedPositionClickCommand}"
-                         Height="50"
-                         Width="160"
-                         FontFamily="{StaticResource AppTextFont}"
-                         FontSize="36"
-                         FontWeight="UltraBold"
-                         Foreground="{StaticResource AppTextColor}"
-                         Margin="0,0,0,3"/>
+        <Button Content="{lang:Loc Alignment_GoTo}"
+                Command="{Binding GoToLastCalibratedPositionClickCommand}"
+                Style="{StaticResource ButtonStyle}"
+                Height="50"
+                Width="160"
+                Margin="0,0,0,3"/>
         <TextBox  Height="36"
                   HorizontalAlignment="Stretch"
                   Margin="0,0,0,3"
@@ -120,24 +117,16 @@
           </StackPanel>
         </Border>
 
-        <dx:SimpleButton Content="{lang:Loc Run}"
-                         Command="{Binding RunLaserAlignMotorClickCommand}"
-                         Height="50"
-                         Width="150"
-                         FontFamily="{StaticResource AppTextFont}"
-                         FontSize="36"
-                         FontWeight="UltraBold"
-                         Foreground="{StaticResource AppTextColor}"
-                         Margin="0,0,0,3"/>
-        <dx:SimpleButton Content="{lang:Loc Halt}"
-                         Height="50"
-                         Width="150"
-                         Command="{Binding HaltLaserAlignMotorClickCommand}"
-                         FontFamily="{StaticResource AppTextFont}"
-                         FontSize="36"
-                         FontWeight="UltraBold"
-                         Foreground="{StaticResource AppTextColor}"
-                         Margin="0,0,0,3"/>
+        <Button Content="{lang:Loc Run}"
+                Command="{Binding RunLaserAlignMotorClickCommand}"
+                Style="{StaticResource ButtonStyle}"
+                Height="50" Width="150"
+                Margin="0,0,0,3"/>
+        <Button Content="{lang:Loc Halt}"
+                Command="{Binding HaltLaserAlignMotorClickCommand}"
+                Style="{StaticResource HaltButtonStyle}"
+                Height="50" Width="150"
+                Margin="0,0,0,3"/>
 
       </StackPanel>
     </Border>
@@ -203,15 +192,11 @@
           </StackPanel>
         </Border>
 
-        <dx:SimpleButton Content="{lang:Loc Run}"
-                         Width="150"
-                         Command="{Binding RunAutoAlignClickCommand}"
-                         Height="50"
-                         FontFamily="{StaticResource AppTextFont}"
-                         FontSize="36"
-                         FontWeight="UltraBold"
-                         Foreground="{StaticResource AppTextColor}"
-                         Margin="0,0,0,3"/>
+        <Button Content="{lang:Loc Run}"
+                Command="{Binding RunAutoAlignClickCommand}"
+                Style="{StaticResource ButtonStyle}"
+                Height="50" Width="150"
+                Margin="0,0,0,3"/>
 
       </StackPanel>
     </Border>
@@ -230,34 +215,21 @@
                      VerticalAlignment="Top"
                      Margin="0,0,0,10"/>
 
-        <dx:SimpleButton Content="{lang:Loc Alignment_Scan}"
-                         Width="200"
-                         Command="{Binding ScanAlignSequenceClickCommand}"
-                         Height="50"
-                         FontFamily="{StaticResource AppTextFont}"
-                         FontSize="34"
-                         FontWeight="UltraBold"
-                         Foreground="{StaticResource AppTextColor}"
-                         Margin="0,0,0,3"/>
-        <dx:SimpleButton Content="{lang:Loc Alignment_Find_Peak}"
-                         Width="200"
-                         Command="{Binding FindPeakAlignSequenceClickCommand}"
-                         Height="50"
-                         FontFamily="{StaticResource AppTextFont}"
-                         FontSize="34"
-                         FontWeight="UltraBold"
-                         Foreground="{StaticResource AppTextColor}"
-                         Margin="0,0,0,3"/>
-
-        <dx:SimpleButton Content="{lang:Loc Alignment_GoTo_Peak}"
-                         Width="200"
-                         Command="{Binding GoToAlignSequenceClickCommand}"
-                         Height="50"
-                         FontFamily="{StaticResource AppTextFont}"
-                         FontSize="34"
-                         FontWeight="UltraBold"
-                         Foreground="{StaticResource AppTextColor}"
-                         Margin="0,0,0,3" Click="SimpleButton_Click"/>
+        <Button Content="{lang:Loc Alignment_Scan}"
+                Command="{Binding ScanAlignSequenceClickCommand}"
+                Style="{StaticResource ButtonStyle}"
+                Height="50" Width="200"
+                Margin="0,0,0,3"/>
+        <Button Content="{lang:Loc Alignment_Find_Peak}"
+                Command="{Binding FindPeakAlignSequenceClickCommand}"
+                Style="{StaticResource ButtonStyle}"
+                Height="50" Width="200"
+                Margin="0,0,0,3"/>
+        <Button Content="{lang:Loc Alignment_GoTo_Peak}"
+                Command="{Binding GoToAlignSequenceClickCommand}"
+                Style="{StaticResource ButtonStyle}"
+                Height="50" Width="200"
+                Margin="0,0,0,3"/>
 
         </StackPanel>
     </Border>

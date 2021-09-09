@@ -132,6 +132,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Styles\EmbeddedImg.cs" />
     <Compile Include="ViewModels\AlignmentViewModel.cs" />
     <Compile Include="ViewModels\CalibrationViewModel.cs" />
     <Compile Include="ViewModels\ChannelOffsetViewModel.cs" />
@@ -205,6 +206,14 @@
       <DependentUpon>MainView.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Styles\ButtonStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\HaltButtonStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Styles\HeatmapSelectorStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -213,11 +222,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Styles\MainRibbonButtonStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Styles\RadioButtonThemeStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Styles\RibbonTileStyle.xaml">
+    <Page Include="Styles\SubRibbonButtonStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -312,9 +325,6 @@
     <Resource Include="Emission_Logo.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="laser-icon-16521-Windows.ico" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Language\Language.csproj">
       <Project>{ae6ffeca-703a-49a8-8979-7381fb4dbae9}</Project>
       <Name>Language</Name>
@@ -338,6 +348,23 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="TODOs.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\alignment icon.png" />
+    <Resource Include="Icons\acquire sample icon.png" />
+    <Resource Include="Icons\channel offset icon.png" />
+    <Resource Include="Icons\components icon.png" />
+    <Resource Include="Icons\dashboard icon.png" />
+    <Resource Include="Icons\data analysis icon.png" />
+    <Resource Include="Icons\laser-icon-16521-Windows.ico" />
+    <Resource Include="Icons\maintenance icon.png" />
+    <Resource Include="Icons\motors icon.png" />
+    <Resource Include="Icons\results icon.png" />
+    <Resource Include="Icons\service icon.png" />
+    <Resource Include="Icons\syringe speeds icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="laser-icon-16521-Windows.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

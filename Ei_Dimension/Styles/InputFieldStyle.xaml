@@ -9,7 +9,6 @@
     <Setter Property="AllowDrop" Value="true"/>
     <Setter Property="Foreground" Value="{DynamicResource AppTextColor}"/>
     <Setter Property="FontFamily" Value="{DynamicResource AppTextFont}"/>
-    <Setter Property="FontWeight" Value="ExtraBold"/>
     <Setter Property="FontSize" Value="25"/>
     <Setter Property="Template">
       <Setter.Value>
@@ -18,17 +17,11 @@
           <Border Name="Border">
             <Grid>
               <Rectangle Name="ToggleButtonRect" VerticalAlignment="Stretch"
-                  HorizontalAlignment="Stretch"
-                  Fill="{DynamicResource PressedButtonBackground}"
-                  RadiusX="10" RadiusY="15"/>
-              <ScrollViewer 
-                    Margin="10,5,10,0" x:Name="PART_ContentHost"/>
-              <Line X1="0" X2="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ActualWidth}"
-                    Y1="0" Y2="0"
-                    VerticalAlignment="Bottom"
-                    StrokeThickness="2"
-                    Margin="10,0,10,0"
-                    Stroke="{DynamicResource AppTextColor}"/>
+                         HorizontalAlignment="Stretch"
+                         Fill="{DynamicResource AppBackground}"
+                         Stroke="{DynamicResource ButtonBackgroundHighlighted}"
+                         StrokeThickness="1"/>
+              <ScrollViewer Margin="10,0,10,0" x:Name="PART_ContentHost"/>
             </Grid>
           </Border>
           

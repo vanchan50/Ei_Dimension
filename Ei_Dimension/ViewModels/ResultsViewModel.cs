@@ -53,7 +53,6 @@ namespace Ei_Dimension.ViewModels
       _heatMapSeriesXY = new ObservableCollection<HeatMapData>();
       HeatmapAxisXTitle = "CL1";
       HeatmapAxisYTitle = "CL2";
-      _heatmapAxisXY = (1, 2);
 
       HeatLevel1 = new ObservableCollection<HeatMapData>(); // Min     outside of bin
       HeatLevel2 = new ObservableCollection<HeatMapData>(); //         70%
@@ -87,6 +86,7 @@ namespace Ei_Dimension.ViewModels
       XAxisSelectorState[Settings.Default.XAxisG] = true;
       YAxisSelectorState = new ObservableCollection<bool> { false, false, false, false };
       YAxisSelectorState[Settings.Default.YAxisG] = true;
+      _heatmapAxisXY = (Settings.Default.XAxisG, Settings.Default.YAxisG);
 
       Instance = this;
     }

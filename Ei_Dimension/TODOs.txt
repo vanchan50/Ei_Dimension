@@ -38,3 +38,5 @@ when something actually runs, UPDATE:
 
 
 in ExperimentVM instead of App.Device.ActWell use Table96Wells and Table384Wells in (btnRead_Click  legacy)   where welltype.empty => false (legacy)
+
+componentsVM LasersButtonClick() probably bug in multiple lasers on/off shoul be summed up?

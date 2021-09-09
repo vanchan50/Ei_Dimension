@@ -23,7 +23,8 @@
               <TextBlock Text="{TemplateBinding Property=Content}"
                          VerticalAlignment="Center"
                          HorizontalAlignment="Center"
-                         FontSize="18"/>
+                         FontSize="18"
+                         FontFamily="{DynamicResource AppTextFont}"/>
 
             </Grid>
           </ControlTemplate>

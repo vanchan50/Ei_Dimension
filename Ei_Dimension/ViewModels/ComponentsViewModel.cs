@@ -125,17 +125,17 @@ namespace Ei_Dimension.ViewModels
           break;
         case 2:
           ValvesStates[1] = !ValvesStates[1];
-          param = ValvesStates[0] ? 1 : 0;
+          param = ValvesStates[1] ? 1 : 0;
           Code = 0x12;
           break;
         case 3:
           ValvesStates[2] = !ValvesStates[2];
-          param = ValvesStates[0] ? 1 : 0;
+          param = ValvesStates[2] ? 1 : 0;
           Code = 0x10;
           break;
         case 4:
           ValvesStates[3] = !ValvesStates[3];
-          param = ValvesStates[0] ? 1 : 0;
+          param = ValvesStates[3] ? 1 : 0;
           Code = 0x11;
           break;
       }
@@ -144,23 +144,23 @@ namespace Ei_Dimension.ViewModels
 
     public void LasersButtonClick(int num)
     {
-      ushort param = 0;
+      int param = 0;
       switch (num)
       {
         case 1:
           LaserRedActive = !LaserRedActive;
-          param = 0x01;
+          param = LaserRedActive ? 0x01 : 0x00;
           break;
         case 2:
           LaserGreenActive = !LaserGreenActive;
-          param = 0x02;
+          param = LaserGreenActive ? 0x02 : 0x00;
           break;
         case 3:
           LaserVioletActive = !LaserVioletActive;
-          param = 0x04;
+          param = LaserVioletActive ? 0x04 : 0x00;
           break;
       }
-      App.Device.MainCommand("Set Property", code: 0xc0, parameter: param);
+      App.Device.MainCommand("Set Property", code: 0xc0, parameter: (ushort)param);
     }
 
     public void SheathRunButtonClick()

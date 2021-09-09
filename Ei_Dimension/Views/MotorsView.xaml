@@ -36,8 +36,8 @@
                   VerticalAlignment="Stretch"
                   Margin="10,0,10,0">
           <StackPanel VerticalAlignment="Stretch"
-                    Width="140"
-                    Margin="0,0,3,0">
+                      Width="140"
+                      Margin="0,0,3,0">
           <TextBlock Text="{lang:Loc Motors_Steps}"
                      FontFamily="{StaticResource AppTextFont}"
                      FontSize="20"
@@ -46,20 +46,16 @@
                      HorizontalAlignment="Right"
                      VerticalAlignment="Top"
                      Margin="0,30,8,0"/>
-          <Border BorderThickness="2"
-                  BorderBrush="{StaticResource AppTextColor}"
-                  CornerRadius="5"
-                  HorizontalAlignment="Right"
-                  VerticalAlignment="Top"
-                  Width="116"
-                  Margin="0,19,4,0">
-            <ToggleButton Style="{StaticResource ToggleButtonThemeStyle}"
-                          Height="88"
-                          Width="120"
-                          Content="{lang:Loc Motors_Poll_Step}"
-                          IsChecked="{Binding PollStepActive}"
-                          Command="{Binding PollStepToggleButtonClickCommand}"/>
-          </Border>
+          
+          <ToggleButton Style="{StaticResource ToggleButtonThemeStyle}"
+                        Height="88"
+                        Width="120"
+                        Margin="0,19,4,0"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        Content="{lang:Loc Motors_Poll_Step}"
+                        IsChecked="False"
+                        Command="{Binding PollStepToggleButtonClickCommand}"/>
 
           <TextBlock Text="{lang:Loc Motors_Slope}"
                  FontFamily="{StaticResource AppTextFont}"
@@ -68,7 +64,7 @@
                  Foreground="{StaticResource AppTextColor}"
                  HorizontalAlignment="Right"
                  VerticalAlignment="Top"
-                 Margin="0,124,4,0"/>
+                 Margin="0,120,4,0"/>
           <TextBlock Text="{lang:Loc Motors_Start_Speed}"
                  FontFamily="{StaticResource AppTextFont}"
                  FontSize="20"
@@ -76,7 +72,7 @@
                  Foreground="{StaticResource AppTextColor}"
                  HorizontalAlignment="Right"
                  VerticalAlignment="Top"
-                 Margin="0,15,4,0"/>
+                 Margin="0,10,4,0"/>
           <TextBlock Text="{lang:Loc Motors_Run_Speed}"
                  FontFamily="{StaticResource AppTextFont}"
                  FontSize="20"
@@ -84,7 +80,7 @@
                  Foreground="{StaticResource AppTextColor}"
                  HorizontalAlignment="Right"
                  VerticalAlignment="Top"
-                 Margin="0,15,4,0"/>
+                 Margin="0,14,4,0"/>
           <TextBlock Text="{lang:Loc Motors_Cur_Step}"
                  FontFamily="{StaticResource AppTextFont}"
                  FontSize="20"
@@ -92,7 +88,7 @@
                  Foreground="{StaticResource AppTextColor}"
                  HorizontalAlignment="Right"
                  VerticalAlignment="Top"
-                 Margin="0,15,4,0"/>
+                 Margin="0,14,4,0"/>
           <TextBlock Text="{lang:Loc Motors_Cur_Limit}"
                  FontFamily="{StaticResource AppTextFont}"
                  FontSize="20"
@@ -100,7 +96,7 @@
                  Foreground="{StaticResource AppTextColor}"
                  HorizontalAlignment="Right"
                  VerticalAlignment="Top"
-                 Margin="0,15,4,0"/>
+                 Margin="0,14,4,0"/>
           </StackPanel>
           <StackPanel VerticalAlignment="Stretch"
                     Width="100"
@@ -151,30 +147,24 @@
               </StackPanel>
             </Border>
 
-          <dx:SimpleButton Content="{lang:Loc Run}"
-                             Command="{Binding RunMotorButtonClickCommand}"
-                             Height="50"
-                             FontFamily="{StaticResource AppTextFont}"
-                             FontSize="36"
-                             FontWeight="UltraBold"
-                             Foreground="{StaticResource AppTextColor}"
-                             Margin="0,0,0,3">
-              <dx:SimpleButton.CommandParameter>
+          <Button Content="{lang:Loc Run}"
+                  Command="{Binding RunMotorButtonClickCommand}"
+                  Style="{StaticResource ButtonStyle}"
+                  Height="50"
+                  Margin="0,0,0,3">
+              <Button.CommandParameter>
                 <System:String>x</System:String>
-              </dx:SimpleButton.CommandParameter>
-            </dx:SimpleButton>
-          <dx:SimpleButton Content="{lang:Loc Halt}"
-                             Height="50"
-                             Command="{Binding HaltMotorButtonClickCommand}"
-                             FontFamily="{StaticResource AppTextFont}"
-                             FontSize="36"
-                             FontWeight="UltraBold"
-                             Foreground="{StaticResource AppTextColor}"
-                             Margin="0,0,0,3">
-              <dx:SimpleButton.CommandParameter>
+              </Button.CommandParameter>
+            </Button>
+          <Button Content="{lang:Loc Halt}"
+                  Command="{Binding HaltMotorButtonClickCommand}"
+                  Style="{StaticResource HaltButtonStyle}"
+                  Height="50"
+                  Margin="0,0,0,3">
+              <Button.CommandParameter>
                 <System:String>x</System:String>
-              </dx:SimpleButton.CommandParameter>
-            </dx:SimpleButton>
+              </Button.CommandParameter>
+            </Button>
             <TextBox  Height="36"
                       HorizontalAlignment="Stretch"
                       Margin="0,0,0,3"
@@ -272,30 +262,24 @@
               </StackPanel>
             </Border>
 
-          <dx:SimpleButton Content="{lang:Loc Run}"
-                             Command="{Binding RunMotorButtonClickCommand}"
-                             Height="50"
-                             FontFamily="{StaticResource AppTextFont}"
-                             FontSize="36"
-                             FontWeight="UltraBold"
-                             Foreground="{StaticResource AppTextColor}"
-                             Margin="0,0,0,3">
-              <dx:SimpleButton.CommandParameter>
+          <Button Content="{lang:Loc Run}"
+                  Command="{Binding RunMotorButtonClickCommand}"
+                  Style="{StaticResource ButtonStyle}"
+                  Height="50"
+                  Margin="0,0,0,3">
+              <Button.CommandParameter>
                 <System:String>y</System:String>
-              </dx:SimpleButton.CommandParameter>
-            </dx:SimpleButton>
-          <dx:SimpleButton Content="{lang:Loc Halt}"
-                             Command="{Binding HaltMotorButtonClickCommand}"
-                             Height="50"
-                             FontFamily="{StaticResource AppTextFont}"
-                             FontSize="36"
-                             FontWeight="UltraBold"
-                             Foreground="{StaticResource AppTextColor}"
-                             Margin="0,0,0,3">
-              <dx:SimpleButton.CommandParameter>
+              </Button.CommandParameter>
+            </Button>
+          <Button Content="{lang:Loc Halt}"
+                  Command="{Binding HaltMotorButtonClickCommand}"
+                  Style="{StaticResource HaltButtonStyle}"
+                  Height="50"
+                  Margin="0,0,0,3">
+              <Button.CommandParameter>
                 <System:String>y</System:String>
-              </dx:SimpleButton.CommandParameter>
-            </dx:SimpleButton>
+              </Button.CommandParameter>
+            </Button>
             <TextBox  Height="36"
                       HorizontalAlignment="Stretch"
                       Margin="0,0,0,3"
@@ -391,30 +375,24 @@
               </StackPanel>
             </Border>
 
-          <dx:SimpleButton Content="{lang:Loc Run}"
-                             Command="{Binding RunMotorButtonClickCommand}"
-                             Height="50"
-                             FontFamily="{StaticResource AppTextFont}"
-                             FontSize="36"
-                             FontWeight="UltraBold"
-                             Foreground="{StaticResource AppTextColor}"
-                             Margin="0,0,0,3">
-              <dx:SimpleButton.CommandParameter>
+          <Button Content="{lang:Loc Run}"
+                  Command="{Binding RunMotorButtonClickCommand}"
+                  Style="{StaticResource ButtonStyle}"
+                  Height="50"
+                  Margin="0,0,0,3">
+              <Button.CommandParameter>
                 <System:String>z</System:String>
-              </dx:SimpleButton.CommandParameter>
-            </dx:SimpleButton>
-          <dx:SimpleButton Content="{lang:Loc Halt}"
-                             Command="{Binding HaltMotorButtonClickCommand}"
-                             Height="50"
-                             FontFamily="{StaticResource AppTextFont}"
-                             FontSize="36"
-                             FontWeight="UltraBold"
-                             Foreground="{StaticResource AppTextColor}"
-                             Margin="0,0,0,3">
-              <dx:SimpleButton.CommandParameter>
+              </Button.CommandParameter>
+            </Button>
+          <Button Content="{lang:Loc Halt}"
+                  Command="{Binding HaltMotorButtonClickCommand}"
+                  Style="{StaticResource HaltButtonStyle}"
+                  Height="50"
+                  Margin="0,0,0,3">
+              <Button.CommandParameter>
                 <System:String>z</System:String>
-              </dx:SimpleButton.CommandParameter>
-            </dx:SimpleButton>
+              </Button.CommandParameter>
+            </Button>
             <TextBox  Height="36"
                       HorizontalAlignment="Stretch"
                       Margin="0,0,0,3"
@@ -874,14 +852,11 @@
           </dx:DropDownButton>
         </StackPanel>
 
-        <dx:SimpleButton Content="{lang:Loc Motors_GoTo_Well}"
-                        FontSize="40"
-                        FontFamily="{StaticResource AppTextFont}"
-                        Foreground="{StaticResource AppTextColor}"
-                        Width="240"
-                        Height="60"
-                        Margin="0,3,0,0"
-                        Command="{Binding GoToWellButtonClickCommand}"/>
+        <Button Content="{lang:Loc Motors_GoTo_Well}"
+                Command="{Binding GoToWellButtonClickCommand}"
+                Style="{StaticResource ButtonStyle}"
+                Height="60" Width="240"
+                Margin="0,3,0,0"/>
       </StackPanel>
     </Border>
     

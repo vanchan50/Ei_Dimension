@@ -13,12 +13,17 @@ namespace Ei_Dimension.ViewModels
     public virtual byte LaserAlignMotorSelectorState { get; set; }
     public virtual byte AutoAlignSelectorState { get; set; }
 
+    private MaintenanceViewModel _maintVM;
+
     protected AlignmentViewModel()
     {
       LastCalibratedPosition = new ObservableCollection<string> { "", "" };
       LaserAlignMotor = new ObservableCollection<string> { "" };
       LaserAlignMotorSelectorState = 1;
       AutoAlignSelectorState = 0;
+
+      if(MaintenanceViewModel.Instance != null)
+        _maintVM = MaintenanceViewModel.Instance;
     }
 
     public static AlignmentViewModel Create()
@@ -51,31 +56,11 @@ namespace Ei_Dimension.ViewModels
 
     public void AutoAlignSelector(byte num)
     {
-      switch (num)
-      {
-        case 0:
-          App.Device.MainCommand("Set Property", code: 0xc5);
-          MaintenanceViewModel.Instance.LEDsEnabled = true;
-          break;
-        case 1:
-          MaintenanceViewModel.Instance.LEDsToggleButtonState = true;
-          MaintenanceViewModel.Instance.LEDsButtonClick();
-          MaintenanceViewModel.Instance.LEDsEnabled = false;
-          App.Device.MainCommand("Set Property", code: 0xc5, parameter: 1);
-          break;
-        case 2:
-          MaintenanceViewModel.Instance.LEDsToggleButtonState = true;
-          MaintenanceViewModel.Instance.LEDsButtonClick();
-          MaintenanceViewModel.Instance.LEDsEnabled = false;
-          App.Device.MainCommand("Set Property", code: 0xc5, parameter: 2);
-          break;
-        case 3:
-          MaintenanceViewModel.Instance.LEDsToggleButtonState = true;
-          MaintenanceViewModel.Instance.LEDsButtonClick();
-          MaintenanceViewModel.Instance.LEDsEnabled = false;
-          App.Device.MainCommand("Set Property", code: 0xc5, parameter: 3);
-          break;
-      }
+      bool state = false;
+      if(num == 0)
+        state = true;
+      LedsOn(state);
+      App.Device.MainCommand("Set Property", code: 0xc5, parameter: (ushort)num);
       AutoAlignSelectorState = num;
     }
 
@@ -112,6 +97,24 @@ namespace Ei_Dimension.ViewModels
         case 2:
           App.SelectedTextBox = (this.GetType().GetProperty(nameof(LaserAlignMotor)), this, 0);
           break;
+      }
+    }
+
+    private void LedsOn(bool on)
+    {
+      if (_maintVM == null && MaintenanceViewModel.Instance != null)
+        _maintVM = MaintenanceViewModel.Instance;
+
+      if (_maintVM != null)
+      {
+        if (on)
+          _maintVM.LEDsEnabled = true;
+        else
+        {
+          _maintVM.LEDsToggleButtonState = true;
+          _maintVM.LEDsButtonClick();
+          _maintVM.LEDsEnabled = false;
+        }
       }
     }
   }

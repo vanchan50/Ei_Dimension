@@ -11,6 +11,7 @@
     xmlns:dxwui="http://schemas.devexpress.com/winfx/2008/xaml/windowsui"
     xmlns:dxwuin="http://schemas.devexpress.com/winfx/2008/xaml/windowsui/navigation"
     xmlns:lang="clr-namespace:Ei_Dimension.Language;assembly=Language"
+    xmlns:img="clr-namespace:Ei_Dimension.Styles"
     x:Class="Ei_Dimension.MainWindow"
     Title="Ei_Dimension"
     Height="800"
@@ -59,67 +60,36 @@
     <StackPanel Grid.Row="1" Grid.ColumnSpan="2"
                 Orientation="Horizontal"
                 Margin="30,0,0,0">
-      <dxlc:Tile Header="{lang:Loc Ribbon_Dashboard}"
-                 Command="{Binding NavigateDashboardCommand}"
-                 Style="{StaticResource RibbonTileStyle}">
-        <Image HorizontalAlignment="Right"
-               VerticalAlignment="Top"
-               Margin="0,6,4,0"
-               Width="50"
-               Height="50"
-               Source="{dx:DXImage SvgImages/Chart/ChartType_Pie3D.svg}"/>
-      </dxlc:Tile>
-      <dxlc:Tile Header="{lang:Loc Ribbon_Acquire}"
-                 Command="{Binding NavigateExperimentCommand}"
-                 Style="{StaticResource RibbonTileStyle}">
-        <Image HorizontalAlignment="Right"
-               VerticalAlignment="Top"
-               Margin="0,6,4,0"
-               Width="50"
-               Height="50"
-               Source="{dx:DXImage SvgImages/Reports/GaugeStyleFullCircular.svg}"/>
-      </dxlc:Tile>
-      <dxlc:Tile Header="{lang:Loc Ribbon_Results}"
-                 Command="{Binding NavigateResultsCommand}"
-                 Style="{StaticResource RibbonTileStyle}">
-        <Image HorizontalAlignment="Right"
-               VerticalAlignment="Top"
-               Margin="0,6,4,0"
-               Width="50"
-               Height="50"
-               Source="{dx:DXImage 'SvgImages/DiagramIcons/ApplyChanges.svg'}"/>
-      </dxlc:Tile>
-      <dxlc:Tile Header="{lang:Loc Ribbon_Analysis}"
-                 Command="{Binding NavigateDataAnalysisCommand}"
-                 Style="{StaticResource RibbonTileStyle}">
-        <Image HorizontalAlignment="Right"
-               VerticalAlignment="Top"
-               Margin="0,6,4,0"
-               Width="50"
-               Height="50"
-               Source="{dx:DXImage 'SvgImages/Chart/ChartType_RadarArea.svg'}"/>
-      </dxlc:Tile>
-      <dxlc:Tile Header="{lang:Loc Ribbon_Maintenance}"
-                 Command="{Binding NavigateMaintenanceCommand}"
-                 Style="{StaticResource RibbonTileStyle}">
-        <Image HorizontalAlignment="Right"
-               VerticalAlignment="Top"
-               Margin="0,6,4,0"
-               Width="50"
-               Height="50"
-               Source="{dx:DXImage SvgImages/Setup/PageSetup.svg}"/>
-      </dxlc:Tile>
-      <dxlc:Tile Header="{lang:Loc Ribbon_Service}"
-                 Command="{Binding NavigateSettingsCommand}"
-                 Style="{StaticResource RibbonTileStyle}">
-        <Image HorizontalAlignment="Right"
-               VerticalAlignment="Top"
-               Margin="0,6,4,0"
-               Width="50"
-               Height="50"
-               Source="{dx:DXImage Images/Programming/Technology_32x32.png}"/>
-      </dxlc:Tile>
-
+      <RadioButton Content="{lang:Loc Ribbon_Dashboard}" Width="180"
+                    img:EmbeddedImg.Image="/Icons/dashboard icon.png"
+                    Style="{DynamicResource MainRibbonButtonStyle}"
+                    Command="{Binding NavigateDashboardCommand}">
+      </RadioButton>
+      <RadioButton Content="{lang:Loc Ribbon_Acquire}" Width="180"
+                    img:EmbeddedImg.Image="/Icons/acquire sample icon.png"
+                    Style="{DynamicResource MainRibbonButtonStyle}"
+                    Command="{Binding NavigateExperimentCommand}">
+      </RadioButton>
+      <RadioButton Content="{lang:Loc Ribbon_Results}" Width="180"
+                    img:EmbeddedImg.Image="/Icons/results icon.png"
+                    Style="{DynamicResource MainRibbonButtonStyle}"
+                    Command="{Binding NavigateResultsCommand}">
+      </RadioButton>
+      <RadioButton Content="{lang:Loc Ribbon_Analysis}" Width="180"
+                    img:EmbeddedImg.Image="/Icons/data analysis icon.png"
+                    Style="{DynamicResource MainRibbonButtonStyle}"
+                    Command="{Binding NavigateDataAnalysisCommand}">
+      </RadioButton>
+      <RadioButton Content="{lang:Loc Ribbon_Maintenance}" Width="180"
+                    img:EmbeddedImg.Image="/Icons/maintenance icon.png"
+                    Style="{DynamicResource MainRibbonButtonStyle}"
+                    Command="{Binding NavigateMaintenanceCommand}">
+      </RadioButton>
+      <RadioButton Content="{lang:Loc Ribbon_Service}" Width="180"
+                    img:EmbeddedImg.Image="/Icons/service icon.png"
+                    Style="{DynamicResource MainRibbonButtonStyle}"
+                    Command="{Binding NavigateSettingsCommand}">
+      </RadioButton>
     </StackPanel>
 
     <dxwui:NavigationFrame AnimationType="Fade"

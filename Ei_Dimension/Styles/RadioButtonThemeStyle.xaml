@@ -20,8 +20,7 @@
               <TextBlock Text="{TemplateBinding Property=Content}"
                          VerticalAlignment="Center"
                          HorizontalAlignment="Center"
-                         FontFamily="{DynamicResource AppTextFont}"
-                         FontWeight="ExtraBold"/>
+                         FontFamily="{DynamicResource AppTextFont}"/>
 
             </Grid>
           </ControlTemplate>
@@ -62,8 +61,7 @@
               <TextBlock Text="{TemplateBinding Property=Content}"
                          VerticalAlignment="Center"
                          HorizontalAlignment="Center"
-                         FontFamily="{DynamicResource AppTextFont}"
-                         FontWeight="ExtraBold"/>
+                         FontFamily="{DynamicResource AppTextFont}"/>
 
             </Grid>
           </ControlTemplate>
