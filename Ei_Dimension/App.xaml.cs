@@ -26,7 +26,6 @@ namespace Ei_Dimension
       Device.SystemControl = Settings.Default.SystemControl;
       Device.Compensation = Settings.Default.Compensation;
       // reading VM add slist.DataSource = active_items;    //System monitor control
-      //  var regbindinglist = new BindingList<BeadRegion>(m_MicroCy.maplist[0].mapRegions);
       Device.SampleSize = Settings.Default.SampleSize;
       // RegCtr_SampSize.Text = Device.SampleSize.ToString(); //bead maps
       Device.Everyevent = Settings.Default.Everyevent;

@@ -407,6 +407,16 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Calibration
+        ///  Statistics.
+        /// </summary>
+        public static string DataAn_Calib_stats {
+            get {
+                return ResourceManager.GetString("DataAn_Calib_stats", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to CV.
         /// </summary>
         public static string DataAn_CV {
@@ -740,6 +750,15 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Eject Plate.
+        /// </summary>
+        public static string Experiment_Eject {
+            get {
+                return ResourceManager.GetString("Experiment_Eject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to End of
         ///Sample.
         /// </summary>
@@ -755,6 +774,33 @@ namespace Ei_Dimension.Language {
         public static string Experiment_End_Read {
             get {
                 return ResourceManager.GetString("Experiment_End_Read", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Event Count.
+        /// </summary>
+        public static string Experiment_Event_Count {
+            get {
+                return ResourceManager.GetString("Experiment_Event_Count", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fluidics.
+        /// </summary>
+        public static string Experiment_Fluidics {
+            get {
+                return ResourceManager.GetString("Experiment_Fluidics", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Load Plate.
+        /// </summary>
+        public static string Experiment_Load {
+            get {
+                return ResourceManager.GetString("Experiment_Load", resourceCulture);
             }
         }
         
@@ -783,6 +829,15 @@ namespace Ei_Dimension.Language {
         public static string Experiment_Order {
             get {
                 return ResourceManager.GetString("Experiment_Order", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Prime.
+        /// </summary>
+        public static string Experiment_Prime {
+            get {
+                return ResourceManager.GetString("Experiment_Prime", resourceCulture);
             }
         }
         
@@ -820,6 +875,24 @@ namespace Ei_Dimension.Language {
         public static string Experiment_Total_Events {
             get {
                 return ResourceManager.GetString("Experiment_Total_Events", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wash A.
+        /// </summary>
+        public static string Experiment_Wash_A {
+            get {
+                return ResourceManager.GetString("Experiment_Wash_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wash B.
+        /// </summary>
+        public static string Experiment_Wash_B {
+            get {
+                return ResourceManager.GetString("Experiment_Wash_B", resourceCulture);
             }
         }
         

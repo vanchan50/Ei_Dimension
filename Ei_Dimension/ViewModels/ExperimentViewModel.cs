@@ -14,6 +14,9 @@ namespace Ei_Dimension.ViewModels
   {
     public virtual Visibility Table96Visible { get; set; }
     public virtual Visibility Table384Visible { get; set; }
+    public virtual Visibility TableSelectorVisible { get; set; }
+    public virtual Visibility WellSelectorVisible { get; set; }
+    public virtual Visibility ButtonsVisible { get; set; }
     public virtual ObservableCollection<WellTableRow> Table96Wells { get; set; }
     public virtual ObservableCollection<WellTableRow> Table384Wells { get; set; }
     public virtual bool Selected96 { get; set; }
@@ -31,6 +34,8 @@ namespace Ei_Dimension.ViewModels
     public virtual string SelectedChConfigContent { get; set; }
     public virtual ObservableCollection<DropDownButtonContents> ChConfigItems { get; set; }
 
+    public virtual ObservableCollection<string> EventCountField { get; set; }
+
     public static ExperimentViewModel Instance { get; private set; }
 
     private int _currentTableSize;
@@ -40,12 +45,15 @@ namespace Ei_Dimension.ViewModels
     protected ExperimentViewModel()
     {
       InitTables();
-      ChangeWellTableSize(384);
-
+      Selected96  = false;
+      Selected384 = false;
+      WellSelectorVisible = Visibility.Hidden;
+      ButtonsVisible = Visibility.Visible;
       EndRead = new ObservableCollection<string> { "100", "500" };
 
       SystemControlSelectorState = new ObservableCollection<bool> { false, false, false };
       SystemControlSelector(App.Device.SystemControl);
+      TableSelectorVisible = App.Device.SystemControl == 0 ? Visibility.Visible : Visibility.Hidden;
 
       OrderSelectorState = 1; //Row
       EndReadSelectorState = new ObservableCollection<bool> { false, false, false};
@@ -89,6 +97,10 @@ namespace Ei_Dimension.ViewModels
 
       _selectedWell96Indices = new List<(int, int)>();
       _selectedWell384Indices = new List<(int, int)>();
+      _currentTableSize = 0;
+
+      EventCountField = new ObservableCollection<string> { "" };
+
       Instance = this;
     }
 
@@ -141,43 +153,76 @@ namespace Ei_Dimension.ViewModels
 
     public void ChangeWellTableSize(int num)
     {
-      if (_currentTableSize == num)
-        return;
-      _currentTableSize = num;
-      switch (_currentTableSize)
+      switch (num)
       {
         case 1:
           App.Device.MainCommand("Set Property", code: 0xab, parameter: 2);
           App.Device.PlateType = 2;
           break;
         case 96:
-          Selected96 = true;
           Selected384 = false;
-          foreach (var row in Table384Wells)
+          Table384Visible = Visibility.Hidden;
+          if (Selected96)
           {
-            for (var i = 0; i < 24; i++)
-            {
-              row.SetType(i, WellType.Empty);
-            }
+            Selected96 = false;
+            Table96Visible = Visibility.Hidden;
+            WellSelectorVisible = Visibility.Hidden;
+            ButtonsVisible = Visibility.Visible;
           }
-          App.Device.MainCommand("Set Property", code: 0xab, parameter: 0);
-          App.Device.PlateType = 0;
+          else
+          {
+            Selected96 = true;
+            Table96Visible = Visibility.Visible;
+            WellSelectorVisible = Visibility.Visible;
+            ButtonsVisible = Visibility.Hidden;
+          }
+          if(_currentTableSize != num)
+          {
+            _currentTableSize = num;
+            foreach (var row in Table384Wells)
+            {
+              for (var i = 0; i < 24; i++)
+              {
+                row.SetType(i, WellType.Empty);
+              }
+            }
+            App.Device.MainCommand("Set Property", code: 0xab, parameter: 0);
+            App.Device.PlateType = 0;
+          }
           break;
         case 384:
           Selected96 = false;
-          Selected384 = true;
-          foreach (var row in Table96Wells)
+          Table96Visible = Visibility.Hidden;
+          if (Selected384)
           {
-            for (var i = 0; i < 12; i++)
-            {
-              row.SetType(i, WellType.Empty);
-            }
+            Selected384 = false;
+            Table384Visible = Visibility.Hidden;
+            WellSelectorVisible = Visibility.Hidden;
+            ButtonsVisible = Visibility.Visible;
           }
-          App.Device.MainCommand("Set Property", code: 0xab, parameter: 1);
-          App.Device.PlateType = 1;
+          else
+          {
+            Selected384 = true;
+            Table384Visible = Visibility.Visible;
+            WellSelectorVisible = Visibility.Visible;
+            ButtonsVisible = Visibility.Hidden;
+          }
+          if (_currentTableSize != num)
+          {
+            _currentTableSize = num;
+            foreach (var row in Table96Wells)
+            {
+              for (var i = 0; i < 12; i++)
+              {
+                row.SetType(i, WellType.Empty);
+              }
+            }
+            App.Device.MainCommand("Set Property", code: 0xab, parameter: 1);
+            App.Device.PlateType = 1;
+          }
           break;
       }
-      ShowActiveTable();
+      _currentTableSize = num;
     }
 
     public void SystemControlSelector(byte num)
@@ -189,11 +234,17 @@ namespace Ei_Dimension.ViewModels
       App.SetSystemControl(num);
       if (num != 0)
       {
+        TableSelectorVisible = Visibility.Hidden;
         Table96Visible = Visibility.Hidden;
         Table384Visible = Visibility.Hidden;
+        WellSelectorVisible = Visibility.Hidden;
+        Selected96 = false;
+        Selected384 = false;
       }
       else
-        ShowActiveTable();
+      {
+        TableSelectorVisible = Visibility.Visible;
+      }
     }
 
     public void OrderSelector(byte num)
@@ -217,18 +268,35 @@ namespace Ei_Dimension.ViewModels
       Volumes[0] = num.ToString();
     }
 
+    public void PrimeButtonClick()
+    {
+
+    }
+
+    public void WashAButtonClick()
+    {
+
+    }
+
+    public void WashBButtonClick()
+    {
+
+    }
+
+    public void LoadButtonClick()
+    {
+
+    }
+
+    public void EjectBButtonClick()
+    {
+
+    }
+
     private void InitTables()
     {
-      if(_currentTableSize == 96)
-      {
-        Table96Visible = System.Windows.Visibility.Visible;
-        Table384Visible = System.Windows.Visibility.Hidden;
-      }
-      else if (_currentTableSize == 384)
-      {
-        Table96Visible = System.Windows.Visibility.Hidden;
-        Table384Visible = System.Windows.Visibility.Visible;
-      }
+      Table96Visible = Visibility.Hidden;
+      Table384Visible = Visibility.Hidden;
       Table96Wells = new ObservableCollection<WellTableRow>();
       Table384Wells = new ObservableCollection<WellTableRow>();
       Table96Wells.Add(new WellTableRow(0, 12)); //A
@@ -258,19 +326,6 @@ namespace Ei_Dimension.ViewModels
       Table384Wells.Add(new WellTableRow(15, 24)); //P
     }
 
-    private void ShowActiveTable()
-    {
-      if (_currentTableSize == 96)
-      {
-        Table96Visible = Visibility.Visible;
-        Table384Visible = Visibility.Hidden;
-      }
-      else if (_currentTableSize == 384)
-      {
-        Table96Visible = Visibility.Hidden;
-        Table384Visible = Visibility.Visible;
-      }
-    }
     public void FocusedBox(int num)
     {
       switch (num)

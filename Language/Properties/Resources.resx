@@ -235,6 +235,10 @@ Coefficient</value>
   <data name="Components_Valves" xml:space="preserve">
     <value>Valves</value>
   </data>
+  <data name="DataAn_Calib_stats" xml:space="preserve">
+    <value>Calibration
+  Statistics</value>
+  </data>
   <data name="DataAn_CV" xml:space="preserve">
     <value>CV</value>
   </data>
@@ -346,12 +350,24 @@ Coefficient</value>
   <data name="Experiment_Classific_Map" xml:space="preserve">
     <value>Classification Map</value>
   </data>
+  <data name="Experiment_Eject" xml:space="preserve">
+    <value>Eject Plate</value>
+  </data>
   <data name="Experiment_End_of_Sample" xml:space="preserve">
     <value>End of
 Sample</value>
   </data>
   <data name="Experiment_End_Read" xml:space="preserve">
     <value>End Read</value>
+  </data>
+  <data name="Experiment_Event_Count" xml:space="preserve">
+    <value>Event Count</value>
+  </data>
+  <data name="Experiment_Fluidics" xml:space="preserve">
+    <value>Fluidics</value>
+  </data>
+  <data name="Experiment_Load" xml:space="preserve">
+    <value>Load Plate</value>
   </data>
   <data name="Experiment_Manual" xml:space="preserve">
     <value>Manual</value>
@@ -362,6 +378,9 @@ Region</value>
   </data>
   <data name="Experiment_Order" xml:space="preserve">
     <value>Order</value>
+  </data>
+  <data name="Experiment_Prime" xml:space="preserve">
+    <value>Prime</value>
   </data>
   <data name="Experiment_Samp_Vol" xml:space="preserve">
     <value>Samp Vol</value>
@@ -375,6 +394,12 @@ Region</value>
   <data name="Experiment_Total_Events" xml:space="preserve">
     <value>Total
 Events</value>
+  </data>
+  <data name="Experiment_Wash_A" xml:space="preserve">
+    <value>Wash A</value>
+  </data>
+  <data name="Experiment_Wash_B" xml:space="preserve">
+    <value>Wash B</value>
   </data>
   <data name="Experiment_Wash_Vol" xml:space="preserve">
     <value>Wash Vol</value>

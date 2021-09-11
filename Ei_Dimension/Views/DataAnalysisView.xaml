@@ -101,9 +101,10 @@
       </dxc:XYDiagram2D>
     </dxc:ChartControl>
 
+    <!--Calibration Statistics-->
     <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Margin="900,30,0,0">
+            Margin="1000,30,0,0">
       <StackPanel Orientation="Horizontal"
                   HorizontalAlignment="Stretch"
                   VerticalAlignment="Stretch">
@@ -204,92 +205,52 @@
                       Margin="8,8,8,20"
                       IsReadOnly="True"
                       Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding ChannelsOffsetParameters[0]}">
-                <dxmvvm:Interaction.Behaviors>
-                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="0"/>
-                </dxmvvm:Interaction.Behaviors>
-              </TextBox>
+                      Text="{Binding MfiItems[0]}"/>
               <TextBox HorizontalAlignment="Stretch"
                       Margin="8,0,8,20"
                       IsReadOnly="True"
                       Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding ChannelsOffsetParameters[1]}">
-                <dxmvvm:Interaction.Behaviors>
-                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="1"/>
-                </dxmvvm:Interaction.Behaviors>
-              </TextBox>
+                      Text="{Binding MfiItems[1]}"/>
               <TextBox HorizontalAlignment="Stretch"
                       Margin="8,0,8,20"
                       IsReadOnly="True"
                       Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding ChannelsOffsetParameters[2]}">
-                <dxmvvm:Interaction.Behaviors>
-                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="2"/>
-                </dxmvvm:Interaction.Behaviors>
-              </TextBox>
+                      Text="{Binding MfiItems[2]}"/>
               <TextBox HorizontalAlignment="Stretch"
                       Margin="8,0,8,20"
                       IsReadOnly="True"
                       Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding ChannelsOffsetParameters[3]}">
-                <dxmvvm:Interaction.Behaviors>
-                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="3"/>
-                </dxmvvm:Interaction.Behaviors>
-              </TextBox>
+                      Text="{Binding MfiItems[3]}"/>
               <TextBox HorizontalAlignment="Stretch"
                       Margin="8,0,8,20"
                       IsReadOnly="True"
                       Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding ChannelsOffsetParameters[4]}">
-                <dxmvvm:Interaction.Behaviors>
-                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="4"/>
-                </dxmvvm:Interaction.Behaviors>
-              </TextBox>
+                      Text="{Binding MfiItems[4]}"/>
               <TextBox HorizontalAlignment="Stretch"
                       Margin="8,0,8,20"
                       IsReadOnly="True"
                       Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding ChannelsOffsetParameters[5]}">
-                <dxmvvm:Interaction.Behaviors>
-                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="5"/>
-                </dxmvvm:Interaction.Behaviors>
-              </TextBox>
+                      Text="{Binding MfiItems[5]}"/>
               <TextBox HorizontalAlignment="Stretch"
                       Margin="8,0,8,20"
                       IsReadOnly="True"
                       Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding ChannelsOffsetParameters[6]}">
-                <dxmvvm:Interaction.Behaviors>
-                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="6"/>
-                </dxmvvm:Interaction.Behaviors>
-              </TextBox>
+                      Text="{Binding MfiItems[6]}"/>
               <TextBox HorizontalAlignment="Stretch"
                       Margin="8,0,8,20"
                       IsReadOnly="True"
                       Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding ChannelsOffsetParameters[7]}">
-                <dxmvvm:Interaction.Behaviors>
-                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="7"/>
-                </dxmvvm:Interaction.Behaviors>
-              </TextBox>
+                      Text="{Binding MfiItems[7]}"/>
               <TextBox HorizontalAlignment="Stretch"
                       Margin="8,0,8,20"
                       IsReadOnly="True"
                       Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding ChannelsOffsetParameters[8]}">
-                <dxmvvm:Interaction.Behaviors>
-                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="8"/>
-                </dxmvvm:Interaction.Behaviors>
-              </TextBox>
+                      Text="{Binding MfiItems[8]}"/>
               <TextBox HorizontalAlignment="Stretch"
                       Margin="8,0,8,8"
                       IsReadOnly="True"
                       Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding ChannelsOffsetParameters[9]}">
-                <dxmvvm:Interaction.Behaviors>
-                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="9"/>
-                </dxmvvm:Interaction.Behaviors>
-              </TextBox>
+                      Text="{Binding MfiItems[9]}"/>
             </StackPanel>
           </Border>
         </StackPanel>
@@ -308,96 +269,64 @@
                       Margin="8,8,8,20"
                       IsReadOnly="True"
                       Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding ChannelsOffsetParameters[0]}">
-                <dxmvvm:Interaction.Behaviors>
-                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="0"/>
-                </dxmvvm:Interaction.Behaviors>
-              </TextBox>
+                      Text="{Binding CvItems[0]}"/>
               <TextBox HorizontalAlignment="Stretch"
                       Margin="8,0,8,20"
                       IsReadOnly="True"
                       Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding ChannelsOffsetParameters[1]}">
-                <dxmvvm:Interaction.Behaviors>
-                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="1"/>
-                </dxmvvm:Interaction.Behaviors>
-              </TextBox>
+                      Text="{Binding CvItems[1]}"/>
               <TextBox HorizontalAlignment="Stretch"
                       Margin="8,0,8,20"
                       IsReadOnly="True"
                       Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding ChannelsOffsetParameters[2]}">
-                <dxmvvm:Interaction.Behaviors>
-                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="2"/>
-                </dxmvvm:Interaction.Behaviors>
-              </TextBox>
+                      Text="{Binding CvItems[2]}"/>
               <TextBox HorizontalAlignment="Stretch"
                       Margin="8,0,8,20"
                       IsReadOnly="True"
                       Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding ChannelsOffsetParameters[3]}">
-                <dxmvvm:Interaction.Behaviors>
-                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="3"/>
-                </dxmvvm:Interaction.Behaviors>
-              </TextBox>
+                      Text="{Binding CvItems[3]}"/>
               <TextBox HorizontalAlignment="Stretch"
                       Margin="8,0,8,20"
                       IsReadOnly="True"
                       Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding ChannelsOffsetParameters[4]}">
-                <dxmvvm:Interaction.Behaviors>
-                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="4"/>
-                </dxmvvm:Interaction.Behaviors>
-              </TextBox>
+                      Text="{Binding CvItems[4]}"/>
               <TextBox HorizontalAlignment="Stretch"
                       Margin="8,0,8,20"
                       IsReadOnly="True"
                       Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding ChannelsOffsetParameters[5]}">
-                <dxmvvm:Interaction.Behaviors>
-                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="5"/>
-                </dxmvvm:Interaction.Behaviors>
-              </TextBox>
+                      Text="{Binding CvItems[5]}"/>
               <TextBox HorizontalAlignment="Stretch"
                       Margin="8,0,8,20"
                       IsReadOnly="True"
                       Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding ChannelsOffsetParameters[6]}">
-                <dxmvvm:Interaction.Behaviors>
-                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="6"/>
-                </dxmvvm:Interaction.Behaviors>
-              </TextBox>
+                      Text="{Binding CvItems[6]}"/>
               <TextBox HorizontalAlignment="Stretch"
                       Margin="8,0,8,20"
                       IsReadOnly="True"
                       Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding ChannelsOffsetParameters[7]}">
-                <dxmvvm:Interaction.Behaviors>
-                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="7"/>
-                </dxmvvm:Interaction.Behaviors>
-              </TextBox>
+                      Text="{Binding CvItems[7]}"/>
               <TextBox HorizontalAlignment="Stretch"
                       Margin="8,0,8,20"
                       IsReadOnly="True"
                       Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding ChannelsOffsetParameters[8]}">
-                <dxmvvm:Interaction.Behaviors>
-                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="8"/>
-                </dxmvvm:Interaction.Behaviors>
-              </TextBox>
+                      Text="{Binding CvItems[8]}"/>
               <TextBox HorizontalAlignment="Stretch"
                       Margin="8,0,8,8"
                       IsReadOnly="True"
                       Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding ChannelsOffsetParameters[9]}">
-                <dxmvvm:Interaction.Behaviors>
-                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="9"/>
-                </dxmvvm:Interaction.Behaviors>
-              </TextBox>
+                      Text="{Binding CvItems[9]}"/>
             </StackPanel>
           </Border>
         </StackPanel>
       </StackPanel>
     </Border>
+    <ToggleButton Style="{StaticResource ToggleButtonThemeStyle}"
+                  Height="60" Width="120"
+                  Content="{lang:Loc DataAn_Calib_stats}"
+                  VerticalAlignment="Top"
+                  HorizontalAlignment="Left"
+                  Margin="1020,20,0,0"
+                  IsChecked="{Binding CalStatsButtonState, Mode=OneWay}"
+                  Command="{Binding CalibrationStatisticsButtonClickCommand}"/>
   </Grid>
 </UserControl>

@@ -18,7 +18,7 @@
              d:DesignHeight="674" d:DesignWidth="1500">
   <Grid>
     <!--WellTable 96-->
-    <DataGrid HorizontalAlignment="Left" VerticalAlignment="Top"
+    <DataGrid HorizontalAlignment="Center" VerticalAlignment="Center"
                 SelectionMode="Extended"
                 SelectionUnit="Cell"
                 AutoGenerateColumns="False"
@@ -31,6 +31,8 @@
                 Visibility="{Binding Table96Visible}"
                 CanUserResizeColumns="False"
                 CanUserResizeRows="False"
+                CanUserReorderColumns="False"
+                CanUserDeleteRows="False"
                 BorderThickness="0">
       <DataGrid.Resources>
         <Style x:Key="{ComponentResourceKey ResourceId=DataGridSelectAllButtonStyle, TypeInTargetAssembly={x:Type DataGrid}}"
@@ -38,205 +40,7 @@
           <Setter Property="Template">
             <Setter.Value>
               <ControlTemplate TargetType="{x:Type Button}">
-                <Grid Background="{StaticResource PressedButtonBackground}">
-                  <ContentPresenter/>
-                </Grid>
-              </ControlTemplate>
-            </Setter.Value>
-          </Setter>
-          <Style.Triggers>
-            <Trigger Property="IsPressed" Value="True">
-              <Setter Property="IsEnabled" Value="False"/>
-            </Trigger>
-          </Style.Triggers>
-        </Style>
-      </DataGrid.Resources>
-      <dxmvvm:Interaction.Behaviors>
-          <dxmvvm:EventToCommand EventName="SelectedCellsChanged"
-                                 Command="{Binding SelectIndicesCommand}"
-                                 PassEventArgsToCommand="True"/>
-        </dxmvvm:Interaction.Behaviors>
-      <DataGrid.CellStyle>
-          <Style TargetType="{x:Type DataGridCell}">
-            <Setter Property="Template">
-              <Setter.Value>
-                <ControlTemplate TargetType="DataGridCell">
-                  <Border x:Name="border">
-                    <ContentPresenter />
-                  </Border>
-                  <ControlTemplate.Triggers>
-                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsSelected}" Value="true">
-                      <Setter TargetName="border" Property="Background" Value="{StaticResource PressedButtonBackground}"/>
-                    </DataTrigger>
-                  </ControlTemplate.Triggers>
-                </ControlTemplate>
-              </Setter.Value>
-            </Setter>
-          </Style>
-      </DataGrid.CellStyle>
-      <DataGrid.RowHeaderStyle>
-        <Style TargetType="{x:Type DataGridRowHeader}">
-          <Setter Property="Template">
-            <Setter.Value>
-              <ControlTemplate TargetType="DataGridRowHeader">
-                <Grid Background="{StaticResource PressedButtonBackground}">
-                  <ContentPresenter HorizontalAlignment="Center"/>
-                </Grid>
-              </ControlTemplate>
-            </Setter.Value>
-          </Setter>
-          <Setter Property="Content" Value="{Binding Header}"/>
-          <Setter Property="Foreground" Value="{StaticResource AppTextColor}"/>
-          <Setter Property="FontFamily" Value="{StaticResource AppTextFont}"/>
-          <Setter Property="FontWeight" Value="ExtraBold"/>
-          <Setter Property="FontSize" Value="25"/>
-          <Setter Property="Height" Value="33"/>
-          <Style.Triggers>
-            <Trigger Property="IsVisible" Value="true">
-              <Setter Property="Height" Value="32"/>
-            </Trigger>
-          </Style.Triggers>
-        </Style>
-      </DataGrid.RowHeaderStyle>
-      <DataGrid.ColumnHeaderStyle>
-        <Style TargetType="{x:Type DataGridColumnHeader}">
-          <Setter Property="Foreground" Value="{StaticResource AppTextColor}"/>
-          <Setter Property="FontFamily" Value="{StaticResource AppTextFont}"/>
-          <Setter Property="FontWeight" Value="ExtraBold"/>
-          <Setter Property="FontSize" Value="25"/>
-          <Setter Property="Template">
-            <Setter.Value>
-              <ControlTemplate TargetType="DataGridColumnHeader">
-                <Grid Background="{StaticResource PressedButtonBackground}">
-                  <ContentPresenter HorizontalAlignment="Center"/>
-                </Grid>
-              </ControlTemplate>
-            </Setter.Value>
-          </Setter>
-        </Style>
-      </DataGrid.ColumnHeaderStyle>
-      <DataGrid.Columns>
-        <DataGridTemplateColumn Header="1" Width="SizeToCells"
-                                IsReadOnly="True">
-            <DataGridTemplateColumn.CellTemplate>
-              <DataTemplate>
-                <Image Source="{Binding Images[0]}"/>
-              </DataTemplate>
-            </DataGridTemplateColumn.CellTemplate>
-          </DataGridTemplateColumn>
-          <DataGridTemplateColumn Header="2" Width="SizeToCells"
-                                IsReadOnly="True">
-            <DataGridTemplateColumn.CellTemplate>
-              <DataTemplate>
-                <Image Source="{Binding Images[1]}"/>
-              </DataTemplate>
-            </DataGridTemplateColumn.CellTemplate>
-          </DataGridTemplateColumn>
-          <DataGridTemplateColumn Header="3" Width="SizeToCells"
-                                IsReadOnly="True">
-            <DataGridTemplateColumn.CellTemplate>
-              <DataTemplate>
-                <Image Source="{Binding Images[2]}"/>
-              </DataTemplate>
-            </DataGridTemplateColumn.CellTemplate>
-          </DataGridTemplateColumn>
-          <DataGridTemplateColumn Header="4" Width="SizeToCells"
-                                IsReadOnly="True">
-            <DataGridTemplateColumn.CellTemplate>
-              <DataTemplate>
-                <Image Source="{Binding Images[3]}"/>
-              </DataTemplate>
-            </DataGridTemplateColumn.CellTemplate>
-          </DataGridTemplateColumn>
-          <DataGridTemplateColumn Header="5" Width="SizeToCells"
-                                IsReadOnly="True">
-            <DataGridTemplateColumn.CellTemplate>
-              <DataTemplate>
-                <Image Source="{Binding Images[4]}"/>
-              </DataTemplate>
-            </DataGridTemplateColumn.CellTemplate>
-          </DataGridTemplateColumn>
-          <DataGridTemplateColumn Header="6" Width="SizeToCells"
-                                IsReadOnly="True">
-            <DataGridTemplateColumn.CellTemplate>
-              <DataTemplate>
-                <Image Source="{Binding Images[5]}"/>
-              </DataTemplate>
-            </DataGridTemplateColumn.CellTemplate>
-          </DataGridTemplateColumn>
-          <DataGridTemplateColumn Header="7" Width="SizeToCells"
-                                IsReadOnly="True">
-            <DataGridTemplateColumn.CellTemplate>
-              <DataTemplate>
-                <Image Source="{Binding Images[6]}"/>
-              </DataTemplate>
-            </DataGridTemplateColumn.CellTemplate>
-          </DataGridTemplateColumn>
-          <DataGridTemplateColumn Header="8" Width="SizeToCells"
-                                IsReadOnly="True">
-            <DataGridTemplateColumn.CellTemplate>
-              <DataTemplate>
-                <Image Source="{Binding Images[7]}"/>
-              </DataTemplate>
-            </DataGridTemplateColumn.CellTemplate>
-          </DataGridTemplateColumn>
-          <DataGridTemplateColumn Header="9" Width="SizeToCells"
-                                IsReadOnly="True">
-            <DataGridTemplateColumn.CellTemplate>
-              <DataTemplate>
-                <Image Source="{Binding Images[8]}"/>
-              </DataTemplate>
-            </DataGridTemplateColumn.CellTemplate>
-          </DataGridTemplateColumn>
-          <DataGridTemplateColumn Header="10" Width="SizeToCells"
-                                IsReadOnly="True">
-            <DataGridTemplateColumn.CellTemplate>
-              <DataTemplate>
-                <Image Source="{Binding Images[9]}"/>
-              </DataTemplate>
-            </DataGridTemplateColumn.CellTemplate>
-          </DataGridTemplateColumn>
-          <DataGridTemplateColumn Header="11" Width="SizeToCells"
-                                IsReadOnly="True">
-            <DataGridTemplateColumn.CellTemplate>
-              <DataTemplate>
-                <Image Source="{Binding Images[10]}"/>
-              </DataTemplate>
-            </DataGridTemplateColumn.CellTemplate>
-          </DataGridTemplateColumn>
-          <DataGridTemplateColumn Header="12" Width="SizeToCells"
-                                IsReadOnly="True">
-            <DataGridTemplateColumn.CellTemplate>
-              <DataTemplate>
-                <Image Source="{Binding Images[11]}"/>
-              </DataTemplate>
-            </DataGridTemplateColumn.CellTemplate>
-          </DataGridTemplateColumn>
-        </DataGrid.Columns>
-      </DataGrid>
-
-    <!--WellTable 384-->
-    <DataGrid HorizontalAlignment="Left" VerticalAlignment="Top"
-              SelectionMode="Extended"
-              SelectionUnit="Cell"
-              AutoGenerateColumns="False"
-              ItemsSource="{Binding Table384Wells}"
-              HeadersVisibility="All"
-              Background="Transparent"
-              RowBackground="Transparent"
-              AlternatingRowBackground="Transparent"
-              GridLinesVisibility="None"
-              Visibility="{Binding Table384Visible}"
-              CanUserResizeColumns="False"
-              CanUserResizeRows="False"
-              BorderThickness="0">
-      <DataGrid.Resources>
-        <Style x:Key="{ComponentResourceKey ResourceId=DataGridSelectAllButtonStyle, TypeInTargetAssembly={x:Type DataGrid}}"
-               TargetType="{x:Type Button}">
-          <Setter Property="Template">
-            <Setter.Value>
-              <ControlTemplate TargetType="{x:Type Button}">
-                <Grid Background="{StaticResource PressedButtonBackground}">
+                <Grid Background="{StaticResource AppBackground}">
                   <ContentPresenter/>
                 </Grid>
               </ControlTemplate>
@@ -251,10 +55,9 @@
       </DataGrid.Resources>
       <dxmvvm:Interaction.Behaviors>
         <dxmvvm:EventToCommand EventName="SelectedCellsChanged"
-                               Command="{Binding SelectIndicesCommand}"
-                               PassEventArgsToCommand="True"/>
+                                 Command="{Binding SelectIndicesCommand}"
+                                 PassEventArgsToCommand="True"/>
       </dxmvvm:Interaction.Behaviors>
-      
       <DataGrid.CellStyle>
         <Style TargetType="{x:Type DataGridCell}">
           <Setter Property="Template">
@@ -264,21 +67,23 @@
                   <ContentPresenter />
                 </Border>
                 <ControlTemplate.Triggers>
-                  <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsSelected}" Value="true">
-                    <Setter TargetName="border" Property="Background" Value="{StaticResource PressedButtonBackground}"/>
+                  <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsSelected}"
+                               Value="true">
+                    <Setter TargetName="border" Property="Background"
+                            Value="{StaticResource RibbonBackgroundActive}"/>
                   </DataTrigger>
                 </ControlTemplate.Triggers>
               </ControlTemplate>
             </Setter.Value>
           </Setter>
         </Style>
-        </DataGrid.CellStyle>
+      </DataGrid.CellStyle>
       <DataGrid.RowHeaderStyle>
         <Style TargetType="{x:Type DataGridRowHeader}">
           <Setter Property="Template">
             <Setter.Value>
               <ControlTemplate TargetType="DataGridRowHeader">
-                <Grid Background="{StaticResource PressedButtonBackground}">
+                <Grid Background="{StaticResource AppBackground}">
                   <ContentPresenter HorizontalAlignment="Center"/>
                 </Grid>
               </ControlTemplate>
@@ -301,12 +106,12 @@
         <Style TargetType="{x:Type DataGridColumnHeader}">
           <Setter Property="Foreground" Value="{StaticResource AppTextColor}"/>
           <Setter Property="FontFamily" Value="{StaticResource AppTextFont}"/>
-          <Setter Property="FontSize" Value="25"/>
           <Setter Property="FontWeight" Value="ExtraBold"/>
+          <Setter Property="FontSize" Value="25"/>
           <Setter Property="Template">
             <Setter.Value>
               <ControlTemplate TargetType="DataGridColumnHeader">
-                <Grid Background="{StaticResource PressedButtonBackground}">
+                <Grid Background="{StaticResource AppBackground}">
                   <ContentPresenter HorizontalAlignment="Center"/>
                 </Grid>
               </ControlTemplate>
@@ -325,224 +130,427 @@
         </DataGridTemplateColumn>
         <DataGridTemplateColumn Header="2" Width="SizeToCells"
                                 IsReadOnly="True">
-            <DataGridTemplateColumn.CellTemplate>
-              <DataTemplate>
-                <Image Source="{Binding Images[1]}"/>
-              </DataTemplate>
-            </DataGridTemplateColumn.CellTemplate>
-          </DataGridTemplateColumn>
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <Image Source="{Binding Images[1]}"/>
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
         <DataGridTemplateColumn Header="3" Width="SizeToCells"
                                 IsReadOnly="True">
-            <DataGridTemplateColumn.CellTemplate>
-              <DataTemplate>
-                <Image Source="{Binding Images[2]}"/>
-              </DataTemplate>
-            </DataGridTemplateColumn.CellTemplate>
-          </DataGridTemplateColumn>
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <Image Source="{Binding Images[2]}"/>
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
         <DataGridTemplateColumn Header="4" Width="SizeToCells"
                                 IsReadOnly="True">
-            <DataGridTemplateColumn.CellTemplate>
-              <DataTemplate>
-                <Image Source="{Binding Images[3]}"/>
-              </DataTemplate>
-            </DataGridTemplateColumn.CellTemplate>
-          </DataGridTemplateColumn>
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <Image Source="{Binding Images[3]}"/>
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
         <DataGridTemplateColumn Header="5" Width="SizeToCells"
                                 IsReadOnly="True">
-            <DataGridTemplateColumn.CellTemplate>
-              <DataTemplate>
-                <Image Source="{Binding Images[4]}"/>
-              </DataTemplate>
-            </DataGridTemplateColumn.CellTemplate>
-          </DataGridTemplateColumn>
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <Image Source="{Binding Images[4]}"/>
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
         <DataGridTemplateColumn Header="6" Width="SizeToCells"
                                 IsReadOnly="True">
-            <DataGridTemplateColumn.CellTemplate>
-              <DataTemplate>
-                <Image Source="{Binding Images[5]}"/>
-              </DataTemplate>
-            </DataGridTemplateColumn.CellTemplate>
-          </DataGridTemplateColumn>
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <Image Source="{Binding Images[5]}"/>
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
         <DataGridTemplateColumn Header="7" Width="SizeToCells"
                                 IsReadOnly="True">
-            <DataGridTemplateColumn.CellTemplate>
-              <DataTemplate>
-                <Image Source="{Binding Images[6]}"/>
-              </DataTemplate>
-            </DataGridTemplateColumn.CellTemplate>
-          </DataGridTemplateColumn>
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <Image Source="{Binding Images[6]}"/>
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
         <DataGridTemplateColumn Header="8" Width="SizeToCells"
                                 IsReadOnly="True">
-            <DataGridTemplateColumn.CellTemplate>
-              <DataTemplate>
-                <Image Source="{Binding Images[7]}"/>
-              </DataTemplate>
-            </DataGridTemplateColumn.CellTemplate>
-          </DataGridTemplateColumn>
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <Image Source="{Binding Images[7]}"/>
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
         <DataGridTemplateColumn Header="9" Width="SizeToCells"
                                 IsReadOnly="True">
-            <DataGridTemplateColumn.CellTemplate>
-              <DataTemplate>
-                <Image Source="{Binding Images[8]}"/>
-              </DataTemplate>
-            </DataGridTemplateColumn.CellTemplate>
-          </DataGridTemplateColumn>
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <Image Source="{Binding Images[8]}"/>
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
         <DataGridTemplateColumn Header="10" Width="SizeToCells"
                                 IsReadOnly="True">
-            <DataGridTemplateColumn.CellTemplate>
-              <DataTemplate>
-                <Image Source="{Binding Images[9]}"/>
-              </DataTemplate>
-            </DataGridTemplateColumn.CellTemplate>
-          </DataGridTemplateColumn>
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <Image Source="{Binding Images[9]}"/>
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
         <DataGridTemplateColumn Header="11" Width="SizeToCells"
                                 IsReadOnly="True">
-            <DataGridTemplateColumn.CellTemplate>
-              <DataTemplate>
-                <Image Source="{Binding Images[10]}"/>
-              </DataTemplate>
-            </DataGridTemplateColumn.CellTemplate>
-          </DataGridTemplateColumn>
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <Image Source="{Binding Images[10]}"/>
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
         <DataGridTemplateColumn Header="12" Width="SizeToCells"
                                 IsReadOnly="True">
-            <DataGridTemplateColumn.CellTemplate>
-              <DataTemplate>
-                <Image Source="{Binding Images[11]}"/>
-              </DataTemplate>
-            </DataGridTemplateColumn.CellTemplate>
-          </DataGridTemplateColumn>
-        <DataGridTemplateColumn Header="13" Width="SizeToCells"
-                                IsReadOnly="True">
-            <DataGridTemplateColumn.CellTemplate>
-              <DataTemplate>
-                <Image Source="{Binding Images[12]}"/>
-              </DataTemplate>
-            </DataGridTemplateColumn.CellTemplate>
-          </DataGridTemplateColumn>
-        <DataGridTemplateColumn Header="14" Width="SizeToCells"
-                                IsReadOnly="True">
-            <DataGridTemplateColumn.CellTemplate>
-              <DataTemplate>
-                <Image Source="{Binding Images[13]}"/>
-              </DataTemplate>
-            </DataGridTemplateColumn.CellTemplate>
-          </DataGridTemplateColumn>
-        <DataGridTemplateColumn Header="15" Width="SizeToCells"
-                                IsReadOnly="True">
-            <DataGridTemplateColumn.CellTemplate>
-              <DataTemplate>
-                <Image Source="{Binding Images[14]}"/>
-              </DataTemplate>
-            </DataGridTemplateColumn.CellTemplate>
-          </DataGridTemplateColumn>
-        <DataGridTemplateColumn Header="16" Width="SizeToCells"
-                                IsReadOnly="True">
-            <DataGridTemplateColumn.CellTemplate>
-              <DataTemplate>
-                <Image Source="{Binding Images[15]}"/>
-              </DataTemplate>
-            </DataGridTemplateColumn.CellTemplate>
-          </DataGridTemplateColumn>
-        <DataGridTemplateColumn Header="17" Width="SizeToCells"
-                                IsReadOnly="True">
-            <DataGridTemplateColumn.CellTemplate>
-              <DataTemplate>
-                <Image Source="{Binding Images[16]}"/>
-              </DataTemplate>
-            </DataGridTemplateColumn.CellTemplate>
-          </DataGridTemplateColumn>
-        <DataGridTemplateColumn Header="18" Width="SizeToCells"
-                                IsReadOnly="True">
-            <DataGridTemplateColumn.CellTemplate>
-              <DataTemplate>
-                <Image Source="{Binding Images[17]}"/>
-              </DataTemplate>
-            </DataGridTemplateColumn.CellTemplate>
-          </DataGridTemplateColumn>
-        <DataGridTemplateColumn Header="19" Width="SizeToCells"
-                                IsReadOnly="True">
-            <DataGridTemplateColumn.CellTemplate>
-              <DataTemplate>
-                <Image Source="{Binding Images[18]}"/>
-              </DataTemplate>
-            </DataGridTemplateColumn.CellTemplate>
-          </DataGridTemplateColumn>
-        <DataGridTemplateColumn Header="20" Width="SizeToCells"
-                                IsReadOnly="True">
-            <DataGridTemplateColumn.CellTemplate>
-              <DataTemplate>
-                <Image Source="{Binding Images[19]}"/>
-              </DataTemplate>
-            </DataGridTemplateColumn.CellTemplate>
-          </DataGridTemplateColumn>
-        <DataGridTemplateColumn Header="21" Width="SizeToCells"
-                                IsReadOnly="True">
-            <DataGridTemplateColumn.CellTemplate>
-              <DataTemplate>
-                <Image Source="{Binding Images[20]}"/>
-              </DataTemplate>
-            </DataGridTemplateColumn.CellTemplate>
-          </DataGridTemplateColumn>
-        <DataGridTemplateColumn Header="22" Width="SizeToCells"
-                                IsReadOnly="True">
-            <DataGridTemplateColumn.CellTemplate>
-              <DataTemplate>
-                <Image Source="{Binding Images[21]}"/>
-              </DataTemplate>
-            </DataGridTemplateColumn.CellTemplate>
-          </DataGridTemplateColumn>
-        <DataGridTemplateColumn Header="23" Width="SizeToCells"
-                                IsReadOnly="True">
-            <DataGridTemplateColumn.CellTemplate>
-              <DataTemplate>
-                <Image Source="{Binding Images[22]}"/>
-              </DataTemplate>
-            </DataGridTemplateColumn.CellTemplate>
-          </DataGridTemplateColumn>
-        <DataGridTemplateColumn Header="24" Width="SizeToCells"
-                                IsReadOnly="True">
-            <DataGridTemplateColumn.CellTemplate>
-              <DataTemplate>
-                <Image Source="{Binding Images[23]}"/>
-              </DataTemplate>
-            </DataGridTemplateColumn.CellTemplate>
-          </DataGridTemplateColumn>
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <Image Source="{Binding Images[11]}"/>
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
       </DataGrid.Columns>
     </DataGrid>
-    
+
+    <!--WellTable 384-->
+    <DataGrid HorizontalAlignment="Center" VerticalAlignment="Top"
+              Margin="0,30,0,0"
+              SelectionMode="Extended"
+              SelectionUnit="Cell"
+              AutoGenerateColumns="False"
+              ItemsSource="{Binding Table384Wells}"
+              HeadersVisibility="All"
+              Background="Transparent"
+              RowBackground="Transparent"
+              AlternatingRowBackground="Transparent"
+              GridLinesVisibility="None"
+              Visibility="{Binding Table384Visible}"
+              CanUserResizeColumns="False"
+              CanUserResizeRows="False"
+              CanUserReorderColumns="False"
+              CanUserDeleteRows="False"
+              BorderThickness="0">
+      <DataGrid.Resources>
+        <Style x:Key="{ComponentResourceKey ResourceId=DataGridSelectAllButtonStyle, TypeInTargetAssembly={x:Type DataGrid}}"
+               TargetType="{x:Type Button}">
+          <Setter Property="Template">
+            <Setter.Value>
+              <ControlTemplate TargetType="{x:Type Button}">
+                <Grid Background="{StaticResource AppBackground}">
+                  <ContentPresenter/>
+                </Grid>
+              </ControlTemplate>
+            </Setter.Value>
+          </Setter>
+          <Style.Triggers>
+            <Trigger Property="IsPressed" Value="True">
+              <Setter Property="IsEnabled" Value="False"/>
+            </Trigger>
+          </Style.Triggers>
+        </Style>
+      </DataGrid.Resources>
+      <dxmvvm:Interaction.Behaviors>
+        <dxmvvm:EventToCommand EventName="SelectedCellsChanged"
+                               Command="{Binding SelectIndicesCommand}"
+                               PassEventArgsToCommand="True"/>
+      </dxmvvm:Interaction.Behaviors>
+
+      <DataGrid.CellStyle>
+        <Style TargetType="{x:Type DataGridCell}">
+          <Setter Property="Template">
+            <Setter.Value>
+              <ControlTemplate TargetType="DataGridCell">
+                <Border x:Name="border">
+                  <ContentPresenter />
+                </Border>
+                <ControlTemplate.Triggers>
+                  <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsSelected}" Value="true">
+                    <Setter TargetName="border" Property="Background"
+                            Value="{StaticResource RibbonBackgroundActive}"/>
+                  </DataTrigger>
+                </ControlTemplate.Triggers>
+              </ControlTemplate>
+            </Setter.Value>
+          </Setter>
+        </Style>
+      </DataGrid.CellStyle>
+      <DataGrid.RowHeaderStyle>
+        <Style TargetType="{x:Type DataGridRowHeader}">
+          <Setter Property="Template">
+            <Setter.Value>
+              <ControlTemplate TargetType="DataGridRowHeader">
+                <Grid Background="{StaticResource AppBackground}">
+                  <ContentPresenter HorizontalAlignment="Center"/>
+                </Grid>
+              </ControlTemplate>
+            </Setter.Value>
+          </Setter>
+          <Setter Property="Content" Value="{Binding Header}"/>
+          <Setter Property="Foreground" Value="{StaticResource AppTextColor}"/>
+          <Setter Property="FontFamily" Value="{StaticResource AppTextFont}"/>
+          <Setter Property="FontWeight" Value="ExtraBold"/>
+          <Setter Property="FontSize" Value="25"/>
+          <Setter Property="Height" Value="33"/>
+          <Style.Triggers>
+            <Trigger Property="IsVisible" Value="true">
+              <Setter Property="Height" Value="32"/>
+            </Trigger>
+          </Style.Triggers>
+        </Style>
+      </DataGrid.RowHeaderStyle>
+      <DataGrid.ColumnHeaderStyle>
+        <Style TargetType="{x:Type DataGridColumnHeader}">
+          <Setter Property="Foreground" Value="{StaticResource AppTextColor}"/>
+          <Setter Property="FontFamily" Value="{StaticResource AppTextFont}"/>
+          <Setter Property="FontSize" Value="25"/>
+          <Setter Property="FontWeight" Value="ExtraBold"/>
+          <Setter Property="Template">
+            <Setter.Value>
+              <ControlTemplate TargetType="DataGridColumnHeader">
+                <Grid Background="{StaticResource AppBackground}">
+                  <ContentPresenter HorizontalAlignment="Center"/>
+                </Grid>
+              </ControlTemplate>
+            </Setter.Value>
+          </Setter>
+        </Style>
+      </DataGrid.ColumnHeaderStyle>
+      <DataGrid.Columns>
+        <DataGridTemplateColumn Header="1" Width="SizeToCells"
+                                IsReadOnly="True">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <Image Source="{Binding Images[0]}"/>
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+        <DataGridTemplateColumn Header="2" Width="SizeToCells"
+                                IsReadOnly="True">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <Image Source="{Binding Images[1]}"/>
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+        <DataGridTemplateColumn Header="3" Width="SizeToCells"
+                                IsReadOnly="True">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <Image Source="{Binding Images[2]}"/>
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+        <DataGridTemplateColumn Header="4" Width="SizeToCells"
+                                IsReadOnly="True">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <Image Source="{Binding Images[3]}"/>
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+        <DataGridTemplateColumn Header="5" Width="SizeToCells"
+                                IsReadOnly="True">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <Image Source="{Binding Images[4]}"/>
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+        <DataGridTemplateColumn Header="6" Width="SizeToCells"
+                                IsReadOnly="True">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <Image Source="{Binding Images[5]}"/>
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+        <DataGridTemplateColumn Header="7" Width="SizeToCells"
+                                IsReadOnly="True">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <Image Source="{Binding Images[6]}"/>
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+        <DataGridTemplateColumn Header="8" Width="SizeToCells"
+                                IsReadOnly="True">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <Image Source="{Binding Images[7]}"/>
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+        <DataGridTemplateColumn Header="9" Width="SizeToCells"
+                                IsReadOnly="True">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <Image Source="{Binding Images[8]}"/>
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+        <DataGridTemplateColumn Header="10" Width="SizeToCells"
+                                IsReadOnly="True">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <Image Source="{Binding Images[9]}"/>
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+        <DataGridTemplateColumn Header="11" Width="SizeToCells"
+                                IsReadOnly="True">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <Image Source="{Binding Images[10]}"/>
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+        <DataGridTemplateColumn Header="12" Width="SizeToCells"
+                                IsReadOnly="True">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <Image Source="{Binding Images[11]}"/>
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+        <DataGridTemplateColumn Header="13" Width="SizeToCells"
+                                IsReadOnly="True">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <Image Source="{Binding Images[12]}"/>
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+        <DataGridTemplateColumn Header="14" Width="SizeToCells"
+                                IsReadOnly="True">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <Image Source="{Binding Images[13]}"/>
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+        <DataGridTemplateColumn Header="15" Width="SizeToCells"
+                                IsReadOnly="True">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <Image Source="{Binding Images[14]}"/>
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+        <DataGridTemplateColumn Header="16" Width="SizeToCells"
+                                IsReadOnly="True">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <Image Source="{Binding Images[15]}"/>
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+        <DataGridTemplateColumn Header="17" Width="SizeToCells"
+                                IsReadOnly="True">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <Image Source="{Binding Images[16]}"/>
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+        <DataGridTemplateColumn Header="18" Width="SizeToCells"
+                                IsReadOnly="True">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <Image Source="{Binding Images[17]}"/>
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+        <DataGridTemplateColumn Header="19" Width="SizeToCells"
+                                IsReadOnly="True">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <Image Source="{Binding Images[18]}"/>
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+        <DataGridTemplateColumn Header="20" Width="SizeToCells"
+                                IsReadOnly="True">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <Image Source="{Binding Images[19]}"/>
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+        <DataGridTemplateColumn Header="21" Width="SizeToCells"
+                                IsReadOnly="True">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <Image Source="{Binding Images[20]}"/>
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+        <DataGridTemplateColumn Header="22" Width="SizeToCells"
+                                IsReadOnly="True">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <Image Source="{Binding Images[21]}"/>
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+        <DataGridTemplateColumn Header="23" Width="SizeToCells"
+                                IsReadOnly="True">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <Image Source="{Binding Images[22]}"/>
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+        <DataGridTemplateColumn Header="24" Width="SizeToCells"
+                                IsReadOnly="True">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <Image Source="{Binding Images[23]}"/>
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+      </DataGrid.Columns>
+    </DataGrid>
+
     <!--WellTable Size Selector-->
     <Border HorizontalAlignment="Left" VerticalAlignment="Bottom"
-            BorderThickness="1"
-            BorderBrush="{StaticResource HaltButtonBackgroundHighlighted}"
             Margin="20,0,0,20"
             Width="240"
-            Height="60">
+            Height="60"
+            Visibility="{Binding TableSelectorVisible}">
       <StackPanel HorizontalAlignment="Center"
                   Orientation="Horizontal">
-        <RadioButton Content="96"
-                     Style="{StaticResource RadioButtonHorizontalThemeStyle}"
-                     IsChecked="{Binding Selected96}"
+        <ToggleButton Content="96"
+                     Style="{StaticResource ToggleButtonThemeStyle}"
+                     IsChecked="{Binding Selected96, Mode=OneWay}"
                      Width="120"
                      Command="{Binding ChangeWellTableSizeCommand}">
-          <RadioButton.CommandParameter>
+          <ToggleButton.CommandParameter>
             <System:Int32>96</System:Int32>
-          </RadioButton.CommandParameter>
-        </RadioButton>
-        <RadioButton Content="384"
-                     Style="{StaticResource RadioButtonHorizontalThemeStyle}"
-                     IsChecked="{Binding Selected384}"
+          </ToggleButton.CommandParameter>
+        </ToggleButton>
+        <ToggleButton Content="384"
+                     Style="{StaticResource ToggleButtonThemeStyle}"
+                     IsChecked="{Binding Selected384, Mode=OneWay}"
                      Width="120"
                      Command="{Binding ChangeWellTableSizeCommand}">
-          <RadioButton.CommandParameter>
+          <ToggleButton.CommandParameter>
             <System:Int32>384</System:Int32>
-          </RadioButton.CommandParameter>
-        </RadioButton>
+          </ToggleButton.CommandParameter>
+        </ToggleButton>
       </StackPanel>
     </Border>
 
     <!--Well Assignment Buttons-->
-    <Border HorizontalAlignment="Left" VerticalAlignment="Bottom"
-            Margin="300,0,0,20">
+    <Border HorizontalAlignment="Center" VerticalAlignment="Bottom"
+            Margin="0,0,0,30"
+            Visibility="{Binding WellSelectorVisible}">
       <StackPanel Orientation="Horizontal">
         <Button Width="50" Height="50"
                 Command="{Binding AssignWellTypeButtonClickCommand}"
@@ -564,16 +572,18 @@
                 CommandParameter="3">
           <Image Source="pack://application:,,,/DevExpress.Images.v21.1;component/Images/Find/Find_32x32.png"/>
         </Button>
-      </StackPanel> 
+      </StackPanel>
     </Border>
 
-    <!--System Control-->
-    <Border HorizontalAlignment="Left"
+    <!--All Buttons-->
+    <Grid Visibility="{Binding ButtonsVisible}">
+      <!--System Control-->
+      <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Margin="800,50,0,0">
+            Margin="30,50,0,0">
 
-      <StackPanel VerticalAlignment="Stretch">
-        <TextBlock Text="{lang:Loc Experiment_System_Control}"
+        <StackPanel VerticalAlignment="Stretch">
+          <TextBlock Text="{lang:Loc Experiment_System_Control}"
                  FontFamily="{StaticResource AppTextFont}"
                  FontSize="30"
                  FontWeight="UltraBold"
@@ -582,57 +592,57 @@
                  VerticalAlignment="Top"
                  Margin="0,0,0,0"/>
 
-        <Border BorderThickness="1"
+          <Border BorderThickness="1"
                 BorderBrush="{StaticResource HaltButtonBackgroundHighlighted}"
                 Margin="0,0,0,5"
                 Width="150">
 
-          <StackPanel HorizontalAlignment="Center">
-            <RadioButton Content="{lang:Loc Experiment_Manual}"
+            <StackPanel HorizontalAlignment="Center">
+              <RadioButton Content="{lang:Loc Experiment_Manual}"
                          Style="{StaticResource RadioButtonVerticalThemeStyle}"
                          Height="44"
                          Width="150"
                          FontSize="19"
                          IsChecked="{Binding SystemControlSelectorState[0]}"
                          Command="{Binding SystemControlSelectorCommand}">
-              <RadioButton.CommandParameter>
-                <System:Byte>0</System:Byte>
-              </RadioButton.CommandParameter>
-            </RadioButton>
-            <RadioButton Content="{lang:Loc Experiment_Work_Order}"
+                <RadioButton.CommandParameter>
+                  <System:Byte>0</System:Byte>
+                </RadioButton.CommandParameter>
+              </RadioButton>
+              <RadioButton Content="{lang:Loc Experiment_Work_Order}"
                          Style="{StaticResource RadioButtonVerticalThemeStyle}"
                          Height="44"
                          Width="150"
                          FontSize="19"
                          IsChecked="{Binding SystemControlSelectorState[1]}"
                          Command="{Binding SystemControlSelectorCommand}">
-              <RadioButton.CommandParameter>
-                <System:Byte>1</System:Byte>
-              </RadioButton.CommandParameter>
-            </RadioButton>
-            <RadioButton Content="{lang:Loc Experiment_Work_Order_Plus_Bcode}"
+                <RadioButton.CommandParameter>
+                  <System:Byte>1</System:Byte>
+                </RadioButton.CommandParameter>
+              </RadioButton>
+              <RadioButton Content="{lang:Loc Experiment_Work_Order_Plus_Bcode}"
                          Style="{StaticResource RadioButtonVerticalThemeStyle}"
                          Height="44"
                          Width="150"
                          FontSize="19"
                          IsChecked="{Binding SystemControlSelectorState[2]}"
                          Command="{Binding SystemControlSelectorCommand}">
-              <RadioButton.CommandParameter>
-                <System:Byte>2</System:Byte>
-              </RadioButton.CommandParameter>
-            </RadioButton>
-          </StackPanel>
-        </Border>
-      </StackPanel>
-    </Border>
+                <RadioButton.CommandParameter>
+                  <System:Byte>2</System:Byte>
+                </RadioButton.CommandParameter>
+              </RadioButton>
+            </StackPanel>
+          </Border>
+        </StackPanel>
+      </Border>
 
-    <!--Order-->
-    <Border HorizontalAlignment="Left"
+      <!--Order-->
+      <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Margin="1050,50,0,0">
+            Margin="300,50,0,0">
 
-      <StackPanel VerticalAlignment="Stretch">
-        <TextBlock Text="{lang:Loc Experiment_Order}"
+        <StackPanel VerticalAlignment="Stretch">
+          <TextBlock Text="{lang:Loc Experiment_Order}"
                  FontFamily="{StaticResource AppTextFont}"
                  FontSize="30"
                  FontWeight="UltraBold"
@@ -641,43 +651,43 @@
                  VerticalAlignment="Top"
                  Margin="0,0,0,0"/>
 
-        <Border BorderThickness="1"
+          <Border BorderThickness="1"
                 BorderBrush="{StaticResource HaltButtonBackgroundHighlighted}"
                 Margin="0,0,0,5"
                 Width="150">
 
-          <StackPanel HorizontalAlignment="Center">
-            <RadioButton Content="{lang:Loc Row}"
+            <StackPanel HorizontalAlignment="Center">
+              <RadioButton Content="{lang:Loc Row}"
                          Style="{StaticResource RadioButtonVerticalThemeStyle}"
                          Height="44"
                          Width="150"
                          Command="{Binding OrderSelectorCommand}">
-              <RadioButton.CommandParameter>
-                <System:Byte>1</System:Byte>
-              </RadioButton.CommandParameter>
-            </RadioButton>
-            <RadioButton Content="{lang:Loc Column}"
+                <RadioButton.CommandParameter>
+                  <System:Byte>1</System:Byte>
+                </RadioButton.CommandParameter>
+              </RadioButton>
+              <RadioButton Content="{lang:Loc Column}"
                          Style="{StaticResource RadioButtonVerticalThemeStyle}"
                          Height="44"
                          Width="150"
                          IsChecked="True"
                          Command="{Binding OrderSelectorCommand}">
-              <RadioButton.CommandParameter>
-                <System:Byte>0</System:Byte>
-              </RadioButton.CommandParameter>
-            </RadioButton>
-          </StackPanel>
-        </Border>
-      </StackPanel>
-    </Border>
+                <RadioButton.CommandParameter>
+                  <System:Byte>0</System:Byte>
+                </RadioButton.CommandParameter>
+              </RadioButton>
+            </StackPanel>
+          </Border>
+        </StackPanel>
+      </Border>
 
-    <!--End Read-->
-    <Border HorizontalAlignment="Left"
+      <!--End Read-->
+      <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Margin="1250,50,0,0">
+            Margin="500,50,0,0">
 
-      <StackPanel VerticalAlignment="Stretch">
-        <TextBlock Text="{lang:Loc Experiment_End_Read}"
+        <StackPanel VerticalAlignment="Stretch">
+          <TextBlock Text="{lang:Loc Experiment_End_Read}"
                    FontFamily="{StaticResource AppTextFont}"
                    FontSize="30"
                    FontWeight="UltraBold"
@@ -685,178 +695,183 @@
                    HorizontalAlignment="Center"
                    VerticalAlignment="Top"
                    Margin="0,0,0,0"/>
-        <StackPanel Orientation="Horizontal">
-          <Border BorderThickness="1"
+          <StackPanel Orientation="Horizontal">
+            <Border BorderThickness="1"
                   BorderBrush="{StaticResource HaltButtonBackgroundHighlighted}"
                   HorizontalAlignment="Left"
                   Margin="0,0,0,5"
                   Width="100">
 
-          <StackPanel HorizontalAlignment="Center">
-            <RadioButton Content="{lang:Loc Experiment_Min_Per_Reg}"
+              <StackPanel HorizontalAlignment="Center">
+                <RadioButton Content="{lang:Loc Experiment_Min_Per_Reg}"
                          Style="{StaticResource RadioButtonVerticalThemeStyle}"
                          Height="44"
                          Width="100"
                          FontSize="19"
                          IsChecked="{Binding EndReadSelectorState[0]}"
                          Command="{Binding EndReadSelectorCommand}">
-              <RadioButton.CommandParameter>
-                <System:Byte>0</System:Byte>
-              </RadioButton.CommandParameter>
-            </RadioButton>
-            <RadioButton Content="{lang:Loc Experiment_Total_Events}"
+                  <RadioButton.CommandParameter>
+                    <System:Byte>0</System:Byte>
+                  </RadioButton.CommandParameter>
+                </RadioButton>
+                <RadioButton Content="{lang:Loc Experiment_Total_Events}"
                          Style="{StaticResource RadioButtonVerticalThemeStyle}"
                          Height="44"
                          Width="100"
                          FontSize="19"
                          IsChecked="{Binding EndReadSelectorState[1]}"
                          Command="{Binding EndReadSelectorCommand}">
-              <RadioButton.CommandParameter>
-                <System:Byte>1</System:Byte>
-              </RadioButton.CommandParameter>
-            </RadioButton>
-            <RadioButton Content="{lang:Loc Experiment_End_of_Sample}"
+                  <RadioButton.CommandParameter>
+                    <System:Byte>1</System:Byte>
+                  </RadioButton.CommandParameter>
+                </RadioButton>
+                <RadioButton Content="{lang:Loc Experiment_End_of_Sample}"
                          Style="{StaticResource RadioButtonVerticalThemeStyle}"
                          Height="44"
                          Width="100"
                          FontSize="19"
                          IsChecked="{Binding EndReadSelectorState[2]}"
                          Command="{Binding EndReadSelectorCommand}">
-              <RadioButton.CommandParameter>
-                <System:Byte>2</System:Byte>
-              </RadioButton.CommandParameter>
-            </RadioButton>
-          </StackPanel>
-          </Border>
-          <Border Background="{StaticResource RibbonBackgroundActive}"
+                  <RadioButton.CommandParameter>
+                    <System:Byte>2</System:Byte>
+                  </RadioButton.CommandParameter>
+                </RadioButton>
+              </StackPanel>
+            </Border>
+            <Border Background="{StaticResource RibbonBackgroundActive}"
                   Height="96" Width="100"
                   VerticalAlignment="Top"
                   Margin="5,0,0,0">
-            <StackPanel>
-              <TextBox HorizontalAlignment="Stretch"
+              <StackPanel>
+                <TextBox HorizontalAlignment="Stretch"
                        Margin="8,8,8,0"
                        Style="{StaticResource InputFieldStyle}"
                        Text="{Binding EndRead[0]}">
-                <dxmvvm:Interaction.Behaviors>
-                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="0"/>
-                </dxmvvm:Interaction.Behaviors>
-              </TextBox>
-              <TextBox HorizontalAlignment="Stretch"
+                  <dxmvvm:Interaction.Behaviors>
+                    <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="0"/>
+                  </dxmvvm:Interaction.Behaviors>
+                </TextBox>
+                <TextBox HorizontalAlignment="Stretch"
                        Margin="8,8,8,8"
                        Style="{StaticResource InputFieldStyle}"
                        Text="{Binding EndRead[1]}">
-                <dxmvvm:Interaction.Behaviors>
-                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="1"/>
-                </dxmvvm:Interaction.Behaviors>
-              </TextBox>
-            </StackPanel>
-          </Border>
+                  <dxmvvm:Interaction.Behaviors>
+                    <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="1"/>
+                  </dxmvvm:Interaction.Behaviors>
+                </TextBox>
+              </StackPanel>
+            </Border>
+          </StackPanel>
         </StackPanel>
-      </StackPanel>
-    </Border>
+      </Border>
 
-    <!--Volumes-->
-    <Border HorizontalAlignment="Left"
+      <!--Volumes-->
+      <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Margin="840,300,0,0">
-      <StackPanel>
-        <TextBlock Text="{lang:Loc Experiment_Samp_Vol}"
+            Margin="30,350,0,0">
+        <StackPanel Orientation="Horizontal">
+          <StackPanel Margin="0,63,-15,0">
+            <TextBlock Text="{lang:Loc Experiment_Samp_Vol}"
                    FontFamily="{StaticResource AppTextFont}"
-                   FontSize="26"
+                   FontSize="30"
                    FontWeight="UltraBold"
+                   HorizontalAlignment="Right"
+                   Foreground="{StaticResource AppTextColor}"/>
+            <TextBlock Text="{lang:Loc Experiment_Wash_Vol}"
+                   FontFamily="{StaticResource AppTextFont}"
+                   FontSize="30"
+                   FontWeight="UltraBold"
+                   HorizontalAlignment="Right"
                    Foreground="{StaticResource AppTextColor}"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Top"
-                   Margin="0,0,0,3"/>
-        <TextBox Width="140"
-                 HorizontalAlignment="Center"
-                 Margin="0,0,10,3"
-                 Style="{StaticResource InputFieldStyle}"
-                 Text="{Binding Volumes[0]}">
-          <dxmvvm:Interaction.Behaviors>
-            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="2"/>
-          </dxmvvm:Interaction.Behaviors>
-        </TextBox>
-        <StackPanel Orientation="Horizontal"
+                   Margin="0,6,0,0"/>
+            <TextBlock Text="{lang:Loc Experiment_Agitate_Vol}"
+                   FontFamily="{StaticResource AppTextFont}"
+                   FontSize="30"
+                   FontWeight="UltraBold"
+                   HorizontalAlignment="Right"
+                   Foreground="{StaticResource AppTextColor}"
+                   Margin="0,3,0,0"/>
+          </StackPanel>
+          <StackPanel>
+            <StackPanel Orientation="Horizontal"
                     HorizontalAlignment="Center"
                     Width="192"
-                    Margin="0,3,0,20">
-          <Button Content="25"
+                    Margin="0,3,0,5">
+              <Button Content="25"
                   Command="{Binding SetFixedVolumeButtonClickCommand}"
                   Style="{StaticResource ButtonStyle}"
                   Height="50" Width="60"
                   HorizontalAlignment="Center"
                   VerticalAlignment="Center"
                   Margin="3,0,3,0">
-            <Button.CommandParameter>
-              <System:UInt16>25</System:UInt16>
-            </Button.CommandParameter>
-          </Button>
-          <Button Content="50"
+                <Button.CommandParameter>
+                  <System:UInt16>25</System:UInt16>
+                </Button.CommandParameter>
+              </Button>
+              <Button Content="50"
                   Command="{Binding SetFixedVolumeButtonClickCommand}"
                   Style="{StaticResource ButtonStyle}"
                   Height="50" Width="60"
                   HorizontalAlignment="Center"
                   VerticalAlignment="Center"
                   Margin="0,0,3,0">
-            <Button.CommandParameter>
-              <System:UInt16>50</System:UInt16>
-            </Button.CommandParameter>
-          </Button>
-          <Button Content="100"
+                <Button.CommandParameter>
+                  <System:UInt16>50</System:UInt16>
+                </Button.CommandParameter>
+              </Button>
+              <Button Content="100"
                   Command="{Binding SetFixedVolumeButtonClickCommand}"
                   Style="{StaticResource ButtonStyle}"
                   Height="50" Width="60"
                   HorizontalAlignment="Center"
                   VerticalAlignment="Center">
-            <Button.CommandParameter>
-              <System:UInt16>100</System:UInt16>
-            </Button.CommandParameter>
-          </Button>
-        </StackPanel>
-        <TextBlock Text="{lang:Loc Experiment_Wash_Vol}"
-                   FontFamily="{StaticResource AppTextFont}"
-                   FontSize="26"
-                   FontWeight="UltraBold"
-                   Foreground="{StaticResource AppTextColor}"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Top"
-                   Margin="0,0,0,3"/>
-        <TextBox Width="140"
+                <Button.CommandParameter>
+                  <System:UInt16>100</System:UInt16>
+                </Button.CommandParameter>
+              </Button>
+            </StackPanel>
+            <Border Background="{StaticResource RibbonBackgroundActive}"
+                  HorizontalAlignment="Center">
+              <StackPanel>
+                <TextBox Width="140"
                  HorizontalAlignment="Center"
-                 Margin="0,0,10,3"
+                 Margin="8,8,8,0"
+                 Style="{StaticResource InputFieldStyle}"
+                 Text="{Binding Volumes[0]}">
+                  <dxmvvm:Interaction.Behaviors>
+                    <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="2"/>
+                  </dxmvvm:Interaction.Behaviors>
+                </TextBox>
+                <TextBox Width="140"
+                 HorizontalAlignment="Center"
+                 Margin="8,8,8,8"
                  Style="{StaticResource InputFieldStyle}"
                  Text="{Binding Volumes[1]}">
-          <dxmvvm:Interaction.Behaviors>
-            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="3"/>
-          </dxmvvm:Interaction.Behaviors>
-        </TextBox>
-        <TextBlock Text="{lang:Loc Experiment_Agitate_Vol}"
-                   FontFamily="{StaticResource AppTextFont}"
-                   FontSize="26"
-                   FontWeight="UltraBold"
-                   Foreground="{StaticResource AppTextColor}"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Top"
-                   Margin="0,0,0,3"/>
-        <TextBox Width="140"
+                  <dxmvvm:Interaction.Behaviors>
+                    <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="3"/>
+                  </dxmvvm:Interaction.Behaviors>
+                </TextBox>
+                <TextBox Width="140"
                  HorizontalAlignment="Center"
-                 Margin="0,0,10,3"
+                 Margin="8,0,8,8"
                  Style="{StaticResource InputFieldStyle}"
                  Text="{Binding Volumes[2]}">
-          <dxmvvm:Interaction.Behaviors>
-            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="4"/>
-          </dxmvvm:Interaction.Behaviors>
-        </TextBox>
-      </StackPanel>
-    </Border>
+                  <dxmvvm:Interaction.Behaviors>
+                    <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="4"/>
+                  </dxmvvm:Interaction.Behaviors>
+                </TextBox>
+              </StackPanel>
+            </Border>
+          </StackPanel>
+        </StackPanel>
+      </Border>
 
-    <!--Dropdowns-->
-    <Border HorizontalAlignment="Left"
+      <!--Dropdowns-->
+      <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Margin="1040,300,0,0">
-      <StackPanel>
-        <TextBlock Text="{lang:Loc Experiment_Speed}"
+            Margin="400,300,0,0">
+        <StackPanel>
+          <TextBlock Text="{lang:Loc Experiment_Speed}"
                    FontFamily="{StaticResource AppTextFont}"
                    FontSize="26"
                    FontWeight="UltraBold"
@@ -864,7 +879,7 @@
                    HorizontalAlignment="Center"
                    VerticalAlignment="Top"
                    Margin="0,0,0,3"/>
-        <dx:DropDownButton Width="300"
+          <dx:DropDownButton Width="300"
                            Height="50"
                            FontSize="25"
                            VerticalAlignment="Bottom"
@@ -872,18 +887,18 @@
                            FontFamily="{StaticResource AppTextFont}"
                            Foreground="{StaticResource AppTextColor}"
                            Content="{Binding SelectedSpeedContent}">
-          <dxb:PopupMenu ItemLinksSource="{Binding SpeedItems}">
-            <dxb:PopupMenu.ItemTemplate>
-              <DataTemplate>
-                <ContentControl>
-                  <dxb:BarButtonItem Content="{Binding Content}"  
+            <dxb:PopupMenu ItemLinksSource="{Binding SpeedItems}">
+              <dxb:PopupMenu.ItemTemplate>
+                <DataTemplate>
+                  <ContentControl>
+                    <dxb:BarButtonItem Content="{Binding Content}"  
                                    ItemClick="{DXEvent 'Click((int)1)'}"/>
-                </ContentControl>
-              </DataTemplate>
-            </dxb:PopupMenu.ItemTemplate>
-          </dxb:PopupMenu>
-        </dx:DropDownButton>
-        <TextBlock Text="{lang:Loc Experiment_Classific_Map}"
+                  </ContentControl>
+                </DataTemplate>
+              </dxb:PopupMenu.ItemTemplate>
+            </dxb:PopupMenu>
+          </dx:DropDownButton>
+          <TextBlock Text="{lang:Loc Experiment_Classific_Map}"
                    FontFamily="{StaticResource AppTextFont}"
                    FontSize="26"
                    FontWeight="UltraBold"
@@ -891,7 +906,7 @@
                    HorizontalAlignment="Center"
                    VerticalAlignment="Top"
                    Margin="0,0,0,3"/>
-        <dx:DropDownButton Width="300"
+          <dx:DropDownButton Width="300"
                            Height="50"
                            FontSize="25"
                            VerticalAlignment="Bottom"
@@ -899,18 +914,18 @@
                            FontFamily="{StaticResource AppTextFont}"
                            Foreground="{StaticResource AppTextColor}"
                            Content="{Binding SelectedClassiMapContent}">
-          <dxb:PopupMenu ItemLinksSource="{Binding ClassiMapItems}">
-            <dxb:PopupMenu.ItemTemplate>
-              <DataTemplate>
-                <ContentControl>
-                  <dxb:BarButtonItem Content="{Binding Content}"  
+            <dxb:PopupMenu ItemLinksSource="{Binding ClassiMapItems}">
+              <dxb:PopupMenu.ItemTemplate>
+                <DataTemplate>
+                  <ContentControl>
+                    <dxb:BarButtonItem Content="{Binding Content}"  
                                    ItemClick="{DXEvent 'Click((int)2)'}"/>
-                </ContentControl>
-              </DataTemplate>
-            </dxb:PopupMenu.ItemTemplate>
-          </dxb:PopupMenu>
-        </dx:DropDownButton>
-        <TextBlock Text="{lang:Loc Experiment_Ch_Config}"
+                  </ContentControl>
+                </DataTemplate>
+              </dxb:PopupMenu.ItemTemplate>
+            </dxb:PopupMenu>
+          </dx:DropDownButton>
+          <TextBlock Text="{lang:Loc Experiment_Ch_Config}"
                    FontFamily="{StaticResource AppTextFont}"
                    FontSize="26"
                    FontWeight="UltraBold"
@@ -918,7 +933,7 @@
                    HorizontalAlignment="Center"
                    VerticalAlignment="Top"
                    Margin="0,0,0,3"/>
-        <dx:DropDownButton Width="300"
+          <dx:DropDownButton Width="300"
                            Height="50"
                            FontSize="25"
                            VerticalAlignment="Bottom"
@@ -926,18 +941,99 @@
                            FontFamily="{StaticResource AppTextFont}"
                            Foreground="{StaticResource AppTextColor}"
                            Content="{Binding SelectedChConfigContent}">
-          <dxb:PopupMenu ItemLinksSource="{Binding ChConfigItems}">
-            <dxb:PopupMenu.ItemTemplate>
-              <DataTemplate>
-                <ContentControl>
-                  <dxb:BarButtonItem Content="{Binding Content}"  
+            <dxb:PopupMenu ItemLinksSource="{Binding ChConfigItems}">
+              <dxb:PopupMenu.ItemTemplate>
+                <DataTemplate>
+                  <ContentControl>
+                    <dxb:BarButtonItem Content="{Binding Content}"  
                                    ItemClick="{DXEvent 'Click((int)3)'}"/>
-                </ContentControl>
-              </DataTemplate>
-            </dxb:PopupMenu.ItemTemplate>
-          </dxb:PopupMenu>
-        </dx:DropDownButton>
-      </StackPanel>
-    </Border>
+                  </ContentControl>
+                </DataTemplate>
+              </dxb:PopupMenu.ItemTemplate>
+            </dxb:PopupMenu>
+          </dx:DropDownButton>
+        </StackPanel>
+      </Border>
+      
+      <!--Fluidics-->
+      <Border HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Margin="800,50,0,0">
+        <StackPanel>
+          <TextBlock Text="{lang:Loc Experiment_Fluidics}"
+                   FontFamily="{StaticResource AppTextFont}"
+                   FontSize="30"
+                   FontWeight="UltraBold"
+                   Foreground="{StaticResource AppTextColor}"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Top"
+                   Margin="0,0,0,0"/>
+          <Button Content="{lang:Loc Experiment_Prime}"
+                  Style="{StaticResource ButtonStyle}"
+                  Command="{Binding PrimeButtonClickCommand}"
+                  Height="50" Width="100"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center"
+                  Margin="0,4,0,0"/>
+          <Button Content="{lang:Loc Experiment_Wash_A}"
+                  Style="{StaticResource ButtonStyle}"
+                  Command="{Binding WashAButtonClickCommand}"
+                  Height="50" Width="100"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center"
+                  Margin="0,4,0,0"/>
+          <Button Content="{lang:Loc Experiment_Wash_B}"
+                  Style="{StaticResource ButtonStyle}"
+                  Command="{Binding WashBButtonClickCommand}"
+                  Height="50" Width="100"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center"
+                  Margin="0,4,0,0"/>
+        </StackPanel>
+      </Border>
+      
+      <!--Event Count-->
+      <Border HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Margin="950,50,0,0">
+        <StackPanel>
+          <TextBlock Text="{lang:Loc Experiment_Event_Count}"
+                   FontFamily="{StaticResource AppTextFont}"
+                   FontSize="30"
+                   FontWeight="UltraBold"
+                   Foreground="{StaticResource AppTextColor}"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Top"
+                   Margin="0,0,0,0"/>
+          <TextBox HorizontalAlignment="Stretch"
+                   Margin="8,8,8,8"
+                   IsReadOnly="True"
+                   Style="{StaticResource InputFieldStyle}"
+                   Text="{Binding EventCountField[0]}"/>
+        </StackPanel>
+      </Border>
+      
+      <!--Load Eject Plate-->
+      <Border HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Margin="950,150,0,0">
+        <StackPanel>
+          <Button Content="{lang:Loc Experiment_Load}"
+                  Style="{StaticResource ButtonStyle}"
+                  Command="{Binding LoadButtonClickCommand}"
+                  Height="50" Width="100"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center"
+                  Margin="0,4,0,0"/>
+          <Button Content="{lang:Loc Experiment_Eject}"
+                  Style="{StaticResource ButtonStyle}"
+                  Command="{Binding EjectButtonClickCommand}"
+                  Height="50" Width="100"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center"
+                  Margin="0,4,0,0"/>
+        </StackPanel>
+      </Border>
+    </Grid>
   </Grid>
 </UserControl>

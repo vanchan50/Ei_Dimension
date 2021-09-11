@@ -105,8 +105,7 @@ namespace MicroCy
     public List<Wells> WellsInOrder { get; } = new List<Wells>();
     public List<Wells> Wells { get; } = new List<Wells>();
     public List<CustomMap> MapList { get; private set; } = new List<CustomMap>();
-    public List<Gstats> GStats { get; set; } = new List<Gstats> {new Gstats(), new Gstats(), new Gstats(),
-      new Gstats(), new Gstats(), new Gstats(),new Gstats(), new Gstats(), new Gstats(), new Gstats() };
+    public List<Gstats> GStats { get; set; }
     public float HDnrCoef { get; set; }
     public float MapPeakX { get; set; }
     public float MapPeakY { get; set; }
@@ -277,6 +276,11 @@ namespace MicroCy
       Outdir = RootDirectory.FullName;
       EndState = 0;
       ReadActive = false;
+      GStats = new List<Gstats>(10);
+      for(var i = 0; i < 10; i++)
+      {
+        GStats.Add(new Gstats());
+      }
     }
 
     public void ConstructMap(CustomMap mmap)
