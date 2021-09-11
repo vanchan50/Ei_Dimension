@@ -25,7 +25,7 @@
     <!--Input Selector-->
     <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Margin="30,100,0,0">
+            Margin="190,100,0,0">
 
       <StackPanel VerticalAlignment="Stretch">
         <TextBlock Text="{lang:Loc Components_Input_Sel}"
@@ -40,8 +40,7 @@
         <Border BorderThickness="2"
                   Margin="0,0,0,13"
                   CornerRadius="5">
-          <Grid Width="150" Height="90">
-
+          <Grid>
             <TextBlock Text="A"
                  FontFamily="{StaticResource AppTextFont}"
                  FontSize="20"
@@ -49,7 +48,7 @@
                  Foreground="{StaticResource AppTextColor}"
                  HorizontalAlignment="Left"
                  VerticalAlignment="Top"
-                 Margin="10,0,0,0"/>
+                 Margin="5,0,0,0"/>
 
             <TextBlock Text="{Binding InputSelectorState[0]}"
                  FontFamily="{StaticResource AppTextFont}"
@@ -58,18 +57,18 @@
                  Foreground="{StaticResource AppTextColor}"
                  HorizontalAlignment="Left"
                  VerticalAlignment="Top"
-                 Margin="40,0,0,0"/>
+                 Margin="26,0,0,0"/>
 
             <dx:SimpleButton Glyph="{dx:DXImage 'SvgImages/Spreadsheet/SortFields.svg'}"
                              Command="{Binding InputSelectorSwapButtonClickCommand}"
-                             Height="40" Width="100"
-                             HorizontalAlignment="Center"
-                             VerticalAlignment="Center"
+                             Height="40" Width="120"
+                             HorizontalAlignment="Left"
+                             VerticalAlignment="Top"
                              FontFamily="{StaticResource AppTextFont}"
                              FontSize="16"
                              FontWeight="UltraBold"
                              Foreground="{StaticResource AppTextColor}"
-                             Margin="0,0,10,0"/>
+                             Margin="0,28,0,0"/>
 
             <TextBlock Text="B"
                  FontFamily="{StaticResource AppTextFont}"
@@ -77,8 +76,8 @@
                  FontWeight="UltraBold"
                  Foreground="{StaticResource AppTextColor}"
                  HorizontalAlignment="Left"
-                 VerticalAlignment="Bottom"
-                 Margin="10,0,0,0"/>
+                 VerticalAlignment="Top"
+                 Margin="5,65,0,0"/>
 
             <TextBlock Text="{Binding InputSelectorState[1]}"
                  FontFamily="{StaticResource AppTextFont}"
@@ -86,8 +85,70 @@
                  FontWeight="UltraBold"
                  Foreground="{StaticResource AppTextColor}"
                  HorizontalAlignment="Left"
-                 VerticalAlignment="Bottom"
-                 Margin="40,0,0,0"/>
+                 VerticalAlignment="Top"
+                 Margin="26,65,0,0"/>
+            <StackPanel HorizontalAlignment="Left"
+                    Margin="0,60,0,0">
+              <Button Content="{lang:Loc Components_Position}"
+                  Style="{StaticResource ButtonStyle}"
+                  Command="{Binding IdexPositionButtonClickCommand}"
+                  Height="50" Width="120"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center"
+                  Margin="0,45,0,0"/>
+              <TextBlock Text="{lang:Loc Components_Max_Steps}"
+                     FontFamily="{StaticResource AppTextFont}"
+                     FontSize="26"
+                     FontWeight="UltraBold"
+                     Foreground="{StaticResource AppTextColor}"
+                     HorizontalAlignment="Center"
+                     VerticalAlignment="Top"
+                     Margin="0,0,0,6"/>
+
+            </StackPanel>
+            
+            <StackPanel HorizontalAlignment="Left"
+                          VerticalAlignment="Top"
+                          Margin="130,45,0,0">
+
+              <Button Content="{lang:Loc Components_Move_Idex}"
+                  Style="{StaticResource ButtonStyle}"
+                  Command="{Binding MoveIdexButtonClickCommand}"
+                  Height="50" Width="120"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center"
+                  Margin="0,3,0,4"/>
+              <Border Background="{StaticResource RibbonBackgroundActive}">
+                <StackPanel>
+                  <TextBox Width="120"
+                           HorizontalAlignment="Right"
+                           Margin="8,8,8,0"
+                           Style="{StaticResource InputFieldStyle}"
+                           Text="{Binding IdexTextBoxInputs[0]}">
+                    <dxmvvm:Interaction.Behaviors>
+                      <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="0"/>
+                    </dxmvvm:Interaction.Behaviors>
+                  </TextBox>
+                  <TextBox Width="120"
+                           HorizontalAlignment="Right"
+                           Margin="8,8,8,8"
+                           Style="{StaticResource InputFieldStyle}"
+                           Text="{Binding IdexTextBoxInputs[1]}">
+                    <dxmvvm:Interaction.Behaviors>
+                      <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="1"/>
+                    </dxmvvm:Interaction.Behaviors>
+                  </TextBox>
+                </StackPanel>
+              </Border>
+              <ToggleButton Style="{StaticResource ToggleButtonThemeStyle}"
+                            Height="60"
+                            Width="120"
+                            Margin="0,4,0,0"
+                            Content="{lang:Loc Components_CW_Dir}"
+                            IsChecked="False"
+                            Command="{Binding CWDirectionToggleButtonClickCommand}"/>
+
+            </StackPanel>
           </Grid>
         </Border>
 
@@ -97,7 +158,7 @@
     <!--Valves-->
     <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Margin="70,300,0,0">
+            Margin="50,360,0,0">
 
       <StackPanel VerticalAlignment="Stretch">
         <TextBlock Text="{lang:Loc Components_Valves}"
@@ -126,6 +187,7 @@
             <ToggleButton Style="{StaticResource ToggleButtonThemeStyle}"
                           Height="60"
                           Width="150"
+                          Margin="0,3,0,0"
                           Content="{lang:Loc Components_Valve2}"
                           IsChecked="False"
                           Command="{Binding ValvesButtonClickCommand}">
@@ -136,6 +198,7 @@
             <ToggleButton Style="{StaticResource ToggleButtonThemeStyle}"
                           Height="60"
                           Width="150"
+                          Margin="0,3,0,0"
                           Content="{lang:Loc Components_Cuvet_Drain_Open}"
                           IsChecked="False"
                           Command="{Binding ValvesButtonClickCommand}">
@@ -146,6 +209,7 @@
             <ToggleButton Style="{StaticResource ToggleButtonThemeStyle}"
                           Height="60"
                           Width="150"
+                          Margin="0,3,0,0"
                           Content="{lang:Loc Components_Fan}"
                           IsChecked="False"
                           Command="{Binding ValvesButtonClickCommand}">
@@ -162,7 +226,7 @@
     <!--Lasers-->
     <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Margin="380,100,0,0"
+            Margin="520,100,0,0"
             Width="180">
 
       <StackPanel VerticalAlignment="Stretch">
@@ -203,10 +267,10 @@
                            Foreground="{StaticResource AppTextColor}"
                            HorizontalAlignment="Left"
                            VerticalAlignment="Bottom"
-                           Margin="10,0,0,7"/>
+                           Margin="10,0,0,15"/>
 
-                <TextBox Height="36" Width="55"
-                         Margin="80,53,0,3"
+                <TextBox Width="55"
+                         Margin="80,58,0,8"
                          HorizontalAlignment="Left"
                          VerticalAlignment="Bottom"
                          Style="{StaticResource InputFieldStyle}"
@@ -225,8 +289,7 @@
               <Grid>
 
                 <ToggleButton Style="{StaticResource ToggleButtonThemeStyle}"
-                              Height="50"
-                              Width="150"
+                              Height="50" Width="150"
                               Content="{lang:Loc Green}"
                               IsChecked="False"
                               VerticalAlignment="Top"
@@ -243,10 +306,10 @@
                            Foreground="{StaticResource AppTextColor}"
                            HorizontalAlignment="Left"
                            VerticalAlignment="Bottom"
-                           Margin="10,0,0,7"/>
+                           Margin="10,0,0,15"/>
 
-                <TextBox Height="36" Width="55"
-                         Margin="80,53,0,3"
+                <TextBox Width="55"
+                         Margin="80,58,0,8"
                          HorizontalAlignment="Left"
                          VerticalAlignment="Bottom"
                          Style="{StaticResource InputFieldStyle}"
@@ -259,7 +322,6 @@
             </Border>
             <Border BorderThickness="2"
                     BorderBrush="{StaticResource AppTextColor}"
-                    Margin="0,0,0,13"
                     CornerRadius="5"
                     Width="150">
               <Grid>
@@ -283,10 +345,10 @@
                            Foreground="{StaticResource AppTextColor}"
                            HorizontalAlignment="Left"
                            VerticalAlignment="Bottom"
-                           Margin="10,0,0,7"/>
+                           Margin="10,0,0,15"/>
 
-                <TextBox Height="36" Width="55"
-                         Margin="80,53,0,3"
+                <TextBox Width="55"
+                         Margin="80,58,0,8"
                          HorizontalAlignment="Left"
                          VerticalAlignment="Bottom"
                          Style="{StaticResource InputFieldStyle}"
@@ -304,9 +366,9 @@
     </Border>
 
     <!--Syringe control-->
-    <Border HorizontalAlignment="Right"
+    <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Margin="0,100,218,0"
+            Margin="720,100,0,0"
             Width="320">
       <StackPanel VerticalAlignment="Stretch">
 
@@ -364,7 +426,7 @@
                    VerticalAlignment="Bottom"
                    HorizontalAlignment="Left"
                    Margin="247,0,0,36"/>
-                <TextBox Height="34" Width="65"
+                <TextBox Width="65"
                          Margin="245,0,5,2"
                          HorizontalAlignment="Left"
                          VerticalAlignment="Bottom"
@@ -420,7 +482,7 @@
                    VerticalAlignment="Bottom"
                    HorizontalAlignment="Left"
                    Margin="247,0,0,36"/>
-                <TextBox Height="34" Width="65"
+                <TextBox Width="65"
                          Margin="245,0,5,2"
                          HorizontalAlignment="Left"
                          VerticalAlignment="Bottom"
@@ -476,7 +538,7 @@
                    VerticalAlignment="Bottom"
                    HorizontalAlignment="Left"
                    Margin="247,0,0,36"/>
-                <TextBox Height="34" Width="65"
+                <TextBox Width="65"
                          Margin="245,0,5,2"
                          HorizontalAlignment="Left"
                          VerticalAlignment="Bottom"
@@ -495,9 +557,9 @@
     </Border>
 
     <!--Get Position-->
-    <Border HorizontalAlignment="Right"
+    <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Margin="0,455,200,0"
+            Margin="720,455,0,0"
             Width="340">
       <Grid>
         <StackPanel HorizontalAlignment="Left"
@@ -559,7 +621,7 @@
                      Margin="0,5,0,6"/>
           <Border Background="{StaticResource RibbonBackgroundActive}">
             <StackPanel>
-              <TextBox Height="36" Width="190"
+              <TextBox Width="190"
                    Margin="8,8,8,0"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Bottom"
@@ -569,7 +631,7 @@
                   <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="8"/>
                 </dxmvvm:Interaction.Behaviors>
               </TextBox>
-              <TextBox Height="36" Width="190"
+              <TextBox Width="190"
                    Margin="8,18,8,0"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Bottom"
@@ -579,7 +641,7 @@
                   <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="9"/>
                 </dxmvvm:Interaction.Behaviors>
               </TextBox>
-              <TextBox Height="36" Width="190"
+              <TextBox Width="190"
                    Margin="8,18,8,8"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Bottom"
@@ -594,12 +656,13 @@
         </StackPanel>
       </Grid>
     </Border>
-
+    
+    <!--Sampling-->
     <Border HorizontalAlignment="Left"
-            Margin="580,451,0,0">
+            Margin="380,430,0,0">
       <StackPanel>
         <ToggleButton Style="{StaticResource ToggleButtonThemeStyle}"
-                      Height="50" Width="130"
+                      Height="60" Width="130"
                       Margin="0,0,0,3"
                       Content="{lang:Loc Components_Sampling_ON}"
                       IsChecked="False"
@@ -607,7 +670,7 @@
                       Command="{Binding SamplingToggleButtonClickCommand}"/>
 
         <ToggleButton Style="{StaticResource ToggleButtonThemeStyle}"
-                      Height="50" Width="130"
+                      Height="60" Width="130"
                       Margin="0,0,0,3"
                       Content="{lang:Loc Components_Singl_Step_Deb}"
                       IsChecked="False"
@@ -632,66 +695,7 @@
 
     <Border HorizontalAlignment="Left"
             Height="195"
-            Margin="250,409,0,0">
-      <Grid>
-        <StackPanel HorizontalAlignment="Left">
-
-          <Button Content="{lang:Loc Components_Move_Idex}"
-                  Style="{StaticResource ButtonStyle}"
-                  Command="{Binding MoveIdexButtonClickCommand}"
-                  Height="50" Width="120"
-                  HorizontalAlignment="Center"
-                  VerticalAlignment="Center"
-                  Margin="0,3,0,0"/>
-          <TextBox Height="36"
-                   Width="120"
-                   HorizontalAlignment="Right"
-                   Margin="0,5,0,0"
-                   Style="{StaticResource InputFieldStyle}"
-                   Text="{Binding IdexTextBoxInputs[0]}">
-            <dxmvvm:Interaction.Behaviors>
-              <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="0"/>
-            </dxmvvm:Interaction.Behaviors>
-          </TextBox>
-          <TextBox Height="36"
-                   Width="120"
-                   HorizontalAlignment="Right"
-                   Margin="0,5,0,5"
-                   Style="{StaticResource InputFieldStyle}"
-                   Text="{Binding IdexTextBoxInputs[1]}">
-            <dxmvvm:Interaction.Behaviors>
-              <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="1"/>
-            </dxmvvm:Interaction.Behaviors>
-          </TextBox>
-          <ToggleButton Style="{StaticResource ToggleButtonThemeStyle}"
-                        Height="50"
-                        Width="120"
-                        Content="{lang:Loc Components_CW_Dir}"
-                        IsChecked="False"
-                        Command="{Binding CWDirectionToggleButtonClickCommand}"/>
-
-        </StackPanel>
-
-        <StackPanel HorizontalAlignment="Left"
-                    Margin="130,0,0,0">
-          <Button Content="{lang:Loc Components_Position}"
-                  Style="{StaticResource ButtonStyle}"
-                  Command="{Binding IdexPositionButtonClickCommand}"
-                  Height="50" Width="120"
-                  HorizontalAlignment="Center"
-                  VerticalAlignment="Center"
-                  Margin="0,45,0,0"/>
-          <TextBlock Text="{lang:Loc Components_Max_Steps}"
-                     FontFamily="{StaticResource AppTextFont}"
-                     FontSize="26"
-                     FontWeight="UltraBold"
-                     Foreground="{StaticResource AppTextColor}"
-                     HorizontalAlignment="Center"
-                     VerticalAlignment="Top"
-                     Margin="0,8,0,6"/>
-
-        </StackPanel>
-      </Grid>
+            Margin="70,409,0,0">
     </Border>
 
   </Grid>

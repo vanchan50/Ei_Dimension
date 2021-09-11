@@ -36,7 +36,7 @@
                  Foreground="{StaticResource AppTextColor}"
                  HorizontalAlignment="Right"
                  VerticalAlignment="Top"
-                 Margin="0,0,8,0"/>
+                 Margin="0,0,4,0"/>
           <TextBlock Text="{lang:Loc SyringeSpeeds_HiSpeed}"
                  FontFamily="{StaticResource AppTextFont}"
                  FontSize="36"
@@ -90,17 +90,15 @@
                  VerticalAlignment="Top"/>
           <Border Background="{StaticResource RibbonBackgroundActive}">
             <StackPanel>
-              <TextBox  Height="36"
-                      HorizontalAlignment="Stretch"
-                      Margin="8,8,8,20"
-                      Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding SheathSyringeParameters[0]}">
+              <TextBox HorizontalAlignment="Stretch"
+                       Margin="8,8,8,20"
+                       Style="{StaticResource InputFieldStyle}"
+                       Text="{Binding SheathSyringeParameters[0]}">
                 <dxmvvm:Interaction.Behaviors>
                   <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="0"/>
                 </dxmvvm:Interaction.Behaviors>
               </TextBox>
-              <TextBox  Height="36"
-                      HorizontalAlignment="Stretch"
+              <TextBox HorizontalAlignment="Stretch"
                       Margin="8,0,8,20"
                       Style="{StaticResource InputFieldStyle}"
                       Text="{Binding SheathSyringeParameters[1]}">
@@ -108,8 +106,7 @@
                   <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="1"/>
                 </dxmvvm:Interaction.Behaviors>
               </TextBox>
-              <TextBox  Height="36"
-                      HorizontalAlignment="Stretch"
+              <TextBox HorizontalAlignment="Stretch"
                       Margin="8,0,8,20"
                       Style="{StaticResource InputFieldStyle}"
                       Text="{Binding SheathSyringeParameters[2]}">
@@ -117,8 +114,7 @@
                   <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="2"/>
                 </dxmvvm:Interaction.Behaviors>
               </TextBox>
-              <TextBox  Height="36"
-                      HorizontalAlignment="Stretch"
+              <TextBox HorizontalAlignment="Stretch"
                       Margin="8,0,8,20"
                       Style="{StaticResource InputFieldStyle}"
                       Text="{Binding SheathSyringeParameters[3]}">
@@ -126,8 +122,7 @@
                   <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="3"/>
                 </dxmvvm:Interaction.Behaviors>
               </TextBox>
-              <TextBox  Height="36"
-                      HorizontalAlignment="Stretch"
+              <TextBox HorizontalAlignment="Stretch"
                       Margin="8,0,8,20"
                       Style="{StaticResource InputFieldStyle}"
                       Text="{Binding SheathSyringeParameters[4]}">
@@ -135,8 +130,7 @@
                   <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="4"/>
                 </dxmvvm:Interaction.Behaviors>
               </TextBox>
-              <TextBox  Height="36"
-                      HorizontalAlignment="Stretch"
+              <TextBox HorizontalAlignment="Stretch"
                       Margin="8,0,8,8"
                       Style="{StaticResource InputFieldStyle}"
                       Text="{Binding SheathSyringeParameters[5]}">
@@ -159,8 +153,7 @@
                  VerticalAlignment="Top"/>
           <Border Background="{StaticResource RibbonBackgroundActive}">
             <StackPanel>
-              <TextBox  Height="36"
-                      HorizontalAlignment="Stretch"
+              <TextBox HorizontalAlignment="Stretch"
                       Margin="8,8,8,20"
                       Style="{StaticResource InputFieldStyle}"
                       Text="{Binding SamplesSyringeParameters[0]}">
@@ -169,8 +162,7 @@
                 </dxmvvm:Interaction.Behaviors>
               </TextBox>
 
-              <TextBox  Height="36"
-                      HorizontalAlignment="Stretch"
+              <TextBox HorizontalAlignment="Stretch"
                       Margin="8,0,8,20"
                       Style="{StaticResource InputFieldStyle}"
                       Text="{Binding SamplesSyringeParameters[1]}">
@@ -178,8 +170,7 @@
                   <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="7"/>
                 </dxmvvm:Interaction.Behaviors>
               </TextBox>
-              <TextBox  Height="36"
-                      HorizontalAlignment="Stretch"
+              <TextBox HorizontalAlignment="Stretch"
                       Margin="8,0,8,20"
                       Style="{StaticResource InputFieldStyle}"
                       Text="{Binding SamplesSyringeParameters[2]}">
@@ -187,8 +178,7 @@
                   <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="8"/>
                 </dxmvvm:Interaction.Behaviors>
               </TextBox>
-              <TextBox  Height="36"
-                      HorizontalAlignment="Stretch"
+              <TextBox HorizontalAlignment="Stretch"
                       Margin="8,0,8,20"
                       Style="{StaticResource InputFieldStyle}"
                       Text="{Binding SamplesSyringeParameters[3]}">
@@ -196,8 +186,7 @@
                   <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="9"/>
                 </dxmvvm:Interaction.Behaviors>
               </TextBox>
-              <TextBox  Height="36"
-                      HorizontalAlignment="Stretch"
+              <TextBox HorizontalAlignment="Stretch"
                       Margin="8,0,8,20"
                       Style="{StaticResource InputFieldStyle}"
                       Text="{Binding SamplesSyringeParameters[4]}">
@@ -205,8 +194,7 @@
                   <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="10"/>
                 </dxmvvm:Interaction.Behaviors>
               </TextBox>
-              <TextBox  Height="36"
-                      HorizontalAlignment="Stretch"
+              <TextBox HorizontalAlignment="Stretch"
                       Margin="8,0,8,8"
                       Style="{StaticResource InputFieldStyle}"
                       Text="{Binding SamplesSyringeParameters[5]}">

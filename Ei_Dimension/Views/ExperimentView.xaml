@@ -512,12 +512,11 @@
     
     <!--WellTable Size Selector-->
     <Border HorizontalAlignment="Left" VerticalAlignment="Bottom"
-            BorderThickness="2"
-              BorderBrush="{StaticResource AppTextColor}"
-              Margin="20,0,0,20"
-              Width="240"
-              Height="60"
-              CornerRadius="5">
+            BorderThickness="1"
+            BorderBrush="{StaticResource HaltButtonBackgroundHighlighted}"
+            Margin="20,0,0,20"
+            Width="240"
+            Height="60">
       <StackPanel HorizontalAlignment="Center"
                   Orientation="Horizontal">
         <RadioButton Content="96"
@@ -583,11 +582,10 @@
                  VerticalAlignment="Top"
                  Margin="0,0,0,0"/>
 
-        <Border BorderThickness="2"
-                BorderBrush="{StaticResource AppTextColor}"
+        <Border BorderThickness="1"
+                BorderBrush="{StaticResource HaltButtonBackgroundHighlighted}"
                 Margin="0,0,0,5"
-                Width="150"
-                CornerRadius="5">
+                Width="150">
 
           <StackPanel HorizontalAlignment="Center">
             <RadioButton Content="{lang:Loc Experiment_Manual}"
@@ -643,11 +641,10 @@
                  VerticalAlignment="Top"
                  Margin="0,0,0,0"/>
 
-        <Border BorderThickness="2"
-                BorderBrush="{StaticResource AppTextColor}"
+        <Border BorderThickness="1"
+                BorderBrush="{StaticResource HaltButtonBackgroundHighlighted}"
                 Margin="0,0,0,5"
-                Width="150"
-                CornerRadius="5">
+                Width="150">
 
           <StackPanel HorizontalAlignment="Center">
             <RadioButton Content="{lang:Loc Row}"
@@ -689,12 +686,11 @@
                    VerticalAlignment="Top"
                    Margin="0,0,0,0"/>
         <StackPanel Orientation="Horizontal">
-          <Border BorderThickness="2"
-                BorderBrush="{StaticResource AppTextColor}"
-                HorizontalAlignment="Left"
-                Margin="0,0,0,5"
-                Width="100"
-                CornerRadius="5">
+          <Border BorderThickness="1"
+                  BorderBrush="{StaticResource HaltButtonBackgroundHighlighted}"
+                  HorizontalAlignment="Left"
+                  Margin="0,0,0,5"
+                  Width="100">
 
           <StackPanel HorizontalAlignment="Center">
             <RadioButton Content="{lang:Loc Experiment_Min_Per_Reg}"
@@ -731,29 +727,30 @@
               </RadioButton.CommandParameter>
             </RadioButton>
           </StackPanel>
-        </Border>
-          <StackPanel Margin="3,6,0,0">
-            <TextBox Height="36"
-                     HorizontalAlignment="Stretch"
-                     Margin="0,0,0,0"
-                     Width="80"
-                     Style="{StaticResource InputFieldStyle}"
-                     Text="{Binding EndRead[0]}">
-              <dxmvvm:Interaction.Behaviors>
-                <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="0"/>
-              </dxmvvm:Interaction.Behaviors>
-            </TextBox>
-            <TextBox Height="36"
-                     HorizontalAlignment="Stretch"
-                     Margin="0,6,0,0"
-                     Width="80"
-                     Style="{StaticResource InputFieldStyle}"
-                     Text="{Binding EndRead[1]}">
-              <dxmvvm:Interaction.Behaviors>
-                <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="1"/>
-              </dxmvvm:Interaction.Behaviors>
-            </TextBox>
-          </StackPanel>
+          </Border>
+          <Border Background="{StaticResource RibbonBackgroundActive}"
+                  Height="96" Width="100"
+                  VerticalAlignment="Top"
+                  Margin="5,0,0,0">
+            <StackPanel>
+              <TextBox HorizontalAlignment="Stretch"
+                       Margin="8,8,8,0"
+                       Style="{StaticResource InputFieldStyle}"
+                       Text="{Binding EndRead[0]}">
+                <dxmvvm:Interaction.Behaviors>
+                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="0"/>
+                </dxmvvm:Interaction.Behaviors>
+              </TextBox>
+              <TextBox HorizontalAlignment="Stretch"
+                       Margin="8,8,8,8"
+                       Style="{StaticResource InputFieldStyle}"
+                       Text="{Binding EndRead[1]}">
+                <dxmvvm:Interaction.Behaviors>
+                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="1"/>
+                </dxmvvm:Interaction.Behaviors>
+              </TextBox>
+            </StackPanel>
+          </Border>
         </StackPanel>
       </StackPanel>
     </Border>
@@ -771,8 +768,7 @@
                    HorizontalAlignment="Center"
                    VerticalAlignment="Top"
                    Margin="0,0,0,3"/>
-        <TextBox Height="36"
-                 Width="100"
+        <TextBox Width="140"
                  HorizontalAlignment="Center"
                  Margin="0,0,10,3"
                  Style="{StaticResource InputFieldStyle}"
@@ -826,8 +822,7 @@
                    HorizontalAlignment="Center"
                    VerticalAlignment="Top"
                    Margin="0,0,0,3"/>
-        <TextBox Height="36"
-                 Width="100"
+        <TextBox Width="140"
                  HorizontalAlignment="Center"
                  Margin="0,0,10,3"
                  Style="{StaticResource InputFieldStyle}"
@@ -844,8 +839,7 @@
                    HorizontalAlignment="Center"
                    VerticalAlignment="Top"
                    Margin="0,0,0,3"/>
-        <TextBox Height="36"
-                 Width="100"
+        <TextBox Width="140"
                  HorizontalAlignment="Center"
                  Margin="0,0,10,3"
                  Style="{StaticResource InputFieldStyle}"

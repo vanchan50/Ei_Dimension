@@ -15,7 +15,7 @@
               <Border Name="Brdr"
                       VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                       Background="{TemplateBinding Background}"
-                      BorderBrush="{DynamicResource ButtonBackgroundHighlighted}"
+                      BorderBrush="{DynamicResource HaltButtonBackgroundHighlighted}"
                       BorderThickness="1"
                       CornerRadius="8">
                 <TextBlock Text="{TemplateBinding Property=Content}"
@@ -28,7 +28,10 @@
             <ControlTemplate.Triggers>
               <Trigger Property="IsChecked" Value="True">
                 <Setter TargetName="Brdr" Property="BorderBrush" Value="{DynamicResource ButtonBackground}"/>
-                <Setter Property="Background" Value="{DynamicResource ButtonBackgroundHighlighted}"/>
+                <Setter Property="Background" Value="{DynamicResource MenuButtonBackgroundActive}"/>
+              </Trigger>
+              <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Opacity" Value="0.2"/>
               </Trigger>
             </ControlTemplate.Triggers>
           </ControlTemplate>
@@ -36,8 +39,8 @@
       </Setter>
 
       <Setter Property="FontSize" Value="22"/>
-      <Setter Property="Foreground" Value="{DynamicResource ButtonForeground}"/>
-      <Setter Property="Background" Value="{DynamicResource ButtonBackground}"/>
+      <Setter Property="Foreground" Value="{DynamicResource AppTextColor}"/>
+      <Setter Property="Background" Value="{DynamicResource MenuButtonBackground}"/>
     </Style.Setters>
 
 

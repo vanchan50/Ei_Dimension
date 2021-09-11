@@ -27,15 +27,14 @@
         </Setter.Value>
       </Setter>
 
-      <Setter Property="Background" Value="{DynamicResource UnpressedButtonBackground}"/>
+      <Setter Property="Background" Value="{DynamicResource MenuButtonBackground}"/>
       <Setter Property="Foreground" Value="{DynamicResource AppTextColor}"/>
       <Setter Property="FontSize" Value="50"/>
     </Style.Setters>
 
     <Style.Triggers>
       <Trigger Property="IsChecked" Value="True">
-        <Setter Property="FontSize" Value="35"/>
-        <Setter Property="Background" Value="{DynamicResource PressedButtonBackground}"/>
+        <Setter Property="Background" Value="{DynamicResource MenuButtonBackgroundActive}"/>
       </Trigger>
     </Style.Triggers>
 
@@ -55,8 +54,8 @@
                   Height="{TemplateBinding Property=Height}"
                   Width="{TemplateBinding Property=Width}">
               <Rectangle VerticalAlignment="Stretch"
-                  HorizontalAlignment="Stretch"
-                  Fill="{TemplateBinding Background}"/>
+                         HorizontalAlignment="Stretch"
+                         Fill="{TemplateBinding Background}"/>
 
               <TextBlock Text="{TemplateBinding Property=Content}"
                          VerticalAlignment="Center"
@@ -69,15 +68,14 @@
       </Setter>
 
       <Setter Property="FontSize" Value="30"/>
-      <Setter Property="Background" Value="{DynamicResource UnpressedButtonBackground}"/>
+      <Setter Property="Background" Value="{DynamicResource MenuButtonBackground}"/>
       <Setter Property="Foreground" Value="{DynamicResource AppTextColor}"/>
 
     </Style.Setters>
 
     <Style.Triggers>
       <Trigger Property="IsChecked" Value="True">
-        <Setter Property="FontSize" Value="15"/>
-        <Setter Property="Background" Value="{DynamicResource PressedButtonBackground}"/>
+        <Setter Property="Background" Value="{DynamicResource MenuButtonBackgroundActive}"/>
       </Trigger>
     </Style.Triggers>
 

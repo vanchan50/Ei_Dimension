@@ -411,6 +411,9 @@ Events</value>
   <data name="Motors_Down" xml:space="preserve">
     <value>Down</value>
   </data>
+  <data name="Motors_Enc_Steps" xml:space="preserve">
+    <value>Encoder Steps</value>
+  </data>
   <data name="Motors_Front" xml:space="preserve">
     <value>Front</value>
   </data>

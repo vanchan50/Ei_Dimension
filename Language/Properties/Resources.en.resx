@@ -154,15 +154,14 @@ Align Motor</value>
   </data>
   <data name="Calibration_Classification_targets" xml:space="preserve">
     <value>Classification
-       Targets</value>
+    Targets</value>
   </data>
   <data name="Calibration_Classification_To_map" xml:space="preserve">
-    <value>Classification
-           To
-Current Map</value>
+    <value>Classification To
+  Current Map</value>
   </data>
   <data name="Calibration_Compensation_Percent" xml:space="preserve">
-    <value>  RP1 To CL1
+    <value>   RP1 To CL1
 Compensation
    Percentage</value>
   </data>
@@ -266,10 +265,10 @@ Coefficient</value>
   </data>
   <data name="Components_Cuvet_Drain_Open" xml:space="preserve">
     <value>Cuvet Drain
-       Open</value>
+     Open</value>
   </data>
   <data name="Components_CW_Dir" xml:space="preserve">
-    <value>     CW
+    <value>    CW
 Direction</value>
   </data>
   <data name="Components_Fan" xml:space="preserve">
@@ -298,14 +297,14 @@ Direction</value>
   </data>
   <data name="Components_Sampling_ON" xml:space="preserve">
     <value>Sampling
-      ON</value>
+    ON</value>
   </data>
   <data name="Components_Sheath" xml:space="preserve">
     <value>Sheath</value>
   </data>
   <data name="Components_Singl_Step_Deb" xml:space="preserve">
     <value>Single Step
-     Debug</value>
+    Debug</value>
   </data>
   <data name="Components_Startup" xml:space="preserve">
     <value>Startup</value>
@@ -506,6 +505,9 @@ Events</value>
   </data>
   <data name="Motors_Down" xml:space="preserve">
     <value>Down</value>
+  </data>
+  <data name="Motors_Enc_Steps" xml:space="preserve">
+    <value>Encoder Steps</value>
   </data>
   <data name="Motors_Front" xml:space="preserve">
     <value>Front</value>

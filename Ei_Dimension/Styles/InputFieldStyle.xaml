@@ -10,6 +10,7 @@
     <Setter Property="Foreground" Value="{DynamicResource AppTextColor}"/>
     <Setter Property="FontFamily" Value="{DynamicResource AppTextFont}"/>
     <Setter Property="FontSize" Value="25"/>
+    <Setter Property="Height" Value="36"/>
     <Setter Property="Template">
       <Setter.Value>
         
@@ -21,7 +22,9 @@
                          Fill="{DynamicResource AppBackground}"
                          Stroke="{DynamicResource ButtonBackgroundHighlighted}"
                          StrokeThickness="1"/>
-              <ScrollViewer Margin="10,0,10,0" x:Name="PART_ContentHost"/>
+              <ScrollViewer Margin="10,0,10,0"
+                            HorizontalAlignment="Center"
+                            x:Name="PART_ContentHost"/>
             </Grid>
           </Border>
           

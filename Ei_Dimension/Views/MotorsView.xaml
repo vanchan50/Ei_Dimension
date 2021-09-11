@@ -18,39 +18,38 @@
              d:DesignHeight="674" d:DesignWidth="1312">
   <Grid>
     <TextBlock Text="{lang:Loc Service_Motors}"
-                 FontFamily="{StaticResource AppTextFont}"
-                 FontSize="50"
-                 FontWeight="UltraBold"
-                 Foreground="{StaticResource AppTextColor}"
-                 HorizontalAlignment="Center"
-                 VerticalAlignment="Top"
-                 Margin="0,10,250,0"/>
+               FontFamily="{StaticResource AppTextFont}"
+               FontSize="50"
+               FontWeight="UltraBold"
+               Foreground="{StaticResource AppTextColor}"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Top"
+               Margin="0,10,250,0"/>
 
     <!--Motors Parameters-->
     <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Margin="0,100,0,00">
+            Margin="0,80,0,00">
 
       <StackPanel Orientation="Horizontal"
                   HorizontalAlignment="Stretch"
                   VerticalAlignment="Stretch"
                   Margin="10,0,10,0">
-          <StackPanel VerticalAlignment="Stretch"
-                      Width="140"
+        <StackPanel VerticalAlignment="Stretch"
                       Margin="0,0,3,0">
           <TextBlock Text="{lang:Loc Motors_Steps}"
                      FontFamily="{StaticResource AppTextFont}"
-                     FontSize="20"
+                     FontSize="36"
                      FontWeight="UltraBold"
                      Foreground="{StaticResource AppTextColor}"
                      HorizontalAlignment="Right"
                      VerticalAlignment="Top"
-                     Margin="0,30,8,0"/>
+                     Margin="0,40,8,0"/>
           
           <ToggleButton Style="{StaticResource ToggleButtonThemeStyle}"
                         Height="88"
                         Width="120"
-                        Margin="0,19,4,0"
+                        Margin="0,11,4,0"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Top"
                         Content="{lang:Loc Motors_Poll_Step}"
@@ -59,99 +58,101 @@
 
           <TextBlock Text="{lang:Loc Motors_Slope}"
                  FontFamily="{StaticResource AppTextFont}"
-                 FontSize="20"
+                 FontSize="36"
                  FontWeight="UltraBold"
                  Foreground="{StaticResource AppTextColor}"
                  HorizontalAlignment="Right"
                  VerticalAlignment="Top"
-                 Margin="0,120,4,0"/>
+                 Margin="0,112,4,0"/>
           <TextBlock Text="{lang:Loc Motors_Start_Speed}"
                  FontFamily="{StaticResource AppTextFont}"
-                 FontSize="20"
+                 FontSize="36"
                  FontWeight="UltraBold"
                  Foreground="{StaticResource AppTextColor}"
                  HorizontalAlignment="Right"
                  VerticalAlignment="Top"
-                 Margin="0,10,4,0"/>
+                 Margin="0,0,4,0"/>
           <TextBlock Text="{lang:Loc Motors_Run_Speed}"
                  FontFamily="{StaticResource AppTextFont}"
-                 FontSize="20"
+                 FontSize="36"
                  FontWeight="UltraBold"
                  Foreground="{StaticResource AppTextColor}"
                  HorizontalAlignment="Right"
                  VerticalAlignment="Top"
-                 Margin="0,14,4,0"/>
+                 Margin="0,-4,4,0"/>
           <TextBlock Text="{lang:Loc Motors_Cur_Step}"
                  FontFamily="{StaticResource AppTextFont}"
-                 FontSize="20"
+                 FontSize="36"
                  FontWeight="UltraBold"
                  Foreground="{StaticResource AppTextColor}"
                  HorizontalAlignment="Right"
                  VerticalAlignment="Top"
-                 Margin="0,14,4,0"/>
+                 Margin="0,-4,4,0"/>
+          <TextBlock Text="{lang:Loc Motors_Enc_Steps}"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="36"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Right"
+                 VerticalAlignment="Top"
+                 Margin="0,-4,4,0"/>
           <TextBlock Text="{lang:Loc Motors_Cur_Limit}"
                  FontFamily="{StaticResource AppTextFont}"
-                 FontSize="20"
+                 FontSize="36"
                  FontWeight="UltraBold"
                  Foreground="{StaticResource AppTextColor}"
                  HorizontalAlignment="Right"
                  VerticalAlignment="Top"
-                 Margin="0,14,4,0"/>
-          </StackPanel>
-          <StackPanel VerticalAlignment="Stretch"
-                    Width="100"
-                    Margin="0,0,15,0">
+                 Margin="0,-4,4,0"/>
+        </StackPanel>
+        <StackPanel VerticalAlignment="Stretch"
+                    Width="100">
           <TextBlock Text="{lang:Loc X}"
-                 FontFamily="{StaticResource AppTextFont}"
-                 FontSize="20"
-                 FontWeight="UltraBold"
-                 Foreground="{StaticResource AppTextColor}"
-                 HorizontalAlignment="Center"
-                 VerticalAlignment="Top"
-                 Margin="0,0,0,0"/>
+                     FontFamily="{StaticResource AppTextFont}"
+                     FontSize="36"
+                     FontWeight="UltraBold"
+                     Foreground="{StaticResource AppTextColor}"
+                     HorizontalAlignment="Center"
+                     VerticalAlignment="Top"/>
 
-            <TextBox  Height="36"
-                      HorizontalAlignment="Stretch"
-                      Margin="0,0,0,13"
-                      Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding ParametersX[0]}">
+          <TextBox HorizontalAlignment="Stretch"
+                   Margin="8,0,4,13"
+                   Style="{StaticResource InputFieldStyle}"
+                   Text="{Binding ParametersX[0]}">
             <dxmvvm:Interaction.Behaviors>
               <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="0"/>
             </dxmvvm:Interaction.Behaviors>
           </TextBox>
 
-          <Border BorderThickness="2"
-                  BorderBrush="{StaticResource AppTextColor}"
-                  Margin="0,0,0,3"
-                  CornerRadius="5">
-              <StackPanel HorizontalAlignment="Center">
-              <RadioButton Content="{lang:Loc Motors_Left}"
-                           Style="{StaticResource RadioButtonVerticalThemeStyle}"
-                           IsChecked="True"
-                           Height="44"
-                           Width="100"
-                           Command="{Binding PollStepSelectorCommand}">
-                  <RadioButton.CommandParameter>
-                    <System:String>Left</System:String>
-                  </RadioButton.CommandParameter>
-                </RadioButton>
-              <RadioButton Content="{lang:Loc Motors_Right}"
-                           Style="{StaticResource RadioButtonVerticalThemeStyle}"
-                           Height="44"
-                           Width="100"
-                           Command="{Binding PollStepSelectorCommand}">
-                  <RadioButton.CommandParameter>
-                    <System:String>Right</System:String>
-                  </RadioButton.CommandParameter>
-                </RadioButton>
-              </StackPanel>
-            </Border>
+          <Border BorderThickness="1"
+                  BorderBrush="{StaticResource HaltButtonBackgroundHighlighted}"
+                  Margin="4,0,4,6">
+            <StackPanel>
+            <RadioButton Content="{lang:Loc Motors_Left}"
+                         Style="{StaticResource RadioButtonVerticalThemeStyle}"
+                         IsChecked="True"
+                         Height="44"
+                         Command="{Binding PollStepSelectorCommand}">
+                <RadioButton.CommandParameter>
+                  <System:String>Left</System:String>
+                </RadioButton.CommandParameter>
+              </RadioButton>
+            <RadioButton Content="{lang:Loc Motors_Right}"
+                         Style="{StaticResource RadioButtonVerticalThemeStyle}"
+                         Height="44"
+                         Command="{Binding PollStepSelectorCommand}">
+                <RadioButton.CommandParameter>
+                  <System:String>Right</System:String>
+                </RadioButton.CommandParameter>
+              </RadioButton>
+            </StackPanel>
+          </Border>
 
           <Button Content="{lang:Loc Run}"
                   Command="{Binding RunMotorButtonClickCommand}"
                   Style="{StaticResource ButtonStyle}"
                   Height="50"
-                  Margin="0,0,0,3">
+                  Margin="4,0,4,3">
               <Button.CommandParameter>
                 <System:String>x</System:String>
               </Button.CommandParameter>
@@ -160,90 +161,92 @@
                   Command="{Binding HaltMotorButtonClickCommand}"
                   Style="{StaticResource HaltButtonStyle}"
                   Height="50"
-                  Margin="0,0,0,3">
+                  Margin="4,0,4,6">
               <Button.CommandParameter>
                 <System:String>x</System:String>
               </Button.CommandParameter>
             </Button>
-            <TextBox  Height="36"
-                      HorizontalAlignment="Stretch"
-                      Margin="0,0,0,3"
-                      Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding ParametersX[2]}">
-            <dxmvvm:Interaction.Behaviors>
-              <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="1"/>
-            </dxmvvm:Interaction.Behaviors>
-          </TextBox>
-            <TextBox  Height="36"
-                      HorizontalAlignment="Stretch"
-                      Margin="0,0,0,3"
-                      Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding ParametersX[3]}">
-            <dxmvvm:Interaction.Behaviors>
-              <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="2"/>
-            </dxmvvm:Interaction.Behaviors>
-          </TextBox>
-            <TextBox  Height="36"
-                      HorizontalAlignment="Stretch"
-                      Margin="0,0,0,3"
-                      Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding ParametersX[4]}">
-            <dxmvvm:Interaction.Behaviors>
-              <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="3"/>
-            </dxmvvm:Interaction.Behaviors>
-          </TextBox>
-            <TextBox  Height="36"
-                      HorizontalAlignment="Stretch"
-                      Margin="0,0,0,3"
-                      Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding ParametersX[5]}">
-            <dxmvvm:Interaction.Behaviors>
-              <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="4"/>
-            </dxmvvm:Interaction.Behaviors>
-          </TextBox>
-            <TextBox  Height="36"
-                      HorizontalAlignment="Stretch"
-                      Margin="0,0,0,3"
-                      Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding ParametersX[6]}">
-            <dxmvvm:Interaction.Behaviors>
-              <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="5"/>
-            </dxmvvm:Interaction.Behaviors>
-          </TextBox>
-
-          </StackPanel>
-          <StackPanel VerticalAlignment="Stretch"
-                    Width="100"
-                    Margin="0,0,15,0">
+          <Border Background="{StaticResource RibbonBackgroundActive}">
+            <StackPanel>
+              <TextBox HorizontalAlignment="Stretch"
+                   Margin="8,8,4,0"
+                   Style="{StaticResource InputFieldStyle}"
+                   Text="{Binding ParametersX[2]}">
+                <dxmvvm:Interaction.Behaviors>
+                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="1"/>
+                </dxmvvm:Interaction.Behaviors>
+              </TextBox>
+              <TextBox HorizontalAlignment="Stretch"
+                   Margin="8,8,4,0"
+                   Style="{StaticResource InputFieldStyle}"
+                   Text="{Binding ParametersX[3]}">
+                <dxmvvm:Interaction.Behaviors>
+                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="2"/>
+                </dxmvvm:Interaction.Behaviors>
+              </TextBox>
+              <TextBox HorizontalAlignment="Stretch"
+                    Margin="8,8,4,0"
+                    Style="{StaticResource InputFieldStyle}"
+                    Text="{Binding ParametersX[4]}">
+                <dxmvvm:Interaction.Behaviors>
+                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="3"/>
+                </dxmvvm:Interaction.Behaviors>
+              </TextBox>
+              <TextBox HorizontalAlignment="Stretch"
+                    Margin="8,8,4,0"
+                    Style="{StaticResource InputFieldStyle}"
+                    Text="{Binding ParametersX[5]}">
+                <dxmvvm:Interaction.Behaviors>
+                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="4"/>
+                </dxmvvm:Interaction.Behaviors>
+              </TextBox>
+              <TextBox HorizontalAlignment="Stretch"
+                    Margin="8,8,4,0"
+                    Style="{StaticResource InputFieldStyle}"
+                    Text="{Binding ParametersX[6]}">
+                <dxmvvm:Interaction.Behaviors>
+                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="5"/>
+                </dxmvvm:Interaction.Behaviors>
+              </TextBox>
+              <TextBox HorizontalAlignment="Stretch"
+                   Margin="8,8,4,8"
+                   Style="{StaticResource InputFieldStyle}"
+                   Text="{Binding ParametersX[7]}">
+                <dxmvvm:Interaction.Behaviors>
+                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="33"/>
+                </dxmvvm:Interaction.Behaviors>
+              </TextBox>
+            </StackPanel>
+          </Border>
+        </StackPanel>
+        <StackPanel VerticalAlignment="Stretch"
+                    Width="100">
           <TextBlock Text="{lang:Loc Y}"
-                 FontFamily="{StaticResource AppTextFont}"
-                 FontSize="20"
-                 FontWeight="UltraBold"
-                 Foreground="{StaticResource AppTextColor}"
-                 HorizontalAlignment="Center"
-                 VerticalAlignment="Top"
-                 Margin="0,0,0,0"/>
+                     FontFamily="{StaticResource AppTextFont}"
+                     FontSize="36"
+                     FontWeight="UltraBold"
+                     Foreground="{StaticResource AppTextColor}"
+                     HorizontalAlignment="Center"
+                     VerticalAlignment="Top"
+                     Margin="0,0,0,0"/>
 
-            <TextBox  Height="36"
-                      HorizontalAlignment="Stretch"
-                      Margin="0,0,0,13"
-                      Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding ParametersY[0]}">
+            <TextBox HorizontalAlignment="Stretch"
+                     Margin="4,0,4,13"
+                     Style="{StaticResource InputFieldStyle}"
+                     Text="{Binding ParametersY[0]}">
             <dxmvvm:Interaction.Behaviors>
               <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="6"/>
             </dxmvvm:Interaction.Behaviors>
           </TextBox>
 
-            <Border BorderThickness="2"
-                  BorderBrush="{StaticResource AppTextColor}"
-                  Margin="0,0,0,3"
-                  CornerRadius="5">
+          <Border BorderThickness="1"
+                  BorderBrush="{StaticResource HaltButtonBackgroundHighlighted}"
+                  Margin="4,0,4,6">
 
-              <StackPanel HorizontalAlignment="Center">
+              <StackPanel>
               <RadioButton Content="{lang:Loc Motors_Back}"
                            Style="{StaticResource RadioButtonVerticalThemeStyle}"
                            Height="44"
-                           Width="100"
                            Command="{Binding PollStepSelectorCommand}">
                   <RadioButton.CommandParameter>
                     <System:String>Back</System:String>
@@ -252,7 +255,6 @@
               <RadioButton Content="{lang:Loc Motors_Front}"
                            Style="{StaticResource RadioButtonVerticalThemeStyle}"
                            Height="44"
-                           Width="100"
                            IsChecked="True"
                            Command="{Binding PollStepSelectorCommand}">
                   <RadioButton.CommandParameter>
@@ -266,7 +268,7 @@
                   Command="{Binding RunMotorButtonClickCommand}"
                   Style="{StaticResource ButtonStyle}"
                   Height="50"
-                  Margin="0,0,0,3">
+                  Margin="4,0,4,3">
               <Button.CommandParameter>
                 <System:String>y</System:String>
               </Button.CommandParameter>
@@ -275,99 +277,100 @@
                   Command="{Binding HaltMotorButtonClickCommand}"
                   Style="{StaticResource HaltButtonStyle}"
                   Height="50"
-                  Margin="0,0,0,3">
+                  Margin="4,0,4,6">
               <Button.CommandParameter>
                 <System:String>y</System:String>
               </Button.CommandParameter>
             </Button>
-            <TextBox  Height="36"
-                      HorizontalAlignment="Stretch"
-                      Margin="0,0,0,3"
-                      Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding ParametersY[2]}">
-            <dxmvvm:Interaction.Behaviors>
-              <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="7"/>
-            </dxmvvm:Interaction.Behaviors>
-          </TextBox>
-            <TextBox  Height="36"
-                      HorizontalAlignment="Stretch"
-                      Margin="0,0,0,3"
-                      Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding ParametersY[3]}">
-            <dxmvvm:Interaction.Behaviors>
-              <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="8"/>
-            </dxmvvm:Interaction.Behaviors>
-          </TextBox>
-            <TextBox  Height="36"
-                      HorizontalAlignment="Stretch"
-                      Margin="0,0,0,3"
-                      Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding ParametersY[4]}">
-            <dxmvvm:Interaction.Behaviors>
-              <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="9"/>
-            </dxmvvm:Interaction.Behaviors>
-          </TextBox>
-            <TextBox  Height="36"
-                      HorizontalAlignment="Stretch"
-                      Margin="0,0,0,3"
-                      Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding ParametersY[5]}">
-            <dxmvvm:Interaction.Behaviors>
-              <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="10"/>
-            </dxmvvm:Interaction.Behaviors>
-          </TextBox>
-            <TextBox  Height="36"
-                      HorizontalAlignment="Stretch"
-                      Margin="0,0,0,3"
-                      Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding ParametersY[6]}">
-            <dxmvvm:Interaction.Behaviors>
-              <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="11"/>
-            </dxmvvm:Interaction.Behaviors>
-          </TextBox>
-          </StackPanel>
-          <StackPanel VerticalAlignment="Stretch"
+          <Border Background="{StaticResource RibbonBackgroundActive}">
+            <StackPanel>
+              <TextBox HorizontalAlignment="Stretch"
+                       Margin="4,8,4,0"
+                       Style="{StaticResource InputFieldStyle}"
+                       Text="{Binding ParametersY[2]}">
+                <dxmvvm:Interaction.Behaviors>
+                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="7"/>
+                </dxmvvm:Interaction.Behaviors>
+              </TextBox>
+              <TextBox HorizontalAlignment="Stretch"
+                       Margin="4,8,4,0"
+                       Style="{StaticResource InputFieldStyle}"
+                       Text="{Binding ParametersY[3]}">
+                <dxmvvm:Interaction.Behaviors>
+                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="8"/>
+                </dxmvvm:Interaction.Behaviors>
+              </TextBox>
+              <TextBox HorizontalAlignment="Stretch"
+                       Margin="4,8,4,0"
+                       Style="{StaticResource InputFieldStyle}"
+                       Text="{Binding ParametersY[4]}">
+                <dxmvvm:Interaction.Behaviors>
+                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="9"/>
+                </dxmvvm:Interaction.Behaviors>
+              </TextBox>
+              <TextBox HorizontalAlignment="Stretch"
+                       Margin="4,8,4,0"
+                       Style="{StaticResource InputFieldStyle}"
+                       Text="{Binding ParametersY[5]}">
+                <dxmvvm:Interaction.Behaviors>
+                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="10"/>
+                </dxmvvm:Interaction.Behaviors>
+              </TextBox>
+              <TextBox HorizontalAlignment="Stretch"
+                       Margin="4,8,4,0"
+                       Style="{StaticResource InputFieldStyle}"
+                       Text="{Binding ParametersY[6]}">
+                <dxmvvm:Interaction.Behaviors>
+                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="11"/>
+                </dxmvvm:Interaction.Behaviors>
+              </TextBox>
+              <TextBox HorizontalAlignment="Stretch"
+                       Margin="4,8,4,8"
+                       Style="{StaticResource InputFieldStyle}"
+                       Text="{Binding ParametersY[7]}">
+                <dxmvvm:Interaction.Behaviors>
+                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="34"/>
+                </dxmvvm:Interaction.Behaviors>
+              </TextBox>
+            </StackPanel>
+          </Border>
+        </StackPanel>
+        <StackPanel VerticalAlignment="Stretch"
                     Width="100">
           <TextBlock Text="{lang:Loc Z}"
-                 FontFamily="{StaticResource AppTextFont}"
-                 FontSize="20"
-                 FontWeight="UltraBold"
-                 Foreground="{StaticResource AppTextColor}"
-                 HorizontalAlignment="Center"
-                 VerticalAlignment="Top"
-                 Margin="0,0,0,0"/>
-
-
-            <TextBox  Height="36"
-                      HorizontalAlignment="Stretch"
-                      Margin="0,0,0,13"
-                      Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding ParametersZ[0]}">
+                     FontFamily="{StaticResource AppTextFont}"
+                     FontSize="36"
+                     FontWeight="UltraBold"
+                     Foreground="{StaticResource AppTextColor}"
+                     HorizontalAlignment="Center"
+                     VerticalAlignment="Top"
+                     Margin="0,0,0,0"/>
+            <TextBox HorizontalAlignment="Stretch"
+                     Margin="4,0,0,13"
+                     Style="{StaticResource InputFieldStyle}"
+                     Text="{Binding ParametersZ[0]}">
             <dxmvvm:Interaction.Behaviors>
               <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="12"/>
             </dxmvvm:Interaction.Behaviors>
           </TextBox>
 
-            <Border BorderThickness="2"
-                  BorderBrush="{StaticResource AppTextColor}"
-                  Margin="0,0,0,3"
-                  CornerRadius="5">
-              <StackPanel HorizontalAlignment="Center">
-              <RadioButton Content="{lang:Loc Motors_Up}"
-                           Style="{StaticResource RadioButtonVerticalThemeStyle}"
-                           Height="44"
-                           Width="100"
-                           IsChecked="True"
-                           Command="{Binding PollStepSelectorCommand}">
+          <Border BorderThickness="1"
+                  BorderBrush="{StaticResource HaltButtonBackgroundHighlighted}"
+                  Margin="4,0,4,6">
+              <StackPanel>
+                <RadioButton Content="{lang:Loc Motors_Up}"
+                             Style="{StaticResource RadioButtonVerticalThemeStyle}"
+                             Height="44"
+                             IsChecked="True"
+                             Command="{Binding PollStepSelectorCommand}">
                   <RadioButton.CommandParameter>
                     <System:String>Up</System:String>
                   </RadioButton.CommandParameter>
                 </RadioButton>
-              <RadioButton Content="{lang:Loc Motors_Down}"
-                           Style="{StaticResource RadioButtonVerticalThemeStyle}"
-                           Height="44"
-                           Width="100"
-                           Command="{Binding PollStepSelectorCommand}">
+                <RadioButton Content="{lang:Loc Motors_Down}"
+                             Style="{StaticResource RadioButtonVerticalThemeStyle}"
+                             Height="44"
+                             Command="{Binding PollStepSelectorCommand}">
                   <RadioButton.CommandParameter>
                     <System:String>Down</System:String>
                   </RadioButton.CommandParameter>
@@ -379,73 +382,80 @@
                   Command="{Binding RunMotorButtonClickCommand}"
                   Style="{StaticResource ButtonStyle}"
                   Height="50"
-                  Margin="0,0,0,3">
-              <Button.CommandParameter>
-                <System:String>z</System:String>
-              </Button.CommandParameter>
-            </Button>
+                  Margin="4,0,4,3">
+            <Button.CommandParameter>
+              <System:String>z</System:String>
+            </Button.CommandParameter>
+          </Button>
           <Button Content="{lang:Loc Halt}"
                   Command="{Binding HaltMotorButtonClickCommand}"
                   Style="{StaticResource HaltButtonStyle}"
                   Height="50"
-                  Margin="0,0,0,3">
-              <Button.CommandParameter>
-                <System:String>z</System:String>
-              </Button.CommandParameter>
-            </Button>
-            <TextBox  Height="36"
-                      HorizontalAlignment="Stretch"
-                      Margin="0,0,0,3"
-                      Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding ParametersZ[2]}">
-            <dxmvvm:Interaction.Behaviors>
-              <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="13"/>
-            </dxmvvm:Interaction.Behaviors>
-          </TextBox>
-            <TextBox  Height="36"
-                      HorizontalAlignment="Stretch"
-                      Margin="0,0,0,3"
-                      Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding ParametersZ[3]}">
-            <dxmvvm:Interaction.Behaviors>
-              <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="14"/>
-            </dxmvvm:Interaction.Behaviors>
-          </TextBox>
-            <TextBox  Height="36"
-                      HorizontalAlignment="Stretch"
-                      Margin="0,0,0,3"
-                      Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding ParametersZ[4]}">
-            <dxmvvm:Interaction.Behaviors>
-              <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="15"/>
-            </dxmvvm:Interaction.Behaviors>
-          </TextBox>
-            <TextBox  Height="36"
-                      HorizontalAlignment="Stretch"
-                      Margin="0,0,0,3"
-                      Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding ParametersZ[5]}">
-            <dxmvvm:Interaction.Behaviors>
-              <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="16"/>
-            </dxmvvm:Interaction.Behaviors>
-          </TextBox>
-            <TextBox  Height="36"
-                      HorizontalAlignment="Stretch"
-                      Margin="0,0,0,3"
-                      Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding ParametersZ[6]}">
-            <dxmvvm:Interaction.Behaviors>
-              <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="17"/>
-            </dxmvvm:Interaction.Behaviors>
-          </TextBox>
-          </StackPanel>
+                  Margin="4,0,4,6">
+            <Button.CommandParameter>
+              <System:String>z</System:String>
+            </Button.CommandParameter>
+          </Button>
+          <Border Background="{StaticResource RibbonBackgroundActive}">
+            <StackPanel>
+              <TextBox HorizontalAlignment="Stretch"
+                   Margin="4,8,8,0"
+                   Style="{StaticResource InputFieldStyle}"
+                   Text="{Binding ParametersZ[2]}">
+                <dxmvvm:Interaction.Behaviors>
+                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="13"/>
+                </dxmvvm:Interaction.Behaviors>
+              </TextBox>
+              <TextBox HorizontalAlignment="Stretch"
+                   Margin="4,8,8,0"
+                   Style="{StaticResource InputFieldStyle}"
+                   Text="{Binding ParametersZ[3]}">
+                <dxmvvm:Interaction.Behaviors>
+                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="14"/>
+                </dxmvvm:Interaction.Behaviors>
+              </TextBox>
+              <TextBox HorizontalAlignment="Stretch"
+                   Margin="4,8,8,0"
+                   Style="{StaticResource InputFieldStyle}"
+                   Text="{Binding ParametersZ[4]}">
+                <dxmvvm:Interaction.Behaviors>
+                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="15"/>
+                </dxmvvm:Interaction.Behaviors>
+              </TextBox>
+              <TextBox HorizontalAlignment="Stretch"
+                   Margin="4,8,8,0"
+                   Style="{StaticResource InputFieldStyle}"
+                   Text="{Binding ParametersZ[5]}">
+                <dxmvvm:Interaction.Behaviors>
+                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="16"/>
+                </dxmvvm:Interaction.Behaviors>
+              </TextBox>
+              <TextBox HorizontalAlignment="Stretch"
+                   Margin="4,8,8,0"
+                   Style="{StaticResource InputFieldStyle}"
+                   Text="{Binding ParametersZ[6]}">
+                <dxmvvm:Interaction.Behaviors>
+                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="17"/>
+                </dxmvvm:Interaction.Behaviors>
+              </TextBox>
+              <TextBox HorizontalAlignment="Stretch"
+                   Margin="4,8,8,8"
+                   Style="{StaticResource InputFieldStyle}"
+                   Text="{Binding ParametersZ[6]}">
+                <dxmvvm:Interaction.Behaviors>
+                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="35"/>
+                </dxmvvm:Interaction.Behaviors>
+              </TextBox>
+            </StackPanel>
+          </Border>
         </StackPanel>
+      </StackPanel>
     </Border>
     
     <!--Steps-->
     <Border VerticalAlignment="Top"
-            HorizontalAlignment="Right"
-            Margin="0,80,200,0">
+            HorizontalAlignment="Left"
+            Margin="600,80,0,0">
       <StackPanel>
         <TextBlock Text="{lang:Loc Motors_Steps}"
                  FontFamily="{StaticResource AppTextFont}"
@@ -461,310 +471,303 @@
                 Orientation="Horizontal"
                 Margin="10,0,10,0">
           <StackPanel VerticalAlignment="Stretch"
-                    Width="110"
-                    Margin="0,0,3,0">
+                    Margin="0,48,3,0">
             <TextBlock Text="{lang:Loc Motors_96W_C1}"
                  FontFamily="{StaticResource AppTextFont}"
-                 FontSize="20"
+                 FontSize="26"
                  FontWeight="UltraBold"
                  Foreground="{StaticResource AppTextColor}"
                  HorizontalAlignment="Right"
                  VerticalAlignment="Top"
-                 Margin="0,32,10,0"/>
+                 Margin="0,0,10,0"/>
             <TextBlock Text="{lang:Loc Motors_96W_C12}"
                  FontFamily="{StaticResource AppTextFont}"
-                 FontSize="20"
+                 FontSize="26"
                  FontWeight="UltraBold"
                  Foreground="{StaticResource AppTextColor}"
                  HorizontalAlignment="Right"
                  VerticalAlignment="Top"
-                 Margin="0,16,10,0"/>
+                 Margin="0,8,10,0"/>
             <TextBlock Text="{lang:Loc Motors_384W_C1}"
                  FontFamily="{StaticResource AppTextFont}"
-                 FontSize="20"
+                 FontSize="26"
                  FontWeight="UltraBold"
                  Foreground="{StaticResource AppTextColor}"
                  HorizontalAlignment="Right"
                  VerticalAlignment="Top"
-                 Margin="0,16,10,0"/>
+                 Margin="0,9,10,0"/>
             <TextBlock Text="{lang:Loc Motors_384W_C24}"
                  FontFamily="{StaticResource AppTextFont}"
-                 FontSize="20"
+                 FontSize="26"
                  FontWeight="UltraBold"
                  Foreground="{StaticResource AppTextColor}"
                  HorizontalAlignment="Right"
                  VerticalAlignment="Top"
-                 Margin="0,16,10,0"/>
+                 Margin="0,9,10,0"/>
             <TextBlock Text="{lang:Loc Tube}"
                  FontFamily="{StaticResource AppTextFont}"
-                 FontSize="20"
+                 FontSize="26"
                  FontWeight="UltraBold"
                  Foreground="{StaticResource AppTextColor}"
                  HorizontalAlignment="Right"
                  VerticalAlignment="Top"
-                 Margin="0,24,10,0"/>
+                 Margin="0,9,10,0"/>
           </StackPanel>
           <StackPanel VerticalAlignment="Stretch"
-                    Width="60"
+                    Width="100"
                     Margin="0,0,3,0">
             <TextBlock Text="{lang:Loc X}"
                  FontFamily="{StaticResource AppTextFont}"
-                 FontSize="20"
+                 FontSize="30"
                  FontWeight="UltraBold"
                  Foreground="{StaticResource AppTextColor}"
                  HorizontalAlignment="Center"
                  VerticalAlignment="Top"
                  Margin="0,0,0,0"/>
-            <TextBox  Height="36"
-                      HorizontalAlignment="Stretch"
-                      Margin="0,0,0,3"
-                      Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding StepsParametersX[0]}">
-              <dxmvvm:Interaction.Behaviors>
-                <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="18"/>
-              </dxmvvm:Interaction.Behaviors>
-            </TextBox>
-            <TextBox  Height="36"
-                      HorizontalAlignment="Stretch"
-                      Margin="0,0,0,3"
-                      Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding StepsParametersX[1]}">
-              <dxmvvm:Interaction.Behaviors>
-                <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="19"/>
-              </dxmvvm:Interaction.Behaviors>
-            </TextBox>
-            <TextBox  Height="36"
-                      HorizontalAlignment="Stretch"
-                      Margin="0,0,0,3"
-                      Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding StepsParametersX[2]}">
-              <dxmvvm:Interaction.Behaviors>
-                <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="20"/>
-              </dxmvvm:Interaction.Behaviors>
-            </TextBox>
-            <TextBox  Height="36"
-                      HorizontalAlignment="Stretch"
-                      Margin="0,0,0,3"
-                      Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding StepsParametersX[3]}">
-              <dxmvvm:Interaction.Behaviors>
-                <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="21"/>
-              </dxmvvm:Interaction.Behaviors>
-            </TextBox>
-            <TextBox  Height="36"
-                      HorizontalAlignment="Stretch"
-                      Margin="0,0,0,3"
-                      Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding StepsParametersX[4]}">
-              <dxmvvm:Interaction.Behaviors>
-                <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="22"/>
-              </dxmvvm:Interaction.Behaviors>
-            </TextBox>
-
+            <Border Background="{StaticResource RibbonBackgroundActive}">
+              <StackPanel>
+                <TextBox HorizontalAlignment="Stretch"
+                         Margin="8,8,8,0"
+                         Style="{StaticResource InputFieldStyle}"
+                         Text="{Binding StepsParametersX[0]}">
+                  <dxmvvm:Interaction.Behaviors>
+                    <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="18"/>
+                  </dxmvvm:Interaction.Behaviors>
+                </TextBox>
+                <TextBox HorizontalAlignment="Stretch"
+                         Margin="8,8,8,0"
+                         Style="{StaticResource InputFieldStyle}"
+                         Text="{Binding StepsParametersX[1]}">
+                  <dxmvvm:Interaction.Behaviors>
+                    <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="19"/>
+                  </dxmvvm:Interaction.Behaviors>
+                </TextBox>
+                <TextBox HorizontalAlignment="Stretch"
+                         Margin="8,8,8,0"
+                         Style="{StaticResource InputFieldStyle}"
+                         Text="{Binding StepsParametersX[2]}">
+                  <dxmvvm:Interaction.Behaviors>
+                    <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="20"/>
+                  </dxmvvm:Interaction.Behaviors>
+                </TextBox>
+                <TextBox HorizontalAlignment="Stretch"
+                         Margin="8,8,8,0"
+                         Style="{StaticResource InputFieldStyle}"
+                         Text="{Binding StepsParametersX[3]}">
+                  <dxmvvm:Interaction.Behaviors>
+                    <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="21"/>
+                  </dxmvvm:Interaction.Behaviors>
+                </TextBox>
+                <TextBox HorizontalAlignment="Stretch"
+                         Margin="8,8,8,8"
+                         Style="{StaticResource InputFieldStyle}"
+                         Text="{Binding StepsParametersX[4]}">
+                  <dxmvvm:Interaction.Behaviors>
+                    <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="22"/>
+                  </dxmvvm:Interaction.Behaviors>
+                </TextBox>
+              </StackPanel>
+            </Border>
           </StackPanel>
           <StackPanel VerticalAlignment="Stretch"
-                    Width="90"
-                    Margin="0,0,3,0">
+                      Width="90"
+                      Margin="0,48,3,0">
             <TextBlock Text="{lang:Loc Motors_Row_A}"
-                 FontFamily="{StaticResource AppTextFont}"
-                 FontSize="20"
-                 FontWeight="UltraBold"
-                 Foreground="{StaticResource AppTextColor}"
-                 HorizontalAlignment="Right"
-                 VerticalAlignment="Top"
-                 Margin="0,32,10,0"/>
+                       FontFamily="{StaticResource AppTextFont}"
+                       FontSize="26"
+                       FontWeight="UltraBold"
+                       Foreground="{StaticResource AppTextColor}"
+                       HorizontalAlignment="Right"
+                       VerticalAlignment="Top"
+                       Margin="0,0,10,0"/>
             <TextBlock Text="{lang:Loc Motors_Row_H}"
-                 FontFamily="{StaticResource AppTextFont}"
-                 FontSize="20"
-                 FontWeight="UltraBold"
-                 Foreground="{StaticResource AppTextColor}"
-                 HorizontalAlignment="Right"
-                 VerticalAlignment="Top"
-                 Margin="0,16,10,0"/>
+                       FontFamily="{StaticResource AppTextFont}"
+                       FontSize="26"
+                       FontWeight="UltraBold"
+                       Foreground="{StaticResource AppTextColor}"
+                       HorizontalAlignment="Right"
+                       VerticalAlignment="Top"
+                       Margin="0,8,10,0"/>
             <TextBlock Text="{lang:Loc Motors_Row_A}"
-                 FontFamily="{StaticResource AppTextFont}"
-                 FontSize="20"
-                 FontWeight="UltraBold"
-                 Foreground="{StaticResource AppTextColor}"
-                 HorizontalAlignment="Right"
-                 VerticalAlignment="Top"
-                 Margin="0,16,10,0"/>
+                       FontFamily="{StaticResource AppTextFont}"
+                       FontSize="26"
+                       FontWeight="UltraBold"
+                       Foreground="{StaticResource AppTextColor}"
+                       HorizontalAlignment="Right"
+                       VerticalAlignment="Top"
+                       Margin="0,9,10,0"/>
             <TextBlock Text="{lang:Loc Motors_Row_P}"
-                 FontFamily="{StaticResource AppTextFont}"
-                 FontSize="20"
-                 FontWeight="UltraBold"
-                 Foreground="{StaticResource AppTextColor}"
-                 HorizontalAlignment="Right"
-                 VerticalAlignment="Top"
-                 Margin="0,16,10,0"/>
+                       FontFamily="{StaticResource AppTextFont}"
+                       FontSize="26"
+                       FontWeight="UltraBold"
+                       Foreground="{StaticResource AppTextColor}"
+                       HorizontalAlignment="Right"
+                       VerticalAlignment="Top"
+                       Margin="0,9,10,0"/>
             <TextBlock Text="{lang:Loc Tube}"
-                 FontFamily="{StaticResource AppTextFont}"
-                 FontSize="20"
-                 FontWeight="UltraBold"
-                 Foreground="{StaticResource AppTextColor}"
-                 HorizontalAlignment="Right"
-                 VerticalAlignment="Top"
-                 Margin="0,24,10,0"/>
+                       FontFamily="{StaticResource AppTextFont}"
+                       FontSize="26"
+                       FontWeight="UltraBold"
+                       Foreground="{StaticResource AppTextColor}"
+                       HorizontalAlignment="Right"
+                       VerticalAlignment="Top"
+                       Margin="0,9,10,0"/>
           </StackPanel>
           <StackPanel VerticalAlignment="Stretch"
-                    Width="60"
-                    Margin="0,0,3,0">
+                      Width="100"
+                      Margin="0,0,3,0">
             <TextBlock Text="{lang:Loc Y}"
-                 FontFamily="{StaticResource AppTextFont}"
-                 FontSize="20"
-                 FontWeight="UltraBold"
-                 Foreground="{StaticResource AppTextColor}"
-                 HorizontalAlignment="Center"
-                 VerticalAlignment="Top"
-                 Margin="0,0,0,0"/>
-            <TextBox  Height="36"
-                      HorizontalAlignment="Stretch"
-                      Margin="0,0,0,3"
-                      Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding StepsParametersY[0]}">
-              <dxmvvm:Interaction.Behaviors>
-                <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="23"/>
-              </dxmvvm:Interaction.Behaviors>
-            </TextBox>
-            <TextBox  Height="36"
-                      HorizontalAlignment="Stretch"
-                      Margin="0,0,0,3"
-                      Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding StepsParametersY[1]}">
-              <dxmvvm:Interaction.Behaviors>
-                <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="24"/>
-              </dxmvvm:Interaction.Behaviors>
-            </TextBox>
-            <TextBox  Height="36"
-                      HorizontalAlignment="Stretch"
-                      Margin="0,0,0,3"
-                      Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding StepsParametersY[2]}">
-              <dxmvvm:Interaction.Behaviors>
-                <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="25"/>
-              </dxmvvm:Interaction.Behaviors>
-            </TextBox>
-            <TextBox  Height="36"
-                      HorizontalAlignment="Stretch"
-                      Margin="0,0,0,3"
+                       FontFamily="{StaticResource AppTextFont}"
+                       FontSize="30"
+                       FontWeight="UltraBold"
+                       Foreground="{StaticResource AppTextColor}"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Top"
+                       Margin="0,0,0,0"/>
+            <Border Background="{StaticResource RibbonBackgroundActive}">
+              <StackPanel>
+                <TextBox HorizontalAlignment="Stretch"
+                         Margin="8,8,8,0"
+                         Style="{StaticResource InputFieldStyle}"
+                         Text="{Binding StepsParametersY[0]}">
+                  <dxmvvm:Interaction.Behaviors>
+                    <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="23"/>
+                  </dxmvvm:Interaction.Behaviors>
+                </TextBox>
+                <TextBox HorizontalAlignment="Stretch"
+                         Margin="8,8,8,0"
+                         Style="{StaticResource InputFieldStyle}"
+                         Text="{Binding StepsParametersY[1]}">
+                  <dxmvvm:Interaction.Behaviors>
+                    <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="24"/>
+                  </dxmvvm:Interaction.Behaviors>
+                </TextBox>
+                <TextBox HorizontalAlignment="Stretch"
+                         Margin="8,8,8,0"
+                         Style="{StaticResource InputFieldStyle}"
+                         Text="{Binding StepsParametersY[2]}">
+                  <dxmvvm:Interaction.Behaviors>
+                    <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="25"/>
+                  </dxmvvm:Interaction.Behaviors>
+                </TextBox>
+                <TextBox HorizontalAlignment="Stretch"
+                         Margin="8,8,8,0"
                       Style="{StaticResource InputFieldStyle}"
                       Text="{Binding StepsParametersY[3]}">
-              <dxmvvm:Interaction.Behaviors>
-                <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="26"/>
-              </dxmvvm:Interaction.Behaviors>
-            </TextBox>
-            <TextBox  Height="36"
-                      HorizontalAlignment="Stretch"
-                      Margin="0,0,0,3"
-                      Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding StepsParametersY[4]}">
-              <dxmvvm:Interaction.Behaviors>
-                <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="27"/>
-              </dxmvvm:Interaction.Behaviors>
-            </TextBox>
-
+                  <dxmvvm:Interaction.Behaviors>
+                    <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="26"/>
+                  </dxmvvm:Interaction.Behaviors>
+                </TextBox>
+                <TextBox HorizontalAlignment="Stretch"
+                         Margin="8,8,8,8"
+                         Style="{StaticResource InputFieldStyle}"
+                         Text="{Binding StepsParametersY[4]}">
+                  <dxmvvm:Interaction.Behaviors>
+                    <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="27"/>
+                  </dxmvvm:Interaction.Behaviors>
+                </TextBox>
+              </StackPanel>
+            </Border>
           </StackPanel>
           <StackPanel VerticalAlignment="Stretch"
-                    Width="70"
-                    Margin="0,0,3,0">
+                      Width="70"
+                      Margin="0,48,3,0">
             <TextBlock Text="{lang:Loc Motors_A1}"
-                 FontFamily="{StaticResource AppTextFont}"
-                 FontSize="20"
-                 FontWeight="UltraBold"
-                 Foreground="{StaticResource AppTextColor}"
-                 HorizontalAlignment="Right"
-                 VerticalAlignment="Top"
-                 Margin="0,32,10,0"/>
+                       FontFamily="{StaticResource AppTextFont}"
+                       FontSize="26"
+                       FontWeight="UltraBold"
+                       Foreground="{StaticResource AppTextColor}"
+                       HorizontalAlignment="Right"
+                       VerticalAlignment="Top"
+                       Margin="0,0,10,0"/>
             <TextBlock Text="{lang:Loc Motors_A12}"
-                 FontFamily="{StaticResource AppTextFont}"
-                 FontSize="20"
-                 FontWeight="UltraBold"
-                 Foreground="{StaticResource AppTextColor}"
-                 HorizontalAlignment="Right"
-                 VerticalAlignment="Top"
-                 Margin="0,16,10,0"/>
+                       FontFamily="{StaticResource AppTextFont}"
+                       FontSize="26"
+                       FontWeight="UltraBold"
+                       Foreground="{StaticResource AppTextColor}"
+                       HorizontalAlignment="Right"
+                       VerticalAlignment="Top"
+                       Margin="0,8,10,0"/>
             <TextBlock Text="{lang:Loc Motors_H1}"
-                 FontFamily="{StaticResource AppTextFont}"
-                 FontSize="20"
-                 FontWeight="UltraBold"
-                 Foreground="{StaticResource AppTextColor}"
-                 HorizontalAlignment="Right"
-                 VerticalAlignment="Top"
-                 Margin="0,16,10,0"/>
+                       FontFamily="{StaticResource AppTextFont}"
+                       FontSize="26"
+                       FontWeight="UltraBold"
+                       Foreground="{StaticResource AppTextColor}"
+                       HorizontalAlignment="Right"
+                       VerticalAlignment="Top"
+                       Margin="0,9,10,0"/>
             <TextBlock Text="{lang:Loc Motors_H12}"
                  FontFamily="{StaticResource AppTextFont}"
-                 FontSize="20"
+                 FontSize="26"
                  FontWeight="UltraBold"
                  Foreground="{StaticResource AppTextColor}"
                  HorizontalAlignment="Right"
                  VerticalAlignment="Top"
-                 Margin="0,16,10,0"/>
+                 Margin="0,9,10,0"/>
             <TextBlock Text="{lang:Loc Tube}"
                  FontFamily="{StaticResource AppTextFont}"
-                 FontSize="20"
+                 FontSize="26"
                  FontWeight="UltraBold"
                  Foreground="{StaticResource AppTextColor}"
                  HorizontalAlignment="Right"
                  VerticalAlignment="Top"
-                 Margin="0,24,10,0"/>
+                 Margin="0,9,10,0"/>
           </StackPanel>
           <StackPanel VerticalAlignment="Stretch"
-                    Width="60"
-                    Margin="0,0,3,0">
+                      Width="100"
+                      Margin="0,0,3,0">
             <TextBlock Text="{lang:Loc Z}"
                  FontFamily="{StaticResource AppTextFont}"
-                 FontSize="20"
+                 FontSize="30"
                  FontWeight="UltraBold"
                  Foreground="{StaticResource AppTextColor}"
                  HorizontalAlignment="Center"
                  VerticalAlignment="Top"
                  Margin="0,0,0,0"/>
-            <TextBox  Height="36"
-                      HorizontalAlignment="Stretch"
-                      Margin="0,0,0,3"
+            <Border Background="{StaticResource RibbonBackgroundActive}">
+              <StackPanel>
+                <TextBox HorizontalAlignment="Stretch"
+                         Margin="8,8,8,0"
                       Style="{StaticResource InputFieldStyle}"
                       Text="{Binding StepsParametersZ[0]}">
-              <dxmvvm:Interaction.Behaviors>
-                <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="28"/>
-              </dxmvvm:Interaction.Behaviors>
-            </TextBox>
-            <TextBox  Height="36"
-                      HorizontalAlignment="Stretch"
-                      Margin="0,0,0,3"
+                  <dxmvvm:Interaction.Behaviors>
+                    <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="28"/>
+                  </dxmvvm:Interaction.Behaviors>
+                </TextBox>
+                <TextBox HorizontalAlignment="Stretch"
+                         Margin="8,8,8,0"
                       Style="{StaticResource InputFieldStyle}"
                       Text="{Binding StepsParametersZ[1]}">
-              <dxmvvm:Interaction.Behaviors>
-                <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="29"/>
-              </dxmvvm:Interaction.Behaviors>
-            </TextBox>
-            <TextBox  Height="36"
-                      HorizontalAlignment="Stretch"
-                      Margin="0,0,0,3"
+                  <dxmvvm:Interaction.Behaviors>
+                    <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="29"/>
+                  </dxmvvm:Interaction.Behaviors>
+                </TextBox>
+                <TextBox HorizontalAlignment="Stretch"
+                         Margin="8,8,8,0"
                       Style="{StaticResource InputFieldStyle}"
                       Text="{Binding StepsParametersZ[2]}">
-              <dxmvvm:Interaction.Behaviors>
-                <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="30"/>
-              </dxmvvm:Interaction.Behaviors>
-            </TextBox>
-            <TextBox  Height="36"
-                      HorizontalAlignment="Stretch"
-                      Margin="0,0,0,3"
+                  <dxmvvm:Interaction.Behaviors>
+                    <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="30"/>
+                  </dxmvvm:Interaction.Behaviors>
+                </TextBox>
+                <TextBox HorizontalAlignment="Stretch"
+                         Margin="8,8,8,0"
                       Style="{StaticResource InputFieldStyle}"
                       Text="{Binding StepsParametersZ[3]}">
-              <dxmvvm:Interaction.Behaviors>
-                <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="31"/>
-              </dxmvvm:Interaction.Behaviors>
-            </TextBox>
-            <TextBox  Height="36"
-                      HorizontalAlignment="Stretch"
-                      Margin="0,0,0,3"
-                      Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding StepsParametersZ[4]}">
-              <dxmvvm:Interaction.Behaviors>
-                <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="32"/>
-              </dxmvvm:Interaction.Behaviors>
-            </TextBox>
-
+                  <dxmvvm:Interaction.Behaviors>
+                    <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="31"/>
+                  </dxmvvm:Interaction.Behaviors>
+                </TextBox>
+                <TextBox HorizontalAlignment="Stretch"
+                         Margin="8,8,8,8"
+                         Style="{StaticResource InputFieldStyle}"
+                         Text="{Binding StepsParametersZ[4]}">
+                  <dxmvvm:Interaction.Behaviors>
+                    <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="32"/>
+                  </dxmvvm:Interaction.Behaviors>
+                </TextBox>
+              </StackPanel>
+            </Border>
           </StackPanel>
         </StackPanel>
       </StackPanel>
@@ -772,8 +775,8 @@
     
     <!--Well Selection-->
     <Border VerticalAlignment="Bottom"
-            HorizontalAlignment="Right"
-            Margin="0,0,290,60">
+            HorizontalAlignment="Left"
+            Margin="800,0,0,30">
       <StackPanel>
 
         <TextBlock Text="{lang:Loc Motors_Man_Well_Sel}"
@@ -785,12 +788,11 @@
                  VerticalAlignment="Top"
                  Margin="0,0,0,10"/>
 
-        <Border BorderThickness="2"
-              BorderBrush="{StaticResource AppTextColor}"
-              Margin="0,0,0,3"
-              Width="240"
-              Height="60"
-              CornerRadius="5">
+        <Border BorderThickness="1"
+                BorderBrush="{StaticResource HaltButtonBackgroundHighlighted}"
+                Margin="0,0,0,3"
+                Width="240"
+                Height="60">
           <StackPanel HorizontalAlignment="Center"
                     Orientation="Horizontal">
             <RadioButton Content="96"
@@ -818,7 +820,7 @@
                   Height="60"
                   Width="240">
           <dx:DropDownButton Width="120"
-                        FontSize="50"
+                        FontSize="40"
                         FontFamily="{StaticResource AppTextFont}"
                         Foreground="{StaticResource AppTextColor}"
                         Content="{Binding SelectedWellRow}">
@@ -835,7 +837,7 @@
             </dxb:PopupMenu>
           </dx:DropDownButton>
           <dx:DropDownButton Width="120"
-                        FontSize="50"
+                        FontSize="40"
                         FontFamily="{StaticResource AppTextFont}"
                         Foreground="{StaticResource AppTextColor}"
                         Content="{Binding SelectedWellColumn}">

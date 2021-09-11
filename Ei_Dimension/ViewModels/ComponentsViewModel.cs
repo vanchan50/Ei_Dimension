@@ -41,6 +41,7 @@ namespace Ei_Dimension.ViewModels
 
     private int _iGetPositionToggleButtonState;
     private byte[] _syringeControlStates;
+    private ushort _activeLasers;
 
     protected ComponentsViewModel()
     {
@@ -58,6 +59,7 @@ namespace Ei_Dimension.ViewModels
       LaserRedPowerValue = new ObservableCollection<string> {""};
       LaserGreenPowerValue = new ObservableCollection<string> {""};
       LaserVioletPowerValue = new ObservableCollection<string> {""};
+      _activeLasers = 0;
 
       var RM = Language.Resources.ResourceManager;
       var curCulture = Language.TranslationSource.Instance.CurrentCulture;
@@ -84,9 +86,8 @@ namespace Ei_Dimension.ViewModels
       SyringeControlSheathValue = new ObservableCollection<string> {""};
       SyringeControlSampleAValue = new ObservableCollection<string> {""};
       SyringeControlSampleBValue = new ObservableCollection<string> {""};
-
-      GetPositionToggleButtonState = RM.GetString(nameof(Language.Resources.OFF),
-        Language.TranslationSource.Instance.CurrentCulture);
+      
+      GetPositionToggleButtonState = RM.GetString(nameof(Language.Resources.OFF), Language.TranslationSource.Instance.CurrentCulture);
       _iGetPositionToggleButtonState = 0;
       GetPositionTextBoxInputs = new ObservableCollection<string> {"", "", ""};
 
@@ -149,15 +150,24 @@ namespace Ei_Dimension.ViewModels
       {
         case 1:
           LaserRedActive = !LaserRedActive;
-          param = LaserRedActive ? 0x01 : 0x00;
+          if (LaserRedActive)
+            _activeLasers += 1;
+          else
+            _activeLasers -= 1;
           break;
         case 2:
           LaserGreenActive = !LaserGreenActive;
-          param = LaserGreenActive ? 0x02 : 0x00;
+          if (LaserGreenActive)
+            _activeLasers += 2;
+          else
+            _activeLasers -= 2;
           break;
         case 3:
           LaserVioletActive = !LaserVioletActive;
-          param = LaserVioletActive ? 0x04 : 0x00;
+          if (LaserVioletActive)
+            _activeLasers += 4;
+          else
+            _activeLasers -= 4;
           break;
       }
       App.Device.MainCommand("Set Property", code: 0xc0, parameter: (ushort)param);

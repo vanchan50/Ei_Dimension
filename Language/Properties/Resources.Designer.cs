@@ -925,6 +925,15 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Encoder Steps.
+        /// </summary>
+        public static string Motors_Enc_Steps {
+            get {
+                return ResourceManager.GetString("Motors_Enc_Steps", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Front.
         /// </summary>
         public static string Motors_Front {

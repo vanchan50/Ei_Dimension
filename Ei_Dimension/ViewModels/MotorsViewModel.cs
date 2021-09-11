@@ -35,7 +35,7 @@ namespace Ei_Dimension.ViewModels
       StepsParametersX = new ObservableCollection<string>();
       StepsParametersY = new ObservableCollection<string>();
       StepsParametersZ = new ObservableCollection<string>();
-      for (var i = 0; i < 7; i++)
+      for (var i = 0; i < 8; i++)
       {
         ParametersX.Add("");
         ParametersY.Add("");
@@ -309,6 +309,15 @@ namespace Ei_Dimension.ViewModels
           break;
         case 32:
           App.SelectedTextBox = (this.GetType().GetProperty(nameof(StepsParametersZ)), this, 4);
+          break;
+        case 33:
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(ParametersX)), this, 7);
+          break;
+        case 34:
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(ParametersY)), this, 7);
+          break;
+        case 35:
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(ParametersZ)), this, 7);
           break;
       }
     }

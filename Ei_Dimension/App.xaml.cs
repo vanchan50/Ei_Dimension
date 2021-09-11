@@ -624,6 +624,13 @@ namespace Ei_Dimension
             {
               if (int.TryParse(temp, out iRes))
               {
+
+              }
+            }
+            if (SelectedTextBox.index == 7)
+            {
+              if (int.TryParse(temp, out iRes))
+              {
                 Device.MainCommand("Set Property", code: 0x90, parameter: (ushort)iRes);
               }
             }
@@ -654,6 +661,13 @@ namespace Ei_Dimension
             {
               if (int.TryParse(temp, out iRes))
               {
+
+              }
+            }
+            if (SelectedTextBox.index == 7)
+            {
+              if (int.TryParse(temp, out iRes))
+              {
                 Device.MainCommand("Set Property", code: 0x91, parameter: (ushort)iRes);
               }
             }
@@ -681,6 +695,13 @@ namespace Ei_Dimension
               }
             }
             if (SelectedTextBox.index == 6)
+            {
+              if (int.TryParse(temp, out iRes))
+              {
+
+              }
+            }
+            if (SelectedTextBox.index == 7)
             {
               if (int.TryParse(temp, out iRes))
               {
