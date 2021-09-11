@@ -11,9 +11,10 @@
     <Setter Property="FontFamily" Value="{DynamicResource AppTextFont}"/>
     <Setter Property="FontSize" Value="25"/>
     <Setter Property="Height" Value="36"/>
+    <Setter Property="CaretBrush" Value="Transparent"/>
     <Setter Property="Template">
       <Setter.Value>
-        
+
         <ControlTemplate TargetType="{x:Type TextBoxBase}">
           <Border Name="Border">
             <Grid>
@@ -27,7 +28,18 @@
                             x:Name="PART_ContentHost"/>
             </Grid>
           </Border>
-          
+          <ControlTemplate.Triggers>
+            <MultiTrigger>
+              <MultiTrigger.Conditions>
+                <Condition Property="IsFocused" Value="True"/>
+                <Condition Property="IsReadOnly" Value="False"/>
+              </MultiTrigger.Conditions>
+              <Setter TargetName="ToggleButtonRect" Property="Fill" Value="{DynamicResource HaltButtonBackground}"/>
+            </MultiTrigger>
+            <Trigger Property="IsReadOnly" Value="True">
+              <Setter TargetName="ToggleButtonRect" Property="Fill" Value="{DynamicResource SubRibbonBackground}"/>
+            </Trigger>
+          </ControlTemplate.Triggers>
         </ControlTemplate>
       </Setter.Value>
     </Setter>

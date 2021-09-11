@@ -327,6 +327,30 @@ Direction</value>
   <data name="Components_Valves" xml:space="preserve">
     <value>Valves</value>
   </data>
+  <data name="DataAn_CV" xml:space="preserve">
+    <value>CV</value>
+  </data>
+  <data name="DataAn_FSC" xml:space="preserve">
+    <value>FSC</value>
+  </data>
+  <data name="DataAn_Green_Maj" xml:space="preserve">
+    <value>Green Maj</value>
+  </data>
+  <data name="DataAn_Green_Min" xml:space="preserve">
+    <value>Green Min</value>
+  </data>
+  <data name="DataAn_Green_SSC" xml:space="preserve">
+    <value>Green SSC</value>
+  </data>
+  <data name="DataAn_MFI" xml:space="preserve">
+    <value>MFI</value>
+  </data>
+  <data name="DataAn_Red_SSC" xml:space="preserve">
+    <value>Red SSC</value>
+  </data>
+  <data name="DataAn_Violet_SSC" xml:space="preserve">
+    <value>Violet SSC</value>
+  </data>
   <data name="Dropdown_Boot" xml:space="preserve">
     <value>Boot</value>
   </data>

@@ -270,14 +270,12 @@
                            Margin="10,0,0,15"/>
 
                 <TextBox Width="55"
+                         IsReadOnly="True"
                          Margin="80,58,0,8"
                          HorizontalAlignment="Left"
                          VerticalAlignment="Bottom"
                          Style="{StaticResource InputFieldStyle}"
                          Text="{Binding LaserRedPowerValue[0]}">
-                  <dxmvvm:Interaction.Behaviors>
-                    <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="2"/>
-                  </dxmvvm:Interaction.Behaviors>
                 </TextBox>
               </Grid>
             </Border>
@@ -309,14 +307,12 @@
                            Margin="10,0,0,15"/>
 
                 <TextBox Width="55"
+                         IsReadOnly="True"
                          Margin="80,58,0,8"
                          HorizontalAlignment="Left"
                          VerticalAlignment="Bottom"
                          Style="{StaticResource InputFieldStyle}"
                          Text="{Binding LaserGreenPowerValue[0]}">
-                  <dxmvvm:Interaction.Behaviors>
-                    <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="3"/>
-                  </dxmvvm:Interaction.Behaviors>
                 </TextBox>
               </Grid>
             </Border>
@@ -348,14 +344,12 @@
                            Margin="10,0,0,15"/>
 
                 <TextBox Width="55"
+                         IsReadOnly="True"
                          Margin="80,58,0,8"
                          HorizontalAlignment="Left"
                          VerticalAlignment="Bottom"
                          Style="{StaticResource InputFieldStyle}"
                          Text="{Binding LaserVioletPowerValue[0]}">
-                  <dxmvvm:Interaction.Behaviors>
-                    <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="4"/>
-                  </dxmvvm:Interaction.Behaviors>
                 </TextBox>
               </Grid>
             </Border>
@@ -622,34 +616,28 @@
           <Border Background="{StaticResource RibbonBackgroundActive}">
             <StackPanel>
               <TextBox Width="190"
-                   Margin="8,8,8,0"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Bottom"
-                   Style="{StaticResource InputFieldStyle}"
-                   Text="{Binding GetPositionTextBoxInputs[0]}">
-                <dxmvvm:Interaction.Behaviors>
-                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="8"/>
-                </dxmvvm:Interaction.Behaviors>
+                       IsReadOnly="True"
+                       Margin="8,8,8,0"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Bottom"
+                       Style="{StaticResource InputFieldStyle}"
+                       Text="{Binding GetPositionTextBoxInputs[0]}">
               </TextBox>
               <TextBox Width="190"
-                   Margin="8,18,8,0"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Bottom"
-                   Style="{StaticResource InputFieldStyle}"
-                   Text="{Binding GetPositionTextBoxInputs[1]}">
-                <dxmvvm:Interaction.Behaviors>
-                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="9"/>
-                </dxmvvm:Interaction.Behaviors>
+                       IsReadOnly="True"
+                       Margin="8,18,8,0"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Bottom"
+                       Style="{StaticResource InputFieldStyle}"
+                       Text="{Binding GetPositionTextBoxInputs[1]}">
               </TextBox>
               <TextBox Width="190"
-                   Margin="8,18,8,8"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Bottom"
-                   Style="{StaticResource InputFieldStyle}"
-                   Text="{Binding GetPositionTextBoxInputs[2]}">
-                <dxmvvm:Interaction.Behaviors>
-                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="10"/>
-                </dxmvvm:Interaction.Behaviors>
+                       IsReadOnly="True"
+                       Margin="8,18,8,8"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Bottom"
+                       Style="{StaticResource InputFieldStyle}"
+                       Text="{Binding GetPositionTextBoxInputs[2]}">
               </TextBox>
             </StackPanel>
           </Border>

@@ -223,9 +223,6 @@ namespace Ei_Dimension.ViewModels
         case 3:
           App.SelectedTextBox = (this.GetType().GetProperty(nameof(ParametersX)), this, 4);
           break;
-        case 4:
-          App.SelectedTextBox = (this.GetType().GetProperty(nameof(ParametersX)), this, 5);
-          break;
         case 5:
           App.SelectedTextBox = (this.GetType().GetProperty(nameof(ParametersX)), this, 6);
           break;
@@ -241,9 +238,6 @@ namespace Ei_Dimension.ViewModels
         case 9:
           App.SelectedTextBox = (this.GetType().GetProperty(nameof(ParametersY)), this, 4);
           break;
-        case 10:
-          App.SelectedTextBox = (this.GetType().GetProperty(nameof(ParametersY)), this, 5);
-          break;
         case 11:
           App.SelectedTextBox = (this.GetType().GetProperty(nameof(ParametersY)), this, 6);
           break;
@@ -258,9 +252,6 @@ namespace Ei_Dimension.ViewModels
           break;
         case 15:
           App.SelectedTextBox = (this.GetType().GetProperty(nameof(ParametersZ)), this, 4);
-          break;
-        case 16:
-          App.SelectedTextBox = (this.GetType().GetProperty(nameof(ParametersZ)), this, 5);
           break;
         case 17:
           App.SelectedTextBox = (this.GetType().GetProperty(nameof(ParametersZ)), this, 6);

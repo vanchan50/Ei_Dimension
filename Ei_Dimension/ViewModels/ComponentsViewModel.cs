@@ -278,15 +278,6 @@ namespace Ei_Dimension.ViewModels
         case 1:
           App.SelectedTextBox = (this.GetType().GetProperty(nameof(IdexTextBoxInputs)), this, 1);
           break;
-        case 2:
-          App.SelectedTextBox = (this.GetType().GetProperty(nameof(LaserRedPowerValue)), this, 0);
-          break;
-        case 3:
-          App.SelectedTextBox = (this.GetType().GetProperty(nameof(LaserGreenPowerValue)), this, 0);
-          break;
-        case 4:
-          App.SelectedTextBox = (this.GetType().GetProperty(nameof(LaserVioletPowerValue)), this, 0);
-          break;
         case 5:
           App.SelectedTextBox = (this.GetType().GetProperty(nameof(SyringeControlSheathValue)), this, 0);
           break;
@@ -295,15 +286,6 @@ namespace Ei_Dimension.ViewModels
           break;
         case 7:
           App.SelectedTextBox = (this.GetType().GetProperty(nameof(SyringeControlSampleBValue)), this, 0);
-          break;
-        case 8:
-          App.SelectedTextBox = (this.GetType().GetProperty(nameof(GetPositionTextBoxInputs)), this, 0);
-          break;
-        case 9:
-          App.SelectedTextBox = (this.GetType().GetProperty(nameof(GetPositionTextBoxInputs)), this, 1);
-          break;
-        case 10:
-          App.SelectedTextBox = (this.GetType().GetProperty(nameof(GetPositionTextBoxInputs)), this, 2);
           break;
       }
     }

@@ -407,6 +407,78 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to CV.
+        /// </summary>
+        public static string DataAn_CV {
+            get {
+                return ResourceManager.GetString("DataAn_CV", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to FSC.
+        /// </summary>
+        public static string DataAn_FSC {
+            get {
+                return ResourceManager.GetString("DataAn_FSC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Green Maj.
+        /// </summary>
+        public static string DataAn_Green_Maj {
+            get {
+                return ResourceManager.GetString("DataAn_Green_Maj", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Green Min.
+        /// </summary>
+        public static string DataAn_Green_Min {
+            get {
+                return ResourceManager.GetString("DataAn_Green_Min", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Green SSC.
+        /// </summary>
+        public static string DataAn_Green_SSC {
+            get {
+                return ResourceManager.GetString("DataAn_Green_SSC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MFI.
+        /// </summary>
+        public static string DataAn_MFI {
+            get {
+                return ResourceManager.GetString("DataAn_MFI", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Red SSC.
+        /// </summary>
+        public static string DataAn_Red_SSC {
+            get {
+                return ResourceManager.GetString("DataAn_Red_SSC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Violet SSC.
+        /// </summary>
+        public static string DataAn_Violet_SSC {
+            get {
+                return ResourceManager.GetString("DataAn_Violet_SSC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Загрузить.
         /// </summary>
         public static string Dropdown_Boot {

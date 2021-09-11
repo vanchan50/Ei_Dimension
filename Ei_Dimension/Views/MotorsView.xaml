@@ -193,12 +193,10 @@
                 </dxmvvm:Interaction.Behaviors>
               </TextBox>
               <TextBox HorizontalAlignment="Stretch"
-                    Margin="8,8,4,0"
-                    Style="{StaticResource InputFieldStyle}"
-                    Text="{Binding ParametersX[5]}">
-                <dxmvvm:Interaction.Behaviors>
-                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="4"/>
-                </dxmvvm:Interaction.Behaviors>
+                       IsReadOnly="True"
+                       Margin="8,8,4,0"
+                       Style="{StaticResource InputFieldStyle}"
+                       Text="{Binding ParametersX[5]}">
               </TextBox>
               <TextBox HorizontalAlignment="Stretch"
                     Margin="8,8,4,0"
@@ -310,11 +308,9 @@
               </TextBox>
               <TextBox HorizontalAlignment="Stretch"
                        Margin="4,8,4,0"
+                       IsReadOnly="True"
                        Style="{StaticResource InputFieldStyle}"
                        Text="{Binding ParametersY[5]}">
-                <dxmvvm:Interaction.Behaviors>
-                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="10"/>
-                </dxmvvm:Interaction.Behaviors>
               </TextBox>
               <TextBox HorizontalAlignment="Stretch"
                        Margin="4,8,4,0"
@@ -424,11 +420,9 @@
               </TextBox>
               <TextBox HorizontalAlignment="Stretch"
                    Margin="4,8,8,0"
+                   IsReadOnly="True"
                    Style="{StaticResource InputFieldStyle}"
                    Text="{Binding ParametersZ[5]}">
-                <dxmvvm:Interaction.Behaviors>
-                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="16"/>
-                </dxmvvm:Interaction.Behaviors>
               </TextBox>
               <TextBox HorizontalAlignment="Stretch"
                    Margin="4,8,8,0"
@@ -441,7 +435,7 @@
               <TextBox HorizontalAlignment="Stretch"
                    Margin="4,8,8,8"
                    Style="{StaticResource InputFieldStyle}"
-                   Text="{Binding ParametersZ[6]}">
+                   Text="{Binding ParametersZ[7]}">
                 <dxmvvm:Interaction.Behaviors>
                   <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="35"/>
                 </dxmvvm:Interaction.Behaviors>
