@@ -759,6 +759,15 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to End.
+        /// </summary>
+        public static string Experiment_End {
+            get {
+                return ResourceManager.GetString("Experiment_End", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to End of
         ///Sample.
         /// </summary>
@@ -856,6 +865,15 @@ namespace Ei_Dimension.Language {
         public static string Experiment_Speed {
             get {
                 return ResourceManager.GetString("Experiment_Speed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start.
+        /// </summary>
+        public static string Experiment_Start {
+            get {
+                return ResourceManager.GetString("Experiment_Start", resourceCulture);
             }
         }
         

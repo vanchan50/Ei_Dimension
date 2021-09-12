@@ -18,22 +18,26 @@
              d:DesignHeight="674" d:DesignWidth="1500">
   <Grid>
     <!--WellTable 96-->
-    <DataGrid HorizontalAlignment="Center" VerticalAlignment="Center"
-                SelectionMode="Extended"
-                SelectionUnit="Cell"
-                AutoGenerateColumns="False"
-                ItemsSource="{Binding Table96Wells}"
-                HeadersVisibility="All"
-                Background="Transparent"
-                RowBackground="Transparent"
-                AlternatingRowBackground="Transparent"
-                GridLinesVisibility="None"
-                Visibility="{Binding Table96Visible}"
-                CanUserResizeColumns="False"
-                CanUserResizeRows="False"
-                CanUserReorderColumns="False"
-                CanUserDeleteRows="False"
-                BorderThickness="0">
+    <DataGrid Name="grd96"
+              HorizontalAlignment="Center" VerticalAlignment="Center"
+              SelectionMode="Extended"
+              SelectionUnit="Cell"
+              AutoGenerateColumns="False"
+              ItemsSource="{Binding Table96Wells}"
+              HeadersVisibility="All"
+              Background="Transparent"
+              RowBackground="Transparent"
+              AlternatingRowBackground="Transparent"
+              GridLinesVisibility="None"
+              Visibility="{Binding Table96Visible}"
+              CanUserResizeColumns="False"
+              CanUserResizeRows="False"
+              CanUserReorderColumns="False"
+              CanUserDeleteRows="False"
+              CanUserSortColumns="False"
+              BorderThickness="0"
+              TouchMove="grd96_TouchMove"
+              TouchDown="grd96_TouchDown">
       <DataGrid.Resources>
         <Style x:Key="{ComponentResourceKey ResourceId=DataGridSelectAllButtonStyle, TypeInTargetAssembly={x:Type DataGrid}}"
                TargetType="{x:Type Button}">
@@ -220,7 +224,8 @@
     </DataGrid>
 
     <!--WellTable 384-->
-    <DataGrid HorizontalAlignment="Center" VerticalAlignment="Top"
+    <DataGrid Name="grd384"
+              HorizontalAlignment="Center" VerticalAlignment="Top"
               Margin="0,30,0,0"
               SelectionMode="Extended"
               SelectionUnit="Cell"
@@ -236,7 +241,10 @@
               CanUserResizeRows="False"
               CanUserReorderColumns="False"
               CanUserDeleteRows="False"
-              BorderThickness="0">
+              CanUserSortColumns="False"
+              BorderThickness="0"
+              TouchMove="grd384_TouchMove"
+              TouchDown="grd384_TouchDown">
       <DataGrid.Resources>
         <Style x:Key="{ComponentResourceKey ResourceId=DataGridSelectAllButtonStyle, TypeInTargetAssembly={x:Type DataGrid}}"
                TargetType="{x:Type Button}">
@@ -575,7 +583,7 @@
       </StackPanel>
     </Border>
 
-    <!--All Buttons-->
+    <!--All Buttons are here-->
     <Grid Visibility="{Binding ButtonsVisible}">
       <!--System Control-->
       <Border HorizontalAlignment="Left"
@@ -970,25 +978,37 @@
                    Margin="0,0,0,0"/>
           <Button Content="{lang:Loc Experiment_Prime}"
                   Style="{StaticResource ButtonStyle}"
-                  Command="{Binding PrimeButtonClickCommand}"
+                  Command="{Binding FluidicsButtonClickCommand}"
                   Height="50" Width="100"
                   HorizontalAlignment="Center"
                   VerticalAlignment="Center"
-                  Margin="0,4,0,0"/>
+                  Margin="0,4,0,0">
+            <Button.CommandParameter>
+              <System:Int32>0</System:Int32>
+            </Button.CommandParameter>
+          </Button>
           <Button Content="{lang:Loc Experiment_Wash_A}"
                   Style="{StaticResource ButtonStyle}"
-                  Command="{Binding WashAButtonClickCommand}"
+                  Command="{Binding FluidicsButtonClickCommand}"
                   Height="50" Width="100"
                   HorizontalAlignment="Center"
                   VerticalAlignment="Center"
-                  Margin="0,4,0,0"/>
+                  Margin="0,4,0,0">
+            <Button.CommandParameter>
+              <System:Int32>1</System:Int32>
+            </Button.CommandParameter>
+          </Button>
           <Button Content="{lang:Loc Experiment_Wash_B}"
                   Style="{StaticResource ButtonStyle}"
-                  Command="{Binding WashBButtonClickCommand}"
+                  Command="{Binding FluidicsButtonClickCommand}"
                   Height="50" Width="100"
                   HorizontalAlignment="Center"
                   VerticalAlignment="Center"
-                  Margin="0,4,0,0"/>
+                  Margin="0,4,0,0">
+            <Button.CommandParameter>
+              <System:Int32>2</System:Int32>
+            </Button.CommandParameter>
+          </Button>
         </StackPanel>
       </Border>
       
@@ -1028,6 +1048,27 @@
           <Button Content="{lang:Loc Experiment_Eject}"
                   Style="{StaticResource ButtonStyle}"
                   Command="{Binding EjectButtonClickCommand}"
+                  Height="50" Width="100"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center"
+                  Margin="0,4,0,0"/>
+        </StackPanel>
+      </Border>
+      <!--Start & End-->
+      <Border HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Margin="1050,350,0,0">
+        <StackPanel>
+          <Button Content="{lang:Loc Experiment_Start}"
+                  Style="{StaticResource ButtonStyle}"
+                  Command="{Binding StartButtonClickCommand}"
+                  Height="50" Width="100"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center"
+                  Margin="0,4,0,0"/>
+          <Button Content="{lang:Loc Experiment_End}"
+                  Style="{StaticResource ButtonStyle}"
+                  Command="{Binding EndButtonClickCommand}"
                   Height="50" Width="100"
                   HorizontalAlignment="Center"
                   VerticalAlignment="Center"

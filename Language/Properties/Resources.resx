@@ -353,6 +353,9 @@ Coefficient</value>
   <data name="Experiment_Eject" xml:space="preserve">
     <value>Eject Plate</value>
   </data>
+  <data name="Experiment_End" xml:space="preserve">
+    <value>End</value>
+  </data>
   <data name="Experiment_End_of_Sample" xml:space="preserve">
     <value>End of
 Sample</value>
@@ -387,6 +390,9 @@ Region</value>
   </data>
   <data name="Experiment_Speed" xml:space="preserve">
     <value>Speed</value>
+  </data>
+  <data name="Experiment_Start" xml:space="preserve">
+    <value>Start</value>
   </data>
   <data name="Experiment_System_Control" xml:space="preserve">
     <value>System Control</value>

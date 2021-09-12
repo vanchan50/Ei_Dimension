@@ -268,19 +268,24 @@ namespace Ei_Dimension.ViewModels
       Volumes[0] = num.ToString();
     }
 
-    public void PrimeButtonClick()
+    public void FluidicsButtonClick(int i)
     {
-
-    }
-
-    public void WashAButtonClick()
-    {
-
-    }
-
-    public void WashBButtonClick()
-    {
-
+      string cmd="";
+      switch (i)
+      {
+        case 0:
+          cmd = "Prime";
+          break;
+        case 1:
+          cmd = "Wash A";
+          break;
+        case 2:
+          cmd = "Wash B";
+          break;
+      }
+      App.Device.MainCommand("Set Property", code: 0x19, parameter: 1); //bubble detect on
+      App.Device.MainCommand(cmd);
+      App.Device.MainCommand("Set Property", code: 0x19, parameter: 0); //bubble detect off
     }
 
     public void LoadButtonClick()
@@ -288,7 +293,17 @@ namespace Ei_Dimension.ViewModels
 
     }
 
-    public void EjectBButtonClick()
+    public void EjectButtonClick()
+    {
+
+    }
+
+    public void StartButtonClick()
+    {
+
+    }
+
+    public void EndButtonClick()
     {
 
     }
