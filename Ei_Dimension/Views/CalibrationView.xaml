@@ -157,7 +157,7 @@
             <RadioButton Content="{lang:Loc OFF}"
                            Style="{StaticResource RadioButtonVerticalThemeStyle}"
                            Height="50"
-                           IsChecked="True"
+                           IsChecked="{Binding CalibrationSelectorState[0], Mode=OneWay}"
                            Command="{Binding CalibrationSelectorCommand}">
               <RadioButton.CommandParameter>
                 <System:Byte>0</System:Byte>
@@ -166,6 +166,7 @@
             <RadioButton Content="{lang:Loc Calibration_Classification_To_map}"
                            Style="{StaticResource RadioButtonVerticalThemeStyle}"
                            Height="80"
+                           IsChecked="{Binding CalibrationSelectorState[1], Mode=OneWay}"
                            Command="{Binding CalibrationSelectorCommand}">
               <RadioButton.CommandParameter>
                 <System:Byte>1</System:Byte>
@@ -174,6 +175,7 @@
             <RadioButton Content="{lang:Loc Reporter}"
                            Style="{StaticResource RadioButtonVerticalThemeStyle}"
                            Height="50"
+                           IsChecked="{Binding CalibrationSelectorState[2], Mode=OneWay}"
                            Command="{Binding CalibrationSelectorCommand}">
               <RadioButton.CommandParameter>
                 <System:Byte>2</System:Byte>

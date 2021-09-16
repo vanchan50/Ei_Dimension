@@ -178,7 +178,7 @@
                           Height="60"
                           Width="150"
                           Content="{lang:Loc Components_Valve1}"
-                          IsChecked="False"
+                          IsChecked="{Binding ValvesStates[0], Mode=OneWay}"
                           Command="{Binding ValvesButtonClickCommand}">
               <ToggleButton.CommandParameter>
                 <System:Int32>1</System:Int32>
@@ -189,7 +189,7 @@
                           Width="150"
                           Margin="0,3,0,0"
                           Content="{lang:Loc Components_Valve2}"
-                          IsChecked="False"
+                          IsChecked="{Binding ValvesStates[1], Mode=OneWay}"
                           Command="{Binding ValvesButtonClickCommand}">
               <ToggleButton.CommandParameter>
                 <System:Int32>2</System:Int32>
@@ -200,7 +200,7 @@
                           Width="150"
                           Margin="0,3,0,0"
                           Content="{lang:Loc Components_Cuvet_Drain_Open}"
-                          IsChecked="False"
+                          IsChecked="{Binding ValvesStates[2], Mode=OneWay}"
                           Command="{Binding ValvesButtonClickCommand}">
               <ToggleButton.CommandParameter>
                 <System:Int32>3</System:Int32>
@@ -211,7 +211,7 @@
                           Width="150"
                           Margin="0,3,0,0"
                           Content="{lang:Loc Components_Fan}"
-                          IsChecked="False"
+                          IsChecked="{Binding ValvesStates[3], Mode=OneWay}"
                           Command="{Binding ValvesButtonClickCommand}">
               <ToggleButton.CommandParameter>
                 <System:Int32>4</System:Int32>
@@ -252,7 +252,7 @@
                               Height="50"
                               Width="150"
                               Content="{lang:Loc Red}"
-                              IsChecked="False"
+                              IsChecked="{Binding LasersActive[0], Mode=OneWay}"
                               VerticalAlignment="Top"
                               HorizontalAlignment="Center"
                               Command="{Binding LasersButtonClickCommand}">
@@ -289,7 +289,7 @@
                 <ToggleButton Style="{StaticResource ToggleButtonThemeStyle}"
                               Height="50" Width="150"
                               Content="{lang:Loc Green}"
-                              IsChecked="False"
+                              IsChecked="{Binding LasersActive[1], Mode=OneWay}"
                               VerticalAlignment="Top"
                               HorizontalAlignment="Center"
                               Command="{Binding LasersButtonClickCommand}">
@@ -326,7 +326,7 @@
                               Height="50"
                               Width="150"
                               Content="{lang:Loc Violet}"
-                              IsChecked="False"
+                              IsChecked="{Binding LasersActive[2], Mode=OneWay}"
                               VerticalAlignment="Top"
                               HorizontalAlignment="Center"
                               Command="{Binding LasersButtonClickCommand}">

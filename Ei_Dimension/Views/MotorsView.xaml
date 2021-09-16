@@ -45,7 +45,6 @@
                      HorizontalAlignment="Right"
                      VerticalAlignment="Top"
                      Margin="0,40,8,0"/>
-          
           <ToggleButton Style="{StaticResource ToggleButtonThemeStyle}"
                         Height="88"
                         Width="120"
@@ -53,9 +52,8 @@
                         HorizontalAlignment="Right"
                         VerticalAlignment="Top"
                         Content="{lang:Loc Motors_Poll_Step}"
-                        IsChecked="False"
+                        IsChecked="{Binding PollStepActive[0], Mode=OneWay}"
                         Command="{Binding PollStepToggleButtonClickCommand}"/>
-
           <TextBlock Text="{lang:Loc Motors_Slope}"
                  FontFamily="{StaticResource AppTextFont}"
                  FontSize="36"
@@ -773,9 +771,9 @@
     </Border>
     
     <!--Well Selection-->
-    <Border VerticalAlignment="Bottom"
+    <Border VerticalAlignment="top"
             HorizontalAlignment="Left"
-            Margin="800,0,0,30">
+            Margin="800,420,0,0">
       <StackPanel>
 
         <TextBlock Text="{lang:Loc Motors_Man_Well_Sel}"

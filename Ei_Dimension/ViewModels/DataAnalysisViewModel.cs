@@ -13,7 +13,7 @@ namespace Ei_Dimension.ViewModels
     public virtual ObservableCollection<string> CvItems { get; set; }
     public virtual bool CalStatsButtonState { get; set; }
 
-    public DataAnalysisViewModel Instance;
+    static public DataAnalysisViewModel Instance;
 
     protected DataAnalysisViewModel()
     {

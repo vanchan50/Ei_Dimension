@@ -102,8 +102,7 @@ namespace MicroCy
     public CustomMap ActiveMap { get; set; }
     public Queue<CommandStruct> Commands { get; } = new Queue<CommandStruct>();
     public Queue<CLQueue> ClData { get; } = new Queue<CLQueue>();
-    public List<Wells> WellsInOrder { get; } = new List<Wells>();
-    public List<Wells> Wells { get; } = new List<Wells>();
+    public List<Wells> WellsInOrder { get; set; } = new List<Wells>();
     public List<CustomMap> MapList { get; private set; } = new List<CustomMap>();
     public List<Gstats> GStats { get; set; }
     public float HDnrCoef { get; set; }
@@ -135,7 +134,6 @@ namespace MicroCy
     public int MinPerRegion { get; set; }
     public ushort IdexSteps { get; set; }
     public ushort[,] ClassificationMap { get; } = new ushort[300, 300];
-    public bool RowOrder { get; set; }
     public bool NewStats { get; set; }
     public bool SubtRegBg { get; set; }
     public bool IsTube { get; set; }
@@ -281,12 +279,12 @@ namespace MicroCy
       {
         GStats.Add(new Gstats());
       }
+      Outfilename = "ResultFile";
     }
 
-    public void ConstructMap(CustomMap mmap)
+    public void ConstructClassificationMap(CustomMap mmap)
     {
       //build classification map from ActiveMap using bitfield types A-D
-      int row, irow, col, jcol,begidx,begidy,endidx,endidy;
       float xwidth,ywidth,cl2;
       int[,] bitpoints = new int[32, 2];
       _actPriIdx = (byte)mmap.midorderidx; //what channel cl0 - cl3?
@@ -300,12 +298,12 @@ namespace MicroCy
         {
           Array.Clear(bitpoints, 0, bitpoints.Length);  //copy bitmap of the type specified (A B C D)
           Array.Copy(Bitmaplist[mapRegions.bitmaptype], bitpoints, Bitmaplist[mapRegions.bitmaptype].Length);
-          row = mapRegions.centermidorderidx - bitpoints[0, 0];  //first position is value to backup before etching bitmap
-          col = mapRegions.centerloworderidx - bitpoints[0, 1];
-          irow = 1;
+          int row = mapRegions.centermidorderidx - bitpoints[0, 0];  //first position is value to backup before etching bitmap
+          int col = mapRegions.centerloworderidx - bitpoints[0, 1];
+          int irow = 1;
           while (bitpoints[irow, 0] != 0)
           {
-            for (jcol = col; jcol < (col + bitpoints[irow, 0]); jcol++)
+            for (int jcol = col; jcol < (col + bitpoints[irow, 0]); jcol++)
             {
               //handle region overlap by making overlap 0
               if (ClassificationMap[row + irow - 1, jcol] == 0)
@@ -326,20 +324,20 @@ namespace MicroCy
         {
           //populate a computed region
           cl2 = (float)mapRegions.meanloworder;
-          xwidth = (float) 0.33 * mapRegions.meanmidorder + 50;
+          xwidth = (float)0.33 * mapRegions.meanmidorder + 50;
           ywidth = (float)0.33 * mapRegions.meanloworder + 50;
-          begidx = Val_2_Idx((int)(mapRegions.meanmidorder - (xwidth * 0.5)));
-          endidx = Val_2_Idx((int) (mapRegions.meanmidorder + (xwidth * 0.5 )));
+          int begidx = Val_2_Idx((int)(mapRegions.meanmidorder - (xwidth * 0.5)));
+          int endidx = Val_2_Idx((int) (mapRegions.meanmidorder + (xwidth * 0.5 )));
           float xincer = 0;
-          begidy = Val_2_Idx((int)(mapRegions.meanloworder - (ywidth /2)));
-          endidy = Val_2_Idx((int)(mapRegions.meanloworder + (ywidth/2 ) ));
+          int begidy = Val_2_Idx((int)(mapRegions.meanloworder - (ywidth /2)));
+          int endidy = Val_2_Idx((int)(mapRegions.meanloworder + (ywidth/2 ) ));
           if (begidx < 3)
             begidx = 3;
           if (begidy < 3)
             begidy = 3;
-          for (irow = begidx; irow <= endidx; irow++)
+          for (int irow = begidx; irow <= endidx; irow++)
           {
-            for (jcol = begidy + (int)xincer; jcol <= endidy + (int)xincer; jcol++)
+            for (int jcol = begidy + (int)xincer; jcol <= endidy + (int)xincer; jcol++)
             {
               if (ClassificationMap[irow, jcol] == 0)
                 ClassificationMap[irow, jcol] = mapRegions.regionNumber;
@@ -353,7 +351,7 @@ namespace MicroCy
       Newmap = true;
     }
 
-    private void InitBeadRead(byte rown, byte coln)
+    public void InitBeadRead(byte rown, byte coln)
     {
       //open file
       //first create uninique filename
@@ -362,7 +360,7 @@ namespace MicroCy
         colnum++;  //use 0 for tubes and true column for plates
       char rowletter = (char)(0x41 + rown);
       if (!Directory.Exists(Outdir))
-        Outdir = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+        Outdir = RootDirectory.FullName;
       for (var differ = 0; differ < 100; differ++)
       {
         _fullFileName = Outdir + "\\" + Outfilename + rowletter + colnum.ToString() + '_' + differ.ToString()+".csv";
@@ -381,30 +379,26 @@ namespace MicroCy
       char[] alphabet = Enumerable.Range('A', 16).Select(x => (char)x).ToArray();
       string bgfullFileName = _fullFileName;  //save name in bg process cause it gets changed in endstate 5
       string bgsummaryFileName = PrepareSummaryFile();
-      List<WellResults> bgwellresults = _wellResults.ToList();
       string bgdataout = _dataout.ToString();
       byte bgreadingrow = ReadingRow;
       byte bgreadingcol = ReadingCol;
       Console.WriteLine(string.Format("{0} Reporting Background results cloned for save", DateTime.Now.ToString()));
       if ((bgfullFileName != null) & (Everyevent))
-      {
         File.WriteAllText(bgfullFileName, _dataout.ToString());
-      }
       if (RMeans)
       {
-        PlateReport.rpWells.Add(new WellReport { prow= WellsInOrder[SavingWellIdx].rowIdx, pcol= WellsInOrder[SavingWellIdx].colIdx });
-        foreach (WellResults regionNumber in bgwellresults)
+        if(PlateReport != null)
+          PlateReport.rpWells.Add(new WellReport { prow = WellsInOrder[SavingWellIdx].rowIdx, pcol = WellsInOrder[SavingWellIdx].colIdx });
+        foreach (WellResults regionNumber in _wellResults)
         {
           OutResults rout = new OutResults();
-          if (SavingWellIdx > (WellsInOrder.Count - 1)) SavingWellIdx = WellsInOrder.Count - 1;
+          SavingWellIdx = SavingWellIdx > WellsInOrder.Count - 1 ? WellsInOrder.Count - 1 : SavingWellIdx;
           rout.row = alphabet[WellsInOrder[SavingWellIdx].rowIdx].ToString();
           rout.col = WellsInOrder[SavingWellIdx].colIdx + 1;    //columns are 1 based
           rout.count = regionNumber.RP1vals.Count();
           rout.region = regionNumber.regionNumber;
           if (rout.count > 2)
-          {
             rout.meanfi = regionNumber.RP1vals.Average();
-          }
           if (rout.count >= 20)
           {
             regionNumber.RP1vals.Sort();
@@ -432,9 +426,7 @@ namespace MicroCy
           });
         }
         if ((SavingWellIdx == WellsToRead) & (_summaryout.Length > 0) & (RMeans) )  //end of read session (plate, plate section or tube) write summary stat file
-        {
           File.WriteAllText(bgsummaryFileName, _summaryout.ToString());
-        }
         if ((SavingWellIdx == WellsToRead) & (_summaryout.Length > 0) & (PltRept))    //end of read and json results requested
         {
           string rfilename = SystemControl == 0 ? Outfilename : WorkOrder.plateID.ToString();
@@ -455,15 +447,14 @@ namespace MicroCy
           }
         }
       }
-      if ((CalStats) & (SavBeadCount > 2))
+      if (CalStats & (SavBeadCount > 2))
       {
         double sumit = 0;
         double sumsq = 0;
         double mean = 0;
         double stddev = 0;
         double[] robustcnt = new double[10];
-        if (SavBeadCount > 5000)
-          SavBeadCount = 5000;
+        SavBeadCount = SavBeadCount > 5000 ? 5000 : SavBeadCount;
         for (int finx = 0; finx < 10; finx++)
         {
           for (int beads = 0; beads < SavBeadCount; beads++)
@@ -479,9 +470,7 @@ namespace MicroCy
           for (int beads = 0; beads < SavBeadCount; beads++)
           {
             if ((_sfi[beads, finx] > min) & (_sfi[beads, finx] < max))
-            {
               sumit += _sfi[beads, finx];
-            }
             else
             {
               _sfi[beads, finx] = 0;
@@ -510,19 +499,19 @@ namespace MicroCy
       Console.WriteLine(string.Format("{0} Reporting Background File Save Complete", DateTime.Now.ToString()));
     }
 
-    public void SetReadingParamsForWell(int idx)
+    public void SetReadingParamsForWell(int index)
     {
-      MainCommand("Set Property", code: 0xaa, parameter: (ushort)WellsInOrder[idx].runSpeed);
-      MainCommand("Set Property", code: 0xc2, parameter: (ushort)WellsInOrder[idx].chanConfig);
-      BeadsToCapture = WellsInOrder[idx].termCnt;
-      MinPerRegion = WellsInOrder[idx].regTermCnt;
-      TerminationType = WellsInOrder[idx].termType;
-      ConstructMap(ActiveMap);
+      MainCommand("Set Property", code: 0xaa, parameter: (ushort)WellsInOrder[index].runSpeed);
+      MainCommand("Set Property", code: 0xc2, parameter: (ushort)WellsInOrder[index].chanConfig);
+      BeadsToCapture = WellsInOrder[index].termCnt;
+      MinPerRegion = WellsInOrder[index].regTermCnt;
+      TerminationType = WellsInOrder[index].termType;
+      ConstructClassificationMap(ActiveMap);
       _wellResults.Clear();
-      foreach (BeadRegion mapRegions in WellsInOrder[idx].thisWellsMap.mapRegions)
+      foreach (BeadRegion mapRegions in WellsInOrder[index].thisWellsMap.mapRegions)
       {
-        bool isInMap = ActiveMap.mapRegions.Any(xx => mapRegions.regionNumber == xx.regionNumber);
-        if (isInMap==false)
+        bool isInMap = ActiveMap.mapRegions.Any(x => mapRegions.regionNumber == x.regionNumber);
+        if (!isInMap)
           Console.WriteLine(string.Format("{0} No Map for Work Order region {1}", DateTime.Now.ToString(),mapRegions.regionNumber));
         if ((mapRegions.isActive) & (isInMap))
         {
@@ -849,6 +838,10 @@ namespace MicroCy
       cs.Parameter = parameter ?? cs.Parameter;
       cs.FParameter = fparameter ?? cs.FParameter;
       RunCmd(command, cs);
+      if(command == "Read A" || command == "Read A Aspirate B")
+        _readingA = true;
+      if (command == "Read B" || command == "Read B Aspirate A")
+        _readingA = false;
     }
 
     public void InitSTab(string tabname)
@@ -970,7 +963,7 @@ namespace MicroCy
       Console.WriteLine(string.Format("{0} Sending [{1}]: {2}", DateTime.Now.ToString(), sCmdName, cs.ToString())); //  MARK1 END
     }
 
-    private string PrepareSummaryFile() //  DEBUGINFO: in Legacy was int BtnRead_Click
+    public string PrepareSummaryFile() //  DEBUGINFO: in Legacy was int BtnRead_Click
     {
       string summaryFileName = "";
       for (var i = 0; i < 1000; i++)
@@ -996,13 +989,9 @@ namespace MicroCy
           {
             SetAspirateParamsForWell(CurrentWellIdx + 1);
             MainCommand("Read B Aspirate A");
-            _readingA = false;
           }
           else if (CurrentWellIdx == WellsToRead)
-          {
             MainCommand("Read B");
-            _readingA = false;
-          }
         }
         else
         {
@@ -1010,14 +999,10 @@ namespace MicroCy
           {
             SetAspirateParamsForWell(CurrentWellIdx + 1);
             MainCommand("Read A Aspirate B");
-            _readingA = true;
           }
           else if (CurrentWellIdx == WellsToRead)
-          {
             //handle end of plate things
             MainCommand("Read A");
-            _readingA = true;
-          }
         }
         InitBeadRead(ReadingRow, ReadingCol);   //gets output file redy
       }

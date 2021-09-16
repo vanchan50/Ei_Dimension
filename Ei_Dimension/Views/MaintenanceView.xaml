@@ -23,17 +23,18 @@
     </Grid.ColumnDefinitions>
 
     <!--Tile Ribbon-->
-    <StackPanel Grid.Column="0" Margin="30,60,0,0">
+    <StackPanel Margin="30,60,0,0"
+                Width="200">
       <RadioButton Content="{lang:Loc Maintenance_Calibration}"
                    Height="70"
                    IsChecked="True"
-                   img:EmbeddedImg.Image="/Icons/motors icon.png"
+                   img:EmbeddedImg.Image="/Icons/calibration icon.png"
                    Style="{DynamicResource SubRibbonButtonStyle}"
                    Command="{Binding NavigateCalibrationCommand}">
       </RadioButton>
       <RadioButton Content="{lang:Loc Maintenance_Channels}"
                    Height="70"
-                   img:EmbeddedImg.Image="/Icons/components icon.png"
+                   img:EmbeddedImg.Image="/Icons/channels icon.png"
                    Style="{DynamicResource SubRibbonButtonStyle}"
                    Command="{Binding NavigateChannelsCommand}">
       </RadioButton>
@@ -165,7 +166,7 @@
 
     <dxwui:NavigationFrame AnimationType="SlideHorizontal"
                            NavigationCacheMode="Required"
-                           Grid.Row="0" Grid.Column="1">
+                           Grid.Column="1">
       <dxmvvm:Interaction.Triggers>
         <dxmvvm:EventToCommand EventName="Loaded" Command="{Binding NavigateCalibrationCommand}" />
       </dxmvvm:Interaction.Triggers>

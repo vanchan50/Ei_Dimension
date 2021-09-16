@@ -4,6 +4,7 @@ using DevExpress.Mvvm.POCO;
 using DevExpress.Xpf.Map;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Windows;
 using System.Xml.Serialization;
@@ -13,47 +14,32 @@ namespace Ei_Dimension.ViewModels
   [POCOViewModel]
   public class DashboardViewModel
   {
-    public List<DataModel> Items { get; set; }
+    public virtual ObservableCollection<string> PressureMon { get; set; }
+    public virtual bool PressureMonToggleButtonState { get; set; }
+    public double MaxPressure { get; set; }
+    public double MinPressure { get; set; }
+    public virtual ObservableCollection<string> ActiveList { get; set; }
+
+    public static DashboardViewModel Instance { get; private set; }
+
     protected DashboardViewModel()
     {
-      Items = new List<DataModel>();
-      Items.Add(new DataModel(0, 0));
-      Items.Add(new DataModel(10, 10));
-      Items.Add(new DataModel(20, 20));
-      Items.Add(new DataModel(30, 30));
-
-      ChoroplethColorizer colorizer = new ChoroplethColorizer();
-      colorizer.RangeStops = new System.Windows.Media.DoubleCollection(new double[]{ 0.1, 0.2, 0.7, 1 });
-      colorizer.Colors.Add(System.Windows.Media.Color.FromArgb(50, 128, 255, 0));
-      colorizer.Colors.Add(System.Windows.Media.Color.FromArgb(255, 255, 255, 0));
-      colorizer.Colors.Add(System.Windows.Media.Color.FromArgb(255, 234, 72, 58));
-      colorizer.Colors.Add(System.Windows.Media.Color.FromArgb(255, 162, 36, 25));
-      colorizer.ApproximateColors = true;
-
-      HeatmapDataSourceAdapter adapter = new HeatmapDataSourceAdapter();
-      adapter.DataSource = Items;
-
-      HeatmapProvider provider = new HeatmapProvider();
-      provider.PointSource = adapter;
-      provider.Algorithm = new HeatmapDensityBasedAlgorithm { PointRadius = 8 };
-      provider.Colorizer = colorizer;
+      PressureMonToggleButtonState = false;
+      PressureMon = new ObservableCollection<string> {"","",""};
+      ActiveList = new ObservableCollection<string>();
+      Instance = this;
     }
 
     public static DashboardViewModel Create()
     {
       return ViewModelSource.Create(() => new DashboardViewModel());
     }
-  }
 
-  public class DataModel
-  {
-    public double X { get; set; }
-    public double Y { get; set; }
-    public DataModel(double x, double y)
+    public void PressureMonToggleButtonClick()
     {
-      X = x;
-      Y = y;
+      PressureMonToggleButtonState = !PressureMonToggleButtonState;
+      MaxPressure = 0;
+      MinPressure = 9999999999;
     }
   }
-
 }

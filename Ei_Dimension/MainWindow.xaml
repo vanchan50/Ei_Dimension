@@ -29,37 +29,17 @@
     WindowKind="Normal"
     UseGlowColors="False"
     DataContext="{dxmvvm:ViewModelSource Type=ViewModels:MainViewModel}">
-  
+  <!--make window topmost, maximized-->
   <Grid>
-    <Grid.RowDefinitions>
-      <RowDefinition Height="0.5*"/>
-      <RowDefinition Height="1*"/>
-      <RowDefinition Height="8*"/>
-    </Grid.RowDefinitions>
-    <Grid.ColumnDefinitions>
-      <ColumnDefinition Width="4*"/>
-      <ColumnDefinition Width="1*"/>
-    </Grid.ColumnDefinitions>
-
-    <TextBlock Text="{lang:Loc Program_Name}"
-               Foreground="{StaticResource AppTextColor}"
-               FontSize="28"
-               FontFamily="{StaticResource AppTextFont}"
-               Grid.Row="0" Grid.Column="0"
-               HorizontalAlignment="Left"
-               VerticalAlignment="Center"
-               Margin="5,0,0,0"
-               TextWrapping="Wrap" />
-
     <!-- Company Logo -->
-    <Image Grid.Row="0" Grid.Column="1"
+    <Image HorizontalAlignment="Left" VerticalAlignment="Top"
+           Margin="1300,768,0,0"
            Source="Emission_Logo.png"
-           Stretch="Fill"
            RenderOptions.BitmapScalingMode="HighQuality"/>
     <!--Tile Ribbon-->
-    <StackPanel Grid.Row="1" Grid.ColumnSpan="2"
-                Orientation="Horizontal"
-                Margin="30,0,0,0">
+    <StackPanel Orientation="Horizontal"
+                Height="80" HorizontalAlignment="Left" VerticalAlignment="Top"
+                Margin="30,30,0,0">
       <RadioButton Content="{lang:Loc Ribbon_Dashboard}" Width="180"
                     img:EmbeddedImg.Image="/Icons/dashboard icon.png"
                     Style="{DynamicResource MainRibbonButtonStyle}"
@@ -92,9 +72,11 @@
       </RadioButton>
     </StackPanel>
 
-    <dxwui:NavigationFrame AnimationType="Fade"
-                           NavigationCacheMode="Required"
-                           Grid.Row="2" Grid.ColumnSpan="2">
+    <dxwui:NavigationFrame HorizontalAlignment="Left"
+                           VerticalAlignment="Top"
+                           Margin="0,115,0,0"
+                           AnimationType="Fade"
+                           NavigationCacheMode="Required">
       <dxmvvm:Interaction.Triggers>
         <dxmvvm:EventToCommand EventName="Loaded" Command="{Binding NavigateExperimentCommand}" />
       </dxmvvm:Interaction.Triggers>
@@ -104,19 +86,19 @@
     </dxwui:NavigationFrame>
 
     <!--Numpad-->
-    <dx:SimpleButton Grid.Row="1" Grid.Column ="1"
-                     Height="40" Width="50"
+    <dx:SimpleButton Height="40" Width="50"
                      HorizontalAlignment="Left"
-                     VerticalAlignment="Bottom"
-                     Margin="155,0,0,5"
+                     VerticalAlignment="Top"
+                     Margin="1320,60,0,0"
                      Glyph="{dx:DXImage 'SvgImages/Icon Builder/Electronics_Keyboard.svg'}"
                      GlyphHeight="40"
                      GlyphWidth="40"
                      Command="{Binding NumpadToggleButonCommand}"/>
 
-    <Grid Grid.Row="2" Grid.Column="1"
-          Visibility="{Binding NumpadVisible}"
-          Margin="80,5,0,0">
+    <Grid Width="202" Height="280"
+          VerticalAlignment="Top" HorizontalAlignment="Left"
+          Margin="1250,120,0,0"
+          Visibility="{Binding NumpadVisible}">
       <Views:NumpadView />
     </Grid>
     

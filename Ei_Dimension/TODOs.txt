@@ -38,4 +38,14 @@ what does chart2.Series["CLTARGET"].Enabled mean? another chart displayed? ---> 
 when something actually runs, UPDATE:
 
 
+createmapstate is DEPRECATED
+
 in ExperimentVM instead of App.Device.ActWell use Table96Wells and Table384Wells in (btnRead_Click  legacy)   where welltype.empty => false (legacy)
+
+ExperimentVM startButtonClick makes end buton red and disables read button. do the same?
+ExperimentVM EndButtonClick has workorder not imlemented as well as button colors
+
+ChannelsVM.SiPMTempCoeff is input and output? as in numpad and TextBoxUpdater()
+
+TextBoxUpdater() checks many togglebuttons without bound actions. probably wrong?
+pressure on togglebutton  legacy PressOncb_CheckedChanged() sets params once? remove?

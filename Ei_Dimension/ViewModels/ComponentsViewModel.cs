@@ -9,13 +9,11 @@ namespace Ei_Dimension.ViewModels
   public class ComponentsViewModel
   {
     public virtual ObservableCollection<string> InputSelectorState { get; set; }
-    public int IInputSelectorState { get; private set; }
+    public int IInputSelectorState { get; set; }
 
-    public virtual bool[] ValvesStates { get; set; }
+    public virtual ObservableCollection<bool> ValvesStates { get; set; }
 
-    public virtual bool LaserRedActive { get; set; }
-    public virtual bool LaserGreenActive { get; set; }
-    public virtual bool LaserVioletActive { get; set; }
+    public virtual ObservableCollection<bool> LasersActive { get; set; }
     public virtual ObservableCollection<string> LaserRedPowerValue { get; set; }
     public virtual ObservableCollection<string> LaserGreenPowerValue { get; set; }
     public virtual ObservableCollection<string> LaserVioletPowerValue { get; set; }
@@ -29,6 +27,7 @@ namespace Ei_Dimension.ViewModels
     public virtual ObservableCollection<string> SyringeControlSampleBValue { get; set; }
 
     public virtual string GetPositionToggleButtonState { get; set; }
+    public virtual ObservableCollection<bool> GetPositionToggleButtonStateBool { get; set; }
     public virtual ObservableCollection<string> GetPositionTextBoxInputs { get; set; }
 
     public virtual bool SamplingActive { get; set; }
@@ -39,13 +38,12 @@ namespace Ei_Dimension.ViewModels
 
     public static ComponentsViewModel Instance { get; private set; }
 
-    private int _iGetPositionToggleButtonState;
     private byte[] _syringeControlStates;
     private ushort _activeLasers;
 
     protected ComponentsViewModel()
     {
-      ValvesStates = new bool[4] { false, false, false, false };
+      ValvesStates = new ObservableCollection<bool> { false, false, false, false };
       InputSelectorState = new ObservableCollection<string>();
       InputSelectorState.Add(Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Components_To_Pickup),
         Language.TranslationSource.Instance.CurrentCulture));
@@ -53,9 +51,7 @@ namespace Ei_Dimension.ViewModels
         Language.TranslationSource.Instance.CurrentCulture));
       IInputSelectorState = 0;
 
-      LaserRedActive = false;
-      LaserGreenActive = false;
-      LaserVioletActive = false;
+      LasersActive = new ObservableCollection<bool> { false, false, false };
       LaserRedPowerValue = new ObservableCollection<string> {""};
       LaserGreenPowerValue = new ObservableCollection<string> {""};
       LaserVioletPowerValue = new ObservableCollection<string> {""};
@@ -88,7 +84,7 @@ namespace Ei_Dimension.ViewModels
       SyringeControlSampleBValue = new ObservableCollection<string> {""};
       
       GetPositionToggleButtonState = RM.GetString(nameof(Language.Resources.OFF), Language.TranslationSource.Instance.CurrentCulture);
-      _iGetPositionToggleButtonState = 0;
+      GetPositionToggleButtonStateBool = new ObservableCollection<bool> { false };
       GetPositionTextBoxInputs = new ObservableCollection<string> {"", "", ""};
 
       SamplingActive = false;
@@ -149,22 +145,22 @@ namespace Ei_Dimension.ViewModels
       switch (num)
       {
         case 1:
-          LaserRedActive = !LaserRedActive;
-          if (LaserRedActive)
+          LasersActive[0] = !LasersActive[0];
+          if (LasersActive[0])
             _activeLasers += 1;
           else
             _activeLasers -= 1;
           break;
         case 2:
-          LaserGreenActive = !LaserGreenActive;
-          if (LaserGreenActive)
+          LasersActive[1] = !LasersActive[1];
+          if (LasersActive[1])
             _activeLasers += 2;
           else
             _activeLasers -= 2;
           break;
         case 3:
-          LaserVioletActive = !LaserVioletActive;
-          if (LaserVioletActive)
+          LasersActive[2] = !LasersActive[2];
+          if (LasersActive[2])
             _activeLasers += 4;
           else
             _activeLasers -= 4;
@@ -195,17 +191,20 @@ namespace Ei_Dimension.ViewModels
     {
       var RM = Language.Resources.ResourceManager;
       var curCulture = Language.TranslationSource.Instance.CurrentCulture;
+      ushort state = 0;
       if (GetPositionToggleButtonState == RM.GetString(nameof(Language.Resources.OFF), curCulture))
       {
         GetPositionToggleButtonState = RM.GetString(nameof(Language.Resources.ON), curCulture);
-        _iGetPositionToggleButtonState = 1;
+        GetPositionToggleButtonStateBool[0] = true;
+        state = 1;
       }
       else if (GetPositionToggleButtonState == RM.GetString(nameof(Language.Resources.ON), curCulture))
       {
         GetPositionToggleButtonState = RM.GetString(nameof(Language.Resources.OFF), curCulture);
-        _iGetPositionToggleButtonState = 0;
+        GetPositionToggleButtonStateBool[0] = false;
+        state = 0;
       }
-      App.Device.MainCommand("Set Property", code: 0x15, parameter: (ushort)_iGetPositionToggleButtonState);
+      App.Device.MainCommand("Set Property", code: 0x15, parameter: state);
     }
 
     public void GetPositionButtonsClick(int num)

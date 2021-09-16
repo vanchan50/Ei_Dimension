@@ -407,6 +407,33 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Pressure Monitor.
+        /// </summary>
+        public static string Dashboard_Pressure_Mon {
+            get {
+                return ResourceManager.GetString("Dashboard_Pressure_Mon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Max Pressure.
+        /// </summary>
+        public static string Dashboard_Pressure_Mon_Max {
+            get {
+                return ResourceManager.GetString("Dashboard_Pressure_Mon_Max", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Min Pressure.
+        /// </summary>
+        public static string Dashboard_Pressure_Mon_Min {
+            get {
+                return ResourceManager.GetString("Dashboard_Pressure_Mon_Min", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Calibration
         ///  Statistics.
         /// </summary>
@@ -893,6 +920,16 @@ namespace Ei_Dimension.Language {
         public static string Experiment_Total_Events {
             get {
                 return ResourceManager.GetString("Experiment_Total_Events", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Validate
+        ///Barcode.
+        /// </summary>
+        public static string Experiment_Validate_Bcode {
+            get {
+                return ResourceManager.GetString("Experiment_Validate_Bcode", resourceCulture);
             }
         }
         

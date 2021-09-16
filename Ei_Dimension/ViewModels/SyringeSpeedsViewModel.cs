@@ -10,6 +10,7 @@ namespace Ei_Dimension.ViewModels
   {
     public virtual ObservableCollection<string> SheathSyringeParameters { get; set; }
     public virtual ObservableCollection<string> SamplesSyringeParameters { get; set; }
+    public static SyringeSpeedsViewModel Instance { get; private set; }
 
     protected SyringeSpeedsViewModel()
     {
@@ -20,6 +21,7 @@ namespace Ei_Dimension.ViewModels
         SheathSyringeParameters.Add("");
         SamplesSyringeParameters.Add("");
       }
+      Instance = this;
     }
 
     public static SyringeSpeedsViewModel Create()

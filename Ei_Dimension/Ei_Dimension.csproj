@@ -366,6 +366,11 @@
   <ItemGroup>
     <Resource Include="laser-icon-16521-Windows.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\calibration icon.png" />
+    <Resource Include="Icons\channels icon.png" />
+    <Resource Include="Icons\dimension flow analyzer logo.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

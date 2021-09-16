@@ -11,11 +11,12 @@ namespace Ei_Dimension.ViewModels
   [POCOViewModel]
   public class MotorsViewModel
   {
-    public virtual bool PollStepActive { get; set; }
+    public virtual ObservableCollection<bool> PollStepActive { get; set; }
     public virtual ObservableCollection<DropDownButtonContents> WellRowButtonItems { get; set; }
     public virtual ObservableCollection<DropDownButtonContents> WellColumnButtonItems { get; set; }
     public virtual string SelectedWellRow { get; set; }
     public virtual string SelectedWellColumn { get; set; }
+    public (byte rowIndex, byte colIndex) RowColIndex { get; set; }
     public virtual ObservableCollection<string> ParametersX { get; set; }
     public virtual ObservableCollection<string> ParametersY { get; set; }
     public virtual ObservableCollection<string> ParametersZ { get; set; }
@@ -23,12 +24,13 @@ namespace Ei_Dimension.ViewModels
     public virtual ObservableCollection<string> StepsParametersY { get; set; }
     public virtual ObservableCollection<string> StepsParametersZ { get; set; }
 
-    private (byte rowIndex, byte colIndex) _rowColIndex;
+    public static MotorsViewModel Instance { get; private set; }
+
     private int _amountOfWells;
 
     protected MotorsViewModel()
     {
-      PollStepActive = false;
+      PollStepActive = new ObservableCollection<bool> { false };
       ParametersX = new ObservableCollection<string>();
       ParametersY = new ObservableCollection<string>();
       ParametersZ = new ObservableCollection<string>();
@@ -66,7 +68,8 @@ namespace Ei_Dimension.ViewModels
         WellColumnButtonItems.Add(new DropDownButtonContents(i.ToString()));
       }
       DropDownButtonContents.ResetIndex();
-      _rowColIndex = (1, 1);
+      RowColIndex = (1, 1);
+      Instance = this;
     }
 
     public static MotorsViewModel Create()
@@ -83,7 +86,7 @@ namespace Ei_Dimension.ViewModels
       WellColumnButtonItems.Clear();
       SelectedWellRow = "A";
       SelectedWellColumn = "1";
-      _rowColIndex = (1, 1);
+      RowColIndex = (1, 1);
       //switch only changes dropdown contents
       switch (num)
       {
@@ -168,17 +171,17 @@ namespace Ei_Dimension.ViewModels
 
     public void GoToWellButtonClick()
     {
-      App.Device.MainCommand("Set Property", code: 0xad, parameter: (ushort)_rowColIndex.rowIndex);
-      App.Device.ReadingRow = _rowColIndex.rowIndex;
-      App.Device.MainCommand("Set Property", code: 0xae, parameter: (ushort)_rowColIndex.colIndex);
-      App.Device.ReadingCol = _rowColIndex.colIndex;
+      App.Device.MainCommand("Set Property", code: 0xad, parameter: (ushort)RowColIndex.rowIndex);
+      App.Device.ReadingRow = RowColIndex.rowIndex;
+      App.Device.MainCommand("Set Property", code: 0xae, parameter: (ushort)RowColIndex.colIndex);
+      App.Device.ReadingCol = RowColIndex.colIndex;
       App.Device.MainCommand("Position Well Plate");
     }
 
     public void PollStepToggleButtonClick()
     {
-      PollStepActive = !PollStepActive;
-      var param = PollStepActive ? 1 : 0;
+      PollStepActive[0] = !PollStepActive[0];
+      var param = PollStepActive[0] ? 1 : 0;
       App.Device.MainCommand("Set Property", code: 0x16, parameter: (ushort)param);
     }
 
@@ -337,13 +340,28 @@ namespace Ei_Dimension.ViewModels
             _vm.SelectedWellRow = Content;
             App.Device.MainCommand("Set Property", code: 0xad, parameter: (ushort)Index);
             App.Device.ReadingRow = Index;
-            _vm._rowColIndex.rowIndex = Index;
+            _vm.RowColIndex = (Index, _vm.RowColIndex.colIndex);
             break;
           case 2:
             _vm.SelectedWellColumn = Content;
             App.Device.MainCommand("Set Property", code: 0xae, parameter: (ushort)Index);
             App.Device.ReadingCol = Index;
-            _vm._rowColIndex.colIndex = Index;
+            _vm.RowColIndex = (_vm.RowColIndex.rowIndex, Index);
+            break;
+        }
+      }
+
+      public void ForAppUpdater(int num)
+      {
+        switch (num)
+        {
+          case 1:
+            _vm.SelectedWellRow = Content;
+            _vm.RowColIndex = (Index, _vm.RowColIndex.colIndex);
+            break;
+          case 2:
+            _vm.SelectedWellColumn = Content;
+            _vm.RowColIndex = (_vm.RowColIndex.rowIndex, Index);
             break;
         }
       }

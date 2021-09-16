@@ -9,6 +9,8 @@ namespace Ei_Dimension.ViewModels
   public class ChannelOffsetViewModel
   {
     public virtual ObservableCollection<string> ChannelsOffsetParameters { get; set; }
+    public static ChannelOffsetViewModel Instance { get; private set; }
+
     protected ChannelOffsetViewModel()
     {
       ChannelsOffsetParameters = new ObservableCollection<string>();
@@ -16,6 +18,7 @@ namespace Ei_Dimension.ViewModels
       {
         ChannelsOffsetParameters.Add("");
       }
+      Instance = this;
     }
 
     public static ChannelOffsetViewModel Create()

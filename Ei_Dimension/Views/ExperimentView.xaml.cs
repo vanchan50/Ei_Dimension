@@ -21,7 +21,7 @@ namespace Ei_Dimension.Views
   public partial class ExperimentView : UserControl
   {
     const int shiftX = 24;
-    const int shiftY = 38;
+    const int shiftY = 39;
     const int ColWidth = 32;
     const int RowHeight = 32;
     public ExperimentView()

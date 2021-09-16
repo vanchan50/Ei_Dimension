@@ -527,8 +527,8 @@
     </DataGrid>
 
     <!--WellTable Size Selector-->
-    <Border HorizontalAlignment="Left" VerticalAlignment="Bottom"
-            Margin="20,0,0,20"
+    <Border HorizontalAlignment="Left" VerticalAlignment="Top"
+            Margin="20,600,0,0"
             Width="240"
             Height="60"
             Visibility="{Binding TableSelectorVisible}">
@@ -556,8 +556,8 @@
     </Border>
 
     <!--Well Assignment Buttons-->
-    <Border HorizontalAlignment="Center" VerticalAlignment="Bottom"
-            Margin="0,0,0,30"
+    <Border HorizontalAlignment="Center" VerticalAlignment="Top"
+            Margin="0,610,0,0"
             Visibility="{Binding WellSelectorVisible}">
       <StackPanel Orientation="Horizontal">
         <Button Width="50" Height="50"
@@ -641,6 +641,15 @@
               </RadioButton>
             </StackPanel>
           </Border>
+          <Button Content="{lang:Loc Experiment_Validate_Bcode}"
+                  Command="{Binding ValidateBCodeButtonClickCommand}"
+                  Style="{StaticResource ButtonStyle}"
+                  Height="60" Width="180"
+                  IsEnabled="{Binding ValidateBCodeButtonEnabled}"
+                  Visibility="{Binding ValidateBCodeButtonVisible}"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center"
+                  Margin="0,4,0,0"/>
         </StackPanel>
       </Border>
 
@@ -669,6 +678,7 @@
                          Style="{StaticResource RadioButtonVerticalThemeStyle}"
                          Height="44"
                          Width="150"
+                         IsChecked="{Binding OrderSelectorStateBool[1], Mode=OneWay}"
                          Command="{Binding OrderSelectorCommand}">
                 <RadioButton.CommandParameter>
                   <System:Byte>1</System:Byte>
@@ -678,7 +688,7 @@
                          Style="{StaticResource RadioButtonVerticalThemeStyle}"
                          Height="44"
                          Width="150"
-                         IsChecked="True"
+                         IsChecked="{Binding OrderSelectorStateBool[0], Mode=OneWay}"
                          Command="{Binding OrderSelectorCommand}">
                 <RadioButton.CommandParameter>
                   <System:Byte>0</System:Byte>
@@ -1063,6 +1073,7 @@
                   Style="{StaticResource ButtonStyle}"
                   Command="{Binding StartButtonClickCommand}"
                   Height="50" Width="100"
+                  IsEnabled="{Binding StartButtonEnabled}"
                   HorizontalAlignment="Center"
                   VerticalAlignment="Center"
                   Margin="0,4,0,0"/>

@@ -235,6 +235,15 @@ Coefficient</value>
   <data name="Components_Valves" xml:space="preserve">
     <value>Valves</value>
   </data>
+  <data name="Dashboard_Pressure_Mon" xml:space="preserve">
+    <value>Pressure Monitor</value>
+  </data>
+  <data name="Dashboard_Pressure_Mon_Max" xml:space="preserve">
+    <value>Max Pressure</value>
+  </data>
+  <data name="Dashboard_Pressure_Mon_Min" xml:space="preserve">
+    <value>Min Pressure</value>
+  </data>
   <data name="DataAn_Calib_stats" xml:space="preserve">
     <value>Calibration
   Statistics</value>
@@ -400,6 +409,10 @@ Region</value>
   <data name="Experiment_Total_Events" xml:space="preserve">
     <value>Total
 Events</value>
+  </data>
+  <data name="Experiment_Validate_Bcode" xml:space="preserve">
+    <value>Validate
+Barcode</value>
   </data>
   <data name="Experiment_Wash_A" xml:space="preserve">
     <value>Wash A</value>

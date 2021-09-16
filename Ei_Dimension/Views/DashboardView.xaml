@@ -6,11 +6,69 @@
              xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
              xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
              xmlns:ViewModels="clr-namespace:Ei_Dimension.ViewModels"
-             xmlns:dxm="http://schemas.devexpress.com/winfx/2008/xaml/map" x:Class="Ei_Dimension.Views.DashboardView"
+             xmlns:dxm="http://schemas.devexpress.com/winfx/2008/xaml/map"
+             x:Class="Ei_Dimension.Views.DashboardView"
+             xmlns:lang="clr-namespace:Ei_Dimension.Language;assembly=Language"
              mc:Ignorable="d"
              DataContext="{dxmvvm:ViewModelSource Type={x:Type ViewModels:DashboardViewModel}}"
              d:DesignHeight="674" d:DesignWidth="1500">
   <Grid>
-
+    <StackPanel Orientation="Horizontal"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Margin="200,100,0,0">
+      <StackPanel Width="180"
+                  Margin="0,0,4,0">
+        <ToggleButton Content="{lang:Loc Dashboard_Pressure_Mon}"
+                    Style="{StaticResource ToggleButtonThemeStyle}"
+                    Height="50"
+                    IsChecked="{Binding PressureMonToggleButtonState, Mode=OneWay}"
+                    Command="{Binding PressureMonToggleButtonClickCommand}"/>
+        <TextBlock Text="{lang:Loc Dashboard_Pressure_Mon_Max}"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="26"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Right"
+                 Margin="0,0,0,0"/>
+        <TextBlock Text="{lang:Loc Dashboard_Pressure_Mon_Min}"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="26"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Right"
+                 Margin="0,8,0,0"/>
+      </StackPanel>
+      <Border Background="{StaticResource RibbonBackgroundActive}">
+        <StackPanel Width="180">
+          <TextBox HorizontalAlignment="Stretch"
+               IsReadOnly="True"
+               Margin="8,8,8,0"
+               Style="{StaticResource InputFieldStyle}"
+               Text="{Binding PressureMon[0]}">
+          </TextBox>
+          <TextBox HorizontalAlignment="Stretch"
+               IsReadOnly="True"
+               Margin="8,8,8,0"
+               Style="{StaticResource InputFieldStyle}"
+               Text="{Binding PressureMon[1]}">
+          </TextBox>
+          <TextBox HorizontalAlignment="Stretch"
+               IsReadOnly="True"
+               Margin="8,8,8,8"
+               Style="{StaticResource InputFieldStyle}"
+               Text="{Binding PressureMon[2]}">
+          </TextBox>
+        </StackPanel>
+      </Border>
+      
+    </StackPanel>
+    <ListBox HorizontalAlignment="Left"
+             VerticalAlignment="Top"
+             Margin="200,300,0,0"
+             ItemsSource="{Binding ActiveList}"
+             FontSize="30"> 
+    </ListBox>
+    
   </Grid>
 </UserControl>

@@ -9,8 +9,10 @@ namespace Ei_Dimension.ViewModels
   public class CalibrationViewModel
   {
     public virtual string SelectedGatingContent { get; set; }
+    public byte SelectedGatingIndex { get; set; }
     public virtual ObservableCollection<DropDownButtonContents> GatingItems { get; set; }
     public virtual byte CalibrationParameter { get; set; }
+    public virtual ObservableCollection<bool> CalibrationSelectorState { get; set; }
 
     public virtual ObservableCollection<string> EventTriggerContents { get; set; }
     public virtual ObservableCollection<string> ClassificationTargetsContents { get; set; }
@@ -35,13 +37,15 @@ namespace Ei_Dimension.ViewModels
         new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_Red_Rp_bg), curCulture), this),
         new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_Green_Red_Rp_bg), curCulture), this)
       };
-      SelectedGatingContent = GatingItems[0].Content;
-
+      SelectedGatingIndex = 0;
+      SelectedGatingContent = GatingItems[SelectedGatingIndex].Content;
       EventTriggerContents = new ObservableCollection<string> {"", App.Device.ActiveMap.minmapssc.ToString(), App.Device.ActiveMap.maxmapssc.ToString()};
 
       ClassificationTargetsContents = new ObservableCollection<string> { "1", "1", "1", "1", "3500"};
 
       CalibrationParameter = 0;
+      CalibrationSelectorState = new ObservableCollection<bool> { true, false, false };
+
       CompensationPercentageContent = new ObservableCollection<string> { App.Device.Compensation.ToString() };
       DNRContents = new ObservableCollection<string> { "", App.Device.HdnrTrans.ToString() };
 
@@ -57,6 +61,10 @@ namespace Ei_Dimension.ViewModels
 
     public void CalibrationSelector(byte num)
     {
+      CalibrationSelectorState[0] = false;
+      CalibrationSelectorState[1] = false;
+      CalibrationSelectorState[2] = false;
+      CalibrationSelectorState[num] = true;
       CalibrationParameter = num;
       //chart2.Series["CLTARGET"].Enabled = false; for num=0 and true for num=1
       App.Device.MainCommand("Set Property", code: 0x1b, parameter: num);
@@ -136,6 +144,12 @@ namespace Ei_Dimension.ViewModels
       {
         _vm.SelectedGatingContent = Content;
         App.Device.MainCommand("Set Property", code: 0xca, parameter: (ushort)Index);
+        App.Device.ScatterGate = Index;
+      }
+
+      public void ForAppUpdater()
+      {
+        _vm.SelectedGatingContent = Content;
         App.Device.ScatterGate = Index;
       }
 
