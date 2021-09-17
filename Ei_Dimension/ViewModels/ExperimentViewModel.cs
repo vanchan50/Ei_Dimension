@@ -50,6 +50,7 @@ namespace Ei_Dimension.ViewModels
     private byte _selectedChConfigIndex;
     private List<(int row, int col)> _selectedWell96Indices;
     private List<(int row, int col)> _selectedWell384Indices;
+    private INavigationService NavigationService => this.GetService<INavigationService>();
 
     protected ExperimentViewModel()
     {
@@ -128,6 +129,13 @@ namespace Ei_Dimension.ViewModels
     public static ExperimentViewModel Create()
     {
       return ViewModelSource.Create(() => new ExperimentViewModel());
+    }
+
+    public void NavigateDashboard()
+    {
+      App.ResetFocusedTextbox();
+      App.HideNumpad();
+      NavigationService.Navigate("DashboardView", null, this);
     }
 
     public void SelectIndices(SelectedCellsChangedEventArgs e)

@@ -451,6 +451,9 @@ Direction</value>
   <data name="Experiment_Classific_Map" xml:space="preserve">
     <value>Classification Map</value>
   </data>
+  <data name="Experiment_Dashboard" xml:space="preserve">
+    <value>Dashboard</value>
+  </data>
   <data name="Experiment_Eject" xml:space="preserve">
     <value>Eject Plate</value>
   </data>
@@ -473,6 +476,10 @@ Sample</value>
   <data name="Experiment_Load" xml:space="preserve">
     <value>Load Plate</value>
   </data>
+  <data name="Experiment_Load_Template" xml:space="preserve">
+    <value>   Load
+Template</value>
+  </data>
   <data name="Experiment_Manual" xml:space="preserve">
     <value>Manual</value>
   </data>
@@ -489,6 +496,13 @@ Region</value>
   <data name="Experiment_Samp_Vol" xml:space="preserve">
     <value>Samp Vol</value>
   </data>
+  <data name="Experiment_Save_Template" xml:space="preserve">
+    <value>   Save
+Template</value>
+  </data>
+  <data name="Experiment_Select_Wells" xml:space="preserve">
+    <value>Select Wells</value>
+  </data>
   <data name="Experiment_Speed" xml:space="preserve">
     <value>Speed</value>
   </data>
@@ -501,6 +515,9 @@ Region</value>
   <data name="Experiment_Total_Events" xml:space="preserve">
     <value>Total
 Events</value>
+  </data>
+  <data name="Experiment_Tube" xml:space="preserve">
+    <value>Tube</value>
   </data>
   <data name="Experiment_Validate_Bcode" xml:space="preserve">
     <value>Validate

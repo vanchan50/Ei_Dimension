@@ -14,6 +14,13 @@
              mc:Ignorable="d"
              DataContext="{dxmvvm:ViewModelSource Type=ViewModels:ServiceViewModel}"
              d:DesignHeight="674" d:DesignWidth="1500">
+  <dxmvvm:Interaction.Triggers>
+    <dxmvvm:EventToCommand EventName="Initialized" Command="{Binding NavigateMotorsCommand}"/>
+    <dxmvvm:EventToCommand EventName="Initialized" Command="{Binding NavigateComponentsCommand}"/>
+    <dxmvvm:EventToCommand EventName="Initialized" Command="{Binding NavigateAlignmentCommand}"/>
+    <dxmvvm:EventToCommand EventName="Initialized" Command="{Binding NavigateChannelOffsetCommand}"/>
+    <dxmvvm:EventToCommand EventName="Initialized" Command="{Binding NavigateSyringeSpeedsCommand}"/>
+  </dxmvvm:Interaction.Triggers>
   <Grid>
 
     <Grid.ColumnDefinitions>

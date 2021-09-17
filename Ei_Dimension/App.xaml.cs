@@ -864,7 +864,6 @@ namespace Ei_Dimension
     private void TimerTick(object sender, EventArgs e)
     {
       TextBoxUpdater();
-      /*
       while (Device.ClData.Count != 0)
       {
         lock (Device.ClData)
@@ -880,14 +879,14 @@ namespace Ei_Dimension
       {
         //  chart2.Series["REGIONS"].Enabled = true;
         Device.Newmap = false;
-        for (int iix = 0; iix < 255; iix++)
+        for (var x = 0; x < 255; x++)
         {
-          for (int jjy = 0; jjy < 255; jjy++)
+          for (int y = 0; y < 255; y++)
           {
-            if (Device.ClassificationMap[iix, jjy] > 0)
+            if (Device.ClassificationMap[x, y] > 0) //TODO: remove
             {
-              float expx = (float)Math.Exp(iix / 24.526);
-              float expy = (float)Math.Exp(jjy / 24.526);
+              float expx = (float)Math.Exp(x / 24.526);
+              float expy = (float)Math.Exp(y / 24.526);
               //  chart2.Series["REGIONS"].Points.AddXY(expx, expy);
             }
           }
@@ -910,13 +909,11 @@ namespace Ei_Dimension
             _ = System.Threading.Tasks.Task.Run(Device.SaveBeadFile);
             Device.EndState++;
             Console.WriteLine(string.Format("{0} Reporting Background File Save Init", DateTime.Now.ToString()));
-            else
-              Console.WriteLine(string.Format("{0} File Save Init Failed, _backgroundWorker1 IsBusy", DateTime.Now.ToString()));
             break;
           }
         case 3:
           {
-            if (!(active_items.Contains("WASHING")))
+            if (!DashboardViewModel.Instance.ActiveList.Contains("WASHING"))
             {
               Device.EndState++;  //wait here until alternate syringe is finished washing
               Console.WriteLine(string.Format("{0} Reporting Washing Complete", DateTime.Now.ToString()));
@@ -950,7 +947,7 @@ namespace Ei_Dimension
                 well96dgv.Refresh();
               }
             }
-            *//*
+            */
             break;
           }
         case 5:
@@ -962,8 +959,8 @@ namespace Ei_Dimension
             Device.EndState = 0;
             if (Device.CurrentWellIdx == (Device.WellsToRead + 1)) //if only one more to go
             {
-              woNumbertb.Text = "";
-              pltNumbertb.Text = "";
+              //  woNumbertb.Text = "";
+              //  pltNumbertb.Text = "";
               Device.MainCommand("Set Property", code: 0x19);  //bubble detect off
             }
             else
@@ -982,7 +979,7 @@ namespace Ei_Dimension
       {
         if (Device.IsNewWorkOrder())
         {
-          woNumbertb.Text = Device.WorkOrderName;
+          //  woNumbertb.Text = Device.WorkOrderName;
           _workOrderPending = true;
         }
       }
@@ -995,28 +992,27 @@ namespace Ei_Dimension
         }
         else if (ExperimentViewModel.Instance.SystemControlSelectorState[2])    //barcode required
         {
-          if (videogoing & (video != null))
-          {
-            BarcodeResult plateGUID = BarcodeReader.QuicklyReadOneBarcode(video, BarcodeEncoding.PDF417, true);
-            if (plateGUID != null)
-              pltNumbertb.Text = plateGUID.Value;
-          }
-          else
-            ExperimentViewModel.Instance.ValidateBCodeButtonEnabled = true;
-          if (woNumbertb.Text == pltNumbertb.Text)
-          {
-            ExperimentViewModel.Instance.StartButtonEnabled = true;
-            _workOrderPending = false;
-            Device.MainCommand("Set Property", code: 0x17); //leds off
-            ExperimentViewModel.Instance.ValidateBCodeButtonEnabled = false;
-          }
-          else
-          {
-            pltNumbertb.BackColor = Color.Red;
-          }
+          //if (videogoing & (video != null))
+          //{
+          //  BarcodeResult plateGUID = BarcodeReader.QuicklyReadOneBarcode(video, BarcodeEncoding.PDF417, true);
+          //  if (plateGUID != null)
+          //    pltNumbertb.Text = plateGUID.Value;
+          //}
+          //else
+          //  ExperimentViewModel.Instance.ValidateBCodeButtonEnabled = true;
+        //  if (woNumbertb.Text == pltNumbertb.Text)
+        //  {
+        //    ExperimentViewModel.Instance.StartButtonEnabled = true;
+        //    _workOrderPending = false;
+        //    Device.MainCommand("Set Property", code: 0x17); //leds off
+        //    ExperimentViewModel.Instance.ValidateBCodeButtonEnabled = false;
+        //  }
+        //  else
+        //  {
+        //    //  pltNumbertb.BackColor = Color.Red;
+        //  }
         }
       }
-      */
     }
 
     private void TextBoxUpdater()

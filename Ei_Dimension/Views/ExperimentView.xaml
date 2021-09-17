@@ -10,15 +10,36 @@
              xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
              xmlns:System="clr-namespace:System;assembly=mscorlib"
              xmlns:ViewModels="clr-namespace:Ei_Dimension.ViewModels"
+             xmlns:dxwui="http://schemas.devexpress.com/winfx/2008/xaml/windowsui"
+             xmlns:dxwuin="http://schemas.devexpress.com/winfx/2008/xaml/windowsui/navigation"
              xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
              x:Class="Ei_Dimension.Views.ExperimentView"
              xmlns:lang="clr-namespace:Ei_Dimension.Language;assembly=Language"
+             xmlns:img="clr-namespace:Ei_Dimension.Styles"
              mc:Ignorable="d"
              DataContext="{dxmvvm:ViewModelSource Type={x:Type ViewModels:ExperimentViewModel}}"
              d:DesignHeight="674" d:DesignWidth="1500">
+  <dxmvvm:Interaction.Triggers>
+    <dxmvvm:EventToCommand EventName="Initialized" Command="{Binding NavigateDashboardCommand}"/>
+  </dxmvvm:Interaction.Triggers>
   <Grid>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="2*"/>
+      <ColumnDefinition Width="11*"/>
+    </Grid.ColumnDefinitions>
+
+    <dxwui:NavigationFrame AnimationType="SlideHorizontal"
+                           NavigationCacheMode="Required"
+                           Grid.Column="1">
+      <dxmvvm:Interaction.Triggers>
+        <dxmvvm:EventToCommand EventName="Loaded" Command="{Binding NavigateMotorsCommand}" />
+      </dxmvvm:Interaction.Triggers>
+      <dxmvvm:Interaction.Behaviors>
+        <dxwuin:FrameNavigationService />
+      </dxmvvm:Interaction.Behaviors>
+    </dxwui:NavigationFrame>
     <!--WellTable 96-->
-    <DataGrid Name="grd96"
+    <DataGrid Name="grd96" Grid.ColumnSpan="2"
               HorizontalAlignment="Center" VerticalAlignment="Center"
               SelectionMode="Extended"
               SelectionUnit="Cell"
@@ -224,7 +245,7 @@
     </DataGrid>
 
     <!--WellTable 384-->
-    <DataGrid Name="grd384"
+    <DataGrid Name="grd384" Grid.ColumnSpan="2"
               HorizontalAlignment="Center" VerticalAlignment="Top"
               Margin="0,30,0,0"
               SelectionMode="Extended"
@@ -528,7 +549,7 @@
 
     <!--WellTable Size Selector-->
     <Border HorizontalAlignment="Left" VerticalAlignment="Top"
-            Margin="20,600,0,0"
+            Margin="20,600,0,0" Grid.ColumnSpan="2"
             Width="240"
             Height="60"
             Visibility="{Binding TableSelectorVisible}">
@@ -557,7 +578,7 @@
 
     <!--Well Assignment Buttons-->
     <Border HorizontalAlignment="Center" VerticalAlignment="Top"
-            Margin="0,610,0,0"
+            Margin="0,610,0,0" Grid.ColumnSpan="2"
             Visibility="{Binding WellSelectorVisible}">
       <StackPanel Orientation="Horizontal">
         <Button Width="50" Height="50"
@@ -584,7 +605,8 @@
     </Border>
 
     <!--All Buttons are here-->
-    <Grid Visibility="{Binding ButtonsVisible}">
+    <Grid Visibility="{Binding ButtonsVisible}"
+          Margin="10,0,0,0" Grid.Column="1">
       <!--System Control-->
       <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"
@@ -852,10 +874,10 @@
                   HorizontalAlignment="Center">
               <StackPanel>
                 <TextBox Width="140"
-                 HorizontalAlignment="Center"
-                 Margin="8,8,8,0"
-                 Style="{StaticResource InputFieldStyle}"
-                 Text="{Binding Volumes[0]}">
+                         HorizontalAlignment="Center"
+                         Margin="8,8,8,0"
+                         Style="{StaticResource InputFieldStyle}"
+                         Text="{Binding Volumes[0]}">
                   <dxmvvm:Interaction.Behaviors>
                     <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="2"/>
                   </dxmvvm:Interaction.Behaviors>
@@ -1087,5 +1109,40 @@
         </StackPanel>
       </Border>
     </Grid>
+    <!--Tile Ribbon-->
+    <StackPanel Margin="30,60,0,0"
+                Width="200">
+      <RadioButton Content="{lang:Loc Experiment_Dashboard}"
+                   Height="70"
+                   IsChecked="True"
+                   img:EmbeddedImg.Image="/Icons/motors icon.png"
+                   Style="{DynamicResource SubRibbonButtonStyle}"
+                   Command="{Binding NavigateMotorsCommand}">
+      </RadioButton>
+      <RadioButton Content="{lang:Loc Experiment_Load_Template}"
+                   Height="70"
+                   img:EmbeddedImg.Image="/Icons/components icon.png"
+                   Style="{DynamicResource SubRibbonButtonStyle}"
+                   Command="{Binding NavigateComponentsCommand}">
+      </RadioButton>
+      <RadioButton Content="{lang:Loc Experiment_Save_Template}"
+                   Height="70"
+                   img:EmbeddedImg.Image="/Icons/alignment icon.png"
+                   Style="{DynamicResource SubRibbonButtonStyle}"
+                   Command="{Binding NavigateAlignmentCommand}">
+      </RadioButton>
+      <RadioButton Content="{lang:Loc Experiment_Select_Wells}"
+                   Height="70"
+                   img:EmbeddedImg.Image="/Icons/channel offset icon.png"
+                   Style="{DynamicResource SubRibbonButtonStyle}"
+                   Command="{Binding NavigateChannelOffsetCommand}">
+      </RadioButton>
+      <RadioButton Content="{lang:Loc Experiment_Tube}"
+                   Height="70"
+                   img:EmbeddedImg.Image="/Icons/syringe speeds icon.png"
+                   Style="{DynamicResource SubRibbonButtonStyle}"
+                   Command="{Binding NavigateSyringeSpeedsCommand}">
+      </RadioButton>
+    </StackPanel>
   </Grid>
 </UserControl>

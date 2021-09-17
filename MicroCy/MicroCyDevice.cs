@@ -156,7 +156,6 @@ namespace MicroCy
     public byte XAxisSel { get; set; }    //TODO: delete this
     public byte YAxisSel { get; set; }    //TODO: delete this
     public byte EndState { get; set; }
-    public byte CreateMapState { get; set; }
     public byte SystemControl { get; set; }
 
     public string Outdir { get; set; }  //  user selectable
@@ -285,7 +284,6 @@ namespace MicroCy
     public void ConstructClassificationMap(CustomMap mmap)
     {
       //build classification map from ActiveMap using bitfield types A-D
-      float xwidth,ywidth,cl2;
       int[,] bitpoints = new int[32, 2];
       _actPriIdx = (byte)mmap.midorderidx; //what channel cl0 - cl3?
       _actSecIdx = (byte)mmap.loworderidx;
@@ -323,14 +321,13 @@ namespace MicroCy
         else
         {
           //populate a computed region
-          cl2 = (float)mapRegions.meanloworder;
-          xwidth = (float)0.33 * mapRegions.meanmidorder + 50;
-          ywidth = (float)0.33 * mapRegions.meanloworder + 50;
+          float xwidth = (float)0.33 * mapRegions.meanmidorder + 50;
+          float ywidth = (float)0.33 * mapRegions.meanloworder + 50;
           int begidx = Val_2_Idx((int)(mapRegions.meanmidorder - (xwidth * 0.5)));
-          int endidx = Val_2_Idx((int) (mapRegions.meanmidorder + (xwidth * 0.5 )));
+          int endidx = Val_2_Idx((int)(mapRegions.meanmidorder + (xwidth * 0.5)));
           float xincer = 0;
-          int begidy = Val_2_Idx((int)(mapRegions.meanloworder - (ywidth /2)));
-          int endidy = Val_2_Idx((int)(mapRegions.meanloworder + (ywidth/2 ) ));
+          int begidy = Val_2_Idx((int)(mapRegions.meanloworder - (ywidth / 2)));
+          int endidy = Val_2_Idx((int)(mapRegions.meanloworder + (ywidth / 2)));
           if (begidx < 3)
             begidx = 3;
           if (begidy < 3)
@@ -367,8 +364,8 @@ namespace MicroCy
         if (!File.Exists(_fullFileName))
           break;
       }
-      _dataout.Clear();
-      _dataout.Append(Bheader);
+      _ = _dataout.Clear();
+      _ = _dataout.Append(Bheader);
       _chkRegCnt = false;
       BeadCount = 0;
     }
@@ -379,42 +376,21 @@ namespace MicroCy
       char[] alphabet = Enumerable.Range('A', 16).Select(x => (char)x).ToArray();
       string bgfullFileName = _fullFileName;  //save name in bg process cause it gets changed in endstate 5
       string bgsummaryFileName = PrepareSummaryFile();
-      string bgdataout = _dataout.ToString();
-      byte bgreadingrow = ReadingRow;
-      byte bgreadingcol = ReadingCol;
       Console.WriteLine(string.Format("{0} Reporting Background results cloned for save", DateTime.Now.ToString()));
-      if ((bgfullFileName != null) & (Everyevent))
+      if ((bgfullFileName != null) && Everyevent)
         File.WriteAllText(bgfullFileName, _dataout.ToString());
       if (RMeans)
       {
         if(PlateReport != null)
-          PlateReport.rpWells.Add(new WellReport { prow = WellsInOrder[SavingWellIdx].rowIdx, pcol = WellsInOrder[SavingWellIdx].colIdx });
-        foreach (WellResults regionNumber in _wellResults)
+          PlateReport.rpWells.Add(new WellReport {
+            prow = WellsInOrder[SavingWellIdx].rowIdx,
+            pcol = WellsInOrder[SavingWellIdx].colIdx });
+        for (var i = 0; i < _wellResults.Count; i++)
         {
-          OutResults rout = new OutResults();
+          WellResults regionNumber = _wellResults[i];
           SavingWellIdx = SavingWellIdx > WellsInOrder.Count - 1 ? WellsInOrder.Count - 1 : SavingWellIdx;
-          rout.row = alphabet[WellsInOrder[SavingWellIdx].rowIdx].ToString();
-          rout.col = WellsInOrder[SavingWellIdx].colIdx + 1;    //columns are 1 based
-          rout.count = regionNumber.RP1vals.Count();
-          rout.region = regionNumber.regionNumber;
-          if (rout.count > 2)
-            rout.meanfi = regionNumber.RP1vals.Average();
-          if (rout.count >= 20)
-          {
-            regionNumber.RP1vals.Sort();
-            float rpbg = regionNumber.RP1bgnd.Average() * 16;
-            int quarter = rout.count / 4;
-            regionNumber.RP1vals.RemoveRange(rout.count - quarter , quarter);
-            regionNumber.RP1vals.RemoveRange(0, quarter);
-            rout.meanfi = regionNumber.RP1vals.Average();
-            double sumsq = regionNumber.RP1vals.Sum(dataout => Math.Pow(dataout - rout.meanfi, 2));
-            double stddev = Math.Sqrt(sumsq / regionNumber.RP1vals.Count() - 1);
-            rout.cv = (float)stddev / rout.meanfi * 100;
-            if (double.IsNaN(rout.cv)) rout.cv = 0;
-            rout.medfi = (float) Math.Round(regionNumber.RP1vals[quarter] - rpbg);
-            rout.meanfi -= rpbg;
-          }
-          _summaryout.Append(rout.ToString());
+          OutResults rout = FillOutResults(regionNumber, in alphabet);
+          _ = _summaryout.Append(rout.ToString());
 
           PlateReport.rpWells[SavingWellIdx].rpReg.Add(new RegionReport
           {
@@ -425,16 +401,16 @@ namespace MicroCy
             coefVar = rout.cv
           });
         }
-        if ((SavingWellIdx == WellsToRead) & (_summaryout.Length > 0) & (RMeans) )  //end of read session (plate, plate section or tube) write summary stat file
+        if ((SavingWellIdx == WellsToRead) && (_summaryout.Length > 0) && RMeans )  //end of read session (plate, plate section or tube) write summary stat file
           File.WriteAllText(bgsummaryFileName, _summaryout.ToString());
-        if ((SavingWellIdx == WellsToRead) & (_summaryout.Length > 0) & (PltRept))    //end of read and json results requested
+        if ((SavingWellIdx == WellsToRead) && (_summaryout.Length > 0) && PltRept)    //end of read and json results requested
         {
           string rfilename = SystemControl == 0 ? Outfilename : WorkOrder.plateID.ToString();
           string resultfilename = Path.Combine(RootDirectory.FullName, "Result", rfilename);
           TextWriter jwriter = null;
           try
           {
-            var jcontents = JsonConvert.SerializeObject(PlateReport);   
+            var jcontents = JsonConvert.SerializeObject(PlateReport);
             jwriter = new StreamWriter(resultfilename + ".json");
             jwriter.Write(jcontents);
             if (File.Exists(_workOrderPath))
@@ -447,29 +423,26 @@ namespace MicroCy
           }
         }
       }
-      if (CalStats & (SavBeadCount > 2))
+      if (CalStats && (SavBeadCount > 2))
       {
-        double sumit = 0;
-        double sumsq = 0;
-        double mean = 0;
-        double stddev = 0;
         double[] robustcnt = new double[10];
         SavBeadCount = SavBeadCount > 5000 ? 5000 : SavBeadCount;
         for (int finx = 0; finx < 10; finx++)
         {
+          double sumit = 0;
           for (int beads = 0; beads < SavBeadCount; beads++)
           {
             sumit += _sfi[beads, finx];
           }
           robustcnt[finx] = SavBeadCount; //start with total bead count
-          mean = sumit / SavBeadCount;
+          double mean = sumit / SavBeadCount;
           //find high and low bounds
           double min = mean * 0.5;
           double max = mean * 2;
           sumit = 0;
           for (int beads = 0; beads < SavBeadCount; beads++)
           {
-            if ((_sfi[beads, finx] > min) & (_sfi[beads, finx] < max))
+            if ((_sfi[beads, finx] > min) && (_sfi[beads, finx] < max))
               sumit += _sfi[beads, finx];
             else
             {
@@ -478,21 +451,20 @@ namespace MicroCy
             }
           }
           mean = sumit / robustcnt[finx];
+          double sumsq = 0;
           for (int beads = 0; beads < SavBeadCount; beads++)
           {
             if (_sfi[beads, finx] == 0)
               continue;
             sumsq += Math.Pow(mean - _sfi[beads, finx], 2);
           }
-          stddev = Math.Sqrt(sumsq / (robustcnt[finx] - 1));
+          double stddev = Math.Sqrt(sumsq / (robustcnt[finx] - 1));
           var gstats = GStats[finx];
           gstats.mfi = mean;
           gstats.cv = (stddev / mean) * 100;
           if (double.IsNaN(gstats.cv))
             gstats.cv = 0;
           GStats[finx] = gstats;
-          sumit = 0;
-          sumsq = 0;
         }
         NewStats = true;
       }
@@ -513,20 +485,16 @@ namespace MicroCy
         bool isInMap = ActiveMap.mapRegions.Any(x => mapRegions.regionNumber == x.regionNumber);
         if (!isInMap)
           Console.WriteLine(string.Format("{0} No Map for Work Order region {1}", DateTime.Now.ToString(),mapRegions.regionNumber));
-        if ((mapRegions.isActive) & (isInMap))
-        {
+        if (mapRegions.isActive && isInMap)
           _wellResults.Add(new WellResults { regionNumber = mapRegions.regionNumber });
-        }
       }
       if (Reg0stats)
-      {
         _wellResults.Add(new WellResults { regionNumber = 0 });
-      }
     }
 
     private void ReplyFromMC(IAsyncResult result)
     {
-      MicroCyUSBDevice.Interfaces[0].Pipes[0x81].EndRead(result);
+      _ = MicroCyUSBDevice.Interfaces[0].Pipes[0x81].EndRead(result);
       if ((_usbInputBuffer[0] == 0xbe) && (_usbInputBuffer[1] == 0xad))
       {
         for (byte i = 0; i < 8; i++)
@@ -536,236 +504,47 @@ namespace MicroCy
             break;
           float cl1comp = outbead.greenB * Compensation / 100;
           float cl2comp = (float)(cl1comp * 0.26);
-          float[] cl = { outbead.cl0, outbead.cl1, outbead.cl2, outbead.cl3 };
-          cl[1] = outbead.cl1 - cl1comp;   //Compensation
+          float[] cl = {
+            outbead.cl0,
+            outbead.cl1 - cl1comp,  //Compensation
+            outbead.cl2 - cl2comp,  //Compensation
+            outbead.cl3
+          };
           outbead.cl1 = cl[1];
-          cl[2] = outbead.cl2 - cl2comp;
           outbead.cl2 = cl[2];
           int x = (byte)(Math.Log(cl[_actPriIdx]) * 24.526);
           int y = (byte)(Math.Log(cl[_actSecIdx]) * 24.526);
-          if ((x > 0) & (y > 0))
-          {
-            outbead.region = ClassificationMap[x, y];    //each well can have a different  classification map
-          }
-          else
-            outbead.region = 0;
+          //each well can have a different  classification map
+          outbead.region = (x > 0) && (y > 0) ? ClassificationMap[x, y] : (ushort)0;
           //handle HI dnr channel
-          //outbead.reporter = outbead.greenC;
-          if (outbead.greenC > HdnrTrans)
-              outbead.reporter = outbead.greenB * HDnrCoef;
-          else
-            outbead.reporter = outbead.greenC ;
-//          accumrpbg += outbead.greenC;
-          // if pcreg exists in wellsresults, add rp1 value to list
-          //                    if (_wellResults.Any(w => w.regionNumber == pcreg))
-
+          outbead.reporter = outbead.greenC > HdnrTrans ? outbead.greenB * HDnrCoef : outbead.greenC;
           //_wellResults is a list of region numbers that are active
           //each entry has a list of rp1 values from each bead in that reagion
           int index = _wellResults.FindIndex(w => w.regionNumber == outbead.region);
           if (index >= 0)
           {
-            _wellResults[index].RP1vals.Add(outbead.reporter);   //
+            _wellResults[index].RP1vals.Add(outbead.reporter);
             _wellResults[index].RP1bgnd.Add(outbead.greenC_bg);
-            if (_wellResults[index].RP1vals.Count == MinPerRegion)
-            {
-              _chkRegCnt = true;  //see if assay is done via sufficient beads in each region
-            }
+            _chkRegCnt = _wellResults[index].RP1vals.Count == MinPerRegion;  //see if assay is done via sufficient beads in each region
           }
 
-
-          if (outbead.region == 0)
-          {
-            if (OnlyClassified)
-              continue;
-          }
-
-          if ((cl[_actSecIdx] > 0) & (cl[_actPriIdx] > 0)& (CreateMapState == 1))
-          {
-            _map[x, y]++;
-//            if (map[xx, yy] == 250) CreateMapState = 2; //we have enough to end map build
-            // TODO if calc peak box checked in add region activity, check if 10k beads have been read, if so set state to 3
-            if(BeadCntMapCreate++ > SampleSize)
-              CreateMapState = 3;
-          }
+          if (outbead.region == 0 && OnlyClassified)
+            continue;
+          //TODO: check:  Createmapstate was removed, because it is deprecated.
           if (BeadCount < BeadsToGraph)
-          {
-            CLQueue newdp = new CLQueue();
-            switch (XAxisSel)
-            {
-              case 0:
-                newdp.xyclx = (uint)outbead.cl0;
-                break;
-              case 1:
-                newdp.xyclx = (uint)outbead.cl1;
-                break;
-              case 2:
-                newdp.xyclx = (uint)outbead.cl2;
-                break;
-              default:
-                newdp.xyclx = (uint)outbead.cl3;
-                break;
-            }
-            switch (YAxisSel)
-            {
-              case 0:
-                newdp.xycly = (uint)outbead.cl0;
-                break;
-              case 1:
-                newdp.xycly = (uint)outbead.cl1;
-                break;
-              case 2:
-                newdp.xycly = (uint)outbead.cl2;
-                break;
-              default:
-                newdp.xycly = (uint)outbead.cl3;
-                break;
-            }
-            double sidsel;
-            switch (SscSelected)
-            {
-              case 0:
-                sidsel = outbead.fsc;
-                break;
-              case 1:
-                sidsel = outbead.violetssc;
-                break;
-              case 2:
-                sidsel = outbead.greenssc;
-                break;
-              default:
-                sidsel = outbead.redssc;
-                break;
-            }
-            double sidesc = Math.Log(sidsel) * 24.526;
-            SscData[(byte)sidesc]++;
-            float grp1 = outbead.reporter;
-            if (grp1 > 32000)
-              grp1 = 32000; //don't let graph overflow
-            Rp1Data[(byte)(Math.Log(grp1) * 24.526)]++;
-            try
-            {
-              if ((newdp.xyclx > 1) && (newdp.xycly > 1))
-              {
-                lock (ClData)
-                {
-                  ClData.Enqueue(newdp);  //save data for graphing 
-                }
-              }
-            }
-            finally { }
-          }
-          if (outbead.region > 0)
-          {
-            if (0 == MinPerRegion)  //do the check whenever and region gets to min  //TODO: legacy had some useless check. Probably not necessary if block
-            {
-              _chkRegCnt = true;
-            }
-          }
+            NewClData(in outbead);
           if(Everyevent)
             _ = _dataout.Append(outbead.ToString());
           //accum stats for run as a whole, used during aligment and QC
-          if ((CalStats) & (BeadCount < 5000))
-          {
-            _sfi[BeadCount, 6] = outbead.cl3;
-            _sfi[BeadCount, 3] = outbead.redssc;
-            _sfi[BeadCount, 4] = outbead.cl1;
-            _sfi[BeadCount, 5] = outbead.cl2;
-            _sfi[BeadCount, 0] = outbead.greenssc;
-            _sfi[BeadCount, 1] = outbead.greenB;
-            _sfi[BeadCount, 2] = outbead.greenC;
-            _sfi[BeadCount, 7] = outbead.violetssc;
-            _sfi[BeadCount, 8] = outbead.cl0;
-            _sfi[BeadCount, 9] = outbead.fsc;
-          }
+          FillCalibrationStatsRow(in outbead);
           BeadCount++;
         }
-        if (CreateMapState == 2)
-        {
-          byte[] mapx = new byte[70000];
-          int i = 0;
-          for (int CL1 = 0; CL1 < 256; CL1++) //linearize the array
-          {
-            for (int CL2 = 0; CL2 < 256; CL2++)
-            {
-              mapx[i++] = _map[(byte)CL1, (byte)CL2];
-            }
-          }
-          string mapdir = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments); //TODO: probably not necessary
-          File.WriteAllBytes(mapdir + "\\" + "mapcounter.bin", mapx);
-          CreateMapState = 0;
-        }
-        if (CreateMapState == 3)
-        {
-          int z = 0;
-          int savx = 0;
-          int savy = 0;
-          for (int x = 0; x < 256; x++) //find peak
-          {
-            for (int y = 0; y < 256; y++)
-            {
-              if (_map[x, y] > z)
-              {
-                z = _map[x, y];
-                savx = x;
-                savy = y;
-              }
-            }
-          }
-          MapPeakX = (float)Math.Exp(savx / 24.526);
-          MapPeakY = (float)Math.Exp(savy / 24.526);
-//          avgrpbg = accumrpbg / BeadCount;
-          CreateMapState = 0;
-
-          //find region peak and fill in text boxes on new region tab
-        }
         Array.Clear(_usbInputBuffer, 0, _usbInputBuffer.Length);
-        switch (TerminationType)
-        {
-          case 0: //min beads in each region
-            //do statistical magic
-            if (_chkRegCnt)  //a region made it, are there more that haven't
-            {
-              EndState = 1;   //assume all region have enough beads
-              foreach (WellResults regionNumber in _wellResults)
-              {
-                if (regionNumber.RP1vals.Count() < MinPerRegion)
-                {
-                  EndState = 0;   //not done yet
-                  break;
-                }
-              }
-              _chkRegCnt = false;
-            }
-            break;
-          case 1: //total beads captured
-            if ((BeadCount >= BeadsToCapture) & ReadActive)
-            {
-              EndState = 1;
-              ReadActive = false;
-            }
-            break;
-          case 2: //end of sample 
-            break;
-        }
+        TerminationReadyCheck();
       }
       else
-      {
-        CommandStruct newcmd;
-        lock (Commands)
-        {
-          // move received command to queue
-          newcmd = ByteArrayToStruct<CommandStruct>(_usbInputBuffer);
-          Commands.Enqueue(newcmd);
-        }
-        if ((newcmd.Code >= 0xd0) & (newcmd.Code <= 0xdf))
-        {
-          Console.WriteLine(string.Format("{0} E-series script [{1}]", DateTime.Now.ToString(), newcmd.ToString()));
-        }
-        else if (newcmd.Code > 0)
-        {
-          Console.Out.WriteLine(string.Format("{0} Received [{1}]", DateTime.Now.ToString(), newcmd.ToString()));
-        }
-      }
+        GetCommandFromBuffer();
+
       _ = MicroCyUSBDevice.Interfaces[0].Pipes[0x81].BeginRead(_usbInputBuffer, 0, _usbInputBuffer.Length, new AsyncCallback(ReplyFromMC), null);
     }
 
@@ -809,10 +588,7 @@ namespace MicroCy
           reader.Close();
       }
       //set plate type
-      if (WorkOrder.numberCols == 12)
-        PlateType = 0;
-      else
-        PlateType = 1;
+      PlateType = WorkOrder.numberCols == 12 ? (byte)0 : (byte)1;
       // send well depth once that is worked out
       return true;
     }
@@ -824,7 +600,7 @@ namespace MicroCy
       Array.Clear(_map, 0, _map.Length);
     }
 
-    public void InitReadPipe()
+    private void InitReadPipe()
     {
       if (_instrumentConnected)
         _ = MicroCyUSBDevice.Interfaces[0].Pipes[0x81].BeginRead(_usbInputBuffer, 0, _usbInputBuffer.Length, new AsyncCallback(ReplyFromMC), null);
@@ -1059,6 +835,169 @@ namespace MicroCy
       int retidx;
       retidx = (int)(Math.Log(val) * 24.526);
       return retidx;
+    }
+
+    private void NewClData(in BeadInfoStruct outbead)
+    {
+      CLQueue newdp = new CLQueue();
+      switch (XAxisSel)
+      {
+        case 0:
+          newdp.xyclx = (uint)outbead.cl0;
+          break;
+        case 1:
+          newdp.xyclx = (uint)outbead.cl1;
+          break;
+        case 2:
+          newdp.xyclx = (uint)outbead.cl2;
+          break;
+        default:
+          newdp.xyclx = (uint)outbead.cl3;
+          break;
+      }
+      switch (YAxisSel)
+      {
+        case 0:
+          newdp.xycly = (uint)outbead.cl0;
+          break;
+        case 1:
+          newdp.xycly = (uint)outbead.cl1;
+          break;
+        case 2:
+          newdp.xycly = (uint)outbead.cl2;
+          break;
+        default:
+          newdp.xycly = (uint)outbead.cl3;
+          break;
+      }
+      double sidsel;
+      switch (SscSelected)
+      {
+        case 0:
+          sidsel = outbead.fsc;
+          break;
+        case 1:
+          sidsel = outbead.violetssc;
+          break;
+        case 2:
+          sidsel = outbead.greenssc;
+          break;
+        default:
+          sidsel = outbead.redssc;
+          break;
+      }
+      double sidesc = Math.Log(sidsel) * 24.526;
+      SscData[(byte)sidesc]++;
+      float grp1 = outbead.reporter;
+      if (grp1 > 32000)
+        grp1 = 32000; //don't let graph overflow
+      Rp1Data[(byte)(Math.Log(grp1) * 24.526)]++;
+      try
+      {
+        if ((newdp.xyclx > 1) && (newdp.xycly > 1))
+        {
+          lock (ClData)
+          {
+            ClData.Enqueue(newdp);  //save data for graphing 
+          }
+        }
+      }
+      finally { }
+    }
+
+    private void GetCommandFromBuffer()
+    {
+      CommandStruct newcmd;
+      lock (Commands)
+      {
+        // move received command to queue
+        newcmd = ByteArrayToStruct<CommandStruct>(_usbInputBuffer);
+        Commands.Enqueue(newcmd);
+      }
+      if ((newcmd.Code >= 0xd0) && (newcmd.Code <= 0xdf))
+      {
+        Console.WriteLine(string.Format("{0} E-series script [{1}]", DateTime.Now.ToString(), newcmd.ToString()));
+      }
+      else if (newcmd.Code > 0)
+      {
+        Console.Out.WriteLine(string.Format("{0} Received [{1}]", DateTime.Now.ToString(), newcmd.ToString()));
+      }
+    }
+
+    private void TerminationReadyCheck()
+    {
+      switch (TerminationType)
+      {
+        case 0: //min beads in each region
+                //do statistical magic
+          if (_chkRegCnt)  //a region made it, are there more that haven't
+          {
+            EndState = 1;   //assume all region have enough beads
+            foreach (WellResults region in _wellResults)
+            {
+              if (region.RP1vals.Count() < MinPerRegion)
+              {
+                EndState = 0;   //not done yet
+                break;
+              }
+            }
+            _chkRegCnt = false;
+          }
+          break;
+        case 1: //total beads captured
+          if ((BeadCount >= BeadsToCapture) && ReadActive)
+          {
+            EndState = 1;
+            ReadActive = false;
+          }
+          break;
+        case 2: //end of sample 
+          break;
+      }
+    }
+
+    private void FillCalibrationStatsRow(in BeadInfoStruct outbead)
+    {
+      if (CalStats && (BeadCount < 5000))
+      {
+        _sfi[BeadCount, 6] = outbead.cl3;
+        _sfi[BeadCount, 3] = outbead.redssc;
+        _sfi[BeadCount, 4] = outbead.cl1;
+        _sfi[BeadCount, 5] = outbead.cl2;
+        _sfi[BeadCount, 0] = outbead.greenssc;
+        _sfi[BeadCount, 1] = outbead.greenB;
+        _sfi[BeadCount, 2] = outbead.greenC;
+        _sfi[BeadCount, 7] = outbead.violetssc;
+        _sfi[BeadCount, 8] = outbead.cl0;
+        _sfi[BeadCount, 9] = outbead.fsc;
+      }
+    }
+
+    private OutResults FillOutResults(WellResults regionNumber, in char[] alphabet)
+    {
+      OutResults rout = new OutResults();
+      rout.row = alphabet[WellsInOrder[SavingWellIdx].rowIdx].ToString();
+      rout.col = WellsInOrder[SavingWellIdx].colIdx + 1;    //columns are 1 based
+      rout.count = regionNumber.RP1vals.Count();
+      rout.region = regionNumber.regionNumber;
+      if (rout.count > 2)
+        rout.meanfi = regionNumber.RP1vals.Average();
+      if (rout.count >= 20)
+      {
+        regionNumber.RP1vals.Sort();
+        float rpbg = regionNumber.RP1bgnd.Average() * 16;
+        int quarter = rout.count / 4;
+        regionNumber.RP1vals.RemoveRange(rout.count - quarter, quarter);
+        regionNumber.RP1vals.RemoveRange(0, quarter);
+        rout.meanfi = regionNumber.RP1vals.Average();
+        double sumsq = regionNumber.RP1vals.Sum(dataout => Math.Pow(dataout - rout.meanfi, 2));
+        double stddev = Math.Sqrt(sumsq / regionNumber.RP1vals.Count() - 1);
+        rout.cv = (float)stddev / rout.meanfi * 100;
+        if (double.IsNaN(rout.cv)) rout.cv = 0;
+        rout.medfi = (float)Math.Round(regionNumber.RP1vals[quarter] - rpbg);
+        rout.meanfi -= rpbg;
+      }
+      return rout;
     }
   }
 }

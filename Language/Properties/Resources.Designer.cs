@@ -777,6 +777,15 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dashboard.
+        /// </summary>
+        public static string Experiment_Dashboard {
+            get {
+                return ResourceManager.GetString("Experiment_Dashboard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Eject Plate.
         /// </summary>
         public static string Experiment_Eject {
@@ -841,6 +850,16 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to    Load
+        ///Template.
+        /// </summary>
+        public static string Experiment_Load_Template {
+            get {
+                return ResourceManager.GetString("Experiment_Load_Template", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Manual.
         /// </summary>
         public static string Experiment_Manual {
@@ -887,6 +906,25 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to    Save
+        ///Template.
+        /// </summary>
+        public static string Experiment_Save_Template {
+            get {
+                return ResourceManager.GetString("Experiment_Save_Template", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select Wells.
+        /// </summary>
+        public static string Experiment_Select_Wells {
+            get {
+                return ResourceManager.GetString("Experiment_Select_Wells", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Speed.
         /// </summary>
         public static string Experiment_Speed {
@@ -920,6 +958,15 @@ namespace Ei_Dimension.Language {
         public static string Experiment_Total_Events {
             get {
                 return ResourceManager.GetString("Experiment_Total_Events", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tube.
+        /// </summary>
+        public static string Experiment_Tube {
+            get {
+                return ResourceManager.GetString("Experiment_Tube", resourceCulture);
             }
         }
         

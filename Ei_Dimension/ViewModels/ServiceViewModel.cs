@@ -15,7 +15,6 @@ namespace Ei_Dimension.ViewModels
 
     protected ServiceViewModel()
     {
-
     }
 
     public static ServiceViewModel Create()

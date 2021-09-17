@@ -30,6 +30,12 @@
     UseGlowColors="False"
     DataContext="{dxmvvm:ViewModelSource Type=ViewModels:MainViewModel}">
   <!--make window topmost, maximized-->
+  <dxmvvm:Interaction.Triggers>
+    <dxmvvm:EventToCommand EventName="Initialized" Command="{Binding NavigateResultsCommand}"/>
+    <dxmvvm:EventToCommand EventName="Initialized" Command="{Binding NavigateDataAnalysisCommand}"/>
+    <dxmvvm:EventToCommand EventName="Initialized" Command="{Binding NavigateMaintenanceCommand}"/>
+    <dxmvvm:EventToCommand EventName="Initialized" Command="{Binding NavigateSettingsCommand}"/>
+  </dxmvvm:Interaction.Triggers>
   <Grid>
     <!-- Company Logo -->
     <Image HorizontalAlignment="Left" VerticalAlignment="Top"
@@ -39,12 +45,7 @@
     <!--Tile Ribbon-->
     <StackPanel Orientation="Horizontal"
                 Height="80" HorizontalAlignment="Left" VerticalAlignment="Top"
-                Margin="30,30,0,0">
-      <RadioButton Content="{lang:Loc Ribbon_Dashboard}" Width="180"
-                    img:EmbeddedImg.Image="/Icons/dashboard icon.png"
-                    Style="{DynamicResource MainRibbonButtonStyle}"
-                    Command="{Binding NavigateDashboardCommand}">
-      </RadioButton>
+                Margin="210,30,0,0">
       <RadioButton Content="{lang:Loc Ribbon_Acquire}" Width="180"
                     img:EmbeddedImg.Image="/Icons/acquire sample icon.png"
                     Style="{DynamicResource MainRibbonButtonStyle}"
@@ -81,7 +82,7 @@
         <dxmvvm:EventToCommand EventName="Loaded" Command="{Binding NavigateExperimentCommand}" />
       </dxmvvm:Interaction.Triggers>
       <dxmvvm:Interaction.Behaviors>
-        <dxwuin:FrameNavigationService />
+        <dxwuin:FrameNavigationService/>
       </dxmvvm:Interaction.Behaviors>
     </dxwui:NavigationFrame>
 

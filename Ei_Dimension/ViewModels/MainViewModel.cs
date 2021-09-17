@@ -22,13 +22,6 @@ namespace Ei_Dimension.ViewModels
       return ViewModelSource.Create(() => new MainViewModel());
     }
 
-    public void NavigateDashboard()
-    {
-      App.ResetFocusedTextbox();
-      App.HideNumpad();
-      NavigationService.Navigate("DashboardView", null, this);
-    }
-
     public void NavigateExperiment()
     {
       App.ResetFocusedTextbox();
