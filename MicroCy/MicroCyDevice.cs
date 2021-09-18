@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Management;
 using System.Text;
 using System.IO;
-using MadWizard.WinUSBNet;
 using Newtonsoft.Json;
 using IronBarCode;
-//using System.Linq;
 using System.Runtime.InteropServices;
-using System.Threading.Tasks;
 
 /*
  * Most commands on the host side parallel the Properties and Methods document fo QB-1000
@@ -39,61 +35,6 @@ using System.Threading.Tasks;
 
 namespace MicroCy
 {
-  #region ENUMS
-  public enum USBRequestType
-  {
-    Standard = 0,
-    Class = 1,
-    Vendor = 2,
-    Reserved = 3
-  }
-
-  public enum USBRequestType_Direction
-  {
-    HostToDevice = 0,
-    DeviceToHost = 1
-  }
-
-  public enum USBRequestType_Recipient
-  {
-    Device = 0,
-    Interface = 1,
-    Endpoint = 2,
-    Other = 3
-  }
-
-  public enum USBRequest
-  {
-    GET_STATUS = 0,
-    CLEAR_FEATURE = 1,
-    SET_FEATURE = 3,
-    SET_ADDRESS = 5,
-    GET_DESCRIPTOR = 6,
-    SET_DESCRIPTOR = 7,
-    GET_CONFIGURATION = 8,
-    SET_CONFIGURATION = 9,
-    GET_INTERFACE = 10,
-    SET_INTERFACE = 11,
-    SYNCH_FRAME = 12
-  }
-
-  public enum SyncItems
-  {
-    SHEATH = 0,
-    SAMPLE_A = 1,
-    SAMPLE_B = 2,
-    FLASH = 3,
-
-    ALIGNER = 4,
-    VALVES = 5,
-    X_MOTOR = 6,
-    Y_MOTOR = 7,
-
-    Z_MOTOR = 8,
-    PROXIMITY = 9,
-    PRESSURE = 10
-  }
-  #endregion ENUMS
 
   public class MicroCyDevice
   {
@@ -121,7 +62,7 @@ namespace MicroCy
     public int TempRedSsc { get; set; }
     public int TempGreenSsc { get; set; }
     public int TempVioletSsc { get; set; }
-    public int TemprpMaj { get; set; }
+    public int TempRpMaj { get; set; }
     public int TempRpMin { get; set; }
     public int WellsToRead { get; set; }
     public int BeadsToCapture { get; set; }
@@ -133,7 +74,6 @@ namespace MicroCy
     public int ScatterGate { get; set; }
     public int MinPerRegion { get; set; }
     public ushort IdexSteps { get; set; }
-    public ushort[,] ClassificationMap { get; } = new ushort[300, 300];
     public bool NewStats { get; set; }
     public bool SubtRegBg { get; set; }
     public bool IsTube { get; set; }
@@ -165,13 +105,12 @@ namespace MicroCy
       "Y_MOTOR", "Z_MOTOR", "PROXIMITY", "PRESSURE", "WASHING", "FAULT", "ALIGN MOTOR", "MAIN VALVE", "SINGLE STEP" };
     public string WorkOrderName { get; private set; }
     public DirectoryInfo RootDirectory { get; private set; }
-    private bool _chkRegCnt;
-    private bool _instrumentConnected;
+    private bool _chkRegionCount;
     private bool _readingA;
-    private byte _actPriIdx;
-    private byte _actSecIdx;
+    private byte _actPrimaryIndex;
+    private byte _actSecondaryIndex;
     private byte[,] _map = new byte[300, 300];    //map for finding peak of a single region // added ClearMap()
-    private byte[] _usbInputBuffer = new byte[512];
+    private ushort[,] _classificationMap { get; } = new ushort[300, 300];
     private float[,] _sfi = new float[5000, 10];
     private string _workOrderPath;
     private string _fullFileName; //TODO: probably not necessary. look at refactoring InitBeadRead()
@@ -179,7 +118,7 @@ namespace MicroCy
     private StringBuilder _summaryout = new StringBuilder();
     private StringBuilder _dataout = new StringBuilder();
     private List<WellResults> _wellResults = new List<WellResults>();
-    private readonly USBDevice MicroCyUSBDevice;
+    private readonly ISerial _usbBConnection;
     private readonly Dictionary<string, CommandStruct> MainCmdTemplatesDict = new Dictionary<string, CommandStruct>()
     {
       { "Sheath",               new CommandStruct{ Code=0xd0, Command=0x0, Parameter=0, FParameter=0} },
@@ -238,38 +177,25 @@ namespace MicroCy
         new int[29,2] { { 15, 6 },{8,0 }, { 8, 1 }, { 7, 0 }, { 7, 0 }, { 7, 0 }, { 8, 0 }, { 8, 0 }, { 8, 0 }, { 8, 0 }, { 9, 0 }, { 9, 0 }, { 9, 1 }, { 8, 0 }, { 9, 0 }, { 9, 0 }, { 9, 1 },
             { 8, 0 }, { 8, 0 }, { 8, 0 }, { 8, 0 }, { 8, 0 }, { 8, 0 }, { 8, 0 }, { 8, 0 }, { 8, 1 }, { 6, 2 }, { 4, 0 }, { 0, 0 },  },
     };
-    private const string InterfaceGuid = "F70242C7-FB25-443B-9E7E-A4260F373982"; // interface GUID, not device guid
     private const string Bheader = "Preamble,Time(1 us Tick),FSC bg,Viol SSC bg,CL0 bg,CL1 bg,CL2 bg,CL3 bg,Red SSC bg,Green SSC bg," +
             "Green Maj bg, Green Min bg,Green Major,Green Minor,Red-Grn Offset,Grn-Viol Offset,Region,Forward Scatter,Violet SSC,CL0," +
             "Red SSC,CL1,CL2,CL3,Green SSC,Reporter\r ";
     private const string Sheader = "Row,Col,Region,Bead Count,Median FI,Trimmed Mean FI,CV%\r";
     private const int BeadsToGraph = 2000;
 
-    public MicroCyDevice()
+    public MicroCyDevice(Type connectionType)
     {
-      USBDeviceInfo[] di = USBDevice.GetDevices(InterfaceGuid);   // Get all the MicroCy devices connected
-      if (di.Length > 0)
-      {
-        try
-        {
-          MicroCyUSBDevice = new USBDevice(di[0].DevicePath);     // just grab the first one for now, but should support multiples
-          Console.WriteLine(string.Format("{0}:{1}", MicroCyUSBDevice.Descriptor.FullName, MicroCyUSBDevice.Descriptor.SerialNumber));
-          _instrumentConnected = true;
-        }
-        catch { }
-      }
-      else
-        Console.WriteLine("USB devices not found");
+      _usbBConnection = ConnectionFactory.MakeNewConnection(connectionType);
       SetSystemDirectories();
       LoadMaps();
       MainCommand("Set Property", code: 1, parameter: 1);    //set version as 1 to enable work order handling
-      _actPriIdx = 1;  //cl1;
-      _actSecIdx = 2;  //cl2;
+      _actPrimaryIndex = 1;  //cl1;
+      _actSecondaryIndex = 2;  //cl2;
       Reg0stats = false;
       CalStats = false;
       Newmap = false;
       IsTube = false;
-      InitReadPipe();    //default termination is end of sample
+      _usbBConnection.BeginRead(ReplyFromMC);   //default termination is end of sample
       Outdir = RootDirectory.FullName;
       EndState = 0;
       ReadActive = false;
@@ -285,11 +211,11 @@ namespace MicroCy
     {
       //build classification map from ActiveMap using bitfield types A-D
       int[,] bitpoints = new int[32, 2];
-      _actPriIdx = (byte)mmap.midorderidx; //what channel cl0 - cl3?
-      _actSecIdx = (byte)mmap.loworderidx;
+      _actPrimaryIndex = (byte)mmap.midorderidx; //what channel cl0 - cl3?
+      _actSecondaryIndex = (byte)mmap.loworderidx;
       MainCommand("Set Property", code: 0xce, parameter: mmap.minmapssc);  //set ssc gates for this map
       MainCommand("Set Property", code: 0xcf, parameter: mmap.maxmapssc);
-      Array.Clear(ClassificationMap, 0, ClassificationMap.Length);
+      Array.Clear(_classificationMap, 0, _classificationMap.Length);
       foreach (BeadRegion mapRegions in mmap.mapRegions)
       {
         if (!mapRegions.isvector)       //this region shape is taken from Bitmaplist array
@@ -304,15 +230,7 @@ namespace MicroCy
             for (int jcol = col; jcol < (col + bitpoints[irow, 0]); jcol++)
             {
               //handle region overlap by making overlap 0
-              if (ClassificationMap[row + irow - 1, jcol] == 0)
-              {
-                ClassificationMap[row + irow - 1, jcol] = mapRegions.regionNumber;
-              }
-              //TODO: else seems useless,since ClassificationMap is zeroed in Array.Clear();
-              else
-              {
-                ClassificationMap[row + irow - 1, jcol] = 0;
-              }
+              _classificationMap[row + irow - 1, jcol] = _classificationMap[row + irow - 1, jcol] == 0 ? mapRegions.regionNumber : (ushort)0;
             }
             col += bitpoints[irow, 1];  //second position is right shift amount for next line in map
             irow++;
@@ -332,15 +250,12 @@ namespace MicroCy
             begidx = 3;
           if (begidy < 3)
             begidy = 3;
-          for (int irow = begidx; irow <= endidx; irow++)
+          for (int row = begidx; row <= endidx; row++)
           {
-            for (int jcol = begidy + (int)xincer; jcol <= endidy + (int)xincer; jcol++)
+            for (int col = begidy + (int)xincer; col <= endidy + (int)xincer; col++)
             {
-              if (ClassificationMap[irow, jcol] == 0)
-                ClassificationMap[irow, jcol] = mapRegions.regionNumber;
-              else
-                //TODO: else seems useless,since ClassificationMap is zeroed in Array.Clear();
-                ClassificationMap[irow, jcol] = 0;  //zero any overlaps
+              //zero any overlaps
+              _classificationMap[row, col] = _classificationMap[row, col] == 0 ? mapRegions.regionNumber : (ushort)0;
             }
           }
         }
@@ -366,7 +281,7 @@ namespace MicroCy
       }
       _ = _dataout.Clear();
       _ = _dataout.Append(Bheader);
-      _chkRegCnt = false;
+      _chkRegionCount = false;
       BeadCount = 0;
     }
 
@@ -494,24 +409,15 @@ namespace MicroCy
 
     private void ReplyFromMC(IAsyncResult result)
     {
-      _ = MicroCyUSBDevice.Interfaces[0].Pipes[0x81].EndRead(result);
-      if ((_usbInputBuffer[0] == 0xbe) && (_usbInputBuffer[1] == 0xad))
+      _usbBConnection.EndRead(result);
+      if ((_usbBConnection.InputBuffer[0] == 0xbe) && (_usbBConnection.InputBuffer[1] == 0xad))
       {
         for (byte i = 0; i < 8; i++)
         {
           BeadInfoStruct outbead;
-          if (!GetBeadFromBuffer(_usbInputBuffer, i, out outbead))
+          if (!GetBeadFromBuffer(_usbBConnection.InputBuffer, i, out outbead))
             break;
-          //_wellResults is a list of region numbers that are active
-          //each entry has a list of rp1 values from each bead in that reagion
-          int index = _wellResults.FindIndex(w => w.regionNumber == outbead.region);
-          if (index >= 0)
-          {
-            _wellResults[index].RP1vals.Add(outbead.reporter);
-            _wellResults[index].RP1bgnd.Add(outbead.greenC_bg);
-            _chkRegCnt = _wellResults[index].RP1vals.Count == MinPerRegion;  //see if assay is done via sufficient beads in each region
-          }
-
+          FillActiveWellResults(in outbead);
           if (outbead.region == 0 && OnlyClassified)
             continue;
           if (BeadCount < BeadsToGraph)
@@ -522,13 +428,13 @@ namespace MicroCy
           FillCalibrationStatsRow(in outbead);
           BeadCount++;
         }
-        Array.Clear(_usbInputBuffer, 0, _usbInputBuffer.Length);
+        Array.Clear(_usbBConnection.InputBuffer, 0, _usbBConnection.InputBuffer.Length);
         TerminationReadyCheck();
       }
       else
         GetCommandFromBuffer();
 
-      _ = MicroCyUSBDevice.Interfaces[0].Pipes[0x81].BeginRead(_usbInputBuffer, 0, _usbInputBuffer.Length, new AsyncCallback(ReplyFromMC), null);
+      _usbBConnection.BeginRead(ReplyFromMC);
     }
 
     public void LoadMaps()
@@ -581,12 +487,6 @@ namespace MicroCy
     public void ClearMap()
     {
       Array.Clear(_map, 0, _map.Length);
-    }
-
-    private void InitReadPipe()
-    {
-      if (_instrumentConnected)
-        _ = MicroCyUSBDevice.Interfaces[0].Pipes[0x81].BeginRead(_usbInputBuffer, 0, _usbInputBuffer.Length, new AsyncCallback(ReplyFromMC), null);
     }
 
     public void MainCommand(string command, byte? cmd = null, byte? code = null, ushort? parameter = null, float? fparameter = null)
@@ -660,7 +560,7 @@ namespace MicroCy
     {
       var map = MapList[idx];
       map.calrpmin = TempRpMin;
-      map.calrpmaj = TemprpMaj;
+      map.calrpmaj = TempRpMaj;
       map.calrssc = TempRedSsc;
       map.calgssc = TempGreenSsc;
       map.calvssc = TempVioletSsc;
@@ -714,10 +614,10 @@ namespace MicroCy
     /// <param name="cs">The CommandStruct object containing the command parameters.  This will get converted to an 8-byte array.</param>
     private void RunCmd(string sCmdName, CommandStruct cs)
     {
-      if (_instrumentConnected)
+      if (_usbBConnection.IsActive)
       {
         byte[] buffer = StructToByteArray(cs);
-        MicroCyUSBDevice.Interfaces[0].OutPipe.Write(buffer);
+        _usbBConnection.Write(buffer);
       }
       Console.WriteLine(string.Format("{0} Sending [{1}]: {2}", DateTime.Now.ToString(), sCmdName, cs.ToString())); //  MARK1 END
     }
@@ -822,35 +722,35 @@ namespace MicroCy
 
     private void NewClData(in BeadInfoStruct outbead)
     {
-      CLQueue newdp = new CLQueue();
+      CLQueue DataPoint = new CLQueue();
       switch (XAxisSel)
       {
         case 0:
-          newdp.xyclx = (uint)outbead.cl0;
+          DataPoint.xyclx = (uint)outbead.cl0;
           break;
         case 1:
-          newdp.xyclx = (uint)outbead.cl1;
+          DataPoint.xyclx = (uint)outbead.cl1;
           break;
         case 2:
-          newdp.xyclx = (uint)outbead.cl2;
+          DataPoint.xyclx = (uint)outbead.cl2;
           break;
         default:
-          newdp.xyclx = (uint)outbead.cl3;
+          DataPoint.xyclx = (uint)outbead.cl3;
           break;
       }
       switch (YAxisSel)
       {
         case 0:
-          newdp.xycly = (uint)outbead.cl0;
+          DataPoint.xycly = (uint)outbead.cl0;
           break;
         case 1:
-          newdp.xycly = (uint)outbead.cl1;
+          DataPoint.xycly = (uint)outbead.cl1;
           break;
         case 2:
-          newdp.xycly = (uint)outbead.cl2;
+          DataPoint.xycly = (uint)outbead.cl2;
           break;
         default:
-          newdp.xycly = (uint)outbead.cl3;
+          DataPoint.xycly = (uint)outbead.cl3;
           break;
       }
       double sidsel;
@@ -877,11 +777,11 @@ namespace MicroCy
       Rp1Data[(byte)(Math.Log(grp1) * 24.526)]++;
       try
       {
-        if ((newdp.xyclx > 1) && (newdp.xycly > 1))
+        if ((DataPoint.xyclx > 1) && (DataPoint.xycly > 1))
         {
           lock (ClData)
           {
-            ClData.Enqueue(newdp);  //save data for graphing 
+            ClData.Enqueue(DataPoint);  //save data for graphing 
           }
         }
       }
@@ -894,7 +794,7 @@ namespace MicroCy
       lock (Commands)
       {
         // move received command to queue
-        newcmd = ByteArrayToStruct<CommandStruct>(_usbInputBuffer);
+        newcmd = ByteArrayToStruct<CommandStruct>(_usbBConnection.InputBuffer);
         Commands.Enqueue(newcmd);
       }
       if ((newcmd.Code >= 0xd0) && (newcmd.Code <= 0xdf))
@@ -913,7 +813,7 @@ namespace MicroCy
       {
         case 0: //min beads in each region
                 //do statistical magic
-          if (_chkRegCnt)  //a region made it, are there more that haven't
+          if (_chkRegionCount)  //a region made it, are there more that haven't
           {
             EndState = 1;   //assume all region have enough beads
             foreach (WellResults region in _wellResults)
@@ -924,7 +824,7 @@ namespace MicroCy
                 break;
               }
             }
-            _chkRegCnt = false;
+            _chkRegionCount = false;
           }
           break;
         case 1: //total beads captured
@@ -988,23 +888,46 @@ namespace MicroCy
       outbead = BeadArrayToStruct<BeadInfoStruct>(buffer, shift);
       if (outbead.Header != 0xadbeadbe)
         return false;
+      float[] cl = MakeClArr(in outbead);
+      //each well can have a different  classification map
+      outbead.region = ClassifyBeadToRegion(cl);
+      outbead.cl1 = cl[1];
+      outbead.cl2 = cl[2];
+      //handle HI dnr channel
+      outbead.reporter = outbead.greenC > HdnrTrans ? outbead.greenB * HDnrCoef : outbead.greenC;
+      return true;
+    }
+
+    private ushort ClassifyBeadToRegion(float[] cl)
+    {
+      int x = (byte)(Math.Log(cl[_actPrimaryIndex]) * 24.526);
+      int y = (byte)(Math.Log(cl[_actSecondaryIndex]) * 24.526);
+      return (x > 0) && (y > 0) ? _classificationMap[x, y] : (ushort)0;
+    }
+
+    private float[] MakeClArr(in BeadInfoStruct outbead)
+    {
       float cl1comp = outbead.greenB * Compensation / 100;
-      float cl2comp = (float)(cl1comp * 0.26);
-      float[] cl = {
+      float cl2comp = cl1comp * 0.26f;
+      return new float[]{
             outbead.cl0,
             outbead.cl1 - cl1comp,  //Compensation
             outbead.cl2 - cl2comp,  //Compensation
             outbead.cl3
-          };
-      outbead.cl1 = cl[1];
-      outbead.cl2 = cl[2];
-      int x = (byte)(Math.Log(cl[_actPriIdx]) * 24.526);
-      int y = (byte)(Math.Log(cl[_actSecIdx]) * 24.526);
-      //each well can have a different  classification map
-      outbead.region = (x > 0) && (y > 0) ? ClassificationMap[x, y] : (ushort)0;
-      //handle HI dnr channel
-      outbead.reporter = outbead.greenC > HdnrTrans ? outbead.greenB * HDnrCoef : outbead.greenC;
-      return true;
+      };
+    }
+    private void FillActiveWellResults(in BeadInfoStruct outbead)
+    {
+      //_wellResults is a list of region numbers that are active
+      //each entry has a list of rp1 values from each bead in that reagion
+      ushort region = outbead.region;
+      int index = _wellResults.FindIndex(w => w.regionNumber == region);
+      if (index >= 0)
+      {
+        _wellResults[index].RP1vals.Add(outbead.reporter);
+        _wellResults[index].RP1bgnd.Add(outbead.greenC_bg);
+        _chkRegionCount = _wellResults[index].RP1vals.Count == MinPerRegion;  //see if assay is done via sufficient beads in each region
+      }
     }
   }
 }

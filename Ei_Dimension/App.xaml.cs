@@ -22,7 +22,7 @@ namespace Ei_Dimension
     {
       SetLanguage("en-US");
 
-      Device = new MicroCyDevice();
+      Device = new MicroCyDevice(typeof(USBConnection));
       try
       {
         Device.ActiveMap = Device.MapList[Settings.Default.DefaultMap];
@@ -469,7 +469,7 @@ namespace Ei_Dimension
               if (int.TryParse(temp, out iRes))
               {
                 Device.MainCommand("Set Property", code: 0x29, parameter: (ushort)iRes);
-                Device.TemprpMaj = iRes;
+                Device.TempRpMaj = iRes;
               }
             }
             if (SelectedTextBox.index == 2)
@@ -875,23 +875,24 @@ namespace Ei_Dimension
       DashboardViewModel.Instance.EventCountField[0] = Device.BeadCount.ToString();
       if (DashboardViewModel.Instance.PressureMonToggleButtonState)
         Device.MainCommand("Get FProperty", code: 0x22);
-      if (Device.Newmap)
-      {
-        //  chart2.Series["REGIONS"].Enabled = true;
-        Device.Newmap = false;
-        for (var x = 0; x < 255; x++)
-        {
-          for (int y = 0; y < 255; y++)
-          {
-            if (Device.ClassificationMap[x, y] > 0) //TODO: remove
-            {
-              float expx = (float)Math.Exp(x / 24.526);
-              float expy = (float)Math.Exp(y / 24.526);
-              //  chart2.Series["REGIONS"].Points.AddXY(expx, expy);
-            }
-          }
-        }
-      }
+      //TODO: REmove: for map construction in another program
+    //  if (Device.Newmap)
+    //  {
+    //    //  chart2.Series["REGIONS"].Enabled = true;
+    //    Device.Newmap = false;
+    //    for (var x = 0; x < 255; x++)
+    //    {
+    //      for (int y = 0; y < 255; y++)
+    //      {
+    //        if (Device._classificationMap[x, y] > 0) //TODO: remove
+    //        {
+    //          float expx = (float)Math.Exp(x / 24.526);
+    //          float expy = (float)Math.Exp(y / 24.526);
+    //          //  chart2.Series["REGIONS"].Points.AddXY(expx, expy);
+    //        }
+    //      }
+    //    }
+    //  }
       // end of well state machine
       switch (Device.EndState)
       {
