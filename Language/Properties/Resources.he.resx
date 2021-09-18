@@ -123,7 +123,7 @@
   <data name="Components_To_Pickup" xml:space="preserve">
     <value>Пикап</value>
   </data>
-  <data name="Ribbon_Dashboard" xml:space="preserve">
+  <data name="Experiment_Dashboard" xml:space="preserve">
     <value>לוּחַ מַחווָנִים</value>
   </data>
 </root>

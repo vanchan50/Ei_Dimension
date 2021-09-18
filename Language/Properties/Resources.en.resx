@@ -666,9 +666,6 @@ Barcode</value>
   <data name="Ribbon_Analysis" xml:space="preserve">
     <value>Data Analysis</value>
   </data>
-  <data name="Ribbon_Dashboard" xml:space="preserve">
-    <value>Dashboard</value>
-  </data>
   <data name="Ribbon_Maintenance" xml:space="preserve">
     <value>Maintenance</value>
   </data>

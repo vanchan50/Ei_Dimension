@@ -198,16 +198,16 @@ namespace Ei_Dimension
         CaliVM.GatingItems[7].Content = RM.GetString(nameof(Language.Resources.Dropdown_Green_Red_Rp_bg), curCulture);
         CaliVM.SelectedGatingContent = CaliVM.GatingItems[0].Content;
       }
-      var ExpVM = ExperimentViewModel.Instance;
-      if (ExpVM != null)
+      var DashVM = DashboardViewModel.Instance;
+      if (DashVM != null)
       {
-        ExpVM.SpeedItems[0].Content = RM.GetString(nameof(Language.Resources.Dropdown_Normal), curCulture);
-        ExpVM.SpeedItems[1].Content = RM.GetString(nameof(Language.Resources.Dropdown_Hi_Speed), curCulture);
-        ExpVM.SpeedItems[2].Content = RM.GetString(nameof(Language.Resources.Dropdown_Hi_Sens), curCulture);
+        DashVM.SpeedItems[0].Content = RM.GetString(nameof(Language.Resources.Dropdown_Normal), curCulture);
+        DashVM.SpeedItems[1].Content = RM.GetString(nameof(Language.Resources.Dropdown_Hi_Speed), curCulture);
+        DashVM.SpeedItems[2].Content = RM.GetString(nameof(Language.Resources.Dropdown_Hi_Sens), curCulture);
 
-        ExpVM.ChConfigItems[0].Content = RM.GetString(nameof(Language.Resources.Dropdown_Standard), curCulture);
-        ExpVM.ChConfigItems[1].Content = RM.GetString(nameof(Language.Resources.Dropdown_Cells), curCulture);
-        ExpVM.ChConfigItems[2].Content = RM.GetString(nameof(Language.Resources.Dropdown_FM3D), curCulture);
+        DashVM.ChConfigItems[0].Content = RM.GetString(nameof(Language.Resources.Dropdown_Standard), curCulture);
+        DashVM.ChConfigItems[1].Content = RM.GetString(nameof(Language.Resources.Dropdown_Cells), curCulture);
+        DashVM.ChConfigItems[2].Content = RM.GetString(nameof(Language.Resources.Dropdown_FM3D), curCulture);
       }
       #endregion
     }
@@ -872,7 +872,7 @@ namespace Ei_Dimension
           //  chart2.Series["CL1CL2"].Points.AddXY(cldp.xyclx, cldp.xycly);
         }
       }
-      ExperimentViewModel.Instance.EventCountField[0] = Device.BeadCount.ToString();
+      DashboardViewModel.Instance.EventCountField[0] = Device.BeadCount.ToString();
       if (DashboardViewModel.Instance.PressureMonToggleButtonState)
         Device.MainCommand("Get FProperty", code: 0x22);
       if (Device.Newmap)
@@ -975,7 +975,7 @@ namespace Ei_Dimension
       }
 
       //see if work order is available
-      if (!ExperimentViewModel.Instance.SystemControlSelectorState[0])
+      if (!DashboardViewModel.Instance.SystemControlSelectorState[0])
       {
         if (Device.IsNewWorkOrder())
         {
@@ -985,12 +985,12 @@ namespace Ei_Dimension
       }
       if (_workOrderPending == true)
       {
-        if (ExperimentViewModel.Instance.SystemControlSelectorState[1])  //no barcode required so allow start
+        if (DashboardViewModel.Instance.SystemControlSelectorState[1])  //no barcode required so allow start
         {
-          ExperimentViewModel.Instance.StartButtonEnabled = true;
+          DashboardViewModel.Instance.StartButtonEnabled = true;
           _workOrderPending = false;
         }
-        else if (ExperimentViewModel.Instance.SystemControlSelectorState[2])    //barcode required
+        else if (DashboardViewModel.Instance.SystemControlSelectorState[2])    //barcode required
         {
           //if (videogoing & (video != null))
           //{
@@ -999,13 +999,13 @@ namespace Ei_Dimension
           //    pltNumbertb.Text = plateGUID.Value;
           //}
           //else
-          //  ExperimentViewModel.Instance.ValidateBCodeButtonEnabled = true;
+          //  DashboardViewModel.Instance.ValidateBCodeButtonEnabled = true;
         //  if (woNumbertb.Text == pltNumbertb.Text)
         //  {
-        //    ExperimentViewModel.Instance.StartButtonEnabled = true;
+        //    DashboardViewModel.Instance.StartButtonEnabled = true;
         //    _workOrderPending = false;
         //    Device.MainCommand("Set Property", code: 0x17); //leds off
-        //    ExperimentViewModel.Instance.ValidateBCodeButtonEnabled = false;
+        //    DashboardViewModel.Instance.ValidateBCodeButtonEnabled = false;
         //  }
         //  else
         //  {
@@ -1357,23 +1357,23 @@ namespace Ei_Dimension
             case 0xa8:
               if (exe.Parameter == 1)
               {
-                ExperimentViewModel.Instance.OrderSelectorStateBool[0] = false;
-                ExperimentViewModel.Instance.OrderSelectorStateBool[1] = true;
+                DashboardViewModel.Instance.OrderSelectorStateBool[0] = false;
+                DashboardViewModel.Instance.OrderSelectorStateBool[1] = true;
               }
               else
               {
-                ExperimentViewModel.Instance.OrderSelectorStateBool[0] = true;
-                ExperimentViewModel.Instance.OrderSelectorStateBool[1] = false;
+                DashboardViewModel.Instance.OrderSelectorStateBool[0] = true;
+                DashboardViewModel.Instance.OrderSelectorStateBool[1] = false;
               }
               break;
             case 0xa9:
-              ExperimentViewModel.Instance.ClassiMapItems[exe.Parameter].ForAppUpdater(2);
+              DashboardViewModel.Instance.ClassiMapItems[exe.Parameter].ForAppUpdater(2);
               break;
             case 0xaa:  //read speed
-              ExperimentViewModel.Instance.ClassiMapItems[exe.Parameter].ForAppUpdater(1);
+              DashboardViewModel.Instance.SpeedItems[exe.Parameter].ForAppUpdater(1);
               break;
             case 0xac:
-              ExperimentViewModel.Instance.Volumes[1] = exe.Parameter.ToString();
+              DashboardViewModel.Instance.Volumes[1] = exe.Parameter.ToString();
               break;
             case 0xad:  //TODO: remove?
               if (exe.Parameter > 15)
@@ -1388,7 +1388,7 @@ namespace Ei_Dimension
               Device.PlateCol = (byte)exe.Parameter;  //TODO: it doesn't accout for 96well; can go overboard and crash
               break;
             case 0xaf:
-              ExperimentViewModel.Instance.Volumes[0] = exe.Parameter.ToString();
+              DashboardViewModel.Instance.Volumes[0] = exe.Parameter.ToString();
               break;
             case 0xb0:
               ChannelsViewModel.Instance.TempParameters[0] = (exe.Parameter / 10.0).ToString("N1");
@@ -1438,7 +1438,7 @@ namespace Ei_Dimension
               ComponentsViewModel.Instance.LasersActive[2] = (exe.Parameter & 0x04) == 4;
               break;
             case 0xc4:
-              ExperimentViewModel.Instance.Volumes[2] = exe.FParameter.ToString();
+              DashboardViewModel.Instance.Volumes[2] = exe.FParameter.ToString();
               break;
             case 0xc7:
               g = (float)(exe.Parameter / 4096.0 / 0.040 * 3.3);

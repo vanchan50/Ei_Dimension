@@ -146,6 +146,7 @@
     <Compile Include="ViewModels\NumpadViewModel.cs" />
     <Compile Include="ViewModels\ServiceViewModel.cs" />
     <Compile Include="ViewModels\SyringeSpeedsViewModel.cs" />
+    <Compile Include="ViewModels\WellsSelectViewModel.cs" />
     <Compile Include="Views\AlignmentView.xaml.cs">
       <DependentUpon>AlignmentView.xaml</DependentUpon>
     </Compile>
@@ -187,6 +188,9 @@
     </Compile>
     <Compile Include="Views\SyringeSpeedsView.xaml.cs">
       <DependentUpon>SyringeSpeedsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WellsSelectView.xaml.cs">
+      <DependentUpon>WellsSelectView.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -295,6 +299,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\SyringeSpeedsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\WellsSelectView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

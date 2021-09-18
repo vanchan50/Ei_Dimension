@@ -777,7 +777,8 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Dashboard.
+        ///   Looks up a localized string similar to Приборная
+        ///Панель.
         /// </summary>
         public static string Experiment_Dashboard {
             get {
@@ -1367,16 +1368,6 @@ namespace Ei_Dimension.Language {
         public static string Ribbon_Analysis {
             get {
                 return ResourceManager.GetString("Ribbon_Analysis", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Приборная
-        ///Панель.
-        /// </summary>
-        public static string Ribbon_Dashboard {
-            get {
-                return ResourceManager.GetString("Ribbon_Dashboard", resourceCulture);
             }
         }
         

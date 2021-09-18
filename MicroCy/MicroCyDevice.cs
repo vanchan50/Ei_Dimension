@@ -499,25 +499,9 @@ namespace MicroCy
       {
         for (byte i = 0; i < 8; i++)
         {
-          BeadInfoStruct outbead = BeadArrayToStruct<BeadInfoStruct>(_usbInputBuffer, i);
-          if (outbead.Header != 0xadbeadbe)
+          BeadInfoStruct outbead;
+          if (!GetBeadFromBuffer(_usbInputBuffer, i, out outbead))
             break;
-          float cl1comp = outbead.greenB * Compensation / 100;
-          float cl2comp = (float)(cl1comp * 0.26);
-          float[] cl = {
-            outbead.cl0,
-            outbead.cl1 - cl1comp,  //Compensation
-            outbead.cl2 - cl2comp,  //Compensation
-            outbead.cl3
-          };
-          outbead.cl1 = cl[1];
-          outbead.cl2 = cl[2];
-          int x = (byte)(Math.Log(cl[_actPriIdx]) * 24.526);
-          int y = (byte)(Math.Log(cl[_actSecIdx]) * 24.526);
-          //each well can have a different  classification map
-          outbead.region = (x > 0) && (y > 0) ? ClassificationMap[x, y] : (ushort)0;
-          //handle HI dnr channel
-          outbead.reporter = outbead.greenC > HdnrTrans ? outbead.greenB * HDnrCoef : outbead.greenC;
           //_wellResults is a list of region numbers that are active
           //each entry has a list of rp1 values from each bead in that reagion
           int index = _wellResults.FindIndex(w => w.regionNumber == outbead.region);
@@ -530,10 +514,9 @@ namespace MicroCy
 
           if (outbead.region == 0 && OnlyClassified)
             continue;
-          //TODO: check:  Createmapstate was removed, because it is deprecated.
           if (BeadCount < BeadsToGraph)
             NewClData(in outbead);
-          if(Everyevent)
+          if (Everyevent)
             _ = _dataout.Append(outbead.ToString());
           //accum stats for run as a whole, used during aligment and QC
           FillCalibrationStatsRow(in outbead);
@@ -998,6 +981,30 @@ namespace MicroCy
         rout.meanfi -= rpbg;
       }
       return rout;
+    }
+
+    private bool GetBeadFromBuffer(byte[] buffer,byte shift, out BeadInfoStruct outbead)
+    {
+      outbead = BeadArrayToStruct<BeadInfoStruct>(buffer, shift);
+      if (outbead.Header != 0xadbeadbe)
+        return false;
+      float cl1comp = outbead.greenB * Compensation / 100;
+      float cl2comp = (float)(cl1comp * 0.26);
+      float[] cl = {
+            outbead.cl0,
+            outbead.cl1 - cl1comp,  //Compensation
+            outbead.cl2 - cl2comp,  //Compensation
+            outbead.cl3
+          };
+      outbead.cl1 = cl[1];
+      outbead.cl2 = cl[2];
+      int x = (byte)(Math.Log(cl[_actPriIdx]) * 24.526);
+      int y = (byte)(Math.Log(cl[_actSecIdx]) * 24.526);
+      //each well can have a different  classification map
+      outbead.region = (x > 0) && (y > 0) ? ClassificationMap[x, y] : (ushort)0;
+      //handle HI dnr channel
+      outbead.reporter = outbead.greenC > HdnrTrans ? outbead.greenB * HDnrCoef : outbead.greenC;
+      return true;
     }
   }
 }

@@ -46,7 +46,7 @@
     </StackPanel>
 
     <Border Grid.Column="0"
-            Margin="0,300,0,0">
+            Margin="20,300,0,0">
       <StackPanel>
         <ToggleButton Style="{StaticResource ToggleButtonThemeStyle}"
                       Height="60" Width="80"
@@ -92,7 +92,7 @@
               <Setter Property="Template">
                 <Setter.Value>
                   <ControlTemplate>
-                    <Border Background="{StaticResource PressedButtonBackground}"
+                    <Border Background="{DynamicResource RibbonBackgroundActive}"
                             Height="20"
                             VerticalAlignment="Center"
                             Margin="-5,0,5,0"
@@ -147,7 +147,7 @@
                  Foreground="{StaticResource AppTextColor}"
                  HorizontalAlignment="Center"
                  VerticalAlignment="Top"
-                 Margin="0,40,0,0"/>
+                 Margin="0,20,0,0"/>
         <dx:DropDownButton FontSize="30"
                            Margin="20,0,20,0"
                            FontFamily="{StaticResource AppTextFont}"

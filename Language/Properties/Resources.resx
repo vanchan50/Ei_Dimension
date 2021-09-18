@@ -360,7 +360,8 @@ Coefficient</value>
     <value>Classification Map</value>
   </data>
   <data name="Experiment_Dashboard" xml:space="preserve">
-    <value>Dashboard</value>
+    <value>Приборная
+Панель</value>
   </data>
   <data name="Experiment_Eject" xml:space="preserve">
     <value>Eject Plate</value>
@@ -562,10 +563,6 @@ Barcode</value>
   <data name="Ribbon_Analysis" xml:space="preserve">
     <value>Анализ
 Данных</value>
-  </data>
-  <data name="Ribbon_Dashboard" xml:space="preserve">
-    <value>Приборная
-Панель</value>
   </data>
   <data name="Ribbon_Maintenance" xml:space="preserve">
     <value>Настройки</value>

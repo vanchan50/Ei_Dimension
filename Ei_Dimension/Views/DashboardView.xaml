@@ -13,12 +13,13 @@
              xmlns:lang="clr-namespace:Ei_Dimension.Language;assembly=Language"
              mc:Ignorable="d"
              DataContext="{dxmvvm:ViewModelSource Type={x:Type ViewModels:DashboardViewModel}}"
-             d:DesignHeight="674" d:DesignWidth="1500">
+             d:DesignHeight="674" d:DesignWidth="1312">
   <Grid>
+    <!--Pressure Monitor-->
     <StackPanel Orientation="Horizontal"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
-                Margin="750,400,0,0">
+                Margin="700,400,0,0">
       <StackPanel Width="180"
                   Margin="0,0,4,0">
         <ToggleButton Content="{lang:Loc Dashboard_Pressure_Mon}"
@@ -65,11 +66,14 @@
       </Border>
       
     </StackPanel>
+
+    <!--System Monitor-->
     <ListBox HorizontalAlignment="Left"
              VerticalAlignment="Top"
-             Margin="200,300,0,0"
+             Margin="1080,360,0,0"
+             Width="150" Height="260"
              ItemsSource="{Binding ActiveList}"
-             FontSize="30"> 
+             FontSize="20">
     </ListBox>
 
     <!--System Control-->
@@ -206,11 +210,10 @@
                 HorizontalAlignment="Left"
                 Margin="0,0,0,5"
                 Width="100">
-
             <StackPanel HorizontalAlignment="Center">
               <RadioButton Content="{lang:Loc Experiment_Min_Per_Reg}"
                        Style="{StaticResource RadioButtonVerticalThemeStyle}"
-                       Height="44"
+                       Height="50"
                        Width="100"
                        FontSize="19"
                        IsChecked="{Binding EndReadSelectorState[0]}"
@@ -221,7 +224,7 @@
               </RadioButton>
               <RadioButton Content="{lang:Loc Experiment_Total_Events}"
                        Style="{StaticResource RadioButtonVerticalThemeStyle}"
-                       Height="44"
+                       Height="50"
                        Width="100"
                        FontSize="19"
                        IsChecked="{Binding EndReadSelectorState[1]}"
@@ -232,7 +235,7 @@
               </RadioButton>
               <RadioButton Content="{lang:Loc Experiment_End_of_Sample}"
                        Style="{StaticResource RadioButtonVerticalThemeStyle}"
-                       Height="44"
+                       Height="50"
                        Width="100"
                        FontSize="19"
                        IsChecked="{Binding EndReadSelectorState[2]}"
@@ -246,7 +249,7 @@
           <Border Background="{StaticResource RibbonBackgroundActive}"
                 Height="96" Width="100"
                 VerticalAlignment="Top"
-                Margin="5,0,0,0">
+                Margin="5,2,0,0">
             <StackPanel>
               <TextBox HorizontalAlignment="Stretch"
                      Margin="8,8,8,0"
@@ -374,7 +377,7 @@
     <!--Dropdowns-->
     <Border HorizontalAlignment="Left"
           VerticalAlignment="Top"
-          Margin="400,300,0,0">
+          Margin="370,300,0,0">
       <StackPanel>
         <TextBlock Text="{lang:Loc Experiment_Speed}"
                  FontFamily="{StaticResource AppTextFont}"
@@ -554,12 +557,12 @@
     <!--Start & End-->
     <Border HorizontalAlignment="Left"
           VerticalAlignment="Top"
-          Margin="1050,280,0,0">
+          Margin="1150,100,0,0">
       <StackPanel>
         <Button Content="{lang:Loc Experiment_Start}"
                 Style="{StaticResource ButtonStyle}"
                 Command="{Binding StartButtonClickCommand}"
-                Height="50" Width="100"
+                Height="150" Width="100"
                 IsEnabled="{Binding StartButtonEnabled}"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
@@ -567,7 +570,7 @@
         <Button Content="{lang:Loc Experiment_End}"
                 Style="{StaticResource ButtonStyle}"
                 Command="{Binding EndButtonClickCommand}"
-                Height="50" Width="100"
+                Height="90" Width="100"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 Margin="0,4,0,0"/>
