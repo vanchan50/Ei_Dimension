@@ -16,7 +16,7 @@ namespace Ei_Dimension.Models
     public WellTableRow(int rowIndex, int size)
     {
       _stateDict = new Dictionary<WellType, string>();
-      _stateDict.Add(WellType.Empty, @"pack://application:,,,/DevExpress.Images.v21.1;component/Images/Actions/Cancel_32x32.png");
+      _stateDict.Add(WellType.Empty, @"/Icons/Empty_Well.png");
       _stateDict.Add(WellType.Standard, @"pack://application:,,,/DevExpress.Images.v21.1;component/Images/Actions/Apply_32x32.png");
       _stateDict.Add(WellType.Control, @"pack://application:,,,/DevExpress.Images.v21.1;component/Images/Media/Media_32x32.png");
       _stateDict.Add(WellType.Unknown, @"pack://application:,,,/DevExpress.Images.v21.1;component/Images/Find/Find_32x32.png");

@@ -66,7 +66,7 @@
                 <Setter.Value>
                   <ControlTemplate>
                     <Ellipse Width="40" Height="40"
-                             Fill="{StaticResource AppTextColor}"
+                             Fill="{StaticResource ButtonBackground}"
                              Stroke="{StaticResource AppBackground}"
                              StrokeThickness="2"/>
                   </ControlTemplate>
@@ -78,7 +78,7 @@
               <Setter Property="Template">
                 <Setter.Value>
                   <ControlTemplate>
-                    <Border Background="{StaticResource AppTextColor}"
+                    <Border Background="{StaticResource ButtonBackground}"
                             Height="20"
                             VerticalAlignment="Center"
                             Margin="5,0,-5,0"

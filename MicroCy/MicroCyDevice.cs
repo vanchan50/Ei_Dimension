@@ -110,7 +110,7 @@ namespace MicroCy
     private byte _actPrimaryIndex;
     private byte _actSecondaryIndex;
     private byte[,] _map = new byte[300, 300];    //map for finding peak of a single region // added ClearMap()
-    private ushort[,] _classificationMap { get; } = new ushort[300, 300];
+    private byte[,] _classificationMap { get; } = new byte[300, 300]; //TODO: was ushort
     private float[,] _sfi = new float[5000, 10];
     private string _workOrderPath;
     private string _fullFileName; //TODO: probably not necessary. look at refactoring InitBeadRead()
@@ -118,7 +118,7 @@ namespace MicroCy
     private StringBuilder _summaryout = new StringBuilder();
     private StringBuilder _dataout = new StringBuilder();
     private List<WellResults> _wellResults = new List<WellResults>();
-    private readonly ISerial _usbBConnection;
+    private readonly ISerial _usbConnection;
     private readonly Dictionary<string, CommandStruct> MainCmdTemplatesDict = new Dictionary<string, CommandStruct>()
     {
       { "Sheath",               new CommandStruct{ Code=0xd0, Command=0x0, Parameter=0, FParameter=0} },
@@ -182,10 +182,11 @@ namespace MicroCy
             "Red SSC,CL1,CL2,CL3,Green SSC,Reporter\r ";
     private const string Sheader = "Row,Col,Region,Bead Count,Median FI,Trimmed Mean FI,CV%\r";
     private const int BeadsToGraph = 2000;
+    private readonly bool _useStaticMaps;
 
-    public MicroCyDevice(Type connectionType)
+    public MicroCyDevice(Type connectionType, bool useStaticMaps)
     {
-      _usbBConnection = ConnectionFactory.MakeNewConnection(connectionType);
+      _usbConnection = ConnectionFactory.MakeNewConnection(connectionType);
       SetSystemDirectories();
       LoadMaps();
       MainCommand("Set Property", code: 1, parameter: 1);    //set version as 1 to enable work order handling
@@ -195,7 +196,7 @@ namespace MicroCy
       CalStats = false;
       Newmap = false;
       IsTube = false;
-      _usbBConnection.BeginRead(ReplyFromMC);   //default termination is end of sample
+      _usbConnection.BeginRead(ReplyFromMC);   //default termination is end of sample
       Outdir = RootDirectory.FullName;
       EndState = 0;
       ReadActive = false;
@@ -205,62 +206,80 @@ namespace MicroCy
         GStats.Add(new Gstats());
       }
       Outfilename = "ResultFile";
-    }
-
-    public void ConstructClassificationMap(CustomMap mmap)
-    {
-      //build classification map from ActiveMap using bitfield types A-D
-      int[,] bitpoints = new int[32, 2];
-      _actPrimaryIndex = (byte)mmap.midorderidx; //what channel cl0 - cl3?
-      _actSecondaryIndex = (byte)mmap.loworderidx;
-      MainCommand("Set Property", code: 0xce, parameter: mmap.minmapssc);  //set ssc gates for this map
-      MainCommand("Set Property", code: 0xcf, parameter: mmap.maxmapssc);
-      Array.Clear(_classificationMap, 0, _classificationMap.Length);
-      foreach (BeadRegion mapRegions in mmap.mapRegions)
+      _useStaticMaps = useStaticMaps;
+      if (_useStaticMaps)
       {
-        if (!mapRegions.isvector)       //this region shape is taken from Bitmaplist array
+        using (var BinReader = new BinaryReader(File.OpenRead(@"../../StaticMaps/QB_Map2019_4.bin")))
         {
-          Array.Clear(bitpoints, 0, bitpoints.Length);  //copy bitmap of the type specified (A B C D)
-          Array.Copy(Bitmaplist[mapRegions.bitmaptype], bitpoints, Bitmaplist[mapRegions.bitmaptype].Length);
-          int row = mapRegions.centermidorderidx - bitpoints[0, 0];  //first position is value to backup before etching bitmap
-          int col = mapRegions.centerloworderidx - bitpoints[0, 1];
-          int irow = 1;
-          while (bitpoints[irow, 0] != 0)
+          for (var i = 0; i < 256; i++)
           {
-            for (int jcol = col; jcol < (col + bitpoints[irow, 0]); jcol++)
+            for (var j = 0; j < 256; j++)
             {
-              //handle region overlap by making overlap 0
-              _classificationMap[row + irow - 1, jcol] = _classificationMap[row + irow - 1, jcol] == 0 ? mapRegions.regionNumber : (ushort)0;
-            }
-            col += bitpoints[irow, 1];  //second position is right shift amount for next line in map
-            irow++;
-          }
-        }
-        else
-        {
-          //populate a computed region
-          float xwidth = (float)0.33 * mapRegions.meanmidorder + 50;
-          float ywidth = (float)0.33 * mapRegions.meanloworder + 50;
-          int begidx = Val_2_Idx((int)(mapRegions.meanmidorder - (xwidth * 0.5)));
-          int endidx = Val_2_Idx((int)(mapRegions.meanmidorder + (xwidth * 0.5)));
-          float xincer = 0;
-          int begidy = Val_2_Idx((int)(mapRegions.meanloworder - (ywidth / 2)));
-          int endidy = Val_2_Idx((int)(mapRegions.meanloworder + (ywidth / 2)));
-          if (begidx < 3)
-            begidx = 3;
-          if (begidy < 3)
-            begidy = 3;
-          for (int row = begidx; row <= endidx; row++)
-          {
-            for (int col = begidy + (int)xincer; col <= endidy + (int)xincer; col++)
-            {
-              //zero any overlaps
-              _classificationMap[row, col] = _classificationMap[row, col] == 0 ? mapRegions.regionNumber : (ushort)0;
+              _classificationMap[i, j] = BinReader.ReadByte();
             }
           }
         }
       }
-      Newmap = true;
+    }
+
+    public void ConstructClassificationMap(CustomMap mmap)
+    {
+      //TODO: NEEDS a FIX after decided
+      if (_useStaticMaps)
+        return;
+
+    //  //build classification map from ActiveMap using bitfield types A-D
+    //  int[,] bitpoints = new int[32, 2];
+    //  _actPrimaryIndex = (byte)mmap.midorderidx; //what channel cl0 - cl3?
+    //  _actSecondaryIndex = (byte)mmap.loworderidx;
+    //  MainCommand("Set Property", code: 0xce, parameter: mmap.minmapssc);  //set ssc gates for this map
+    //  MainCommand("Set Property", code: 0xcf, parameter: mmap.maxmapssc);
+    //  Array.Clear(_classificationMap, 0, _classificationMap.Length);
+    //  foreach (BeadRegion mapRegions in mmap.mapRegions)
+    //  {
+    //    if (!mapRegions.isvector)       //this region shape is taken from Bitmaplist array
+    //    {
+    //      Array.Clear(bitpoints, 0, bitpoints.Length);  //copy bitmap of the type specified (A B C D)
+    //      Array.Copy(Bitmaplist[mapRegions.bitmaptype], bitpoints, Bitmaplist[mapRegions.bitmaptype].Length);
+    //      int row = mapRegions.centermidorderidx - bitpoints[0, 0];  //first position is value to backup before etching bitmap
+    //      int col = mapRegions.centerloworderidx - bitpoints[0, 1];
+    //      int irow = 1;
+    //      while (bitpoints[irow, 0] != 0)
+    //      {
+    //        for (int jcol = col; jcol < (col + bitpoints[irow, 0]); jcol++)
+    //        {
+    //          //handle region overlap by making overlap 0
+    //          _classificationMap[row + irow - 1, jcol] = _classificationMap[row + irow - 1, jcol] == 0 ? mapRegions.regionNumber : (ushort)0;
+    //        }
+    //        col += bitpoints[irow, 1];  //second position is right shift amount for next line in map
+    //        irow++;
+    //      }
+    //    }
+    //    else
+    //    {
+    //      //populate a computed region
+    //      float xwidth = (float)0.33 * mapRegions.meanmidorder + 50;
+    //      float ywidth = (float)0.33 * mapRegions.meanloworder + 50;
+    //      int begidx = Val_2_Idx((int)(mapRegions.meanmidorder - (xwidth * 0.5)));
+    //      int endidx = Val_2_Idx((int)(mapRegions.meanmidorder + (xwidth * 0.5)));
+    //      float xincer = 0;
+    //      int begidy = Val_2_Idx((int)(mapRegions.meanloworder - (ywidth / 2)));
+    //      int endidy = Val_2_Idx((int)(mapRegions.meanloworder + (ywidth / 2)));
+    //      if (begidx < 3)
+    //        begidx = 3;
+    //      if (begidy < 3)
+    //        begidy = 3;
+    //      for (int row = begidx; row <= endidx; row++)
+    //      {
+    //        for (int col = begidy + (int)xincer; col <= endidy + (int)xincer; col++)
+    //        {
+    //          //zero any overlaps
+    //          _classificationMap[row, col] = _classificationMap[row, col] == 0 ? mapRegions.regionNumber : (ushort)0;
+    //        }
+    //      }
+    //    }
+    //  }
+    //  Newmap = true;
     }
 
     public void InitBeadRead(byte rown, byte coln)
@@ -409,13 +428,13 @@ namespace MicroCy
 
     private void ReplyFromMC(IAsyncResult result)
     {
-      _usbBConnection.EndRead(result);
-      if ((_usbBConnection.InputBuffer[0] == 0xbe) && (_usbBConnection.InputBuffer[1] == 0xad))
+      _usbConnection.EndRead(result);
+      if ((_usbConnection.InputBuffer[0] == 0xbe) && (_usbConnection.InputBuffer[1] == 0xad))
       {
         for (byte i = 0; i < 8; i++)
         {
           BeadInfoStruct outbead;
-          if (!GetBeadFromBuffer(_usbBConnection.InputBuffer, i, out outbead))
+          if (!GetBeadFromBuffer(_usbConnection.InputBuffer, i, out outbead))
             break;
           FillActiveWellResults(in outbead);
           if (outbead.region == 0 && OnlyClassified)
@@ -428,13 +447,13 @@ namespace MicroCy
           FillCalibrationStatsRow(in outbead);
           BeadCount++;
         }
-        Array.Clear(_usbBConnection.InputBuffer, 0, _usbBConnection.InputBuffer.Length);
+        Array.Clear(_usbConnection.InputBuffer, 0, _usbConnection.InputBuffer.Length);
         TerminationReadyCheck();
       }
       else
         GetCommandFromBuffer();
 
-      _usbBConnection.BeginRead(ReplyFromMC);
+      _usbConnection.BeginRead(ReplyFromMC);
     }
 
     public void LoadMaps()
@@ -614,10 +633,10 @@ namespace MicroCy
     /// <param name="cs">The CommandStruct object containing the command parameters.  This will get converted to an 8-byte array.</param>
     private void RunCmd(string sCmdName, CommandStruct cs)
     {
-      if (_usbBConnection.IsActive)
+      if (_usbConnection.IsActive)
       {
         byte[] buffer = StructToByteArray(cs);
-        _usbBConnection.Write(buffer);
+        _usbConnection.Write(buffer);
       }
       Console.WriteLine(string.Format("{0} Sending [{1}]: {2}", DateTime.Now.ToString(), sCmdName, cs.ToString())); //  MARK1 END
     }
@@ -794,7 +813,7 @@ namespace MicroCy
       lock (Commands)
       {
         // move received command to queue
-        newcmd = ByteArrayToStruct<CommandStruct>(_usbBConnection.InputBuffer);
+        newcmd = ByteArrayToStruct<CommandStruct>(_usbConnection.InputBuffer);
         Commands.Enqueue(newcmd);
       }
       if ((newcmd.Code >= 0xd0) && (newcmd.Code <= 0xdf))

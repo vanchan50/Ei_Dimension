@@ -1,13 +1,12 @@
 ﻿<Application x:Class="Ei_Dimension.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:System="clr-namespace:System;assembly=mscorlib"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
 
     <ResourceDictionary>
       <SolidColorBrush x:Key="AppBackground" Color="White"/>
-      <SolidColorBrush x:Key="PressedButtonBackground" Color="#2a446f"/>
-      <SolidColorBrush x:Key="UnpressedButtonBackground" Color="#416aae"/>
       <SolidColorBrush x:Key="AppTextColor" Color="Black"/>
       <SolidColorBrush x:Key="SubRibbonBackground" Color="#f2f5fb"/>
       <SolidColorBrush x:Key="RibbonBackgroundActive" Color="#d8e1f3"/>
@@ -19,6 +18,8 @@
       <SolidColorBrush x:Key="MenuButtonBackground" Color="#ededee"/>
       <SolidColorBrush x:Key="MenuButtonBackgroundActive" Color="#87abda"/>
       <FontFamily x:Key="AppTextFont">Segoe UI Semilight</FontFamily>
+      <System:Double x:Key="Table96Width">70</System:Double>
+      <System:Double x:Key="Table384Width">37</System:Double>
       <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/Styles/HeatmapSelectorStyle.xaml"/>
         <ResourceDictionary Source="/Styles/RadioButtonThemeStyle.xaml"/>

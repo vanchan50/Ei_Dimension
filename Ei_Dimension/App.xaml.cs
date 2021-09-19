@@ -22,7 +22,7 @@ namespace Ei_Dimension
     {
       SetLanguage("en-US");
 
-      Device = new MicroCyDevice(typeof(USBConnection));
+      Device = new MicroCyDevice(typeof(USBConnection), useStaticMaps: true);
       try
       {
         Device.ActiveMap = Device.MapList[Settings.Default.DefaultMap];

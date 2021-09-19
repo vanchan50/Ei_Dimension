@@ -19,21 +19,29 @@ namespace Ei_Dimension.Views
   /// </summary>
   public partial class WellsSelectView : UserControl
   {
-    const int shiftX = 24;
-    const int shiftY = 39;
-    const int ColWidth = 32;
-    const int RowHeight = 32;
+    private readonly int shiftX384 = 24;
+    private readonly int shiftY384 = 39;
+    private readonly int ColWidth384;
+    private readonly int RowHeight384;
+    private readonly int shiftX96 = 24;
+    private readonly int shiftY96 = 39;
+    private readonly int ColWidth96;
+    private readonly int RowHeight96;
 
     public WellsSelectView()
     {
       InitializeComponent();
+      ColWidth96 = (int)(double)App.Current.Resources["Table96Width"];
+      RowHeight96 = (int)(double)App.Current.Resources["Table96Width"];
+      ColWidth384 = (int)(double)App.Current.Resources["Table384Width"];
+      RowHeight384 = (int)(double)App.Current.Resources["Table384Width"];
     }
 
     private void grd384_TouchMove(object sender, TouchEventArgs e)
     {
       var tp = e.GetTouchPoint(grd384);
-      int indexX = (int)Math.Floor((tp.Position.X - shiftX) / ColWidth);
-      int indexY = (int)Math.Floor((tp.Position.Y - shiftY) / RowHeight);
+      int indexX = (int)Math.Floor((tp.Position.X - shiftX384) / ColWidth384);
+      int indexY = (int)Math.Floor((tp.Position.Y - shiftY384) / RowHeight384);
 
       if (indexX >= 0 && indexX < 24 && indexY >= 0 && indexY < 16)
       {
@@ -51,8 +59,8 @@ namespace Ei_Dimension.Views
     private void grd96_TouchMove(object sender, TouchEventArgs e)
     {
       var tp = e.GetTouchPoint(grd96);
-      int indexX = (int)Math.Floor((tp.Position.X - shiftX) / ColWidth);
-      int indexY = (int)Math.Floor((tp.Position.Y - shiftY) / RowHeight);
+      int indexX = (int)Math.Floor((tp.Position.X - shiftX96) / ColWidth96);
+      int indexY = (int)Math.Floor((tp.Position.Y - shiftY96) / RowHeight96);
 
       if (indexX >= 0 && indexX < 12 && indexY >= 0 && indexY < 8)
       {

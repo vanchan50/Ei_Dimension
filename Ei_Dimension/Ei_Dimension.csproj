@@ -328,6 +328,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <None Include="StaticMaps\QB_Map2019_4.bin" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Emission_Logo.png" />
@@ -379,6 +380,10 @@
     <Resource Include="Icons\channels icon.png" />
     <Resource Include="Icons\dimension flow analyzer logo.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\Empty_Well.png" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
