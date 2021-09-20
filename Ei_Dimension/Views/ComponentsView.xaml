@@ -25,7 +25,7 @@
     <!--Input Selector-->
     <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Margin="190,100,0,0">
+            Margin="243,100,0,0">
 
       <StackPanel VerticalAlignment="Stretch">
         <TextBlock Text="{lang:Loc Components_Input_Sel}"
@@ -681,9 +681,53 @@
       </StackPanel>
     </Border>
 
+    <!--Fluidics-->
     <Border HorizontalAlignment="Left"
-            Height="195"
-            Margin="70,409,0,0">
+          VerticalAlignment="Top"
+          Margin="70,150,0,0">
+      <StackPanel>
+        <TextBlock Text="{lang:Loc Components_Fluidics}"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="30"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Center"
+                 VerticalAlignment="Top"
+                 Margin="0,0,0,0"/>
+        <Button Content="{lang:Loc Components_Prime}"
+                Style="{StaticResource ButtonStyle}"
+                Command="{Binding FluidicsButtonClickCommand}"
+                Height="50" Width="100"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Margin="0,4,0,0">
+          <Button.CommandParameter>
+            <System:Int32>0</System:Int32>
+          </Button.CommandParameter>
+        </Button>
+        <Button Content="{lang:Loc Components_Wash_A}"
+                Style="{StaticResource ButtonStyle}"
+                Command="{Binding FluidicsButtonClickCommand}"
+                Height="50" Width="100"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Margin="0,4,0,0">
+          <Button.CommandParameter>
+            <System:Int32>1</System:Int32>
+          </Button.CommandParameter>
+        </Button>
+        <Button Content="{lang:Loc Components_Wash_B}"
+                Style="{StaticResource ButtonStyle}"
+                Command="{Binding FluidicsButtonClickCommand}"
+                Height="50" Width="100"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Margin="0,4,0,0">
+          <Button.CommandParameter>
+            <System:Int32>2</System:Int32>
+          </Button.CommandParameter>
+        </Button>
+      </StackPanel>
     </Border>
 
   </Grid>

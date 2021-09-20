@@ -948,5 +948,9 @@ namespace MicroCy
         _chkRegionCount = _wellResults[index].RP1vals.Count == MinPerRegion;  //see if assay is done via sufficient beads in each region
       }
     }
+    public byte[,] GetStaticMap()
+    {
+      return _classificationMap;
+    }
   }
 }

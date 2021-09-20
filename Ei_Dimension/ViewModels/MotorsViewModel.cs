@@ -43,6 +43,9 @@ namespace Ei_Dimension.ViewModels
         ParametersY.Add("");
         ParametersZ.Add("");
       }
+      ParametersX[6] = Settings.Default.StepsPerRevX.ToString();
+      ParametersY[6] = Settings.Default.StepsPerRevY.ToString();
+      ParametersZ[6] = Settings.Default.StepsPerRevZ.ToString();
       for (var i = 0; i < 5; i++)
       {
         StepsParametersX.Add("");

@@ -186,6 +186,9 @@
     <Compile Include="Views\ServiceView.xaml.cs">
       <DependentUpon>ServiceView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\StaticMapView.xaml.cs">
+      <DependentUpon>StaticMapView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SyringeSpeedsView.xaml.cs">
       <DependentUpon>SyringeSpeedsView.xaml</DependentUpon>
     </Compile>
@@ -295,6 +298,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ServiceView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StaticMapView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

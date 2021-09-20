@@ -19,7 +19,7 @@
     <StackPanel Orientation="Horizontal"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
-                Margin="700,400,0,0">
+                Margin="680,495,0,0">
       <StackPanel Width="180"
                   Margin="0,0,4,0">
         <ToggleButton Content="{lang:Loc Dashboard_Pressure_Mon}"
@@ -68,18 +68,30 @@
     </StackPanel>
 
     <!--System Monitor-->
-    <ListBox HorizontalAlignment="Left"
-             VerticalAlignment="Top"
-             Margin="1080,360,0,0"
-             Width="150" Height="260"
+    <Border HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Margin="1040,370,0,0">
+      <StackPanel>
+        <TextBlock Text="{lang:Loc Experiment_System_Monitor}"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="30"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Center"
+                 VerticalAlignment="Top"
+                 Margin="0,0,0,4"/>
+        <ListBox 
+             Width="150" Height="220"
              ItemsSource="{Binding ActiveList}"
              FontSize="20">
-    </ListBox>
+        </ListBox>
+      </StackPanel>
+    </Border>
 
     <!--System Control-->
     <Border HorizontalAlignment="Left"
           VerticalAlignment="Top"
-          Margin="30,50,0,0">
+          Margin="30,100,0,0">
 
       <StackPanel VerticalAlignment="Stretch">
         <TextBlock Text="{lang:Loc Experiment_System_Control}"
@@ -147,7 +159,7 @@
     <!--Order-->
     <Border HorizontalAlignment="Left"
           VerticalAlignment="Top"
-          Margin="300,50,0,0">
+          Margin="230,100,0,0">
 
       <StackPanel VerticalAlignment="Stretch">
         <TextBlock Text="{lang:Loc Experiment_Order}"
@@ -193,7 +205,7 @@
     <!--End Read-->
     <Border HorizontalAlignment="Left"
           VerticalAlignment="Top"
-          Margin="500,50,0,0">
+          Margin="450,450,0,0">
 
       <StackPanel VerticalAlignment="Stretch">
         <TextBlock Text="{lang:Loc Experiment_End_Read}"
@@ -276,7 +288,7 @@
     <!--Volumes-->
     <Border HorizontalAlignment="Left"
           VerticalAlignment="Top"
-          Margin="30,350,0,0">
+          Margin="400,50,0,0">
       <StackPanel Orientation="Horizontal">
         <StackPanel Margin="0,63,-15,0">
           <TextBlock Text="{lang:Loc Experiment_Samp_Vol}"
@@ -377,7 +389,7 @@
     <!--Dropdowns-->
     <Border HorizontalAlignment="Left"
           VerticalAlignment="Top"
-          Margin="370,300,0,0">
+          Margin="40,370,0,0">
       <StackPanel>
         <TextBlock Text="{lang:Loc Experiment_Speed}"
                  FontFamily="{StaticResource AppTextFont}"
@@ -463,59 +475,10 @@
       </StackPanel>
     </Border>
 
-    <!--Fluidics-->
-    <Border HorizontalAlignment="Left"
-          VerticalAlignment="Top"
-          Margin="800,50,0,0">
-      <StackPanel>
-        <TextBlock Text="{lang:Loc Experiment_Fluidics}"
-                 FontFamily="{StaticResource AppTextFont}"
-                 FontSize="30"
-                 FontWeight="UltraBold"
-                 Foreground="{StaticResource AppTextColor}"
-                 HorizontalAlignment="Center"
-                 VerticalAlignment="Top"
-                 Margin="0,0,0,0"/>
-        <Button Content="{lang:Loc Experiment_Prime}"
-                Style="{StaticResource ButtonStyle}"
-                Command="{Binding FluidicsButtonClickCommand}"
-                Height="50" Width="100"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Margin="0,4,0,0">
-          <Button.CommandParameter>
-            <System:Int32>0</System:Int32>
-          </Button.CommandParameter>
-        </Button>
-        <Button Content="{lang:Loc Experiment_Wash_A}"
-                Style="{StaticResource ButtonStyle}"
-                Command="{Binding FluidicsButtonClickCommand}"
-                Height="50" Width="100"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Margin="0,4,0,0">
-          <Button.CommandParameter>
-            <System:Int32>1</System:Int32>
-          </Button.CommandParameter>
-        </Button>
-        <Button Content="{lang:Loc Experiment_Wash_B}"
-                Style="{StaticResource ButtonStyle}"
-                Command="{Binding FluidicsButtonClickCommand}"
-                Height="50" Width="100"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Margin="0,4,0,0">
-          <Button.CommandParameter>
-            <System:Int32>2</System:Int32>
-          </Button.CommandParameter>
-        </Button>
-      </StackPanel>
-    </Border>
-
     <!--Event Count-->
     <Border HorizontalAlignment="Left"
           VerticalAlignment="Top"
-          Margin="950,50,0,0">
+          Margin="30,10,0,0">
       <StackPanel>
         <TextBlock Text="{lang:Loc Experiment_Event_Count}"
                  FontFamily="{StaticResource AppTextFont}"
@@ -536,44 +499,44 @@
     <!--Load Eject Plate-->
     <Border HorizontalAlignment="Left"
           VerticalAlignment="Top"
-          Margin="950,150,0,0">
-      <StackPanel>
-        <Button Content="{lang:Loc Experiment_Load}"
-                Style="{StaticResource ButtonStyle}"
-                Command="{Binding LoadButtonClickCommand}"
-                Height="50" Width="100"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Margin="0,4,0,0"/>
+          Margin="1030,254,0,0">
+      <StackPanel Orientation="Horizontal">
         <Button Content="{lang:Loc Experiment_Eject}"
                 Style="{StaticResource ButtonStyle}"
                 Command="{Binding EjectButtonClickCommand}"
-                Height="50" Width="100"
+                Height="100" Width="100"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                Margin="0,4,0,0"/>
+                Margin="0,0,4,0"/>
+        <Button Content="{lang:Loc Experiment_Load}"
+                Style="{StaticResource ButtonStyle}"
+                Command="{Binding LoadButtonClickCommand}"
+                Height="100" Width="100"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Margin="0,0,0,0"/>
       </StackPanel>
     </Border>
     <!--Start & End-->
     <Border HorizontalAlignment="Left"
           VerticalAlignment="Top"
-          Margin="1150,100,0,0">
-      <StackPanel>
-        <Button Content="{lang:Loc Experiment_Start}"
-                Style="{StaticResource ButtonStyle}"
-                Command="{Binding StartButtonClickCommand}"
-                Height="150" Width="100"
-                IsEnabled="{Binding StartButtonEnabled}"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Margin="0,4,0,0"/>
+          Margin="1030,150,0,0">
+      <StackPanel Orientation="Horizontal">
         <Button Content="{lang:Loc Experiment_End}"
                 Style="{StaticResource ButtonStyle}"
                 Command="{Binding EndButtonClickCommand}"
-                Height="90" Width="100"
+                Height="100" Width="100"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                Margin="0,4,0,0"/>
+                Margin="0,0,4,0"/>
+        <Button Content="{lang:Loc Experiment_Start}"
+                Style="{StaticResource ButtonStyle}"
+                Command="{Binding StartButtonClickCommand}"
+                Height="100" Width="100"
+                IsEnabled="{Binding StartButtonEnabled}"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Margin="0,0,0,0"/>
       </StackPanel>
     </Border>
   </Grid>

@@ -111,8 +111,6 @@ namespace Ei_Dimension.ViewModels
       PressureMonToggleButtonState = false;
       PressureMon = new ObservableCollection<string> {"","",""};
       ActiveList = new ObservableCollection<string>();
-      ActiveList.Add("123456789");
-      ActiveList.Add("ABCDEFGHI");
       Instance = this;
     }
 
@@ -177,26 +175,6 @@ namespace Ei_Dimension.ViewModels
     {
       App.Device.MainCommand("Set Property", code: 0xaf, parameter: num);
       Volumes[0] = num.ToString();
-    }
-
-    public void FluidicsButtonClick(int i)
-    {
-      string cmd = "";
-      switch (i)
-      {
-        case 0:
-          cmd = "Prime";
-          break;
-        case 1:
-          cmd = "Wash A";
-          break;
-        case 2:
-          cmd = "Wash B";
-          break;
-      }
-      App.Device.MainCommand("Set Property", code: 0x19, parameter: 1); //bubble detect on
-      App.Device.MainCommand(cmd);
-      App.Device.MainCommand("Set Property", code: 0x19, parameter: 0); //bubble detect off
     }
 
     public void LoadButtonClick()

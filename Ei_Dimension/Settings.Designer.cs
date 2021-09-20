@@ -226,5 +226,41 @@ namespace Ei_Dimension {
                 this["BeadsToCapture"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("400")]
+        public ushort StepsPerRevX {
+            get {
+                return ((ushort)(this["StepsPerRevX"]));
+            }
+            set {
+                this["StepsPerRevX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("400")]
+        public ushort StepsPerRevY {
+            get {
+                return ((ushort)(this["StepsPerRevY"]));
+            }
+            set {
+                this["StepsPerRevY"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("400")]
+        public ushort StepsPerRevZ {
+            get {
+                return ((ushort)(this["StepsPerRevZ"]));
+            }
+            set {
+                this["StepsPerRevZ"] = value;
+            }
+        }
     }
 }

@@ -344,6 +344,15 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Fluidics.
+        /// </summary>
+        public static string Components_Fluidics {
+            get {
+                return ResourceManager.GetString("Components_Fluidics", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Input Selector.
         /// </summary>
         public static string Components_Input_Sel {
@@ -358,6 +367,15 @@ namespace Ei_Dimension.Language {
         public static string Components_Move_Idex {
             get {
                 return ResourceManager.GetString("Components_Move_Idex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Prime.
+        /// </summary>
+        public static string Components_Prime {
+            get {
+                return ResourceManager.GetString("Components_Prime", resourceCulture);
             }
         }
         
@@ -403,6 +421,24 @@ namespace Ei_Dimension.Language {
         public static string Components_Valves {
             get {
                 return ResourceManager.GetString("Components_Valves", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wash A.
+        /// </summary>
+        public static string Components_Wash_A {
+            get {
+                return ResourceManager.GetString("Components_Wash_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wash B.
+        /// </summary>
+        public static string Components_Wash_B {
+            get {
+                return ResourceManager.GetString("Components_Wash_B", resourceCulture);
             }
         }
         
@@ -833,15 +869,6 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fluidics.
-        /// </summary>
-        public static string Experiment_Fluidics {
-            get {
-                return ResourceManager.GetString("Experiment_Fluidics", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Load Plate.
         /// </summary>
         public static string Experiment_Load {
@@ -885,15 +912,6 @@ namespace Ei_Dimension.Language {
         public static string Experiment_Order {
             get {
                 return ResourceManager.GetString("Experiment_Order", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Prime.
-        /// </summary>
-        public static string Experiment_Prime {
-            get {
-                return ResourceManager.GetString("Experiment_Prime", resourceCulture);
             }
         }
         
@@ -953,6 +971,15 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to System Monitor.
+        /// </summary>
+        public static string Experiment_System_Monitor {
+            get {
+                return ResourceManager.GetString("Experiment_System_Monitor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Total
         ///Events.
         /// </summary>
@@ -978,24 +1005,6 @@ namespace Ei_Dimension.Language {
         public static string Experiment_Validate_Bcode {
             get {
                 return ResourceManager.GetString("Experiment_Validate_Bcode", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Wash A.
-        /// </summary>
-        public static string Experiment_Wash_A {
-            get {
-                return ResourceManager.GetString("Experiment_Wash_A", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Wash B.
-        /// </summary>
-        public static string Experiment_Wash_B {
-            get {
-                return ResourceManager.GetString("Experiment_Wash_B", resourceCulture);
             }
         }
         

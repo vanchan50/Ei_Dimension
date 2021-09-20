@@ -31,6 +31,7 @@
     DataContext="{dxmvvm:ViewModelSource Type=ViewModels:MainViewModel}">
   <!--make window topmost, maximized-->
   <dxmvvm:Interaction.Triggers>
+    <dxmvvm:EventToCommand EventName="Initialized" Command="{Binding NavigateResultsCommand}"/>
     <dxmvvm:EventToCommand EventName="Initialized" Command="{Binding NavigateDataAnalysisCommand}"/>
     <dxmvvm:EventToCommand EventName="Initialized" Command="{Binding NavigateMaintenanceCommand}"/>
     <dxmvvm:EventToCommand EventName="Initialized" Command="{Binding NavigateSettingsCommand}"/>
@@ -107,6 +108,13 @@
           Visibility="{Binding NumpadVisible}">
       <Views:NumpadView />
     </Grid>
-    
+
+    <Button HorizontalAlignment="Left" VerticalAlignment="Top"
+            Width="100"
+            Height="50"
+            Margin="1320,10,0,0"
+            Content="ShowStaticMap"
+            Command="{Binding NavigateStaticMapCommand}"/>
+
   </Grid>
 </dx:ThemedWindow>

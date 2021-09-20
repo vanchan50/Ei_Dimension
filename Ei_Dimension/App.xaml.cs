@@ -632,9 +632,10 @@ namespace Ei_Dimension
             }
             if (SelectedTextBox.index == 6)
             {
-              if (int.TryParse(temp, out iRes))
+              if (ushort.TryParse(temp, out usRes))
               {
-
+                Device.MainCommand("Set Property", code: 0x50, parameter: (ushort)usRes);
+                Settings.Default.StepsPerRevX = usRes;
               }
             }
             if (SelectedTextBox.index == 7)
@@ -669,9 +670,10 @@ namespace Ei_Dimension
             }
             if (SelectedTextBox.index == 6)
             {
-              if (int.TryParse(temp, out iRes))
+              if (ushort.TryParse(temp, out usRes))
               {
-
+                Device.MainCommand("Set Property", code: 0x60, parameter: (ushort)usRes);
+                Settings.Default.StepsPerRevY = usRes;
               }
             }
             if (SelectedTextBox.index == 7)
@@ -706,9 +708,10 @@ namespace Ei_Dimension
             }
             if (SelectedTextBox.index == 6)
             {
-              if (int.TryParse(temp, out iRes))
+              if (ushort.TryParse(temp, out usRes))
               {
-
+                Device.MainCommand("Set Property", code: 0x40, parameter: (ushort)usRes);
+                Settings.Default.StepsPerRevZ = usRes;
               }
             }
             if (SelectedTextBox.index == 7)

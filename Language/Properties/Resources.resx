@@ -214,11 +214,17 @@ Coefficient</value>
   <data name="Components_Fan" xml:space="preserve">
     <value>Вентилятор</value>
   </data>
+  <data name="Components_Fluidics" xml:space="preserve">
+    <value>Fluidics</value>
+  </data>
   <data name="Components_Input_Sel" xml:space="preserve">
     <value>Input Selector</value>
   </data>
   <data name="Components_Move_Idex" xml:space="preserve">
     <value>Move Idex</value>
+  </data>
+  <data name="Components_Prime" xml:space="preserve">
+    <value>Prime</value>
   </data>
   <data name="Components_To_Cuvet" xml:space="preserve">
     <value>В кювет</value>
@@ -234,6 +240,12 @@ Coefficient</value>
   </data>
   <data name="Components_Valves" xml:space="preserve">
     <value>Valves</value>
+  </data>
+  <data name="Components_Wash_A" xml:space="preserve">
+    <value>Wash A</value>
+  </data>
+  <data name="Components_Wash_B" xml:space="preserve">
+    <value>Wash B</value>
   </data>
   <data name="Dashboard_Pressure_Mon" xml:space="preserve">
     <value>Pressure Monitor</value>
@@ -379,9 +391,6 @@ Sample</value>
   <data name="Experiment_Event_Count" xml:space="preserve">
     <value>Event Count</value>
   </data>
-  <data name="Experiment_Fluidics" xml:space="preserve">
-    <value>Fluidics</value>
-  </data>
   <data name="Experiment_Load" xml:space="preserve">
     <value>Load Plate</value>
   </data>
@@ -398,9 +407,6 @@ Region</value>
   </data>
   <data name="Experiment_Order" xml:space="preserve">
     <value>Order</value>
-  </data>
-  <data name="Experiment_Prime" xml:space="preserve">
-    <value>Prime</value>
   </data>
   <data name="Experiment_Samp_Vol" xml:space="preserve">
     <value>Samp Vol</value>
@@ -421,6 +427,9 @@ Template</value>
   <data name="Experiment_System_Control" xml:space="preserve">
     <value>System Control</value>
   </data>
+  <data name="Experiment_System_Monitor" xml:space="preserve">
+    <value>System Monitor</value>
+  </data>
   <data name="Experiment_Total_Events" xml:space="preserve">
     <value>Total
 Events</value>
@@ -431,12 +440,6 @@ Events</value>
   <data name="Experiment_Validate_Bcode" xml:space="preserve">
     <value>Validate
 Barcode</value>
-  </data>
-  <data name="Experiment_Wash_A" xml:space="preserve">
-    <value>Wash A</value>
-  </data>
-  <data name="Experiment_Wash_B" xml:space="preserve">
-    <value>Wash B</value>
   </data>
   <data name="Experiment_Wash_Vol" xml:space="preserve">
     <value>Wash Vol</value>
