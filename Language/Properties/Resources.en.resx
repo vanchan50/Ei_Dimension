@@ -149,6 +149,9 @@ Align Motor</value>
   <data name="Alignment_Scan" xml:space="preserve">
     <value>Scan</value>
   </data>
+  <data name="All Files" xml:space="preserve">
+    <value>All Files</value>
+  </data>
   <data name="Calibration_Calibration" xml:space="preserve">
     <value>Calibration</value>
   </data>
@@ -489,6 +492,9 @@ Sample</value>
     <value>   Load
 Template</value>
   </data>
+  <data name="Experiment_Load_Template_Dialog_Title" xml:space="preserve">
+    <value>Load Template</value>
+  </data>
   <data name="Experiment_Manual" xml:space="preserve">
     <value>Manual</value>
   </data>
@@ -505,6 +511,9 @@ Region</value>
   <data name="Experiment_Save_Template" xml:space="preserve">
     <value>   Save
 Template</value>
+  </data>
+  <data name="Experiment_Save_Template_Dialog_Title" xml:space="preserve">
+    <value>Save Template</value>
   </data>
   <data name="Experiment_Select_Wells" xml:space="preserve">
     <value>Select Wells</value>
@@ -742,6 +751,9 @@ Speeds</value>
   </data>
   <data name="Temp" xml:space="preserve">
     <value>Temp</value>
+  </data>
+  <data name="Text_Files" xml:space="preserve">
+    <value>Text Files</value>
   </data>
   <data name="Tube" xml:space="preserve">
     <value>Tube</value>

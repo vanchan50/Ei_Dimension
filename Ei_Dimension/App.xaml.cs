@@ -209,6 +209,14 @@ namespace Ei_Dimension
         DashVM.ChConfigItems[1].Content = RM.GetString(nameof(Language.Resources.Dropdown_Cells), curCulture);
         DashVM.ChConfigItems[2].Content = RM.GetString(nameof(Language.Resources.Dropdown_FM3D), curCulture);
       }
+      var ExperimentVM = ExperimentViewModel.Instance;
+      if (ExperimentVM != null)
+      {
+        ExperimentVM.DialogFilter = RM.GetString(nameof(Language.Resources.Text_Files), curCulture) +
+          "|*.txt|" + RM.GetString(nameof(Language.Resources.All_Files), curCulture) + "|*.*";
+        ExperimentVM.DialogTitleSave = RM.GetString(nameof(Language.Resources.Experiment_Save_Template_Dialog_Title), curCulture);
+        ExperimentVM.DialogTitleLoad = RM.GetString(nameof(Language.Resources.Experiment_Load_Template_Dialog_Title), curCulture);
+      }
       #endregion
     }
 

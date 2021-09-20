@@ -23,6 +23,10 @@
     <dxmvvm:EventToCommand EventName="Initialized" Command="{Binding NavigateWellsSelectCommand}" CommandParameter="96"/>
     <dxmvvm:EventToCommand EventName="Initialized" Command="{Binding NavigateDashboardCommand}"/>
   </dxmvvm:Interaction.Triggers>
+  <dxmvvm:Interaction.Behaviors>
+    <dxmvvm:OpenFileDialogService/>
+    <dxmvvm:SaveFileDialogService/>
+  </dxmvvm:Interaction.Behaviors>
   <Grid>
     <Grid.ColumnDefinitions>
       <ColumnDefinition Width="2*"/>
@@ -44,22 +48,22 @@
     <StackPanel Margin="30,60,0,0"
                 Width="200">
       <RadioButton Content="{lang:Loc Experiment_Dashboard}"
+                   GroupName="SelectWellGroup"
                    Height="70"
                    IsChecked="True"
                    img:EmbeddedImg.Image="/Icons/motors icon.png"
                    Style="{DynamicResource SubRibbonButtonStyle}"
-                   Command="{Binding NavigateDashboardCommand}">
-      </RadioButton>
-      <RadioButton Content="{lang:Loc Experiment_Load_Template}"
+                   Command="{Binding NavigateDashboardCommand}"/>
+      <Button Content="{lang:Loc Experiment_Load_Template}"
                    Height="70"
                    img:EmbeddedImg.Image="{dx:DXImage 'SvgImages/Export/Export.svg'}"
-                   Style="{DynamicResource SubRibbonButtonStyle}">
-      </RadioButton>
-      <RadioButton Content="{lang:Loc Experiment_Save_Template}"
+                   Style="{DynamicResource DashboardButtonStyle}"
+                   Command="{Binding LoadTemplateCommand}"/>
+      <Button Content="{lang:Loc Experiment_Save_Template}"
                    Height="70"
                    img:EmbeddedImg.Image="{dx:DXImage 'SvgImages/PDF Viewer/Import.svg'}"
-                   Style="{DynamicResource SubRibbonButtonStyle}">
-      </RadioButton>
+                   Style="{DynamicResource DashboardButtonStyle}"
+                   Command="{Binding SaveTemplateCommand}"/>
       
       <Grid Visibility="{Binding WellSelectVisible}"
             Margin="0,20,0,0">

@@ -29,6 +29,7 @@
         <ResourceDictionary Source="/Styles/InputFieldStyle.xaml"/>
         <ResourceDictionary Source="/Styles/MainRibbonButtonStyle.xaml"/>
         <ResourceDictionary Source="/Styles/SubRibbonButtonStyle.xaml"/>
+        <ResourceDictionary Source="/Styles/DashboardButtonStyle.xaml"/>
       </ResourceDictionary.MergedDictionaries>
     </ResourceDictionary>
   </Application.Resources>

@@ -30,8 +30,13 @@ namespace Ei_Dimension.Views
           var rect1 = new Rectangle();
           rect1.Width = 2;
           rect1.Height = 2;
-          rect1.Margin= new Thickness(j*2, i*2, 0, 0);
-          rect1.Fill = new SolidColorBrush(Color.FromRgb(mep[i,j] ,mep[i, j],mep[i, j]));
+          rect1.Margin= new Thickness(j * 2, i * 2, 0, 0);
+          (byte r, byte g, byte b) color = (0,0,0);
+          if(mep[i, j] != 0)
+          {
+            color = (255,255,255);
+          }
+          rect1.Fill = new SolidColorBrush(Color.FromRgb(color.r,color.g,color.b));
           Canv.Children.Add(rect1);
         }
       }

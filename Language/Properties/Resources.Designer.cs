@@ -61,6 +61,15 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Все файлы.
+        /// </summary>
+        public static string All_Files {
+            get {
+                return ResourceManager.GetString("All Files", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Classification.
         /// </summary>
         public static string Calibration_Classification_targets {
@@ -878,12 +887,21 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to    Load
-        ///Template.
+        ///   Looks up a localized string similar to Открыть
+        ///Шаблон.
         /// </summary>
         public static string Experiment_Load_Template {
             get {
                 return ResourceManager.GetString("Experiment_Load_Template", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Открыть Шаблон.
+        /// </summary>
+        public static string Experiment_Load_Template_Dialog_Title {
+            get {
+                return ResourceManager.GetString("Experiment_Load_Template_Dialog_Title", resourceCulture);
             }
         }
         
@@ -925,12 +943,21 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to    Save
-        ///Template.
+        ///   Looks up a localized string similar to Сохранить
+        /// Шаблон.
         /// </summary>
         public static string Experiment_Save_Template {
             get {
                 return ResourceManager.GetString("Experiment_Save_Template", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Сохранить Шаблон.
+        /// </summary>
+        public static string Experiment_Save_Template_Dialog_Title {
+            get {
+                return ResourceManager.GetString("Experiment_Save_Template_Dialog_Title", resourceCulture);
             }
         }
         
@@ -1530,6 +1557,15 @@ namespace Ei_Dimension.Language {
         public static string Temp {
             get {
                 return ResourceManager.GetString("Temp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Текстовые документы.
+        /// </summary>
+        public static string Text_Files {
+            get {
+                return ResourceManager.GetString("Text_Files", resourceCulture);
             }
         }
         
