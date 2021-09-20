@@ -4,7 +4,7 @@ When something from Settings changes, use .Save() and don't forget to change App
 Save settings from textboxes in App.InjectToTextbox()
 ResultsView scatter chart switch legend with buttons so it can be bound to command
 DataOut and initStab("reportertab")
-ExperimentVM systemcontrol switch needs buttons visibility implementation
+
 ExperimentVM ChangeWellTableSize() has tube as case 1; implement in view
 CalibrationVM Classification targets has a weird legacy chart2series stuff. propbably not necessary
 ComponentsView SamplingON button - change behaviour like GetPosition Toggle button. for language swapping
@@ -20,7 +20,7 @@ If "." is inserted into texbox that is meant to be for INT, round down/ make som
 
 App.GetActiveMapIndex() might be too much, consider adding a field to Device
 
-Encoder steps box in MOTORSView for 400/500
+Fix bug with select all button in WellSelectView
 
 Display a tab related to work order execution where you touch a well
   and all that wells properties (read speed, sample volume, bead map, etc) are displayed,

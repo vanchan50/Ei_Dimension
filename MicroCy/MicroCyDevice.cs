@@ -213,7 +213,7 @@ namespace MicroCy
         {
           for (var i = 0; i < 256; i++)
           {
-            for (var j = 255; j > -1; j--)
+            for (var j = 0; j < 256; j++)
             {
               _classificationMap[j, i] = BinReader.ReadByte();
             }
