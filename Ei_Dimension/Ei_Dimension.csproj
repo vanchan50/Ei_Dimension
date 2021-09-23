@@ -340,6 +340,7 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <None Include="StaticMaps\QB_Map2019_4.bin" />
+    <None Include="StaticMaps\ULBG50.json" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Emission_Logo.png" />
@@ -394,7 +395,9 @@
   <ItemGroup>
     <Resource Include="Icons\Empty_Well.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="StaticMaps\QBlogo.h" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

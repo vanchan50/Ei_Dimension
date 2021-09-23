@@ -29,7 +29,7 @@ namespace Ei_Dimension.Views
         {
           var rect1 = new Rectangle();
           rect1.Width = 2;
-          rect1.Height = 2;  
+          rect1.Height = 2;
           rect1.Margin= new Thickness(j * 2, (255 * 2) - (i * 2), 0, 0);
           (byte r, byte g, byte b) color = (0,0,0);
           if(mep[i, j] != 0)

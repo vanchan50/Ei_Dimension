@@ -16,9 +16,9 @@
                  FontSize="50"
                  FontWeight="UltraBold"
                  Foreground="{StaticResource AppTextColor}"
-                 HorizontalAlignment="Center"
+                 HorizontalAlignment="Left"
                  VerticalAlignment="Top"
-                 Margin="0,0,250,0"/>
+                 Margin="400,0,250,0"/>
 
     <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"

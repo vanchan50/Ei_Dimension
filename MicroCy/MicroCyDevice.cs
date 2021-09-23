@@ -171,11 +171,11 @@ namespace MicroCy
     private readonly List<byte> Componentstab = new List<byte>() { 0x10, 0x11, 0x12, 0x13, 0x14, 0x16, 0x17, 0x18, 0xc0, 0xc7, 0xc8, 0xc9 };
     private readonly List<int[,]> Bitmaplist = new List<int[,]>
     {
-        new int[9,2] { { 5, 6 },{3,1 }, { 4, 0 }, { 5, 1 }, { 6, 1 }, { 6, 1 }, { 5, 2 }, { 3, 0 },{ 0, 0 }, },
-        new int[13,2] { { 6, 6 },{4,0 }, { 5, 0 }, { 6, 1 }, { 6, 1 }, { 6, 0 }, { 7, 1 }, { 7, 1 }, { 7, 2 }, { 5, 1 }, { 4, 1 }, { 4, 0 }, { 0, 0 }, },
-        new int[14,2] { { 6, 5 },{5,1 }, { 5, 0 }, { 7, 0 }, { 8, 1 }, { 8, 0 }, { 9, 1 }, { 8, 1 }, { 7, 0 }, { 8, 1 }, { 8, 1 }, { 7, 2 }, { 5, 0 }, { 0, 0 }, },
+        new int[9,2]  { { 5, 6 }, {3,1 }, { 4, 0 }, { 5, 1 }, { 6, 1 }, { 6, 1 }, { 5, 2 }, { 3, 0 }, { 0, 0 } },
+        new int[13,2] { { 6, 6 }, {4,0 }, { 5, 0 }, { 6, 1 }, { 6, 1 }, { 6, 0 }, { 7, 1 }, { 7, 1 }, { 7, 2 }, { 5, 1 }, { 4, 1 }, { 4, 0 }, { 0, 0 } },
+        new int[14,2] { { 6, 5 }, {5,1 }, { 5, 0 }, { 7, 0 }, { 8, 1 }, { 8, 0 }, { 9, 1 }, { 8, 1 }, { 7, 0 }, { 8, 1 }, { 8, 1 }, { 7, 2 }, { 5, 0 }, { 0, 0 } },
         new int[29,2] { { 15, 6 },{8,0 }, { 8, 1 }, { 7, 0 }, { 7, 0 }, { 7, 0 }, { 8, 0 }, { 8, 0 }, { 8, 0 }, { 8, 0 }, { 9, 0 }, { 9, 0 }, { 9, 1 }, { 8, 0 }, { 9, 0 }, { 9, 0 }, { 9, 1 },
-            { 8, 0 }, { 8, 0 }, { 8, 0 }, { 8, 0 }, { 8, 0 }, { 8, 0 }, { 8, 0 }, { 8, 0 }, { 8, 1 }, { 6, 2 }, { 4, 0 }, { 0, 0 },  },
+            { 8, 0 }, { 8, 0 }, { 8, 0 }, { 8, 0 }, { 8, 0 }, { 8, 0 }, { 8, 0 }, { 8, 0 }, { 8, 1 }, { 6, 2 }, { 4, 0 }, { 0, 0 }  }
     };
     private const string Bheader = "Preamble,Time(1 us Tick),FSC bg,Viol SSC bg,CL0 bg,CL1 bg,CL2 bg,CL3 bg,Red SSC bg,Green SSC bg," +
             "Green Maj bg, Green Min bg,Green Major,Green Minor,Red-Grn Offset,Grn-Viol Offset,Region,Forward Scatter,Violet SSC,CL0," +
@@ -208,78 +208,95 @@ namespace MicroCy
       Outfilename = "ResultFile";
       _useStaticMaps = useStaticMaps;
       if (_useStaticMaps)
-      {
-        using (var BinReader = new BinaryReader(File.OpenRead(@"../../StaticMaps/QB_Map2019_4.bin")))
-        {
-          for (var i = 0; i < 256; i++)
-          {
-            for (var j = 0; j < 256; j++)
-            {
-              _classificationMap[j, i] = BinReader.ReadByte();
-            }
-          }
-        }
-      }
+        ConstructClassificationMap(null);
     }
 
     public void ConstructClassificationMap(CustomMap mmap)
     {
       //TODO: NEEDS a FIX after decided
       if (_useStaticMaps)
-        return;
+      {
+        using (var BinReader = new BinaryReader(File.OpenRead(@"../../StaticMaps/StaticMap.bin")))
+        {
+          for (var i = 0; i < 256; i++)
+          {
+            for (var j = 0; j < 256; j++)
+            {
+              //for some reason in .bin file the map is drawn upwards-right
+              _classificationMap[j, i] = BinReader.ReadByte();
+            }
+          }
+        }
 
-    //  //build classification map from ActiveMap using bitfield types A-D
-    //  int[,] bitpoints = new int[32, 2];
-    //  _actPrimaryIndex = (byte)mmap.midorderidx; //what channel cl0 - cl3?
-    //  _actSecondaryIndex = (byte)mmap.loworderidx;
-    //  MainCommand("Set Property", code: 0xce, parameter: mmap.minmapssc);  //set ssc gates for this map
-    //  MainCommand("Set Property", code: 0xcf, parameter: mmap.maxmapssc);
-    //  Array.Clear(_classificationMap, 0, _classificationMap.Length);
-    //  foreach (BeadRegion mapRegions in mmap.mapRegions)
-    //  {
-    //    if (!mapRegions.isvector)       //this region shape is taken from Bitmaplist array
-    //    {
-    //      Array.Clear(bitpoints, 0, bitpoints.Length);  //copy bitmap of the type specified (A B C D)
-    //      Array.Copy(Bitmaplist[mapRegions.bitmaptype], bitpoints, Bitmaplist[mapRegions.bitmaptype].Length);
-    //      int row = mapRegions.centermidorderidx - bitpoints[0, 0];  //first position is value to backup before etching bitmap
-    //      int col = mapRegions.centerloworderidx - bitpoints[0, 1];
-    //      int irow = 1;
-    //      while (bitpoints[irow, 0] != 0)
-    //      {
-    //        for (int jcol = col; jcol < (col + bitpoints[irow, 0]); jcol++)
-    //        {
-    //          //handle region overlap by making overlap 0
-    //          _classificationMap[row + irow - 1, jcol] = _classificationMap[row + irow - 1, jcol] == 0 ? mapRegions.regionNumber : (ushort)0;
-    //        }
-    //        col += bitpoints[irow, 1];  //second position is right shift amount for next line in map
-    //        irow++;
-    //      }
-    //    }
-    //    else
-    //    {
-    //      //populate a computed region
-    //      float xwidth = (float)0.33 * mapRegions.meanmidorder + 50;
-    //      float ywidth = (float)0.33 * mapRegions.meanloworder + 50;
-    //      int begidx = Val_2_Idx((int)(mapRegions.meanmidorder - (xwidth * 0.5)));
-    //      int endidx = Val_2_Idx((int)(mapRegions.meanmidorder + (xwidth * 0.5)));
-    //      float xincer = 0;
-    //      int begidy = Val_2_Idx((int)(mapRegions.meanloworder - (ywidth / 2)));
-    //      int endidy = Val_2_Idx((int)(mapRegions.meanloworder + (ywidth / 2)));
-    //      if (begidx < 3)
-    //        begidx = 3;
-    //      if (begidy < 3)
-    //        begidy = 3;
-    //      for (int row = begidx; row <= endidx; row++)
-    //      {
-    //        for (int col = begidy + (int)xincer; col <= endidy + (int)xincer; col++)
-    //        {
-    //          //zero any overlaps
-    //          _classificationMap[row, col] = _classificationMap[row, col] == 0 ? mapRegions.regionNumber : (ushort)0;
-    //        }
-    //      }
-    //    }
-    //  }
-    //  Newmap = true;
+        //using (var Reader = new StreamReader(@"../../StaticMaps/QBlogo.h"))
+        //{
+        //  string data = Reader.ReadToEnd();
+        //  int index = data.IndexOf("0x");
+        //  for (var i = 0; i < 256; i++)
+        //  {
+        //    for (var j = 0; j < 256; j++)
+        //    {
+        //      //for some reason in .bin file the map is drawn upwards-right
+        //      _classificationMap[j, i] = byte.Parse(data.Substring(index + 2, 2), System.Globalization.NumberStyles.HexNumber);
+        //      index = data.IndexOf("0x", index + 2);
+        //    }
+        //  }
+        //}
+        return;
+      }
+
+      //build classification map from ActiveMap using bitfield types A-D
+      int[,] bitpoints = new int[32, 2];
+      _actPrimaryIndex = (byte)mmap.midorderidx; //what channel cl0 - cl3?
+      _actSecondaryIndex = (byte)mmap.loworderidx;
+      MainCommand("Set Property", code: 0xce, parameter: mmap.minmapssc);  //set ssc gates for this map
+      MainCommand("Set Property", code: 0xcf, parameter: mmap.maxmapssc);
+      Array.Clear(_classificationMap, 0, _classificationMap.Length);
+      foreach (BeadRegion mapRegions in mmap.mapRegions)
+      {
+        if (!mapRegions.isvector)       //this region shape is taken from Bitmaplist array
+        {
+          Array.Clear(bitpoints, 0, bitpoints.Length);  //copy bitmap of the type specified (A B C D)
+          Array.Copy(Bitmaplist[mapRegions.bitmaptype], bitpoints, Bitmaplist[mapRegions.bitmaptype].Length);
+          int rowBase = mapRegions.centermidorderidx - bitpoints[0, 0];  //first position is value to backup before etching bitmap
+          int col = mapRegions.centerloworderidx - bitpoints[0, 1];
+          int irow = 1; // 56 31 40 51 61 61 52 30 00
+          while (bitpoints[irow, 0] != 0)
+          {
+            for (int jcol = col; jcol < (col + bitpoints[irow, 0]); jcol++)
+            {
+              //handle region overlap by making overlap 0
+              _classificationMap[rowBase + irow - 1, jcol] = _classificationMap[rowBase + irow - 1, jcol] == 0 ? (byte)mapRegions.regionNumber : (byte)0;
+            }
+            col += bitpoints[irow, 1];  //second position is right shift amount for next line in map
+            irow++;
+          }
+        }
+        else
+        {
+          //populate a computed region
+          float xwidth = (float)0.33 * mapRegions.meanmidorder + 50;
+          float ywidth = (float)0.33 * mapRegions.meanloworder + 50;
+          int begidx = Val_2_Idx((int)(mapRegions.meanmidorder - (xwidth * 0.5)));
+          int endidx = Val_2_Idx((int)(mapRegions.meanmidorder + (xwidth * 0.5)));
+          float xincer = 0;
+          int begidy = Val_2_Idx((int)(mapRegions.meanloworder - (ywidth / 2)));
+          int endidy = Val_2_Idx((int)(mapRegions.meanloworder + (ywidth / 2)));
+          if (begidx < 3)
+            begidx = 3;
+          if (begidy < 3)
+            begidy = 3;
+          for (int row = begidx; row <= endidx; row++)
+          {
+            for (int col = begidy + (int)xincer; col <= endidy + (int)xincer; col++)
+            {
+              //zero any overlaps
+              _classificationMap[row, col] = _classificationMap[row, col] == 0 ? (byte)mapRegions.regionNumber : (byte)0;
+            }
+          }
+        }
+      }
+      Newmap = true;
     }
 
     public void InitBeadRead(byte rown, byte coln)
