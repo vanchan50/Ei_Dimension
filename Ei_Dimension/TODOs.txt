@@ -3,7 +3,6 @@ Need some way to update Device.MapList if we get to add new maps
 When something from Settings changes, use .Save() and don't forget to change App.[property]
 Save settings from textboxes in App.InjectToTextbox()
 ResultsView scatter chart switch legend with buttons so it can be bound to command
-DataOut and initStab("reportertab")
 
 ExperimentVM ChangeWellTableSize() has tube as case 1; implement in view
 CalibrationVM Classification targets has a weird legacy chart2series stuff. propbably not necessary
@@ -41,3 +40,5 @@ ExperimentVM startButtonClick makes end buton red and disables read button. do t
 ExperimentVM EndButtonClick has workorder not imlemented as well as button colors
 
 PlateReport class has useless members except list
+
+Subtract bed region background button. useless?

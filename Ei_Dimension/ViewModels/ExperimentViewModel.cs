@@ -51,6 +51,14 @@ namespace Ei_Dimension.ViewModels
       NavigationService.Navigate("DashboardView", null, this);
     }
 
+    public void NavigateFileSave()
+    {
+      App.ResetFocusedTextbox();
+      App.HideNumpad();
+      App.Device.InitSTab("reportingtab");
+      NavigationService.Navigate("FileSaveView", null, this);
+    }
+
     public void NavigateWellsSelect(int num)
     {
       App.ResetFocusedTextbox();

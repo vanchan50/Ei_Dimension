@@ -75,7 +75,6 @@ namespace MicroCy
     public int MinPerRegion { get; set; }
     public ushort IdexSteps { get; set; }
     public bool NewStats { get; set; }
-    public bool SubtRegBg { get; set; }
     public bool IsTube { get; set; }
     public bool ReadActive { get; set; }
     public bool Everyevent { get; set; }

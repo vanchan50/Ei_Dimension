@@ -394,6 +394,10 @@ Sample</value>
   <data name="Experiment_Event_Count" xml:space="preserve">
     <value>Event Count</value>
   </data>
+  <data name="Experiment_FileSave" xml:space="preserve">
+    <value>Select Files
+and Folder</value>
+  </data>
   <data name="Experiment_Load" xml:space="preserve">
     <value>Load Plate</value>
   </data>
@@ -459,6 +463,33 @@ Barcode</value>
   <data name="Experiment_Work_Order_Plus_Bcode" xml:space="preserve">
     <value>Work Order +
   Barcode</value>
+  </data>
+  <data name="FileSave_Base_Filename" xml:space="preserve">
+    <value>Base File Name</value>
+  </data>
+  <data name="FileSave_Discard_Unclassified_Beads" xml:space="preserve">
+    <value>Discard Unclassified Beads From Bead Event File</value>
+  </data>
+  <data name="FileSave_Filters" xml:space="preserve">
+    <value>Filters</value>
+  </data>
+  <data name="FileSave_Include_Doublet_Events" xml:space="preserve">
+    <value>Include Doublet Events in Bead Event File</value>
+  </data>
+  <data name="FileSave_Include_Unclassified_Beads" xml:space="preserve">
+    <value>Include Unclassified Beads in Plate Summary File</value>
+  </data>
+  <data name="FileSave_Ind_Bead_Events" xml:space="preserve">
+    <value>Individual Bead Events</value>
+  </data>
+  <data name="FileSave_JSON_To_Results" xml:space="preserve">
+    <value>JSON Resuts File</value>
+  </data>
+  <data name="FileSave_Output_Files" xml:space="preserve">
+    <value>Output Files</value>
+  </data>
+  <data name="FileSave_Plate_Summary" xml:space="preserve">
+    <value>Plate Summary of MFI for All Regions</value>
   </data>
   <data name="Halt" xml:space="preserve">
     <value>Halt</value>

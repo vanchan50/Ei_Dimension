@@ -141,6 +141,7 @@
     <Compile Include="ViewModels\DashboardViewModel.cs" />
     <Compile Include="ViewModels\DataAnalysisViewModel.cs" />
     <Compile Include="ViewModels\ExperimentViewModel.cs" />
+    <Compile Include="ViewModels\FileSaveViewModel.cs" />
     <Compile Include="ViewModels\MaintenanceViewModel.cs" />
     <Compile Include="ViewModels\MotorsViewModel.cs" />
     <Compile Include="ViewModels\NumpadViewModel.cs" />
@@ -170,6 +171,9 @@
     </Compile>
     <Compile Include="Views\ExperimentView.xaml.cs">
       <DependentUpon>ExperimentView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FileSaveView.xaml.cs">
+      <DependentUpon>FileSaveView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MaintenanceView.xaml.cs">
       <DependentUpon>MaintenanceView.xaml</DependentUpon>
@@ -214,6 +218,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Styles\ButtonStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\CheckboxStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -278,6 +286,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ExperimentView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\FileSaveView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -1,0 +1,138 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+             xmlns:ViewModels="clr-namespace:Ei_Dimension.ViewModels"
+             xmlns:lang="clr-namespace:Ei_Dimension.Language;assembly=Language"
+             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors" x:Class="Ei_Dimension.Views.FileSaveView"
+             mc:Ignorable="d"
+             DataContext="{dxmvvm:ViewModelSource Type={x:Type ViewModels:FileSaveViewModel}}"
+             d:DesignHeight="674" d:DesignWidth="1312">
+  <Grid>
+    <StackPanel Orientation="Horizontal"
+                Height="50"
+                Margin="80,60,4,0"
+                VerticalAlignment="Top" HorizontalAlignment="Left">
+      <TextBlock Text="{lang:Loc FileSave_Base_Filename}"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="30"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 Margin="0,0,10,0"/>
+      <TextBox Width="300"
+               Style="{StaticResource InputFieldStyle}"
+               Text="{Binding BaseFileName[0]}">
+        <dxmvvm:Interaction.Behaviors>
+          <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="0"/>
+        </dxmvvm:Interaction.Behaviors>
+      </TextBox>
+    </StackPanel>
+
+    <StackPanel Margin="80,260,4,0"
+                VerticalAlignment="Top" HorizontalAlignment="Left">
+      <StackPanel Orientation="Horizontal">
+        <TextBlock Text="{lang:Loc FileSave_Output_Files}"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="30"
+                 Width="200"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 Margin="0,0,0,0"/>
+        <StackPanel>
+          <CheckBox Content="{lang:Loc FileSave_Ind_Bead_Events}"
+                    FontFamily="{StaticResource AppTextFont}"
+                    FontSize="30"
+                    FontWeight="UltraBold"
+                    Foreground="{StaticResource AppTextColor}"
+                    Margin="0,0,0,0"
+                    Style="{StaticResource CheckboxStyle}"
+                    IsChecked="{Binding Checkboxes[0]}">
+            <dxmvvm:Interaction.Behaviors>
+              <dxmvvm:EventToCommand EventName="Checked" Command="{Binding CheckedBoxCommand}" CommandParameter="0"/>
+              <dxmvvm:EventToCommand EventName="Unchecked" Command="{Binding CheckedBoxCommand}" CommandParameter="0"/>
+            </dxmvvm:Interaction.Behaviors>
+          </CheckBox>
+          <CheckBox Content="{lang:Loc FileSave_Plate_Summary}"
+                    FontFamily="{StaticResource AppTextFont}"
+                    FontSize="30"
+                    FontWeight="UltraBold"
+                    Foreground="{StaticResource AppTextColor}"
+                    Margin="0,4,0,0"
+                    Style="{StaticResource CheckboxStyle}"
+                    IsChecked="{Binding Checkboxes[1]}">
+            <dxmvvm:Interaction.Behaviors>
+              <dxmvvm:EventToCommand EventName="Checked" Command="{Binding CheckedBoxCommand}" CommandParameter="1"/>
+              <dxmvvm:EventToCommand EventName="Unchecked" Command="{Binding CheckedBoxCommand}" CommandParameter="1"/>
+            </dxmvvm:Interaction.Behaviors>
+          </CheckBox>
+          <CheckBox Content="{lang:Loc FileSave_JSON_To_Results}"
+                    FontFamily="{StaticResource AppTextFont}"
+                    FontSize="30"
+                    FontWeight="UltraBold"
+                    Foreground="{StaticResource AppTextColor}"
+                    Margin="0,4,0,0"
+                    Style="{StaticResource CheckboxStyle}"
+                    IsChecked="{Binding Checkboxes[2]}">
+            <dxmvvm:Interaction.Behaviors>
+              <dxmvvm:EventToCommand EventName="Checked" Command="{Binding CheckedBoxCommand}" CommandParameter="2"/>
+              <dxmvvm:EventToCommand EventName="Unchecked" Command="{Binding CheckedBoxCommand}" CommandParameter="2"/>
+            </dxmvvm:Interaction.Behaviors>
+          </CheckBox>
+        </StackPanel>
+      </StackPanel>
+      <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+        <TextBlock Text="{lang:Loc FileSave_Filters}"
+                   FontFamily="{StaticResource AppTextFont}"
+                   FontSize="30"
+                   Width="200"
+                   HorizontalAlignment="Right"
+                   FontWeight="UltraBold"
+                   Foreground="{StaticResource AppTextColor}"
+                   Margin="0,0,0,0"/>
+        <StackPanel>
+          <CheckBox Content="{lang:Loc FileSave_Discard_Unclassified_Beads}"
+                    FontFamily="{StaticResource AppTextFont}"
+                    FontSize="30"
+                    FontWeight="UltraBold"
+                    Foreground="{StaticResource AppTextColor}"
+                    Margin="0,0,0,0"
+                    Style="{StaticResource CheckboxStyle}"
+                    IsChecked="{Binding Checkboxes[3]}">
+            <dxmvvm:Interaction.Behaviors>
+              <dxmvvm:EventToCommand EventName="Checked" Command="{Binding CheckedBoxCommand}" CommandParameter="3"/>
+              <dxmvvm:EventToCommand EventName="Unchecked" Command="{Binding CheckedBoxCommand}" CommandParameter="3"/>
+            </dxmvvm:Interaction.Behaviors>
+          </CheckBox>
+          <CheckBox Content="{lang:Loc FileSave_Include_Unclassified_Beads}"
+                    FontFamily="{StaticResource AppTextFont}"
+                    FontSize="30"
+                    FontWeight="UltraBold"
+                    Foreground="{StaticResource AppTextColor}"
+                    Margin="0,4,0,0"
+                    Style="{StaticResource CheckboxStyle}"
+                    IsChecked="{Binding Checkboxes[4]}">
+            <dxmvvm:Interaction.Behaviors>
+              <dxmvvm:EventToCommand EventName="Checked" Command="{Binding CheckedBoxCommand}" CommandParameter="4"/>
+              <dxmvvm:EventToCommand EventName="Unchecked" Command="{Binding CheckedBoxCommand}" CommandParameter="4"/>
+            </dxmvvm:Interaction.Behaviors>
+          </CheckBox>
+          <CheckBox Content="{lang:Loc FileSave_Include_Doublet_Events}"
+                    FontFamily="{StaticResource AppTextFont}"
+                    FontSize="30"
+                    FontWeight="UltraBold"
+                    Foreground="{StaticResource AppTextColor}"
+                    Margin="0,4,0,0"
+                    Style="{StaticResource CheckboxStyle}"
+                    IsChecked="{Binding Checkboxes[5]}">
+            <dxmvvm:Interaction.Behaviors>
+              <dxmvvm:EventToCommand EventName="Checked" Command="{Binding CheckedBoxCommand}" CommandParameter="5"/>
+              <dxmvvm:EventToCommand EventName="Unchecked" Command="{Binding CheckedBoxCommand}" CommandParameter="5"/>
+            </dxmvvm:Interaction.Behaviors>
+          </CheckBox>
+        </StackPanel>
+      </StackPanel>
+    </StackPanel>
+  </Grid>
+</UserControl>

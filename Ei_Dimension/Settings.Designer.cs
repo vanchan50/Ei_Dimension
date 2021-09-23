@@ -37,18 +37,6 @@ namespace Ei_Dimension {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool SubtRegBg {
-            get {
-                return ((bool)(this["SubtRegBg"]));
-            }
-            set {
-                this["SubtRegBg"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
         public int DefaultMap {
             get {
@@ -110,18 +98,18 @@ namespace Ei_Dimension {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool PltRept {
+        public bool PlateReport {
             get {
-                return ((bool)(this["PltRept"]));
+                return ((bool)(this["PlateReport"]));
             }
             set {
-                this["PltRept"] = value;
+                this["PlateReport"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("SavedFileName")]
+        [global::System.Configuration.DefaultSettingValueAttribute("BeadAssay")]
         public string SaveFileName {
             get {
                 return ((string)(this["SaveFileName"]));

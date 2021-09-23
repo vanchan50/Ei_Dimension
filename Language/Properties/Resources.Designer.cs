@@ -878,6 +878,16 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select Files
+        ///and Folder.
+        /// </summary>
+        public static string Experiment_FileSave {
+            get {
+                return ResourceManager.GetString("Experiment_FileSave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Load Plate.
         /// </summary>
         public static string Experiment_Load {
@@ -1060,6 +1070,87 @@ namespace Ei_Dimension.Language {
         public static string Experiment_Work_Order_Plus_Bcode {
             get {
                 return ResourceManager.GetString("Experiment_Work_Order_Plus_Bcode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Base File Name.
+        /// </summary>
+        public static string FileSave_Base_Filename {
+            get {
+                return ResourceManager.GetString("FileSave_Base_Filename", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Discard Unclassified Beads From Bead Event File.
+        /// </summary>
+        public static string FileSave_Discard_Unclassified_Beads {
+            get {
+                return ResourceManager.GetString("FileSave_Discard_Unclassified_Beads", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Filters.
+        /// </summary>
+        public static string FileSave_Filters {
+            get {
+                return ResourceManager.GetString("FileSave_Filters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Include Doublet Events in Bead Event File.
+        /// </summary>
+        public static string FileSave_Include_Doublet_Events {
+            get {
+                return ResourceManager.GetString("FileSave_Include_Doublet_Events", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Include Unclassified Beads in Plate Summary File.
+        /// </summary>
+        public static string FileSave_Include_Unclassified_Beads {
+            get {
+                return ResourceManager.GetString("FileSave_Include_Unclassified_Beads", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Individual Bead Events.
+        /// </summary>
+        public static string FileSave_Ind_Bead_Events {
+            get {
+                return ResourceManager.GetString("FileSave_Ind_Bead_Events", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to JSON Resuts File.
+        /// </summary>
+        public static string FileSave_JSON_To_Results {
+            get {
+                return ResourceManager.GetString("FileSave_JSON_To_Results", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Output Files.
+        /// </summary>
+        public static string FileSave_Output_Files {
+            get {
+                return ResourceManager.GetString("FileSave_Output_Files", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Plate Summary of MFI for All Regions.
+        /// </summary>
+        public static string FileSave_Plate_Summary {
+            get {
+                return ResourceManager.GetString("FileSave_Plate_Summary", resourceCulture);
             }
         }
         

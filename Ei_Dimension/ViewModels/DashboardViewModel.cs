@@ -34,7 +34,6 @@ namespace Ei_Dimension.ViewModels
     public virtual bool StartButtonEnabled { get; set; }
 
 
-
     public virtual ObservableCollection<string> PressureMon { get; set; }
     public virtual bool PressureMonToggleButtonState { get; set; }
     public double MaxPressure { get; set; }

@@ -5,9 +5,6 @@
     <Setting Name="SystemControl" Type="System.Byte" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="SubtRegBg" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
-    </Setting>
     <Setting Name="DefaultMap" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
@@ -23,11 +20,11 @@
     <Setting Name="RMeans" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="PltRept" Type="System.Boolean" Scope="User">
+    <Setting Name="PlateReport" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="SaveFileName" Type="System.String" Scope="User">
-      <Value Profile="(Default)">SavedFileName</Value>
+      <Value Profile="(Default)">BeadAssay</Value>
     </Setting>
     <Setting Name="EndRead" Type="System.Byte" Scope="User">
       <Value Profile="(Default)">0</Value>

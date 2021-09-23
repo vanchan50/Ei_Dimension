@@ -30,17 +30,12 @@ namespace Ei_Dimension
       catch { }
       Device.SystemControl = Settings.Default.SystemControl;
       Device.Compensation = Settings.Default.Compensation;
-      // reading VM add slist.DataSource = active_items;    //System monitor control
       Device.SampleSize = Settings.Default.SampleSize;
       // RegCtr_SampSize.Text = Device.SampleSize.ToString(); //bead maps
       Device.Everyevent = Settings.Default.Everyevent;
-      //  everyEventcb.Checked = m_MicroCy.everyevent; //Data out
       Device.RMeans = Settings.Default.RMeans;
-      // rmeanscb.Checked = m_MicroCy.RMeans; //Data out
-      Device.PltRept = Settings.Default.PltRept;
-      // plateResultscb.Checked = m_MicroCy.PltRept;  //Data out
+      Device.PltRept = Settings.Default.PlateReport;
       Device.TerminationType = Settings.Default.EndRead;
-      Device.SubtRegBg = Settings.Default.SubtRegBg;
       Device.MinPerRegion = Settings.Default.MinPerRegion;
       Device.BeadsToCapture = Settings.Default.BeadsToCapture;
       if (!System.Windows.Input.Keyboard.IsKeyDown(System.Windows.Input.Key.LeftCtrl))
@@ -54,7 +49,7 @@ namespace Ei_Dimension
 
       _dispatcherTimer = new DispatcherTimer();
       _dispatcherTimer.Tick += TimerTick;
-      _dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
+      _dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 500);
       _dispatcherTimer.Start();
       _workOrderPending = false;
     }
@@ -856,6 +851,10 @@ namespace Ei_Dimension
                 Device.IdexSteps = usRes;
               }
             }
+            break;
+          case "BaseFileName":
+            Device.Outfilename = temp;
+            Settings.Default.SaveFileName = temp;
             break;
         }
         Settings.Default.Save();
