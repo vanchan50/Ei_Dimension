@@ -542,7 +542,7 @@
         <Button Width="50" Height="50"
                 Command="{Binding AssignWellTypeButtonClickCommand}"
                 CommandParameter="1">
-          <Image Source="pack://application:,,,/DevExpress.Images.v21.1;component/Images/Actions/Apply_32x32.png"/>
+          <Image Source="/Icons/Filled_Well.png"/>
         </Button>
       </StackPanel>
     </Border>

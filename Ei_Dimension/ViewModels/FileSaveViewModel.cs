@@ -11,6 +11,7 @@ namespace Ei_Dimension.ViewModels
   {
     public virtual ObservableCollection<string> BaseFileName { get; set; }
     public virtual ObservableCollection<bool> Checkboxes { get; set; }
+    private IFolderBrowserDialogService FolderBrowserDialogService => this.GetService<IFolderBrowserDialogService>();
 
     protected FileSaveViewModel()
     {
@@ -56,6 +57,13 @@ namespace Ei_Dimension.ViewModels
           break;
       }
       Settings.Default.Save();
+    }
+
+    public void SelectOutFolder()
+    {
+       FolderBrowserDialogService.StartPath = App.Device.Outdir;
+      if (FolderBrowserDialogService.ShowDialog())
+        App.Device.Outdir = FolderBrowserDialogService.ResultPath;
     }
 
     public void FocusedBox(int num)

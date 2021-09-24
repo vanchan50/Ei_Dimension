@@ -408,6 +408,7 @@
     <Resource Include="Icons\Empty_Well.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Icons\Filled_Well.png" />
     <Content Include="StaticMaps\QBlogo.h" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
