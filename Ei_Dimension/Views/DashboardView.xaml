@@ -19,7 +19,7 @@
     <StackPanel Orientation="Horizontal"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
-                Margin="680,495,0,0">
+                Margin="760,580,0,0">
       <StackPanel Width="180"
                   Margin="0,0,4,0">
         <ToggleButton Content="{lang:Loc Dashboard_Pressure_Mon}"
@@ -70,7 +70,7 @@
     <!--System Monitor-->
     <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Margin="1040,370,0,0">
+            Margin="1140,400,0,0">
       <StackPanel>
         <TextBlock Text="{lang:Loc Experiment_System_Monitor}"
                  FontFamily="{StaticResource AppTextFont}"
@@ -81,7 +81,7 @@
                  VerticalAlignment="Top"
                  Margin="0,0,0,4"/>
         <ListBox 
-             Width="150" Height="220"
+             Width="150" Height="280"
              ItemsSource="{Binding ActiveList}"
              FontSize="20">
         </ListBox>
@@ -91,7 +91,7 @@
     <!--System Control-->
     <Border HorizontalAlignment="Left"
           VerticalAlignment="Top"
-          Margin="30,100,0,0">
+          Margin="90,150,0,0">
 
       <StackPanel VerticalAlignment="Stretch">
         <TextBlock Text="{lang:Loc Experiment_System_Control}"
@@ -159,7 +159,7 @@
     <!--Order-->
     <Border HorizontalAlignment="Left"
           VerticalAlignment="Top"
-          Margin="230,100,0,0">
+          Margin="540,50,0,0">
 
       <StackPanel VerticalAlignment="Stretch">
         <TextBlock Text="{lang:Loc Experiment_Order}"
@@ -221,13 +221,13 @@
                 BorderBrush="{StaticResource HaltButtonBackgroundHighlighted}"
                 HorizontalAlignment="Left"
                 Margin="0,0,0,5"
-                Width="100">
+                Width="150">
             <StackPanel HorizontalAlignment="Center">
               <RadioButton Content="{lang:Loc Experiment_Min_Per_Reg}"
                        Style="{StaticResource RadioButtonVerticalThemeStyle}"
-                       Height="50"
-                       Width="100"
-                       FontSize="19"
+                       Height="90"
+                       Width="150"
+                       FontSize="30"
                        IsChecked="{Binding EndReadSelectorState[0]}"
                        Command="{Binding EndReadSelectorCommand}">
                 <RadioButton.CommandParameter>
@@ -236,9 +236,9 @@
               </RadioButton>
               <RadioButton Content="{lang:Loc Experiment_Total_Events}"
                        Style="{StaticResource RadioButtonVerticalThemeStyle}"
-                       Height="50"
-                       Width="100"
-                       FontSize="19"
+                       Height="90"
+                       Width="150"
+                       FontSize="30"
                        IsChecked="{Binding EndReadSelectorState[1]}"
                        Command="{Binding EndReadSelectorCommand}">
                 <RadioButton.CommandParameter>
@@ -247,9 +247,9 @@
               </RadioButton>
               <RadioButton Content="{lang:Loc Experiment_End_of_Sample}"
                        Style="{StaticResource RadioButtonVerticalThemeStyle}"
-                       Height="50"
-                       Width="100"
-                       FontSize="19"
+                       Height="90"
+                       Width="150"
+                       FontSize="30"
                        IsChecked="{Binding EndReadSelectorState[2]}"
                        Command="{Binding EndReadSelectorCommand}">
                 <RadioButton.CommandParameter>
@@ -259,12 +259,12 @@
             </StackPanel>
           </Border>
           <Border Background="{StaticResource RibbonBackgroundActive}"
-                Height="96" Width="100"
+                Height="180" Width="120"
                 VerticalAlignment="Top"
-                Margin="5,2,0,0">
+                Margin="5,0,0,0">
             <StackPanel>
               <TextBox HorizontalAlignment="Stretch"
-                     Margin="8,8,8,0"
+                     Margin="8,30,8,0"
                      Style="{StaticResource InputFieldStyle}"
                      Text="{Binding EndRead[0]}">
                 <dxmvvm:Interaction.Behaviors>
@@ -272,7 +272,7 @@
                 </dxmvvm:Interaction.Behaviors>
               </TextBox>
               <TextBox HorizontalAlignment="Stretch"
-                     Margin="8,8,8,8"
+                     Margin="8,50,8,8"
                      Style="{StaticResource InputFieldStyle}"
                      Text="{Binding EndRead[1]}">
                 <dxmvvm:Interaction.Behaviors>
@@ -288,7 +288,7 @@
     <!--Volumes-->
     <Border HorizontalAlignment="Left"
           VerticalAlignment="Top"
-          Margin="400,50,0,0">
+          Margin="400,220,0,0">
       <StackPanel Orientation="Horizontal">
         <StackPanel Margin="0,63,-15,0">
           <TextBlock Text="{lang:Loc Experiment_Samp_Vol}"
@@ -389,7 +389,7 @@
     <!--Dropdowns-->
     <Border HorizontalAlignment="Left"
           VerticalAlignment="Top"
-          Margin="40,370,0,0">
+          Margin="40,450,0,0">
       <StackPanel>
         <TextBlock Text="{lang:Loc Experiment_Speed}"
                  FontFamily="{StaticResource AppTextFont}"
@@ -478,7 +478,7 @@
     <!--Event Count-->
     <Border HorizontalAlignment="Left"
           VerticalAlignment="Top"
-          Margin="30,10,0,0">
+          Margin="110,40,0,0">
       <StackPanel>
         <TextBlock Text="{lang:Loc Experiment_Event_Count}"
                  FontFamily="{StaticResource AppTextFont}"
@@ -499,19 +499,19 @@
     <!--Load Eject Plate-->
     <Border HorizontalAlignment="Left"
           VerticalAlignment="Top"
-          Margin="1030,254,0,0">
+          Margin="1070,230,0,0">
       <StackPanel Orientation="Horizontal">
         <Button Content="{lang:Loc Experiment_Eject}"
                 Style="{StaticResource ButtonStyle}"
                 Command="{Binding EjectButtonClickCommand}"
-                Height="100" Width="100"
+                Height="120" Width="120"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                Margin="0,0,4,0"/>
+                Margin="0,0,10,0"/>
         <Button Content="{lang:Loc Experiment_Load}"
                 Style="{StaticResource ButtonStyle}"
                 Command="{Binding LoadButtonClickCommand}"
-                Height="100" Width="100"
+                Height="120" Width="120"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 Margin="0,0,0,0"/>
@@ -520,19 +520,19 @@
     <!--Start & End-->
     <Border HorizontalAlignment="Left"
           VerticalAlignment="Top"
-          Margin="1030,150,0,0">
+          Margin="1070,100,0,0">
       <StackPanel Orientation="Horizontal">
         <Button Content="{lang:Loc Experiment_End}"
                 Style="{StaticResource ButtonStyle}"
                 Command="{Binding EndButtonClickCommand}"
-                Height="100" Width="100"
+                Height="120" Width="120"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                Margin="0,0,4,0"/>
+                Margin="0,0,10,0"/>
         <Button Content="{lang:Loc Experiment_Start}"
                 Style="{StaticResource ButtonStyle}"
                 Command="{Binding StartButtonClickCommand}"
-                Height="100" Width="100"
+                Height="120" Width="120"
                 IsEnabled="{Binding StartButtonEnabled}"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"

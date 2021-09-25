@@ -1,4 +1,4 @@
-﻿<dx:ThemedWindow
+﻿<dx:ThemedWindow Name="wndw"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
@@ -38,7 +38,7 @@
     <!-- Company Logo Right-->
     <Image HorizontalAlignment="Left" VerticalAlignment="Top"
            Margin="1390,858,10,10"
-           Source="Emission_Logo.png"
+           Source="/Icons/Emission_Logo.png"
            RenderOptions.BitmapScalingMode="HighQuality"/>
     <!-- Company Logo Left -->
     <Image HorizontalAlignment="Left" VerticalAlignment="Top"

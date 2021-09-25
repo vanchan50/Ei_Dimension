@@ -25,8 +25,9 @@ namespace Ei_Dimension.ViewModels
         false,
         false
       };
+      Program.SplashScreen.Close(TimeSpan.FromMilliseconds(300));
     }
-
+    
     public static FileSaveViewModel Create()
     {
       return ViewModelSource.Create(() => new FileSaveViewModel());

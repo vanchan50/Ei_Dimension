@@ -15,11 +15,12 @@ namespace Ei_Dimension
     public static (PropertyInfo prop, object VM) NumpadShow { get; set; }
     public static (PropertyInfo prop, object VM, int index) SelectedTextBox { get; set; }
     public static MicroCyDevice Device { get; private set; }
-
+    public static SplashScreen SplashScreen { get; private set; }
     private DispatcherTimer _dispatcherTimer;
     private bool _workOrderPending;
     public App()
     {
+      SplashScreen = Program.SplashScreen;
       SetLanguage("en-US");
 
       Device = new MicroCyDevice(typeof(USBConnection), useStaticMaps: true);
@@ -141,7 +142,6 @@ namespace Ei_Dimension
       var RM = Language.Resources.ResourceManager;
 
       #region Translation hack
-
       var ComponentsVM = ComponentsViewModel.Instance;
       if (ComponentsVM != null)
       {
