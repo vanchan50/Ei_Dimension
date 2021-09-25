@@ -13,7 +13,7 @@
              xmlns:lang="clr-namespace:Ei_Dimension.Language;assembly=Language"
              mc:Ignorable="d"
              DataContext="{dxmvvm:ViewModelSource Type={x:Type ViewModels:DashboardViewModel}}"
-             d:DesignHeight="674" d:DesignWidth="1312">
+             d:DesignHeight="785" d:DesignWidth="1353">
   <Grid>
     <!--Pressure Monitor-->
     <StackPanel Orientation="Horizontal"

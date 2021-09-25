@@ -117,8 +117,6 @@
     </ApplicationDefinition>
     <Compile Include="Core\DataProcessor.cs" />
     <Compile Include="Core\ObservableObject.cs" />
-    <Compile Include="Models\BeadRegion.cs" />
-    <Compile Include="Models\CustomMap.cs" />
     <Compile Include="Models\DropdownStrings.cs" />
     <Compile Include="Models\HeatMapData.cs" />
     <Compile Include="Models\HistogramData.cs" />
@@ -409,6 +407,7 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Icons\Filled_Well.png" />
+    <Resource Include="Icons\service iconV2.png" />
     <Content Include="StaticMaps\QBlogo.h" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

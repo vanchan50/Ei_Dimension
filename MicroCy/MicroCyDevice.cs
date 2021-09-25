@@ -98,7 +98,7 @@ namespace MicroCy
     public byte SystemControl { get; set; }
 
     public string Outdir { get; set; }  //  user selectable
-    public string Outfilename { get; set; } //TODO: prob not necessary
+    public string Outfilename { get; set; }
 
     public string[] SyncElements { get; } = { "SHEATH", "SAMPLE_A", "SAMPLE_B", "FLASH", "END_WELL", "VALVES", "X_MOTOR",
       "Y_MOTOR", "Z_MOTOR", "PROXIMITY", "PRESSURE", "WASHING", "FAULT", "ALIGN MOTOR", "MAIN VALVE", "SINGLE STEP" };
@@ -308,7 +308,7 @@ namespace MicroCy
       char rowletter = (char)(0x41 + rown);
       if (!Directory.Exists(Outdir))
         Outdir = RootDirectory.FullName;
-      for (var differ = 0; differ < 100; differ++)
+      for (var differ = 0; differ < int.MaxValue; differ++)
       {
         _fullFileName = Outdir + "\\" + Outfilename + rowletter + colnum.ToString() + '_' + differ.ToString()+".csv";
         if (!File.Exists(_fullFileName))
@@ -660,7 +660,7 @@ namespace MicroCy
     public string PrepareSummaryFile() //  DEBUGINFO: in Legacy was int BtnRead_Click
     {
       string summaryFileName = "";
-      for (var i = 0; i < 1000; i++)
+      for (var i = 0; i < int.MaxValue; i++)
       {
         summaryFileName = Outdir + "\\" + "Results__" + Outfilename + '_' + i.ToString() + ".csv";
         if (!File.Exists(summaryFileName))

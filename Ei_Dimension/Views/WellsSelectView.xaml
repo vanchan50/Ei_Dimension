@@ -9,13 +9,13 @@
              xmlns:System="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d"
              DataContext="{dxmvvm:ViewModelSource Type=ViewModels:WellsSelectViewModel}"
-             d:DesignHeight="674" d:DesignWidth="1312">
+             d:DesignHeight="785" d:DesignWidth="1353">
   <Grid>
 
     <!--WellTable 96   -->
     <Border HorizontalAlignment="Left" VerticalAlignment="Top"
-            Width="1100" Height="640"
-            Margin="50,20,0,0"
+            Width="1100" Height="740"
+            Margin="70,30,0,0"
             Visibility="{Binding Table96Visible}">
       <DataGrid Name="grd96" Grid.ColumnSpan="2"
               SelectionMode="Extended"
@@ -225,8 +225,8 @@
 
     <!--WellTable 384-->
     <Border HorizontalAlignment="Left"  VerticalAlignment="Top"
-            Width="1100" Height="640"
-            Margin="50,20,0,0" 
+            Width="1030" Height="740"
+            Margin="70,30,0,0" 
             Visibility="{Binding Table384Visible}">
       <DataGrid Name="grd384" Grid.ColumnSpan="2"
               SelectionMode="Extended"
@@ -255,7 +255,7 @@
                   <Grid Background="{StaticResource AppBackground}">
                     <Image Source="{dx:DXImage 'SvgImages/DiagramIcons/Figures/figures2.svg'}"
                            RenderTransformOrigin="0.5,0.5"
-                           Margin="0,16,0,0">
+                           Margin="0,16,0,0"> 
                       <Image.RenderTransform>
                         <ScaleTransform ScaleX="-1"/>
                       </Image.RenderTransform>

@@ -18,7 +18,7 @@
              xmlns:System="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d"
              DataContext="{dxmvvm:ViewModelSource Type={x:Type ViewModels:ExperimentViewModel}}"
-             d:DesignHeight="674" d:DesignWidth="1500">
+             d:DesignHeight="785" d:DesignWidth="1600">
   <dxmvvm:Interaction.Triggers>
     <dxmvvm:EventToCommand EventName="Initialized" Command="{Binding NavigateWellsSelectCommand}" CommandParameter="96"/>
     <dxmvvm:EventToCommand EventName="Initialized" Command="{Binding NavigateDashboardCommand}"/>

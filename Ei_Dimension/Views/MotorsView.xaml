@@ -15,28 +15,29 @@
              xmlns:lang="clr-namespace:Ei_Dimension.Language;assembly=Language"
              mc:Ignorable="d"
              DataContext="{dxmvvm:ViewModelSource Type=ViewModels:MotorsViewModel}"
-             d:DesignHeight="674" d:DesignWidth="1312">
+             d:DesignHeight="785" d:DesignWidth="1353">
   <Grid>
     <TextBlock Text="{lang:Loc Service_Motors}"
                FontFamily="{StaticResource AppTextFont}"
                FontSize="50"
                FontWeight="UltraBold"
                Foreground="{StaticResource AppTextColor}"
-               HorizontalAlignment="Center"
+               HorizontalAlignment="Left"
                VerticalAlignment="Top"
-               Margin="0,10,250,0"/>
+               Margin="465,10,250,0"/>
 
     <!--Motors Parameters-->
     <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Margin="0,80,0,00">
+            Margin="0,100,0,00">
 
       <StackPanel Orientation="Horizontal"
                   HorizontalAlignment="Stretch"
                   VerticalAlignment="Stretch"
                   Margin="10,0,10,0">
         <StackPanel VerticalAlignment="Stretch"
-                      Margin="0,0,3,0">
+                    Margin="0,0,3,0"
+                    Width="270">
           <TextBlock Text="{lang:Loc Motors_Steps}"
                      FontFamily="{StaticResource AppTextFont}"
                      FontSize="36"
@@ -452,7 +453,7 @@
     <!--Steps-->
     <Border VerticalAlignment="Top"
             HorizontalAlignment="Left"
-            Margin="600,80,0,0">
+            Margin="650,50,0,0">
       <StackPanel>
         <TextBlock Text="{lang:Loc Motors_Steps}"
                  FontFamily="{StaticResource AppTextFont}"
@@ -468,7 +469,8 @@
                 Orientation="Horizontal"
                 Margin="10,0,10,0">
           <StackPanel VerticalAlignment="Stretch"
-                    Margin="0,48,3,0">
+                      Margin="0,48,3,0"
+                      Width="130">
             <TextBlock Text="{lang:Loc Motors_96W_C1}"
                  FontFamily="{StaticResource AppTextFont}"
                  FontSize="26"
@@ -667,7 +669,7 @@
             </Border>
           </StackPanel>
           <StackPanel VerticalAlignment="Stretch"
-                      Width="70"
+                      Width="90"
                       Margin="0,48,3,0">
             <TextBlock Text="{lang:Loc Motors_A1}"
                        FontFamily="{StaticResource AppTextFont}"
@@ -773,7 +775,7 @@
     <!--Well Selection-->
     <Border VerticalAlignment="top"
             HorizontalAlignment="Left"
-            Margin="800,420,0,0">
+            Margin="870,440,0,0">
       <StackPanel>
 
         <TextBlock Text="{lang:Loc Motors_Man_Well_Sel}"

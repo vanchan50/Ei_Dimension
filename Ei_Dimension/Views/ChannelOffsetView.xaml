@@ -8,7 +8,7 @@
              xmlns:lang="clr-namespace:Ei_Dimension.Language;assembly=Language"
              mc:Ignorable="d"
              DataContext="{dxmvvm:ViewModelSource Type=ViewModels:ChannelOffsetViewModel}"
-             d:DesignHeight="674" d:DesignWidth="1312">
+             d:DesignHeight="785" d:DesignWidth="1353">
   <Grid>
     <TextBlock Text="{lang:Loc Ch_Offset_Ch_Offset}"
                  FontFamily="{StaticResource AppTextFont}"
@@ -21,12 +21,13 @@
 
     <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Margin="300,80,0,00">
+            Margin="100,100,0,00">
       <StackPanel Orientation="Horizontal"
                   HorizontalAlignment="Stretch"
                   VerticalAlignment="Stretch">
         <StackPanel VerticalAlignment="Stretch"
-                    Margin="0,0,3,0">
+                    Margin="0,0,3,0"
+                    Width="400">
           <TextBlock Text="{lang:Loc Channels_Green_A}"
                  FontFamily="{StaticResource AppTextFont}"
                  FontSize="36"

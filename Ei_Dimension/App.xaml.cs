@@ -32,6 +32,7 @@ namespace Ei_Dimension
       Device.Compensation = Settings.Default.Compensation;
       Device.SampleSize = Settings.Default.SampleSize;
       // RegCtr_SampSize.Text = Device.SampleSize.ToString(); //bead maps
+      Device.Outfilename = Settings.Default.SaveFileName;
       Device.Everyevent = Settings.Default.Everyevent;
       Device.RMeans = Settings.Default.RMeans;
       Device.PltRept = Settings.Default.PlateReport;

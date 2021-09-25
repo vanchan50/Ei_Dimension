@@ -11,21 +11,21 @@
              xmlns:lang="clr-namespace:Ei_Dimension.Language;assembly=Language"
              mc:Ignorable="d"
              DataContext="{dxmvvm:ViewModelSource Type=ViewModels:ComponentsViewModel}"
-             d:DesignHeight="674" d:DesignWidth="1312">
+             d:DesignHeight="785" d:DesignWidth="1353">
   <Grid>
     <TextBlock Text="{lang:Loc Service_Components}"
                  FontFamily="{StaticResource AppTextFont}"
                  FontSize="50"
                  FontWeight="UltraBold"
                  Foreground="{StaticResource AppTextColor}"
-                 HorizontalAlignment="Center"
+                 HorizontalAlignment="Left"
                  VerticalAlignment="Top"
-                 Margin="0,10,250,0"/>
+                 Margin="390,10,250,0"/>
     
     <!--Input Selector-->
     <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Margin="243,100,0,0">
+            Margin="320,100,0,0">
 
       <StackPanel VerticalAlignment="Stretch">
         <TextBlock Text="{lang:Loc Components_Input_Sel}"
@@ -109,7 +109,7 @@
             
             <StackPanel HorizontalAlignment="Left"
                           VerticalAlignment="Top"
-                          Margin="130,45,0,0">
+                          Margin="130,20,0,0">
 
               <Button Content="{lang:Loc Components_Move_Idex}"
                   Style="{StaticResource ButtonStyle}"
@@ -117,7 +117,7 @@
                   Height="50" Width="120"
                   HorizontalAlignment="Center"
                   VerticalAlignment="Center"
-                  Margin="0,3,0,4"/>
+                  Margin="0,3,0,32"/>
               <Border Background="{StaticResource RibbonBackgroundActive}">
                 <StackPanel>
                   <TextBox Width="120"
@@ -158,7 +158,7 @@
     <!--Valves-->
     <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Margin="50,360,0,0">
+            Margin="50,400,0,0">
 
       <StackPanel VerticalAlignment="Stretch">
         <TextBlock Text="{lang:Loc Components_Valves}"
@@ -226,7 +226,7 @@
     <!--Lasers-->
     <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Margin="520,100,0,0"
+            Margin="660,100,0,0"
             Width="180">
 
       <StackPanel VerticalAlignment="Stretch">
@@ -362,7 +362,7 @@
     <!--Syringe control-->
     <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Margin="720,100,0,0"
+            Margin="900,100,0,0"
             Width="320">
       <StackPanel VerticalAlignment="Stretch">
 
@@ -553,7 +553,7 @@
     <!--Get Position-->
     <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Margin="720,455,0,0"
+            Margin="900,500,0,0"
             Width="340">
       <Grid>
         <StackPanel HorizontalAlignment="Left"
@@ -647,7 +647,7 @@
     
     <!--Sampling-->
     <Border HorizontalAlignment="Left"
-            Margin="380,430,0,0">
+            Margin="320,480,0,0">
       <StackPanel>
         <ToggleButton Style="{StaticResource ToggleButtonThemeStyle}"
                       Height="60" Width="130"
@@ -684,11 +684,11 @@
     <!--Fluidics-->
     <Border HorizontalAlignment="Left"
           VerticalAlignment="Top"
-          Margin="70,150,0,0">
+          Margin="50,100,0,0">
       <StackPanel>
         <TextBlock Text="{lang:Loc Components_Fluidics}"
                  FontFamily="{StaticResource AppTextFont}"
-                 FontSize="30"
+                 FontSize="36"
                  FontWeight="UltraBold"
                  Foreground="{StaticResource AppTextColor}"
                  HorizontalAlignment="Center"
@@ -697,7 +697,7 @@
         <Button Content="{lang:Loc Components_Prime}"
                 Style="{StaticResource ButtonStyle}"
                 Command="{Binding FluidicsButtonClickCommand}"
-                Height="50" Width="100"
+                Height="50" Width="150"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 Margin="0,4,0,0">
@@ -708,7 +708,7 @@
         <Button Content="{lang:Loc Components_Wash_A}"
                 Style="{StaticResource ButtonStyle}"
                 Command="{Binding FluidicsButtonClickCommand}"
-                Height="50" Width="100"
+                Height="50" Width="150"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 Margin="0,4,0,0">
@@ -719,7 +719,7 @@
         <Button Content="{lang:Loc Components_Wash_B}"
                 Style="{StaticResource ButtonStyle}"
                 Command="{Binding FluidicsButtonClickCommand}"
-                Height="50" Width="100"
+                Height="50" Width="150"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 Margin="0,4,0,0">

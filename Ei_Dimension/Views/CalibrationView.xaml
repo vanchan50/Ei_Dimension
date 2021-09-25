@@ -11,7 +11,7 @@
              xmlns:lang="clr-namespace:Ei_Dimension.Language;assembly=Language"
              mc:Ignorable="d"
              DataContext="{dxmvvm:ViewModelSource Type=ViewModels:CalibrationViewModel}"
-             d:DesignHeight="674" d:DesignWidth="1312">
+             d:DesignHeight="785" d:DesignWidth="1353">
   <Grid>
     <TextBlock Text="{lang:Loc Maintenance_Calibration}"
                FontFamily="{StaticResource AppTextFont}"
@@ -20,12 +20,12 @@
                Foreground="{StaticResource AppTextColor}"
                HorizontalAlignment="Left"
                VerticalAlignment="Top"
-               Margin="400,10,250,0"/>
+               Margin="430,10,250,0"/>
     
     <!--Gating-->
     <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Margin="340,150,0,0">
+            Margin="430,165,0,0">
       <StackPanel>
         <TextBlock Text="{lang:Loc Calibration_Gating}"
                  FontFamily="{StaticResource AppTextFont}"
@@ -60,7 +60,7 @@
     <!--Event Trigger-->
     <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Margin="270,290,0,0">
+            Margin="370,340,0,0">
       <Grid>
         <Rectangle Margin="0,97,0,0"
                    Fill="{StaticResource RibbonBackgroundActive}"/>
@@ -136,7 +136,7 @@
     <!--Calibration-->
     <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Margin="25,280,0,0">
+            Margin="25,300,0,0">
 
       <StackPanel VerticalAlignment="Stretch">
         <TextBlock Text="{lang:Loc Calibration_Calibration}"
@@ -150,7 +150,7 @@
 
         <Border BorderThickness="1"
                 BorderBrush="{StaticResource HaltButtonBackgroundHighlighted}"
-                Margin="0,0,0,5"
+                Margin="0,0,0,0"
                 Width="210">
 
           <StackPanel>
@@ -188,7 +188,7 @@
                 Command="{Binding SaveCalibrationToMapClickCommand}"
                 Style="{StaticResource ButtonStyle}"
                 Height="100" Width="230"
-                Margin="0,0,0,3"/>
+                Margin="0,10,0,3"/>
         <TextBlock Text="{Binding CurrentMapName[0]}"
                      FontFamily="{StaticResource AppTextFont}"
                      FontSize="15"
@@ -203,7 +203,7 @@
     <!--Classification Targets-->
     <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Margin="720,150,0,0">
+            Margin="920,150,0,0">
       <StackPanel>
         <TextBlock Text="{lang:Loc Calibration_Classification_targets}"
                  FontFamily="{StaticResource AppTextFont}"
@@ -214,7 +214,7 @@
                  VerticalAlignment="Top"
                  Margin="0,0,0,14"/>
         <StackPanel Orientation="Horizontal">
-          <StackPanel Margin="0,4,4,0">
+          <StackPanel Margin="-60,4,4,0" Width="120">
             <TextBlock Text="{lang:Loc CL0}"
                  FontFamily="{StaticResource AppTextFont}"
                  FontSize="30"
@@ -331,25 +331,28 @@
     <!--DNR-->
     <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Margin="280,480,0,0">
-      <StackPanel Orientation="Horizontal">
-        <StackPanel>
+            Margin="332,530,0,0">
+      <Grid>
+        <StackPanel Width="300"
+                    HorizontalAlignment="Left">
           <TextBlock Text="{lang:Loc Calibration_High_DNR_Coeff}"
                    FontFamily="{StaticResource AppTextFont}"
                    FontSize="30"
                    FontWeight="UltraBold"
                    Foreground="{StaticResource AppTextColor}"
                    HorizontalAlignment="Right"
-                   Margin="0,5,4,3"/>
+                   Margin="0,5,0,3"/>
           <TextBlock Text="{lang:Loc Calibration_High_DNR_Trans}"
                    FontFamily="{StaticResource AppTextFont}"
                    FontSize="30"
                    FontWeight="UltraBold"
                    Foreground="{StaticResource AppTextColor}"
                    HorizontalAlignment="Right"
-                   Margin="0,2,4,3"/>
+                   Margin="0,2,0,0"/>
         </StackPanel>
-        <Border Background="{StaticResource RibbonBackgroundActive}">
+        <Border Background="{StaticResource RibbonBackgroundActive}"
+                HorizontalAlignment="Left"
+                Margin="300,0,0,0">
             <StackPanel>
             <TextBox Width="150"
                      HorizontalAlignment="Center"
@@ -371,7 +374,7 @@
             </TextBox>
           </StackPanel>
           </Border>
-        </StackPanel>
+        </Grid>
     </Border>
     
   </Grid>

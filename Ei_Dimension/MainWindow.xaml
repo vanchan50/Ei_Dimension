@@ -11,8 +11,8 @@
     xmlns:img="clr-namespace:Ei_Dimension.Styles"
     x:Class="Ei_Dimension.MainWindow"
     Title="Ei_Dimension"
-    Height="800"
-    Width="1500"
+    Height="900"
+    Width="1600"
     SnapsToDevicePixels="True"
     ResizeMode="NoResize"
     SizeToContent="Manual"
@@ -25,6 +25,7 @@
     ShowStatusPanel="False"
     WindowKind="Normal"
     UseGlowColors="False"
+    WindowState="Maximized"
     DataContext="{dxmvvm:ViewModelSource Type=ViewModels:MainViewModel}">
   <!--make window topmost, maximized-->
   <dxmvvm:Interaction.Triggers>
@@ -36,18 +37,18 @@
   <Grid>
     <!-- Company Logo Right-->
     <Image HorizontalAlignment="Left" VerticalAlignment="Top"
-           Margin="1290,758,10,10"
+           Margin="1390,858,10,10"
            Source="Emission_Logo.png"
            RenderOptions.BitmapScalingMode="HighQuality"/>
     <!-- Company Logo Left -->
     <Image HorizontalAlignment="Left" VerticalAlignment="Top"
-           Margin="10,758,0,10"
+           Margin="10,858,0,10"
            Source="/Icons/dimension flow analyzer logo.png"
            RenderOptions.BitmapScalingMode="HighQuality"/>
     <!--Tile Ribbon-->
     <StackPanel Orientation="Horizontal"
                 Height="80" HorizontalAlignment="Left" VerticalAlignment="Top"
-                Margin="210,30,0,0">
+                Margin="260,30,0,0">
       <RadioButton Content="{lang:Loc Ribbon_Acquire}" Width="180"
                    img:EmbeddedImg.Image="/Icons/acquire sample icon.png"
                    Style="{DynamicResource MainRibbonButtonStyle}"
@@ -70,7 +71,7 @@
                     Command="{Binding NavigateMaintenanceCommand}">
       </RadioButton>
       <RadioButton Content="{lang:Loc Ribbon_Service}" Width="180"
-                    img:EmbeddedImg.Image="/Icons/service icon.png"
+                    img:EmbeddedImg.Image="/Icons/service iconV2.png"
                     Style="{DynamicResource MainRibbonButtonStyle}"
                     Command="{Binding NavigateSettingsCommand}">
       </RadioButton>

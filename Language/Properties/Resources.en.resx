@@ -133,12 +133,12 @@
     <value>GoTo Peak</value>
   </data>
   <data name="Alignment_Laser_Align_Motor" xml:space="preserve">
-    <value>       Laser
+    <value>     Laser
 Align Motor</value>
   </data>
   <data name="Alignment_Last_Calib_Pos" xml:space="preserve">
     <value>Last Calibrated
-        Position</value>
+     Position</value>
   </data>
   <data name="Alignment_Left" xml:space="preserve">
     <value>Left</value>
@@ -226,7 +226,7 @@ To Current Map</value>
   <data name="Channels_Save_Bias_To_Map" xml:space="preserve">
     <value> Save Bias
 To Current
-       Map</value>
+     Map</value>
   </data>
   <data name="Channels_Set_Offset" xml:space="preserve">
     <value>Set Offset</value>
@@ -600,8 +600,7 @@ Barcode</value>
     <value>Channels</value>
   </data>
   <data name="Maintenance_LEDs" xml:space="preserve">
-    <value>LEDs
-  ON</value>
+    <value>LEDs ON</value>
   </data>
   <data name="Maintenance_Sanitize" xml:space="preserve">
     <value>UVC Sanitize</value>

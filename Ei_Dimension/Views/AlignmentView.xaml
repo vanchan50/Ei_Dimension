@@ -10,22 +10,24 @@
              xmlns:lang="clr-namespace:Ei_Dimension.Language;assembly=Language"
              mc:Ignorable="d"
              DataContext="{dxmvvm:ViewModelSource Type=ViewModels:AlignmentViewModel}"
-             d:DesignHeight="674" d:DesignWidth="1312">
+             d:DesignHeight="785" d:DesignWidth="1353">
   <Grid>
     <TextBlock Text="{lang:Loc Service_Alignment}"
                  FontFamily="{StaticResource AppTextFont}"
                  FontSize="50"
                  FontWeight="UltraBold"
                  Foreground="{StaticResource AppTextColor}"
-                 HorizontalAlignment="Center"
+                 HorizontalAlignment="Left"
                  VerticalAlignment="Top"
-                 Margin="0,10,250,0"/>
+                 Margin="430,10,250,0"/>
 
+    <!--Last Cal Position-->
     <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Margin="20,100,0,0">
+            Margin="188,100,0,0">
 
-      <StackPanel VerticalAlignment="Stretch">
+      <StackPanel VerticalAlignment="Stretch"
+                  Width="280">
         <TextBlock Text="{lang:Loc Alignment_Last_Calib_Pos}"
                  FontFamily="{StaticResource AppTextFont}"
                  FontSize="36"
@@ -33,11 +35,11 @@
                  Foreground="{StaticResource AppTextColor}"
                  HorizontalAlignment="Center"
                  VerticalAlignment="Top"
-                 Margin="0,0,8,0"/>
+                 Margin="0,0,0,0"/>
         <TextBox  Height="36"
                   HorizontalAlignment="Stretch"
-                  Margin="0,0,0,13"
-                  Width="160"
+                  Margin="0,0,0,0"
+                  Width="180"
                   Style="{StaticResource InputFieldStyle}"
                   Text="{Binding LastCalibratedPosition[0]}">
           <dxmvvm:Interaction.Behaviors>
@@ -48,12 +50,12 @@
                 Command="{Binding GoToLastCalibratedPositionClickCommand}"
                 Style="{StaticResource ButtonStyle}"
                 Height="50"
-                Width="160"
-                Margin="0,0,0,3"/>
+                Width="180"
+                Margin="0,8,0,0"/>
         <TextBox  Height="36"
                   HorizontalAlignment="Stretch"
-                  Margin="0,0,0,3"
-                  Width="160"
+                  Margin="0,8,0,0"
+                  Width="180"
                   Style="{StaticResource InputFieldStyle}"
                   Text="{Binding LastCalibratedPosition[1]}">
           <dxmvvm:Interaction.Behaviors>
@@ -64,9 +66,10 @@
       </StackPanel>
     </Border>
 
+    <!--Laser Align Motor-->
     <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Margin="300,100,0,0">
+            Margin="236,350,0,0">
 
       <StackPanel VerticalAlignment="Stretch">
         <TextBlock Text="{lang:Loc Alignment_Laser_Align_Motor}"
@@ -80,8 +83,8 @@
 
         <TextBox Height="36"
                  HorizontalAlignment="Stretch"
-                 Margin="0,0,0,13"
-                 Width="150"
+                 Margin="0,4,0,13"
+                 Width="180"
                  Style="{StaticResource InputFieldStyle}"
                  Text="{Binding LaserAlignMotor[0]}">
           <dxmvvm:Interaction.Behaviors>
@@ -91,8 +94,8 @@
 
         <Border BorderThickness="1"
                 BorderBrush="{StaticResource HaltButtonBackgroundHighlighted}"
-                Margin="0,0,0,13"
-                Width="250">
+                Margin="0,0,0,0"
+                Width="180">
           <StackPanel>
             <RadioButton Content="{lang:Loc Alignment_Left}"
                          Style="{StaticResource RadioButtonVerticalThemeStyle}"
@@ -119,20 +122,21 @@
         <Button Content="{lang:Loc Run}"
                 Command="{Binding RunLaserAlignMotorClickCommand}"
                 Style="{StaticResource ButtonStyle}"
-                Height="50" Width="150"
-                Margin="0,0,0,3"/>
+                Height="50" Width="180"
+                Margin="0,8,0,0"/>
         <Button Content="{lang:Loc Halt}"
                 Command="{Binding HaltLaserAlignMotorClickCommand}"
                 Style="{StaticResource HaltButtonStyle}"
-                Height="50" Width="150"
-                Margin="0,0,0,3"/>
+                Height="50" Width="180"
+                Margin="0,4,0,0"/>
 
       </StackPanel>
     </Border>
 
+    <!--Auto Align-->
     <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Margin="600,100,0,0">
+            Margin="660,410,0,0">
 
       <StackPanel VerticalAlignment="Stretch">
         <TextBlock Text="{lang:Loc Alignment_Auto_Align}"
@@ -146,8 +150,8 @@
 
         <Border BorderThickness="1"
                 BorderBrush="{StaticResource HaltButtonBackgroundHighlighted}"
-                Margin="0,0,0,5"
-                Width="250">
+                Margin="0,0,0,0"
+                Width="180">
 
           <StackPanel>
             <RadioButton Content="{lang:Loc OFF}"
@@ -193,15 +197,16 @@
         <Button Content="{lang:Loc Run}"
                 Command="{Binding RunAutoAlignClickCommand}"
                 Style="{StaticResource ButtonStyle}"
-                Height="50" Width="150"
-                Margin="0,0,0,3"/>
+                Height="50" Width="180"
+                Margin="0,8,0,0"/>
 
       </StackPanel>
     </Border>
     
+    <!--Align Sequence-->
     <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Margin="880,100,0,0">
+            Margin="630,120,0,0">
 
         <StackPanel VerticalAlignment="Stretch">
         <TextBlock Text="{lang:Loc Alignment_Align_Seq}"
@@ -216,17 +221,17 @@
         <Button Content="{lang:Loc Alignment_Scan}"
                 Command="{Binding ScanAlignSequenceClickCommand}"
                 Style="{StaticResource ButtonStyle}"
-                Height="50" Width="200"
+                Height="50" Width="180"
                 Margin="0,0,0,3"/>
         <Button Content="{lang:Loc Alignment_Find_Peak}"
                 Command="{Binding FindPeakAlignSequenceClickCommand}"
                 Style="{StaticResource ButtonStyle}"
-                Height="50" Width="200"
+                Height="50" Width="180"
                 Margin="0,0,0,3"/>
         <Button Content="{lang:Loc Alignment_GoTo_Peak}"
                 Command="{Binding GoToAlignSequenceClickCommand}"
                 Style="{StaticResource ButtonStyle}"
-                Height="50" Width="200"
+                Height="50" Width="180"
                 Margin="0,0,0,3"/>
 
         </StackPanel>

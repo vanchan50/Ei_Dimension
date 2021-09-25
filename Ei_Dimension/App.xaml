@@ -18,8 +18,8 @@
       <SolidColorBrush x:Key="MenuButtonBackground" Color="#ededee"/>
       <SolidColorBrush x:Key="MenuButtonBackgroundActive" Color="#87abda"/>
       <FontFamily x:Key="AppTextFont">Segoe UI Semilight</FontFamily>
-      <System:Double x:Key="Table96Width">70</System:Double>
-      <System:Double x:Key="Table384Width">37</System:Double>
+      <System:Double x:Key="Table96Width">80</System:Double>
+      <System:Double x:Key="Table384Width">42</System:Double>
       <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/Styles/HeatmapSelectorStyle.xaml"/>
         <ResourceDictionary Source="/Styles/RadioButtonThemeStyle.xaml"/>

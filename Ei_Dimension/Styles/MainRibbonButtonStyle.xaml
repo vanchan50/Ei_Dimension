@@ -55,7 +55,7 @@
       <Setter Property="FontSize" Value="22"/>
       <Setter Property="Foreground" Value="{DynamicResource AppTextColor}"/>
       <Setter Property="Background" Value="Transparent"/>
-      <Setter Property="Margin" Value="0,0,20,0"/>
+      <Setter Property="Margin" Value="0,0,30,0"/>
     </Style.Setters>
 
 
