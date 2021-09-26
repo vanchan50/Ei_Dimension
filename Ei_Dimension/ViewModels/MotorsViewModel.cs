@@ -5,6 +5,7 @@ using DevExpress.Mvvm.UI;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Windows.Controls;
 
 namespace Ei_Dimension.ViewModels
 {
@@ -317,6 +318,11 @@ namespace Ei_Dimension.ViewModels
           App.SelectedTextBox = (this.GetType().GetProperty(nameof(ParametersZ)), this, 7);
           break;
       }
+    }
+
+    public void TextChanged(TextChangedEventArgs e)
+    {
+      App.InjectToFocusedTextbox(((TextBox)e.Source).Text, true);
     }
 
     public class DropDownButtonContents

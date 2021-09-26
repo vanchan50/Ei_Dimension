@@ -129,6 +129,7 @@
                     Text="{Binding SanitizeSecondsContent[0]}">
             <dxmvvm:Interaction.Behaviors>
               <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="0"/>
+              <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
             </dxmvvm:Interaction.Behaviors>
           </TextBox>
           <TextBlock Text="{lang:Loc Seconds}"

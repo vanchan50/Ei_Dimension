@@ -18,11 +18,12 @@ namespace Ei_Dimension
     public static SplashScreen SplashScreen { get; private set; }
     private DispatcherTimer _dispatcherTimer;
     private bool _workOrderPending;
+    private static bool _cancelKeyboardInjectionFlag;
     public App()
     {
       SplashScreen = Program.SplashScreen;
+      _cancelKeyboardInjectionFlag = false;
       SetLanguage("en-US");
-
       Device = new MicroCyDevice(typeof(USBConnection), useStaticMaps: true);
       try
       {
@@ -54,6 +55,7 @@ namespace Ei_Dimension
       _dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 500);
       _dispatcherTimer.Start();
       _workOrderPending = false;
+
     }
 
     public static int GetActiveMapIndex()
@@ -216,19 +218,29 @@ namespace Ei_Dimension
       #endregion
     }
 
-    public static void InjectToFocusedTextbox(string input)
+    public static void InjectToFocusedTextbox(string input, bool keyboardinput = false)
     {
-      if (SelectedTextBox.prop != null)
+      if (SelectedTextBox.prop != null && !_cancelKeyboardInjectionFlag)
       {
-        var temp = ((ObservableCollection<string>)SelectedTextBox.prop.GetValue(SelectedTextBox.VM))[SelectedTextBox.index];
-        if (input == "")
+        string temp = "";
+        if (keyboardinput)
         {
-          if(temp.Length > 0)
-            ((ObservableCollection<string>)SelectedTextBox.prop.GetValue(SelectedTextBox.VM))[SelectedTextBox.index] = temp =
-              temp.Remove(temp.Length - 1, 1);
+          temp = input;
         }
         else
-          ((ObservableCollection<string>)SelectedTextBox.prop.GetValue(SelectedTextBox.VM))[SelectedTextBox.index] = temp += input;
+        {
+          _cancelKeyboardInjectionFlag = true;
+           temp = ((ObservableCollection<string>)SelectedTextBox.prop.GetValue(SelectedTextBox.VM))[SelectedTextBox.index];
+          if (input == "")
+          {
+            if (temp.Length > 0)
+              ((ObservableCollection<string>)SelectedTextBox.prop.GetValue(SelectedTextBox.VM))[SelectedTextBox.index] = temp =
+                temp.Remove(temp.Length - 1, 1);
+          }
+          else
+            ((ObservableCollection<string>)SelectedTextBox.prop.GetValue(SelectedTextBox.VM))[SelectedTextBox.index] = temp += input;
+          _cancelKeyboardInjectionFlag = false;
+        }
         float fRes;
         int iRes;
         ushort usRes;

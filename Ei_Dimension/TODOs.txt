@@ -17,6 +17,9 @@ If "." is inserted into texbox that is meant to be for INT, round down/ make som
   cleaning up the App.InjectToTextbox()
 
 
+TextChanged eventhandler for every textbox, so it calls inject func
+
+
 App.GetActiveMapIndex() might be too much, consider adding a field to Device
 
 Fix bug with select all button in WellSelectView

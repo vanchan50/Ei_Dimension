@@ -89,6 +89,7 @@
                       Text="{Binding EventTriggerContents[0]}">
                 <dxmvvm:Interaction.Behaviors>
                   <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="1"/>
+                  <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
                 </dxmvvm:Interaction.Behaviors>
               </TextBox>
             </StackPanel>
@@ -107,6 +108,7 @@
                       Text="{Binding EventTriggerContents[1]}">
                 <dxmvvm:Interaction.Behaviors>
                   <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="2"/>
+                  <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
                 </dxmvvm:Interaction.Behaviors>
               </TextBox>
             </StackPanel>
@@ -125,6 +127,7 @@
                       Text="{Binding EventTriggerContents[2]}">
                 <dxmvvm:Interaction.Behaviors>
                   <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="3"/>
+                  <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
                 </dxmvvm:Interaction.Behaviors>
               </TextBox>
             </StackPanel>
@@ -264,6 +267,7 @@
                       Text="{Binding ClassificationTargetsContents[0]}">
                 <dxmvvm:Interaction.Behaviors>
                   <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="6"/>
+                  <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
                 </dxmvvm:Interaction.Behaviors>
               </TextBox>
               <TextBox HorizontalAlignment="Stretch"
@@ -272,6 +276,7 @@
                       Text="{Binding ClassificationTargetsContents[1]}">
                 <dxmvvm:Interaction.Behaviors>
                   <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="7"/>
+                  <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
                 </dxmvvm:Interaction.Behaviors>
               </TextBox>
               <TextBox HorizontalAlignment="Stretch"
@@ -280,6 +285,7 @@
                       Text="{Binding ClassificationTargetsContents[2]}">
                 <dxmvvm:Interaction.Behaviors>
                   <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="8"/>
+                  <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
                 </dxmvvm:Interaction.Behaviors>
               </TextBox>
               <TextBox HorizontalAlignment="Stretch"
@@ -288,6 +294,7 @@
                       Text="{Binding ClassificationTargetsContents[3]}">
                 <dxmvvm:Interaction.Behaviors>
                   <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="9"/>
+                  <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
                 </dxmvvm:Interaction.Behaviors>
               </TextBox>
               <TextBox HorizontalAlignment="Stretch"
@@ -296,6 +303,7 @@
                       Text="{Binding ClassificationTargetsContents[4]}">
                 <dxmvvm:Interaction.Behaviors>
                   <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="10"/>
+                  <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
                 </dxmvvm:Interaction.Behaviors>
               </TextBox>
             </StackPanel>
@@ -323,6 +331,7 @@
                  Text="{Binding CompensationPercentageContent[0]}">
           <dxmvvm:Interaction.Behaviors>
             <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="0"/>
+            <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
           </dxmvvm:Interaction.Behaviors>
         </TextBox>
       </StackPanel>
@@ -361,6 +370,7 @@
                      Text="{Binding DNRContents[0]}">
               <dxmvvm:Interaction.Behaviors>
                 <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="4"/>
+                <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
               </dxmvvm:Interaction.Behaviors>
             </TextBox>
             <TextBox Width="150"
@@ -370,6 +380,7 @@
                      Text="{Binding DNRContents[1]}">
               <dxmvvm:Interaction.Behaviors>
                 <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="5"/>
+                <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
               </dxmvvm:Interaction.Behaviors>
             </TextBox>
           </StackPanel>

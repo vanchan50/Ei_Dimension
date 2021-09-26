@@ -3,6 +3,7 @@ using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
 using System;
 using System.Collections.ObjectModel;
+using System.Windows.Controls;
 
 namespace Ei_Dimension.ViewModels
 {
@@ -75,6 +76,11 @@ namespace Ei_Dimension.ViewModels
           App.SelectedTextBox = (this.GetType().GetProperty(nameof(BaseFileName)), this, 0);
           break;
       }
+    }
+
+    public void TextChanged(TextChangedEventArgs e)
+    {
+      App.InjectToFocusedTextbox(((TextBox)e.Source).Text, true);
     }
   }
 }

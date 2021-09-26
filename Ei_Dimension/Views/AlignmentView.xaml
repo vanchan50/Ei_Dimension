@@ -44,6 +44,7 @@
                   Text="{Binding LastCalibratedPosition[0]}">
           <dxmvvm:Interaction.Behaviors>
             <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="0"/>
+            <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
           </dxmvvm:Interaction.Behaviors>
         </TextBox>
         <Button Content="{lang:Loc Alignment_GoTo}"
@@ -60,6 +61,7 @@
                   Text="{Binding LastCalibratedPosition[1]}">
           <dxmvvm:Interaction.Behaviors>
             <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="1"/>
+            <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
           </dxmvvm:Interaction.Behaviors>
         </TextBox>
 
@@ -89,6 +91,7 @@
                  Text="{Binding LaserAlignMotor[0]}">
           <dxmvvm:Interaction.Behaviors>
             <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="2"/>
+            <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
           </dxmvvm:Interaction.Behaviors>
         </TextBox>
 
