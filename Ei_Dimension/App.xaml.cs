@@ -895,148 +895,31 @@ namespace Ei_Dimension
           //  chart2.Series["CL1CL2"].Points.AddXY(cldp.xyclx, cldp.xycly);
         }
       }
-      DashboardViewModel.Instance.EventCountField[0] = Device.BeadCount.ToString();
-      if (DashboardViewModel.Instance.PressureMonToggleButtonState)
-        Device.MainCommand("Get FProperty", code: 0x22);
+      UpdateEventCounter();
+      UpdatePressureMonitor();
+      WellStateHandler();
+      WorkOrderHandler();
+      RegionsRenameHandler();
       //TODO: REmove: for map construction in another program
-    //  if (Device.Newmap)
-    //  {
-    //    //  chart2.Series["REGIONS"].Enabled = true;
-    //    Device.Newmap = false;
-    //    for (var x = 0; x < 255; x++)
-    //    {
-    //      for (int y = 0; y < 255; y++)
-    //      {
-    //        if (Device._classificationMap[x, y] > 0) //TODO: remove
-    //        {
-    //          float expx = (float)Math.Exp(x / 24.526);
-    //          float expy = (float)Math.Exp(y / 24.526);
-    //          //  chart2.Series["REGIONS"].Points.AddXY(expx, expy);
-    //        }
-    //      }
-    //    }
-    //  }
-      // end of well state machine
-      switch (Device.EndState)
+      /*
+      if (Device.Newmap)
       {
-        case 1:
-          {
-            Device.SavBeadCount = Device.BeadCount;   //save for stats
-            Device.SavingWellIdx = Device.CurrentWellIdx; //save the index of the currrent well for background file save
-            Device.MainCommand("End Sampling");    //sends message to instrument to stop sampling
-            Device.EndState++;
-            Console.WriteLine(string.Format("{0} Reporting End Sampling", DateTime.Now.ToString()));
-            break;
-          }
-        case 2:
-          {
-            _ = System.Threading.Tasks.Task.Run(Device.SaveBeadFile);
-            Device.EndState++;
-            Console.WriteLine(string.Format("{0} Reporting Background File Save Init", DateTime.Now.ToString()));
-            break;
-          }
-        case 3:
-          {
-            if (!DashboardViewModel.Instance.ActiveList.Contains("WASHING"))
-            {
-              Device.EndState++;  //wait here until alternate syringe is finished washing
-              Console.WriteLine(string.Format("{0} Reporting Washing Complete", DateTime.Now.ToString()));
-            }
-            else
-            {
-              Device.MainCommand("Get Property", code: 0xcc);
-              System.Threading.Thread.Sleep(10);  //this is kind of a loop. This is a polling delay
-            }
-            break;
-          }
-        case 4:
-          {
-            Device.WellNext();   //saves current well address for filename in state 5
-            Device.EndState++;
-            Console.WriteLine(string.Format("{0} Reporting Setting up next well", DateTime.Now.ToString()));
-            //highling the current well on the plate on the screen
-            /*
-            well384dgv.ClearSelection();
-            well96dgv.ClearSelection();
-            if (ExperimentViewModel.Instance.CurrentTableSize > 1)   
-            {
-              if (ExperimentViewModel.Instance.CurrentTableSize == 384)
-              {
-                well384dgv.Rows[m_MicroCy.readingRow].Cells[m_MicroCy.readingCol].Selected = true;
-                well384dgv.Refresh();
-              }
-              else
-              {
-                well96dgv.Rows[m_MicroCy.readingRow].Cells[m_MicroCy.readingCol].Selected = true;
-                well96dgv.Refresh();
-              }
-            }
-            */
-            break;
-          }
-        case 5:
-          {
-            Device.MainCommand("FlushCmdQueue");
-            Device.MainCommand("Set Property", code: 0xc3); //clear empty syringe token
-            Device.MainCommand("Set Property", code: 0xcb); //clear sync token to allow next sequence to execute
-            Device.EndBeadRead();
-            Device.EndState = 0;
-            if (Device.CurrentWellIdx == (Device.WellsToRead + 1)) //if only one more to go
-            {
-              //  woNumbertb.Text = "";
-              //  pltNumbertb.Text = "";
-              Device.MainCommand("Set Property", code: 0x19);  //bubble detect off
-            }
-            else
-            {
-              //  ClearCharts();
-              Array.Clear(Device.SscData, 0, 256);
-              Array.Clear(Device.Rp1Data, 0, 256);
-            }
-            Console.WriteLine(string.Format("{0} Reporting End of current well", DateTime.Now.ToString()));
-            break;
-          }
-      }
-
-      //see if work order is available
-      if (!DashboardViewModel.Instance.SystemControlSelectorState[0])
-      {
-        if (Device.IsNewWorkOrder())
+        //  chart2.Series["REGIONS"].Enabled = true;
+        Device.Newmap = false;
+        for (var x = 0; x < 255; x++)
         {
-          //  woNumbertb.Text = Device.WorkOrderName;
-          _workOrderPending = true;
+          for (int y = 0; y < 255; y++)
+          {
+            if (Device._classificationMap[x, y] > 0) //TODO: remove
+            {
+              float expx = (float)Math.Exp(x / 24.526);
+              float expy = (float)Math.Exp(y / 24.526);
+              //  chart2.Series["REGIONS"].Points.AddXY(expx, expy);
+            }
+          }
         }
       }
-      if (_workOrderPending == true)
-      {
-        if (DashboardViewModel.Instance.SystemControlSelectorState[1])  //no barcode required so allow start
-        {
-          DashboardViewModel.Instance.StartButtonEnabled = true;
-          _workOrderPending = false;
-        }
-        else if (DashboardViewModel.Instance.SystemControlSelectorState[2])    //barcode required
-        {
-          //if (videogoing & (video != null))
-          //{
-          //  BarcodeResult plateGUID = BarcodeReader.QuicklyReadOneBarcode(video, BarcodeEncoding.PDF417, true);
-          //  if (plateGUID != null)
-          //    pltNumbertb.Text = plateGUID.Value;
-          //}
-          //else
-          //  DashboardViewModel.Instance.ValidateBCodeButtonEnabled = true;
-        //  if (woNumbertb.Text == pltNumbertb.Text)
-        //  {
-        //    DashboardViewModel.Instance.StartButtonEnabled = true;
-        //    _workOrderPending = false;
-        //    Device.MainCommand("Set Property", code: 0x17); //leds off
-        //    DashboardViewModel.Instance.ValidateBCodeButtonEnabled = false;
-        //  }
-        //  else
-        //  {
-        //    //  pltNumbertb.BackColor = Color.Red;
-        //  }
-        }
-      }
+      */
     }
 
     private void TextBoxUpdater()
@@ -1575,6 +1458,172 @@ namespace Ei_Dimension
           DataAnalysisViewModel.Instance.CvItems[i] = Device.GStats[i].cv.ToString();
         }
       }
+    }
+
+    private void WellStateHandler()
+    {
+      // end of well state machine
+      switch (Device.EndState)
+      {
+        case 1:
+          {
+            Device.SavBeadCount = Device.BeadCount;   //save for stats
+            Device.SavingWellIdx = Device.CurrentWellIdx; //save the index of the currrent well for background file save
+            Device.MainCommand("End Sampling");    //sends message to instrument to stop sampling
+            Device.EndState++;
+            Console.WriteLine(string.Format("{0} Reporting End Sampling", DateTime.Now.ToString()));
+            break;
+          }
+        case 2:
+          {
+            _ = System.Threading.Tasks.Task.Run(Device.SaveBeadFile);
+            Device.EndState++;
+            Console.WriteLine(string.Format("{0} Reporting Background File Save Init", DateTime.Now.ToString()));
+            break;
+          }
+        case 3:
+          {
+            if (!DashboardViewModel.Instance.ActiveList.Contains("WASHING"))
+            {
+              Device.EndState++;  //wait here until alternate syringe is finished washing
+              Console.WriteLine(string.Format("{0} Reporting Washing Complete", DateTime.Now.ToString()));
+            }
+            else
+            {
+              Device.MainCommand("Get Property", code: 0xcc);
+              System.Threading.Thread.Sleep(10);  //this is kind of a loop. This is a polling delay
+            }
+            break;
+          }
+        case 4:
+          {
+            Device.WellNext();   //saves current well address for filename in state 5
+            Device.EndState++;
+            Console.WriteLine(string.Format("{0} Reporting Setting up next well", DateTime.Now.ToString()));
+            //highling the current well on the plate on the screen
+            /*
+            well384dgv.ClearSelection();
+            well96dgv.ClearSelection();
+            if (ExperimentViewModel.Instance.CurrentTableSize > 1)   
+            {
+              if (ExperimentViewModel.Instance.CurrentTableSize == 384)
+              {
+                well384dgv.Rows[m_MicroCy.readingRow].Cells[m_MicroCy.readingCol].Selected = true;
+                well384dgv.Refresh();
+              }
+              else
+              {
+                well96dgv.Rows[m_MicroCy.readingRow].Cells[m_MicroCy.readingCol].Selected = true;
+                well96dgv.Refresh();
+              }
+            }
+            */
+            break;
+          }
+        case 5:
+          {
+            Device.MainCommand("FlushCmdQueue");
+            Device.MainCommand("Set Property", code: 0xc3); //clear empty syringe token
+            Device.MainCommand("Set Property", code: 0xcb); //clear sync token to allow next sequence to execute
+            Device.EndBeadRead();
+            Device.EndState = 0;
+            if (Device.CurrentWellIdx == (Device.WellsToRead + 1)) //if only one more to go
+            {
+              //  woNumbertb.Text = "";
+              //  pltNumbertb.Text = "";
+              Device.MainCommand("Set Property", code: 0x19);  //bubble detect off
+            }
+            else
+            {
+              //  ClearCharts();
+              Array.Clear(Device.SscData, 0, 256);
+              Array.Clear(Device.Rp1Data, 0, 256);
+            }
+            Console.WriteLine(string.Format("{0} Reporting End of current well", DateTime.Now.ToString()));
+            break;
+          }
+      }
+    }
+
+    private void WorkOrderHandler()
+    {
+      //see if work order is available
+      if (!DashboardViewModel.Instance.SystemControlSelectorState[0])
+      {
+        if (Device.IsNewWorkOrder())
+        {
+          //  woNumbertb.Text = Device.WorkOrderName;
+          _workOrderPending = true;
+        }
+      }
+      if (_workOrderPending == true)
+      {
+        if (DashboardViewModel.Instance.SystemControlSelectorState[1])  //no barcode required so allow start
+        {
+          DashboardViewModel.Instance.StartButtonEnabled = true;
+          _workOrderPending = false;
+        }
+        else if (DashboardViewModel.Instance.SystemControlSelectorState[2])    //barcode required
+        {
+          //if (videogoing & (video != null))
+          //{
+          //  BarcodeResult plateGUID = BarcodeReader.QuicklyReadOneBarcode(video, BarcodeEncoding.PDF417, true);
+          //  if (plateGUID != null)
+          //    pltNumbertb.Text = plateGUID.Value;
+          //}
+          //else
+          //  DashboardViewModel.Instance.ValidateBCodeButtonEnabled = true;
+          //  if (woNumbertb.Text == pltNumbertb.Text)
+          //  {
+          //    DashboardViewModel.Instance.StartButtonEnabled = true;
+          //    _workOrderPending = false;
+          //    Device.MainCommand("Set Property", code: 0x17); //leds off
+          //    DashboardViewModel.Instance.ValidateBCodeButtonEnabled = false;
+          //  }
+          //  else
+          //  {
+          //    //  pltNumbertb.BackColor = Color.Red;
+          //  }
+        }
+      }
+    }
+
+    private void RegionsRenameHandler() //TODO: switch this logic to a Template use
+    {
+      if (DashboardViewModel.Instance.RegionsRenamed)
+      {
+        var RegionsList = Device.MapList[GetActiveMapIndex()].mapRegions;
+        for (var i = 0; i < RegionsList.Count; i++)
+        {
+          RegionsList[i] = new BeadRegion
+          {
+            regionNumber = RegionsList[i].regionNumber,
+            regionName = DashboardViewModel.Instance.RegionsList[i],
+            isActive = RegionsList[i].isActive,
+            isvector = RegionsList[i].isvector,
+            bitmaptype = RegionsList[i].bitmaptype,
+            centerhighorderidx = RegionsList[i].centerhighorderidx,
+            centermidorderidx = RegionsList[i].centermidorderidx,
+            centerloworderidx = RegionsList[i].centerloworderidx,
+            meanhighorder = RegionsList[i].meanhighorder,
+            meanmidorder = RegionsList[i].meanmidorder,
+            meanloworder = RegionsList[i].meanloworder,
+            meanrp1bg = RegionsList[i].meanrp1bg
+          };
+        }
+        DashboardViewModel.Instance.RegionsRenamed = false;
+      }
+    }
+
+    private void UpdateEventCounter()
+    {
+      DashboardViewModel.Instance.EventCountField[0] = Device.BeadCount.ToString();
+    }
+
+    private void UpdatePressureMonitor()
+    {
+      if (DashboardViewModel.Instance.PressureMonToggleButtonState)
+        Device.MainCommand("Get FProperty", code: 0x22);
     }
   }
 }

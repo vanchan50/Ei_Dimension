@@ -250,6 +250,9 @@ Coefficient</value>
   <data name="Components_Wash_B" xml:space="preserve">
     <value>Wash B</value>
   </data>
+  <data name="Dashboard_Name_Regions" xml:space="preserve">
+    <value>Name</value>
+  </data>
   <data name="Dashboard_Pressure_Mon" xml:space="preserve">
     <value>Pressure Monitor</value>
   </data>
@@ -258,6 +261,9 @@ Coefficient</value>
   </data>
   <data name="Dashboard_Pressure_Mon_Min" xml:space="preserve">
     <value>Min Pressure</value>
+  </data>
+  <data name="Dashboard_Select_Regions" xml:space="preserve">
+    <value>Sel</value>
   </data>
   <data name="DataAn_Calib_stats" xml:space="preserve">
     <value>Calibration
@@ -364,6 +370,9 @@ Coefficient</value>
   </data>
   <data name="Dropdown_Valve_Right" xml:space="preserve">
     <value>Valve Right</value>
+  </data>
+  <data name="Experiment_Active_Regions" xml:space="preserve">
+    <value>Active Regions</value>
   </data>
   <data name="Experiment_Agitate_Vol" xml:space="preserve">
     <value>Agitate Vol</value>

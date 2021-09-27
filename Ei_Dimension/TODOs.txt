@@ -17,8 +17,11 @@ If "." is inserted into texbox that is meant to be for INT, round down/ make som
   cleaning up the App.InjectToTextbox()
 
 
-TextChanged eventhandler for every textbox, so it calls inject func
 
+BeadRegion class has a new member regionName. every map json has to implement that. do it for DimensionMaps file.
+  Update on this: we'll actually use templates to keep regionName data.
+  RegionsRenameHandler() is for remake with template.
+  Added regionName field in BeadRegion struct is for deletion
 
 App.GetActiveMapIndex() might be too much, consider adding a field to Device
 

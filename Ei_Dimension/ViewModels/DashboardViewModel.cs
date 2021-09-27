@@ -1,15 +1,14 @@
 ﻿using DevExpress.Mvvm;
 using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
-using DevExpress.Xpf.Map;
 using System;
 using Ei_Dimension.Models;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
 using System.Windows;
-using System.Xml.Serialization;
 using System.Windows.Controls;
+using System.Threading.Tasks;
+using System.Reflection;
 
 namespace Ei_Dimension.ViewModels
 {
@@ -40,12 +39,15 @@ namespace Ei_Dimension.ViewModels
     public double MaxPressure { get; set; }
     public double MinPressure { get; set; }
     public virtual ObservableCollection<string> ActiveList { get; set; }
+    public virtual ObservableCollection<string> RegionsList { get; set; }
+    public bool RegionsRenamed { get; set; }
 
     public static DashboardViewModel Instance { get; private set; }
 
     private byte _systemControlSelectorIndex;
     private byte _selectedSpeedIndex;
     private byte _selectedChConfigIndex;
+    private bool _firstLoadflag;
 
     protected DashboardViewModel()
     {
@@ -111,6 +113,9 @@ namespace Ei_Dimension.ViewModels
       PressureMonToggleButtonState = false;
       PressureMon = new ObservableCollection<string> {"","",""};
       ActiveList = new ObservableCollection<string>();
+      RegionsList = new ObservableCollection<string>();
+      _firstLoadflag = false;
+      RegionsRenamed = false;
       Instance = this;
     }
 
@@ -289,7 +294,6 @@ namespace Ei_Dimension.ViewModels
       App.InjectToFocusedTextbox(((TextBox)e.Source).Text, true);
     }
 
-
     private MicroCy.Wells MakeWell(byte row, byte col)
     {
       MicroCy.Wells newwell = new MicroCy.Wells();
@@ -348,6 +352,25 @@ namespace Ei_Dimension.ViewModels
 
     }
 
+    public void FillRegions(bool loadByPage = false)
+    {
+      if (_firstLoadflag && loadByPage)
+      {
+        return;
+      }
+      _firstLoadflag = true;
+      RegionsRenamed = false;
+      Views.DashboardView.Instance.ClearTextBoxes();
+      RegionsList.Clear();
+      var i = 0;
+      foreach (var region in App.Device.ActiveMap.mapRegions)
+      {
+        RegionsList.Add(region.regionName);
+        Views.DashboardView.Instance.AddTextBox($"RegionsList[{i}]");
+        i++;
+      }
+    }
+
     public class DropDownButtonContents : Core.ObservableObject
     {
       public string Content
@@ -386,6 +409,7 @@ namespace Ei_Dimension.ViewModels
             _vm.SelectedClassiMapContent = Content;
             App.SetActiveMap(Content);
             App.Device.MainCommand("Set Property", code: 0xa9, parameter: (ushort)Index);
+            _vm.FillRegions();
             break;
           case 3:
             _vm.SelectedChConfigContent = Content;
@@ -405,6 +429,7 @@ namespace Ei_Dimension.ViewModels
             break;
           case 2:
             _vm.SelectedClassiMapContent = Content;
+            _vm.FillRegions();
             break;
           case 3:
             _vm.SelectedChConfigContent = Content;

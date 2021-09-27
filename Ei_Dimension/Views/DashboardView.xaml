@@ -8,12 +8,16 @@
              xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
              xmlns:ViewModels="clr-namespace:Ei_Dimension.ViewModels"
              xmlns:dxm="http://schemas.devexpress.com/winfx/2008/xaml/map"
-             x:Class="Ei_Dimension.Views.DashboardView"
              xmlns:System="clr-namespace:System;assembly=mscorlib"
              xmlns:lang="clr-namespace:Ei_Dimension.Language;assembly=Language"
+             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+             x:Class="Ei_Dimension.Views.DashboardView"
              mc:Ignorable="d"
              DataContext="{dxmvvm:ViewModelSource Type={x:Type ViewModels:DashboardViewModel}}"
              d:DesignHeight="785" d:DesignWidth="1353">
+  <dxmvvm:Interaction.Triggers>
+    <dxmvvm:EventToCommand EventName="Loaded" Command="{Binding FillRegionsCommand}" CommandParameter="true"/>
+  </dxmvvm:Interaction.Triggers>
   <Grid>
     <!--Pressure Monitor-->
     <StackPanel Orientation="Horizontal"
@@ -48,23 +52,20 @@
                IsReadOnly="True"
                Margin="8,8,8,0"
                Style="{StaticResource InputFieldStyle}"
-               Text="{Binding PressureMon[0]}">
-          </TextBox>
+               Text="{Binding PressureMon[0]}"/>
           <TextBox HorizontalAlignment="Stretch"
                IsReadOnly="True"
                Margin="8,8,8,0"
                Style="{StaticResource InputFieldStyle}"
-               Text="{Binding PressureMon[1]}">
-          </TextBox>
+               Text="{Binding PressureMon[1]}"/>
           <TextBox HorizontalAlignment="Stretch"
                IsReadOnly="True"
                Margin="8,8,8,8"
                Style="{StaticResource InputFieldStyle}"
-               Text="{Binding PressureMon[2]}">
-          </TextBox>
+               Text="{Binding PressureMon[2]}"/>
         </StackPanel>
       </Border>
-      
+
     </StackPanel>
 
     <!--System Monitor-->
@@ -83,11 +84,63 @@
         <ListBox 
              Width="150" Height="280"
              ItemsSource="{Binding ActiveList}"
-             FontSize="20">
-        </ListBox>
+             FontSize="20"/>
       </StackPanel>
     </Border>
 
+    <!--Active Regions-->
+    <Border HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Margin="800,50,0,0">
+      <StackPanel>
+        <TextBlock Text="{lang:Loc Experiment_Active_Regions}"
+                   FontFamily="{StaticResource AppTextFont}"
+                   FontSize="30"
+                   Width="218"
+                   FontWeight="UltraBold"
+                   TextAlignment="Center"
+                   Foreground="{StaticResource AppTextColor}"
+                   Margin="0,0,0,4"/>
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Left"
+                    Width="200" Height="60"
+                    Margin="0,0,0,4">
+          <RadioButton Content="{lang:Loc Dashboard_Select_Regions}"
+                       Style="{StaticResource RadioButtonHorizontalThemeStyle}"
+                       Width="100"
+                       FontSize="30"
+                       IsChecked="True">
+            <RadioButton.CommandParameter>
+              <System:Byte>1</System:Byte>
+            </RadioButton.CommandParameter>
+          </RadioButton>
+          <RadioButton Content="{lang:Loc Dashboard_Name_Regions}"
+                       Style="{StaticResource RadioButtonHorizontalThemeStyle}"
+                       Width="100"
+                       FontSize="30">
+            <RadioButton.CommandParameter>
+              <System:Byte>2</System:Byte>
+            </RadioButton.CommandParameter>
+          </RadioButton>
+        </StackPanel>
+        <ScrollViewer Width="218" Height="300">
+          <Border Background="{StaticResource RibbonBackgroundActive}">
+            <StackPanel Name="RegionsBorder"/>
+          </Border>
+        </ScrollViewer>
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Left"
+                    Width="200" Height="60"
+                    Margin="0,4,0,0">
+          <Button Width="98" Height="60"
+                  Margin="0,0,4,0"
+                  Style="{StaticResource LeftArrowButtonThemeStyle}"/>
+          <Button Width="98" Height="60"
+                  Style="{StaticResource RightArrowButtonThemeStyle}"/>
+        </StackPanel>
+      </StackPanel>
+    </Border>
+    
     <!--System Control-->
     <Border HorizontalAlignment="Left"
           VerticalAlignment="Top"
@@ -417,7 +470,7 @@
               <DataTemplate>
                 <ContentControl>
                   <dxb:BarButtonItem Content="{Binding Content}"  
-                                 ItemClick="{DXEvent 'Click((int)1)'}"/>
+                                 ItemClick="{DXEvent Click((int)1)}"/>
                 </ContentControl>
               </DataTemplate>
             </dxb:PopupMenu.ItemTemplate>
@@ -444,7 +497,7 @@
               <DataTemplate>
                 <ContentControl>
                   <dxb:BarButtonItem Content="{Binding Content}"  
-                                 ItemClick="{DXEvent 'Click((int)2)'}"/>
+                                 ItemClick="{DXEvent Click((int)2)}"/>
                 </ContentControl>
               </DataTemplate>
             </dxb:PopupMenu.ItemTemplate>
@@ -471,7 +524,7 @@
               <DataTemplate>
                 <ContentControl>
                   <dxb:BarButtonItem Content="{Binding Content}"  
-                                 ItemClick="{DXEvent 'Click((int)3)'}"/>
+                                 ItemClick="{DXEvent Click((int)3)}"/>
                 </ContentControl>
               </DataTemplate>
             </dxb:PopupMenu.ItemTemplate>

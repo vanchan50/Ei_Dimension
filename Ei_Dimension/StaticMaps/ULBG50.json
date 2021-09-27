@@ -3,6 +3,7 @@
     "mapRegions": [
       {
         "regionNumber": 1,
+        "regionName": "1",
         "isActive": true,
         "isvector": true,
         "bitmaptype": 3,
@@ -16,6 +17,7 @@
       },
       {
         "regionNumber": 2,
+        "regionName": "2",
         "isActive": true,
         "isvector": true,
         "bitmaptype": 3,
@@ -29,6 +31,7 @@
       },
       {
         "regionNumber": 3,
+        "regionName": "3",
         "isActive": true,
         "isvector": true,
         "bitmaptype": 3,
@@ -42,6 +45,7 @@
       },
       {
         "regionNumber": 4,
+        "regionName": "4",
         "isActive": true,
         "isvector": true,
         "bitmaptype": 3,
@@ -55,6 +59,7 @@
       },
       {
         "regionNumber": 5,
+        "regionName": "5",
         "isActive": true,
         "isvector": true,
         "bitmaptype": 3,
@@ -68,6 +73,7 @@
       },
       {
         "regionNumber": 6,
+        "regionName": "6",
         "isActive": true,
         "isvector": true,
         "bitmaptype": 3,
@@ -81,6 +87,7 @@
       },
       {
         "regionNumber": 7,
+        "regionName": "7",
         "isActive": true,
         "isvector": true,
         "bitmaptype": 3,
@@ -94,6 +101,7 @@
       },
       {
         "regionNumber": 8,
+        "regionName": "8",
         "isActive": true,
         "isvector": true,
         "bitmaptype": 3,
@@ -107,6 +115,7 @@
       },
       {
         "regionNumber": 9,
+        "regionName": "9",
         "isActive": true,
         "isvector": true,
         "bitmaptype": 2,
@@ -120,6 +129,7 @@
       },
       {
         "regionNumber": 10,
+        "regionName": "10",
         "isActive": true,
         "isvector": true,
         "bitmaptype": 3,
@@ -133,6 +143,7 @@
       },
       {
         "regionNumber": 11,
+        "regionName": "11",
         "isActive": true,
         "isvector": true,
         "bitmaptype": 2,
@@ -146,6 +157,7 @@
       },
       {
         "regionNumber": 12,
+        "regionName": "12",
         "isActive": true,
         "isvector": true,
         "bitmaptype": 2,

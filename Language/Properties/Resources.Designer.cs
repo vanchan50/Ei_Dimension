@@ -452,6 +452,15 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string Dashboard_Name_Regions {
+            get {
+                return ResourceManager.GetString("Dashboard_Name_Regions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Pressure Monitor.
         /// </summary>
         public static string Dashboard_Pressure_Mon {
@@ -475,6 +484,15 @@ namespace Ei_Dimension.Language {
         public static string Dashboard_Pressure_Mon_Min {
             get {
                 return ResourceManager.GetString("Dashboard_Pressure_Mon_Min", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sel.
+        /// </summary>
+        public static string Dashboard_Select_Regions {
+            get {
+                return ResourceManager.GetString("Dashboard_Select_Regions", resourceCulture);
             }
         }
         
@@ -791,6 +809,15 @@ namespace Ei_Dimension.Language {
         public static string Dropdown_Valve_Right {
             get {
                 return ResourceManager.GetString("Dropdown_Valve_Right", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Active Regions.
+        /// </summary>
+        public static string Experiment_Active_Regions {
+            get {
+                return ResourceManager.GetString("Experiment_Active_Regions", resourceCulture);
             }
         }
         
