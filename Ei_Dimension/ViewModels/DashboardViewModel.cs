@@ -15,12 +15,7 @@ namespace Ei_Dimension.ViewModels
   [POCOViewModel]
   public class DashboardViewModel
   {
-    public virtual Visibility ValidateBCodeButtonVisible { get; set; }
     public virtual ObservableCollection<string> EndRead { get; set; }
-    public virtual ObservableCollection<bool> SystemControlSelectorState { get; set; }
-    public virtual bool ValidateBCodeButtonEnabled { get; set; }
-    public virtual ObservableCollection<DropDownButtonContents> OrderItems { get; set; }
-    public virtual string SelectedOrderContent { get; set; }  //TODO: make private?
     public virtual ObservableCollection<bool> EndReadSelectorState { get; set; }
     public virtual ObservableCollection<string> Volumes { get; set; }
     public virtual string SelectedSpeedContent { get; set; }
@@ -29,6 +24,10 @@ namespace Ei_Dimension.ViewModels
     public virtual ObservableCollection<DropDownButtonContents> ClassiMapItems { get; set; }
     public virtual string SelectedChConfigContent { get; set; }
     public virtual ObservableCollection<DropDownButtonContents> ChConfigItems { get; set; }
+    public virtual string SelectedOrderContent { get; set; }
+    public virtual ObservableCollection<DropDownButtonContents> OrderItems { get; set; }
+    public virtual string SelectedSysControlContent { get; set; }
+    public virtual ObservableCollection<DropDownButtonContents> SysControlItems { get; set; }
 
     public virtual ObservableCollection<string> EventCountField { get; set; }
     public virtual bool StartButtonEnabled { get; set; }
@@ -44,26 +43,16 @@ namespace Ei_Dimension.ViewModels
 
     public static DashboardViewModel Instance { get; private set; }
 
-    private byte _systemControlSelectorIndex;
-    private byte _selectedSpeedIndex;
-    private byte _selectedChConfigIndex;
-    private byte _selectedOrderIndex;
+    public byte SelectedSystemControlIndex { get; set; }
+    public byte SelectedSpeedIndex { get; set; }
+    public byte SelectedChConfigIndex { get; set; }
+    public byte SelectedOrderIndex { get; set; }
+    public byte SelectedEndReadIndex { get; set; }
     private bool _firstLoadflag;
 
     protected DashboardViewModel()
     {
       EndRead = new ObservableCollection<string> { "100", "500" };
-      SystemControlSelectorState = new ObservableCollection<bool> { false, false, false };
-      SystemControlSelector(Settings.Default.SystemControl);
-      if (_systemControlSelectorIndex == 2)
-        ValidateBCodeButtonVisible = Visibility.Visible;
-      else
-        ValidateBCodeButtonVisible = Visibility.Hidden;
-      ValidateBCodeButtonEnabled = true;
-      if (_systemControlSelectorIndex == 0)
-        StartButtonEnabled = true;
-      else
-        StartButtonEnabled = false;
 
       EndReadSelectorState = new ObservableCollection<bool> { false, false, false };
       EndReadSelector(App.Device.TerminationType);
@@ -79,8 +68,8 @@ namespace Ei_Dimension.ViewModels
         new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_Hi_Speed), curCulture), this),
         new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_Hi_Sens), curCulture), this)
       };
-      _selectedSpeedIndex = 0;
-      SelectedSpeedContent = SpeedItems[_selectedSpeedIndex].Content;
+      SelectedSpeedIndex = 0;
+      SelectedSpeedContent = SpeedItems[SelectedSpeedIndex].Content;
       DropDownButtonContents.ResetIndex();
 
       ClassiMapItems = new ObservableCollection<DropDownButtonContents>();
@@ -102,8 +91,8 @@ namespace Ei_Dimension.ViewModels
         new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_Cells), curCulture), this),
         new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_FM3D), curCulture), this)
       };
-      _selectedChConfigIndex = 0;
-      SelectedChConfigContent = ChConfigItems[_selectedChConfigIndex].Content;
+      SelectedChConfigIndex = 0;
+      SelectedChConfigContent = ChConfigItems[SelectedChConfigIndex].Content;
       DropDownButtonContents.ResetIndex();
 
       OrderItems = new ObservableCollection<DropDownButtonContents>
@@ -111,12 +100,27 @@ namespace Ei_Dimension.ViewModels
         new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Column), curCulture), this),
         new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Row), curCulture), this),
       };
-      _selectedOrderIndex = 0; //Column
-      SelectedOrderContent = OrderItems[_selectedOrderIndex].Content;
+      SelectedOrderIndex = 0; //Column
+      SelectedOrderContent = OrderItems[SelectedOrderIndex].Content;
       DropDownButtonContents.ResetIndex();
 
-      EventCountField = new ObservableCollection<string> { "" };
+      SysControlItems = new ObservableCollection<DropDownButtonContents>
+      {
+        new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Experiment_Manual), curCulture), this),
+        new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Experiment_Work_Order), curCulture), this),
+        new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Experiment_Work_Order_Plus_Bcode), curCulture), this),
+      };
+      SelectedSystemControlIndex = Settings.Default.SystemControl;
+      SelectedSysControlContent = SysControlItems[SelectedSystemControlIndex].Content;
+      DropDownButtonContents.ResetIndex();
 
+      if (SelectedSystemControlIndex == 0)
+        StartButtonEnabled = true;
+      else
+        StartButtonEnabled = false;
+
+
+      EventCountField = new ObservableCollection<string> { "" };
 
       PressureMonToggleButtonState = false;
       PressureMon = new ObservableCollection<string> {"","",""};
@@ -139,40 +143,14 @@ namespace Ei_Dimension.ViewModels
       MinPressure = 9999999999;
     }
 
-    public void SystemControlSelector(byte num)
-    {
-      SystemControlSelectorState[0] = false;
-      SystemControlSelectorState[1] = false;
-      SystemControlSelectorState[2] = false;
-      SystemControlSelectorState[num] = true;
-      _systemControlSelectorIndex = num;
-      App.SetSystemControl(num);
-      if (num != 0)
-      {
-        ExperimentViewModel.Instance.WellSelectVisible = Visibility.Hidden;
-
-        if (num == 2)
-        {
-          ValidateBCodeButtonVisible = Visibility.Visible;
-        }
-        else
-          ValidateBCodeButtonVisible = Visibility.Hidden;
-      }
-      else
-      {
-        ExperimentViewModel.Instance.WellSelectVisible = Visibility.Visible;
-
-        ValidateBCodeButtonVisible = Visibility.Hidden;
-      }
-    }
-
     public void EndReadSelector(byte num)
     {
-      EndReadSelectorState[0] = false;
+       EndReadSelectorState[0] = false;
       EndReadSelectorState[1] = false;
       EndReadSelectorState[2] = false;
       EndReadSelectorState[num] = true;
       App.SetTerminationType(num);
+      SelectedEndReadIndex = num;
     }
 
     public void SetFixedVolumeButtonClick(ushort num)
@@ -208,7 +186,7 @@ namespace Ei_Dimension.ViewModels
       //find number of wells to read
       if (App.Device.WellsInOrder.Count < 1)
         return;
-      //btnEndRead.BackColor = Color.Tomato;  //TODO: ask about it
+      //btnEndRead.BackColor = Color.Tomato;
       StartButtonEnabled = false;
 
       App.Device.WellsToRead = App.Device.WellsInOrder.Count - 1;    //make zero based like well index is
@@ -245,26 +223,6 @@ namespace Ei_Dimension.ViewModels
         if (App.Device.WellsToRead > 0)   //if end read on tube or single well, nothing else is aspirated otherwise
           App.Device.WellsToRead = App.Device.CurrentWellIdx + 1; //just read the next well in order since it is already aspirated
       }
-      App.Device.Commands.Enqueue(new MicroCy.CommandStruct { Code = 0xa8, Command = 1, Parameter = 1 });  //test
-    }
-
-    public void ValidateBCodeButtonClick()
-    {
-      App.Device.MainCommand("Set Property", code: 0xad, parameter: 1); //move plate to best image distance
-      App.Device.ReadingRow = MotorsViewModel.Instance.RowColIndex.rowIndex;
-      App.Device.MainCommand("Set Property", code: 0xae);
-      App.Device.ReadingCol = MotorsViewModel.Instance.RowColIndex.colIndex;
-      App.Device.MainCommand("Set Property", code: 0x17, parameter: 1); //leds on
-      App.Device.MainCommand("Position Well Plate");
-      //if (videogoing == false)
-      //{
-      //  FinalVideo = new VideoCaptureDevice(VideoCaptureDevices[comboBox1.SelectedIndex].MonikerString);
-      //  FinalVideo.VideoResolution = FinalVideo.VideoCapabilities[7]; //It selects the default size
-      //  FinalVideo.NewFrame += new NewFrameEventHandler(FinalVideo_NewFrame);
-      //  videogoing = true;
-      //}
-      //
-      //FinalVideo.Start();
     }
 
     public void FocusedBox(int num)
@@ -299,7 +257,7 @@ namespace Ei_Dimension.ViewModels
       MicroCy.Wells newwell = new MicroCy.Wells();
       newwell.rowIdx = row;
       newwell.colIdx = col;
-      newwell.runSpeed = _selectedSpeedIndex;
+      newwell.runSpeed = SelectedSpeedIndex;
       short sRes = 0;
       _ = short.TryParse(Volumes[0], out sRes);
       newwell.sampVol = sRes;
@@ -310,7 +268,7 @@ namespace Ei_Dimension.ViewModels
       _ = short.TryParse(Volumes[2], out sRes);
       newwell.agitateVol = sRes;
       newwell.termType = App.Device.TerminationType;
-      newwell.chanConfig = _selectedChConfigIndex;
+      newwell.chanConfig = SelectedChConfigIndex;
       newwell.regTermCnt = App.Device.MinPerRegion;
       newwell.termCnt = App.Device.BeadsToCapture;
       newwell.thisWellsMap = App.Device.ActiveMap;
@@ -324,7 +282,7 @@ namespace Ei_Dimension.ViewModels
       {
         ObservableCollection<WellTableRow> plate = WellsSelectViewModel.Instance.CurrentTableSize == 96 ?
           WellsSelectViewModel.Instance.Table96Wells : WellsSelectViewModel.Instance.Table384Wells;
-        if (_systemControlSelectorIndex == 0)  //manual control of plate //TODO: SystemControl can be removed from device fields maybe?
+        if (SelectedSystemControlIndex == 0)  //manual control of plate //TODO: SystemControl can be removed from device fields maybe?
         {
           for (byte r = 0; r < plate.Count; r++)
           {
@@ -334,7 +292,7 @@ namespace Ei_Dimension.ViewModels
                 App.Device.WellsInOrder.Add(MakeWell(r, c));
             }
           }
-          if (_selectedOrderIndex == 0)
+          if (SelectedOrderIndex == 0)
           {
             //sort list by col/row
             App.Device.WellsInOrder.Sort((x, y) => x.colIdx.CompareTo(y.colIdx));
@@ -365,7 +323,7 @@ namespace Ei_Dimension.ViewModels
       var i = 0;
       foreach (var region in App.Device.ActiveMap.mapRegions)
       {
-        RegionsList.Add(region.regionName);
+        RegionsList.Add(region.regionNumber.ToString());
         Views.DashboardView.Instance.AddTextBox($"RegionsList[{i}]");
         i++;
       }
@@ -402,7 +360,7 @@ namespace Ei_Dimension.ViewModels
         {
           case 1:
             _vm.SelectedSpeedContent = Content;
-            _vm._selectedSpeedIndex = Index;
+            _vm.SelectedSpeedIndex = Index;
             App.Device.MainCommand("Set Property", code: 0xaa, parameter: (ushort)Index);
             break;
           case 2:
@@ -413,13 +371,28 @@ namespace Ei_Dimension.ViewModels
             break;
           case 3:
             _vm.SelectedChConfigContent = Content;
-            _vm._selectedChConfigIndex = Index;
+            _vm.SelectedChConfigIndex = Index;
             App.Device.MainCommand("Set Property", code: 0xc2, parameter: (ushort)Index);
             break;
           case 4:
             _vm.SelectedOrderContent = Content;
-            _vm._selectedOrderIndex = Index;
+            _vm.SelectedOrderIndex = Index;
             App.Device.MainCommand("Set Property", code: 0xa8, parameter: (ushort)Index);
+            break;
+          case 5:
+            _vm.SelectedSysControlContent = Content;
+            _vm.SelectedSystemControlIndex = Index;
+            App.SetSystemControl(Index);
+            if (Index != 0)
+            {
+              ExperimentViewModel.Instance.WellSelectVisible = Visibility.Hidden;
+              _vm.StartButtonEnabled = false;
+            }
+            else
+            {
+              ExperimentViewModel.Instance.WellSelectVisible = Visibility.Visible;
+              _vm.StartButtonEnabled = true;
+            }
             break;
         }
       }
@@ -430,7 +403,7 @@ namespace Ei_Dimension.ViewModels
         {
           case 1:
             _vm.SelectedSpeedContent = Content;
-            _vm._selectedSpeedIndex = Index;
+            _vm.SelectedSpeedIndex = Index;
             break;
           case 2:
             _vm.SelectedClassiMapContent = Content;
@@ -438,11 +411,26 @@ namespace Ei_Dimension.ViewModels
             break;
           case 3:
             _vm.SelectedChConfigContent = Content;
-            _vm._selectedChConfigIndex = Index;
+            _vm.SelectedChConfigIndex = Index;
             break;
           case 4:
             _vm.SelectedOrderContent = Content;
-            _vm._selectedOrderIndex = Index;
+            _vm.SelectedOrderIndex = Index;
+            break;
+          case 5:
+            _vm.SelectedSysControlContent = Content;
+            _vm.SelectedSystemControlIndex = Index;
+            App.SetSystemControl(Index);
+            if (Index != 0)
+            {
+              ExperimentViewModel.Instance.WellSelectVisible = Visibility.Hidden;
+              _vm.StartButtonEnabled = false;
+            }
+            else
+            {
+              ExperimentViewModel.Instance.WellSelectVisible = Visibility.Visible;
+              _vm.StartButtonEnabled = true;
+            }
             break;
         }
       }

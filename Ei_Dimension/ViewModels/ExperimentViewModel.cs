@@ -5,9 +5,11 @@ using System.Collections.ObjectModel;
 using System.Windows;
 using Ei_Dimension.Models;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 using System.Windows.Controls;
 using System;
 using System.Linq;
+using System.IO;
 
 namespace Ei_Dimension.ViewModels
 {
@@ -29,8 +31,8 @@ namespace Ei_Dimension.ViewModels
 
       var curCulture = Language.TranslationSource.Instance.CurrentCulture;
       var RM = Language.Resources.ResourceManager;
-      DialogFilter = RM.GetString(nameof(Language.Resources.Text_Files),
-            curCulture) + "|*.txt|" + RM.GetString(nameof(Language.Resources.All_Files),
+      DialogFilter = RM.GetString(nameof(Language.Resources.JSON_Files),
+            curCulture) + "|*.json|" + RM.GetString(nameof(Language.Resources.All_Files),
             curCulture) + "|*.*";
       DialogTitleSave = RM.GetString(nameof(Language.Resources.Experiment_Save_Template_Dialog_Title),
             curCulture);
@@ -76,9 +78,17 @@ namespace Ei_Dimension.ViewModels
       OpenFileDialogService.Title = DialogTitleLoad;
       if (OpenFileDialogService.ShowDialog())
       {
-        var file = OpenFileDialogService.File;
+        var file = OpenFileDialogService.GetFullFileName();
+        try
+        {
+          using (TextReader reader = new StreamReader(file))
+          {
+            var fileContents = reader.ReadToEnd();
+            App.AcquisitionTemplateLoaded(JsonConvert.DeserializeObject<AcquisitionTemplate>(fileContents));
+          }
+        }
+        catch { }
       }
-
     }
 
     public void SaveTemplate()
@@ -87,14 +97,33 @@ namespace Ei_Dimension.ViewModels
       SaveFileDialogService.Filter = DialogFilter;
       SaveFileDialogService.FilterIndex = 1;
       SaveFileDialogService.Title = DialogTitleSave;
-      SaveFileDialogService.DefaultExt = "txt";
+      SaveFileDialogService.DefaultExt = "json";
       //  SaveFileDialogService.DefaultFileName = DefaultFileName;
       if (SaveFileDialogService.ShowDialog())
       {
-        using (var stream = new System.IO.StreamWriter(SaveFileDialogService.OpenFile()))
+        try
         {
-          stream.Write("");
+          using (var stream = new StreamWriter(SaveFileDialogService.OpenFile()))
+          {
+            var temp = new AcquisitionTemplate();
+            temp.Name = SaveFileDialogService.File.Name;
+            temp.SysControl = DashboardViewModel.Instance.SelectedSystemControlIndex;
+            temp.ChConfig = DashboardViewModel.Instance.SelectedChConfigIndex;
+            temp.Order = DashboardViewModel.Instance.SelectedOrderIndex;
+            temp.Speed = DashboardViewModel.Instance.SelectedSpeedIndex;
+            temp.Map = DashboardViewModel.Instance.SelectedClassiMapContent;
+            temp.EndRead = DashboardViewModel.Instance.SelectedEndReadIndex;
+            temp.SampleVolume = uint.Parse(DashboardViewModel.Instance.Volumes[0]);
+            temp.WashVolume = uint.Parse(DashboardViewModel.Instance.Volumes[1]);
+            temp.AgitateVolume = uint.Parse(DashboardViewModel.Instance.Volumes[2]);
+            temp.MinPerRegion = uint.Parse(DashboardViewModel.Instance.EndRead[0]);
+            temp.TotalEvents = uint.Parse(DashboardViewModel.Instance.EndRead[1]);
+
+            var contents = JsonConvert.SerializeObject(temp);
+            _ = stream.WriteAsync(contents);
+          }
         }
+        catch { }
       }
     }
   }

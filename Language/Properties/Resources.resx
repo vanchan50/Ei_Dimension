@@ -503,6 +503,9 @@ Barcode</value>
   <data name="Halt" xml:space="preserve">
     <value>Halt</value>
   </data>
+  <data name="JSON_Files" xml:space="preserve">
+    <value>JSON Files</value>
+  </data>
   <data name="Language" xml:space="preserve">
     <value>Язык</value>
   </data>

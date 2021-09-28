@@ -55,17 +55,23 @@ namespace Ei_Dimension
       _dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 500);
       _dispatcherTimer.Start();
       _workOrderPending = false;
-
     }
 
     public static int GetActiveMapIndex()
     {
+      return GetMapIndex(Device.ActiveMap.mapName);
+    }
+
+    public static int GetMapIndex(string MapName)
+    {
       int i = 0;
       for (; i < Device.MapList.Count; i++)
       {
-        if (Device.MapList[i].mapName == Device.ActiveMap.mapName)
+        if (Device.MapList[i].mapName == MapName)
           break;
       }
+      if (i == Device.MapList.Count)
+        i = -1;
       return i;
     }
 
@@ -209,6 +215,10 @@ namespace Ei_Dimension
 
         DashVM.OrderItems[0].Content = RM.GetString(nameof(Language.Resources.Column), curCulture);
         DashVM.OrderItems[1].Content = RM.GetString(nameof(Language.Resources.Row), curCulture);
+
+        DashVM.SysControlItems[0].Content = RM.GetString(nameof(Language.Resources.Experiment_Manual), curCulture);
+        DashVM.SysControlItems[1].Content = RM.GetString(nameof(Language.Resources.Experiment_Work_Order), curCulture);
+        DashVM.SysControlItems[2].Content = RM.GetString(nameof(Language.Resources.Experiment_Work_Order_Plus_Bcode), curCulture);
       }
       var ExperimentVM = ExperimentViewModel.Instance;
       if (ExperimentVM != null)
@@ -887,6 +897,36 @@ namespace Ei_Dimension
       NumpadShow.prop.SetValue(NumpadShow.VM, Visibility.Hidden);
     }
 
+    public static void AcquisitionTemplateLoaded(Models.AcquisitionTemplate newTemplate)
+    {
+      try
+      {
+        var DashVM = DashboardViewModel.Instance;
+        DashVM.SpeedItems[newTemplate.Speed].Click(1);
+        DashVM.ClassiMapItems[GetMapIndex(newTemplate.Map)].Click(2);
+        DashVM.ChConfigItems[newTemplate.ChConfig].Click(3);
+        DashVM.OrderItems[newTemplate.Order].Click(4);
+        DashVM.SysControlItems[newTemplate.SysControl].Click(5);
+        DashVM.EndReadSelector(newTemplate.EndRead);
+        DashVM.EndRead[0] = newTemplate.MinPerRegion.ToString();
+        DashVM.FocusedBox(0);
+        InjectToFocusedTextbox(newTemplate.MinPerRegion.ToString(), true);
+        DashVM.EndRead[1] = newTemplate.TotalEvents.ToString();
+        DashVM.FocusedBox(1);
+        InjectToFocusedTextbox(newTemplate.TotalEvents.ToString(), true);
+        DashVM.Volumes[0] = newTemplate.SampleVolume.ToString();
+        DashVM.FocusedBox(2);
+        InjectToFocusedTextbox(newTemplate.SampleVolume.ToString(), true);
+        DashVM.Volumes[1] = newTemplate.WashVolume.ToString();
+        DashVM.FocusedBox(3);
+        InjectToFocusedTextbox(newTemplate.WashVolume.ToString(), true);
+        DashVM.Volumes[2] = newTemplate.AgitateVolume.ToString();
+        DashVM.FocusedBox(4);
+        InjectToFocusedTextbox(newTemplate.AgitateVolume.ToString(), true);
+      }
+      catch { }
+    }
+
     private static void TimerTick(object sender, EventArgs e)
     {
       TextBoxUpdater();
@@ -1542,7 +1582,7 @@ namespace Ei_Dimension
     private static void WorkOrderHandler()
     {
       //see if work order is available
-      if (!DashboardViewModel.Instance.SystemControlSelectorState[0])
+      if (DashboardViewModel.Instance.SelectedSystemControlIndex != 0)
       {
         if (Device.IsNewWorkOrder())
         {
@@ -1552,12 +1592,12 @@ namespace Ei_Dimension
       }
       if (_workOrderPending == true)
       {
-        if (DashboardViewModel.Instance.SystemControlSelectorState[1])  //no barcode required so allow start
+        if (DashboardViewModel.Instance.SelectedSystemControlIndex == 1)  //no barcode required so allow start
         {
           DashboardViewModel.Instance.StartButtonEnabled = true;
           _workOrderPending = false;
         }
-        else if (DashboardViewModel.Instance.SystemControlSelectorState[2])    //barcode required
+        else if (DashboardViewModel.Instance.SelectedSystemControlIndex == 2)    //barcode required
         {
           //if (videogoing & (video != null))
           //{
@@ -1592,7 +1632,6 @@ namespace Ei_Dimension
           RegionsList[i] = new BeadRegion
           {
             regionNumber = RegionsList[i].regionNumber,
-            regionName = DashboardViewModel.Instance.RegionsList[i],
             isActive = RegionsList[i].isActive,
             isvector = RegionsList[i].isvector,
             bitmaptype = RegionsList[i].bitmaptype,

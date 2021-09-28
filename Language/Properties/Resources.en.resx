@@ -563,8 +563,7 @@ Barcode</value>
     <value>Work Order</value>
   </data>
   <data name="Experiment_Work_Order_Plus_Bcode" xml:space="preserve">
-    <value>Work Order +
-     Barcode</value>
+    <value>Work Order + Barcode</value>
   </data>
   <data name="FileSave_Base_Filename" xml:space="preserve">
     <value>Base File Name</value>
@@ -598,6 +597,9 @@ Barcode</value>
   </data>
   <data name="Halt" xml:space="preserve">
     <value>Halt</value>
+  </data>
+  <data name="JSON_Files" xml:space="preserve">
+    <value>JSON Files</value>
   </data>
   <data name="Language" xml:space="preserve">
     <value>Language</value>

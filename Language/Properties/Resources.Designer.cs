@@ -1191,6 +1191,15 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to JSON Files.
+        /// </summary>
+        public static string JSON_Files {
+            get {
+                return ResourceManager.GetString("JSON_Files", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Язык.
         /// </summary>
         public static string Language {

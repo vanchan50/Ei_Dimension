@@ -6,7 +6,6 @@ namespace MicroCy
   public struct BeadRegion
   {
     public ushort regionNumber;
-    public string regionName;
     public bool isActive;
     public bool isvector;          //vector type maps are computed instead of described by map array
     public byte bitmaptype;
