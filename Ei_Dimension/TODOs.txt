@@ -16,7 +16,7 @@ App.InjectToTextbox() needs cleanup after it is finished
 If "." is inserted into texbox that is meant to be for INT, round down/ make some alert/<<< or don't accept the ".">>> do that after
   cleaning up the App.InjectToTextbox()
 
-
+GetProperty still goes to textboxupdater and changes properties
 
 BeadRegion class has a new member regionName. every map json has to implement that. do it for DimensionMaps file.
   Update on this: we'll actually use templates to keep regionName data.

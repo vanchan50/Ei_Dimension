@@ -16,8 +16,8 @@ namespace Ei_Dimension
     public static (PropertyInfo prop, object VM, int index) SelectedTextBox { get; set; }
     public static MicroCyDevice Device { get; private set; }
     public static SplashScreen SplashScreen { get; private set; }
-    private DispatcherTimer _dispatcherTimer;
-    private bool _workOrderPending;
+    private static DispatcherTimer _dispatcherTimer;
+    private static bool _workOrderPending;
     private static bool _cancelKeyboardInjectionFlag;
     public App()
     {
@@ -206,6 +206,9 @@ namespace Ei_Dimension
         DashVM.ChConfigItems[0].Content = RM.GetString(nameof(Language.Resources.Dropdown_Standard), curCulture);
         DashVM.ChConfigItems[1].Content = RM.GetString(nameof(Language.Resources.Dropdown_Cells), curCulture);
         DashVM.ChConfigItems[2].Content = RM.GetString(nameof(Language.Resources.Dropdown_FM3D), curCulture);
+
+        DashVM.OrderItems[0].Content = RM.GetString(nameof(Language.Resources.Column), curCulture);
+        DashVM.OrderItems[1].Content = RM.GetString(nameof(Language.Resources.Row), curCulture);
       }
       var ExperimentVM = ExperimentViewModel.Instance;
       if (ExperimentVM != null)
@@ -884,7 +887,7 @@ namespace Ei_Dimension
       NumpadShow.prop.SetValue(NumpadShow.VM, Visibility.Hidden);
     }
 
-    private void TimerTick(object sender, EventArgs e)
+    private static void TimerTick(object sender, EventArgs e)
     {
       TextBoxUpdater();
       while (Device.ClData.Count != 0)
@@ -922,7 +925,7 @@ namespace Ei_Dimension
       */
     }
 
-    private void TextBoxUpdater()
+    private static void TextBoxUpdater()
     {
       float g = 0;
       while (Device.Commands.Count != 0)
@@ -1262,16 +1265,7 @@ namespace Ei_Dimension
               ChannelsViewModel.Instance.TcompBiasParameters[5] = exe.Parameter.ToString();
               break;
             case 0xa8:
-              if (exe.Parameter == 1)
-              {
-                DashboardViewModel.Instance.OrderSelectorStateBool[0] = false;
-                DashboardViewModel.Instance.OrderSelectorStateBool[1] = true;
-              }
-              else
-              {
-                DashboardViewModel.Instance.OrderSelectorStateBool[0] = true;
-                DashboardViewModel.Instance.OrderSelectorStateBool[1] = false;
-              }
+              DashboardViewModel.Instance.OrderItems[exe.Parameter].ForAppUpdater(4);
               break;
             case 0xa9:
               DashboardViewModel.Instance.ClassiMapItems[exe.Parameter].ForAppUpdater(2);
@@ -1460,7 +1454,7 @@ namespace Ei_Dimension
       }
     }
 
-    private void WellStateHandler()
+    private static void WellStateHandler()
     {
       // end of well state machine
       switch (Device.EndState)
@@ -1545,7 +1539,7 @@ namespace Ei_Dimension
       }
     }
 
-    private void WorkOrderHandler()
+    private static void WorkOrderHandler()
     {
       //see if work order is available
       if (!DashboardViewModel.Instance.SystemControlSelectorState[0])
@@ -1588,7 +1582,7 @@ namespace Ei_Dimension
       }
     }
 
-    private void RegionsRenameHandler() //TODO: switch this logic to a Template use
+    private static void RegionsRenameHandler() //TODO: switch this logic to a Template use
     {
       if (DashboardViewModel.Instance.RegionsRenamed)
       {
@@ -1615,12 +1609,12 @@ namespace Ei_Dimension
       }
     }
 
-    private void UpdateEventCounter()
+    private static void UpdateEventCounter()
     {
       DashboardViewModel.Instance.EventCountField[0] = Device.BeadCount.ToString();
     }
 
-    private void UpdatePressureMonitor()
+    private static void UpdatePressureMonitor()
     {
       if (DashboardViewModel.Instance.PressureMonToggleButtonState)
         Device.MainCommand("Get FProperty", code: 0x22);

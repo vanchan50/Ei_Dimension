@@ -19,8 +19,8 @@ namespace Ei_Dimension.ViewModels
     public virtual ObservableCollection<string> EndRead { get; set; }
     public virtual ObservableCollection<bool> SystemControlSelectorState { get; set; }
     public virtual bool ValidateBCodeButtonEnabled { get; set; }
-    public virtual byte OrderSelectorState { get; set; }
-    public virtual ObservableCollection<bool> OrderSelectorStateBool { get; set; }
+    public virtual ObservableCollection<DropDownButtonContents> OrderItems { get; set; }
+    public virtual string SelectedOrderContent { get; set; }  //TODO: make private?
     public virtual ObservableCollection<bool> EndReadSelectorState { get; set; }
     public virtual ObservableCollection<string> Volumes { get; set; }
     public virtual string SelectedSpeedContent { get; set; }
@@ -47,6 +47,7 @@ namespace Ei_Dimension.ViewModels
     private byte _systemControlSelectorIndex;
     private byte _selectedSpeedIndex;
     private byte _selectedChConfigIndex;
+    private byte _selectedOrderIndex;
     private bool _firstLoadflag;
 
     protected DashboardViewModel()
@@ -64,8 +65,6 @@ namespace Ei_Dimension.ViewModels
       else
         StartButtonEnabled = false;
 
-      OrderSelectorState = 0; //Column
-      OrderSelectorStateBool = new ObservableCollection<bool> { true, false };
       EndReadSelectorState = new ObservableCollection<bool> { false, false, false };
       EndReadSelector(App.Device.TerminationType);
 
@@ -105,6 +104,15 @@ namespace Ei_Dimension.ViewModels
       };
       _selectedChConfigIndex = 0;
       SelectedChConfigContent = ChConfigItems[_selectedChConfigIndex].Content;
+      DropDownButtonContents.ResetIndex();
+
+      OrderItems = new ObservableCollection<DropDownButtonContents>
+      {
+        new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Column), curCulture), this),
+        new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Row), curCulture), this),
+      };
+      _selectedOrderIndex = 0; //Column
+      SelectedOrderContent = OrderItems[_selectedOrderIndex].Content;
       DropDownButtonContents.ResetIndex();
 
       EventCountField = new ObservableCollection<string> { "" };
@@ -156,15 +164,6 @@ namespace Ei_Dimension.ViewModels
 
         ValidateBCodeButtonVisible = Visibility.Hidden;
       }
-    }
-
-    public void OrderSelector(byte num)
-    {
-      OrderSelectorState = num;
-      OrderSelectorStateBool[0] = false;
-      OrderSelectorStateBool[1] = false;
-      OrderSelectorStateBool[num] = true;
-      App.Device.MainCommand("Set Property", code: 0xa8, parameter: num);
     }
 
     public void EndReadSelector(byte num)
@@ -246,6 +245,7 @@ namespace Ei_Dimension.ViewModels
         if (App.Device.WellsToRead > 0)   //if end read on tube or single well, nothing else is aspirated otherwise
           App.Device.WellsToRead = App.Device.CurrentWellIdx + 1; //just read the next well in order since it is already aspirated
       }
+      App.Device.Commands.Enqueue(new MicroCy.CommandStruct { Code = 0xa8, Command = 1, Parameter = 1 });  //test
     }
 
     public void ValidateBCodeButtonClick()
@@ -334,7 +334,7 @@ namespace Ei_Dimension.ViewModels
                 App.Device.WellsInOrder.Add(MakeWell(r, c));
             }
           }
-          if (OrderSelectorState == 0)
+          if (_selectedOrderIndex == 0)
           {
             //sort list by col/row
             App.Device.WellsInOrder.Sort((x, y) => x.colIdx.CompareTo(y.colIdx));
@@ -416,6 +416,11 @@ namespace Ei_Dimension.ViewModels
             _vm._selectedChConfigIndex = Index;
             App.Device.MainCommand("Set Property", code: 0xc2, parameter: (ushort)Index);
             break;
+          case 4:
+            _vm.SelectedOrderContent = Content;
+            _vm._selectedOrderIndex = Index;
+            App.Device.MainCommand("Set Property", code: 0xa8, parameter: (ushort)Index);
+            break;
         }
       }
 
@@ -434,6 +439,10 @@ namespace Ei_Dimension.ViewModels
           case 3:
             _vm.SelectedChConfigContent = Content;
             _vm._selectedChConfigIndex = Index;
+            break;
+          case 4:
+            _vm.SelectedOrderContent = Content;
+            _vm._selectedOrderIndex = Index;
             break;
         }
       }
