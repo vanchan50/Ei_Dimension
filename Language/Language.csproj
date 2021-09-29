@@ -79,6 +79,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <CustomToolNamespace>Ei_Dimension.Language</CustomToolNamespace>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.zh.resx" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,0 +1,732 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Alignment_Align_Seq" xml:space="preserve">
+    <value>对准顺序</value>
+  </data>
+  <data name="Alignment_Auto_Align" xml:space="preserve">
+    <value>自动对准</value>
+  </data>
+  <data name="Alignment_Find_Peak" xml:space="preserve">
+    <value>查找峰值</value>
+  </data>
+  <data name="Alignment_GoTo" xml:space="preserve">
+    <value>转到</value>
+  </data>
+  <data name="Alignment_GoTo_Peak" xml:space="preserve">
+    <value>转到峰值</value>
+  </data>
+  <data name="Alignment_Last_Calib_Pos" xml:space="preserve">
+    <value>上次校准位置</value>
+  </data>
+  <data name="Alignment_Left" xml:space="preserve">
+    <value>左</value>
+  </data>
+  <data name="Alignment_Right" xml:space="preserve">
+    <value>右</value>
+  </data>
+  <data name="Alignment_Scan" xml:space="preserve">
+    <value>扫描</value>
+  </data>
+  <data name="All Files" xml:space="preserve">
+    <value>所有文件</value>
+  </data>
+  <data name="Calibration_Calibration" xml:space="preserve">
+    <value>校准</value>
+  </data>
+  <data name="Calibration_Classification_targets" xml:space="preserve">
+    <value>分类目标</value>
+  </data>
+  <data name="Calibration_Classification_To_map" xml:space="preserve">
+    <value>分类到当前珠图</value>
+  </data>
+  <data name="Calibration_Compensation_Percent" xml:space="preserve">
+    <value>RP1 至 CL1
+补偿百分比</value>
+  </data>
+  <data name="Calibration_Event_Trigger" xml:space="preserve">
+    <value>事件触发</value>
+  </data>
+  <data name="Calibration_Gating" xml:space="preserve">
+    <value>设门</value>
+  </data>
+  <data name="Calibration_Height" xml:space="preserve">
+    <value>高度</value>
+  </data>
+  <data name="Calibration_High_DNR_Coeff" xml:space="preserve">
+    <value>高动态范围系数</value>
+  </data>
+  <data name="Calibration_High_DNR_Trans" xml:space="preserve">
+    <value>高动态范围转换</value>
+  </data>
+  <data name="Calibration_Max_SSC" xml:space="preserve">
+    <value>最大SSC</value>
+  </data>
+  <data name="Calibration_Min_SSC" xml:space="preserve">
+    <value>最小SSC</value>
+  </data>
+  <data name="Calibration_Save_Calibration_To_Map" xml:space="preserve">
+    <value>保存校准到当前珠图</value>
+  </data>
+  <data name="Channels_Background" xml:space="preserve">
+    <value>背景</value>
+  </data>
+  <data name="Channels_Bias" xml:space="preserve">
+    <value>偏置 @ 30ᴼC</value>
+  </data>
+  <data name="Channels_Forward_Scatter" xml:space="preserve">
+    <value>前向散射</value>
+  </data>
+  <data name="Channels_Green_A" xml:space="preserve">
+    <value>绿光 A (SSC)</value>
+  </data>
+  <data name="Channels_Green_B" xml:space="preserve">
+    <value>绿光 B (PE 2%)</value>
+  </data>
+  <data name="Channels_Green_C" xml:space="preserve">
+    <value>绿光 C PE</value>
+  </data>
+  <data name="Channels_Red_A" xml:space="preserve">
+    <value>红光 A (CL3)</value>
+  </data>
+  <data name="Channels_Red_B" xml:space="preserve">
+    <value>红光 B (SSC)</value>
+  </data>
+  <data name="Channels_Red_C" xml:space="preserve">
+    <value>红光 C (CL1)</value>
+  </data>
+  <data name="Channels_Red_D" xml:space="preserve">
+    <value>红光 D (CL2)</value>
+  </data>
+  <data name="Channels_Save_Bias_To_Map" xml:space="preserve">
+    <value>保存偏置到当前珠图</value>
+  </data>
+  <data name="Channels_Set_Offset" xml:space="preserve">
+    <value>设置偏移</value>
+  </data>
+  <data name="Channels_SiPM_Temp_Coefficient" xml:space="preserve">
+    <value>   SiPM
+温度系数</value>
+  </data>
+  <data name="Channels_Tcomp_Bias" xml:space="preserve">
+    <value>Tcomp偏置</value>
+  </data>
+  <data name="Channels_Update_Bias" xml:space="preserve">
+    <value>更新偏置</value>
+  </data>
+  <data name="Channels_Violet_A" xml:space="preserve">
+    <value>紫光 A (SSC)</value>
+  </data>
+  <data name="Channels_Violet_B" xml:space="preserve">
+    <value>紫光 B (CL0)</value>
+  </data>
+  <data name="Ch_Offset_Ch_Offset" xml:space="preserve">
+    <value>通道偏移</value>
+  </data>
+  <data name="CL0" xml:space="preserve">
+    <value>CL0</value>
+  </data>
+  <data name="CL1" xml:space="preserve">
+    <value>CL1</value>
+  </data>
+  <data name="CL2" xml:space="preserve">
+    <value>CL2</value>
+  </data>
+  <data name="CL3" xml:space="preserve">
+    <value>CL3</value>
+  </data>
+  <data name="Column" xml:space="preserve">
+    <value>列</value>
+  </data>
+  <data name="Components_Cuvet_Drain_Open" xml:space="preserve">
+    <value>流通池排水阀 开</value>
+  </data>
+  <data name="Components_Fan" xml:space="preserve">
+    <value>风扇</value>
+  </data>
+  <data name="Components_Fluidics" xml:space="preserve">
+    <value>流体</value>
+  </data>
+  <data name="Components_Flush" xml:space="preserve">
+    <value>冲洗</value>
+  </data>
+  <data name="Components_Get_Pos" xml:space="preserve">
+    <value>获取位置</value>
+  </data>
+  <data name="Components_Input_Sel" xml:space="preserve">
+    <value>输入选择</value>
+  </data>
+  <data name="Components_Lasers" xml:space="preserve">
+    <value>激光器</value>
+  </data>
+  <data name="Components_Max_Steps" xml:space="preserve">
+    <value>最大步数</value>
+  </data>
+  <data name="Components_Move_Idex" xml:space="preserve">
+    <value>移动 Idex</value>
+  </data>
+  <data name="Components_Position" xml:space="preserve">
+    <value>位置</value>
+  </data>
+  <data name="Components_Prime" xml:space="preserve">
+    <value>灌注</value>
+  </data>
+  <data name="Components_Sampling_ON" xml:space="preserve">
+    <value>采样开启</value>
+  </data>
+  <data name="Components_Sheath" xml:space="preserve">
+    <value>鞘液</value>
+  </data>
+  <data name="Components_Singl_Step_Deb" xml:space="preserve">
+    <value>单步调试</value>
+  </data>
+  <data name="Components_Startup" xml:space="preserve">
+    <value>启动</value>
+  </data>
+  <data name="Components_Syringe_Ctrl" xml:space="preserve">
+    <value>注射泵控制</value>
+  </data>
+  <data name="Components_To_Cuvet" xml:space="preserve">
+    <value>到流通池</value>
+  </data>
+  <data name="Components_To_Pickup" xml:space="preserve">
+    <value>到拾取</value>
+  </data>
+  <data name="Components_Valve1" xml:space="preserve">
+    <value>阀门 1</value>
+  </data>
+  <data name="Components_Valve2" xml:space="preserve">
+    <value>阀门 2</value>
+  </data>
+  <data name="Components_Valves" xml:space="preserve">
+    <value>阀门</value>
+  </data>
+  <data name="Components_Wash_A" xml:space="preserve">
+    <value>清洗 A</value>
+  </data>
+  <data name="Components_Wash_B" xml:space="preserve">
+    <value>清洗 B</value>
+  </data>
+  <data name="Dashboard_Pressure_Mon" xml:space="preserve">
+    <value>压力监测器</value>
+  </data>
+  <data name="Dashboard_Pressure_Mon_Max" xml:space="preserve">
+    <value>最大压力</value>
+  </data>
+  <data name="Dashboard_Pressure_Mon_Min" xml:space="preserve">
+    <value>最小压力</value>
+  </data>
+  <data name="DataAn_Calib_stats" xml:space="preserve">
+    <value>校准统计</value>
+  </data>
+  <data name="DataAn_FSC" xml:space="preserve">
+    <value>前向散射</value>
+  </data>
+  <data name="DataAn_Green_Maj" xml:space="preserve">
+    <value>绿光  主</value>
+  </data>
+  <data name="DataAn_Green_Min" xml:space="preserve">
+    <value>绿光  次</value>
+  </data>
+  <data name="DataAn_Green_SSC" xml:space="preserve">
+    <value>绿光  SSC</value>
+  </data>
+  <data name="DataAn_Red_SSC" xml:space="preserve">
+    <value>红光SSC</value>
+  </data>
+  <data name="DataAn_Violet_SSC" xml:space="preserve">
+    <value>紫光SSC</value>
+  </data>
+  <data name="Dropdown_Boot" xml:space="preserve">
+    <value>启动</value>
+  </data>
+  <data name="Dropdown_Cells" xml:space="preserve">
+    <value>细胞</value>
+  </data>
+  <data name="Dropdown_Green_Red_Rp_bg" xml:space="preserve">
+    <value>绿光+红光+RP bg</value>
+  </data>
+  <data name="Dropdown_Green_Red_SSC" xml:space="preserve">
+    <value>绿光+红光 SSC</value>
+  </data>
+  <data name="Dropdown_Green_Rp_bg" xml:space="preserve">
+    <value>绿光+RP bg</value>
+  </data>
+  <data name="Dropdown_Green_SSC" xml:space="preserve">
+    <value>绿光 SSC</value>
+  </data>
+  <data name="Dropdown_Halt" xml:space="preserve">
+    <value>停止</value>
+  </data>
+  <data name="Dropdown_Hi_Sens" xml:space="preserve">
+    <value>高灵敏度</value>
+  </data>
+  <data name="Dropdown_Hi_Speed" xml:space="preserve">
+    <value>高速</value>
+  </data>
+  <data name="Dropdown_Initialize" xml:space="preserve">
+    <value>初始化</value>
+  </data>
+  <data name="Dropdown_Micro_step" xml:space="preserve">
+    <value>微步进</value>
+  </data>
+  <data name="Dropdown_Move_Absolute" xml:space="preserve">
+    <value>绝对移动</value>
+  </data>
+  <data name="Dropdown_None" xml:space="preserve">
+    <value>无</value>
+  </data>
+  <data name="Dropdown_Normal" xml:space="preserve">
+    <value>正常</value>
+  </data>
+  <data name="Dropdown_Pickup" xml:space="preserve">
+    <value>拾取</value>
+  </data>
+  <data name="Dropdown_Pos" xml:space="preserve">
+    <value>位置</value>
+  </data>
+  <data name="Dropdown_Pre_inject" xml:space="preserve">
+    <value>预注入</value>
+  </data>
+  <data name="Dropdown_Red_Rp_bg" xml:space="preserve">
+    <value>红光+RP bg</value>
+  </data>
+  <data name="Dropdown_Red_SSC" xml:space="preserve">
+    <value>红光 SSC</value>
+  </data>
+  <data name="Dropdown_Speed" xml:space="preserve">
+    <value>速度</value>
+  </data>
+  <data name="Dropdown_Speed_Preset" xml:space="preserve">
+    <value>速度预置</value>
+  </data>
+  <data name="Dropdown_Standard" xml:space="preserve">
+    <value>标准</value>
+  </data>
+  <data name="Dropdown_Valve_Left" xml:space="preserve">
+    <value>阀门 左</value>
+  </data>
+  <data name="Dropdown_Valve_Right" xml:space="preserve">
+    <value>阀门 右</value>
+  </data>
+  <data name="Experiment_Agitate_Vol" xml:space="preserve">
+    <value>搅动量</value>
+  </data>
+  <data name="Experiment_Ch_Config" xml:space="preserve">
+    <value>通道配置</value>
+  </data>
+  <data name="Experiment_Classific_Map" xml:space="preserve">
+    <value>分类珠图</value>
+  </data>
+  <data name="Experiment_Dashboard" xml:space="preserve">
+    <value>控制面板</value>
+  </data>
+  <data name="Experiment_Eject" xml:space="preserve">
+    <value>弹出孔板</value>
+  </data>
+  <data name="Experiment_End" xml:space="preserve">
+    <value>终止</value>
+  </data>
+  <data name="Experiment_End_of_Sample" xml:space="preserve">
+    <value>样本结束</value>
+  </data>
+  <data name="Experiment_End_Read" xml:space="preserve">
+    <value>结束读取</value>
+  </data>
+  <data name="Experiment_Event_Count" xml:space="preserve">
+    <value>事件计数</value>
+  </data>
+  <data name="Experiment_FileSave" xml:space="preserve">
+    <value>选 择 文件
+和 文件夹</value>
+  </data>
+  <data name="Experiment_Load" xml:space="preserve">
+    <value>加载孔板</value>
+  </data>
+  <data name="Experiment_Load_Template" xml:space="preserve">
+    <value>加载模板</value>
+  </data>
+  <data name="Experiment_Load_Template_Dialog_Title" xml:space="preserve">
+    <value>加载模板</value>
+  </data>
+  <data name="Experiment_Manual" xml:space="preserve">
+    <value>手册</value>
+  </data>
+  <data name="Experiment_Min_Per_Reg" xml:space="preserve">
+    <value>每个区域最小</value>
+  </data>
+  <data name="Experiment_Samp_Vol" xml:space="preserve">
+    <value>样本体积</value>
+  </data>
+  <data name="Experiment_Save_Template" xml:space="preserve">
+    <value>保存模板</value>
+  </data>
+  <data name="Experiment_Save_Template_Dialog_Title" xml:space="preserve">
+    <value>保存模板</value>
+  </data>
+  <data name="Experiment_Select_Wells" xml:space="preserve">
+    <value>选井</value>
+  </data>
+  <data name="Experiment_Speed" xml:space="preserve">
+    <value>速度</value>
+  </data>
+  <data name="Experiment_Start" xml:space="preserve">
+    <value>开始</value>
+  </data>
+  <data name="Experiment_System_Control" xml:space="preserve">
+    <value>系统控制</value>
+  </data>
+  <data name="Experiment_System_Monitor" xml:space="preserve">
+    <value>系统监视</value>
+  </data>
+  <data name="Experiment_Total_Events" xml:space="preserve">
+    <value>总事件</value>
+  </data>
+  <data name="Experiment_Tube" xml:space="preserve">
+    <value>试管</value>
+  </data>
+  <data name="Experiment_Validate_Bcode" xml:space="preserve">
+    <value>验证条形码</value>
+  </data>
+  <data name="Experiment_Wash_Vol" xml:space="preserve">
+    <value>清洗体积</value>
+  </data>
+  <data name="Experiment_Work_Order" xml:space="preserve">
+    <value>工单</value>
+  </data>
+  <data name="Experiment_Work_Order_Plus_Bcode" xml:space="preserve">
+    <value>工单+条形码</value>
+  </data>
+  <data name="FileSave_Base_Filename" xml:space="preserve">
+    <value>基础文件名</value>
+  </data>
+  <data name="FileSave_Discard_Unclassified_Beads" xml:space="preserve">
+    <value>从珠子事件文件中丢弃未分类的珠子</value>
+  </data>
+  <data name="FileSave_Filters" xml:space="preserve">
+    <value>过滤器</value>
+  </data>
+  <data name="FileSave_Include_Doublet_Events" xml:space="preserve">
+    <value>在珠子事件文件中包含双峰事件</value>
+  </data>
+  <data name="FileSave_Include_Unclassified_Beads" xml:space="preserve">
+    <value>在孔板汇总文件中包含未分类的珠子</value>
+  </data>
+  <data name="FileSave_Ind_Bead_Events" xml:space="preserve">
+    <value>个体珠子事件</value>
+  </data>
+  <data name="FileSave_JSON_To_Results" xml:space="preserve">
+    <value>JSON 结果文件</value>
+  </data>
+  <data name="FileSave_Output_Files" xml:space="preserve">
+    <value>输出文件</value>
+  </data>
+  <data name="FileSave_Plate_Summary" xml:space="preserve">
+    <value>所有区域MFI的孔板汇总</value>
+  </data>
+  <data name="Green" xml:space="preserve">
+    <value>绿光</value>
+  </data>
+  <data name="Halt" xml:space="preserve">
+    <value>暂停</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>语言</value>
+  </data>
+  <data name="Maintenance_Calibration" xml:space="preserve">
+    <value>校准</value>
+  </data>
+  <data name="Maintenance_Channels" xml:space="preserve">
+    <value>通道</value>
+  </data>
+  <data name="Maintenance_LEDs" xml:space="preserve">
+    <value>LED 开</value>
+  </data>
+  <data name="Maintenance_Sanitize" xml:space="preserve">
+    <value>UVC 紫外消毒</value>
+  </data>
+  <data name="Motors_384W_C1" xml:space="preserve">
+    <value>384孔 C1</value>
+  </data>
+  <data name="Motors_384W_C24" xml:space="preserve">
+    <value>384孔 C24</value>
+  </data>
+  <data name="Motors_96W_C1" xml:space="preserve">
+    <value>96孔 C1</value>
+  </data>
+  <data name="Motors_96W_C12" xml:space="preserve">
+    <value>96孔 C12</value>
+  </data>
+  <data name="Motors_Back" xml:space="preserve">
+    <value>后退</value>
+  </data>
+  <data name="Motors_Cur_Limit" xml:space="preserve">
+    <value>电流限制</value>
+  </data>
+  <data name="Motors_Cur_Step" xml:space="preserve">
+    <value>当前步数</value>
+  </data>
+  <data name="Motors_Down" xml:space="preserve">
+    <value>下</value>
+  </data>
+  <data name="Motors_Enc_Steps" xml:space="preserve">
+    <value>编码器步数</value>
+  </data>
+  <data name="Motors_Front" xml:space="preserve">
+    <value>正面</value>
+  </data>
+  <data name="Motors_GoTo_Well" xml:space="preserve">
+    <value>到井</value>
+  </data>
+  <data name="Motors_Left" xml:space="preserve">
+    <value>左</value>
+  </data>
+  <data name="Motors_Man_Well_Sel" xml:space="preserve">
+    <value>手动选井</value>
+  </data>
+  <data name="Motors_Right" xml:space="preserve">
+    <value>右</value>
+  </data>
+  <data name="Motors_Row_A" xml:space="preserve">
+    <value>A行</value>
+  </data>
+  <data name="Motors_Row_H" xml:space="preserve">
+    <value>H行</value>
+  </data>
+  <data name="Motors_Row_P" xml:space="preserve">
+    <value>P行</value>
+  </data>
+  <data name="Motors_Run_Speed" xml:space="preserve">
+    <value>运行速度</value>
+  </data>
+  <data name="Motors_Slope" xml:space="preserve">
+    <value>斜率</value>
+  </data>
+  <data name="Motors_Start_Speed" xml:space="preserve">
+    <value>启动速度</value>
+  </data>
+  <data name="Motors_Steps" xml:space="preserve">
+    <value>步数</value>
+  </data>
+  <data name="Motors_Up" xml:space="preserve">
+    <value>向上</value>
+  </data>
+  <data name="OFF" xml:space="preserve">
+    <value>关闭</value>
+  </data>
+  <data name="ON" xml:space="preserve">
+    <value>开启</value>
+  </data>
+  <data name="Power" xml:space="preserve">
+    <value>电源</value>
+  </data>
+  <data name="Red" xml:space="preserve">
+    <value>红光</value>
+  </data>
+  <data name="Reporter" xml:space="preserve">
+    <value>报告分子</value>
+  </data>
+  <data name="Ribbon_Acquire" xml:space="preserve">
+    <value>采集样本</value>
+  </data>
+  <data name="Ribbon_Analysis" xml:space="preserve">
+    <value>数据分析</value>
+  </data>
+  <data name="Ribbon_Maintenance" xml:space="preserve">
+    <value>维护</value>
+  </data>
+  <data name="Ribbon_Results" xml:space="preserve">
+    <value>结果</value>
+  </data>
+  <data name="Ribbon_Service" xml:space="preserve">
+    <value>维修</value>
+  </data>
+  <data name="Row" xml:space="preserve">
+    <value>行</value>
+  </data>
+  <data name="Run" xml:space="preserve">
+    <value>运行</value>
+  </data>
+  <data name="Sample_A" xml:space="preserve">
+    <value>样本 A</value>
+  </data>
+  <data name="Sample_B" xml:space="preserve">
+    <value>样本 B</value>
+  </data>
+  <data name="Seconds" xml:space="preserve">
+    <value>秒</value>
+  </data>
+  <data name="Service_Alignment" xml:space="preserve">
+    <value>对准</value>
+  </data>
+  <data name="Service_Ch_Offset" xml:space="preserve">
+    <value>通道偏移</value>
+  </data>
+  <data name="Service_Components" xml:space="preserve">
+    <value>组件</value>
+  </data>
+  <data name="Service_Motors" xml:space="preserve">
+    <value>马达</value>
+  </data>
+  <data name="Service_Syringe_Speeds" xml:space="preserve">
+    <value>注射泵速度</value>
+  </data>
+  <data name="Sheath" xml:space="preserve">
+    <value>鞘液</value>
+  </data>
+  <data name="SyringeSpeeds_Flush" xml:space="preserve">
+    <value>冲洗</value>
+  </data>
+  <data name="SyringeSpeeds_HiSens" xml:space="preserve">
+    <value>高灵敏度</value>
+  </data>
+  <data name="SyringeSpeeds_HiSpeed" xml:space="preserve">
+    <value>高速</value>
+  </data>
+  <data name="SyringeSpeeds_Max_Speed" xml:space="preserve">
+    <value>最大速度</value>
+  </data>
+  <data name="SyringeSpeeds_Normal" xml:space="preserve">
+    <value>正常</value>
+  </data>
+  <data name="SyringeSpeeds_Pickup" xml:space="preserve">
+    <value>拾取</value>
+  </data>
+  <data name="SyringeSpeeds_Samples" xml:space="preserve">
+    <value>样本</value>
+  </data>
+  <data name="SyringeSpeeds_Speeds" xml:space="preserve">
+    <value>注射泵速度</value>
+  </data>
+  <data name="Temp" xml:space="preserve">
+    <value>温度</value>
+  </data>
+  <data name="Text_Files" xml:space="preserve">
+    <value>文本文件</value>
+  </data>
+  <data name="Tube" xml:space="preserve">
+    <value>管子</value>
+  </data>
+  <data name="Value" xml:space="preserve">
+    <value>值</value>
+  </data>
+  <data name="Violet" xml:space="preserve">
+    <value>紫光</value>
+  </data>
+</root>

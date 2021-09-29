@@ -39,7 +39,10 @@ namespace Ei_Dimension.ViewModels
     public double MinPressure { get; set; }
     public virtual ObservableCollection<string> ActiveList { get; set; }
     public virtual ObservableCollection<string> RegionsList { get; set; }
+    public Dictionary<uint, string> ActiveRegions { get; set; }
     public bool RegionsRenamed { get; set; }
+    public uint? SelectedRegionCache { get; set; }
+    public int? SelectedRegionTextboxName { get; set; }
 
     public static DashboardViewModel Instance { get; private set; }
 
@@ -126,6 +129,9 @@ namespace Ei_Dimension.ViewModels
       PressureMon = new ObservableCollection<string> {"","",""};
       ActiveList = new ObservableCollection<string>();
       RegionsList = new ObservableCollection<string>();
+      SelectedRegionCache = null;
+      SelectedRegionTextboxName = null;
+      ActiveRegions = new Dictionary<uint, string>();
       _firstLoadflag = false;
       RegionsRenamed = false;
       Instance = this;
@@ -326,6 +332,25 @@ namespace Ei_Dimension.ViewModels
         RegionsList.Add(region.regionNumber.ToString());
         Views.DashboardView.Instance.AddTextBox($"RegionsList[{i}]");
         i++;
+      }
+    }
+
+    public void AddActiveRegion(byte num)
+    {
+      if (SelectedRegionCache != null)
+      {
+        if (num == 1)
+        {
+          ActiveRegions.Add((uint)SelectedRegionCache, "");
+          Views.DashboardView.Instance.ShiftTextBox(true);
+        }
+        else
+        {
+          _ = ActiveRegions.Remove((uint)SelectedRegionCache);
+          Views.DashboardView.Instance.ShiftTextBox(false);
+        }
+        SelectedRegionCache = null;
+        SelectedRegionTextboxName = null;
       }
     }
 

@@ -212,6 +212,7 @@
                  FontFamily="{StaticResource AppTextFont}"
                  FontSize="36"
                  FontWeight="UltraBold"
+                 Height="100"
                  Foreground="{StaticResource AppTextColor}"
                  HorizontalAlignment="Center"
                  VerticalAlignment="Top"
@@ -316,11 +317,13 @@
     <!--Compensation-->
     <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Margin="45,100,0,0">
+            Margin="45,100,0,0"
+            Width="186">
       <StackPanel>
         <TextBlock Text="{lang:Loc Calibration_Compensation_Percent}"
                    FontFamily="{StaticResource AppTextFont}"
                    FontSize="30"
+                   Height="120"
                    FontWeight="UltraBold"
                    Foreground="{StaticResource AppTextColor}"
                    HorizontalAlignment="Center"

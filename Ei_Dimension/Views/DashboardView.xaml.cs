@@ -20,6 +20,9 @@ namespace Ei_Dimension.Views
   /// </summary>
   public partial class DashboardView : UserControl
   {
+    private uint _tbCounter = 0;
+    private Thickness _alignmentLeft = new Thickness(8, 8, 105, 0);
+    private Thickness _alignmentRight = new Thickness(105, 8, 8, 0);
     public static DashboardView Instance;
     public DashboardView()
     {
@@ -31,15 +34,22 @@ namespace Ei_Dimension.Views
     {
       var tb = new TextBox();
       tb.Style = (Style)App.Current.Resources.MergedDictionaries[5]["InputFieldStyle"];
-      tb.Margin = new Thickness(8, 8, 8, 0);
-
+      tb.Margin = _alignmentLeft;
+      tb.Name = $"_{_tbCounter++}";
       Binding bind = new Binding();
       bind.Source = ViewModels.DashboardViewModel.Instance;
       bind.Path = new PropertyPath(propertyPath);
       bind.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
       BindingOperations.SetBinding(tb, TextBox.TextProperty, bind);
-      RegionsBorder.Children.Add(tb);
       tb.TextChanged += Tb_TextChanged;
+      tb.GotFocus += Tb_GotFocus;
+      RegionsBorder.Children.Add(tb);
+    }
+
+    private void Tb_GotFocus(object sender, RoutedEventArgs e)
+    {
+      ViewModels.DashboardViewModel.Instance.SelectedRegionTextboxName = int.Parse(((TextBox)e.Source).Name.Trim('_'));
+      ViewModels.DashboardViewModel.Instance.SelectedRegionCache = uint.Parse(((TextBox)e.Source).Text);
     }
 
     private void Tb_TextChanged(object sender, TextChangedEventArgs e)
@@ -53,8 +63,16 @@ namespace Ei_Dimension.Views
       {
         BindingOperations.ClearAllBindings(UIEl);
         ((TextBox)UIEl).TextChanged -= Tb_TextChanged;
+        ((TextBox)UIEl).GotFocus -= Tb_GotFocus;
       }
       RegionsBorder.Children.Clear();
+      _tbCounter = 0;
+    }
+
+    public void ShiftTextBox(bool right)
+    {
+      var tb = (TextBox)RegionsBorder.Children[(int)ViewModels.DashboardViewModel.Instance.SelectedRegionTextboxName];
+      tb.Margin = right ? _alignmentRight : _alignmentLeft;
     }
   }
 }
