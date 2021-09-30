@@ -221,7 +221,7 @@ namespace Ei_Dimension
 
         DashVM.SysControlItems[0].Content = RM.GetString(nameof(Language.Resources.Experiment_Manual), curCulture);
         DashVM.SysControlItems[1].Content = RM.GetString(nameof(Language.Resources.Experiment_Work_Order), curCulture);
-        DashVM.SysControlItems[2].Content = RM.GetString(nameof(Language.Resources.Experiment_Work_Order_Plus_Bcode), curCulture);
+        //DashVM.SysControlItems[2].Content = RM.GetString(nameof(Language.Resources.Experiment_Work_Order_Plus_Bcode), curCulture);
         DashVM.SelectedSysControlContent = DashVM.SysControlItems[0].Content;
 
         DashVM.EndReadItems[0].Content = RM.GetString(nameof(Language.Resources.Experiment_Min_Per_Reg), curCulture);
@@ -252,7 +252,7 @@ namespace Ei_Dimension
         else
         {
           _cancelKeyboardInjectionFlag = true;
-           temp = ((ObservableCollection<string>)SelectedTextBox.prop.GetValue(SelectedTextBox.VM))[SelectedTextBox.index];
+          temp = ((ObservableCollection<string>)SelectedTextBox.prop.GetValue(SelectedTextBox.VM))[SelectedTextBox.index];
           if (input == "")
           {
             if (temp.Length > 0)
@@ -951,7 +951,6 @@ namespace Ei_Dimension
       UpdatePressureMonitor();
       WellStateHandler();
       WorkOrderHandler();
-      RegionsRenameHandler();
       //TODO: REmove: for map construction in another program
       /*
       if (Device.Newmap)
@@ -1628,32 +1627,6 @@ namespace Ei_Dimension
           //    //  pltNumbertb.BackColor = Color.Red;
           //  }
         }
-      }
-    }
-
-    private static void RegionsRenameHandler() //TODO: switch this logic to a Template use
-    {
-      if (DashboardViewModel.Instance.RegionsRenamed)
-      {
-        var RegionsList = Device.MapList[GetActiveMapIndex()].mapRegions;
-        for (var i = 0; i < RegionsList.Count; i++)
-        {
-          RegionsList[i] = new BeadRegion
-          {
-            regionNumber = RegionsList[i].regionNumber,
-            isActive = RegionsList[i].isActive,
-            isvector = RegionsList[i].isvector,
-            bitmaptype = RegionsList[i].bitmaptype,
-            centerhighorderidx = RegionsList[i].centerhighorderidx,
-            centermidorderidx = RegionsList[i].centermidorderidx,
-            centerloworderidx = RegionsList[i].centerloworderidx,
-            meanhighorder = RegionsList[i].meanhighorder,
-            meanmidorder = RegionsList[i].meanmidorder,
-            meanloworder = RegionsList[i].meanloworder,
-            meanrp1bg = RegionsList[i].meanrp1bg
-          };
-        }
-        DashboardViewModel.Instance.RegionsRenamed = false;
       }
     }
 

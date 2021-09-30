@@ -40,8 +40,8 @@ namespace Ei_Dimension.ViewModels
     public double MinPressure { get; set; }
     public virtual ObservableCollection<string> ActiveList { get; set; }
     public virtual ObservableCollection<string> RegionsList { get; set; }
-    public Dictionary<uint, string> ActiveRegions { get; set; }
-    public bool RegionsRenamed { get; set; }
+    public virtual ObservableCollection<string> RegionsNamesList { get; set; }
+    public List<bool> ActiveRegions { get; set; }
     public uint? SelectedRegionCache { get; set; }
     public int? SelectedRegionTextboxName { get; set; }
 
@@ -110,7 +110,7 @@ namespace Ei_Dimension.ViewModels
       {
         new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Experiment_Manual), curCulture), this),
         new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Experiment_Work_Order), curCulture), this),
-        new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Experiment_Work_Order_Plus_Bcode), curCulture), this),
+        //new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Experiment_Work_Order_Plus_Bcode), curCulture), this),
       };
       SelectedSystemControlIndex = Settings.Default.SystemControl;
       SelectedSysControlContent = SysControlItems[SelectedSystemControlIndex].Content;
@@ -143,11 +143,11 @@ namespace Ei_Dimension.ViewModels
       PressureMon = new ObservableCollection<string> {"","",""};
       ActiveList = new ObservableCollection<string>();
       RegionsList = new ObservableCollection<string>();
+      RegionsNamesList = new ObservableCollection<string>();
       SelectedRegionCache = null;
       SelectedRegionTextboxName = null;
-      ActiveRegions = new Dictionary<uint, string>();
+      ActiveRegions = new List<bool>();
       _firstLoadflag = false;
-      RegionsRenamed = false;
       Instance = this;
     }
 
@@ -323,18 +323,19 @@ namespace Ei_Dimension.ViewModels
     public void FillRegions(bool loadByPage = false)
     {
       if (_firstLoadflag && loadByPage)
-      {
         return;
-      }
       _firstLoadflag = true;
-      RegionsRenamed = false;
       Views.DashboardView.Instance.ClearTextBoxes();
       RegionsList.Clear();
+      RegionsNamesList.Clear();
+      ActiveRegions.Clear();
       var i = 0;
       foreach (var region in App.Device.ActiveMap.mapRegions)
       {
         RegionsList.Add(region.regionNumber.ToString());
-        Views.DashboardView.Instance.AddTextBox($"RegionsList[{i}]");
+        RegionsNamesList.Add("");
+        ActiveRegions.Add(false);
+        Views.DashboardView.Instance.AddTextboxes($"RegionsList[{i}]", $"RegionsNamesList[{i}]");
         i++;
       }
     }
@@ -345,12 +346,12 @@ namespace Ei_Dimension.ViewModels
       {
         if (num == 1)
         {
-          ActiveRegions.Add((uint)SelectedRegionCache, "");
           Views.DashboardView.Instance.ShiftTextBox(true);
+          ActiveRegions[(int)SelectedRegionTextboxName] = true;
         }
         else
         {
-          _ = ActiveRegions.Remove((uint)SelectedRegionCache);
+          ActiveRegions[(int)SelectedRegionTextboxName] = false;
           Views.DashboardView.Instance.ShiftTextBox(false);
         }
         SelectedRegionCache = null;

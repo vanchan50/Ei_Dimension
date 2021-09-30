@@ -10,7 +10,8 @@ namespace Ei_Dimension.Models
   public class AcquisitionTemplate
   {
     public string Name;
-    public Dictionary<uint, string> ActiveRegions;
+    public List<bool> ActiveRegions;
+    public List<string> RegionsNamesList;
     public byte SysControl;
     public byte ChConfig;
     public string Map;
@@ -25,7 +26,8 @@ namespace Ei_Dimension.Models
 
     public AcquisitionTemplate()
     {
-      ActiveRegions = new Dictionary<uint, string>();
+      ActiveRegions = new List<bool>();
+      RegionsNamesList = new List<string>();
     }
   }
 }

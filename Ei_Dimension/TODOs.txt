@@ -41,3 +41,5 @@ ExperimentVM EndButtonClick has workorder not imlemented as well as button color
 PlateReport class has useless members except list
 
 Subtract bed region background button. useless?
+
+Can I make windows dialog windows bigger and bigger fonts?
