@@ -14,7 +14,7 @@
              x:Class="Ei_Dimension.Views.DashboardView"
              mc:Ignorable="d"
              DataContext="{dxmvvm:ViewModelSource Type={x:Type ViewModels:DashboardViewModel}}"
-             d:DesignHeight="785" d:DesignWidth="1353">
+             d:DesignHeight="944" d:DesignWidth="1632">
   <dxmvvm:Interaction.Triggers>
     <dxmvvm:EventToCommand EventName="Loaded" Command="{Binding FillRegionsCommand}" CommandParameter="true"/>
   </dxmvvm:Interaction.Triggers>
@@ -23,91 +23,87 @@
     <StackPanel Orientation="Horizontal"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
-                Margin="760,580,0,0">
-      <StackPanel Width="180"
-                  Margin="0,0,4,0">
+                Margin="280,650,0,0">
+      <StackPanel Width="120"
+                  Margin="0,-10,4,0">
         <ToggleButton Content="{lang:Loc Dashboard_Pressure_Mon}"
                     Style="{StaticResource ToggleButtonThemeStyle}"
-                    Height="50"
+                    Height="75" Width="120"
                     IsChecked="{Binding PressureMonToggleButtonState, Mode=OneWay}"
                     Command="{Binding PressureMonToggleButtonClickCommand}"/>
         <TextBlock Text="{lang:Loc Dashboard_Pressure_Mon_Max}"
                  FontFamily="{StaticResource AppTextFont}"
-                 FontSize="26"
+                 FontSize="26" Height="70"
                  FontWeight="UltraBold"
                  Foreground="{StaticResource AppTextColor}"
-                 HorizontalAlignment="Right"
+                 HorizontalAlignment="Center"
                  Margin="0,0,0,0"/>
         <TextBlock Text="{lang:Loc Dashboard_Pressure_Mon_Min}"
                  FontFamily="{StaticResource AppTextFont}"
-                 FontSize="26"
+                 FontSize="26" Height="70"
                  FontWeight="UltraBold"
                  Foreground="{StaticResource AppTextColor}"
-                 HorizontalAlignment="Right"
-                 Margin="0,8,0,0"/>
+                 HorizontalAlignment="Center"
+                 Margin="0,8,0,4"/>
       </StackPanel>
       <Border Background="{StaticResource RibbonBackgroundActive}">
         <StackPanel Width="180">
           <TextBox HorizontalAlignment="Stretch"
                IsReadOnly="True"
-               Margin="8,8,8,0"
+               Margin="10,10,10,0"
                Style="{StaticResource InputFieldStyle}"
                Text="{Binding PressureMon[0]}"/>
           <TextBox HorizontalAlignment="Stretch"
                IsReadOnly="True"
-               Margin="8,8,8,0"
+               Margin="10,30,10,0"
                Style="{StaticResource InputFieldStyle}"
                Text="{Binding PressureMon[1]}"/>
           <TextBox HorizontalAlignment="Stretch"
                IsReadOnly="True"
-               Margin="8,8,8,8"
+               Margin="10,30,10,10"
                Style="{StaticResource InputFieldStyle}"
                Text="{Binding PressureMon[2]}"/>
         </StackPanel>
       </Border>
-
     </StackPanel>
 
     <!--System Monitor-->
     <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Margin="1140,400,0,0">
+            Margin="1300,540,0,0">
       <StackPanel>
         <TextBlock Text="{lang:Loc Experiment_System_Monitor}"
-                 FontFamily="{StaticResource AppTextFont}"
-                 FontSize="30"
-                 FontWeight="UltraBold"
-                 Foreground="{StaticResource AppTextColor}"
-                 HorizontalAlignment="Center"
-                 VerticalAlignment="Top"
-                 Margin="0,0,0,4"/>
-        <ListBox 
-             Width="150" Height="280"
-             ItemsSource="{Binding ActiveList}"
-             FontSize="20"/>
+                   FontFamily="{StaticResource AppTextFont}"
+                   FontSize="36"
+                   FontWeight="UltraBold"
+                   Foreground="{StaticResource AppTextColor}"
+                   Margin="0,0,0,4"/>
+        <ListBox Width="220" Height="280"
+                 ItemsSource="{Binding ActiveList}"
+                 FontSize="24"/>
       </StackPanel>
     </Border>
 
     <!--Active Regions-->
     <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Margin="800,50,0,0">
+            Margin="630,50,0,0">
       <StackPanel>
         <TextBlock Text="{lang:Loc Experiment_Active_Regions}"
                    FontFamily="{StaticResource AppTextFont}"
-                   FontSize="30"
-                   Width="218"
+                   FontSize="36"
+                   Width="580"
                    FontWeight="UltraBold"
                    TextAlignment="Center"
                    Foreground="{StaticResource AppTextColor}"
                    Margin="0,0,0,4"/>
         <StackPanel Orientation="Horizontal"
                     HorizontalAlignment="Left"
-                    Width="200" Height="60"
-                    Margin="0,0,0,4">
+                    Height="60"
+                    Margin="90,0,0,4">
           <RadioButton Content="{lang:Loc Dashboard_Select_Regions}"
                        Style="{StaticResource RadioButtonHorizontalThemeStyle}"
-                       Width="100"
+                       Width="200"
                        FontSize="30"
                        IsChecked="True">
             <RadioButton.CommandParameter>
@@ -116,14 +112,14 @@
           </RadioButton>
           <RadioButton Content="{lang:Loc Dashboard_Name_Regions}"
                        Style="{StaticResource RadioButtonHorizontalThemeStyle}"
-                       Width="100"
+                       Width="200"
                        FontSize="30">
             <RadioButton.CommandParameter>
               <System:Byte>2</System:Byte>
             </RadioButton.CommandParameter>
           </RadioButton>
         </StackPanel>
-        <ScrollViewer Width="218" Height="300">
+        <ScrollViewer Width="580" Height="700">
           <Border Background="{StaticResource RibbonBackgroundActive}">
             <StackPanel Name="RegionsBorder"/>
           </Border>
@@ -131,7 +127,7 @@
         <StackPanel Orientation="Horizontal"
                     HorizontalAlignment="Left"
                     Width="200" Height="60"
-                    Margin="0,4,0,0">
+                    Margin="190,4,0,0">
           <Button Width="98" Height="60"
                   Margin="0,0,4,0"
                   Style="{StaticResource LeftArrowButtonThemeStyle}"
@@ -142,185 +138,93 @@
         </StackPanel>
       </StackPanel>
     </Border>
-    
-    <!--End Read-->
-    <Border HorizontalAlignment="Left"
-          VerticalAlignment="Top"
-          Margin="450,450,0,0">
-
-      <StackPanel VerticalAlignment="Stretch">
-        <TextBlock Text="{lang:Loc Experiment_End_Read}"
-                 FontFamily="{StaticResource AppTextFont}"
-                 FontSize="30"
-                 FontWeight="UltraBold"
-                 Foreground="{StaticResource AppTextColor}"
-                 HorizontalAlignment="Center"
-                 VerticalAlignment="Top"
-                 Margin="0,0,0,0"/>
-        <StackPanel Orientation="Horizontal">
-          <Border BorderThickness="1"
-                BorderBrush="{StaticResource HaltButtonBackgroundHighlighted}"
-                HorizontalAlignment="Left"
-                Margin="0,0,0,5"
-                Width="150">
-            <StackPanel HorizontalAlignment="Center">
-              <RadioButton Content="{lang:Loc Experiment_Min_Per_Reg}"
-                       Style="{StaticResource RadioButtonVerticalThemeStyle}"
-                       Height="90"
-                       Width="150"
-                       FontSize="30"
-                       IsChecked="{Binding EndReadSelectorState[0]}"
-                       Command="{Binding EndReadSelectorCommand}">
-                <RadioButton.CommandParameter>
-                  <System:Byte>0</System:Byte>
-                </RadioButton.CommandParameter>
-              </RadioButton>
-              <RadioButton Content="{lang:Loc Experiment_Total_Events}"
-                       Style="{StaticResource RadioButtonVerticalThemeStyle}"
-                       Height="90"
-                       Width="150"
-                       FontSize="30"
-                       IsChecked="{Binding EndReadSelectorState[1]}"
-                       Command="{Binding EndReadSelectorCommand}">
-                <RadioButton.CommandParameter>
-                  <System:Byte>1</System:Byte>
-                </RadioButton.CommandParameter>
-              </RadioButton>
-              <RadioButton Content="{lang:Loc Experiment_End_of_Sample}"
-                       Style="{StaticResource RadioButtonVerticalThemeStyle}"
-                       Height="90"
-                       Width="150"
-                       FontSize="30"
-                       IsChecked="{Binding EndReadSelectorState[2]}"
-                       Command="{Binding EndReadSelectorCommand}">
-                <RadioButton.CommandParameter>
-                  <System:Byte>2</System:Byte>
-                </RadioButton.CommandParameter>
-              </RadioButton>
-            </StackPanel>
-          </Border>
-          <Border Background="{StaticResource RibbonBackgroundActive}"
-                Height="180" Width="120"
-                VerticalAlignment="Top"
-                Margin="5,0,0,0">
-            <StackPanel>
-              <TextBox HorizontalAlignment="Stretch"
-                     Margin="8,30,8,0"
-                     Style="{StaticResource InputFieldStyle}"
-                     Text="{Binding EndRead[0]}">
-                <dxmvvm:Interaction.Behaviors>
-                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="0"/>
-                  <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
-                </dxmvvm:Interaction.Behaviors>
-              </TextBox>
-              <TextBox HorizontalAlignment="Stretch"
-                     Margin="8,50,8,8"
-                     Style="{StaticResource InputFieldStyle}"
-                     Text="{Binding EndRead[1]}">
-                <dxmvvm:Interaction.Behaviors>
-                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="1"/>
-                  <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
-                </dxmvvm:Interaction.Behaviors>
-              </TextBox>
-            </StackPanel>
-          </Border>
-        </StackPanel>
-      </StackPanel>
-    </Border>
 
     <!--Volumes-->
     <Border HorizontalAlignment="Left"
-          VerticalAlignment="Top"
-          Margin="400,220,0,0">
-      <StackPanel Orientation="Horizontal">
-        <StackPanel Margin="0,63,-15,0">
-          <TextBlock Text="{lang:Loc Experiment_Samp_Vol}"
-                 FontFamily="{StaticResource AppTextFont}"
-                 FontSize="30"
-                 FontWeight="UltraBold"
-                 HorizontalAlignment="Right"
-                 Foreground="{StaticResource AppTextColor}"/>
-          <TextBlock Text="{lang:Loc Experiment_Wash_Vol}"
-                 FontFamily="{StaticResource AppTextFont}"
-                 FontSize="30"
-                 FontWeight="UltraBold"
-                 HorizontalAlignment="Right"
-                 Foreground="{StaticResource AppTextColor}"
-                 Margin="0,6,0,0"/>
-          <TextBlock Text="{lang:Loc Experiment_Agitate_Vol}"
-                 FontFamily="{StaticResource AppTextFont}"
-                 FontSize="30"
-                 FontWeight="UltraBold"
-                 HorizontalAlignment="Right"
-                 Foreground="{StaticResource AppTextColor}"
-                 Margin="0,3,0,0"/>
-        </StackPanel>
-        <StackPanel>
-          <StackPanel Orientation="Horizontal"
-                  HorizontalAlignment="Center"
-                  Width="192"
-                  Margin="0,3,0,5">
-            <Button Content="25"
-                Command="{Binding SetFixedVolumeButtonClickCommand}"
-                Style="{StaticResource ButtonStyle}"
-                Height="50" Width="60"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Margin="3,0,3,0">
-              <Button.CommandParameter>
-                <System:UInt16>25</System:UInt16>
-              </Button.CommandParameter>
-            </Button>
-            <Button Content="50"
-                Command="{Binding SetFixedVolumeButtonClickCommand}"
-                Style="{StaticResource ButtonStyle}"
-                Height="50" Width="60"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Margin="0,0,3,0">
-              <Button.CommandParameter>
-                <System:UInt16>50</System:UInt16>
-              </Button.CommandParameter>
-            </Button>
-            <Button Content="100"
-                Command="{Binding SetFixedVolumeButtonClickCommand}"
-                Style="{StaticResource ButtonStyle}"
-                Height="50" Width="60"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center">
-              <Button.CommandParameter>
-                <System:UInt16>100</System:UInt16>
-              </Button.CommandParameter>
-            </Button>
-          </StackPanel>
-          <Border Background="{StaticResource RibbonBackgroundActive}"
-                HorizontalAlignment="Center">
+            VerticalAlignment="Top"
+            Margin="320,160,0,0"
+            Width="200">
+      <StackPanel>
+          <Border HorizontalAlignment="Center">
             <StackPanel>
-              <TextBox Width="140"
-                       HorizontalAlignment="Center"
-                       Margin="8,8,8,0"
+              <TextBlock Text="{lang:Loc Experiment_Samp_Vol}"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="30"
+                 FontWeight="UltraBold"
+                 HorizontalAlignment="Center"
+                 Foreground="{StaticResource AppTextColor}"/>
+              <TextBox HorizontalAlignment="Stretch"
+                       Margin="0,4,0,0"
                        Style="{StaticResource InputFieldStyle}"
                        Text="{Binding Volumes[0]}">
                 <dxmvvm:Interaction.Behaviors>
                   <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="2"/>
                   <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
                 </dxmvvm:Interaction.Behaviors>
-              </TextBox>
-              <TextBox Width="140"
-               HorizontalAlignment="Center"
-               Margin="8,8,8,8"
-               Style="{StaticResource InputFieldStyle}"
-               Text="{Binding Volumes[1]}">
+            </TextBox>
+            <StackPanel Orientation="Horizontal"
+                  HorizontalAlignment="Center"
+                  Width="192"
+                  Margin="0,5,0,5">
+              <Button Content="25"
+                Command="{Binding SetFixedVolumeButtonClickCommand}"
+                Style="{StaticResource ButtonStyle}"
+                Height="50" Width="60"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Margin="3,0,3,0">
+                <Button.CommandParameter>
+                  <System:UInt16>25</System:UInt16>
+                </Button.CommandParameter>
+              </Button>
+              <Button Content="50"
+                Command="{Binding SetFixedVolumeButtonClickCommand}"
+                Style="{StaticResource ButtonStyle}"
+                Height="50" Width="60"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Margin="0,0,3,0">
+                <Button.CommandParameter>
+                  <System:UInt16>50</System:UInt16>
+                </Button.CommandParameter>
+              </Button>
+              <Button Content="100"
+                Command="{Binding SetFixedVolumeButtonClickCommand}"
+                Style="{StaticResource ButtonStyle}"
+                Height="50" Width="60"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center">
+                <Button.CommandParameter>
+                  <System:UInt16>100</System:UInt16>
+                </Button.CommandParameter>
+              </Button>
+            </StackPanel>
+            <TextBlock Text="{lang:Loc Experiment_Wash_Vol}"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="30"
+                 FontWeight="UltraBold"
+                 HorizontalAlignment="Center"
+                 Foreground="{StaticResource AppTextColor}"/>
+              <TextBox HorizontalAlignment="Stretch"
+                       Margin="0,4,0,0"
+                       Style="{StaticResource InputFieldStyle}"
+                       Text="{Binding Volumes[1]}">
                 <dxmvvm:Interaction.Behaviors>
                   <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="3"/>
                   <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
                 </dxmvvm:Interaction.Behaviors>
               </TextBox>
-              <TextBox Width="140"
-               HorizontalAlignment="Center"
-               Margin="8,0,8,8"
-               Style="{StaticResource InputFieldStyle}"
-               Text="{Binding Volumes[2]}">
+              <TextBlock Text="{lang:Loc Experiment_Agitate_Vol}"
+                         FontFamily="{StaticResource AppTextFont}"
+                         FontSize="30"
+                         FontWeight="UltraBold"
+                         HorizontalAlignment="Center"
+                         Foreground="{StaticResource AppTextColor}"
+                         Margin="0,3,0,0"/>
+              <TextBox HorizontalAlignment="Stretch"
+                       Margin="0,4,0,0"
+                       Style="{StaticResource InputFieldStyle}"
+                       Text="{Binding Volumes[2]}">
                 <dxmvvm:Interaction.Behaviors>
                   <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="4"/>
                   <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
@@ -329,13 +233,12 @@
             </StackPanel>
           </Border>
         </StackPanel>
-      </StackPanel>
     </Border>
 
     <!--Dropdowns-->
     <Border HorizontalAlignment="Left"
           VerticalAlignment="Top"
-          Margin="40,140,0,0">
+          Margin="40,30,0,0">
       <StackPanel>
         <TextBlock Text="{lang:Loc Experiment_System_Control}"
                  FontFamily="{StaticResource AppTextFont}"
@@ -345,14 +248,13 @@
                  HorizontalAlignment="Center"
                  VerticalAlignment="Top"
                  Margin="0,0,0,3"/>
-        <dx:DropDownButton Width="300"
-                         Height="50"
-                         FontSize="25"
-                         VerticalAlignment="Bottom"
-                         HorizontalAlignment="Left"
-                         FontFamily="{StaticResource AppTextFont}"
-                         Foreground="{StaticResource AppTextColor}"
-                         Content="{Binding SelectedSysControlContent}">
+        <dx:DropDownButton Width="170"
+                           Height="120"
+                           FontSize="25"
+                           HorizontalAlignment="Center"
+                           FontFamily="{StaticResource AppTextFont}"
+                           Foreground="{StaticResource AppTextColor}"
+                           Content="{Binding SelectedSysControlContent}">
           <dxb:PopupMenu ItemLinksSource="{Binding SysControlItems}">
             <dxb:PopupMenu.ItemTemplate>
               <DataTemplate>
@@ -371,15 +273,14 @@
                  Foreground="{StaticResource AppTextColor}"
                  HorizontalAlignment="Center"
                  VerticalAlignment="Top"
-                 Margin="0,30,0,3"/>
-        <dx:DropDownButton Width="300"
-                         Height="50"
-                         FontSize="25"
-                         VerticalAlignment="Bottom"
-                         HorizontalAlignment="Left"
-                         FontFamily="{StaticResource AppTextFont}"
-                         Foreground="{StaticResource AppTextColor}"
-                         Content="{Binding SelectedChConfigContent}">
+                 Margin="0,6,0,3"/>
+        <dx:DropDownButton Width="170"
+                           Height="80"
+                           FontSize="25"
+                           HorizontalAlignment="Center"
+                           FontFamily="{StaticResource AppTextFont}"
+                           Foreground="{StaticResource AppTextColor}"
+                           Content="{Binding SelectedChConfigContent}">
           <dxb:PopupMenu ItemLinksSource="{Binding ChConfigItems}">
             <dxb:PopupMenu.ItemTemplate>
               <DataTemplate>
@@ -392,21 +293,20 @@
           </dxb:PopupMenu>
         </dx:DropDownButton>
         <TextBlock Text="{lang:Loc Experiment_Classific_Map}"
-                 FontFamily="{StaticResource AppTextFont}"
-                 FontSize="26"
-                 FontWeight="UltraBold"
-                 Foreground="{StaticResource AppTextColor}"
-                 HorizontalAlignment="Center"
-                 VerticalAlignment="Top"
-                 Margin="0,30,0,3"/>
-        <dx:DropDownButton Width="300"
-                         Height="50"
-                         FontSize="25"
-                         VerticalAlignment="Bottom"
-                         HorizontalAlignment="Left"
-                         FontFamily="{StaticResource AppTextFont}"
-                         Foreground="{StaticResource AppTextColor}"
-                         Content="{Binding SelectedClassiMapContent}">
+                   FontFamily="{StaticResource AppTextFont}"
+                   FontSize="26"
+                   FontWeight="UltraBold"
+                   Foreground="{StaticResource AppTextColor}"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Top"
+                   Margin="0,6,0,3"/>
+        <dx:DropDownButton Width="170"
+                           Height="80"
+                           FontSize="25"
+                           HorizontalAlignment="Center"
+                           FontFamily="{StaticResource AppTextFont}"
+                           Foreground="{StaticResource AppTextColor}"
+                           Content="{Binding SelectedClassiMapContent}">
           <dxb:PopupMenu ItemLinksSource="{Binding ClassiMapItems}">
             <dxb:PopupMenu.ItemTemplate>
               <DataTemplate>
@@ -419,21 +319,20 @@
           </dxb:PopupMenu>
         </dx:DropDownButton>
         <TextBlock Text="{lang:Loc Experiment_Order}"
-                 FontFamily="{StaticResource AppTextFont}"
-                 FontSize="26"
-                 FontWeight="UltraBold"
-                 Foreground="{StaticResource AppTextColor}"
-                 HorizontalAlignment="Center"
-                 VerticalAlignment="Top"
-                 Margin="0,30,0,3"/>
-        <dx:DropDownButton Width="300"
-                         Height="50"
-                         FontSize="25"
-                         VerticalAlignment="Bottom"
-                         HorizontalAlignment="Left"
-                         FontFamily="{StaticResource AppTextFont}"
-                         Foreground="{StaticResource AppTextColor}"
-                         Content="{Binding SelectedOrderContent}">
+                   FontFamily="{StaticResource AppTextFont}"
+                   FontSize="26"
+                   FontWeight="UltraBold"
+                   Foreground="{StaticResource AppTextColor}"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Top"
+                   Margin="0,6,0,3"/>
+        <dx:DropDownButton Width="170"
+                           Height="80"
+                           FontSize="25"
+                           HorizontalAlignment="Center"
+                           FontFamily="{StaticResource AppTextFont}"
+                           Foreground="{StaticResource AppTextColor}"
+                           Content="{Binding SelectedOrderContent}">
           <dxb:PopupMenu ItemLinksSource="{Binding OrderItems}">
             <dxb:PopupMenu.ItemTemplate>
               <DataTemplate>
@@ -446,21 +345,20 @@
           </dxb:PopupMenu>
         </dx:DropDownButton>
         <TextBlock Text="{lang:Loc Experiment_Speed}"
-                 FontFamily="{StaticResource AppTextFont}"
-                 FontSize="26"
-                 FontWeight="UltraBold"
-                 Foreground="{StaticResource AppTextColor}"
-                 HorizontalAlignment="Center"
-                 VerticalAlignment="Top"
-                 Margin="0,30,0,3"/>
-        <dx:DropDownButton Width="300"
-                         Height="50"
-                         FontSize="25"
-                         VerticalAlignment="Bottom"
-                         HorizontalAlignment="Left"
-                         FontFamily="{StaticResource AppTextFont}"
-                         Foreground="{StaticResource AppTextColor}"
-                         Content="{Binding SelectedSpeedContent}">
+                   FontFamily="{StaticResource AppTextFont}"
+                   FontSize="26"
+                   FontWeight="UltraBold"
+                   Foreground="{StaticResource AppTextColor}"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Top"
+                   Margin="0,6,0,3"/>
+        <dx:DropDownButton Width="170"
+                           Height="80"
+                           FontSize="25"
+                           HorizontalAlignment="Center"
+                           FontFamily="{StaticResource AppTextFont}"
+                           Foreground="{StaticResource AppTextColor}"
+                           Content="{Binding SelectedSpeedContent}">
           <dxb:PopupMenu ItemLinksSource="{Binding SpeedItems}">
             <dxb:PopupMenu.ItemTemplate>
               <DataTemplate>
@@ -472,71 +370,118 @@
             </dxb:PopupMenu.ItemTemplate>
           </dxb:PopupMenu>
         </dx:DropDownButton>
+        <TextBlock Text="{lang:Loc Experiment_End_Read}"
+                   FontFamily="{StaticResource AppTextFont}"
+                   FontSize="26"
+                   FontWeight="UltraBold"
+                   Foreground="{StaticResource AppTextColor}"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Top"
+                   Margin="0,6,0,3"/>
+        <dx:DropDownButton Width="170"
+                           Height="80"
+                           FontSize="25"
+                           HorizontalAlignment="Center"
+                           FontFamily="{StaticResource AppTextFont}"
+                           Foreground="{StaticResource AppTextColor}"
+                           Content="{Binding SelectedEndReadContent}">
+          <dxb:PopupMenu ItemLinksSource="{Binding EndReadItems}">
+            <dxb:PopupMenu.ItemTemplate>
+              <DataTemplate>
+                <ContentControl>
+                  <dxb:BarButtonItem Content="{Binding Content}"  
+                                 ItemClick="{DXEvent Click((int)6)}"/>
+                </ContentControl>
+              </DataTemplate>
+            </dxb:PopupMenu.ItemTemplate>
+          </dxb:PopupMenu>
+        </dx:DropDownButton>
+        <Grid Margin="0,5,0,0">
+          <TextBox HorizontalAlignment="Center"
+                   Width="170"
+                   Style="{StaticResource InputFieldStyle}"
+                   Text="{Binding EndRead[0]}"
+                   Visibility="{Binding EndReadVisibility[0]}">
+            <dxmvvm:Interaction.Behaviors>
+              <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="0"/>
+              <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+            </dxmvvm:Interaction.Behaviors>
+          </TextBox>
+          <TextBox HorizontalAlignment="Center"
+                   Width="170"
+                   Style="{StaticResource InputFieldStyle}"
+                   Text="{Binding EndRead[1]}"
+                   Visibility="{Binding EndReadVisibility[1]}">
+            <dxmvvm:Interaction.Behaviors>
+              <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="1"/>
+              <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+            </dxmvvm:Interaction.Behaviors>
+          </TextBox>
+        </Grid>
       </StackPanel>
     </Border>
 
     <!--Event Count-->
     <Border HorizontalAlignment="Left"
-          VerticalAlignment="Top"
-          Margin="110,40,0,0">
+            VerticalAlignment="Top"
+            Margin="1330,40,0,0"
+            Width="200">
       <StackPanel>
         <TextBlock Text="{lang:Loc Experiment_Event_Count}"
-                 FontFamily="{StaticResource AppTextFont}"
-                 FontSize="30"
-                 FontWeight="UltraBold"
-                 Foreground="{StaticResource AppTextColor}"
-                 HorizontalAlignment="Center"
-                 VerticalAlignment="Top"
-                 Margin="0,0,0,0"/>
+                   FontFamily="{StaticResource AppTextFont}"
+                   FontSize="36"
+                   FontWeight="UltraBold"
+                   Foreground="{StaticResource AppTextColor}"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Top"
+                   Margin="0,0,0,0"/>
         <TextBox HorizontalAlignment="Stretch"
-                 Margin="8,8,8,8"
+                 Margin="0,10,0,0"
                  IsReadOnly="True"
                  Style="{StaticResource InputFieldStyle}"
                  Text="{Binding EventCountField[0]}"/>
       </StackPanel>
     </Border>
-
-    <!--Load Eject Plate-->
-    <Border HorizontalAlignment="Left"
-          VerticalAlignment="Top"
-          Margin="1070,230,0,0">
-      <StackPanel Orientation="Horizontal">
-        <Button Content="{lang:Loc Experiment_Eject}"
-                Style="{StaticResource ButtonStyle}"
-                Command="{Binding EjectButtonClickCommand}"
-                Height="120" Width="120"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Margin="0,0,10,0"/>
-        <Button Content="{lang:Loc Experiment_Load}"
-                Style="{StaticResource ButtonStyle}"
-                Command="{Binding LoadButtonClickCommand}"
-                Height="120" Width="120"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Margin="0,0,0,0"/>
-      </StackPanel>
-    </Border>
+    
     <!--Start & End-->
     <Border HorizontalAlignment="Left"
           VerticalAlignment="Top"
-          Margin="1070,100,0,0">
-      <StackPanel Orientation="Horizontal">
-        <Button Content="{lang:Loc Experiment_End}"
+          Margin="1250,170,0,0">
+      <StackPanel>
+        <StackPanel Orientation="Horizontal">
+          <Button Content="{lang:Loc Experiment_End}"
                 Style="{StaticResource ButtonStyle}"
                 Command="{Binding EndButtonClickCommand}"
-                Height="120" Width="120"
+                Height="170" Width="170"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                Margin="0,0,10,0"/>
-        <Button Content="{lang:Loc Experiment_Start}"
+                Margin="0,0,12,0"/>
+          <Button Content="{lang:Loc Experiment_Start}"
                 Style="{StaticResource ButtonStyle}"
                 Command="{Binding StartButtonClickCommand}"
-                Height="120" Width="120"
+                Height="170" Width="170"
                 IsEnabled="{Binding StartButtonEnabled}"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 Margin="0,0,0,0"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal"
+                    Margin="0,12,0,0">
+          <Button Content="{lang:Loc Experiment_Eject}"
+                Style="{StaticResource ButtonStyle}"
+                Command="{Binding EjectButtonClickCommand}"
+                Height="170" Width="170"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Margin="0,0,10,0"/>
+          <Button Content="{lang:Loc Experiment_Load}"
+                Style="{StaticResource ButtonStyle}"
+                Command="{Binding LoadButtonClickCommand}"
+                Height="170" Width="170"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Margin="0,0,0,0"/>
+        </StackPanel>
       </StackPanel>
     </Border>
   </Grid>

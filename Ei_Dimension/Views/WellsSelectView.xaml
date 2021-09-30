@@ -6,10 +6,9 @@
              xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
              xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
              xmlns:ViewModels="clr-namespace:Ei_Dimension.ViewModels"
-             xmlns:System="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d"
              DataContext="{dxmvvm:ViewModelSource Type=ViewModels:WellsSelectViewModel}"
-             d:DesignHeight="785" d:DesignWidth="1353">
+             d:DesignHeight="944" d:DesignWidth="1632">
   <Grid>
 
     <!--WellTable 96   -->

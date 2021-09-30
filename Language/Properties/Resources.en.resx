@@ -346,16 +346,19 @@ Direction</value>
     <value>Name</value>
   </data>
   <data name="Dashboard_Pressure_Mon" xml:space="preserve">
-    <value>Pressure Monitor</value>
+    <value>Pressure
+Monitor</value>
   </data>
   <data name="Dashboard_Pressure_Mon_Max" xml:space="preserve">
-    <value>Max Pressure</value>
+    <value>   Max
+Pressure</value>
   </data>
   <data name="Dashboard_Pressure_Mon_Min" xml:space="preserve">
-    <value>Min Pressure</value>
+    <value>   Min
+Pressure</value>
   </data>
   <data name="Dashboard_Select_Regions" xml:space="preserve">
-    <value>Sel</value>
+    <value>Select</value>
   </data>
   <data name="DataAn_Calib_stats" xml:space="preserve">
     <value>Calibration
@@ -410,10 +413,12 @@ Direction</value>
     <value>Halt</value>
   </data>
   <data name="Dropdown_Hi_Sens" xml:space="preserve">
-    <value>Hi Sensitivity</value>
+    <value>      Hi
+Sensitivity</value>
   </data>
   <data name="Dropdown_Hi_Speed" xml:space="preserve">
-    <value>Hi Speed</value>
+    <value>   Hi
+Speed</value>
   </data>
   <data name="Dropdown_Initialize" xml:space="preserve">
     <value>Initialize</value>
@@ -467,7 +472,8 @@ Direction</value>
     <value>Active Regions</value>
   </data>
   <data name="Experiment_Agitate_Vol" xml:space="preserve">
-    <value>Agitate Vol</value>
+    <value>Agitate
+Volume</value>
   </data>
   <data name="Experiment_Ch_Config" xml:space="preserve">
     <value>Channel Configuration</value>
@@ -521,7 +527,8 @@ Region</value>
     <value>Order</value>
   </data>
   <data name="Experiment_Samp_Vol" xml:space="preserve">
-    <value>Samp Vol</value>
+    <value>Sample
+Volume</value>
   </data>
   <data name="Experiment_Save_Template" xml:space="preserve">
     <value>   Save
@@ -557,13 +564,17 @@ Events</value>
 Barcode</value>
   </data>
   <data name="Experiment_Wash_Vol" xml:space="preserve">
-    <value>Wash Vol</value>
+    <value> Wash
+Volume</value>
   </data>
   <data name="Experiment_Work_Order" xml:space="preserve">
-    <value>Work Order</value>
+    <value>Work
+Order</value>
   </data>
   <data name="Experiment_Work_Order_Plus_Bcode" xml:space="preserve">
-    <value>Work Order + Barcode</value>
+    <value>   Work
+   Order
++Barcode</value>
   </data>
   <data name="FileSave_Base_Filename" xml:space="preserve">
     <value>Base File Name</value>

@@ -13,7 +13,7 @@
              xmlns:img="clr-namespace:Ei_Dimension.Styles"
              mc:Ignorable="d"
              DataContext="{dxmvvm:ViewModelSource Type=ViewModels:ServiceViewModel}"
-             d:DesignHeight="674" d:DesignWidth="1500">
+             d:DesignHeight="944" d:DesignWidth="1920">
   <dxmvvm:Interaction.Triggers>
     <dxmvvm:EventToCommand EventName="Initialized" Command="{Binding NavigateMotorsCommand}"/>
     <dxmvvm:EventToCommand EventName="Initialized" Command="{Binding NavigateComponentsCommand}"/>
@@ -24,40 +24,41 @@
   <Grid>
 
     <Grid.ColumnDefinitions>
-      <ColumnDefinition Width="2*"/>
-      <ColumnDefinition Width="11*"/>
+      <ColumnDefinition Width="3*"/>
+      <ColumnDefinition Width="17*"/>
     </Grid.ColumnDefinitions>
 
     <!--Tile Ribbon-->
     <StackPanel Margin="30,60,0,0"
-                Width="200">
+                Width="240"
+                HorizontalAlignment="Left">
       <RadioButton Content="{lang:Loc Service_Motors}"
-                   Height="70"
+                   Height="84"
                    IsChecked="True"
                    img:EmbeddedImg.Image="/Icons/motors icon.png"
                    Style="{DynamicResource SubRibbonButtonStyle}"
                    Command="{Binding NavigateMotorsCommand}">
       </RadioButton>
       <RadioButton Content="{lang:Loc Service_Components}"
-                   Height="70"
+                   Height="84"
                    img:EmbeddedImg.Image="/Icons/components icon.png"
                    Style="{DynamicResource SubRibbonButtonStyle}"
                    Command="{Binding NavigateComponentsCommand}">
       </RadioButton>
       <RadioButton Content="{lang:Loc Service_Alignment}"
-                   Height="70"
+                   Height="84"
                    img:EmbeddedImg.Image="/Icons/alignment icon.png"
                    Style="{DynamicResource SubRibbonButtonStyle}"
                    Command="{Binding NavigateAlignmentCommand}">
       </RadioButton>
       <RadioButton Content="{lang:Loc Service_Ch_Offset}"
-                   Height="70"
+                   Height="84"
                    img:EmbeddedImg.Image="/Icons/channel offset icon.png"
                    Style="{DynamicResource SubRibbonButtonStyle}"
                    Command="{Binding NavigateChannelOffsetCommand}">
       </RadioButton>
       <RadioButton Content="{lang:Loc Service_Syringe_Speeds}"
-                   Height="70"
+                   Height="84"
                    img:EmbeddedImg.Image="/Icons/syringe speeds icon.png"
                    Style="{DynamicResource SubRibbonButtonStyle}"
                    Command="{Binding NavigateSyringeSpeedsCommand}">

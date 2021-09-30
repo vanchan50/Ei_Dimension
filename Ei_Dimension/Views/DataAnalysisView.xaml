@@ -10,7 +10,7 @@
              xmlns:lang="clr-namespace:Ei_Dimension.Language;assembly=Language"
              mc:Ignorable="d"
              DataContext="{dxmvvm:ViewModelSource Type=ViewModels:DataAnalysisViewModel}"
-             d:DesignHeight="674" d:DesignWidth="1500">
+             d:DesignHeight="960" d:DesignWidth="1920">
   <Grid>
     <!--Heatmap Chart-->
     <dxc:ChartControl Grid.Row="1" Grid.Column="2"

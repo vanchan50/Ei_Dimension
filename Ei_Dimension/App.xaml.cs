@@ -223,6 +223,11 @@ namespace Ei_Dimension
         DashVM.SysControlItems[1].Content = RM.GetString(nameof(Language.Resources.Experiment_Work_Order), curCulture);
         DashVM.SysControlItems[2].Content = RM.GetString(nameof(Language.Resources.Experiment_Work_Order_Plus_Bcode), curCulture);
         DashVM.SelectedSysControlContent = DashVM.SysControlItems[0].Content;
+
+        DashVM.EndReadItems[0].Content = RM.GetString(nameof(Language.Resources.Experiment_Min_Per_Reg), curCulture);
+        DashVM.EndReadItems[1].Content = RM.GetString(nameof(Language.Resources.Experiment_Total_Events), curCulture);
+        DashVM.EndReadItems[2].Content = RM.GetString(nameof(Language.Resources.Experiment_End_of_Sample), curCulture);
+        DashVM.SelectedEndReadContent = DashVM.EndReadItems[0].Content;
       }
       var ExperimentVM = ExperimentViewModel.Instance;
       if (ExperimentVM != null)
@@ -911,7 +916,7 @@ namespace Ei_Dimension
         DashVM.ChConfigItems[newTemplate.ChConfig].Click(3);
         DashVM.OrderItems[newTemplate.Order].Click(4);
         DashVM.SysControlItems[newTemplate.SysControl].Click(5);
-        DashVM.EndReadSelector(newTemplate.EndRead);
+        DashVM.EndReadItems[newTemplate.EndRead].Click(6);
         DashVM.EndRead[0] = newTemplate.MinPerRegion.ToString();
         DashVM.FocusedBox(0);
         InjectToFocusedTextbox(newTemplate.MinPerRegion.ToString(), true);

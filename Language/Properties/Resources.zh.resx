@@ -511,7 +511,8 @@
     <value>工单</value>
   </data>
   <data name="Experiment_Work_Order_Plus_Bcode" xml:space="preserve">
-    <value>工单+条形码</value>
+    <value>  工单
++条形码</value>
   </data>
   <data name="FileSave_Base_Filename" xml:space="preserve">
     <value>基础文件名</value>

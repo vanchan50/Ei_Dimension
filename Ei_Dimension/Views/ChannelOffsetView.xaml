@@ -8,7 +8,7 @@
              xmlns:lang="clr-namespace:Ei_Dimension.Language;assembly=Language"
              mc:Ignorable="d"
              DataContext="{dxmvvm:ViewModelSource Type=ViewModels:ChannelOffsetViewModel}"
-             d:DesignHeight="785" d:DesignWidth="1353">
+             d:DesignHeight="944" d:DesignWidth="1632">
   <Grid>
     <TextBlock Text="{lang:Loc Ch_Offset_Ch_Offset}"
                  FontFamily="{StaticResource AppTextFont}"
@@ -17,11 +17,11 @@
                  Foreground="{StaticResource AppTextColor}"
                  HorizontalAlignment="Left"
                  VerticalAlignment="Top"
-                 Margin="360,10,0,0"/>
+                 Margin="475,20,0,0"/>
 
     <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Margin="100,100,0,00">
+            Margin="200,100,0,00">
       <StackPanel Orientation="Horizontal"
                   HorizontalAlignment="Stretch"
                   VerticalAlignment="Stretch">
@@ -43,7 +43,7 @@
                  Foreground="{StaticResource AppTextColor}"
                  HorizontalAlignment="Right"
                  VerticalAlignment="Top"
-                 Margin="0,8,4,0"/>
+                 Margin="0,13,4,0"/>
           <TextBlock Text="{lang:Loc Channels_Green_C}"
                  FontFamily="{StaticResource AppTextFont}"
                  FontSize="36"
@@ -51,7 +51,7 @@
                  Foreground="{StaticResource AppTextColor}"
                  HorizontalAlignment="Right"
                  VerticalAlignment="Top"
-                 Margin="0,8,4,0"/>
+                 Margin="0,13,4,0"/>
           <TextBlock Text="{lang:Loc Channels_Red_A}"
                  FontFamily="{StaticResource AppTextFont}"
                  FontSize="36"
@@ -67,7 +67,7 @@
                  Foreground="{StaticResource AppTextColor}"
                  HorizontalAlignment="Right"
                  VerticalAlignment="Top"
-                 Margin="0,8,4,0"/>
+                 Margin="0,10,4,0"/>
           <TextBlock Text="{lang:Loc Channels_Red_C}"
                  FontFamily="{StaticResource AppTextFont}"
                  FontSize="36"
@@ -75,7 +75,7 @@
                  Foreground="{StaticResource AppTextColor}"
                  HorizontalAlignment="Right"
                  VerticalAlignment="Top"
-                 Margin="0,8,4,0"/>
+                 Margin="0,9,4,0"/>
           <TextBlock Text="{lang:Loc Channels_Red_D}"
                  FontFamily="{StaticResource AppTextFont}"
                  FontSize="36"
@@ -83,7 +83,7 @@
                  Foreground="{StaticResource AppTextColor}"
                  HorizontalAlignment="Right"
                  VerticalAlignment="Top"
-                 Margin="0,8,4,0"/>
+                 Margin="0,10,4,0"/>
           <TextBlock Text="{lang:Loc Channels_Violet_A}"
                  FontFamily="{StaticResource AppTextFont}"
                  FontSize="36"
@@ -91,7 +91,7 @@
                  Foreground="{StaticResource AppTextColor}"
                  HorizontalAlignment="Right"
                  VerticalAlignment="Top"
-                 Margin="0,8,4,0"/>
+                 Margin="0,10,4,0"/>
           <TextBlock Text="{lang:Loc Channels_Violet_B}"
                  FontFamily="{StaticResource AppTextFont}"
                  FontSize="36"
@@ -99,7 +99,7 @@
                  Foreground="{StaticResource AppTextColor}"
                  HorizontalAlignment="Right"
                  VerticalAlignment="Top"
-                 Margin="0,8,4,0"/>
+                 Margin="0,10,4,0"/>
           <TextBlock Text="{lang:Loc Channels_Forward_Scatter}"
                  FontFamily="{StaticResource AppTextFont}"
                  FontSize="36"
@@ -107,14 +107,14 @@
                  Foreground="{StaticResource AppTextColor}"
                  HorizontalAlignment="Right"
                  VerticalAlignment="Top"
-                 Margin="0,8,4,0"/>
+                 Margin="0,11,4,0"/>
         </StackPanel>
         <Border Background="{StaticResource RibbonBackgroundActive}">
           <StackPanel VerticalAlignment="Stretch"
-                    Width="150">
+                    Width="180">
 
             <TextBox HorizontalAlignment="Stretch"
-                      Margin="8,8,8,20"
+                      Margin="10,10,10,0"
                       Style="{StaticResource InputFieldStyle}"
                       Text="{Binding ChannelsOffsetParameters[0]}">
               <dxmvvm:Interaction.Behaviors>
@@ -123,7 +123,7 @@
               </dxmvvm:Interaction.Behaviors>
             </TextBox>
             <TextBox HorizontalAlignment="Stretch"
-                      Margin="8,0,8,20"
+                      Margin="10,15,10,0"
                       Style="{StaticResource InputFieldStyle}"
                       Text="{Binding ChannelsOffsetParameters[1]}">
               <dxmvvm:Interaction.Behaviors>
@@ -132,7 +132,7 @@
               </dxmvvm:Interaction.Behaviors>
             </TextBox>
             <TextBox HorizontalAlignment="Stretch"
-                      Margin="8,0,8,20"
+                      Margin="10,15,10,0"
                       Style="{StaticResource InputFieldStyle}"
                       Text="{Binding ChannelsOffsetParameters[2]}">
               <dxmvvm:Interaction.Behaviors>
@@ -141,7 +141,7 @@
               </dxmvvm:Interaction.Behaviors>
             </TextBox>
             <TextBox HorizontalAlignment="Stretch"
-                      Margin="8,0,8,20"
+                      Margin="10,15,10,0"
                       Style="{StaticResource InputFieldStyle}"
                       Text="{Binding ChannelsOffsetParameters[3]}">
               <dxmvvm:Interaction.Behaviors>
@@ -150,7 +150,7 @@
               </dxmvvm:Interaction.Behaviors>
             </TextBox>
             <TextBox HorizontalAlignment="Stretch"
-                      Margin="8,0,8,20"
+                      Margin="10,15,10,0"
                       Style="{StaticResource InputFieldStyle}"
                       Text="{Binding ChannelsOffsetParameters[4]}">
               <dxmvvm:Interaction.Behaviors>
@@ -159,7 +159,7 @@
               </dxmvvm:Interaction.Behaviors>
             </TextBox>
             <TextBox HorizontalAlignment="Stretch"
-                      Margin="8,0,8,20"
+                      Margin="10,15,10,0"
                       Style="{StaticResource InputFieldStyle}"
                       Text="{Binding ChannelsOffsetParameters[5]}">
               <dxmvvm:Interaction.Behaviors>
@@ -168,7 +168,7 @@
               </dxmvvm:Interaction.Behaviors>
             </TextBox>
             <TextBox HorizontalAlignment="Stretch"
-                      Margin="8,0,8,20"
+                      Margin="10,15,10,0"
                       Style="{StaticResource InputFieldStyle}"
                       Text="{Binding ChannelsOffsetParameters[6]}">
               <dxmvvm:Interaction.Behaviors>
@@ -177,7 +177,7 @@
               </dxmvvm:Interaction.Behaviors>
             </TextBox>
             <TextBox HorizontalAlignment="Stretch"
-                      Margin="8,0,8,20"
+                      Margin="10,15,10,0"
                       Style="{StaticResource InputFieldStyle}"
                       Text="{Binding ChannelsOffsetParameters[7]}">
               <dxmvvm:Interaction.Behaviors>
@@ -186,7 +186,7 @@
               </dxmvvm:Interaction.Behaviors>
             </TextBox>
             <TextBox HorizontalAlignment="Stretch"
-                      Margin="8,0,8,20"
+                      Margin="10,15,10,0"
                       Style="{StaticResource InputFieldStyle}"
                       Text="{Binding ChannelsOffsetParameters[8]}">
               <dxmvvm:Interaction.Behaviors>
@@ -195,7 +195,7 @@
               </dxmvvm:Interaction.Behaviors>
             </TextBox>
             <TextBox HorizontalAlignment="Stretch"
-                      Margin="8,0,8,8"
+                      Margin="10,15,10,10"
                       Style="{StaticResource InputFieldStyle}"
                       Text="{Binding ChannelsOffsetParameters[9]}">
               <dxmvvm:Interaction.Behaviors>

@@ -21,8 +21,8 @@ namespace Ei_Dimension.Views
   public partial class DashboardView : UserControl
   {
     private uint _tbCounter = 0;
-    private Thickness _alignmentLeft = new Thickness(8, 8, 105, 0);
-    private Thickness _alignmentRight = new Thickness(105, 8, 8, 0);
+    private Thickness _alignmentLeft = new Thickness(8, 8, 0, 0);
+    private Thickness _alignmentRight = new Thickness(128, 8, 8, 0);
     public static DashboardView Instance;
     public DashboardView()
     {
@@ -33,9 +33,10 @@ namespace Ei_Dimension.Views
     public void AddTextBox(string propertyPath)
     {
       var tb = new TextBox();
-      tb.Style = (Style)App.Current.Resources.MergedDictionaries[5]["InputFieldStyle"];
+      tb.Style = (Style)App.Current.Resources.MergedDictionaries[6]["RegionFieldStyle"];
       tb.Margin = _alignmentLeft;
       tb.Name = $"_{_tbCounter++}";
+      tb.IsReadOnly = true;
       Binding bind = new Binding();
       bind.Source = ViewModels.DashboardViewModel.Instance;
       bind.Path = new PropertyPath(propertyPath);

@@ -1,8 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <Style TargetType="{x:Type TextBox}"
-         x:Key="InputFieldStyle">
-    
+         x:Key="RegionFieldStyle">
+
     <Setter Property="SnapsToDevicePixels" Value="True"/>
     <Setter Property="OverridesDefaultStyle" Value="True"/>
     <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
@@ -11,6 +11,8 @@
     <Setter Property="FontFamily" Value="{DynamicResource AppTextFont}"/>
     <Setter Property="FontSize" Value="30"/>
     <Setter Property="Height" Value="43"/>
+    <Setter Property="Width" Value="120"/>
+    <Setter Property="HorizontalAlignment" Value="Left"/>
     <Setter Property="CaretBrush" Value="Transparent"/>
     <Setter Property="Template">
       <Setter.Value>
@@ -29,15 +31,11 @@
             </Grid>
           </Border>
           <ControlTemplate.Triggers>
-            <MultiTrigger>
-              <MultiTrigger.Conditions>
-                <Condition Property="IsFocused" Value="True"/>
-                <Condition Property="IsReadOnly" Value="False"/>
-              </MultiTrigger.Conditions>
-              <Setter TargetName="ToggleButtonRect" Property="Fill" Value="{DynamicResource HaltButtonBackground}"/>
-            </MultiTrigger>
             <Trigger Property="IsReadOnly" Value="True">
               <Setter TargetName="ToggleButtonRect" Property="Fill" Value="{DynamicResource SubRibbonBackground}"/>
+            </Trigger>
+            <Trigger Property="IsFocused" Value="True">
+              <Setter TargetName="ToggleButtonRect" Property="Fill" Value="{DynamicResource HaltButtonBackground}"/>
             </Trigger>
           </ControlTemplate.Triggers>
         </ControlTemplate>

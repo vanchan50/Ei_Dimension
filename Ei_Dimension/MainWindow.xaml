@@ -11,8 +11,8 @@
     xmlns:img="clr-namespace:Ei_Dimension.Styles"
     x:Class="Ei_Dimension.MainWindow"
     Title="Ei_Dimension"
-    Height="900"
-    Width="1600"
+    Height="1080"
+    Width="1920"
     SnapsToDevicePixels="True"
     ResizeMode="NoResize"
     SizeToContent="Manual"
@@ -37,40 +37,42 @@
   <Grid>
     <!-- Company Logo Right-->
     <Image HorizontalAlignment="Left" VerticalAlignment="Top"
-           Margin="1390,858,10,10"
+           Margin="1626,1030,5,0"
+           Width="290" Height="40"
            Source="/Icons/Emission_Logo.png"
            RenderOptions.BitmapScalingMode="HighQuality"/>
     <!-- Company Logo Left -->
     <Image HorizontalAlignment="Left" VerticalAlignment="Top"
-           Margin="10,858,0,10"
+           Margin="10,1034,0,0"
+           Width="430" Height="40"
            Source="/Icons/dimension flow analyzer logo.png"
            RenderOptions.BitmapScalingMode="HighQuality"/>
     <!--Tile Ribbon-->
     <StackPanel Orientation="Horizontal"
-                Height="80" HorizontalAlignment="Left" VerticalAlignment="Top"
-                Margin="260,30,0,0">
-      <RadioButton Content="{lang:Loc Ribbon_Acquire}" Width="180"
+                Height="96" HorizontalAlignment="Left" VerticalAlignment="Top"
+                Margin="312,30,0,0">
+      <RadioButton Content="{lang:Loc Ribbon_Acquire}" Width="216"
                    img:EmbeddedImg.Image="/Icons/acquire sample icon.png"
                    Style="{DynamicResource MainRibbonButtonStyle}"
                    Command="{Binding NavigateExperimentCommand}"
                    IsChecked="True">
       </RadioButton>
-      <RadioButton Content="{lang:Loc Ribbon_Results}" Width="180"
+      <RadioButton Content="{lang:Loc Ribbon_Results}" Width="216"
                     img:EmbeddedImg.Image="/Icons/results icon.png"
                     Style="{DynamicResource MainRibbonButtonStyle}"
                     Command="{Binding NavigateResultsCommand}">
       </RadioButton>
-      <RadioButton Content="{lang:Loc Ribbon_Analysis}" Width="180"
+      <RadioButton Content="{lang:Loc Ribbon_Analysis}" Width="216"
                     img:EmbeddedImg.Image="/Icons/data analysis icon.png"
                     Style="{DynamicResource MainRibbonButtonStyle}"
                     Command="{Binding NavigateDataAnalysisCommand}">
       </RadioButton>
-      <RadioButton Content="{lang:Loc Ribbon_Maintenance}" Width="180"
+      <RadioButton Content="{lang:Loc Ribbon_Maintenance}" Width="216"
                     img:EmbeddedImg.Image="/Icons/maintenance icon.png"
                     Style="{DynamicResource MainRibbonButtonStyle}"
                     Command="{Binding NavigateMaintenanceCommand}">
       </RadioButton>
-      <RadioButton Content="{lang:Loc Ribbon_Service}" Width="180"
+      <RadioButton Content="{lang:Loc Ribbon_Service}" Width="216"
                     img:EmbeddedImg.Image="/Icons/service iconV2.png"
                     Style="{DynamicResource MainRibbonButtonStyle}"
                     Command="{Binding NavigateSettingsCommand}">
@@ -79,7 +81,7 @@
 
     <dxwui:NavigationFrame HorizontalAlignment="Left"
                            VerticalAlignment="Top"
-                           Margin="0,115,0,0"
+                           Margin="0,136,0,0"
                            AnimationType="Fade"
                            NavigationCacheMode="Required">
       <dxmvvm:Interaction.Triggers>
@@ -94,7 +96,7 @@
     <dx:SimpleButton Height="40" Width="50"
                      HorizontalAlignment="Left"
                      VerticalAlignment="Top"
-                     Margin="1320,60,0,0"
+                     Margin="1620,60,0,0"
                      Glyph="{dx:DXImage 'SvgImages/Icon Builder/Electronics_Keyboard.svg'}"
                      GlyphHeight="40"
                      GlyphWidth="40"
@@ -102,7 +104,7 @@
 
     <Grid Width="202" Height="280"
           VerticalAlignment="Top" HorizontalAlignment="Left"
-          Margin="1250,120,0,0"
+          Margin="1550,160,0,0"
           Visibility="{Binding NumpadVisible}">
       <Views:NumpadView />
     </Grid>
@@ -110,7 +112,7 @@
     <Button HorizontalAlignment="Left" VerticalAlignment="Top"
             Width="100"
             Height="50"
-            Margin="1320,10,0,0"
+            Margin="1620,10,0,0"
             Content="ShowStaticMap"
             Command="{Binding NavigateStaticMapCommand}"/>
 

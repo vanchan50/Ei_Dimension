@@ -16,7 +16,6 @@ namespace Ei_Dimension.ViewModels
   public class DashboardViewModel
   {
     public virtual ObservableCollection<string> EndRead { get; set; }
-    public virtual ObservableCollection<bool> EndReadSelectorState { get; set; }
     public virtual ObservableCollection<string> Volumes { get; set; }
     public virtual string SelectedSpeedContent { get; set; }
     public virtual ObservableCollection<DropDownButtonContents> SpeedItems { get; set; }
@@ -28,6 +27,8 @@ namespace Ei_Dimension.ViewModels
     public virtual ObservableCollection<DropDownButtonContents> OrderItems { get; set; }
     public virtual string SelectedSysControlContent { get; set; }
     public virtual ObservableCollection<DropDownButtonContents> SysControlItems { get; set; }
+    public virtual string SelectedEndReadContent { get; set; }
+    public virtual ObservableCollection<DropDownButtonContents> EndReadItems { get; set; }
 
     public virtual ObservableCollection<string> EventCountField { get; set; }
     public virtual bool StartButtonEnabled { get; set; }
@@ -51,17 +52,15 @@ namespace Ei_Dimension.ViewModels
     public byte SelectedChConfigIndex { get; set; }
     public byte SelectedOrderIndex { get; set; }
     public byte SelectedEndReadIndex { get; set; }
+    public virtual ObservableCollection<Visibility> EndReadVisibility { get; set; }
+
     private bool _firstLoadflag;
 
     protected DashboardViewModel()
     {
       EndRead = new ObservableCollection<string> { "100", "500" };
 
-      EndReadSelectorState = new ObservableCollection<bool> { false, false, false };
-      EndReadSelector(App.Device.TerminationType);
-
       Volumes = new ObservableCollection<string> { "0", "", "" };
-
 
       var RM = Language.Resources.ResourceManager;
       var curCulture = Language.TranslationSource.Instance.CurrentCulture;
@@ -117,11 +116,26 @@ namespace Ei_Dimension.ViewModels
       SelectedSysControlContent = SysControlItems[SelectedSystemControlIndex].Content;
       DropDownButtonContents.ResetIndex();
 
+      EndReadItems = new ObservableCollection<DropDownButtonContents>
+      {
+        new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Experiment_Min_Per_Reg), curCulture), this),
+        new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Experiment_Total_Events), curCulture), this),
+        new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Experiment_End_of_Sample), curCulture), this),
+      };
+      SelectedEndReadIndex = App.Device.TerminationType;
+      SelectedEndReadContent = EndReadItems[SelectedEndReadIndex].Content;
+      EndReadVisibility = new ObservableCollection<Visibility>
+      {
+        Visibility.Hidden,
+        Visibility.Hidden
+      };
+      EndReadVisibilitySwitch();
+      DropDownButtonContents.ResetIndex();
+
       if (SelectedSystemControlIndex == 0)
         StartButtonEnabled = true;
       else
         StartButtonEnabled = false;
-
 
       EventCountField = new ObservableCollection<string> { "" };
 
@@ -147,16 +161,6 @@ namespace Ei_Dimension.ViewModels
       PressureMonToggleButtonState = !PressureMonToggleButtonState;
       MaxPressure = 0;
       MinPressure = 9999999999;
-    }
-
-    public void EndReadSelector(byte num)
-    {
-       EndReadSelectorState[0] = false;
-      EndReadSelectorState[1] = false;
-      EndReadSelectorState[2] = false;
-      EndReadSelectorState[num] = true;
-      App.SetTerminationType(num);
-      SelectedEndReadIndex = num;
     }
 
     public void SetFixedVolumeButtonClick(ushort num)
@@ -354,6 +358,25 @@ namespace Ei_Dimension.ViewModels
       }
     }
 
+    private void EndReadVisibilitySwitch()
+    {
+      switch (SelectedEndReadIndex)
+      {
+        case 0:
+          EndReadVisibility[0] = Visibility.Visible;
+          EndReadVisibility[1] = Visibility.Hidden;
+          break;
+        case 1:
+          EndReadVisibility[0] = Visibility.Hidden;
+          EndReadVisibility[1] = Visibility.Visible;
+          break;
+        default:
+          EndReadVisibility[0] = Visibility.Hidden;
+          EndReadVisibility[1] = Visibility.Hidden;
+          break;
+      }
+    }
+
     public class DropDownButtonContents : Core.ObservableObject
     {
       public string Content
@@ -419,6 +442,12 @@ namespace Ei_Dimension.ViewModels
               _vm.StartButtonEnabled = true;
             }
             break;
+          case 6:
+            _vm.SelectedEndReadContent = Content;
+            _vm.SelectedEndReadIndex = Index;
+            App.SetTerminationType(Index);
+            _vm.EndReadVisibilitySwitch();
+            break;
         }
       }
 
@@ -456,6 +485,12 @@ namespace Ei_Dimension.ViewModels
               ExperimentViewModel.Instance.WellSelectVisible = Visibility.Visible;
               _vm.StartButtonEnabled = true;
             }
+            break;
+          case 6:
+            _vm.SelectedEndReadContent = Content;
+            _vm.SelectedEndReadIndex = Index;
+            App.SetTerminationType(Index);
+            _vm.EndReadVisibilitySwitch();
             break;
         }
       }

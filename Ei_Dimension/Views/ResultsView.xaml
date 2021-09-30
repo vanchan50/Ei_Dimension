@@ -16,7 +16,7 @@
              x:Class="Ei_Dimension.Views.ResultsView"
              mc:Ignorable="d"
              DataContext="{dxmvvm:ViewModelSource Type={x:Type ViewModels:ResultsViewModel}}"
-             d:DesignHeight="674" d:DesignWidth="1500">
+             d:DesignHeight="960" d:DesignWidth="1920">
   <dxmvvm:Interaction.Behaviors>
     <dxmvvm:DispatcherService/>
   </dxmvvm:Interaction.Behaviors>

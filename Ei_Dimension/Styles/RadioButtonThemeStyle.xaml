@@ -29,7 +29,7 @@
 
       <Setter Property="Background" Value="{DynamicResource MenuButtonBackground}"/>
       <Setter Property="Foreground" Value="{DynamicResource AppTextColor}"/>
-      <Setter Property="FontSize" Value="50"/>
+      <Setter Property="FontSize" Value="60"/>
     </Style.Setters>
 
     <Style.Triggers>
@@ -67,7 +67,7 @@
         </Setter.Value>
       </Setter>
 
-      <Setter Property="FontSize" Value="30"/>
+      <Setter Property="FontSize" Value="36"/>
       <Setter Property="Background" Value="{DynamicResource MenuButtonBackground}"/>
       <Setter Property="Foreground" Value="{DynamicResource AppTextColor}"/>
 

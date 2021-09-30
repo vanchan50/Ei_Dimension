@@ -27,6 +27,7 @@
         <ResourceDictionary Source="/Styles/HaltButtonStyle.xaml"/>
         <ResourceDictionary Source="/Styles/ToggleButtonThemeStyle.xaml"/>
         <ResourceDictionary Source="/Styles/InputFieldStyle.xaml"/>
+        <ResourceDictionary Source="/Styles/RegionFieldStyle.xaml"/>
         <ResourceDictionary Source="/Styles/MainRibbonButtonStyle.xaml"/>
         <ResourceDictionary Source="/Styles/SubRibbonButtonStyle.xaml"/>
         <ResourceDictionary Source="/Styles/DashboardButtonStyle.xaml"/>

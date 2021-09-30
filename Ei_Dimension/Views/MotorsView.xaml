@@ -4,18 +4,14 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
-             xmlns:dxc="http://schemas.devexpress.com/winfx/2008/xaml/charts"
              xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
              xmlns:ViewModels="clr-namespace:Ei_Dimension.ViewModels"
-             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
-             xmlns:dxei="http://schemas.devexpress.com/winfx/2008/xaml/editors/internal"
-             xmlns:dxcn="http://schemas.devexpress.com/winfx/2008/xaml/core/internal"
              xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
              xmlns:System="clr-namespace:System;assembly=mscorlib"
              xmlns:lang="clr-namespace:Ei_Dimension.Language;assembly=Language"
              mc:Ignorable="d"
              DataContext="{dxmvvm:ViewModelSource Type=ViewModels:MotorsViewModel}"
-             d:DesignHeight="785" d:DesignWidth="1353">
+             d:DesignHeight="960" d:DesignWidth="1664">
   <Grid>
     <TextBlock Text="{lang:Loc Service_Motors}"
                FontFamily="{StaticResource AppTextFont}"
@@ -24,12 +20,12 @@
                Foreground="{StaticResource AppTextColor}"
                HorizontalAlignment="Left"
                VerticalAlignment="Top"
-               Margin="465,10,250,0"/>
+               Margin="560,20,250,0"/>
 
     <!--Motors Parameters-->
     <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Margin="0,100,0,00">
+            Margin="0,100,0,0">
 
       <StackPanel Orientation="Horizontal"
                   HorizontalAlignment="Stretch"
@@ -45,11 +41,11 @@
                      Foreground="{StaticResource AppTextColor}"
                      HorizontalAlignment="Right"
                      VerticalAlignment="Top"
-                     Margin="0,40,8,0"/>
+                     Margin="0,46,8,0"/>
           <ToggleButton Style="{StaticResource ToggleButtonThemeStyle}"
-                        Height="88"
-                        Width="120"
-                        Margin="0,11,4,0"
+                        Height="120"
+                        Width="140"
+                        Margin="0,16,4,0"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Top"
                         Content="{lang:Loc Motors_Poll_Step}"
@@ -62,7 +58,7 @@
                  Foreground="{StaticResource AppTextColor}"
                  HorizontalAlignment="Right"
                  VerticalAlignment="Top"
-                 Margin="0,112,4,0"/>
+                 Margin="0,142,4,0"/>
           <TextBlock Text="{lang:Loc Motors_Start_Speed}"
                  FontFamily="{StaticResource AppTextFont}"
                  FontSize="36"
@@ -70,7 +66,7 @@
                  Foreground="{StaticResource AppTextColor}"
                  HorizontalAlignment="Right"
                  VerticalAlignment="Top"
-                 Margin="0,0,4,0"/>
+                 Margin="0,8,4,0"/>
           <TextBlock Text="{lang:Loc Motors_Run_Speed}"
                  FontFamily="{StaticResource AppTextFont}"
                  FontSize="36"
@@ -78,7 +74,7 @@
                  Foreground="{StaticResource AppTextColor}"
                  HorizontalAlignment="Right"
                  VerticalAlignment="Top"
-                 Margin="0,-4,4,0"/>
+                 Margin="0,4,4,0"/>
           <TextBlock Text="{lang:Loc Motors_Cur_Step}"
                  FontFamily="{StaticResource AppTextFont}"
                  FontSize="36"
@@ -86,7 +82,7 @@
                  Foreground="{StaticResource AppTextColor}"
                  HorizontalAlignment="Right"
                  VerticalAlignment="Top"
-                 Margin="0,-4,4,0"/>
+                 Margin="0,4,4,0"/>
           <TextBlock Text="{lang:Loc Motors_Enc_Steps}"
                  FontFamily="{StaticResource AppTextFont}"
                  FontSize="36"
@@ -94,7 +90,7 @@
                  Foreground="{StaticResource AppTextColor}"
                  HorizontalAlignment="Right"
                  VerticalAlignment="Top"
-                 Margin="0,-4,4,0"/>
+                 Margin="0,4,4,0"/>
           <TextBlock Text="{lang:Loc Motors_Cur_Limit}"
                  FontFamily="{StaticResource AppTextFont}"
                  FontSize="36"
@@ -102,10 +98,10 @@
                  Foreground="{StaticResource AppTextColor}"
                  HorizontalAlignment="Right"
                  VerticalAlignment="Top"
-                 Margin="0,-4,4,0"/>
+                 Margin="0,5,4,0"/>
         </StackPanel>
         <StackPanel VerticalAlignment="Stretch"
-                    Width="100">
+                    Width="120">
           <TextBlock Text="{lang:Loc X}"
                      FontFamily="{StaticResource AppTextFont}"
                      FontSize="36"
@@ -116,7 +112,7 @@
           <Border Background="{StaticResource RibbonBackgroundActive}"
                    Margin="0,-5,0,4">
             <TextBox HorizontalAlignment="Stretch"
-                   Margin="8,8,4,8"
+                   Margin="10,10,5,10"
                    Style="{StaticResource InputFieldStyle}"
                    Text="{Binding ParametersX[0]}">
               <dxmvvm:Interaction.Behaviors>
@@ -133,7 +129,7 @@
             <RadioButton Content="{lang:Loc Motors_Left}"
                          Style="{StaticResource RadioButtonVerticalThemeStyle}"
                          IsChecked="True"
-                         Height="44"
+                         Height="60"
                          Command="{Binding PollStepSelectorCommand}">
                 <RadioButton.CommandParameter>
                   <System:String>Left</System:String>
@@ -141,7 +137,7 @@
               </RadioButton>
             <RadioButton Content="{lang:Loc Motors_Right}"
                          Style="{StaticResource RadioButtonVerticalThemeStyle}"
-                         Height="44"
+                         Height="60"
                          Command="{Binding PollStepSelectorCommand}">
                 <RadioButton.CommandParameter>
                   <System:String>Right</System:String>
@@ -153,7 +149,7 @@
           <Button Content="{lang:Loc Run}"
                   Command="{Binding RunMotorButtonClickCommand}"
                   Style="{StaticResource ButtonStyle}"
-                  Height="50"
+                  Height="60"
                   Margin="4,0,4,3">
               <Button.CommandParameter>
                 <System:String>x</System:String>
@@ -162,7 +158,7 @@
           <Button Content="{lang:Loc Halt}"
                   Command="{Binding HaltMotorButtonClickCommand}"
                   Style="{StaticResource HaltButtonStyle}"
-                  Height="50"
+                  Height="60"
                   Margin="4,0,4,6">
               <Button.CommandParameter>
                 <System:String>x</System:String>
@@ -171,7 +167,7 @@
           <Border Background="{StaticResource RibbonBackgroundActive}">
             <StackPanel>
               <TextBox HorizontalAlignment="Stretch"
-                   Margin="8,8,4,0"
+                   Margin="10,10,5,0"
                    Style="{StaticResource InputFieldStyle}"
                    Text="{Binding ParametersX[2]}">
                 <dxmvvm:Interaction.Behaviors>
@@ -180,7 +176,7 @@
                 </dxmvvm:Interaction.Behaviors>
               </TextBox>
               <TextBox HorizontalAlignment="Stretch"
-                   Margin="8,8,4,0"
+                   Margin="10,10,5,0"
                    Style="{StaticResource InputFieldStyle}"
                    Text="{Binding ParametersX[3]}">
                 <dxmvvm:Interaction.Behaviors>
@@ -189,7 +185,7 @@
                 </dxmvvm:Interaction.Behaviors>
               </TextBox>
               <TextBox HorizontalAlignment="Stretch"
-                    Margin="8,8,4,0"
+                   Margin="10,10,5,0"
                     Style="{StaticResource InputFieldStyle}"
                     Text="{Binding ParametersX[4]}">
                 <dxmvvm:Interaction.Behaviors>
@@ -199,12 +195,12 @@
               </TextBox>
               <TextBox HorizontalAlignment="Stretch"
                        IsReadOnly="True"
-                       Margin="8,8,4,0"
+                       Margin="10,10,5,0"
                        Style="{StaticResource InputFieldStyle}"
                        Text="{Binding ParametersX[5]}">
               </TextBox>
               <TextBox HorizontalAlignment="Stretch"
-                    Margin="8,8,4,0"
+                   Margin="10,10,5,0"
                     Style="{StaticResource InputFieldStyle}"
                     Text="{Binding ParametersX[6]}">
                 <dxmvvm:Interaction.Behaviors>
@@ -213,7 +209,7 @@
                 </dxmvvm:Interaction.Behaviors>
               </TextBox>
               <TextBox HorizontalAlignment="Stretch"
-                   Margin="8,8,4,8"
+                   Margin="10,10,5,10"
                    Style="{StaticResource InputFieldStyle}"
                    Text="{Binding ParametersX[7]}">
                 <dxmvvm:Interaction.Behaviors>
@@ -225,7 +221,7 @@
           </Border>
         </StackPanel>
         <StackPanel VerticalAlignment="Stretch"
-                    Width="100">
+                    Width="120">
           <TextBlock Text="{lang:Loc Y}"
                      FontFamily="{StaticResource AppTextFont}"
                      FontSize="36"
@@ -237,7 +233,7 @@
           <Border Background="{StaticResource RibbonBackgroundActive}"
                    Margin="0,-5,0,4">
             <TextBox HorizontalAlignment="Stretch"
-                     Margin="4,8,4,8"
+                     Margin="5,10,5,10"
                      Style="{StaticResource InputFieldStyle}"
                      Text="{Binding ParametersY[0]}">
               <dxmvvm:Interaction.Behaviors>
@@ -253,7 +249,7 @@
               <StackPanel>
               <RadioButton Content="{lang:Loc Motors_Back}"
                            Style="{StaticResource RadioButtonVerticalThemeStyle}"
-                           Height="44"
+                           Height="60"
                            Command="{Binding PollStepSelectorCommand}">
                   <RadioButton.CommandParameter>
                     <System:String>Back</System:String>
@@ -261,7 +257,7 @@
                 </RadioButton>
               <RadioButton Content="{lang:Loc Motors_Front}"
                            Style="{StaticResource RadioButtonVerticalThemeStyle}"
-                           Height="44"
+                           Height="60"
                            IsChecked="True"
                            Command="{Binding PollStepSelectorCommand}">
                   <RadioButton.CommandParameter>
@@ -274,7 +270,7 @@
           <Button Content="{lang:Loc Run}"
                   Command="{Binding RunMotorButtonClickCommand}"
                   Style="{StaticResource ButtonStyle}"
-                  Height="50"
+                  Height="60"
                   Margin="4,0,4,3">
               <Button.CommandParameter>
                 <System:String>y</System:String>
@@ -283,7 +279,7 @@
           <Button Content="{lang:Loc Halt}"
                   Command="{Binding HaltMotorButtonClickCommand}"
                   Style="{StaticResource HaltButtonStyle}"
-                  Height="50"
+                  Height="60"
                   Margin="4,0,4,6">
               <Button.CommandParameter>
                 <System:String>y</System:String>
@@ -292,7 +288,7 @@
           <Border Background="{StaticResource RibbonBackgroundActive}">
             <StackPanel>
               <TextBox HorizontalAlignment="Stretch"
-                       Margin="4,8,4,0"
+                       Margin="5,10,5,0"
                        Style="{StaticResource InputFieldStyle}"
                        Text="{Binding ParametersY[2]}">
                 <dxmvvm:Interaction.Behaviors>
@@ -301,7 +297,7 @@
                 </dxmvvm:Interaction.Behaviors>
               </TextBox>
               <TextBox HorizontalAlignment="Stretch"
-                       Margin="4,8,4,0"
+                       Margin="5,10,5,0"
                        Style="{StaticResource InputFieldStyle}"
                        Text="{Binding ParametersY[3]}">
                 <dxmvvm:Interaction.Behaviors>
@@ -310,7 +306,7 @@
                 </dxmvvm:Interaction.Behaviors>
               </TextBox>
               <TextBox HorizontalAlignment="Stretch"
-                       Margin="4,8,4,0"
+                       Margin="5,10,5,0"
                        Style="{StaticResource InputFieldStyle}"
                        Text="{Binding ParametersY[4]}">
                 <dxmvvm:Interaction.Behaviors>
@@ -319,13 +315,13 @@
                 </dxmvvm:Interaction.Behaviors>
               </TextBox>
               <TextBox HorizontalAlignment="Stretch"
-                       Margin="4,8,4,0"
+                       Margin="5,10,5,0"
                        IsReadOnly="True"
                        Style="{StaticResource InputFieldStyle}"
                        Text="{Binding ParametersY[5]}">
               </TextBox>
               <TextBox HorizontalAlignment="Stretch"
-                       Margin="4,8,4,0"
+                       Margin="5,10,5,0"
                        Style="{StaticResource InputFieldStyle}"
                        Text="{Binding ParametersY[6]}">
                 <dxmvvm:Interaction.Behaviors>
@@ -334,7 +330,7 @@
                 </dxmvvm:Interaction.Behaviors>
               </TextBox>
               <TextBox HorizontalAlignment="Stretch"
-                       Margin="4,8,4,8"
+                       Margin="5,10,5,10"
                        Style="{StaticResource InputFieldStyle}"
                        Text="{Binding ParametersY[7]}">
                 <dxmvvm:Interaction.Behaviors>
@@ -346,7 +342,7 @@
           </Border>
         </StackPanel>
         <StackPanel VerticalAlignment="Stretch"
-                    Width="100">
+                    Width="120">
           <TextBlock Text="{lang:Loc Z}"
                      FontFamily="{StaticResource AppTextFont}"
                      FontSize="36"
@@ -358,7 +354,7 @@
           <Border Background="{StaticResource RibbonBackgroundActive}"
                    Margin="0,-5,0,4">
             <TextBox HorizontalAlignment="Stretch"
-                     Margin="4,8,8,8"
+                     Margin="5,10,10,10"
                      Style="{StaticResource InputFieldStyle}"
                      Text="{Binding ParametersZ[0]}">
               <dxmvvm:Interaction.Behaviors>
@@ -373,7 +369,7 @@
               <StackPanel>
                 <RadioButton Content="{lang:Loc Motors_Up}"
                              Style="{StaticResource RadioButtonVerticalThemeStyle}"
-                             Height="44"
+                             Height="60"
                              IsChecked="True"
                              Command="{Binding PollStepSelectorCommand}">
                   <RadioButton.CommandParameter>
@@ -382,7 +378,7 @@
                 </RadioButton>
                 <RadioButton Content="{lang:Loc Motors_Down}"
                              Style="{StaticResource RadioButtonVerticalThemeStyle}"
-                             Height="44"
+                             Height="60"
                              Command="{Binding PollStepSelectorCommand}">
                   <RadioButton.CommandParameter>
                     <System:String>Down</System:String>
@@ -394,7 +390,7 @@
           <Button Content="{lang:Loc Run}"
                   Command="{Binding RunMotorButtonClickCommand}"
                   Style="{StaticResource ButtonStyle}"
-                  Height="50"
+                  Height="60"
                   Margin="4,0,4,3">
             <Button.CommandParameter>
               <System:String>z</System:String>
@@ -403,7 +399,7 @@
           <Button Content="{lang:Loc Halt}"
                   Command="{Binding HaltMotorButtonClickCommand}"
                   Style="{StaticResource HaltButtonStyle}"
-                  Height="50"
+                  Height="60"
                   Margin="4,0,4,6">
             <Button.CommandParameter>
               <System:String>z</System:String>
@@ -412,7 +408,7 @@
           <Border Background="{StaticResource RibbonBackgroundActive}">
             <StackPanel>
               <TextBox HorizontalAlignment="Stretch"
-                   Margin="4,8,8,0"
+                   Margin="5,10,10,0"
                    Style="{StaticResource InputFieldStyle}"
                    Text="{Binding ParametersZ[2]}">
                 <dxmvvm:Interaction.Behaviors>
@@ -421,7 +417,7 @@
                 </dxmvvm:Interaction.Behaviors>
               </TextBox>
               <TextBox HorizontalAlignment="Stretch"
-                   Margin="4,8,8,0"
+                   Margin="5,10,10,0"
                    Style="{StaticResource InputFieldStyle}"
                    Text="{Binding ParametersZ[3]}">
                 <dxmvvm:Interaction.Behaviors>
@@ -430,7 +426,7 @@
                 </dxmvvm:Interaction.Behaviors>
               </TextBox>
               <TextBox HorizontalAlignment="Stretch"
-                   Margin="4,8,8,0"
+                   Margin="5,10,10,0"
                    Style="{StaticResource InputFieldStyle}"
                    Text="{Binding ParametersZ[4]}">
                 <dxmvvm:Interaction.Behaviors>
@@ -439,13 +435,13 @@
                 </dxmvvm:Interaction.Behaviors>
               </TextBox>
               <TextBox HorizontalAlignment="Stretch"
-                   Margin="4,8,8,0"
+                   Margin="5,10,10,0"
                    IsReadOnly="True"
                    Style="{StaticResource InputFieldStyle}"
                    Text="{Binding ParametersZ[5]}">
               </TextBox>
               <TextBox HorizontalAlignment="Stretch"
-                   Margin="4,8,8,0"
+                   Margin="5,10,10,0"
                    Style="{StaticResource InputFieldStyle}"
                    Text="{Binding ParametersZ[6]}">
                 <dxmvvm:Interaction.Behaviors>
@@ -454,7 +450,7 @@
                 </dxmvvm:Interaction.Behaviors>
               </TextBox>
               <TextBox HorizontalAlignment="Stretch"
-                   Margin="4,8,8,8"
+                       Margin="5,10,10,10"
                    Style="{StaticResource InputFieldStyle}"
                    Text="{Binding ParametersZ[7]}">
                 <dxmvvm:Interaction.Behaviors>
@@ -471,7 +467,7 @@
     <!--Steps-->
     <Border VerticalAlignment="Top"
             HorizontalAlignment="Left"
-            Margin="650,50,0,0">
+            Margin="680,60,0,0">
       <StackPanel>
         <TextBlock Text="{lang:Loc Motors_Steps}"
                  FontFamily="{StaticResource AppTextFont}"
@@ -480,62 +476,57 @@
                  Foreground="{StaticResource AppTextColor}"
                  HorizontalAlignment="Center"
                  VerticalAlignment="Top"
-                 Margin="0,0,0,10"/>
+                 Margin="140,0,0,10"/>
         <StackPanel 
                 VerticalAlignment="Stretch"
                 HorizontalAlignment="Stretch"
                 Orientation="Horizontal"
                 Margin="10,0,10,0">
           <StackPanel VerticalAlignment="Stretch"
-                      Margin="0,48,3,0"
-                      Width="130">
+                      Margin="0,54,3,0"
+                      Width="200">
             <TextBlock Text="{lang:Loc Motors_96W_C1}"
                  FontFamily="{StaticResource AppTextFont}"
-                 FontSize="26"
+                 FontSize="36"
                  FontWeight="UltraBold"
                  Foreground="{StaticResource AppTextColor}"
                  HorizontalAlignment="Right"
-                 VerticalAlignment="Top"
                  Margin="0,0,10,0"/>
             <TextBlock Text="{lang:Loc Motors_96W_C12}"
                  FontFamily="{StaticResource AppTextFont}"
-                 FontSize="26"
+                 FontSize="36"
                  FontWeight="UltraBold"
                  Foreground="{StaticResource AppTextColor}"
                  HorizontalAlignment="Right"
-                 VerticalAlignment="Top"
-                 Margin="0,8,10,0"/>
+                 Margin="0,6,10,0"/>
             <TextBlock Text="{lang:Loc Motors_384W_C1}"
                  FontFamily="{StaticResource AppTextFont}"
-                 FontSize="26"
+                 FontSize="36"
                  FontWeight="UltraBold"
                  Foreground="{StaticResource AppTextColor}"
                  HorizontalAlignment="Right"
-                 VerticalAlignment="Top"
-                 Margin="0,9,10,0"/>
+                 Margin="0,6,10,0"/>
             <TextBlock Text="{lang:Loc Motors_384W_C24}"
                  FontFamily="{StaticResource AppTextFont}"
-                 FontSize="26"
+                 FontSize="36"
                  FontWeight="UltraBold"
                  Foreground="{StaticResource AppTextColor}"
                  HorizontalAlignment="Right"
-                 VerticalAlignment="Top"
-                 Margin="0,9,10,0"/>
+                 Margin="0,6,10,0"/>
             <TextBlock Text="{lang:Loc Tube}"
                  FontFamily="{StaticResource AppTextFont}"
-                 FontSize="26"
+                 FontSize="36"
                  FontWeight="UltraBold"
                  Foreground="{StaticResource AppTextColor}"
                  HorizontalAlignment="Right"
-                 VerticalAlignment="Top"
-                 Margin="0,9,10,0"/>
+                 Margin="0,2,10,0"/>
           </StackPanel>
           <StackPanel VerticalAlignment="Stretch"
-                    Width="100"
+                    Width="120"
                     Margin="0,0,3,0">
             <TextBlock Text="{lang:Loc X}"
                  FontFamily="{StaticResource AppTextFont}"
-                 FontSize="30"
+                 FontSize="36"
                  FontWeight="UltraBold"
                  Foreground="{StaticResource AppTextColor}"
                  HorizontalAlignment="Center"
@@ -544,7 +535,7 @@
             <Border Background="{StaticResource RibbonBackgroundActive}">
               <StackPanel>
                 <TextBox HorizontalAlignment="Stretch"
-                         Margin="8,8,8,0"
+                         Margin="10,10,10,0"
                          Style="{StaticResource InputFieldStyle}"
                          Text="{Binding StepsParametersX[0]}">
                   <dxmvvm:Interaction.Behaviors>
@@ -553,7 +544,7 @@
                   </dxmvvm:Interaction.Behaviors>
                 </TextBox>
                 <TextBox HorizontalAlignment="Stretch"
-                         Margin="8,8,8,0"
+                         Margin="10,10,10,0"
                          Style="{StaticResource InputFieldStyle}"
                          Text="{Binding StepsParametersX[1]}">
                   <dxmvvm:Interaction.Behaviors>
@@ -562,7 +553,7 @@
                   </dxmvvm:Interaction.Behaviors>
                 </TextBox>
                 <TextBox HorizontalAlignment="Stretch"
-                         Margin="8,8,8,0"
+                         Margin="10,10,10,0"
                          Style="{StaticResource InputFieldStyle}"
                          Text="{Binding StepsParametersX[2]}">
                   <dxmvvm:Interaction.Behaviors>
@@ -571,7 +562,7 @@
                   </dxmvvm:Interaction.Behaviors>
                 </TextBox>
                 <TextBox HorizontalAlignment="Stretch"
-                         Margin="8,8,8,0"
+                         Margin="10,10,10,0"
                          Style="{StaticResource InputFieldStyle}"
                          Text="{Binding StepsParametersX[3]}">
                   <dxmvvm:Interaction.Behaviors>
@@ -580,7 +571,7 @@
                   </dxmvvm:Interaction.Behaviors>
                 </TextBox>
                 <TextBox HorizontalAlignment="Stretch"
-                         Margin="8,8,8,8"
+                         Margin="10,10,10,10"
                          Style="{StaticResource InputFieldStyle}"
                          Text="{Binding StepsParametersX[4]}">
                   <dxmvvm:Interaction.Behaviors>
@@ -592,55 +583,50 @@
             </Border>
           </StackPanel>
           <StackPanel VerticalAlignment="Stretch"
-                      Width="90"
-                      Margin="0,48,3,0">
+                      Width="130"
+                      Margin="0,54,3,0">
             <TextBlock Text="{lang:Loc Motors_Row_A}"
                        FontFamily="{StaticResource AppTextFont}"
-                       FontSize="26"
+                       FontSize="36"
                        FontWeight="UltraBold"
                        Foreground="{StaticResource AppTextColor}"
                        HorizontalAlignment="Right"
-                       VerticalAlignment="Top"
                        Margin="0,0,10,0"/>
             <TextBlock Text="{lang:Loc Motors_Row_H}"
                        FontFamily="{StaticResource AppTextFont}"
-                       FontSize="26"
+                       FontSize="36"
                        FontWeight="UltraBold"
                        Foreground="{StaticResource AppTextColor}"
                        HorizontalAlignment="Right"
-                       VerticalAlignment="Top"
-                       Margin="0,8,10,0"/>
+                       Margin="0,6,10,0"/>
             <TextBlock Text="{lang:Loc Motors_Row_A}"
                        FontFamily="{StaticResource AppTextFont}"
-                       FontSize="26"
+                       FontSize="36"
                        FontWeight="UltraBold"
                        Foreground="{StaticResource AppTextColor}"
                        HorizontalAlignment="Right"
-                       VerticalAlignment="Top"
-                       Margin="0,9,10,0"/>
+                       Margin="0,6,10,0"/>
             <TextBlock Text="{lang:Loc Motors_Row_P}"
                        FontFamily="{StaticResource AppTextFont}"
-                       FontSize="26"
+                       FontSize="36"
                        FontWeight="UltraBold"
                        Foreground="{StaticResource AppTextColor}"
                        HorizontalAlignment="Right"
-                       VerticalAlignment="Top"
-                       Margin="0,9,10,0"/>
+                       Margin="0,6,10,0"/>
             <TextBlock Text="{lang:Loc Tube}"
                        FontFamily="{StaticResource AppTextFont}"
-                       FontSize="26"
+                       FontSize="36"
                        FontWeight="UltraBold"
                        Foreground="{StaticResource AppTextColor}"
                        HorizontalAlignment="Right"
-                       VerticalAlignment="Top"
-                       Margin="0,9,10,0"/>
+                       Margin="0,2,10,0"/>
           </StackPanel>
           <StackPanel VerticalAlignment="Stretch"
-                      Width="100"
+                      Width="120"
                       Margin="0,0,3,0">
             <TextBlock Text="{lang:Loc Y}"
                        FontFamily="{StaticResource AppTextFont}"
-                       FontSize="30"
+                       FontSize="36"
                        FontWeight="UltraBold"
                        Foreground="{StaticResource AppTextColor}"
                        HorizontalAlignment="Center"
@@ -649,7 +635,7 @@
             <Border Background="{StaticResource RibbonBackgroundActive}">
               <StackPanel>
                 <TextBox HorizontalAlignment="Stretch"
-                         Margin="8,8,8,0"
+                         Margin="10,10,10,0"
                          Style="{StaticResource InputFieldStyle}"
                          Text="{Binding StepsParametersY[0]}">
                   <dxmvvm:Interaction.Behaviors>
@@ -658,7 +644,7 @@
                   </dxmvvm:Interaction.Behaviors>
                 </TextBox>
                 <TextBox HorizontalAlignment="Stretch"
-                         Margin="8,8,8,0"
+                         Margin="10,10,10,0"
                          Style="{StaticResource InputFieldStyle}"
                          Text="{Binding StepsParametersY[1]}">
                   <dxmvvm:Interaction.Behaviors>
@@ -667,7 +653,7 @@
                   </dxmvvm:Interaction.Behaviors>
                 </TextBox>
                 <TextBox HorizontalAlignment="Stretch"
-                         Margin="8,8,8,0"
+                         Margin="10,10,10,0"
                          Style="{StaticResource InputFieldStyle}"
                          Text="{Binding StepsParametersY[2]}">
                   <dxmvvm:Interaction.Behaviors>
@@ -676,7 +662,7 @@
                   </dxmvvm:Interaction.Behaviors>
                 </TextBox>
                 <TextBox HorizontalAlignment="Stretch"
-                         Margin="8,8,8,0"
+                         Margin="10,10,10,0"
                       Style="{StaticResource InputFieldStyle}"
                       Text="{Binding StepsParametersY[3]}">
                   <dxmvvm:Interaction.Behaviors>
@@ -685,7 +671,7 @@
                   </dxmvvm:Interaction.Behaviors>
                 </TextBox>
                 <TextBox HorizontalAlignment="Stretch"
-                         Margin="8,8,8,8"
+                         Margin="10,10,10,10"
                          Style="{StaticResource InputFieldStyle}"
                          Text="{Binding StepsParametersY[4]}">
                   <dxmvvm:Interaction.Behaviors>
@@ -697,55 +683,50 @@
             </Border>
           </StackPanel>
           <StackPanel VerticalAlignment="Stretch"
-                      Width="90"
-                      Margin="0,48,3,0">
+                      Width="130"
+                      Margin="0,54,3,0">
             <TextBlock Text="{lang:Loc Motors_A1}"
                        FontFamily="{StaticResource AppTextFont}"
-                       FontSize="26"
+                       FontSize="36"
                        FontWeight="UltraBold"
                        Foreground="{StaticResource AppTextColor}"
                        HorizontalAlignment="Right"
-                       VerticalAlignment="Top"
                        Margin="0,0,10,0"/>
             <TextBlock Text="{lang:Loc Motors_A12}"
                        FontFamily="{StaticResource AppTextFont}"
-                       FontSize="26"
+                       FontSize="36"
                        FontWeight="UltraBold"
                        Foreground="{StaticResource AppTextColor}"
                        HorizontalAlignment="Right"
-                       VerticalAlignment="Top"
-                       Margin="0,8,10,0"/>
+                       Margin="0,6,10,0"/>
             <TextBlock Text="{lang:Loc Motors_H1}"
                        FontFamily="{StaticResource AppTextFont}"
-                       FontSize="26"
+                       FontSize="36"
                        FontWeight="UltraBold"
                        Foreground="{StaticResource AppTextColor}"
                        HorizontalAlignment="Right"
-                       VerticalAlignment="Top"
-                       Margin="0,9,10,0"/>
+                       Margin="0,4,10,0"/>
             <TextBlock Text="{lang:Loc Motors_H12}"
-                 FontFamily="{StaticResource AppTextFont}"
-                 FontSize="26"
-                 FontWeight="UltraBold"
-                 Foreground="{StaticResource AppTextColor}"
-                 HorizontalAlignment="Right"
-                 VerticalAlignment="Top"
-                 Margin="0,9,10,0"/>
+                       FontFamily="{StaticResource AppTextFont}"
+                       FontSize="36"
+                       FontWeight="UltraBold"
+                       Foreground="{StaticResource AppTextColor}"
+                       HorizontalAlignment="Right"
+                       Margin="0,6,10,0"/>
             <TextBlock Text="{lang:Loc Tube}"
-                 FontFamily="{StaticResource AppTextFont}"
-                 FontSize="26"
-                 FontWeight="UltraBold"
-                 Foreground="{StaticResource AppTextColor}"
-                 HorizontalAlignment="Right"
-                 VerticalAlignment="Top"
-                 Margin="0,9,10,0"/>
+                       FontFamily="{StaticResource AppTextFont}"
+                       FontSize="36"
+                       FontWeight="UltraBold"
+                       Foreground="{StaticResource AppTextColor}"
+                       HorizontalAlignment="Right"
+                       Margin="0,2,10,0"/>
           </StackPanel>
           <StackPanel VerticalAlignment="Stretch"
                       Width="100"
                       Margin="0,0,3,0">
             <TextBlock Text="{lang:Loc Z}"
                  FontFamily="{StaticResource AppTextFont}"
-                 FontSize="30"
+                 FontSize="36"
                  FontWeight="UltraBold"
                  Foreground="{StaticResource AppTextColor}"
                  HorizontalAlignment="Center"
@@ -754,7 +735,7 @@
             <Border Background="{StaticResource RibbonBackgroundActive}">
               <StackPanel>
                 <TextBox HorizontalAlignment="Stretch"
-                         Margin="8,8,8,0"
+                         Margin="10,10,10,0"
                       Style="{StaticResource InputFieldStyle}"
                       Text="{Binding StepsParametersZ[0]}">
                   <dxmvvm:Interaction.Behaviors>
@@ -763,7 +744,7 @@
                   </dxmvvm:Interaction.Behaviors>
                 </TextBox>
                 <TextBox HorizontalAlignment="Stretch"
-                         Margin="8,8,8,0"
+                         Margin="10,10,10,0"
                       Style="{StaticResource InputFieldStyle}"
                       Text="{Binding StepsParametersZ[1]}">
                   <dxmvvm:Interaction.Behaviors>
@@ -772,7 +753,7 @@
                   </dxmvvm:Interaction.Behaviors>
                 </TextBox>
                 <TextBox HorizontalAlignment="Stretch"
-                         Margin="8,8,8,0"
+                         Margin="10,10,10,0"
                       Style="{StaticResource InputFieldStyle}"
                       Text="{Binding StepsParametersZ[2]}">
                   <dxmvvm:Interaction.Behaviors>
@@ -781,7 +762,7 @@
                   </dxmvvm:Interaction.Behaviors>
                 </TextBox>
                 <TextBox HorizontalAlignment="Stretch"
-                         Margin="8,8,8,0"
+                         Margin="10,10,10,0"
                       Style="{StaticResource InputFieldStyle}"
                       Text="{Binding StepsParametersZ[3]}">
                   <dxmvvm:Interaction.Behaviors>
@@ -790,7 +771,7 @@
                   </dxmvvm:Interaction.Behaviors>
                 </TextBox>
                 <TextBox HorizontalAlignment="Stretch"
-                         Margin="8,8,8,8"
+                         Margin="10,10,10,10"
                          Style="{StaticResource InputFieldStyle}"
                          Text="{Binding StepsParametersZ[4]}">
                   <dxmvvm:Interaction.Behaviors>
@@ -808,29 +789,28 @@
     <!--Well Selection-->
     <Border VerticalAlignment="top"
             HorizontalAlignment="Left"
-            Margin="870,440,0,0">
+            Margin="970,475,0,0">
       <StackPanel>
 
         <TextBlock Text="{lang:Loc Motors_Man_Well_Sel}"
                  FontFamily="{StaticResource AppTextFont}"
-                 FontSize="28"
+                 FontSize="36"
                  FontWeight="UltraBold"
                  Foreground="{StaticResource AppTextColor}"
-                 HorizontalAlignment="Center"
-                 VerticalAlignment="Top"
+                 Width="350"
                  Margin="0,0,0,10"/>
 
         <Border BorderThickness="1"
                 BorderBrush="{StaticResource HaltButtonBackgroundHighlighted}"
-                Margin="0,0,0,3"
-                Width="240"
-                Height="60">
+                Margin="0,0,0,6"
+                Width="280"
+                Height="80">
           <StackPanel HorizontalAlignment="Center"
                     Orientation="Horizontal">
             <RadioButton Content="96"
                        Style="{StaticResource RadioButtonHorizontalThemeStyle}"
                        IsChecked="True"
-                       Width="120"
+                       Width="140"
                        Command="{Binding ChangeAmountOfWellsCommand}">
               <RadioButton.CommandParameter>
                 <System:Int32>96</System:Int32>
@@ -838,7 +818,7 @@
             </RadioButton>
             <RadioButton Content="384"
                        Style="{StaticResource RadioButtonHorizontalThemeStyle}"
-                       Width="120"
+                       Width="140"
                        Command="{Binding ChangeAmountOfWellsCommand}">
               <RadioButton.CommandParameter>
                 <System:Int32>384</System:Int32>
@@ -848,11 +828,10 @@
         </Border>
 
         <StackPanel Orientation="Horizontal"
-                  HorizontalAlignment="Center"
-                  Height="60"
-                  Width="240">
-          <dx:DropDownButton Width="120"
-                        FontSize="40"
+                  Height="80"
+                  Width="280">
+          <dx:DropDownButton Width="140"
+                        FontSize="50"
                         FontFamily="{StaticResource AppTextFont}"
                         Foreground="{StaticResource AppTextColor}"
                         Content="{Binding SelectedWellRow}">
@@ -868,8 +847,8 @@
               </dxb:PopupMenu.ItemTemplate>
             </dxb:PopupMenu>
           </dx:DropDownButton>
-          <dx:DropDownButton Width="120"
-                        FontSize="40"
+          <dx:DropDownButton Width="140"
+                        FontSize="50"
                         FontFamily="{StaticResource AppTextFont}"
                         Foreground="{StaticResource AppTextColor}"
                         Content="{Binding SelectedWellColumn}">
@@ -889,8 +868,8 @@
         <Button Content="{lang:Loc Motors_GoTo_Well}"
                 Command="{Binding GoToWellButtonClickCommand}"
                 Style="{StaticResource ButtonStyle}"
-                Height="60" Width="240"
-                Margin="0,3,0,0"/>
+                Height="80" Width="280"
+                Margin="0,6,0,0"/>
       </StackPanel>
     </Border>
     

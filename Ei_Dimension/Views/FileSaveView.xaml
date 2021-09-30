@@ -9,7 +9,7 @@
              xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors" x:Class="Ei_Dimension.Views.FileSaveView"
              mc:Ignorable="d"
              DataContext="{dxmvvm:ViewModelSource Type={x:Type ViewModels:FileSaveViewModel}}"
-             d:DesignHeight="785" d:DesignWidth="1353">
+             d:DesignHeight="960" d:DesignWidth="1664">
   <dxmvvm:Interaction.Behaviors>
     <dxmvvm:FolderBrowserDialogService/>
   </dxmvvm:Interaction.Behaviors>
