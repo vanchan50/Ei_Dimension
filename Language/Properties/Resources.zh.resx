@@ -217,6 +217,12 @@
   <data name="Channels_Save_Bias_To_Map" xml:space="preserve">
     <value>保存偏置到当前珠图</value>
   </data>
+  <data name="Channels_Sens_B" xml:space="preserve">
+    <value>绿光 B</value>
+  </data>
+  <data name="Channels_Sens_C" xml:space="preserve">
+    <value>绿光 C</value>
+  </data>
   <data name="Channels_Set_Offset" xml:space="preserve">
     <value>设置偏移</value>
   </data>

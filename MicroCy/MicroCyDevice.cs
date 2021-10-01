@@ -927,6 +927,7 @@ namespace MicroCy
       outbead = BeadArrayToStruct<BeadInfoStruct>(buffer, shift);
       if (outbead.Header != 0xadbeadbe)
         return false;
+      //greenMaj is the hi dyn range channel, greenMin is the high sensitivity channel(depends on filter placement)
       if (ChannelBIsHiSensitivity)
       {
         _greenMaj = outbead.greenC;
