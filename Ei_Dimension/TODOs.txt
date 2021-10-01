@@ -45,3 +45,7 @@ Subtract bed region background button. useless?
 Can I make windows dialog windows bigger and bigger fonts?
 
 Switch language should account for selected settings in device. like for ChannelsVM
+
+NewClData() acts as graph data storage
+
+I can leave the CLdata mechanism, with minor adjustments. it should keep all the data, disregarding the selectors. what is it ~10Mb max?

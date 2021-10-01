@@ -4,25 +4,36 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:dxc="http://schemas.devexpress.com/winfx/2008/xaml/charts"
-             xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm" xmlns:ViewModels="clr-namespace:Ei_Dimension.ViewModels"
+             xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+             xmlns:ViewModels="clr-namespace:Ei_Dimension.ViewModels"
              mc:Ignorable="d"
              DataContext="{dxmvvm:ViewModelSource Type=ViewModels:ResultsViewModel}"
              d:DesignHeight="944" d:DesignWidth="1920">
   <Grid>
     <!--Reporter Chart-->
-    <dxc:ChartControl>
+    <dxc:ChartControl Width="640" Height="472"
+                      HorizontalAlignment="Left"
+                      VerticalAlignment="Top">
       <dxc:XYDiagram2D>
         <dxc:XYDiagram2D.AxisY>
-          <dxc:AxisY2D>
+          <dxc:AxisY2D Interlaced="False">
             <dxc:AxisY2D.Title>
-              <dxc:AxisTitle Content="Count" Visible="True"/>
+              <dxc:AxisTitle Content="Count"
+                             FontSize="30"
+                             FontWeight="UltraBold"
+                             FontFamily="{StaticResource AppTextFont}"
+                             Visible="True"/>
             </dxc:AxisY2D.Title>
           </dxc:AxisY2D>
         </dxc:XYDiagram2D.AxisY>
         <dxc:XYDiagram2D.AxisX>
           <dxc:AxisX2D Logarithmic="True">
             <dxc:AxisX2D.Title>
-              <dxc:AxisTitle Content="Reporter"  Visible="True"/>
+              <dxc:AxisTitle Content="Reporter"
+                             FontSize="30"
+                             FontWeight="UltraBold"
+                             FontFamily="{StaticResource AppTextFont}"
+                             Visible="True"/>
             </dxc:AxisX2D.Title>
           </dxc:AxisX2D>
         </dxc:XYDiagram2D.AxisX>

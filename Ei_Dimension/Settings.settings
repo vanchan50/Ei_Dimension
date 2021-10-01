@@ -29,9 +29,6 @@
     <Setting Name="EndRead" Type="System.Byte" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="SscHistSel" Type="System.Byte" Scope="User">
-      <Value Profile="(Default)">3</Value>
-    </Setting>
     <Setting Name="XAxisG" Type="System.Byte" Scope="User">
       <Value Profile="(Default)">1</Value>
     </Setting>

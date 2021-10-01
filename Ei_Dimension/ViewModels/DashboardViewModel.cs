@@ -187,10 +187,8 @@ namespace Ei_Dimension.ViewModels
       App.Device.MainCommand("Get FProperty", code: 0x68);
       App.Device.PlateReport = new MicroCy.PlateReport(); //TODO: optimize, not needed here
       App.Device.MainCommand("Get FProperty", code: 0x20);   //get high dnr property
-      Array.Clear(App.Device.SscData, 0, 256);
-      Array.Clear(App.Device.Rp1Data, 0, 256);
-      //  chart1.Series["SSC"].Points.DataBindY(m_MicroCy.sscdata);
-      //  chart3.Series["RP1"].Points.DataBindY(m_MicroCy.rp1data);
+      App.Device.ClearGraphingArrays();
+      ResultsViewModel.Instance.ClearGraphs();
       SetWellsInOrder();
 
       //find number of wells to read

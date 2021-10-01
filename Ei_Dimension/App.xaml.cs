@@ -6,7 +6,7 @@ using System.Windows.Threading;
 using System.Windows;
 using Ei_Dimension.ViewModels;
 using MicroCy;
-using System.ComponentModel;
+using System.Threading.Tasks;
 
 namespace Ei_Dimension
 {
@@ -19,6 +19,7 @@ namespace Ei_Dimension
     private static DispatcherTimer _dispatcherTimer;
     private static bool _workOrderPending;
     private static bool _cancelKeyboardInjectionFlag;
+    private static bool _histogramUpdateGoing;
     public App()
     {
       SplashScreen = Program.SplashScreen;
@@ -43,7 +44,6 @@ namespace Ei_Dimension
       Device.BeadsToCapture = Settings.Default.BeadsToCapture;
       if (!System.Windows.Input.Keyboard.IsKeyDown(System.Windows.Input.Key.LeftCtrl))
         Device.MainCommand("Startup");
-      Device.SscSelected = Settings.Default.SscHistSel; //TODO: delete this, when refactor ReplyFromMC. only needed in legacy to build graphs
       Device.XAxisSel = Settings.Default.XAxisG;        //TODO: delete this, when refactor ReplyFromMC. only needed in legacy to build graphs
       Device.YAxisSel = Settings.Default.YAxisG;        //TODO: delete this, when refactor ReplyFromMC. only needed in legacy to build graphs
       Device.HdnrTrans = Settings.Default.HDnrTrans;
@@ -55,6 +55,7 @@ namespace Ei_Dimension
       _dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 500);
       _dispatcherTimer.Start();
       _workOrderPending = false;
+      _histogramUpdateGoing = false;
     }
 
     public static int GetActiveMapIndex()
@@ -947,14 +948,7 @@ namespace Ei_Dimension
     private static void TimerTick(object sender, EventArgs e)
     {
       TextBoxUpdater();
-      while (Device.ClData.Count != 0)
-      {
-        lock (Device.ClData)
-        {
-          CLQueue cldp = Device.ClData.Dequeue();
-          //  chart2.Series["CL1CL2"].Points.AddXY(cldp.xyclx, cldp.xycly);
-        }
-      }
+      HistogramHandler();
       UpdateEventCounter();
       UpdatePressureMonitor();
       WellStateHandler();
@@ -1482,7 +1476,7 @@ namespace Ei_Dimension
               if (Device.WellsToRead > 0)
               {
                 //  ClearCharts();
-                Array.Clear(Device.SscData, 0, 256);
+                Array.Clear(Device.ForwardSscData, 0, 256);
                 Array.Clear(Device.Rp1Data, 0, 256);
               }
               break;
@@ -1491,7 +1485,7 @@ namespace Ei_Dimension
               if (Device.WellsToRead > 0)
               {
                 //  ClearCharts();
-                Array.Clear(Device.SscData, 0, 256);
+                Array.Clear(Device.ForwardSscData, 0, 256);
                 Array.Clear(Device.Rp1Data, 0, 256);
               }
               break;
@@ -1526,7 +1520,7 @@ namespace Ei_Dimension
           }
         case 2:
           {
-            _ = System.Threading.Tasks.Task.Run(Device.SaveBeadFile);
+            _ = Task.Run(Device.SaveBeadFile);
             Device.EndState++;
             Console.WriteLine(string.Format("{0} Reporting Background File Save Init", DateTime.Now.ToString()));
             break;
@@ -1586,7 +1580,7 @@ namespace Ei_Dimension
             else
             {
               //  ClearCharts();
-              Array.Clear(Device.SscData, 0, 256);
+              Array.Clear(Device.ForwardSscData, 0, 256);
               Array.Clear(Device.Rp1Data, 0, 256);
             }
             Console.WriteLine(string.Format("{0} Reporting End of current well", DateTime.Now.ToString()));
@@ -1635,6 +1629,36 @@ namespace Ei_Dimension
           //    //  pltNumbertb.BackColor = Color.Red;
           //  }
         }
+      }
+    }
+
+    private static void HistogramHandler()
+    {
+
+      while (Device.ClData.Count != 0)
+      {
+        lock (Device.ClData)
+        {
+          CLQueue cldp = Device.ClData.Dequeue();
+          //  chart2.Series["CL1CL2"].Points.AddXY(cldp.xyclx, cldp.xycly);
+        }
+      }
+
+      if (!_histogramUpdateGoing)
+      {
+        var ResVM = ResultsViewModel.Instance;
+        _histogramUpdateGoing = true;
+        _ = Current.Dispatcher.BeginInvoke((Action)(() => {
+          for(var i = 0; i < 256; i++)
+          {
+            ResVM.ForwardSsc[i].Value = Device.ForwardSscData[i];
+            ResVM.VioletSsc[i].Value = Device.VioletSscData[i];
+            ResVM.RedSsc[i].Value = Device.RedSscData[i];
+            ResVM.GreenSsc[i].Value = Device.GreenSscData[i];
+            ResVM.Reporter[i].Value = Device.Rp1Data[i];
+          }
+          _histogramUpdateGoing = false;
+        }));
       }
     }
 

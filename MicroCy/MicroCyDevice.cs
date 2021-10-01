@@ -52,8 +52,11 @@ namespace MicroCy
     public float Compensation { get; set; }
     public float HdnrTrans { get; set; }
     public float IdexDir { get; set; }
-    public int[] SscData = new int[256];  //Probably not necessary. was part of chart1 in legacy Only set in ReplyFromMC()
-    public int[] Rp1Data = new int[256];  //Probably not necessary. was part of chart3 in legacy Only set in ReplyFromMC()
+    public int[] ForwardSscData = new int[256];
+    public int[] VioletSscData = new int[256];
+    public int[] RedSscData = new int[256];
+    public int[] GreenSscData = new int[256];
+    public int[] Rp1Data = new int[256];
     public int SavingWellIdx { get; set; }
     public int TempCl0 { get; set; }
     public int TempCl1 { get; set; }
@@ -92,7 +95,6 @@ namespace MicroCy
     public byte TerminationType { get; set; }
     public byte ReadingRow { get; set; }
     public byte ReadingCol { get; set; }
-    public byte SscSelected { get; set; } //TODO: delete this
     public byte XAxisSel { get; set; }    //TODO: delete this
     public byte YAxisSel { get; set; }    //TODO: delete this
     public byte EndState { get; set; }
@@ -792,27 +794,11 @@ namespace MicroCy
           DataPoint.xycly = (uint)outbead.cl3;
           break;
       }
-      double sidsel;
-      switch (SscSelected)
-      {
-        case 0:
-          sidsel = outbead.fsc;
-          break;
-        case 1:
-          sidsel = outbead.violetssc;
-          break;
-        case 2:
-          sidsel = outbead.greenssc;
-          break;
-        default:
-          sidsel = outbead.redssc;
-          break;
-      }
-      double sidesc = Math.Log(sidsel) * 24.526;
-      SscData[(byte)sidesc]++;
-      float grp1 = outbead.reporter;
-      if (grp1 > 32000)
-        grp1 = 32000; //don't let graph overflow
+      ForwardSscData[(byte)(Math.Log(outbead.fsc) * 24.526)]++;
+      VioletSscData[(byte)(Math.Log(outbead.violetssc) * 24.526)]++;
+      RedSscData[(byte)(Math.Log(outbead.redssc) * 24.526)]++;
+      GreenSscData[(byte)(Math.Log(outbead.greenssc) * 24.526)]++;
+      float grp1 = outbead.reporter < 32000 ? outbead.reporter : 32000;  //don't let graph overflow
       Rp1Data[(byte)(Math.Log(grp1) * 24.526)]++;
       try
       {
@@ -882,13 +868,13 @@ namespace MicroCy
     {
       if (CalStats && (BeadCount < 5000))
       {
-        _sfi[BeadCount, 6] = outbead.cl3;
-        _sfi[BeadCount, 3] = outbead.redssc;
-        _sfi[BeadCount, 4] = outbead.cl1;
-        _sfi[BeadCount, 5] = outbead.cl2;
         _sfi[BeadCount, 0] = outbead.greenssc;
         _sfi[BeadCount, 1] = outbead.greenB;
         _sfi[BeadCount, 2] = outbead.greenC;
+        _sfi[BeadCount, 3] = outbead.redssc;
+        _sfi[BeadCount, 4] = outbead.cl1;
+        _sfi[BeadCount, 5] = outbead.cl2;
+        _sfi[BeadCount, 6] = outbead.cl3;
         _sfi[BeadCount, 7] = outbead.violetssc;
         _sfi[BeadCount, 8] = outbead.cl0;
         _sfi[BeadCount, 9] = outbead.fsc;
@@ -966,6 +952,7 @@ namespace MicroCy
             outbead.cl3
       };
     }
+
     private void FillActiveWellResults(in BeadInfoStruct outbead)
     {
       //_wellResults is a list of region numbers that are active
@@ -979,9 +966,19 @@ namespace MicroCy
         _chkRegionCount = _wellResults[index].RP1vals.Count == MinPerRegion;  //see if assay is done via sufficient beads in each region
       }
     }
+
     public byte[,] GetStaticMap()
     {
       return _classificationMap;
+    }
+
+    public void ClearGraphingArrays()
+    {
+      Array.Clear(ForwardSscData, 0, 256);
+      Array.Clear(VioletSscData, 0, 256);
+      Array.Clear(RedSscData, 0, 256);
+      Array.Clear(GreenSscData, 0, 256);
+      Array.Clear(Rp1Data, 0, 256);
     }
   }
 }
