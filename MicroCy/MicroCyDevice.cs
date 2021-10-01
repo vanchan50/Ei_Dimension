@@ -84,6 +84,7 @@ namespace MicroCy
     public bool OnlyClassified { get; set; }
     public bool Reg0stats { get; set; }
     public bool Newmap { get; set; }
+    public bool ChannelBIsHiSensitivity { get; set; }
     public byte PlateRow { get; set; }
     public byte PlateCol { get; set; }
     public byte PlateType { get; set; }
@@ -111,6 +112,8 @@ namespace MicroCy
     private byte[,] _map = new byte[300, 300];    //map for finding peak of a single region // added ClearMap()
     private byte[,] _classificationMap { get; } = new byte[300, 300]; //TODO: was ushort
     private float[,] _sfi = new float[5000, 10];
+    private float _greenMin;
+    private float _greenMaj;
     private string _workOrderPath;
     private string _fullFileName; //TODO: probably not necessary. look at refactoring InitBeadRead()
     private string _mapsFileName;
@@ -205,6 +208,7 @@ namespace MicroCy
         GStats.Add(new Gstats());
       }
       Outfilename = "ResultFile";
+      ChannelBIsHiSensitivity = true;
       _useStaticMaps = useStaticMaps;
       if (_useStaticMaps)
         ConstructClassificationMap(null);
@@ -923,13 +927,23 @@ namespace MicroCy
       outbead = BeadArrayToStruct<BeadInfoStruct>(buffer, shift);
       if (outbead.Header != 0xadbeadbe)
         return false;
+      if (ChannelBIsHiSensitivity)
+      {
+        _greenMaj = outbead.greenC;
+        _greenMin = outbead.greenB;
+      }
+      else
+      {
+        _greenMaj = outbead.greenB;
+        _greenMin = outbead.greenC;
+      }
       float[] cl = MakeClArr(in outbead);
       //each well can have a different  classification map
-      outbead.region = ClassifyBeadToRegion(cl);
       outbead.cl1 = cl[1];
       outbead.cl2 = cl[2];
+      outbead.region = ClassifyBeadToRegion(cl);
       //handle HI dnr channel
-      outbead.reporter = outbead.greenC > HdnrTrans ? outbead.greenB * HDnrCoef : outbead.greenC;
+      outbead.reporter = _greenMaj > HdnrTrans ? _greenMaj * HDnrCoef : _greenMin;
       return true;
     }
 
@@ -942,7 +956,7 @@ namespace MicroCy
 
     private float[] MakeClArr(in BeadInfoStruct outbead)
     {
-      float cl1comp = outbead.greenB * Compensation / 100;
+      float cl1comp = _greenMaj * Compensation / 100;
       float cl2comp = cl1comp * 0.26f;
       return new float[]{
             outbead.cl0,

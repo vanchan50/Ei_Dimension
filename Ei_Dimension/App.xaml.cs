@@ -237,6 +237,14 @@ namespace Ei_Dimension
         ExperimentVM.DialogTitleSave = RM.GetString(nameof(Language.Resources.Experiment_Save_Template_Dialog_Title), curCulture);
         ExperimentVM.DialogTitleLoad = RM.GetString(nameof(Language.Resources.Experiment_Load_Template_Dialog_Title), curCulture);
       }
+      var ChannelsVM = ChannelsViewModel.Instance;
+      if (ChannelsVM != null)
+      {
+        ChannelsVM.SensitivityItems[0].Content = RM.GetString(nameof(Language.Resources.Channels_Sens_B), curCulture);
+        ChannelsVM.SensitivityItems[1].Content = RM.GetString(nameof(Language.Resources.Channels_Sens_C), curCulture);
+        int i = Device.ChannelBIsHiSensitivity ? 0 : 1;
+        ChannelsVM.SelectedSensitivityContent = ChannelsVM.SensitivityItems[i].Content;
+      }
       #endregion
     }
 

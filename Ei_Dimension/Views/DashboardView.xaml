@@ -50,20 +50,24 @@
         <Border Height="45" Width="633"
                 HorizontalAlignment="Left">
           <Grid>
-            <TextBlock Text="  Inactive"
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="358*"/>
+              <ColumnDefinition Width="275*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="{lang:Loc Dashboard_Inactive_Region}"
                        FontSize="30"
-                       Width="130"
+                       Width="140"
                        HorizontalAlignment="Left"/>
-            <TextBlock Text="  Active"
+            <TextBlock Text="{lang:Loc Dashboard_Active_Region}"
                        FontSize="30"
                        Width="120"
-                       Margin="130,0,0,0"
+                       Margin="140,0,0,0"
                        HorizontalAlignment="Left"/>
-            <TextBlock Text="                  Name"
-                       Width="380"
+            <TextBlock Text="{lang:Loc Name}"
+                       Width="370"
                        FontSize="30"
-                       Margin="250,0,0,0"
-                       HorizontalAlignment="Left"/>
+                       Margin="260,0,0,0"
+                       HorizontalAlignment="Left" Grid.ColumnSpan="2"/>
           </Grid>
         </Border>
         <ScrollViewer Width="650" Height="699">
@@ -81,13 +85,14 @@
         </ScrollViewer>
         <StackPanel Orientation="Horizontal"
                     HorizontalAlignment="Left"
-                    Width="200" Height="60"
-                    Margin="225,4,0,0">
-          <Button Width="98" Height="60"
-                  Margin="0,0,4,0"
+                    Width="270" Height="60"
+                    Margin="0,4,0,0">
+          <Button Width="100" Height="60"
+                  Margin="20,0,0,0"
                   Style="{StaticResource LeftArrowButtonThemeStyle}"
                   Command="{Binding AddActiveRegionCommand}" CommandParameter="0"/>
-          <Button Width="98" Height="60"
+          <Button Width="100" Height="60"
+                  Margin="30,0,0,0"
                   Style="{StaticResource RightArrowButtonThemeStyle}"
                   Command="{Binding AddActiveRegionCommand}" CommandParameter="1"/>
         </StackPanel>
@@ -100,22 +105,22 @@
             Margin="320,30,0,0"
             Width="200">
       <StackPanel>
-          <Border HorizontalAlignment="Center">
-            <StackPanel>
-              <TextBlock Text="{lang:Loc Experiment_Samp_Vol}"
+        <Border HorizontalAlignment="Center">
+          <StackPanel>
+            <TextBlock Text="{lang:Loc Experiment_Samp_Vol}"
                          FontFamily="{StaticResource AppTextFont}"
                          FontSize="30"
                          FontWeight="UltraBold"
                          HorizontalAlignment="Center"
                          Foreground="{StaticResource AppTextColor}"/>
-              <TextBox HorizontalAlignment="Stretch"
+            <TextBox HorizontalAlignment="Stretch"
                        Margin="0,4,0,0"
                        Style="{StaticResource InputFieldStyle}"
                        Text="{Binding Volumes[0]}">
-                <dxmvvm:Interaction.Behaviors>
-                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="2"/>
-                  <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
-                </dxmvvm:Interaction.Behaviors>
+              <dxmvvm:Interaction.Behaviors>
+                <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="2"/>
+                <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+              </dxmvvm:Interaction.Behaviors>
             </TextBox>
             <StackPanel Orientation="Horizontal"
                         HorizontalAlignment="Center"
@@ -160,30 +165,30 @@
                        FontWeight="UltraBold"
                        HorizontalAlignment="Center"
                        Foreground="{StaticResource AppTextColor}"/>
-              <TextBox HorizontalAlignment="Stretch"
+            <TextBox HorizontalAlignment="Stretch"
                        Margin="0,4,0,0"
                        Style="{StaticResource InputFieldStyle}"
                        Text="{Binding Volumes[1]}">
-                <dxmvvm:Interaction.Behaviors>
-                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="3"/>
-                  <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
-                </dxmvvm:Interaction.Behaviors>
-              </TextBox>
-              <TextBlock Text="{lang:Loc Experiment_Agitate_Vol}"
+              <dxmvvm:Interaction.Behaviors>
+                <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="3"/>
+                <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+              </dxmvvm:Interaction.Behaviors>
+            </TextBox>
+            <TextBlock Text="{lang:Loc Experiment_Agitate_Vol}"
                          FontFamily="{StaticResource AppTextFont}"
                          FontSize="30"
                          FontWeight="UltraBold"
                          HorizontalAlignment="Center"
                          Foreground="{StaticResource AppTextColor}"
                          Margin="0,3,0,0"/>
-              <TextBox HorizontalAlignment="Stretch"
+            <TextBox HorizontalAlignment="Stretch"
                        Margin="0,4,0,0"
                        Style="{StaticResource InputFieldStyle}"
                        Text="{Binding Volumes[2]}">
-                <dxmvvm:Interaction.Behaviors>
-                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="4"/>
-                  <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
-                </dxmvvm:Interaction.Behaviors>
+              <dxmvvm:Interaction.Behaviors>
+                <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="4"/>
+                <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+              </dxmvvm:Interaction.Behaviors>
             </TextBox>
             <ToggleButton Content="{lang:Loc Dashboard_Pressure_Mon}"
                     Style="{StaticResource ToggleButtonThemeStyle}"
@@ -221,8 +226,8 @@
                      Style="{StaticResource InputFieldStyle}"
                      Text="{Binding PressureMon[2]}"/>
           </StackPanel>
-          </Border>
-        </StackPanel>
+        </Border>
+      </StackPanel>
     </Border>
 
     <!--Dropdowns-->
@@ -432,7 +437,7 @@
                  Text="{Binding EventCountField[0]}"/>
       </StackPanel>
     </Border>
-    
+
     <!--Start & End-->
     <Border HorizontalAlignment="Left"
           VerticalAlignment="Top"

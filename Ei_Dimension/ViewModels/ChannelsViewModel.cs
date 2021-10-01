@@ -15,8 +15,11 @@ namespace Ei_Dimension.ViewModels
     public virtual ObservableCollection<string> BackgroundParameters { get; set; }
     public virtual ObservableCollection<string> SiPMTempCoeff { get; set; }
     public virtual ObservableCollection<string> CurrentMapName { get; set; }
+    public virtual string SelectedSensitivityContent { get; set; }
+    public virtual ObservableCollection<DropDownButtonContents> SensitivityItems { get; set; }
 
     public static ChannelsViewModel Instance { get; private set; }
+    public byte SelectedSensitivityIndex { get; set; }
 
     protected ChannelsViewModel()
     {
@@ -48,6 +51,16 @@ namespace Ei_Dimension.ViewModels
         BackgroundParameters.Add("");
       }
       SiPMTempCoeff = new ObservableCollection<string> { "" };
+
+      var RM = Language.Resources.ResourceManager;
+      var curCulture = Language.TranslationSource.Instance.CurrentCulture;
+      SensitivityItems = new ObservableCollection<DropDownButtonContents>
+      {
+        new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Channels_Sens_B), curCulture), this),
+        new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Channels_Sens_C), curCulture), this)
+      };
+      SelectedSensitivityIndex = 0;
+      SelectedSensitivityContent = SensitivityItems[SelectedSensitivityIndex].Content;
       Instance = this;
     }
 
@@ -115,6 +128,44 @@ namespace Ei_Dimension.ViewModels
     public void TextChanged(TextChangedEventArgs e)
     {
       App.InjectToFocusedTextbox(((TextBox)e.Source).Text, true);
+    }
+
+    public class DropDownButtonContents : Core.ObservableObject
+    {
+      public string Content
+      {
+        get => _content;
+        set
+        {
+          _content = value;
+          OnPropertyChanged();
+        }
+      }
+      public byte Index { get; set; }
+      private static byte _nextIndex = 0;
+      private string _content;
+      private static ChannelsViewModel _vm;
+      public DropDownButtonContents(string content, ChannelsViewModel vm = null)
+      {
+        if (_vm == null)
+        {
+          _vm = vm;
+        }
+        Content = content;
+        Index = _nextIndex++;
+      }
+
+      public void Click()
+      {
+        _vm.SelectedSensitivityContent = Content;
+        _vm.SelectedSensitivityIndex = Index;
+        App.Device.ChannelBIsHiSensitivity = Index == 0 ? true : false;
+      }
+
+      public static void ResetIndex()
+      {
+        _nextIndex = 0;
+      }
     }
   }
 }

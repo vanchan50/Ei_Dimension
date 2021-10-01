@@ -15,6 +15,8 @@ namespace Ei_Dimension.Views
     private static Thickness _lastRegionsTbAlignment = new Thickness(10, 10, 0, 10);
     private static Thickness _NameBoxAlignment = new Thickness(0, 10, 0, 0);
     private static Thickness _lastNameBoxAlignment = new Thickness(0, 10, 0, 10);
+    private static Style _regionsStyle = (Style)App.Current.Resources.MergedDictionaries[6]["RegionFieldStyle"];
+    private static Style _regionsNamesStyle = (Style) App.Current.Resources.MergedDictionaries[5]["InputFieldStyle"];
     private static TextBox _lastRegionsBox;
     private static TextBox _lastRegionsNameBox;
     public static DashboardView Instance;
@@ -65,7 +67,7 @@ namespace Ei_Dimension.Views
     private void AddRegionsTextBox(string propertyPath)
     {
       var tb = new TextBox();
-      tb.Style = (Style)App.Current.Resources.MergedDictionaries[6]["RegionFieldStyle"];
+      tb.Style = _regionsStyle;
       if (_lastRegionsBox != null)
         _lastRegionsBox.Margin = _regionsTbAlignment;
       _lastRegionsBox = tb;
@@ -84,7 +86,7 @@ namespace Ei_Dimension.Views
     private void AddRegionsNamesTextBox(string propertyPath)
     {
       var tb = new TextBox();
-      tb.Style = (Style)App.Current.Resources.MergedDictionaries[5]["InputFieldStyle"];
+      tb.Style = _regionsNamesStyle;
       if (_lastRegionsNameBox != null)
         _lastRegionsNameBox.Margin = _NameBoxAlignment;
       _lastRegionsNameBox = tb;

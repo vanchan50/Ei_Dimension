@@ -178,6 +178,16 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hi Sensitivity
+        ///    Channel.
+        /// </summary>
+        public static string Channels_Hi_Sens_Chan {
+            get {
+                return ResourceManager.GetString("Channels_Hi_Sens_Chan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Red A (CL3).
         /// </summary>
         public static string Channels_Red_A {
@@ -221,6 +231,24 @@ namespace Ei_Dimension.Language {
         public static string Channels_Save_Bias_To_Map {
             get {
                 return ResourceManager.GetString("Channels_Save_Bias_To_Map", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Green B.
+        /// </summary>
+        public static string Channels_Sens_B {
+            get {
+                return ResourceManager.GetString("Channels_Sens_B", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Green C.
+        /// </summary>
+        public static string Channels_Sens_C {
+            get {
+                return ResourceManager.GetString("Channels_Sens_C", resourceCulture);
             }
         }
         
@@ -448,6 +476,24 @@ namespace Ei_Dimension.Language {
         public static string Components_Wash_B {
             get {
                 return ResourceManager.GetString("Components_Wash_B", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to   Active.
+        /// </summary>
+        public static string Dashboard_Active_Region {
+            get {
+                return ResourceManager.GetString("Dashboard_Active_Region", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to   Inactive.
+        /// </summary>
+        public static string Dashboard_Inactive_Region {
+            get {
+                return ResourceManager.GetString("Dashboard_Inactive_Region", resourceCulture);
             }
         }
         
@@ -1485,6 +1531,15 @@ namespace Ei_Dimension.Language {
         public static string Motors_Up {
             get {
                 return ResourceManager.GetString("Motors_Up", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to                   Name.
+        /// </summary>
+        public static string Name {
+            get {
+                return ResourceManager.GetString("Name", resourceCulture);
             }
         }
         

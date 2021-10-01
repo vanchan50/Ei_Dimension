@@ -156,6 +156,10 @@
   <data name="Channels_Green_C" xml:space="preserve">
     <value>Green C PE</value>
   </data>
+  <data name="Channels_Hi_Sens_Chan" xml:space="preserve">
+    <value>Hi Sensitivity
+    Channel</value>
+  </data>
   <data name="Channels_Red_A" xml:space="preserve">
     <value>Red A (CL3)</value>
   </data>
@@ -172,6 +176,12 @@
     <value> Save Bias
 To Current
        Map</value>
+  </data>
+  <data name="Channels_Sens_B" xml:space="preserve">
+    <value>Green B</value>
+  </data>
+  <data name="Channels_Sens_C" xml:space="preserve">
+    <value>Green C</value>
   </data>
   <data name="Channels_Set_Offset" xml:space="preserve">
     <value>Set Offset</value>
@@ -249,6 +259,12 @@ Coefficient</value>
   </data>
   <data name="Components_Wash_B" xml:space="preserve">
     <value>Wash B</value>
+  </data>
+  <data name="Dashboard_Active_Region" xml:space="preserve">
+    <value>  Active</value>
+  </data>
+  <data name="Dashboard_Inactive_Region" xml:space="preserve">
+    <value>  Inactive</value>
   </data>
   <data name="Dashboard_Name_Regions" xml:space="preserve">
     <value>Name</value>
@@ -602,6 +618,9 @@ Barcode</value>
   </data>
   <data name="Motors_Up" xml:space="preserve">
     <value>Up</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>                  Name</value>
   </data>
   <data name="OFF" xml:space="preserve">
     <value>Выкл</value>

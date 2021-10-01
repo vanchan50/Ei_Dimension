@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+             xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
              xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
              xmlns:ViewModels="clr-namespace:Ei_Dimension.ViewModels"
              xmlns:System="clr-namespace:System;assembly=mscorlib"
@@ -414,7 +415,33 @@
         </StackPanel>
         <StackPanel VerticalAlignment="Stretch"
                     Width="220"
-                    Margin="10,190,0,0">
+                    Margin="30,-15,0,0">
+          <TextBlock Text="{lang:Loc Channels_Hi_Sens_Chan}"
+                   FontFamily="{StaticResource AppTextFont}"
+                   FontSize="36"
+                     Height="100"
+                   FontWeight="UltraBold"
+                   Foreground="{StaticResource AppTextColor}"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Top"
+                   Margin="0,16,0,3"/>
+          <dx:DropDownButton 
+                           Height="50"
+                           FontSize="25"
+                           FontFamily="{StaticResource AppTextFont}"
+                           Foreground="{StaticResource AppTextColor}"
+                           Content="{Binding SelectedSensitivityContent}">
+            <dxb:PopupMenu ItemLinksSource="{Binding SensitivityItems}">
+              <dxb:PopupMenu.ItemTemplate>
+                <DataTemplate>
+                  <ContentControl>
+                    <dxb:BarButtonItem Content="{Binding Content}"  
+                                 ItemClick="{DXEvent Click()}"/>
+                  </ContentControl>
+                </DataTemplate>
+              </dxb:PopupMenu.ItemTemplate>
+            </dxb:PopupMenu>
+          </dx:DropDownButton>
           <TextBlock Text="{lang:Loc Channels_SiPM_Temp_Coefficient}"
                      FontFamily="{StaticResource AppTextFont}"
                      FontSize="36"
@@ -423,7 +450,7 @@
                      Foreground="{StaticResource AppTextColor}"
                      HorizontalAlignment="Center"
                      VerticalAlignment="Top"
-                     Margin="0,0,0,0"/>
+                     Margin="0,5,0,0"/>
           <TextBox HorizontalAlignment="Stretch"
                     Margin="30,0,30,13"
                     Style="{StaticResource InputFieldStyle}"

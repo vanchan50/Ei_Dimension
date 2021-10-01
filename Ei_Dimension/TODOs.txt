@@ -43,3 +43,5 @@ PlateReport class has useless members except list
 Subtract bed region background button. useless?
 
 Can I make windows dialog windows bigger and bigger fonts?
+
+Switch language should account for selected settings in device. like for ChannelsVM
