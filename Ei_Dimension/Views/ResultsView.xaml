@@ -40,7 +40,8 @@
         </dxc:XYDiagram2D.AxisY>
         <dxc:XYDiagram2D.AxisX>
           <dxc:AxisX2D TickmarksMinorVisible="False"
-                       TickmarksVisible="False">
+                       TickmarksVisible="False"
+                       Logarithmic="True">
             <dxc:AxisX2D.Title>
               <dxc:AxisTitle Content="Scatter"
                              FontSize="30"
@@ -103,7 +104,8 @@
         </dxc:XYDiagram2D.AxisY>
         <dxc:XYDiagram2D.AxisX>
           <dxc:AxisX2D TickmarksMinorVisible="False"
-                       TickmarksVisible="False">
+                       TickmarksVisible="False"
+                       Logarithmic="True">
             <dxc:AxisX2D.Title>
               <dxc:AxisTitle Content="Reporter"
                              FontSize="30"

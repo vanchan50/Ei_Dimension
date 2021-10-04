@@ -10,37 +10,39 @@ namespace Ei_Dimension.ViewModels
   [POCOViewModel]
   public class ResultsViewModel
   {
-    public virtual ObservableCollection<HistogramData> ForwardSsc { get; set; }
-    public virtual ObservableCollection<HistogramData> VioletSsc { get; set; }
-    public virtual ObservableCollection<HistogramData> RedSsc { get; set; }
-    public virtual ObservableCollection<HistogramData> GreenSsc { get; set; }
-    public virtual ObservableCollection<HistogramData> Reporter { get; set; }
+    public virtual ObservableCollection<HistogramData<int,double>> ForwardSsc { get; set; }
+    public virtual ObservableCollection<HistogramData<int, double>> VioletSsc { get; set; }
+    public virtual ObservableCollection<HistogramData<int, double>> RedSsc { get; set; }
+    public virtual ObservableCollection<HistogramData<int, double>> GreenSsc { get; set; }
+    public virtual ObservableCollection<HistogramData<int, double>> Reporter { get; set; }
     public static ResultsViewModel Instance { get; private set; }
 
     protected ResultsViewModel()
     {
       Instance = this;
-      ForwardSsc = new ObservableCollection<HistogramData>();
-      VioletSsc = new ObservableCollection<HistogramData>();
-      RedSsc = new ObservableCollection<HistogramData>();
-      GreenSsc = new ObservableCollection<HistogramData>();
-      Reporter = new ObservableCollection<HistogramData>();
-      //64 bins per decade. 1-9;10-99;100-999;1000-9999;10000-99999;
-      double[] data = new double[384];
-      for(var i = 1; i < 385; i++)
+      ForwardSsc = new ObservableCollection<HistogramData<int, double>>();
+      VioletSsc = new ObservableCollection<HistogramData<int, double>>();
+      RedSsc = new ObservableCollection<HistogramData<int, double>>();
+      GreenSsc = new ObservableCollection<HistogramData<int, double>>();
+      Reporter = new ObservableCollection<HistogramData<int, double>>();
+      var bins = Core.DataProcessor.GenerateLogSpace(1,1000000,384);
+      for (var i = 0; i < bins.Length; i++)
       {
-        data[i-1] = Math.Log(i);
+        ForwardSsc.Add(new HistogramData<int, double>(0, bins[i]));
+        VioletSsc.Add(new HistogramData<int, double>(0, bins[i]));
+        RedSsc.Add(new HistogramData<int, double>(0, bins[i]));
+        GreenSsc.Add(new HistogramData<int, double>(0, bins[i]));
+        Reporter.Add(new HistogramData<int, double>(0, bins[i]));
       }
 
-      for(var i = 0; i < 256; i++)
-      {
-        int bin = (int)Math.Exp(i / 24.526);  //make const bin array in microcy. place bin[i] as xAxis
-        ForwardSsc.Add(new HistogramData(0, i));
-        VioletSsc.Add(new HistogramData(0, i));
-        RedSsc.Add(new HistogramData(0, i));
-        GreenSsc.Add(new HistogramData(0, i));
-        Reporter.Add(new HistogramData(0, i));
-      }
+    //  for (var i = 0; i < 256; i++)
+    //  {
+    //    ForwardSsc.Add(new HistogramData(0, i));
+    //    VioletSsc.Add(new HistogramData(0, i));
+    //    RedSsc.Add(new HistogramData(0, i));
+    //    GreenSsc.Add(new HistogramData(0, i));
+    //    Reporter.Add(new HistogramData(0, i));
+    //  }
     }
 
     public static ResultsViewModel Create()
@@ -50,7 +52,7 @@ namespace Ei_Dimension.ViewModels
 
     public void ClearGraphs()
     {
-      for (var i = 0; i < 256; i++)
+      for (var i = 0; i < Reporter.Count; i++)
       {
         ForwardSsc[i].Value = 0;
         VioletSsc[i].Value = 0;

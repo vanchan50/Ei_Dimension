@@ -2,9 +2,9 @@
 
 namespace Ei_Dimension.Models
 {
-  public class HistogramData : ObservableObject
+  public class HistogramData<T1, T2> : ObservableObject
   {
-    public int Value
+    public T1 Value
     {
       get => _value;
       set
@@ -13,7 +13,7 @@ namespace Ei_Dimension.Models
         OnPropertyChanged();
       }
     }
-    public int Argument
+    public T2 Argument
     {
       get => _argument;
       set
@@ -22,9 +22,9 @@ namespace Ei_Dimension.Models
         OnPropertyChanged();
       }
     }
-    private int _value;
-    private int _argument;
-    public HistogramData(int val, int arg)
+    private T1 _value;
+    private T2 _argument;
+    public HistogramData(T1 val, T2 arg)
     {
       _value = val;
       _argument = arg;

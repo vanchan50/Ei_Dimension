@@ -52,11 +52,11 @@ namespace MicroCy
     public float Compensation { get; set; }
     public float HdnrTrans { get; set; }
     public float IdexDir { get; set; }
-    public int[] ForwardSscData = new int[256];
-    public int[] VioletSscData = new int[256];
-    public int[] RedSscData = new int[256];
-    public int[] GreenSscData = new int[256];
-    public int[] Rp1Data = new int[256];
+    public int[] ForwardSscData = new int[385];
+    public int[] VioletSscData = new int[385];
+    public int[] RedSscData = new int[385];
+    public int[] GreenSscData = new int[385];
+    public int[] Rp1Data = new int[385];
     public int SavingWellIdx { get; set; }
     public int TempCl0 { get; set; }
     public int TempCl1 { get; set; }
@@ -116,6 +116,7 @@ namespace MicroCy
     private float[,] _sfi = new float[5000, 10];
     private float _greenMin;
     private float _greenMaj;
+    private double[] _histogramBins;
     private string _workOrderPath;
     private string _fullFileName; //TODO: probably not necessary. look at refactoring InitBeadRead()
     private string _mapsFileName;
@@ -214,6 +215,8 @@ namespace MicroCy
       _useStaticMaps = useStaticMaps;
       if (_useStaticMaps)
         ConstructClassificationMap(null);
+
+      _histogramBins = GenerateLogSpace(1, 1000000, 384);
     }
 
     public void ConstructClassificationMap(CustomMap mmap)
@@ -794,12 +797,17 @@ namespace MicroCy
           DataPoint.xycly = (uint)outbead.cl3;
           break;
       }
-      ForwardSscData[(int)(Math.Log(outbead.fsc) * 24.526)]++;
-      VioletSscData[(int)(Math.Log(outbead.violetssc) * 24.526)]++;
-      RedSscData[(int)(Math.Log(outbead.redssc) * 24.526)]++;
-      GreenSscData[(int)(Math.Log(outbead.greenssc) * 24.526)]++;
-      float grp1 = outbead.reporter < 32000 ? outbead.reporter : 32000;  //don't let graph overflow
-      Rp1Data[(int)(Math.Log(grp1) * 24.526)]++;
+      BinData(outbead.fsc, ref ForwardSscData);
+      BinData(outbead.violetssc, ref VioletSscData);
+      BinData(outbead.redssc, ref RedSscData);
+      BinData(outbead.greenssc, ref GreenSscData);
+      BinData(outbead.reporter, ref Rp1Data);
+      //ForwardSscData[(int)(Math.Log(outbead.fsc) * 24.526)]++;
+      //VioletSscData[(int)(Math.Log(outbead.violetssc) * 24.526)]++;
+      //RedSscData[(int)(Math.Log(outbead.redssc) * 24.526)]++;
+      //GreenSscData[(int)(Math.Log(outbead.greenssc) * 24.526)]++;
+      //float grp1 = outbead.reporter < 32000 ? outbead.reporter : 32000;  //don't let graph overflow
+      //Rp1Data[(int)(Math.Log(grp1) * 24.526)]++;
       try
       {
         if ((DataPoint.xyclx > 1) && (DataPoint.xycly > 1))
@@ -979,6 +987,32 @@ namespace MicroCy
       Array.Clear(RedSscData, 0, 256);
       Array.Clear(GreenSscData, 0, 256);
       Array.Clear(Rp1Data, 0, 256);
+    }
+    private static double[] GenerateLogSpace(int min, int max, int logBins)
+    {
+      double logarithmicBase = 10;
+      double logMin = Math.Log10(min);
+      double logMax = Math.Log10(max);
+      double delta = (logMax - logMin) / logBins;
+      double accDelta = 0;
+      double[] Result = new double[logBins + 1];
+      for (int i = 0; i <= logBins; ++i)
+      {
+        Result[i] = Math.Pow(logarithmicBase, logMin + accDelta);
+        accDelta += delta;// accDelta = delta * i
+      }
+      return Result;
+    }
+
+    private void BinData(float data, ref int[] array)
+    {
+      for (var i = 0; i < _histogramBins.Length; i++){
+        if (data <= _histogramBins[i])
+        {
+          array[i]++;
+          break;
+        }
+      }
     }
   }
 }

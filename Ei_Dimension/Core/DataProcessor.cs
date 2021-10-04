@@ -1,4 +1,5 @@
 ﻿using Ei_Dimension.Models;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -55,11 +56,11 @@ namespace Ei_Dimension.Core
       return Binfo;
     }
 
-    static public List<HistogramData> MovAvgFilter(List<HistogramData> data)
+    static public List<HistogramData<int,int>> MovAvgFilter(List<HistogramData<int, int>> data)
     {
       int max = data.Count - 1;
       int avg = 0;
-      List<HistogramData> averaged = new List<HistogramData>(data);
+      List<HistogramData<int, int>> averaged = new List<HistogramData<int, int>> (data);
       for (var i = 4; i < max; i++)
       {
         avg = (averaged[i - 4].Value + averaged[i - 3].Value + averaged[i - 2].Value + averaged[i - 1].Value + averaged[i].Value) / 5;
@@ -68,17 +69,17 @@ namespace Ei_Dimension.Core
       return averaged;
     }
 
-    static public List<HistogramData> LinearizeDictionary(SortedDictionary<int,int> dict)
+    static public List<HistogramData<int, int>> LinearizeDictionary(SortedDictionary<int,int> dict)
     {
-      var result = new List<HistogramData>();
+      var result = new List<HistogramData<int, int>>();
       foreach (var x in dict)
       {
-        result.Add(new HistogramData(x.Value, x.Key));
+        result.Add(new HistogramData<int, int>(x.Value, x.Key));
       }
       return result;
     }
 
-    static public List<(int, int, int)> IdentifyPeaks(List<HistogramData> list)
+    static public List<(int, int, int)> IdentifyPeaks(List<HistogramData<int, int>> list)
     {
       var Peaks = new List<(int, int, int)>();
       int start = list[0].Value;
@@ -319,6 +320,21 @@ namespace Ei_Dimension.Core
       }
     //less than start - assign to min
     return 1;
+    }
+    public static double[] GenerateLogSpace(int min, int max, int logBins)
+    {
+      double logarithmicBase = 10;
+      double logMin = Math.Log10(min);
+      double logMax = Math.Log10(max);
+      double delta = (logMax - logMin) / logBins;
+      double accDelta = 0;
+      double[] Result = new double[logBins + 1];
+      for (int i = 0; i <= logBins; ++i)
+      {
+        Result[i] = Math.Pow(logarithmicBase, logMin + accDelta);
+        accDelta += delta;// accDelta = delta * i
+      }
+      return Result;
     }
   }
 }

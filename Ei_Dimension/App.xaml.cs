@@ -1643,7 +1643,7 @@ namespace Ei_Dimension
         var ResVM = ResultsViewModel.Instance;
         _histogramUpdateGoing = true;
         _ = Current.Dispatcher.BeginInvoke((Action)(() => {
-          for(var i = 0; i < 256; i++)
+          for(var i = 0; i < ResVM.ForwardSsc.Count; i++)
           {
             ResVM.ForwardSsc[i].Value = Device.ForwardSscData[i];
             ResVM.VioletSsc[i].Value = Device.VioletSscData[i];
