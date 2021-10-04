@@ -794,12 +794,12 @@ namespace MicroCy
           DataPoint.xycly = (uint)outbead.cl3;
           break;
       }
-      ForwardSscData[(byte)(Math.Log(outbead.fsc) * 24.526)]++;
-      VioletSscData[(byte)(Math.Log(outbead.violetssc) * 24.526)]++;
-      RedSscData[(byte)(Math.Log(outbead.redssc) * 24.526)]++;
-      GreenSscData[(byte)(Math.Log(outbead.greenssc) * 24.526)]++;
+      ForwardSscData[(int)(Math.Log(outbead.fsc) * 24.526)]++;
+      VioletSscData[(int)(Math.Log(outbead.violetssc) * 24.526)]++;
+      RedSscData[(int)(Math.Log(outbead.redssc) * 24.526)]++;
+      GreenSscData[(int)(Math.Log(outbead.greenssc) * 24.526)]++;
       float grp1 = outbead.reporter < 32000 ? outbead.reporter : 32000;  //don't let graph overflow
-      Rp1Data[(byte)(Math.Log(grp1) * 24.526)]++;
+      Rp1Data[(int)(Math.Log(grp1) * 24.526)]++;
       try
       {
         if ((DataPoint.xyclx > 1) && (DataPoint.xycly > 1))

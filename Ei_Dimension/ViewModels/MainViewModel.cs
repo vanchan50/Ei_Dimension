@@ -9,12 +9,14 @@ namespace Ei_Dimension.ViewModels
   public class MainViewModel
   {
     public virtual System.Windows.Visibility NumpadVisible { get; set; }
+    public static MainViewModel Instance { get; private set; }
     private INavigationService NavigationService => this.GetService<INavigationService>();
 
     protected MainViewModel()
     {
       App.NumpadShow = (this.GetType().GetProperty(nameof(NumpadVisible)), this);
       NumpadVisible = System.Windows.Visibility.Hidden;
+      Instance = this;
     }
 
     public static MainViewModel Create()

@@ -1475,18 +1475,14 @@ namespace Ei_Dimension
               Device.EndState = 1; //start the end of well state machine
               if (Device.WellsToRead > 0)
               {
-                //  ClearCharts();
-                Array.Clear(Device.ForwardSscData, 0, 256);
-                Array.Clear(Device.Rp1Data, 0, 256);
+                Device.ClearGraphingArrays();
               }
               break;
             case 0xfe:
               Device.EndState = 1;
               if (Device.WellsToRead > 0)
               {
-                //  ClearCharts();
-                Array.Clear(Device.ForwardSscData, 0, 256);
-                Array.Clear(Device.Rp1Data, 0, 256);
+                Device.ClearGraphingArrays();
               }
               break;
           }
@@ -1579,9 +1575,7 @@ namespace Ei_Dimension
             }
             else
             {
-              //  ClearCharts();
-              Array.Clear(Device.ForwardSscData, 0, 256);
-              Array.Clear(Device.Rp1Data, 0, 256);
+              Device.ClearGraphingArrays();
             }
             Console.WriteLine(string.Format("{0} Reporting End of current well", DateTime.Now.ToString()));
             break;
@@ -1672,5 +1666,6 @@ namespace Ei_Dimension
       if (DashboardViewModel.Instance.PressureMonToggleButtonState)
         Device.MainCommand("Get FProperty", code: 0x22);
     }
+
   }
 }

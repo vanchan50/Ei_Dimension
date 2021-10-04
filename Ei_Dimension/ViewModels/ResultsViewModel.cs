@@ -25,8 +25,16 @@ namespace Ei_Dimension.ViewModels
       RedSsc = new ObservableCollection<HistogramData>();
       GreenSsc = new ObservableCollection<HistogramData>();
       Reporter = new ObservableCollection<HistogramData>();
+      //64 bins per decade. 1-9;10-99;100-999;1000-9999;10000-99999;
+      double[] data = new double[384];
+      for(var i = 1; i < 385; i++)
+      {
+        data[i-1] = Math.Log(i);
+      }
+
       for(var i = 0; i < 256; i++)
       {
+        int bin = (int)Math.Exp(i / 24.526);  //make const bin array in microcy. place bin[i] as xAxis
         ForwardSsc.Add(new HistogramData(0, i));
         VioletSsc.Add(new HistogramData(0, i));
         RedSsc.Add(new HistogramData(0, i));
@@ -34,7 +42,7 @@ namespace Ei_Dimension.ViewModels
         Reporter.Add(new HistogramData(0, i));
       }
     }
-  
+
     public static ResultsViewModel Create()
     {
       return ViewModelSource.Create(() => new ResultsViewModel());
