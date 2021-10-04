@@ -29,10 +29,7 @@ namespace Ei_Dimension.ViewModels
     public virtual ObservableCollection<DropDownButtonContents> SysControlItems { get; set; }
     public virtual string SelectedEndReadContent { get; set; }
     public virtual ObservableCollection<DropDownButtonContents> EndReadItems { get; set; }
-
-    public virtual ObservableCollection<string> EventCountField { get; set; }
     public virtual bool StartButtonEnabled { get; set; }
-
 
     public virtual ObservableCollection<string> PressureMon { get; set; }
     public virtual bool PressureMonToggleButtonState { get; set; }
@@ -136,8 +133,6 @@ namespace Ei_Dimension.ViewModels
         StartButtonEnabled = true;
       else
         StartButtonEnabled = false;
-
-      EventCountField = new ObservableCollection<string> { "" };
 
       PressureMonToggleButtonState = false;
       PressureMon = new ObservableCollection<string> {"","",""};

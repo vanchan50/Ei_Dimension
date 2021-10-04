@@ -51,3 +51,5 @@ NewClData() acts as graph data storage
 I can leave the CLdata mechanism, with minor adjustments. it should keep all the data, disregarding the selectors. what is it ~10Mb max?
 
 charts are [256]. should it be log? probably not
+
+GenerateLogSpace exists in two projects

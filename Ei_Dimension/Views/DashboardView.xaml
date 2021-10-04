@@ -416,28 +416,6 @@
       </StackPanel>
     </Border>
 
-    <!--Event Count-->
-    <Border HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Margin="1330,40,0,0"
-            Width="200">
-      <StackPanel>
-        <TextBlock Text="{lang:Loc Experiment_Event_Count}"
-                   FontFamily="{StaticResource AppTextFont}"
-                   FontSize="36"
-                   FontWeight="UltraBold"
-                   Foreground="{StaticResource AppTextColor}"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Top"
-                   Margin="0,0,0,0"/>
-        <TextBox HorizontalAlignment="Stretch"
-                 Margin="0,10,0,0"
-                 IsReadOnly="True"
-                 Style="{StaticResource InputFieldStyle}"
-                 Text="{Binding EventCountField[0]}"/>
-      </StackPanel>
-    </Border>
-
     <!--Start & End-->
     <Border HorizontalAlignment="Left"
           VerticalAlignment="Top"

@@ -1658,7 +1658,7 @@ namespace Ei_Dimension
 
     private static void UpdateEventCounter()
     {
-      DashboardViewModel.Instance.EventCountField[0] = Device.BeadCount.ToString();
+      MainViewModel.Instance.EventCountField[0] = Device.BeadCount.ToString();
     }
 
     private static void UpdatePressureMonitor()

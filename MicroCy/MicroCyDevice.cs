@@ -6,6 +6,7 @@ using System.IO;
 using Newtonsoft.Json;
 using IronBarCode;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 
 /*
  * Most commands on the host side parallel the Properties and Methods document fo QB-1000
@@ -465,7 +466,7 @@ namespace MicroCy
           if (outbead.region == 0 && OnlyClassified)
             continue;
           if (BeadCount < BeadsToGraph)
-            NewClData(in outbead);
+            NewClData(outbead);
           if (Everyevent)
             _ = _dataout.Append(outbead.ToString());
           //accum stats for run as a whole, used during aligment and QC
@@ -764,7 +765,7 @@ namespace MicroCy
       return retidx;
     }
 
-    private void NewClData(in BeadInfoStruct outbead)
+    private void NewClData(BeadInfoStruct outbead)
     {
       CLQueue DataPoint = new CLQueue();
       switch (XAxisSel)
@@ -797,17 +798,12 @@ namespace MicroCy
           DataPoint.xycly = (uint)outbead.cl3;
           break;
       }
-      BinData(outbead.fsc, ref ForwardSscData);
-      BinData(outbead.violetssc, ref VioletSscData);
-      BinData(outbead.redssc, ref RedSscData);
-      BinData(outbead.greenssc, ref GreenSscData);
-      BinData(outbead.reporter, ref Rp1Data);
-      //ForwardSscData[(int)(Math.Log(outbead.fsc) * 24.526)]++;
-      //VioletSscData[(int)(Math.Log(outbead.violetssc) * 24.526)]++;
-      //RedSscData[(int)(Math.Log(outbead.redssc) * 24.526)]++;
-      //GreenSscData[(int)(Math.Log(outbead.greenssc) * 24.526)]++;
-      //float grp1 = outbead.reporter < 32000 ? outbead.reporter : 32000;  //don't let graph overflow
-      //Rp1Data[(int)(Math.Log(grp1) * 24.526)]++;
+      Task bin1 = Task.Run(() => BinData(outbead.fsc, ref ForwardSscData));
+      Task bin2 = Task.Run(() => BinData(outbead.violetssc, ref VioletSscData));
+      Task bin3 = Task.Run(() => BinData(outbead.redssc, ref RedSscData));
+      Task bin4 = Task.Run(() => BinData(outbead.greenssc, ref GreenSscData));
+      Task bin5 = Task.Run(() => BinData(outbead.reporter, ref Rp1Data));
+      Task.WaitAll(bin1, bin2, bin3, bin4, bin5);
       try
       {
         if ((DataPoint.xyclx > 1) && (DataPoint.xycly > 1))
@@ -999,14 +995,16 @@ namespace MicroCy
       for (int i = 0; i <= logBins; ++i)
       {
         Result[i] = Math.Pow(logarithmicBase, logMin + accDelta);
-        accDelta += delta;// accDelta = delta * i
+        accDelta += delta;
       }
       return Result;
     }
 
     private void BinData(float data, ref int[] array)
     {
-      for (var i = 0; i < _histogramBins.Length; i++){
+      data = data < 1000000 ? data : 1000000; //owerflow protection
+      for (var i = 0; i < _histogramBins.Length; i++)
+      {
         if (data <= _histogramBins[i])
         {
           array[i]++;

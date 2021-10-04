@@ -332,7 +332,7 @@ namespace Ei_Dimension.Core
       for (int i = 0; i <= logBins; ++i)
       {
         Result[i] = Math.Pow(logarithmicBase, logMin + accDelta);
-        accDelta += delta;// accDelta = delta * i
+        accDelta += delta;
       }
       return Result;
     }
