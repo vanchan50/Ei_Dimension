@@ -285,7 +285,7 @@ Coefficient</value>
 Direction</value>
   </data>
   <data name="Components_Fan" xml:space="preserve">
-    <value>Fan</value>
+    <value>Fan 1</value>
   </data>
   <data name="Components_Fluidics" xml:space="preserve">
     <value>Fluidics</value>
@@ -338,7 +338,7 @@ Direction</value>
     <value>To Pickup</value>
   </data>
   <data name="Components_Valve1" xml:space="preserve">
-    <value>Valve 1</value>
+    <value>Fan 2</value>
   </data>
   <data name="Components_Valve2" xml:space="preserve">
     <value>Valve 2</value>

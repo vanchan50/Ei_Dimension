@@ -970,9 +970,9 @@ namespace Ei_Dimension
             case 0x12:  //sample A valve cb LEGACY, use 0x18 to switch with IDEX
               ComponentsViewModel.Instance.ValvesStates[0] = exe.Parameter == 1;
               break;
-            case 0x13:  //sample b LEGACY
-              ComponentsViewModel.Instance.ValvesStates[1] = exe.Parameter == 1;
-              break;
+            //case 0x13:  //sample b LEGACY
+            //  ComponentsViewModel.Instance.ValvesStates[1] = exe.Parameter == 1;
+            //  break;
             case 0x14:
               switch (exe.Parameter)
               {
