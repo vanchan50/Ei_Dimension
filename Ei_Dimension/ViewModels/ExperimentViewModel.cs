@@ -78,16 +78,58 @@ namespace Ei_Dimension.ViewModels
       OpenFileDialogService.Title = DialogTitleLoad;
       if (OpenFileDialogService.ShowDialog())
       {
+        AcquisitionTemplate newTemplate = null;
         var file = OpenFileDialogService.GetFullFileName();
         try
         {
           using (TextReader reader = new StreamReader(file))
           {
             var fileContents = reader.ReadToEnd();
-            App.AcquisitionTemplateLoaded(JsonConvert.DeserializeObject<AcquisitionTemplate>(fileContents));
+            newTemplate = JsonConvert.DeserializeObject<AcquisitionTemplate>(fileContents);
           }
         }
         catch { }
+        if(newTemplate != null)
+        {
+          try
+          {
+            var DashVM = DashboardViewModel.Instance;
+            DashVM.SpeedItems[newTemplate.Speed].Click(1);
+            DashVM.ClassiMapItems[App.GetMapIndex(newTemplate.Map)].Click(2);
+            DashVM.ChConfigItems[newTemplate.ChConfig].Click(3);
+            DashVM.OrderItems[newTemplate.Order].Click(4);
+            DashVM.SysControlItems[newTemplate.SysControl].Click(5);
+            DashVM.EndReadItems[newTemplate.EndRead].Click(6);
+            DashVM.EndRead[0] = newTemplate.MinPerRegion.ToString();
+            DashVM.FocusedBox(0);
+            App.InjectToFocusedTextbox(newTemplate.MinPerRegion.ToString(), true);
+            DashVM.EndRead[1] = newTemplate.TotalEvents.ToString();
+            DashVM.FocusedBox(1);
+            App.InjectToFocusedTextbox(newTemplate.TotalEvents.ToString(), true);
+            DashVM.Volumes[0] = newTemplate.SampleVolume.ToString();
+            DashVM.FocusedBox(2);
+            App.InjectToFocusedTextbox(newTemplate.SampleVolume.ToString(), true);
+            DashVM.Volumes[1] = newTemplate.WashVolume.ToString();
+            DashVM.FocusedBox(3);
+            App.InjectToFocusedTextbox(newTemplate.WashVolume.ToString(), true);
+            DashVM.Volumes[2] = newTemplate.AgitateVolume.ToString();
+            DashVM.FocusedBox(4);
+            App.InjectToFocusedTextbox(newTemplate.AgitateVolume.ToString(), true);
+            uint chkBox = newTemplate.FileSaveCheckboxes;
+            for (var i = FileSaveViewModel.Instance.Checkboxes.Count -1; i > -1 ; i--)
+            {
+              uint pow = (uint)Math.Pow(2, i);
+              if (chkBox >= pow)
+              {
+                FileSaveViewModel.Instance.CheckedBox(i);
+                chkBox -= pow;
+              }
+              else
+                FileSaveViewModel.Instance.UncheckedBox(i); ;
+            }
+          }
+          catch { }
+        }
       }
     }
 
@@ -118,7 +160,14 @@ namespace Ei_Dimension.ViewModels
             temp.AgitateVolume = uint.Parse(DashboardViewModel.Instance.Volumes[2]);
             temp.MinPerRegion = uint.Parse(DashboardViewModel.Instance.EndRead[0]);
             temp.TotalEvents = uint.Parse(DashboardViewModel.Instance.EndRead[1]);
-
+            uint checkboxes = 0;
+            int currVal = 0;
+            for(var i = 0; i < FileSaveViewModel.Instance.Checkboxes.Count; i++)
+            {
+              currVal = (int)Math.Pow(2,i) * (FileSaveViewModel.Instance.Checkboxes[i] ? 1 : 0);
+              checkboxes += (uint)currVal;
+            }
+            temp.FileSaveCheckboxes = checkboxes;
             var contents = JsonConvert.SerializeObject(temp);
             _ = stream.WriteAsync(contents);
           }

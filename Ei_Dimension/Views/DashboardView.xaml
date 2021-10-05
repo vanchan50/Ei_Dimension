@@ -20,7 +20,7 @@
     <!--System Monitor-->
     <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Margin="1300,540,0,0">
+            Margin="1300,580,0,0">
       <StackPanel>
         <TextBlock Text="{lang:Loc Experiment_System_Monitor}"
                    FontFamily="{StaticResource AppTextFont}"
@@ -28,16 +28,67 @@
                    FontWeight="UltraBold"
                    Foreground="{StaticResource AppTextColor}"
                    Margin="0,0,0,4"/>
-        <ListBox Width="220" Height="280"
+        <ListBox Width="220" Height="240"
                  ItemsSource="{Binding ActiveList}"
                  FontSize="24"/>
+      </StackPanel>
+    </Border>
+    
+    <!--Fluidics-->
+    <Border HorizontalAlignment="Left"
+          VerticalAlignment="Top"
+          Margin="1250,370,0,0">
+      <StackPanel>
+        <TextBlock Text="{lang:Loc Components_Fluidics}"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="36"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Center"
+                 VerticalAlignment="Top"
+                 Margin="0,0,0,0"/>
+        <Button Content="{lang:Loc Components_Prime}"
+                Style="{StaticResource ButtonStyle}"
+                Command="{Binding FluidicsButtonClickCommand}"
+                Height="75" Width="335"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Margin="0,4,0,0">
+          <Button.CommandParameter>
+            <System:Int32>0</System:Int32>
+          </Button.CommandParameter>
+        </Button>
+        <StackPanel Orientation="Horizontal">
+          <Button Content="{lang:Loc Components_Wash_A}"
+                Style="{StaticResource ButtonStyle}"
+                Command="{Binding FluidicsButtonClickCommand}"
+                Height="75" Width="160"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Margin="0,5,12,0">
+            <Button.CommandParameter>
+              <System:Int32>1</System:Int32>
+            </Button.CommandParameter>
+          </Button>
+          <Button Content="{lang:Loc Components_Wash_B}"
+                Style="{StaticResource ButtonStyle}"
+                Command="{Binding FluidicsButtonClickCommand}"
+                Height="75" Width="160"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Margin="0,5,0,0">
+            <Button.CommandParameter>
+              <System:Int32>2</System:Int32>
+            </Button.CommandParameter>
+          </Button>
+        </StackPanel>
       </StackPanel>
     </Border>
 
     <!--Active Regions-->
     <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Margin="560,50,0,0">
+            Margin="560,30,0,0">
       <StackPanel>
         <TextBlock Text="{lang:Loc Experiment_Active_Regions}"
                    FontFamily="{StaticResource AppTextFont}"
@@ -419,20 +470,20 @@
     <!--Start & End-->
     <Border HorizontalAlignment="Left"
           VerticalAlignment="Top"
-          Margin="1250,170,0,0">
+          Margin="1250,30,0,0">
       <StackPanel>
         <StackPanel Orientation="Horizontal">
           <Button Content="{lang:Loc Experiment_End}"
                 Style="{StaticResource ButtonStyle}"
                 Command="{Binding EndButtonClickCommand}"
-                Height="170" Width="170"
+                Height="160" Width="160"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 Margin="0,0,12,0"/>
           <Button Content="{lang:Loc Experiment_Start}"
                 Style="{StaticResource ButtonStyle}"
                 Command="{Binding StartButtonClickCommand}"
-                Height="170" Width="170"
+                Height="160" Width="160"
                 IsEnabled="{Binding StartButtonEnabled}"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
@@ -443,14 +494,14 @@
           <Button Content="{lang:Loc Experiment_Eject}"
                 Style="{StaticResource ButtonStyle}"
                 Command="{Binding EjectButtonClickCommand}"
-                Height="170" Width="170"
+                Height="160" Width="160"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 Margin="0,0,10,0"/>
           <Button Content="{lang:Loc Experiment_Load}"
                 Style="{StaticResource ButtonStyle}"
                 Command="{Binding LoadButtonClickCommand}"
-                Height="170" Width="170"
+                Height="160" Width="160"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 Margin="0,0,0,0"/>

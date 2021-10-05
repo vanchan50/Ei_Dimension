@@ -12,6 +12,7 @@ namespace Ei_Dimension.ViewModels
   {
     public virtual ObservableCollection<string> BaseFileName { get; set; }
     public virtual ObservableCollection<bool> Checkboxes { get; set; }
+    public static FileSaveViewModel Instance { get; private set; }
     private IFolderBrowserDialogService FolderBrowserDialogService => this.GetService<IFolderBrowserDialogService>();
 
     protected FileSaveViewModel()
@@ -27,6 +28,7 @@ namespace Ei_Dimension.ViewModels
         false
       };
       Program.SplashScreen.Close(TimeSpan.FromMilliseconds(300));
+      Instance = this;
     }
     
     public static FileSaveViewModel Create()
@@ -35,6 +37,40 @@ namespace Ei_Dimension.ViewModels
     }
 
     public void CheckedBox(int num)
+    {
+      Checkboxes[num] = true;
+      CheckBox(num);
+    }
+
+    public void UncheckedBox(int num)
+    {
+      Checkboxes[num] = false;
+      CheckBox(num);
+    }
+
+    public void SelectOutFolder()
+    {
+       FolderBrowserDialogService.StartPath = App.Device.Outdir;
+      if (FolderBrowserDialogService.ShowDialog())
+        App.Device.Outdir = FolderBrowserDialogService.ResultPath;
+    }
+
+    public void FocusedBox(int num)
+    {
+      switch (num)
+      {
+        case 0:
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(BaseFileName)), this, 0);
+          break;
+      }
+    }
+
+    public void TextChanged(TextChangedEventArgs e)
+    {
+      App.InjectToFocusedTextbox(((TextBox)e.Source).Text, true);
+    }
+
+    private void CheckBox(int num)
     {
       switch (num)
       {
@@ -59,28 +95,6 @@ namespace Ei_Dimension.ViewModels
           break;
       }
       Settings.Default.Save();
-    }
-
-    public void SelectOutFolder()
-    {
-       FolderBrowserDialogService.StartPath = App.Device.Outdir;
-      if (FolderBrowserDialogService.ShowDialog())
-        App.Device.Outdir = FolderBrowserDialogService.ResultPath;
-    }
-
-    public void FocusedBox(int num)
-    {
-      switch (num)
-      {
-        case 0:
-          App.SelectedTextBox = (this.GetType().GetProperty(nameof(BaseFileName)), this, 0);
-          break;
-      }
-    }
-
-    public void TextChanged(TextChangedEventArgs e)
-    {
-      App.InjectToFocusedTextbox(((TextBox)e.Source).Text, true);
     }
   }
 }

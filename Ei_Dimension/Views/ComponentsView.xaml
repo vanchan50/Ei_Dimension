@@ -662,54 +662,5 @@
       </StackPanel>
     </Border>
 
-    <!--Fluidics-->
-    <Border HorizontalAlignment="Left"
-          VerticalAlignment="Top"
-          Margin="50,100,0,0">
-      <StackPanel>
-        <TextBlock Text="{lang:Loc Components_Fluidics}"
-                 FontFamily="{StaticResource AppTextFont}"
-                 FontSize="36"
-                 FontWeight="UltraBold"
-                 Foreground="{StaticResource AppTextColor}"
-                 HorizontalAlignment="Center"
-                 VerticalAlignment="Top"
-                 Margin="0,0,0,0"/>
-        <Button Content="{lang:Loc Components_Prime}"
-                Style="{StaticResource ButtonStyle}"
-                Command="{Binding FluidicsButtonClickCommand}"
-                Height="75" Width="180"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Margin="0,4,0,0">
-          <Button.CommandParameter>
-            <System:Int32>0</System:Int32>
-          </Button.CommandParameter>
-        </Button>
-        <Button Content="{lang:Loc Components_Wash_A}"
-                Style="{StaticResource ButtonStyle}"
-                Command="{Binding FluidicsButtonClickCommand}"
-                Height="75" Width="180"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Margin="0,5,0,0">
-          <Button.CommandParameter>
-            <System:Int32>1</System:Int32>
-          </Button.CommandParameter>
-        </Button>
-        <Button Content="{lang:Loc Components_Wash_B}"
-                Style="{StaticResource ButtonStyle}"
-                Command="{Binding FluidicsButtonClickCommand}"
-                Height="75" Width="180"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Margin="0,5,0,0">
-          <Button.CommandParameter>
-            <System:Int32>2</System:Int32>
-          </Button.CommandParameter>
-        </Button>
-      </StackPanel>
-    </Border>
-
   </Grid>
 </UserControl>

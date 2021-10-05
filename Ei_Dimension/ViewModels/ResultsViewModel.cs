@@ -25,7 +25,7 @@ namespace Ei_Dimension.ViewModels
       RedSsc = new ObservableCollection<HistogramData<int, double>>();
       GreenSsc = new ObservableCollection<HistogramData<int, double>>();
       Reporter = new ObservableCollection<HistogramData<int, double>>();
-      var bins = Core.DataProcessor.GenerateLogSpace(1,1000000,384);
+      var bins = Core.DataProcessor.GenerateLogSpace(1, 1000000, 384);
       for (var i = 0; i < bins.Length; i++)
       {
         ForwardSsc.Add(new HistogramData<int, double>(0, bins[i]));

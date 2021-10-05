@@ -23,6 +23,7 @@ namespace Ei_Dimension.Models
     public byte EndRead;
     public uint MinPerRegion;
     public uint TotalEvents;
+    public uint FileSaveCheckboxes;
 
     public AcquisitionTemplate()
     {

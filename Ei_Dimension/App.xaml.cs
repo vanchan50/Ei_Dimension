@@ -915,36 +915,6 @@ namespace Ei_Dimension
       NumpadShow.prop.SetValue(NumpadShow.VM, Visibility.Hidden);
     }
 
-    public static void AcquisitionTemplateLoaded(Models.AcquisitionTemplate newTemplate)
-    {
-      try
-      {
-        var DashVM = DashboardViewModel.Instance;
-        DashVM.SpeedItems[newTemplate.Speed].Click(1);
-        DashVM.ClassiMapItems[GetMapIndex(newTemplate.Map)].Click(2);
-        DashVM.ChConfigItems[newTemplate.ChConfig].Click(3);
-        DashVM.OrderItems[newTemplate.Order].Click(4);
-        DashVM.SysControlItems[newTemplate.SysControl].Click(5);
-        DashVM.EndReadItems[newTemplate.EndRead].Click(6);
-        DashVM.EndRead[0] = newTemplate.MinPerRegion.ToString();
-        DashVM.FocusedBox(0);
-        InjectToFocusedTextbox(newTemplate.MinPerRegion.ToString(), true);
-        DashVM.EndRead[1] = newTemplate.TotalEvents.ToString();
-        DashVM.FocusedBox(1);
-        InjectToFocusedTextbox(newTemplate.TotalEvents.ToString(), true);
-        DashVM.Volumes[0] = newTemplate.SampleVolume.ToString();
-        DashVM.FocusedBox(2);
-        InjectToFocusedTextbox(newTemplate.SampleVolume.ToString(), true);
-        DashVM.Volumes[1] = newTemplate.WashVolume.ToString();
-        DashVM.FocusedBox(3);
-        InjectToFocusedTextbox(newTemplate.WashVolume.ToString(), true);
-        DashVM.Volumes[2] = newTemplate.AgitateVolume.ToString();
-        DashVM.FocusedBox(4);
-        InjectToFocusedTextbox(newTemplate.AgitateVolume.ToString(), true);
-      }
-      catch { }
-    }
-
     private static void TimerTick(object sender, EventArgs e)
     {
       TextBoxUpdater();
@@ -1628,7 +1598,6 @@ namespace Ei_Dimension
 
     private static void HistogramHandler()
     {
-
       while (Device.ClData.Count != 0)
       {
         lock (Device.ClData)
@@ -1642,8 +1611,9 @@ namespace Ei_Dimension
       {
         var ResVM = ResultsViewModel.Instance;
         _histogramUpdateGoing = true;
-        _ = Current.Dispatcher.BeginInvoke((Action)(() => {
-          for(var i = 0; i < ResVM.ForwardSsc.Count; i++)
+        _ = Current.Dispatcher.BeginInvoke((Action)(() =>
+        {
+          for (var i = 0; i < ResVM.ForwardSsc.Count; i++)
           {
             ResVM.ForwardSsc[i].Value = Device.ForwardSscData[i];
             ResVM.VioletSsc[i].Value = Device.VioletSscData[i];

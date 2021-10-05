@@ -30,7 +30,6 @@ namespace Ei_Dimension.ViewModels
     public virtual string SelectedEndReadContent { get; set; }
     public virtual ObservableCollection<DropDownButtonContents> EndReadItems { get; set; }
     public virtual bool StartButtonEnabled { get; set; }
-
     public virtual ObservableCollection<string> PressureMon { get; set; }
     public virtual bool PressureMonToggleButtonState { get; set; }
     public double MaxPressure { get; set; }
@@ -228,6 +227,25 @@ namespace Ei_Dimension.ViewModels
         if (App.Device.WellsToRead > 0)   //if end read on tube or single well, nothing else is aspirated otherwise
           App.Device.WellsToRead = App.Device.CurrentWellIdx + 1; //just read the next well in order since it is already aspirated
       }
+    }
+    public void FluidicsButtonClick(int i)
+    {
+      string cmd = "";
+      switch (i)
+      {
+        case 0:
+          cmd = "Prime";
+          break;
+        case 1:
+          cmd = "Wash A";
+          break;
+        case 2:
+          cmd = "Wash B";
+          break;
+      }
+      App.Device.MainCommand("Set Property", code: 0x19, parameter: 1); //bubble detect on
+      App.Device.MainCommand(cmd);
+      App.Device.MainCommand("Set Property", code: 0x19, parameter: 0); //bubble detect off
     }
 
     public void FocusedBox(int num)
