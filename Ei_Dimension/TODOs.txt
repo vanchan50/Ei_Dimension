@@ -54,5 +54,4 @@ charts are [256]. should it be log? probably not
 
 GenerateLogSpace exists in two projects
 
-Everthing regargind activeregions should be a separate class kept in App. The logic of it is flawed,
-  since Microcy uses region number, but dashboard and results use index. so App.StatsHandler has to constantly Findindex()
+Everthing regargind activeregions should be a separate class kept in App.

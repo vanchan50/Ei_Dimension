@@ -178,7 +178,7 @@ namespace Ei_Dimension.ViewModels
       App.Device.MainCommand("Get FProperty", code: 0x58);
       App.Device.MainCommand("Get FProperty", code: 0x68);
       App.Device.PlateReport = new MicroCy.PlateReport(); //TODO: optimize, not needed here
-      App.Device.MainCommand("Get FProperty", code: 0x20);   //get high dnr property
+      App.Device.MainCommand("Get FProperty", code: 0x20); //get high dnr property
       App.Device.ClearGraphingArrays();
       ResultsViewModel.Instance.ClearGraphs();
       App.Device.SetupActiveRegions(ActiveRegions);
@@ -254,7 +254,7 @@ namespace Ei_Dimension.ViewModels
       {
         case 0:
           App.SelectedTextBox = (this.GetType().GetProperty(nameof(EndRead)), this, 0);
-          break;
+          break; 
         case 1:
           App.SelectedTextBox = (this.GetType().GetProperty(nameof(EndRead)), this, 1);
           break;
@@ -339,6 +339,7 @@ namespace Ei_Dimension.ViewModels
         return;
       _firstLoadflag = true;
       Views.DashboardView.Instance.ClearTextBoxes();
+      Views.ResultsView.Instance.ClearTable();
       RegionsList.Clear();
       RegionsNamesList.Clear();
       ActiveRegions.Clear();

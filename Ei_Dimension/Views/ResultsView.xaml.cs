@@ -30,14 +30,16 @@ namespace Ei_Dimension.Views
     public void AddRegionToTable(string name, BindingBase bind)
     {
       //TODO: use hashtable for bookkeeping sp name and index in Table.Children? no need to search for sp by name then
-      StackPanel sp = new StackPanel();
-      sp.Name = name;
-      sp.VerticalAlignment = VerticalAlignment.Top;
-      sp.HorizontalAlignment = HorizontalAlignment.Left;
-      sp.Width = 140;
-      sp.Height = 129+5+5+5+5;
-      sp.Margin = new Thickness(10, 5, 0, 0);
-      sp.Background = Brushes.Red;
+      StackPanel sp = new StackPanel
+      {
+        Name = name,
+        VerticalAlignment = VerticalAlignment.Top,
+        HorizontalAlignment = HorizontalAlignment.Left,
+        Width = 140,
+        Height = 129 + 5 + 5 + 5 + 5,
+        Margin = new Thickness(10, 5, 0, 0),
+        Background = Brushes.Red
+      };
 
       int index = int.Parse(name.Trim('_'));
       sp.Children.Add(MakeNameTextBox(bind));
@@ -56,23 +58,42 @@ namespace Ei_Dimension.Views
       }
       Table.Children.Remove(sp);
     }
+
+    public void ClearTable()
+    {
+      for(var i = 0; i < Table.Children.Count; i++)
+      {
+        var sp = (StackPanel)Table.Children[i];
+        for (var j = sp.Children.Count - 1; j > -1 ; j--)
+        {
+          BindingOperations.ClearAllBindings(sp.Children[j]);
+          sp.Children.RemoveAt(j);
+        }
+        Table.Children.RemoveAt(i);
+      }
+    }
+
     private TextBox MakeNameTextBox(BindingBase bind)
     {
-      var tb = new TextBox();
-      tb.VerticalAlignment = VerticalAlignment.Top;
-      tb.Style = _regionsNamesStyle;
-      tb.IsReadOnly = true;
-      tb.Margin = _TbAlignment;
+      var tb = new TextBox
+      {
+        VerticalAlignment = VerticalAlignment.Top,
+        Style = _regionsNamesStyle,
+        IsReadOnly = true,
+        Margin = _TbAlignment
+      };
       BindingOperations.SetBinding(tb, TextBox.TextProperty, bind);
       return tb;
     }
 
     private TextBox MakeCounterTextBox(int index)
     {
-      var tb = new TextBox();
-      tb.Style = _regionsNamesStyle;
-      tb.IsReadOnly = true;
-      tb.Margin = _TbAlignment;
+      var tb = new TextBox
+      {
+        Style = _regionsNamesStyle,
+        IsReadOnly = true,
+        Margin = _TbAlignment
+      };
       Binding bind = new Binding();
       bind.Source = ViewModels.ResultsViewModel.Instance;
       bind.Path = new PropertyPath($"ActiveRegionsCount[{index}]");
@@ -83,10 +104,12 @@ namespace Ei_Dimension.Views
 
     private TextBox MakeMeanTextBox(int index)
     {
-      var tb = new TextBox();
-      tb.Style = _regionsNamesStyle;
-      tb.IsReadOnly = true;
-      tb.Margin = _TbAlignment;
+      var tb = new TextBox
+      {
+        Style = _regionsNamesStyle,
+        IsReadOnly = true,
+        Margin = _TbAlignment
+      };
       Binding bind = new Binding();
       bind.Source = ViewModels.ResultsViewModel.Instance;
       bind.Path = new PropertyPath($"ActiveRegionsMean[{index}]");
@@ -94,7 +117,7 @@ namespace Ei_Dimension.Views
       BindingOperations.SetBinding(tb, TextBox.TextProperty, bind);
       return tb;
     }
-    
+
     private int GetSPIndexByName(string name, Panel UIEl)
     {
       for(var i = 0; i < UIEl.Children.Count; i++)

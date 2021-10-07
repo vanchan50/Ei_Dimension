@@ -238,5 +238,17 @@ namespace Ei_Dimension {
                 this["StepsPerRevZ"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool SensitivityChannelB {
+            get {
+                return ((bool)(this["SensitivityChannelB"]));
+            }
+            set {
+                this["SensitivityChannelB"] = value;
+            }
+        }
     }
 }

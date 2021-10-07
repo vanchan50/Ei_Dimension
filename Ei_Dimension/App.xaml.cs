@@ -15,7 +15,6 @@ namespace Ei_Dimension
     public static (PropertyInfo prop, object VM) NumpadShow { get; set; }
     public static (PropertyInfo prop, object VM, int index) SelectedTextBox { get; set; }
     public static MicroCyDevice Device { get; private set; }
-    public static SplashScreen SplashScreen { get; private set; }
     private static DispatcherTimer _dispatcherTimer;
     private static bool _workOrderPending;
     private static bool _cancelKeyboardInjectionFlag;
@@ -23,10 +22,9 @@ namespace Ei_Dimension
     private static bool _ActiveRegionsUpdateGoing;
     public App()
     {
-      SplashScreen = Program.SplashScreen;
       _cancelKeyboardInjectionFlag = false;
       SetLanguage("en-US");
-      Device = new MicroCyDevice(typeof(USBConnection), useStaticMaps: true);
+      Device = new MicroCyDevice(typeof(USBConnection), useStaticMaps: false);
       try
       {
         Device.ActiveMap = Device.MapList[Settings.Default.DefaultMap];
@@ -141,6 +139,13 @@ namespace Ei_Dimension
     {
       Device.YAxisSel = num;
       Settings.Default.YAxisG = num;
+      Settings.Default.Save();
+    }
+
+    public static void SetSensitivityChannel(byte num)
+    {
+      Device.ChannelBIsHiSensitivity = num == 0;
+      Settings.Default.SensitivityChannelB = num == 0;
       Settings.Default.Save();
     }
 
@@ -1638,12 +1643,8 @@ namespace Ei_Dimension
         {
           foreach (var region in Device.ActiveRegionStats)
           {
-            if (ResultsViewModel.Instance.ActiveRegionsCount.Count > 3)
-            {
-              int index = DashboardViewModel.Instance.RegionsList.IndexOf(region.Key.ToString());
-              ResultsViewModel.Instance.ActiveRegionsCount[index] = region.Value.Item1.ToString();
-              ResultsViewModel.Instance.ActiveRegionsMean[index] = region.Value.Item2.ToString();
-            }
+            ResultsViewModel.Instance.ActiveRegionsCount[region.Key] = region.Value.Item1.ToString();
+            ResultsViewModel.Instance.ActiveRegionsMean[region.Key] = region.Value.Item2.ToString();
           }
           _ActiveRegionsUpdateGoing = false;
         }));
