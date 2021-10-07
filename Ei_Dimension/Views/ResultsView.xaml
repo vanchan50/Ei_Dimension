@@ -208,5 +208,17 @@
                            Brush="#FFEB2323"/>
       </dxc:XYDiagram2D>
     </dxc:ChartControl>
+
+    <Border HorizontalAlignment="Left" VerticalAlignment="Top"
+            Margin="0,472,0,0">
+      <ScrollViewer Width="960" Height="422"
+                    HorizontalScrollBarVisibility="Auto"
+                    VerticalScrollBarVisibility="Auto">
+        <Border Background="{StaticResource RibbonBackgroundActive}">
+          <StackPanel Orientation="Horizontal" Name="Table">
+          </StackPanel>
+        </Border>
+      </ScrollViewer>
+    </Border>
   </Grid>
 </UserControl>

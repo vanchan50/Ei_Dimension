@@ -20,6 +20,7 @@ namespace Ei_Dimension
     private static bool _workOrderPending;
     private static bool _cancelKeyboardInjectionFlag;
     private static bool _histogramUpdateGoing;
+    private static bool _ActiveRegionsUpdateGoing;
     public App()
     {
       SplashScreen = Program.SplashScreen;
@@ -56,6 +57,7 @@ namespace Ei_Dimension
       _dispatcherTimer.Start();
       _workOrderPending = false;
       _histogramUpdateGoing = false;
+      _ActiveRegionsUpdateGoing = false;
     }
 
     public static int GetActiveMapIndex()
@@ -919,6 +921,7 @@ namespace Ei_Dimension
     {
       TextBoxUpdater();
       HistogramHandler();
+      ActiveRegionsStatsHandler();
       UpdateEventCounter();
       UpdatePressureMonitor();
       WellStateHandler();
@@ -1432,7 +1435,7 @@ namespace Ei_Dimension
                 if (MessageBox.Show(ws + "\nPower Off System", "Operator Alert", MessageBoxButton.OK, MessageBoxImage.Warning) == MessageBoxResult.OK)
                 {
                   Device.WellsToRead = Device.CurrentWellIdx;
-                  Device.SaveBeadFile();
+                  _ = Task.Run(Device.SaveBeadFile);
                   //                                Environment.Exit(0);
                 }
               }
@@ -1622,6 +1625,27 @@ namespace Ei_Dimension
             ResVM.Reporter[i].Value = Device.Rp1Data[i];
           }
           _histogramUpdateGoing = false;
+        }));
+      }
+    }
+
+    private static void ActiveRegionsStatsHandler()
+    {
+      if (!_ActiveRegionsUpdateGoing)
+      {
+        _ActiveRegionsUpdateGoing = true;
+        _ = Current.Dispatcher.BeginInvoke((Action)(() =>
+        {
+          foreach (var region in Device.ActiveRegionStats)
+          {
+            if (ResultsViewModel.Instance.ActiveRegionsCount.Count > 3)
+            {
+              int index = DashboardViewModel.Instance.RegionsList.IndexOf(region.Key.ToString());
+              ResultsViewModel.Instance.ActiveRegionsCount[index] = region.Value.Item1.ToString();
+              ResultsViewModel.Instance.ActiveRegionsMean[index] = region.Value.Item2.ToString();
+            }
+          }
+          _ActiveRegionsUpdateGoing = false;
         }));
       }
     }

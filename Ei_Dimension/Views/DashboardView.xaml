@@ -121,7 +121,8 @@
                        HorizontalAlignment="Left" Grid.ColumnSpan="2"/>
           </Grid>
         </Border>
-        <ScrollViewer Width="650" Height="699">
+        <ScrollViewer Width="650" Height="699"
+                      VerticalScrollBarVisibility="Auto">
           <Border Background="{StaticResource RibbonBackgroundActive}">
             <StackPanel Orientation="Horizontal">
               <StackPanel Name="RegionsBorder"

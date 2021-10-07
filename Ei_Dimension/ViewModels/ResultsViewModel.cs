@@ -15,6 +15,8 @@ namespace Ei_Dimension.ViewModels
     public virtual ObservableCollection<HistogramData<int, double>> RedSsc { get; set; }
     public virtual ObservableCollection<HistogramData<int, double>> GreenSsc { get; set; }
     public virtual ObservableCollection<HistogramData<int, double>> Reporter { get; set; }
+    public virtual ObservableCollection<string> ActiveRegionsCount { get; set; }
+    public virtual ObservableCollection<string> ActiveRegionsMean { get; set; }
     public static ResultsViewModel Instance { get; private set; }
 
     protected ResultsViewModel()
@@ -35,14 +37,16 @@ namespace Ei_Dimension.ViewModels
         Reporter.Add(new HistogramData<int, double>(0, bins[i]));
       }
 
-    //  for (var i = 0; i < 256; i++)
-    //  {
-    //    ForwardSsc.Add(new HistogramData(0, i));
-    //    VioletSsc.Add(new HistogramData(0, i));
-    //    RedSsc.Add(new HistogramData(0, i));
-    //    GreenSsc.Add(new HistogramData(0, i));
-    //    Reporter.Add(new HistogramData(0, i));
-    //  }
+      ActiveRegionsCount = new ObservableCollection<string>();
+      ActiveRegionsMean = new ObservableCollection<string>();
+      //  for (var i = 0; i < 256; i++)
+      //  {
+      //    ForwardSsc.Add(new HistogramData(0, i));
+      //    VioletSsc.Add(new HistogramData(0, i));
+      //    RedSsc.Add(new HistogramData(0, i));
+      //    GreenSsc.Add(new HistogramData(0, i));
+      //    Reporter.Add(new HistogramData(0, i));
+      //  }
     }
 
     public static ResultsViewModel Create()

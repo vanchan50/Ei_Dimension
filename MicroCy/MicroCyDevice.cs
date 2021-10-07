@@ -46,7 +46,8 @@ namespace MicroCy
     public Queue<CLQueue> ClData { get; } = new Queue<CLQueue>();
     public List<Wells> WellsInOrder { get; set; } = new List<Wells>();
     public List<CustomMap> MapList { get; private set; } = new List<CustomMap>();
-    public List<Gstats> GStats { get; set; }
+    public List<Gstats> GStats { get; set; } = new List<Gstats>(10);
+    public Dictionary<int, (uint, float)> ActiveRegionStats { get; } = new Dictionary<int, (uint, float)>();
     public float HDnrCoef { get; set; }
     public float MapPeakX { get; set; }
     public float MapPeakY { get; set; }
@@ -206,11 +207,6 @@ namespace MicroCy
       Outdir = RootDirectory.FullName;
       EndState = 0;
       ReadActive = false;
-      GStats = new List<Gstats>(10);
-      for(var i = 0; i < 10; i++)
-      {
-        GStats.Add(new Gstats());
-      }
       Outfilename = "ResultFile";
       ChannelBIsHiSensitivity = true;
       _useStaticMaps = useStaticMaps;
@@ -314,13 +310,13 @@ namespace MicroCy
       //first create uninique filename
       ushort colnum = (ushort)coln;    //well names are relative to 1
       if (!IsTube)
-        colnum++;  //use 0 for tubes and true column for plates
+        coln++;  //use 0 for tubes and true column for plates
       char rowletter = (char)(0x41 + rown);
       if (!Directory.Exists(Outdir))
         Outdir = RootDirectory.FullName;
       for (var differ = 0; differ < int.MaxValue; differ++)
       {
-        _fullFileName = Outdir + "\\" + Outfilename + rowletter + colnum.ToString() + '_' + differ.ToString()+".csv";
+        _fullFileName = Outdir + "\\" + Outfilename + rowletter + coln.ToString() + '_' + differ.ToString()+".csv";
         if (!File.Exists(_fullFileName))
           break;
       }
@@ -333,99 +329,34 @@ namespace MicroCy
     public void SaveBeadFile() //cancels the begin read from endpoint 2
     {
       //write file
-      char[] alphabet = Enumerable.Range('A', 16).Select(x => (char)x).ToArray();
-      string bgfullFileName = _fullFileName;  //save name in bg process cause it gets changed in endstate 5
-      string bgsummaryFileName = PrepareSummaryFile();
       Console.WriteLine(string.Format("{0} Reporting Background results cloned for save", DateTime.Now.ToString()));
-      if ((bgfullFileName != null) && Everyevent)
-        File.WriteAllText(bgfullFileName, _dataout.ToString());
+      if ((_fullFileName != null) && Everyevent)
+        File.WriteAllText(_fullFileName, _dataout.ToString());
       if (RMeans)
       {
-        if(PlateReport != null)
+        ClearSummary();
+        if (PlateReport != null)
           PlateReport.rpWells.Add(new WellReport {
             prow = WellsInOrder[SavingWellIdx].rowIdx,
-            pcol = WellsInOrder[SavingWellIdx].colIdx });
+            pcol = WellsInOrder[SavingWellIdx].colIdx
+          });
+        char[] alphabet = Enumerable.Range('A', 16).Select(x => (char)x).ToArray();
         for (var i = 0; i < _wellResults.Count; i++)
         {
           WellResults regionNumber = _wellResults[i];
           SavingWellIdx = SavingWellIdx > WellsInOrder.Count - 1 ? WellsInOrder.Count - 1 : SavingWellIdx;
           OutResults rout = FillOutResults(regionNumber, in alphabet);
           _ = _summaryout.Append(rout.ToString());
-
-          PlateReport.rpWells[SavingWellIdx].rpReg.Add(new RegionReport
-          {
-            region = regionNumber.regionNumber,
-            count = (uint)rout.count,
-            medfi = rout.medfi,
-            meanfi = rout.meanfi,
-            coefVar = rout.cv
-          });
+          AddToPlateReport(in rout);
+          FillActiveRegionsStats(in rout);
         }
-        if ((SavingWellIdx == WellsToRead) && (_summaryout.Length > 0) && RMeans )  //end of read session (plate, plate section or tube) write summary stat file
-          File.WriteAllText(bgsummaryFileName, _summaryout.ToString());
-        if ((SavingWellIdx == WellsToRead) && (_summaryout.Length > 0) && PltRept)    //end of read and json results requested
-        {
-          string rfilename = SystemControl == 0 ? Outfilename : WorkOrder.plateID.ToString();
-          string resultfilename = Path.Combine(RootDirectory.FullName, "Result", rfilename);
-          TextWriter jwriter = null;
-          try
-          {
-            var jcontents = JsonConvert.SerializeObject(PlateReport);
-            jwriter = new StreamWriter(resultfilename + ".json");
-            jwriter.Write(jcontents);
-            if (File.Exists(_workOrderPath))
-              File.Delete(_workOrderPath);   //result is posted, delete work order
-          }
-          finally
-          {
-            if (jwriter != null)
-              jwriter.Close();
-          }
-        }
+        OutputSummaryFiles();
       }
       if (CalStats && (SavBeadCount > 2))
       {
-        double[] robustcnt = new double[10];
         SavBeadCount = SavBeadCount > 5000 ? 5000 : SavBeadCount;
-        for (int finx = 0; finx < 10; finx++)
-        {
-          double sumit = 0;
-          for (int beads = 0; beads < SavBeadCount; beads++)
-          {
-            sumit += _sfi[beads, finx];
-          }
-          robustcnt[finx] = SavBeadCount; //start with total bead count
-          double mean = sumit / SavBeadCount;
-          //find high and low bounds
-          double min = mean * 0.5;
-          double max = mean * 2;
-          sumit = 0;
-          for (int beads = 0; beads < SavBeadCount; beads++)
-          {
-            if ((_sfi[beads, finx] > min) && (_sfi[beads, finx] < max))
-              sumit += _sfi[beads, finx];
-            else
-            {
-              _sfi[beads, finx] = 0;
-              robustcnt[finx]--;
-            }
-          }
-          mean = sumit / robustcnt[finx];
-          double sumsq = 0;
-          for (int beads = 0; beads < SavBeadCount; beads++)
-          {
-            if (_sfi[beads, finx] == 0)
-              continue;
-            sumsq += Math.Pow(mean - _sfi[beads, finx], 2);
-          }
-          double stddev = Math.Sqrt(sumsq / (robustcnt[finx] - 1));
-          var gstats = GStats[finx];
-          gstats.mfi = mean;
-          gstats.cv = (stddev / mean) * 100;
-          if (double.IsNaN(gstats.cv))
-            gstats.cv = 0;
-          GStats[finx] = gstats;
-        }
+        GStats.Clear();
+        FillGStats();
         NewStats = true;
       }
       Console.WriteLine(string.Format("{0} Reporting Background File Save Complete", DateTime.Now.ToString()));
@@ -667,7 +598,7 @@ namespace MicroCy
       Console.WriteLine(string.Format("{0} Sending [{1}]: {2}", DateTime.Now.ToString(), sCmdName, cs.ToString())); //  MARK1 END
     }
 
-    public string PrepareSummaryFile() //  DEBUGINFO: in Legacy was int BtnRead_Click
+    private string GetSummaryFileName()
     {
       string summaryFileName = "";
       for (var i = 0; i < int.MaxValue; i++)
@@ -676,8 +607,6 @@ namespace MicroCy
         if (!File.Exists(summaryFileName))
           break;
       }
-      _ = _summaryout.Clear();
-      _ = _summaryout.Append(Sheader);
       return summaryFileName;
     }
 
@@ -1010,6 +939,119 @@ namespace MicroCy
           array[i]++;
           break;
         }
+      }
+    }
+
+    private void AddToPlateReport(in OutResults outRes)
+    {
+      PlateReport.rpWells[SavingWellIdx].rpReg.Add(new RegionReport
+      {
+        region = outRes.region,
+        count = (uint)outRes.count,
+        medfi = outRes.medfi,
+        meanfi = outRes.meanfi,
+        coefVar = outRes.cv
+      });
+    }
+
+    private void FillActiveRegionsStats(in OutResults outRes)
+    {
+      if (ActiveRegionStats.ContainsKey(outRes.region))
+      {
+        ActiveRegionStats[outRes.region] = (ActiveRegionStats[outRes.region].Item1 + (uint)outRes.count,
+          ActiveRegionStats[outRes.region].Item2 + outRes.meanfi);
+      }
+    }
+
+    public void ClearSummary()
+    {
+      _ = _summaryout.Clear();
+      _ = _summaryout.Append(Sheader);
+    }
+
+    private void OutputSummaryFiles()
+    {
+      if ((SavingWellIdx == WellsToRead) && (_summaryout.Length > 0))  //end of read session (plate, plate section or tube) write summary stat file
+        File.WriteAllText(GetSummaryFileName(), _summaryout.ToString());
+      OutputPlateReport();
+    }
+
+    private void OutputPlateReport()
+    {
+      if ((SavingWellIdx == WellsToRead) && (_summaryout.Length > 0) && PltRept)    //end of read and json results requested
+      {
+        string rfilename = SystemControl == 0 ? Outfilename : WorkOrder.plateID.ToString();
+        string resultfilename = Path.Combine(RootDirectory.FullName, "Result", rfilename);
+        TextWriter jwriter = null;
+        try
+        {
+          var jcontents = JsonConvert.SerializeObject(PlateReport);
+          jwriter = new StreamWriter(resultfilename + ".json");
+          jwriter.Write(jcontents);
+          if (File.Exists(_workOrderPath))
+            File.Delete(_workOrderPath);   //result is posted, delete work order
+        }
+        finally
+        {
+          if (jwriter != null)
+            jwriter.Close();
+        }
+      }
+    }
+
+    private void FillGStats()
+    {
+      for (int finx = 0; finx < 10; finx++)
+      {
+        double sumit = 0;
+        for (int beads = 0; beads < SavBeadCount; beads++)
+        {
+          sumit += _sfi[beads, finx];
+        }
+        double robustcnt = SavBeadCount; //start with total bead count
+        double mean = sumit / SavBeadCount;
+        //find high and low bounds
+        double min = mean * 0.5;
+        double max = mean * 2;
+        sumit = 0;
+        for (int beads = 0; beads < SavBeadCount; beads++)
+        {
+          if ((_sfi[beads, finx] > min) && (_sfi[beads, finx] < max))
+            sumit += _sfi[beads, finx];
+          else
+          {
+            _sfi[beads, finx] = 0;
+            robustcnt--;
+          }
+        }
+        mean = sumit / robustcnt;
+        double sumsq = 0;
+        for (int beads = 0; beads < SavBeadCount; beads++)
+        {
+          if (_sfi[beads, finx] == 0)
+            continue;
+          sumsq += Math.Pow(mean - _sfi[beads, finx], 2);
+        }
+        double stddev = Math.Sqrt(sumsq / (robustcnt - 1));
+
+        double gcv = (stddev / mean) * 100;
+        if (double.IsNaN(gcv))
+          gcv = 0;
+        GStats.Add(new Gstats
+        {
+          mfi = mean,
+          cv = gcv
+        });
+      }
+    }
+
+    public void SetupActiveRegions(List<bool> activeRegions)
+    {
+      ActiveRegionStats.Clear();
+      for (var i = 0; i < activeRegions.Count; i++)
+      {
+        if(activeRegions[i])
+          ActiveRegionStats.Add(i, (0,0f));
       }
     }
   }

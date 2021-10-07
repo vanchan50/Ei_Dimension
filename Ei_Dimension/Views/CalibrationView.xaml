@@ -166,6 +166,7 @@
             <RadioButton Content="{lang:Loc Calibration_Classification_To_map}"
                          Style="{StaticResource RadioButtonVerticalThemeStyle}"
                          Height="100"
+                         FontSize="30"
                          IsChecked="{Binding CalibrationSelectorState[1], Mode=OneWay}"
                          Command="{Binding CalibrationSelectorCommand}">
               <RadioButton.CommandParameter>

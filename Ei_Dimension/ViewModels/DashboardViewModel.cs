@@ -38,8 +38,7 @@ namespace Ei_Dimension.ViewModels
     public virtual ObservableCollection<string> RegionsList { get; set; }
     public virtual ObservableCollection<string> RegionsNamesList { get; set; }
     public List<bool> ActiveRegions { get; set; }
-    public uint? SelectedRegionCache { get; set; }
-    public int? SelectedRegionTextboxName { get; set; }
+    public int? SelectedRegionTextboxIndex { get; set; }
 
     public static DashboardViewModel Instance { get; private set; }
 
@@ -138,8 +137,7 @@ namespace Ei_Dimension.ViewModels
       ActiveList = new ObservableCollection<string>();
       RegionsList = new ObservableCollection<string>();
       RegionsNamesList = new ObservableCollection<string>();
-      SelectedRegionCache = null;
-      SelectedRegionTextboxName = null;
+      SelectedRegionTextboxIndex = null;
       ActiveRegions = new List<bool>();
       _firstLoadflag = false;
       Instance = this;
@@ -183,6 +181,8 @@ namespace Ei_Dimension.ViewModels
       App.Device.MainCommand("Get FProperty", code: 0x20);   //get high dnr property
       App.Device.ClearGraphingArrays();
       ResultsViewModel.Instance.ClearGraphs();
+      App.Device.SetupActiveRegions(ActiveRegions);
+
       SetWellsInOrder();
 
       //find number of wells to read
@@ -197,9 +197,9 @@ namespace Ei_Dimension.ViewModels
       App.Device.MainCommand("Set Property", code: 0x19, parameter: 1); //bubble detect on
       App.Device.MainCommand("Position Well Plate");   //move motors. next position is set in properties 0xad and 0xae
       App.Device.MainCommand("Aspirate Syringe A"); //handles down and pickup sample
-      App.Device.WellNext();   //save well numbers for file neame
+      App.Device.WellNext();   //save well numbers for file name
       App.Device.InitBeadRead(App.Device.ReadingRow, App.Device.ReadingCol);   //gets output file redy
-      App.Device.PrepareSummaryFile(); //TODO : try to move to initbeadread, there is an issue, if during runtime some box is clicked
+      App.Device.ClearSummary();
 
       if (App.Device.WellsToRead == 0)    //only one well in region
         App.Device.MainCommand("Read A");
@@ -342,12 +342,16 @@ namespace Ei_Dimension.ViewModels
       RegionsList.Clear();
       RegionsNamesList.Clear();
       ActiveRegions.Clear();
+      ResultsViewModel.Instance.ActiveRegionsCount.Clear();
+      ResultsViewModel.Instance.ActiveRegionsMean.Clear();
       var i = 0;
       foreach (var region in App.Device.ActiveMap.mapRegions)
       {
         RegionsList.Add(region.regionNumber.ToString());
         RegionsNamesList.Add("");
         ActiveRegions.Add(false);
+        ResultsViewModel.Instance.ActiveRegionsCount.Add("");
+        ResultsViewModel.Instance.ActiveRegionsMean.Add("");
         Views.DashboardView.Instance.AddTextboxes($"RegionsList[{i}]", $"RegionsNamesList[{i}]");
         i++;
       }
@@ -355,20 +359,19 @@ namespace Ei_Dimension.ViewModels
 
     public void AddActiveRegion(byte num)
     {
-      if (SelectedRegionCache != null)
+      if (SelectedRegionTextboxIndex != null)
       {
-        if (num == 1)
+        if (num == 1 && !ActiveRegions[(int)SelectedRegionTextboxIndex])
         {
           Views.DashboardView.Instance.ShiftTextBox(true);
-          ActiveRegions[(int)SelectedRegionTextboxName] = true;
+          ActiveRegions[(int)SelectedRegionTextboxIndex] = true;
         }
-        else
+        else if(num == 0 && ActiveRegions[(int)SelectedRegionTextboxIndex])
         {
-          ActiveRegions[(int)SelectedRegionTextboxName] = false;
+          ActiveRegions[(int)SelectedRegionTextboxIndex] = false;
           Views.DashboardView.Instance.ShiftTextBox(false);
         }
-        SelectedRegionCache = null;
-        SelectedRegionTextboxName = null;
+        SelectedRegionTextboxIndex = null;
       }
     }
 

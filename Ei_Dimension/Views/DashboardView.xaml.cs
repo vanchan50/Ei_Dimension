@@ -55,13 +55,23 @@ namespace Ei_Dimension.Views
 
     public void ShiftTextBox(bool right)
     {
-      var tb = (TextBox)RegionsBorder.Children[(int)ViewModels.DashboardViewModel.Instance.SelectedRegionTextboxName];
+      var tb = (TextBox)RegionsBorder.Children[(int)ViewModels.DashboardViewModel.Instance.SelectedRegionTextboxIndex];
       var shift = tb.Margin;
       shift.Left = right ? 140 : 10;
       tb.Margin = shift;
 
-      var NameTb = (TextBox)RegionsNamesBorder.Children[(int)ViewModels.DashboardViewModel.Instance.SelectedRegionTextboxName];
+      var NameTb = (TextBox)RegionsNamesBorder.Children[(int)ViewModels.DashboardViewModel.Instance.SelectedRegionTextboxIndex];
       NameTb.Visibility = right ? Visibility.Visible : Visibility.Hidden;
+
+      if (right)
+      {
+        var bindToCopy = BindingOperations.GetBindingBase(NameTb, TextBox.TextProperty);
+        ResultsView.Instance.AddRegionToTable(NameTb.Name, bindToCopy);
+      }
+      else
+      {
+        ResultsView.Instance.RemoveRegionFromTable(NameTb.Name);
+      }
     }
 
     private void AddRegionsTextBox(string propertyPath)
@@ -104,8 +114,7 @@ namespace Ei_Dimension.Views
 
     private void RegionsTbGotFocus(object sender, RoutedEventArgs e)
     {
-      ViewModels.DashboardViewModel.Instance.SelectedRegionTextboxName = int.Parse(((TextBox)e.Source).Name.Trim('_'));
-      ViewModels.DashboardViewModel.Instance.SelectedRegionCache = uint.Parse(((TextBox)e.Source).Text);
+      ViewModels.DashboardViewModel.Instance.SelectedRegionTextboxIndex = int.Parse(((TextBox)e.Source).Name.Trim('_'));
     }
 
     private void RegionsNamesTbGotFocus(object sender, RoutedEventArgs e)
