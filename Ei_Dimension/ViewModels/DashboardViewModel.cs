@@ -338,8 +338,8 @@ namespace Ei_Dimension.ViewModels
       if (_firstLoadflag && loadByPage)
         return;
       _firstLoadflag = true;
-      Views.DashboardView.Instance.ClearTextBoxes();
       Views.ResultsView.Instance.ClearTable();
+      Views.DashboardView.Instance.ClearTextBoxes();
       RegionsList.Clear();
       RegionsNamesList.Clear();
       ActiveRegions.Clear();

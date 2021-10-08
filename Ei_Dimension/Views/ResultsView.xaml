@@ -210,15 +210,20 @@
     </dxc:ChartControl>
 
     <Border HorizontalAlignment="Left" VerticalAlignment="Top"
-            Margin="0,472,0,0">
-      <ScrollViewer Width="960" Height="422"
-                    HorizontalScrollBarVisibility="Auto"
-                    VerticalScrollBarVisibility="Auto">
-        <Border Background="{StaticResource RibbonBackgroundActive}">
-          <StackPanel Orientation="Horizontal" Name="Table">
-          </StackPanel>
-        </Border>
+            Margin="0,584,0,0" Width="930" Height="310">
+      <ScrollViewer 
+                    HorizontalScrollBarVisibility="Disabled"
+                    VerticalScrollBarVisibility="Visible">
+        <ListBox Name="Table" Background="{StaticResource RibbonBackgroundActive}">
+          <ListBox.ItemsPanel>
+            <ItemsPanelTemplate>
+              <WrapPanel Width="900"
+                         Orientation="Horizontal"/>
+            </ItemsPanelTemplate>
+          </ListBox.ItemsPanel>
+        </ListBox>
       </ScrollViewer>
     </Border>
+
   </Grid>
 </UserControl>

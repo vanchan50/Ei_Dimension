@@ -29,7 +29,7 @@ namespace Ei_Dimension.Views
     }
     public void AddRegionToTable(string name, BindingBase bind)
     {
-      //TODO: use hashtable for bookkeeping sp name and index in Table.Children? no need to search for sp by name then
+      //TODO: use hashtable for bookkeeping sp name and index in Table.Items? no need to search for sp by name then
       StackPanel sp = new StackPanel
       {
         Name = name,
@@ -37,39 +37,38 @@ namespace Ei_Dimension.Views
         HorizontalAlignment = HorizontalAlignment.Left,
         Width = 140,
         Height = 129 + 5 + 5 + 5 + 5,
-        Margin = new Thickness(10, 5, 0, 0),
-        Background = Brushes.Red
+        Margin = new Thickness(0, 0, 0, 0)
       };
 
       int index = int.Parse(name.Trim('_'));
       sp.Children.Add(MakeNameTextBox(bind));
       sp.Children.Add(MakeCounterTextBox(index));
       sp.Children.Add(MakeMeanTextBox(index));
-      Table.Children.Add(sp);
+      Table.Items.Add(sp);
     }
 
     public void RemoveRegionFromTable(string name)
     {
-      var sp = (StackPanel)Table.Children[GetSPIndexByName(name, Table)];
+      var sp = (StackPanel)Table.Items[GetSPIndexByName(name, Table)];
       for(var i = sp.Children.Count -1; i > -1; i--)
       {
         BindingOperations.ClearAllBindings(sp.Children[i]);
         sp.Children.RemoveAt(i);
       }
-      Table.Children.Remove(sp);
+      Table.Items.Remove(sp);
     }
 
     public void ClearTable()
     {
-      for(var i = 0; i < Table.Children.Count; i++)
+      for(var i = Table.Items.Count -1; i > -1; i--)
       {
-        var sp = (StackPanel)Table.Children[i];
+        var sp = (StackPanel)Table.Items[i];
         for (var j = sp.Children.Count - 1; j > -1 ; j--)
         {
           BindingOperations.ClearAllBindings(sp.Children[j]);
           sp.Children.RemoveAt(j);
         }
-        Table.Children.RemoveAt(i);
+        Table.Items.RemoveAt(i);
       }
     }
 
@@ -118,11 +117,11 @@ namespace Ei_Dimension.Views
       return tb;
     }
 
-    private int GetSPIndexByName(string name, Panel UIEl)
+    private int GetSPIndexByName(string name, ListBox UIEl)
     {
-      for(var i = 0; i < UIEl.Children.Count; i++)
+      for(var i = 0; i < UIEl.Items.Count; i++)
       {
-        if (((StackPanel)UIEl.Children[i]).Name == name)
+        if (((StackPanel)UIEl.Items[i]).Name == name)
           return i;
       }
       return -1;
