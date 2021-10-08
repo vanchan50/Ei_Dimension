@@ -381,6 +381,7 @@
                                 ArrowPadding="15"
                                 VerticalAlignment="Bottom"
                                 HorizontalAlignment="Left"
+                                dxb:BarManager.ShowGlyphsInPopupMenus="False"
                                 FontFamily="{StaticResource AppTextFont}"
                                 Foreground="{StaticResource AppTextColor}"
                                 Content="{Binding SelectedSheathContent}"  
@@ -393,10 +394,12 @@
                                    ItemClick="{DXEvent 'Click((int)1)'}">
                             <dxb:BarButtonItem.ContentTemplate>
                               <DataTemplate>
-                                <TextBlock Text="{Binding}"
-                                   FontFamily="{StaticResource AppTextFont}"
-                                   Foreground="{StaticResource AppTextColor}"
-                                   FontSize="25"/>
+                                <Grid Width="202">
+                                  <TextBlock Text="{Binding}" HorizontalAlignment="Center"
+                                             FontFamily="{StaticResource AppTextFont}"
+                                             Foreground="{StaticResource AppTextColor}"
+                                             FontSize="25"/>
+                                </Grid>
                               </DataTemplate>
                             </dxb:BarButtonItem.ContentTemplate>
                           </dxb:BarButtonItem>
@@ -447,6 +450,7 @@
                                 ArrowPadding="15"
                                 VerticalAlignment="Bottom"
                                 HorizontalAlignment="Left"
+                                dxb:BarManager.ShowGlyphsInPopupMenus="False"
                                 FontFamily="{StaticResource AppTextFont}"
                                 Foreground="{StaticResource AppTextColor}"
                                 Content="{Binding SelectedSampleAContent}"  
@@ -459,10 +463,12 @@
                                    ItemClick="{DXEvent 'Click((int)2)'}">
                             <dxb:BarButtonItem.ContentTemplate>
                               <DataTemplate>
-                                <TextBlock Text="{Binding}"
-                                   FontFamily="{StaticResource AppTextFont}"
-                                   Foreground="{StaticResource AppTextColor}"
-                                   FontSize="25"/>
+                                <Grid Width="202">
+                                  <TextBlock Text="{Binding}" HorizontalAlignment="Center"
+                                             FontFamily="{StaticResource AppTextFont}"
+                                             Foreground="{StaticResource AppTextColor}"
+                                             FontSize="25"/>
+                                </Grid>
                               </DataTemplate>
                             </dxb:BarButtonItem.ContentTemplate>
                           </dxb:BarButtonItem>
@@ -513,6 +519,7 @@
                                 ArrowPadding="15"
                                 VerticalAlignment="Bottom"
                                 HorizontalAlignment="Left"
+                                dxb:BarManager.ShowGlyphsInPopupMenus="False"
                                 FontFamily="{StaticResource AppTextFont}"
                                 Foreground="{StaticResource AppTextColor}"
                                 Content="{Binding SelectedSampleBContent}"  
@@ -525,10 +532,12 @@
                                    ItemClick="{DXEvent 'Click((int)3)'}">
                             <dxb:BarButtonItem.ContentTemplate>
                               <DataTemplate>
-                                <TextBlock Text="{Binding}"
-                                   FontFamily="{StaticResource AppTextFont}"
-                                   Foreground="{StaticResource AppTextColor}"
-                                   FontSize="25"/>
+                                <Grid Width="202">
+                                  <TextBlock Text="{Binding}" HorizontalAlignment="Center"
+                                             FontFamily="{StaticResource AppTextFont}"
+                                             Foreground="{StaticResource AppTextColor}"
+                                             FontSize="25"/>
+                                </Grid>
                               </DataTemplate>
                             </dxb:BarButtonItem.ContentTemplate>
                           </dxb:BarButtonItem>

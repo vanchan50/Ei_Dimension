@@ -831,10 +831,11 @@
                   Height="80"
                   Width="280">
           <dx:DropDownButton Width="140"
-                        FontSize="50"
-                        FontFamily="{StaticResource AppTextFont}"
-                        Foreground="{StaticResource AppTextColor}"
-                        Content="{Binding SelectedWellRow}">
+                             FontSize="50"
+                             dxb:BarManager.ShowGlyphsInPopupMenus="False"
+                             FontFamily="{StaticResource AppTextFont}"
+                             Foreground="{StaticResource AppTextColor}"
+                             Content="{Binding SelectedWellRow}">
             <dxb:PopupMenu ItemLinksSource="{Binding WellRowButtonItems}">
               <dxb:PopupMenu.ItemTemplate>
                 <DataTemplate>
@@ -843,10 +844,12 @@
                                    ItemClick="{DXEvent 'Click((int)1)'}">
                       <dxb:BarButtonItem.ContentTemplate>
                         <DataTemplate>
-                          <TextBlock Text="{Binding}"
+                          <Grid Width="100">
+                            <TextBlock Text="{Binding}" HorizontalAlignment="Center"
                                    FontFamily="{StaticResource AppTextFont}"
                                    Foreground="{StaticResource AppTextColor}"
                                    FontSize="25"/>
+                          </Grid>
                         </DataTemplate>
                       </dxb:BarButtonItem.ContentTemplate>
                     </dxb:BarButtonItem>
@@ -856,10 +859,11 @@
             </dxb:PopupMenu>
           </dx:DropDownButton>
           <dx:DropDownButton Width="140"
-                        FontSize="50"
-                        FontFamily="{StaticResource AppTextFont}"
-                        Foreground="{StaticResource AppTextColor}"
-                        Content="{Binding SelectedWellColumn}">
+                             FontSize="50"
+                             dxb:BarManager.ShowGlyphsInPopupMenus="False"
+                             FontFamily="{StaticResource AppTextFont}"
+                             Foreground="{StaticResource AppTextColor}"
+                             Content="{Binding SelectedWellColumn}">
             <dxb:PopupMenu ItemLinksSource="{Binding WellColumnButtonItems}">
               <dxb:PopupMenu.ItemTemplate>
                 <DataTemplate>
@@ -868,10 +872,12 @@
                                      ItemClick="{DXEvent 'Click((int)2)'}">
                       <dxb:BarButtonItem.ContentTemplate>
                         <DataTemplate>
-                          <TextBlock Text="{Binding}"
+                          <Grid Width="100">
+                            <TextBlock Text="{Binding}" HorizontalAlignment="Center"
                                    FontFamily="{StaticResource AppTextFont}"
                                    Foreground="{StaticResource AppTextColor}"
                                    FontSize="25"/>
+                          </Grid>
                         </DataTemplate>
                       </dxb:BarButtonItem.ContentTemplate>
                     </dxb:BarButtonItem>

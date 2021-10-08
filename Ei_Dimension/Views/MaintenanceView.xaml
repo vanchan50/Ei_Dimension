@@ -153,6 +153,7 @@
                  Margin="0,50,0,0"/>
         <dx:DropDownButton FontSize="30"
                            Margin="10,0,10,0"
+                           dxb:BarManager.ShowGlyphsInPopupMenus="False"
                            FontFamily="{StaticResource AppTextFont}"
                            Foreground="{StaticResource AppTextColor}"
                            Content="{Binding SelectedLanguage}">
@@ -164,10 +165,12 @@
                                    ItemClick="{DXEvent 'Click()'}">
                     <dxb:BarButtonItem.ContentTemplate>
                       <DataTemplate>
-                        <TextBlock Text="{Binding}"
+                        <Grid Width="170">
+                          <TextBlock Text="{Binding}" HorizontalAlignment="Center"
                                    FontFamily="{StaticResource AppTextFont}"
                                    Foreground="{StaticResource AppTextColor}"
                                    FontSize="25"/>
+                        </Grid>
                       </DataTemplate>
                     </dxb:BarButtonItem.ContentTemplate>
                   </dxb:BarButtonItem>

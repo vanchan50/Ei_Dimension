@@ -34,10 +34,10 @@
                 <Condition Property="IsFocused" Value="True"/>
                 <Condition Property="IsReadOnly" Value="False"/>
               </MultiTrigger.Conditions>
-              <Setter TargetName="ToggleButtonRect" Property="Fill" Value="{DynamicResource HaltButtonBackground}"/>
+              <Setter TargetName="ToggleButtonRect" Property="Fill" Value="{DynamicResource MenuButtonBackgroundActive}"/>
             </MultiTrigger>
             <Trigger Property="IsReadOnly" Value="True">
-              <Setter TargetName="ToggleButtonRect" Property="Fill" Value="{DynamicResource SubRibbonBackground}"/>
+              <Setter TargetName="ToggleButtonRect" Property="Fill" Value="{DynamicResource HaltButtonBackground}"/>
             </Trigger>
           </ControlTemplate.Triggers>
         </ControlTemplate>

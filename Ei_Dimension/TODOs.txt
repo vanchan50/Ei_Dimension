@@ -55,3 +55,5 @@ charts are [256]. should it be log? probably not
 GenerateLogSpace exists in two projects
 
 Everthing regargind activeregions should be a separate class kept in App.
+
+Devexpress dxb:PopupMenu can be used for numpad near textbox
