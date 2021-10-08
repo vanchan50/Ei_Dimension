@@ -161,8 +161,16 @@
               <DataTemplate>
                 <ContentControl>
                   <dxb:BarButtonItem Content="{Binding Content}"  
-                                   ItemClick="{DXEvent 'Click()'}"/>
-
+                                   ItemClick="{DXEvent 'Click()'}">
+                    <dxb:BarButtonItem.ContentTemplate>
+                      <DataTemplate>
+                        <TextBlock Text="{Binding}"
+                                   FontFamily="{StaticResource AppTextFont}"
+                                   Foreground="{StaticResource AppTextColor}"
+                                   FontSize="25"/>
+                      </DataTemplate>
+                    </dxb:BarButtonItem.ContentTemplate>
+                  </dxb:BarButtonItem>
                 </ContentControl>
               </DataTemplate>
             </dxb:PopupMenu.ItemTemplate>

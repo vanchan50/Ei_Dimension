@@ -840,8 +840,16 @@
                 <DataTemplate>
                   <ContentControl>
                     <dxb:BarButtonItem Content="{Binding Content}"  
-                                   ItemClick="{DXEvent 'Click((int)1)'}"/>
-
+                                   ItemClick="{DXEvent 'Click((int)1)'}">
+                      <dxb:BarButtonItem.ContentTemplate>
+                        <DataTemplate>
+                          <TextBlock Text="{Binding}"
+                                   FontFamily="{StaticResource AppTextFont}"
+                                   Foreground="{StaticResource AppTextColor}"
+                                   FontSize="25"/>
+                        </DataTemplate>
+                      </dxb:BarButtonItem.ContentTemplate>
+                    </dxb:BarButtonItem>
                   </ContentControl>
                 </DataTemplate>
               </dxb:PopupMenu.ItemTemplate>
@@ -857,7 +865,16 @@
                 <DataTemplate>
                   <ContentControl>
                     <dxb:BarButtonItem Content="{Binding Content}"  
-                                     ItemClick="{DXEvent 'Click((int)2)'}"/>
+                                     ItemClick="{DXEvent 'Click((int)2)'}">
+                      <dxb:BarButtonItem.ContentTemplate>
+                        <DataTemplate>
+                          <TextBlock Text="{Binding}"
+                                   FontFamily="{StaticResource AppTextFont}"
+                                   Foreground="{StaticResource AppTextColor}"
+                                   FontSize="25"/>
+                        </DataTemplate>
+                      </dxb:BarButtonItem.ContentTemplate>
+                    </dxb:BarButtonItem>
                   </ContentControl>
                 </DataTemplate>
               </dxb:PopupMenu.ItemTemplate>
