@@ -105,7 +105,10 @@
         <dxc:XYDiagram2D.AxisX>
           <dxc:AxisX2D TickmarksMinorVisible="False"
                        TickmarksVisible="False"
-                       Logarithmic="True" GridLinesMinorVisible="True" GridLinesVisible="True" MinorCount="9">
+                       Logarithmic="True"
+                       GridLinesMinorVisible="True"
+                       GridLinesVisible="True"
+                       MinorCount="9">
             <dxc:AxisX2D.Title>
               <dxc:AxisTitle Content="Reporter"
                              FontSize="30"
@@ -211,8 +214,7 @@
 
     <Border HorizontalAlignment="Left" VerticalAlignment="Top"
             Margin="0,584,0,0" Width="930" Height="310">
-      <ScrollViewer 
-                    HorizontalScrollBarVisibility="Disabled"
+      <ScrollViewer HorizontalScrollBarVisibility="Disabled"
                     VerticalScrollBarVisibility="Visible">
         <ListBox Name="Table" Background="{StaticResource RibbonBackgroundActive}">
           <ListBox.ItemsPanel>
