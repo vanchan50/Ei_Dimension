@@ -39,14 +39,6 @@ namespace Ei_Dimension.ViewModels
 
       ActiveRegionsCount = new ObservableCollection<string>();
       ActiveRegionsMean = new ObservableCollection<string>();
-      //  for (var i = 0; i < 256; i++)
-      //  {
-      //    ForwardSsc.Add(new HistogramData(0, i));
-      //    VioletSsc.Add(new HistogramData(0, i));
-      //    RedSsc.Add(new HistogramData(0, i));
-      //    GreenSsc.Add(new HistogramData(0, i));
-      //    Reporter.Add(new HistogramData(0, i));
-      //  }
     }
 
     public static ResultsViewModel Create()

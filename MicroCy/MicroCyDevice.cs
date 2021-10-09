@@ -208,7 +208,6 @@ namespace MicroCy
       EndState = 0;
       ReadActive = false;
       Outfilename = "ResultFile";
-      ChannelBIsHiSensitivity = true;
       _useStaticMaps = useStaticMaps;
       if (_useStaticMaps)
         ConstructClassificationMap(null);

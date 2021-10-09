@@ -41,6 +41,7 @@ namespace Ei_Dimension
       Device.TerminationType = Settings.Default.EndRead;
       Device.MinPerRegion = Settings.Default.MinPerRegion;
       Device.BeadsToCapture = Settings.Default.BeadsToCapture;
+      Device.ChannelBIsHiSensitivity = Settings.Default.SensitivityChannelB;
       if (!System.Windows.Input.Keyboard.IsKeyDown(System.Windows.Input.Key.LeftCtrl))
         Device.MainCommand("Startup");
       Device.XAxisSel = Settings.Default.XAxisG;        //TODO: delete this, when refactor ReplyFromMC. only needed in legacy to build graphs
@@ -48,7 +49,6 @@ namespace Ei_Dimension
       Device.HdnrTrans = Settings.Default.HDnrTrans;
       Device.MainCommand("Set Property", code: 0x97, parameter: 1170);  //set current limit of aligner motors if leds are off
       Device.MainCommand("Get Property", code: 0xca);
-
       _dispatcherTimer = new DispatcherTimer();
       _dispatcherTimer.Tick += TimerTick;
       _dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 500);

@@ -41,7 +41,10 @@
         <dxc:XYDiagram2D.AxisX>
           <dxc:AxisX2D TickmarksMinorVisible="False"
                        TickmarksVisible="False"
-                       Logarithmic="True">
+                       Logarithmic="True"
+                       GridLinesMinorVisible="True"
+                       GridLinesVisible="True"
+                       MinorCount="9">
             <dxc:AxisX2D.Title>
               <dxc:AxisTitle Content="Scatter"
                              FontSize="30"
@@ -52,6 +55,9 @@
             <dxc:AxisX2D.Range>
               <dxc:AxisRange SideMarginsEnabled="False"/>
             </dxc:AxisX2D.Range>
+            <dxc:AxisX2D.Label>
+              <dxc:AxisLabel TextPattern="{}{E:E0}"/>
+            </dxc:AxisX2D.Label>
           </dxc:AxisX2D>
         </dxc:XYDiagram2D.AxisX>
         <dxc:LineSeries2D DataSource="{Binding RedSsc}"
@@ -140,7 +146,12 @@
       <dxc:XYDiagram2D Width="562" Height="388" Margin="45,10,0,0"
                        HorizontalAlignment="Left" VerticalAlignment="Top">
         <dxc:XYDiagram2D.AxisY>
-          <dxc:AxisY2D Logarithmic="True" GridLinesMinorVisible="True" MinorCount="9" Interlaced="False">
+          <dxc:AxisY2D Logarithmic="True"
+                       GridLinesMinorVisible="True"
+                       MinorCount="9"
+                       Interlaced="False"
+                       TickmarksMinorVisible="False"
+                       TickmarksVisible="False">
             <dxc:AxisY2D.WholeRange>
               <dxc:Range dxc:AxisY2D.AlwaysShowZeroLevel="False" >
                 <dxc:Range.MinValue>
@@ -161,21 +172,12 @@
           </dxc:AxisY2D>
         </dxc:XYDiagram2D.AxisY>
         <dxc:XYDiagram2D.AxisX>
-          <dxc:AxisX2D Logarithmic="True" GridLinesMinorVisible="True" MinorCount="9" GridLinesVisible="True" Interlaced="False">
-            <dxc:AxisX2D.VisualRange>
-              <dxc:Range >
-                <dxc:Range.MinValue>
-                  <System:Double>1</System:Double>
-                </dxc:Range.MinValue>
-              </dxc:Range>
-            </dxc:AxisX2D.VisualRange>
-            <dxc:AxisX2D.WholeRange>
-              <dxc:Range>
-                <dxc:Range.MinValue>
-                  <System:Double>1</System:Double>
-                </dxc:Range.MinValue>
-              </dxc:Range>
-            </dxc:AxisX2D.WholeRange>
+          <dxc:AxisX2D Logarithmic="True"
+                       GridLinesMinorVisible="True"
+                       MinorCount="9"
+                       GridLinesVisible="True"
+                       TickmarksMinorVisible="False"
+                       TickmarksVisible="False">
             <dxc:AxisX2D.Range>
               <dxc:AxisRange SideMarginsEnabled="False"/>
             </dxc:AxisX2D.Range>
