@@ -327,11 +327,11 @@ namespace Ei_Dimension.Core
       double logMin = Math.Log10(min);
       double logMax = Math.Log10(max);
       double delta = (logMax - logMin) / logBins;
-      double accDelta = 0;
-      double[] Result = new double[logBins + 1];
-      for (int i = 0; i <= logBins; ++i)
+      double accDelta = delta;
+      double[] Result = new double[logBins];
+      for (int i = 1; i <= logBins; ++i)
       {
-        Result[i] = Math.Pow(logarithmicBase, logMin + accDelta);
+        Result[i -1] = Math.Pow(logarithmicBase, logMin + accDelta);
         accDelta += delta;
       }
       return Result;

@@ -179,8 +179,8 @@ namespace Ei_Dimension.ViewModels
       App.Device.MainCommand("Get FProperty", code: 0x68);
       App.Device.PlateReport = new MicroCy.PlateReport(); //TODO: optimize, not needed here
       App.Device.MainCommand("Get FProperty", code: 0x20); //get high dnr property
-      App.Device.ClearGraphingArrays();
       ResultsViewModel.Instance.ClearGraphs();
+      ResultsViewModel.Instance.Map.Clear();
       App.Device.SetupActiveRegions(ActiveRegions);
 
       SetWellsInOrder();

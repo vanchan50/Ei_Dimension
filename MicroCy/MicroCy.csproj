@@ -60,7 +60,6 @@
   <ItemGroup>
     <Compile Include="BeadInfoStruct.cs" />
     <Compile Include="BeadRegion.cs" />
-    <Compile Include="CLQueue.cs" />
     <Compile Include="CommandStruct.cs" />
     <Compile Include="ConnectionFactory.cs" />
     <Compile Include="CustomMap.cs" />

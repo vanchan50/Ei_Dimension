@@ -15,6 +15,11 @@ namespace Ei_Dimension.ViewModels
     public virtual ObservableCollection<HistogramData<int, double>> RedSsc { get; set; }
     public virtual ObservableCollection<HistogramData<int, double>> GreenSsc { get; set; }
     public virtual ObservableCollection<HistogramData<int, double>> Reporter { get; set; }
+    public virtual ObservableCollection<HistogramData<int, double>> CL0 { get; set; }
+    public virtual ObservableCollection<HistogramData<int, double>> CL1 { get; set; }
+    public virtual ObservableCollection<HistogramData<int, double>> CL2 { get; set; }
+    public virtual ObservableCollection<HistogramData<int, double>> CL3 { get; set; }
+    public virtual ObservableCollection<HeatMapData> Map { get; set; }
     public virtual ObservableCollection<string> ActiveRegionsCount { get; set; }
     public virtual ObservableCollection<string> ActiveRegionsMean { get; set; }
     public static ResultsViewModel Instance { get; private set; }
@@ -27,6 +32,11 @@ namespace Ei_Dimension.ViewModels
       RedSsc = new ObservableCollection<HistogramData<int, double>>();
       GreenSsc = new ObservableCollection<HistogramData<int, double>>();
       Reporter = new ObservableCollection<HistogramData<int, double>>();
+      CL0 = new ObservableCollection<HistogramData<int, double>>();
+      CL1 = new ObservableCollection<HistogramData<int, double>>();
+      CL2 = new ObservableCollection<HistogramData<int, double>>();
+      CL3 = new ObservableCollection<HistogramData<int, double>>();
+
       var bins = Core.DataProcessor.GenerateLogSpace(1, 1000000, 384);
       for (var i = 0; i < bins.Length; i++)
       {
@@ -35,7 +45,13 @@ namespace Ei_Dimension.ViewModels
         RedSsc.Add(new HistogramData<int, double>(0, bins[i]));
         GreenSsc.Add(new HistogramData<int, double>(0, bins[i]));
         Reporter.Add(new HistogramData<int, double>(0, bins[i]));
+        CL0.Add(new HistogramData<int, double>(0, bins[i]));
+        CL1.Add(new HistogramData<int, double>(0, bins[i]));
+        CL2.Add(new HistogramData<int, double>(0, bins[i]));
+        CL3.Add(new HistogramData<int, double>(0, bins[i]));
       }
+
+      Map = new ObservableCollection<HeatMapData>();
 
       ActiveRegionsCount = new ObservableCollection<string>();
       ActiveRegionsMean = new ObservableCollection<string>();

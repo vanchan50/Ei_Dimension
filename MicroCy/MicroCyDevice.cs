@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using IronBarCode;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
+using System.Collections.Concurrent;
 
 /*
  * Most commands on the host side parallel the Properties and Methods document fo QB-1000
@@ -43,7 +44,7 @@ namespace MicroCy
     public PlateReport PlateReport { get; set; }
     public CustomMap ActiveMap { get; set; }
     public Queue<CommandStruct> Commands { get; } = new Queue<CommandStruct>();
-    public Queue<CLQueue> ClData { get; } = new Queue<CLQueue>();
+    public ConcurrentQueue<BeadInfoStruct> DataOut { get; } = new ConcurrentQueue<BeadInfoStruct>();
     public List<Wells> WellsInOrder { get; set; } = new List<Wells>();
     public List<CustomMap> MapList { get; private set; } = new List<CustomMap>();
     public List<Gstats> GStats { get; set; } = new List<Gstats>(10);
@@ -54,11 +55,6 @@ namespace MicroCy
     public float Compensation { get; set; }
     public float HdnrTrans { get; set; }
     public float IdexDir { get; set; }
-    public int[] ForwardSscData = new int[385];
-    public int[] VioletSscData = new int[385];
-    public int[] RedSscData = new int[385];
-    public int[] GreenSscData = new int[385];
-    public int[] Rp1Data = new int[385];
     public int SavingWellIdx { get; set; }
     public int TempCl0 { get; set; }
     public int TempCl1 { get; set; }
@@ -118,7 +114,6 @@ namespace MicroCy
     private float[,] _sfi = new float[5000, 10];
     private float _greenMin;
     private float _greenMaj;
-    private double[] _histogramBins;
     private string _workOrderPath;
     private string _fullFileName; //TODO: probably not necessary. look at refactoring InitBeadRead()
     private string _mapsFileName;
@@ -188,7 +183,6 @@ namespace MicroCy
             "Green Maj bg, Green Min bg,Green Major,Green Minor,Red-Grn Offset,Grn-Viol Offset,Region,Forward Scatter,Violet SSC,CL0," +
             "Red SSC,CL1,CL2,CL3,Green SSC,Reporter\r ";
     private const string Sheader = "Row,Col,Region,Bead Count,Median FI,Trimmed Mean FI,CV%\r";
-    private const int BeadsToGraph = 2000;
     private readonly bool _useStaticMaps;
 
     public MicroCyDevice(Type connectionType, bool useStaticMaps)
@@ -211,8 +205,6 @@ namespace MicroCy
       _useStaticMaps = useStaticMaps;
       if (_useStaticMaps)
         ConstructClassificationMap(null);
-
-      _histogramBins = GenerateLogSpace(1, 1000000, 384);
     }
 
     public void ConstructClassificationMap(CustomMap mmap)
@@ -392,11 +384,12 @@ namespace MicroCy
           BeadInfoStruct outbead;
           if (!GetBeadFromBuffer(_usbConnection.InputBuffer, i, out outbead))
             break;
+          CalculateBeadParams(ref outbead);
+
           FillActiveWellResults(in outbead);
           if (outbead.region == 0 && OnlyClassified)
             continue;
-          if (BeadCount < BeadsToGraph)
-            NewClData(outbead);
+          DataOut.Enqueue(outbead);
           if (Everyevent)
             _ = _dataout.Append(outbead.ToString());
           //accum stats for run as a whole, used during aligment and QC
@@ -693,58 +686,6 @@ namespace MicroCy
       return retidx;
     }
 
-    private void NewClData(BeadInfoStruct outbead)
-    {
-      CLQueue DataPoint = new CLQueue();
-      switch (XAxisSel)
-      {
-        case 0:
-          DataPoint.xyclx = (uint)outbead.cl0;
-          break;
-        case 1:
-          DataPoint.xyclx = (uint)outbead.cl1;
-          break;
-        case 2:
-          DataPoint.xyclx = (uint)outbead.cl2;
-          break;
-        default:
-          DataPoint.xyclx = (uint)outbead.cl3;
-          break;
-      }
-      switch (YAxisSel)
-      {
-        case 0:
-          DataPoint.xycly = (uint)outbead.cl0;
-          break;
-        case 1:
-          DataPoint.xycly = (uint)outbead.cl1;
-          break;
-        case 2:
-          DataPoint.xycly = (uint)outbead.cl2;
-          break;
-        default:
-          DataPoint.xycly = (uint)outbead.cl3;
-          break;
-      }
-      Task bin1 = Task.Run(() => BinData(outbead.fsc, ref ForwardSscData));
-      Task bin2 = Task.Run(() => BinData(outbead.violetssc, ref VioletSscData));
-      Task bin3 = Task.Run(() => BinData(outbead.redssc, ref RedSscData));
-      Task bin4 = Task.Run(() => BinData(outbead.greenssc, ref GreenSscData));
-      Task bin5 = Task.Run(() => BinData(outbead.reporter, ref Rp1Data));
-      Task.WaitAll(bin1, bin2, bin3, bin4, bin5);
-      try
-      {
-        if ((DataPoint.xyclx > 1) && (DataPoint.xycly > 1))
-        {
-          lock (ClData)
-          {
-            ClData.Enqueue(DataPoint);  //save data for graphing 
-          }
-        }
-      }
-      finally { }
-    }
-
     private void GetCommandFromBuffer()
     {
       CommandStruct newcmd;
@@ -843,8 +784,11 @@ namespace MicroCy
     private bool GetBeadFromBuffer(byte[] buffer,byte shift, out BeadInfoStruct outbead)
     {
       outbead = BeadArrayToStruct<BeadInfoStruct>(buffer, shift);
-      if (outbead.Header != 0xadbeadbe)
-        return false;
+      return outbead.Header == 0xadbeadbe ? true : false;
+    }
+
+    private void CalculateBeadParams(ref BeadInfoStruct outbead)
+    {
       //greenMaj is the hi dyn range channel, greenMin is the high sensitivity channel(depends on filter placement)
       if (ChannelBIsHiSensitivity)
       {
@@ -863,7 +807,6 @@ namespace MicroCy
       outbead.region = ClassifyBeadToRegion(cl);
       //handle HI dnr channel
       outbead.reporter = _greenMaj > HdnrTrans ? _greenMaj * HDnrCoef : _greenMin;
-      return true;
     }
 
     private ushort ClassifyBeadToRegion(float[] cl)
@@ -902,43 +845,6 @@ namespace MicroCy
     public byte[,] GetStaticMap()
     {
       return _classificationMap;
-    }
-
-    public void ClearGraphingArrays()
-    {
-      Array.Clear(ForwardSscData, 0, 256);
-      Array.Clear(VioletSscData, 0, 256);
-      Array.Clear(RedSscData, 0, 256);
-      Array.Clear(GreenSscData, 0, 256);
-      Array.Clear(Rp1Data, 0, 256);
-    }
-    private static double[] GenerateLogSpace(int min, int max, int logBins)
-    {
-      double logarithmicBase = 10;
-      double logMin = Math.Log10(min);
-      double logMax = Math.Log10(max);
-      double delta = (logMax - logMin) / logBins;
-      double accDelta = 0;
-      double[] Result = new double[logBins + 1];
-      for (int i = 0; i <= logBins; ++i)
-      {
-        Result[i] = Math.Pow(logarithmicBase, logMin + accDelta);
-        accDelta += delta;
-      }
-      return Result;
-    }
-
-    private void BinData(float data, ref int[] array)
-    {
-      data = data < 1000000 ? data : 1000000; //owerflow protection
-      for (var i = 0; i < _histogramBins.Length; i++)
-      {
-        if (data <= _histogramBins[i])
-        {
-          array[i]++;
-          break;
-        }
-      }
     }
 
     private void AddToPlateReport(in OutResults outRes)

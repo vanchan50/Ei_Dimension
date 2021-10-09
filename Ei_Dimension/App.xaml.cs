@@ -1451,17 +1451,9 @@ namespace Ei_Dimension
             //    break;
             case 0xfd:
               Device.EndState = 1; //start the end of well state machine
-              if (Device.WellsToRead > 0)
-              {
-                Device.ClearGraphingArrays();
-              }
               break;
             case 0xfe:
               Device.EndState = 1;
-              if (Device.WellsToRead > 0)
-              {
-                Device.ClearGraphingArrays();
-              }
               break;
           }
         }
@@ -1551,10 +1543,6 @@ namespace Ei_Dimension
               //  pltNumbertb.Text = "";
               Device.MainCommand("Set Property", code: 0x19);  //bubble detect off
             }
-            else
-            {
-              Device.ClearGraphingArrays();
-            }
             Console.WriteLine(string.Format("{0} Reporting End of current well", DateTime.Now.ToString()));
             break;
           }
@@ -1606,28 +1594,16 @@ namespace Ei_Dimension
 
     private static void HistogramHandler()
     {
-      while (Device.ClData.Count != 0)
-      {
-        lock (Device.ClData)
-        {
-          CLQueue cldp = Device.ClData.Dequeue();
-          //  chart2.Series["CL1CL2"].Points.AddXY(cldp.xyclx, cldp.xycly);
-        }
-      }
-
       if (!_histogramUpdateGoing)
       {
-        var ResVM = ResultsViewModel.Instance;
         _histogramUpdateGoing = true;
         _ = Current.Dispatcher.BeginInvoke((Action)(() =>
         {
-          for (var i = 0; i < ResVM.ForwardSsc.Count; i++)
+          BeadInfoStruct bead;
+          while (Device.DataOut.TryDequeue(out bead))
           {
-            ResVM.ForwardSsc[i].Value = Device.ForwardSscData[i];
-            ResVM.VioletSsc[i].Value = Device.VioletSscData[i];
-            ResVM.RedSsc[i].Value = Device.RedSscData[i];
-            ResVM.GreenSsc[i].Value = Device.GreenSscData[i];
-            ResVM.Reporter[i].Value = Device.Rp1Data[i];
+            BinData(bead);
+            ResultsViewModel.Instance.Map.Add(new Models.HeatMapData((int)bead.cl1, (int)bead.cl2));
           }
           _histogramUpdateGoing = false;
         }));
@@ -1662,5 +1638,53 @@ namespace Ei_Dimension
         Device.MainCommand("Get FProperty", code: 0x22);
     }
 
+    private static void BinData(BeadInfoStruct bead)
+    {
+      var ResVM = ResultsViewModel.Instance;
+      float MaxValue = (float)ResVM.Reporter[ResVM.Reporter.Count].Argument;
+      //overflow protection
+      bead.fsc = bead.fsc < MaxValue ? bead.fsc : MaxValue;
+      bead.violetssc = bead.violetssc < MaxValue ? bead.violetssc : MaxValue;
+      bead.redssc = bead.redssc < MaxValue ? bead.redssc : MaxValue;
+      bead.greenssc = bead.greenssc < MaxValue ? bead.greenssc : MaxValue;
+      bead.reporter = bead.reporter < MaxValue ? bead.reporter : MaxValue;
+
+      bool fscDone = false;
+      bool violetDone = false;
+      bool redDone = false;
+      bool greenDone = false;
+      bool reporterDone = false;
+      for (var i = 0; i < ResVM.Reporter.Count; i++)
+      {
+        float currentValue = (float)ResVM.Reporter[i].Argument;
+        if (!fscDone && bead.fsc <= currentValue)
+        {
+          ResVM.ForwardSsc[i].Value++;
+          fscDone = true;
+        }
+        if (!violetDone && bead.violetssc <= currentValue)
+        {
+          ResVM.VioletSsc[i].Value++;
+          violetDone = true;
+        }
+        if (!redDone && bead.redssc <= currentValue)
+        {
+          ResVM.RedSsc[i].Value++;
+          redDone = true;
+        }
+        if (!greenDone && bead.greenssc <= currentValue)
+        {
+          ResVM.GreenSsc[i].Value++;
+          greenDone = true;
+        }
+        if (!reporterDone && bead.reporter <= currentValue)
+        {
+          ResVM.Reporter[i].Value++;
+          reporterDone = true;
+        }
+        if (fscDone && violetDone && redDone && greenDone && reporterDone)
+          break;
+      }
+    }
   }
 }

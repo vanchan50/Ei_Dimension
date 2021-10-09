@@ -160,7 +160,8 @@
               </dxc:Range>
             </dxc:AxisY2D.WholeRange>
             <dxc:AxisY2D.Title>
-              <dxc:AxisTitle Content="{Binding HeatmapAxisYTitle}" Visible="False"/>
+              <dxc:AxisTitle Content="{Binding HeatmapAxisYTitle}"
+                             Visible="False"/>
             </dxc:AxisY2D.Title>
             <dxc:AxisY2D.VisualRange>
               <dxc:Range dxc:AxisY2D.AlwaysShowZeroLevel="False">
@@ -182,7 +183,8 @@
               <dxc:AxisRange SideMarginsEnabled="False"/>
             </dxc:AxisX2D.Range>
             <dxc:AxisX2D.Title>
-              <dxc:AxisTitle Content="{Binding HeatmapAxisXTitle}"  Visible="False"/>
+              <dxc:AxisTitle Content="{Binding HeatmapAxisXTitle}"
+                             Visible="False"/>
             </dxc:AxisX2D.Title>
           </dxc:AxisX2D>
         </dxc:XYDiagram2D.AxisX>
@@ -201,7 +203,7 @@
                            ValueDataMember="Y"
                            MarkerSize="3"
                            Brush="Orange"/>
-        <dxc:PointSeries2D DataSource="{Binding HeatLevel4}"
+        <dxc:PointSeries2D DataSource="{Binding Map}"
                            ArgumentDataMember="X"
                            ValueDataMember="Y"
                            MarkerSize="3"

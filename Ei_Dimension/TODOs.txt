@@ -60,3 +60,7 @@ all incoming data is sorted to bins in updater.
 
 so:
 get raw data from microcy. bin it. put to respective containers
+
+NewClData() -> enqueue outbead
+
+resultsVM has obscollections of obsobjects. can ez be translated to arrays[obsobjects], so obscollection not neeeded?

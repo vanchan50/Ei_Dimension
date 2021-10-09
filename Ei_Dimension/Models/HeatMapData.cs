@@ -4,10 +4,27 @@ namespace Ei_Dimension.Models
 {
   public class HeatMapData : ObservableObject
   {
-    public int X { get; set; }
-    public int Y { get; set; }
+    public int X {
+      get => _x;
+      set
+      {
+        _x = value;
+        OnPropertyChanged();
+      }
+    }
+    public int Y
+    {
+      get => _y;
+      set
+      {
+        _y = value;
+        OnPropertyChanged();
+      }
+    }
     public byte IntensityX { get; set; }
     public byte IntensityY { get; set; }
+    private int _x;
+    private int _y;
     public HeatMapData(int x, int y)
     {
       X = x;
