@@ -1641,7 +1641,7 @@ namespace Ei_Dimension
     private static void BinData(BeadInfoStruct bead)
     {
       var ResVM = ResultsViewModel.Instance;
-      float MaxValue = (float)ResVM.Reporter[ResVM.Reporter.Count].Argument;
+      float MaxValue = (float)ResVM.Reporter[ResVM.Reporter.Count - 1].Argument;
       //overflow protection
       bead.fsc = bead.fsc < MaxValue ? bead.fsc : MaxValue;
       bead.violetssc = bead.violetssc < MaxValue ? bead.violetssc : MaxValue;
