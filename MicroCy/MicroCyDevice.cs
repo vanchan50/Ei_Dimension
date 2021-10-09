@@ -48,7 +48,7 @@ namespace MicroCy
     public List<Wells> WellsInOrder { get; set; } = new List<Wells>();
     public List<CustomMap> MapList { get; private set; } = new List<CustomMap>();
     public List<Gstats> GStats { get; set; } = new List<Gstats>(10);
-    public Dictionary<int, (uint, float)> ActiveRegionStats { get; } = new Dictionary<int, (uint, float)>();
+    public List<WellResults> WellResults { get; } = new List<WellResults>();
     public float HDnrCoef { get; set; }
     public float MapPeakX { get; set; }
     public float MapPeakY { get; set; }
@@ -119,7 +119,6 @@ namespace MicroCy
     private string _mapsFileName;
     private StringBuilder _summaryout = new StringBuilder();
     private StringBuilder _dataout = new StringBuilder();
-    private List<WellResults> _wellResults = new List<WellResults>();
     private readonly ISerial _usbConnection;
     private readonly Dictionary<string, CommandStruct> MainCmdTemplatesDict = new Dictionary<string, CommandStruct>()
     {
@@ -326,20 +325,19 @@ namespace MicroCy
       if (RMeans)
       {
         ClearSummary();
-        if (PlateReport != null)
+        if (PlateReport != null && WellsInOrder.Count != 0)
           PlateReport.rpWells.Add(new WellReport {
             prow = WellsInOrder[SavingWellIdx].rowIdx,
             pcol = WellsInOrder[SavingWellIdx].colIdx
           });
         char[] alphabet = Enumerable.Range('A', 16).Select(x => (char)x).ToArray();
-        for (var i = 0; i < _wellResults.Count; i++)
+        for (var i = 0; i < WellResults.Count; i++)
         {
-          WellResults regionNumber = _wellResults[i];
+          WellResults regionNumber = WellResults[i];
           SavingWellIdx = SavingWellIdx > WellsInOrder.Count - 1 ? WellsInOrder.Count - 1 : SavingWellIdx;
           OutResults rout = FillOutResults(regionNumber, in alphabet);
           _ = _summaryout.Append(rout.ToString());
           AddToPlateReport(in rout);
-          FillActiveRegionsStats(in rout);
         }
         OutputSummaryFiles();
       }
@@ -361,17 +359,17 @@ namespace MicroCy
       MinPerRegion = WellsInOrder[index].regTermCnt;
       TerminationType = WellsInOrder[index].termType;
       ConstructClassificationMap(ActiveMap);
-      _wellResults.Clear();
+      WellResults.Clear();
       foreach (BeadRegion mapRegions in WellsInOrder[index].thisWellsMap.mapRegions)
       {
         bool isInMap = ActiveMap.mapRegions.Any(x => mapRegions.regionNumber == x.regionNumber);
         if (!isInMap)
           Console.WriteLine(string.Format("{0} No Map for Work Order region {1}", DateTime.Now.ToString(),mapRegions.regionNumber));
         if (mapRegions.isActive && isInMap)
-          _wellResults.Add(new WellResults { regionNumber = mapRegions.regionNumber });
+          WellResults.Add(new WellResults { regionNumber = mapRegions.regionNumber });
       }
       if (Reg0stats)
-        _wellResults.Add(new WellResults { regionNumber = 0 });
+        WellResults.Add(new WellResults { regionNumber = 0 });
     }
 
     private void ReplyFromMC(IAsyncResult result)
@@ -714,7 +712,7 @@ namespace MicroCy
           if (_chkRegionCount)  //a region made it, are there more that haven't
           {
             EndState = 1;   //assume all region have enough beads
-            foreach (WellResults region in _wellResults)
+            foreach (WellResults region in WellResults)
             {
               if (region.RP1vals.Count() < MinPerRegion)
               {
@@ -830,15 +828,15 @@ namespace MicroCy
 
     private void FillActiveWellResults(in BeadInfoStruct outbead)
     {
-      //_wellResults is a list of region numbers that are active
+      //WellResults is a list of region numbers that are active
       //each entry has a list of rp1 values from each bead in that reagion
       ushort region = outbead.region;
-      int index = _wellResults.FindIndex(w => w.regionNumber == region);
+      int index = WellResults.FindIndex(w => w.regionNumber == region);
       if (index >= 0)
       {
-        _wellResults[index].RP1vals.Add(outbead.reporter);
-        _wellResults[index].RP1bgnd.Add(outbead.greenC_bg);
-        _chkRegionCount = _wellResults[index].RP1vals.Count == MinPerRegion;  //see if assay is done via sufficient beads in each region
+        WellResults[index].RP1vals.Add(outbead.reporter);
+        WellResults[index].RP1bgnd.Add(outbead.greenC_bg);
+        _chkRegionCount = WellResults[index].RP1vals.Count == MinPerRegion;  //see if assay is done via sufficient beads in each region
       }
     }
 
@@ -857,15 +855,6 @@ namespace MicroCy
         meanfi = outRes.meanfi,
         coefVar = outRes.cv
       });
-    }
-
-    private void FillActiveRegionsStats(in OutResults outRes)
-    {
-      if (ActiveRegionStats.ContainsKey(outRes.region))
-      {
-        ActiveRegionStats[outRes.region] = (ActiveRegionStats[outRes.region].Item1 + (uint)outRes.count,
-          ActiveRegionStats[outRes.region].Item2 + outRes.meanfi);
-      }
     }
 
     public void ClearSummary()
@@ -947,16 +936,6 @@ namespace MicroCy
           mfi = mean,
           cv = gcv
         });
-      }
-    }
-
-    public void SetupActiveRegions(List<bool> activeRegions)
-    {
-      ActiveRegionStats.Clear();
-      for (var i = 0; i < activeRegions.Count; i++)
-      {
-        if(activeRegions[i])
-          ActiveRegionStats.Add(i, (0,0f));
       }
     }
   }

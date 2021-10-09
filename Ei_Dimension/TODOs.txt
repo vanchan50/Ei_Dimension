@@ -41,15 +41,7 @@ Can I make windows dialog windows bigger and bigger fonts?
 
 Switch language should account for selected settings in device. like for ChannelsVM
 
-NewClData() acts as graph data storage
-
-I can leave the CLdata mechanism, with minor adjustments. it should keep all the data, disregarding the selectors. what is it ~10Mb max?
-
-GenerateLogSpace exists in two projects
-
 Everthing regarging activeregions should be a separate class kept in App.
-
-binning should not be done inside MicroCy; It should return RawData, and application can do whatever. especially in case of an API
 
 Devexpress dxb:PopupMenu can be used for numpad near textbox
 
@@ -61,6 +53,9 @@ all incoming data is sorted to bins in updater.
 so:
 get raw data from microcy. bin it. put to respective containers
 
-NewClData() -> enqueue outbead
-
 resultsVM has obscollections of obsobjects. can ez be translated to arrays[obsobjects], so obscollection not neeeded?
+
+results page table should display mean and current stats for the current well being read or
+
+wellresults[i].RP1vals.Count(); - count
+wellresults[i].RP1vals.Average(); - mean

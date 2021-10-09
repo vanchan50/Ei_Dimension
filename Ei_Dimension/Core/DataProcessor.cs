@@ -331,7 +331,7 @@ namespace Ei_Dimension.Core
       double[] Result = new double[logBins];
       for (int i = 1; i <= logBins; ++i)
       {
-        Result[i -1] = Math.Pow(logarithmicBase, logMin + accDelta);
+        Result[i - 1] = Math.Pow(logarithmicBase, logMin + accDelta);
         accDelta += delta;
       }
       return Result;

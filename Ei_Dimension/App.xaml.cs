@@ -7,6 +7,7 @@ using System.Windows;
 using Ei_Dimension.ViewModels;
 using MicroCy;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace Ei_Dimension
 {
@@ -1617,10 +1618,13 @@ namespace Ei_Dimension
         _ActiveRegionsUpdateGoing = true;
         _ = Current.Dispatcher.BeginInvoke((Action)(() =>
         {
-          foreach (var region in Device.ActiveRegionStats)
+          foreach (var result in Device.WellResults)
           {
-            ResultsViewModel.Instance.ActiveRegionsCount[region.Key] = region.Value.Item1.ToString();
-            ResultsViewModel.Instance.ActiveRegionsMean[region.Key] = region.Value.Item2.ToString();
+            var index = DashboardViewModel.Instance.RegionsList.IndexOf(result.regionNumber.ToString());
+            if (index == -1)
+              continue;
+            ResultsViewModel.Instance.ActiveRegionsCount[index] = result.RP1vals.Count().ToString();
+            ResultsViewModel.Instance.ActiveRegionsMean[index] = result.RP1vals.Average().ToString();
           }
           _ActiveRegionsUpdateGoing = false;
         }));
