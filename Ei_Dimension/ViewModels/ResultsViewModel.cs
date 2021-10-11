@@ -20,8 +20,6 @@ namespace Ei_Dimension.ViewModels
     public virtual ObservableCollection<HistogramData<int, double>> CL2 { get; set; }
     public virtual ObservableCollection<HistogramData<int, double>> CL3 { get; set; }
     public virtual ObservableCollection<HeatMapData> Map { get; set; }
-    public virtual ObservableCollection<string> ActiveRegionsCount { get; set; }
-    public virtual ObservableCollection<string> ActiveRegionsMean { get; set; }
     public static ResultsViewModel Instance { get; private set; }
 
     protected ResultsViewModel()
@@ -52,9 +50,6 @@ namespace Ei_Dimension.ViewModels
       }
 
       Map = new ObservableCollection<HeatMapData>();
-
-      ActiveRegionsCount = new ObservableCollection<string>();
-      ActiveRegionsMean = new ObservableCollection<string>();
     }
 
     public static ResultsViewModel Create()

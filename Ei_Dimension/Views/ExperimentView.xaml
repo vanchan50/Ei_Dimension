@@ -15,9 +15,7 @@
              DataContext="{dxmvvm:ViewModelSource Type={x:Type ViewModels:ExperimentViewModel}}"
              d:DesignHeight="944" d:DesignWidth="1920">
   <dxmvvm:Interaction.Triggers>
-    <dxmvvm:EventToCommand EventName="Initialized" Command="{Binding NavigateWellsSelectCommand}" CommandParameter="96"/>
-    <dxmvvm:EventToCommand EventName="Initialized" Command="{Binding NavigateDashboardCommand}"/>
-    <dxmvvm:EventToCommand EventName="Initialized" Command="{Binding NavigateFileSaveCommand}"/>
+    <dxmvvm:EventToCommand EventName="Initialized" Command="{Binding InitChildrenCommand}"/>
   </dxmvvm:Interaction.Triggers>
   <dxmvvm:Interaction.Behaviors>
     <dxmvvm:OpenFileDialogService/>
@@ -51,6 +49,12 @@
                    img:EmbeddedImg.Image="/Icons/motors icon.png"
                    Style="{DynamicResource SubRibbonButtonStyle}"
                    Command="{Binding NavigateDashboardCommand}"/>
+      <RadioButton Content="{lang:Loc Experiment_Sel_Active_Region}"
+                   GroupName="SelectWellGroup"
+                   Height="84"
+                   img:EmbeddedImg.Image="/Icons/components icon.png"
+                   Style="{DynamicResource SubRibbonButtonStyle}"
+                   Command="{Binding NavigateSelRegionsCommand}"/>
       <Button Content="{lang:Loc Experiment_Load_Template}"
                    Height="84"
                    img:EmbeddedImg.Image="{dx:DXImage 'SvgImages/Export/Export.svg'}"

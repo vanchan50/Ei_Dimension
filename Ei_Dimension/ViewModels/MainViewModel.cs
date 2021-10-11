@@ -88,5 +88,13 @@ namespace Ei_Dimension.ViewModels
       App.HideNumpad();
       NavigationService.Navigate("StaticMapView", null, this);
     }
+    public void InitChildren()
+    {
+      NavigateExperiment();
+      NavigateResults();
+      NavigateDataAnalysis();
+      NavigateMaintenance();
+      NavigateSettings();
+    }
   }
 }

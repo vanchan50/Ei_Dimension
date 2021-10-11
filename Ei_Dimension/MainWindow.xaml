@@ -29,10 +29,7 @@
     DataContext="{dxmvvm:ViewModelSource Type=ViewModels:MainViewModel}">
   <!--make window topmost, maximized-->
   <dxmvvm:Interaction.Triggers>
-    <dxmvvm:EventToCommand EventName="Initialized" Command="{Binding NavigateResultsCommand}"/>
-    <dxmvvm:EventToCommand EventName="Initialized" Command="{Binding NavigateDataAnalysisCommand}"/>
-    <dxmvvm:EventToCommand EventName="Initialized" Command="{Binding NavigateMaintenanceCommand}"/>
-    <dxmvvm:EventToCommand EventName="Initialized" Command="{Binding NavigateSettingsCommand}"/>
+    <dxmvvm:EventToCommand EventName="Initialized" Command="{Binding InitChildrenCommand}"/>
   </dxmvvm:Interaction.Triggers>
   <Grid>
     <!-- Company Logo Right-->

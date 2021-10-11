@@ -125,6 +125,7 @@
     <Compile Include="Models\DropdownStrings.cs" />
     <Compile Include="Models\HeatMapData.cs" />
     <Compile Include="Models\HistogramData.cs" />
+    <Compile Include="Models\MapRegions.cs" />
     <Compile Include="Models\ResultFile.cs" />
     <Compile Include="Models\WellTableRow.cs" />
     <Compile Include="Models\WellType.cs" />
@@ -149,6 +150,7 @@
     <Compile Include="ViewModels\MotorsViewModel.cs" />
     <Compile Include="ViewModels\NumpadViewModel.cs" />
     <Compile Include="ViewModels\ResultsViewModel.cs" />
+    <Compile Include="ViewModels\SelRegionsViewModel.cs" />
     <Compile Include="Views\ResultsView.xaml.cs">
       <DependentUpon>ResultsView.xaml</DependentUpon>
     </Compile>
@@ -190,6 +192,9 @@
     </Compile>
     <Compile Include="Views\NumpadView.xaml.cs">
       <DependentUpon>NumpadView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SelRegionsView.xaml.cs">
+      <DependentUpon>SelRegionsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ServiceView.xaml.cs">
       <DependentUpon>ServiceView.xaml</DependentUpon>
@@ -321,6 +326,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\NumpadView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SelRegionsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -53,6 +53,13 @@ namespace Ei_Dimension.ViewModels
       NavigationService.Navigate("DashboardView", null, this);
     }
 
+    public void NavigateSelRegions()
+    {
+      App.ResetFocusedTextbox();
+      App.HideNumpad();
+      NavigationService.Navigate("SelRegionsView", null, this);
+    }
+
     public void NavigateFileSave()
     {
       App.ResetFocusedTextbox();
@@ -174,6 +181,13 @@ namespace Ei_Dimension.ViewModels
         }
         catch { }
       }
+    }
+    public void InitChildren()
+    {
+      NavigateWellsSelect(96);
+      NavigateDashboard();
+      NavigateFileSave();
+      NavigateSelRegions();
     }
   }
 }

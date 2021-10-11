@@ -16,6 +16,8 @@ namespace Ei_Dimension
     public static (PropertyInfo prop, object VM) NumpadShow { get; set; }
     public static (PropertyInfo prop, object VM, int index) SelectedTextBox { get; set; }
     public static MicroCyDevice Device { get; private set; }
+    public static Models.MapRegions MapRegions { get; set; }  //Performs operations on injected views
+
     private static DispatcherTimer _dispatcherTimer;
     private static bool _workOrderPending;
     private static bool _cancelKeyboardInjectionFlag;
@@ -925,6 +927,13 @@ namespace Ei_Dimension
 
     private static void TimerTick(object sender, EventArgs e)
     {
+      if(MapRegions == null)
+        MapRegions = new Models.MapRegions(
+          Views.SelRegionsView.Instance.RegionsBorder,
+          Views.SelRegionsView.Instance.RegionsNamesBorder,
+          Views.ResultsView.Instance.Table,
+          Views.DashboardView.Instance.DbActiveRegionNo,
+          Views.DashboardView.Instance.DbActiveRegionName);
       TextBoxUpdater();
       HistogramHandler();
       ActiveRegionsStatsHandler();
@@ -1620,11 +1629,11 @@ namespace Ei_Dimension
         {
           foreach (var result in Device.WellResults)
           {
-            var index = DashboardViewModel.Instance.RegionsList.IndexOf(result.regionNumber.ToString());
+            var index = MapRegions.RegionsList.IndexOf(result.regionNumber.ToString());
             if (index == -1)
               continue;
-            ResultsViewModel.Instance.ActiveRegionsCount[index] = result.RP1vals.Count().ToString();
-            ResultsViewModel.Instance.ActiveRegionsMean[index] = result.RP1vals.Average().ToString();
+            MapRegions.ActiveRegionsCount[index] = result.RP1vals.Count().ToString();
+            MapRegions.ActiveRegionsMean[index] = result.RP1vals.Average().ToString();
           }
           _ActiveRegionsUpdateGoing = false;
         }));

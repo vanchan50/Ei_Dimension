@@ -485,11 +485,14 @@ Speed</value>
     <value>Valve Right</value>
   </data>
   <data name="Experiment_Active_Regions" xml:space="preserve">
-    <value>Regions</value>
+    <value>Active Regions</value>
   </data>
   <data name="Experiment_Agitate_Vol" xml:space="preserve">
     <value>Agitate
 Volume</value>
+  </data>
+  <data name="Experiment_Available_Regions" xml:space="preserve">
+    <value>Available Regions</value>
   </data>
   <data name="Experiment_Ch_Config" xml:space="preserve">
     <value>Channel Configuration</value>
@@ -555,6 +558,10 @@ Template</value>
   </data>
   <data name="Experiment_Select_Wells" xml:space="preserve">
     <value>Select Wells</value>
+  </data>
+  <data name="Experiment_Sel_Active_Region" xml:space="preserve">
+    <value>Select Active
+ Regions</value>
   </data>
   <data name="Experiment_Speed" xml:space="preserve">
     <value>Speed</value>

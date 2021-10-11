@@ -12,9 +12,6 @@
              mc:Ignorable="d"
              DataContext="{dxmvvm:ViewModelSource Type={x:Type ViewModels:DashboardViewModel}}"
              d:DesignHeight="944" d:DesignWidth="1632">
-  <dxmvvm:Interaction.Triggers>
-    <dxmvvm:EventToCommand EventName="Loaded" Command="{Binding FillRegionsCommand}" CommandParameter="true"/>
-  </dxmvvm:Interaction.Triggers>
   <Grid>
 
     <!--System Monitor-->
@@ -101,53 +98,31 @@
         <Border Height="45" Width="633"
                 HorizontalAlignment="Left">
           <Grid>
-            <Grid.ColumnDefinitions>
-              <ColumnDefinition Width="358*"/>
-              <ColumnDefinition Width="275*"/>
-            </Grid.ColumnDefinitions>
-            <TextBlock Text="{lang:Loc Dashboard_Inactive_Region}"
+            <TextBlock Text="      №"
                        FontSize="30"
                        Width="140"
                        HorizontalAlignment="Left"/>
-            <TextBlock Text="{lang:Loc Dashboard_Active_Region}"
+            <TextBlock Text="{lang:Loc Name}"
+                       Width="490"
                        FontSize="30"
-                       Width="120"
                        Margin="140,0,0,0"
                        HorizontalAlignment="Left"/>
-            <TextBlock Text="{lang:Loc Name}"
-                       Width="370"
-                       FontSize="30"
-                       Margin="260,0,0,0"
-                       HorizontalAlignment="Left" Grid.ColumnSpan="2"/>
           </Grid>
         </Border>
         <ScrollViewer Width="650" Height="699"
-                      VerticalScrollBarVisibility="Auto">
+                      VerticalScrollBarVisibility="Visible">
           <Border Background="{StaticResource RibbonBackgroundActive}">
             <StackPanel Orientation="Horizontal">
-              <StackPanel Name="RegionsBorder"
-                          Width="270"
+              <StackPanel Name="DbActiveRegionNo"
+                          Width="140"
                           HorizontalAlignment="Left"/>
-              <StackPanel Name="RegionsNamesBorder"
+              <StackPanel Name="DbActiveRegionName"
                           HorizontalAlignment="Left"
-                          Width="353">
+                          Width="483">
               </StackPanel>
             </StackPanel>
           </Border>
         </ScrollViewer>
-        <StackPanel Orientation="Horizontal"
-                    HorizontalAlignment="Left"
-                    Width="270" Height="60"
-                    Margin="0,4,0,0">
-          <Button Width="100" Height="60"
-                  Margin="20,0,0,0"
-                  Style="{StaticResource LeftArrowButtonThemeStyle}"
-                  Command="{Binding AddActiveRegionCommand}" CommandParameter="0"/>
-          <Button Width="100" Height="60"
-                  Margin="30,0,0,0"
-                  Style="{StaticResource RightArrowButtonThemeStyle}"
-                  Command="{Binding AddActiveRegionCommand}" CommandParameter="1"/>
-        </StackPanel>
       </StackPanel>
     </Border>
 

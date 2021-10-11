@@ -877,6 +877,15 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Available Regions.
+        /// </summary>
+        public static string Experiment_Available_Regions {
+            get {
+                return ResourceManager.GetString("Experiment_Available_Regions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Channel Configuration.
         /// </summary>
         public static string Experiment_Ch_Config {
@@ -1041,6 +1050,16 @@ namespace Ei_Dimension.Language {
         public static string Experiment_Save_Template_Dialog_Title {
             get {
                 return ResourceManager.GetString("Experiment_Save_Template_Dialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select Active
+        /// Regions.
+        /// </summary>
+        public static string Experiment_Sel_Active_Region {
+            get {
+                return ResourceManager.GetString("Experiment_Sel_Active_Region", resourceCulture);
             }
         }
         

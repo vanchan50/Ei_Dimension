@@ -16,8 +16,7 @@
              DataContext="{dxmvvm:ViewModelSource Type={x:Type ViewModels:MaintenanceViewModel}}"
              d:DesignHeight="944" d:DesignWidth="1920">
   <dxmvvm:Interaction.Triggers>
-    <dxmvvm:EventToCommand EventName="Initialized" Command="{Binding NavigateCalibrationCommand}"/>
-    <dxmvvm:EventToCommand EventName="Initialized" Command="{Binding NavigateChannelsCommand}"/>
+    <dxmvvm:EventToCommand EventName="Initialized" Command="{Binding InitChildrenCommand}"/>
   </dxmvvm:Interaction.Triggers>
   <Grid>
     <Grid.ColumnDefinitions>

@@ -393,6 +393,9 @@ Coefficient</value>
   <data name="Experiment_Agitate_Vol" xml:space="preserve">
     <value>Agitate Vol</value>
   </data>
+  <data name="Experiment_Available_Regions" xml:space="preserve">
+    <value>Available Regions</value>
+  </data>
   <data name="Experiment_Ch_Config" xml:space="preserve">
     <value>Channel Configuration</value>
   </data>
@@ -455,6 +458,10 @@ Region</value>
   </data>
   <data name="Experiment_Select_Wells" xml:space="preserve">
     <value>Select Wells</value>
+  </data>
+  <data name="Experiment_Sel_Active_Region" xml:space="preserve">
+    <value>Select Active
+ Regions</value>
   </data>
   <data name="Experiment_Speed" xml:space="preserve">
     <value>Speed</value>

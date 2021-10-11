@@ -8,7 +8,6 @@ using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Threading.Tasks;
-using System.Reflection;
 
 namespace Ei_Dimension.ViewModels
 {
@@ -35,11 +34,6 @@ namespace Ei_Dimension.ViewModels
     public double MaxPressure { get; set; }
     public double MinPressure { get; set; }
     public virtual ObservableCollection<string> ActiveList { get; set; }
-    public virtual ObservableCollection<string> RegionsList { get; set; }
-    public virtual ObservableCollection<string> RegionsNamesList { get; set; }
-    public List<bool> ActiveRegions { get; set; }
-    public int? SelectedRegionTextboxIndex { get; set; }
-
     public static DashboardViewModel Instance { get; private set; }
 
     public byte SelectedSystemControlIndex { get; set; }
@@ -48,8 +42,6 @@ namespace Ei_Dimension.ViewModels
     public byte SelectedOrderIndex { get; set; }
     public byte SelectedEndReadIndex { get; set; }
     public virtual ObservableCollection<Visibility> EndReadVisibility { get; set; }
-
-    private bool _firstLoadflag;
 
     protected DashboardViewModel()
     {
@@ -135,11 +127,6 @@ namespace Ei_Dimension.ViewModels
       PressureMonToggleButtonState = false;
       PressureMon = new ObservableCollection<string> {"","",""};
       ActiveList = new ObservableCollection<string>();
-      RegionsList = new ObservableCollection<string>();
-      RegionsNamesList = new ObservableCollection<string>();
-      SelectedRegionTextboxIndex = null;
-      ActiveRegions = new List<bool>();
-      _firstLoadflag = false;
       Instance = this;
     }
 
@@ -332,49 +319,6 @@ namespace Ei_Dimension.ViewModels
 
     }
 
-    public void FillRegions(bool loadByPage = false)
-    {
-      if (_firstLoadflag && loadByPage)
-        return;
-      _firstLoadflag = true;
-      Views.ResultsView.Instance.ClearTable();
-      Views.DashboardView.Instance.ClearTextBoxes();
-      RegionsList.Clear();
-      RegionsNamesList.Clear();
-      ActiveRegions.Clear();
-      ResultsViewModel.Instance.ActiveRegionsCount.Clear();
-      ResultsViewModel.Instance.ActiveRegionsMean.Clear();
-      var i = 0;
-      foreach (var region in App.Device.ActiveMap.mapRegions)
-      {
-        RegionsList.Add(region.regionNumber.ToString());
-        RegionsNamesList.Add("");
-        ActiveRegions.Add(false);
-        ResultsViewModel.Instance.ActiveRegionsCount.Add("");
-        ResultsViewModel.Instance.ActiveRegionsMean.Add("");
-        Views.DashboardView.Instance.AddTextboxes($"RegionsList[{i}]", $"RegionsNamesList[{i}]");
-        i++;
-      }
-    }
-
-    public void AddActiveRegion(byte num)
-    {
-      if (SelectedRegionTextboxIndex != null)
-      {
-        if (num == 1 && !ActiveRegions[(int)SelectedRegionTextboxIndex])
-        {
-          Views.DashboardView.Instance.ShiftTextBox(true);
-          ActiveRegions[(int)SelectedRegionTextboxIndex] = true;
-        }
-        else if(num == 0 && ActiveRegions[(int)SelectedRegionTextboxIndex])
-        {
-          ActiveRegions[(int)SelectedRegionTextboxIndex] = false;
-          Views.DashboardView.Instance.ShiftTextBox(false);
-        }
-        SelectedRegionTextboxIndex = null;
-      }
-    }
-
     private void EndReadVisibilitySwitch()
     {
       switch (SelectedEndReadIndex)
@@ -432,7 +376,7 @@ namespace Ei_Dimension.ViewModels
             _vm.SelectedClassiMapContent = Content;
             App.SetActiveMap(Content);
             App.Device.MainCommand("Set Property", code: 0xa9, parameter: (ushort)Index);
-            _vm.FillRegions();
+            App.MapRegions.FillRegions();
             break;
           case 3:
             _vm.SelectedChConfigContent = Content;
@@ -478,7 +422,7 @@ namespace Ei_Dimension.ViewModels
             break;
           case 2:
             _vm.SelectedClassiMapContent = Content;
-            _vm.FillRegions();
+            App.MapRegions.FillRegions();
             break;
           case 3:
             _vm.SelectedChConfigContent = Content;

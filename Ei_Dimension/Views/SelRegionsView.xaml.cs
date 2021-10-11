@@ -15,12 +15,12 @@ using System.Windows.Shapes;
 namespace Ei_Dimension.Views
 {
   /// <summary>
-  /// Interaction logic for ResultsView.xaml
+  /// Interaction logic for SelRegionsView.xaml
   /// </summary>
-  public partial class ResultsView : UserControl
+  public partial class SelRegionsView : UserControl
   {
-    public static ResultsView Instance;
-    public ResultsView()
+    public static SelRegionsView Instance { get; private set; }
+    public SelRegionsView()
     {
       InitializeComponent();
       Instance = this;
