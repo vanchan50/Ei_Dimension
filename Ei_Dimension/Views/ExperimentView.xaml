@@ -72,9 +72,6 @@
         <RadioButton.Style>
           <Style TargetType="RadioButton">
             <Style.Triggers>
-              <DataTrigger Binding="{Binding ElementName=DbTube, Path=IsChecked}" Value="True">
-                <Setter Property="IsChecked" Value="True"/>
-              </DataTrigger>
               <DataTrigger Binding="{Binding ElementName=DbWell96, Path=IsChecked}" Value="True">
                 <Setter Property="IsChecked" Value="True"/>
               </DataTrigger>
