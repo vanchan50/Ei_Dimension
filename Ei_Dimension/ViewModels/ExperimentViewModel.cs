@@ -72,7 +72,8 @@ namespace Ei_Dimension.ViewModels
     {
       App.ResetFocusedTextbox();
       App.HideNumpad();
-      NavigationService.Navigate("WellsSelectView", null, this);
+      if(num != 1)
+        NavigationService.Navigate("WellsSelectView", null, this);
       if (WellsSelectViewModel.Instance != null)
         WellsSelectViewModel.Instance.ChangeWellTableSize(num);
     }
