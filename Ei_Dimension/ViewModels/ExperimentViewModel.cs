@@ -74,6 +74,8 @@ namespace Ei_Dimension.ViewModels
       App.HideNumpad();
       if(num != 1)
         NavigationService.Navigate("WellsSelectView", null, this);
+      else
+        NavigationService.Navigate("DashboardView", null, this);
       if (WellsSelectViewModel.Instance != null)
         WellsSelectViewModel.Instance.ChangeWellTableSize(num);
     }

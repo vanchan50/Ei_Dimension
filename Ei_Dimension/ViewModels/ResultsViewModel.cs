@@ -10,43 +10,43 @@ namespace Ei_Dimension.ViewModels
   [POCOViewModel]
   public class ResultsViewModel
   {
-    public virtual ObservableCollection<HistogramData<int,double>> ForwardSsc { get; set; }
-    public virtual ObservableCollection<HistogramData<int, double>> VioletSsc { get; set; }
-    public virtual ObservableCollection<HistogramData<int, double>> RedSsc { get; set; }
-    public virtual ObservableCollection<HistogramData<int, double>> GreenSsc { get; set; }
-    public virtual ObservableCollection<HistogramData<int, double>> Reporter { get; set; }
-    public virtual ObservableCollection<HistogramData<int, double>> CL0 { get; set; }
-    public virtual ObservableCollection<HistogramData<int, double>> CL1 { get; set; }
-    public virtual ObservableCollection<HistogramData<int, double>> CL2 { get; set; }
-    public virtual ObservableCollection<HistogramData<int, double>> CL3 { get; set; }
+    public virtual ObservableCollection<HistogramData<int, int>> ForwardSsc { get; set; }
+    public virtual ObservableCollection<HistogramData<int, int>> VioletSsc { get; set; }
+    public virtual ObservableCollection<HistogramData<int, int>> RedSsc { get; set; }
+    public virtual ObservableCollection<HistogramData<int, int>> GreenSsc { get; set; }
+    public virtual ObservableCollection<HistogramData<int, int>> Reporter { get; set; }
+    public virtual ObservableCollection<HistogramData<int, int>> CL0 { get; set; }
+    public virtual ObservableCollection<HistogramData<int, int>> CL1 { get; set; }
+    public virtual ObservableCollection<HistogramData<int, int>> CL2 { get; set; }
+    public virtual ObservableCollection<HistogramData<int, int>> CL3 { get; set; }
     public virtual ObservableCollection<HeatMapData> Map { get; set; }
     public static ResultsViewModel Instance { get; private set; }
 
     protected ResultsViewModel()
     {
       Instance = this;
-      ForwardSsc = new ObservableCollection<HistogramData<int, double>>();
-      VioletSsc = new ObservableCollection<HistogramData<int, double>>();
-      RedSsc = new ObservableCollection<HistogramData<int, double>>();
-      GreenSsc = new ObservableCollection<HistogramData<int, double>>();
-      Reporter = new ObservableCollection<HistogramData<int, double>>();
-      CL0 = new ObservableCollection<HistogramData<int, double>>();
-      CL1 = new ObservableCollection<HistogramData<int, double>>();
-      CL2 = new ObservableCollection<HistogramData<int, double>>();
-      CL3 = new ObservableCollection<HistogramData<int, double>>();
+      ForwardSsc = new ObservableCollection<HistogramData<int, int>>();
+      VioletSsc = new ObservableCollection<HistogramData<int, int>>();
+      RedSsc = new ObservableCollection<HistogramData<int, int>>();
+      GreenSsc = new ObservableCollection<HistogramData<int, int>>();
+      Reporter = new ObservableCollection<HistogramData<int, int>>();
+      CL0 = new ObservableCollection<HistogramData<int, int>>();
+      CL1 = new ObservableCollection<HistogramData<int, int>>();
+      CL2 = new ObservableCollection<HistogramData<int, int>>();
+      CL3 = new ObservableCollection<HistogramData<int, int>>();
 
       var bins = Core.DataProcessor.GenerateLogSpace(1, 1000000, 384);
       for (var i = 0; i < bins.Length; i++)
       {
-        ForwardSsc.Add(new HistogramData<int, double>(0, bins[i]));
-        VioletSsc.Add(new HistogramData<int, double>(0, bins[i]));
-        RedSsc.Add(new HistogramData<int, double>(0, bins[i]));
-        GreenSsc.Add(new HistogramData<int, double>(0, bins[i]));
-        Reporter.Add(new HistogramData<int, double>(0, bins[i]));
-        CL0.Add(new HistogramData<int, double>(0, bins[i]));
-        CL1.Add(new HistogramData<int, double>(0, bins[i]));
-        CL2.Add(new HistogramData<int, double>(0, bins[i]));
-        CL3.Add(new HistogramData<int, double>(0, bins[i]));
+        ForwardSsc.Add(new HistogramData<int, int>(0, bins[i]));
+        VioletSsc.Add(new HistogramData<int, int>(0, bins[i]));
+        RedSsc.Add(new HistogramData<int, int>(0, bins[i]));
+        GreenSsc.Add(new HistogramData<int, int>(0, bins[i]));
+        Reporter.Add(new HistogramData<int, int>(0, bins[i]));
+        CL0.Add(new HistogramData<int, int>(0, bins[i]));
+        CL1.Add(new HistogramData<int, int>(0, bins[i]));
+        CL2.Add(new HistogramData<int, int>(0, bins[i]));
+        CL3.Add(new HistogramData<int, int>(0, bins[i]));
       }
 
       Map = new ObservableCollection<HeatMapData>();

@@ -321,17 +321,17 @@ namespace Ei_Dimension.Core
     //less than start - assign to min
     return 1;
     }
-    public static double[] GenerateLogSpace(int min, int max, int logBins)
+    public static int[] GenerateLogSpace(int min, int max, int logBins)
     {
       double logarithmicBase = 10;
       double logMin = Math.Log10(min);
       double logMax = Math.Log10(max);
       double delta = (logMax - logMin) / logBins;
       double accDelta = delta;
-      double[] Result = new double[logBins];
+      int[] Result = new int[logBins];
       for (int i = 1; i <= logBins; ++i)
       {
-        Result[i - 1] = Math.Pow(logarithmicBase, logMin + accDelta);
+        Result[i - 1] = (int)Math.Round(Math.Pow(logarithmicBase, logMin + accDelta));
         accDelta += delta;
       }
       return Result;

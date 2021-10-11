@@ -17,11 +17,14 @@
                       VerticalAlignment="Top"
                       BorderThickness="0">
       <dxc:ChartControl.Legends>
-        <dxc:Legend HorizontalPosition="Right"
+        <dxc:Legend HorizontalPosition="Left"
                     MarkerMode="CheckBox"
                     Orientation="Horizontal"
+                    Margin="-14"
+                    Background="Transparent"
+                    BorderBrush="Transparent"
                     VerticalPosition="Top"
-                    Width="280" Visible="True"/>
+                    Width="350" Visible="True"/>
       </dxc:ChartControl.Legends>
       <dxc:XYDiagram2D>
         <dxc:XYDiagram2D.AxisY>
@@ -46,7 +49,7 @@
                        GridLinesVisible="True"
                        MinorCount="9">
             <dxc:AxisX2D.Title>
-              <dxc:AxisTitle Content="Scatter"
+              <dxc:AxisTitle Content="Value"
                              FontSize="30"
                              FontWeight="UltraBold"
                              FontFamily="{StaticResource AppTextFont}"
@@ -61,79 +64,35 @@
           </dxc:AxisX2D>
         </dxc:XYDiagram2D.AxisX>
         <dxc:LineSeries2D DataSource="{Binding RedSsc}"
-                                       ValueDataMember="Value"
-                                       ArgumentDataMember="Argument"
-                                       DisplayName="Red"
-                                       Brush="Red"
-                                       CheckedInLegend="{Binding ScatterSelectorState[0]}"/>
+                          ValueDataMember="Value"
+                          ArgumentDataMember="Argument"
+                          DisplayName="Red"
+                          Brush="Red"
+                          CheckedInLegend="{Binding ScatterSelectorState[0]}"/>
         <dxc:LineSeries2D DataSource="{Binding GreenSsc}"
-                                       ValueDataMember="Value"
-                                       ArgumentDataMember="Argument"
-                                       DisplayName="Green"
-                                       Brush="Green"
-                                       CheckedInLegend="{Binding ScatterSelectorState[1]}"/>
+                          ValueDataMember="Value"
+                          ArgumentDataMember="Argument"
+                          DisplayName="Green"
+                          Brush="Green"
+                          CheckedInLegend="{Binding ScatterSelectorState[1]}"/>
         <dxc:LineSeries2D DataSource="{Binding VioletSsc}"
-                                       ValueDataMember="Value"
-                                       ArgumentDataMember="Argument"
-                                       DisplayName="Violet"
-                                       Brush="DarkViolet"
-                                       CheckedInLegend="{Binding ScatterSelectorState[2]}"/>
+                          ValueDataMember="Value"
+                          ArgumentDataMember="Argument"
+                          DisplayName="Violet"
+                          Brush="DarkViolet"
+                          CheckedInLegend="{Binding ScatterSelectorState[2]}"/>
         <dxc:LineSeries2D DataSource="{Binding ForwardSsc}"
-                                       ValueDataMember="Value"
-                                       ArgumentDataMember="Argument"
-                                       DisplayName="Forward"
-                                       Brush="Black"
-                                       CheckedInLegend="{Binding ScatterSelectorState[3]}"/>
-      </dxc:XYDiagram2D>
-    </dxc:ChartControl>
-
-    <!--Reporter Chart-->
-    <dxc:ChartControl Width="640" Height="472"
-                      HorizontalAlignment="Left"
-                      VerticalAlignment="Top"
-                      BorderThickness="0"
-                      Margin="640,0,0,0">
-      <dxc:XYDiagram2D>
-        <dxc:XYDiagram2D.AxisY>
-          <dxc:AxisY2D Interlaced="False"
-                       GridLinesVisible="False"
-                       TickmarksMinorVisible="False"
-                       TickmarksVisible="False">
-            <dxc:AxisY2D.Title>
-              <dxc:AxisTitle Content="Count"
-                             FontSize="30"
-                             FontWeight="UltraBold"
-                             FontFamily="{StaticResource AppTextFont}"
-                             Visible="True"/>
-            </dxc:AxisY2D.Title>
-          </dxc:AxisY2D>
-        </dxc:XYDiagram2D.AxisY>
-        <dxc:XYDiagram2D.AxisX>
-          <dxc:AxisX2D TickmarksMinorVisible="False"
-                       TickmarksVisible="False"
-                       Logarithmic="True"
-                       GridLinesMinorVisible="True"
-                       GridLinesVisible="True"
-                       MinorCount="9">
-            <dxc:AxisX2D.Title>
-              <dxc:AxisTitle Content="Reporter"
-                             FontSize="30"
-                             FontWeight="UltraBold"
-                             FontFamily="{StaticResource AppTextFont}"
-                             Visible="True"/>
-            </dxc:AxisX2D.Title>
-            <dxc:AxisX2D.Range>
-              <dxc:AxisRange SideMarginsEnabled="False"/>
-            </dxc:AxisX2D.Range>
-            <dxc:AxisX2D.Label>
-              <dxc:AxisLabel TextPattern="{}{E:E0}"/>
-            </dxc:AxisX2D.Label>
-          </dxc:AxisX2D>
-        </dxc:XYDiagram2D.AxisX>
+                          ValueDataMember="Value"
+                          ArgumentDataMember="Argument"
+                          DisplayName="Forward"
+                          Brush="Chocolate"
+                          CheckedInLegend="{Binding ScatterSelectorState[3]}"/>
         <dxc:LineSeries2D DataSource="{Binding Reporter}"
                           ValueDataMember="Value"
                           ArgumentDataMember="Argument"
-                          Brush="Black"/>
+                          DisplayName="Reporter"
+                          Brush="Black"
+                          CheckedInLegend="{Binding ScatterSelectorState[4]}"/>
       </dxc:XYDiagram2D>
     </dxc:ChartControl>
 
@@ -142,7 +101,7 @@
                       HorizontalAlignment="Left"
                       VerticalAlignment="Top"
                       BorderThickness="0"
-                      Margin="1280,0,0,0">
+                      Margin="0,472,0,0">
       <dxc:XYDiagram2D Width="562" Height="388" Margin="45,10,0,0"
                        HorizontalAlignment="Left" VerticalAlignment="Top">
         <dxc:XYDiagram2D.AxisY>
@@ -217,7 +176,7 @@
     </dxc:ChartControl>
 
     <Border HorizontalAlignment="Left" VerticalAlignment="Top"
-            Margin="0,584,0,0" Width="930" Height="310">
+            Margin="640,584,0,0" Width="930" Height="310">
       <ScrollViewer HorizontalScrollBarVisibility="Disabled"
                     VerticalScrollBarVisibility="Visible">
         <ListBox Name="Table" Background="{StaticResource RibbonBackgroundActive}">
