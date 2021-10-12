@@ -98,7 +98,7 @@
         <Border Height="45" Width="633"
                 HorizontalAlignment="Left">
           <Grid>
-            <TextBlock Text="      №"
+            <TextBlock Text="       №"
                        FontSize="30"
                        Width="140"
                        HorizontalAlignment="Left"/>
@@ -106,7 +106,8 @@
                        Width="490"
                        FontSize="30"
                        Margin="140,0,0,0"
-                       HorizontalAlignment="Left"/>
+                       HorizontalAlignment="Left"
+                       TextAlignment="Center"/>
           </Grid>
         </Border>
         <ScrollViewer Width="650" Height="699"

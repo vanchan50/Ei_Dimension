@@ -35,7 +35,7 @@ namespace Ei_Dimension.Models
     private static TextBox _lastRegionsBox;
     private static TextBox _lastRegionsNameBox;
     private ListBox _table;
-    private static Thickness _TbAlignment = new Thickness(0, 5, 0, 0);
+    private static Thickness _TbAlignment = new Thickness(5, 5, 5, 0);
     //DB
     private StackPanel _dbNum;
     private StackPanel _dbName;
@@ -211,8 +211,9 @@ namespace Ei_Dimension.Models
         Name = name,
         VerticalAlignment = VerticalAlignment.Top,
         HorizontalAlignment = HorizontalAlignment.Left,
-        Width = 140,
-        Height = 129 + 5 + 5 + 5 + 5,
+        Orientation = Orientation.Horizontal,
+        Width = 430,
+        Height = 53,
         Margin = new Thickness(0, 0, 0, 0)
       };
 
@@ -253,6 +254,8 @@ namespace Ei_Dimension.Models
       var tb = new TextBox
       {
         VerticalAlignment = VerticalAlignment.Top,
+        HorizontalAlignment = HorizontalAlignment.Left,
+        Width = 200,
         Style = _regionsNamesStyle,
         IsReadOnly = true,
         Margin = _TbAlignment
@@ -265,7 +268,10 @@ namespace Ei_Dimension.Models
     {
       var tb = new TextBox
       {
+        VerticalAlignment = VerticalAlignment.Top,
+        HorizontalAlignment = HorizontalAlignment.Left,
         Style = _regionsNamesStyle,
+        Width = 100,
         IsReadOnly = true,
         Margin = _TbAlignment
       };
@@ -281,7 +287,10 @@ namespace Ei_Dimension.Models
     {
       var tb = new TextBox
       {
+        VerticalAlignment = VerticalAlignment.Top,
+        HorizontalAlignment = HorizontalAlignment.Left,
         Style = _regionsNamesStyle,
+        Width = 100,
         IsReadOnly = true,
         Margin = _TbAlignment
       };

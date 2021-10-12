@@ -13,7 +13,7 @@
     <!--Active Regions-->
     <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Margin="560,30,0,0">
+            Margin="315,30,0,0">
       <StackPanel>
         <TextBlock Text="{lang:Loc Experiment_Available_Regions}"
                    FontFamily="{StaticResource AppTextFont}"
@@ -26,10 +26,6 @@
         <Border Height="45" Width="633"
                 HorizontalAlignment="Left">
           <Grid>
-            <Grid.ColumnDefinitions>
-              <ColumnDefinition Width="358*"/>
-              <ColumnDefinition Width="275*"/>
-            </Grid.ColumnDefinitions>
             <TextBlock Text="{lang:Loc Dashboard_Inactive_Region}"
                        FontSize="30"
                        Width="140"
@@ -43,7 +39,8 @@
                        Width="370"
                        FontSize="30"
                        Margin="260,0,0,0"
-                       HorizontalAlignment="Left" Grid.ColumnSpan="2"/>
+                       HorizontalAlignment="Left"
+                       TextAlignment="Center"/>
           </Grid>
         </Border>
         <ScrollViewer Width="650" Height="699"

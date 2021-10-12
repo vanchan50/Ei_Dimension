@@ -260,6 +260,9 @@ Coefficient</value>
   <data name="Components_Wash_B" xml:space="preserve">
     <value>Wash B</value>
   </data>
+  <data name="Counter" xml:space="preserve">
+    <value>Counter</value>
+  </data>
   <data name="Dashboard_Active_Region" xml:space="preserve">
     <value>  Active</value>
   </data>
@@ -545,6 +548,9 @@ Barcode</value>
   <data name="Maintenance_Sanitize" xml:space="preserve">
     <value>UVC Sanitize</value>
   </data>
+  <data name="Mean" xml:space="preserve">
+    <value> Mean</value>
+  </data>
   <data name="Motors_384W_C1" xml:space="preserve">
     <value>384W C1</value>
   </data>
@@ -627,7 +633,7 @@ Barcode</value>
     <value>Up</value>
   </data>
   <data name="Name" xml:space="preserve">
-    <value>                  Name</value>
+    <value>Name</value>
   </data>
   <data name="OFF" xml:space="preserve">
     <value>Выкл</value>

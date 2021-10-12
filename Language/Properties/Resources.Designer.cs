@@ -480,6 +480,15 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Counter.
+        /// </summary>
+        public static string Counter {
+            get {
+                return ResourceManager.GetString("Counter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to   Active.
         /// </summary>
         public static string Dashboard_Active_Region {
@@ -1311,6 +1320,15 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to  Mean.
+        /// </summary>
+        public static string Mean {
+            get {
+                return ResourceManager.GetString("Mean", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 384W C1.
         /// </summary>
         public static string Motors_384W_C1 {
@@ -1554,7 +1572,7 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to                   Name.
+        ///   Looks up a localized string similar to Name.
         /// </summary>
         public static string Name {
             get {

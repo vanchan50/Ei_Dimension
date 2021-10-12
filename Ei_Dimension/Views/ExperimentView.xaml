@@ -45,28 +45,28 @@
       <RadioButton Content="{lang:Loc Experiment_Dashboard}"
                    Height="84" Name="DbButton"
                    IsChecked="True"
-                   img:EmbeddedImg.Image="/Icons/motors icon.png"
-                   Style="{DynamicResource SubRibbonButtonStyle}"
+                   Style="{StaticResource SubRibbonButtonStyle}"
+                   img:EmbeddedImg.Image="/Icons/syringe speeds icon.png"
                    Command="{Binding NavigateDashboardCommand}"/>
       <RadioButton Content="{lang:Loc Experiment_Sel_Active_Region}"
                    Height="84"
                    img:EmbeddedImg.Image="/Icons/components icon.png"
-                   Style="{DynamicResource SubRibbonButtonStyle}"
+                   Style="{StaticResource SubRibbonButtonStyle}"
                    Command="{Binding NavigateSelRegionsCommand}"/>
       <Button Content="{lang:Loc Experiment_Load_Template}"
                    Height="84"
                    img:EmbeddedImg.Image="{dx:DXImage 'SvgImages/Export/Export.svg'}"
-                   Style="{DynamicResource DashboardButtonStyle}"
+                   Style="{StaticResource DashboardButtonStyle}"
                    Command="{Binding LoadTemplateCommand}"/>
       <Button Content="{lang:Loc Experiment_Save_Template}"
                    Height="84"
                    img:EmbeddedImg.Image="{dx:DXImage 'SvgImages/PDF Viewer/Import.svg'}"
-                   Style="{DynamicResource DashboardButtonStyle}"
+                   Style="{StaticResource DashboardButtonStyle}"
                    Command="{Binding SaveTemplateCommand}"/>
       <RadioButton Content="{lang:Loc Experiment_FileSave}"
                    Height="84"
                    img:EmbeddedImg.Image="{dx:DXImage 'SvgImages/Reports/PrintPageRange.svg'}"
-                   Style="{DynamicResource SubRibbonButtonStyle}"
+                   Style="{StaticResource SubRibbonButtonStyle}"
                    Command="{Binding NavigateFileSaveCommand}"/>
       <RadioButton Name="fake" Visibility="Hidden">
         <RadioButton.Style>
