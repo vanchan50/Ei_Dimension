@@ -168,14 +168,12 @@ namespace Ei_Dimension.ViewModels
       App.Device.MainCommand("Get FProperty", code: 0x20); //get high dnr property
       ResultsViewModel.Instance.ClearGraphs();
       ResultsViewModel.Instance.PlatePictogram.Clear();
-      ResultsViewModel.Instance.Map.Clear();
+      ResultsViewModel.Instance.PlotCurrent();
 
       SetWellsInOrder();
 
-      //find number of wells to read
       if (App.Device.WellsInOrder.Count < 1)
         return;
-      //btnEndRead.BackColor = Color.Tomato;
       StartButtonEnabled = false;
 
       App.Device.WellsToRead = App.Device.WellsInOrder.Count - 1;    //make zero based like well index is
@@ -186,6 +184,7 @@ namespace Ei_Dimension.ViewModels
       App.Device.MainCommand("Aspirate Syringe A"); //handles down and pickup sample
       App.Device.WellNext();   //save well numbers for file name
       App.Device.InitBeadRead(App.Device.ReadingRow, App.Device.ReadingCol);   //gets output file redy
+      ResultsViewModel.Instance.SelectedWell = (App.Device.ReadingRow, App.Device.ReadingCol);
       ResultsViewModel.Instance.PlatePictogram.ChangeState(App.Device.ReadingRow, App.Device.ReadingCol, WellType.NowReading); //Results well display
       App.Device.ClearSummary();
 

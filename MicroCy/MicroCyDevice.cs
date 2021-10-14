@@ -8,6 +8,7 @@ using IronBarCode;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Collections.Concurrent;
+using MicroCy.InstrumentParameters;
 
 /*
  * Most commands on the host side parallel the Properties and Methods document fo QB-1000
@@ -47,24 +48,10 @@ namespace MicroCy
     public ConcurrentQueue<BeadInfoStruct> DataOut { get; } = new ConcurrentQueue<BeadInfoStruct>();
     public List<Wells> WellsInOrder { get; set; } = new List<Wells>();
     public List<CustomMap> MapList { get; private set; } = new List<CustomMap>();
-    public List<Gstats> GStats { get; set; } = new List<Gstats>(10);
+    public List<Gstats> GStats { get; } = new List<Gstats>(10);
     public List<WellResults> WellResults { get; } = new List<WellResults>();
-    public float HDnrCoef { get; set; }
-    public float MapPeakX { get; set; }
-    public float MapPeakY { get; set; }
-    public float Compensation { get; set; }
-    public float HdnrTrans { get; set; }
-    public float IdexDir { get; set; }
+    public event EventHandler StartingToReadWell;
     public int SavingWellIdx { get; set; }
-    public int TempCl0 { get; set; }
-    public int TempCl1 { get; set; }
-    public int TempCl2 { get; set; }
-    public int TempCl3 { get; set; }
-    public int TempRedSsc { get; set; }
-    public int TempGreenSsc { get; set; }
-    public int TempVioletSsc { get; set; }
-    public int TempRpMaj { get; set; }
-    public int TempRpMin { get; set; }
     public int WellsToRead { get; set; }
     public int BeadsToCapture { get; set; }
     public int BeadCount { get; private set; }
@@ -74,7 +61,6 @@ namespace MicroCy
     public int BeadCntMapCreate { get; set; }
     public int ScatterGate { get; set; }
     public int MinPerRegion { get; set; }
-    public ushort IdexSteps { get; set; }
     public bool NewStats { get; set; }
     public bool IsTube { get; set; }
     public bool ReadActive { get; set; }
@@ -84,12 +70,10 @@ namespace MicroCy
     public bool PltRept { get; set; }
     public bool OnlyClassified { get; set; }
     public bool Reg0stats { get; set; }
-    public bool Newmap { get; set; }
     public bool ChannelBIsHiSensitivity { get; set; }
     public byte PlateRow { get; set; }
     public byte PlateCol { get; set; }
     public byte PlateType { get; set; }
-    public byte IdexPos { get; set; }
     public byte TerminationType { get; set; }
     public byte ReadingRow { get; set; }
     public byte ReadingCol { get; set; }
@@ -119,65 +103,7 @@ namespace MicroCy
     private string _mapsFileName;
     private StringBuilder _summaryout = new StringBuilder();
     private StringBuilder _dataout = new StringBuilder();
-    private readonly ISerial _usbConnection;
-    private readonly Dictionary<string, CommandStruct> MainCmdTemplatesDict = new Dictionary<string, CommandStruct>()
-    {
-      { "Sheath",               new CommandStruct{ Code=0xd0, Command=0x0, Parameter=0, FParameter=0} },
-      { "SampleA",              new CommandStruct{ Code=0xd1, Command=0x0, Parameter=0, FParameter=0} },
-      { "SampleB",              new CommandStruct{ Code=0xd2, Command=0x0, Parameter=0, FParameter=0} },
-      { "RefreshDac",           new CommandStruct{ Code=0xd3, Command=0x0, Parameter=0, FParameter=0} },
-      { "SetNextWell",          new CommandStruct{ Code=0xd4, Command=0x0, Parameter=0, FParameter=0} },
-      { "SetBaseline",          new CommandStruct{ Code=0xd5, Command=0x0, Parameter=0, FParameter=0} },
-      { "SaveToFlash",          new CommandStruct{ Code=0xd6, Command=0x0, Parameter=0, FParameter=0} },
-      { "Idex",                 new CommandStruct{ Code=0xd7, Command=0x0, Parameter=0, FParameter=0} },
-      { "InitOpVars",           new CommandStruct{ Code=0xd8, Command=0x0, Parameter=0, FParameter=0} },
-      { "FlushCmdQueue",        new CommandStruct{ Code=0xd9, Command=0x0, Parameter=0, FParameter=0} },
-      { "Start Sampling",       new CommandStruct{ Code=0xda, Command=0x0, Parameter=0, FParameter=0} },
-      { "End Sampling",         new CommandStruct{ Code=0xdb, Command=0x0, Parameter=0, FParameter=0} },
-      { "AlignMotor",           new CommandStruct{ Code=0xdc, Command=0x0, Parameter=0, FParameter=0} },
-      { "MotorX",               new CommandStruct{ Code=0xdd, Command=0x0, Parameter=0, FParameter=0} },
-      { "MotorY",               new CommandStruct{ Code=0xde, Command=0x0, Parameter=0, FParameter=0} },
-      { "MotorZ",               new CommandStruct{ Code=0xdf, Command=0x0, Parameter=0, FParameter=0} },
-      { "Startup",              new CommandStruct{ Code=0xe0, Command=0x0, Parameter=0, FParameter=0} },
-      { "Prime",                new CommandStruct{ Code=0xe1, Command=0x0, Parameter=0, FParameter=0} },
-      { "Sheath Empty Prime",   new CommandStruct{ Code=0xe2, Command=0x0, Parameter=0, FParameter=0} },
-      { "Wash A",               new CommandStruct{ Code=0xe3, Command=0x0, Parameter=0, FParameter=0} },
-      { "Wash B",               new CommandStruct{ Code=0xe4, Command=0x0, Parameter=0, FParameter=0} },
-      { "Eject Plate",          new CommandStruct{ Code=0xe5, Command=0x0, Parameter=0, FParameter=0} },
-      { "Load Plate",           new CommandStruct{ Code=0xe6, Command=0x0, Parameter=0, FParameter=0} },
-      { "Position Well Plate",  new CommandStruct{ Code=0xe7, Command=0x0, Parameter=0, FParameter=0} },
-      { "Aspirate Syringe A",   new CommandStruct{ Code=0xe8, Command=0x0, Parameter=0, FParameter=0} },
-      { "Aspirate Syringe B",   new CommandStruct{ Code=0xe9, Command=0x0, Parameter=0, FParameter=0} },
-      { "Read A",               new CommandStruct{ Code=0xea, Command=0x0, Parameter=0, FParameter=0} },
-      { "Read B",               new CommandStruct{ Code=0xeb, Command=0x0, Parameter=0, FParameter=0} },
-      { "Read A Aspirate B",    new CommandStruct{ Code=0xec, Command=0x0, Parameter=0, FParameter=0} },
-      { "Read B Aspirate A",    new CommandStruct{ Code=0xed, Command=0x0, Parameter=0, FParameter=0} },
-      { "End Bead Read A",      new CommandStruct{ Code=0xee, Command=0x0, Parameter=0, FParameter=0} },
-      { "End Bead Read B",      new CommandStruct{ Code=0xef, Command=0x0, Parameter=0, FParameter=0} },
-      { "Set Aspirate Volume",  new CommandStruct{ Code=0xaf, Command=0x0, Parameter=0, FParameter=0} },
-      { "Set Property",         new CommandStruct{ Code=0x0, Command=0x02, Parameter=0, FParameter=0} },
-      { "Get Property",         new CommandStruct{ Code=0x0, Command=0x01, Parameter=0, FParameter=0} },
-      { "Set FProperty",        new CommandStruct{ Code=0x0, Command=0x02, Parameter=0, FParameter=0} },
-      { "Get FProperty",        new CommandStruct{ Code=0x0, Command=0x01, Parameter=0, FParameter=0} }
-    };
-    private readonly List<byte> Readertab = new List<byte>() { 0xaa, 0xac, 0xaf, 0xa9, 0xab, 0xa8, 0xc2, 0xc4, 0xcd, 0xce, 0xcf };
-    private readonly List<byte> Reportingtab = new List<byte>() { 0x10, 0x12, 0x13, 0x20, 0x22, 0x24, 0x25, 0x26, 0x28, 0x29, 0x2a, 0x2c, 0x2d,
-      0x2e, 0xc0, 0xc1, 0xc2, 0xc8, 0xc9, 0x80, 0x82, 0x84, 0x86, 0x88, 0x8a };
-    private readonly List<byte> Calibtab = new List<byte>() { 0x20, 0x30, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x39, 0x3a, 0x3b, 0x3c,
-      0x3d, 0x3e, 0x3f, 0x87, 0x88, 0x89, 0x8a, 0x8b, 0x8c, 0x8d, 0x8e, 0x8f, 0xcd, 0xce, 0xcf };
-    private readonly List<byte> Channeltab = new List<byte>() { 0x24, 0x25, 0x26, 0x28, 0x29, 0x2a, 0x2c, 0x2d, 0x2e, 0x2f,0x93,0x94,0x95,0x96,0x98,0x99,0x9a,0x9b, 0x9c, 0x9d, 0x9e, 0x9f, 0xa0, 0xa1, 0xa2, 0xa3, 0xa4, 0xa5 ,0xa6,0xa7,0x80,0x81,0x82,0x83,0x84,0x85
-        ,0xb0,0xb1,0xb2,0xb3,0xb4,0xb5,0xb6,0xb7,0xb8,0xb9,0xba,0xbb,0xbc,0xbd,0xbe, 0x02};
-    private readonly List<byte> Motorstab = new List<byte>() { 0x41, 0x42, 0x43, 0x44, 0x48, 0x4a, 0x46, 0x4c, 0x4e, 0x51, 0x52, 0x53, 0x54,
-      0x56, 0x58, 0x5a, 0x5c, 0x5e, 0x61, 0x62, 0x63, 0x64, 0x66, 0x68, 0x6a, 0x6c, 0x6e, 0xa8, 0x1c, 0x1d, 0x1e, 0x1a, 0x90, 0x91, 0x92, 0x16 };
-    private readonly List<byte> Componentstab = new List<byte>() { 0x10, 0x11, 0x12, 0x13, 0x14, 0x16, 0x17, 0x18, 0xc0, 0xc7, 0xc8, 0xc9 };
-    private readonly List<int[,]> Bitmaplist = new List<int[,]>
-    {
-        new int[9,2]  { { 5, 6 }, {3,1 }, { 4, 0 }, { 5, 1 }, { 6, 1 }, { 6, 1 }, { 5, 2 }, { 3, 0 }, { 0, 0 } },
-        new int[13,2] { { 6, 6 }, {4,0 }, { 5, 0 }, { 6, 1 }, { 6, 1 }, { 6, 0 }, { 7, 1 }, { 7, 1 }, { 7, 2 }, { 5, 1 }, { 4, 1 }, { 4, 0 }, { 0, 0 } },
-        new int[14,2] { { 6, 5 }, {5,1 }, { 5, 0 }, { 7, 0 }, { 8, 1 }, { 8, 0 }, { 9, 1 }, { 8, 1 }, { 7, 0 }, { 8, 1 }, { 8, 1 }, { 7, 2 }, { 5, 0 }, { 0, 0 } },
-        new int[29,2] { { 15, 6 },{8,0 }, { 8, 1 }, { 7, 0 }, { 7, 0 }, { 7, 0 }, { 8, 0 }, { 8, 0 }, { 8, 0 }, { 8, 0 }, { 9, 0 }, { 9, 0 }, { 9, 1 }, { 8, 0 }, { 9, 0 }, { 9, 0 }, { 9, 1 },
-            { 8, 0 }, { 8, 0 }, { 8, 0 }, { 8, 0 }, { 8, 0 }, { 8, 0 }, { 8, 0 }, { 8, 0 }, { 8, 1 }, { 6, 2 }, { 4, 0 }, { 0, 0 }  }
-    };
+    private readonly ISerial _serialConnection;
     private const string Bheader = "Preamble,Time(1 us Tick),FSC bg,Viol SSC bg,CL0 bg,CL1 bg,CL2 bg,CL3 bg,Red SSC bg,Green SSC bg," +
             "Green Maj bg, Green Min bg,Green Major,Green Minor,Red-Grn Offset,Grn-Viol Offset,Region,Forward Scatter,Violet SSC,CL0," +
             "Red SSC,CL1,CL2,CL3,Green SSC,Reporter\r ";
@@ -186,7 +112,7 @@ namespace MicroCy
 
     public MicroCyDevice(Type connectionType, bool useStaticMaps)
     {
-      _usbConnection = ConnectionFactory.MakeNewConnection(connectionType);
+      _serialConnection = ConnectionFactory.MakeNewConnection(connectionType);
       SetSystemDirectories();
       LoadMaps();
       MainCommand("Set Property", code: 1, parameter: 1);    //set version as 1 to enable work order handling
@@ -194,9 +120,8 @@ namespace MicroCy
       _actSecondaryIndex = 2;  //cl2;
       Reg0stats = false;
       CalStats = false;
-      Newmap = false;
       IsTube = false;
-      _usbConnection.BeginRead(ReplyFromMC);   //default termination is end of sample
+      _serialConnection.BeginRead(ReplyFromMC);   //default termination is end of sample
       Outdir = RootDirectory.FullName;
       EndState = 0;
       ReadActive = false;
@@ -252,7 +177,7 @@ namespace MicroCy
         if (!mapRegions.isvector)       //this region shape is taken from Bitmaplist array
         {
           Array.Clear(bitpoints, 0, bitpoints.Length);  //copy bitmap of the type specified (A B C D)
-          Array.Copy(Bitmaplist[mapRegions.bitmaptype], bitpoints, Bitmaplist[mapRegions.bitmaptype].Length);
+          Array.Copy(CommandLists.Bitmaplist[mapRegions.bitmaptype], bitpoints, CommandLists.Bitmaplist[mapRegions.bitmaptype].Length);
           int rowBase = mapRegions.centermidorderidx - bitpoints[0, 0];  //first position is value to backup before etching bitmap
           int col = mapRegions.centerloworderidx - bitpoints[0, 1];
           int irow = 1; // 56 31 40 51 61 61 52 30 00
@@ -291,7 +216,6 @@ namespace MicroCy
           }
         }
       }
-      Newmap = true;
     }
 
     public void InitBeadRead(byte rown, byte coln)
@@ -374,13 +298,13 @@ namespace MicroCy
 
     private void ReplyFromMC(IAsyncResult result)
     {
-      _usbConnection.EndRead(result);
-      if ((_usbConnection.InputBuffer[0] == 0xbe) && (_usbConnection.InputBuffer[1] == 0xad))
+      _serialConnection.EndRead(result);
+      if ((_serialConnection.InputBuffer[0] == 0xbe) && (_serialConnection.InputBuffer[1] == 0xad))
       {
         for (byte i = 0; i < 8; i++)
         {
           BeadInfoStruct outbead;
-          if (!GetBeadFromBuffer(_usbConnection.InputBuffer, i, out outbead))
+          if (!GetBeadFromBuffer(_serialConnection.InputBuffer, i, out outbead))
             break;
           CalculateBeadParams(ref outbead);
 
@@ -394,13 +318,13 @@ namespace MicroCy
           FillCalibrationStatsRow(in outbead);
           BeadCount++;
         }
-        Array.Clear(_usbConnection.InputBuffer, 0, _usbConnection.InputBuffer.Length);
+        Array.Clear(_serialConnection.InputBuffer, 0, _serialConnection.InputBuffer.Length);
         TerminationReadyCheck();
       }
       else
         GetCommandFromBuffer();
 
-      _usbConnection.BeginRead(ReplyFromMC);
+      _serialConnection.BeginRead(ReplyFromMC);
     }
 
     public void LoadMaps()
@@ -457,40 +381,60 @@ namespace MicroCy
 
     public void MainCommand(string command, byte? cmd = null, byte? code = null, ushort? parameter = null, float? fparameter = null)
     {
-      CommandStruct cs = MainCmdTemplatesDict[command];
+      CommandStruct cs = CommandLists.MainCmdTemplatesDict[command];
       cs.Command = cmd ?? cs.Command;
       cs.Code = code ?? cs.Code;
       cs.Parameter = parameter ?? cs.Parameter;
       cs.FParameter = fparameter ?? cs.FParameter;
+      switch (command)
+      {
+        case "Read A":
+          _readingA = true;
+          OnStartingToReadWell();
+          break;
+        case "Read A Aspirate B":
+          _readingA = true;
+          OnStartingToReadWell();
+          break;
+        case "Read B":
+          _readingA = false;
+          OnStartingToReadWell();
+          break;
+        case "Read B Aspirate A":
+          _readingA = false;
+          OnStartingToReadWell();
+          break;
+        case "Idex":
+          cs.Command = Idex.Pos;
+          cs.Parameter = Idex.Steps;
+          cs.FParameter = Idex.Dir;
+          break;
+      }
       RunCmd(command, cs);
-      if(command == "Read A" || command == "Read A Aspirate B")
-        _readingA = true;
-      if (command == "Read B" || command == "Read B Aspirate A")
-        _readingA = false;
     }
 
     public void InitSTab(string tabname)
     {
-      List<byte> list = Readertab;
+      List<byte> list = CommandLists.Readertab;
       switch (tabname)
       {
         case "readertab":
-          list = Readertab;
+          list = CommandLists.Readertab;
           break;
         case "reportingtab":
-          list = Reportingtab;
+          list = CommandLists.Reportingtab;
           break;
         case "calibtab":
-          list = Calibtab;
+          list = CommandLists.Calibtab;
           break;
         case "channeltab":
-          list = Channeltab;
+          list = CommandLists.Channeltab;
           break;
         case "motorstab":
-          list = Motorstab;
+          list = CommandLists.Motorstab;
           break;
         case "componentstab":
-          list = Componentstab;
+          list = CommandLists.Componentstab;
           break;
       }
       foreach (byte Code in list)
@@ -525,15 +469,15 @@ namespace MicroCy
     public void SaveCalVals(int idx)
     {
       var map = MapList[idx];
-      map.calrpmin = TempRpMin;
-      map.calrpmaj = TempRpMaj;
-      map.calrssc = TempRedSsc;
-      map.calgssc = TempGreenSsc;
-      map.calvssc = TempVioletSsc;
-      map.calcl0 = TempCl0;
-      map.calcl1 = TempCl1;
-      map.calcl2 = TempCl2;
-      map.calcl3 = TempCl3;
+      map.calrpmin = BiasAt30Temp.TempRpMin;
+      map.calrpmaj = BiasAt30Temp.TempRpMaj;
+      map.calrssc = BiasAt30Temp.TempRedSsc;
+      map.calgssc = BiasAt30Temp.TempGreenSsc;
+      map.calvssc = BiasAt30Temp.TempVioletSsc;
+      map.calcl0 = BiasAt30Temp.TempCl0;
+      map.calcl1 = BiasAt30Temp.TempCl1;
+      map.calcl2 = BiasAt30Temp.TempCl2;
+      map.calcl3 = BiasAt30Temp.TempCl3;
       MapList[idx] = map;
       SaveMaps();
     }
@@ -580,10 +524,10 @@ namespace MicroCy
     /// <param name="cs">The CommandStruct object containing the command parameters.  This will get converted to an 8-byte array.</param>
     private void RunCmd(string sCmdName, CommandStruct cs)
     {
-      if (_usbConnection.IsActive)
+      if (_serialConnection.IsActive)
       {
         byte[] buffer = StructToByteArray(cs);
-        _usbConnection.Write(buffer);
+        _serialConnection.Write(buffer);
       }
       Console.WriteLine(string.Format("{0} Sending [{1}]: {2}", DateTime.Now.ToString(), sCmdName, cs.ToString())); //  MARK1 END
     }
@@ -690,7 +634,7 @@ namespace MicroCy
       lock (Commands)
       {
         // move received command to queue
-        newcmd = ByteArrayToStruct<CommandStruct>(_usbConnection.InputBuffer);
+        newcmd = ByteArrayToStruct<CommandStruct>(_serialConnection.InputBuffer);
         Commands.Enqueue(newcmd);
       }
       if ((newcmd.Code >= 0xd0) && (newcmd.Code <= 0xdf))
@@ -804,7 +748,7 @@ namespace MicroCy
       outbead.cl2 = cl[2];
       outbead.region = ClassifyBeadToRegion(cl);
       //handle HI dnr channel
-      outbead.reporter = _greenMaj > HdnrTrans ? _greenMaj * HDnrCoef : _greenMin;
+      outbead.reporter = _greenMaj > Calibration.HdnrTrans ? _greenMaj * Calibration.HDnrCoef : _greenMin;
     }
 
     private ushort ClassifyBeadToRegion(float[] cl)
@@ -816,7 +760,7 @@ namespace MicroCy
 
     private float[] MakeClArr(in BeadInfoStruct outbead)
     {
-      float cl1comp = _greenMaj * Compensation / 100;
+      float cl1comp = _greenMaj * Calibration.Compensation / 100;
       float cl2comp = cl1comp * 0.26f;
       return new float[]{
             outbead.cl0,
@@ -937,6 +881,11 @@ namespace MicroCy
           cv = gcv
         });
       }
+    }
+
+    private void OnStartingToReadWell() //protected virtual method
+    {
+      StartingToReadWell?.Invoke(this, EventArgs.Empty);
     }
   }
 }

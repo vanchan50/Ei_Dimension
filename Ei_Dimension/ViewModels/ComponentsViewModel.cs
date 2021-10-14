@@ -254,13 +254,13 @@ namespace Ei_Dimension.ViewModels
 
     public void MoveIdexButtonClick()
     {
-      App.Device.MainCommand("Idex", cmd: App.Device.IdexPos, parameter: App.Device.IdexSteps, fparameter: App.Device.IdexDir);
+      App.Device.MainCommand("Idex");
     }
 
     public void CWDirectionToggleButtonClick()
     {
       CWDirectionActive = !CWDirectionActive;
-      App.Device.IdexDir = CWDirectionActive ? 1 : 0;
+      MicroCy.InstrumentParameters.Idex.Dir = CWDirectionActive ? 1 : 0;
     }
 
     public void IdexPositionButtonClick()

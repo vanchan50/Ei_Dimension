@@ -16,18 +16,21 @@
     <dxc:ChartControl Width="640" Height="472"
                       HorizontalAlignment="Left"
                       VerticalAlignment="Top"
+                      Focusable="False"
                       BorderThickness="0">
       <dxc:ChartControl.Legends>
         <dxc:Legend HorizontalPosition="Left"
                     MarkerMode="CheckBox"
                     Orientation="Horizontal"
-                    Margin="-14" FontSize="24"
+                    Margin="-30,-38,0,0"
+                    FontSize="24"
                     Background="Transparent"
                     BorderBrush="Transparent"
                     VerticalPosition="Top"
+                    Focusable="False"
                     Width="525" Visible="True"/>
       </dxc:ChartControl.Legends>
-      <dxc:XYDiagram2D>
+      <dxc:XYDiagram2D Focusable="False">
         <dxc:XYDiagram2D.AxisY>
           <dxc:AxisY2D Interlaced="False"
                        GridLinesVisible="False"
@@ -64,31 +67,31 @@
             </dxc:AxisX2D.Label>
           </dxc:AxisX2D>
         </dxc:XYDiagram2D.AxisX>
-        <dxc:LineSeries2D DataSource="{Binding RedSsc}"
+        <dxc:LineSeries2D DataSource="{Binding DisplayedRedSsc}"
                           ValueDataMember="Value"
                           ArgumentDataMember="Argument"
                           DisplayName="Red"
                           Brush="Red"
                           CheckedInLegend="{Binding ScatterSelectorState[0]}"/>
-        <dxc:LineSeries2D DataSource="{Binding GreenSsc}"
+        <dxc:LineSeries2D DataSource="{Binding DisplayedGreenSsc}"
                           ValueDataMember="Value"
                           ArgumentDataMember="Argument"
                           DisplayName="Green"
                           Brush="Green"
                           CheckedInLegend="{Binding ScatterSelectorState[1]}"/>
-        <dxc:LineSeries2D DataSource="{Binding VioletSsc}"
+        <dxc:LineSeries2D DataSource="{Binding DisplayedVioletSsc}"
                           ValueDataMember="Value"
                           ArgumentDataMember="Argument"
                           DisplayName="Violet"
                           Brush="DarkViolet"
                           CheckedInLegend="{Binding ScatterSelectorState[2]}"/>
-        <dxc:LineSeries2D DataSource="{Binding ForwardSsc}"
+        <dxc:LineSeries2D DataSource="{Binding DisplayedForwardSsc}"
                           ValueDataMember="Value"
                           ArgumentDataMember="Argument"
                           DisplayName="Forward"
                           Brush="Chocolate"
                           CheckedInLegend="{Binding ScatterSelectorState[3]}"/>
-        <dxc:LineSeries2D DataSource="{Binding Reporter}"
+        <dxc:LineSeries2D DataSource="{Binding DisplayedReporter}"
                           ValueDataMember="Value"
                           ArgumentDataMember="Argument"
                           DisplayName="Reporter"
@@ -102,8 +105,10 @@
                       HorizontalAlignment="Left"
                       VerticalAlignment="Top"
                       BorderThickness="0"
+                      Focusable="False"
                       Margin="0,452,0,0">
-      <dxc:XYDiagram2D Width="562" Height="388" Margin="50,-8,0,0"
+      <dxc:XYDiagram2D Width="562" Height="388" Margin="50,-8,0,0" 
+                       Focusable="False"
                        HorizontalAlignment="Left" VerticalAlignment="Top">
         <dxc:XYDiagram2D.AxisY>
           <dxc:AxisY2D Logarithmic="True"
@@ -163,7 +168,7 @@
                            ValueDataMember="Y"
                            MarkerSize="3"
                            Brush="Orange"/>
-        <dxc:PointSeries2D DataSource="{Binding Map}"
+        <dxc:PointSeries2D DataSource="{Binding DisplayedMap}"
                            ArgumentDataMember="X"
                            ValueDataMember="Y"
                            MarkerSize="3"
@@ -439,7 +444,7 @@
           </DataGrid.Resources>
           <dxmvvm:Interaction.Behaviors>
             <dxmvvm:EventToCommand EventName="CurrentCellChanged"
-                                   Command="{Binding PlatePictogram.SelectedCellChangedCommand}"/>
+                                   Command="{Binding SelectedCellChangedCommand}"/>
           </dxmvvm:Interaction.Behaviors>
           <DataGrid.CellStyle>
             <Style TargetType="{x:Type DataGridCell}">

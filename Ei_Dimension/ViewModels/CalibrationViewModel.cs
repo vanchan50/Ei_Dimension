@@ -47,8 +47,8 @@ namespace Ei_Dimension.ViewModels
       CalibrationParameter = 0;
       CalibrationSelectorState = new ObservableCollection<bool> { true, false, false };
 
-      CompensationPercentageContent = new ObservableCollection<string> { App.Device.Compensation.ToString() };
-      DNRContents = new ObservableCollection<string> { "", App.Device.HdnrTrans.ToString() };
+      CompensationPercentageContent = new ObservableCollection<string> { MicroCy.InstrumentParameters.Calibration.Compensation.ToString() };
+      DNRContents = new ObservableCollection<string> { "", MicroCy.InstrumentParameters.Calibration.HdnrTrans.ToString() };
 
       CurrentMapName = new ObservableCollection<string> { App.Device.ActiveMap.mapName };
 

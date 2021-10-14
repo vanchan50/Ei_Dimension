@@ -36,7 +36,6 @@ namespace Ei_Dimension
       }
       catch { }
       Device.SystemControl = Settings.Default.SystemControl;
-      Device.Compensation = Settings.Default.Compensation;
       Device.SampleSize = Settings.Default.SampleSize;
       // RegCtr_SampSize.Text = Device.SampleSize.ToString(); //bead maps
       Device.Outfilename = Settings.Default.SaveFileName;
@@ -51,9 +50,11 @@ namespace Ei_Dimension
         Device.MainCommand("Startup");
       Device.XAxisSel = Settings.Default.XAxisG;        //TODO: delete this, when refactor ReplyFromMC. only needed in legacy to build graphs
       Device.YAxisSel = Settings.Default.YAxisG;        //TODO: delete this, when refactor ReplyFromMC. only needed in legacy to build graphs
-      Device.HdnrTrans = Settings.Default.HDnrTrans;
+      MicroCy.InstrumentParameters.Calibration.HdnrTrans = Settings.Default.HDnrTrans;
+      MicroCy.InstrumentParameters.Calibration.Compensation = Settings.Default.Compensation;
       Device.MainCommand("Set Property", code: 0x97, parameter: 1170);  //set current limit of aligner motors if leds are off
       Device.MainCommand("Get Property", code: 0xca);
+      Device.StartingToReadWell += StartingToReadWellEventhandler;
       _dispatcherTimer = new DispatcherTimer();
       _dispatcherTimer.Tick += TimerTick;
       _dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 500);
@@ -294,7 +295,7 @@ namespace Ei_Dimension
           case "CompensationPercentageContent":
             if (float.TryParse(temp, out fRes))
             {
-              Device.Compensation = fRes;
+              MicroCy.InstrumentParameters.Calibration.Compensation = fRes;
               Settings.Default.Compensation = fRes;
             }
             break;
@@ -303,7 +304,7 @@ namespace Ei_Dimension
             {
               if (float.TryParse(temp, out fRes))
               {
-                Device.HDnrCoef = fRes;
+                MicroCy.InstrumentParameters.Calibration.HDnrCoef = fRes;
                 Device.MainCommand("Set FProperty", code: 0x20, fparameter: fRes);
               }
             }
@@ -311,7 +312,7 @@ namespace Ei_Dimension
             {
               if (float.TryParse(temp, out fRes))
               {
-                Device.HdnrTrans = fRes;
+                MicroCy.InstrumentParameters.Calibration.HdnrTrans = fRes;
                 Settings.Default.HDnrTrans = fRes;
               }
             }
@@ -521,7 +522,7 @@ namespace Ei_Dimension
               if (int.TryParse(temp, out iRes))
               {
                 Device.MainCommand("Set Property", code: 0x28, parameter: (ushort)iRes);
-                Device.TempGreenSsc = iRes;
+                MicroCy.InstrumentParameters.BiasAt30Temp.TempGreenSsc = iRes;
               }
             }
             if (SelectedTextBox.index == 1)
@@ -529,7 +530,7 @@ namespace Ei_Dimension
               if (int.TryParse(temp, out iRes))
               {
                 Device.MainCommand("Set Property", code: 0x29, parameter: (ushort)iRes);
-                Device.TempRpMaj = iRes;
+                MicroCy.InstrumentParameters.BiasAt30Temp.TempRpMaj = iRes;
               }
             }
             if (SelectedTextBox.index == 2)
@@ -537,7 +538,7 @@ namespace Ei_Dimension
               if (int.TryParse(temp, out iRes))
               {
                 Device.MainCommand("Set Property", code: 0x2a, parameter: (ushort)iRes);
-                Device.TempRpMin = iRes;
+                MicroCy.InstrumentParameters.BiasAt30Temp.TempRpMin = iRes;
               }
             }
             if (SelectedTextBox.index == 3)
@@ -545,7 +546,7 @@ namespace Ei_Dimension
               if (int.TryParse(temp, out iRes))
               {
                 Device.MainCommand("Set Property", code: 0x2c, parameter: (ushort)iRes);
-                Device.TempCl3 = iRes;
+                MicroCy.InstrumentParameters.BiasAt30Temp.TempCl3 = iRes;
               }
             }
             if (SelectedTextBox.index == 4)
@@ -553,7 +554,7 @@ namespace Ei_Dimension
               if (int.TryParse(temp, out iRes))
               {
                 Device.MainCommand("Set Property", code: 0x2d, parameter: (ushort)iRes);
-                Device.TempRedSsc = iRes;
+                MicroCy.InstrumentParameters.BiasAt30Temp.TempRedSsc = iRes;
               }
             }
             if (SelectedTextBox.index == 5)
@@ -561,7 +562,7 @@ namespace Ei_Dimension
               if (int.TryParse(temp, out iRes))
               {
                 Device.MainCommand("Set Property", code: 0x2e, parameter: (ushort)iRes);
-                Device.TempCl1 = iRes;
+                MicroCy.InstrumentParameters.BiasAt30Temp.TempCl1 = iRes;
               }
             }
             if (SelectedTextBox.index == 6)
@@ -569,7 +570,7 @@ namespace Ei_Dimension
               if (int.TryParse(temp, out iRes))
               {
                 Device.MainCommand("Set Property", code: 0x2f, parameter: (ushort)iRes);
-                Device.TempCl2 = iRes;
+                MicroCy.InstrumentParameters.BiasAt30Temp.TempCl2 = iRes;
               }
             }
             if (SelectedTextBox.index == 7)
@@ -577,7 +578,7 @@ namespace Ei_Dimension
               if (int.TryParse(temp, out iRes))
               {
                 Device.MainCommand("Set Property", code: 0x25, parameter: (ushort)iRes);
-                Device.TempVioletSsc = iRes;
+                MicroCy.InstrumentParameters.BiasAt30Temp.TempVioletSsc = iRes;
               }
             }
             if (SelectedTextBox.index == 8)
@@ -585,7 +586,7 @@ namespace Ei_Dimension
               if (int.TryParse(temp, out iRes))
               {
                 Device.MainCommand("Set Property", code: 0x26, parameter: (ushort)iRes);
-                Device.TempCl0 = iRes;
+                MicroCy.InstrumentParameters.BiasAt30Temp.TempCl0 = iRes;
               }
             }
             if (SelectedTextBox.index == 9)
@@ -898,14 +899,14 @@ namespace Ei_Dimension
             {
               if (byte.TryParse(temp, out bRes))
               {
-                Device.IdexPos = bRes;
+                MicroCy.InstrumentParameters.Idex.Pos = bRes;
               }
             }
             if (SelectedTextBox.index == 1)
             {
               if (ushort.TryParse(temp, out usRes))
               {
-                Device.IdexSteps = usRes;
+                MicroCy.InstrumentParameters.Idex.Steps = usRes;
               }
             }
             break;
@@ -930,7 +931,7 @@ namespace Ei_Dimension
 
     private static void TimerTick(object sender, EventArgs e)
     {
-      if (_isStartup)
+      if (_isStartup) //TODO: can be a Task launched from ctor, that polls if all instances are != null
       {
         MapRegions = new Models.MapRegions(
           Views.SelRegionsView.Instance.RegionsBorder,
@@ -1054,7 +1055,7 @@ namespace Ei_Dimension
               break;
             case 0x20:
               CalibrationViewModel.Instance.DNRContents[0] = exe.FParameter.ToString();
-              Device.HDnrCoef = exe.FParameter;
+              MicroCy.InstrumentParameters.Calibration.HDnrCoef = exe.FParameter;
               break;
             case 0x22:  //pressure
               double dd = exe.FParameter;
@@ -1526,7 +1527,6 @@ namespace Ei_Dimension
         case 4:
           {
             Device.WellNext();  //saves current well address for filename in state 5
-            ResultsViewModel.Instance.PlatePictogram.ChangeState(Device.ReadingRow, Device.ReadingCol, Models.WellType.NowReading);
             Device.EndState++;
             Console.WriteLine(string.Format("{0} Reporting Setting up next well", DateTime.Now.ToString()));
             //highling the current well on the plate on the screen
@@ -1621,8 +1621,8 @@ namespace Ei_Dimension
           BeadInfoStruct bead;
           while (Device.DataOut.TryDequeue(out bead))
           {
-            BinData(bead);
-            ResultsViewModel.Instance.Map.Add(new Models.HeatMapData((int)bead.cl1, (int)bead.cl2));
+            Core.DataProcessor.BinData(bead);
+            ResultsViewModel.Instance.CurrentMap.Add(new Models.HeatMapData((int)bead.cl1, (int)bead.cl2));
           }
           _histogramUpdateGoing = false;
         }));
@@ -1639,7 +1639,7 @@ namespace Ei_Dimension
           foreach (var result in Device.WellResults)
           {
             var index = MapRegions.RegionsList.IndexOf(result.regionNumber.ToString());
-            if (index == -1)
+            if (index == -1 || result.RP1vals.Count == 0)
               continue;
             MapRegions.ActiveRegionsCount[index] = result.RP1vals.Count().ToString();
             MapRegions.ActiveRegionsMean[index] = result.RP1vals.Average().ToString();
@@ -1660,52 +1660,15 @@ namespace Ei_Dimension
         Device.MainCommand("Get FProperty", code: 0x22);
     }
 
-    private static void BinData(BeadInfoStruct bead)
+    public static void StartingToReadWellEventhandler(object sender, EventArgs e)
     {
-      var ResVM = ResultsViewModel.Instance;
-      float MaxValue = (float)ResVM.Reporter[ResVM.Reporter.Count - 1].Argument;
-      //overflow protection
-      bead.fsc = bead.fsc < MaxValue ? bead.fsc : MaxValue;
-      bead.violetssc = bead.violetssc < MaxValue ? bead.violetssc : MaxValue;
-      bead.redssc = bead.redssc < MaxValue ? bead.redssc : MaxValue;
-      bead.greenssc = bead.greenssc < MaxValue ? bead.greenssc : MaxValue;
-      bead.reporter = bead.reporter < MaxValue ? bead.reporter : MaxValue;
+      ResultsViewModel.Instance.PlatePictogram.ChangeState(Device.ReadingRow, Device.ReadingCol, Models.WellType.NowReading);
 
-      bool fscDone = false;
-      bool violetDone = false;
-      bool redDone = false;
-      bool greenDone = false;
-      bool reporterDone = false;
-      for (var i = 0; i < ResVM.Reporter.Count; i++)
+      ResultsViewModel.Instance.ClearGraphs();
+      for (var i = 0; i < MapRegions.ActiveRegionsCount.Count; i++)
       {
-        float currentValue = (float)ResVM.Reporter[i].Argument;
-        if (!fscDone && bead.fsc <= currentValue)
-        {
-          ResVM.ForwardSsc[i].Value++;
-          fscDone = true;
-        }
-        if (!violetDone && bead.violetssc <= currentValue)
-        {
-          ResVM.VioletSsc[i].Value++;
-          violetDone = true;
-        }
-        if (!redDone && bead.redssc <= currentValue)
-        {
-          ResVM.RedSsc[i].Value++;
-          redDone = true;
-        }
-        if (!greenDone && bead.greenssc <= currentValue)
-        {
-          ResVM.GreenSsc[i].Value++;
-          greenDone = true;
-        }
-        if (!reporterDone && bead.reporter <= currentValue)
-        {
-          ResVM.Reporter[i].Value++;
-          reporterDone = true;
-        }
-        if (fscDone && violetDone && redDone && greenDone && reporterDone)
-          break;
+        MapRegions.ActiveRegionsCount[i] = "0";
+        MapRegions.ActiveRegionsMean[i] = "0";
       }
     }
   }

@@ -74,3 +74,7 @@ TimerTick looks like not the best option. should be used only to update UI. prog
 
 App.ChangeDrawingPlateState() - controls resultsView plate pictogram.
   Not sure how to detect last well, so it doesn't go overboard.
+
+case "ClassificationTargetsContents": (CalibrationView Classification Targets)
+  adds a point to XY plot. what is it?
+  Save Calibration to current map button is viable?

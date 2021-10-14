@@ -69,14 +69,16 @@ namespace Ei_Dimension.Models
       DrawingWells[row].SetType(col, type);
     }
 
-    public void SelectedCellChanged() //probably should be a VM function
+    public (int,int) SelectedCell() //probably should be a VM function
     {
       var SelectedCell = _drawingGrid.CurrentCell;
       if (SelectedCell.IsValid)
       {
-        ((WellTableRow)SelectedCell.Item).SetType(SelectedCell.Column.DisplayIndex, WellType.Success);
+        return (((WellTableRow)SelectedCell.Item).Index, SelectedCell.Column.DisplayIndex);
       }
+      throw new Exception("CurrentCell is null");
     }
+
     public void SetGrid(DataGrid grid)
     {
       if (!_gridSet)

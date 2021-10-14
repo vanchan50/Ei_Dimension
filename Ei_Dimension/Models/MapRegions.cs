@@ -67,8 +67,8 @@ namespace Ei_Dimension.Models
         RegionsList.Add(region.regionNumber.ToString());
         RegionsNamesList.Add("");
         ActiveRegions.Add(false);
-        ActiveRegionsCount.Add("");
-        ActiveRegionsMean.Add("");
+        ActiveRegionsCount.Add("0");
+        ActiveRegionsMean.Add("0");
         AddTextboxes($"RegionsList[{i}]", $"RegionsNamesList[{i}]");
         i++;
       }
