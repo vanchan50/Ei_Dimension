@@ -228,5 +228,339 @@
            Width="430" Height="40"
            Source="/Icons/dimension flow analyzer logo.png"
            RenderOptions.BitmapScalingMode="HighQuality"/>
+    
+    <!--Plate pictogram-->
+    <Border Width="760" Height="524"
+            Margin="1140,10,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top">
+      <Grid Name="Plate">
+        <StackPanel Orientation="Horizontal"
+                    Margin="56,-10,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Height="43">
+          <TextBlock Text="1"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="40"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"/>
+          <TextBlock Text="2"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="40"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="46,0,0,0"/>
+          <TextBlock Text="3"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="40"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="38,0,0,0"/>
+          <TextBlock Text="4"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="40"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="36,0,0,0"/>
+          <TextBlock Text="5"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="40"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="40,0,0,0"/>
+          <TextBlock Text="6"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="40"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="40,0,0,0"/>
+          <TextBlock Text="7"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="40"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="40,0,0,0"/>
+          <TextBlock Text="8"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="40"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="40,0,0,0"/>
+          <TextBlock Text="9"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="40"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="38,0,0,0"/>
+          <TextBlock Text="10"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="40"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="30,0,0,0"/>
+          <TextBlock Text="11"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="40"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="26,0,0,0"/>
+          <TextBlock Text="12"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="40"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="28,0,0,0"/>
+        </StackPanel>
+        <StackPanel HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Margin="0,38,0,0"
+                    Width="33">
+          <TextBlock Text="A"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="40"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"/>
+          <TextBlock Text="B"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="40"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="0,10,0,0"/>
+          <TextBlock Text="C"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="40"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="0,6,0,0"/>
+          <TextBlock Text="D"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="40"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="0,6,0,0"/>
+          <TextBlock Text="E"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="40"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="0,6,0,0"/>
+          <TextBlock Text="F"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="40"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="0,8,0,0"/>
+          <TextBlock Text="G"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="40"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="0,8,0,0"/>
+          <TextBlock Text="H"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="40"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="0,6,0,0"/>
+        </StackPanel>
+        <DataGrid SelectionMode="Single"
+                  SelectionUnit="Cell"
+                  AutoGenerateColumns="False"
+                  ItemsSource="{Binding PlatePictogram.DrawingWells}"
+                  HeadersVisibility="None"
+                  Background="Transparent"
+                  RowBackground="Transparent"
+                  AlternatingRowBackground="Transparent"
+                  GridLinesVisibility="None"
+                  CanUserResizeColumns="False"
+                  CanUserResizeRows="False"
+                  CanUserReorderColumns="False"
+                  CanUserDeleteRows="False"
+                  CanUserSortColumns="False"
+                  BorderThickness="2"
+                  BorderBrush="Black"
+                  HorizontalAlignment="Left"
+                  VerticalAlignment="Top"
+                  Margin="33,37,0,0">
+          <DataGrid.Resources>
+            <Style x:Key="{ComponentResourceKey ResourceId=DataGridSelectAllButtonStyle, TypeInTargetAssembly={x:Type DataGrid}}"
+                   TargetType="{x:Type Button}">
+              <Setter Property="Template">
+                <Setter.Value>
+                  <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid>
+                      <ContentPresenter/>
+                    </Grid>
+                  </ControlTemplate>
+                </Setter.Value>
+              </Setter>
+            </Style>
+          </DataGrid.Resources>
+          <dxmvvm:Interaction.Behaviors>
+            <dxmvvm:EventToCommand EventName="CurrentCellChanged"
+                                   Command="{Binding PlatePictogram.SelectedCellChangedCommand}"/>
+          </dxmvvm:Interaction.Behaviors>
+          <DataGrid.CellStyle>
+            <Style TargetType="{x:Type DataGridCell}">
+              <Setter Property="Template">
+                <Setter.Value>
+                  <ControlTemplate TargetType="DataGridCell">
+                    <Border x:Name="border" Width="60">
+                      <ContentPresenter />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                      <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsSelected}"
+                               Value="true">
+                        <Setter TargetName="border" Property="Background"
+                                Value="{StaticResource RibbonBackgroundActive}"/>
+                      </DataTrigger>
+                    </ControlTemplate.Triggers>
+                  </ControlTemplate>
+                </Setter.Value>
+              </Setter>
+            </Style>
+          </DataGrid.CellStyle>
+          <DataGrid.Columns>
+            <DataGridTemplateColumn Header="1" Width="SizeToCells"
+                                IsReadOnly="True">
+              <DataGridTemplateColumn.CellTemplate>
+                <DataTemplate>
+                  <Image Source="{Binding Images[0]}"/>
+                </DataTemplate>
+              </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+            <DataGridTemplateColumn Header="2" Width="SizeToCells"
+                                IsReadOnly="True">
+              <DataGridTemplateColumn.CellTemplate>
+                <DataTemplate>
+                  <Image Source="{Binding Images[1]}"/>
+                </DataTemplate>
+              </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+            <DataGridTemplateColumn Header="3" Width="SizeToCells"
+                                IsReadOnly="True">
+              <DataGridTemplateColumn.CellTemplate>
+                <DataTemplate>
+                  <Image Source="{Binding Images[2]}"/>
+                </DataTemplate>
+              </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+            <DataGridTemplateColumn Header="4" Width="SizeToCells"
+                                IsReadOnly="True">
+              <DataGridTemplateColumn.CellTemplate>
+                <DataTemplate>
+                  <Image Source="{Binding Images[3]}"/>
+                </DataTemplate>
+              </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+            <DataGridTemplateColumn Header="5" Width="SizeToCells"
+                                IsReadOnly="True">
+              <DataGridTemplateColumn.CellTemplate>
+                <DataTemplate>
+                  <Image Source="{Binding Images[4]}"/>
+                </DataTemplate>
+              </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+            <DataGridTemplateColumn Header="6" Width="SizeToCells"
+                                IsReadOnly="True">
+              <DataGridTemplateColumn.CellTemplate>
+                <DataTemplate>
+                  <Image Source="{Binding Images[5]}"/>
+                </DataTemplate>
+              </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+            <DataGridTemplateColumn Header="7" Width="SizeToCells"
+                                IsReadOnly="True">
+              <DataGridTemplateColumn.CellTemplate>
+                <DataTemplate>
+                  <Image Source="{Binding Images[6]}"/>
+                </DataTemplate>
+              </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+            <DataGridTemplateColumn Header="8" Width="SizeToCells"
+                                IsReadOnly="True">
+              <DataGridTemplateColumn.CellTemplate>
+                <DataTemplate>
+                  <Image Source="{Binding Images[7]}"/>
+                </DataTemplate>
+              </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+            <DataGridTemplateColumn Header="9" Width="SizeToCells"
+                                IsReadOnly="True">
+              <DataGridTemplateColumn.CellTemplate>
+                <DataTemplate>
+                  <Image Source="{Binding Images[8]}"/>
+                </DataTemplate>
+              </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+            <DataGridTemplateColumn Header="10" Width="SizeToCells"
+                                IsReadOnly="True">
+              <DataGridTemplateColumn.CellTemplate>
+                <DataTemplate>
+                  <Image Source="{Binding Images[9]}"/>
+                </DataTemplate>
+              </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+            <DataGridTemplateColumn Header="11" Width="SizeToCells"
+                                IsReadOnly="True">
+              <DataGridTemplateColumn.CellTemplate>
+                <DataTemplate>
+                  <Image Source="{Binding Images[10]}"/>
+                </DataTemplate>
+              </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+            <DataGridTemplateColumn Header="12" Width="SizeToCells"
+                                IsReadOnly="True">
+              <DataGridTemplateColumn.CellTemplate>
+                <DataTemplate>
+                  <Image Source="{Binding Images[11]}"/>
+                </DataTemplate>
+              </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+          </DataGrid.Columns>
+        </DataGrid>
+      </Grid>
+    </Border>
   </Grid>
 </UserControl>

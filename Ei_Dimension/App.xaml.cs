@@ -17,12 +17,14 @@ namespace Ei_Dimension
     public static (PropertyInfo prop, object VM, int index) SelectedTextBox { get; set; }
     public static MicroCyDevice Device { get; private set; }
     public static Models.MapRegions MapRegions { get; set; }  //Performs operations on injected views
+    //public static Models.PlateWell[,] PlateDrawing { get; private set; }
 
     private static DispatcherTimer _dispatcherTimer;
     private static bool _workOrderPending;
     private static bool _cancelKeyboardInjectionFlag;
     private static bool _histogramUpdateGoing;
     private static bool _ActiveRegionsUpdateGoing;
+    private static bool _isStartup;
     public App()
     {
       _cancelKeyboardInjectionFlag = false;
@@ -59,6 +61,7 @@ namespace Ei_Dimension
       _workOrderPending = false;
       _histogramUpdateGoing = false;
       _ActiveRegionsUpdateGoing = false;
+      _isStartup = true;
     }
 
     public static int GetActiveMapIndex()
@@ -927,13 +930,17 @@ namespace Ei_Dimension
 
     private static void TimerTick(object sender, EventArgs e)
     {
-      if(MapRegions == null)
+      if (_isStartup)
+      {
         MapRegions = new Models.MapRegions(
           Views.SelRegionsView.Instance.RegionsBorder,
           Views.SelRegionsView.Instance.RegionsNamesBorder,
           Views.ResultsView.Instance.Table,
           Views.DashboardView.Instance.DbActiveRegionNo,
           Views.DashboardView.Instance.DbActiveRegionName);
+        ResultsViewModel.Instance.PlatePictogram.SetGrid((System.Windows.Controls.DataGrid)Views.ResultsView.Instance.Plate.Children[2]);
+        _isStartup = false;
+      }
       TextBoxUpdater();
       HistogramHandler();
       ActiveRegionsStatsHandler();
@@ -1490,6 +1497,7 @@ namespace Ei_Dimension
             Device.SavBeadCount = Device.BeadCount;   //save for stats
             Device.SavingWellIdx = Device.CurrentWellIdx; //save the index of the currrent well for background file save
             Device.MainCommand("End Sampling");    //sends message to instrument to stop sampling
+            ResultsViewModel.Instance.PlatePictogram.ChangeState(Device.ReadingRow, Device.ReadingCol, Models.WellType.Success);
             Device.EndState++;
             Console.WriteLine(string.Format("{0} Reporting End Sampling", DateTime.Now.ToString()));
             break;
@@ -1517,7 +1525,8 @@ namespace Ei_Dimension
           }
         case 4:
           {
-            Device.WellNext();   //saves current well address for filename in state 5
+            Device.WellNext();  //saves current well address for filename in state 5
+            ResultsViewModel.Instance.PlatePictogram.ChangeState(Device.ReadingRow, Device.ReadingCol, Models.WellType.NowReading);
             Device.EndState++;
             Console.WriteLine(string.Format("{0} Reporting Setting up next well", DateTime.Now.ToString()));
             //highling the current well on the plate on the screen

@@ -11,6 +11,8 @@ namespace Ei_Dimension.Models
     Empty,
     Standard,
     Control,
-    Unknown
+    Unknown,
+    NowReading,
+    Success
   }
 }

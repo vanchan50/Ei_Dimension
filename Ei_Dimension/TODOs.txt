@@ -67,5 +67,10 @@ when saving template, offer defaultname as previously loaded name. so user kind 
 
 TimerTick looks like not the best option. should be used only to update UI. program logic should be on a separate thread?
 
-reporter goes to another checkbox, XY goes down, Table goes to list of rows nearby;
+
   plateprogress or controls show on the rightside, depending if tube or wells is selected
+
+  experimentVM behaviour should be done in codeBehind
+
+App.ChangeDrawingPlateState() - controls resultsView plate pictogram.
+  Not sure how to detect last well, so it doesn't go overboard.

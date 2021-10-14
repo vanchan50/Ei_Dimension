@@ -167,6 +167,7 @@ namespace Ei_Dimension.ViewModels
       App.Device.PlateReport = new MicroCy.PlateReport(); //TODO: optimize, not needed here
       App.Device.MainCommand("Get FProperty", code: 0x20); //get high dnr property
       ResultsViewModel.Instance.ClearGraphs();
+      ResultsViewModel.Instance.PlatePictogram.Clear();
       ResultsViewModel.Instance.Map.Clear();
 
       SetWellsInOrder();
@@ -185,6 +186,7 @@ namespace Ei_Dimension.ViewModels
       App.Device.MainCommand("Aspirate Syringe A"); //handles down and pickup sample
       App.Device.WellNext();   //save well numbers for file name
       App.Device.InitBeadRead(App.Device.ReadingRow, App.Device.ReadingCol);   //gets output file redy
+      ResultsViewModel.Instance.PlatePictogram.ChangeState(App.Device.ReadingRow, App.Device.ReadingCol, WellType.NowReading); //Results well display
       App.Device.ClearSummary();
 
       if (App.Device.WellsToRead == 0)    //only one well in region
@@ -316,7 +318,6 @@ namespace Ei_Dimension.ViewModels
       }
       else if (WellsSelectViewModel.Instance.CurrentTableSize == 1)  //tube
         App.Device.WellsInOrder.Add(MakeWell(0, 0));    //a 1 record work order
-
     }
 
     private void EndReadVisibilitySwitch()

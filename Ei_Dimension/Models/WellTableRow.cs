@@ -11,23 +11,15 @@ namespace Ei_Dimension.Models
     public ObservableCollection<string> Images { get; set; }
     public List<WellType> Types { get; set; }
 
-    private readonly Dictionary<WellType, string> _stateDict;
-
     public WellTableRow(int rowIndex, int size)
     {
-      _stateDict = new Dictionary<WellType, string>();
-      _stateDict.Add(WellType.Empty, @"/Icons/Empty_Well.png");
-      _stateDict.Add(WellType.Standard, @"/Icons/Filled_Well.png");
-      _stateDict.Add(WellType.Control, @"pack://application:,,,/DevExpress.Images.v21.1;component/Images/Media/Media_32x32.png");
-      _stateDict.Add(WellType.Unknown, @"pack://application:,,,/DevExpress.Images.v21.1;component/Images/Find/Find_32x32.png");
-
       Index = rowIndex;
       Header = Convert.ToChar('A' + Index).ToString();
       Images = new ObservableCollection<string>();
       Types = new List<WellType>(size);
       for (var i = 0; i < size; i++)
       {
-        Images.Add(_stateDict[WellType.Empty]);
+        Images.Add(Image(WellType.Empty));
         Types.Add(WellType.Empty);
       }
     }
@@ -35,7 +27,34 @@ namespace Ei_Dimension.Models
     public void SetType(int index, WellType type)
     {
       Types[index] = type;
-      Images[index] = _stateDict[Types[index]];
+      Images[index] = Image(type);
+    }
+    
+    private static string Image(WellType type)
+    {
+      string ret = "";
+      switch (type)
+      {
+        case WellType.Empty:
+          ret = @"/Icons/Empty_Well.png";
+          break;
+        case WellType.Standard:
+          ret = @"/Icons/Filled_Well.png";
+          break;
+        case WellType.Control:
+          ret = @"pack://application:,,,/DevExpress.Images.v21.1;component/Images/Media/Media_32x32.png";
+          break;
+        case WellType.Unknown:
+          ret = @"pack://application:,,,/DevExpress.Images.v21.1;component/Images/Find/Find_32x32.png";
+          break;
+        case WellType.NowReading:
+          ret = @"pack://application:,,,/DevExpress.Images.v21.1;component/SvgImages/Outlook Inspired/GettingStarted.svg";
+          break;
+        case WellType.Success:
+          ret = @"pack://application:,,,/DevExpress.Images.v21.1;component/SvgImages/Icon Builder/Actions_CheckCircled.svg";
+          break;
+      }
+      return ret;
     }
   }
 }

@@ -122,6 +122,7 @@
     <Compile Include="Core\DataProcessor.cs" />
     <Compile Include="Core\ObservableObject.cs" />
     <Compile Include="Models\AcquisitionTemplate.cs" />
+    <Compile Include="Models\DrawingPlate.cs" />
     <Compile Include="Models\DropdownStrings.cs" />
     <Compile Include="Models\HeatMapData.cs" />
     <Compile Include="Models\HistogramData.cs" />

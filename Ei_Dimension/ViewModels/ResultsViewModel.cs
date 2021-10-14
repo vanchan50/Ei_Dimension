@@ -20,6 +20,7 @@ namespace Ei_Dimension.ViewModels
     public virtual ObservableCollection<HistogramData<int, int>> CL2 { get; set; }
     public virtual ObservableCollection<HistogramData<int, int>> CL3 { get; set; }
     public virtual ObservableCollection<HeatMapData> Map { get; set; }
+    public virtual DrawingPlate PlatePictogram { get; set; }
     public static ResultsViewModel Instance { get; private set; }
 
     protected ResultsViewModel()
@@ -50,6 +51,8 @@ namespace Ei_Dimension.ViewModels
       }
 
       Map = new ObservableCollection<HeatMapData>();
+
+      PlatePictogram = DrawingPlate.Create();
     }
 
     public static ResultsViewModel Create()
@@ -68,5 +71,6 @@ namespace Ei_Dimension.ViewModels
         Reporter[i].Value = 0;
       }
     }
+
   }
 }
