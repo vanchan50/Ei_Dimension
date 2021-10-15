@@ -44,7 +44,7 @@ namespace Ei_Dimension.ViewModels
     public virtual ObservableCollection<HistogramData<int, int>> BackingCL3 { get; set; }
     public virtual ObservableCollection<HeatMapData> BackingMap { get; set; }
     public virtual DrawingPlate PlatePictogram { get; set; }
-    public (int row, int col) SelectedWell;
+    public (int row, int col) SelectedWell { get; set; }  //TODO: fordeletion
     public static ResultsViewModel Instance { get; private set; }
 
     private string _savedFilesLocation = App.Device.Outdir;
@@ -236,6 +236,26 @@ namespace Ei_Dimension.ViewModels
         DisplayedCL3 = BackingCL3;
         DisplayedMap = BackingMap;
       }
+    }
+
+    public void LoadButtonClick()
+    {
+      DashboardViewModel.Instance.LoadButtonClick();
+    }
+
+    public void EjectButtonClick()
+    {
+      DashboardViewModel.Instance.EjectButtonClick();
+    }
+
+    public void StartButtonClick()
+    {
+      DashboardViewModel.Instance.StartButtonClick();
+    }
+
+    public void EndButtonClick()
+    {
+      DashboardViewModel.Instance.EndButtonClick();
     }
   }
 }

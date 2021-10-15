@@ -69,6 +69,14 @@ namespace Ei_Dimension.Models
       DrawingWells[row].SetType(col, type);
     }
 
+    public void SetWellsForReading(List<MicroCy.Wells> wells)
+    {
+      foreach(var well in wells)
+      {
+        ChangeState(well.rowIdx, well.colIdx, WellType.ReadyForReading);
+      }
+    }
+
     public (int,int) SelectedCell() //probably should be a VM function
     {
       var SelectedCell = _drawingGrid.CurrentCell;

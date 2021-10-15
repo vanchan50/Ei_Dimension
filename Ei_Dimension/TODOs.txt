@@ -63,7 +63,6 @@ wellresults[i].RP1vals.Average(); - mean
 BinData() add CL0-CL3 binning, probably to other bins than up to mil. up to 32k
 
 save template name somewhere, also display somewhere. fill it when template loaded.
-when saving template, offer defaultname as previously loaded name. so user kind of knows which template they used
 
 TimerTick looks like not the best option. should be used only to update UI. program logic should be on a separate thread?
 
@@ -78,3 +77,9 @@ App.ChangeDrawingPlateState() - controls resultsView plate pictogram.
 case "ClassificationTargetsContents": (CalibrationView Classification Targets)
   adds a point to XY plot. what is it?
   Save Calibration to current map button is viable?
+
+ready to be read, being read, succesfully read empty;
+  green -evetyhing was fine\light red at -at leas one region did not reach target nuber of beads but at least 75% \dark red - else
+
+
+  Ellipse is a transform of circle -> scale + rotation (or skew?)

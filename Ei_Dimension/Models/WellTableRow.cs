@@ -45,13 +45,22 @@ namespace Ei_Dimension.Models
           ret = @"pack://application:,,,/DevExpress.Images.v21.1;component/Images/Media/Media_32x32.png";
           break;
         case WellType.Unknown:
-          ret = @"pack://application:,,,/DevExpress.Images.v21.1;component/Images/Find/Find_32x32.png";
+          ret = @"pack://application:,,,/DevExpress.Images.v21.1;component/SvgImages/Icon Builder/Actions_Question.svg";
+          break;
+        case WellType.ReadyForReading:
+          ret = @"pack://application:,,,/DevExpress.Images.v21.1;component/SvgImages/DiagramIcons/BindingEditorHelpIcon.svg";
           break;
         case WellType.NowReading:
           ret = @"pack://application:,,,/DevExpress.Images.v21.1;component/SvgImages/Outlook Inspired/GettingStarted.svg";
           break;
         case WellType.Success:
           ret = @"pack://application:,,,/DevExpress.Images.v21.1;component/SvgImages/Icon Builder/Actions_CheckCircled.svg";
+          break;
+        case WellType.LightFail:
+          ret = @"pack://application:,,,/DevExpress.Images.v21.1;component/SvgImages/Icon Builder/Security_WarningCircled2.svg";
+          break;
+        case WellType.Fail:
+          ret = @"pack://application:,,,/DevExpress.Images.v21.1;component/SvgImages/XAF/State_Validation_Invalid.svg";
           break;
       }
       return ret;

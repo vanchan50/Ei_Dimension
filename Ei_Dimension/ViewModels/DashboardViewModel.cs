@@ -166,15 +166,16 @@ namespace Ei_Dimension.ViewModels
       App.Device.MainCommand("Get FProperty", code: 0x68);
       App.Device.PlateReport = new MicroCy.PlateReport(); //TODO: optimize, not needed here
       App.Device.MainCommand("Get FProperty", code: 0x20); //get high dnr property
-      ResultsViewModel.Instance.ClearGraphs();
-      ResultsViewModel.Instance.PlatePictogram.Clear();
-      ResultsViewModel.Instance.PlotCurrent();
 
       SetWellsInOrder();
 
       if (App.Device.WellsInOrder.Count < 1)
         return;
       StartButtonEnabled = false;
+      ResultsViewModel.Instance.ClearGraphs();
+      ResultsViewModel.Instance.PlotCurrent();
+      ResultsViewModel.Instance.PlatePictogram.Clear();
+      ResultsViewModel.Instance.PlatePictogram.SetWellsForReading(App.Device.WellsInOrder);
 
       App.Device.WellsToRead = App.Device.WellsInOrder.Count - 1;    //make zero based like well index is
       App.Device.SetAspirateParamsForWell(0);  //setup for first read
@@ -184,8 +185,7 @@ namespace Ei_Dimension.ViewModels
       App.Device.MainCommand("Aspirate Syringe A"); //handles down and pickup sample
       App.Device.WellNext();   //save well numbers for file name
       App.Device.InitBeadRead(App.Device.ReadingRow, App.Device.ReadingCol);   //gets output file redy
-      ResultsViewModel.Instance.SelectedWell = (App.Device.ReadingRow, App.Device.ReadingCol);
-      ResultsViewModel.Instance.PlatePictogram.ChangeState(App.Device.ReadingRow, App.Device.ReadingCol, WellType.NowReading); //Results well display
+      ResultsViewModel.Instance.SelectedWell = (App.Device.ReadingRow, App.Device.ReadingCol);  //TODO: fordeletion
       App.Device.ClearSummary();
 
       if (App.Device.WellsToRead == 0)    //only one well in region
