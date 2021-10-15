@@ -60,7 +60,7 @@ results page table should display mean and current stats for the current well be
 wellresults[i].RP1vals.Count(); - count
 wellresults[i].RP1vals.Average(); - mean
 
-BinData() add CL0-CL3 binning, probably to other bins than up to mil. up to 50/100k?
+BinData() add CL0-CL3 binning, probably to other bins than up to mil. up to 32k
 
 save template name somewhere, also display somewhere. fill it when template loaded.
 when saving template, offer defaultname as previously loaded name. so user kind of knows which template they used

@@ -21,6 +21,7 @@ namespace Ei_Dimension.ViewModels
     public string DialogFilter { get; set; }
     public string DialogTitleLoad { get; set; }
     public string DialogTitleSave { get; set; }
+    private string _templateName;
     private INavigationService NavigationService => this.GetService<INavigationService>();
     private IOpenFileDialogService OpenFileDialogService => this.GetService<IOpenFileDialogService>();
     private ISaveFileDialogService SaveFileDialogService => this.GetService<ISaveFileDialogService>();
@@ -146,6 +147,7 @@ namespace Ei_Dimension.ViewModels
               }
               App.MapRegions.RegionsNamesList[i] = newTemplate.RegionsNamesList[i];
             }
+            _templateName = file.Substring(file.LastIndexOf('\\') + 1);
           }
           catch { }
         }
@@ -159,7 +161,8 @@ namespace Ei_Dimension.ViewModels
       SaveFileDialogService.FilterIndex = 1;
       SaveFileDialogService.Title = DialogTitleSave;
       SaveFileDialogService.DefaultExt = "json";
-      //  SaveFileDialogService.DefaultFileName = DefaultFileName;
+      if (_templateName != null)
+        SaveFileDialogService.DefaultFileName = _templateName;
       if (SaveFileDialogService.ShowDialog())
       {
         try
