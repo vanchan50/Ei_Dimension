@@ -8,8 +8,10 @@ namespace Ei_Dimension.ViewModels
   [POCOViewModel]
   public class SelRegionsViewModel
   {
+    public static SelRegionsViewModel Instance { get; private set; }
     protected SelRegionsViewModel()
     {
+      Instance = this;
     }
 
     public static SelRegionsViewModel Create()

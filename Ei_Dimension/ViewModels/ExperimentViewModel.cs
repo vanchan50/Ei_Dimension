@@ -137,6 +137,15 @@ namespace Ei_Dimension.ViewModels
               else
                 FileSaveViewModel.Instance.UncheckedBox(i); ;
             }
+            for(var i = 0; i < App.MapRegions.ActiveRegions.Count; i++)
+            {
+              if (newTemplate.ActiveRegions[i])
+              {
+                App.MapRegions.SelectedRegionTextboxIndex = i;
+                SelRegionsViewModel.Instance.AddActiveRegion(1);
+              }
+              App.MapRegions.RegionsNamesList[i] = newTemplate.RegionsNamesList[i];
+            }
           }
           catch { }
         }
@@ -178,6 +187,8 @@ namespace Ei_Dimension.ViewModels
               checkboxes += (uint)currVal;
             }
             temp.FileSaveCheckboxes = checkboxes;
+            temp.ActiveRegions.AddRange(App.MapRegions.ActiveRegions);
+            temp.RegionsNamesList.AddRange(App.MapRegions.RegionsNamesList);
             var contents = JsonConvert.SerializeObject(temp);
             _ = stream.WriteAsync(contents);
           }
