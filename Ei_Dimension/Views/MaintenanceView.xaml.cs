@@ -23,5 +23,10 @@ namespace Ei_Dimension.Views
     {
       InitializeComponent();
     }
+
+    private void UserControl_Loaded(object sender, RoutedEventArgs e)
+    {
+      CalButton.IsChecked = true;
+    }
   }
 }

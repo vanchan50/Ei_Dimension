@@ -25,5 +25,14 @@ namespace Ei_Dimension.Views
       InitializeComponent();
     }
 
+    private void DbTube_Click(object sender, RoutedEventArgs e)
+    {
+      DbButton.IsChecked = true;
+    }
+
+    private void UserControl_Loaded(object sender, RoutedEventArgs e)
+    {
+      DbButton.IsChecked = true;
+    }
   }
 }

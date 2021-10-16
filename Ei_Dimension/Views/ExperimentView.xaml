@@ -13,7 +13,8 @@
              xmlns:System="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d"
              DataContext="{dxmvvm:ViewModelSource Type={x:Type ViewModels:ExperimentViewModel}}"
-             d:DesignHeight="944" d:DesignWidth="1920">
+             d:DesignHeight="944" d:DesignWidth="1920"
+             Loaded="UserControl_Loaded">
   <dxmvvm:Interaction.Triggers>
     <dxmvvm:EventToCommand EventName="Initialized" Command="{Binding InitChildrenCommand}"/>
   </dxmvvm:Interaction.Triggers>
@@ -45,7 +46,7 @@
                    img:EmbeddedImg.Image="/Icons/syringe speeds icon.png"
                    Command="{Binding NavigateDashboardCommand}"/>
       <RadioButton Content="{lang:Loc Experiment_Sel_Active_Region}"
-                   Height="84"
+                   Height="84" Name="SelRegButton"
                    img:EmbeddedImg.Image="/Icons/components icon.png"
                    Style="{StaticResource SubRibbonButtonStyle}"
                    Command="{Binding NavigateSelRegionsCommand}"/>
@@ -60,7 +61,7 @@
                    Style="{StaticResource DashboardButtonStyle}"
                    Command="{Binding SaveTemplateCommand}"/>
       <RadioButton Content="{lang:Loc Experiment_FileSave}"
-                   Height="84"
+                   Height="84" Name="SelFileButton"
                    img:EmbeddedImg.Image="{dx:DXImage 'SvgImages/Reports/PrintPageRange.svg'}"
                    Style="{StaticResource SubRibbonButtonStyle}"
                    Command="{Binding NavigateFileSaveCommand}"/>
@@ -109,10 +110,11 @@
               </RadioButton>
             </StackPanel>
             <RadioButton GroupName="SelectWellGroup"
-                     Content="{lang:Loc Experiment_Tube}"
-                     Height="84" Name="DbTube"
-                     Style="{StaticResource SubRibbonButtonStyle}"
-                     Command="{Binding NavigateWellsSelectCommand}">
+                         Content="{lang:Loc Experiment_Tube}"
+                         Height="84" Name="DbTube"
+                         Click="DbTube_Click"
+                         Style="{StaticResource SubRibbonButtonStyle}"
+                         Command="{Binding NavigateWellsSelectCommand}">
               <RadioButton.CommandParameter>
                 <System:Int32>1</System:Int32>
               </RadioButton.CommandParameter>

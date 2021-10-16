@@ -13,7 +13,8 @@
              xmlns:img="clr-namespace:Ei_Dimension.Styles"
              mc:Ignorable="d"
              DataContext="{dxmvvm:ViewModelSource Type=ViewModels:ServiceViewModel}"
-             d:DesignHeight="944" d:DesignWidth="1920">
+             d:DesignHeight="944" d:DesignWidth="1920"
+             Loaded="UserControl_Loaded">
   <dxmvvm:Interaction.Triggers>
     <dxmvvm:EventToCommand EventName="Initialized" Command="{Binding InitChildrenCommand}"/>
   </dxmvvm:Interaction.Triggers>
@@ -24,7 +25,7 @@
                 Width="240"
                 HorizontalAlignment="Left">
       <RadioButton Content="{lang:Loc Service_Motors}"
-                   Height="84"
+                   Height="84" Name="MotorsButton"
                    IsChecked="True"
                    img:EmbeddedImg.Image="/Icons/motors icon.png"
                    Style="{DynamicResource SubRibbonButtonStyle}"
