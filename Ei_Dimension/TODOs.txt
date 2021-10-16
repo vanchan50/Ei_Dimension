@@ -83,3 +83,11 @@ ready to be read, being read, succesfully read empty;
 
 
   Ellipse is a transform of circle -> scale + rotation (or skew?)
+
+Fixed a bug, also present in Legacy: second press of END button results in crash by SetReadingParamsForWell() accesing index+1
+  State machine should not be active at all, if measurement is inactive
+
+Fixed a TerminationReadyCheck() possible bug scenario, where assuming EndRegion = 1 could fuck up state machine
+
+Device.TerminationReadyCheck() case 1
+  looks wrong. don't copy EndRead button function here? why not?

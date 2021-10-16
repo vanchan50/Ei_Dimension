@@ -55,6 +55,8 @@ namespace Ei_Dimension
       Device.MainCommand("Set Property", code: 0x97, parameter: 1170);  //set current limit of aligner motors if leds are off
       Device.MainCommand("Get Property", code: 0xca);
       Device.StartingToReadWell += StartingToReadWellEventhandler;
+      Device.FinishedReadingWell += FinishedReadingWellEventhandler;
+      Device.FinishedMeasurement += FinishedMeasurementEventhandler;
       _dispatcherTimer = new DispatcherTimer();
       _dispatcherTimer.Tick += TimerTick;
       _dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 500);
@@ -943,11 +945,13 @@ namespace Ei_Dimension
         _isStartup = false;
       }
       TextBoxUpdater();
-      HistogramHandler();
-      ActiveRegionsStatsHandler();
-      UpdateEventCounter();
-      UpdatePressureMonitor();
-      WellStateHandler();
+      if (Device.IsMeasurementGoing)
+      {
+        HistogramHandler();
+        ActiveRegionsStatsHandler();
+        UpdateEventCounter();
+        WellStateHandler();
+      }
       WorkOrderHandler();
       //TODO: REmove: for map construction in another program
       /*
@@ -1486,6 +1490,8 @@ namespace Ei_Dimension
           DataAnalysisViewModel.Instance.CvItems[i] = Device.GStats[i].cv.ToString();
         }
       }
+
+      UpdatePressureMonitor();
     }
 
     private static void WellStateHandler()
@@ -1498,7 +1504,6 @@ namespace Ei_Dimension
             Device.SavBeadCount = Device.BeadCount;   //save for stats
             Device.SavingWellIdx = Device.CurrentWellIdx; //save the index of the currrent well for background file save
             Device.MainCommand("End Sampling");    //sends message to instrument to stop sampling
-            ResultsViewModel.Instance.PlatePictogram.ChangeState(Device.ReadingRow, Device.ReadingCol, Models.WellType.Success);
             Device.EndState++;
             Console.WriteLine(string.Format("{0} Reporting End Sampling", DateTime.Now.ToString()));
             break;
@@ -1660,9 +1665,9 @@ namespace Ei_Dimension
         Device.MainCommand("Get FProperty", code: 0x22);
     }
 
-    public static void StartingToReadWellEventhandler(object sender, EventArgs e)
+    public static void StartingToReadWellEventhandler(object sender, ReadingWellEventArgs e)
     {
-      ResultsViewModel.Instance.PlatePictogram.ChangeState(Device.ReadingRow, Device.ReadingCol, Models.WellType.NowReading);
+      ResultsViewModel.Instance.PlatePictogram.ChangeState(e.Row, e.Column, Models.WellType.NowReading);
 
       ResultsViewModel.Instance.ClearGraphs();
       for (var i = 0; i < MapRegions.ActiveRegionsCount.Count; i++)
@@ -1670,6 +1675,35 @@ namespace Ei_Dimension
         MapRegions.ActiveRegionsCount[i] = "0";
         MapRegions.ActiveRegionsMean[i] = "0";
       }
+    }
+
+    public static void FinishedReadingWellEventhandler(object sender, ReadingWellEventArgs e)
+    {
+      var type = Models.WellType.Success;
+      foreach (WellResults region in Device.WellResults)
+      {
+        var index = Device.ActiveMap.mapRegions.FindIndex(w => w.regionNumber == region.regionNumber);
+        if (!MapRegions.ActiveRegions[index])
+          continue;
+
+        if (region.RP1vals.Count() < Device.MinPerRegion * 0.75)
+        {
+          type = Models.WellType.Fail;
+          break;
+        }
+        if (region.RP1vals.Count() != Device.MinPerRegion)
+        {
+          type = Models.WellType.LightFail;
+          break;
+        }
+      }
+      ResultsViewModel.Instance.PlatePictogram.ChangeState(e.Row, e.Column, type);
+    }
+
+    public static void FinishedMeasurementEventhandler(object sender, EventArgs e)
+    {
+      Device.ReadActive = false;
+      DashboardViewModel.Instance.StartButtonEnabled = true;
     }
   }
 }

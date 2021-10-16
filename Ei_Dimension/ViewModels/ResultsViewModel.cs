@@ -44,10 +44,7 @@ namespace Ei_Dimension.ViewModels
     public virtual ObservableCollection<HistogramData<int, int>> BackingCL3 { get; set; }
     public virtual ObservableCollection<HeatMapData> BackingMap { get; set; }
     public virtual DrawingPlate PlatePictogram { get; set; }
-    public (int row, int col) SelectedWell { get; set; }  //TODO: fordeletion
     public static ResultsViewModel Instance { get; private set; }
-
-    private string _savedFilesLocation = App.Device.Outdir;
 
     protected ResultsViewModel()
     {
@@ -127,7 +124,6 @@ namespace Ei_Dimension.ViewModels
       PlotCurrent();
 
       PlatePictogram = DrawingPlate.Create();
-      SelectedWell = (0, 0);
     }
 
     public static ResultsViewModel Create()
@@ -166,7 +162,6 @@ namespace Ei_Dimension.ViewModels
     {
       try
       {
-        SelectedWell = PlatePictogram.SelectedCell();
         ClearGraphs(false);
         FillAllDataAsync();
         PlotCurrent(false);
@@ -188,23 +183,20 @@ namespace Ei_Dimension.ViewModels
     public async Task ParseBeadInfoAsync(string path, List<MicroCy.BeadInfoStruct> beadstructs)
     {
       List<string> LinesInFile = await Core.DataProcessor.GetDataFromFileAsync(path);
-      var sw = new System.Diagnostics.Stopwatch();
-      sw.Start();
       for (var i = 0; i < LinesInFile.Count; i++)
       {
         beadstructs.Add(Core.DataProcessor.ParseRow(LinesInFile[i]));
       }
-      sw.Stop();
-      var s = sw.ElapsedMilliseconds;
     }
 
     public async void FillAllDataAsync()
     {
+      //PlatePictogram.SelectedCell();    --start searching for file here
       var beadStructslist = new List<MicroCy.BeadInfoStruct>();
       await ParseBeadInfoAsync(@"C:\Users\Admin\Desktop\BeadAssayA1_2.csv", beadStructslist);
       foreach (var bead in beadStructslist)
       {
-        Core.DataProcessor.BinData(bead, true);
+        Core.DataProcessor.BinData(bead, fromFile: true);
       }
     }
 

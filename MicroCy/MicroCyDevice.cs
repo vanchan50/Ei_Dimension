@@ -50,7 +50,9 @@ namespace MicroCy
     public List<CustomMap> MapList { get; private set; } = new List<CustomMap>();
     public List<Gstats> GStats { get; } = new List<Gstats>(10);
     public List<WellResults> WellResults { get; } = new List<WellResults>();
-    public event EventHandler StartingToReadWell;
+    public event EventHandler<ReadingWellEventArgs> StartingToReadWell;
+    public event EventHandler<ReadingWellEventArgs> FinishedReadingWell;
+    public event EventHandler FinishedMeasurement;
     public int SavingWellIdx { get; set; }
     public int WellsToRead { get; set; }
     public int BeadsToCapture { get; set; }
@@ -61,6 +63,7 @@ namespace MicroCy
     public int BeadCntMapCreate { get; set; }
     public int ScatterGate { get; set; }
     public int MinPerRegion { get; set; }
+    public bool IsMeasurementGoing { get; private set; }
     public bool NewStats { get; set; }
     public bool IsTube { get; set; }
     public bool ReadActive { get; set; }
@@ -126,6 +129,7 @@ namespace MicroCy
       EndState = 0;
       ReadActive = false;
       Outfilename = "ResultFile";
+      IsMeasurementGoing = false;
       _useStaticMaps = useStaticMaps;
       if (_useStaticMaps)
         ConstructClassificationMap(null);
@@ -404,6 +408,9 @@ namespace MicroCy
           _readingA = false;
           OnStartingToReadWell();
           break;
+        case "End Sampling":
+          OnFinishedReadingWell();
+          break;
         case "Idex":
           cs.Command = Idex.Pos;
           cs.Parameter = Idex.Steps;
@@ -494,7 +501,35 @@ namespace MicroCy
         MainCommand("End Bead Read A");         //sends EE to instrument
       else
         MainCommand("End Bead Read B");    //send EF to instrument
-      WellReset();
+      CurrentWellIdx++;
+      if (CurrentWellIdx <= WellsToRead)  //are there more to go
+      {
+        SetReadingParamsForWell(CurrentWellIdx);
+        if (_readingA)
+        {
+          if (CurrentWellIdx < WellsToRead)   //more than one to go
+          {
+            SetAspirateParamsForWell(CurrentWellIdx + 1);
+            MainCommand("Read B Aspirate A");
+          }
+          else if (CurrentWellIdx == WellsToRead)
+            //handle end of plate things
+            MainCommand("Read B");
+        }
+        else
+        {
+          if (CurrentWellIdx < WellsToRead)
+          {
+            SetAspirateParamsForWell(CurrentWellIdx + 1);
+            MainCommand("Read A Aspirate B");
+          }
+          else if (CurrentWellIdx == WellsToRead)
+            //handle end of plate things
+            MainCommand("Read A");
+        }
+        InitBeadRead(ReadingRow, ReadingCol);   //gets output file redy
+      }
+      OnFinishedMeasurement();
     }
 
     public void SetAspirateParamsForWell(int idx)
@@ -542,42 +577,6 @@ namespace MicroCy
           break;
       }
       return summaryFileName;
-    }
-
-    private void WellReset()
-    {
-      CurrentWellIdx++;
-      if (CurrentWellIdx <= WellsToRead)  //are there more to go
-      {
-        SetReadingParamsForWell(CurrentWellIdx);
-        if (_readingA)
-        {
-          if (CurrentWellIdx < WellsToRead)   //more than one to go
-          {
-            SetAspirateParamsForWell(CurrentWellIdx + 1);
-            MainCommand("Read B Aspirate A");
-          }
-          else if (CurrentWellIdx == WellsToRead)
-            MainCommand("Read B");
-        }
-        else
-        {
-          if (CurrentWellIdx < WellsToRead)
-          {
-            SetAspirateParamsForWell(CurrentWellIdx + 1);
-            MainCommand("Read A Aspirate B");
-          }
-          else if (CurrentWellIdx == WellsToRead)
-            //handle end of plate things
-            MainCommand("Read A");
-        }
-        InitBeadRead(ReadingRow, ReadingCol);   //gets output file redy
-      }
-      else
-      {
-        //do end of run things
-        ReadActive = false; //  DEBUGINFO: was not in Legacy
-      }
     }
 
     private static byte[] StructToByteArray(object obj)
@@ -655,15 +654,16 @@ namespace MicroCy
                 //do statistical magic
           if (_chkRegionCount)  //a region made it, are there more that haven't
           {
-            EndState = 1;   //assume all region have enough beads
+            byte IsDone = 1;   //assume all region have enough beads
             foreach (WellResults region in WellResults)
             {
               if (region.RP1vals.Count() < MinPerRegion)
               {
-                EndState = 0;   //not done yet
+                IsDone = 0; //not done yet
                 break;
               }
             }
+            EndState = IsDone;
             _chkRegionCount = false;
           }
           break;
@@ -885,7 +885,19 @@ namespace MicroCy
 
     private void OnStartingToReadWell() //protected virtual method
     {
-      StartingToReadWell?.Invoke(this, EventArgs.Empty);
+      IsMeasurementGoing = true;
+      StartingToReadWell?.Invoke(this, new ReadingWellEventArgs(ReadingRow, ReadingCol));
+    }
+
+    private void OnFinishedReadingWell() //protected virtual method
+    {
+      FinishedReadingWell?.Invoke(this, new ReadingWellEventArgs(ReadingRow, ReadingCol));
+    }
+
+    private void OnFinishedMeasurement() //protected virtual method
+    {
+      IsMeasurementGoing = false;
+      FinishedMeasurement?.Invoke(this, EventArgs.Empty);
     }
   }
 }

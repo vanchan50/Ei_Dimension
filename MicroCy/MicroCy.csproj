@@ -74,6 +74,7 @@
     <Compile Include="Structs\OutResults.cs" />
     <Compile Include="PlateReport.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Structs\ReadingWellEventArgs.cs" />
     <Compile Include="Structs\RegionReport.cs" />
     <Compile Include="USBConnection.cs" />
     <Compile Include="WellReport.cs" />

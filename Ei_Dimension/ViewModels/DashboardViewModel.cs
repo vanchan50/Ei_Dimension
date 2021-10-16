@@ -160,24 +160,23 @@ namespace Ei_Dimension.ViewModels
 
     public void StartButtonClick()
     {
+      SetWellsInOrder();
+      if (App.Device.WellsInOrder.Count < 1)
+        return;
+
       //read section of plate
-      App.Device.ReadActive = true;
       App.Device.MainCommand("Get FProperty", code: 0x58);
       App.Device.MainCommand("Get FProperty", code: 0x68);
       App.Device.PlateReport = new MicroCy.PlateReport(); //TODO: optimize, not needed here
       App.Device.MainCommand("Get FProperty", code: 0x20); //get high dnr property
+      App.Device.ReadActive = true;
 
-      SetWellsInOrder();
-
-      if (App.Device.WellsInOrder.Count < 1)
-        return;
       StartButtonEnabled = false;
       ResultsViewModel.Instance.ClearGraphs();
       ResultsViewModel.Instance.PlotCurrent();
       ResultsViewModel.Instance.PlatePictogram.Clear();
       ResultsViewModel.Instance.PlatePictogram.SetWellsForReading(App.Device.WellsInOrder);
 
-      App.Device.WellsToRead = App.Device.WellsInOrder.Count - 1;    //make zero based like well index is
       App.Device.SetAspirateParamsForWell(0);  //setup for first read
       App.Device.SetReadingParamsForWell(0);
       App.Device.MainCommand("Set Property", code: 0x19, parameter: 1); //bubble detect on
@@ -185,7 +184,6 @@ namespace Ei_Dimension.ViewModels
       App.Device.MainCommand("Aspirate Syringe A"); //handles down and pickup sample
       App.Device.WellNext();   //save well numbers for file name
       App.Device.InitBeadRead(App.Device.ReadingRow, App.Device.ReadingCol);   //gets output file redy
-      ResultsViewModel.Instance.SelectedWell = (App.Device.ReadingRow, App.Device.ReadingCol);  //TODO: fordeletion
       App.Device.ClearSummary();
 
       if (App.Device.WellsToRead == 0)    //only one well in region
@@ -209,12 +207,13 @@ namespace Ei_Dimension.ViewModels
       }
       else
       {
+        App.Device.ReadActive = false;
         App.Device.EndState = 1;
-        StartButtonEnabled = true;
         if (App.Device.WellsToRead > 0)   //if end read on tube or single well, nothing else is aspirated otherwise
           App.Device.WellsToRead = App.Device.CurrentWellIdx + 1; //just read the next well in order since it is already aspirated
       }
     }
+
     public void FluidicsButtonClick(int i)
     {
       string cmd = "";
@@ -313,10 +312,11 @@ namespace Ei_Dimension.ViewModels
           //fill wells from work order
           App.Device.WellsInOrder = App.Device.WorkOrder.woWells;
         }
-        App.Device.WellsToRead = App.Device.WellsInOrder.Count;
       }
       else if (WellsSelectViewModel.Instance.CurrentTableSize == 1)  //tube
-        App.Device.WellsInOrder.Add(MakeWell(0, 0));    //a 1 record work order
+        App.Device.WellsInOrder.Add(MakeWell(0, 0));  //  a 1 record work order
+
+      App.Device.WellsToRead = App.Device.WellsInOrder.Count - 1;  //make zero based like well index is
     }
 
     private void EndReadVisibilitySwitch()
