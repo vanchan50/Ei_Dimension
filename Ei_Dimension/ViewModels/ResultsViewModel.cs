@@ -229,25 +229,5 @@ namespace Ei_Dimension.ViewModels
         DisplayedMap = BackingMap;
       }
     }
-
-    public void LoadButtonClick()
-    {
-      DashboardViewModel.Instance.LoadButtonClick();
-    }
-
-    public void EjectButtonClick()
-    {
-      DashboardViewModel.Instance.EjectButtonClick();
-    }
-
-    public void StartButtonClick()
-    {
-      DashboardViewModel.Instance.StartButtonClick();
-    }
-
-    public void EndButtonClick()
-    {
-      DashboardViewModel.Instance.EndButtonClick();
-    }
   }
 }

@@ -51,6 +51,7 @@ namespace Ei_Dimension.ViewModels
     {
       App.ResetFocusedTextbox();
       App.HideNumpad();
+      MainViewModel.Instance.StartButtonsVisible = Visibility.Visible;
       NavigationService.Navigate("DashboardView", null, this);
     }
 
@@ -58,6 +59,7 @@ namespace Ei_Dimension.ViewModels
     {
       App.ResetFocusedTextbox();
       App.HideNumpad();
+      MainViewModel.Instance.StartButtonsVisible = Visibility.Hidden;
       NavigationService.Navigate("SelRegionsView", null, this);
     }
 
@@ -66,6 +68,7 @@ namespace Ei_Dimension.ViewModels
       App.ResetFocusedTextbox();
       App.HideNumpad();
       App.Device.InitSTab("reportingtab");
+      MainViewModel.Instance.StartButtonsVisible = Visibility.Hidden;
       NavigationService.Navigate("FileSaveView", null, this);
     }
 
@@ -73,10 +76,13 @@ namespace Ei_Dimension.ViewModels
     {
       App.ResetFocusedTextbox();
       App.HideNumpad();
-      if(num != 1)
+      if (num != 1)
+      {
+        MainViewModel.Instance.StartButtonsVisible = Visibility.Hidden;
         NavigationService.Navigate("WellsSelectView", null, this);
+      }
       else
-        NavigationService.Navigate("DashboardView", null, this);
+        NavigateDashboard();
       if (WellsSelectViewModel.Instance != null)
         WellsSelectViewModel.Instance.ChangeWellTableSize(num);
     }

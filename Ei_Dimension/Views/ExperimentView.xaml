@@ -22,14 +22,10 @@
     <dxmvvm:SaveFileDialogService/>
   </dxmvvm:Interaction.Behaviors>
   <Grid>
-    <Grid.ColumnDefinitions>
-      <ColumnDefinition Width="3*"/>
-      <ColumnDefinition Width="17*"/>
-    </Grid.ColumnDefinitions>
 
-    <dxwui:NavigationFrame AnimationType="SlideHorizontal"
+    <dxwui:NavigationFrame AnimationType="Fade"
                            NavigationCacheMode="Required"
-                           Grid.Column="1">
+                           Margin="288,0,0,0">
       <dxmvvm:Interaction.Triggers>
         <dxmvvm:EventToCommand EventName="Loaded" Command="{Binding NavigateDashboardCommand}"/>
       </dxmvvm:Interaction.Triggers>

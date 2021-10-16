@@ -151,11 +151,15 @@
     <Compile Include="ViewModels\DataAnalysisViewModel.cs" />
     <Compile Include="ViewModels\ExperimentViewModel.cs" />
     <Compile Include="ViewModels\FileSaveViewModel.cs" />
+    <Compile Include="ViewModels\MainButtonsViewModel.cs" />
     <Compile Include="ViewModels\MaintenanceViewModel.cs" />
     <Compile Include="ViewModels\MotorsViewModel.cs" />
     <Compile Include="ViewModels\NumpadViewModel.cs" />
     <Compile Include="ViewModels\ResultsViewModel.cs" />
     <Compile Include="ViewModels\SelRegionsViewModel.cs" />
+    <Compile Include="Views\MainButtonsView.xaml.cs">
+      <DependentUpon>MainButtonsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ResultsView.xaml.cs">
       <DependentUpon>ResultsView.xaml</DependentUpon>
     </Compile>
@@ -275,6 +279,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Styles\ToggleButtonThemeStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MainButtonsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

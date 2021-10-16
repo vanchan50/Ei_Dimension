@@ -129,6 +129,13 @@
       </StackPanel>
     </Border>
 
+    <Grid Width="630" Height="340"
+          VerticalAlignment="Top" HorizontalAlignment="Left"
+          Margin="1248,166,0,0"
+          Visibility="{Binding StartButtonsVisible}">
+      <Views:MainButtonsView />
+    </Grid>
+    
     <Button HorizontalAlignment="Left" VerticalAlignment="Top"
             Width="100"
             Height="50"

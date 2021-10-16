@@ -19,11 +19,6 @@
   </dxmvvm:Interaction.Triggers>
   <Grid>
 
-    <Grid.ColumnDefinitions>
-      <ColumnDefinition Width="3*"/>
-      <ColumnDefinition Width="17*"/>
-    </Grid.ColumnDefinitions>
-
     <!--Tile Ribbon-->
     <StackPanel Margin="30,60,0,0"
                 Width="240"
@@ -63,7 +58,7 @@
 
     <dxwui:NavigationFrame AnimationType="SlideHorizontal"
                            NavigationCacheMode="Required"
-                           Grid.Column="1">
+                           Margin="288,0,0,0">
       <dxmvvm:Interaction.Triggers>
         <dxmvvm:EventToCommand EventName="Loaded" Command="{Binding NavigateMotorsCommand}" />
       </dxmvvm:Interaction.Triggers>

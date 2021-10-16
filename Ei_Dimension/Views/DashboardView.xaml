@@ -13,24 +13,6 @@
              DataContext="{dxmvvm:ViewModelSource Type={x:Type ViewModels:DashboardViewModel}}"
              d:DesignHeight="944" d:DesignWidth="1632">
   <Grid>
-
-    <!--System Monitor-->
-    <Border HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Margin="1300,580,0,0">
-      <StackPanel>
-        <TextBlock Text="{lang:Loc Experiment_System_Monitor}"
-                   FontFamily="{StaticResource AppTextFont}"
-                   FontSize="36"
-                   FontWeight="UltraBold"
-                   Foreground="{StaticResource AppTextColor}"
-                   Margin="0,0,0,4"/>
-        <ListBox Width="220" Height="240"
-                 ItemsSource="{Binding ActiveList}"
-                 FontSize="24"/>
-      </StackPanel>
-    </Border>
-    
     <!--Fluidics-->
     <Border HorizontalAlignment="Left"
           VerticalAlignment="Top"
@@ -90,12 +72,12 @@
         <TextBlock Text="{lang:Loc Experiment_Active_Regions}"
                    FontFamily="{StaticResource AppTextFont}"
                    FontSize="36"
-                   Width="650"
+                   Width="367"
                    FontWeight="UltraBold"
                    TextAlignment="Center"
                    Foreground="{StaticResource AppTextColor}"
                    Margin="0,0,0,4"/>
-        <Border Height="45" Width="633"
+        <Border Height="45" Width="367"
                 HorizontalAlignment="Left">
           <Grid>
             <TextBlock Text="       №"
@@ -103,14 +85,14 @@
                        Width="140"
                        HorizontalAlignment="Left"/>
             <TextBlock Text="{lang:Loc Name}"
-                       Width="490"
+                       Width="207"
                        FontSize="30"
                        Margin="140,0,0,0"
                        HorizontalAlignment="Left"
                        TextAlignment="Center"/>
           </Grid>
         </Border>
-        <ScrollViewer Width="650" Height="699"
+        <ScrollViewer Width="367" Height="699"
                       VerticalScrollBarVisibility="Visible">
           <Border Background="{StaticResource RibbonBackgroundActive}">
             <StackPanel Orientation="Horizontal">
@@ -119,7 +101,7 @@
                           HorizontalAlignment="Left"/>
               <StackPanel Name="DbActiveRegionName"
                           HorizontalAlignment="Left"
-                          Width="483">
+                          Width="200">
               </StackPanel>
             </StackPanel>
           </Border>
@@ -513,49 +495,6 @@
             </dxmvvm:Interaction.Behaviors>
           </TextBox>
         </Grid>
-      </StackPanel>
-    </Border>
-
-    <!--Start & End-->
-    <Border HorizontalAlignment="Left"
-          VerticalAlignment="Top"
-          Margin="1250,30,0,0">
-      <StackPanel>
-        <StackPanel Orientation="Horizontal">
-          <Button Content="{lang:Loc Experiment_End}"
-                Style="{StaticResource ButtonStyle}"
-                Command="{Binding EndButtonClickCommand}"
-                Height="160" Width="160"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                  Background="DarkRed"
-                Margin="0,0,12,0"/>
-          <Button Content="{lang:Loc Experiment_Start}"
-                Style="{StaticResource ButtonStyle}"
-                Command="{Binding StartButtonClickCommand}"
-                Height="160" Width="160"
-                IsEnabled="{Binding StartButtonEnabled}"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Background="ForestGreen"/>
-        </StackPanel>
-        <StackPanel Orientation="Horizontal"
-                    Margin="0,12,0,0">
-          <Button Content="{lang:Loc Experiment_Eject}"
-                Style="{StaticResource ButtonStyle}"
-                Command="{Binding EjectButtonClickCommand}"
-                Height="160" Width="160"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Margin="0,0,10,0"/>
-          <Button Content="{lang:Loc Experiment_Load}"
-                Style="{StaticResource ButtonStyle}"
-                Command="{Binding LoadButtonClickCommand}"
-                Height="160" Width="160"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Margin="0,0,0,0"/>
-        </StackPanel>
       </StackPanel>
     </Border>
   </Grid>

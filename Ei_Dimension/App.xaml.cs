@@ -17,7 +17,6 @@ namespace Ei_Dimension
     public static (PropertyInfo prop, object VM, int index) SelectedTextBox { get; set; }
     public static MicroCyDevice Device { get; private set; }
     public static Models.MapRegions MapRegions { get; set; }  //Performs operations on injected views
-    //public static Models.PlateWell[,] PlateDrawing { get; private set; }
 
     private static DispatcherTimer _dispatcherTimer;
     private static bool _workOrderPending;
@@ -1588,7 +1587,7 @@ namespace Ei_Dimension
       {
         if (DashboardViewModel.Instance.SelectedSystemControlIndex == 1)  //no barcode required so allow start
         {
-          DashboardViewModel.Instance.StartButtonEnabled = true;
+          MainButtonsViewModel.Instance.StartButtonEnabled = true;
           _workOrderPending = false;
         }
         else if (DashboardViewModel.Instance.SelectedSystemControlIndex == 2)    //barcode required
@@ -1680,18 +1679,17 @@ namespace Ei_Dimension
     public static void FinishedReadingWellEventhandler(object sender, ReadingWellEventArgs e)
     {
       var type = Models.WellType.Success;
-      foreach (WellResults region in Device.WellResults)
+      for(var i = 0; i < MapRegions.ActiveRegions.Count; i++)
       {
-        var index = Device.ActiveMap.mapRegions.FindIndex(w => w.regionNumber == region.regionNumber);
-        if (!MapRegions.ActiveRegions[index])
+        if (!MapRegions.ActiveRegions[i])
           continue;
 
-        if (region.RP1vals.Count() < Device.MinPerRegion * 0.75)
+        if (Device.WellResults[i].RP1vals.Count() < Device.MinPerRegion * 0.75)
         {
           type = Models.WellType.Fail;
           break;
         }
-        if (region.RP1vals.Count() != Device.MinPerRegion)
+        if (Device.WellResults[i].RP1vals.Count() != Device.MinPerRegion)
         {
           type = Models.WellType.LightFail;
           break;
@@ -1703,7 +1701,7 @@ namespace Ei_Dimension
     public static void FinishedMeasurementEventhandler(object sender, EventArgs e)
     {
       Device.ReadActive = false;
-      DashboardViewModel.Instance.StartButtonEnabled = true;
+      MainButtonsViewModel.Instance.StartButtonEnabled = true;
     }
   }
 }
