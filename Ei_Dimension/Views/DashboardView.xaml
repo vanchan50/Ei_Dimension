@@ -337,27 +337,35 @@
                            FontFamily="{StaticResource AppTextFont}"
                            Foreground="{StaticResource AppTextColor}"
                            Content="{Binding SelectedClassiMapContent}">
-          <dxb:PopupMenu ItemLinksSource="{Binding ClassiMapItems}">
-            <dxb:PopupMenu.ItemTemplate>
-              <DataTemplate>
-                <ContentControl>
-                  <dxb:BarButtonItem Content="{Binding Content}"  
-                                 ItemClick="{DXEvent Click((int)2)}">
-                    <dxb:BarButtonItem.ContentTemplate>
+          <dxb:PopupControlContainer>
+            <ScrollViewer MaxHeight="600">
+              <dxb:MenuBarControl>
+                <dxb:MenuBarControl.Menu>
+                  <dxb:PopupMenu ItemLinksSource="{Binding ClassiMapItems}">
+                    <dxb:PopupMenu.ItemTemplate>
                       <DataTemplate>
-                        <Grid Width="130">
-                          <TextBlock Text="{Binding}" HorizontalAlignment="Center"
+                        <ContentControl>
+                          <dxb:BarButtonItem Content="{Binding Content}"  
+                                 ItemClick="{DXEvent Click((int)2)}">
+                            <dxb:BarButtonItem.ContentTemplate>
+                              <DataTemplate>
+                                <Grid Width="130">
+                                  <TextBlock Text="{Binding}" HorizontalAlignment="Center"
                                    FontFamily="{StaticResource AppTextFont}"
                                    Foreground="{StaticResource AppTextColor}"
                                    FontSize="25"/>
-                        </Grid>
+                                </Grid>
+                              </DataTemplate>
+                            </dxb:BarButtonItem.ContentTemplate>
+                          </dxb:BarButtonItem>
+                        </ContentControl>
                       </DataTemplate>
-                    </dxb:BarButtonItem.ContentTemplate>
-                  </dxb:BarButtonItem>
-                </ContentControl>
-              </DataTemplate>
-            </dxb:PopupMenu.ItemTemplate>
-          </dxb:PopupMenu>
+                    </dxb:PopupMenu.ItemTemplate>
+                  </dxb:PopupMenu>
+                </dxb:MenuBarControl.Menu>
+              </dxb:MenuBarControl>
+            </ScrollViewer>
+          </dxb:PopupControlContainer>
         </dx:DropDownButton>
         <TextBlock Text="{lang:Loc Experiment_Order}"
                    FontFamily="{StaticResource AppTextFont}"
