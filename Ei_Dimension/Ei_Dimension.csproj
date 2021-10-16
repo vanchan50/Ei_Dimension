@@ -442,6 +442,10 @@
     <Resource Include="Icons\service iconV2.png" />
     <Resource Include="Icons\Emission_Logo.png" />
     <Resource Include="Icons\Splash.png" />
+    <Resource Include="Icons\BottomLeftPlate.png" />
+    <Resource Include="Icons\BottomRightPlate.png" />
+    <Resource Include="Icons\TopLeftPlate.png" />
+    <Resource Include="Icons\TopRightPlate.png" />
     <Content Include="StaticMaps\QBlogo.h" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

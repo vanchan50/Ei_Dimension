@@ -89,10 +89,12 @@ namespace Ei_Dimension.ViewModels
           App.Device.PlateType = 2;
           Table384Visible = Visibility.Hidden;
           Table96Visible = Visibility.Hidden;
+          ResultsViewModel.Instance.Buttons384Visible = Visibility.Hidden;
           break;
         case 96:
           Table384Visible = Visibility.Hidden;
           Table96Visible = Visibility.Visible;
+          ResultsViewModel.Instance.Buttons384Visible = Visibility.Hidden;
           if (CurrentTableSize != num)
           {
             foreach (var row in Table384Wells)
@@ -109,6 +111,7 @@ namespace Ei_Dimension.ViewModels
         case 384:
           Table384Visible = Visibility.Visible;
           Table96Visible = Visibility.Hidden;
+          ResultsViewModel.Instance.Buttons384Visible = Visibility.Visible;
           if (CurrentTableSize != num)
           {
             foreach (var row in Table96Wells)

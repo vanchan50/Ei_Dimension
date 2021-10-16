@@ -8,7 +8,7 @@
              xmlns:ViewModels="clr-namespace:Ei_Dimension.ViewModels"
              mc:Ignorable="d"
              DataContext="{dxmvvm:ViewModelSource Type=ViewModels:MainButtonsViewModel}"
-             d:DesignHeight="340" d:DesignWidth="630">
+             d:DesignHeight="366" d:DesignWidth="630">
   <Grid>
     <!--System Monitor-->
     <Border HorizontalAlignment="Left"
@@ -21,7 +21,7 @@
                    FontWeight="UltraBold"
                    Foreground="{StaticResource AppTextColor}"
                    Margin="0,0,0,4"/>
-        <ListBox Width="220" Height="240"
+        <ListBox Width="220" Height="310"
                  ItemsSource="{Binding ActiveList}"
                  FontSize="24"/>
       </StackPanel>
@@ -29,7 +29,7 @@
     <!--Start & End-->
     <Border HorizontalAlignment="Left"
           VerticalAlignment="Top"
-          Margin="290,0,0,0">
+          Margin="290,26,0,0">
       <StackPanel>
         <StackPanel Orientation="Horizontal">
           <Button Content="{lang:Loc Experiment_End}"

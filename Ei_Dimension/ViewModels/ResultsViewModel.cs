@@ -44,6 +44,7 @@ namespace Ei_Dimension.ViewModels
     public virtual ObservableCollection<HistogramData<int, int>> BackingCL3 { get; set; }
     public virtual ObservableCollection<HeatMapData> BackingMap { get; set; }
     public virtual DrawingPlate PlatePictogram { get; set; }
+    public virtual System.Windows.Visibility Buttons384Visible { get; set; }
     public static ResultsViewModel Instance { get; private set; }
 
     protected ResultsViewModel()
@@ -124,6 +125,7 @@ namespace Ei_Dimension.ViewModels
       PlotCurrent();
 
       PlatePictogram = DrawingPlate.Create();
+      Buttons384Visible = System.Windows.Visibility.Hidden;
     }
 
     public static ResultsViewModel Create()
