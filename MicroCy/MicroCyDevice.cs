@@ -528,7 +528,8 @@ namespace MicroCy
         }
         InitBeadRead(ReadingRow, ReadingCol);   //gets output file redy
       }
-      OnFinishedMeasurement();
+      else
+        OnFinishedMeasurement();
     }
 
     public void SetAspirateParamsForWell(int idx)

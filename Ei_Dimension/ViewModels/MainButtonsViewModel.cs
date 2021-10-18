@@ -89,6 +89,5 @@ namespace Ei_Dimension.ViewModels
           App.Device.WellsToRead = App.Device.CurrentWellIdx + 1; //just read the next well in order since it is already aspirated
       }
     }
-
   }
 }
