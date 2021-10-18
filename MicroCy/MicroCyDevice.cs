@@ -349,6 +349,8 @@ namespace MicroCy
         }
         catch { }
       }
+      else
+        throw new Exception("Error: DimensionMaps does not exist");
     }
 
     public bool IsNewWorkOrder()
