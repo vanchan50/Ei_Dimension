@@ -242,6 +242,7 @@ namespace MicroCy
       _ = _dataout.Append(Bheader);
       _chkRegionCount = false;
       BeadCount = 0;
+      OnStartingToReadWell();
     }
 
     public void SaveBeadFile() //cancels the begin read from endpoint 2
@@ -394,19 +395,15 @@ namespace MicroCy
       {
         case "Read A":
           _readingA = true;
-          OnStartingToReadWell();
           break;
         case "Read A Aspirate B":
           _readingA = true;
-          OnStartingToReadWell();
           break;
         case "Read B":
           _readingA = false;
-          OnStartingToReadWell();
           break;
         case "Read B Aspirate A":
           _readingA = false;
-          OnStartingToReadWell();
           break;
         case "End Sampling":
           OnFinishedReadingWell();
@@ -886,7 +883,7 @@ namespace MicroCy
     private void OnStartingToReadWell() //protected virtual method
     {
       IsMeasurementGoing = true;
-      StartingToReadWell?.Invoke(this, new ReadingWellEventArgs(ReadingRow, ReadingCol));
+      StartingToReadWell?.Invoke(this, new ReadingWellEventArgs(ReadingRow, ReadingCol, _fullFileName));
     }
 
     private void OnFinishedReadingWell() //protected virtual method

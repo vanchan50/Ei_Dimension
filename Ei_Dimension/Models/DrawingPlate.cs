@@ -14,7 +14,12 @@ namespace Ei_Dimension.Models
   public class DrawingPlate
   {
     public virtual ObservableCollection<WellTableRow> DrawingWells { get; protected set; }  //drawing data
+    public (int row, int col) CurrentlyReadCell { get; set; }
+    public (int row, int col) SelectedCell { get; set; }
+    public bool FollowingCurrentCell { get; set; }
     private readonly PlateWell[,] _wells; //actual data
+    private int _mode;
+    private int _CurrentCorner;
     private DataGrid _drawingGrid;
     private bool _gridSet;
 
@@ -38,11 +43,35 @@ namespace Ei_Dimension.Models
           _wells[i, j] = new PlateWell(i, j);
         }
       }
+      _mode = 96;
+      _CurrentCorner = 1;
       _gridSet = false;
+      CurrentlyReadCell = (-1, -1);
+      SelectedCell = (-1, -1);
+      FollowingCurrentCell = true;
     }
     public static DrawingPlate Create()
     {
       return ViewModelSource.Create(() => new DrawingPlate());
+    }
+
+    public void ChangeMode(int mode)
+    {
+      switch (mode)
+      {
+        case 1:
+          break;
+        case 96:
+          _mode = 96;
+          ViewModels.ResultsViewModel.Instance.Buttons384Visible = Visibility.Hidden;
+          break;
+        case 384:
+          _mode = 384;
+          ViewModels.ResultsViewModel.Instance.Buttons384Visible = Visibility.Visible;
+          break;
+        default:
+          throw new Exception("Only modes 1, 96 or 384 supported");
+      }
     }
 
     public void Clear()
@@ -59,14 +88,51 @@ namespace Ei_Dimension.Models
         for (var j = 0; j < 24; j++)
         {
           _wells[i, j].Type = WellType.Empty;
+          _wells[i, j].FilePath = null;
         }
       }
     }
 
-    public void ChangeState(byte row, byte col, WellType type)  //TODO: add 384 functionality here, to change appropriate well.
+    public void ChangeState(byte row, byte col, WellType type, string FilePath = null)  //TODO: add 384 functionality here, to change appropriate well.
     {
       _wells[row, col].Type = type;
-      DrawingWells[row].SetType(col, type);
+      if (FilePath != null)
+        _wells[row, col].FilePath = FilePath;
+      if (_mode == 96)
+      {
+        DrawingWells[row].SetType(col, type);
+      }
+      else if (_mode == 384)
+      {
+        var tempCorner = CalculateCorner(row, col);
+
+        if (_CurrentCorner == tempCorner)
+        {
+          //if currently displayed -> draw
+          byte shiftX = 0;
+          byte shiftY = 0;
+          CorrectionForCorner(_CurrentCorner, ref shiftX, ref shiftY);
+          DrawingWells[row - shiftY].SetType(col - shiftX, type);
+        }
+      }
+    }
+
+    public void ChangeCorner(int corner)
+    {
+      if (_mode != 384 || _CurrentCorner == corner)
+        return;
+      byte shiftX = 0;
+      byte shiftY = 0;
+      CorrectionForCorner(corner, ref shiftX, ref shiftY);
+      for (var i = 0; i < 8; i++)
+      {
+        for (var j = 0; j < 12; j++)
+        {
+          DrawingWells[i].SetType(j, _wells[i + shiftY, j + shiftX].Type);
+        }
+      }
+      _CurrentCorner = corner;
+
     }
 
     public void SetWellsForReading(List<MicroCy.Wells> wells)
@@ -77,14 +143,57 @@ namespace Ei_Dimension.Models
       }
     }
 
-    public (int,int) SelectedCell() //probably should be a VM function
+    private static void CorrectionForCorner(int corner, ref byte x, ref byte y)
     {
-      var SelectedCell = _drawingGrid.CurrentCell;
-      if (SelectedCell.IsValid)
+      switch (corner)
       {
-        return (((WellTableRow)SelectedCell.Item).Index, SelectedCell.Column.DisplayIndex);
+        case 1:
+          break;
+        case 2:
+          x = 12;
+          break;
+        case 3:
+          y = 8;
+          break;
+        case 4:
+          x = 12;
+          y = 8;
+          break;
+        default:
+          throw new Exception("Incorrect Argument");
       }
-      throw new Exception("CurrentCell is null");
+    }
+
+    public static int CalculateCorner(int row, int col)
+    {
+      var tempCorner = 1;
+      if (row < 8)
+        tempCorner = col < 12 ? 1 : 2;
+      else
+        tempCorner = col < 12 ? 3 : 4;
+      return tempCorner;
+    }
+
+    public (int row, int col) GetSelectedCell() //probably should be a VM function
+    {
+      if(_drawingGrid != null)
+      {
+        var SelectedCell = _drawingGrid.CurrentCell;
+        if (SelectedCell.IsValid)
+        {
+          byte shiftX = 0;
+          byte shiftY = 0;
+          CorrectionForCorner(_CurrentCorner, ref shiftX, ref shiftY);
+
+          return (((WellTableRow)SelectedCell.Item).Index + shiftY, SelectedCell.Column.DisplayIndex + shiftX);
+        }
+      }
+      return (-1,-1);
+    }
+
+    public string GetSelectedFilePath()
+    {
+      return _wells[SelectedCell.row, SelectedCell.col].FilePath;
     }
 
     public void SetGrid(DataGrid grid)
@@ -103,6 +212,7 @@ namespace Ei_Dimension.Models
       public int Row { get; }
       public int Column { get; }
       public WellType Type { get; set; }
+      public string FilePath { get; set; }
       public PlateWell(int row, int col)
       {
         Row = row;

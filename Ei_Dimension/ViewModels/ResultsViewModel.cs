@@ -45,6 +45,11 @@ namespace Ei_Dimension.ViewModels
     public virtual ObservableCollection<HeatMapData> BackingMap { get; set; }
     public virtual DrawingPlate PlatePictogram { get; set; }
     public virtual System.Windows.Visibility Buttons384Visible { get; set; }
+    public virtual System.Windows.Visibility LeftLabel384Visible { get; set; }
+    public virtual System.Windows.Visibility RightLabel384Visible { get; set; }
+    public virtual System.Windows.Visibility TopLabel384Visible { get; set; }
+    public virtual System.Windows.Visibility BottomLabel384Visible { get; set; }
+    public virtual ObservableCollection<bool> CornerButtonsChecked { get; set; }
     public static ResultsViewModel Instance { get; private set; }
 
     protected ResultsViewModel()
@@ -126,11 +131,66 @@ namespace Ei_Dimension.ViewModels
 
       PlatePictogram = DrawingPlate.Create();
       Buttons384Visible = System.Windows.Visibility.Hidden;
+      CornerButtonsChecked = new ObservableCollection<bool> { true, false, false, false };
+      LeftLabel384Visible = System.Windows.Visibility.Visible;
+      RightLabel384Visible = System.Windows.Visibility.Hidden;
+      TopLabel384Visible = System.Windows.Visibility.Visible;
+      BottomLabel384Visible = System.Windows.Visibility.Hidden;
     }
 
     public static ResultsViewModel Create()
     {
       return ViewModelSource.Create(() => new ResultsViewModel());
+    }
+
+    public void CornerButtonClick(int corner)
+    {
+      switch (corner) {
+        case 1:
+          LeftLabel384Visible = System.Windows.Visibility.Visible;
+          RightLabel384Visible = System.Windows.Visibility.Hidden;
+          TopLabel384Visible = System.Windows.Visibility.Visible;
+          BottomLabel384Visible = System.Windows.Visibility.Hidden;
+          break;
+        case 2:
+          LeftLabel384Visible = System.Windows.Visibility.Hidden;
+          RightLabel384Visible = System.Windows.Visibility.Visible;
+          TopLabel384Visible = System.Windows.Visibility.Visible;
+          BottomLabel384Visible = System.Windows.Visibility.Hidden;
+          break;
+        case 3:
+          LeftLabel384Visible = System.Windows.Visibility.Visible;
+          RightLabel384Visible = System.Windows.Visibility.Hidden;
+          TopLabel384Visible = System.Windows.Visibility.Hidden;
+          BottomLabel384Visible = System.Windows.Visibility.Visible;
+          break;
+        case 4:
+          LeftLabel384Visible = System.Windows.Visibility.Hidden;
+          RightLabel384Visible = System.Windows.Visibility.Visible;
+          TopLabel384Visible = System.Windows.Visibility.Hidden;
+          BottomLabel384Visible = System.Windows.Visibility.Visible;
+          break;
+      }
+      Views.ResultsView.Instance.DrawingPlate.UnselectAllCells();
+      CornerButtonsChecked[0] = false;
+      CornerButtonsChecked[1] = false;
+      CornerButtonsChecked[2] = false;
+      CornerButtonsChecked[3] = false;
+      CornerButtonsChecked[corner - 1 ] = true;
+      PlatePictogram.ChangeCorner(corner);
+    }
+
+    public void ToCurrentButtonClick()
+    {
+      Views.ResultsView.Instance.DrawingPlate.UnselectAllCells();
+      PlotCurrent();
+
+      int tempCorner = 1;
+      if (PlatePictogram.CurrentlyReadCell.row < 8)
+        tempCorner = PlatePictogram.CurrentlyReadCell.col < 12 ? 1 : 2;
+      else
+        tempCorner = PlatePictogram.CurrentlyReadCell.col < 12 ? 3 : 4;
+      CornerButtonClick(tempCorner);
     }
 
     public void ClearGraphs(bool current = true)
@@ -164,6 +224,14 @@ namespace Ei_Dimension.ViewModels
     {
       try
       {
+        var temp = PlatePictogram.GetSelectedCell();
+        if (temp.row != -1)
+          PlatePictogram.SelectedCell = temp;
+        if (temp == PlatePictogram.CurrentlyReadCell)
+        {
+          ToCurrentButtonClick();
+          return;
+        }
         ClearGraphs(false);
         FillAllDataAsync();
         PlotCurrent(false);
@@ -182,9 +250,14 @@ namespace Ei_Dimension.ViewModels
       Settings.Default.ScatterGraphSelector = res;
       Settings.Default.Save();
     }
-    public async Task ParseBeadInfoAsync(string path, List<MicroCy.BeadInfoStruct> beadstructs)
+    private async Task ParseBeadInfoAsync(string path, List<MicroCy.BeadInfoStruct> beadstructs)
     {
       List<string> LinesInFile = await Core.DataProcessor.GetDataFromFileAsync(path);
+      if (LinesInFile.Count == 1 && LinesInFile[0] == " ")
+      {
+        System.Windows.MessageBox.Show("File is empty");
+        return;
+      }
       for (var i = 0; i < LinesInFile.Count; i++)
       {
         beadstructs.Add(Core.DataProcessor.ParseRow(LinesInFile[i]));
@@ -193,9 +266,11 @@ namespace Ei_Dimension.ViewModels
 
     public async void FillAllDataAsync()
     {
-      //PlatePictogram.SelectedCell();    --start searching for file here
+      var path = PlatePictogram.GetSelectedFilePath();
+      if (path == null)
+        return;
       var beadStructslist = new List<MicroCy.BeadInfoStruct>();
-      await ParseBeadInfoAsync(@"C:\Users\Admin\Desktop\BeadAssayA1_2.csv", beadStructslist);
+      await ParseBeadInfoAsync(path, beadStructslist);
       foreach (var bead in beadStructslist)
       {
         Core.DataProcessor.BinData(bead, fromFile: true);

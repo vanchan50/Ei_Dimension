@@ -240,9 +240,10 @@
             Margin="1230,372,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top">
-      <Grid Name="Plate">
+      <Grid>
         <StackPanel Orientation="Horizontal"
                     Margin="52,-10,0,0"
+                    Visibility="{Binding LeftLabel384Visible}"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
                     Height="43">
@@ -345,6 +346,7 @@
         <StackPanel HorizontalAlignment="Left"
                     VerticalAlignment="Top"
                     Margin="0,32,0,0"
+                    Visibility="{Binding TopLabel384Visible}"
                     Width="33">
           <TextBlock Text="A"
                    FontFamily="{DynamicResource AppTextFont}"
@@ -410,7 +412,180 @@
                    VerticalAlignment="Top"
                    Margin="0,-3,0,0"/>
         </StackPanel>
+        <StackPanel Orientation="Horizontal"
+                    Margin="42,-10,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Visibility="{Binding RightLabel384Visible}"
+                    Height="43">
+          <TextBlock Text="13"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="40"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"/>
+          <TextBlock Text="14"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="40"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="10,0,0,0"/>
+          <TextBlock Text="15"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="40"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="16,0,0,0"/>
+          <TextBlock Text="16"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="40"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="14,0,0,0"/>
+          <TextBlock Text="17"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="40"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="16,0,0,0"/>
+          <TextBlock Text="18"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="40"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="13,0,0,0"/>
+          <TextBlock Text="19"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="40"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="14,0,0,0"/>
+          <TextBlock Text="20"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="40"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="12,0,0,0"/>
+          <TextBlock Text="21"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="40"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="10,0,0,0"/>
+          <TextBlock Text="22"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="40"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="12,0,0,0"/>
+          <TextBlock Text="23"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="40"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="8,0,0,0"/>
+          <TextBlock Text="24"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="40"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="8,0,0,0"/>
+        </StackPanel>
+        <StackPanel HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Margin="0,32,0,0"
+                    Visibility="{Binding BottomLabel384Visible}"
+                    Width="33">
+          <TextBlock Text="I"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="40"
+                   FontWeight="ExtraBold"  TextAlignment="Right"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="9,0,0,0"/>
+          <TextBlock Text="J"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="40"
+                   FontWeight="ExtraBold" TextAlignment="Right"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="7,-2,0,0"/>
+          <TextBlock Text="K"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="40"
+                   FontWeight="ExtraBold" TextAlignment="Right"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="2,-4,0,0"/>
+          <TextBlock Text="L"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="40"
+                   FontWeight="ExtraBold" TextAlignment="Right"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="5,-2,0,0"/>
+          <TextBlock Text="M"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="40"
+                   FontWeight="ExtraBold" TextAlignment="Right"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="-3,-3,0,0"/>
+          <TextBlock Text="N"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="40"
+                   FontWeight="ExtraBold" TextAlignment="Right"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="0,-3,0,0"/>
+          <TextBlock Text="O"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="40"
+                   FontWeight="ExtraBold" TextAlignment="Right"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="0,-3,0,0"/>
+          <TextBlock Text="P"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="40"
+                   FontWeight="ExtraBold" TextAlignment="Right"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="5,-3,0,0"/>
+        </StackPanel>
         <DataGrid SelectionMode="Single"
+                  Name="DrawingPlate"
                   SelectionUnit="Cell"
                   AutoGenerateColumns="False"
                   ItemsSource="{Binding PlatePictogram.DrawingWells}"
@@ -575,36 +750,59 @@
             <RadioButton Width="100" Height="70"
                        HorizontalAlignment="Left"
                        VerticalAlignment="Top"
-                       IsChecked="True"
+                       IsChecked="{Binding CornerButtonsChecked[0], Mode=OneWay}"
                        img:EmbeddedImg.Image="/Icons/TopLeftPlate.png"
-                       Style="{StaticResource ResultsRadioButtonStyle}"/>
-            <RadioButton Width="100" Height="70"
+                       Style="{StaticResource ResultsRadioButtonStyle}"
+                       Command="{Binding CornerButtonClickCommand}">
+              <RadioButton.CommandParameter>
+                <System:Int32>1</System:Int32>
+              </RadioButton.CommandParameter>
+            </RadioButton>
+              <RadioButton Width="100" Height="70"
                        Margin="10,0,0,0"
                        HorizontalAlignment="Left"
                        VerticalAlignment="Top"
+                       IsChecked="{Binding CornerButtonsChecked[1], Mode=OneWay}"
                        img:EmbeddedImg.Image="/Icons/TopRightPlate.png"
-                       Style="{StaticResource ResultsRadioButtonStyle}"/>
+                       Style="{StaticResource ResultsRadioButtonStyle}"
+                       Command="{Binding CornerButtonClickCommand}">
+              <RadioButton.CommandParameter>
+                <System:Int32>2</System:Int32>
+              </RadioButton.CommandParameter>
+            </RadioButton>
             <RadioButton Width="100" Height="70"
                        Margin="10,0,0,0"
                        HorizontalAlignment="Left"
                        VerticalAlignment="Top"
+                       IsChecked="{Binding CornerButtonsChecked[2], Mode=OneWay}"
                        img:EmbeddedImg.Image="/Icons/BottomLeftPlate.png"
-                       Style="{StaticResource ResultsRadioButtonStyle}"/>
+                       Style="{StaticResource ResultsRadioButtonStyle}"
+                       Command="{Binding CornerButtonClickCommand}">
+              <RadioButton.CommandParameter>
+                <System:Int32>3</System:Int32>
+              </RadioButton.CommandParameter>
+            </RadioButton>
             <RadioButton Width="100" Height="70"
                        Margin="10,0,0,0"
                        HorizontalAlignment="Left"
                        VerticalAlignment="Top"
+                       IsChecked="{Binding CornerButtonsChecked[3], Mode=OneWay}"
                        img:EmbeddedImg.Image="/Icons/BottomRightPlate.png"
-                       Style="{StaticResource ResultsRadioButtonStyle}"/>
+                       Style="{StaticResource ResultsRadioButtonStyle}"
+                       Command="{Binding CornerButtonClickCommand}">
+              <RadioButton.CommandParameter>
+                <System:Int32>4</System:Int32>
+              </RadioButton.CommandParameter>
+            </RadioButton>
           </StackPanel>
           <Button Width="163" Height="70"
                   Margin="10,0,0,0"
                   HorizontalAlignment="Left"
                   VerticalAlignment="Top"
                   Content="To Current"
-                  Style="{StaticResource ButtonStyle}"/>
+                  Style="{StaticResource ButtonStyle}"
+                  Command="{Binding ToCurrentButtonClickCommand}"/>
         </StackPanel>
-        
       </Grid>
     </Border>
   </Grid>

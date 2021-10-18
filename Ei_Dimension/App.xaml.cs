@@ -940,7 +940,7 @@ namespace Ei_Dimension
           Views.ResultsView.Instance.Table,
           Views.DashboardView.Instance.DbActiveRegionNo,
           Views.DashboardView.Instance.DbActiveRegionName);
-        ResultsViewModel.Instance.PlatePictogram.SetGrid((System.Windows.Controls.DataGrid)Views.ResultsView.Instance.Plate.Children[2]);
+        ResultsViewModel.Instance.PlatePictogram.SetGrid(Views.ResultsView.Instance.DrawingPlate);
         _isStartup = false;
       }
       TextBoxUpdater();
@@ -1666,8 +1666,9 @@ namespace Ei_Dimension
 
     public static void StartingToReadWellEventhandler(object sender, ReadingWellEventArgs e)
     {
-      ResultsViewModel.Instance.PlatePictogram.ChangeState(e.Row, e.Column, Models.WellType.NowReading);
-
+      ResultsViewModel.Instance.PlatePictogram.CurrentlyReadCell = (e.Row, e.Column);
+      ResultsViewModel.Instance.PlatePictogram.ChangeState(e.Row, e.Column, Models.WellType.NowReading, e.FilePath);
+      ResultsViewModel.Instance.CornerButtonClick(Models.DrawingPlate.CalculateCorner(e.Row, e.Column));
       ResultsViewModel.Instance.ClearGraphs();
       for (var i = 0; i < MapRegions.ActiveRegionsCount.Count; i++)
       {
