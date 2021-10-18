@@ -64,7 +64,6 @@ namespace Ei_Dimension
       _histogramUpdateGoing = false;
       _ActiveRegionsUpdateGoing = false;
       _isStartup = true;
-      logfilecb_CheckedChanged();
     }
 
     public static int GetActiveMapIndex()
@@ -1699,32 +1698,6 @@ namespace Ei_Dimension
     {
       Device.ReadActive = false;
       MainButtonsViewModel.Instance.StartButtonEnabled = true;
-    }
-    private void logfilecb_CheckedChanged()
-    {
-      string logpath = System.IO.Path.Combine(Device.RootDirectory.FullName, "SystemLogs", "EventLog");
-      //if (logfilecb.Checked == true)
-      //{
-        string logfilepath = logpath + ".txt";
-        string backfilepath = logpath + ".bak";
-        if (System.IO.File.Exists(logfilepath))
-        {
-        System.IO.File.Delete(backfilepath);
-          System.IO.File.Move(logfilepath, logpath + ".bak");
-        }
-        System.IO.FileStream fs = new System.IO.FileStream(logpath + ".txt", System.IO.FileMode.Create);
-        System.IO.StreamWriter logwriter = new System.IO.StreamWriter(fs);
-        logwriter.AutoFlush = true;
-
-        Console.SetOut(logwriter);
-      //}
-      //else
-      //{
-      //  Console.Out.Close();
-      //  StreamWriter sw = new StreamWriter(Console.OpenStandardOutput());
-      //  sw.AutoFlush = true;
-      //  Console.SetOut(sw);
-      //}
     }
   }
 }

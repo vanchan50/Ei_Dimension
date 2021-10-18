@@ -1256,6 +1256,15 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to System Log.
+        /// </summary>
+        public static string FileSave_Sys_Log {
+            get {
+                return ResourceManager.GetString("FileSave_Sys_Log", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Halt.
         /// </summary>
         public static string Halt {

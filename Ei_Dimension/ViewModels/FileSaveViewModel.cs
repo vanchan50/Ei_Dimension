@@ -3,6 +3,7 @@ using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
 using System;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Windows.Controls;
 
 namespace Ei_Dimension.ViewModels
@@ -23,6 +24,7 @@ namespace Ei_Dimension.ViewModels
         Settings.Default.Everyevent,
         Settings.Default.RMeans,
         Settings.Default.PlateReport,
+        false,
         false,
         false,
         false
@@ -92,6 +94,31 @@ namespace Ei_Dimension.ViewModels
         case 4:
           break;
         case 5:
+          break;
+        case 6:
+          string logpath = Path.Combine(App.Device.RootDirectory.FullName, "SystemLogs", "EventLog");
+          if (Checkboxes[num] == true)
+          {
+          string logfilepath = logpath + ".txt";
+          string backfilepath = logpath + ".bak";
+          if (File.Exists(logfilepath))
+          {
+            File.Delete(backfilepath);
+            File.Move(logfilepath, logpath + ".bak");
+          }
+          FileStream fs = new FileStream(logpath + ".txt", FileMode.Create);
+          StreamWriter logwriter = new StreamWriter(fs);
+          logwriter.AutoFlush = true;
+
+          Console.SetOut(logwriter);
+          }
+          else
+          {
+            Console.Out.Close();
+            StreamWriter sw = new StreamWriter(Console.OpenStandardOutput());
+            sw.AutoFlush = true;
+            Console.SetOut(sw);
+          }
           break;
       }
       Settings.Default.Save();

@@ -133,7 +133,7 @@ namespace Ei_Dimension.ViewModels
             DashVM.FocusedBox(4);
             App.InjectToFocusedTextbox(newTemplate.AgitateVolume.ToString(), true);
             uint chkBox = newTemplate.FileSaveCheckboxes;
-            for (var i = FileSaveViewModel.Instance.Checkboxes.Count -1; i > -1 ; i--)
+            for (var i = FileSaveViewModel.Instance.Checkboxes.Count -1 -1; i > -1 ; i--)// -1 to not store system log
             {
               uint pow = (uint)Math.Pow(2, i);
               if (chkBox >= pow)
@@ -190,7 +190,7 @@ namespace Ei_Dimension.ViewModels
             temp.TotalEvents = uint.Parse(DashboardViewModel.Instance.EndRead[1]);
             uint checkboxes = 0;
             int currVal = 0;
-            for(var i = 0; i < FileSaveViewModel.Instance.Checkboxes.Count; i++)
+            for(var i = 0; i < FileSaveViewModel.Instance.Checkboxes.Count - 1; i++)  // -1 to not store system log
             {
               currVal = (int)Math.Pow(2,i) * (FileSaveViewModel.Instance.Checkboxes[i] ? 1 : 0);
               checkboxes += (uint)currVal;
