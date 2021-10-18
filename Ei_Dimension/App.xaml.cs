@@ -1472,10 +1472,12 @@ namespace Ei_Dimension
             //    Device.InitSTab(tabnam);
             //    break;
             case 0xfd:
-              Device.EndState = 1; //start the end of well state machine
+              if (Device.EndState == 0)
+                Device.EndState = 1; //start the end of well state machine
               break;
             case 0xfe:
-              Device.EndState = 1;
+              if(Device.EndState == 0)
+                Device.EndState = 1;
               break;
           }
         }
