@@ -32,7 +32,6 @@ namespace Ei_Dimension.ViewModels
     public virtual bool PressureMonToggleButtonState { get; set; }
     public double MaxPressure { get; set; }
     public double MinPressure { get; set; }
-    public virtual ObservableCollection<string> ActiveList { get; set; }
     public static DashboardViewModel Instance { get; private set; }
 
     public byte SelectedSystemControlIndex { get; set; }
@@ -125,7 +124,6 @@ namespace Ei_Dimension.ViewModels
 
       PressureMonToggleButtonState = false;
       PressureMon = new ObservableCollection<string> {"","",""};
-      ActiveList = new ObservableCollection<string>();
       Instance = this;
     }
 

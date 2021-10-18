@@ -2,6 +2,7 @@
 using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
 using System;
+using System.Collections.ObjectModel;
 
 namespace Ei_Dimension.ViewModels
 {
@@ -10,9 +11,11 @@ namespace Ei_Dimension.ViewModels
   {
     public virtual bool StartButtonEnabled { get; set; }
     public static MainButtonsViewModel Instance { get; private set; }
+    public virtual ObservableCollection<string> ActiveList { get; set; }
     protected MainButtonsViewModel()
     {
       StartButtonEnabled = true;
+      ActiveList = new ObservableCollection<string>();
       Instance = this;
     }
 

@@ -1406,7 +1406,7 @@ namespace Ei_Dimension
               CalibrationViewModel.Instance.GatingItems[exe.Parameter].ForAppUpdater();
               break;
             case 0xcc:  //sync pending
-              var list = DashboardViewModel.Instance.ActiveList;
+              var list = MainButtonsViewModel.Instance.ActiveList;
               for (var i = 0; i < 16; i++)
               {
                 if ((exe.Parameter & (1 << i)) != 0)
@@ -1516,7 +1516,7 @@ namespace Ei_Dimension
           }
         case 3:
           {
-            if (!DashboardViewModel.Instance.ActiveList.Contains("WASHING"))
+            if (!MainButtonsViewModel.Instance.ActiveList.Contains("WASHING"))
             {
               Device.EndState++;  //wait here until alternate syringe is finished washing
               Console.WriteLine(string.Format("{0} Reporting Washing Complete", DateTime.Now.ToString()));
