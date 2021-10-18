@@ -44,7 +44,7 @@ namespace Ei_Dimension.ViewModels
       App.Device.MainCommand("Get FProperty", code: 0x20); //get high dnr property
       App.Device.ReadActive = true;
 
-      MainButtonsViewModel.Instance.StartButtonEnabled = false;
+      StartButtonEnabled = false;
       ResultsViewModel.Instance.ClearGraphs();
       ResultsViewModel.Instance.PlotCurrent();
       ResultsViewModel.Instance.PlatePictogram.Clear();

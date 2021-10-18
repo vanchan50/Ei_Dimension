@@ -234,7 +234,7 @@ namespace MicroCy
         Outdir = RootDirectory.FullName;
       for (var differ = 0; differ < int.MaxValue; differ++)
       {
-        _fullFileName = Outdir + "\\" + Outfilename + rowletter + coln.ToString() + '_' + differ.ToString()+".csv";
+        _fullFileName = Outdir + "\\AcquisitionData\\" + Outfilename + rowletter + coln.ToString() + '_' + differ.ToString()+".csv";
         if (!File.Exists(_fullFileName))
           break;
       }
@@ -569,7 +569,7 @@ namespace MicroCy
       string summaryFileName = "";
       for (var i = 0; i < int.MaxValue; i++)
       {
-        summaryFileName = Outdir + "\\" + "Results__" + Outfilename + '_' + i.ToString() + ".csv";
+        summaryFileName = Outdir + "\\Summary\\" + "Summary_" + Outfilename + '_' + i.ToString() + ".csv";
         if (!File.Exists(summaryFileName))
           break;
       }

@@ -217,6 +217,7 @@ namespace Ei_Dimension.ViewModels
           BackingGreenSsc[i].Value = 0;
           BackingReporter[i].Value = 0;
         }
+        BackingMap.Clear();
       }
     }
 
@@ -274,6 +275,7 @@ namespace Ei_Dimension.ViewModels
       foreach (var bead in beadStructslist)
       {
         Core.DataProcessor.BinData(bead, fromFile: true);
+        BackingMap.Add(new HeatMapData((int)bead.cl1, (int)bead.cl2));
       }
     }
 
