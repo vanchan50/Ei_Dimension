@@ -1,4 +1,5 @@
 ﻿using Ei_Dimension.Core;
+using System.Collections.Generic;
 
 namespace Ei_Dimension.Models
 {
@@ -21,16 +22,29 @@ namespace Ei_Dimension.Models
         OnPropertyChanged();
       }
     }
-    public byte IntensityX { get; set; }
-    public byte IntensityY { get; set; }
+    public int A
+    {
+      get => _a;
+      set
+      {
+        _a = value;
+        OnPropertyChanged();
+      }
+    }
     private int _x;
     private int _y;
+    private int _a;
+    public static int[] bins { get; }
+    public static Dictionary<(int x, int y), int> Dict { get; } = new Dictionary<(int x, int y), int>();
     public HeatMapData(int x, int y)
     {
       X = x;
       Y = y;
-      IntensityX = 0;
-      IntensityY = 0;
+      _a = 0;
+    }
+    static HeatMapData()
+    {
+      bins = DataProcessor.GenerateCLSpace();
     }
   }
 }

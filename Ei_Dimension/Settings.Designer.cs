@@ -49,7 +49,7 @@ namespace Ei_Dimension {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.5")]
         public float Compensation {
             get {
                 return ((float)(this["Compensation"]));
@@ -157,7 +157,7 @@ namespace Ei_Dimension {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("7200")]
+        [global::System.Configuration.DefaultSettingValueAttribute("12500")]
         public float HDnrTrans {
             get {
                 return ((float)(this["HDnrTrans"]));

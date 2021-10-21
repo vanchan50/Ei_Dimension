@@ -108,9 +108,11 @@
                       BorderThickness="0"
                       Focusable="False"
                       Margin="0,452,0,0">
-      <dxc:XYDiagram2D Width="562" Height="388" Margin="50,-8,0,0" 
+      <dxc:XYDiagram2D Width="562" Height="388"
+                       Margin="46,-8,0,0" 
                        Focusable="False"
-                       HorizontalAlignment="Left" VerticalAlignment="Top">
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Top">
         <dxc:XYDiagram2D.AxisY>
           <dxc:AxisY2D Logarithmic="True"
                        GridLinesMinorVisible="True"
@@ -121,7 +123,7 @@
             <dxc:AxisY2D.WholeRange>
               <dxc:Range dxc:AxisY2D.AlwaysShowZeroLevel="False" >
                 <dxc:Range.MinValue>
-                  <System:Double>1</System:Double>
+                  <System:Double>10</System:Double>
                 </dxc:Range.MinValue>
               </dxc:Range>
             </dxc:AxisY2D.WholeRange>
@@ -129,13 +131,6 @@
               <dxc:AxisTitle Content="{Binding HeatmapAxisYTitle}"
                              Visible="False"/>
             </dxc:AxisY2D.Title>
-            <dxc:AxisY2D.VisualRange>
-              <dxc:Range dxc:AxisY2D.AlwaysShowZeroLevel="False">
-                <dxc:Range.MinValue>
-                  <System:Double>1</System:Double>
-                </dxc:Range.MinValue>
-              </dxc:Range>
-            </dxc:AxisY2D.VisualRange>
           </dxc:AxisY2D>
         </dxc:XYDiagram2D.AxisY>
         <dxc:XYDiagram2D.AxisX>
@@ -145,15 +140,28 @@
                        GridLinesVisible="True"
                        TickmarksMinorVisible="False"
                        TickmarksVisible="False">
-            <dxc:AxisX2D.Range>
-              <dxc:AxisRange SideMarginsEnabled="False"/>
-            </dxc:AxisX2D.Range>
+            <dxc:AxisX2D.WholeRange>
+              <dxc:Range>
+                <dxc:Range.MinValue>
+                  <System:Double>10</System:Double>
+                </dxc:Range.MinValue>
+              </dxc:Range>
+            </dxc:AxisX2D.WholeRange>
             <dxc:AxisX2D.Title>
               <dxc:AxisTitle Content="{Binding HeatmapAxisXTitle}"
                              Visible="False"/>
             </dxc:AxisX2D.Title>
           </dxc:AxisX2D>
         </dxc:XYDiagram2D.AxisX>
+        <dxc:PointSeries2D DataSource="{Binding WorldMap}"
+                           ArgumentDataMember="X"
+                           ValueDataMember="Y"
+                           MarkerSize="5"
+                           Brush="LightGray">
+          <dxc:PointSeries2D.MarkerModel>
+            <dxc:BorderlessSimpleMarker2DModel/>
+          </dxc:PointSeries2D.MarkerModel>
+        </dxc:PointSeries2D>
         <dxc:PointSeries2D DataSource="{Binding HeatLevel1}"
                            ArgumentDataMember="X"
                            ValueDataMember="Y"

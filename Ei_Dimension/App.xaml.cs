@@ -1621,7 +1621,7 @@ namespace Ei_Dimension
           while (Device.DataOut.TryDequeue(out bead))
           {
             Core.DataProcessor.BinData(bead);
-            ResultsViewModel.Instance.CurrentMap.Add(new Models.HeatMapData((int)bead.cl1, (int)bead.cl2));
+            FillCurrentMap(in bead);
           }
           _histogramUpdateGoing = false;
         }));
@@ -1698,6 +1698,21 @@ namespace Ei_Dimension
     {
       Device.ReadActive = false;
       MainButtonsViewModel.Instance.StartButtonEnabled = true;
+    }
+
+    private static void FillCurrentMap(in BeadInfoStruct bead)
+    {
+      var x = Models.HeatMapData.bins[(int)(Math.Log(bead.cl1) * 24.526)];
+      var y = Models.HeatMapData.bins[(int)(Math.Log(bead.cl2) * 24.526)];
+      if (!Models.HeatMapData.Dict.ContainsKey((x, y)))
+      {
+        Models.HeatMapData.Dict.Add((x, y), ResultsViewModel.Instance.CurrentMap.Count);
+        ResultsViewModel.Instance.CurrentMap.Add(new Models.HeatMapData(x, y));
+      }
+      else
+      {
+        ResultsViewModel.Instance.CurrentMap[Models.HeatMapData.Dict[(x, y)]].A++;
+      }
     }
   }
 }

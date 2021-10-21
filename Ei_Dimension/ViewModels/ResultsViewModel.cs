@@ -13,6 +13,7 @@ namespace Ei_Dimension.ViewModels
   public class ResultsViewModel
   {
     public virtual ObservableCollection<bool> ScatterSelectorState { get; set; }
+    public virtual ObservableCollection<HeatMapData> WorldMap { get; set; }
     public virtual ObservableCollection<HistogramData<int, int>> CurrentForwardSsc { get; set; }
     public virtual ObservableCollection<HistogramData<int, int>> CurrentVioletSsc { get; set; }
     public virtual ObservableCollection<HistogramData<int, int>> CurrentRedSsc { get; set; }
@@ -55,6 +56,8 @@ namespace Ei_Dimension.ViewModels
     protected ResultsViewModel()
     {
       ScatterSelectorState = new ObservableCollection<bool> { false, false, false, false, false };
+      WorldMap = new ObservableCollection<HeatMapData>();
+
       byte temp = Settings.Default.ScatterGraphSelector;
       if (temp >= 16)
       {
@@ -126,6 +129,7 @@ namespace Ei_Dimension.ViewModels
       }
 
       CurrentMap = new ObservableCollection<HeatMapData>();
+      _ = new HeatMapData(1,1);
       BackingMap = new ObservableCollection<HeatMapData>();
       PlotCurrent();
 
@@ -136,6 +140,7 @@ namespace Ei_Dimension.ViewModels
       RightLabel384Visible = System.Windows.Visibility.Hidden;
       TopLabel384Visible = System.Windows.Visibility.Visible;
       BottomLabel384Visible = System.Windows.Visibility.Hidden;
+      FillWorldMap(App.Device.RootDirectory.FullName + @"\Config\" + App.Device.ActiveMap.mapName + @"_world.json");
     }
 
     public static ResultsViewModel Create()
@@ -206,6 +211,7 @@ namespace Ei_Dimension.ViewModels
           CurrentReporter[i].Value = 0;
         }
         CurrentMap.Clear();
+        HeatMapData.Dict.Clear();
       }
       else
       {
@@ -306,6 +312,27 @@ namespace Ei_Dimension.ViewModels
         DisplayedCL2 = BackingCL2;
         DisplayedCL3 = BackingCL3;
         DisplayedMap = BackingMap;
+      }
+    }
+    public void FillWorldMap(string path)
+    {
+      List<(int x, int y)> XYList = null;
+      try
+      {
+        using (System.IO.TextReader reader = new System.IO.StreamReader(path))
+        {
+          var fileContents = reader.ReadToEnd();
+          XYList = Newtonsoft.Json.JsonConvert.DeserializeObject<List<(int, int)>>(fileContents);
+        }
+      }
+      catch { }
+      if (XYList != null)
+      {
+        WorldMap.Clear();
+        foreach (var point in XYList)
+        {
+          WorldMap.Add(new HeatMapData(HeatMapData.bins[point.x], HeatMapData.bins[point.y]));
+        }
       }
     }
   }

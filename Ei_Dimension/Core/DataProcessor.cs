@@ -321,11 +321,17 @@ namespace Ei_Dimension.Core
     //less than start - assign to min
     return 1;
     }
-    public static int[] GenerateLogSpace(int min, int max, int logBins)
+    public static int[] GenerateLogSpace(int min, int max, int logBins, bool baseE = false)
     {
       double logarithmicBase = 10;
       double logMin = Math.Log10(min);
       double logMax = Math.Log10(max);
+      if (baseE)
+      {
+        logarithmicBase = Math.E;
+        logMin = Math.Log(min);
+        logMax = Math.Log(max);
+      }
       double delta = (logMax - logMin) / logBins;
       double accDelta = delta;
       int[] Result = new int[logBins];
@@ -336,6 +342,19 @@ namespace Ei_Dimension.Core
       }
       return Result;
     }
+
+    public static int[] GenerateCLSpace()
+    {
+      int[] res = new int[256];
+      int iterator = 0;
+      for (var i = 0; i < 32800; i++)
+      {
+        if ((Math.Log(i) * 24.526) > iterator)
+          res[iterator++] = i;
+      }
+      return res;
+    }
+
     public static void BinData(MicroCy.BeadInfoStruct bead, bool fromFile = false)
     {
       var ResVM = ViewModels.ResultsViewModel.Instance;

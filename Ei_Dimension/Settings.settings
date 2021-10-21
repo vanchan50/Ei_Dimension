@@ -9,7 +9,7 @@
       <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="Compensation" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">1</Value>
+      <Value Profile="(Default)">0.5</Value>
     </Setting>
     <Setting Name="SampleSize" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">1000</Value>
@@ -36,7 +36,7 @@
       <Value Profile="(Default)">2</Value>
     </Setting>
     <Setting Name="HDnrTrans" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">7200</Value>
+      <Value Profile="(Default)">12500</Value>
     </Setting>
     <Setting Name="ScatterGraphSelector" Type="System.Byte" Scope="User">
       <Value Profile="(Default)">18</Value>

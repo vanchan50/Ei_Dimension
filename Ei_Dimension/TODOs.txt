@@ -92,4 +92,4 @@ Fixed a TerminationReadyCheck() possible bug scenario, where assuming EndRegion 
 Device.TerminationReadyCheck() case 1
   looks wrong. don't copy EndRead button function here? why not?
 
-Template stores System Log checkbox information. probably should not
+  heatmapdata has to have a static constructor and a field, bins[], initialized there.
