@@ -107,7 +107,7 @@
                       VerticalAlignment="Top"
                       BorderThickness="0"
                       Focusable="False"
-                      Margin="0,452,0,0">
+                      Margin="0,452,0,0" Name="ChC">
       <dxc:XYDiagram2D Width="562" Height="388"
                        Margin="46,-8,0,0" 
                        Focusable="False"
@@ -154,7 +154,7 @@
           </dxc:AxisX2D>
         </dxc:XYDiagram2D.AxisX>
         <dxc:PointSeries2D DataSource="{Binding WorldMap}"
-                           ArgumentDataMember="X"
+                           ArgumentDataMember="X" CrosshairContentShowMode="Legend"
                            ValueDataMember="Y"
                            MarkerSize="5"
                            Brush="LightGray">
@@ -162,31 +162,11 @@
             <dxc:BorderlessSimpleMarker2DModel/>
           </dxc:PointSeries2D.MarkerModel>
         </dxc:PointSeries2D>
-        <dxc:PointSeries2D DataSource="{Binding HeatLevel1}"
-                           ArgumentDataMember="X"
-                           ValueDataMember="Y"
-                           MarkerSize="3"
-                           Brush="Aqua"/>
-        <dxc:PointSeries2D DataSource="{Binding HeatLevel2}"
-                           ArgumentDataMember="X"
-                           ValueDataMember="Y"
-                           MarkerSize="3"
-                           Brush="Green"/>
-        <dxc:PointSeries2D DataSource="{Binding HeatLevel3}"
-                           ArgumentDataMember="X"
-                           ValueDataMember="Y"
-                           MarkerSize="3"
-                           Brush="Orange"/>
-        <dxc:PointSeries2D DataSource="{Binding DisplayedMap}"
-                           ArgumentDataMember="X"
-                           ValueDataMember="Y"
-                           MarkerSize="3"
-                           Brush="OrangeRed"/>
-        <dxc:PointSeries2D DataSource="{Binding HeatLevel5}"
-                           ArgumentDataMember="X"
-                           ValueDataMember="Y"
-                           MarkerSize="3"
-                           Brush="#FFEB2323"/>
+        <dxc:PointSeries2D DisplayName="TestSeries" MarkerSize="3">
+          <dxc:PointSeries2D.MarkerModel>
+            <dxc:BorderlessSimpleMarker2DModel/>
+          </dxc:PointSeries2D.MarkerModel>
+        </dxc:PointSeries2D>
       </dxc:XYDiagram2D>
     </dxc:ChartControl>
 

@@ -93,3 +93,5 @@ Device.TerminationReadyCheck() case 1
   looks wrong. don't copy EndRead button function here? why not?
 
   heatmapdata has to have a static constructor and a field, bins[], initialized there.
+
+  Analysis if beads hit a certain region is still done with log(x * num) and not log10() with proper binning. fix it

@@ -24,6 +24,7 @@ namespace Ei_Dimension
     private static bool _histogramUpdateGoing;
     private static bool _ActiveRegionsUpdateGoing;
     private static bool _isStartup;
+    private static int _50PointsUpdateCounter;
     public App()
     {
       _cancelKeyboardInjectionFlag = false;
@@ -64,6 +65,7 @@ namespace Ei_Dimension
       _histogramUpdateGoing = false;
       _ActiveRegionsUpdateGoing = false;
       _isStartup = true;
+      _50PointsUpdateCounter = 0;
     }
 
     public static int GetActiveMapIndex()
@@ -944,6 +946,7 @@ namespace Ei_Dimension
         _isStartup = false;
       }
       TextBoxUpdater();
+
       if (Device.IsMeasurementGoing)
       {
         HistogramHandler();
@@ -1622,6 +1625,12 @@ namespace Ei_Dimension
           {
             Core.DataProcessor.BinData(bead);
             FillCurrentMap(in bead);
+            if(_50PointsUpdateCounter == 50)
+            {
+              _50PointsUpdateCounter = 0;
+              AnalyzeHeatMap();
+            }
+            _50PointsUpdateCounter++;
           }
           _histogramUpdateGoing = false;
         }));
@@ -1724,10 +1733,43 @@ namespace Ei_Dimension
       {
         Models.HeatMapData.Dict.Add((x, y), ResultsViewModel.Instance.CurrentMap.Count);
         ResultsViewModel.Instance.CurrentMap.Add(new Models.HeatMapData((int)Models.HeatMapData.bins[x], (int)Models.HeatMapData.bins[y]));
+        if (ResultsViewModel.Instance.PlatePictogram.FollowingCurrentCell)
+          Views.ResultsView.Instance.AddXYPoint((int)Models.HeatMapData.bins[x], (int)Models.HeatMapData.bins[y], System.Windows.Media.Brushes.DarkOliveGreen);
       }
       else
       {
         ResultsViewModel.Instance.CurrentMap[Models.HeatMapData.Dict[(x, y)]].A++;
+      }
+    }
+
+    public static void AnalyzeHeatMap()
+    {
+      if (ResultsViewModel.Instance.PlatePictogram.FollowingCurrentCell && ResultsViewModel.Instance.CurrentMap.Count > 0)
+      {
+        int max = 0;
+        int min = ResultsViewModel.Instance.CurrentMap[0].A;
+        int sum = 0;
+        foreach (var p in ResultsViewModel.Instance.CurrentMap)
+        {
+          if (p.A > max)
+            max = p.A;
+          if (p.A < min)
+            min = p.A;
+          sum += p.A;
+        }
+        int avg = sum / ResultsViewModel.Instance.CurrentMap.Count;
+
+        for (var i = 0; i < ResultsViewModel.Instance.CurrentMap.Count; i++)
+        {
+          if (ResultsViewModel.Instance.CurrentMap[i].A >= max - (0.5 * (max - avg)))
+            Views.ResultsView.Instance.ChangePointColor(i, System.Windows.Media.Brushes.Red);
+          else if (ResultsViewModel.Instance.CurrentMap[i].A >= avg)
+            Views.ResultsView.Instance.ChangePointColor(i, System.Windows.Media.Brushes.OrangeRed);
+          else if (ResultsViewModel.Instance.CurrentMap[i].A >= avg - (0.5 * (avg - min)))
+            Views.ResultsView.Instance.ChangePointColor(i, System.Windows.Media.Brushes.Orange);
+          else if (ResultsViewModel.Instance.CurrentMap[i].A >= min)
+            Views.ResultsView.Instance.ChangePointColor(i, System.Windows.Media.Brushes.Blue);
+        }
       }
     }
   }
