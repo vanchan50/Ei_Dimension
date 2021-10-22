@@ -1702,12 +1702,28 @@ namespace Ei_Dimension
 
     private static void FillCurrentMap(in BeadInfoStruct bead)
     {
-      var x = Models.HeatMapData.bins[(int)(Math.Log(bead.cl1) * 24.526)];
-      var y = Models.HeatMapData.bins[(int)(Math.Log(bead.cl2) * 24.526)];
+      int x = 0;
+      int y = 0;
+      for (var i = 0; i < 256; i++)
+      {
+        if (bead.cl1 <= Models.HeatMapData.bins[i])
+        {
+          x = i;
+          break;
+        }
+      }
+      for (var i = 0; i < 256; i++)
+      {
+        if (bead.cl2 <= Models.HeatMapData.bins[i])
+        {
+          y = i;
+          break;
+        }
+      }
       if (!Models.HeatMapData.Dict.ContainsKey((x, y)))
       {
         Models.HeatMapData.Dict.Add((x, y), ResultsViewModel.Instance.CurrentMap.Count);
-        ResultsViewModel.Instance.CurrentMap.Add(new Models.HeatMapData(x, y));
+        ResultsViewModel.Instance.CurrentMap.Add(new Models.HeatMapData((int)Models.HeatMapData.bins[x], (int)Models.HeatMapData.bins[y]));
       }
       else
       {

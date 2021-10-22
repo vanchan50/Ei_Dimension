@@ -34,7 +34,7 @@ namespace Ei_Dimension.Models
     private int _x;
     private int _y;
     private int _a;
-    public static int[] bins { get; }
+    public static double[] bins { get; }
     public static Dictionary<(int x, int y), int> Dict { get; } = new Dictionary<(int x, int y), int>();
     public HeatMapData(int x, int y)
     {
@@ -44,7 +44,7 @@ namespace Ei_Dimension.Models
     }
     static HeatMapData()
     {
-      bins = DataProcessor.GenerateCLSpace();
+      bins = DataProcessor.GenerateLogSpaceD(1, 50000, 256);
     }
   }
 }

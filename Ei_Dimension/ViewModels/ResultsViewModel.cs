@@ -281,7 +281,25 @@ namespace Ei_Dimension.ViewModels
       foreach (var bead in beadStructslist)
       {
         Core.DataProcessor.BinData(bead, fromFile: true);
-        BackingMap.Add(new HeatMapData((int)bead.cl1, (int)bead.cl2));
+        int x = 0;
+        int y = 0;
+        for (var i = 0; i < 256; i++)
+        {
+          if (bead.cl1 <= HeatMapData.bins[i])
+          {
+            x = i;
+            break;
+          }
+        }
+        for (var i = 0; i < 256; i++)
+        {
+          if (bead.cl2 <= HeatMapData.bins[i])
+          {
+            y = i;
+            break;
+          }
+        }
+        BackingMap.Add(new HeatMapData((int)HeatMapData.bins[x], (int)HeatMapData.bins[y]));
       }
     }
 
@@ -331,7 +349,7 @@ namespace Ei_Dimension.ViewModels
         WorldMap.Clear();
         foreach (var point in XYList)
         {
-          WorldMap.Add(new HeatMapData(HeatMapData.bins[point.x], HeatMapData.bins[point.y]));
+          WorldMap.Add(new HeatMapData(point.x, point.y));
         }
       }
     }
