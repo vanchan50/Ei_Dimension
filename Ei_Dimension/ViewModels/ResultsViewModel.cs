@@ -39,6 +39,7 @@ namespace Ei_Dimension.ViewModels
     public virtual System.Windows.Visibility BottomLabel384Visible { get; set; }
     public virtual ObservableCollection<bool> CornerButtonsChecked { get; set; }
     public static ResultsViewModel Instance { get; private set; }
+    public static int[] HistogramBins { get; private set; }
 
     protected ResultsViewModel()
     {
@@ -83,20 +84,20 @@ namespace Ei_Dimension.ViewModels
       BackingGreenSsc = new ObservableCollection<HistogramData<int, int>>();
       BackingReporter = new ObservableCollection<HistogramData<int, int>>();
 
-      var bins = Core.DataProcessor.GenerateLogSpace(1, 1000000, 384);
-      for (var i = 0; i < bins.Length; i++)
+      HistogramBins = Core.DataProcessor.GenerateLogSpace(1, 1000000, 384);
+      for (var i = 0; i < HistogramBins.Length; i++)
       {
-        CurrentForwardSsc.Add(new HistogramData<int, int>(0, bins[i]));
-         CurrentVioletSsc.Add(new HistogramData<int, int>(0, bins[i]));
-            CurrentRedSsc.Add(new HistogramData<int, int>(0, bins[i]));
-          CurrentGreenSsc.Add(new HistogramData<int, int>(0, bins[i]));
-          CurrentReporter.Add(new HistogramData<int, int>(0, bins[i]));
+        CurrentForwardSsc.Add(new HistogramData<int, int>(0, HistogramBins[i]));
+         CurrentVioletSsc.Add(new HistogramData<int, int>(0, HistogramBins[i]));
+            CurrentRedSsc.Add(new HistogramData<int, int>(0, HistogramBins[i]));
+          CurrentGreenSsc.Add(new HistogramData<int, int>(0, HistogramBins[i]));
+          CurrentReporter.Add(new HistogramData<int, int>(0, HistogramBins[i]));
 
-        BackingForwardSsc.Add(new HistogramData<int, int>(0, bins[i]));
-         BackingVioletSsc.Add(new HistogramData<int, int>(0, bins[i]));
-            BackingRedSsc.Add(new HistogramData<int, int>(0, bins[i]));
-          BackingGreenSsc.Add(new HistogramData<int, int>(0, bins[i]));
-          BackingReporter.Add(new HistogramData<int, int>(0, bins[i]));
+        BackingForwardSsc.Add(new HistogramData<int, int>(0, HistogramBins[i]));
+         BackingVioletSsc.Add(new HistogramData<int, int>(0, HistogramBins[i]));
+            BackingRedSsc.Add(new HistogramData<int, int>(0, HistogramBins[i]));
+          BackingGreenSsc.Add(new HistogramData<int, int>(0, HistogramBins[i]));
+          BackingReporter.Add(new HistogramData<int, int>(0, HistogramBins[i]));
       }
 
       CurrentMap = new ObservableCollection<HeatMapData>();
@@ -250,78 +251,82 @@ namespace Ei_Dimension.ViewModels
       }
     }
 
-    public async void FillAllDataAsync()
+    public void FillAllDataAsync()
     {
-      var path = @"D:\WorkC#\SampleData\Mon Run 2AA11_0.csv";// PlatePictogram.GetSelectedFilePath();
-      if (path == null)
-        return;
-      var beadStructslist = new List<MicroCy.BeadInfoStruct>();
-      await ParseBeadInfoAsync(path, beadStructslist);
-      Dictionary<(int x, int y), int> Dict = new Dictionary<(int x, int y), int>();
-      int index = 0;
-      foreach (var bead in beadStructslist)
+      _ = Task.Run(async ()=>
       {
-        Core.DataProcessor.BinData(bead, fromFile: true);
-        //TODO:try to put into dispatcher begininvk
-        int x = 0;
-        int y = 0;
-        for (var i = 0; i < 256; i++)
+        var path = @"D:\WorkC#\SampleData\Mon Run 2AA11_0.csv";// PlatePictogram.GetSelectedFilePath();
+        if (path == null)
+          return;
+        var beadStructslist = new List<MicroCy.BeadInfoStruct>();
+        await ParseBeadInfoAsync(path, beadStructslist);
+        Dictionary<(int x, int y), int> Dict = new Dictionary<(int x, int y), int>();
+        int index = 0;
+        _ = Task.Run(() => Core.DataProcessor.BinData(beadStructslist, fromFile: true));
+        foreach (var bead in beadStructslist)
         {
-          if (bead.cl1 <= HeatMapData.bins[i])
+          int x = 0;
+          int y = 0;
+          for (var i = 0; i < 256; i++)
           {
-            x = i;
-            break;
+            if (bead.cl1 <= HeatMapData.bins[i])
+            {
+              x = i;
+              break;
+            }
+          }
+          for (var i = 0; i < 256; i++)
+          {
+            if (bead.cl2 <= HeatMapData.bins[i])
+            {
+              y = i;
+              break;
+            }
+          }
+          if (!Dict.ContainsKey((x, y)))
+          {
+            Dict.Add((x, y), index);
+            index++;
+            BackingMap.Add(new HeatMapData((int)HeatMapData.bins[x], (int)HeatMapData.bins[y]));
+          }
+          else
+          {
+            BackingMap[Dict[(x, y)]].A++;
           }
         }
-        for (var i = 0; i < 256; i++)
+        _ = App.Current.Dispatcher.BeginInvoke((Action)(()=>
         {
-          if (bead.cl2 <= HeatMapData.bins[i])
+          //analyzeheatmap for noncurrentmap, but backing map here
+          int max = 0;
+          int min = BackingMap[0].A;
+          foreach (var p in BackingMap)
           {
-            y = i;
-            break;
+            if (p.A > max)
+              max = p.A;
+            if (p.A < min)
+              min = p.A;
           }
-        }
-        if (!Dict.ContainsKey((x, y)))
-        {
-          Dict.Add((x, y), index);
-          index++;
-          BackingMap.Add(new HeatMapData((int)HeatMapData.bins[x], (int)HeatMapData.bins[y]));
-          Views.ResultsView.Instance.AddXYPoint((int)HeatMapData.bins[x], (int)HeatMapData.bins[y], System.Windows.Media.Brushes.DarkOliveGreen);
-        }
-        else
-        {
-          BackingMap[Dict[(x, y)]].A++;
-        }
-      }
-      //analyzeheatmap for noncurrentmap, but backing map here
-      int max = 0;
-      int min = BackingMap[0].A;
-      foreach (var p in BackingMap)
-      {
-        if (p.A > max)
-          max = p.A;
-        if (p.A < min)
-          min = p.A;
-      }
-      double[] bins = Core.DataProcessor.GenerateLogSpaceD(1, max + 1, 5, true);
-      var heat1 = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(0x0a, 0x6d, 0xaa));
-      var heat2 = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(0x00, 0xcc, 0x49));
-      var heat3 = System.Windows.Media.Brushes.Orange;
-      var heat4 = System.Windows.Media.Brushes.OrangeRed;
-      var heat5 = System.Windows.Media.Brushes.Red;
-      for (var i = 0; i < BackingMap.Count; i++)
-      {
-        if (BackingMap[i].A <= bins[0])
-          Views.ResultsView.Instance.ChangePointColor(i, heat1);
-        else if (BackingMap[i].A <= bins[1])
-          Views.ResultsView.Instance.ChangePointColor(i, heat2);
-        else if (BackingMap[i].A <= bins[2])
-          Views.ResultsView.Instance.ChangePointColor(i, heat3);
-        else if (BackingMap[i].A <= bins[3])
-          Views.ResultsView.Instance.ChangePointColor(i, heat4);
-        else if (BackingMap[i].A <= bins[4])
-          Views.ResultsView.Instance.ChangePointColor(i, heat5);
-      }
+          double[] bins = Core.DataProcessor.GenerateLogSpaceD(1, max + 1, 5, true);
+          var heat1 = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(0x0a, 0x6d, 0xaa));
+          var heat2 = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(0x00, 0xcc, 0x49));
+          var heat3 = System.Windows.Media.Brushes.Orange;
+          var heat4 = System.Windows.Media.Brushes.OrangeRed;
+          var heat5 = System.Windows.Media.Brushes.Red;
+          for (var i = 0; i < BackingMap.Count; i++)
+          {
+            if (BackingMap[i].A <= bins[0])
+              Views.ResultsView.Instance.AddXYPoint(BackingMap[i].X, BackingMap[i].Y, heat1);
+            else if (BackingMap[i].A <= bins[1])
+              Views.ResultsView.Instance.AddXYPoint(BackingMap[i].X, BackingMap[i].Y, heat2);
+            else if (BackingMap[i].A <= bins[2])
+              Views.ResultsView.Instance.AddXYPoint(BackingMap[i].X, BackingMap[i].Y, heat3);
+            else if (BackingMap[i].A <= bins[3])
+              Views.ResultsView.Instance.AddXYPoint(BackingMap[i].X, BackingMap[i].Y, heat4);
+            else if (BackingMap[i].A <= bins[4])
+              Views.ResultsView.Instance.AddXYPoint(BackingMap[i].X, BackingMap[i].Y, heat5);
+          }
+        }));
+      });
     }
 
     public void PlotCurrent(bool current = true)

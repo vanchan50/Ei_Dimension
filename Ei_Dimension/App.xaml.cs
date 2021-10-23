@@ -8,6 +8,7 @@ using Ei_Dimension.ViewModels;
 using MicroCy;
 using System.Threading.Tasks;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace Ei_Dimension
 {
@@ -1618,22 +1619,29 @@ namespace Ei_Dimension
       if (!_histogramUpdateGoing)
       {
         _histogramUpdateGoing = true;
-        _ = Current.Dispatcher.BeginInvoke((Action)(() =>
-        {
+        _ = Task.Run(()=> {
           BeadInfoStruct bead;
+          var list = new List<BeadInfoStruct>();
           while (Device.DataOut.TryDequeue(out bead))
           {
-            Core.DataProcessor.BinData(bead);
-            FillCurrentMap(in bead);
-            if(_50PointsUpdateCounter == 50)
+            list.Add(bead);
+            _50PointsUpdateCounter++;
+          }
+          _ = Task.Run(() => { Core.DataProcessor.BinData(list); });
+          _ = Current.Dispatcher.BeginInvoke((Action)(() =>
+          {
+            foreach(var Bbead in list)
+            {
+              FillCurrentMap(in Bbead);
+            }
+            if (_50PointsUpdateCounter >= 50)
             {
               _50PointsUpdateCounter = 0;
               AnalyzeHeatMap();
             }
-            _50PointsUpdateCounter++;
-          }
-          _histogramUpdateGoing = false;
-        }));
+            _histogramUpdateGoing = false;
+          }));
+        });
       }
     }
 

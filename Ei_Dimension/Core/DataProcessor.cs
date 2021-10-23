@@ -364,50 +364,56 @@ namespace Ei_Dimension.Core
       return Result;
     }
 
-    public static void BinData(MicroCy.BeadInfoStruct bead, bool fromFile = false)
+    public static void BinData(List<MicroCy.BeadInfoStruct> list, bool fromFile = false)
     {
       var ResVM = ViewModels.ResultsViewModel.Instance;
-      float MaxValue = (float)ResVM.CurrentReporter[ResVM.CurrentReporter.Count - 1].Argument;
-      //overflow protection
-      bead.fsc = bead.fsc < MaxValue ? bead.fsc : MaxValue;
-      bead.violetssc = bead.violetssc < MaxValue ? bead.violetssc : MaxValue;
-      bead.redssc = bead.redssc < MaxValue ? bead.redssc : MaxValue;
-      bead.greenssc = bead.greenssc < MaxValue ? bead.greenssc : MaxValue;
-      bead.reporter = bead.reporter < MaxValue ? bead.reporter : MaxValue;
-
-      bool fscDone = false;
-      bool violetDone = false;
-      bool redDone = false;
-      bool greenDone = false;
-      bool reporterDone = false;
-
-      if (!fromFile)
+      var MaxValue = ResVM.CurrentReporter[ResVM.CurrentReporter.Count - 1].Argument;
+      var reporter = new int[ResVM.CurrentReporter.Count];
+      var fsc = new int[ResVM.CurrentReporter.Count];
+      var red = new int[ResVM.CurrentReporter.Count];
+      var green = new int[ResVM.CurrentReporter.Count];
+      var violet = new int[ResVM.CurrentReporter.Count];
+      foreach (var beadD in list)
       {
-        for (var i = 0; i < ResVM.CurrentReporter.Count; i++)
+        var bead = beadD;
+        //overflow protection
+        bead.fsc = bead.fsc < MaxValue ? bead.fsc : MaxValue;
+        bead.violetssc = bead.violetssc < MaxValue ? bead.violetssc : MaxValue;
+        bead.redssc = bead.redssc < MaxValue ? bead.redssc : MaxValue;
+        bead.greenssc = bead.greenssc < MaxValue ? bead.greenssc : MaxValue;
+        bead.reporter = bead.reporter < MaxValue ? bead.reporter : MaxValue;
+        bool fscDone = false;
+        bool violetDone = false;
+        bool redDone = false;
+        bool greenDone = false;
+        bool reporterDone = false;
+
+        for (var i = 0; i < reporter.Length; i++)
         {
-          float currentValue = (float)ResVM.CurrentReporter[i].Argument;
+          var currentValue = ViewModels.ResultsViewModel.HistogramBins[i];
           if (!fscDone && bead.fsc <= currentValue)
           {
-            ResVM.CurrentForwardSsc[i].Value++;
+            fsc[i]++;
             fscDone = true;
           }
           if (!violetDone && bead.violetssc <= currentValue)
           {
-            ResVM.CurrentVioletSsc[i].Value++;
+            violet[i]++;
             violetDone = true;
           }
           if (!redDone && bead.redssc <= currentValue)
           {
-            ResVM.CurrentRedSsc[i].Value++;
+            red[i]++;
             redDone = true;
           }
           if (!greenDone && bead.greenssc <= currentValue)
           {
-            ResVM.CurrentGreenSsc[i].Value++;
+            green[i]++;
             greenDone = true;
           }
           if (!reporterDone && bead.reporter <= currentValue)
           {
+            reporter[i]++;
             ResVM.CurrentReporter[i].Value++;
             reporterDone = true;
           }
@@ -415,40 +421,32 @@ namespace Ei_Dimension.Core
             break;
         }
       }
-      else
+      _ = App.Current.Dispatcher.BeginInvoke((Action)(() =>
       {
-        for (var i = 0; i < ResVM.BackingReporter.Count; i++)
+        if (fromFile)
         {
-          float currentValue = (float)ResVM.BackingReporter[i].Argument;
-          if (!fscDone && bead.fsc <= currentValue)
+          for (var i = 0; i < ResVM.BackingReporter.Count; i++)
           {
-            ResVM.BackingForwardSsc[i].Value++;
-            fscDone = true;
+            ResVM.BackingReporter[i].Value += reporter[i];
+            ResVM.BackingForwardSsc[i].Value += fsc[i];
+            ResVM.BackingRedSsc[i].Value += red[i];
+            ResVM.BackingGreenSsc[i].Value += green[i];
+            ResVM.BackingVioletSsc[i].Value += violet[i];
           }
-          if (!violetDone && bead.violetssc <= currentValue)
-          {
-            ResVM.BackingVioletSsc[i].Value++;
-            violetDone = true;
-          }
-          if (!redDone && bead.redssc <= currentValue)
-          {
-            ResVM.BackingRedSsc[i].Value++;
-            redDone = true;
-          }
-          if (!greenDone && bead.greenssc <= currentValue)
-          {
-            ResVM.BackingGreenSsc[i].Value++;
-            greenDone = true;
-          }
-          if (!reporterDone && bead.reporter <= currentValue)
-          {
-            ResVM.BackingReporter[i].Value++;
-            reporterDone = true;
-          }
-          if (fscDone && violetDone && redDone && greenDone && reporterDone)
-            break;
         }
-      }
+        else
+        {
+          for (var i = 0; i < ResVM.CurrentReporter.Count; i++)
+          {
+            ResVM.CurrentReporter[i].Value += reporter[i];
+            ResVM.CurrentForwardSsc[i].Value += fsc[i];
+            ResVM.CurrentRedSsc[i].Value += red[i];
+            ResVM.CurrentGreenSsc[i].Value += green[i];
+            ResVM.CurrentVioletSsc[i].Value += violet[i];
+          }
+        }
+      }));
+
     }
   }
 }
