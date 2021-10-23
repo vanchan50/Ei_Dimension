@@ -23,13 +23,6 @@ namespace Ei_Dimension.Views
     {
       InitializeComponent();
       Instance = this;
-      //var t = ChC.Diagram.Series[6];
-      //var Point = new DevExpress.Xpf.Charts.SeriesPoint(100, 100);
-      //Point.Brush = Brushes.Green;
-      //t.Points.Add(Point);
-      //var Point2 = new DevExpress.Xpf.Charts.SeriesPoint(1000, 1000);
-      //Point2.Brush = Brushes.Red;
-      //t.Points.Add(Point2);
     }
     public void AddXYPoint(double x, double y, SolidColorBrush brush)
     {

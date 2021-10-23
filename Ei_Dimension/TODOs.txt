@@ -60,7 +60,6 @@ results page table should display mean and current stats for the current well be
 wellresults[i].RP1vals.Count(); - count
 wellresults[i].RP1vals.Average(); - mean
 
-BinData() add CL0-CL3 binning, probably to other bins than up to mil. up to 32k
 
 save template name somewhere, also display somewhere. fill it when template loaded.
 
@@ -78,12 +77,6 @@ case "ClassificationTargetsContents": (CalibrationView Classification Targets)
   adds a point to XY plot. what is it?
   Save Calibration to current map button is viable?
 
-ready to be read, being read, succesfully read empty;
-  green -evetyhing was fine\light red at -at leas one region did not reach target nuber of beads but at least 75% \dark red - else
-
-
-  Ellipse is a transform of circle -> scale + rotation (or skew?)
-
 Fixed a bug, also present in Legacy: second press of END button results in crash by SetReadingParamsForWell() accesing index+1
   State machine should not be active at all, if measurement is inactive
 
@@ -91,7 +84,5 @@ Fixed a TerminationReadyCheck() possible bug scenario, where assuming EndRegion 
 
 Device.TerminationReadyCheck() case 1
   looks wrong. don't copy EndRead button function here? why not?
-
-  heatmapdata has to have a static constructor and a field, bins[], initialized there.
 
   Analysis if beads hit a certain region is still done with log(x * num) and not log10() with proper binning. fix it

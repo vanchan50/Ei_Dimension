@@ -2,9 +2,9 @@
 
 namespace Ei_Dimension.Models
 {
-  public class HistogramData<T1, T2> : ObservableObject
+  public class HistogramData : ObservableObject
   {
-    public T1 Value
+    public int Value
     {
       get => _value;
       set
@@ -13,7 +13,7 @@ namespace Ei_Dimension.Models
         OnPropertyChanged();
       }
     }
-    public T2 Argument
+    public int Argument
     {
       get => _argument;
       set
@@ -22,12 +22,17 @@ namespace Ei_Dimension.Models
         OnPropertyChanged();
       }
     }
-    private T1 _value;
-    private T2 _argument;
-    public HistogramData(T1 val, T2 arg)
+    private int _value;
+    private int _argument;
+    public static int[] Bins{ get; private set; }
+    public HistogramData(int val, int arg)
     {
       _value = val;
       _argument = arg;
+    }
+    static HistogramData()
+    {
+      Bins = DataProcessor.GenerateLogSpace(1, 1000000, 384);
     }
   }
 }

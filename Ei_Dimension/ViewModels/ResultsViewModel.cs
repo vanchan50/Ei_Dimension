@@ -13,24 +13,24 @@ namespace Ei_Dimension.ViewModels
   public class ResultsViewModel
   {
     public virtual ObservableCollection<bool> ScatterSelectorState { get; set; }
+    public virtual ObservableCollection<HistogramData> CurrentForwardSsc { get; set; }
+    public virtual ObservableCollection<HistogramData> CurrentVioletSsc { get; set; }
+    public virtual ObservableCollection<HistogramData> CurrentRedSsc { get; set; }
+    public virtual ObservableCollection<HistogramData> CurrentGreenSsc { get; set; }
+    public virtual ObservableCollection<HistogramData> CurrentReporter { get; set; }
+    public virtual ObservableCollection<HistogramData> DisplayedForwardSsc { get; set; }
+    public virtual ObservableCollection<HistogramData> DisplayedVioletSsc { get; set; }
+    public virtual ObservableCollection<HistogramData> DisplayedRedSsc { get; set; }
+    public virtual ObservableCollection<HistogramData> DisplayedGreenSsc { get; set; }
+    public virtual ObservableCollection<HistogramData> DisplayedReporter { get; set; }
+    public virtual ObservableCollection<HistogramData> BackingForwardSsc { get; set; }
+    public virtual ObservableCollection<HistogramData> BackingVioletSsc { get; set; }
+    public virtual ObservableCollection<HistogramData> BackingRedSsc { get; set; }
+    public virtual ObservableCollection<HistogramData> BackingGreenSsc { get; set; }
+    public virtual ObservableCollection<HistogramData> BackingReporter { get; set; }
     public virtual ObservableCollection<HeatMapData> WorldMap { get; set; }
-    public virtual ObservableCollection<HistogramData<int, int>> CurrentForwardSsc { get; set; }
-    public virtual ObservableCollection<HistogramData<int, int>> CurrentVioletSsc { get; set; }
-    public virtual ObservableCollection<HistogramData<int, int>> CurrentRedSsc { get; set; }
-    public virtual ObservableCollection<HistogramData<int, int>> CurrentGreenSsc { get; set; }
-    public virtual ObservableCollection<HistogramData<int, int>> CurrentReporter { get; set; }
-    public virtual ObservableCollection<HeatMapData> CurrentMap { get; set; }
-    public virtual ObservableCollection<HistogramData<int, int>> DisplayedForwardSsc { get; set; }
-    public virtual ObservableCollection<HistogramData<int, int>> DisplayedVioletSsc { get; set; }
-    public virtual ObservableCollection<HistogramData<int, int>> DisplayedRedSsc { get; set; }
-    public virtual ObservableCollection<HistogramData<int, int>> DisplayedGreenSsc { get; set; }
-    public virtual ObservableCollection<HistogramData<int, int>> DisplayedReporter { get; set; }
-    public virtual ObservableCollection<HistogramData<int, int>> BackingForwardSsc { get; set; }
-    public virtual ObservableCollection<HistogramData<int, int>> BackingVioletSsc { get; set; }
-    public virtual ObservableCollection<HistogramData<int, int>> BackingRedSsc { get; set; }
-    public virtual ObservableCollection<HistogramData<int, int>> BackingGreenSsc { get; set; }
-    public virtual ObservableCollection<HistogramData<int, int>> BackingReporter { get; set; }
-    public virtual ObservableCollection<HeatMapData> BackingMap { get; set; }
+    public List<HeatMapData> CurrentMap { get; set; }
+    public List<HeatMapData> BackingMap { get; set; }
     public virtual DrawingPlate PlatePictogram { get; set; }
     public virtual System.Windows.Visibility Buttons384Visible { get; set; }
     public virtual System.Windows.Visibility LeftLabel384Visible { get; set; }
@@ -39,7 +39,6 @@ namespace Ei_Dimension.ViewModels
     public virtual System.Windows.Visibility BottomLabel384Visible { get; set; }
     public virtual ObservableCollection<bool> CornerButtonsChecked { get; set; }
     public static ResultsViewModel Instance { get; private set; }
-    public static int[] HistogramBins { get; private set; }
 
     protected ResultsViewModel()
     {
@@ -73,36 +72,34 @@ namespace Ei_Dimension.ViewModels
       }
 
       Instance = this;
-      CurrentForwardSsc = new ObservableCollection<HistogramData<int, int>>();
-      CurrentVioletSsc = new ObservableCollection<HistogramData<int, int>>();
-      CurrentRedSsc = new ObservableCollection<HistogramData<int, int>>();
-      CurrentGreenSsc = new ObservableCollection<HistogramData<int, int>>();
-      CurrentReporter = new ObservableCollection<HistogramData<int, int>>();
-      BackingForwardSsc = new ObservableCollection<HistogramData<int, int>>();
-      BackingVioletSsc = new ObservableCollection<HistogramData<int, int>>();
-      BackingRedSsc = new ObservableCollection<HistogramData<int, int>>();
-      BackingGreenSsc = new ObservableCollection<HistogramData<int, int>>();
-      BackingReporter = new ObservableCollection<HistogramData<int, int>>();
+      CurrentForwardSsc = new ObservableCollection<HistogramData>();
+      CurrentVioletSsc = new ObservableCollection<HistogramData>();
+      CurrentRedSsc = new ObservableCollection<HistogramData>();
+      CurrentGreenSsc = new ObservableCollection<HistogramData>();
+      CurrentReporter = new ObservableCollection<HistogramData>();
+      BackingForwardSsc = new ObservableCollection<HistogramData>();
+      BackingVioletSsc = new ObservableCollection<HistogramData>();
+      BackingRedSsc = new ObservableCollection<HistogramData>();
+      BackingGreenSsc = new ObservableCollection<HistogramData>();
+      BackingReporter = new ObservableCollection<HistogramData>();
 
-      HistogramBins = Core.DataProcessor.GenerateLogSpace(1, 1000000, 384);
-      for (var i = 0; i < HistogramBins.Length; i++)
+      for (var i = 0; i < HistogramData.Bins.Length; i++)
       {
-        CurrentForwardSsc.Add(new HistogramData<int, int>(0, HistogramBins[i]));
-         CurrentVioletSsc.Add(new HistogramData<int, int>(0, HistogramBins[i]));
-            CurrentRedSsc.Add(new HistogramData<int, int>(0, HistogramBins[i]));
-          CurrentGreenSsc.Add(new HistogramData<int, int>(0, HistogramBins[i]));
-          CurrentReporter.Add(new HistogramData<int, int>(0, HistogramBins[i]));
-
-        BackingForwardSsc.Add(new HistogramData<int, int>(0, HistogramBins[i]));
-         BackingVioletSsc.Add(new HistogramData<int, int>(0, HistogramBins[i]));
-            BackingRedSsc.Add(new HistogramData<int, int>(0, HistogramBins[i]));
-          BackingGreenSsc.Add(new HistogramData<int, int>(0, HistogramBins[i]));
-          BackingReporter.Add(new HistogramData<int, int>(0, HistogramBins[i]));
+        CurrentForwardSsc.Add(new HistogramData(0, HistogramData.Bins[i]));
+         CurrentVioletSsc.Add(new HistogramData(0, HistogramData.Bins[i]));
+            CurrentRedSsc.Add(new HistogramData(0, HistogramData.Bins[i]));
+          CurrentGreenSsc.Add(new HistogramData(0, HistogramData.Bins[i]));
+          CurrentReporter.Add(new HistogramData(0, HistogramData.Bins[i]));
+                                                   
+        BackingForwardSsc.Add(new HistogramData(0, HistogramData.Bins[i]));
+         BackingVioletSsc.Add(new HistogramData(0, HistogramData.Bins[i]));
+            BackingRedSsc.Add(new HistogramData(0, HistogramData.Bins[i]));
+          BackingGreenSsc.Add(new HistogramData(0, HistogramData.Bins[i]));
+          BackingReporter.Add(new HistogramData(0, HistogramData.Bins[i]));
       }
 
-      CurrentMap = new ObservableCollection<HeatMapData>();
-      _ = new HeatMapData(1,1);
-      BackingMap = new ObservableCollection<HeatMapData>();
+      CurrentMap = new List<HeatMapData>();
+      BackingMap = new List<HeatMapData>();
 
       DisplayedForwardSsc = CurrentForwardSsc;
       DisplayedVioletSsc = CurrentVioletSsc;
@@ -164,7 +161,6 @@ namespace Ei_Dimension.ViewModels
 
     public void ToCurrentButtonClick()
     {
-      Views.ResultsView.Instance.DrawingPlate.UnselectAllCells();
       PlotCurrent();
       PlatePictogram.FollowingCurrentCell = true;
 
@@ -219,7 +215,7 @@ namespace Ei_Dimension.ViewModels
           return;
         }
         ClearGraphs(false);
-        FillAllDataAsync();
+        FillAllData();
         PlotCurrent(false);
         PlatePictogram.FollowingCurrentCell = false;
       }
@@ -251,7 +247,7 @@ namespace Ei_Dimension.ViewModels
       }
     }
 
-    public void FillAllDataAsync()
+    public void FillAllData()
     {
       _ = Task.Run(async ()=>
       {
@@ -296,35 +292,7 @@ namespace Ei_Dimension.ViewModels
         }
         _ = App.Current.Dispatcher.BeginInvoke((Action)(()=>
         {
-          //analyzeheatmap for noncurrentmap, but backing map here
-          int max = 0;
-          int min = BackingMap[0].A;
-          foreach (var p in BackingMap)
-          {
-            if (p.A > max)
-              max = p.A;
-            if (p.A < min)
-              min = p.A;
-          }
-          double[] bins = Core.DataProcessor.GenerateLogSpaceD(1, max + 1, 5, true);
-          var heat1 = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(0x0a, 0x6d, 0xaa));
-          var heat2 = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(0x00, 0xcc, 0x49));
-          var heat3 = System.Windows.Media.Brushes.Orange;
-          var heat4 = System.Windows.Media.Brushes.OrangeRed;
-          var heat5 = System.Windows.Media.Brushes.Red;
-          for (var i = 0; i < BackingMap.Count; i++)
-          {
-            if (BackingMap[i].A <= bins[0])
-              Views.ResultsView.Instance.AddXYPoint(BackingMap[i].X, BackingMap[i].Y, heat1);
-            else if (BackingMap[i].A <= bins[1])
-              Views.ResultsView.Instance.AddXYPoint(BackingMap[i].X, BackingMap[i].Y, heat2);
-            else if (BackingMap[i].A <= bins[2])
-              Views.ResultsView.Instance.AddXYPoint(BackingMap[i].X, BackingMap[i].Y, heat3);
-            else if (BackingMap[i].A <= bins[3])
-              Views.ResultsView.Instance.AddXYPoint(BackingMap[i].X, BackingMap[i].Y, heat4);
-            else if (BackingMap[i].A <= bins[4])
-              Views.ResultsView.Instance.AddXYPoint(BackingMap[i].X, BackingMap[i].Y, heat5);
-          }
+          App.AnalyzeHeatMap(BackingMap);
         }));
       });
     }
@@ -344,7 +312,7 @@ namespace Ei_Dimension.ViewModels
         {
           Views.ResultsView.Instance.AddXYPoint(p.X, p.Y, System.Windows.Media.Brushes.DarkOliveGreen);
         }
-        App.AnalyzeHeatMap();
+        App.AnalyzeHeatMap(CurrentMap);
       }
       else
       {

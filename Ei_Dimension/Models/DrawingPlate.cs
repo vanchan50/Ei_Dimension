@@ -93,7 +93,7 @@ namespace Ei_Dimension.Models
       }
     }
 
-    public void ChangeState(byte row, byte col, WellType type, string FilePath = null)  //TODO: add 384 functionality here, to change appropriate well.
+    public void ChangeState(byte row, byte col, WellType type, string FilePath = null)
     {
       _wells[row, col].Type = type;
       if (FilePath != null)

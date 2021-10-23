@@ -397,8 +397,6 @@ namespace Ei_Dimension
             {
               if (int.TryParse(temp, out iRes) && iRes > 0 && iRes < 30000)
               {
-                //  chart2.Series["CLTARGET"].Points.RemoveAt(0);
-                //  chart2.Series["CLTARGET"].Points.AddXY(jj, kk);
                 Device.MainCommand("Set Property", code: 0x8c, parameter: (ushort)iRes);
               }
             }
@@ -406,8 +404,6 @@ namespace Ei_Dimension
             {
               if (int.TryParse(temp, out iRes) && iRes > 0 && iRes < 30000)
               {
-                //  chart2.Series["CLTARGET"].Points.RemoveAt(0);
-                //  chart2.Series["CLTARGET"].Points.AddXY(jj, kk);
                 Device.MainCommand("Set Property", code: 0x8d, parameter: (ushort)iRes);
               }
             }
@@ -956,26 +952,6 @@ namespace Ei_Dimension
         WellStateHandler();
       }
       WorkOrderHandler();
-      //TODO: REmove: for map construction in another program
-      /*
-      if (Device.Newmap)
-      {
-        //  chart2.Series["REGIONS"].Enabled = true;
-        Device.Newmap = false;
-        for (var x = 0; x < 255; x++)
-        {
-          for (int y = 0; y < 255; y++)
-          {
-            if (Device._classificationMap[x, y] > 0) //TODO: remove
-            {
-              float expx = (float)Math.Exp(x / 24.526);
-              float expy = (float)Math.Exp(y / 24.526);
-              //  chart2.Series["REGIONS"].Points.AddXY(expx, expy);
-            }
-          }
-        }
-      }
-      */
     }
 
     private static void TextBoxUpdater()
@@ -1637,7 +1613,7 @@ namespace Ei_Dimension
             if (_50PointsUpdateCounter >= 50)
             {
               _50PointsUpdateCounter = 0;
-              AnalyzeHeatMap();
+              AnalyzeHeatMap(ResultsViewModel.Instance.CurrentMap);
             }
             _histogramUpdateGoing = false;
           }));
@@ -1750,33 +1726,37 @@ namespace Ei_Dimension
       }
     }
 
-    public static void AnalyzeHeatMap()
+    public static void AnalyzeHeatMap(List<Models.HeatMapData> heatmap)
     {
-      if (ResultsViewModel.Instance.PlatePictogram.FollowingCurrentCell && ResultsViewModel.Instance.CurrentMap.Count > 0)
+      if (heatmap.Count > 0)
       {
         int max = 0;
-        int min = ResultsViewModel.Instance.CurrentMap[0].A;
-        int sum = 0;
-        foreach (var p in ResultsViewModel.Instance.CurrentMap)
+        int min = heatmap[0].A;
+        foreach (var p in heatmap)
         {
           if (p.A > max)
             max = p.A;
           if (p.A < min)
             min = p.A;
-          sum += p.A;
         }
-        int avg = sum / ResultsViewModel.Instance.CurrentMap.Count;
-
-        for (var i = 0; i < ResultsViewModel.Instance.CurrentMap.Count; i++)
+        double[] bins = Core.DataProcessor.GenerateLogSpaceD(1, max + 1, 5, true);
+        var heat1 = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(0x0a, 0x6d, 0xaa));
+        var heat2 = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(0x00, 0xcc, 0x49));
+        var heat3 = System.Windows.Media.Brushes.Orange;
+        var heat4 = System.Windows.Media.Brushes.OrangeRed;
+        var heat5 = System.Windows.Media.Brushes.Red;
+        for (var i = 0; i < heatmap.Count; i++)
         {
-          if (ResultsViewModel.Instance.CurrentMap[i].A >= max - (0.5 * (max - avg)))
-            Views.ResultsView.Instance.ChangePointColor(i, System.Windows.Media.Brushes.Red);
-          else if (ResultsViewModel.Instance.CurrentMap[i].A >= avg)
-            Views.ResultsView.Instance.ChangePointColor(i, System.Windows.Media.Brushes.OrangeRed);
-          else if (ResultsViewModel.Instance.CurrentMap[i].A >= avg - (0.5 * (avg - min)))
-            Views.ResultsView.Instance.ChangePointColor(i, System.Windows.Media.Brushes.Orange);
-          else if (ResultsViewModel.Instance.CurrentMap[i].A >= min)
-            Views.ResultsView.Instance.ChangePointColor(i, System.Windows.Media.Brushes.Blue);
+          if (heatmap[i].A <= bins[0])
+            Views.ResultsView.Instance.AddXYPoint(heatmap[i].X, heatmap[i].Y, heat1);
+          else if (heatmap[i].A <= bins[1])
+            Views.ResultsView.Instance.AddXYPoint(heatmap[i].X, heatmap[i].Y, heat2);
+          else if (heatmap[i].A <= bins[2])
+            Views.ResultsView.Instance.AddXYPoint(heatmap[i].X, heatmap[i].Y, heat3);
+          else if (heatmap[i].A <= bins[3])
+            Views.ResultsView.Instance.AddXYPoint(heatmap[i].X, heatmap[i].Y, heat4);
+          else if (heatmap[i].A <= bins[4])
+            Views.ResultsView.Instance.AddXYPoint(heatmap[i].X, heatmap[i].Y, heat5);
         }
       }
     }

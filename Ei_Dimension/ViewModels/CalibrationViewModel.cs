@@ -67,7 +67,6 @@ namespace Ei_Dimension.ViewModels
       CalibrationSelectorState[2] = false;
       CalibrationSelectorState[num] = true;
       CalibrationParameter = num;
-      //chart2.Series["CLTARGET"].Enabled = false; for num=0 and true for num=1
       App.Device.MainCommand("Set Property", code: 0x1b, parameter: num);
     }
 
