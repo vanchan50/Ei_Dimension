@@ -207,8 +207,9 @@ namespace Ei_Dimension.ViewModels
       try
       {
         var temp = PlatePictogram.GetSelectedCell();
-        if (temp.row != -1)
-          PlatePictogram.SelectedCell = temp;
+        if (temp.row == -1)
+          return;
+        PlatePictogram.SelectedCell = temp;
         if (temp == PlatePictogram.CurrentlyReadCell)
         {
           ToCurrentButtonClick();
@@ -292,7 +293,7 @@ namespace Ei_Dimension.ViewModels
         }
         _ = App.Current.Dispatcher.BeginInvoke((Action)(()=>
         {
-          App.AnalyzeHeatMap(BackingMap);
+          Core.DataProcessor.AnalyzeHeatMap(BackingMap);
         }));
       });
     }
@@ -308,11 +309,7 @@ namespace Ei_Dimension.ViewModels
         DisplayedReporter = CurrentReporter;
 
         Views.ResultsView.Instance.ClearPoints();
-        foreach(var p in CurrentMap)
-        {
-          Views.ResultsView.Instance.AddXYPoint(p.X, p.Y, System.Windows.Media.Brushes.DarkOliveGreen);
-        }
-        App.AnalyzeHeatMap(CurrentMap);
+        Core.DataProcessor.AnalyzeHeatMap(CurrentMap);
       }
       else
       {

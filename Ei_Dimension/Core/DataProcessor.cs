@@ -2,11 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Windows.Media;
 
 namespace Ei_Dimension.Core
 {
   public static class DataProcessor
-  //helper class for ResultsViewModel
   {
     static public async Task<List<string>> GetDataFromFileAsync(string path)
     {
@@ -190,7 +190,42 @@ namespace Ei_Dimension.Core
           }
         }
       }));
+    }
 
+    public static void AnalyzeHeatMap(List<HeatMapData> heatmap)
+    {
+      if (heatmap.Count > 0)
+      {
+        int max = 0;
+        int min = heatmap[0].A;
+        foreach (var p in heatmap)
+        {
+          if (p.A > max)
+            max = p.A;
+          if (p.A < min)
+            min = p.A;
+        }
+        double[] bins = GenerateLogSpaceD(1, max + 1, 5, true);
+        var heat1 = new SolidColorBrush(Color.FromRgb(0x0a, 0x6d, 0xaa));
+        var heat2 = new SolidColorBrush(Color.FromRgb(0x00, 0xcc, 0x49));
+        var heat3 = Brushes.Orange;
+        var heat4 = Brushes.OrangeRed;
+        var heat5 = Brushes.Red;
+        Views.ResultsView.Instance.ClearPoints();
+        for (var i = 0; i < heatmap.Count; i++)
+        {
+          if (heatmap[i].A <= bins[0])
+            Views.ResultsView.Instance.AddXYPoint(heatmap[i].X, heatmap[i].Y, heat1);
+          else if (heatmap[i].A <= bins[1])
+            Views.ResultsView.Instance.AddXYPoint(heatmap[i].X, heatmap[i].Y, heat2);
+          else if (heatmap[i].A <= bins[2])
+            Views.ResultsView.Instance.AddXYPoint(heatmap[i].X, heatmap[i].Y, heat3);
+          else if (heatmap[i].A <= bins[3])
+            Views.ResultsView.Instance.AddXYPoint(heatmap[i].X, heatmap[i].Y, heat4);
+          else if (heatmap[i].A <= bins[4])
+            Views.ResultsView.Instance.AddXYPoint(heatmap[i].X, heatmap[i].Y, heat5);
+        }
+      }
     }
   }
 }

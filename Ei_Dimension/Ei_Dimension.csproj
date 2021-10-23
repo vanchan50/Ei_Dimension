@@ -128,7 +128,6 @@
     <Compile Include="Models\AcquisitionTemplate.cs" />
     <Compile Include="Models\DrawingPlate.cs" />
     <Compile Include="Models\DropdownStrings.cs" />
-    <Compile Include="Models\HeatMap.cs" />
     <Compile Include="Models\HeatMapData.cs" />
     <Compile Include="Models\HistogramData.cs" />
     <Compile Include="Models\MapRegions.cs" />

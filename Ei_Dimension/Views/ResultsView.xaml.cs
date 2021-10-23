@@ -28,15 +28,15 @@ namespace Ei_Dimension.Views
     {
       var Point = new DevExpress.Xpf.Charts.SeriesPoint(x, y);
       Point.Brush = brush;
-      ChC.Diagram.Series[1].Points.Add(Point);
+      HeatMap.Points.Add(Point);
     }
     public void ChangePointColor(int index, SolidColorBrush brush)
     {
-      ChC.Diagram.Series[1].Points[index].Brush = brush;
+      HeatMap.Points[index].Brush = brush;
     }
     public void ClearPoints()
     {
-      ChC.Diagram.Series[1].Points.Clear();
+      HeatMap.Points.Clear();
     }
   }
 }

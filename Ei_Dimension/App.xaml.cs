@@ -1613,7 +1613,7 @@ namespace Ei_Dimension
             if (_50PointsUpdateCounter >= 50)
             {
               _50PointsUpdateCounter = 0;
-              AnalyzeHeatMap(ResultsViewModel.Instance.CurrentMap);
+              Core.DataProcessor.AnalyzeHeatMap(ResultsViewModel.Instance.CurrentMap);
             }
             _histogramUpdateGoing = false;
           }));
@@ -1691,27 +1691,29 @@ namespace Ei_Dimension
     {
       Device.ReadActive = false;
       MainButtonsViewModel.Instance.StartButtonEnabled = true;
+      ResultsViewModel.Instance.PlatePictogram.CurrentlyReadCell = (-1, -1);
     }
 
     private static void FillCurrentMap(in BeadInfoStruct bead)
     {
       int x = 0;
       int y = 0;
+      bool xDone = false;
+      bool yDone = false;
       for (var i = 0; i < 256; i++)
       {
-        if (bead.cl1 <= Models.HeatMapData.bins[i])
+        if (!xDone && bead.cl1 <= Models.HeatMapData.bins[i])
         {
           x = i;
-          break;
+          xDone = true;
         }
-      }
-      for (var i = 0; i < 256; i++)
-      {
-        if (bead.cl2 <= Models.HeatMapData.bins[i])
+        if (!yDone && bead.cl2 <= Models.HeatMapData.bins[i])
         {
           y = i;
-          break;
+          yDone = true;
         }
+        if (xDone && yDone)
+          break;
       }
       if (!Models.HeatMapData.Dict.ContainsKey((x, y)))
       {
@@ -1723,41 +1725,6 @@ namespace Ei_Dimension
       else
       {
         ResultsViewModel.Instance.CurrentMap[Models.HeatMapData.Dict[(x, y)]].A++;
-      }
-    }
-
-    public static void AnalyzeHeatMap(List<Models.HeatMapData> heatmap)
-    {
-      if (heatmap.Count > 0)
-      {
-        int max = 0;
-        int min = heatmap[0].A;
-        foreach (var p in heatmap)
-        {
-          if (p.A > max)
-            max = p.A;
-          if (p.A < min)
-            min = p.A;
-        }
-        double[] bins = Core.DataProcessor.GenerateLogSpaceD(1, max + 1, 5, true);
-        var heat1 = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(0x0a, 0x6d, 0xaa));
-        var heat2 = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(0x00, 0xcc, 0x49));
-        var heat3 = System.Windows.Media.Brushes.Orange;
-        var heat4 = System.Windows.Media.Brushes.OrangeRed;
-        var heat5 = System.Windows.Media.Brushes.Red;
-        for (var i = 0; i < heatmap.Count; i++)
-        {
-          if (heatmap[i].A <= bins[0])
-            Views.ResultsView.Instance.AddXYPoint(heatmap[i].X, heatmap[i].Y, heat1);
-          else if (heatmap[i].A <= bins[1])
-            Views.ResultsView.Instance.AddXYPoint(heatmap[i].X, heatmap[i].Y, heat2);
-          else if (heatmap[i].A <= bins[2])
-            Views.ResultsView.Instance.AddXYPoint(heatmap[i].X, heatmap[i].Y, heat3);
-          else if (heatmap[i].A <= bins[3])
-            Views.ResultsView.Instance.AddXYPoint(heatmap[i].X, heatmap[i].Y, heat4);
-          else if (heatmap[i].A <= bins[4])
-            Views.ResultsView.Instance.AddXYPoint(heatmap[i].X, heatmap[i].Y, heat5);
-        }
       }
     }
   }
