@@ -527,7 +527,7 @@ Barcode</value>
     <value>Plate Summary of MFI for All Regions</value>
   </data>
   <data name="FileSave_Sys_Log" xml:space="preserve">
-    <value>System Log</value>
+    <value>Log to File</value>
   </data>
   <data name="Halt" xml:space="preserve">
     <value>Halt</value>

@@ -9,6 +9,7 @@ using MicroCy;
 using System.Threading.Tasks;
 using System.Linq;
 using System.Collections.Generic;
+using System.IO;
 
 namespace Ei_Dimension
 {
@@ -27,7 +28,8 @@ namespace Ei_Dimension
     private static bool _isStartup;
     public App()
     {
-      _cancelKeyboardInjectionFlag = false;
+      SetLogOutput();
+       _cancelKeyboardInjectionFlag = false;
       SetLanguage("en-US");
       Device = new MicroCyDevice(typeof(USBConnection), useStaticMaps: false);
       try
@@ -1722,6 +1724,21 @@ namespace Ei_Dimension
       {
         ResultsViewModel.Instance.CurrentMap[Models.HeatMapData.Dict[(x, y)]].A++;
       }
+    }
+    public static void SetLogOutput()
+    {
+      string logpath = Path.Combine(Path.Combine(@"C:\Emissioninc", Environment.MachineName), "SystemLogs", "EventLog");
+      string logfilepath = logpath + ".txt";
+      string backfilepath = logpath + ".bak";
+      if (File.Exists(logfilepath))
+      {
+        File.Delete(backfilepath);
+        File.Move(logfilepath, backfilepath);
+      }
+      FileStream fs = new FileStream(logfilepath, FileMode.Create);
+      StreamWriter logwriter = new StreamWriter(fs);
+      logwriter.AutoFlush = true;
+      Console.SetOut(logwriter);
     }
   }
 }

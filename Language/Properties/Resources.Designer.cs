@@ -1256,7 +1256,7 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to System Log.
+        ///   Looks up a localized string similar to Log to File.
         /// </summary>
         public static string FileSave_Sys_Log {
             get {

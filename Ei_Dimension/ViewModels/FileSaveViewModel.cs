@@ -27,7 +27,7 @@ namespace Ei_Dimension.ViewModels
         false,
         false,
         false,
-        false
+        true
       };
       Program.SplashScreen.Close(TimeSpan.FromMilliseconds(300));
       Instance = this;
@@ -96,22 +96,8 @@ namespace Ei_Dimension.ViewModels
         case 5:
           break;
         case 6:
-          string logpath = Path.Combine(App.Device.RootDirectory.FullName, "SystemLogs", "EventLog");
           if (Checkboxes[num] == true)
-          {
-          string logfilepath = logpath + ".txt";
-          string backfilepath = logpath + ".bak";
-          if (File.Exists(logfilepath))
-          {
-            File.Delete(backfilepath);
-            File.Move(logfilepath, logpath + ".bak");
-          }
-          FileStream fs = new FileStream(logpath + ".txt", FileMode.Create);
-          StreamWriter logwriter = new StreamWriter(fs);
-          logwriter.AutoFlush = true;
-
-          Console.SetOut(logwriter);
-          }
+            App.SetLogOutput();
           else
           {
             Console.Out.Close();
