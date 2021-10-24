@@ -1603,10 +1603,7 @@ namespace Ei_Dimension
             BeadInfoList.Add(bead);
           }
           _ = Task.Run(() => { Core.DataProcessor.BinData(BeadInfoList); });
-          foreach (var bead in BeadInfoList)
-          {
-            FillCurrentMap(in bead);
-          }
+          Core.DataProcessor.BinMapData(BeadInfoList, ResultsViewModel.Instance.CurrentCL12Map, Models.HeatMapData.Dict);
           if (ResultsViewModel.Instance.PlatePictogram.FollowingCurrentCell)
           {
             _ = Current.Dispatcher.BeginInvoke((Action)(() =>
@@ -1694,37 +1691,6 @@ namespace Ei_Dimension
       ResultsViewModel.Instance.PlatePictogram.CurrentlyReadCell = (-1, -1);
     }
 
-    private static void FillCurrentMap(in BeadInfoStruct bead)
-    {
-      int x = 0;
-      int y = 0;
-      bool xDone = false;
-      bool yDone = false;
-      for (var i = 0; i < 256; i++)
-      {
-        if (!xDone && bead.cl1 <= Models.HeatMapData.bins[i])
-        {
-          x = i;
-          xDone = true;
-        }
-        if (!yDone && bead.cl2 <= Models.HeatMapData.bins[i])
-        {
-          y = i;
-          yDone = true;
-        }
-        if (xDone && yDone)
-          break;
-      }
-      if (!Models.HeatMapData.Dict.ContainsKey((x, y)))
-      {
-        Models.HeatMapData.Dict.Add((x, y), ResultsViewModel.Instance.CurrentCL12Map.Count);
-        ResultsViewModel.Instance.CurrentCL12Map.Add(new Models.HeatMapData((int)Models.HeatMapData.bins[x], (int)Models.HeatMapData.bins[y]));
-      }
-      else
-      {
-        ResultsViewModel.Instance.CurrentCL12Map[Models.HeatMapData.Dict[(x, y)]].A++;
-      }
-    }
     public static void SetLogOutput()
     {
       string logpath = Path.Combine(Path.Combine(@"C:\Emissioninc", Environment.MachineName), "SystemLogs", "EventLog");

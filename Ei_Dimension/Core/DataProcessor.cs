@@ -229,5 +229,40 @@ namespace Ei_Dimension.Core
         }
       }
     }
+
+    public static void BinMapData(List<MicroCy.BeadInfoStruct> BeadInfoList, List<HeatMapData> heatmap, Dictionary<(int x, int y), int> Dict)
+    {
+      foreach (var bead in BeadInfoList)
+      {
+        int x = 0;
+        int y = 0;
+        bool xDone = false;
+        bool yDone = false;
+        for (var i = 0; i < 256; i++)
+        {
+          if (!xDone && bead.cl1 <= HeatMapData.bins[i])
+          {
+            x = i;
+            xDone = true;
+          }
+          if (!yDone && bead.cl2 <= HeatMapData.bins[i])
+          {
+            y = i;
+            yDone = true;
+          }
+          if (xDone && yDone)
+            break;
+        }
+        if (!Dict.ContainsKey((x, y)))
+        {
+          Dict.Add((x, y), heatmap.Count);
+          heatmap.Add(new HeatMapData((int)HeatMapData.bins[x], (int)HeatMapData.bins[y]));
+        }
+        else
+        {
+          heatmap[Dict[(x, y)]].A++;
+        }
+      }
+    }
   }
 }

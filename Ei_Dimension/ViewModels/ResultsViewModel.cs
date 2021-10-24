@@ -29,8 +29,18 @@ namespace Ei_Dimension.ViewModels
     public virtual ObservableCollection<HistogramData> BackingGreenSsc { get; set; }
     public virtual ObservableCollection<HistogramData> BackingReporter { get; set; }
     public virtual ObservableCollection<HeatMapData> WorldMap { get; set; }
+    public List<HeatMapData> CurrentCL01Map { get; set; }
+    public List<HeatMapData> CurrentCL02Map { get; set; }
+    public List<HeatMapData> CurrentCL03Map { get; set; }
     public List<HeatMapData> CurrentCL12Map { get; set; }
+    public List<HeatMapData> CurrentCL13Map { get; set; }
+    public List<HeatMapData> CurrentCL23Map { get; set; }
+    public List<HeatMapData> BackingCL01Map { get; set; }
+    public List<HeatMapData> BackingCL02Map { get; set; }
+    public List<HeatMapData> BackingCL03Map { get; set; }
     public List<HeatMapData> BackingCL12Map { get; set; }
+    public List<HeatMapData> BackingCL13Map { get; set; }
+    public List<HeatMapData> BackingCL23Map { get; set; }
     public virtual DrawingPlate PlatePictogram { get; set; }
     public virtual System.Windows.Visibility Buttons384Visible { get; set; }
     public virtual System.Windows.Visibility LeftLabel384Visible { get; set; }
@@ -99,8 +109,18 @@ namespace Ei_Dimension.ViewModels
           BackingReporter.Add(new HistogramData(0, HistogramData.Bins[i]));
       }
 
+      CurrentCL01Map = new List<HeatMapData>();
+      CurrentCL02Map = new List<HeatMapData>();
+      CurrentCL03Map = new List<HeatMapData>();
       CurrentCL12Map = new List<HeatMapData>();
+      CurrentCL13Map = new List<HeatMapData>();
+      CurrentCL23Map = new List<HeatMapData>();
+      BackingCL01Map = new List<HeatMapData>();
+      BackingCL02Map = new List<HeatMapData>();
+      BackingCL03Map = new List<HeatMapData>();
       BackingCL12Map = new List<HeatMapData>();
+      BackingCL13Map = new List<HeatMapData>();
+      BackingCL23Map = new List<HeatMapData>();
 
       DisplayedForwardSsc = CurrentForwardSsc;
       DisplayedVioletSsc = CurrentVioletSsc;
@@ -298,40 +318,9 @@ namespace Ei_Dimension.ViewModels
           return;
         var beadStructslist = new List<MicroCy.BeadInfoStruct>();
         await ParseBeadInfoAsync(path, beadStructslist);
-        Dictionary<(int x, int y), int> Dict = new Dictionary<(int x, int y), int>();
-        int index = 0;
+        var Dict = new Dictionary<(int x, int y), int>();
         _ = Task.Run(() => Core.DataProcessor.BinData(beadStructslist, fromFile: true));
-        foreach (var bead in beadStructslist)
-        {
-          int x = 0;
-          int y = 0;
-          for (var i = 0; i < 256; i++)
-          {
-            if (bead.cl1 <= HeatMapData.bins[i])
-            {
-              x = i;
-              break;
-            }
-          }
-          for (var i = 0; i < 256; i++)
-          {
-            if (bead.cl2 <= HeatMapData.bins[i])
-            {
-              y = i;
-              break;
-            }
-          }
-          if (!Dict.ContainsKey((x, y)))
-          {
-            Dict.Add((x, y), index);
-            index++;
-            BackingCL12Map.Add(new HeatMapData((int)HeatMapData.bins[x], (int)HeatMapData.bins[y]));
-          }
-          else
-          {
-            BackingCL12Map[Dict[(x, y)]].A++;
-          }
-        }
+        Core.DataProcessor.BinMapData(beadStructslist, BackingCL12Map, Dict);
         _ = App.Current.Dispatcher.BeginInvoke((Action)(()=>
         {
           Core.DataProcessor.AnalyzeHeatMap(BackingCL12Map);
