@@ -1602,8 +1602,8 @@ namespace Ei_Dimension
           {
             BeadInfoList.Add(bead);
           }
-          _ = Task.Run(() => { Core.DataProcessor.BinData(BeadInfoList); });
-          Core.DataProcessor.BinMapData(BeadInfoList, ResultsViewModel.Instance.CurrentCL12Map, Models.HeatMapData.Dict);
+          _ = Task.Run(() => { Core.DataProcessor.BinScatterData(BeadInfoList); });
+          Core.DataProcessor.BinMapData(BeadInfoList, current: true);
           if (ResultsViewModel.Instance.PlatePictogram.FollowingCurrentCell)
           {
             _ = Current.Dispatcher.BeginInvoke((Action)(() =>

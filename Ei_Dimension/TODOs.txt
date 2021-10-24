@@ -85,4 +85,9 @@ Fixed a TerminationReadyCheck() possible bug scenario, where assuming EndRegion 
 Device.TerminationReadyCheck() case 1
   looks wrong. don't copy EndRead button function here? why not?
 
-  Analysis if beads hit a certain region is still done with log(x * num) and not log10() with proper binning. fix it
+Analysis if beads hit a certain region is still done with log(x * num) and not log10() with proper binning. fix it
+
+
+AnalyzeHeatmap iunserts proper CL data to graph. CL0-3 stiwches should properly indicate which data to output and taht's it.
+  also, swap XY, for half of plots.
+  And move all this to separate class please, that's disgusting

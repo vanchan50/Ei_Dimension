@@ -121,7 +121,7 @@ namespace Ei_Dimension.Core
       return Result;
     }
 
-    public static void BinData(List<MicroCy.BeadInfoStruct> list, bool fromFile = false)
+    public static void BinScatterData(List<MicroCy.BeadInfoStruct> list, bool fromFile = false)
     {
       var ResVM = ViewModels.ResultsViewModel.Instance;
       var MaxValue = ResVM.CurrentReporter[ResVM.CurrentReporter.Count - 1].Argument;
@@ -230,37 +230,169 @@ namespace Ei_Dimension.Core
       }
     }
 
-    public static void BinMapData(List<MicroCy.BeadInfoStruct> BeadInfoList, List<HeatMapData> heatmap, Dictionary<(int x, int y), int> Dict)
+    public static void BinMapData(List<MicroCy.BeadInfoStruct> BeadInfoList, bool current = true)
     {
+      var ResVM = ViewModels.ResultsViewModel.Instance;
       foreach (var bead in BeadInfoList)
       {
-        int x = 0;
-        int y = 0;
-        bool xDone = false;
-        bool yDone = false;
+        int cl0 = 0;
+        int cl1 = 0;
+        int cl2 = 0;
+        int cl3 = 0;
+        bool cl0Done = false;
+        bool cl1Done = false;
+        bool cl2Done = false;
+        bool cl3Done = false;
         for (var i = 0; i < 256; i++)
         {
-          if (!xDone && bead.cl1 <= HeatMapData.bins[i])
+          if (!cl0Done && bead.cl0 <= HeatMapData.bins[i])
           {
-            x = i;
-            xDone = true;
+            cl0 = i;
+            cl0Done = true;
           }
-          if (!yDone && bead.cl2 <= HeatMapData.bins[i])
+          if (!cl1Done && bead.cl1 <= HeatMapData.bins[i])
           {
-            y = i;
-            yDone = true;
+            cl1 = i;
+            cl1Done = true;
           }
-          if (xDone && yDone)
+          if (!cl2Done && bead.cl2 <= HeatMapData.bins[i])
+          {
+            cl2 = i;
+            cl2Done = true;
+          }
+          if (!cl3Done && bead.cl3 <= HeatMapData.bins[i])
+          {
+            cl3 = i;
+            cl3Done = true;
+          }
+          if (cl0Done && cl1Done && cl2Done && cl3Done)
             break;
         }
-        if (!Dict.ContainsKey((x, y)))
+        if (current)
         {
-          Dict.Add((x, y), heatmap.Count);
-          heatmap.Add(new HeatMapData((int)HeatMapData.bins[x], (int)HeatMapData.bins[y]));
+          //01
+          if (!ResVM.CurrentCL01Dict.ContainsKey((cl0, cl1)))
+          {
+            ResVM.CurrentCL01Dict.Add((cl0, cl1), ResVM.CurrentCL01Map.Count);
+            ResVM.CurrentCL01Map.Add(new HeatMapData((int)HeatMapData.bins[cl0], (int)HeatMapData.bins[cl1]));
+          }
+          else
+          {
+            ResVM.CurrentCL01Map[ResVM.CurrentCL01Dict[(cl0, cl1)]].A++;
+          }
+          //02
+          if (!ResVM.CurrentCL02Dict.ContainsKey((cl0, cl2)))
+          {
+            ResVM.CurrentCL02Dict.Add((cl0, cl2), ResVM.CurrentCL02Map.Count);
+            ResVM.CurrentCL02Map.Add(new HeatMapData((int)HeatMapData.bins[cl0], (int)HeatMapData.bins[cl2]));
+          }
+          else
+          {
+            ResVM.CurrentCL02Map[ResVM.CurrentCL02Dict[(cl0, cl2)]].A++;
+          }
+          //03
+          if (!ResVM.CurrentCL03Dict.ContainsKey((cl0, cl3)))
+          {
+            ResVM.CurrentCL03Dict.Add((cl0, cl3), ResVM.CurrentCL03Map.Count);
+            ResVM.CurrentCL03Map.Add(new HeatMapData((int)HeatMapData.bins[cl0], (int)HeatMapData.bins[cl3]));
+          }
+          else
+          {
+            ResVM.CurrentCL03Map[ResVM.CurrentCL03Dict[(cl0, cl3)]].A++;
+          }
+          //12
+          if (!ResVM.CurrentCL12Dict.ContainsKey((cl1, cl2)))
+          {
+            ResVM.CurrentCL12Dict.Add((cl1, cl2), ResVM.CurrentCL12Map.Count);
+            ResVM.CurrentCL12Map.Add(new HeatMapData((int)HeatMapData.bins[cl1], (int)HeatMapData.bins[cl2]));
+          }
+          else
+          {
+            ResVM.CurrentCL12Map[ResVM.CurrentCL12Dict[(cl1, cl2)]].A++;
+          }
+          //13
+          if (!ResVM.CurrentCL13Dict.ContainsKey((cl1, cl3)))
+          {
+            ResVM.CurrentCL13Dict.Add((cl1, cl3), ResVM.CurrentCL13Map.Count);
+            ResVM.CurrentCL13Map.Add(new HeatMapData((int)HeatMapData.bins[cl1], (int)HeatMapData.bins[cl3]));
+          }
+          else
+          {
+            ResVM.CurrentCL13Map[ResVM.CurrentCL13Dict[(cl1, cl3)]].A++;
+          }
+          //23
+          if (!ResVM.CurrentCL23Dict.ContainsKey((cl2, cl3)))
+          {
+            ResVM.CurrentCL23Dict.Add((cl2, cl3), ResVM.CurrentCL23Map.Count);
+            ResVM.CurrentCL23Map.Add(new HeatMapData((int)HeatMapData.bins[cl2], (int)HeatMapData.bins[cl3]));
+          }
+          else
+          {
+            ResVM.CurrentCL23Map[ResVM.CurrentCL23Dict[(cl2, cl3)]].A++;
+          }
         }
         else
         {
-          heatmap[Dict[(x, y)]].A++;
+          //01
+          if (!ResVM.BackingCL01Dict.ContainsKey((cl0, cl1)))
+          {
+            ResVM.BackingCL01Dict.Add((cl0, cl1), ResVM.BackingCL01Map.Count);
+            ResVM.BackingCL01Map.Add(new HeatMapData((int)HeatMapData.bins[cl0], (int)HeatMapData.bins[cl1]));
+          }
+          else
+          {
+            ResVM.BackingCL01Map[ResVM.BackingCL01Dict[(cl0, cl1)]].A++;
+          }
+          //02
+          if (!ResVM.BackingCL02Dict.ContainsKey((cl0, cl2)))
+          {
+            ResVM.BackingCL02Dict.Add((cl0, cl2), ResVM.BackingCL02Map.Count);
+            ResVM.BackingCL02Map.Add(new HeatMapData((int)HeatMapData.bins[cl0], (int)HeatMapData.bins[cl2]));
+          }
+          else
+          {
+            ResVM.BackingCL02Map[ResVM.BackingCL02Dict[(cl0, cl2)]].A++;
+          }
+          //03
+          if (!ResVM.BackingCL03Dict.ContainsKey((cl0, cl3)))
+          {
+            ResVM.BackingCL03Dict.Add((cl0, cl3), ResVM.BackingCL03Map.Count);
+            ResVM.BackingCL03Map.Add(new HeatMapData((int)HeatMapData.bins[cl0], (int)HeatMapData.bins[cl3]));
+          }
+          else
+          {
+            ResVM.BackingCL03Map[ResVM.BackingCL03Dict[(cl0, cl3)]].A++;
+          }
+          //12
+          if (!ResVM.BackingCL12Dict.ContainsKey((cl1, cl2)))
+          {
+            ResVM.BackingCL12Dict.Add((cl1, cl2), ResVM.BackingCL12Map.Count);
+            ResVM.BackingCL12Map.Add(new HeatMapData((int)HeatMapData.bins[cl1], (int)HeatMapData.bins[cl2]));
+          }
+          else
+          {
+            ResVM.BackingCL12Map[ResVM.BackingCL12Dict[(cl1, cl2)]].A++;
+          }
+          //13
+          if (!ResVM.BackingCL13Dict.ContainsKey((cl1, cl3)))
+          {
+            ResVM.BackingCL13Dict.Add((cl1, cl3), ResVM.BackingCL13Map.Count);
+            ResVM.BackingCL13Map.Add(new HeatMapData((int)HeatMapData.bins[cl1], (int)HeatMapData.bins[cl3]));
+          }
+          else
+          {
+            ResVM.BackingCL13Map[ResVM.BackingCL13Dict[(cl1, cl3)]].A++;
+          }
+          //23
+          if (!ResVM.BackingCL23Dict.ContainsKey((cl2, cl3)))
+          {
+            ResVM.BackingCL23Dict.Add((cl2, cl3), ResVM.BackingCL23Map.Count);
+            ResVM.BackingCL23Map.Add(new HeatMapData((int)HeatMapData.bins[cl2], (int)HeatMapData.bins[cl3]));
+          }
+          else
+          {
+            ResVM.BackingCL23Map[ResVM.BackingCL23Dict[(cl2, cl3)]].A++;
+          }
         }
       }
     }

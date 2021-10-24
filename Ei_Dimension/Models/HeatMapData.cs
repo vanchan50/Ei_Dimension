@@ -35,7 +35,6 @@ namespace Ei_Dimension.Models
     private int _y;
     private int _a;
     public static double[] bins { get; }
-    public static Dictionary<(int x, int y), int> Dict { get; } = new Dictionary<(int x, int y), int>();
     public HeatMapData(int x, int y)
     {
       X = x;

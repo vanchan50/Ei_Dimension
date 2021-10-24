@@ -29,18 +29,30 @@ namespace Ei_Dimension.ViewModels
     public virtual ObservableCollection<HistogramData> BackingGreenSsc { get; set; }
     public virtual ObservableCollection<HistogramData> BackingReporter { get; set; }
     public virtual ObservableCollection<HeatMapData> WorldMap { get; set; }
-    public List<HeatMapData> CurrentCL01Map { get; set; }
-    public List<HeatMapData> CurrentCL02Map { get; set; }
-    public List<HeatMapData> CurrentCL03Map { get; set; }
-    public List<HeatMapData> CurrentCL12Map { get; set; }
-    public List<HeatMapData> CurrentCL13Map { get; set; }
-    public List<HeatMapData> CurrentCL23Map { get; set; }
-    public List<HeatMapData> BackingCL01Map { get; set; }
-    public List<HeatMapData> BackingCL02Map { get; set; }
-    public List<HeatMapData> BackingCL03Map { get; set; }
-    public List<HeatMapData> BackingCL12Map { get; set; }
-    public List<HeatMapData> BackingCL13Map { get; set; }
-    public List<HeatMapData> BackingCL23Map { get; set; }
+    public List<HeatMapData> CurrentCL01Map { get; private set; }
+    public List<HeatMapData> CurrentCL02Map { get; private set; }
+    public List<HeatMapData> CurrentCL03Map { get; private set; }
+    public List<HeatMapData> CurrentCL12Map { get; private set; }
+    public List<HeatMapData> CurrentCL13Map { get; private set; }
+    public List<HeatMapData> CurrentCL23Map { get; private set; }
+    public List<HeatMapData> BackingCL01Map { get; private set; }
+    public List<HeatMapData> BackingCL02Map { get; private set; }
+    public List<HeatMapData> BackingCL03Map { get; private set; }
+    public List<HeatMapData> BackingCL12Map { get; private set; }
+    public List<HeatMapData> BackingCL13Map { get; private set; }
+    public List<HeatMapData> BackingCL23Map { get; private set; }
+    public Dictionary<(int x, int y), int> CurrentCL01Dict { get; private set; }
+    public Dictionary<(int x, int y), int> CurrentCL02Dict { get; private set; }
+    public Dictionary<(int x, int y), int> CurrentCL03Dict { get; private set; }
+    public Dictionary<(int x, int y), int> CurrentCL12Dict { get; private set; }
+    public Dictionary<(int x, int y), int> CurrentCL13Dict { get; private set; }
+    public Dictionary<(int x, int y), int> CurrentCL23Dict { get; private set; }
+    public Dictionary<(int x, int y), int> BackingCL01Dict { get; private set; }
+    public Dictionary<(int x, int y), int> BackingCL02Dict { get; private set; }
+    public Dictionary<(int x, int y), int> BackingCL03Dict { get; private set; }
+    public Dictionary<(int x, int y), int> BackingCL12Dict { get; private set; }
+    public Dictionary<(int x, int y), int> BackingCL13Dict { get; private set; }
+    public Dictionary<(int x, int y), int> BackingCL23Dict { get; private set; }
     public virtual DrawingPlate PlatePictogram { get; set; }
     public virtual System.Windows.Visibility Buttons384Visible { get; set; }
     public virtual System.Windows.Visibility LeftLabel384Visible { get; set; }
@@ -93,6 +105,19 @@ namespace Ei_Dimension.ViewModels
       BackingRedSsc = new ObservableCollection<HistogramData>();
       BackingGreenSsc = new ObservableCollection<HistogramData>();
       BackingReporter = new ObservableCollection<HistogramData>();
+
+      CurrentCL01Dict = new Dictionary<(int x, int y), int>();
+      CurrentCL02Dict = new Dictionary<(int x, int y), int>();
+      CurrentCL03Dict = new Dictionary<(int x, int y), int>();
+      CurrentCL12Dict = new Dictionary<(int x, int y), int>();
+      CurrentCL13Dict = new Dictionary<(int x, int y), int>();
+      CurrentCL23Dict = new Dictionary<(int x, int y), int>();
+      BackingCL01Dict = new Dictionary<(int x, int y), int>();
+      BackingCL02Dict = new Dictionary<(int x, int y), int>();
+      BackingCL03Dict = new Dictionary<(int x, int y), int>();
+      BackingCL12Dict = new Dictionary<(int x, int y), int>();
+      BackingCL13Dict = new Dictionary<(int x, int y), int>();
+      BackingCL23Dict = new Dictionary<(int x, int y), int>();
 
       for (var i = 0; i < HistogramData.Bins.Length; i++)
       {
@@ -245,8 +270,18 @@ namespace Ei_Dimension.ViewModels
           CurrentGreenSsc[i].Value = 0;
           CurrentReporter[i].Value = 0;
         }
+        CurrentCL01Map.Clear();
+        CurrentCL02Map.Clear();
+        CurrentCL03Map.Clear();
         CurrentCL12Map.Clear();
-        HeatMapData.Dict.Clear();
+        CurrentCL13Map.Clear();
+        CurrentCL23Map.Clear();
+        CurrentCL01Dict.Clear();
+        CurrentCL02Dict.Clear();
+        CurrentCL03Dict.Clear();
+        CurrentCL12Dict.Clear();
+        CurrentCL13Dict.Clear();
+        CurrentCL23Dict.Clear();
       }
       else
       {
@@ -258,7 +293,18 @@ namespace Ei_Dimension.ViewModels
           BackingGreenSsc[i].Value = 0;
           BackingReporter[i].Value = 0;
         }
+        BackingCL01Map.Clear();
+        BackingCL02Map.Clear();
+        BackingCL03Map.Clear();
         BackingCL12Map.Clear();
+        BackingCL13Map.Clear();
+        BackingCL23Map.Clear();
+        BackingCL01Dict.Clear();
+        BackingCL02Dict.Clear();
+        BackingCL03Dict.Clear();
+        BackingCL12Dict.Clear();
+        BackingCL13Dict.Clear();
+        BackingCL23Dict.Clear();
       }
       Views.ResultsView.Instance.ClearPoints();
     }
@@ -318,9 +364,8 @@ namespace Ei_Dimension.ViewModels
           return;
         var beadStructslist = new List<MicroCy.BeadInfoStruct>();
         await ParseBeadInfoAsync(path, beadStructslist);
-        var Dict = new Dictionary<(int x, int y), int>();
-        _ = Task.Run(() => Core.DataProcessor.BinData(beadStructslist, fromFile: true));
-        Core.DataProcessor.BinMapData(beadStructslist, BackingCL12Map, Dict);
+        _ = Task.Run(() => Core.DataProcessor.BinScatterData(beadStructslist, fromFile: true));
+        Core.DataProcessor.BinMapData(beadStructslist, current: false);
         _ = App.Current.Dispatcher.BeginInvoke((Action)(()=>
         {
           Core.DataProcessor.AnalyzeHeatMap(BackingCL12Map);
