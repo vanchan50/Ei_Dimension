@@ -29,8 +29,8 @@ namespace Ei_Dimension.ViewModels
     public virtual ObservableCollection<HistogramData> BackingGreenSsc { get; set; }
     public virtual ObservableCollection<HistogramData> BackingReporter { get; set; }
     public virtual ObservableCollection<HeatMapData> WorldMap { get; set; }
-    public List<HeatMapData> CurrentMap { get; set; }
-    public List<HeatMapData> BackingMap { get; set; }
+    public List<HeatMapData> CurrentCL12Map { get; set; }
+    public List<HeatMapData> BackingCL12Map { get; set; }
     public virtual DrawingPlate PlatePictogram { get; set; }
     public virtual System.Windows.Visibility Buttons384Visible { get; set; }
     public virtual System.Windows.Visibility LeftLabel384Visible { get; set; }
@@ -38,6 +38,7 @@ namespace Ei_Dimension.ViewModels
     public virtual System.Windows.Visibility TopLabel384Visible { get; set; }
     public virtual System.Windows.Visibility BottomLabel384Visible { get; set; }
     public virtual ObservableCollection<bool> CornerButtonsChecked { get; set; }
+    public virtual ObservableCollection<bool> CLButtonsChecked { get; set; }
     public static ResultsViewModel Instance { get; private set; }
 
     protected ResultsViewModel()
@@ -98,8 +99,8 @@ namespace Ei_Dimension.ViewModels
           BackingReporter.Add(new HistogramData(0, HistogramData.Bins[i]));
       }
 
-      CurrentMap = new List<HeatMapData>();
-      BackingMap = new List<HeatMapData>();
+      CurrentCL12Map = new List<HeatMapData>();
+      BackingCL12Map = new List<HeatMapData>();
 
       DisplayedForwardSsc = CurrentForwardSsc;
       DisplayedVioletSsc = CurrentVioletSsc;
@@ -110,6 +111,7 @@ namespace Ei_Dimension.ViewModels
       PlatePictogram = DrawingPlate.Create();
       Buttons384Visible = System.Windows.Visibility.Hidden;
       CornerButtonsChecked = new ObservableCollection<bool> { true, false, false, false };
+      CLButtonsChecked = new ObservableCollection<bool> { false, false, true, false, false, true, false, false };
       LeftLabel384Visible = System.Windows.Visibility.Visible;
       RightLabel384Visible = System.Windows.Visibility.Hidden;
       TopLabel384Visible = System.Windows.Visibility.Visible;
@@ -122,9 +124,48 @@ namespace Ei_Dimension.ViewModels
       return ViewModelSource.Create(() => new ResultsViewModel());
     }
 
+    public void CLButtonClick(int CL)
+    {
+      switch (CL)
+      {
+        case 0:
+          break;
+        case 1:
+          break;
+        case 2:
+          break;
+        case 3:
+          break;
+        case 4:
+          break;
+        case 5:
+          break;
+        case 6:
+          break;
+        case 7:
+          break;
+      }
+      if (CL < 4)
+      {
+        CLButtonsChecked[0] = false;
+        CLButtonsChecked[1] = false;
+        CLButtonsChecked[2] = false;
+        CLButtonsChecked[3] = false;
+      }
+      else
+      {
+        CLButtonsChecked[4] = false;
+        CLButtonsChecked[5] = false;
+        CLButtonsChecked[6] = false;
+        CLButtonsChecked[7] = false;
+      }
+      CLButtonsChecked[CL] = true;
+    }
+
     public void CornerButtonClick(int corner)
     {
-      switch (corner) {
+      switch (corner)
+      {
         case 1:
           LeftLabel384Visible = System.Windows.Visibility.Visible;
           RightLabel384Visible = System.Windows.Visibility.Hidden;
@@ -184,7 +225,7 @@ namespace Ei_Dimension.ViewModels
           CurrentGreenSsc[i].Value = 0;
           CurrentReporter[i].Value = 0;
         }
-        CurrentMap.Clear();
+        CurrentCL12Map.Clear();
         HeatMapData.Dict.Clear();
       }
       else
@@ -197,7 +238,7 @@ namespace Ei_Dimension.ViewModels
           BackingGreenSsc[i].Value = 0;
           BackingReporter[i].Value = 0;
         }
-        BackingMap.Clear();
+        BackingCL12Map.Clear();
       }
       Views.ResultsView.Instance.ClearPoints();
     }
@@ -284,16 +325,16 @@ namespace Ei_Dimension.ViewModels
           {
             Dict.Add((x, y), index);
             index++;
-            BackingMap.Add(new HeatMapData((int)HeatMapData.bins[x], (int)HeatMapData.bins[y]));
+            BackingCL12Map.Add(new HeatMapData((int)HeatMapData.bins[x], (int)HeatMapData.bins[y]));
           }
           else
           {
-            BackingMap[Dict[(x, y)]].A++;
+            BackingCL12Map[Dict[(x, y)]].A++;
           }
         }
         _ = App.Current.Dispatcher.BeginInvoke((Action)(()=>
         {
-          Core.DataProcessor.AnalyzeHeatMap(BackingMap);
+          Core.DataProcessor.AnalyzeHeatMap(BackingCL12Map);
         }));
       });
     }
@@ -309,7 +350,7 @@ namespace Ei_Dimension.ViewModels
         DisplayedReporter = CurrentReporter;
 
         Views.ResultsView.Instance.ClearPoints();
-        Core.DataProcessor.AnalyzeHeatMap(CurrentMap);
+        Core.DataProcessor.AnalyzeHeatMap(CurrentCL12Map);
       }
       else
       {

@@ -14,7 +14,7 @@
              d:DesignHeight="944" d:DesignWidth="1920">
   <Grid>
     <!--Scatter Chart-->
-    <dxc:ChartControl Width="640" Height="472"
+    <dxc:ChartControl Width="740" Height="472"
                       HorizontalAlignment="Left"
                       VerticalAlignment="Top"
                       Focusable="False"
@@ -102,14 +102,14 @@
     </dxc:ChartControl>
 
     <!--Heatmap Chart-->
-    <dxc:ChartControl Width="640" Height="472"
+    <dxc:ChartControl Width="740" Height="472"
                       HorizontalAlignment="Left"
                       VerticalAlignment="Top"
                       BorderThickness="0"
                       Focusable="False"
                       Margin="0,452,0,0" Name="ChC">
-      <dxc:XYDiagram2D Width="562" Height="388"
-                       Margin="46,-8,0,0" 
+      <dxc:XYDiagram2D Width="632" Height="388"
+                       Margin="76,-8,0,0" 
                        Focusable="False"
                        HorizontalAlignment="Left"
                        VerticalAlignment="Top">
@@ -169,9 +169,122 @@
         </dxc:PointSeries2D>
       </dxc:XYDiagram2D>
     </dxc:ChartControl>
+    
+    <StackPanel HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Margin="15,550,0,0">
+      <RadioButton Width="60" Height="45"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Content="CL0"
+                   FontSize="35"
+                   IsChecked="{Binding CLButtonsChecked[0], Mode=OneWay}"
+                   Style="{StaticResource RadioButtonHorizontalThemeStyle}"
+                   Command="{Binding CLButtonClickCommand}">
+        <RadioButton.CommandParameter>
+          <System:Int32>0</System:Int32>
+        </RadioButton.CommandParameter>
+      </RadioButton>
+      <RadioButton Width="60" Height="45"
+                   Margin="0,3,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Content="CL1"
+                   FontSize="35"
+                   IsChecked="{Binding CLButtonsChecked[1], Mode=OneWay}"
+                   Style="{StaticResource RadioButtonHorizontalThemeStyle}"
+                   Command="{Binding CLButtonClickCommand}">
+        <RadioButton.CommandParameter>
+          <System:Int32>1</System:Int32>
+        </RadioButton.CommandParameter>
+      </RadioButton>
+      <RadioButton Width="60" Height="45"
+                   Margin="0,3,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Content="CL2"
+                   FontSize="35"
+                   IsChecked="{Binding CLButtonsChecked[2], Mode=OneWay}"
+                   Style="{StaticResource RadioButtonHorizontalThemeStyle}"
+                   Command="{Binding CLButtonClickCommand}">
+        <RadioButton.CommandParameter>
+          <System:Int32>2</System:Int32>
+        </RadioButton.CommandParameter>
+      </RadioButton>
+      <RadioButton Width="60" Height="45"
+                   Margin="0,3,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Content="CL3"
+                   FontSize="35"
+                   IsChecked="{Binding CLButtonsChecked[3], Mode=OneWay}"
+                   Style="{StaticResource RadioButtonHorizontalThemeStyle}"
+                   Command="{Binding CLButtonClickCommand}">
+        <RadioButton.CommandParameter>
+          <System:Int32>3</System:Int32>
+        </RadioButton.CommandParameter>
+      </RadioButton>
+    </StackPanel>
+
+    <StackPanel Orientation="Horizontal"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Margin="250,850,0,0">
+      <RadioButton Width="60" Height="45"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Content="CL0"
+                   FontSize="35"
+                   IsChecked="{Binding CLButtonsChecked[4], Mode=OneWay}"
+                   Style="{StaticResource RadioButtonHorizontalThemeStyle}"
+                   Command="{Binding CLButtonClickCommand}">
+        <RadioButton.CommandParameter>
+          <System:Int32>4</System:Int32>
+        </RadioButton.CommandParameter>
+      </RadioButton>
+      <RadioButton Width="60" Height="45"
+                   Margin="3,0,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Content="CL1"
+                   FontSize="35"
+                   IsChecked="{Binding CLButtonsChecked[5], Mode=OneWay}"
+                   Style="{StaticResource RadioButtonHorizontalThemeStyle}"
+                   Command="{Binding CLButtonClickCommand}">
+        <RadioButton.CommandParameter>
+          <System:Int32>5</System:Int32>
+        </RadioButton.CommandParameter>
+      </RadioButton>
+      <RadioButton Width="60" Height="45"
+                   Margin="3,0,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Content="CL2"
+                   FontSize="35"
+                   IsChecked="{Binding CLButtonsChecked[6], Mode=OneWay}"
+                   Style="{StaticResource RadioButtonHorizontalThemeStyle}"
+                   Command="{Binding CLButtonClickCommand}">
+        <RadioButton.CommandParameter>
+          <System:Int32>6</System:Int32>
+        </RadioButton.CommandParameter>
+      </RadioButton>
+      <RadioButton Width="60" Height="45"
+                   Margin="3,0,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Content="CL3"
+                   FontSize="35"
+                   IsChecked="{Binding CLButtonsChecked[7], Mode=OneWay}"
+                   Style="{StaticResource RadioButtonHorizontalThemeStyle}"
+                   Command="{Binding CLButtonClickCommand}">
+        <RadioButton.CommandParameter>
+          <System:Int32>7</System:Int32>
+        </RadioButton.CommandParameter>
+      </RadioButton>
+    </StackPanel>
 
     <Border HorizontalAlignment="Left" VerticalAlignment="Top"
-            Margin="710,0,0,0" Width="470" Height="900">
+            Margin="750,0,0,0" Width="470" Height="900">
       <StackPanel>
         <TextBlock Text="{lang:Loc Experiment_Active_Regions}"
                    FontFamily="{StaticResource AppTextFont}"

@@ -1611,7 +1611,7 @@ namespace Ei_Dimension
           {
             _ = Current.Dispatcher.BeginInvoke((Action)(() =>
             {
-              Core.DataProcessor.AnalyzeHeatMap(ResultsViewModel.Instance.CurrentMap);
+              Core.DataProcessor.AnalyzeHeatMap(ResultsViewModel.Instance.CurrentCL12Map);
               _histogramUpdateGoing = false;
             }));
           }
@@ -1717,12 +1717,12 @@ namespace Ei_Dimension
       }
       if (!Models.HeatMapData.Dict.ContainsKey((x, y)))
       {
-        Models.HeatMapData.Dict.Add((x, y), ResultsViewModel.Instance.CurrentMap.Count);
-        ResultsViewModel.Instance.CurrentMap.Add(new Models.HeatMapData((int)Models.HeatMapData.bins[x], (int)Models.HeatMapData.bins[y]));
+        Models.HeatMapData.Dict.Add((x, y), ResultsViewModel.Instance.CurrentCL12Map.Count);
+        ResultsViewModel.Instance.CurrentCL12Map.Add(new Models.HeatMapData((int)Models.HeatMapData.bins[x], (int)Models.HeatMapData.bins[y]));
       }
       else
       {
-        ResultsViewModel.Instance.CurrentMap[Models.HeatMapData.Dict[(x, y)]].A++;
+        ResultsViewModel.Instance.CurrentCL12Map[Models.HeatMapData.Dict[(x, y)]].A++;
       }
     }
     public static void SetLogOutput()
