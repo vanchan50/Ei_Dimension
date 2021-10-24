@@ -21,6 +21,7 @@ namespace Ei_Dimension.ViewModels
     public string DialogFilter { get; set; }
     public string DialogTitleLoad { get; set; }
     public string DialogTitleSave { get; set; }
+    private string _templateName;
     private INavigationService NavigationService => this.GetService<INavigationService>();
     private IOpenFileDialogService OpenFileDialogService => this.GetService<IOpenFileDialogService>();
     private ISaveFileDialogService SaveFileDialogService => this.GetService<ISaveFileDialogService>();
@@ -50,7 +51,16 @@ namespace Ei_Dimension.ViewModels
     {
       App.ResetFocusedTextbox();
       App.HideNumpad();
+      MainViewModel.Instance.StartButtonsVisible = Visibility.Visible;
       NavigationService.Navigate("DashboardView", null, this);
+    }
+
+    public void NavigateSelRegions()
+    {
+      App.ResetFocusedTextbox();
+      App.HideNumpad();
+      MainViewModel.Instance.StartButtonsVisible = Visibility.Hidden;
+      NavigationService.Navigate("SelRegionsView", null, this);
     }
 
     public void NavigateFileSave()
@@ -58,6 +68,7 @@ namespace Ei_Dimension.ViewModels
       App.ResetFocusedTextbox();
       App.HideNumpad();
       App.Device.InitSTab("reportingtab");
+      MainViewModel.Instance.StartButtonsVisible = Visibility.Hidden;
       NavigationService.Navigate("FileSaveView", null, this);
     }
 
@@ -65,7 +76,13 @@ namespace Ei_Dimension.ViewModels
     {
       App.ResetFocusedTextbox();
       App.HideNumpad();
-      NavigationService.Navigate("WellsSelectView", null, this);
+      if (num != 1)
+      {
+        MainViewModel.Instance.StartButtonsVisible = Visibility.Hidden;
+        NavigationService.Navigate("WellsSelectView", null, this);
+      }
+      else
+        NavigateDashboard();
       if (WellsSelectViewModel.Instance != null)
         WellsSelectViewModel.Instance.ChangeWellTableSize(num);
     }
@@ -78,16 +95,68 @@ namespace Ei_Dimension.ViewModels
       OpenFileDialogService.Title = DialogTitleLoad;
       if (OpenFileDialogService.ShowDialog())
       {
+        AcquisitionTemplate newTemplate = null;
         var file = OpenFileDialogService.GetFullFileName();
         try
         {
           using (TextReader reader = new StreamReader(file))
           {
             var fileContents = reader.ReadToEnd();
-            App.AcquisitionTemplateLoaded(JsonConvert.DeserializeObject<AcquisitionTemplate>(fileContents));
+            newTemplate = JsonConvert.DeserializeObject<AcquisitionTemplate>(fileContents);
           }
         }
         catch { }
+        if(newTemplate != null)
+        {
+          try
+          {
+            var DashVM = DashboardViewModel.Instance;
+            DashVM.SpeedItems[newTemplate.Speed].Click(1);
+            DashVM.ClassiMapItems[App.GetMapIndex(newTemplate.Map)].Click(2);
+            DashVM.ChConfigItems[newTemplate.ChConfig].Click(3);
+            DashVM.OrderItems[newTemplate.Order].Click(4);
+            DashVM.SysControlItems[newTemplate.SysControl].Click(5);
+            DashVM.EndReadItems[newTemplate.EndRead].Click(6);
+            DashVM.EndRead[0] = newTemplate.MinPerRegion.ToString();
+            DashVM.FocusedBox(0);
+            App.InjectToFocusedTextbox(newTemplate.MinPerRegion.ToString(), true);
+            DashVM.EndRead[1] = newTemplate.TotalEvents.ToString();
+            DashVM.FocusedBox(1);
+            App.InjectToFocusedTextbox(newTemplate.TotalEvents.ToString(), true);
+            DashVM.Volumes[0] = newTemplate.SampleVolume.ToString();
+            DashVM.FocusedBox(2);
+            App.InjectToFocusedTextbox(newTemplate.SampleVolume.ToString(), true);
+            DashVM.Volumes[1] = newTemplate.WashVolume.ToString();
+            DashVM.FocusedBox(3);
+            App.InjectToFocusedTextbox(newTemplate.WashVolume.ToString(), true);
+            DashVM.Volumes[2] = newTemplate.AgitateVolume.ToString();
+            DashVM.FocusedBox(4);
+            App.InjectToFocusedTextbox(newTemplate.AgitateVolume.ToString(), true);
+            uint chkBox = newTemplate.FileSaveCheckboxes;
+            for (var i = FileSaveViewModel.Instance.Checkboxes.Count -1 -1; i > -1 ; i--)// -1 to not store system log
+            {
+              uint pow = (uint)Math.Pow(2, i);
+              if (chkBox >= pow)
+              {
+                FileSaveViewModel.Instance.CheckedBox(i);
+                chkBox -= pow;
+              }
+              else
+                FileSaveViewModel.Instance.UncheckedBox(i); ;
+            }
+            for(var i = 0; i < App.MapRegions.ActiveRegions.Count; i++)
+            {
+              if (newTemplate.ActiveRegions[i])
+              {
+                App.MapRegions.SelectedRegionTextboxIndex = i;
+                SelRegionsViewModel.Instance.AddActiveRegion(1);
+              }
+              App.MapRegions.RegionsNamesList[i] = newTemplate.RegionsNamesList[i];
+            }
+            _templateName = file.Substring(file.LastIndexOf('\\') + 1);
+          }
+          catch { }
+        }
       }
     }
 
@@ -98,7 +167,8 @@ namespace Ei_Dimension.ViewModels
       SaveFileDialogService.FilterIndex = 1;
       SaveFileDialogService.Title = DialogTitleSave;
       SaveFileDialogService.DefaultExt = "json";
-      //  SaveFileDialogService.DefaultFileName = DefaultFileName;
+      if (_templateName != null)
+        SaveFileDialogService.DefaultFileName = _templateName;
       if (SaveFileDialogService.ShowDialog())
       {
         try
@@ -118,13 +188,29 @@ namespace Ei_Dimension.ViewModels
             temp.AgitateVolume = uint.Parse(DashboardViewModel.Instance.Volumes[2]);
             temp.MinPerRegion = uint.Parse(DashboardViewModel.Instance.EndRead[0]);
             temp.TotalEvents = uint.Parse(DashboardViewModel.Instance.EndRead[1]);
-
+            uint checkboxes = 0;
+            int currVal = 0;
+            for(var i = 0; i < FileSaveViewModel.Instance.Checkboxes.Count - 1; i++)  // -1 to not store system log
+            {
+              currVal = (int)Math.Pow(2,i) * (FileSaveViewModel.Instance.Checkboxes[i] ? 1 : 0);
+              checkboxes += (uint)currVal;
+            }
+            temp.FileSaveCheckboxes = checkboxes;
+            temp.ActiveRegions.AddRange(App.MapRegions.ActiveRegions);
+            temp.RegionsNamesList.AddRange(App.MapRegions.RegionsNamesList);
             var contents = JsonConvert.SerializeObject(temp);
             _ = stream.WriteAsync(contents);
           }
         }
         catch { }
       }
+    }
+    public void InitChildren()
+    {
+      NavigateWellsSelect(96);
+      NavigateDashboard();
+      NavigateFileSave();
+      NavigateSelRegions();
     }
   }
 }

@@ -124,6 +124,8 @@ namespace Ei_Dimension.ViewModels
           break;
       }
       CurrentTableSize = num;
+      ResultsViewModel.Instance.PlatePictogram.ChangeMode(num);
+      ResultsViewModel.Instance.CornerButtonClick(1);
     }
 
     private void InitTables()

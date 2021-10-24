@@ -102,6 +102,11 @@ namespace Ei_Dimension.ViewModels
     {
       App.InjectToFocusedTextbox(((TextBox)e.Source).Text, true);
     }
+    public void InitChildren()
+    {
+      NavigateCalibration();
+      NavigateChannels();
+    }
 
     public class DropDownButtonContents
     {

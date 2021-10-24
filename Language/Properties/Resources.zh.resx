@@ -264,7 +264,7 @@
     <value>流通池排水阀 开</value>
   </data>
   <data name="Components_Fan" xml:space="preserve">
-    <value>风扇</value>
+    <value>风扇 1</value>
   </data>
   <data name="Components_Fluidics" xml:space="preserve">
     <value>流体</value>
@@ -315,7 +315,7 @@
     <value>到拾取</value>
   </data>
   <data name="Components_Valve1" xml:space="preserve">
-    <value>阀门 1</value>
+    <value>风扇 2</value>
   </data>
   <data name="Components_Valve2" xml:space="preserve">
     <value>阀门 2</value>

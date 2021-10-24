@@ -47,8 +47,8 @@ namespace Ei_Dimension.ViewModels
       CalibrationParameter = 0;
       CalibrationSelectorState = new ObservableCollection<bool> { true, false, false };
 
-      CompensationPercentageContent = new ObservableCollection<string> { App.Device.Compensation.ToString() };
-      DNRContents = new ObservableCollection<string> { "", App.Device.HdnrTrans.ToString() };
+      CompensationPercentageContent = new ObservableCollection<string> { MicroCy.InstrumentParameters.Calibration.Compensation.ToString() };
+      DNRContents = new ObservableCollection<string> { "", MicroCy.InstrumentParameters.Calibration.HdnrTrans.ToString() };
 
       CurrentMapName = new ObservableCollection<string> { App.Device.ActiveMap.mapName };
 
@@ -67,7 +67,6 @@ namespace Ei_Dimension.ViewModels
       CalibrationSelectorState[2] = false;
       CalibrationSelectorState[num] = true;
       CalibrationParameter = num;
-      //chart2.Series["CLTARGET"].Enabled = false; for num=0 and true for num=1
       App.Device.MainCommand("Set Property", code: 0x1b, parameter: num);
     }
 

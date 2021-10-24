@@ -52,10 +52,10 @@
                     Foreground="{StaticResource AppTextColor}"
                     Margin="0,0,0,0"
                     Style="{StaticResource CheckboxStyle}"
-                    IsChecked="{Binding Checkboxes[0]}">
+                    IsChecked="{Binding Checkboxes[0],Mode=OneWay}">
               <dxmvvm:Interaction.Behaviors>
                 <dxmvvm:EventToCommand EventName="Checked" Command="{Binding CheckedBoxCommand}" CommandParameter="0"/>
-                <dxmvvm:EventToCommand EventName="Unchecked" Command="{Binding CheckedBoxCommand}" CommandParameter="0"/>
+                <dxmvvm:EventToCommand EventName="Unchecked" Command="{Binding UncheckedBoxCommand}" CommandParameter="0"/>
               </dxmvvm:Interaction.Behaviors>
             </CheckBox>
             <TextBlock Text="{lang:Loc FileSave_Ind_Bead_Events}"
@@ -72,10 +72,10 @@
                     Foreground="{StaticResource AppTextColor}"
                     Margin="0,4,0,0"
                     Style="{StaticResource CheckboxStyle}"
-                    IsChecked="{Binding Checkboxes[1]}">
+                    IsChecked="{Binding Checkboxes[1],Mode=OneWay}">
               <dxmvvm:Interaction.Behaviors>
                 <dxmvvm:EventToCommand EventName="Checked" Command="{Binding CheckedBoxCommand}" CommandParameter="1"/>
-                <dxmvvm:EventToCommand EventName="Unchecked" Command="{Binding CheckedBoxCommand}" CommandParameter="1"/>
+                <dxmvvm:EventToCommand EventName="Unchecked" Command="{Binding UncheckedBoxCommand}" CommandParameter="1"/>
               </dxmvvm:Interaction.Behaviors>
             </CheckBox>
             <TextBlock Text="{lang:Loc FileSave_Plate_Summary}"
@@ -92,10 +92,10 @@
                       Foreground="{StaticResource AppTextColor}"
                       Margin="0,4,0,0"
                       Style="{StaticResource CheckboxStyle}"
-                      IsChecked="{Binding Checkboxes[2]}">
+                      IsChecked="{Binding Checkboxes[2],Mode=OneWay}">
               <dxmvvm:Interaction.Behaviors>
                 <dxmvvm:EventToCommand EventName="Checked" Command="{Binding CheckedBoxCommand}" CommandParameter="2"/>
-                <dxmvvm:EventToCommand EventName="Unchecked" Command="{Binding CheckedBoxCommand}" CommandParameter="2"/>
+                <dxmvvm:EventToCommand EventName="Unchecked" Command="{Binding UncheckedBoxCommand}" CommandParameter="2"/>
               </dxmvvm:Interaction.Behaviors>
             </CheckBox>
             <TextBlock Text="{lang:Loc FileSave_JSON_To_Results}"
@@ -124,10 +124,10 @@
                       Foreground="{StaticResource AppTextColor}"
                       Margin="0,0,0,0"
                       Style="{StaticResource CheckboxStyle}"
-                      IsChecked="{Binding Checkboxes[3]}">
+                      IsChecked="{Binding Checkboxes[3],Mode=OneWay}">
               <dxmvvm:Interaction.Behaviors>
                 <dxmvvm:EventToCommand EventName="Checked" Command="{Binding CheckedBoxCommand}" CommandParameter="3"/>
-                <dxmvvm:EventToCommand EventName="Unchecked" Command="{Binding CheckedBoxCommand}" CommandParameter="3"/>
+                <dxmvvm:EventToCommand EventName="Unchecked" Command="{Binding UncheckedBoxCommand}" CommandParameter="3"/>
               </dxmvvm:Interaction.Behaviors>
             </CheckBox>
             <TextBlock Text="{lang:Loc FileSave_Discard_Unclassified_Beads}"
@@ -144,10 +144,10 @@
                       Foreground="{StaticResource AppTextColor}"
                       Margin="0,4,0,0"
                       Style="{StaticResource CheckboxStyle}"
-                      IsChecked="{Binding Checkboxes[4]}">
+                      IsChecked="{Binding Checkboxes[4],Mode=OneWay}">
               <dxmvvm:Interaction.Behaviors>
                 <dxmvvm:EventToCommand EventName="Checked" Command="{Binding CheckedBoxCommand}" CommandParameter="4"/>
-                <dxmvvm:EventToCommand EventName="Unchecked" Command="{Binding CheckedBoxCommand}" CommandParameter="4"/>
+                <dxmvvm:EventToCommand EventName="Unchecked" Command="{Binding UncheckedBoxCommand}" CommandParameter="4"/>
               </dxmvvm:Interaction.Behaviors>
             </CheckBox>
             <TextBlock Text="{lang:Loc FileSave_Include_Unclassified_Beads}"
@@ -164,10 +164,10 @@
                     Foreground="{StaticResource AppTextColor}"
                     Margin="0,4,0,0"
                     Style="{StaticResource CheckboxStyle}"
-                    IsChecked="{Binding Checkboxes[5]}">
+                    IsChecked="{Binding Checkboxes[5],Mode=OneWay}">
               <dxmvvm:Interaction.Behaviors>
                 <dxmvvm:EventToCommand EventName="Checked" Command="{Binding CheckedBoxCommand}" CommandParameter="5"/>
-                <dxmvvm:EventToCommand EventName="Unchecked" Command="{Binding CheckedBoxCommand}" CommandParameter="5"/>
+                <dxmvvm:EventToCommand EventName="Unchecked" Command="{Binding UncheckedBoxCommand}" CommandParameter="5"/>
               </dxmvvm:Interaction.Behaviors>
             </CheckBox>
             <TextBlock Text="{lang:Loc FileSave_Include_Doublet_Events}"
@@ -186,5 +186,29 @@
             Margin="80,600,0,0"
             Style="{StaticResource ButtonStyle}"
             Command="{Binding SelectOutFolderCommand}"/>
+    <StackPanel Orientation="Horizontal" 
+                Height="40"
+                Margin="750,800,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top">
+      <CheckBox FontFamily="{StaticResource AppTextFont}"
+                    FontSize="30"
+                    FontWeight="UltraBold"
+                    Foreground="{StaticResource AppTextColor}"
+                    Margin="0,4,0,0"
+                    Style="{StaticResource CheckboxStyle}"
+                    IsChecked="{Binding Checkboxes[6],Mode=OneWay}">
+        <dxmvvm:Interaction.Behaviors>
+          <dxmvvm:EventToCommand EventName="Checked" Command="{Binding CheckedBoxCommand}" CommandParameter="6"/>
+          <dxmvvm:EventToCommand EventName="Unchecked" Command="{Binding UncheckedBoxCommand}" CommandParameter="6"/>
+        </dxmvvm:Interaction.Behaviors>
+      </CheckBox>
+      <TextBlock Text="{lang:Loc FileSave_Sys_Log}"
+                       FontFamily="{StaticResource AppTextFont}"
+                       FontSize="30"
+                       FontWeight="UltraBold"
+                       Foreground="{StaticResource AppTextColor}"
+                       Margin="4,0,0,0"/>
+    </StackPanel>
   </Grid>
 </UserControl>

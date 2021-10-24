@@ -1,12 +1,25 @@
 ﻿using Ei_Dimension.Models;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Windows.Media;
 
 namespace Ei_Dimension.Core
 {
   public static class DataProcessor
-  //helper class for ResultsViewModel
   {
+    private static SolidColorBrush[] _heatColors;
+
+    static  DataProcessor()
+    {
+      _heatColors = new SolidColorBrush[5];
+      _heatColors[0] = new SolidColorBrush(Color.FromRgb(0x0a, 0x6d, 0xaa));
+      _heatColors[1] = new SolidColorBrush(Color.FromRgb(0x00, 0xcc, 0x49));
+      _heatColors[2] = Brushes.Orange;
+      _heatColors[3] = Brushes.OrangeRed;
+      _heatColors[4] = Brushes.Red;
+    }
+
     static public async Task<List<string>> GetDataFromFileAsync(string path)
     {
       var str = new List<string>();
@@ -55,19 +68,6 @@ namespace Ei_Dimension.Core
       return Binfo;
     }
 
-    static public List<HistogramData> MovAvgFilter(List<HistogramData> data)
-    {
-      int max = data.Count - 1;
-      int avg = 0;
-      List<HistogramData> averaged = new List<HistogramData>(data);
-      for (var i = 4; i < max; i++)
-      {
-        avg = (averaged[i - 4].Value + averaged[i - 3].Value + averaged[i - 2].Value + averaged[i - 1].Value + averaged[i].Value) / 5;
-        averaged[i].Value = avg;
-      }
-      return averaged;
-    }
-
     static public List<HistogramData> LinearizeDictionary(SortedDictionary<int,int> dict)
     {
       var result = new List<HistogramData>();
@@ -78,247 +78,156 @@ namespace Ei_Dimension.Core
       return result;
     }
 
-    static public List<(int, int, int)> IdentifyPeaks(List<HistogramData> list)
+    public static int[] GenerateLogSpace(int min, int max, int logBins, bool baseE = false)
     {
-      var Peaks = new List<(int, int, int)>();
-      int start = list[0].Value;
-      int top = list[0].Value;
-      int end = list[0].Value;
-      int startIndex = 0;
-      int topIndex = 0;
-      int endIndex = 0;
-      int threshold = 19; //arbitrary threshold to not include meaningless peaks
-      for (var i = 1; i < list.Count - 1; i++)
+      double logarithmicBase = 10;
+      double logMin = Math.Log10(min);
+      double logMax = Math.Log10(max);
+      if (baseE)
       {
-        if (list[i].Value < list[i - 1].Value && start == top)
-        {
-          end = list[i].Value;
-          start = list[i].Value;
-          top = list[i].Value;
-          startIndex = i;
-          topIndex = i;
-          endIndex = i;
-          continue;
-        }
-        if (list[i].Value > top)
-        {
-          top = list[i].Value;
-          topIndex = i;
-          continue;
-        }
-        if (list[i].Value < start)
-        {
-          end = list[i].Value;
-          endIndex = i;
-          if (top - start > threshold)
-          {
-            Peaks.Add((list[startIndex].Argument, list[topIndex].Argument, list[endIndex].Argument));
-          }
-          start = list[i].Value;
-          startIndex = i;
-          top = list[i].Value;
-          topIndex = i;
-          continue;
-        }
+        logarithmicBase = Math.E;
+        logMin = Math.Log(min);
+        logMax = Math.Log(max);
       }
-      return Peaks;
+      double delta = (logMax - logMin) / logBins;
+      double accDelta = delta;
+      int[] Result = new int[logBins];
+      for (int i = 1; i <= logBins; ++i)
+      {
+        Result[i - 1] = (int)Math.Round(Math.Pow(logarithmicBase, logMin + accDelta));
+        accDelta += delta;
+      }
+      return Result;
+    }
+    public static double[] GenerateLogSpaceD(int min, int max, int logBins, bool baseE = false)
+    {
+      double logarithmicBase = 10;
+      double logMin = Math.Log10(min);
+      double logMax = Math.Log10(max);
+      if (baseE)
+      {
+        logarithmicBase = Math.E;
+        logMin = Math.Log(min);
+        logMax = Math.Log(max);
+      }
+      double delta = (logMax - logMin) / logBins;
+      double accDelta = delta;
+      double[] Result = new double[logBins];
+      for (int i = 1; i <= logBins; ++i)
+      {
+        Result[i - 1] = Math.Pow(logarithmicBase, logMin + accDelta);
+        accDelta += delta;
+      }
+      return Result;
     }
 
-    static public List<SortedDictionary<int, int>> MakeDictionariesFromData(List<MicroCy.BeadInfoStruct> bsList)
+    public static void BinData(List<MicroCy.BeadInfoStruct> list, bool fromFile = false)
     {
-      SortedDictionary<int, int> dictForward = new SortedDictionary<int, int>(); //value,bin
-      SortedDictionary<int, int> dictVioletssc = new SortedDictionary<int, int>(); //value,bin
-      SortedDictionary<int, int> dictRedssc = new SortedDictionary<int, int>(); //value,bin
-      SortedDictionary<int, int> dictGreenssc = new SortedDictionary<int, int>(); //value,bin
-      SortedDictionary<int, int> dictReporter = new SortedDictionary<int, int>(); //value,bin
-      SortedDictionary<int, int> dictCl0 = new SortedDictionary<int, int>(); //value,bin
-      SortedDictionary<int, int> dictCl1 = new SortedDictionary<int, int>(); //value,bin
-      SortedDictionary<int, int> dictCl2 = new SortedDictionary<int, int>(); //value,bin
-      SortedDictionary<int, int> dictCl3 = new SortedDictionary<int, int>(); //value,bin
-
-
-      int binsize = 50;
-      int maxlength = 10050;
-      for (var i = binsize; i < maxlength; i += binsize)
+      var ResVM = ViewModels.ResultsViewModel.Instance;
+      var MaxValue = ResVM.CurrentReporter[ResVM.CurrentReporter.Count - 1].Argument;
+      var reporter = new int[ResVM.CurrentReporter.Count];
+      var fsc = new int[ResVM.CurrentReporter.Count];
+      var red = new int[ResVM.CurrentReporter.Count];
+      var green = new int[ResVM.CurrentReporter.Count];
+      var violet = new int[ResVM.CurrentReporter.Count];
+      foreach (var beadD in list)
       {
-        dictCl0.Add(i, 0);
-        dictCl1.Add(i, 0);
-        dictCl2.Add(i, 0);
-        dictCl3.Add(i, 0);
-      }
+        var bead = beadD;
+        //overflow protection
+        bead.fsc = bead.fsc < MaxValue ? bead.fsc : MaxValue;
+        bead.violetssc = bead.violetssc < MaxValue ? bead.violetssc : MaxValue;
+        bead.redssc = bead.redssc < MaxValue ? bead.redssc : MaxValue;
+        bead.greenssc = bead.greenssc < MaxValue ? bead.greenssc : MaxValue;
+        bead.reporter = bead.reporter < MaxValue ? bead.reporter : MaxValue;
+        bool fscDone = false;
+        bool violetDone = false;
+        bool redDone = false;
+        bool greenDone = false;
+        bool reporterDone = false;
 
-      int key;
-      foreach (var bs in bsList)
+        for (var i = 0; i < reporter.Length; i++)
+        {
+          var currentValue = HistogramData.Bins[i];
+          if (!fscDone && bead.fsc <= currentValue)
+          {
+            fsc[i]++;
+            fscDone = true;
+          }
+          if (!violetDone && bead.violetssc <= currentValue)
+          {
+            violet[i]++;
+            violetDone = true;
+          }
+          if (!redDone && bead.redssc <= currentValue)
+          {
+            red[i]++;
+            redDone = true;
+          }
+          if (!greenDone && bead.greenssc <= currentValue)
+          {
+            green[i]++;
+            greenDone = true;
+          }
+          if (!reporterDone && bead.reporter <= currentValue)
+          {
+            reporter[i]++;
+            reporterDone = true;
+          }
+          if (fscDone && violetDone && redDone && greenDone && reporterDone)
+            break;
+        }
+      }
+      _ = App.Current.Dispatcher.BeginInvoke((Action)(() =>
       {
-        key = (int)bs.reporter;
-        if (dictReporter.ContainsKey(key))
+        if (fromFile)
         {
-          dictReporter[key]++;
-        }
-        else
-        {
-          dictReporter.Add(key, 1);
-        }
-
-        key = (int)bs.fsc;
-        if (dictForward.ContainsKey(key))
-        {
-          dictForward[key]++;
-        }
-        else
-        {
-          dictForward.Add(key, 1);
-        }
-
-        key = (int)bs.violetssc;
-        if (dictVioletssc.ContainsKey(key))
-        {
-          dictVioletssc[key]++;
-        }
-        else
-        {
-          dictVioletssc.Add(key, 1);
-        }
-
-        key = (int)bs.redssc;
-        if (dictRedssc.ContainsKey(key))
-        {
-          dictRedssc[key]++;
-        }
-        else
-        {
-          dictRedssc.Add(key, 1);
-        }
-
-        key = (int)bs.greenssc;
-        if (dictGreenssc.ContainsKey(key))
-        {
-          dictGreenssc[key]++;
-        }
-        else
-        {
-          dictGreenssc.Add(key, 1);
-        }
-
-        //bin these into binsize point bins
-        for (var i = binsize; i < maxlength; i += binsize)
-        {
-          if (bs.cl0 > i)
+          for (var i = 0; i < ResVM.BackingReporter.Count; i++)
           {
-            continue;
+            ResVM.BackingReporter[i].Value += reporter[i];
+            ResVM.BackingForwardSsc[i].Value += fsc[i];
+            ResVM.BackingRedSsc[i].Value += red[i];
+            ResVM.BackingGreenSsc[i].Value += green[i];
+            ResVM.BackingVioletSsc[i].Value += violet[i];
           }
-          dictCl0[i]++;
-          break;
         }
-        for (var i = binsize; i < maxlength; i += binsize)
+        else
         {
-          if (bs.cl1 > i)
+          for (var i = 0; i < ResVM.CurrentReporter.Count; i++)
           {
-            continue;
+            ResVM.CurrentReporter[i].Value += reporter[i];
+            ResVM.CurrentForwardSsc[i].Value += fsc[i];
+            ResVM.CurrentRedSsc[i].Value += red[i];
+            ResVM.CurrentGreenSsc[i].Value += green[i];
+            ResVM.CurrentVioletSsc[i].Value += violet[i];
           }
-          dictCl1[i]++;
-          break;
         }
-        for (var i = binsize; i < maxlength; i += binsize)
-        {
-          if (bs.cl2 > i)
-          {
-            continue;
-          }
-          dictCl2[i]++;
-          break;
-        }
-        for (var i = binsize; i < maxlength; i += binsize)
-        {
-          if (bs.cl3 > i)
-          {
-            continue;
-          }
-          dictCl3[i]++;
-          break;
-        }
-        //  key = (int)bs.cl0;
-        //  if (dictCl0.ContainsKey(key))
-        //  {
-        //    dictCl0[key]++;
-        //  }
-        //  else
-        //  {
-        //    dictCl0.Add(key, 1);
-        //  }
-
-        //  key = (int)bs.cl1;
-        //  if (dictCl1.ContainsKey(key))
-        //  {
-        //    dictCl1[key]++;
-        //  }
-        //  else
-        //  {
-        //    dictCl1.Add(key, 1);
-        //  }
-        //
-        //  key = (int)bs.cl2;
-        //  if (dictCl2.ContainsKey(key))
-        //  {
-        //    dictCl2[key]++;
-        //  }
-        //  else
-        //  {
-        //    dictCl2.Add(key, 1);
-        //  }
-        //
-        //  key = (int)bs.cl3;
-        //  if (dictCl3.ContainsKey(key))
-        //  {
-        //    dictCl3[key]++;
-        //  }
-        //  else
-        //  {
-        //    dictCl3.Add(key, 1);
-        //  }
-      }
-
-      var lst = new List<SortedDictionary<int, int>>();
-      lst.Add(dictForward);     //0
-      lst.Add(dictVioletssc);   //1
-      lst.Add(dictRedssc);      //2
-      lst.Add(dictGreenssc);    //3
-      lst.Add(dictReporter);    //4
-      lst.Add(dictCl0);         //5
-      lst.Add(dictCl1);         //6
-      lst.Add(dictCl2);         //7
-      lst.Add(dictCl3);         //8
-      return lst;
+      }));
     }
 
-    static public byte AssignIntensity(int point, (int,int,int)peak, double[] heatLvl)
+    public static void AnalyzeHeatMap(List<HeatMapData> heatmap)
     {
-      //check if in bounds
-      if (point > peak.Item1)
+      if (heatmap.Count > 0)
       {
-        //in 30%
-        if (point > peak.Item2 - heatLvl[0] * (peak.Item2 - peak.Item1) && point < peak.Item2 + heatLvl[0] * (peak.Item3 - peak.Item2))
+        int max = 0;
+        foreach (var p in heatmap)
         {
-          return 5;
+          if (p.A > max)
+            max = p.A;
         }
-        //in 50%
-        if (point > peak.Item2 - heatLvl[1] * (peak.Item2 - peak.Item1) && point < peak.Item2 + heatLvl[1] * (peak.Item3 - peak.Item2))
+        double[] bins = GenerateLogSpaceD(1, max + 1, 5, true);
+        Views.ResultsView.Instance.ClearPoints();
+        for (var i = 0; i < heatmap.Count; i++)
         {
-          return 4;
-        }
-        //in 70%
-        if (point > peak.Item2 - heatLvl[2] * (peak.Item2 - peak.Item1) && point < peak.Item2 + heatLvl[2] * (peak.Item3 - peak.Item2))
-        {
-          return 3;
-        }
-        //in bin at all
-        if (point > peak.Item2 - heatLvl[3] * (peak.Item2 - peak.Item1) && point < peak.Item2 + heatLvl[3] * (peak.Item3 - peak.Item2))
-        {
-          return 2;
+          for(var j = 0; j < _heatColors.Length; j++)
+          {
+            if (heatmap[i].A <= bins[j])
+            {
+              Views.ResultsView.Instance.AddXYPoint(heatmap[i].X, heatmap[i].Y, _heatColors[j]);
+              break;
+            }
+          }
         }
       }
-    //less than start - assign to min
-    return 1;
     }
   }
 }

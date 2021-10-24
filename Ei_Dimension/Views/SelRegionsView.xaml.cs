@@ -15,18 +15,15 @@ using System.Windows.Shapes;
 namespace Ei_Dimension.Views
 {
   /// <summary>
-  /// Interaction logic for ServiceView.xaml
+  /// Interaction logic for SelRegionsView.xaml
   /// </summary>
-  public partial class ServiceView : UserControl
+  public partial class SelRegionsView : UserControl
   {
-    public ServiceView()
+    public static SelRegionsView Instance { get; private set; }
+    public SelRegionsView()
     {
       InitializeComponent();
-    }
-
-    private void UserControl_Loaded(object sender, RoutedEventArgs e)
-    {
-      MotorsButton.IsChecked = true;
+      Instance = this;
     }
   }
 }

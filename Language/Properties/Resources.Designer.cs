@@ -480,6 +480,15 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Counter.
+        /// </summary>
+        public static string Counter {
+            get {
+                return ResourceManager.GetString("Counter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to   Active.
         /// </summary>
         public static string Dashboard_Active_Region {
@@ -877,6 +886,15 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Available Regions.
+        /// </summary>
+        public static string Experiment_Available_Regions {
+            get {
+                return ResourceManager.GetString("Experiment_Available_Regions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Channel Configuration.
         /// </summary>
         public static string Experiment_Ch_Config {
@@ -1041,6 +1059,16 @@ namespace Ei_Dimension.Language {
         public static string Experiment_Save_Template_Dialog_Title {
             get {
                 return ResourceManager.GetString("Experiment_Save_Template_Dialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select Active
+        /// Regions.
+        /// </summary>
+        public static string Experiment_Sel_Active_Region {
+            get {
+                return ResourceManager.GetString("Experiment_Sel_Active_Region", resourceCulture);
             }
         }
         
@@ -1228,6 +1256,15 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Log to File.
+        /// </summary>
+        public static string FileSave_Sys_Log {
+            get {
+                return ResourceManager.GetString("FileSave_Sys_Log", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Halt.
         /// </summary>
         public static string Halt {
@@ -1288,6 +1325,15 @@ namespace Ei_Dimension.Language {
         public static string Maintenance_Sanitize {
             get {
                 return ResourceManager.GetString("Maintenance_Sanitize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  Mean.
+        /// </summary>
+        public static string Mean {
+            get {
+                return ResourceManager.GetString("Mean", resourceCulture);
             }
         }
         
@@ -1535,7 +1581,7 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to                   Name.
+        ///   Looks up a localized string similar to Name.
         /// </summary>
         public static string Name {
             get {

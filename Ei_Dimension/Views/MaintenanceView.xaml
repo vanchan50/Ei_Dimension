@@ -14,23 +14,19 @@
              xmlns:img="clr-namespace:Ei_Dimension.Styles"
              mc:Ignorable="d"
              DataContext="{dxmvvm:ViewModelSource Type={x:Type ViewModels:MaintenanceViewModel}}"
-             d:DesignHeight="944" d:DesignWidth="1920">
+             d:DesignHeight="944" d:DesignWidth="1920"
+             Loaded="UserControl_Loaded">
   <dxmvvm:Interaction.Triggers>
-    <dxmvvm:EventToCommand EventName="Initialized" Command="{Binding NavigateCalibrationCommand}"/>
-    <dxmvvm:EventToCommand EventName="Initialized" Command="{Binding NavigateChannelsCommand}"/>
+    <dxmvvm:EventToCommand EventName="Initialized" Command="{Binding InitChildrenCommand}"/>
   </dxmvvm:Interaction.Triggers>
   <Grid>
-    <Grid.ColumnDefinitions>
-      <ColumnDefinition Width="3*"/>
-      <ColumnDefinition Width="17*"/>
-    </Grid.ColumnDefinitions>
 
     <!--Tile Ribbon-->
     <StackPanel Margin="30,60,0,0"
                 Width="240"
                 HorizontalAlignment="Left">
       <RadioButton Content="{lang:Loc Maintenance_Calibration}"
-                   Height="84"
+                   Height="84" Name="CalButton"
                    IsChecked="True"
                    img:EmbeddedImg.Image="/Icons/calibration icon.png"
                    Style="{DynamicResource SubRibbonButtonStyle}"
@@ -153,6 +149,7 @@
                  Margin="0,50,0,0"/>
         <dx:DropDownButton FontSize="30"
                            Margin="10,0,10,0"
+                           dxb:BarManager.ShowGlyphsInPopupMenus="False"
                            FontFamily="{StaticResource AppTextFont}"
                            Foreground="{StaticResource AppTextColor}"
                            Content="{Binding SelectedLanguage}">
@@ -161,8 +158,18 @@
               <DataTemplate>
                 <ContentControl>
                   <dxb:BarButtonItem Content="{Binding Content}"  
-                                   ItemClick="{DXEvent 'Click()'}"/>
-
+                                   ItemClick="{DXEvent 'Click()'}">
+                    <dxb:BarButtonItem.ContentTemplate>
+                      <DataTemplate>
+                        <Grid Width="170">
+                          <TextBlock Text="{Binding}" HorizontalAlignment="Center"
+                                   FontFamily="{StaticResource AppTextFont}"
+                                   Foreground="{StaticResource AppTextColor}"
+                                   FontSize="25"/>
+                        </Grid>
+                      </DataTemplate>
+                    </dxb:BarButtonItem.ContentTemplate>
+                  </dxb:BarButtonItem>
                 </ContentControl>
               </DataTemplate>
             </dxb:PopupMenu.ItemTemplate>
@@ -173,7 +180,7 @@
 
     <dxwui:NavigationFrame AnimationType="SlideHorizontal"
                            NavigationCacheMode="Required"
-                           Grid.Column="1">
+                           Margin="288,0,0,0">
       <dxmvvm:Interaction.Triggers>
         <dxmvvm:EventToCommand EventName="Loaded" Command="{Binding NavigateCalibrationCommand}" />
       </dxmvvm:Interaction.Triggers>

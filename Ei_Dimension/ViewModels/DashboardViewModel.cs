@@ -8,7 +8,6 @@ using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Threading.Tasks;
-using System.Reflection;
 
 namespace Ei_Dimension.ViewModels
 {
@@ -29,22 +28,10 @@ namespace Ei_Dimension.ViewModels
     public virtual ObservableCollection<DropDownButtonContents> SysControlItems { get; set; }
     public virtual string SelectedEndReadContent { get; set; }
     public virtual ObservableCollection<DropDownButtonContents> EndReadItems { get; set; }
-
-    public virtual ObservableCollection<string> EventCountField { get; set; }
-    public virtual bool StartButtonEnabled { get; set; }
-
-
     public virtual ObservableCollection<string> PressureMon { get; set; }
     public virtual bool PressureMonToggleButtonState { get; set; }
     public double MaxPressure { get; set; }
     public double MinPressure { get; set; }
-    public virtual ObservableCollection<string> ActiveList { get; set; }
-    public virtual ObservableCollection<string> RegionsList { get; set; }
-    public virtual ObservableCollection<string> RegionsNamesList { get; set; }
-    public List<bool> ActiveRegions { get; set; }
-    public uint? SelectedRegionCache { get; set; }
-    public int? SelectedRegionTextboxName { get; set; }
-
     public static DashboardViewModel Instance { get; private set; }
 
     public byte SelectedSystemControlIndex { get; set; }
@@ -53,8 +40,6 @@ namespace Ei_Dimension.ViewModels
     public byte SelectedOrderIndex { get; set; }
     public byte SelectedEndReadIndex { get; set; }
     public virtual ObservableCollection<Visibility> EndReadVisibility { get; set; }
-
-    private bool _firstLoadflag;
 
     protected DashboardViewModel()
     {
@@ -133,21 +118,12 @@ namespace Ei_Dimension.ViewModels
       DropDownButtonContents.ResetIndex();
 
       if (SelectedSystemControlIndex == 0)
-        StartButtonEnabled = true;
+        MainButtonsViewModel.Instance.StartButtonEnabled = true;
       else
-        StartButtonEnabled = false;
-
-      EventCountField = new ObservableCollection<string> { "" };
+        MainButtonsViewModel.Instance.StartButtonEnabled = false;
 
       PressureMonToggleButtonState = false;
       PressureMon = new ObservableCollection<string> {"","",""};
-      ActiveList = new ObservableCollection<string>();
-      RegionsList = new ObservableCollection<string>();
-      RegionsNamesList = new ObservableCollection<string>();
-      SelectedRegionCache = null;
-      SelectedRegionTextboxName = null;
-      ActiveRegions = new List<bool>();
-      _firstLoadflag = false;
       Instance = this;
     }
 
@@ -169,70 +145,24 @@ namespace Ei_Dimension.ViewModels
       Volumes[0] = num.ToString();
     }
 
-    public void LoadButtonClick()
+    public void FluidicsButtonClick(int i)
     {
-      App.Device.MainCommand("Load Plate");
-    }
-
-    public void EjectButtonClick()
-    {
-      App.Device.MainCommand("Eject Plate");
-    }
-
-    public void StartButtonClick()
-    {
-      //read section of plate
-      App.Device.ReadActive = true;
-      App.Device.MainCommand("Get FProperty", code: 0x58);
-      App.Device.MainCommand("Get FProperty", code: 0x68);
-      App.Device.PlateReport = new MicroCy.PlateReport(); //TODO: optimize, not needed here
-      App.Device.MainCommand("Get FProperty", code: 0x20);   //get high dnr property
-      Array.Clear(App.Device.SscData, 0, 256);
-      Array.Clear(App.Device.Rp1Data, 0, 256);
-      //  chart1.Series["SSC"].Points.DataBindY(m_MicroCy.sscdata);
-      //  chart3.Series["RP1"].Points.DataBindY(m_MicroCy.rp1data);
-      SetWellsInOrder();
-
-      //find number of wells to read
-      if (App.Device.WellsInOrder.Count < 1)
-        return;
-      //btnEndRead.BackColor = Color.Tomato;
-      StartButtonEnabled = false;
-
-      App.Device.WellsToRead = App.Device.WellsInOrder.Count - 1;    //make zero based like well index is
-      App.Device.SetAspirateParamsForWell(0);  //setup for first read
-      App.Device.SetReadingParamsForWell(0);
+      string cmd = "";
+      switch (i)
+      {
+        case 0:
+          cmd = "Prime";
+          break;
+        case 1:
+          cmd = "Wash A";
+          break;
+        case 2:
+          cmd = "Wash B";
+          break;
+      }
       App.Device.MainCommand("Set Property", code: 0x19, parameter: 1); //bubble detect on
-      App.Device.MainCommand("Position Well Plate");   //move motors. next position is set in properties 0xad and 0xae
-      App.Device.MainCommand("Aspirate Syringe A"); //handles down and pickup sample
-      App.Device.WellNext();   //save well numbers for file neame
-      App.Device.InitBeadRead(App.Device.ReadingRow, App.Device.ReadingCol);   //gets output file redy
-      App.Device.PrepareSummaryFile(); //TODO : try to move to initbeadread, there is an issue, if during runtime some box is clicked
-
-      if (App.Device.WellsToRead == 0)    //only one well in region
-        App.Device.MainCommand("Read A");
-      else
-      {
-        App.Device.SetAspirateParamsForWell(1);
-        App.Device.MainCommand("Read A Aspirate B");
-      }
-      App.Device.CurrentWellIdx = 0;
-      if (App.Device.TerminationType != 1)    //set some limit for running to eos or if regions are wrong
-        App.Device.BeadsToCapture = 100000;
-    }
-
-    public void EndButtonClick()
-    {
-      if (!App.Device.ReadActive)  //end button press before start, cancel work order
-      {
-        App.Device.MainCommand("Set Property", code: 0x17); //leds off
-      }
-      else
-      {
-        App.Device.EndState = 1;
-        if (App.Device.WellsToRead > 0)   //if end read on tube or single well, nothing else is aspirated otherwise
-          App.Device.WellsToRead = App.Device.CurrentWellIdx + 1; //just read the next well in order since it is already aspirated
-      }
+      App.Device.MainCommand(cmd);
+      App.Device.MainCommand("Set Property", code: 0x19, parameter: 0); //bubble detect off
     }
 
     public void FocusedBox(int num)
@@ -241,7 +171,7 @@ namespace Ei_Dimension.ViewModels
       {
         case 0:
           App.SelectedTextBox = (this.GetType().GetProperty(nameof(EndRead)), this, 0);
-          break;
+          break; 
         case 1:
           App.SelectedTextBox = (this.GetType().GetProperty(nameof(EndRead)), this, 1);
           break;
@@ -285,7 +215,7 @@ namespace Ei_Dimension.ViewModels
       return newwell;
     }
 
-    private void SetWellsInOrder()
+    public void SetWellsInOrder()
     {
       App.Device.WellsInOrder.Clear();
       if (WellsSelectViewModel.Instance.CurrentTableSize > 1)    //TODO: platetype can be removed from device fields, as soon as workorder stuff is done
@@ -313,50 +243,11 @@ namespace Ei_Dimension.ViewModels
           //fill wells from work order
           App.Device.WellsInOrder = App.Device.WorkOrder.woWells;
         }
-        App.Device.WellsToRead = App.Device.WellsInOrder.Count;
       }
       else if (WellsSelectViewModel.Instance.CurrentTableSize == 1)  //tube
-        App.Device.WellsInOrder.Add(MakeWell(0, 0));    //a 1 record work order
+        App.Device.WellsInOrder.Add(MakeWell(0, 0));  //  a 1 record work order
 
-    }
-
-    public void FillRegions(bool loadByPage = false)
-    {
-      if (_firstLoadflag && loadByPage)
-        return;
-      _firstLoadflag = true;
-      Views.DashboardView.Instance.ClearTextBoxes();
-      RegionsList.Clear();
-      RegionsNamesList.Clear();
-      ActiveRegions.Clear();
-      var i = 0;
-      foreach (var region in App.Device.ActiveMap.mapRegions)
-      {
-        RegionsList.Add(region.regionNumber.ToString());
-        RegionsNamesList.Add("");
-        ActiveRegions.Add(false);
-        Views.DashboardView.Instance.AddTextboxes($"RegionsList[{i}]", $"RegionsNamesList[{i}]");
-        i++;
-      }
-    }
-
-    public void AddActiveRegion(byte num)
-    {
-      if (SelectedRegionCache != null)
-      {
-        if (num == 1)
-        {
-          Views.DashboardView.Instance.ShiftTextBox(true);
-          ActiveRegions[(int)SelectedRegionTextboxName] = true;
-        }
-        else
-        {
-          ActiveRegions[(int)SelectedRegionTextboxName] = false;
-          Views.DashboardView.Instance.ShiftTextBox(false);
-        }
-        SelectedRegionCache = null;
-        SelectedRegionTextboxName = null;
-      }
+      App.Device.WellsToRead = App.Device.WellsInOrder.Count - 1;  //make zero based like well index is
     }
 
     private void EndReadVisibilitySwitch()
@@ -416,7 +307,7 @@ namespace Ei_Dimension.ViewModels
             _vm.SelectedClassiMapContent = Content;
             App.SetActiveMap(Content);
             App.Device.MainCommand("Set Property", code: 0xa9, parameter: (ushort)Index);
-            _vm.FillRegions();
+            App.MapRegions.FillRegions();
             break;
           case 3:
             _vm.SelectedChConfigContent = Content;
@@ -435,12 +326,12 @@ namespace Ei_Dimension.ViewModels
             if (Index != 0)
             {
               ExperimentViewModel.Instance.WellSelectVisible = Visibility.Hidden;
-              _vm.StartButtonEnabled = false;
+              MainButtonsViewModel.Instance.StartButtonEnabled = false;
             }
             else
             {
               ExperimentViewModel.Instance.WellSelectVisible = Visibility.Visible;
-              _vm.StartButtonEnabled = true;
+              MainButtonsViewModel.Instance.StartButtonEnabled = true;
             }
             break;
           case 6:
@@ -462,7 +353,7 @@ namespace Ei_Dimension.ViewModels
             break;
           case 2:
             _vm.SelectedClassiMapContent = Content;
-            _vm.FillRegions();
+            App.MapRegions.FillRegions();
             break;
           case 3:
             _vm.SelectedChConfigContent = Content;
@@ -479,12 +370,12 @@ namespace Ei_Dimension.ViewModels
             if (Index != 0)
             {
               ExperimentViewModel.Instance.WellSelectVisible = Visibility.Hidden;
-              _vm.StartButtonEnabled = false;
+              MainButtonsViewModel.Instance.StartButtonEnabled = false;
             }
             else
             {
               ExperimentViewModel.Instance.WellSelectVisible = Visibility.Visible;
-              _vm.StartButtonEnabled = true;
+              MainButtonsViewModel.Instance.StartButtonEnabled = true;
             }
             break;
           case 6:

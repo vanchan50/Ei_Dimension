@@ -49,7 +49,7 @@ namespace Ei_Dimension {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.5")]
         public float Compensation {
             get {
                 return ((float)(this["Compensation"]));
@@ -133,18 +133,6 @@ namespace Ei_Dimension {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("3")]
-        public byte SscHistSel {
-            get {
-                return ((byte)(this["SscHistSel"]));
-            }
-            set {
-                this["SscHistSel"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("1")]
         public byte XAxisG {
             get {
@@ -169,7 +157,7 @@ namespace Ei_Dimension {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("7200")]
+        [global::System.Configuration.DefaultSettingValueAttribute("12500")]
         public float HDnrTrans {
             get {
                 return ((float)(this["HDnrTrans"]));
@@ -181,7 +169,7 @@ namespace Ei_Dimension {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("3")]
+        [global::System.Configuration.DefaultSettingValueAttribute("18")]
         public byte ScatterGraphSelector {
             get {
                 return ((byte)(this["ScatterGraphSelector"]));
@@ -248,6 +236,18 @@ namespace Ei_Dimension {
             }
             set {
                 this["StepsPerRevZ"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool SensitivityChannelB {
+            get {
+                return ((bool)(this["SensitivityChannelB"]));
+            }
+            set {
+                this["SensitivityChannelB"] = value;
             }
         }
     }

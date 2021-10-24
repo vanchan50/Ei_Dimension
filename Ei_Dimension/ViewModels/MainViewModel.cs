@@ -2,6 +2,7 @@
 using System;
 using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
+using System.Collections.ObjectModel;
 
 namespace Ei_Dimension.ViewModels
 {
@@ -9,12 +10,21 @@ namespace Ei_Dimension.ViewModels
   public class MainViewModel
   {
     public virtual System.Windows.Visibility NumpadVisible { get; set; }
+    public virtual ObservableCollection<string> EventCountField { get; set; }
+    public virtual System.Windows.Visibility EventCountVisible { get; set; }
+    public virtual System.Windows.Visibility StartButtonsVisible { get; set; }
+    
+    public static MainViewModel Instance { get; private set; }
     private INavigationService NavigationService => this.GetService<INavigationService>();
 
     protected MainViewModel()
     {
       App.NumpadShow = (this.GetType().GetProperty(nameof(NumpadVisible)), this);
       NumpadVisible = System.Windows.Visibility.Hidden;
+      EventCountVisible = System.Windows.Visibility.Visible;
+      StartButtonsVisible = System.Windows.Visibility.Visible;
+      EventCountField = new ObservableCollection<string> { "0" };
+      Instance = this;
     }
 
     public static MainViewModel Create()
@@ -26,6 +36,8 @@ namespace Ei_Dimension.ViewModels
     {
       App.ResetFocusedTextbox();
       App.HideNumpad();
+      EventCountVisible = System.Windows.Visibility.Visible;
+      StartButtonsVisible = System.Windows.Visibility.Visible;
       NavigationService.Navigate("ExperimentView", null, this);
       App.Device.InitSTab("readertab");
     }
@@ -34,6 +46,8 @@ namespace Ei_Dimension.ViewModels
     {
       App.ResetFocusedTextbox();
       App.HideNumpad();
+      EventCountVisible = System.Windows.Visibility.Visible;
+      StartButtonsVisible = System.Windows.Visibility.Visible;
       NavigationService.Navigate("ResultsView", null, this);
     }
 
@@ -41,6 +55,8 @@ namespace Ei_Dimension.ViewModels
     {
       App.ResetFocusedTextbox();
       App.HideNumpad();
+      StartButtonsVisible = System.Windows.Visibility.Hidden;
+      EventCountVisible = System.Windows.Visibility.Hidden;
       NavigationService.Navigate("DataAnalysisView", null, this);
     }
 
@@ -48,6 +64,8 @@ namespace Ei_Dimension.ViewModels
     {
       App.ResetFocusedTextbox();
       App.HideNumpad();
+      StartButtonsVisible = System.Windows.Visibility.Hidden;
+      EventCountVisible = System.Windows.Visibility.Hidden;
       NavigationService.Navigate("MaintenanceView", null, this);
     }
 
@@ -55,6 +73,8 @@ namespace Ei_Dimension.ViewModels
     {
       App.ResetFocusedTextbox();
       App.HideNumpad();
+      StartButtonsVisible = System.Windows.Visibility.Hidden;
+      EventCountVisible = System.Windows.Visibility.Hidden;
       NavigationService.Navigate("ServiceView", null, this);
     }
 
@@ -75,6 +95,14 @@ namespace Ei_Dimension.ViewModels
       App.ResetFocusedTextbox();
       App.HideNumpad();
       NavigationService.Navigate("StaticMapView", null, this);
+    }
+    public void InitChildren()
+    {
+      NavigateExperiment();
+      NavigateResults();
+      NavigateDataAnalysis();
+      NavigateMaintenance();
+      NavigateSettings();
     }
   }
 }

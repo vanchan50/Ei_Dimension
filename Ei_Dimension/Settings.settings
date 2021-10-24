@@ -9,7 +9,7 @@
       <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="Compensation" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">1</Value>
+      <Value Profile="(Default)">0.5</Value>
     </Setting>
     <Setting Name="SampleSize" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">1000</Value>
@@ -29,9 +29,6 @@
     <Setting Name="EndRead" Type="System.Byte" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="SscHistSel" Type="System.Byte" Scope="User">
-      <Value Profile="(Default)">3</Value>
-    </Setting>
     <Setting Name="XAxisG" Type="System.Byte" Scope="User">
       <Value Profile="(Default)">1</Value>
     </Setting>
@@ -39,10 +36,10 @@
       <Value Profile="(Default)">2</Value>
     </Setting>
     <Setting Name="HDnrTrans" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">7200</Value>
+      <Value Profile="(Default)">12500</Value>
     </Setting>
     <Setting Name="ScatterGraphSelector" Type="System.Byte" Scope="User">
-      <Value Profile="(Default)">3</Value>
+      <Value Profile="(Default)">18</Value>
     </Setting>
     <Setting Name="MinPerRegion" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">100</Value>
@@ -58,6 +55,9 @@
     </Setting>
     <Setting Name="StepsPerRevZ" Type="System.UInt16" Scope="User">
       <Value Profile="(Default)">400</Value>
+    </Setting>
+    <Setting Name="SensitivityChannelB" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
     </Setting>
   </Settings>
 </SettingsFile>

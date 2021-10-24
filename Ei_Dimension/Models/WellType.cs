@@ -11,6 +11,11 @@ namespace Ei_Dimension.Models
     Empty,
     Standard,
     Control,
-    Unknown
+    Unknown,
+    ReadyForReading,
+    NowReading,
+    Success,
+    LightFail,
+    Fail
   }
 }

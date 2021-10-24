@@ -10,7 +10,6 @@
              DataContext="{dxmvvm:ViewModelSource Type=ViewModels:WellsSelectViewModel}"
              d:DesignHeight="944" d:DesignWidth="1632">
   <Grid>
-
     <!--WellTable 96   -->
     <Border HorizontalAlignment="Left" VerticalAlignment="Top"
             Width="1100" Height="740"

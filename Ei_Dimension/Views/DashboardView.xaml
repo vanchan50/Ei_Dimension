@@ -12,90 +12,100 @@
              mc:Ignorable="d"
              DataContext="{dxmvvm:ViewModelSource Type={x:Type ViewModels:DashboardViewModel}}"
              d:DesignHeight="944" d:DesignWidth="1632">
-  <dxmvvm:Interaction.Triggers>
-    <dxmvvm:EventToCommand EventName="Loaded" Command="{Binding FillRegionsCommand}" CommandParameter="true"/>
-  </dxmvvm:Interaction.Triggers>
   <Grid>
-
-    <!--System Monitor-->
+    <!--Fluidics-->
     <Border HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Margin="1300,540,0,0">
+          VerticalAlignment="Top"
+          Margin="1250,370,0,0">
       <StackPanel>
-        <TextBlock Text="{lang:Loc Experiment_System_Monitor}"
-                   FontFamily="{StaticResource AppTextFont}"
-                   FontSize="36"
-                   FontWeight="UltraBold"
-                   Foreground="{StaticResource AppTextColor}"
-                   Margin="0,0,0,4"/>
-        <ListBox Width="220" Height="280"
-                 ItemsSource="{Binding ActiveList}"
-                 FontSize="24"/>
+        <TextBlock Text="{lang:Loc Components_Fluidics}"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="36"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Center"
+                 VerticalAlignment="Top"
+                 Margin="0,0,0,0"/>
+        <Button Content="{lang:Loc Components_Prime}"
+                Style="{StaticResource ButtonStyle}"
+                Command="{Binding FluidicsButtonClickCommand}"
+                Height="75" Width="335"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Margin="0,4,0,0">
+          <Button.CommandParameter>
+            <System:Int32>0</System:Int32>
+          </Button.CommandParameter>
+        </Button>
+        <StackPanel Orientation="Horizontal">
+          <Button Content="{lang:Loc Components_Wash_A}"
+                Style="{StaticResource ButtonStyle}"
+                Command="{Binding FluidicsButtonClickCommand}"
+                Height="75" Width="160"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Margin="0,5,12,0">
+            <Button.CommandParameter>
+              <System:Int32>1</System:Int32>
+            </Button.CommandParameter>
+          </Button>
+          <Button Content="{lang:Loc Components_Wash_B}"
+                Style="{StaticResource ButtonStyle}"
+                Command="{Binding FluidicsButtonClickCommand}"
+                Height="75" Width="160"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Margin="0,5,0,0">
+            <Button.CommandParameter>
+              <System:Int32>2</System:Int32>
+            </Button.CommandParameter>
+          </Button>
+        </StackPanel>
       </StackPanel>
     </Border>
 
     <!--Active Regions-->
     <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Margin="560,50,0,0">
+            Margin="560,30,0,0">
       <StackPanel>
         <TextBlock Text="{lang:Loc Experiment_Active_Regions}"
                    FontFamily="{StaticResource AppTextFont}"
                    FontSize="36"
-                   Width="650"
+                   Width="367"
                    FontWeight="UltraBold"
                    TextAlignment="Center"
                    Foreground="{StaticResource AppTextColor}"
                    Margin="0,0,0,4"/>
-        <Border Height="45" Width="633"
+        <Border Height="45" Width="367"
                 HorizontalAlignment="Left">
           <Grid>
-            <Grid.ColumnDefinitions>
-              <ColumnDefinition Width="358*"/>
-              <ColumnDefinition Width="275*"/>
-            </Grid.ColumnDefinitions>
-            <TextBlock Text="{lang:Loc Dashboard_Inactive_Region}"
+            <TextBlock Text="       №"
                        FontSize="30"
                        Width="140"
                        HorizontalAlignment="Left"/>
-            <TextBlock Text="{lang:Loc Dashboard_Active_Region}"
-                       FontSize="30"
-                       Width="120"
-                       Margin="140,0,0,0"
-                       HorizontalAlignment="Left"/>
             <TextBlock Text="{lang:Loc Name}"
-                       Width="370"
+                       Width="207"
                        FontSize="30"
-                       Margin="260,0,0,0"
-                       HorizontalAlignment="Left" Grid.ColumnSpan="2"/>
+                       Margin="140,0,0,0"
+                       HorizontalAlignment="Left"
+                       TextAlignment="Center"/>
           </Grid>
         </Border>
-        <ScrollViewer Width="650" Height="699">
+        <ScrollViewer Width="367" Height="699"
+                      VerticalScrollBarVisibility="Visible">
           <Border Background="{StaticResource RibbonBackgroundActive}">
             <StackPanel Orientation="Horizontal">
-              <StackPanel Name="RegionsBorder"
-                          Width="270"
+              <StackPanel Name="DbActiveRegionNo"
+                          Width="140"
                           HorizontalAlignment="Left"/>
-              <StackPanel Name="RegionsNamesBorder"
+              <StackPanel Name="DbActiveRegionName"
                           HorizontalAlignment="Left"
-                          Width="353">
+                          Width="200">
               </StackPanel>
             </StackPanel>
           </Border>
         </ScrollViewer>
-        <StackPanel Orientation="Horizontal"
-                    HorizontalAlignment="Left"
-                    Width="270" Height="60"
-                    Margin="0,4,0,0">
-          <Button Width="100" Height="60"
-                  Margin="20,0,0,0"
-                  Style="{StaticResource LeftArrowButtonThemeStyle}"
-                  Command="{Binding AddActiveRegionCommand}" CommandParameter="0"/>
-          <Button Width="100" Height="60"
-                  Margin="30,0,0,0"
-                  Style="{StaticResource RightArrowButtonThemeStyle}"
-                  Command="{Binding AddActiveRegionCommand}" CommandParameter="1"/>
-        </StackPanel>
       </StackPanel>
     </Border>
 
@@ -247,6 +257,7 @@
                            Height="80"
                            FontSize="25"
                            HorizontalAlignment="Center"
+                           dxb:BarManager.ShowGlyphsInPopupMenus="False"
                            FontFamily="{StaticResource AppTextFont}"
                            Foreground="{StaticResource AppTextColor}"
                            Content="{Binding SelectedSysControlContent}">
@@ -254,8 +265,19 @@
             <dxb:PopupMenu.ItemTemplate>
               <DataTemplate>
                 <ContentControl>
-                  <dxb:BarButtonItem Content="{Binding Content}"  
-                                   ItemClick="{DXEvent Click((int)5)}"/>
+                  <dxb:BarButtonItem Content="{Binding Content}"
+                                     ItemClick="{DXEvent Click((int)5)}">
+                    <dxb:BarButtonItem.ContentTemplate>
+                      <DataTemplate>
+                        <Grid Width="130">
+                          <TextBlock Text="{Binding}" HorizontalAlignment="Center"
+                                   FontFamily="{StaticResource AppTextFont}"
+                                   Foreground="{StaticResource AppTextColor}"
+                                   FontSize="25"/>
+                        </Grid>
+                      </DataTemplate>
+                    </dxb:BarButtonItem.ContentTemplate>
+                  </dxb:BarButtonItem>
                 </ContentControl>
               </DataTemplate>
             </dxb:PopupMenu.ItemTemplate>
@@ -273,6 +295,7 @@
                            Height="80"
                            FontSize="25"
                            HorizontalAlignment="Center"
+                           dxb:BarManager.ShowGlyphsInPopupMenus="False"
                            FontFamily="{StaticResource AppTextFont}"
                            Foreground="{StaticResource AppTextColor}"
                            Content="{Binding SelectedChConfigContent}">
@@ -281,7 +304,18 @@
               <DataTemplate>
                 <ContentControl>
                   <dxb:BarButtonItem Content="{Binding Content}"  
-                                 ItemClick="{DXEvent Click((int)3)}"/>
+                                 ItemClick="{DXEvent Click((int)3)}">
+                    <dxb:BarButtonItem.ContentTemplate>
+                      <DataTemplate>
+                        <Grid Width="130">
+                          <TextBlock Text="{Binding}" HorizontalAlignment="Center"
+                                   FontFamily="{StaticResource AppTextFont}"
+                                   Foreground="{StaticResource AppTextColor}"
+                                   FontSize="25"/>
+                        </Grid>
+                      </DataTemplate>
+                    </dxb:BarButtonItem.ContentTemplate>
+                  </dxb:BarButtonItem>
                 </ContentControl>
               </DataTemplate>
             </dxb:PopupMenu.ItemTemplate>
@@ -299,19 +333,39 @@
                            Height="80"
                            FontSize="25"
                            HorizontalAlignment="Center"
+                           dxb:BarManager.ShowGlyphsInPopupMenus="False"
                            FontFamily="{StaticResource AppTextFont}"
                            Foreground="{StaticResource AppTextColor}"
                            Content="{Binding SelectedClassiMapContent}">
-          <dxb:PopupMenu ItemLinksSource="{Binding ClassiMapItems}">
-            <dxb:PopupMenu.ItemTemplate>
-              <DataTemplate>
-                <ContentControl>
-                  <dxb:BarButtonItem Content="{Binding Content}"  
-                                 ItemClick="{DXEvent Click((int)2)}"/>
-                </ContentControl>
-              </DataTemplate>
-            </dxb:PopupMenu.ItemTemplate>
-          </dxb:PopupMenu>
+          <dxb:PopupControlContainer>
+            <ScrollViewer MaxHeight="600">
+              <dxb:MenuBarControl>
+                <dxb:MenuBarControl.Menu>
+                  <dxb:PopupMenu ItemLinksSource="{Binding ClassiMapItems}">
+                    <dxb:PopupMenu.ItemTemplate>
+                      <DataTemplate>
+                        <ContentControl>
+                          <dxb:BarButtonItem Content="{Binding Content}"  
+                                 ItemClick="{DXEvent Click((int)2)}">
+                            <dxb:BarButtonItem.ContentTemplate>
+                              <DataTemplate>
+                                <Grid Width="130">
+                                  <TextBlock Text="{Binding}" HorizontalAlignment="Center"
+                                   FontFamily="{StaticResource AppTextFont}"
+                                   Foreground="{StaticResource AppTextColor}"
+                                   FontSize="25"/>
+                                </Grid>
+                              </DataTemplate>
+                            </dxb:BarButtonItem.ContentTemplate>
+                          </dxb:BarButtonItem>
+                        </ContentControl>
+                      </DataTemplate>
+                    </dxb:PopupMenu.ItemTemplate>
+                  </dxb:PopupMenu>
+                </dxb:MenuBarControl.Menu>
+              </dxb:MenuBarControl>
+            </ScrollViewer>
+          </dxb:PopupControlContainer>
         </dx:DropDownButton>
         <TextBlock Text="{lang:Loc Experiment_Order}"
                    FontFamily="{StaticResource AppTextFont}"
@@ -325,6 +379,7 @@
                            Height="80"
                            FontSize="25"
                            HorizontalAlignment="Center"
+                           dxb:BarManager.ShowGlyphsInPopupMenus="False"
                            FontFamily="{StaticResource AppTextFont}"
                            Foreground="{StaticResource AppTextColor}"
                            Content="{Binding SelectedOrderContent}">
@@ -333,7 +388,18 @@
               <DataTemplate>
                 <ContentControl>
                   <dxb:BarButtonItem Content="{Binding Content}"  
-                                   ItemClick="{DXEvent Click((int)4)}"/>
+                                   ItemClick="{DXEvent Click((int)4)}">
+                    <dxb:BarButtonItem.ContentTemplate>
+                      <DataTemplate>
+                        <Grid Width="130">
+                          <TextBlock Text="{Binding}" HorizontalAlignment="Center"
+                                   FontFamily="{StaticResource AppTextFont}"
+                                   Foreground="{StaticResource AppTextColor}"
+                                   FontSize="25"/>
+                        </Grid>
+                      </DataTemplate>
+                    </dxb:BarButtonItem.ContentTemplate>
+                  </dxb:BarButtonItem>
                 </ContentControl>
               </DataTemplate>
             </dxb:PopupMenu.ItemTemplate>
@@ -351,6 +417,7 @@
                            Height="80"
                            FontSize="25"
                            HorizontalAlignment="Center"
+                           dxb:BarManager.ShowGlyphsInPopupMenus="False"
                            FontFamily="{StaticResource AppTextFont}"
                            Foreground="{StaticResource AppTextColor}"
                            Content="{Binding SelectedSpeedContent}">
@@ -358,8 +425,19 @@
             <dxb:PopupMenu.ItemTemplate>
               <DataTemplate>
                 <ContentControl>
-                  <dxb:BarButtonItem Content="{Binding Content}"  
-                                 ItemClick="{DXEvent Click((int)1)}"/>
+                  <dxb:BarButtonItem Content="{Binding Content}"
+                                 ItemClick="{DXEvent Click((int)1)}">
+                    <dxb:BarButtonItem.ContentTemplate>
+                      <DataTemplate>
+                        <Grid Width="130">
+                          <TextBlock Text="{Binding}" HorizontalAlignment="Center"
+                                   FontFamily="{StaticResource AppTextFont}"
+                                   Foreground="{StaticResource AppTextColor}"
+                                   FontSize="25"/>
+                        </Grid>
+                      </DataTemplate>
+                    </dxb:BarButtonItem.ContentTemplate>
+                  </dxb:BarButtonItem>
                 </ContentControl>
               </DataTemplate>
             </dxb:PopupMenu.ItemTemplate>
@@ -377,6 +455,7 @@
                            Height="80"
                            FontSize="25"
                            HorizontalAlignment="Center"
+                           dxb:BarManager.ShowGlyphsInPopupMenus="False"
                            FontFamily="{StaticResource AppTextFont}"
                            Foreground="{StaticResource AppTextColor}"
                            Content="{Binding SelectedEndReadContent}">
@@ -385,7 +464,18 @@
               <DataTemplate>
                 <ContentControl>
                   <dxb:BarButtonItem Content="{Binding Content}"  
-                                 ItemClick="{DXEvent Click((int)6)}"/>
+                                 ItemClick="{DXEvent Click((int)6)}">
+                    <dxb:BarButtonItem.ContentTemplate>
+                      <DataTemplate>
+                        <Grid Width="130">
+                          <TextBlock Text="{Binding}" HorizontalAlignment="Center"
+                                   FontFamily="{StaticResource AppTextFont}"
+                                   Foreground="{StaticResource AppTextColor}"
+                                   FontSize="25"/>
+                        </Grid>
+                      </DataTemplate>
+                    </dxb:BarButtonItem.ContentTemplate>
+                  </dxb:BarButtonItem>
                 </ContentControl>
               </DataTemplate>
             </dxb:PopupMenu.ItemTemplate>
@@ -413,70 +503,6 @@
             </dxmvvm:Interaction.Behaviors>
           </TextBox>
         </Grid>
-      </StackPanel>
-    </Border>
-
-    <!--Event Count-->
-    <Border HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Margin="1330,40,0,0"
-            Width="200">
-      <StackPanel>
-        <TextBlock Text="{lang:Loc Experiment_Event_Count}"
-                   FontFamily="{StaticResource AppTextFont}"
-                   FontSize="36"
-                   FontWeight="UltraBold"
-                   Foreground="{StaticResource AppTextColor}"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Top"
-                   Margin="0,0,0,0"/>
-        <TextBox HorizontalAlignment="Stretch"
-                 Margin="0,10,0,0"
-                 IsReadOnly="True"
-                 Style="{StaticResource InputFieldStyle}"
-                 Text="{Binding EventCountField[0]}"/>
-      </StackPanel>
-    </Border>
-
-    <!--Start & End-->
-    <Border HorizontalAlignment="Left"
-          VerticalAlignment="Top"
-          Margin="1250,170,0,0">
-      <StackPanel>
-        <StackPanel Orientation="Horizontal">
-          <Button Content="{lang:Loc Experiment_End}"
-                Style="{StaticResource ButtonStyle}"
-                Command="{Binding EndButtonClickCommand}"
-                Height="170" Width="170"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Margin="0,0,12,0"/>
-          <Button Content="{lang:Loc Experiment_Start}"
-                Style="{StaticResource ButtonStyle}"
-                Command="{Binding StartButtonClickCommand}"
-                Height="170" Width="170"
-                IsEnabled="{Binding StartButtonEnabled}"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Margin="0,0,0,0"/>
-        </StackPanel>
-        <StackPanel Orientation="Horizontal"
-                    Margin="0,12,0,0">
-          <Button Content="{lang:Loc Experiment_Eject}"
-                Style="{StaticResource ButtonStyle}"
-                Command="{Binding EjectButtonClickCommand}"
-                Height="170" Width="170"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Margin="0,0,10,0"/>
-          <Button Content="{lang:Loc Experiment_Load}"
-                Style="{StaticResource ButtonStyle}"
-                Command="{Binding LoadButtonClickCommand}"
-                Height="170" Width="170"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Margin="0,0,0,0"/>
-        </StackPanel>
       </StackPanel>
     </Border>
   </Grid>

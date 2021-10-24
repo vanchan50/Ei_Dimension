@@ -13,25 +13,20 @@
              xmlns:System="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d"
              DataContext="{dxmvvm:ViewModelSource Type={x:Type ViewModels:ExperimentViewModel}}"
-             d:DesignHeight="944" d:DesignWidth="1920">
+             d:DesignHeight="944" d:DesignWidth="1920"
+             Loaded="UserControl_Loaded">
   <dxmvvm:Interaction.Triggers>
-    <dxmvvm:EventToCommand EventName="Initialized" Command="{Binding NavigateWellsSelectCommand}" CommandParameter="96"/>
-    <dxmvvm:EventToCommand EventName="Initialized" Command="{Binding NavigateDashboardCommand}"/>
-    <dxmvvm:EventToCommand EventName="Initialized" Command="{Binding NavigateFileSaveCommand}"/>
+    <dxmvvm:EventToCommand EventName="Initialized" Command="{Binding InitChildrenCommand}"/>
   </dxmvvm:Interaction.Triggers>
   <dxmvvm:Interaction.Behaviors>
     <dxmvvm:OpenFileDialogService/>
     <dxmvvm:SaveFileDialogService/>
   </dxmvvm:Interaction.Behaviors>
   <Grid>
-    <Grid.ColumnDefinitions>
-      <ColumnDefinition Width="3*"/>
-      <ColumnDefinition Width="17*"/>
-    </Grid.ColumnDefinitions>
 
-    <dxwui:NavigationFrame AnimationType="SlideHorizontal"
+    <dxwui:NavigationFrame AnimationType="Fade"
                            NavigationCacheMode="Required"
-                           Grid.Column="1">
+                           Margin="288,0,0,0">
       <dxmvvm:Interaction.Triggers>
         <dxmvvm:EventToCommand EventName="Loaded" Command="{Binding NavigateDashboardCommand}"/>
       </dxmvvm:Interaction.Triggers>
@@ -45,29 +40,46 @@
                 Width="240"
                 HorizontalAlignment="Left">
       <RadioButton Content="{lang:Loc Experiment_Dashboard}"
-                   GroupName="SelectWellGroup"
-                   Height="84"
+                   Height="84" Name="DbButton"
                    IsChecked="True"
-                   img:EmbeddedImg.Image="/Icons/motors icon.png"
-                   Style="{DynamicResource SubRibbonButtonStyle}"
+                   Style="{StaticResource SubRibbonButtonStyle}"
+                   img:EmbeddedImg.Image="/Icons/syringe speeds icon.png"
                    Command="{Binding NavigateDashboardCommand}"/>
+      <RadioButton Content="{lang:Loc Experiment_Sel_Active_Region}"
+                   Height="84" Name="SelRegButton"
+                   img:EmbeddedImg.Image="/Icons/components icon.png"
+                   Style="{StaticResource SubRibbonButtonStyle}"
+                   Command="{Binding NavigateSelRegionsCommand}"/>
       <Button Content="{lang:Loc Experiment_Load_Template}"
                    Height="84"
                    img:EmbeddedImg.Image="{dx:DXImage 'SvgImages/Export/Export.svg'}"
-                   Style="{DynamicResource DashboardButtonStyle}"
+                   Style="{StaticResource DashboardButtonStyle}"
                    Command="{Binding LoadTemplateCommand}"/>
       <Button Content="{lang:Loc Experiment_Save_Template}"
                    Height="84"
                    img:EmbeddedImg.Image="{dx:DXImage 'SvgImages/PDF Viewer/Import.svg'}"
-                   Style="{DynamicResource DashboardButtonStyle}"
+                   Style="{StaticResource DashboardButtonStyle}"
                    Command="{Binding SaveTemplateCommand}"/>
       <RadioButton Content="{lang:Loc Experiment_FileSave}"
-                   GroupName="SelectWellGroup"
-                   Height="84"
+                   Height="84" Name="SelFileButton"
                    img:EmbeddedImg.Image="{dx:DXImage 'SvgImages/Reports/PrintPageRange.svg'}"
-                   Style="{DynamicResource SubRibbonButtonStyle}"
+                   Style="{StaticResource SubRibbonButtonStyle}"
                    Command="{Binding NavigateFileSaveCommand}"/>
-      
+      <RadioButton Name="fake" Visibility="Hidden">
+        <RadioButton.Style>
+          <Style TargetType="RadioButton">
+            <Style.Triggers>
+              <DataTrigger Binding="{Binding ElementName=DbWell96, Path=IsChecked}" Value="True">
+                <Setter Property="IsChecked" Value="True"/>
+              </DataTrigger>
+              <DataTrigger Binding="{Binding ElementName=DbWell384, Path=IsChecked}" Value="True">
+                <Setter Property="IsChecked" Value="True"/>
+              </DataTrigger>
+            </Style.Triggers>
+          </Style>
+        </RadioButton.Style>
+      </RadioButton>
+
       <Grid Visibility="{Binding WellSelectVisible}"
             Margin="0,20,0,0">
         <StackPanel>
@@ -78,19 +90,19 @@
           <StackPanel>
             <StackPanel Orientation="Horizontal">
               <RadioButton GroupName="SelectWellGroup"
-                       Content="96"
-                       Height="84" Width="118"
-                       Style="{DynamicResource SubRibbonButtonStyle}"
-                       Command="{Binding NavigateWellsSelectCommand}"
-                       Margin="0,0,4,6">
+                           Content="96" Name="DbWell96"
+                           Height="84" Width="118"
+                           Command="{Binding NavigateWellsSelectCommand}"
+                           Style="{StaticResource SubRibbonButtonStyle}"
+                           Margin="0,0,4,6">
                 <RadioButton.CommandParameter>
                   <System:Int32>96</System:Int32>
                 </RadioButton.CommandParameter>
               </RadioButton>
               <RadioButton GroupName="SelectWellGroup"
-                       Content="384"
+                       Content="384" Name="DbWell384"
                        Height="84" Width="118"
-                       Style="{DynamicResource SubRibbonButtonStyle}"
+                       Style="{StaticResource SubRibbonButtonStyle}"
                        Command="{Binding NavigateWellsSelectCommand}">
                 <RadioButton.CommandParameter>
                   <System:Int32>384</System:Int32>
@@ -98,10 +110,11 @@
               </RadioButton>
             </StackPanel>
             <RadioButton GroupName="SelectWellGroup"
-                     Content="{lang:Loc Experiment_Tube}"
-                     Height="84"
-                     Style="{DynamicResource SubRibbonButtonStyle}"
-                     Command="{Binding NavigateWellsSelectCommand}">
+                         Content="{lang:Loc Experiment_Tube}"
+                         Height="84" Name="DbTube"
+                         Click="DbTube_Click"
+                         Style="{StaticResource SubRibbonButtonStyle}"
+                         Command="{Binding NavigateWellsSelectCommand}">
               <RadioButton.CommandParameter>
                 <System:Int32>1</System:Int32>
               </RadioButton.CommandParameter>

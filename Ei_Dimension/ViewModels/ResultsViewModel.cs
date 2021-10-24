@@ -1,67 +1,56 @@
 ﻿using DevExpress.Mvvm;
 using DevExpress.Mvvm.DataAnnotations;
-using System;
 using DevExpress.Mvvm.POCO;
-using System.Collections.ObjectModel;
-using DevExpress.Xpf.Charts;
 using Ei_Dimension.Models;
-using Ei_Dimension.Core;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
-using System.ComponentModel;
-using System.IO;
 
 namespace Ei_Dimension.ViewModels
 {
   [POCOViewModel]
   public class ResultsViewModel
   {
-    public virtual ObservableCollection<HistogramData> ForwardSsc { get; set; }
-    public virtual ObservableCollection<HistogramData> VioletSsc { get; set; }
-    public virtual ObservableCollection<HistogramData> RedSsc { get; set; }
-    public virtual ObservableCollection<HistogramData> GreenSsc { get; set; }
-    public virtual ObservableCollection<HistogramData> Reporter { get; set; }
-    public virtual ObservableCollection<int> SeriesCL0 { get; set; }
-    public virtual ObservableCollection<int> SeriesCL1 { get; set; }
-    public virtual ObservableCollection<int> SeriesCL2 { get; set; }
-    public virtual ObservableCollection<int> SeriesCL3 { get; set; }
-    public virtual ObservableCollection<ResultFile> AvailableResults { get; set; }
-    public virtual ObservableCollection<ResultFile> SelectedItem { get; set; }
-    public virtual string HeatmapAxisXTitle { get; set; }
-    public virtual string HeatmapAxisYTitle { get; set; }
-    public virtual ObservableCollection<HeatMapData> HeatLevel1 { get; set; }
-    public virtual ObservableCollection<HeatMapData> HeatLevel2 { get; set; }
-    public virtual ObservableCollection<HeatMapData> HeatLevel3 { get; set; }
-    public virtual ObservableCollection<HeatMapData> HeatLevel4 { get; set; }
-    public virtual ObservableCollection<HeatMapData> HeatLevel5 { get; set; }
     public virtual ObservableCollection<bool> ScatterSelectorState { get; set; }
-    public virtual ObservableCollection<bool> XAxisSelectorState { get; set; }
-    public virtual ObservableCollection<bool> YAxisSelectorState { get; set; }
-
-    private List<MicroCy.BeadInfoStruct> _beadStructsList;
-    private ObservableCollection<HeatMapData> _heatMapSeriesXY;
-    private List<SortedDictionary<int, int>> _histoDicts;
-    private (int, int) _heatmapAxisXY;  //holds selected values for heatmap data
-    private string _savedFilesLocation = @"C:\Users\Admin\Desktop\WorkC#\SampleData";
-
+    public virtual ObservableCollection<HistogramData> CurrentForwardSsc { get; set; }
+    public virtual ObservableCollection<HistogramData> CurrentVioletSsc { get; set; }
+    public virtual ObservableCollection<HistogramData> CurrentRedSsc { get; set; }
+    public virtual ObservableCollection<HistogramData> CurrentGreenSsc { get; set; }
+    public virtual ObservableCollection<HistogramData> CurrentReporter { get; set; }
+    public virtual ObservableCollection<HistogramData> DisplayedForwardSsc { get; set; }
+    public virtual ObservableCollection<HistogramData> DisplayedVioletSsc { get; set; }
+    public virtual ObservableCollection<HistogramData> DisplayedRedSsc { get; set; }
+    public virtual ObservableCollection<HistogramData> DisplayedGreenSsc { get; set; }
+    public virtual ObservableCollection<HistogramData> DisplayedReporter { get; set; }
+    public virtual ObservableCollection<HistogramData> BackingForwardSsc { get; set; }
+    public virtual ObservableCollection<HistogramData> BackingVioletSsc { get; set; }
+    public virtual ObservableCollection<HistogramData> BackingRedSsc { get; set; }
+    public virtual ObservableCollection<HistogramData> BackingGreenSsc { get; set; }
+    public virtual ObservableCollection<HistogramData> BackingReporter { get; set; }
+    public virtual ObservableCollection<HeatMapData> WorldMap { get; set; }
+    public List<HeatMapData> CurrentMap { get; set; }
+    public List<HeatMapData> BackingMap { get; set; }
+    public virtual DrawingPlate PlatePictogram { get; set; }
+    public virtual System.Windows.Visibility Buttons384Visible { get; set; }
+    public virtual System.Windows.Visibility LeftLabel384Visible { get; set; }
+    public virtual System.Windows.Visibility RightLabel384Visible { get; set; }
+    public virtual System.Windows.Visibility TopLabel384Visible { get; set; }
+    public virtual System.Windows.Visibility BottomLabel384Visible { get; set; }
+    public virtual ObservableCollection<bool> CornerButtonsChecked { get; set; }
     public static ResultsViewModel Instance { get; private set; }
 
     protected ResultsViewModel()
     {
-      GetAvailableResults();
-      SelectedItem = new ObservableCollection<ResultFile>();
-      _heatMapSeriesXY = new ObservableCollection<HeatMapData>();
-      HeatmapAxisXTitle = "CL1";
-      HeatmapAxisYTitle = "CL2";
+      ScatterSelectorState = new ObservableCollection<bool> { false, false, false, false, false };
+      WorldMap = new ObservableCollection<HeatMapData>();
 
-      HeatLevel1 = new ObservableCollection<HeatMapData>(); // Min     outside of bin
-      HeatLevel2 = new ObservableCollection<HeatMapData>(); //         70%
-      HeatLevel3 = new ObservableCollection<HeatMapData>(); // Medium  50%
-      HeatLevel4 = new ObservableCollection<HeatMapData>(); //         30% of binwidth
-      HeatLevel5 = new ObservableCollection<HeatMapData>(); // Max     bin center
-
-      ScatterSelectorState = new ObservableCollection<bool> { false, false, false, false };
       byte temp = Settings.Default.ScatterGraphSelector;
+      if (temp >= 16)
+      {
+        ScatterSelectorState[4] = true;
+        temp -= 16;
+      }
       if (temp >= 8)
       {
         ScatterSelectorState[3] = true;
@@ -82,13 +71,50 @@ namespace Ei_Dimension.ViewModels
         ScatterSelectorState[0] = true;
       }
 
-      XAxisSelectorState = new ObservableCollection<bool> { false, false, false, false };
-      XAxisSelectorState[Settings.Default.XAxisG] = true;
-      YAxisSelectorState = new ObservableCollection<bool> { false, false, false, false };
-      YAxisSelectorState[Settings.Default.YAxisG] = true;
-      _heatmapAxisXY = (Settings.Default.XAxisG, Settings.Default.YAxisG);
-
       Instance = this;
+      CurrentForwardSsc = new ObservableCollection<HistogramData>();
+      CurrentVioletSsc = new ObservableCollection<HistogramData>();
+      CurrentRedSsc = new ObservableCollection<HistogramData>();
+      CurrentGreenSsc = new ObservableCollection<HistogramData>();
+      CurrentReporter = new ObservableCollection<HistogramData>();
+      BackingForwardSsc = new ObservableCollection<HistogramData>();
+      BackingVioletSsc = new ObservableCollection<HistogramData>();
+      BackingRedSsc = new ObservableCollection<HistogramData>();
+      BackingGreenSsc = new ObservableCollection<HistogramData>();
+      BackingReporter = new ObservableCollection<HistogramData>();
+
+      for (var i = 0; i < HistogramData.Bins.Length; i++)
+      {
+        CurrentForwardSsc.Add(new HistogramData(0, HistogramData.Bins[i]));
+         CurrentVioletSsc.Add(new HistogramData(0, HistogramData.Bins[i]));
+            CurrentRedSsc.Add(new HistogramData(0, HistogramData.Bins[i]));
+          CurrentGreenSsc.Add(new HistogramData(0, HistogramData.Bins[i]));
+          CurrentReporter.Add(new HistogramData(0, HistogramData.Bins[i]));
+                                                   
+        BackingForwardSsc.Add(new HistogramData(0, HistogramData.Bins[i]));
+         BackingVioletSsc.Add(new HistogramData(0, HistogramData.Bins[i]));
+            BackingRedSsc.Add(new HistogramData(0, HistogramData.Bins[i]));
+          BackingGreenSsc.Add(new HistogramData(0, HistogramData.Bins[i]));
+          BackingReporter.Add(new HistogramData(0, HistogramData.Bins[i]));
+      }
+
+      CurrentMap = new List<HeatMapData>();
+      BackingMap = new List<HeatMapData>();
+
+      DisplayedForwardSsc = CurrentForwardSsc;
+      DisplayedVioletSsc = CurrentVioletSsc;
+      DisplayedRedSsc = CurrentRedSsc;
+      DisplayedGreenSsc = CurrentGreenSsc;
+      DisplayedReporter = CurrentReporter;
+
+      PlatePictogram = DrawingPlate.Create();
+      Buttons384Visible = System.Windows.Visibility.Hidden;
+      CornerButtonsChecked = new ObservableCollection<bool> { true, false, false, false };
+      LeftLabel384Visible = System.Windows.Visibility.Visible;
+      RightLabel384Visible = System.Windows.Visibility.Hidden;
+      TopLabel384Visible = System.Windows.Visibility.Visible;
+      BottomLabel384Visible = System.Windows.Visibility.Hidden;
+      FillWorldMap(App.Device.RootDirectory.FullName + @"\Config\" + App.Device.ActiveMap.mapName + @"_world.json");
     }
 
     public static ResultsViewModel Create()
@@ -96,87 +122,107 @@ namespace Ei_Dimension.ViewModels
       return ViewModelSource.Create(() => new ResultsViewModel());
     }
 
-    public void GetAvailableResults()
+    public void CornerButtonClick(int corner)
     {
-      if (AvailableResults == null)
+      switch (corner) {
+        case 1:
+          LeftLabel384Visible = System.Windows.Visibility.Visible;
+          RightLabel384Visible = System.Windows.Visibility.Hidden;
+          TopLabel384Visible = System.Windows.Visibility.Visible;
+          BottomLabel384Visible = System.Windows.Visibility.Hidden;
+          break;
+        case 2:
+          LeftLabel384Visible = System.Windows.Visibility.Hidden;
+          RightLabel384Visible = System.Windows.Visibility.Visible;
+          TopLabel384Visible = System.Windows.Visibility.Visible;
+          BottomLabel384Visible = System.Windows.Visibility.Hidden;
+          break;
+        case 3:
+          LeftLabel384Visible = System.Windows.Visibility.Visible;
+          RightLabel384Visible = System.Windows.Visibility.Hidden;
+          TopLabel384Visible = System.Windows.Visibility.Hidden;
+          BottomLabel384Visible = System.Windows.Visibility.Visible;
+          break;
+        case 4:
+          LeftLabel384Visible = System.Windows.Visibility.Hidden;
+          RightLabel384Visible = System.Windows.Visibility.Visible;
+          TopLabel384Visible = System.Windows.Visibility.Hidden;
+          BottomLabel384Visible = System.Windows.Visibility.Visible;
+          break;
+      }
+      Views.ResultsView.Instance.DrawingPlate.UnselectAllCells();
+      CornerButtonsChecked[0] = false;
+      CornerButtonsChecked[1] = false;
+      CornerButtonsChecked[2] = false;
+      CornerButtonsChecked[3] = false;
+      CornerButtonsChecked[corner - 1 ] = true;
+      PlatePictogram.ChangeCorner(corner);
+    }
+
+    public void ToCurrentButtonClick()
+    {
+      PlotCurrent();
+      PlatePictogram.FollowingCurrentCell = true;
+
+      int tempCorner = 1;
+      if (PlatePictogram.CurrentlyReadCell.row < 8)
+        tempCorner = PlatePictogram.CurrentlyReadCell.col < 12 ? 1 : 2;
+      else
+        tempCorner = PlatePictogram.CurrentlyReadCell.col < 12 ? 3 : 4;
+      CornerButtonClick(tempCorner);
+    }
+
+    public void ClearGraphs(bool current = true)
+    {
+      if (current)
       {
-        AvailableResults = new ObservableCollection<ResultFile>();
+        for (var i = 0; i < CurrentReporter.Count; i++)
+        {
+          CurrentForwardSsc[i].Value = 0;
+          CurrentVioletSsc[i].Value = 0;
+          CurrentRedSsc[i].Value = 0;
+          CurrentGreenSsc[i].Value = 0;
+          CurrentReporter[i].Value = 0;
+        }
+        CurrentMap.Clear();
+        HeatMapData.Dict.Clear();
       }
       else
       {
-        AvailableResults.Clear();
+        for (var i = 0; i < BackingReporter.Count; i++)
+        {
+          BackingForwardSsc[i].Value = 0;
+          BackingVioletSsc[i].Value = 0;
+          BackingRedSsc[i].Value = 0;
+          BackingGreenSsc[i].Value = 0;
+          BackingReporter[i].Value = 0;
+        }
+        BackingMap.Clear();
       }
+      Views.ResultsView.Instance.ClearPoints();
+    }
+
+    public void SelectedCellChanged()
+    {
       try
       {
-        string[] files = Directory.GetFiles(_savedFilesLocation, "*.csv");
-        foreach (var f in files)
+        var temp = PlatePictogram.GetSelectedCell();
+        if (temp.row == -1)
+          return;
+        PlatePictogram.SelectedCell = temp;
+        if (temp == PlatePictogram.CurrentlyReadCell)
         {
-          AvailableResults.Add(new ResultFile(f));
+          ToCurrentButtonClick();
+          return;
         }
+        ClearGraphs(false);
+        FillAllData();
+        PlotCurrent(false);
+        PlatePictogram.FollowingCurrentCell = false;
       }
-      catch
-      {
-
-      }
+      catch { }
     }
-
-    public async Task ParseBeadInfoAsync(string path)
-    {
-      if(_beadStructsList == null)
-      {
-        _beadStructsList = new List<MicroCy.BeadInfoStruct>();
-      }
-      else
-      {
-        _beadStructsList.Clear();
-      }
-      List<string> contents = await DataProcessor.GetDataFromFileAsync(path);
-
-      for (var i = 0; i < contents.Count; i++)
-      {
-        _beadStructsList.Add(await Task.Run(() => {
-          MicroCy.BeadInfoStruct bs;
-          return bs = DataProcessor.ParseRow(contents[i]); }));
-      }
-    }
-
-    [AsyncCommand(UseCommandManager = false)]
-    public async void FillAllDataAsync()
-    {
-      if (_histoDicts != null)
-      {
-        foreach (var d in _histoDicts)
-        {
-          d.Clear();
-        }
-        _histoDicts.Clear();
-      }
-      await ParseBeadInfoAsync(SelectedItem[0].Path);
-      _histoDicts = DataProcessor.MakeDictionariesFromData(_beadStructsList);
-      Task<ObservableCollection<HistogramData>> ForwardTask = new Task<ObservableCollection<HistogramData>>(() => { return AddScatterItem(0); });
-      ForwardTask.Start();
-      Task<ObservableCollection<HistogramData>> VioletTask = new Task<ObservableCollection<HistogramData>>(() => { return AddScatterItem(1); });
-      VioletTask.Start();
-      Task<ObservableCollection<HistogramData>> RedTask = new Task<ObservableCollection<HistogramData>>(() => { return AddScatterItem(2); });
-      RedTask.Start();
-      Task<ObservableCollection<HistogramData>> GreenTask = new Task<ObservableCollection<HistogramData>>(() => { return AddScatterItem(3); });
-      GreenTask.Start();
-      Task<ObservableCollection<HistogramData>> ReporterTask = new Task<ObservableCollection<HistogramData>>(() => { return AddScatterItem(4); });
-      ReporterTask.Start();
-      Task<(ObservableCollection<int>, ObservableCollection<int>, ObservableCollection<int>, ObservableCollection<int>)> MapTask =
-        new Task<(ObservableCollection<int>, ObservableCollection<int>, ObservableCollection<int>, ObservableCollection<int>)>(AddMapItem);
-      MapTask.Start();
-
-      ForwardSsc = await ForwardTask;
-      VioletSsc = await VioletTask;
-      RedSsc = await RedTask;
-      GreenSsc = await GreenTask;
-      Reporter = await ReporterTask;
-      (SeriesCL0, SeriesCL1, SeriesCL2, SeriesCL3) = await MapTask;
-      UpdateHeatmap();
-    }
-
-    public void ChangeScatterLegend(int num)
+    public void ChangeScatterLegend(int num)  //TODO: For buttons
     {
       ScatterSelectorState[num] = !ScatterSelectorState[num];
       byte res = 0;
@@ -184,229 +230,117 @@ namespace Ei_Dimension.ViewModels
       res += ScatterSelectorState[1] ? (byte)2 : (byte)0;
       res += ScatterSelectorState[2] ? (byte)4 : (byte)0;
       res += ScatterSelectorState[3] ? (byte)8 : (byte)0;
+      res += ScatterSelectorState[4] ? (byte)16 : (byte)0;
       Settings.Default.ScatterGraphSelector = res;
       Settings.Default.Save();
     }
-
-    public void ChangeHeatmapX(byte num)
+    private async Task ParseBeadInfoAsync(string path, List<MicroCy.BeadInfoStruct> beadstructs)
     {
-      XAxisSelectorState[0] = false;
-      XAxisSelectorState[1] = false;
-      XAxisSelectorState[2] = false;
-      XAxisSelectorState[3] = false;
-      switch (num)
+      List<string> LinesInFile = await Core.DataProcessor.GetDataFromFileAsync(path);
+      if (LinesInFile.Count == 1 && LinesInFile[0] == " ")
       {
-        case 0:
-          _heatmapAxisXY.Item1 = 0;
-          HeatmapAxisXTitle = "CL0";
-          break;
-        case 1:
-          _heatmapAxisXY.Item1 = 1;
-          HeatmapAxisXTitle = "CL1";
-          break;
-        case 2:
-          _heatmapAxisXY.Item1 = 2;
-          HeatmapAxisXTitle = "CL2";
-          break;
-        case 3:
-          _heatmapAxisXY.Item1 = 3;
-          HeatmapAxisXTitle = "CL3";
-          break;
+        System.Windows.MessageBox.Show("File is empty");
+        return;
       }
-      XAxisSelectorState[num] = true;
-      App.SetHeatmapX(num);
-      UpdateHeatmap();
+      for (var i = 0; i < LinesInFile.Count; i++)
+      {
+        beadstructs.Add(Core.DataProcessor.ParseRow(LinesInFile[i]));
+      }
     }
 
-    public void ChangeHeatmapY(byte num)
+    public void FillAllData()
     {
-      YAxisSelectorState[0] = false;
-      YAxisSelectorState[1] = false;
-      YAxisSelectorState[2] = false;
-      YAxisSelectorState[3] = false;
-      switch (num)
+      _ = Task.Run(async ()=>
       {
-        case 0:
-          _heatmapAxisXY.Item2 = 0;
-          HeatmapAxisYTitle = "CL0";
-          break;
-        case 1:
-          _heatmapAxisXY.Item2 = 1;
-          HeatmapAxisYTitle = "CL1";
-          break;
-        case 2:
-          _heatmapAxisXY.Item2 = 2;
-          HeatmapAxisYTitle = "CL2";
-          break;
-        case 3:
-          _heatmapAxisXY.Item2 = 3;
-          HeatmapAxisYTitle = "CL3";
-          break;
-      }
-      YAxisSelectorState[num] = true;
-      App.SetHeatmapY(num);
-      UpdateHeatmap();
-    }
-
-    public void UpdateHeatmap()
-    {
-      _heatMapSeriesXY.Clear();
-      ObservableCollection<int> x = new ObservableCollection<int>();
-      ObservableCollection<int> y = new ObservableCollection<int>();
-      switch (_heatmapAxisXY.Item1)
-      {
-        case 0:
-          x = SeriesCL0;
-          break;
-        case 1:
-          x = SeriesCL1;
-          break;
-        case 2:
-          x = SeriesCL2;
-          break;
-        case 3:
-          x = SeriesCL3;
-          break;
-      }
-      switch (_heatmapAxisXY.Item2)
-      {
-        case 0:
-          y = SeriesCL0;
-          break;
-        case 1:
-          y = SeriesCL1;
-          break;
-        case 2:
-          y = SeriesCL2;
-          break;
-        case 3:
-          y = SeriesCL3;
-          break;
-      }
-      int i = 0;
-      if (x != null)
-      {
-        while (i < x.Count)
+        var path = @"D:\WorkC#\SampleData\Mon Run 2AA11_0.csv";// PlatePictogram.GetSelectedFilePath();
+        if (path == null)
+          return;
+        var beadStructslist = new List<MicroCy.BeadInfoStruct>();
+        await ParseBeadInfoAsync(path, beadStructslist);
+        Dictionary<(int x, int y), int> Dict = new Dictionary<(int x, int y), int>();
+        int index = 0;
+        _ = Task.Run(() => Core.DataProcessor.BinData(beadStructslist, fromFile: true));
+        foreach (var bead in beadStructslist)
         {
-          _heatMapSeriesXY.Add(new HeatMapData(x[i], y[i]));
-          i++;
-        }
-        _ = MakeHeatmapAsync();
-      }
-    }
-
-    private ObservableCollection<HistogramData> AddScatterItem(int itemIndex)
-    {
-      ObservableCollection<HistogramData> col = new ObservableCollection<HistogramData>();
-      foreach (var x in _histoDicts[itemIndex])
-      {
-        col.Add(new HistogramData(x.Value, x.Key));
-      }
-      return col;
-    }
-
-    private (ObservableCollection<int>, ObservableCollection<int>, ObservableCollection<int>, ObservableCollection<int>) AddMapItem()
-    {
-      ObservableCollection<int> CL0 = new ObservableCollection<int>();
-      ObservableCollection<int> CL1 = new ObservableCollection<int>();
-      ObservableCollection<int> CL2 = new ObservableCollection<int>();
-      ObservableCollection<int> CL3 = new ObservableCollection<int>();
-      foreach (var bs in _beadStructsList)
-      {
-        CL0.Add((int)bs.cl0);
-        CL1.Add((int)bs.cl1);
-        CL2.Add((int)bs.cl2);
-        CL3.Add((int)bs.cl3);
-      }
-      return (CL0, CL1, CL2, CL3);
-    }
-
-    public async Task MakeHeatmapAsync()  //should return several collections of diff color series
-    {
-      int xDict = _heatmapAxisXY.Item1 + 5; // 5 comes from DataProcessor.MakeDictionariesFromData
-      int yDict = _heatmapAxisXY.Item2 + 5; // 5 comes from DataProcessor.MakeDictionariesFromData
-      Task<List<HistogramData>> t1 = new Task<List<HistogramData>>(()=> { return DataProcessor.LinearizeDictionary(_histoDicts[xDict]);});
-      t1.Start();
-      Task<List<HistogramData>> t2 = new Task<List<HistogramData>>(() => { return DataProcessor.LinearizeDictionary(_histoDicts[yDict]); });
-      t2.Start();
-      List<HistogramData> XAxisHist;
-      List<HistogramData> YAxisHist;
-
-      //identify peaks
-      var XAxisPeaks = DataProcessor.IdentifyPeaks(XAxisHist = await t1);
-      var YAxisPeaks = DataProcessor.IdentifyPeaks(YAxisHist = await t2);
-
-      HeatLevel1.Clear();
-      HeatLevel2.Clear();
-      HeatLevel3.Clear();
-      HeatLevel4.Clear();
-      HeatLevel5.Clear();
-
-      double[] HeatLevels = {0.15, 0.25, 0.35, 0.5};
-
-      //assign heat level to points based on binning
-      for (var i = 0; i < _heatMapSeriesXY.Count - 1; i++)
-      {
-        var pointX = _heatMapSeriesXY[i].X;
-        var pointY = _heatMapSeriesXY[i].Y;
-        foreach (var peak in XAxisPeaks)
-        { 
-          //already assigned value
-          if(_heatMapSeriesXY[i].IntensityX != 0)
+          int x = 0;
+          int y = 0;
+          for (var i = 0; i < 256; i++)
           {
-            break;
+            if (bead.cl1 <= HeatMapData.bins[i])
+            {
+              x = i;
+              break;
+            }
           }
-          // identify which peak it corresponds to
-          if (pointX < peak.Item3)
+          for (var i = 0; i < 256; i++)
           {
-            _heatMapSeriesXY[i].IntensityX = DataProcessor.AssignIntensity(pointX, peak, HeatLevels);
+            if (bead.cl2 <= HeatMapData.bins[i])
+            {
+              y = i;
+              break;
+            }
+          }
+          if (!Dict.ContainsKey((x, y)))
+          {
+            Dict.Add((x, y), index);
+            index++;
+            BackingMap.Add(new HeatMapData((int)HeatMapData.bins[x], (int)HeatMapData.bins[y]));
+          }
+          else
+          {
+            BackingMap[Dict[(x, y)]].A++;
           }
         }
-
-        foreach (var peak in YAxisPeaks)
+        _ = App.Current.Dispatcher.BeginInvoke((Action)(()=>
         {
-          //already assigned value
-          if (_heatMapSeriesXY[i].IntensityY != 0)
-          {
-            break;
-          }
-          // identify which peak it corresponds to
-          if (pointY < peak.Item3)
-          {
-            _heatMapSeriesXY[i].IntensityY = DataProcessor.AssignIntensity(pointY, peak, HeatLevels);
-          }
-        }
-      }
+          Core.DataProcessor.AnalyzeHeatMap(BackingMap);
+        }));
+      });
+    }
 
-      //sort points into HeatLevelX arrays
-      foreach (var point in _heatMapSeriesXY)
+    public void PlotCurrent(bool current = true)
+    {
+      if (current)
       {
-        int colorValue = point.IntensityX * point.IntensityY;
+        DisplayedForwardSsc = CurrentForwardSsc;
+        DisplayedVioletSsc = CurrentVioletSsc;
+        DisplayedRedSsc = CurrentRedSsc;
+        DisplayedGreenSsc = CurrentGreenSsc;
+        DisplayedReporter = CurrentReporter;
 
-        if(colorValue >= 10)
-        {
-          HeatLevel5.Add(point);
-          continue;
-        }
-        if (colorValue >= 5)
-        {
-          HeatLevel4.Add(point);
-          continue;
-        }
-        if (colorValue >= 3)
-        {
-          HeatLevel3.Add(point);
-          continue;
-        }
-        if (colorValue >= 2)
-        {
-          HeatLevel2.Add(point);
-          continue;
-        }
-        HeatLevel1.Add(point);
+        Views.ResultsView.Instance.ClearPoints();
+        Core.DataProcessor.AnalyzeHeatMap(CurrentMap);
       }
+      else
+      {
+        DisplayedForwardSsc = BackingForwardSsc;
+        DisplayedVioletSsc = BackingVioletSsc;
+        DisplayedRedSsc = BackingRedSsc;
+        DisplayedGreenSsc = BackingGreenSsc;
+        DisplayedReporter = BackingReporter;
+      }
+    }
 
-      //add nearbyneighbor analysis for better result
+    public void FillWorldMap(string path)
+    {
+      List<(int x, int y)> XYList = null;
+      try
+      {
+        using (System.IO.TextReader reader = new System.IO.StreamReader(path))
+        {
+          var fileContents = reader.ReadToEnd();
+          XYList = Newtonsoft.Json.JsonConvert.DeserializeObject<List<(int, int)>>(fileContents);
+        }
+      }
+      catch { }
+      if (XYList != null)
+      {
+        WorldMap.Clear();
+        foreach (var point in XYList)
+        {
+          WorldMap.Add(new HeatMapData(point.x, point.y));
+        }
+      }
     }
   }
 }

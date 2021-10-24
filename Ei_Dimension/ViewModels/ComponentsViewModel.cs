@@ -110,26 +110,6 @@ namespace Ei_Dimension.ViewModels
       App.Device.MainCommand("Set Property", code: 0x18, parameter: (ushort)IInputSelectorState);
     }
 
-    public void FluidicsButtonClick(int i)
-    {
-      string cmd = "";
-      switch (i)
-      {
-        case 0:
-          cmd = "Prime";
-          break;
-        case 1:
-          cmd = "Wash A";
-          break;
-        case 2:
-          cmd = "Wash B";
-          break;
-      }
-      App.Device.MainCommand("Set Property", code: 0x19, parameter: 1); //bubble detect on
-      App.Device.MainCommand(cmd);
-      App.Device.MainCommand("Set Property", code: 0x19, parameter: 0); //bubble detect off
-    }
-
     public void ValvesButtonClick(int num)
     {
       int param = 0;
@@ -274,13 +254,13 @@ namespace Ei_Dimension.ViewModels
 
     public void MoveIdexButtonClick()
     {
-      App.Device.MainCommand("Idex", cmd: App.Device.IdexPos, parameter: App.Device.IdexSteps, fparameter: App.Device.IdexDir);
+      App.Device.MainCommand("Idex");
     }
 
     public void CWDirectionToggleButtonClick()
     {
       CWDirectionActive = !CWDirectionActive;
-      App.Device.IdexDir = CWDirectionActive ? 1 : 0;
+      MicroCy.InstrumentParameters.Idex.Dir = CWDirectionActive ? 1 : 0;
     }
 
     public void IdexPositionButtonClick()

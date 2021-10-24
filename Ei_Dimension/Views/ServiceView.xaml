@@ -13,27 +13,19 @@
              xmlns:img="clr-namespace:Ei_Dimension.Styles"
              mc:Ignorable="d"
              DataContext="{dxmvvm:ViewModelSource Type=ViewModels:ServiceViewModel}"
-             d:DesignHeight="944" d:DesignWidth="1920">
+             d:DesignHeight="944" d:DesignWidth="1920"
+             Loaded="UserControl_Loaded">
   <dxmvvm:Interaction.Triggers>
-    <dxmvvm:EventToCommand EventName="Initialized" Command="{Binding NavigateMotorsCommand}"/>
-    <dxmvvm:EventToCommand EventName="Initialized" Command="{Binding NavigateComponentsCommand}"/>
-    <dxmvvm:EventToCommand EventName="Initialized" Command="{Binding NavigateAlignmentCommand}"/>
-    <dxmvvm:EventToCommand EventName="Initialized" Command="{Binding NavigateChannelOffsetCommand}"/>
-    <dxmvvm:EventToCommand EventName="Initialized" Command="{Binding NavigateSyringeSpeedsCommand}"/>
+    <dxmvvm:EventToCommand EventName="Initialized" Command="{Binding InitChildrenCommand}"/>
   </dxmvvm:Interaction.Triggers>
   <Grid>
-
-    <Grid.ColumnDefinitions>
-      <ColumnDefinition Width="3*"/>
-      <ColumnDefinition Width="17*"/>
-    </Grid.ColumnDefinitions>
 
     <!--Tile Ribbon-->
     <StackPanel Margin="30,60,0,0"
                 Width="240"
                 HorizontalAlignment="Left">
       <RadioButton Content="{lang:Loc Service_Motors}"
-                   Height="84"
+                   Height="84" Name="MotorsButton"
                    IsChecked="True"
                    img:EmbeddedImg.Image="/Icons/motors icon.png"
                    Style="{DynamicResource SubRibbonButtonStyle}"
@@ -67,7 +59,7 @@
 
     <dxwui:NavigationFrame AnimationType="SlideHorizontal"
                            NavigationCacheMode="Required"
-                           Grid.Column="1">
+                           Margin="288,0,0,0">
       <dxmvvm:Interaction.Triggers>
         <dxmvvm:EventToCommand EventName="Loaded" Command="{Binding NavigateMotorsCommand}" />
       </dxmvvm:Interaction.Triggers>

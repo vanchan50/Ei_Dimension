@@ -428,6 +428,7 @@
           <dx:DropDownButton 
                            Height="50"
                            FontSize="25"
+                           dxb:BarManager.ShowGlyphsInPopupMenus="False"
                            FontFamily="{StaticResource AppTextFont}"
                            Foreground="{StaticResource AppTextColor}"
                            Content="{Binding SelectedSensitivityContent}">
@@ -436,7 +437,18 @@
                 <DataTemplate>
                   <ContentControl>
                     <dxb:BarButtonItem Content="{Binding Content}"  
-                                 ItemClick="{DXEvent Click()}"/>
+                                 ItemClick="{DXEvent Click()}">
+                      <dxb:BarButtonItem.ContentTemplate>
+                        <DataTemplate>
+                          <Grid Width="180">
+                            <TextBlock Text="{Binding}" HorizontalAlignment="Center"
+                                   FontFamily="{StaticResource AppTextFont}"
+                                   Foreground="{StaticResource AppTextColor}"
+                                   FontSize="25"/>
+                          </Grid>
+                        </DataTemplate>
+                      </dxb:BarButtonItem.ContentTemplate>
+                    </dxb:BarButtonItem>
                   </ContentControl>
                 </DataTemplate>
               </dxb:PopupMenu.ItemTemplate>

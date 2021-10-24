@@ -285,7 +285,7 @@ Coefficient</value>
 Direction</value>
   </data>
   <data name="Components_Fan" xml:space="preserve">
-    <value>Fan</value>
+    <value>Fan 1</value>
   </data>
   <data name="Components_Fluidics" xml:space="preserve">
     <value>Fluidics</value>
@@ -338,7 +338,7 @@ Direction</value>
     <value>To Pickup</value>
   </data>
   <data name="Components_Valve1" xml:space="preserve">
-    <value>Valve 1</value>
+    <value>Fan 2</value>
   </data>
   <data name="Components_Valve2" xml:space="preserve">
     <value>Valve 2</value>
@@ -351,6 +351,9 @@ Direction</value>
   </data>
   <data name="Components_Wash_B" xml:space="preserve">
     <value>Wash B</value>
+  </data>
+  <data name="Counter" xml:space="preserve">
+    <value>Counter</value>
   </data>
   <data name="Dashboard_Active_Region" xml:space="preserve">
     <value>  Active</value>
@@ -485,11 +488,14 @@ Speed</value>
     <value>Valve Right</value>
   </data>
   <data name="Experiment_Active_Regions" xml:space="preserve">
-    <value>Regions</value>
+    <value>Active Regions</value>
   </data>
   <data name="Experiment_Agitate_Vol" xml:space="preserve">
     <value>Agitate
 Volume</value>
+  </data>
+  <data name="Experiment_Available_Regions" xml:space="preserve">
+    <value>Available Regions</value>
   </data>
   <data name="Experiment_Ch_Config" xml:space="preserve">
     <value>Channel Configuration</value>
@@ -556,6 +562,10 @@ Template</value>
   <data name="Experiment_Select_Wells" xml:space="preserve">
     <value>Select Wells</value>
   </data>
+  <data name="Experiment_Sel_Active_Region" xml:space="preserve">
+    <value>Select Active
+ Regions</value>
+  </data>
   <data name="Experiment_Speed" xml:space="preserve">
     <value>Speed</value>
   </data>
@@ -619,6 +629,9 @@ Order</value>
   <data name="FileSave_Plate_Summary" xml:space="preserve">
     <value>Plate Summary of MFI for All Regions</value>
   </data>
+  <data name="FileSave_Sys_Log" xml:space="preserve">
+    <value>Log to File</value>
+  </data>
   <data name="Green" xml:space="preserve">
     <value>Green</value>
   </data>
@@ -642,6 +655,9 @@ Order</value>
   </data>
   <data name="Maintenance_Sanitize" xml:space="preserve">
     <value>UVC Sanitize</value>
+  </data>
+  <data name="Mean" xml:space="preserve">
+    <value> Mean</value>
   </data>
   <data name="Motors_384W_C1" xml:space="preserve">
     <value>384W C1</value>
@@ -725,7 +741,7 @@ Order</value>
     <value>Up</value>
   </data>
   <data name="Name" xml:space="preserve">
-    <value>                  Name</value>
+    <value>Name</value>
   </data>
   <data name="OFF" xml:space="preserve">
     <value>OFF</value>

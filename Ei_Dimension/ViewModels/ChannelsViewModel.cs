@@ -59,7 +59,7 @@ namespace Ei_Dimension.ViewModels
         new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Channels_Sens_B), curCulture), this),
         new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Channels_Sens_C), curCulture), this)
       };
-      SelectedSensitivityIndex = 0;
+      SelectedSensitivityIndex = Settings.Default.SensitivityChannelB? (byte)0 : (byte)1;
       SelectedSensitivityContent = SensitivityItems[SelectedSensitivityIndex].Content;
       Instance = this;
     }
@@ -159,7 +159,7 @@ namespace Ei_Dimension.ViewModels
       {
         _vm.SelectedSensitivityContent = Content;
         _vm.SelectedSensitivityIndex = Index;
-        App.Device.ChannelBIsHiSensitivity = Index == 0 ? true : false;
+        App.SetSensitivityChannel(Index);
       }
 
       public static void ResetIndex()

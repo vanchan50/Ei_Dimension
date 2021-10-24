@@ -1,7 +1,5 @@
-﻿using DevExpress.Xpf.Charts;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -20,9 +18,25 @@ namespace Ei_Dimension.Views
   /// </summary>
   public partial class ResultsView : UserControl
   {
+    public static ResultsView Instance;
     public ResultsView()
     {
       InitializeComponent();
+      Instance = this;
+    }
+    public void AddXYPoint(double x, double y, SolidColorBrush brush)
+    {
+      var Point = new DevExpress.Xpf.Charts.SeriesPoint(x, y);
+      Point.Brush = brush;
+      HeatMap.Points.Add(Point);
+    }
+    public void ChangePointColor(int index, SolidColorBrush brush)
+    {
+      HeatMap.Points[index].Brush = brush;
+    }
+    public void ClearPoints()
+    {
+      HeatMap.Points.Clear();
     }
   }
 }

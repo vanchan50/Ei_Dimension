@@ -15,18 +15,13 @@ using System.Windows.Shapes;
 namespace Ei_Dimension.Views
 {
   /// <summary>
-  /// Interaction logic for ServiceView.xaml
+  /// Interaction logic for MainButtonsView.xaml
   /// </summary>
-  public partial class ServiceView : UserControl
+  public partial class MainButtonsView : UserControl
   {
-    public ServiceView()
+    public MainButtonsView()
     {
       InitializeComponent();
-    }
-
-    private void UserControl_Loaded(object sender, RoutedEventArgs e)
-    {
-      MotorsButton.IsChecked = true;
     }
   }
 }
