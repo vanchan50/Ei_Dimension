@@ -92,18 +92,20 @@
               <RadioButton GroupName="SelectWellGroup"
                            Content="96" Name="DbWell96"
                            Height="84" Width="118"
+                           img:EmbeddedImg.Image="/Icons/Plate96_icon.png"
                            Command="{Binding NavigateWellsSelectCommand}"
-                           Style="{StaticResource SubRibbonButtonStyle}"
+                           Style="{StaticResource SubRibbonSmallButtonStyle}"
                            Margin="0,0,4,6">
                 <RadioButton.CommandParameter>
                   <System:Int32>96</System:Int32>
                 </RadioButton.CommandParameter>
               </RadioButton>
               <RadioButton GroupName="SelectWellGroup"
-                       Content="384" Name="DbWell384"
-                       Height="84" Width="118"
-                       Style="{StaticResource SubRibbonButtonStyle}"
-                       Command="{Binding NavigateWellsSelectCommand}">
+                           Content="384" Name="DbWell384"
+                           Height="84" Width="118"
+                           img:EmbeddedImg.Image="/Icons/Plate384_icon.png"
+                           Style="{StaticResource SubRibbonSmallButtonStyle}"
+                           Command="{Binding NavigateWellsSelectCommand}">
                 <RadioButton.CommandParameter>
                   <System:Int32>384</System:Int32>
                 </RadioButton.CommandParameter>
@@ -113,6 +115,7 @@
                          Content="{lang:Loc Experiment_Tube}"
                          Height="84" Name="DbTube"
                          Click="DbTube_Click"
+                         img:EmbeddedImg.Image="/Icons/Tube_icon.png"
                          Style="{StaticResource SubRibbonButtonStyle}"
                          Command="{Binding NavigateWellsSelectCommand}">
               <RadioButton.CommandParameter>

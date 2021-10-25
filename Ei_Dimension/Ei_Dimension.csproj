@@ -446,6 +446,9 @@
     <Resource Include="Icons\BottomRightPlate.png" />
     <Resource Include="Icons\TopLeftPlate.png" />
     <Resource Include="Icons\TopRightPlate.png" />
+    <Resource Include="Icons\Tube_icon.png" />
+    <Resource Include="Icons\Plate384_icon.png" />
+    <Resource Include="Icons\Plate96_icon.png" />
     <Content Include="StaticMaps\QBlogo.h" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
