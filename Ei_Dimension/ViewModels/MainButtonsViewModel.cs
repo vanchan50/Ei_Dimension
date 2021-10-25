@@ -48,7 +48,6 @@ namespace Ei_Dimension.ViewModels
       App.Device.ReadActive = true;
 
       StartButtonEnabled = false;
-      ResultsViewModel.Instance.FillWorldMap(App.Device.RootDirectory.FullName + @"\Config\" + App.Device.ActiveMap.mapName + @"_world.json");
       ResultsViewModel.Instance.ClearGraphs();
       ResultsViewModel.Instance.PlotCurrent();
       ResultsViewModel.Instance.PlatePictogram.Clear();

@@ -63,9 +63,6 @@
             <dxc:AxisX2D.Range>
               <dxc:AxisRange SideMarginsEnabled="False"/>
             </dxc:AxisX2D.Range>
-            <dxc:AxisX2D.Label>
-              <dxc:AxisLabel TextPattern="{}{E:E0}"/>
-            </dxc:AxisX2D.Label>
           </dxc:AxisX2D>
         </dxc:XYDiagram2D.AxisX>
         <dxc:LineSeries2D DataSource="{Binding DisplayedRedSsc}"
@@ -107,10 +104,10 @@
                       VerticalAlignment="Top"
                       BorderThickness="0"
                       Focusable="False"
-                      Margin="0,452,0,0" Name="ChC">
+                      Margin="0,452,0,0">
       <dxc:XYDiagram2D Width="632" Height="388"
                        Margin="76,-8,0,0" 
-                       Focusable="False"
+                       Focusable="False" Name="ChC"
                        HorizontalAlignment="Left"
                        VerticalAlignment="Top">
         <dxc:XYDiagram2D.AxisY>

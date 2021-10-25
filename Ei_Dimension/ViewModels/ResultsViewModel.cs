@@ -29,6 +29,12 @@ namespace Ei_Dimension.ViewModels
     public virtual ObservableCollection<HistogramData> BackingGreenSsc { get; set; }
     public virtual ObservableCollection<HistogramData> BackingReporter { get; set; }
     public virtual ObservableCollection<HeatMapData> WorldMap { get; set; }
+    public List<HeatMapData> World01Map { get; private set; }
+    public List<HeatMapData> World02Map { get; private set; }
+    public List<HeatMapData> World03Map { get; private set; }
+    public List<HeatMapData> World12Map { get; private set; }
+    public List<HeatMapData> World13Map { get; private set; }
+    public List<HeatMapData> World23Map { get; private set; }
     public bool DisplaysCurrentmap { get; private set; }
     public bool FlipMapAnalysis { get; private set; }
     public List<HeatMapData> DisplayedMap { get; set; }
@@ -69,7 +75,6 @@ namespace Ei_Dimension.ViewModels
     protected ResultsViewModel()
     {
       ScatterSelectorState = new ObservableCollection<bool> { false, false, false, false, false };
-      WorldMap = new ObservableCollection<HeatMapData>();
 
       byte temp = Settings.Default.ScatterGraphSelector;
       if (temp >= 16)
@@ -150,7 +155,15 @@ namespace Ei_Dimension.ViewModels
       BackingCL13Map = new List<HeatMapData>();
       BackingCL23Map = new List<HeatMapData>();
 
+      World01Map = new List<HeatMapData>();
+      World02Map = new List<HeatMapData>();
+      World03Map = new List<HeatMapData>();
+      World12Map = new List<HeatMapData>();
+      World13Map = new List<HeatMapData>();
+      World23Map = new List<HeatMapData>();
+
       DisplayedMap = CurrentCL12Map;
+      WorldMap = new ObservableCollection<HeatMapData>();
       DisplayedForwardSsc = CurrentForwardSsc;
       DisplayedVioletSsc = CurrentVioletSsc;
       DisplayedRedSsc = CurrentRedSsc;
@@ -167,7 +180,7 @@ namespace Ei_Dimension.ViewModels
       RightLabel384Visible = System.Windows.Visibility.Hidden;
       TopLabel384Visible = System.Windows.Visibility.Visible;
       BottomLabel384Visible = System.Windows.Visibility.Hidden;
-      FillWorldMap(App.Device.RootDirectory.FullName + @"\Config\" + App.Device.ActiveMap.mapName + @"_world.json");
+      FillWorldMaps(App.Device.RootDirectory.FullName + @"\Config\" + App.Device.ActiveMap.mapName + @"_world.json");
     }
 
     public static ResultsViewModel Create()
@@ -177,25 +190,6 @@ namespace Ei_Dimension.ViewModels
 
     public void CLButtonClick(int CL)
     {
-      switch (CL)
-      {
-        case 0:
-          break;
-        case 1:
-          break;
-        case 2:
-          break;
-        case 3:
-          break;
-        case 4:
-          break;
-        case 5:
-          break;
-        case 6:
-          break;
-        case 7:
-          break;
-      }
       if (CL < 4)
       {
         CLButtonsChecked[0] = false;
@@ -214,9 +208,9 @@ namespace Ei_Dimension.ViewModels
       SetDisplayedMap();
       if (!DisplaysCurrentmap)
         _ = App.Current.Dispatcher.BeginInvoke((Action)(() =>
-        {
-          Core.DataProcessor.AnalyzeHeatMap(DisplayedMap);
-        }));
+          {
+            Core.DataProcessor.AnalyzeHeatMap(DisplayedMap);
+          }));
     }
 
     public void CornerButtonClick(int corner)
@@ -373,7 +367,7 @@ namespace Ei_Dimension.ViewModels
     {
       _ = Task.Run(async ()=>
       {
-        var path = @"D:\WorkC#\SampleData\Mon Run 2AA11_0.csv";// PlatePictogram.GetSelectedFilePath();
+        var path = PlatePictogram.GetSelectedFilePath();
         if (path == null)
           return;
         var beadStructslist = new List<MicroCy.BeadInfoStruct>();
@@ -399,7 +393,8 @@ namespace Ei_Dimension.ViewModels
         DisplayedGreenSsc = CurrentGreenSsc;
         DisplayedReporter = CurrentReporter;
 
-        Views.ResultsView.Instance.ClearPoints();
+        if(Views.ResultsView.Instance != null)
+          Views.ResultsView.Instance.ClearPoints();
         _ = App.Current.Dispatcher.BeginInvoke((Action)(() =>
         {
           Core.DataProcessor.AnalyzeHeatMap(DisplayedMap);
@@ -415,25 +410,39 @@ namespace Ei_Dimension.ViewModels
       }
     }
 
-    public void FillWorldMap(string path)
+    public void FillWorldMaps(string path)
     {
-      List<(int x, int y)> XYList = null;
       try
       {
         using (System.IO.TextReader reader = new System.IO.StreamReader(path))
         {
           var fileContents = reader.ReadToEnd();
-          XYList = Newtonsoft.Json.JsonConvert.DeserializeObject<List<(int, int)>>(fileContents);
+          List<(int x, int y)> XYList = Newtonsoft.Json.JsonConvert.DeserializeObject<List<(int x, int y)>>(fileContents);
+          foreach (var point in XYList)
+          {
+            World12Map.Add(new HeatMapData(point.x, point.y));
+          }
         }
       }
       catch { }
-      if (XYList != null)
+      PlotCurrent(DisplaysCurrentmap);
+    }
+
+    private void SetWorldMap(List<HeatMapData> Map)
+    {
+      if (Map != null)
       {
-        WorldMap.Clear();
-        foreach (var point in XYList)
+        _ = App.Current.Dispatcher.BeginInvoke((Action)(() =>
         {
-          WorldMap.Add(new HeatMapData(point.x, point.y));
-        }
+          WorldMap.Clear();
+          foreach (var point in Map)
+          {
+            if (FlipMapAnalysis)
+              WorldMap.Add(new HeatMapData(point.Y, point.X));
+            else
+              WorldMap.Add(new HeatMapData(point.X, point.Y));
+          }
+        }));
       }
     }
 
@@ -448,6 +457,7 @@ namespace Ei_Dimension.ViewModels
             DisplayedMap = CurrentCL01Map;
           else
             DisplayedMap = BackingCL01Map;
+          SetWorldMap(World01Map);
         }
         else if (CLButtonsChecked[2])
         {
@@ -455,6 +465,7 @@ namespace Ei_Dimension.ViewModels
             DisplayedMap = CurrentCL02Map;
           else
             DisplayedMap = BackingCL02Map;
+          SetWorldMap(World02Map);
         }
         else if (CLButtonsChecked[3])
         {
@@ -462,11 +473,13 @@ namespace Ei_Dimension.ViewModels
             DisplayedMap = CurrentCL03Map;
           else
             DisplayedMap = BackingCL03Map;
+          SetWorldMap(World03Map);
         }
         else
         {
           DisplayedMap = null;
           Views.ResultsView.Instance.ClearPoints();
+          WorldMap.Clear();
         }
       }
       else if (CLButtonsChecked[5])
@@ -478,6 +491,7 @@ namespace Ei_Dimension.ViewModels
           else
             DisplayedMap = BackingCL01Map;
           FlipMapAnalysis = true;
+          SetWorldMap(World01Map);
         }
         else if (CLButtonsChecked[2])
         {
@@ -485,6 +499,7 @@ namespace Ei_Dimension.ViewModels
             DisplayedMap = CurrentCL12Map;
           else
             DisplayedMap = BackingCL12Map;
+          SetWorldMap(World12Map);
         }
         else if (CLButtonsChecked[3])
         {
@@ -492,11 +507,13 @@ namespace Ei_Dimension.ViewModels
             DisplayedMap = CurrentCL13Map;
           else
             DisplayedMap = BackingCL13Map;
+          SetWorldMap(World13Map);
         }
         else
         {
           DisplayedMap = null;
           Views.ResultsView.Instance.ClearPoints();
+          WorldMap.Clear();
         }
       }
       else if (CLButtonsChecked[6])
@@ -508,6 +525,7 @@ namespace Ei_Dimension.ViewModels
           else
             DisplayedMap = BackingCL02Map;
           FlipMapAnalysis = true;
+          SetWorldMap(World02Map);
         }
         else if (CLButtonsChecked[1])
         {
@@ -516,6 +534,7 @@ namespace Ei_Dimension.ViewModels
           else
             DisplayedMap = BackingCL12Map;
           FlipMapAnalysis = true;
+          SetWorldMap(World12Map);
         }
         else if (CLButtonsChecked[3])
         {
@@ -523,11 +542,13 @@ namespace Ei_Dimension.ViewModels
             DisplayedMap = CurrentCL23Map;
           else
             DisplayedMap = BackingCL23Map;
+          SetWorldMap(World23Map);
         }
         else
         {
           DisplayedMap = null;
           Views.ResultsView.Instance.ClearPoints();
+          WorldMap.Clear();
         }
       }
       else if (CLButtonsChecked[7])
@@ -539,6 +560,7 @@ namespace Ei_Dimension.ViewModels
           else
             DisplayedMap = BackingCL03Map;
           FlipMapAnalysis = true;
+          SetWorldMap(World03Map);
         }
         else if (CLButtonsChecked[1])
         {
@@ -547,6 +569,7 @@ namespace Ei_Dimension.ViewModels
           else
             DisplayedMap = BackingCL13Map;
           FlipMapAnalysis = true;
+          SetWorldMap(World13Map);
         }
         else if (CLButtonsChecked[2])
         {
@@ -555,11 +578,13 @@ namespace Ei_Dimension.ViewModels
           else
             DisplayedMap = BackingCL23Map;
           FlipMapAnalysis = true;
+          SetWorldMap(World23Map);
         }
         else
         {
           DisplayedMap = null;
           Views.ResultsView.Instance.ClearPoints();
+          WorldMap.Clear();
         }
       }
     }

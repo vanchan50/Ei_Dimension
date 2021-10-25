@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DevExpress.Xpf.Charts;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -23,6 +24,10 @@ namespace Ei_Dimension.Views
     {
       InitializeComponent();
       Instance = this;
+      ChC.AxisX.WholeRange.AutoSideMargins = false;
+      ChC.AxisX.WholeRange.SetMinMaxValues(10, 35000);
+      ChC.AxisY.WholeRange.AutoSideMargins = false;
+      ChC.AxisY.WholeRange.SetMinMaxValues(10, 35000);
     }
     public void AddXYPoint(double x, double y, SolidColorBrush brush)
     {

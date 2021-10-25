@@ -4,8 +4,6 @@ When something from Settings changes, use .Save() and don't forget to change App
 Save settings from textboxes in App.InjectToTextbox()
 ResultsView scatter chart switch legend with buttons so it can be bound to command
 
-ExperimentVM ChangeWellTableSize() has tube as case 1; implement in view
-CalibrationVM Classification targets has a weird legacy chart2series stuff. propbably not necessary
 ComponentsView SamplingON button - change behaviour like GetPosition Toggle button. for language swapping
 AlignmentVM LastCalibratedPosition no implementation in legacy; Auto Align - no Run button implementation, and for some reason turns off LED's
 
@@ -15,10 +13,6 @@ If "." is inserted into texbox that is meant to be for INT, round down/ make som
 
 GetProperty still goes to textboxupdater and changes properties
 SetProperty goes same way and double time sets UI parameters
-
-BeadRegion class has a new member regionName. every map json has to implement that. do it for DimensionMaps file.
-  Update on this: we'll actually use templates to keep regionName data.
-  RegionsRenameHandler() is for remake with template.
 
 Fix bug with select all button in WellSelectView
 
@@ -45,14 +39,6 @@ Everthing regarging activeregions should be a separate class kept in App.
 
 Devexpress dxb:PopupMenu can be used for numpad near textbox
 
-all incoming data is sorted to bins in updater.
-  heatmap can be done as "analog" or "discrete"
-  analog will require a lot of memory, and some smoothing algorithm <-- O(n^2) that is too much work for no real reason
-  !discrete is just bins of each coordinate, easy to calculate, less memory! <---Way to go
-
-so:
-get raw data from microcy. bin it. put to respective containers
-
 resultsVM has obscollections of obsobjects. can ez be translated to arrays[obsobjects], so obscollection not neeeded?
 
 results page table should display mean and current stats for the current well being read or
@@ -65,16 +51,7 @@ save template name somewhere, also display somewhere. fill it when template load
 
 TimerTick looks like not the best option. should be used only to update UI. program logic should be on a separate thread?
 
-
-  plateprogress or controls show on the rightside, depending if tube or wells is selected
-
-  experimentVM behaviour should be done in codeBehind
-
-App.ChangeDrawingPlateState() - controls resultsView plate pictogram.
-  Not sure how to detect last well, so it doesn't go overboard.
-
 case "ClassificationTargetsContents": (CalibrationView Classification Targets)
-  adds a point to XY plot. what is it?
   Save Calibration to current map button is viable?
 
 Fixed a bug, also present in Legacy: second press of END button results in crash by SetReadingParamsForWell() accesing index+1
@@ -88,6 +65,5 @@ Device.TerminationReadyCheck() case 1
 Analysis if beads hit a certain region is still done with log(x * num) and not log10() with proper binning. fix it
 
 
-AnalyzeHeatmap iunserts proper CL data to graph. CL0-3 stiwches should properly indicate which data to output and taht's it.
-  also, swap XY, for half of plots.
-  And move all this to separate class please, that's disgusting
+ResultsVM.FillWorldMaps() has to be called on map selection in Dashboard.(and in dashboard constructor).
+  should probably go to a dedicated folder with worldmaps, and import by name. if name not available, just add 2 points (10,10) and (50k,50k)

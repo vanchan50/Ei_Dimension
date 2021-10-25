@@ -80,7 +80,8 @@
         <Border Height="45" Width="367"
                 HorizontalAlignment="Left">
           <Grid>
-            <TextBlock Text="       №"
+            <TextBlock Text="№"
+                       TextAlignment="Center"
                        FontSize="30"
                        Width="140"
                        HorizontalAlignment="Left"/>
@@ -118,15 +119,15 @@
         <Border HorizontalAlignment="Center">
           <StackPanel>
             <TextBlock Text="{lang:Loc Experiment_Samp_Vol}"
-                         FontFamily="{StaticResource AppTextFont}"
-                         FontSize="30"
-                         FontWeight="UltraBold"
-                         HorizontalAlignment="Center"
-                         Foreground="{StaticResource AppTextColor}"/>
+                       FontFamily="{StaticResource AppTextFont}"
+                       FontSize="30"
+                       FontWeight="UltraBold"
+                       HorizontalAlignment="Center"
+                       Foreground="{StaticResource AppTextColor}"/>
             <TextBox HorizontalAlignment="Stretch"
-                       Margin="0,4,0,0"
-                       Style="{StaticResource InputFieldStyle}"
-                       Text="{Binding Volumes[0]}">
+                     Margin="0,4,0,0"
+                     Style="{StaticResource InputFieldStyle}"
+                     Text="{Binding Volumes[0]}">
               <dxmvvm:Interaction.Behaviors>
                 <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="2"/>
                 <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
@@ -176,48 +177,48 @@
                        HorizontalAlignment="Center"
                        Foreground="{StaticResource AppTextColor}"/>
             <TextBox HorizontalAlignment="Stretch"
-                       Margin="0,4,0,0"
-                       Style="{StaticResource InputFieldStyle}"
-                       Text="{Binding Volumes[1]}">
+                     Margin="0,4,0,0"
+                     Style="{StaticResource InputFieldStyle}"
+                     Text="{Binding Volumes[1]}">
               <dxmvvm:Interaction.Behaviors>
                 <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="3"/>
                 <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
               </dxmvvm:Interaction.Behaviors>
             </TextBox>
             <TextBlock Text="{lang:Loc Experiment_Agitate_Vol}"
-                         FontFamily="{StaticResource AppTextFont}"
-                         FontSize="30"
-                         FontWeight="UltraBold"
-                         HorizontalAlignment="Center"
-                         Foreground="{StaticResource AppTextColor}"
-                         Margin="0,3,0,0"/>
+                       FontFamily="{StaticResource AppTextFont}"
+                       FontSize="30"
+                       FontWeight="UltraBold"
+                       HorizontalAlignment="Center"
+                       Foreground="{StaticResource AppTextColor}"
+                       Margin="0,3,0,0"/>
             <TextBox HorizontalAlignment="Stretch"
-                       Margin="0,4,0,0"
-                       Style="{StaticResource InputFieldStyle}"
-                       Text="{Binding Volumes[2]}">
+                     Margin="0,4,0,0"
+                     Style="{StaticResource InputFieldStyle}"
+                     Text="{Binding Volumes[2]}">
               <dxmvvm:Interaction.Behaviors>
                 <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="4"/>
                 <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
               </dxmvvm:Interaction.Behaviors>
             </TextBox>
             <ToggleButton Content="{lang:Loc Dashboard_Pressure_Mon}"
-                    Style="{StaticResource ToggleButtonThemeStyle}"
-                    Height="75" Width="160"
-                    Margin="0,26,0,0" Cursor="Hand"
-                    IsChecked="{Binding PressureMonToggleButtonState, Mode=OneWay}"
-                    Command="{Binding PressureMonToggleButtonClickCommand}"/>
+                          Style="{StaticResource ToggleButtonThemeStyle}"
+                          Height="75" Width="160"
+                          Margin="0,26,0,0" Cursor="Hand"
+                          IsChecked="{Binding PressureMonToggleButtonState, Mode=OneWay}"
+                          Command="{Binding PressureMonToggleButtonClickCommand}"/>
             <TextBox HorizontalAlignment="Stretch"
-               IsReadOnly="True"
-               Margin="0,5,0,0"
-               Style="{StaticResource InputFieldStyle}"
-               Text="{Binding PressureMon[0]}"/>
+                     IsReadOnly="True"
+                     Margin="0,5,0,0"
+                     Style="{StaticResource InputFieldStyle}"
+                     Text="{Binding PressureMon[0]}"/>
             <TextBlock Text="{lang:Loc Dashboard_Pressure_Mon_Max}"
-                 FontFamily="{StaticResource AppTextFont}"
-                 FontSize="26" Height="70"
-                 FontWeight="UltraBold"
-                 Foreground="{StaticResource AppTextColor}"
-                 HorizontalAlignment="Center"
-                 Margin="0,5,0,0"/>
+                       FontFamily="{StaticResource AppTextFont}"
+                       FontSize="26" Height="70"
+                       FontWeight="UltraBold"
+                       Foreground="{StaticResource AppTextColor}"
+                       HorizontalAlignment="Center"
+                       Margin="0,5,0,0"/>
             <TextBox HorizontalAlignment="Stretch"
                      IsReadOnly="True"
                      Margin="0,5,0,0"
