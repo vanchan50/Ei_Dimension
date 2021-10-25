@@ -41,27 +41,27 @@
                 HorizontalAlignment="Left">
       <RadioButton Content="{lang:Loc Experiment_Dashboard}"
                    Height="84" Name="DbButton"
-                   IsChecked="True"
+                   IsChecked="True" Cursor="Hand"
                    Style="{StaticResource SubRibbonButtonStyle}"
                    img:EmbeddedImg.Image="/Icons/syringe speeds icon.png"
                    Command="{Binding NavigateDashboardCommand}"/>
       <RadioButton Content="{lang:Loc Experiment_Sel_Active_Region}"
-                   Height="84" Name="SelRegButton"
+                   Height="84" Name="SelRegButton" Cursor="Hand"
                    img:EmbeddedImg.Image="/Icons/components icon.png"
                    Style="{StaticResource SubRibbonButtonStyle}"
                    Command="{Binding NavigateSelRegionsCommand}"/>
       <Button Content="{lang:Loc Experiment_Load_Template}"
-                   Height="84"
+                   Height="84" Cursor="Hand"
                    img:EmbeddedImg.Image="{dx:DXImage 'SvgImages/Export/Export.svg'}"
                    Style="{StaticResource DashboardButtonStyle}"
                    Command="{Binding LoadTemplateCommand}"/>
       <Button Content="{lang:Loc Experiment_Save_Template}"
-                   Height="84"
+                   Height="84" Cursor="Hand"
                    img:EmbeddedImg.Image="{dx:DXImage 'SvgImages/PDF Viewer/Import.svg'}"
                    Style="{StaticResource DashboardButtonStyle}"
                    Command="{Binding SaveTemplateCommand}"/>
       <RadioButton Content="{lang:Loc Experiment_FileSave}"
-                   Height="84" Name="SelFileButton"
+                   Height="84" Name="SelFileButton" Cursor="Hand"
                    img:EmbeddedImg.Image="{dx:DXImage 'SvgImages/Reports/PrintPageRange.svg'}"
                    Style="{StaticResource SubRibbonButtonStyle}"
                    Command="{Binding NavigateFileSaveCommand}"/>
@@ -95,14 +95,14 @@
                            img:EmbeddedImg.Image="/Icons/Plate96_icon.png"
                            Command="{Binding NavigateWellsSelectCommand}"
                            Style="{StaticResource SubRibbonSmallButtonStyle}"
-                           Margin="0,0,4,6">
+                           Margin="0,0,4,6" Cursor="Hand">
                 <RadioButton.CommandParameter>
                   <System:Int32>96</System:Int32>
                 </RadioButton.CommandParameter>
               </RadioButton>
               <RadioButton GroupName="SelectWellGroup"
                            Content="384" Name="DbWell384"
-                           Height="84" Width="118"
+                           Height="84" Width="118" Cursor="Hand"
                            img:EmbeddedImg.Image="/Icons/Plate384_icon.png"
                            Style="{StaticResource SubRibbonSmallButtonStyle}"
                            Command="{Binding NavigateWellsSelectCommand}">
@@ -114,7 +114,7 @@
             <RadioButton GroupName="SelectWellGroup"
                          Content="{lang:Loc Experiment_Tube}"
                          Height="84" Name="DbTube"
-                         Click="DbTube_Click"
+                         Click="DbTube_Click" Cursor="Hand"
                          img:EmbeddedImg.Image="/Icons/Tube_icon.png"
                          Style="{StaticResource SubRibbonButtonStyle}"
                          Command="{Binding NavigateWellsSelectCommand}">

@@ -64,6 +64,7 @@
                 <Setter.Value>
                   <ControlTemplate>
                     <Ellipse Width="48" Height="48"
+                             Cursor="Hand"
                              Fill="{StaticResource ButtonBackground}"
                              Stroke="{StaticResource AppBackground}"
                              StrokeThickness="2"/>
@@ -148,6 +149,7 @@
                  VerticalAlignment="Top"
                  Margin="0,50,0,0"/>
         <dx:DropDownButton FontSize="30"
+                           Cursor="Hand"
                            Margin="10,0,10,0"
                            dxb:BarManager.ShowGlyphsInPopupMenus="False"
                            FontFamily="{StaticResource AppTextFont}"

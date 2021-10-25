@@ -52,27 +52,31 @@
                    img:EmbeddedImg.Image="/Icons/acquire sample icon.png"
                    Style="{DynamicResource MainRibbonButtonStyle}"
                    Command="{Binding NavigateExperimentCommand}"
-                   IsChecked="True">
+                   IsChecked="True" Cursor="Hand">
       </RadioButton>
       <RadioButton Content="{lang:Loc Ribbon_Results}" Width="216"
                     img:EmbeddedImg.Image="/Icons/results icon.png"
                     Style="{DynamicResource MainRibbonButtonStyle}"
-                    Command="{Binding NavigateResultsCommand}">
+                    Command="{Binding NavigateResultsCommand}"
+                    Cursor="Hand">
       </RadioButton>
       <RadioButton Content="{lang:Loc Ribbon_Analysis}" Width="216"
                     img:EmbeddedImg.Image="/Icons/data analysis icon.png"
                     Style="{DynamicResource MainRibbonButtonStyle}"
-                    Command="{Binding NavigateDataAnalysisCommand}">
+                    Command="{Binding NavigateDataAnalysisCommand}"
+                    Cursor="Hand">
       </RadioButton>
       <RadioButton Content="{lang:Loc Ribbon_Maintenance}" Width="216"
                     img:EmbeddedImg.Image="/Icons/maintenance icon.png"
                     Style="{DynamicResource MainRibbonButtonStyle}"
-                    Command="{Binding NavigateMaintenanceCommand}">
+                    Command="{Binding NavigateMaintenanceCommand}"
+                    Cursor="Hand">
       </RadioButton>
       <RadioButton Content="{lang:Loc Ribbon_Service}" Width="216"
                     img:EmbeddedImg.Image="/Icons/service iconV2.png"
                     Style="{DynamicResource MainRibbonButtonStyle}"
-                    Command="{Binding NavigateSettingsCommand}">
+                    Command="{Binding NavigateSettingsCommand}"
+                    Cursor="Hand">
       </RadioButton>
     </StackPanel>
 
@@ -96,7 +100,7 @@
                      Margin="1760,80,0,0"
                      Glyph="{dx:DXImage 'SvgImages/Icon Builder/Electronics_Keyboard.svg'}"
                      GlyphHeight="40"
-                     GlyphWidth="40"
+                     GlyphWidth="40" Cursor="Hand"
                      Command="{Binding NumpadToggleButonCommand}"/>
 
     <Grid Width="202" Height="280"

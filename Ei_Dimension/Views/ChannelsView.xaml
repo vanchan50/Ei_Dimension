@@ -426,7 +426,7 @@
                    VerticalAlignment="Top"
                    Margin="0,16,0,3"/>
           <dx:DropDownButton 
-                           Height="50"
+                           Height="50" Cursor="Hand"
                            FontSize="25"
                            dxb:BarManager.ShowGlyphsInPopupMenus="False"
                            FontFamily="{StaticResource AppTextFont}"
@@ -475,17 +475,17 @@
           <Button Content="{lang:Loc Channels_Set_Offset}"
                   Command="{Binding SetOffsetButtonClickCommand}"
                   Style="{StaticResource ButtonStyle}"
-                  Height="85"
+                  Height="85" Cursor="Hand"
                   Margin="0,0,0,6"/>
           <Button Content="{lang:Loc Channels_Update_Bias}"
                   Command="{Binding UpdateBiasButtonClickCommand}"
                   Style="{StaticResource ButtonStyle}"
-                  Height="85"
+                  Height="85" Cursor="Hand"
                   Margin="0,0,0,6"/>
           <Button Content="{lang:Loc Channels_Save_Bias_To_Map}"
                   Command="{Binding SaveBiasButtonClickCommand}"
                   Style="{StaticResource ButtonStyle}"
-                  Height="150"
+                  Height="150" Cursor="Hand"
                   Margin="0,0,0,3"/>
           <TextBlock Text="{Binding CurrentMapName[0]}"
                      FontFamily="{StaticResource AppTextFont}"

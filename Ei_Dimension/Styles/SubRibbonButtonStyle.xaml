@@ -43,6 +43,7 @@
       <Setter Property="FontSize" Value="22"/>
       <Setter Property="Foreground" Value="{DynamicResource AppTextColor}"/>
       <Setter Property="Background" Value="{DynamicResource SubRibbonBackground}"/>
+      <Setter Property="Cursor" Value="Hand"/>
       <Setter Property="Margin" Value="0,0,0,6"/>
     </Style.Setters>
 
@@ -91,6 +92,7 @@
       <Setter Property="FontSize" Value="22"/>
       <Setter Property="Foreground" Value="{DynamicResource AppTextColor}"/>
       <Setter Property="Background" Value="{DynamicResource SubRibbonBackground}"/>
+      <Setter Property="Cursor" Value="Hand"/>
       <Setter Property="Margin" Value="0,0,0,6"/>
     </Style.Setters>
 

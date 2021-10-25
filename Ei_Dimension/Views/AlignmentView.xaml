@@ -50,7 +50,7 @@
                 Command="{Binding GoToLastCalibratedPositionClickCommand}"
                 Style="{StaticResource ButtonStyle}"
                 Height="60"
-                Width="180"
+                Width="180" Cursor="Hand"
                 Margin="0,8,0,0"/>
         <TextBox  Height="36"
                   HorizontalAlignment="Stretch"
@@ -103,7 +103,7 @@
                          Style="{StaticResource RadioButtonVerticalThemeStyle}"
                          IsChecked="True"
                          HorizontalAlignment="Stretch"
-                         Height="60"
+                         Height="60" Cursor="Hand"
                          Command="{Binding LaserAlignMotorSelectorCommand}">
               <RadioButton.CommandParameter>
                 <System:Byte>1</System:Byte>
@@ -112,7 +112,7 @@
             <RadioButton Content="{lang:Loc Alignment_Right}"
                          Style="{StaticResource RadioButtonVerticalThemeStyle}"
                          HorizontalAlignment="Stretch"
-                         Height="60"
+                         Height="60" Cursor="Hand"
                          Command="{Binding LaserAlignMotorSelectorCommand}">
               <RadioButton.CommandParameter>
                 <System:Byte>2</System:Byte>
@@ -125,12 +125,12 @@
                 Command="{Binding RunLaserAlignMotorClickCommand}"
                 Style="{StaticResource ButtonStyle}"
                 Height="60" Width="180"
-                Margin="0,8,0,0"/>
+                Margin="0,8,0,0" Cursor="Hand"/>
         <Button Content="{lang:Loc Halt}"
                 Command="{Binding HaltLaserAlignMotorClickCommand}"
                 Style="{StaticResource HaltButtonStyle}"
                 Height="60" Width="180"
-                Margin="0,4,0,0"/>
+                Margin="0,4,0,0" Cursor="Hand"/>
 
       </StackPanel>
     </Border>
@@ -158,7 +158,7 @@
           <StackPanel>
             <RadioButton Content="{lang:Loc OFF}"
                          Style="{StaticResource RadioButtonVerticalThemeStyle}"
-                         Height="60"
+                         Height="60" Cursor="Hand"
                          HorizontalAlignment="Stretch"
                          IsChecked="True"
                          Command="{Binding AutoAlignSelectorCommand}">
@@ -168,7 +168,7 @@
             </RadioButton>
             <RadioButton Content="{lang:Loc Green}"
                          Style="{StaticResource RadioButtonVerticalThemeStyle}"
-                         Height="60"
+                         Height="60" Cursor="Hand"
                          HorizontalAlignment="Stretch"
                          Command="{Binding AutoAlignSelectorCommand}">
               <RadioButton.CommandParameter>
@@ -177,7 +177,7 @@
             </RadioButton>
             <RadioButton Content="{lang:Loc Red}"
                          Style="{StaticResource RadioButtonVerticalThemeStyle}"
-                         Height="60"
+                         Height="60" Cursor="Hand"
                          HorizontalAlignment="Stretch"
                          Command="{Binding AutoAlignSelectorCommand}">
               <RadioButton.CommandParameter>
@@ -186,7 +186,7 @@
             </RadioButton>
             <RadioButton Content="{lang:Loc Violet}"
                          Style="{StaticResource RadioButtonVerticalThemeStyle}"
-                         Height="60"
+                         Height="60" Cursor="Hand"
                          HorizontalAlignment="Stretch"
                          Command="{Binding AutoAlignSelectorCommand}">
               <RadioButton.CommandParameter>
@@ -200,7 +200,7 @@
                 Command="{Binding RunAutoAlignClickCommand}"
                 Style="{StaticResource ButtonStyle}"
                 Height="60" Width="180"
-                Margin="0,8,0,0"/>
+                Margin="0,8,0,0" Cursor="Hand"/>
 
       </StackPanel>
     </Border>
@@ -224,16 +224,16 @@
                 Command="{Binding ScanAlignSequenceClickCommand}"
                 Style="{StaticResource ButtonStyle}"
                 Height="60" Width="180"
-                Margin="0,0,0,8"/>
+                Margin="0,0,0,8" Cursor="Hand"/>
         <Button Content="{lang:Loc Alignment_Find_Peak}"
                 Command="{Binding FindPeakAlignSequenceClickCommand}"
                 Style="{StaticResource ButtonStyle}"
                 Height="60" Width="180"
-                Margin="0,0,0,8"/>
+                Margin="0,0,0,8" Cursor="Hand"/>
         <Button Content="{lang:Loc Alignment_GoTo_Peak}"
                 Command="{Binding GoToAlignSequenceClickCommand}"
                 Style="{StaticResource ButtonStyle}"
-                Height="60" Width="180"/>
+                Height="60" Width="180" Cursor="Hand"/>
 
         </StackPanel>
     </Border>

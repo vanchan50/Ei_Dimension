@@ -169,7 +169,7 @@
                    HorizontalAlignment="Left"
                    VerticalAlignment="Top"
                    Content="CL0"
-                   FontSize="35"
+                   FontSize="35" Cursor="Hand"
                    IsChecked="{Binding CLButtonsChecked[0], Mode=OneWay}"
                    Style="{StaticResource RadioButtonHorizontalThemeStyle}"
                    Command="{Binding CLButtonClickCommand}">
@@ -182,7 +182,7 @@
                    HorizontalAlignment="Left"
                    VerticalAlignment="Top"
                    Content="CL1"
-                   FontSize="35"
+                   FontSize="35" Cursor="Hand"
                    IsChecked="{Binding CLButtonsChecked[1], Mode=OneWay}"
                    Style="{StaticResource RadioButtonHorizontalThemeStyle}"
                    Command="{Binding CLButtonClickCommand}">
@@ -195,7 +195,7 @@
                    HorizontalAlignment="Left"
                    VerticalAlignment="Top"
                    Content="CL2"
-                   FontSize="35"
+                   FontSize="35" Cursor="Hand"
                    IsChecked="{Binding CLButtonsChecked[2], Mode=OneWay}"
                    Style="{StaticResource RadioButtonHorizontalThemeStyle}"
                    Command="{Binding CLButtonClickCommand}">
@@ -208,7 +208,7 @@
                    HorizontalAlignment="Left"
                    VerticalAlignment="Top"
                    Content="CL3"
-                   FontSize="35"
+                   FontSize="35" Cursor="Hand"
                    IsChecked="{Binding CLButtonsChecked[3], Mode=OneWay}"
                    Style="{StaticResource RadioButtonHorizontalThemeStyle}"
                    Command="{Binding CLButtonClickCommand}">
@@ -226,7 +226,7 @@
                    HorizontalAlignment="Left"
                    VerticalAlignment="Top"
                    Content="CL0"
-                   FontSize="35"
+                   FontSize="35" Cursor="Hand"
                    IsChecked="{Binding CLButtonsChecked[4], Mode=OneWay}"
                    Style="{StaticResource RadioButtonHorizontalThemeStyle}"
                    Command="{Binding CLButtonClickCommand}">
@@ -239,7 +239,7 @@
                    HorizontalAlignment="Left"
                    VerticalAlignment="Top"
                    Content="CL1"
-                   FontSize="35"
+                   FontSize="35" Cursor="Hand"
                    IsChecked="{Binding CLButtonsChecked[5], Mode=OneWay}"
                    Style="{StaticResource RadioButtonHorizontalThemeStyle}"
                    Command="{Binding CLButtonClickCommand}">
@@ -252,7 +252,7 @@
                    HorizontalAlignment="Left"
                    VerticalAlignment="Top"
                    Content="CL2"
-                   FontSize="35"
+                   FontSize="35" Cursor="Hand"
                    IsChecked="{Binding CLButtonsChecked[6], Mode=OneWay}"
                    Style="{StaticResource RadioButtonHorizontalThemeStyle}"
                    Command="{Binding CLButtonClickCommand}">
@@ -265,7 +265,7 @@
                    HorizontalAlignment="Left"
                    VerticalAlignment="Top"
                    Content="CL3"
-                   FontSize="35"
+                   FontSize="35" Cursor="Hand"
                    IsChecked="{Binding CLButtonsChecked[7], Mode=OneWay}"
                    Style="{StaticResource RadioButtonHorizontalThemeStyle}"
                    Command="{Binding CLButtonClickCommand}">
@@ -842,7 +842,7 @@
                       Visibility="{Binding Buttons384Visible}">
             <RadioButton Width="100" Height="70"
                        HorizontalAlignment="Left"
-                       VerticalAlignment="Top"
+                       VerticalAlignment="Top" Cursor="Hand"
                        IsChecked="{Binding CornerButtonsChecked[0], Mode=OneWay}"
                        img:EmbeddedImg.Image="/Icons/TopLeftPlate.png"
                        Style="{StaticResource ResultsRadioButtonStyle}"
@@ -852,7 +852,7 @@
               </RadioButton.CommandParameter>
             </RadioButton>
               <RadioButton Width="100" Height="70"
-                       Margin="10,0,0,0"
+                       Margin="10,0,0,0" Cursor="Hand"
                        HorizontalAlignment="Left"
                        VerticalAlignment="Top"
                        IsChecked="{Binding CornerButtonsChecked[1], Mode=OneWay}"
@@ -864,7 +864,7 @@
               </RadioButton.CommandParameter>
             </RadioButton>
             <RadioButton Width="100" Height="70"
-                       Margin="10,0,0,0"
+                       Margin="10,0,0,0" Cursor="Hand"
                        HorizontalAlignment="Left"
                        VerticalAlignment="Top"
                        IsChecked="{Binding CornerButtonsChecked[2], Mode=OneWay}"
@@ -876,7 +876,7 @@
               </RadioButton.CommandParameter>
             </RadioButton>
             <RadioButton Width="100" Height="70"
-                       Margin="10,0,0,0"
+                       Margin="10,0,0,0" Cursor="Hand"
                        HorizontalAlignment="Left"
                        VerticalAlignment="Top"
                        IsChecked="{Binding CornerButtonsChecked[3], Mode=OneWay}"
@@ -889,7 +889,7 @@
             </RadioButton>
           </StackPanel>
           <Button Width="163" Height="70"
-                  Margin="10,0,0,0"
+                  Margin="10,0,0,0" Cursor="Hand"
                   HorizontalAlignment="Left"
                   VerticalAlignment="Top"
                   Content="To Current"

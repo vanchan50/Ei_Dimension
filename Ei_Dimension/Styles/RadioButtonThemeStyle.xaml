@@ -31,6 +31,7 @@
       <Setter Property="Background" Value="{DynamicResource MenuButtonBackground}"/>
       <Setter Property="Foreground" Value="{DynamicResource AppTextColor}"/>
       <Setter Property="FontSize" Value="60"/>
+      <Setter Property="Cursor" Value="Hand"/>
     </Style.Setters>
 
     <Style.Triggers>
@@ -71,6 +72,7 @@
       <Setter Property="FontSize" Value="36"/>
       <Setter Property="Background" Value="{DynamicResource MenuButtonBackground}"/>
       <Setter Property="Foreground" Value="{DynamicResource AppTextColor}"/>
+      <Setter Property="Cursor" Value="Hand"/>
 
     </Style.Setters>
 
@@ -113,6 +115,7 @@
       <Setter Property="Background" Value="{DynamicResource MenuButtonBackground}"/>
       <Setter Property="Foreground" Value="{DynamicResource AppTextColor}"/>
       <Setter Property="FontSize" Value="60"/>
+      <Setter Property="Cursor" Value="Hand"/>
     </Style.Setters>
 
     <Style.Triggers>

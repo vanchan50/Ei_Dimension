@@ -297,7 +297,7 @@
       </StackPanel>
     </Border>
     <ToggleButton Style="{StaticResource ToggleButtonThemeStyle}"
-                  Height="60" Width="120"
+                  Height="60" Width="120" Cursor="Hand"
                   Content="{lang:Loc DataAn_Calib_stats}"
                   VerticalAlignment="Top"
                   HorizontalAlignment="Left"

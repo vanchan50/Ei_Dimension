@@ -38,6 +38,7 @@
       <Setter Property="FontSize" Value="22"/>
       <Setter Property="Foreground" Value="{DynamicResource AppTextColor}"/>
       <Setter Property="Background" Value="{DynamicResource HaltButtonBackground}"/>
+      <Setter Property="Cursor" Value="Hand"/>
     </Style.Setters>
 
 

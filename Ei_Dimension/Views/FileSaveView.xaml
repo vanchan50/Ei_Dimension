@@ -183,7 +183,7 @@
     <Button Content="Select folder"
             Width="150" Height="50"
             HorizontalAlignment="Left" VerticalAlignment="Top"
-            Margin="80,600,0,0"
+            Margin="80,600,0,0" Cursor="Hand"
             Style="{StaticResource ButtonStyle}"
             Command="{Binding SelectOutFolderCommand}"/>
     <StackPanel Orientation="Horizontal" 

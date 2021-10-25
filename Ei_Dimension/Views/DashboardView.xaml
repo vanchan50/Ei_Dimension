@@ -32,7 +32,7 @@
                 Height="75" Width="335"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                Margin="0,4,0,0">
+                Margin="0,4,0,0" Cursor="Hand">
           <Button.CommandParameter>
             <System:Int32>0</System:Int32>
           </Button.CommandParameter>
@@ -44,7 +44,7 @@
                 Height="75" Width="160"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                Margin="0,5,12,0">
+                Margin="0,5,12,0" Cursor="Hand">
             <Button.CommandParameter>
               <System:Int32>1</System:Int32>
             </Button.CommandParameter>
@@ -55,7 +55,7 @@
                 Height="75" Width="160"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                Margin="0,5,0,0">
+                Margin="0,5,0,0" Cursor="Hand">
             <Button.CommandParameter>
               <System:Int32>2</System:Int32>
             </Button.CommandParameter>
@@ -136,7 +136,7 @@
                         HorizontalAlignment="Center"
                         Width="192"
                         Margin="0,5,0,5">
-              <Button Content="25"
+              <Button Content="25" Cursor="Hand"
                       Command="{Binding SetFixedVolumeButtonClickCommand}"
                       Style="{StaticResource ButtonStyle}"
                       Height="50" Width="60"
@@ -147,7 +147,7 @@
                   <System:UInt16>25</System:UInt16>
                 </Button.CommandParameter>
               </Button>
-              <Button Content="50"
+              <Button Content="50" Cursor="Hand"
                       Command="{Binding SetFixedVolumeButtonClickCommand}"
                       Style="{StaticResource ButtonStyle}"
                       Height="50" Width="60"
@@ -158,7 +158,7 @@
                   <System:UInt16>50</System:UInt16>
                 </Button.CommandParameter>
               </Button>
-              <Button Content="100"
+              <Button Content="100" Cursor="Hand"
                       Command="{Binding SetFixedVolumeButtonClickCommand}"
                       Style="{StaticResource ButtonStyle}"
                       Height="50" Width="60"
@@ -203,7 +203,7 @@
             <ToggleButton Content="{lang:Loc Dashboard_Pressure_Mon}"
                     Style="{StaticResource ToggleButtonThemeStyle}"
                     Height="75" Width="160"
-                    Margin="0,26,0,0"
+                    Margin="0,26,0,0" Cursor="Hand"
                     IsChecked="{Binding PressureMonToggleButtonState, Mode=OneWay}"
                     Command="{Binding PressureMonToggleButtonClickCommand}"/>
             <TextBox HorizontalAlignment="Stretch"
@@ -254,7 +254,7 @@
                  VerticalAlignment="Top"
                  Margin="0,0,0,3"/>
         <dx:DropDownButton Width="170"
-                           Height="80"
+                           Height="80" Cursor="Hand"
                            FontSize="25"
                            HorizontalAlignment="Center"
                            dxb:BarManager.ShowGlyphsInPopupMenus="False"
@@ -292,7 +292,7 @@
                  VerticalAlignment="Top"
                  Margin="0,16,0,3"/>
         <dx:DropDownButton Width="170"
-                           Height="80"
+                           Height="80" Cursor="Hand"
                            FontSize="25"
                            HorizontalAlignment="Center"
                            dxb:BarManager.ShowGlyphsInPopupMenus="False"
@@ -330,7 +330,7 @@
                    VerticalAlignment="Top"
                    Margin="0,16,0,3"/>
         <dx:DropDownButton Width="170"
-                           Height="80"
+                           Height="80" Cursor="Hand"
                            FontSize="25"
                            HorizontalAlignment="Center"
                            dxb:BarManager.ShowGlyphsInPopupMenus="False"
@@ -376,7 +376,7 @@
                    VerticalAlignment="Top"
                    Margin="0,16,0,3"/>
         <dx:DropDownButton Width="170"
-                           Height="80"
+                           Height="80" Cursor="Hand"
                            FontSize="25"
                            HorizontalAlignment="Center"
                            dxb:BarManager.ShowGlyphsInPopupMenus="False"
@@ -414,7 +414,7 @@
                    VerticalAlignment="Top"
                    Margin="0,16,0,3"/>
         <dx:DropDownButton Width="170"
-                           Height="80"
+                           Height="80" Cursor="Hand"
                            FontSize="25"
                            HorizontalAlignment="Center"
                            dxb:BarManager.ShowGlyphsInPopupMenus="False"
@@ -452,7 +452,7 @@
                    VerticalAlignment="Top"
                    Margin="0,19,0,3"/>
         <dx:DropDownButton Width="170"
-                           Height="80"
+                           Height="80" Cursor="Hand"
                            FontSize="25"
                            HorizontalAlignment="Center"
                            dxb:BarManager.ShowGlyphsInPopupMenus="False"

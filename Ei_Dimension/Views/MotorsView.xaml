@@ -831,6 +831,7 @@
                   Height="80"
                   Width="280">
           <dx:DropDownButton Width="140"
+                             Cursor="Hand"
                              FontSize="50"
                              dxb:BarManager.ShowGlyphsInPopupMenus="False"
                              FontFamily="{StaticResource AppTextFont}"
@@ -859,6 +860,7 @@
             </dxb:PopupMenu>
           </dx:DropDownButton>
           <dx:DropDownButton Width="140"
+                             Cursor="Hand"
                              FontSize="50"
                              dxb:BarManager.ShowGlyphsInPopupMenus="False"
                              FontFamily="{StaticResource AppTextFont}"

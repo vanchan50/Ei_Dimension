@@ -41,6 +41,7 @@
       <Setter Property="FontSize" Value="26"/>
       <Setter Property="Foreground" Value="{DynamicResource AppTextColor}"/>
       <Setter Property="Background" Value="{DynamicResource MenuButtonBackground}"/>
+      <Setter Property="Cursor" Value="Hand"/>
     </Style.Setters>
 
 
