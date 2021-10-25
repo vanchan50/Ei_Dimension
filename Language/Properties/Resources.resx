@@ -260,6 +260,9 @@ Coefficient</value>
   <data name="Components_Wash_B" xml:space="preserve">
     <value>Wash B</value>
   </data>
+  <data name="Count" xml:space="preserve">
+    <value>Count</value>
+  </data>
   <data name="Counter" xml:space="preserve">
     <value>Counter</value>
   </data>

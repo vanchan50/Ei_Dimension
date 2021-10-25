@@ -1608,7 +1608,7 @@ namespace Ei_Dimension
           {
             _ = Current.Dispatcher.BeginInvoke((Action)(() =>
             {
-              Core.DataProcessor.AnalyzeHeatMap(ResultsViewModel.Instance.CurrentCL12Map);
+              Core.DataProcessor.AnalyzeHeatMap(ResultsViewModel.Instance.DisplayedMap);
               _histogramUpdateGoing = false;
             }));
           }

@@ -29,6 +29,9 @@ namespace Ei_Dimension.ViewModels
     public virtual ObservableCollection<HistogramData> BackingGreenSsc { get; set; }
     public virtual ObservableCollection<HistogramData> BackingReporter { get; set; }
     public virtual ObservableCollection<HeatMapData> WorldMap { get; set; }
+    public bool DisplaysCurrentmap { get; private set; }
+    public bool FlipMapAnalysis { get; private set; }
+    public List<HeatMapData> DisplayedMap { get; set; }
     public List<HeatMapData> CurrentCL01Map { get; private set; }
     public List<HeatMapData> CurrentCL02Map { get; private set; }
     public List<HeatMapData> CurrentCL03Map { get; private set; }
@@ -147,11 +150,14 @@ namespace Ei_Dimension.ViewModels
       BackingCL13Map = new List<HeatMapData>();
       BackingCL23Map = new List<HeatMapData>();
 
+      DisplayedMap = CurrentCL12Map;
       DisplayedForwardSsc = CurrentForwardSsc;
       DisplayedVioletSsc = CurrentVioletSsc;
       DisplayedRedSsc = CurrentRedSsc;
       DisplayedGreenSsc = CurrentGreenSsc;
       DisplayedReporter = CurrentReporter;
+      DisplaysCurrentmap = true;
+      FlipMapAnalysis = false;
 
       PlatePictogram = DrawingPlate.Create();
       Buttons384Visible = System.Windows.Visibility.Hidden;
@@ -205,6 +211,12 @@ namespace Ei_Dimension.ViewModels
         CLButtonsChecked[7] = false;
       }
       CLButtonsChecked[CL] = true;
+      SetDisplayedMap();
+      if (!DisplaysCurrentmap)
+        _ = App.Current.Dispatcher.BeginInvoke((Action)(() =>
+        {
+          Core.DataProcessor.AnalyzeHeatMap(DisplayedMap);
+        }));
     }
 
     public void CornerButtonClick(int corner)
@@ -322,13 +334,14 @@ namespace Ei_Dimension.ViewModels
           ToCurrentButtonClick();
           return;
         }
+        PlotCurrent(false);
         ClearGraphs(false);
         FillAllData();
-        PlotCurrent(false);
         PlatePictogram.FollowingCurrentCell = false;
       }
       catch { }
     }
+
     public void ChangeScatterLegend(int num)  //TODO: For buttons
     {
       ScatterSelectorState[num] = !ScatterSelectorState[num];
@@ -341,6 +354,7 @@ namespace Ei_Dimension.ViewModels
       Settings.Default.ScatterGraphSelector = res;
       Settings.Default.Save();
     }
+
     private async Task ParseBeadInfoAsync(string path, List<MicroCy.BeadInfoStruct> beadstructs)
     {
       List<string> LinesInFile = await Core.DataProcessor.GetDataFromFileAsync(path);
@@ -368,13 +382,15 @@ namespace Ei_Dimension.ViewModels
         Core.DataProcessor.BinMapData(beadStructslist, current: false);
         _ = App.Current.Dispatcher.BeginInvoke((Action)(()=>
         {
-          Core.DataProcessor.AnalyzeHeatMap(BackingCL12Map);
+          Core.DataProcessor.AnalyzeHeatMap(DisplayedMap);
         }));
       });
     }
 
     public void PlotCurrent(bool current = true)
     {
+      DisplaysCurrentmap = current;
+      SetDisplayedMap();
       if (current)
       {
         DisplayedForwardSsc = CurrentForwardSsc;
@@ -384,7 +400,10 @@ namespace Ei_Dimension.ViewModels
         DisplayedReporter = CurrentReporter;
 
         Views.ResultsView.Instance.ClearPoints();
-        Core.DataProcessor.AnalyzeHeatMap(CurrentCL12Map);
+        _ = App.Current.Dispatcher.BeginInvoke((Action)(() =>
+        {
+          Core.DataProcessor.AnalyzeHeatMap(DisplayedMap);
+        }));
       }
       else
       {
@@ -414,6 +433,133 @@ namespace Ei_Dimension.ViewModels
         foreach (var point in XYList)
         {
           WorldMap.Add(new HeatMapData(point.x, point.y));
+        }
+      }
+    }
+
+    private void SetDisplayedMap()
+    {
+      FlipMapAnalysis = false;
+      if (CLButtonsChecked[4])
+      {
+        if (CLButtonsChecked[1])
+        {
+          if (DisplaysCurrentmap)
+            DisplayedMap = CurrentCL01Map;
+          else
+            DisplayedMap = BackingCL01Map;
+        }
+        else if (CLButtonsChecked[2])
+        {
+          if (DisplaysCurrentmap)
+            DisplayedMap = CurrentCL02Map;
+          else
+            DisplayedMap = BackingCL02Map;
+        }
+        else if (CLButtonsChecked[3])
+        {
+          if (DisplaysCurrentmap)
+            DisplayedMap = CurrentCL03Map;
+          else
+            DisplayedMap = BackingCL03Map;
+        }
+        else
+        {
+          DisplayedMap = null;
+          Views.ResultsView.Instance.ClearPoints();
+        }
+      }
+      else if (CLButtonsChecked[5])
+      {
+        if (CLButtonsChecked[0])
+        {
+          if (DisplaysCurrentmap)
+            DisplayedMap = CurrentCL01Map;
+          else
+            DisplayedMap = BackingCL01Map;
+          FlipMapAnalysis = true;
+        }
+        else if (CLButtonsChecked[2])
+        {
+          if (DisplaysCurrentmap)
+            DisplayedMap = CurrentCL12Map;
+          else
+            DisplayedMap = BackingCL12Map;
+        }
+        else if (CLButtonsChecked[3])
+        {
+          if (DisplaysCurrentmap)
+            DisplayedMap = CurrentCL13Map;
+          else
+            DisplayedMap = BackingCL13Map;
+        }
+        else
+        {
+          DisplayedMap = null;
+          Views.ResultsView.Instance.ClearPoints();
+        }
+      }
+      else if (CLButtonsChecked[6])
+      {
+        if (CLButtonsChecked[0])
+        {
+          if (DisplaysCurrentmap)
+            DisplayedMap = CurrentCL02Map;
+          else
+            DisplayedMap = BackingCL02Map;
+          FlipMapAnalysis = true;
+        }
+        else if (CLButtonsChecked[1])
+        {
+          if (DisplaysCurrentmap)
+            DisplayedMap = CurrentCL12Map;
+          else
+            DisplayedMap = BackingCL12Map;
+          FlipMapAnalysis = true;
+        }
+        else if (CLButtonsChecked[3])
+        {
+          if (DisplaysCurrentmap)
+            DisplayedMap = CurrentCL23Map;
+          else
+            DisplayedMap = BackingCL23Map;
+        }
+        else
+        {
+          DisplayedMap = null;
+          Views.ResultsView.Instance.ClearPoints();
+        }
+      }
+      else if (CLButtonsChecked[7])
+      {
+        if (CLButtonsChecked[0])
+        {
+          if (DisplaysCurrentmap)
+            DisplayedMap = CurrentCL03Map;
+          else
+            DisplayedMap = BackingCL03Map;
+          FlipMapAnalysis = true;
+        }
+        else if (CLButtonsChecked[1])
+        {
+          if (DisplaysCurrentmap)
+            DisplayedMap = CurrentCL13Map;
+          else
+            DisplayedMap = BackingCL13Map;
+          FlipMapAnalysis = true;
+        }
+        else if (CLButtonsChecked[2])
+        {
+          if (DisplaysCurrentmap)
+            DisplayedMap = CurrentCL23Map;
+          else
+            DisplayedMap = BackingCL23Map;
+          FlipMapAnalysis = true;
+        }
+        else
+        {
+          DisplayedMap = null;
+          Views.ResultsView.Instance.ClearPoints();
         }
       }
     }

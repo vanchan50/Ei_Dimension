@@ -206,7 +206,7 @@ namespace Ei_Dimension.Core
 
     public static void AnalyzeHeatMap(List<HeatMapData> heatmap)
     {
-      if (heatmap.Count > 0)
+      if (heatmap != null && heatmap.Count > 0)
       {
         int max = 0;
         foreach (var p in heatmap)
@@ -222,7 +222,10 @@ namespace Ei_Dimension.Core
           {
             if (heatmap[i].A <= bins[j])
             {
-              Views.ResultsView.Instance.AddXYPoint(heatmap[i].X, heatmap[i].Y, _heatColors[j]);
+              if (ViewModels.ResultsViewModel.Instance.FlipMapAnalysis)
+                Views.ResultsView.Instance.AddXYPoint(heatmap[i].Y, heatmap[i].X, _heatColors[j]);
+              else
+                Views.ResultsView.Instance.AddXYPoint(heatmap[i].X, heatmap[i].Y, _heatColors[j]);
               break;
             }
           }

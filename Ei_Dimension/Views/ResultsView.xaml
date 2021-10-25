@@ -38,7 +38,7 @@
                        TickmarksMinorVisible="False"
                        TickmarksVisible="False">
             <dxc:AxisY2D.Title>
-              <dxc:AxisTitle Content="Count"
+              <dxc:AxisTitle Content="{lang:Loc Count}"
                              FontSize="30"
                              FontWeight="UltraBold"
                              FontFamily="{StaticResource AppTextFont}"
@@ -54,7 +54,7 @@
                        GridLinesVisible="True"
                        MinorCount="9">
             <dxc:AxisX2D.Title>
-              <dxc:AxisTitle Content="Value"
+              <dxc:AxisTitle Content="{lang:Loc Value}"
                              FontSize="30"
                              FontWeight="UltraBold"
                              FontFamily="{StaticResource AppTextFont}"
@@ -127,10 +127,6 @@
                 </dxc:Range.MinValue>
               </dxc:Range>
             </dxc:AxisY2D.WholeRange>
-            <dxc:AxisY2D.Title>
-              <dxc:AxisTitle Content="{Binding HeatmapAxisYTitle}"
-                             Visible="False"/>
-            </dxc:AxisY2D.Title>
           </dxc:AxisY2D>
         </dxc:XYDiagram2D.AxisY>
         <dxc:XYDiagram2D.AxisX>
@@ -147,10 +143,6 @@
                 </dxc:Range.MinValue>
               </dxc:Range>
             </dxc:AxisX2D.WholeRange>
-            <dxc:AxisX2D.Title>
-              <dxc:AxisTitle Content="{Binding HeatmapAxisXTitle}"
-                             Visible="False"/>
-            </dxc:AxisX2D.Title>
           </dxc:AxisX2D>
         </dxc:XYDiagram2D.AxisX>
         <dxc:PointSeries2D DataSource="{Binding WorldMap}"
@@ -173,7 +165,7 @@
     <StackPanel HorizontalAlignment="Left"
                 VerticalAlignment="Top"
                 Margin="15,550,0,0">
-      <RadioButton Width="60" Height="45"
+      <RadioButton Width="80" Height="50"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Top"
                    Content="CL0"
@@ -185,8 +177,8 @@
           <System:Int32>0</System:Int32>
         </RadioButton.CommandParameter>
       </RadioButton>
-      <RadioButton Width="60" Height="45"
-                   Margin="0,3,0,0"
+      <RadioButton Width="80" Height="50"
+                   Margin="0,6,0,0"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Top"
                    Content="CL1"
@@ -198,8 +190,8 @@
           <System:Int32>1</System:Int32>
         </RadioButton.CommandParameter>
       </RadioButton>
-      <RadioButton Width="60" Height="45"
-                   Margin="0,3,0,0"
+      <RadioButton Width="80" Height="50"
+                   Margin="0,6,0,0"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Top"
                    Content="CL2"
@@ -211,8 +203,8 @@
           <System:Int32>2</System:Int32>
         </RadioButton.CommandParameter>
       </RadioButton>
-      <RadioButton Width="60" Height="45"
-                   Margin="0,3,0,0"
+      <RadioButton Width="80" Height="50"
+                   Margin="0,6,0,0"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Top"
                    Content="CL3"
@@ -230,7 +222,7 @@
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
                 Margin="250,850,0,0">
-      <RadioButton Width="60" Height="45"
+      <RadioButton Width="80" Height="50"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Top"
                    Content="CL0"
@@ -242,8 +234,8 @@
           <System:Int32>4</System:Int32>
         </RadioButton.CommandParameter>
       </RadioButton>
-      <RadioButton Width="60" Height="45"
-                   Margin="3,0,0,0"
+      <RadioButton Width="80" Height="50"
+                   Margin="6,0,0,0"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Top"
                    Content="CL1"
@@ -255,8 +247,8 @@
           <System:Int32>5</System:Int32>
         </RadioButton.CommandParameter>
       </RadioButton>
-      <RadioButton Width="60" Height="45"
-                   Margin="3,0,0,0"
+      <RadioButton Width="80" Height="50"
+                   Margin="6,0,0,0"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Top"
                    Content="CL2"
@@ -268,8 +260,8 @@
           <System:Int32>6</System:Int32>
         </RadioButton.CommandParameter>
       </RadioButton>
-      <RadioButton Width="60" Height="45"
-                   Margin="3,0,0,0"
+      <RadioButton Width="80" Height="50"
+                   Margin="6,0,0,0"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Top"
                    Content="CL3"
