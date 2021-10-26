@@ -93,6 +93,13 @@
       </dxmvvm:Interaction.Behaviors>
     </dxwui:NavigationFrame>
 
+    <Grid Width="630" Height="366"
+          VerticalAlignment="Top" HorizontalAlignment="Left"
+          Margin="1248,140,0,0"
+          Visibility="{Binding StartButtonsVisible}">
+      <Views:MainButtonsView />
+    </Grid>
+
     <!--Numpad-->
     <dx:SimpleButton Height="40" Width="50"
                      HorizontalAlignment="Left"
@@ -132,13 +139,6 @@
                  Text="{Binding EventCountField[0]}"/>
       </StackPanel>
     </Border>
-
-    <Grid Width="630" Height="366"
-          VerticalAlignment="Top" HorizontalAlignment="Left"
-          Margin="1248,140,0,0"
-          Visibility="{Binding StartButtonsVisible}">
-      <Views:MainButtonsView />
-    </Grid>
 
     <Button HorizontalAlignment="Left" VerticalAlignment="Top"
             Width="100"
