@@ -546,7 +546,7 @@ namespace MicroCy
     private void SetSystemDirectories()
     {
       RootDirectory = new DirectoryInfo(Path.Combine(@"C:\Emissioninc", Environment.MachineName));
-      List<string> subDirectories = new List<string>(7) { "Config", "WorkOrder", "Archive", "Result", "Status", "AcquisitionData", "SystemLogs" };
+      List<string> subDirectories = new List<string>(7) { "Config", "WorkOrder", "Summary", "Archive", "Result", "Status", "AcquisitionData", "SystemLogs" };
       foreach (var d in subDirectories)
       {
         RootDirectory.CreateSubdirectory(d);

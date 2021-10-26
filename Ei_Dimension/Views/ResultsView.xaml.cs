@@ -31,7 +31,7 @@ namespace Ei_Dimension.Views
     }
     public void AddXYPoint(double x, double y, SolidColorBrush brush)
     {
-      var Point = new DevExpress.Xpf.Charts.SeriesPoint(x, y);
+      var Point = new SeriesPoint(x, y);
       Point.Brush = brush;
       HeatMap.Points.Add(Point);
     }

@@ -149,42 +149,42 @@ namespace MadWizard.WinUSBNet.API
 
 		public static DeviceDetails[] FindDevicesFromGuid(Guid guid)
 		{
-            IntPtr deviceInfoSet = IntPtr.Zero;
-            List<DeviceDetails> deviceList = new List<DeviceDetails>();
+      IntPtr deviceInfoSet = IntPtr.Zero;
+      List<DeviceDetails> deviceList = new List<DeviceDetails>();
 			try
 			{
-                deviceInfoSet = SetupDiGetClassDevs(ref guid, IntPtr.Zero, IntPtr.Zero, 
-                    DIGCF_PRESENT | DIGCF_DEVICEINTERFACE);
-                if (deviceInfoSet == FileIO.INVALID_HANDLE_VALUE)
-                    throw APIException.Win32("Failed to enumerate devices.");
-                int memberIndex = 0;
+        deviceInfoSet = SetupDiGetClassDevs(ref guid, IntPtr.Zero, IntPtr.Zero,
+          DIGCF_PRESENT | DIGCF_DEVICEINTERFACE);
+        if (deviceInfoSet == FileIO.INVALID_HANDLE_VALUE)
+          throw APIException.Win32("Failed to enumerate devices.");
+        int memberIndex = 0;
 				while(true)
 				{
 					// Begin with 0 and increment through the device information set until
 					// no more devices are available.					
-                    SP_DEVICE_INTERFACE_DATA deviceInterfaceData = new SP_DEVICE_INTERFACE_DATA();
+          SP_DEVICE_INTERFACE_DATA deviceInterfaceData = new SP_DEVICE_INTERFACE_DATA();
 
-				    // The cbSize element of the deviceInterfaceData structure must be set to
-				    // the structure's size in bytes. 
-				    // The size is 28 bytes for 32-bit code and 32 bytes for 64-bit code.
-				    deviceInterfaceData.cbSize = Marshal.SizeOf(deviceInterfaceData);
-				
-                    bool success;
+				  // The cbSize element of the deviceInterfaceData structure must be set to
+				  // the structure's size in bytes. 
+				  // The size is 28 bytes for 32-bit code and 32 bytes for 64-bit code.
+				  deviceInterfaceData.cbSize = Marshal.SizeOf(deviceInterfaceData);
+
+          bool success;
 
 					success = SetupDiEnumDeviceInterfaces(deviceInfoSet, IntPtr.Zero, ref guid, memberIndex, ref deviceInterfaceData);
 
 					// Find out if a device information set was retrieved.
 					if (!success)
 					{
-                        int lastError = Marshal.GetLastWin32Error();
-                        if (lastError == ERROR_NO_MORE_ITEMS)
-                            break;
+            int lastError = Marshal.GetLastWin32Error();
+            if (lastError == ERROR_NO_MORE_ITEMS)
+              break;
 
-                        throw APIException.Win32("Failed to get device interface.");
+            throw APIException.Win32("Failed to get device interface.");
 					}
 				    // A device is present.
 
-                    int bufferSize = 0;
+          int bufferSize = 0;
 
 					success = SetupDiGetDeviceInterfaceDetail
 						(deviceInfoSet,
@@ -194,76 +194,76 @@ namespace MadWizard.WinUSBNet.API
 						ref bufferSize,
 						IntPtr.Zero);
 
-                    if (!success)
-                    {
-                        if (Marshal.GetLastWin32Error() != ERROR_INSUFFICIENT_BUFFER)
-                            throw APIException.Win32("Failed to get interface details buffer size.");
-                    }
-                     
-                    IntPtr detailDataBuffer = IntPtr.Zero;
-                    try
-                    {
-                       
-                        // Allocate memory for the SP_DEVICE_INTERFACE_DETAIL_DATA structure using the returned buffer size.
-                        detailDataBuffer = Marshal.AllocHGlobal(bufferSize);
+          if (!success)
+          {
+            if (Marshal.GetLastWin32Error() != ERROR_INSUFFICIENT_BUFFER)
+              throw APIException.Win32("Failed to get interface details buffer size.");
+          }
+           
+          IntPtr detailDataBuffer = IntPtr.Zero;
+          try
+          {
+             
+            // Allocate memory for the SP_DEVICE_INTERFACE_DETAIL_DATA structure using the returned buffer size.
+            detailDataBuffer = Marshal.AllocHGlobal(bufferSize);
 
-                        // Store cbSize in the first bytes of the array. The number of bytes varies with 32- and 64-bit systems.
+            // Store cbSize in the first bytes of the array. The number of bytes varies with 32- and 64-bit systems.
 
-                        Marshal.WriteInt32(detailDataBuffer, (IntPtr.Size == 4) ? (4 + Marshal.SystemDefaultCharSize) : 8);
+            Marshal.WriteInt32(detailDataBuffer, (IntPtr.Size == 4) ? (4 + Marshal.SystemDefaultCharSize) : 8);
 
-                        // Call SetupDiGetDeviceInterfaceDetail again.
-                        // This time, pass a pointer to DetailDataBuffer
-                        // and the returned required buffer size.
+            // Call SetupDiGetDeviceInterfaceDetail again.
+            // This time, pass a pointer to DetailDataBuffer
+            // and the returned required buffer size.
 
-                        // build a DevInfo Data structure
-                        SP_DEVINFO_DATA da = new SP_DEVINFO_DATA();
-                        da.cbSize = Marshal.SizeOf(da);
+            // build a DevInfo Data structure
+            SP_DEVINFO_DATA da = new SP_DEVINFO_DATA();
+            da.cbSize = Marshal.SizeOf(da);
 
 
-                        success = SetupDiGetDeviceInterfaceDetail
-                            (deviceInfoSet,
-                            ref deviceInterfaceData,
-                            detailDataBuffer,
-                            bufferSize,
-                            ref bufferSize,
-                            ref da);
+            success = SetupDiGetDeviceInterfaceDetail
+                (deviceInfoSet,
+                ref deviceInterfaceData,
+                detailDataBuffer,
+                bufferSize,
+                ref bufferSize,
+                ref da);
 
-                        if (!success)
-                            throw APIException.Win32("Failed to get device interface details.");
-                        
-                        
-                        // Skip over cbsize (4 bytes) to get the address of the devicePathName.
+            if (!success)
+                throw APIException.Win32("Failed to get device interface details.");
+            
+            
+            // Skip over cbsize (4 bytes) to get the address of the devicePathName.
           
-                        IntPtr pDevicePathName = new IntPtr(detailDataBuffer.ToInt64() + 4);
-                        string pathName = Marshal.PtrToStringUni(pDevicePathName);
+            IntPtr pDevicePathName = new IntPtr(detailDataBuffer.ToInt64() + 4);
+            string pathName = Marshal.PtrToStringUni(pDevicePathName);
 
-                        // Get the String containing the devicePathName.
+            // Get the String containing the devicePathName.
 
-                        DeviceDetails details = GetDeviceDetails(pathName, deviceInfoSet, da);
+            DeviceDetails details = GetDeviceDetails(pathName, deviceInfoSet, da);
 
-                        
-                        deviceList.Add(details);
-                    }
-                    finally
-                    {
-                        if (detailDataBuffer != IntPtr.Zero)
-                        {
-                            Marshal.FreeHGlobal(detailDataBuffer);
-                            detailDataBuffer = IntPtr.Zero;
-                        }
-                    }
-                    memberIndex++;
-				}
-			}
-			finally
-			{
-                if (deviceInfoSet != IntPtr.Zero && deviceInfoSet != FileIO.INVALID_HANDLE_VALUE)
+            
+            deviceList.Add(details);
+          }
+          finally
+          {
+            if (detailDataBuffer != IntPtr.Zero)
+            {
+              Marshal.FreeHGlobal(detailDataBuffer);
+              detailDataBuffer = IntPtr.Zero;
+            }
+          }
+          memberIndex++;
+        }
+      }
+      finally
+      {
+        if (deviceInfoSet != IntPtr.Zero && deviceInfoSet != FileIO.INVALID_HANDLE_VALUE)
 				{
 					SetupDiDestroyDeviceInfoList(deviceInfoSet);
 				}
 			}
-            return deviceList.ToArray();
-		}			
+      return deviceList.ToArray();
+    }
 
 
 		public static void RegisterForDeviceNotifications(IntPtr controlHandle, Guid classGuid, ref IntPtr deviceNotificationHandle)
