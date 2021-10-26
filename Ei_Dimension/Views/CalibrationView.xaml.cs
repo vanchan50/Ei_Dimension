@@ -19,9 +19,11 @@ namespace Ei_Dimension.Views
   /// </summary>
   public partial class CalibrationView : UserControl
   {
+    public static CalibrationView Instance { get; private set; }
     public CalibrationView()
     {
       InitializeComponent();
+      Instance = this;
     }
   }
 }

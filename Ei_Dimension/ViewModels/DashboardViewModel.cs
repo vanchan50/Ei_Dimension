@@ -218,7 +218,7 @@ namespace Ei_Dimension.ViewModels
     public void SetWellsInOrder()
     {
       App.Device.WellsInOrder.Clear();
-      if (WellsSelectViewModel.Instance.CurrentTableSize > 1)    //TODO: platetype can be removed from device fields, as soon as workorder stuff is done
+      if (WellsSelectViewModel.Instance.CurrentTableSize > 1)
       {
         ObservableCollection<WellTableRow> plate = WellsSelectViewModel.Instance.CurrentTableSize == 96 ?
           WellsSelectViewModel.Instance.Table96Wells : WellsSelectViewModel.Instance.Table384Wells;

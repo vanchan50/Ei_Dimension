@@ -76,7 +76,6 @@ namespace MicroCy
     public bool ChannelBIsHiSensitivity { get; set; }
     public byte PlateRow { get; set; }
     public byte PlateCol { get; set; }
-    public byte PlateType { get; set; }
     public byte TerminationType { get; set; }
     public byte ReadingRow { get; set; }
     public byte ReadingCol { get; set; }
@@ -373,8 +372,6 @@ namespace MicroCy
         if (reader != null)
           reader.Close();
       }
-      //set plate type
-      PlateType = WorkOrder.numberCols == 12 ? (byte)0 : (byte)1;
       // send well depth once that is worked out
       return true;
     }
@@ -421,6 +418,8 @@ namespace MicroCy
 
     public void InitSTab(string tabname)
     {
+      //Removing this can lead to unforseen crucial bugs in instrument operation. If so - do with extra care
+      //one example is a check in CommandLists.Readertab for changed plate parameter,which could happen in manual well selection in motors tab
       List<byte> list = CommandLists.Readertab;
       switch (tabname)
       {

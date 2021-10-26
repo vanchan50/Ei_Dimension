@@ -24,6 +24,7 @@ namespace Ei_Dimension.ViewModels
     public virtual ObservableCollection<string> StepsParametersX { get; set; }
     public virtual ObservableCollection<string> StepsParametersY { get; set; }
     public virtual ObservableCollection<string> StepsParametersZ { get; set; }
+    public virtual ObservableCollection<bool> WellSelectionButtonsChecked { get; set; }
 
     public static MotorsViewModel Instance { get; private set; }
 
@@ -57,6 +58,7 @@ namespace Ei_Dimension.ViewModels
       ParametersY[1] = "Front";
       ParametersZ[1] = "Up";
       _amountOfWells = 96;
+      WellSelectionButtonsChecked = new ObservableCollection<bool> { true, false, false };
       SelectedWellRow = "A";
       SelectedWellColumn = "1";
       WellRowButtonItems = new ObservableCollection<DropDownButtonContents> { new DropDownButtonContents("A", this) };
@@ -92,39 +94,49 @@ namespace Ei_Dimension.ViewModels
       SelectedWellColumn = "1";
       RowColIndex = (1, 1);
       //switch only changes dropdown contents
+      WellSelectionButtonsChecked[0] = false;
+      WellSelectionButtonsChecked[1] = false;
+      WellSelectionButtonsChecked[2] = false;
       switch (num)
       {
         case 96:
-          WellRowButtonItems = new ObservableCollection<DropDownButtonContents> { new DropDownButtonContents("A", this) };
-          for (var i = 1; i < 8; i++)
+          WellSelectionButtonsChecked[0] = true;
+          for (var i = 0; i < 8; i++)
           {
             WellRowButtonItems.Add(new DropDownButtonContents(Convert.ToChar('A' + i).ToString()));
           }
           DropDownButtonContents.ResetIndex();
-          WellColumnButtonItems = new ObservableCollection<DropDownButtonContents>();
-          for (var i = 1; i < 13; i++)
+          for (var i = 0; i < 13; i++)
           {
             WellColumnButtonItems.Add(new DropDownButtonContents(i.ToString()));
           }
           DropDownButtonContents.ResetIndex();
           break;
         case 384:
-          WellRowButtonItems = new ObservableCollection<DropDownButtonContents> { new DropDownButtonContents("A", this) };
-          for (var i = 1; i < 16; i++)
+          WellSelectionButtonsChecked[1] = true;
+          for (var i = 0; i < 16; i++)
           {
             WellRowButtonItems.Add(new DropDownButtonContents(Convert.ToChar('A' + i).ToString()));
           }
           DropDownButtonContents.ResetIndex();
-          WellColumnButtonItems = new ObservableCollection<DropDownButtonContents>();
-          for (var i = 1; i < 25; i++)
+          for (var i = 0; i < 25; i++)
           {
             WellColumnButtonItems.Add(new DropDownButtonContents(i.ToString()));
           }
           DropDownButtonContents.ResetIndex();
           break;
+        case 1:
+          WellSelectionButtonsChecked[2] = true;
+          WellRowButtonItems.Add(new DropDownButtonContents("A"));
+          DropDownButtonContents.ResetIndex();
+          WellColumnButtonItems.Add(new DropDownButtonContents("1"));
+          DropDownButtonContents.ResetIndex();
+          break;
       }
 
       var param = num == 96 ? 0 : 1;
+      if (num == 1)
+        param = 2;
       App.Device.MainCommand("Set Property", code: 0xab, parameter: (ushort)param);
     }
 

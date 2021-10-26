@@ -940,6 +940,7 @@ namespace Ei_Dimension
           Views.DashboardView.Instance.DbActiveRegionNo,
           Views.DashboardView.Instance.DbActiveRegionName);
         ResultsViewModel.Instance.PlatePictogram.SetGrid(Views.ResultsView.Instance.DrawingPlate);
+        Views.CalibrationView.Instance.clmap.DataContext = DashboardViewModel.Instance;
         _isStartup = false;
       }
       TextBoxUpdater();

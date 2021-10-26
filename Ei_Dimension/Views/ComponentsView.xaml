@@ -212,7 +212,7 @@
     <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Margin="660,100,0,0"
-            Width="180">
+            Width="200">
 
       <StackPanel VerticalAlignment="Stretch">
         <TextBlock Text="{lang:Loc Components_Lasers}"
@@ -225,17 +225,17 @@
                  Margin="0,0,0,6"/>
 
         <Border Margin="0,0,0,13"
-                Width="180">
+                Width="200">
           <StackPanel VerticalAlignment="Stretch">
             <Border BorderThickness="2"
                     BorderBrush="{StaticResource AppTextColor}"
                     Margin="0,0,0,13"
                     CornerRadius="5"
-                    Width="180">
+                    Width="200">
               <Grid>
                 <ToggleButton Style="{StaticResource ToggleButtonThemeStyle}"
-                              Height="60" Cursor="Hand"
-                              Width="180"
+                              Height="60"
+                              Width="200"
                               Content="{lang:Loc Red}"
                               IsChecked="{Binding LasersActive[0], Mode=OneWay}"
                               VerticalAlignment="Top"
@@ -254,7 +254,7 @@
                            VerticalAlignment="Bottom"
                            Margin="10,0,0,15"/>
 
-                <TextBox Width="66"
+                <TextBox Width="80"
                          IsReadOnly="True"
                          Margin="96,68,0,8"
                          HorizontalAlignment="Left"
@@ -268,11 +268,11 @@
                     BorderBrush="{StaticResource AppTextColor}"
                     Margin="0,0,0,13"
                     CornerRadius="5"
-                    Width="180">
+                    Width="200">
               <Grid>
 
                 <ToggleButton Style="{StaticResource ToggleButtonThemeStyle}"
-                              Height="60" Width="180" Cursor="Hand"
+                              Height="60" Width="200"
                               Content="{lang:Loc Green}"
                               IsChecked="{Binding LasersActive[1], Mode=OneWay}"
                               VerticalAlignment="Top"
@@ -291,7 +291,7 @@
                            VerticalAlignment="Bottom"
                            Margin="10,0,0,15"/>
 
-                <TextBox Width="66"
+                <TextBox Width="80"
                          IsReadOnly="True"
                          Margin="96,68,0,8"
                          HorizontalAlignment="Left"
@@ -304,11 +304,11 @@
             <Border BorderThickness="2"
                     BorderBrush="{StaticResource AppTextColor}"
                     CornerRadius="5"
-                    Width="180">
+                    Width="200">
               <Grid>
 
                 <ToggleButton Style="{StaticResource ToggleButtonThemeStyle}"
-                              Height="60" Width="180" Cursor="Hand"
+                              Height="60" Width="200"
                               Content="{lang:Loc Violet}"
                               IsChecked="{Binding LasersActive[2], Mode=OneWay}"
                               VerticalAlignment="Top"
@@ -327,7 +327,7 @@
                            VerticalAlignment="Bottom"
                            Margin="10,0,0,15"/>
 
-                <TextBox Width="66"
+                <TextBox Width="80"
                          IsReadOnly="True"
                          Margin="96,68,0,8"
                          HorizontalAlignment="Left"

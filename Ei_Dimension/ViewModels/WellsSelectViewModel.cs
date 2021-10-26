@@ -82,50 +82,51 @@ namespace Ei_Dimension.ViewModels
 
     public void ChangeWellTableSize(int num)
     {
-      switch (num)
+      if (!App.Device.ReadActive)
       {
-        case 1:
-          App.Device.MainCommand("Set Property", code: 0xab, parameter: 2);
-          App.Device.PlateType = 2;
-          Table384Visible = Visibility.Hidden;
-          Table96Visible = Visibility.Hidden;
-          break;
-        case 96:
-          Table384Visible = Visibility.Hidden;
-          Table96Visible = Visibility.Visible;
-          if (CurrentTableSize != num)
-          {
-            foreach (var row in Table384Wells)
+        switch (num)
+        {
+          case 1:
+            App.Device.MainCommand("Set Property", code: 0xab, parameter: 2);
+            Table384Visible = Visibility.Hidden;
+            Table96Visible = Visibility.Hidden;
+            break;
+          case 96:
+            Table384Visible = Visibility.Hidden;
+            Table96Visible = Visibility.Visible;
+            if (CurrentTableSize != num)
             {
-              for (var i = 0; i < 24; i++)
+              foreach (var row in Table384Wells)
               {
-                row.SetType(i, WellType.Empty);
+                for (var i = 0; i < 24; i++)
+                {
+                  row.SetType(i, WellType.Empty);
+                }
               }
             }
             App.Device.MainCommand("Set Property", code: 0xab, parameter: 0);
-            App.Device.PlateType = 0;
-          }
-          break;
-        case 384:
-          Table384Visible = Visibility.Visible;
-          Table96Visible = Visibility.Hidden;
-          if (CurrentTableSize != num)
-          {
-            foreach (var row in Table96Wells)
+            break;
+          case 384:
+            Table384Visible = Visibility.Visible;
+            Table96Visible = Visibility.Hidden;
+            if (CurrentTableSize != num)
             {
-              for (var i = 0; i < 12; i++)
+              foreach (var row in Table96Wells)
               {
-                row.SetType(i, WellType.Empty);
+                for (var i = 0; i < 12; i++)
+                {
+                  row.SetType(i, WellType.Empty);
+                }
               }
             }
             App.Device.MainCommand("Set Property", code: 0xab, parameter: 1);
-            App.Device.PlateType = 1;
-          }
-          break;
+            break;
+        }
+        CurrentTableSize = num;
+        ResultsViewModel.Instance.PlatePictogram.ChangeMode(num);
+        ResultsViewModel.Instance.CornerButtonClick(1);
+        MotorsViewModel.Instance.ChangeAmountOfWells(num);
       }
-      CurrentTableSize = num;
-      ResultsViewModel.Instance.PlatePictogram.ChangeMode(num);
-      ResultsViewModel.Instance.CornerButtonClick(1);
     }
 
     private void InitTables()
