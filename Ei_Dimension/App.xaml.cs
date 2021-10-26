@@ -50,8 +50,6 @@ namespace Ei_Dimension
       Device.ChannelBIsHiSensitivity = Settings.Default.SensitivityChannelB;
       if (!System.Windows.Input.Keyboard.IsKeyDown(System.Windows.Input.Key.LeftCtrl))
         Device.MainCommand("Startup");
-      Device.XAxisSel = Settings.Default.XAxisG;        //TODO: delete this, when refactor ReplyFromMC. only needed in legacy to build graphs
-      Device.YAxisSel = Settings.Default.YAxisG;        //TODO: delete this, when refactor ReplyFromMC. only needed in legacy to build graphs
       MicroCy.InstrumentParameters.Calibration.HdnrTrans = Settings.Default.HDnrTrans;
       MicroCy.InstrumentParameters.Calibration.Compensation = Settings.Default.Compensation;
       Device.MainCommand("Set Property", code: 0x97, parameter: 1170);  //set current limit of aligner motors if leds are off
@@ -136,20 +134,6 @@ namespace Ei_Dimension
     {
       Device.TerminationType = num;
       Settings.Default.EndRead = num;
-      Settings.Default.Save();
-    }
-
-    public static void SetHeatmapX(byte num)
-    {
-      Device.XAxisSel = num;
-      Settings.Default.XAxisG = num;
-      Settings.Default.Save();
-    }
-
-    public static void SetHeatmapY(byte num)
-    {
-      Device.YAxisSel = num;
-      Settings.Default.YAxisG = num;
       Settings.Default.Save();
     }
 

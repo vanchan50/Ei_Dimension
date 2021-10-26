@@ -79,8 +79,6 @@ namespace MicroCy
     public byte TerminationType { get; set; }
     public byte ReadingRow { get; set; }
     public byte ReadingCol { get; set; }
-    public byte XAxisSel { get; set; }    //TODO: delete this
-    public byte YAxisSel { get; set; }    //TODO: delete this
     public byte EndState { get; set; }
     public byte SystemControl { get; set; }
 

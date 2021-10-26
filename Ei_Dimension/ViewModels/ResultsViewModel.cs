@@ -161,7 +161,6 @@ namespace Ei_Dimension.ViewModels
       World13Map = new List<HeatMapData>();
       World23Map = new List<HeatMapData>();
 
-      DisplayedMap = CurrentCL12Map;
       WorldMap = new ObservableCollection<HeatMapData>();
       DisplayedForwardSsc = CurrentForwardSsc;
       DisplayedVioletSsc = CurrentVioletSsc;
@@ -169,12 +168,13 @@ namespace Ei_Dimension.ViewModels
       DisplayedGreenSsc = CurrentGreenSsc;
       DisplayedReporter = CurrentReporter;
       DisplaysCurrentmap = true;
-      FlipMapAnalysis = false;
 
       PlatePictogram = DrawingPlate.Create();
       Buttons384Visible = System.Windows.Visibility.Hidden;
       CornerButtonsChecked = new ObservableCollection<bool> { true, false, false, false };
       CLButtonsChecked = new ObservableCollection<bool> { false, false, true, false, false, true, false, false };
+      DisplayedMap = CurrentCL12Map;
+      FlipMapAnalysis = false;
       LeftLabel384Visible = System.Windows.Visibility.Visible;
       RightLabel384Visible = System.Windows.Visibility.Hidden;
       TopLabel384Visible = System.Windows.Visibility.Visible;
