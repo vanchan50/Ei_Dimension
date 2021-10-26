@@ -67,3 +67,6 @@ Analysis if beads hit a certain region is still done with log(x * num) and not l
 
 ResultsVM.FillWorldMaps() has to be called on map selection in Dashboard.(and in dashboard constructor).
   should probably go to a dedicated folder with worldmaps, and import by name. if name not available, just add 2 points (10,10) and (50k,50k)
+
+select the text in a text box when a box is selected
+  so that typing replaces the value. it adds now, a second select of the text box should bring up the curosr for editing

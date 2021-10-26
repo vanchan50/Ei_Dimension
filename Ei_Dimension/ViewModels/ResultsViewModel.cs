@@ -206,11 +206,10 @@ namespace Ei_Dimension.ViewModels
       }
       CLButtonsChecked[CL] = true;
       SetDisplayedMap();
-      if (!DisplaysCurrentmap)
-        _ = App.Current.Dispatcher.BeginInvoke((Action)(() =>
-          {
-            Core.DataProcessor.AnalyzeHeatMap(DisplayedMap);
-          }));
+      _ = App.Current.Dispatcher.BeginInvoke((Action)(() =>
+        {
+          Core.DataProcessor.AnalyzeHeatMap(DisplayedMap);
+        }));
     }
 
     public void CornerButtonClick(int corner)
