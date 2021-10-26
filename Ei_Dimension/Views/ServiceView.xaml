@@ -55,6 +55,30 @@
                    Style="{DynamicResource SubRibbonButtonStyle}"
                    Command="{Binding NavigateSyringeSpeedsCommand}">
       </RadioButton>
+
+
+      <Grid Margin="0,5,0,0">
+        <StackPanel>
+          <TextBlock Text="{lang:Loc Service_Memory_Control}"
+                     FontFamily="{StaticResource AppTextFont}"
+                     FontSize="30"
+                     HorizontalAlignment="Center"/>
+          <StackPanel>
+            <Button Content="{lang:Loc Service_Memory_Save_All}"
+                   Height="84"
+                   Style="{StaticResource DashboardButtonStyle}"
+                   Command="{Binding SaveAllClickCommand}"/>
+            <Button Content="{lang:Loc Service_Memory_Restore}"
+                   Height="84"
+                   Style="{StaticResource DashboardButtonStyle}"
+                   Command="{Binding RestoreClickCommand}"/>
+            <Button Content="{lang:Loc Service_Memory_Restore_Defaults}"
+                   Height="84"
+                   Style="{StaticResource DashboardButtonStyle}"
+                   Command="{Binding RestoreDefaultsClickCommand}"/>
+          </StackPanel>
+        </StackPanel>
+      </Grid>
     </StackPanel>
 
     <dxwui:NavigationFrame AnimationType="SlideHorizontal"

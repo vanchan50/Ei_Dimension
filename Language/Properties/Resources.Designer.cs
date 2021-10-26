@@ -1735,6 +1735,44 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Flash Memory
+        ///    Control.
+        /// </summary>
+        public static string Service_Memory_Control {
+            get {
+                return ResourceManager.GetString("Service_Memory_Control", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Restore.
+        /// </summary>
+        public static string Service_Memory_Restore {
+            get {
+                return ResourceManager.GetString("Service_Memory_Restore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Restore
+        ///Factory Defaults.
+        /// </summary>
+        public static string Service_Memory_Restore_Defaults {
+            get {
+                return ResourceManager.GetString("Service_Memory_Restore_Defaults", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save All.
+        /// </summary>
+        public static string Service_Memory_Save_All {
+            get {
+                return ResourceManager.GetString("Service_Memory_Save_All", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Motors.
         /// </summary>
         public static string Service_Motors {

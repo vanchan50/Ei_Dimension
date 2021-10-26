@@ -68,5 +68,20 @@ namespace Ei_Dimension.ViewModels
       NavigateChannelOffset();
       NavigateSyringeSpeeds();
     }
+
+    public void SaveAllClick()
+    {
+      App.Device.MainCommand("SaveToFlash");
+    }
+
+    public void RestoreClick()
+    {
+      App.Device.MainCommand("InitOpVars");
+    }
+
+    public void RestoreDefaultsClick()
+    {
+      App.Device.MainCommand("InitOpVars", cmd: 1);
+    }
   }
 }

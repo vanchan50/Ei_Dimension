@@ -807,6 +807,20 @@ Offset</value>
   <data name="Service_Components" xml:space="preserve">
     <value>Components</value>
   </data>
+  <data name="Service_Memory_Control" xml:space="preserve">
+    <value>Flash Memory
+    Control</value>
+  </data>
+  <data name="Service_Memory_Restore" xml:space="preserve">
+    <value>Restore</value>
+  </data>
+  <data name="Service_Memory_Restore_Defaults" xml:space="preserve">
+    <value>Restore
+Factory Defaults</value>
+  </data>
+  <data name="Service_Memory_Save_All" xml:space="preserve">
+    <value>Save All</value>
+  </data>
   <data name="Service_Motors" xml:space="preserve">
     <value>Motors</value>
   </data>
