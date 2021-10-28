@@ -11,6 +11,8 @@ namespace Ei_Dimension.ViewModels
   [POCOViewModel]
   public class ResultsViewModel
   {
+    public virtual System.Windows.Visibility MultiPlexVisible { get; set; }
+    public virtual System.Windows.Visibility SinglePlexVisible { get; set; }
     public virtual ObservableCollection<bool> ScatterSelectorState { get; set; }
     public virtual ObservableCollection<HistogramData> CurrentForwardSsc { get; set; }
     public virtual ObservableCollection<HistogramData> CurrentVioletSsc { get; set; }
@@ -74,7 +76,8 @@ namespace Ei_Dimension.ViewModels
     protected ResultsViewModel()
     {
       ScatterSelectorState = new ObservableCollection<bool> { false, false, false, false, false };
-
+      MultiPlexVisible = System.Windows.Visibility.Visible;
+      SinglePlexVisible = System.Windows.Visibility.Hidden;
       byte temp = Settings.Default.ScatterGraphSelector;
       if (temp >= 16)
       {
@@ -377,6 +380,7 @@ namespace Ei_Dimension.ViewModels
         {
           Core.DataProcessor.AnalyzeHeatMap(DisplayedMap);
         }));
+        MainViewModel.Instance.EventCountLocal[0] = beadStructslist.Count.ToString();
       });
     }
 
@@ -398,6 +402,7 @@ namespace Ei_Dimension.ViewModels
         {
           Core.DataProcessor.AnalyzeHeatMap(DisplayedMap);
         }));
+        MainViewModel.Instance.EventCountField = MainViewModel.Instance.EventCountGlobal;
       }
       else
       {
@@ -406,6 +411,7 @@ namespace Ei_Dimension.ViewModels
         DisplayedRedSsc = BackingRedSsc;
         DisplayedGreenSsc = BackingGreenSsc;
         DisplayedReporter = BackingReporter;
+        MainViewModel.Instance.EventCountField = MainViewModel.Instance.EventCountLocal;
       }
     }
 
