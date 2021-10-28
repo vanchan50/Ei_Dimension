@@ -11,7 +11,7 @@ namespace Ei_Dimension.ViewModels
   {
     public virtual System.Windows.Visibility NumpadVisible { get; set; }
     public virtual ObservableCollection<string> EventCountField { get; set; }
-    public virtual ObservableCollection<string> EventCountGlobal { get; set; }
+    public virtual ObservableCollection<string> EventCountCurrent { get; set; }
     public virtual ObservableCollection<string> EventCountLocal { get; set; }
     public virtual System.Windows.Visibility EventCountVisible { get; set; }
     public virtual System.Windows.Visibility StartButtonsVisible { get; set; }
@@ -27,9 +27,9 @@ namespace Ei_Dimension.ViewModels
       EventCountVisible = System.Windows.Visibility.Visible;
       StartButtonsVisible = System.Windows.Visibility.Visible;
       PlexResultsButtonVisible = System.Windows.Visibility.Hidden;
-      EventCountGlobal = new ObservableCollection<string> { "0" };
+      EventCountCurrent = new ObservableCollection<string> { "0" };
       EventCountLocal = new ObservableCollection<string> { "0" };
-      EventCountField = EventCountGlobal;
+      EventCountField = EventCountCurrent;
       Instance = this;
     }
 

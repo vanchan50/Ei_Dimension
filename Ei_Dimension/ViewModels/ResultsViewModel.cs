@@ -402,7 +402,7 @@ namespace Ei_Dimension.ViewModels
         {
           Core.DataProcessor.AnalyzeHeatMap(DisplayedMap);
         }));
-        MainViewModel.Instance.EventCountField = MainViewModel.Instance.EventCountGlobal;
+        MainViewModel.Instance.EventCountField = MainViewModel.Instance.EventCountCurrent;
       }
       else
       {
