@@ -71,6 +71,7 @@ namespace Ei_Dimension.ViewModels
         ClassiMapItems.Add(new DropDownButtonContents("No maps available", this));
       SelectedClassiMapContent = App.Device.ActiveMap.mapName;
       DropDownButtonContents.ResetIndex();
+      ResultsViewModel.Instance.FillWorldMaps(App.Device.RootDirectory.FullName + @"\Config\" + App.Device.ActiveMap.mapName + @".wld");
 
       ChConfigItems = new ObservableCollection<DropDownButtonContents>
       {
@@ -308,6 +309,7 @@ namespace Ei_Dimension.ViewModels
             App.SetActiveMap(Content);
             App.Device.MainCommand("Set Property", code: 0xa9, parameter: (ushort)Index);
             App.MapRegions.FillRegions();
+            ResultsViewModel.Instance.FillWorldMaps(App.Device.RootDirectory.FullName + @"\Config\" + App.Device.ActiveMap.mapName + @".wld");
             break;
           case 3:
             _vm.SelectedChConfigContent = Content;
@@ -354,6 +356,7 @@ namespace Ei_Dimension.ViewModels
           case 2:
             _vm.SelectedClassiMapContent = Content;
             App.MapRegions.FillRegions();
+            ResultsViewModel.Instance.FillWorldMaps(App.Device.RootDirectory.FullName + @"\Config\" + App.Device.ActiveMap.mapName + @".wld");
             break;
           case 3:
             _vm.SelectedChConfigContent = Content;

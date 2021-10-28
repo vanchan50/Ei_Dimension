@@ -180,7 +180,7 @@ namespace Ei_Dimension.ViewModels
       TopLabel384Visible = System.Windows.Visibility.Visible;
       BottomLabel384Visible = System.Windows.Visibility.Hidden;
       //FillWorldMaps(App.Device.RootDirectory.FullName + @"\Config\" + App.Device.ActiveMap.mapName + @"_world.json");
-      FillWorldMaps(App.Device.RootDirectory.FullName + @"\Config\" + "BioRad" + @"_world.json");
+      FillWorldMaps(App.Device.RootDirectory.FullName + @"\Config\" + "BR25" + @".wld");
     }
 
     public static ResultsViewModel Create()
@@ -411,6 +411,7 @@ namespace Ei_Dimension.ViewModels
 
     public void FillWorldMaps(string path)
     {
+      World12Map.Clear();
       try
       {
         using (System.IO.TextReader reader = new System.IO.StreamReader(path))

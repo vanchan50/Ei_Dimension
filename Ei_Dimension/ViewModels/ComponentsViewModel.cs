@@ -172,19 +172,25 @@ namespace Ei_Dimension.ViewModels
 
     public void SheathRunButtonClick()
     {
-      if (ushort.TryParse(SyringeControlSheathValue[0], out ushort usRes))
+      if (SyringeControlSheathValue[0] == "")
+        App.Device.MainCommand("Sheath", cmd: _syringeControlStates[0]);
+      else if (ushort.TryParse(SyringeControlSheathValue[0], out ushort usRes))
         App.Device.MainCommand("Sheath", cmd: _syringeControlStates[0], parameter: usRes);
     }
 
     public void SampleARunButtonClick()
     {
-      if (ushort.TryParse(SyringeControlSampleAValue[0], out ushort usRes))
+      if (SyringeControlSampleAValue[0] == "")
+        App.Device.MainCommand("SampleA", cmd: _syringeControlStates[1]);
+      else if (ushort.TryParse(SyringeControlSampleAValue[0], out ushort usRes))
         App.Device.MainCommand("SampleA", cmd: _syringeControlStates[1], parameter: usRes);
     }
 
     public void SampleBRunButtonClick()
     {
-      if (ushort.TryParse(SyringeControlSampleBValue[0], out ushort usRes))
+      if (SyringeControlSampleBValue[0] == "")
+        App.Device.MainCommand("SampleB", cmd: _syringeControlStates[2]);
+      else if (ushort.TryParse(SyringeControlSampleBValue[0], out ushort usRes))
         App.Device.MainCommand("SampleB", cmd: _syringeControlStates[2], parameter: usRes);
     }
 
