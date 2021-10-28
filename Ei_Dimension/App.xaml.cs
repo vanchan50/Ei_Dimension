@@ -156,20 +156,19 @@ namespace Ei_Dimension
       var ComponentsVM = ComponentsViewModel.Instance;
       if (ComponentsVM != null)
       {
-        ComponentsVM.InputSelectorState.Clear();
         if (ComponentsVM.IInputSelectorState == 0)
         {
-          ComponentsVM.InputSelectorState.Add(RM.GetString(nameof(Language.Resources.Components_To_Pickup),
-            curCulture));
-          ComponentsVM.InputSelectorState.Add(RM.GetString(nameof(Language.Resources.Components_To_Cuvet),
-            curCulture));
+          ComponentsVM.InputSelectorState[0] = RM.GetString(nameof(Language.Resources.Components_To_Pickup),
+            curCulture);
+          ComponentsVM.InputSelectorState[1] = RM.GetString(nameof(Language.Resources.Components_To_Cuvet),
+            curCulture);
         }
         else
         {
-          ComponentsVM.InputSelectorState.Add(RM.GetString(nameof(Language.Resources.Components_To_Cuvet),
-            curCulture));
-          ComponentsVM.InputSelectorState.Add(RM.GetString(nameof(Language.Resources.Components_To_Pickup),
-            curCulture));
+          ComponentsVM.InputSelectorState[0] = RM.GetString(nameof(Language.Resources.Components_To_Cuvet),
+            curCulture);
+          ComponentsVM.InputSelectorState[1] = RM.GetString(nameof(Language.Resources.Components_To_Pickup),
+            curCulture);
         }
 
         ComponentsVM.SyringeControlItems[0].Content = RM.GetString(nameof(Language.Resources.Dropdown_Halt), curCulture);

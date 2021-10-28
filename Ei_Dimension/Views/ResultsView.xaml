@@ -291,7 +291,7 @@
                        FontSize="30"
                        TextAlignment="Center"
                        HorizontalAlignment="Left"/>
-            <TextBlock Text="{lang:Loc Counter}"
+            <TextBlock Text="{lang:Loc Count}"
                        FontSize="30"
                        Width="119"
                        Margin="218,0,0,0"
