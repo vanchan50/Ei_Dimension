@@ -194,9 +194,6 @@ namespace Ei_Dimension.ViewModels
         MfiItems.Add("");
         CvItems.Add("");
       }
-
-      //FillWorldMaps(App.Device.RootDirectory.FullName + @"\Config\" + App.Device.ActiveMap.mapName + @"_world.json");
-      FillWorldMaps(App.Device.RootDirectory.FullName + @"\Config\" + "BR25" + @".wld");
     }
 
     public static ResultsViewModel Create()
