@@ -46,7 +46,6 @@ results page table should display mean and current stats for the current well be
 wellresults[i].RP1vals.Count(); - count
 wellresults[i].RP1vals.Average(); - mean
 
-
 save template name somewhere, also display somewhere. fill it when template loaded.
 
 TimerTick looks like not the best option. should be used only to update UI. program logic should be on a separate thread?
@@ -66,7 +65,7 @@ Analysis if beads hit a certain region is still done with log(x * num) and not l
 
 
 ResultsVM.FillWorldMaps() has to be called on map selection in Dashboard.(and in dashboard constructor).
-  should probably go to a dedicated folder with worldmaps, and import by name. if name not available, just add 2 points (10,10) and (50k,50k)
+  should probably go to a dedicated folder with worldmaps, and import by name.
 
 select the text in a text box when a box is selected
   so that typing replaces the value. it adds now, a second select of the text box should bring up the curosr for editing

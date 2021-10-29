@@ -152,6 +152,7 @@
             Height="100"
             Margin="90,25,0,0" Visibility="{Binding PlexResultsButtonVisible}"
             Content="SinglePlex"
+            IsChecked="{Binding PlexResultsButtonState, Mode=OneWay}"
             Style="{StaticResource ToggleButtonThemeStyle}"
             Command="{Binding PlexResultsCommand}"/>
 

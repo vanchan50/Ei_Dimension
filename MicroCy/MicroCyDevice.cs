@@ -48,11 +48,11 @@ namespace MicroCy
     public ConcurrentQueue<BeadInfoStruct> DataOut { get; } = new ConcurrentQueue<BeadInfoStruct>();
     public List<Wells> WellsInOrder { get; set; } = new List<Wells>();
     public List<CustomMap> MapList { get; private set; } = new List<CustomMap>();
-    public List<Gstats> GStats { get; } = new List<Gstats>(10);
     public List<WellResults> WellResults { get; } = new List<WellResults>();
     public event EventHandler<ReadingWellEventArgs> StartingToReadWell;
     public event EventHandler<ReadingWellEventArgs> FinishedReadingWell;
     public event EventHandler FinishedMeasurement;
+    public event EventHandler<GstatsEventArgs> NewStatsAvailable;
     public int SavingWellIdx { get; set; }
     public int WellsToRead { get; set; }
     public int BeadsToCapture { get; set; }
@@ -64,7 +64,6 @@ namespace MicroCy
     public int ScatterGate { get; set; }
     public int MinPerRegion { get; set; }
     public bool IsMeasurementGoing { get; private set; }
-    public bool NewStats { get; set; }
     public bool IsTube { get; set; }
     public bool ReadActive { get; set; }
     public bool Everyevent { get; set; }
@@ -103,6 +102,7 @@ namespace MicroCy
     private string _mapsFileName;
     private StringBuilder _summaryout = new StringBuilder();
     private StringBuilder _dataout = new StringBuilder();
+    private List<Gstats> _gStats = new List<Gstats>(10);
     private readonly ISerial _serialConnection;
     private const string Bheader = "Preamble,Time(1 us Tick),FSC bg,Viol SSC bg,CL0 bg,CL1 bg,CL2 bg,CL3 bg,Red SSC bg,Green SSC bg," +
             "Green Maj bg, Green Min bg,Green Major,Green Minor,Red-Grn Offset,Grn-Viol Offset,Region,Forward Scatter,Violet SSC,CL0," +
@@ -269,10 +269,7 @@ namespace MicroCy
       }
       if (CalStats && (SavBeadCount > 2))
       {
-        SavBeadCount = SavBeadCount > 5000 ? 5000 : SavBeadCount;
-        GStats.Clear();
-        FillGStats();
-        NewStats = true;
+        OnNewStatsAvailable();
       }
       Console.WriteLine(string.Format("{0} Reporting Background File Save Complete", DateTime.Now.ToString()));
     }
@@ -872,7 +869,7 @@ namespace MicroCy
         double gcv = (stddev / mean) * 100;
         if (double.IsNaN(gcv))
           gcv = 0;
-        GStats.Add(new Gstats
+        _gStats.Add(new Gstats
         {
           mfi = mean,
           cv = gcv
@@ -880,21 +877,29 @@ namespace MicroCy
       }
     }
 
-    private void OnStartingToReadWell() //protected virtual method
+    private void OnStartingToReadWell()
     {
       IsMeasurementGoing = true;
       StartingToReadWell?.Invoke(this, new ReadingWellEventArgs(ReadingRow, ReadingCol, _fullFileName));
     }
 
-    private void OnFinishedReadingWell() //protected virtual method
+    private void OnFinishedReadingWell()
     {
       FinishedReadingWell?.Invoke(this, new ReadingWellEventArgs(ReadingRow, ReadingCol));
     }
 
-    private void OnFinishedMeasurement() //protected virtual method
+    private void OnFinishedMeasurement()
     {
       IsMeasurementGoing = false;
       FinishedMeasurement?.Invoke(this, EventArgs.Empty);
+    }
+
+    private void OnNewStatsAvailable()
+    {
+      SavBeadCount = SavBeadCount > 5000 ? 5000 : SavBeadCount;
+      _gStats.Clear();
+      FillGStats();
+      NewStatsAvailable?.Invoke(this, new GstatsEventArgs(_gStats));
     }
   }
 }

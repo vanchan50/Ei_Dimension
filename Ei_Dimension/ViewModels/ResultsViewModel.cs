@@ -69,6 +69,8 @@ namespace Ei_Dimension.ViewModels
     public virtual System.Windows.Visibility RightLabel384Visible { get; set; }
     public virtual System.Windows.Visibility TopLabel384Visible { get; set; }
     public virtual System.Windows.Visibility BottomLabel384Visible { get; set; }
+    public virtual ObservableCollection<string> MfiItems { get; set; }
+    public virtual ObservableCollection<string> CvItems { get; set; }
     public virtual ObservableCollection<bool> CornerButtonsChecked { get; set; }
     public virtual ObservableCollection<bool> CLButtonsChecked { get; set; }
     public static ResultsViewModel Instance { get; private set; }
@@ -182,6 +184,15 @@ namespace Ei_Dimension.ViewModels
       RightLabel384Visible = System.Windows.Visibility.Hidden;
       TopLabel384Visible = System.Windows.Visibility.Visible;
       BottomLabel384Visible = System.Windows.Visibility.Hidden;
+
+      MfiItems = new ObservableCollection<string>();
+      CvItems = new ObservableCollection<string>();
+      for (var i = 0; i < 10; i++)
+      {
+        MfiItems.Add("");
+        CvItems.Add("");
+      }
+
       //FillWorldMaps(App.Device.RootDirectory.FullName + @"\Config\" + App.Device.ActiveMap.mapName + @"_world.json");
       FillWorldMaps(App.Device.RootDirectory.FullName + @"\Config\" + "BR25" + @".wld");
     }

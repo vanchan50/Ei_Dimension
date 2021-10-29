@@ -16,6 +16,7 @@ namespace Ei_Dimension.ViewModels
     public virtual System.Windows.Visibility EventCountVisible { get; set; }
     public virtual System.Windows.Visibility StartButtonsVisible { get; set; }
     public virtual System.Windows.Visibility PlexResultsButtonVisible { get; set; }
+    public virtual bool PlexResultsButtonState { get; set; }
 
     public static MainViewModel Instance { get; private set; }
     private INavigationService NavigationService => this.GetService<INavigationService>();
@@ -27,6 +28,7 @@ namespace Ei_Dimension.ViewModels
       EventCountVisible = System.Windows.Visibility.Visible;
       StartButtonsVisible = System.Windows.Visibility.Visible;
       PlexResultsButtonVisible = System.Windows.Visibility.Hidden;
+      PlexResultsButtonState = false;
       EventCountCurrent = new ObservableCollection<string> { "0" };
       EventCountLocal = new ObservableCollection<string> { "0" };
       EventCountField = EventCountCurrent;
@@ -119,7 +121,9 @@ namespace Ei_Dimension.ViewModels
 
     public void PlexResults()
     {
-      if(ResultsViewModel.Instance.MultiPlexVisible == System.Windows.Visibility.Visible)
+      PlexResultsButtonState = !PlexResultsButtonState;
+      App.Device.CalStats = PlexResultsButtonState;
+      if (ResultsViewModel.Instance.MultiPlexVisible == System.Windows.Visibility.Visible)
       {
         ResultsViewModel.Instance.MultiPlexVisible = System.Windows.Visibility.Hidden;
         ResultsViewModel.Instance.SinglePlexVisible = System.Windows.Visibility.Visible;

@@ -57,6 +57,7 @@ namespace Ei_Dimension
       Device.StartingToReadWell += StartingToReadWellEventhandler;
       Device.FinishedReadingWell += FinishedReadingWellEventhandler;
       Device.FinishedMeasurement += FinishedMeasurementEventhandler;
+      Device.NewStatsAvailable += NewStatsAvailableEventHandler;
       _dispatcherTimer = new DispatcherTimer();
       _dispatcherTimer.Tick += TimerTick;
       _dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 500);
@@ -1446,17 +1447,6 @@ namespace Ei_Dimension
             break;
         }
       }
-
-      if (Device.NewStats)
-      {
-        Device.NewStats = false;
-        for (var i = 0; i < 10; i++)
-        {
-          DataAnalysisViewModel.Instance.MfiItems[i] = Device.GStats[i].mfi.ToString();
-          DataAnalysisViewModel.Instance.CvItems[i] = Device.GStats[i].cv.ToString();
-        }
-      }
-
       UpdatePressureMonitor();
     }
 
@@ -1673,6 +1663,18 @@ namespace Ei_Dimension
       Device.ReadActive = false;
       MainButtonsViewModel.Instance.StartButtonEnabled = true;
       ResultsViewModel.Instance.PlatePictogram.CurrentlyReadCell = (-1, -1);
+    }
+
+    public static void NewStatsAvailableEventHandler(object sender, GstatsEventArgs e)
+    {
+      _ = Current.Dispatcher.BeginInvoke((Action)(() =>
+      {
+        for (var i = 0; i < 10; i++)
+        {
+          ResultsViewModel.Instance.MfiItems[i] = e.GStats[i].mfi.ToString();
+          ResultsViewModel.Instance.CvItems[i] = e.GStats[i].cv.ToString();
+        }
+      }));
     }
 
     public static void SetLogOutput()

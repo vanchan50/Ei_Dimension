@@ -99,8 +99,278 @@
       </dxc:XYDiagram2D>
     </dxc:ChartControl>
 
-      <!--Heatmap Chart-->
-      <dxc:ChartControl Width="740" Height="472"
+      <Border HorizontalAlignment="Left" VerticalAlignment="Top"
+            Margin="750,0,0,0" Width="470" Height="900">
+      <StackPanel>
+        <TextBlock Text="{lang:Loc Experiment_Active_Regions}"
+                   FontFamily="{StaticResource AppTextFont}"
+                   FontSize="36"
+                   Width="470"
+                   FontWeight="UltraBold"
+                   TextAlignment="Center"
+                   Foreground="{StaticResource AppTextColor}"
+                   Margin="0,0,0,4"/>
+        <Border Height="45"
+                HorizontalAlignment="Left">
+          <Grid>
+            <TextBlock Text="{lang:Loc Name}"
+                       Width="218"
+                       FontSize="30"
+                       TextAlignment="Center"
+                       HorizontalAlignment="Left"/>
+            <TextBlock Text="{lang:Loc Count}"
+                       FontSize="30"
+                       Width="119"
+                       Margin="218,0,0,0"
+                       TextAlignment="Center"
+                       HorizontalAlignment="Left"/>
+            <TextBlock Text="{lang:Loc Mean}"
+                       FontSize="30"
+                       Width="135"
+                       Margin="337,0,0,0"
+                       TextAlignment="Left"
+                       HorizontalAlignment="Left"/>
+          </Grid>
+        </Border>
+        <ScrollViewer HorizontalScrollBarVisibility="Disabled"
+                    VerticalScrollBarVisibility="Visible" Height="803">
+          <ListBox Name="Table" Background="{StaticResource RibbonBackgroundActive}">
+            <ListBox.ItemsPanel>
+              <ItemsPanelTemplate>
+                <WrapPanel Width="440"/>
+              </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+          </ListBox>
+        </ScrollViewer>
+      </StackPanel>
+    </Border>
+    </Grid>
+
+    <Grid Visibility="{Binding SinglePlexVisible}">
+
+      <!--Calibration Statistics-->
+      <Border HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Margin="740,80,0,0">
+        <StackPanel Orientation="Horizontal"
+                  HorizontalAlignment="Stretch"
+                  VerticalAlignment="Stretch">
+          <StackPanel HorizontalAlignment="Right"
+                    Margin="0,56,4,0">
+            <TextBlock Text="{lang:Loc DataAn_Green_SSC}"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="36"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Right"
+                 VerticalAlignment="Top"/>
+            <TextBlock Text="{lang:Loc DataAn_Green_Maj}"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="36"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Right"
+                 VerticalAlignment="Top"
+                 Margin="0,14,0,0"/>
+            <TextBlock Text="{lang:Loc DataAn_Green_Min}"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="36"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Right"
+                 VerticalAlignment="Top"
+                 Margin="0,14,0,0"/>
+            <TextBlock Text="{lang:Loc DataAn_Red_SSC}"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="36"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Right"
+                 VerticalAlignment="Top"
+                 Margin="0,18,0,0"/>
+            <TextBlock Text="{lang:Loc CL1}"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="36"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Right"
+                 VerticalAlignment="Top"
+                 Margin="0,14,0,0"/>
+            <TextBlock Text="{lang:Loc CL2}"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="36"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Right"
+                 VerticalAlignment="Top"
+                 Margin="0,14,0,0"/>
+            <TextBlock Text="{lang:Loc CL3}"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="36"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Right"
+                 VerticalAlignment="Top"
+                 Margin="0,16,0,0"/>
+            <TextBlock Text="{lang:Loc DataAn_Violet_SSC}"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="36"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Right"
+                 VerticalAlignment="Top"
+                 Margin="0,16,0,0"/>
+            <TextBlock Text="{lang:Loc CL0}"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="36"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Right"
+                 VerticalAlignment="Top"
+                 Margin="0,14,0,0"/>
+            <TextBlock Text="{lang:Loc DataAn_FSC}"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="36"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Right"
+                 VerticalAlignment="Top"
+                 Margin="0,14,0,0"/>
+          </StackPanel>
+          <StackPanel>
+            <TextBlock Text="{lang:Loc DataAn_MFI}"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="36"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Center"
+                 Margin="0,0,0,4"/>
+            <Border Background="{StaticResource RibbonBackgroundActive}">
+              <StackPanel VerticalAlignment="Stretch"
+                    Width="150">
+                <TextBox HorizontalAlignment="Stretch"
+                      Margin="8,8,8,20"
+                      IsReadOnly="True"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding MfiItems[0]}"/>
+                <TextBox HorizontalAlignment="Stretch"
+                      Margin="8,0,8,20"
+                      IsReadOnly="True"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding MfiItems[1]}"/>
+                <TextBox HorizontalAlignment="Stretch"
+                      Margin="8,0,8,20"
+                      IsReadOnly="True"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding MfiItems[2]}"/>
+                <TextBox HorizontalAlignment="Stretch"
+                      Margin="8,0,8,20"
+                      IsReadOnly="True"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding MfiItems[3]}"/>
+                <TextBox HorizontalAlignment="Stretch"
+                      Margin="8,0,8,20"
+                      IsReadOnly="True"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding MfiItems[4]}"/>
+                <TextBox HorizontalAlignment="Stretch"
+                      Margin="8,0,8,20"
+                      IsReadOnly="True"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding MfiItems[5]}"/>
+                <TextBox HorizontalAlignment="Stretch"
+                      Margin="8,0,8,20"
+                      IsReadOnly="True"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding MfiItems[6]}"/>
+                <TextBox HorizontalAlignment="Stretch"
+                      Margin="8,0,8,20"
+                      IsReadOnly="True"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding MfiItems[7]}"/>
+                <TextBox HorizontalAlignment="Stretch"
+                      Margin="8,0,8,20"
+                      IsReadOnly="True"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding MfiItems[8]}"/>
+                <TextBox HorizontalAlignment="Stretch"
+                      Margin="8,0,8,8"
+                      IsReadOnly="True"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding MfiItems[9]}"/>
+              </StackPanel>
+            </Border>
+          </StackPanel>
+          <StackPanel>
+            <TextBlock Text="{lang:Loc DataAn_CV}"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="36"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Center"
+                 Margin="0,0,0,4"/>
+            <Border Background="{StaticResource RibbonBackgroundActive}">
+              <StackPanel VerticalAlignment="Stretch"
+                    Width="150">
+                <TextBox HorizontalAlignment="Stretch"
+                      Margin="8,8,8,20"
+                      IsReadOnly="True"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding CvItems[0]}"/>
+                <TextBox HorizontalAlignment="Stretch"
+                      Margin="8,0,8,20"
+                      IsReadOnly="True"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding CvItems[1]}"/>
+                <TextBox HorizontalAlignment="Stretch"
+                      Margin="8,0,8,20"
+                      IsReadOnly="True"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding CvItems[2]}"/>
+                <TextBox HorizontalAlignment="Stretch"
+                      Margin="8,0,8,20"
+                      IsReadOnly="True"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding CvItems[3]}"/>
+                <TextBox HorizontalAlignment="Stretch"
+                      Margin="8,0,8,20"
+                      IsReadOnly="True"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding CvItems[4]}"/>
+                <TextBox HorizontalAlignment="Stretch"
+                      Margin="8,0,8,20"
+                      IsReadOnly="True"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding CvItems[5]}"/>
+                <TextBox HorizontalAlignment="Stretch"
+                      Margin="8,0,8,20"
+                      IsReadOnly="True"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding CvItems[6]}"/>
+                <TextBox HorizontalAlignment="Stretch"
+                      Margin="8,0,8,20"
+                      IsReadOnly="True"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding CvItems[7]}"/>
+                <TextBox HorizontalAlignment="Stretch"
+                      Margin="8,0,8,20"
+                      IsReadOnly="True"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding CvItems[8]}"/>
+                <TextBox HorizontalAlignment="Stretch"
+                      Margin="8,0,8,8"
+                      IsReadOnly="True"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding CvItems[9]}"/>
+              </StackPanel>
+            </Border>
+          </StackPanel>
+        </StackPanel>
+      </Border>
+    </Grid>
+
+    <!--Heatmap Chart-->
+    <dxc:ChartControl Width="740" Height="472"
                       HorizontalAlignment="Left"
                       VerticalAlignment="Top"
                       BorderThickness="0"
@@ -160,7 +430,7 @@
       </dxc:XYDiagram2D>
     </dxc:ChartControl>
 
-      <StackPanel HorizontalAlignment="Left"
+    <StackPanel HorizontalAlignment="Left"
                 VerticalAlignment="Top"
                 Margin="15,550,0,0">
       <RadioButton Width="80" Height="50"
@@ -216,7 +486,7 @@
       </RadioButton>
     </StackPanel>
 
-      <StackPanel Orientation="Horizontal"
+    <StackPanel Orientation="Horizontal"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
                 Margin="250,850,0,0">
@@ -272,231 +542,8 @@
         </RadioButton.CommandParameter>
       </RadioButton>
     </StackPanel>
-
-      <Border HorizontalAlignment="Left" VerticalAlignment="Top"
-            Margin="750,0,0,0" Width="470" Height="900">
-      <StackPanel>
-        <TextBlock Text="{lang:Loc Experiment_Active_Regions}"
-                   FontFamily="{StaticResource AppTextFont}"
-                   FontSize="36"
-                   Width="470"
-                   FontWeight="UltraBold"
-                   TextAlignment="Center"
-                   Foreground="{StaticResource AppTextColor}"
-                   Margin="0,0,0,4"/>
-        <Border Height="45"
-                HorizontalAlignment="Left">
-          <Grid>
-            <TextBlock Text="{lang:Loc Name}"
-                       Width="218"
-                       FontSize="30"
-                       TextAlignment="Center"
-                       HorizontalAlignment="Left"/>
-            <TextBlock Text="{lang:Loc Count}"
-                       FontSize="30"
-                       Width="119"
-                       Margin="218,0,0,0"
-                       TextAlignment="Center"
-                       HorizontalAlignment="Left"/>
-            <TextBlock Text="{lang:Loc Mean}"
-                       FontSize="30"
-                       Width="135"
-                       Margin="337,0,0,0"
-                       TextAlignment="Left"
-                       HorizontalAlignment="Left"/>
-          </Grid>
-        </Border>
-        <ScrollViewer HorizontalScrollBarVisibility="Disabled"
-                    VerticalScrollBarVisibility="Visible" Height="803">
-          <ListBox Name="Table" Background="{StaticResource RibbonBackgroundActive}">
-            <ListBox.ItemsPanel>
-              <ItemsPanelTemplate>
-                <WrapPanel Width="440"/>
-              </ItemsPanelTemplate>
-            </ListBox.ItemsPanel>
-          </ListBox>
-        </ScrollViewer>
-      </StackPanel>
-    </Border>
-    </Grid>
-
-    <Grid Visibility="{Binding SinglePlexVisible}">
-      <!--Heatmap Chart-->
-      <dxc:ChartControl Width="1220" Height="924"
-                      HorizontalAlignment="Left"
-                      VerticalAlignment="Top"
-                      BorderThickness="0"
-                      Focusable="False"
-                      Margin="0,0,0,0">
-        <dxc:XYDiagram2D Width="1112" Height="840"
-                       Margin="76,-8,0,0" 
-                       Focusable="False" Name="SPlex"
-                       HorizontalAlignment="Left"
-                       VerticalAlignment="Top">
-          <dxc:XYDiagram2D.AxisY>
-            <dxc:AxisY2D Logarithmic="True"
-                       GridLinesMinorVisible="True"
-                       MinorCount="9"
-                       Interlaced="False"
-                       TickmarksMinorVisible="False"
-                       TickmarksVisible="False">
-              <dxc:AxisY2D.WholeRange>
-                <dxc:Range dxc:AxisY2D.AlwaysShowZeroLevel="False" >
-                  <dxc:Range.MinValue>
-                    <System:Double>10</System:Double>
-                  </dxc:Range.MinValue>
-                </dxc:Range>
-              </dxc:AxisY2D.WholeRange>
-            </dxc:AxisY2D>
-          </dxc:XYDiagram2D.AxisY>
-          <dxc:XYDiagram2D.AxisX>
-            <dxc:AxisX2D Logarithmic="True"
-                       GridLinesMinorVisible="True"
-                       MinorCount="9"
-                       GridLinesVisible="True"
-                       TickmarksMinorVisible="False"
-                       TickmarksVisible="False">
-              <dxc:AxisX2D.WholeRange>
-                <dxc:Range>
-                  <dxc:Range.MinValue>
-                    <System:Double>10</System:Double>
-                  </dxc:Range.MinValue>
-                </dxc:Range>
-              </dxc:AxisX2D.WholeRange>
-            </dxc:AxisX2D>
-          </dxc:XYDiagram2D.AxisX>
-          <dxc:PointSeries2D DataSource="{Binding WorldMap}"
-                           ArgumentDataMember="X" CrosshairContentShowMode="Legend"
-                           ValueDataMember="Y"
-                           MarkerSize="7"
-                           Brush="LightGray">
-            <dxc:PointSeries2D.MarkerModel>
-              <dxc:BorderlessSimpleMarker2DModel/>
-            </dxc:PointSeries2D.MarkerModel>
-          </dxc:PointSeries2D>
-          <dxc:PointSeries2D Name="SPlexHeatMap" DisplayName="HeatMap" MarkerSize="3">
-            <dxc:PointSeries2D.MarkerModel>
-              <dxc:BorderlessSimpleMarker2DModel/>
-            </dxc:PointSeries2D.MarkerModel>
-          </dxc:PointSeries2D>
-        </dxc:XYDiagram2D>
-      </dxc:ChartControl>
-
-      <StackPanel HorizontalAlignment="Left"
-                VerticalAlignment="Top"
-                Margin="15,550,0,0">
-        <RadioButton Width="80" Height="50"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Top"
-                   Content="CL0"
-                   FontSize="35" Cursor="Hand"
-                   IsChecked="{Binding CLButtonsChecked[0], Mode=OneWay}"
-                   Style="{StaticResource RadioButtonHorizontalThemeStyle}"
-                   Command="{Binding CLButtonClickCommand}">
-          <RadioButton.CommandParameter>
-            <System:Int32>0</System:Int32>
-          </RadioButton.CommandParameter>
-        </RadioButton>
-        <RadioButton Width="80" Height="50"
-                   Margin="0,6,0,0"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Top"
-                   Content="CL1"
-                   FontSize="35" Cursor="Hand"
-                   IsChecked="{Binding CLButtonsChecked[1], Mode=OneWay}"
-                   Style="{StaticResource RadioButtonHorizontalThemeStyle}"
-                   Command="{Binding CLButtonClickCommand}">
-          <RadioButton.CommandParameter>
-            <System:Int32>1</System:Int32>
-          </RadioButton.CommandParameter>
-        </RadioButton>
-        <RadioButton Width="80" Height="50"
-                   Margin="0,6,0,0"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Top"
-                   Content="CL2"
-                   FontSize="35" Cursor="Hand"
-                   IsChecked="{Binding CLButtonsChecked[2], Mode=OneWay}"
-                   Style="{StaticResource RadioButtonHorizontalThemeStyle}"
-                   Command="{Binding CLButtonClickCommand}">
-          <RadioButton.CommandParameter>
-            <System:Int32>2</System:Int32>
-          </RadioButton.CommandParameter>
-        </RadioButton>
-        <RadioButton Width="80" Height="50"
-                   Margin="0,6,0,0"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Top"
-                   Content="CL3"
-                   FontSize="35" Cursor="Hand"
-                   IsChecked="{Binding CLButtonsChecked[3], Mode=OneWay}"
-                   Style="{StaticResource RadioButtonHorizontalThemeStyle}"
-                   Command="{Binding CLButtonClickCommand}">
-          <RadioButton.CommandParameter>
-            <System:Int32>3</System:Int32>
-          </RadioButton.CommandParameter>
-        </RadioButton>
-      </StackPanel>
-
-      <StackPanel Orientation="Horizontal"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Top"
-                Margin="250,850,0,0">
-        <RadioButton Width="80" Height="50"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Top"
-                   Content="CL0"
-                   FontSize="35" Cursor="Hand"
-                   IsChecked="{Binding CLButtonsChecked[4], Mode=OneWay}"
-                   Style="{StaticResource RadioButtonHorizontalThemeStyle}"
-                   Command="{Binding CLButtonClickCommand}">
-          <RadioButton.CommandParameter>
-            <System:Int32>4</System:Int32>
-          </RadioButton.CommandParameter>
-        </RadioButton>
-        <RadioButton Width="80" Height="50"
-                   Margin="6,0,0,0"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Top"
-                   Content="CL1"
-                   FontSize="35" Cursor="Hand"
-                   IsChecked="{Binding CLButtonsChecked[5], Mode=OneWay}"
-                   Style="{StaticResource RadioButtonHorizontalThemeStyle}"
-                   Command="{Binding CLButtonClickCommand}">
-          <RadioButton.CommandParameter>
-            <System:Int32>5</System:Int32>
-          </RadioButton.CommandParameter>
-        </RadioButton>
-        <RadioButton Width="80" Height="50"
-                   Margin="6,0,0,0"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Top"
-                   Content="CL2"
-                   FontSize="35" Cursor="Hand"
-                   IsChecked="{Binding CLButtonsChecked[6], Mode=OneWay}"
-                   Style="{StaticResource RadioButtonHorizontalThemeStyle}"
-                   Command="{Binding CLButtonClickCommand}">
-          <RadioButton.CommandParameter>
-            <System:Int32>6</System:Int32>
-          </RadioButton.CommandParameter>
-        </RadioButton>
-        <RadioButton Width="80" Height="50"
-                   Margin="6,0,0,0"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Top"
-                   Content="CL3"
-                   FontSize="35" Cursor="Hand"
-                   IsChecked="{Binding CLButtonsChecked[7], Mode=OneWay}"
-                   Style="{StaticResource RadioButtonHorizontalThemeStyle}"
-                   Command="{Binding CLButtonClickCommand}">
-          <RadioButton.CommandParameter>
-            <System:Int32>7</System:Int32>
-          </RadioButton.CommandParameter>
-        </RadioButton>
-      </StackPanel>
-    </Grid>
-
-  <!-- Company Logo Left -->
+    
+    <!-- Company Logo Left -->
     <Image HorizontalAlignment="Left" VerticalAlignment="Top"
            Margin="10,898,0,0"
            Width="430" Height="40"
