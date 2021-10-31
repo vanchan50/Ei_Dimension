@@ -15,6 +15,5 @@ namespace MicroCy
     public short agitateVol;
     public int termCnt;
     public int regTermCnt;
-    public CustomMap thisWellsMap;
   }
 }

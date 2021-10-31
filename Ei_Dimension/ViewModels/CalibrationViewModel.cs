@@ -72,7 +72,7 @@ namespace Ei_Dimension.ViewModels
 
     public void SaveCalibrationToMapClick()
     {
-      App.Device.SaveCalVals(App.GetActiveMapIndex());
+      App.Device.SaveCalVals(temps: false, ushort.Parse(EventTriggerContents[1]), ushort.Parse(EventTriggerContents[2]));
     }
 
     public void FocusedBox(int num)

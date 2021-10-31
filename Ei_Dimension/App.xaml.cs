@@ -29,14 +29,25 @@ namespace Ei_Dimension
     public App()
     {
       SetLogOutput();
-       _cancelKeyboardInjectionFlag = false;
+      _cancelKeyboardInjectionFlag = false;
       SetLanguage("en-US");
-      Device = new MicroCyDevice(typeof(USBConnection), useStaticMaps: false);
-      try
+      Device = new MicroCyDevice(typeof(USBConnection));
+      if (Settings.Default.DefaultMap > Device.MapList.Count - 1)
+      {
+        try
+        {
+          Device.ActiveMap = Device.MapList[0];
+        }
+        catch
+        {
+          MessageBox.Show($"Could not find Maps in {Device.RootDirectory.FullName + @"\Config"} folder");
+          throw new Exception($"Could not find Maps in { Device.RootDirectory.FullName + @"\Config" } folder");
+        }
+      }
+      else
       {
         Device.ActiveMap = Device.MapList[Settings.Default.DefaultMap];
       }
-      catch { }
       Device.SystemControl = Settings.Default.SystemControl;
       Device.SampleSize = Settings.Default.SampleSize;
       // RegCtr_SampSize.Text = Device.SampleSize.ToString(); //bead maps
@@ -66,11 +77,6 @@ namespace Ei_Dimension
       _histogramUpdateGoing = false;
       _ActiveRegionsUpdateGoing = false;
       _isStartup = true;
-    }
-
-    public static int GetActiveMapIndex()
-    {
-      return GetMapIndex(Device.ActiveMap.mapName);
     }
 
     public static int GetMapIndex(string MapName)
@@ -116,11 +122,8 @@ namespace Ei_Dimension
         ChannelsVM.Bias30Parameters[5] = Device.ActiveMap.calcl1.ToString();
         ChannelsVM.Bias30Parameters[6] = Device.ActiveMap.calcl2.ToString();
         ChannelsVM.Bias30Parameters[7] = Device.ActiveMap.calvssc.ToString();
-        if (Device.ActiveMap.dimension3)
-        {
-          ChannelsVM.Bias30Parameters[3] = Device.ActiveMap.calcl3.ToString();
-          ChannelsVM.Bias30Parameters[8] = Device.ActiveMap.calcl0.ToString();
-        }
+        ChannelsVM.Bias30Parameters[3] = Device.ActiveMap.calcl3.ToString();
+        ChannelsVM.Bias30Parameters[8] = Device.ActiveMap.calcl0.ToString();
       }
     }
 

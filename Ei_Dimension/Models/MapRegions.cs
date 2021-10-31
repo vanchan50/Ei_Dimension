@@ -62,15 +62,21 @@ namespace Ei_Dimension.Models
       ActiveRegionsCount.Clear();
       ActiveRegionsMean.Clear();
       var i = 0;
-      foreach (var region in App.Device.ActiveMap.mapRegions)
+      var r = 0;
+      // regions should have been added in ascending order
+      foreach (var point in App.Device.ActiveMap.classificationMap)
       {
-        RegionsList.Add(region.regionNumber.ToString());
-        RegionsNamesList.Add("");
-        ActiveRegions.Add(false);
-        ActiveRegionsCount.Add("0");
-        ActiveRegionsMean.Add("0");
-        AddTextboxes($"RegionsList[{i}]", $"RegionsNamesList[{i}]");
-        i++;
+        if(point.r > r)
+        {
+          r = point.r;
+          RegionsList.Add(point.r.ToString());
+          RegionsNamesList.Add("");
+          ActiveRegions.Add(false);
+          ActiveRegionsCount.Add("0");
+          ActiveRegionsMean.Add("0");
+          AddTextboxes($"RegionsList[{i}]", $"RegionsNamesList[{i}]");
+          i++;
+        }
       }
     }
     public void AddActiveRegion(byte num)

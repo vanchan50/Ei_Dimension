@@ -140,13 +140,6 @@
       </StackPanel>
     </Border>
 
-    <Button HorizontalAlignment="Left" VerticalAlignment="Top"
-            Width="100"
-            Height="50"
-            Margin="1810,10,0,0" Visibility="Hidden"
-            Content="ShowStaticMap"
-            Command="{Binding NavigateStaticMapCommand}"/>
-    
     <ToggleButton HorizontalAlignment="Left" VerticalAlignment="Top"
             Width="140"
             Height="100"

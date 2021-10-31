@@ -64,7 +64,6 @@ namespace MicroCy
     public int ScatterGate { get; set; }
     public int MinPerRegion { get; set; }
     public bool IsMeasurementGoing { get; private set; }
-    public bool IsTube { get; set; }
     public bool ReadActive { get; set; }
     public bool Everyevent { get; set; }
     public bool RMeans { get; set; }
@@ -92,14 +91,11 @@ namespace MicroCy
     private bool _readingA;
     private byte _actPrimaryIndex;
     private byte _actSecondaryIndex;
-    private byte[,] _map = new byte[300, 300];    //map for finding peak of a single region // added ClearMap()
-    private byte[,] _classificationMap { get; } = new byte[300, 300]; //TODO: was ushort
     private float[,] _sfi = new float[5000, 10];
     private float _greenMin;
     private float _greenMaj;
     private string _workOrderPath;
     private string _fullFileName; //TODO: probably not necessary. look at refactoring InitBeadRead()
-    private string _mapsFileName;
     private StringBuilder _summaryout = new StringBuilder();
     private StringBuilder _dataout = new StringBuilder();
     private List<Gstats> _gStats = new List<Gstats>(10);
@@ -108,114 +104,38 @@ namespace MicroCy
             "Green Maj bg, Green Min bg,Green Major,Green Minor,Red-Grn Offset,Grn-Viol Offset,Region,Forward Scatter,Violet SSC,CL0," +
             "Red SSC,CL1,CL2,CL3,Green SSC,Reporter\r ";
     private const string Sheader = "Row,Col,Region,Bead Count,Median FI,Trimmed Mean FI,CV%\r";
-    private readonly bool _useStaticMaps;
+    private static double[] _classificationBins;
+    private int[,] _classificationMap;
 
-    public MicroCyDevice(Type connectionType, bool useStaticMaps)
+    public MicroCyDevice(Type connectionType)
     {
+      _classificationBins = GenerateLogSpace(1, 50000, 256);
       _serialConnection = ConnectionFactory.MakeNewConnection(connectionType);
       SetSystemDirectories();
       LoadMaps();
       MainCommand("Set Property", code: 1, parameter: 1);    //set version as 1 to enable work order handling
-      _actPrimaryIndex = 1;  //cl1;
-      _actSecondaryIndex = 2;  //cl2;
       Reg0stats = false;
       CalStats = false;
-      IsTube = false;
       _serialConnection.BeginRead(ReplyFromMC);   //default termination is end of sample
       Outdir = RootDirectory.FullName;
       EndState = 0;
       ReadActive = false;
       Outfilename = "ResultFile";
       IsMeasurementGoing = false;
-      _useStaticMaps = useStaticMaps;
-      if (_useStaticMaps)
-        ConstructClassificationMap(null);
     }
 
-    public void ConstructClassificationMap(CustomMap mmap)
+    public void ConstructClassificationMap(CustomMap Cmap)
     {
-      //TODO: NEEDS a FIX after decided
-      if (_useStaticMaps)
-      {
-        using (var BinReader = new BinaryReader(File.OpenRead(@"../../StaticMaps/StaticMap.bin")))
-        {
-          for (var i = 0; i < 256; i++)
-          {
-            for (var j = 0; j < 256; j++)
-            {
-              //for some reason in .bin file the map is drawn upwards-right
-              _classificationMap[j, i] = BinReader.ReadByte();
-            }
-          }
-        }
+      MainCommand("Set Property", code: 0xce, parameter: Cmap.minmapssc);  //set ssc gates for this map
+      MainCommand("Set Property", code: 0xcf, parameter: Cmap.maxmapssc);
 
-        //using (var Reader = new StreamReader(@"../../StaticMaps/QBlogo.h"))
-        //{
-        //  string data = Reader.ReadToEnd();
-        //  int index = data.IndexOf("0x");
-        //  for (var i = 0; i < 256; i++)
-        //  {
-        //    for (var j = 0; j < 256; j++)
-        //    {
-        //      //for some reason in .bin file the map is drawn upwards-right
-        //      _classificationMap[j, i] = byte.Parse(data.Substring(index + 2, 2), System.Globalization.NumberStyles.HexNumber);
-        //      index = data.IndexOf("0x", index + 2);
-        //    }
-        //  }
-        //}
-        return;
-      }
+      _actPrimaryIndex = (byte)Cmap.midorderidx; //what channel cl0 - cl3?
+      _actSecondaryIndex = (byte)Cmap.loworderidx;
 
-      //build classification map from ActiveMap using bitfield types A-D
-      int[,] bitpoints = new int[32, 2];
-      _actPrimaryIndex = (byte)mmap.midorderidx; //what channel cl0 - cl3?
-      _actSecondaryIndex = (byte)mmap.loworderidx;
-      MainCommand("Set Property", code: 0xce, parameter: mmap.minmapssc);  //set ssc gates for this map
-      MainCommand("Set Property", code: 0xcf, parameter: mmap.maxmapssc);
-      Array.Clear(_classificationMap, 0, _classificationMap.Length);
-      foreach (BeadRegion mapRegions in mmap.mapRegions)
+      _classificationMap = new int[256, 256];
+      foreach(var point in Cmap.classificationMap)
       {
-        if (!mapRegions.isvector)       //this region shape is taken from Bitmaplist array
-        {
-          Array.Clear(bitpoints, 0, bitpoints.Length);  //copy bitmap of the type specified (A B C D)
-          Array.Copy(CommandLists.Bitmaplist[mapRegions.bitmaptype], bitpoints, CommandLists.Bitmaplist[mapRegions.bitmaptype].Length);
-          int rowBase = mapRegions.centermidorderidx - bitpoints[0, 0];  //first position is value to backup before etching bitmap
-          int col = mapRegions.centerloworderidx - bitpoints[0, 1];
-          int irow = 1; // 56 31 40 51 61 61 52 30 00
-          while (bitpoints[irow, 0] != 0)
-          {
-            for (int jcol = col; jcol < (col + bitpoints[irow, 0]); jcol++)
-            {
-              //handle region overlap by making overlap 0
-              _classificationMap[rowBase + irow - 1, jcol] = _classificationMap[rowBase + irow - 1, jcol] == 0 ? (byte)mapRegions.regionNumber : (byte)0;
-            }
-            col += bitpoints[irow, 1];  //second position is right shift amount for next line in map
-            irow++;
-          }
-        }
-        else
-        {
-          //populate a computed region
-          float xwidth = (float)0.33 * mapRegions.meanmidorder + 50;
-          float ywidth = (float)0.33 * mapRegions.meanloworder + 50;
-          int begidx = Val_2_Idx((int)(mapRegions.meanmidorder - (xwidth * 0.5)));
-          int endidx = Val_2_Idx((int)(mapRegions.meanmidorder + (xwidth * 0.5)));
-          float xincer = 0;
-          int begidy = Val_2_Idx((int)(mapRegions.meanloworder - (ywidth / 2)));
-          int endidy = Val_2_Idx((int)(mapRegions.meanloworder + (ywidth / 2)));
-          if (begidx < 3)
-            begidx = 3;
-          if (begidy < 3)
-            begidy = 3;
-          for (int row = begidx; row <= endidx; row++)
-          {
-            for (int col = begidy + (int)xincer; col <= endidy + (int)xincer; col++)
-            {
-              //zero any overlaps
-              _classificationMap[row, col] = _classificationMap[row, col] == 0 ? (byte)mapRegions.regionNumber : (byte)0;
-            }
-          }
-        }
+        _classificationMap[point.x, point.y] = point.r;
       }
     }
 
@@ -223,15 +143,15 @@ namespace MicroCy
     {
       //open file
       //first create uninique filename
-      ushort colnum = (ushort)coln;    //well names are relative to 1
-      if (!IsTube)
-        coln++;  //use 0 for tubes and true column for plates
+
+      //if(!isTube)
+      coln++;  //use 0 for tubes and true column for plates
       char rowletter = (char)(0x41 + rown);
       if (!Directory.Exists(Outdir))
         Outdir = RootDirectory.FullName;
       for (var differ = 0; differ < int.MaxValue; differ++)
       {
-        _fullFileName = Outdir + "\\AcquisitionData\\" + Outfilename + rowletter + coln.ToString() + '_' + differ.ToString()+".csv";
+        _fullFileName = Outdir + "\\AcquisitionData\\" + Outfilename + rowletter + coln.ToString() + '_' + differ.ToString() + ".csv";
         if (!File.Exists(_fullFileName))
           break;
       }
@@ -283,13 +203,13 @@ namespace MicroCy
       TerminationType = WellsInOrder[index].termType;
       ConstructClassificationMap(ActiveMap);
       WellResults.Clear();
-      foreach (BeadRegion mapRegions in WellsInOrder[index].thisWellsMap.mapRegions)
+      // regions should have been added in ascending order
+      foreach (var point in ActiveMap.classificationMap)
       {
-        bool isInMap = ActiveMap.mapRegions.Any(x => mapRegions.regionNumber == x.regionNumber);
-        if (!isInMap)
-          Console.WriteLine(string.Format("{0} No Map for Work Order region {1}", DateTime.Now.ToString(),mapRegions.regionNumber));
-        if (mapRegions.isActive && isInMap)
-          WellResults.Add(new WellResults { regionNumber = mapRegions.regionNumber });
+        if(!WellResults.Any(x => x.regionNumber == point.r ))
+        {
+          WellResults.Add(new WellResults { regionNumber = (ushort)point.r });
+        }
       }
       if (Reg0stats)
         WellResults.Add(new WellResults { regionNumber = 0 });
@@ -328,23 +248,20 @@ namespace MicroCy
 
     public void LoadMaps()
     {
-      //read the MapList if available
-      string testfilename = Path.Combine(RootDirectory.FullName, "Config", "DimensionMaps.txt");
-      if (File.Exists(testfilename))
+      string path = Path.Combine(RootDirectory.FullName, "Config");
+      var files = Directory.GetFiles(path, "*.dmap");
+      foreach(var mp in files)
       {
-        _mapsFileName = testfilename;
-        try
+        using (TextReader reader = new StreamReader(mp))
         {
-          using (TextReader reader = new StreamReader(_mapsFileName))
+          var fileContents = reader.ReadToEnd();
+          try
           {
-            var fileContents = reader.ReadToEnd();
-            MapList = JsonConvert.DeserializeObject<List<CustomMap>>(fileContents);
+            MapList.Add(JsonConvert.DeserializeObject<CustomMap>(fileContents));
           }
+          catch { }
         }
-        catch { }
       }
-      else
-        throw new Exception("Error: DimensionMaps does not exist");
     }
 
     public bool IsNewWorkOrder()
@@ -372,11 +289,6 @@ namespace MicroCy
     }
 
     //Refactored
-
-    public void ClearMap()
-    {
-      Array.Clear(_map, 0, _map.Length);
-    }
 
     public void MainCommand(string command, byte? cmd = null, byte? code = null, ushort? parameter = null, float? fparameter = null)
     {
@@ -443,43 +355,47 @@ namespace MicroCy
       }
     }
 
-    public void SaveMaps()
+    public void SaveCalVals(bool temps, ushort minSSC = 0, ushort maxSSC = 0)
     {
-      string jFileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "DimensionPlateResults.txt");
-      TextWriter writer = null;
-      TextWriter jwriter = null;
-      try
-      {
-        var contents = JsonConvert.SerializeObject(MapList);
-        writer = new StreamWriter(_mapsFileName);
-        writer.Write(contents);
-        var jcontents = JsonConvert.SerializeObject(PlateReport);   ///test code to write json for schema creation
-        jwriter = new StreamWriter(jFileName);
-        jwriter.Write(jcontents);
-      }
-      finally
-      {
-        if (writer != null)
-          writer.Close();
-        if (jwriter != null)
-          jwriter.Close();
-      }
-    }
-
-    public void SaveCalVals(int idx)
-    {
+      var idx = MapList.FindIndex(x => x.mapName == ActiveMap.mapName);
       var map = MapList[idx];
-      map.calrpmin = BiasAt30Temp.TempRpMin;
-      map.calrpmaj = BiasAt30Temp.TempRpMaj;
-      map.calrssc = BiasAt30Temp.TempRedSsc;
-      map.calgssc = BiasAt30Temp.TempGreenSsc;
-      map.calvssc = BiasAt30Temp.TempVioletSsc;
-      map.calcl0 = BiasAt30Temp.TempCl0;
-      map.calcl1 = BiasAt30Temp.TempCl1;
-      map.calcl2 = BiasAt30Temp.TempCl2;
-      map.calcl3 = BiasAt30Temp.TempCl3;
+      if (temps)
+      {
+        if (BiasAt30Temp.TempRpMin != 0)
+          map.calrpmin = BiasAt30Temp.TempRpMin;
+        if (BiasAt30Temp.TempRpMaj != 0)
+          map.calrpmaj = BiasAt30Temp.TempRpMaj;
+        if (BiasAt30Temp.TempRedSsc != 0)
+          map.calrssc = BiasAt30Temp.TempRedSsc;
+        if (BiasAt30Temp.TempGreenSsc != 0)
+          map.calgssc = BiasAt30Temp.TempGreenSsc;
+        if (BiasAt30Temp.TempVioletSsc != 0)
+          map.calvssc = BiasAt30Temp.TempVioletSsc;
+        if (BiasAt30Temp.TempCl0 != 0)
+          map.calcl0 = BiasAt30Temp.TempCl0;
+        if (BiasAt30Temp.TempCl1 != 0)
+          map.calcl1 = BiasAt30Temp.TempCl1;
+        if (BiasAt30Temp.TempCl2 != 0)
+          map.calcl2 = BiasAt30Temp.TempCl2;
+        if (BiasAt30Temp.TempCl3 != 0)
+          map.calcl3 = BiasAt30Temp.TempCl3;
+      }
+      else
+      {
+        if (minSSC != 0 && maxSSC != 0)
+        {
+          map.minmapssc = minSSC;
+          map.maxmapssc = maxSSC;
+        }
+      }
       MapList[idx] = map;
-      SaveMaps();
+      ActiveMap = MapList[idx];
+
+      var contents = JsonConvert.SerializeObject(map);
+      using (var stream = new StreamWriter(RootDirectory.FullName + @"/Config/" + map.mapName + @".dmap"))
+      {
+        stream.Write(contents);
+      }
     }
 
     public void WellNext()
@@ -740,16 +656,22 @@ namespace MicroCy
       //each well can have a different  classification map
       outbead.cl1 = cl[1];
       outbead.cl2 = cl[2];
-      outbead.region = ClassifyBeadToRegion(cl);
+      outbead.region = (ushort)ClassifyBeadToRegion(cl);
       //handle HI dnr channel
       outbead.reporter = _greenMaj > Calibration.HdnrTrans ? _greenMaj * Calibration.HDnrCoef : _greenMin;
     }
 
-    private ushort ClassifyBeadToRegion(float[] cl)
+    private int ClassifyBeadToRegion(float[] cl)
     {
-      int x = (byte)(Math.Log(cl[_actPrimaryIndex]) * 24.526);
-      int y = (byte)(Math.Log(cl[_actSecondaryIndex]) * 24.526);
-      return (x > 0) && (y > 0) ? _classificationMap[x, y] : (ushort)0;
+      int x = 0;
+      int y = 0;
+      x = Array.BinarySearch(_classificationBins, cl[_actPrimaryIndex]);
+      if (x < 0)
+        x = ~x;
+      y = Array.BinarySearch(_classificationBins, cl[_actSecondaryIndex]);
+      if (y < 0)
+        y = ~y;
+      return _classificationMap[x, y];
     }
 
     private float[] MakeClArr(in BeadInfoStruct outbead)
@@ -776,11 +698,6 @@ namespace MicroCy
         WellResults[index].RP1bgnd.Add(outbead.greenC_bg);
         _chkRegionCount = WellResults[index].RP1vals.Count == MinPerRegion;  //see if assay is done via sufficient beads in each region
       }
-    }
-
-    public byte[,] GetStaticMap()
-    {
-      return _classificationMap;
     }
 
     private void AddToPlateReport(in OutResults outRes)
@@ -900,6 +817,28 @@ namespace MicroCy
       _gStats.Clear();
       FillGStats();
       NewStatsAvailable?.Invoke(this, new GstatsEventArgs(_gStats));
+    }
+
+    private static double[] GenerateLogSpace(int min, int max, int logBins, bool baseE = false)
+    {
+      double logarithmicBase = 10;
+      double logMin = Math.Log10(min);
+      double logMax = Math.Log10(max);
+      if (baseE)
+      {
+        logarithmicBase = Math.E;
+        logMin = Math.Log(min);
+        logMax = Math.Log(max);
+      }
+      double delta = (logMax - logMin) / logBins;
+      double accDelta = delta;
+      double[] Result = new double[logBins];
+      for (int i = 1; i <= logBins; ++i)
+      {
+        Result[i - 1] = Math.Pow(logarithmicBase, logMin + accDelta);
+        accDelta += delta;
+      }
+      return Result;
     }
   }
 }

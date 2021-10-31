@@ -36,11 +36,8 @@ namespace Ei_Dimension.ViewModels
       Bias30Parameters.Add(App.Device.ActiveMap.calvssc.ToString());
       Bias30Parameters.Add("");
       Bias30Parameters.Add("");
-      if (App.Device.ActiveMap.dimension3)
-      {
-        Bias30Parameters[3] = App.Device.ActiveMap.calcl3.ToString();
-        Bias30Parameters[8] = App.Device.ActiveMap.calcl0.ToString();
-      }
+      Bias30Parameters[3] = App.Device.ActiveMap.calcl3.ToString();
+      Bias30Parameters[8] = App.Device.ActiveMap.calcl0.ToString();
       TcompBiasParameters = new ObservableCollection<string>();
       TempParameters = new ObservableCollection<string>();
       BackgroundParameters = new ObservableCollection<string>();
@@ -77,7 +74,7 @@ namespace Ei_Dimension.ViewModels
 
     public void SaveBiasButtonClick()
     {
-      App.Device.SaveCalVals(App.GetActiveMapIndex());
+      App.Device.SaveCalVals(temps: true);
     }
 
     public void SetOffsetButtonClick()

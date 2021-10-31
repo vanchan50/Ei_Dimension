@@ -425,7 +425,7 @@ namespace Ei_Dimension.ViewModels
       }
     }
 
-    public void FillWorldMaps(string path)
+    public void FillWorldMapsOLD(string path)
     {
       World12Map.Clear();
       try
@@ -442,6 +442,19 @@ namespace Ei_Dimension.ViewModels
       }
       catch { }
       PlotCurrent(DisplaysCurrentmap);
+    }
+
+    public void FillWorldMaps()
+    {
+      _ = App.Current.Dispatcher.BeginInvoke((Action)(() =>
+      {
+        World12Map.Clear();
+        foreach (var point in App.Device.ActiveMap.classificationMap)
+        {
+          World12Map.Add(new HeatMapData((int)HeatMapData.bins[point.x], (int)HeatMapData.bins[point.y]));
+        }
+        PlotCurrent(DisplaysCurrentmap);
+      }));
     }
 
     private void SetWorldMap(List<HeatMapData> Map)

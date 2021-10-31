@@ -103,13 +103,6 @@ namespace Ei_Dimension.ViewModels
       }
     }
 
-    public void NavigateStaticMap()
-    {
-      App.ResetFocusedTextbox();
-      App.HideNumpad();
-      NavigationService.Navigate("StaticMapView", null, this);
-    }
-
     public void InitChildren()
     {
       NavigateExperiment();

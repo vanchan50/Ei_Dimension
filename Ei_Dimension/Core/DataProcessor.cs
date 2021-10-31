@@ -238,39 +238,19 @@ namespace Ei_Dimension.Core
       var ResVM = ViewModels.ResultsViewModel.Instance;
       foreach (var bead in BeadInfoList)
       {
-        int cl0 = 0;
-        int cl1 = 0;
-        int cl2 = 0;
-        int cl3 = 0;
-        bool cl0Done = false;
-        bool cl1Done = false;
-        bool cl2Done = false;
-        bool cl3Done = false;
-        for (var i = 0; i < 256; i++)
-        {
-          if (!cl0Done && bead.cl0 <= HeatMapData.bins[i])
-          {
-            cl0 = i;
-            cl0Done = true;
-          }
-          if (!cl1Done && bead.cl1 <= HeatMapData.bins[i])
-          {
-            cl1 = i;
-            cl1Done = true;
-          }
-          if (!cl2Done && bead.cl2 <= HeatMapData.bins[i])
-          {
-            cl2 = i;
-            cl2Done = true;
-          }
-          if (!cl3Done && bead.cl3 <= HeatMapData.bins[i])
-          {
-            cl3 = i;
-            cl3Done = true;
-          }
-          if (cl0Done && cl1Done && cl2Done && cl3Done)
-            break;
-        }
+        int cl0 = Array.BinarySearch(HeatMapData.bins, bead.cl0);
+        if (cl0 < 0)
+          cl0 = ~cl0;
+        int cl1 = Array.BinarySearch(HeatMapData.bins, bead.cl1);
+        if (cl1 < 0)
+          cl1 = ~cl1;
+        int cl2 = Array.BinarySearch(HeatMapData.bins, bead.cl2);
+        if (cl2 < 0)
+          cl2 = ~cl2;
+        int cl3 = Array.BinarySearch(HeatMapData.bins, bead.cl3);
+        if (cl3 < 0)
+          cl3 = ~cl3;
+
         if (current)
         {
           //01

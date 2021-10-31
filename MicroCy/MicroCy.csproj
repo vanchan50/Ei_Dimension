@@ -59,14 +59,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Structs\CustomMap.cs" />
     <Compile Include="Structs\BeadInfoStruct.cs" />
-    <Compile Include="Structs\BeadRegion.cs" />
     <Compile Include="CommandLists.cs" />
     <Compile Include="InstrumentParameters\BiasAt30TempParameters.cs" />
     <Compile Include="InstrumentParameters\CalibrationParameters.cs" />
     <Compile Include="Structs\CommandStruct.cs" />
     <Compile Include="ConnectionFactory.cs" />
-    <Compile Include="CustomMap.cs" />
     <Compile Include="Structs\Gstats.cs" />
     <Compile Include="InstrumentParameters\Idex.cs" />
     <Compile Include="ISerial.cs" />

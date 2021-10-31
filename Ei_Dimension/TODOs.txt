@@ -69,3 +69,7 @@ ResultsVM.FillWorldMaps() has to be called on map selection in Dashboard.(and in
 
 select the text in a text box when a box is selected
   so that typing replaces the value. it adds now, a second select of the text box should bring up the curosr for editing
+
+
+DataProcessor.BinMapData() could use some optimisation
+ResultsVM.SetDisplayedMap() can be optimised
