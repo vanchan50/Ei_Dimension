@@ -220,7 +220,7 @@ namespace MicroCy
       _serialConnection.EndRead(result);
       if ((_serialConnection.InputBuffer[0] == 0xbe) && (_serialConnection.InputBuffer[1] == 0xad))
       {
-        if (IsMeasurementGoing)
+        if (IsMeasurementGoing) //  this condition avoids the necessity of cleaning up leftover data in the system USB interface. That could happen after operation abortion and program restart
         {
           for (byte i = 0; i < 8; i++)
           {
@@ -470,10 +470,7 @@ namespace MicroCy
     private void RunCmd(string sCmdName, CommandStruct cs)
     {
       if (_serialConnection.IsActive)
-      {
-        byte[] buffer = StructToByteArray(cs);
-        _serialConnection.Write(buffer);
-      }
+        _serialConnection.Write(StructToByteArray(cs));
       Console.WriteLine(string.Format("{0} Sending [{1}]: {2}", DateTime.Now.ToString(), sCmdName, cs.ToString())); //  MARK1 END
     }
 
@@ -528,13 +525,6 @@ namespace MicroCy
       {
         Marshal.FreeHGlobal(ptr);
       }
-    }
-
-    private static int Val_2_Idx(int val)
-    {
-      int retidx;
-      retidx = (int)(Math.Log(val) * 24.526);
-      return retidx;
     }
 
     private void GetCommandFromBuffer()
