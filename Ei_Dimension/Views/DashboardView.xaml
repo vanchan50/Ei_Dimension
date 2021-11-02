@@ -244,7 +244,7 @@
     <!--Dropdowns-->
     <Border HorizontalAlignment="Left"
           VerticalAlignment="Top"
-          Margin="40,30,0,0">
+          Margin="40,10,0,0">
       <StackPanel>
         <TextBlock Text="{lang:Loc Experiment_System_Control}"
                  FontFamily="{StaticResource AppTextFont}"
@@ -284,6 +284,17 @@
             </dxb:PopupMenu.ItemTemplate>
           </dxb:PopupMenu>
         </dx:DropDownButton>
+        <TextBox HorizontalAlignment="Center"
+                   Width="170"
+                   Style="{StaticResource InputFieldStyle}"
+                   Text="{Binding WorkOrder[0]}"
+                   Visibility="{Binding WorkOrderVisibility}"
+                   Margin=" 0,5,0,0">
+          <dxmvvm:Interaction.Behaviors>
+            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="5"/>
+            <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+          </dxmvvm:Interaction.Behaviors>
+        </TextBox>
         <TextBlock Text="{lang:Loc Experiment_Ch_Config}"
                  FontFamily="{StaticResource AppTextFont}"
                  FontSize="26"
@@ -291,7 +302,7 @@
                  Foreground="{StaticResource AppTextColor}"
                  HorizontalAlignment="Center"
                  VerticalAlignment="Top"
-                 Margin="0,16,0,3"/>
+                 Margin="0,6,0,3"/>
         <dx:DropDownButton Width="170"
                            Height="80" Cursor="Hand"
                            FontSize="25"
@@ -482,7 +493,7 @@
             </dxb:PopupMenu.ItemTemplate>
           </dxb:PopupMenu>
         </dx:DropDownButton>
-        <Grid Margin="0,5,0,0">
+        <Grid Margin="0,5,0,0" Height="45">
           <TextBox HorizontalAlignment="Center"
                    Width="170"
                    Style="{StaticResource InputFieldStyle}"

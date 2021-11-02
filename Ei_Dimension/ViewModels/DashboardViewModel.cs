@@ -16,6 +16,7 @@ namespace Ei_Dimension.ViewModels
   {
     public virtual ObservableCollection<string> EndRead { get; set; }
     public virtual ObservableCollection<string> Volumes { get; set; }
+    public virtual ObservableCollection<string> WorkOrder { get; set; }
     public virtual string SelectedSpeedContent { get; set; }
     public virtual ObservableCollection<DropDownButtonContents> SpeedItems { get; set; }
     public virtual string SelectedClassiMapContent { get; set; }
@@ -40,12 +41,14 @@ namespace Ei_Dimension.ViewModels
     public byte SelectedOrderIndex { get; set; }
     public byte SelectedEndReadIndex { get; set; }
     public virtual ObservableCollection<Visibility> EndReadVisibility { get; set; }
+    public virtual Visibility WorkOrderVisibility { get; set; }
 
     protected DashboardViewModel()
     {
       EndRead = new ObservableCollection<string> { "100", "500" };
 
       Volumes = new ObservableCollection<string> { "0", "", "" };
+      WorkOrder = new ObservableCollection<string> { "" };
 
       var RM = Language.Resources.ResourceManager;
       var curCulture = Language.TranslationSource.Instance.CurrentCulture;
@@ -101,6 +104,10 @@ namespace Ei_Dimension.ViewModels
       SelectedSystemControlIndex = Settings.Default.SystemControl;
       SelectedSysControlContent = SysControlItems[SelectedSystemControlIndex].Content;
       DropDownButtonContents.ResetIndex();
+      if(SelectedSystemControlIndex != 0)
+        WorkOrderVisibility = Visibility.Visible;
+      else
+        WorkOrderVisibility = Visibility.Hidden;
 
       EndReadItems = new ObservableCollection<DropDownButtonContents>
       {
@@ -185,6 +192,9 @@ namespace Ei_Dimension.ViewModels
         case 4:
           App.SelectedTextBox = (this.GetType().GetProperty(nameof(Volumes)), this, 2);
           break;
+        case 5:
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(WorkOrder)), this, 0);
+          break;
       }
     }
 
@@ -238,7 +248,7 @@ namespace Ei_Dimension.ViewModels
             App.Device.WellsInOrder.Sort((x, y) => x.colIdx.CompareTo(y.colIdx));
           }
         }
-        else    //Work Order control of plate
+        else  //Work Order control of plate
         {
           //fill wells from work order
           App.Device.WellsInOrder = App.Device.WorkOrder.woWells;
@@ -328,11 +338,13 @@ namespace Ei_Dimension.ViewModels
             {
               ExperimentViewModel.Instance.WellSelectVisible = Visibility.Hidden;
               MainButtonsViewModel.Instance.StartButtonEnabled = false;
+              _vm.WorkOrderVisibility = Visibility.Visible;
             }
             else
             {
               ExperimentViewModel.Instance.WellSelectVisible = Visibility.Visible;
               MainButtonsViewModel.Instance.StartButtonEnabled = true;
+              _vm.WorkOrderVisibility = Visibility.Hidden;
             }
             break;
           case 6:
@@ -373,11 +385,13 @@ namespace Ei_Dimension.ViewModels
             {
               ExperimentViewModel.Instance.WellSelectVisible = Visibility.Hidden;
               MainButtonsViewModel.Instance.StartButtonEnabled = false;
+              _vm.WorkOrderVisibility = Visibility.Visible;
             }
             else
             {
               ExperimentViewModel.Instance.WellSelectVisible = Visibility.Visible;
               MainButtonsViewModel.Instance.StartButtonEnabled = true;
+              _vm.WorkOrderVisibility = Visibility.Hidden;
             }
             break;
           case 6:

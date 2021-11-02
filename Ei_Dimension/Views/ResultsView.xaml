@@ -13,9 +13,277 @@
              DataContext="{dxmvvm:ViewModelSource Type=ViewModels:ResultsViewModel}"
              d:DesignHeight="944" d:DesignWidth="1920">
   <Grid>
-    <Grid Visibility="{Binding MultiPlexVisible}">
-      <!--Scatter Chart-->
-      <dxc:ChartControl Width="740" Height="472"
+    <Border HorizontalAlignment="Left" VerticalAlignment="Top"
+            Margin="750,0,0,0" Width="470" Height="900">
+      <Grid>
+        <TextBlock Text="{lang:Loc Experiment_Active_Regions}"
+                   FontFamily="{StaticResource AppTextFont}"
+                   FontSize="36"
+                   Width="470"
+                   FontWeight="UltraBold"
+                   TextAlignment="Center"
+                   Foreground="{StaticResource AppTextColor}"
+                   Margin="0,0,0,4"/>
+        <StackPanel Margin="0,50,0,4"
+                      Visibility="{Binding MultiPlexVisible}">
+          <Border Height="45"
+                HorizontalAlignment="Left">
+            <Grid>
+              <TextBlock Text="{lang:Loc Name}"
+                       Width="218"
+                       FontSize="30"
+                       TextAlignment="Center"
+                       HorizontalAlignment="Left"/>
+              <TextBlock Text="{lang:Loc Count}"
+                       FontSize="30"
+                       Width="119"
+                       Margin="218,0,0,0"
+                       TextAlignment="Center"
+                       HorizontalAlignment="Left"/>
+              <TextBlock Text="{lang:Loc Mean}"
+                       FontSize="30"
+                       Width="135"
+                       Margin="337,0,0,0"
+                       TextAlignment="Left"
+                       HorizontalAlignment="Left"/>
+            </Grid>
+          </Border>
+          <ScrollViewer HorizontalScrollBarVisibility="Disabled"
+                    VerticalScrollBarVisibility="Visible" Height="803">
+            <ListBox Name="Table" Background="{StaticResource RibbonBackgroundActive}">
+              <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                  <WrapPanel Width="440"/>
+                </ItemsPanelTemplate>
+              </ListBox.ItemsPanel>
+            </ListBox>
+          </ScrollViewer>
+        </StackPanel>
+        <!--Calibration Statistics-->
+        <Border HorizontalAlignment="Left"
+                  VerticalAlignment="Top"
+                  Margin="0,50,0,0"
+                  Visibility="{Binding SinglePlexVisible}">
+          <StackPanel Orientation="Horizontal"
+                  HorizontalAlignment="Stretch"
+                  VerticalAlignment="Stretch">
+            <StackPanel HorizontalAlignment="Right"
+                    Margin="0,56,4,0">
+              <TextBlock Text="{lang:Loc DataAn_Green_SSC}"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="36"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Right"
+                 VerticalAlignment="Top"/>
+              <TextBlock Text="{lang:Loc DataAn_Green_Maj}"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="36"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Right"
+                 VerticalAlignment="Top"
+                 Margin="0,14,0,0"/>
+              <TextBlock Text="{lang:Loc DataAn_Green_Min}"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="36"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Right"
+                 VerticalAlignment="Top"
+                 Margin="0,14,0,0"/>
+              <TextBlock Text="{lang:Loc DataAn_Red_SSC}"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="36"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Right"
+                 VerticalAlignment="Top"
+                 Margin="0,18,0,0"/>
+              <TextBlock Text="{lang:Loc CL1}"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="36"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Right"
+                 VerticalAlignment="Top"
+                 Margin="0,14,0,0"/>
+              <TextBlock Text="{lang:Loc CL2}"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="36"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Right"
+                 VerticalAlignment="Top"
+                 Margin="0,14,0,0"/>
+              <TextBlock Text="{lang:Loc CL3}"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="36"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Right"
+                 VerticalAlignment="Top"
+                 Margin="0,16,0,0"/>
+              <TextBlock Text="{lang:Loc DataAn_Violet_SSC}"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="36"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Right"
+                 VerticalAlignment="Top"
+                 Margin="0,16,0,0"/>
+              <TextBlock Text="{lang:Loc CL0}"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="36"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Right"
+                 VerticalAlignment="Top"
+                 Margin="0,14,0,0"/>
+              <TextBlock Text="{lang:Loc DataAn_FSC}"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="36"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Right"
+                 VerticalAlignment="Top"
+                 Margin="0,14,0,0"/>
+            </StackPanel>
+            <StackPanel>
+              <TextBlock Text="{lang:Loc DataAn_MFI}"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="36"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Center"
+                 Margin="0,0,0,4"/>
+              <Border Background="{StaticResource RibbonBackgroundActive}">
+                <StackPanel VerticalAlignment="Stretch"
+                    Width="150">
+                  <TextBox HorizontalAlignment="Stretch"
+                      Margin="8,8,8,20"
+                      IsReadOnly="True"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding MfiItems[0]}"/>
+                  <TextBox HorizontalAlignment="Stretch"
+                      Margin="8,0,8,20"
+                      IsReadOnly="True"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding MfiItems[1]}"/>
+                  <TextBox HorizontalAlignment="Stretch"
+                      Margin="8,0,8,20"
+                      IsReadOnly="True"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding MfiItems[2]}"/>
+                  <TextBox HorizontalAlignment="Stretch"
+                      Margin="8,0,8,20"
+                      IsReadOnly="True"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding MfiItems[3]}"/>
+                  <TextBox HorizontalAlignment="Stretch"
+                      Margin="8,0,8,20"
+                      IsReadOnly="True"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding MfiItems[4]}"/>
+                  <TextBox HorizontalAlignment="Stretch"
+                      Margin="8,0,8,20"
+                      IsReadOnly="True"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding MfiItems[5]}"/>
+                  <TextBox HorizontalAlignment="Stretch"
+                      Margin="8,0,8,20"
+                      IsReadOnly="True"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding MfiItems[6]}"/>
+                  <TextBox HorizontalAlignment="Stretch"
+                      Margin="8,0,8,20"
+                      IsReadOnly="True"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding MfiItems[7]}"/>
+                  <TextBox HorizontalAlignment="Stretch"
+                      Margin="8,0,8,20"
+                      IsReadOnly="True"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding MfiItems[8]}"/>
+                  <TextBox HorizontalAlignment="Stretch"
+                      Margin="8,0,8,8"
+                      IsReadOnly="True"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding MfiItems[9]}"/>
+                </StackPanel>
+              </Border>
+            </StackPanel>
+            <StackPanel>
+              <TextBlock Text="{lang:Loc DataAn_CV}"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="36"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Center"
+                 Margin="0,0,0,4"/>
+              <Border Background="{StaticResource RibbonBackgroundActive}">
+                <StackPanel VerticalAlignment="Stretch"
+                    Width="150">
+                  <TextBox HorizontalAlignment="Stretch"
+                      Margin="8,8,8,20"
+                      IsReadOnly="True"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding CvItems[0]}"/>
+                  <TextBox HorizontalAlignment="Stretch"
+                      Margin="8,0,8,20"
+                      IsReadOnly="True"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding CvItems[1]}"/>
+                  <TextBox HorizontalAlignment="Stretch"
+                      Margin="8,0,8,20"
+                      IsReadOnly="True"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding CvItems[2]}"/>
+                  <TextBox HorizontalAlignment="Stretch"
+                      Margin="8,0,8,20"
+                      IsReadOnly="True"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding CvItems[3]}"/>
+                  <TextBox HorizontalAlignment="Stretch"
+                      Margin="8,0,8,20"
+                      IsReadOnly="True"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding CvItems[4]}"/>
+                  <TextBox HorizontalAlignment="Stretch"
+                      Margin="8,0,8,20"
+                      IsReadOnly="True"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding CvItems[5]}"/>
+                  <TextBox HorizontalAlignment="Stretch"
+                      Margin="8,0,8,20"
+                      IsReadOnly="True"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding CvItems[6]}"/>
+                  <TextBox HorizontalAlignment="Stretch"
+                      Margin="8,0,8,20"
+                      IsReadOnly="True"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding CvItems[7]}"/>
+                  <TextBox HorizontalAlignment="Stretch"
+                      Margin="8,0,8,20"
+                      IsReadOnly="True"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding CvItems[8]}"/>
+                  <TextBox HorizontalAlignment="Stretch"
+                      Margin="8,0,8,8"
+                      IsReadOnly="True"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding CvItems[9]}"/>
+                </StackPanel>
+              </Border>
+            </StackPanel>
+          </StackPanel>
+        </Border>
+      </Grid>
+    </Border>
+
+    <!--Scatter Chart-->
+    <dxc:ChartControl Width="740" Height="472"
                       HorizontalAlignment="Left"
                       VerticalAlignment="Top"
                       Focusable="False"
@@ -98,277 +366,6 @@
                           CheckedInLegend="{Binding ScatterSelectorState[4]}"/>
       </dxc:XYDiagram2D>
     </dxc:ChartControl>
-
-      <Border HorizontalAlignment="Left" VerticalAlignment="Top"
-            Margin="750,0,0,0" Width="470" Height="900">
-      <StackPanel>
-        <TextBlock Text="{lang:Loc Experiment_Active_Regions}"
-                   FontFamily="{StaticResource AppTextFont}"
-                   FontSize="36"
-                   Width="470"
-                   FontWeight="UltraBold"
-                   TextAlignment="Center"
-                   Foreground="{StaticResource AppTextColor}"
-                   Margin="0,0,0,4"/>
-        <Border Height="45"
-                HorizontalAlignment="Left">
-          <Grid>
-            <TextBlock Text="{lang:Loc Name}"
-                       Width="218"
-                       FontSize="30"
-                       TextAlignment="Center"
-                       HorizontalAlignment="Left"/>
-            <TextBlock Text="{lang:Loc Count}"
-                       FontSize="30"
-                       Width="119"
-                       Margin="218,0,0,0"
-                       TextAlignment="Center"
-                       HorizontalAlignment="Left"/>
-            <TextBlock Text="{lang:Loc Mean}"
-                       FontSize="30"
-                       Width="135"
-                       Margin="337,0,0,0"
-                       TextAlignment="Left"
-                       HorizontalAlignment="Left"/>
-          </Grid>
-        </Border>
-        <ScrollViewer HorizontalScrollBarVisibility="Disabled"
-                    VerticalScrollBarVisibility="Visible" Height="803">
-          <ListBox Name="Table" Background="{StaticResource RibbonBackgroundActive}">
-            <ListBox.ItemsPanel>
-              <ItemsPanelTemplate>
-                <WrapPanel Width="440"/>
-              </ItemsPanelTemplate>
-            </ListBox.ItemsPanel>
-          </ListBox>
-        </ScrollViewer>
-      </StackPanel>
-    </Border>
-    </Grid>
-
-    <Grid Visibility="{Binding SinglePlexVisible}">
-
-      <!--Calibration Statistics-->
-      <Border HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Margin="740,80,0,0">
-        <StackPanel Orientation="Horizontal"
-                  HorizontalAlignment="Stretch"
-                  VerticalAlignment="Stretch">
-          <StackPanel HorizontalAlignment="Right"
-                    Margin="0,56,4,0">
-            <TextBlock Text="{lang:Loc DataAn_Green_SSC}"
-                 FontFamily="{StaticResource AppTextFont}"
-                 FontSize="36"
-                 FontWeight="UltraBold"
-                 Foreground="{StaticResource AppTextColor}"
-                 HorizontalAlignment="Right"
-                 VerticalAlignment="Top"/>
-            <TextBlock Text="{lang:Loc DataAn_Green_Maj}"
-                 FontFamily="{StaticResource AppTextFont}"
-                 FontSize="36"
-                 FontWeight="UltraBold"
-                 Foreground="{StaticResource AppTextColor}"
-                 HorizontalAlignment="Right"
-                 VerticalAlignment="Top"
-                 Margin="0,14,0,0"/>
-            <TextBlock Text="{lang:Loc DataAn_Green_Min}"
-                 FontFamily="{StaticResource AppTextFont}"
-                 FontSize="36"
-                 FontWeight="UltraBold"
-                 Foreground="{StaticResource AppTextColor}"
-                 HorizontalAlignment="Right"
-                 VerticalAlignment="Top"
-                 Margin="0,14,0,0"/>
-            <TextBlock Text="{lang:Loc DataAn_Red_SSC}"
-                 FontFamily="{StaticResource AppTextFont}"
-                 FontSize="36"
-                 FontWeight="UltraBold"
-                 Foreground="{StaticResource AppTextColor}"
-                 HorizontalAlignment="Right"
-                 VerticalAlignment="Top"
-                 Margin="0,18,0,0"/>
-            <TextBlock Text="{lang:Loc CL1}"
-                 FontFamily="{StaticResource AppTextFont}"
-                 FontSize="36"
-                 FontWeight="UltraBold"
-                 Foreground="{StaticResource AppTextColor}"
-                 HorizontalAlignment="Right"
-                 VerticalAlignment="Top"
-                 Margin="0,14,0,0"/>
-            <TextBlock Text="{lang:Loc CL2}"
-                 FontFamily="{StaticResource AppTextFont}"
-                 FontSize="36"
-                 FontWeight="UltraBold"
-                 Foreground="{StaticResource AppTextColor}"
-                 HorizontalAlignment="Right"
-                 VerticalAlignment="Top"
-                 Margin="0,14,0,0"/>
-            <TextBlock Text="{lang:Loc CL3}"
-                 FontFamily="{StaticResource AppTextFont}"
-                 FontSize="36"
-                 FontWeight="UltraBold"
-                 Foreground="{StaticResource AppTextColor}"
-                 HorizontalAlignment="Right"
-                 VerticalAlignment="Top"
-                 Margin="0,16,0,0"/>
-            <TextBlock Text="{lang:Loc DataAn_Violet_SSC}"
-                 FontFamily="{StaticResource AppTextFont}"
-                 FontSize="36"
-                 FontWeight="UltraBold"
-                 Foreground="{StaticResource AppTextColor}"
-                 HorizontalAlignment="Right"
-                 VerticalAlignment="Top"
-                 Margin="0,16,0,0"/>
-            <TextBlock Text="{lang:Loc CL0}"
-                 FontFamily="{StaticResource AppTextFont}"
-                 FontSize="36"
-                 FontWeight="UltraBold"
-                 Foreground="{StaticResource AppTextColor}"
-                 HorizontalAlignment="Right"
-                 VerticalAlignment="Top"
-                 Margin="0,14,0,0"/>
-            <TextBlock Text="{lang:Loc DataAn_FSC}"
-                 FontFamily="{StaticResource AppTextFont}"
-                 FontSize="36"
-                 FontWeight="UltraBold"
-                 Foreground="{StaticResource AppTextColor}"
-                 HorizontalAlignment="Right"
-                 VerticalAlignment="Top"
-                 Margin="0,14,0,0"/>
-          </StackPanel>
-          <StackPanel>
-            <TextBlock Text="{lang:Loc DataAn_MFI}"
-                 FontFamily="{StaticResource AppTextFont}"
-                 FontSize="36"
-                 FontWeight="UltraBold"
-                 Foreground="{StaticResource AppTextColor}"
-                 HorizontalAlignment="Center"
-                 Margin="0,0,0,4"/>
-            <Border Background="{StaticResource RibbonBackgroundActive}">
-              <StackPanel VerticalAlignment="Stretch"
-                    Width="150">
-                <TextBox HorizontalAlignment="Stretch"
-                      Margin="8,8,8,20"
-                      IsReadOnly="True"
-                      Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding MfiItems[0]}"/>
-                <TextBox HorizontalAlignment="Stretch"
-                      Margin="8,0,8,20"
-                      IsReadOnly="True"
-                      Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding MfiItems[1]}"/>
-                <TextBox HorizontalAlignment="Stretch"
-                      Margin="8,0,8,20"
-                      IsReadOnly="True"
-                      Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding MfiItems[2]}"/>
-                <TextBox HorizontalAlignment="Stretch"
-                      Margin="8,0,8,20"
-                      IsReadOnly="True"
-                      Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding MfiItems[3]}"/>
-                <TextBox HorizontalAlignment="Stretch"
-                      Margin="8,0,8,20"
-                      IsReadOnly="True"
-                      Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding MfiItems[4]}"/>
-                <TextBox HorizontalAlignment="Stretch"
-                      Margin="8,0,8,20"
-                      IsReadOnly="True"
-                      Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding MfiItems[5]}"/>
-                <TextBox HorizontalAlignment="Stretch"
-                      Margin="8,0,8,20"
-                      IsReadOnly="True"
-                      Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding MfiItems[6]}"/>
-                <TextBox HorizontalAlignment="Stretch"
-                      Margin="8,0,8,20"
-                      IsReadOnly="True"
-                      Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding MfiItems[7]}"/>
-                <TextBox HorizontalAlignment="Stretch"
-                      Margin="8,0,8,20"
-                      IsReadOnly="True"
-                      Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding MfiItems[8]}"/>
-                <TextBox HorizontalAlignment="Stretch"
-                      Margin="8,0,8,8"
-                      IsReadOnly="True"
-                      Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding MfiItems[9]}"/>
-              </StackPanel>
-            </Border>
-          </StackPanel>
-          <StackPanel>
-            <TextBlock Text="{lang:Loc DataAn_CV}"
-                 FontFamily="{StaticResource AppTextFont}"
-                 FontSize="36"
-                 FontWeight="UltraBold"
-                 Foreground="{StaticResource AppTextColor}"
-                 HorizontalAlignment="Center"
-                 Margin="0,0,0,4"/>
-            <Border Background="{StaticResource RibbonBackgroundActive}">
-              <StackPanel VerticalAlignment="Stretch"
-                    Width="150">
-                <TextBox HorizontalAlignment="Stretch"
-                      Margin="8,8,8,20"
-                      IsReadOnly="True"
-                      Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding CvItems[0]}"/>
-                <TextBox HorizontalAlignment="Stretch"
-                      Margin="8,0,8,20"
-                      IsReadOnly="True"
-                      Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding CvItems[1]}"/>
-                <TextBox HorizontalAlignment="Stretch"
-                      Margin="8,0,8,20"
-                      IsReadOnly="True"
-                      Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding CvItems[2]}"/>
-                <TextBox HorizontalAlignment="Stretch"
-                      Margin="8,0,8,20"
-                      IsReadOnly="True"
-                      Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding CvItems[3]}"/>
-                <TextBox HorizontalAlignment="Stretch"
-                      Margin="8,0,8,20"
-                      IsReadOnly="True"
-                      Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding CvItems[4]}"/>
-                <TextBox HorizontalAlignment="Stretch"
-                      Margin="8,0,8,20"
-                      IsReadOnly="True"
-                      Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding CvItems[5]}"/>
-                <TextBox HorizontalAlignment="Stretch"
-                      Margin="8,0,8,20"
-                      IsReadOnly="True"
-                      Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding CvItems[6]}"/>
-                <TextBox HorizontalAlignment="Stretch"
-                      Margin="8,0,8,20"
-                      IsReadOnly="True"
-                      Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding CvItems[7]}"/>
-                <TextBox HorizontalAlignment="Stretch"
-                      Margin="8,0,8,20"
-                      IsReadOnly="True"
-                      Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding CvItems[8]}"/>
-                <TextBox HorizontalAlignment="Stretch"
-                      Margin="8,0,8,8"
-                      IsReadOnly="True"
-                      Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding CvItems[9]}"/>
-              </StackPanel>
-            </Border>
-          </StackPanel>
-        </StackPanel>
-      </Border>
-    </Grid>
-
     <!--Heatmap Chart-->
     <dxc:ChartControl Width="740" Height="472"
                       HorizontalAlignment="Left"
@@ -415,7 +412,7 @@
         </dxc:XYDiagram2D.AxisX>
         <dxc:PointSeries2D DataSource="{Binding WorldMap}"
                            ArgumentDataMember="X" CrosshairContentShowMode="Legend"
-                           ValueDataMember="Y" Visible="{Binding WorldMapVisible}"
+                           ValueDataMember="Y"
                            MarkerSize="5"
                            Brush="LightGray">
           <dxc:PointSeries2D.MarkerModel>

@@ -115,7 +115,6 @@ namespace Ei_Dimension.ViewModels
     public void PlexResults()
     {
       PlexResultsButtonState = !PlexResultsButtonState;
-      ResultsViewModel.Instance.WorldMapVisible = !ResultsViewModel.Instance.WorldMapVisible;
       App.Device.CalStats = PlexResultsButtonState;
       if (ResultsViewModel.Instance.MultiPlexVisible == System.Windows.Visibility.Visible)
       {

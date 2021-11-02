@@ -1515,8 +1515,7 @@ namespace Ei_Dimension
           Device.EndState = 0;
           if (Device.CurrentWellIdx == (Device.WellsToRead + 1)) //if only one more to go
           {
-            //  woNumbertb.Text = "";
-            //  pltNumbertb.Text = "";
+            DashboardViewModel.Instance.WorkOrder[0] = "";
             Device.MainCommand("Set Property", code: 0x19);  //bubble detect off
           }
           Console.WriteLine(string.Format("{0} Reporting End of current well", DateTime.Now.ToString()));
@@ -1531,7 +1530,7 @@ namespace Ei_Dimension
       {
         if (Device.IsNewWorkOrder())
         {
-          //  woNumbertb.Text = Device.WorkOrderName;
+          DashboardViewModel.Instance.WorkOrder[0] = Device.WorkOrderName;
           _workOrderPending = true;
         }
       }
@@ -1552,7 +1551,7 @@ namespace Ei_Dimension
           //}
           //else
           //  DashboardViewModel.Instance.ValidateBCodeButtonEnabled = true;
-          //  if (woNumbertb.Text == pltNumbertb.Text)
+          //  if (DashboardViewModel.Instance.WorkOrder[0] == pltNumbertb.Text)
           //  {
           //    DashboardViewModel.Instance.StartButtonEnabled = true;
           //    _workOrderPending = false;

@@ -272,18 +272,15 @@ namespace MicroCy
         return false;
       WorkOrderName = Path.GetFileNameWithoutExtension(fileEntries[0]);
       _workOrderPath = fileEntries[0];
-      TextReader reader = null;
       try
       {
-        reader = new StreamReader(_workOrderPath);
-        var fileContents = reader.ReadToEnd();
-        WorkOrder = JsonConvert.DeserializeObject<WorkOrder>(fileContents);
+        using (TextReader reader = new StreamReader(_workOrderPath))
+        {
+          var contents = reader.ReadToEnd();
+          WorkOrder = JsonConvert.DeserializeObject<WorkOrder>(contents);
+        }
       }
-      finally
-      {
-        if (reader != null)
-          reader.Close();
-      }
+      catch { }
       // send well depth once that is worked out
       return true;
     }

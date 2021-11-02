@@ -73,7 +73,6 @@ namespace Ei_Dimension.ViewModels
     public virtual ObservableCollection<string> CvItems { get; set; }
     public virtual ObservableCollection<bool> CornerButtonsChecked { get; set; }
     public virtual ObservableCollection<bool> CLButtonsChecked { get; set; }
-    public virtual bool WorldMapVisible { get; set; }
     public static ResultsViewModel Instance { get; private set; }
 
     protected ResultsViewModel()
@@ -185,7 +184,6 @@ namespace Ei_Dimension.ViewModels
       RightLabel384Visible = System.Windows.Visibility.Hidden;
       TopLabel384Visible = System.Windows.Visibility.Visible;
       BottomLabel384Visible = System.Windows.Visibility.Hidden;
-      WorldMapVisible = true;
 
       MfiItems = new ObservableCollection<string>();
       CvItems = new ObservableCollection<string>();

@@ -73,3 +73,5 @@ select the text in a text box when a box is selected
 
 DataProcessor.BinMapData() could use some optimisation
 ResultsVM.SetDisplayedMap() can be optimised
+
+MicroCyDevice.IsNewWorkOrder() is crazy, since it is checked by app.TimerTick every tick. should be put on file watcher

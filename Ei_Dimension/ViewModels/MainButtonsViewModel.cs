@@ -80,6 +80,7 @@ namespace Ei_Dimension.ViewModels
       if (!App.Device.ReadActive)  //end button press before start, cancel work order
       {
         App.Device.MainCommand("Set Property", code: 0x17); //leds off
+        DashboardViewModel.Instance.WorkOrder[0] = "";
       }
       else
       {
