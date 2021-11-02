@@ -75,3 +75,16 @@ DataProcessor.BinMapData() could use some optimisation
 ResultsVM.SetDisplayedMap() can be optimised
 
 MicroCyDevice.IsNewWorkOrder() is crazy, since it is checked by app.TimerTick every tick. should be put on file watcher
+
+minperreg not hit --issue with load Template FocusedBox() does not happen instantly!?
+meav val for first region not working
+custom version for load/save template with big fonts
+single plex show for well click
+active regions stats for well click
+shift+F12 to show service tab or click
+saving graphs, maybe as .png
+area select for touch
+
+sampling button on ComponentsView could have an issue
+
+make an Installer

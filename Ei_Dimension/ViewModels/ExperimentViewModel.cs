@@ -110,6 +110,7 @@ namespace Ei_Dimension.ViewModels
         {
           try
           {
+            int iRes;
             var DashVM = DashboardViewModel.Instance;
             DashVM.SpeedItems[newTemplate.Speed].Click(1);
             DashVM.ClassiMapItems[App.GetMapIndex(newTemplate.Map)].Click(2);
@@ -118,20 +119,42 @@ namespace Ei_Dimension.ViewModels
             DashVM.SysControlItems[newTemplate.SysControl].Click(5);
             DashVM.EndReadItems[newTemplate.EndRead].Click(6);
             DashVM.EndRead[0] = newTemplate.MinPerRegion.ToString();
-            DashVM.FocusedBox(0);
-            App.InjectToFocusedTextbox(newTemplate.MinPerRegion.ToString(), true);
+            if (int.TryParse(DashVM.EndRead[0], out iRes))
+            {
+              App.Device.MinPerRegion = iRes;
+              Settings.Default.MinPerRegion = iRes;
+            }
+            else
+              MessageBox.Show("Error loading Template");
             DashVM.EndRead[1] = newTemplate.TotalEvents.ToString();
-            DashVM.FocusedBox(1);
-            App.InjectToFocusedTextbox(newTemplate.TotalEvents.ToString(), true);
+            if (int.TryParse(DashVM.EndRead[1], out iRes))
+            {
+              App.Device.BeadsToCapture = iRes;
+              Settings.Default.BeadsToCapture = iRes;
+            }
+            else
+              MessageBox.Show("Error loading Template");
             DashVM.Volumes[0] = newTemplate.SampleVolume.ToString();
-            DashVM.FocusedBox(2);
-            App.InjectToFocusedTextbox(newTemplate.SampleVolume.ToString(), true);
+            if (int.TryParse(DashVM.Volumes[0], out iRes))
+            {
+              App.Device.MainCommand("Set Property", code: 0xaf, parameter: (ushort)iRes);
+            }
+            else
+              MessageBox.Show("Error loading Template");
             DashVM.Volumes[1] = newTemplate.WashVolume.ToString();
-            DashVM.FocusedBox(3);
-            App.InjectToFocusedTextbox(newTemplate.WashVolume.ToString(), true);
+            if (int.TryParse(DashVM.Volumes[1], out iRes))
+            {
+              App.Device.MainCommand("Set Property", code: 0xac, parameter: (ushort)iRes);
+            }
+            else
+              MessageBox.Show("Error loading Template");
             DashVM.Volumes[2] = newTemplate.AgitateVolume.ToString();
-            DashVM.FocusedBox(4);
-            App.InjectToFocusedTextbox(newTemplate.AgitateVolume.ToString(), true);
+            if (int.TryParse(DashVM.Volumes[2], out iRes))
+            {
+              App.Device.MainCommand("Set Property", code: 0xc4, parameter: (ushort)iRes);
+            }
+            else
+              MessageBox.Show("Error loading Template");
             uint chkBox = newTemplate.FileSaveCheckboxes;
             for (var i = FileSaveViewModel.Instance.Checkboxes.Count -1 -1; i > -1 ; i--)// -1 to not store system log
             {

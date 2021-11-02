@@ -1606,7 +1606,7 @@ namespace Ei_Dimension
             var index = MapRegions.RegionsList.IndexOf(result.regionNumber.ToString());
             if (index == -1 || result.RP1vals.Count == 0)
               continue;
-            MapRegions.ActiveRegionsCount[index] = result.RP1vals.Count().ToString();
+            MapRegions.ActiveRegionsCount[index] = result.RP1vals.Count.ToString();
             MapRegions.ActiveRegionsMean[index] = result.RP1vals.Average().ToString();
           }
           _ActiveRegionsUpdateGoing = false;
@@ -1646,12 +1646,12 @@ namespace Ei_Dimension
         if (!MapRegions.ActiveRegions[i])
           continue;
 
-        if (Device.WellResults[i].RP1vals.Count() < Device.MinPerRegion * 0.75)
+        if (Device.WellResults[i].RP1vals.Count < Device.MinPerRegion * 0.75)
         {
           type = Models.WellType.Fail;
           break;
         }
-        if (Device.WellResults[i].RP1vals.Count() != Device.MinPerRegion)
+        if (Device.WellResults[i].RP1vals.Count != Device.MinPerRegion)
         {
           type = Models.WellType.LightFail;
           break;

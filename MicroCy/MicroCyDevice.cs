@@ -217,7 +217,15 @@ namespace MicroCy
 
     private void ReplyFromMC(IAsyncResult result)
     {
-      _serialConnection.EndRead(result);
+      try
+      {
+        _serialConnection.EndRead(result);
+      }
+      catch (MadWizard.WinUSBNet.USBException e)
+      {
+        Console.WriteLine("USB error");
+      }
+      
       if ((_serialConnection.InputBuffer[0] == 0xbe) && (_serialConnection.InputBuffer[1] == 0xad))
       {
         if (IsMeasurementGoing) //  this condition avoids the necessity of cleaning up leftover data in the system USB interface. That could happen after operation abortion and program restart
@@ -557,7 +565,7 @@ namespace MicroCy
             byte IsDone = 1;   //assume all region have enough beads
             foreach (WellResults region in WellResults)
             {
-              if (region.RP1vals.Count() < MinPerRegion)
+              if (region.RP1vals.Count < MinPerRegion)
               {
                 IsDone = 0; //not done yet
                 break;
@@ -601,7 +609,7 @@ namespace MicroCy
       OutResults rout = new OutResults();
       rout.row = alphabet[WellsInOrder[SavingWellIdx].rowIdx].ToString();
       rout.col = WellsInOrder[SavingWellIdx].colIdx + 1;    //columns are 1 based
-      rout.count = regionNumber.RP1vals.Count();
+      rout.count = regionNumber.RP1vals.Count;
       rout.region = regionNumber.regionNumber;
       if (rout.count > 2)
         rout.meanfi = regionNumber.RP1vals.Average();
