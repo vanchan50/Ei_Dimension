@@ -366,8 +366,6 @@ namespace Ei_Dimension.ViewModels
             break;
           case 2:
             _vm.SelectedClassiMapContent = Content;
-            App.MapRegions.FillRegions();
-            ResultsViewModel.Instance.FillWorldMaps();
             break;
           case 3:
             _vm.SelectedChConfigContent = Content;

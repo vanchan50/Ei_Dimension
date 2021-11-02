@@ -220,22 +220,25 @@ namespace MicroCy
       _serialConnection.EndRead(result);
       if ((_serialConnection.InputBuffer[0] == 0xbe) && (_serialConnection.InputBuffer[1] == 0xad))
       {
-        for (byte i = 0; i < 8; i++)
+        if (IsMeasurementGoing)
         {
-          BeadInfoStruct outbead;
-          if (!GetBeadFromBuffer(_serialConnection.InputBuffer, i, out outbead))
-            break;
-          CalculateBeadParams(ref outbead);
+          for (byte i = 0; i < 8; i++)
+          {
+            BeadInfoStruct outbead;
+            if (!GetBeadFromBuffer(_serialConnection.InputBuffer, i, out outbead))
+              break;
+            CalculateBeadParams(ref outbead);
 
-          FillActiveWellResults(in outbead);
-          if (outbead.region == 0 && OnlyClassified)
-            continue;
-          DataOut.Enqueue(outbead);
-          if (Everyevent)
-            _ = _dataout.Append(outbead.ToString());
-          //accum stats for run as a whole, used during aligment and QC
-          FillCalibrationStatsRow(in outbead);
-          BeadCount++;
+            FillActiveWellResults(in outbead);
+            if (outbead.region == 0 && OnlyClassified)
+              continue;
+            DataOut.Enqueue(outbead);
+            if (Everyevent)
+              _ = _dataout.Append(outbead.ToString());
+            //accum stats for run as a whole, used during aligment and QC
+            FillCalibrationStatsRow(in outbead);
+            BeadCount++;
+          }
         }
         Array.Clear(_serialConnection.InputBuffer, 0, _serialConnection.InputBuffer.Length);
         TerminationReadyCheck();
