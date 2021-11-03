@@ -157,7 +157,7 @@ namespace Ei_Dimension {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("12500")]
+        [global::System.Configuration.DefaultSettingValueAttribute("20000")]
         public float HDnrTrans {
             get {
                 return ((float)(this["HDnrTrans"]));

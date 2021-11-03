@@ -26,6 +26,7 @@ namespace Ei_Dimension
     private static bool _histogramUpdateGoing;
     private static bool _ActiveRegionsUpdateGoing;
     private static bool _isStartup;
+    private static int _timerTickcounter;
     public App()
     {
       SetLogOutput();
@@ -77,6 +78,7 @@ namespace Ei_Dimension
       _histogramUpdateGoing = false;
       _ActiveRegionsUpdateGoing = false;
       _isStartup = true;
+      _timerTickcounter = 0;
     }
 
     public static int GetMapIndex(string MapName)
@@ -940,6 +942,12 @@ namespace Ei_Dimension
         WellStateHandler();
       }
       WorkOrderHandler();
+      _timerTickcounter++;
+      if(_timerTickcounter > 4)
+      {
+        MainViewModel.Instance.ServiceVisibilityCheck = 0;
+        _timerTickcounter = 0;
+      }
     }
 
     private static void TextBoxUpdater()

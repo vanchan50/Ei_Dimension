@@ -24,7 +24,7 @@
                    TextAlignment="Center"
                    Foreground="{StaticResource AppTextColor}"
                    Margin="0,0,0,4"/>
-        <StackPanel Margin="0,50,0,4"
+        <StackPanel Margin="0,48,0,4"
                       Visibility="{Binding MultiPlexVisible}">
           <Border Height="45"
                 HorizontalAlignment="Left">

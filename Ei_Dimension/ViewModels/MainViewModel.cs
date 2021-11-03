@@ -16,6 +16,8 @@ namespace Ei_Dimension.ViewModels
     public virtual System.Windows.Visibility EventCountVisible { get; set; }
     public virtual System.Windows.Visibility StartButtonsVisible { get; set; }
     public virtual System.Windows.Visibility PlexResultsButtonVisible { get; set; }
+    public virtual System.Windows.Visibility ServiceVisibility { get; set; }
+    public int ServiceVisibilityCheck { get; set; }
     public virtual bool PlexResultsButtonState { get; set; }
 
     public static MainViewModel Instance { get; private set; }
@@ -28,11 +30,13 @@ namespace Ei_Dimension.ViewModels
       EventCountVisible = System.Windows.Visibility.Visible;
       StartButtonsVisible = System.Windows.Visibility.Visible;
       PlexResultsButtonVisible = System.Windows.Visibility.Hidden;
+      ServiceVisibility = System.Windows.Visibility.Hidden;
       PlexResultsButtonState = false;
       EventCountCurrent = new ObservableCollection<string> { "0" };
       EventCountLocal = new ObservableCollection<string> { "0" };
       EventCountField = EventCountCurrent;
       Instance = this;
+      ServiceVisibilityCheck = 0;
     }
 
     public static MainViewModel Create()
@@ -44,6 +48,7 @@ namespace Ei_Dimension.ViewModels
     {
       App.ResetFocusedTextbox();
       App.HideNumpad();
+      ServiceVisibility = System.Windows.Visibility.Hidden;
       EventCountVisible = System.Windows.Visibility.Visible;
       StartButtonsVisible = System.Windows.Visibility.Visible;
       PlexResultsButtonVisible = System.Windows.Visibility.Hidden;
@@ -55,26 +60,18 @@ namespace Ei_Dimension.ViewModels
     {
       App.ResetFocusedTextbox();
       App.HideNumpad();
+      ServiceVisibility = System.Windows.Visibility.Hidden;
       EventCountVisible = System.Windows.Visibility.Visible;
       StartButtonsVisible = System.Windows.Visibility.Visible;
       PlexResultsButtonVisible = System.Windows.Visibility.Visible;
       NavigationService.Navigate("ResultsView", null, this);
     }
 
-    public void NavigateDataAnalysis()
-    {
-      App.ResetFocusedTextbox();
-      App.HideNumpad();
-      StartButtonsVisible = System.Windows.Visibility.Hidden;
-      EventCountVisible = System.Windows.Visibility.Hidden;
-      PlexResultsButtonVisible = System.Windows.Visibility.Hidden;
-      NavigationService.Navigate("DataAnalysisView", null, this);
-    }
-
     public void NavigateMaintenance()
     {
       App.ResetFocusedTextbox();
       App.HideNumpad();
+      ServiceVisibility = System.Windows.Visibility.Hidden;
       StartButtonsVisible = System.Windows.Visibility.Hidden;
       EventCountVisible = System.Windows.Visibility.Hidden;
       PlexResultsButtonVisible = System.Windows.Visibility.Hidden;
@@ -107,7 +104,6 @@ namespace Ei_Dimension.ViewModels
     {
       NavigateExperiment();
       NavigateResults();
-      NavigateDataAnalysis();
       NavigateMaintenance();
       NavigateSettings();
     }
@@ -125,6 +121,16 @@ namespace Ei_Dimension.ViewModels
       {
         ResultsViewModel.Instance.MultiPlexVisible = System.Windows.Visibility.Visible;
         ResultsViewModel.Instance.SinglePlexVisible = System.Windows.Visibility.Hidden;
+      }
+    }
+
+    public void LogoClick()
+    {
+      ServiceVisibilityCheck++;
+      if (ServiceVisibilityCheck > 2)
+      {
+        ServiceVisibility = System.Windows.Visibility.Visible;
+        ServiceVisibilityCheck = 0;
       }
     }
   }

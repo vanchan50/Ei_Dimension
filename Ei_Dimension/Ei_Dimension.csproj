@@ -148,7 +148,6 @@
     <Compile Include="ViewModels\ChannelsViewModel.cs" />
     <Compile Include="ViewModels\ComponentsViewModel.cs" />
     <Compile Include="ViewModels\DashboardViewModel.cs" />
-    <Compile Include="ViewModels\DataAnalysisViewModel.cs" />
     <Compile Include="ViewModels\ExperimentViewModel.cs" />
     <Compile Include="ViewModels\FileSaveViewModel.cs" />
     <Compile Include="ViewModels\MainButtonsViewModel.cs" />
@@ -183,9 +182,6 @@
     </Compile>
     <Compile Include="Views\DashboardView.xaml.cs">
       <DependentUpon>DashboardView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\DataAnalysisView.xaml.cs">
-      <DependentUpon>DataAnalysisView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ExperimentView.xaml.cs">
       <DependentUpon>ExperimentView.xaml</DependentUpon>
@@ -308,10 +304,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\DashboardView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\DataAnalysisView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
