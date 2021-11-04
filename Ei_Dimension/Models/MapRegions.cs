@@ -7,17 +7,23 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using DevExpress.Mvvm.DataAnnotations;
+using DevExpress.Mvvm.POCO;
 using Ei_Dimension.ViewModels;
 
 namespace Ei_Dimension.Models
 {
-  public class MapRegions : Core.ObservableObject
+  [POCOViewModel]
+  public class MapRegions
   {
-    //Select
     public ObservableCollection<string> RegionsList { get; } = new ObservableCollection<string>();
     public ObservableCollection<string> RegionsNamesList { get; } = new ObservableCollection<string>();
-    public ObservableCollection<string> ActiveRegionsCount { get; } = new ObservableCollection<string>();
-    public ObservableCollection<string> ActiveRegionsMean { get; } = new ObservableCollection<string>();
+    public ObservableCollection<string> CurrentActiveRegionsCount { get; } = new ObservableCollection<string>();
+    public ObservableCollection<string> CurrentActiveRegionsMean { get; } = new ObservableCollection<string>();
+    public ObservableCollection<string> BackingActiveRegionsCount { get; } = new ObservableCollection<string>();
+    public ObservableCollection<string> BackingActiveRegionsMean { get; } = new ObservableCollection<string>();
+    public virtual ObservableCollection<string> DisplayedActiveRegionsCount { get; set; }
+    public virtual ObservableCollection<string> DisplayedActiveRegionsMean { get; set; }
     public List<bool> ActiveRegions { get; } = new List<bool>();
     private StackPanel _regionsBorder;
     private StackPanel _regionsNamesBorder;
@@ -39,16 +45,21 @@ namespace Ei_Dimension.Models
     //DB
     private StackPanel _dbNum;
     private StackPanel _dbName;
-    public MapRegions(StackPanel RegionsBorder, StackPanel RegionsNamesBorder, ListBox Table, StackPanel Db_Num, StackPanel Db_Name)
+    protected MapRegions(StackPanel RegionsBorder, StackPanel RegionsNamesBorder, ListBox Table, StackPanel Db_Num, StackPanel Db_Name)
     {
       _regionsBorder = RegionsBorder;
       _regionsNamesBorder = RegionsNamesBorder;
       _table = Table;
       _dbNum = Db_Num;
       _dbName = Db_Name;
+      DisplayedActiveRegionsCount = CurrentActiveRegionsCount;
+      DisplayedActiveRegionsMean = CurrentActiveRegionsMean;
       FillRegions();
     }
-
+    public static MapRegions Create(StackPanel RegionsBorder, StackPanel RegionsNamesBorder, ListBox Table, StackPanel Db_Num, StackPanel Db_Name)
+    {
+      return ViewModelSource.Create(() => new MapRegions(RegionsBorder, RegionsNamesBorder, Table, Db_Num, Db_Name));
+    }
     public void FillRegions(bool loadByPage = false)
     {
       if (_firstLoadflag && loadByPage)
@@ -59,8 +70,10 @@ namespace Ei_Dimension.Models
       RegionsList.Clear();
       RegionsNamesList.Clear();
       ActiveRegions.Clear();
-      ActiveRegionsCount.Clear();
-      ActiveRegionsMean.Clear();
+      CurrentActiveRegionsCount.Clear();
+      CurrentActiveRegionsMean.Clear();
+      BackingActiveRegionsCount.Clear();
+      BackingActiveRegionsMean.Clear();
       var i = 0;
       var r = 0;
       // regions should have been added in ascending order
@@ -72,8 +85,10 @@ namespace Ei_Dimension.Models
           RegionsList.Add(point.r.ToString());
           RegionsNamesList.Add("");
           ActiveRegions.Add(false);
-          ActiveRegionsCount.Add("0");
-          ActiveRegionsMean.Add("0");
+          CurrentActiveRegionsCount.Add("0");
+          CurrentActiveRegionsMean.Add("0");
+          BackingActiveRegionsCount.Add("0");
+          BackingActiveRegionsMean.Add("0");
           AddTextboxes($"RegionsList[{i}]", $"RegionsNamesList[{i}]");
           i++;
         }
@@ -261,7 +276,7 @@ namespace Ei_Dimension.Models
       {
         VerticalAlignment = VerticalAlignment.Top,
         HorizontalAlignment = HorizontalAlignment.Left,
-        Width = 200,
+        Width = 160,
         Style = _regionsNamesStyle,
         IsReadOnly = true,
         Margin = _TbAlignment
@@ -283,7 +298,7 @@ namespace Ei_Dimension.Models
       };
       Binding bind = new Binding();
       bind.Source = this;
-      bind.Path = new PropertyPath($"ActiveRegionsCount[{index}]");
+      bind.Path = new PropertyPath($"DisplayedActiveRegionsCount[{index}]");
       bind.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
       BindingOperations.SetBinding(tb, TextBox.TextProperty, bind);
       return tb;
@@ -296,13 +311,13 @@ namespace Ei_Dimension.Models
         VerticalAlignment = VerticalAlignment.Top,
         HorizontalAlignment = HorizontalAlignment.Left,
         Style = _regionsNamesStyle,
-        Width = 100,
+        Width = 140,
         IsReadOnly = true,
         Margin = _TbAlignment
       };
       Binding bind = new Binding();
       bind.Source = this;
-      bind.Path = new PropertyPath($"ActiveRegionsMean[{index}]");
+      bind.Path = new PropertyPath($"DisplayedActiveRegionsMean[{index}]");
       bind.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
       BindingOperations.SetBinding(tb, TextBox.TextProperty, bind);
       return tb;

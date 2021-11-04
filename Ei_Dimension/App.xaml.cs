@@ -60,6 +60,7 @@ namespace Ei_Dimension
       Device.MinPerRegion = Settings.Default.MinPerRegion;
       Device.BeadsToCapture = Settings.Default.BeadsToCapture;
       Device.ChannelBIsHiSensitivity = Settings.Default.SensitivityChannelB;
+      Device.MainCommand("Set Property", code: 0xbf, parameter: (ushort)Device.ActiveMap.att);
       if (!System.Windows.Input.Keyboard.IsKeyDown(System.Windows.Input.Key.LeftCtrl))
         Device.MainCommand("Startup");
       MicroCy.InstrumentParameters.Calibration.HdnrTrans = Settings.Default.HDnrTrans;
@@ -103,6 +104,7 @@ namespace Ei_Dimension
           Device.ActiveMap = Device.MapList[i];
           Settings.Default.DefaultMap = i;
           Settings.Default.Save();
+          Device.MainCommand("Set Property", code: 0xbf, parameter: (ushort)Device.ActiveMap.att);
           break;
         }
       }
@@ -903,6 +905,12 @@ namespace Ei_Dimension
             Device.Outfilename = temp;
             Settings.Default.SaveFileName = temp;
             break;
+          case "MaxPressureBox":
+            if (int.TryParse(temp, out iRes))
+            {
+              Settings.Default.MaxPressure = iRes;
+            }
+            break;
         }
         Settings.Default.Save();
       }
@@ -922,7 +930,7 @@ namespace Ei_Dimension
     {
       if (_isStartup) //TODO: can be a Task launched from ctor, that polls if all instances are != null
       {
-        MapRegions = new Models.MapRegions(
+        MapRegions = Models.MapRegions.Create(
           Views.SelRegionsView.Instance.RegionsBorder,
           Views.SelRegionsView.Instance.RegionsNamesBorder,
           Views.ResultsView.Instance.Table,
@@ -1419,10 +1427,13 @@ namespace Ei_Dimension
             }
             else if (exe.Command == 2) //pressure overload
             {
-              if (MessageBox.Show("Pressure Overload\nCheck for waste line obstructions\nPower Off System",
-                "Operator Alert", MessageBoxButton.OK, MessageBoxImage.Warning) == MessageBoxResult.OK)
+              if (exe.FParameter > int.Parse(ComponentsViewModel.Instance.MaxPressureBox))
               {
-                //                                Environment.Exit(0);
+                if (MessageBox.Show("Pressure Overload\nCheck for waste line obstructions\nPower Off System",
+                  "Operator Alert", MessageBoxButton.OK, MessageBoxImage.Warning) == MessageBoxResult.OK)
+                {
+                  Environment.Exit(0);
+                }
               }
             }
             break;
@@ -1455,6 +1466,9 @@ namespace Ei_Dimension
           case 0xfe:
             if (Device.EndState == 0)
               Device.EndState = 1;
+            break;
+          case 0xbf:
+            CalibrationViewModel.Instance.AttenuationBox = exe.Parameter.ToString();
             break;
         }
       }
@@ -1614,8 +1628,8 @@ namespace Ei_Dimension
             var index = MapRegions.RegionsList.IndexOf(result.regionNumber.ToString());
             if (index == -1 || result.RP1vals.Count == 0)
               continue;
-            MapRegions.ActiveRegionsCount[index] = result.RP1vals.Count.ToString();
-            MapRegions.ActiveRegionsMean[index] = result.RP1vals.Average().ToString();
+            MapRegions.CurrentActiveRegionsCount[index] = result.RP1vals.Count.ToString();
+            MapRegions.CurrentActiveRegionsMean[index] = result.RP1vals.Average().ToString($"{0:0.0}");
           }
           _ActiveRegionsUpdateGoing = false;
         }));
@@ -1639,10 +1653,10 @@ namespace Ei_Dimension
       ResultsViewModel.Instance.PlatePictogram.ChangeState(e.Row, e.Column, Models.WellType.NowReading, e.FilePath);
       ResultsViewModel.Instance.CornerButtonClick(Models.DrawingPlate.CalculateCorner(e.Row, e.Column));
       ResultsViewModel.Instance.ClearGraphs();
-      for (var i = 0; i < MapRegions.ActiveRegionsCount.Count; i++)
+      for (var i = 0; i < MapRegions.CurrentActiveRegionsCount.Count; i++)
       {
-        MapRegions.ActiveRegionsCount[i] = "0";
-        MapRegions.ActiveRegionsMean[i] = "0";
+        MapRegions.CurrentActiveRegionsCount[i] = "0";
+        MapRegions.CurrentActiveRegionsMean[i] = "0";
       }
     }
 

@@ -22,6 +22,28 @@
                  VerticalAlignment="Top"
                  Margin="500,20,250,0"/>
     
+    <!--Max Pressure-->
+    <Border HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Margin="70,260,0,0">
+      <StackPanel>
+        <TextBlock Text="{lang:Loc Dashboard_Pressure_Mon_Max}"
+                       FontFamily="{StaticResource AppTextFont}"
+                       FontSize="36" Height="100"
+                       FontWeight="UltraBold"
+                       Foreground="{StaticResource AppTextColor}"
+                       HorizontalAlignment="Center"/>
+        <TextBox Width="140"
+                 Style="{StaticResource InputFieldStyle}"
+                 Text="{Binding MaxPressureBox}">
+          <dxmvvm:Interaction.Behaviors>
+            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="2"/>
+            <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+          </dxmvvm:Interaction.Behaviors>
+        </TextBox>
+      </StackPanel>
+    </Border>
+    
     <!--Input Selector-->
     <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"

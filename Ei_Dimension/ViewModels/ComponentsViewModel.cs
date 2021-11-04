@@ -26,7 +26,6 @@ namespace Ei_Dimension.ViewModels
     public virtual ObservableCollection<string> SyringeControlSheathValue { get; set; }
     public virtual ObservableCollection<string> SyringeControlSampleAValue { get; set; }
     public virtual ObservableCollection<string> SyringeControlSampleBValue { get; set; }
-
     public virtual string GetPositionToggleButtonState { get; set; }
     public virtual ObservableCollection<bool> GetPositionToggleButtonStateBool { get; set; }
     public virtual ObservableCollection<string> GetPositionTextBoxInputs { get; set; }
@@ -36,6 +35,8 @@ namespace Ei_Dimension.ViewModels
 
     public virtual ObservableCollection<string> IdexTextBoxInputs { get; set; }
     public virtual bool CWDirectionActive { get; set; }
+
+    public virtual string MaxPressureBox { get; set; }
 
     public static ComponentsViewModel Instance { get; private set; }
 
@@ -93,6 +94,7 @@ namespace Ei_Dimension.ViewModels
 
       IdexTextBoxInputs = new ObservableCollection<string> { "", "" };
       CWDirectionActive = false;
+      MaxPressureBox = Settings.Default.MaxPressure.ToString();
       Instance = this;
     }
 
@@ -142,7 +144,6 @@ namespace Ei_Dimension.ViewModels
 
     public void LasersButtonClick(int num)
     {
-      int param = 0;
       switch (num)
       {
         case 1:
@@ -167,7 +168,7 @@ namespace Ei_Dimension.ViewModels
             _activeLasers -= 4;
           break;
       }
-      App.Device.MainCommand("Set Property", code: 0xc0, parameter: (ushort)param);
+      App.Device.MainCommand("Set Property", code: 0xc0, parameter: _activeLasers);
     }
 
     public void SheathRunButtonClick()
@@ -283,6 +284,9 @@ namespace Ei_Dimension.ViewModels
           break;
         case 1:
           App.SelectedTextBox = (this.GetType().GetProperty(nameof(IdexTextBoxInputs)), this, 1);
+          break;
+        case 2:
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(MaxPressureBox)), this, 0);
           break;
         case 5:
           App.SelectedTextBox = (this.GetType().GetProperty(nameof(SyringeControlSheathValue)), this, 0);

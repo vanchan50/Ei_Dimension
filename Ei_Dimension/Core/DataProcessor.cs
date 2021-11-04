@@ -1,6 +1,7 @@
 ﻿using Ei_Dimension.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Media;
 
@@ -130,6 +131,19 @@ namespace Ei_Dimension.Core
       var red = new int[ResVM.CurrentReporter.Count];
       var green = new int[ResVM.CurrentReporter.Count];
       var violet = new int[ResVM.CurrentReporter.Count];
+
+      var r = 0;
+      // regions should have been added in ascending order
+      List<List<float>> ActiveRegionsStats = new List<List<float>>();  //for mean and count
+      foreach (var point in App.Device.ActiveMap.classificationMap)
+      {
+        if (point.r > r)
+        {
+          ActiveRegionsStats.Add(new List<float>());
+          r = point.r;
+        }
+      }
+      bool failed = false;
       foreach (var beadD in list)
       {
         var bead = beadD;
@@ -139,44 +153,41 @@ namespace Ei_Dimension.Core
         bead.redssc = bead.redssc < MaxValue ? bead.redssc : MaxValue;
         bead.greenssc = bead.greenssc < MaxValue ? bead.greenssc : MaxValue;
         bead.reporter = bead.reporter < MaxValue ? bead.reporter : MaxValue;
-        bool fscDone = false;
-        bool violetDone = false;
-        bool redDone = false;
-        bool greenDone = false;
-        bool reporterDone = false;
 
         for (var i = 0; i < reporter.Length; i++)
         {
-          var currentValue = HistogramData.Bins[i];
-          if (!fscDone && bead.fsc <= currentValue)
-          {
-            fsc[i]++;
-            fscDone = true;
-          }
-          if (!violetDone && bead.violetssc <= currentValue)
-          {
-            violet[i]++;
-            violetDone = true;
-          }
-          if (!redDone && bead.redssc <= currentValue)
-          {
-            red[i]++;
-            redDone = true;
-          }
-          if (!greenDone && bead.greenssc <= currentValue)
-          {
-            green[i]++;
-            greenDone = true;
-          }
-          if (!reporterDone && bead.reporter <= currentValue)
-          {
-            reporter[i]++;
-            reporterDone = true;
-          }
-          if (fscDone && violetDone && redDone && greenDone && reporterDone)
-            break;
+          int j = 0;
+          j = Array.BinarySearch(HistogramData.Bins, (int)bead.fsc);
+          if (j < 0)
+            j = ~j;
+          fsc[j]++;
+          j = Array.BinarySearch(HistogramData.Bins, (int)bead.redssc);
+          if (j < 0)
+            j = ~j;
+          red[j]++;
+          j = Array.BinarySearch(HistogramData.Bins, (int)bead.greenssc);
+          if (j < 0)
+            j = ~j;
+          green[j]++;
+          j = Array.BinarySearch(HistogramData.Bins, (int)bead.violetssc);
+          if (j < 0)
+            j = ~j;
+          violet[j]++;
+          j = Array.BinarySearch(HistogramData.Bins, (int)bead.reporter);
+          if (j < 0)
+            j = ~j;
+          reporter[j]++;
         }
+
+        var index = App.MapRegions.RegionsList.IndexOf(beadD.region.ToString());
+        if (index != -1)
+          ActiveRegionsStats[index].Add(beadD.reporter);
+        else
+          failed = true;
       }
+      if (failed)
+        System.Windows.MessageBox.Show("An error occured during Well File Read");
+
       _ = App.Current.Dispatcher.BeginInvoke((Action)(() =>
       {
         if (fromFile)
@@ -188,6 +199,17 @@ namespace Ei_Dimension.Core
             ResVM.BackingRedSsc[i].Value += red[i];
             ResVM.BackingGreenSsc[i].Value += green[i];
             ResVM.BackingVioletSsc[i].Value += violet[i];
+
+          }
+          var j = 0;
+          foreach (var lst in ActiveRegionsStats)
+          {
+            if(lst.Count > 0)
+            {
+              App.MapRegions.BackingActiveRegionsCount[j] = lst.Count.ToString();
+              App.MapRegions.BackingActiveRegionsMean[j] = lst.Average().ToString($"{0:0.0}");
+            }
+            j++;
           }
         }
         else

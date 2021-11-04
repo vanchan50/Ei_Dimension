@@ -70,6 +70,15 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Attenuation %.
+        /// </summary>
+        public static string Calibration_Attenuation {
+            get {
+                return ResourceManager.GetString("Calibration_Attenuation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Classification.
         /// </summary>
         public static string Calibration_Classification_targets {
@@ -1105,6 +1114,15 @@ namespace Ei_Dimension.Language {
         public static string Experiment_Start {
             get {
                 return ResourceManager.GetString("Experiment_Start", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Statistics.
+        /// </summary>
+        public static string Experiment_Stats {
+            get {
+                return ResourceManager.GetString("Experiment_Stats", resourceCulture);
             }
         }
         

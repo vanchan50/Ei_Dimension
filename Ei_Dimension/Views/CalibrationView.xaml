@@ -402,7 +402,7 @@
 
     <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Margin="1020,560,0,0" x:Name="clmap">
+            Margin="1045,560,0,0" x:Name="clmap">
       <StackPanel>
         <TextBlock Text="{lang:Loc Experiment_Classific_Map}"
                    FontFamily="{StaticResource AppTextFont}"
@@ -452,5 +452,30 @@
         </dx:DropDownButton>
       </StackPanel>
     </Border>
+
+
+    <Border HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Margin="1065,485,0,0">
+      <StackPanel>
+        <TextBlock Text="{lang:Loc Calibration_Attenuation}"
+                   FontFamily="{StaticResource AppTextFont}"
+                   FontSize="26"
+                   FontWeight="UltraBold"
+                   Foreground="{StaticResource AppTextColor}"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Stretch"
+                 Width="140"
+                 Style="{StaticResource InputFieldStyle}"
+                 Text="{Binding AttenuationBox}">
+          <dxmvvm:Interaction.Behaviors>
+            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="10"/>
+            <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+          </dxmvvm:Interaction.Behaviors>
+        </TextBox>
+      </StackPanel>
+    </Border>
+    
   </Grid>
 </UserControl>

@@ -16,36 +16,36 @@
     <Border HorizontalAlignment="Left" VerticalAlignment="Top"
             Margin="750,0,0,0" Width="470" Height="900">
       <Grid>
-        <TextBlock Text="{lang:Loc Experiment_Active_Regions}"
-                   FontFamily="{StaticResource AppTextFont}"
-                   FontSize="36"
-                   Width="470"
-                   FontWeight="UltraBold"
-                   TextAlignment="Center"
-                   Foreground="{StaticResource AppTextColor}"
-                   Margin="0,0,0,4"/>
+
+        <Button Width="470" Height="50"
+                  HorizontalAlignment="Left"
+                  VerticalAlignment="Top"
+                  FontSize="36"
+                  Content="{Binding PlexButtonString}"
+                  Style="{StaticResource ButtonStyle}"
+                  Command="{Binding PlexButtonClickCommand}"/>
         <StackPanel Margin="0,48,0,4"
-                      Visibility="{Binding MultiPlexVisible}">
+                    Visibility="{Binding MultiPlexVisible}">
           <Border Height="45"
                 HorizontalAlignment="Left">
             <Grid>
               <TextBlock Text="{lang:Loc Name}"
-                       Width="218"
-                       FontSize="30"
-                       TextAlignment="Center"
-                       HorizontalAlignment="Left"/>
+                         Width="178"
+                         FontSize="30"
+                         TextAlignment="Center"
+                         HorizontalAlignment="Left"/>
               <TextBlock Text="{lang:Loc Count}"
-                       FontSize="30"
-                       Width="119"
-                       Margin="218,0,0,0"
-                       TextAlignment="Center"
-                       HorizontalAlignment="Left"/>
+                         FontSize="30"
+                         Width="119"
+                         Margin="178,0,0,0"
+                         TextAlignment="Center"
+                         HorizontalAlignment="Left"/>
               <TextBlock Text="{lang:Loc Mean}"
-                       FontSize="30"
-                       Width="135"
-                       Margin="337,0,0,0"
-                       TextAlignment="Left"
-                       HorizontalAlignment="Left"/>
+                         FontSize="30"
+                         Width="155"
+                         Margin="317,0,0,0" 
+                         TextAlignment="Left"
+                         HorizontalAlignment="Left"/>
             </Grid>
           </Border>
           <ScrollViewer HorizontalScrollBarVisibility="Disabled"

@@ -71,6 +71,7 @@ namespace Ei_Dimension.ViewModels
     public virtual System.Windows.Visibility BottomLabel384Visible { get; set; }
     public virtual ObservableCollection<string> MfiItems { get; set; }
     public virtual ObservableCollection<string> CvItems { get; set; }
+    public virtual string PlexButtonString { get; set; }
     public virtual ObservableCollection<bool> CornerButtonsChecked { get; set; }
     public virtual ObservableCollection<bool> CLButtonsChecked { get; set; }
     public static ResultsViewModel Instance { get; private set; }
@@ -80,6 +81,7 @@ namespace Ei_Dimension.ViewModels
       ScatterSelectorState = new ObservableCollection<bool> { false, false, false, false, false };
       MultiPlexVisible = System.Windows.Visibility.Visible;
       SinglePlexVisible = System.Windows.Visibility.Hidden;
+      PlexButtonString = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Experiment_Active_Regions), Language.TranslationSource.Instance.CurrentCulture);
       byte temp = Settings.Default.ScatterGraphSelector;
       if (temp >= 16)
       {
@@ -321,6 +323,11 @@ namespace Ei_Dimension.ViewModels
         BackingCL12Dict.Clear();
         BackingCL13Dict.Clear();
         BackingCL23Dict.Clear();
+        for(var i = 0; i < App.MapRegions.BackingActiveRegionsCount.Count; i++)
+        {
+          App.MapRegions.BackingActiveRegionsCount[i] = "0";
+          App.MapRegions.BackingActiveRegionsMean[i] = "0";
+        }
       }
       Views.ResultsView.Instance.ClearPoints();
     }
@@ -377,7 +384,11 @@ namespace Ei_Dimension.ViewModels
     {
       _ = Task.Run(async ()=>
       {
+#if DEBUG
+        var path = @"C:\Emissioninc\KEIZ0R-LEGION\AcquisitionData\BeadAssayB1_0.csv";
+#else
         var path = PlatePictogram.GetSelectedFilePath();
+#endif
         if (path == null)
           return;
         var beadStructslist = new List<MicroCy.BeadInfoStruct>();
@@ -403,8 +414,13 @@ namespace Ei_Dimension.ViewModels
         DisplayedRedSsc = CurrentRedSsc;
         DisplayedGreenSsc = CurrentGreenSsc;
         DisplayedReporter = CurrentReporter;
+        if(App.MapRegions != null)
+        {
+          App.MapRegions.DisplayedActiveRegionsCount = App.MapRegions.CurrentActiveRegionsCount;
+          App.MapRegions.DisplayedActiveRegionsMean = App.MapRegions.CurrentActiveRegionsMean;
+        }
 
-        if(Views.ResultsView.Instance != null)
+        if (Views.ResultsView.Instance != null)
           Views.ResultsView.Instance.ClearPoints();
         _ = App.Current.Dispatcher.BeginInvoke((Action)(() =>
         {
@@ -419,6 +435,11 @@ namespace Ei_Dimension.ViewModels
         DisplayedRedSsc = BackingRedSsc;
         DisplayedGreenSsc = BackingGreenSsc;
         DisplayedReporter = BackingReporter;
+        if (App.MapRegions != null)
+        {
+          App.MapRegions.DisplayedActiveRegionsCount = App.MapRegions.BackingActiveRegionsCount;
+          App.MapRegions.DisplayedActiveRegionsMean = App.MapRegions.BackingActiveRegionsMean;
+        }
         MainViewModel.Instance.EventCountField = MainViewModel.Instance.EventCountLocal;
       }
     }
@@ -613,6 +634,23 @@ namespace Ei_Dimension.ViewModels
           Views.ResultsView.Instance.ClearPoints();
           WorldMap.Clear();
         }
+      }
+    }
+
+    public void PlexButtonClick()
+    {
+      App.Device.CalStats = !App.Device.CalStats;
+      if (MultiPlexVisible == System.Windows.Visibility.Visible)
+      {
+        PlexButtonString = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Experiment_Stats), Language.TranslationSource.Instance.CurrentCulture);
+        MultiPlexVisible = System.Windows.Visibility.Hidden;
+        SinglePlexVisible = System.Windows.Visibility.Visible;
+      }
+      else
+      {
+        PlexButtonString = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Experiment_Active_Regions), Language.TranslationSource.Instance.CurrentCulture);
+        MultiPlexVisible = System.Windows.Visibility.Visible;
+        SinglePlexVisible = System.Windows.Visibility.Hidden;
       }
     }
   }

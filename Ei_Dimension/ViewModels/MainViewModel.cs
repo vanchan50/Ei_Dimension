@@ -15,10 +15,8 @@ namespace Ei_Dimension.ViewModels
     public virtual ObservableCollection<string> EventCountLocal { get; set; }
     public virtual System.Windows.Visibility EventCountVisible { get; set; }
     public virtual System.Windows.Visibility StartButtonsVisible { get; set; }
-    public virtual System.Windows.Visibility PlexResultsButtonVisible { get; set; }
     public virtual System.Windows.Visibility ServiceVisibility { get; set; }
     public int ServiceVisibilityCheck { get; set; }
-    public virtual bool PlexResultsButtonState { get; set; }
 
     public static MainViewModel Instance { get; private set; }
     private INavigationService NavigationService => this.GetService<INavigationService>();
@@ -29,9 +27,7 @@ namespace Ei_Dimension.ViewModels
       NumpadVisible = System.Windows.Visibility.Hidden;
       EventCountVisible = System.Windows.Visibility.Visible;
       StartButtonsVisible = System.Windows.Visibility.Visible;
-      PlexResultsButtonVisible = System.Windows.Visibility.Hidden;
       ServiceVisibility = System.Windows.Visibility.Hidden;
-      PlexResultsButtonState = false;
       EventCountCurrent = new ObservableCollection<string> { "0" };
       EventCountLocal = new ObservableCollection<string> { "0" };
       EventCountField = EventCountCurrent;
@@ -51,7 +47,6 @@ namespace Ei_Dimension.ViewModels
       ServiceVisibility = System.Windows.Visibility.Hidden;
       EventCountVisible = System.Windows.Visibility.Visible;
       StartButtonsVisible = System.Windows.Visibility.Visible;
-      PlexResultsButtonVisible = System.Windows.Visibility.Hidden;
       NavigationService.Navigate("ExperimentView", null, this);
       App.Device.InitSTab("readertab");
     }
@@ -63,7 +58,6 @@ namespace Ei_Dimension.ViewModels
       ServiceVisibility = System.Windows.Visibility.Hidden;
       EventCountVisible = System.Windows.Visibility.Visible;
       StartButtonsVisible = System.Windows.Visibility.Visible;
-      PlexResultsButtonVisible = System.Windows.Visibility.Visible;
       NavigationService.Navigate("ResultsView", null, this);
     }
 
@@ -74,7 +68,6 @@ namespace Ei_Dimension.ViewModels
       ServiceVisibility = System.Windows.Visibility.Hidden;
       StartButtonsVisible = System.Windows.Visibility.Hidden;
       EventCountVisible = System.Windows.Visibility.Hidden;
-      PlexResultsButtonVisible = System.Windows.Visibility.Hidden;
       NavigationService.Navigate("MaintenanceView", null, this);
     }
 
@@ -84,7 +77,6 @@ namespace Ei_Dimension.ViewModels
       App.HideNumpad();
       StartButtonsVisible = System.Windows.Visibility.Hidden;
       EventCountVisible = System.Windows.Visibility.Hidden;
-      PlexResultsButtonVisible = System.Windows.Visibility.Hidden;
       NavigationService.Navigate("ServiceView", null, this);
     }
 
@@ -106,22 +98,6 @@ namespace Ei_Dimension.ViewModels
       NavigateResults();
       NavigateMaintenance();
       NavigateSettings();
-    }
-
-    public void PlexResults()
-    {
-      PlexResultsButtonState = !PlexResultsButtonState;
-      App.Device.CalStats = PlexResultsButtonState;
-      if (ResultsViewModel.Instance.MultiPlexVisible == System.Windows.Visibility.Visible)
-      {
-        ResultsViewModel.Instance.MultiPlexVisible = System.Windows.Visibility.Hidden;
-        ResultsViewModel.Instance.SinglePlexVisible = System.Windows.Visibility.Visible;
-      }
-      else
-      {
-        ResultsViewModel.Instance.MultiPlexVisible = System.Windows.Visibility.Visible;
-        ResultsViewModel.Instance.SinglePlexVisible = System.Windows.Visibility.Hidden;
-      }
     }
 
     public void LogoClick()

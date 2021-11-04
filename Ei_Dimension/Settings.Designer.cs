@@ -250,5 +250,17 @@ namespace Ei_Dimension {
                 this["SensitivityChannelB"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        public int MaxPressure {
+            get {
+                return ((int)(this["MaxPressure"]));
+            }
+            set {
+                this["MaxPressure"] = value;
+            }
+        }
     }
 }

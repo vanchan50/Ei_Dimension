@@ -20,6 +20,7 @@ namespace Ei_Dimension.ViewModels
     public virtual ObservableCollection<string> CompensationPercentageContent { get; set; }
     public virtual ObservableCollection<string> DNRContents { get; set; }
     public virtual ObservableCollection<string> CurrentMapName { get; set; }
+    public virtual string AttenuationBox { get; set; }
 
     public static CalibrationViewModel Instance { get; private set; }
 
@@ -51,7 +52,7 @@ namespace Ei_Dimension.ViewModels
       DNRContents = new ObservableCollection<string> { "", MicroCy.InstrumentParameters.Calibration.HdnrTrans.ToString() };
 
       CurrentMapName = new ObservableCollection<string> { App.Device.ActiveMap.mapName };
-
+      AttenuationBox = App.Device.ActiveMap.att.ToString();
       Instance = this;
     }
 

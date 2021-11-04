@@ -152,6 +152,9 @@ Align Motor</value>
   <data name="All Files" xml:space="preserve">
     <value>All Files</value>
   </data>
+  <data name="Calibration_Attenuation" xml:space="preserve">
+    <value>Attenuation %</value>
+  </data>
   <data name="Calibration_Calibration" xml:space="preserve">
     <value>Calibration</value>
   </data>
@@ -574,6 +577,9 @@ Template</value>
   </data>
   <data name="Experiment_Start" xml:space="preserve">
     <value>Start</value>
+  </data>
+  <data name="Experiment_Stats" xml:space="preserve">
+    <value>Statistics</value>
   </data>
   <data name="Experiment_System_Control" xml:space="preserve">
     <value>System Control</value>
