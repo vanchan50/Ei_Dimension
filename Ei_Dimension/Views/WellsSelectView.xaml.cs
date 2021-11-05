@@ -19,14 +19,18 @@ namespace Ei_Dimension.Views
   /// </summary>
   public partial class WellsSelectView : UserControl
   {
-    private readonly int shiftX384 = 24;
-    private readonly int shiftY384 = 39;
+    public static WellsSelectView Instance { get; private set; }
+    public static bool SquareSelectionMode { get; set; }
+    private readonly int shiftX384 = 0;
+    private readonly int shiftY384 = 0;
     private readonly int ColWidth384;
     private readonly int RowHeight384;
-    private readonly int shiftX96 = 24;
-    private readonly int shiftY96 = 39;
+    private readonly int shiftX96 = 0;
+    private readonly int shiftY96 = 0;
     private readonly int ColWidth96;
     private readonly int RowHeight96;
+    private (int x, int y) _basis;
+    private (int x, int y) _previousPoint;
 
     public WellsSelectView()
     {
@@ -35,6 +39,8 @@ namespace Ei_Dimension.Views
       RowHeight96 = (int)(double)App.Current.Resources["Table96Width"];
       ColWidth384 = (int)(double)App.Current.Resources["Table384Width"];
       RowHeight384 = (int)(double)App.Current.Resources["Table384Width"];
+      Instance = this;
+      SquareSelectionMode = true;
     }
 
     private void grd384_TouchMove(object sender, TouchEventArgs e)
@@ -45,9 +51,7 @@ namespace Ei_Dimension.Views
 
       if (indexX >= 0 && indexX < 24 && indexY >= 0 && indexY < 16)
       {
-        var c = new DataGridCellInfo(grd384.Items[indexY], grd384.Columns[indexX]);
-        if (!grd384.SelectedCells.Contains(c))
-          grd384.SelectedCells.Add(c);
+        TouchSelection(indexX, indexY, grd384);
       }
     }
 
@@ -64,15 +68,73 @@ namespace Ei_Dimension.Views
 
       if (indexX >= 0 && indexX < 12 && indexY >= 0 && indexY < 8)
       {
-        var c = new DataGridCellInfo(grd96.Items[indexY], grd96.Columns[indexX]);
-        if (!grd96.SelectedCells.Contains(c))
-          grd96.SelectedCells.Add(c);
+        TouchSelection(indexX, indexY, grd96);
       }
     }
 
     private void grd96_TouchDown(object sender, TouchEventArgs e)
     {
       grd96.SelectedCells.Clear();
+    }
+
+    private void TouchSelection(int x, int y, DataGrid grid)
+    {
+
+      var c = new DataGridCellInfo(grid.Items[y], grid.Columns[x]);
+      if (!SquareSelectionMode)
+      {
+        if (!grid.SelectedCells.Contains(c))
+          grid.SelectedCells.Add(c);
+      }
+      else
+      {
+        if (grid.SelectedCells.Count == 0)
+        {
+          grid.SelectedCells.Add(c);
+          _basis = (x, y);
+          _previousPoint = (x, y);
+        }
+        else
+        {
+          if (_previousPoint.x == x && _previousPoint.y == y)
+            return;
+          _previousPoint = (x, y);
+          grid.SelectedCells.Clear();
+
+          int xStart;
+          int xEnd;
+          int yStart;
+          int yEnd;
+          if (x >= _basis.x)
+          {
+            xStart = _basis.x;
+            xEnd = x;
+          }
+          else
+          {
+            xStart = x;
+            xEnd = _basis.x;
+          }
+          if (y >= _basis.y)
+          {
+            yStart = _basis.y;
+            yEnd = y;
+          }
+          else
+          {
+            yStart = y;
+            yEnd = _basis.y;
+          }
+
+          for (var i = xStart; i <= xEnd; i++)
+          {
+            for (var j = yStart; j <= yEnd; j++)
+            {
+              grid.SelectedCells.Add(new DataGridCellInfo(grid.Items[j], grid.Columns[i]));
+            }
+          }
+        }
+      }
     }
   }
 }

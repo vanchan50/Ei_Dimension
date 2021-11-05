@@ -7,20 +7,191 @@
              xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
              xmlns:ViewModels="clr-namespace:Ei_Dimension.ViewModels"
              mc:Ignorable="d"
+             xmlns:lang="clr-namespace:Ei_Dimension.Language;assembly=Language"
              DataContext="{dxmvvm:ViewModelSource Type=ViewModels:WellsSelectViewModel}"
              d:DesignHeight="944" d:DesignWidth="1632">
   <Grid>
-    <!--WellTable 96   -->
+    <!--WellTable 96-->
     <Border HorizontalAlignment="Left" VerticalAlignment="Top"
             Width="1100" Height="740"
-            Margin="70,30,0,0"
-            Visibility="{Binding Table96Visible}">
-      <DataGrid Name="grd96" Grid.ColumnSpan="2"
+            Visibility="{Binding Table96Visible}"
+            Margin="70,30,0,0">
+      <Grid>
+        <StackPanel Orientation="Horizontal"
+                    Margin="66,-10,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Height="60">
+          <TextBlock Text="1"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="50"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"/>
+          <TextBlock Text="2"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="50"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="62,0,0,0"/>
+          <TextBlock Text="3"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="50"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="54,0,0,0"/>
+          <TextBlock Text="4"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="50"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="50,0,0,0"/>
+          <TextBlock Text="5"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="50"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="56,0,0,0"/>
+          <TextBlock Text="6"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="50"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="52,0,0,0"/>
+          <TextBlock Text="7"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="50"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="54,0,0,0"/>
+          <TextBlock Text="8"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="50"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="54,0,0,0"/>
+          <TextBlock Text="9"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="50"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="54,0,0,0"/>
+          <TextBlock Text="10"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="50"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="44,0,0,0"/>
+          <TextBlock Text="11"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="50"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="38,0,0,0"/>
+          <TextBlock Text="12"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="50"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="40,0,0,0"/>
+        </StackPanel>
+        <StackPanel HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Margin="0,50,0,0"
+                    Width="33">
+          <TextBlock Text="A"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="50"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"/>
+          <TextBlock Text="B"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="50"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="0,16,0,0"/>
+          <TextBlock Text="C"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="50"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="0,14,0,0"/>
+          <TextBlock Text="D"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="50"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="0,12,0,0"/>
+          <TextBlock Text="E"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="50"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="0,14,0,0"/>
+          <TextBlock Text="F"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="50"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="0,14,0,0"/>
+          <TextBlock Text="G"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="50"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="0,14,0,0"/>
+          <TextBlock Text="H"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="50"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="0,14,0,0"/>
+        </StackPanel>
+        <DataGrid Name="grd96" Grid.ColumnSpan="2"
               SelectionMode="Extended"
               SelectionUnit="Cell"
               AutoGenerateColumns="False"
               ItemsSource="{Binding Table96Wells}"
-              HeadersVisibility="All"
+              HeadersVisibility="None"
               Background="Transparent"
               RowBackground="Transparent"
               AlternatingRowBackground="Transparent"
@@ -32,206 +203,539 @@
               CanUserSortColumns="False"
               BorderThickness="0"
               TouchMove="grd96_TouchMove"
-              TouchDown="grd96_TouchDown">
-        <DataGrid.Resources>
-          <Style x:Key="{ComponentResourceKey ResourceId=DataGridSelectAllButtonStyle, TypeInTargetAssembly={x:Type DataGrid}}"
+              TouchDown="grd96_TouchDown"
+                  Margin="40,50,0,0">
+          <DataGrid.Resources>
+            <Style x:Key="{ComponentResourceKey ResourceId=DataGridSelectAllButtonStyle, TypeInTargetAssembly={x:Type DataGrid}}"
                TargetType="{x:Type Button}">
-            <Setter Property="Template">
-              <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Button}">
-                  <Grid Background="{StaticResource AppBackground}">
-                    <Image Source="{dx:DXImage 'SvgImages/DiagramIcons/Figures/figures2.svg'}"
+              <Setter Property="Template">
+                <Setter.Value>
+                  <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid Background="{StaticResource AppBackground}">
+                      <Image Source="{dx:DXImage 'SvgImages/DiagramIcons/Figures/figures2.svg'}"
                            RenderTransformOrigin="0.5,0.5"
                            Margin="0,16,0,0">
-                      <Image.RenderTransform>
-                        <ScaleTransform ScaleX="-1"/>
-                      </Image.RenderTransform>
-                    </Image>
-                    <ContentPresenter/>
-                  </Grid>
-                </ControlTemplate>
-              </Setter.Value>
-            </Setter>
-          </Style>
-        </DataGrid.Resources>
-        <dxmvvm:Interaction.Behaviors>
-          <dxmvvm:EventToCommand EventName="SelectedCellsChanged"
+                        <Image.RenderTransform>
+                          <ScaleTransform ScaleX="-1"/>
+                        </Image.RenderTransform>
+                      </Image>
+                      <ContentPresenter/>
+                    </Grid>
+                  </ControlTemplate>
+                </Setter.Value>
+              </Setter>
+            </Style>
+          </DataGrid.Resources>
+          <dxmvvm:Interaction.Behaviors>
+            <dxmvvm:EventToCommand EventName="SelectedCellsChanged"
                                  Command="{Binding SelectIndicesCommand}"
                                  PassEventArgsToCommand="True"/>
-        </dxmvvm:Interaction.Behaviors>
-        <DataGrid.CellStyle>
-          <Style TargetType="{x:Type DataGridCell}">
-            <Setter Property="Template">
-              <Setter.Value>
-                <ControlTemplate TargetType="DataGridCell">
-                  <Border x:Name="border" Width="{StaticResource Table96Width}">
-                    <ContentPresenter />
-                  </Border>
-                  <ControlTemplate.Triggers>
-                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsSelected}"
+          </dxmvvm:Interaction.Behaviors>
+          <DataGrid.CellStyle>
+            <Style TargetType="{x:Type DataGridCell}">
+              <Setter Property="Template">
+                <Setter.Value>
+                  <ControlTemplate TargetType="DataGridCell">
+                    <Border x:Name="border" Width="{StaticResource Table96Width}">
+                      <ContentPresenter />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                      <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsSelected}"
                                Value="true">
-                      <Setter TargetName="border" Property="Background"
+                        <Setter TargetName="border" Property="Background"
                             Value="{StaticResource RibbonBackgroundActive}"/>
-                    </DataTrigger>
-                  </ControlTemplate.Triggers>
-                </ControlTemplate>
-              </Setter.Value>
-            </Setter>
-          </Style>
-        </DataGrid.CellStyle>
-        <DataGrid.RowHeaderStyle>
-          <Style TargetType="{x:Type DataGridRowHeader}">
-            <Setter Property="Template">
-              <Setter.Value>
-                <ControlTemplate TargetType="DataGridRowHeader">
-                  <Grid Background="{StaticResource AppBackground}">
-                    <ContentPresenter HorizontalAlignment="Center"/>
-                  </Grid>
-                </ControlTemplate>
-              </Setter.Value>
-            </Setter>
-            <Setter Property="Content" Value="{Binding Header}"/>
-            <Setter Property="Foreground" Value="{StaticResource AppTextColor}"/>
-            <Setter Property="FontFamily" Value="{StaticResource AppTextFont}"/>
-            <Setter Property="FontWeight" Value="ExtraBold"/>
-            <Setter Property="FontSize" Value="25"/>
-            <Setter Property="Height" Value="33"/>
-            <Style.Triggers>
-              <Trigger Property="IsVisible" Value="true">
-                <Setter Property="Height" Value="32"/>
-              </Trigger>
-            </Style.Triggers>
-          </Style>
-        </DataGrid.RowHeaderStyle>
-        <DataGrid.ColumnHeaderStyle>
-          <Style TargetType="{x:Type DataGridColumnHeader}">
-            <Setter Property="Foreground" Value="{StaticResource AppTextColor}"/>
-            <Setter Property="FontFamily" Value="{StaticResource AppTextFont}"/>
-            <Setter Property="FontWeight" Value="ExtraBold"/>
-            <Setter Property="FontSize" Value="25"/>
-            <Setter Property="Template">
-              <Setter.Value>
-                <ControlTemplate TargetType="DataGridColumnHeader">
-                  <Grid Background="{StaticResource AppBackground}">
-                    <ContentPresenter HorizontalAlignment="Center"/>
-                  </Grid>
-                </ControlTemplate>
-              </Setter.Value>
-            </Setter>
-          </Style>
-        </DataGrid.ColumnHeaderStyle>
-        <DataGrid.Columns>
-          <DataGridTemplateColumn Header="1" Width="SizeToCells"
+                      </DataTrigger>
+                    </ControlTemplate.Triggers>
+                  </ControlTemplate>
+                </Setter.Value>
+              </Setter>
+            </Style>
+          </DataGrid.CellStyle>
+          <DataGrid.RowHeaderStyle>
+            <Style TargetType="{x:Type DataGridRowHeader}">
+              <Setter Property="Template">
+                <Setter.Value>
+                  <ControlTemplate TargetType="DataGridRowHeader">
+                    <Grid Background="{StaticResource AppBackground}">
+                      <ContentPresenter HorizontalAlignment="Center"/>
+                    </Grid>
+                  </ControlTemplate>
+                </Setter.Value>
+              </Setter>
+              <Setter Property="Content" Value="{Binding Header}"/>
+              <Setter Property="Foreground" Value="{StaticResource AppTextColor}"/>
+              <Setter Property="FontFamily" Value="{StaticResource AppTextFont}"/>
+              <Setter Property="FontWeight" Value="ExtraBold"/>
+              <Setter Property="FontSize" Value="25"/>
+              <Setter Property="Height" Value="33"/>
+              <Style.Triggers>
+                <Trigger Property="IsVisible" Value="true">
+                  <Setter Property="Height" Value="32"/>
+                </Trigger>
+              </Style.Triggers>
+            </Style>
+          </DataGrid.RowHeaderStyle>
+          <DataGrid.ColumnHeaderStyle>
+            <Style TargetType="{x:Type DataGridColumnHeader}">
+              <Setter Property="Foreground" Value="{StaticResource AppTextColor}"/>
+              <Setter Property="FontFamily" Value="{StaticResource AppTextFont}"/>
+              <Setter Property="FontWeight" Value="ExtraBold"/>
+              <Setter Property="FontSize" Value="25"/>
+              <Setter Property="Template">
+                <Setter.Value>
+                  <ControlTemplate TargetType="DataGridColumnHeader">
+                    <Grid Background="{StaticResource AppBackground}">
+                      <ContentPresenter HorizontalAlignment="Center"/>
+                    </Grid>
+                  </ControlTemplate>
+                </Setter.Value>
+              </Setter>
+            </Style>
+          </DataGrid.ColumnHeaderStyle>
+          <DataGrid.Columns>
+            <DataGridTemplateColumn Header="1" Width="SizeToCells"
                                 IsReadOnly="True">
-            <DataGridTemplateColumn.CellTemplate>
-              <DataTemplate>
-                <Image Source="{Binding Images[0]}"/>
-              </DataTemplate>
-            </DataGridTemplateColumn.CellTemplate>
-          </DataGridTemplateColumn>
-          <DataGridTemplateColumn Header="2" Width="SizeToCells"
+              <DataGridTemplateColumn.CellTemplate>
+                <DataTemplate>
+                  <Image Source="{Binding Images[0]}"/>
+                </DataTemplate>
+              </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+            <DataGridTemplateColumn Header="2" Width="SizeToCells"
                                 IsReadOnly="True">
-            <DataGridTemplateColumn.CellTemplate>
-              <DataTemplate>
-                <Image Source="{Binding Images[1]}"/>
-              </DataTemplate>
-            </DataGridTemplateColumn.CellTemplate>
-          </DataGridTemplateColumn>
-          <DataGridTemplateColumn Header="3" Width="SizeToCells"
+              <DataGridTemplateColumn.CellTemplate>
+                <DataTemplate>
+                  <Image Source="{Binding Images[1]}"/>
+                </DataTemplate>
+              </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+            <DataGridTemplateColumn Header="3" Width="SizeToCells"
                                 IsReadOnly="True">
-            <DataGridTemplateColumn.CellTemplate>
-              <DataTemplate>
-                <Image Source="{Binding Images[2]}"/>
-              </DataTemplate>
-            </DataGridTemplateColumn.CellTemplate>
-          </DataGridTemplateColumn>
-          <DataGridTemplateColumn Header="4" Width="SizeToCells"
+              <DataGridTemplateColumn.CellTemplate>
+                <DataTemplate>
+                  <Image Source="{Binding Images[2]}"/>
+                </DataTemplate>
+              </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+            <DataGridTemplateColumn Header="4" Width="SizeToCells"
                                 IsReadOnly="True">
-            <DataGridTemplateColumn.CellTemplate>
-              <DataTemplate>
-                <Image Source="{Binding Images[3]}"/>
-              </DataTemplate>
-            </DataGridTemplateColumn.CellTemplate>
-          </DataGridTemplateColumn>
-          <DataGridTemplateColumn Header="5" Width="SizeToCells"
+              <DataGridTemplateColumn.CellTemplate>
+                <DataTemplate>
+                  <Image Source="{Binding Images[3]}"/>
+                </DataTemplate>
+              </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+            <DataGridTemplateColumn Header="5" Width="SizeToCells"
                                 IsReadOnly="True">
-            <DataGridTemplateColumn.CellTemplate>
-              <DataTemplate>
-                <Image Source="{Binding Images[4]}"/>
-              </DataTemplate>
-            </DataGridTemplateColumn.CellTemplate>
-          </DataGridTemplateColumn>
-          <DataGridTemplateColumn Header="6" Width="SizeToCells"
+              <DataGridTemplateColumn.CellTemplate>
+                <DataTemplate>
+                  <Image Source="{Binding Images[4]}"/>
+                </DataTemplate>
+              </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+            <DataGridTemplateColumn Header="6" Width="SizeToCells"
                                 IsReadOnly="True">
-            <DataGridTemplateColumn.CellTemplate>
-              <DataTemplate>
-                <Image Source="{Binding Images[5]}"/>
-              </DataTemplate>
-            </DataGridTemplateColumn.CellTemplate>
-          </DataGridTemplateColumn>
-          <DataGridTemplateColumn Header="7" Width="SizeToCells"
+              <DataGridTemplateColumn.CellTemplate>
+                <DataTemplate>
+                  <Image Source="{Binding Images[5]}"/>
+                </DataTemplate>
+              </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+            <DataGridTemplateColumn Header="7" Width="SizeToCells"
                                 IsReadOnly="True">
-            <DataGridTemplateColumn.CellTemplate>
-              <DataTemplate>
-                <Image Source="{Binding Images[6]}"/>
-              </DataTemplate>
-            </DataGridTemplateColumn.CellTemplate>
-          </DataGridTemplateColumn>
-          <DataGridTemplateColumn Header="8" Width="SizeToCells"
+              <DataGridTemplateColumn.CellTemplate>
+                <DataTemplate>
+                  <Image Source="{Binding Images[6]}"/>
+                </DataTemplate>
+              </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+            <DataGridTemplateColumn Header="8" Width="SizeToCells"
                                 IsReadOnly="True">
-            <DataGridTemplateColumn.CellTemplate>
-              <DataTemplate>
-                <Image Source="{Binding Images[7]}"/>
-              </DataTemplate>
-            </DataGridTemplateColumn.CellTemplate>
-          </DataGridTemplateColumn>
-          <DataGridTemplateColumn Header="9" Width="SizeToCells"
+              <DataGridTemplateColumn.CellTemplate>
+                <DataTemplate>
+                  <Image Source="{Binding Images[7]}"/>
+                </DataTemplate>
+              </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+            <DataGridTemplateColumn Header="9" Width="SizeToCells"
                                 IsReadOnly="True">
-            <DataGridTemplateColumn.CellTemplate>
-              <DataTemplate>
-                <Image Source="{Binding Images[8]}"/>
-              </DataTemplate>
-            </DataGridTemplateColumn.CellTemplate>
-          </DataGridTemplateColumn>
-          <DataGridTemplateColumn Header="10" Width="SizeToCells"
+              <DataGridTemplateColumn.CellTemplate>
+                <DataTemplate>
+                  <Image Source="{Binding Images[8]}"/>
+                </DataTemplate>
+              </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+            <DataGridTemplateColumn Header="10" Width="SizeToCells"
                                 IsReadOnly="True">
-            <DataGridTemplateColumn.CellTemplate>
-              <DataTemplate>
-                <Image Source="{Binding Images[9]}"/>
-              </DataTemplate>
-            </DataGridTemplateColumn.CellTemplate>
-          </DataGridTemplateColumn>
-          <DataGridTemplateColumn Header="11" Width="SizeToCells"
+              <DataGridTemplateColumn.CellTemplate>
+                <DataTemplate>
+                  <Image Source="{Binding Images[9]}"/>
+                </DataTemplate>
+              </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+            <DataGridTemplateColumn Header="11" Width="SizeToCells"
                                 IsReadOnly="True">
-            <DataGridTemplateColumn.CellTemplate>
-              <DataTemplate>
-                <Image Source="{Binding Images[10]}"/>
-              </DataTemplate>
-            </DataGridTemplateColumn.CellTemplate>
-          </DataGridTemplateColumn>
-          <DataGridTemplateColumn Header="12" Width="SizeToCells"
+              <DataGridTemplateColumn.CellTemplate>
+                <DataTemplate>
+                  <Image Source="{Binding Images[10]}"/>
+                </DataTemplate>
+              </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+            <DataGridTemplateColumn Header="12" Width="SizeToCells"
                                 IsReadOnly="True">
-            <DataGridTemplateColumn.CellTemplate>
-              <DataTemplate>
-                <Image Source="{Binding Images[11]}"/>
-              </DataTemplate>
-            </DataGridTemplateColumn.CellTemplate>
-          </DataGridTemplateColumn>
-        </DataGrid.Columns>
-      </DataGrid>
+              <DataGridTemplateColumn.CellTemplate>
+                <DataTemplate>
+                  <Image Source="{Binding Images[11]}"/>
+                </DataTemplate>
+              </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+          </DataGrid.Columns>
+        </DataGrid>
+      </Grid>
     </Border>
 
     <!--WellTable 384-->
     <Border HorizontalAlignment="Left"  VerticalAlignment="Top"
-            Width="1030" Height="740"
-            Margin="70,30,0,0" 
-            Visibility="{Binding Table384Visible}">
-      <DataGrid Name="grd384" Grid.ColumnSpan="2"
+            Width="1050" Height="740"
+            Visibility="{Binding Table384Visible}"
+            Margin="70,30,0,0">
+      <Grid>
+        <StackPanel Orientation="Horizontal"
+                    Margin="40,0,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Height="45">
+          <TextBlock Text="1"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="34"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"/>
+          <TextBlock Text="2"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="34"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="30,0,0,0"/>
+          <TextBlock Text="3"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="34"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="24,0,0,0"/>
+          <TextBlock Text="4"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="34"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="21,0,0,0"/>
+          <TextBlock Text="5"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="34"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="26,0,0,0"/>
+          <TextBlock Text="6"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="34"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="23,0,0,0"/>
+          <TextBlock Text="7"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="34"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="26,0,0,0"/>
+          <TextBlock Text="8"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="34"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="23,0,0,0"/>
+          <TextBlock Text="9"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="34"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="25,0,0,0"/>
+          <TextBlock Text="10"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="34"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="17,0,0,0"/>
+          <TextBlock Text="11"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="34"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="13,0,0,0"/>
+          <TextBlock Text="12"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="34"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="13,0,0,0"/>
+          <TextBlock Text="13"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="34"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="13,0,0,0"/>
+          <TextBlock Text="14"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="34"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="10,0,0,0"/>
+          <TextBlock Text="15"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="34"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="13,0,0,0"/>
+          <TextBlock Text="16"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="34"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="10,0,0,0"/>
+          <TextBlock Text="17"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="34"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="12,0,0,0"/>
+          <TextBlock Text="18"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="34"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="11,0,0,0"/>
+          <TextBlock Text="19"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="34"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="12,0,0,0"/>
+          <TextBlock Text="20"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="34"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="10,0,0,0"/>
+          <TextBlock Text="21"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="34"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="9,0,0,0"/>
+          <TextBlock Text="22"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="34"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="9,0,0,0"/>
+          <TextBlock Text="23"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="34"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="6,0,0,0"/>
+          <TextBlock Text="24"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="34"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="6,0,0,0"/>
+        </StackPanel>
+        <StackPanel HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Margin="0,34,0,0"
+                    Width="33">
+          <TextBlock Text="A"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="34"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                    Margin="4,0,0,0"/>
+          <TextBlock Text="B"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="34"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="5,-2,0,0"/>
+          <TextBlock Text="C"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="34"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="4,-3,0,0"/>
+          <TextBlock Text="D"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="34"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="3,-3,0,0"/>
+          <TextBlock Text="E"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="34"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="4,-4,0,0"/>
+          <TextBlock Text="F"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="34"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="4,-3,0,0"/>
+          <TextBlock Text="G"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="34"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="0,-3,0,0"/>
+          <TextBlock Text="H"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="34"
+                   FontWeight="ExtraBold"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="0,-3,0,0"/>
+          <TextBlock Text="I"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="34"
+                   FontWeight="ExtraBold"  TextAlignment="Right"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="9,-3,0,0"/>
+          <TextBlock Text="J"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="34"
+                   FontWeight="ExtraBold" TextAlignment="Right"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="7,-3,0,0"/>
+          <TextBlock Text="K"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="34"
+                   FontWeight="ExtraBold" TextAlignment="Right"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="2,-4,0,0"/>
+          <TextBlock Text="L"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="34"
+                   FontWeight="ExtraBold" TextAlignment="Right"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="5,-3,0,0"/>
+          <TextBlock Text="M"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="34"
+                   FontWeight="ExtraBold" TextAlignment="Right"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="-3,-4,0,0"/>
+          <TextBlock Text="N"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="34"
+                   FontWeight="ExtraBold" TextAlignment="Right"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="0,-4,0,0"/>
+          <TextBlock Text="O"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="34"
+                   FontWeight="ExtraBold" TextAlignment="Right"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="0,-3,0,0"/>
+          <TextBlock Text="P"
+                   FontFamily="{DynamicResource AppTextFont}"
+                   FontSize="34"
+                   FontWeight="ExtraBold" TextAlignment="Right"
+                   Foreground="{DynamicResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="5,-3,0,0"/>
+        </StackPanel>
+        <DataGrid Name="grd384" Grid.ColumnSpan="2"
               SelectionMode="Extended"
               SelectionUnit="Cell"
               AutoGenerateColumns="False"
               ItemsSource="{Binding Table384Wells}"
-              HeadersVisibility="All"
+              HeadersVisibility="None"
               Background="Transparent"
               RowBackground="Transparent"
               AlternatingRowBackground="Transparent"
@@ -243,294 +747,296 @@
               CanUserSortColumns="False"
               BorderThickness="0"
               TouchMove="grd384_TouchMove"
-              TouchDown="grd384_TouchDown">
-        <DataGrid.Resources>
-          <Style x:Key="{ComponentResourceKey ResourceId=DataGridSelectAllButtonStyle, TypeInTargetAssembly={x:Type DataGrid}}"
+              TouchDown="grd384_TouchDown"
+                  Margin="28,40,0,0">
+          <DataGrid.Resources>
+            <Style x:Key="{ComponentResourceKey ResourceId=DataGridSelectAllButtonStyle, TypeInTargetAssembly={x:Type DataGrid}}"
                TargetType="{x:Type Button}">
-            <Setter Property="Template">
-              <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Button}">
-                  <Grid Background="{StaticResource AppBackground}">
-                    <Image Source="{dx:DXImage 'SvgImages/DiagramIcons/Figures/figures2.svg'}"
+              <Setter Property="Template">
+                <Setter.Value>
+                  <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid Background="{StaticResource AppBackground}">
+                      <Image Source="{dx:DXImage 'SvgImages/DiagramIcons/Figures/figures2.svg'}"
                            RenderTransformOrigin="0.5,0.5"
-                           Margin="0,16,0,0"> 
-                      <Image.RenderTransform>
-                        <ScaleTransform ScaleX="-1"/>
-                      </Image.RenderTransform>
-                    </Image>
-                    <ContentPresenter/>
-                  </Grid>
-                </ControlTemplate>
-              </Setter.Value>
-            </Setter>
-          </Style>
-        </DataGrid.Resources>
-        <dxmvvm:Interaction.Behaviors>
-          <dxmvvm:EventToCommand EventName="SelectedCellsChanged"
+                           Margin="0,16,0,0">
+                        <Image.RenderTransform>
+                          <ScaleTransform ScaleX="-1"/>
+                        </Image.RenderTransform>
+                      </Image>
+                      <ContentPresenter/>
+                    </Grid>
+                  </ControlTemplate>
+                </Setter.Value>
+              </Setter>
+            </Style>
+          </DataGrid.Resources>
+          <dxmvvm:Interaction.Behaviors>
+            <dxmvvm:EventToCommand EventName="SelectedCellsChanged"
                                Command="{Binding SelectIndicesCommand}"
                                PassEventArgsToCommand="True"/>
-        </dxmvvm:Interaction.Behaviors>
+          </dxmvvm:Interaction.Behaviors>
 
-        <DataGrid.CellStyle>
-          <Style TargetType="{x:Type DataGridCell}">
-            <Setter Property="Template">
-              <Setter.Value>
-                <ControlTemplate TargetType="DataGridCell">
-                  <Border x:Name="border" Width="{StaticResource Table384Width}">
-                    <ContentPresenter />
-                  </Border>
-                  <ControlTemplate.Triggers>
-                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsSelected}" Value="true">
-                      <Setter TargetName="border" Property="Background"
+          <DataGrid.CellStyle>
+            <Style TargetType="{x:Type DataGridCell}">
+              <Setter Property="Template">
+                <Setter.Value>
+                  <ControlTemplate TargetType="DataGridCell">
+                    <Border x:Name="border" Width="{StaticResource Table384Width}">
+                      <ContentPresenter />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                      <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsSelected}" Value="true">
+                        <Setter TargetName="border" Property="Background"
                             Value="{StaticResource RibbonBackgroundActive}"/>
-                    </DataTrigger>
-                  </ControlTemplate.Triggers>
-                </ControlTemplate>
-              </Setter.Value>
-            </Setter>
-          </Style>
-        </DataGrid.CellStyle>
-        <DataGrid.RowHeaderStyle>
-          <Style TargetType="{x:Type DataGridRowHeader}">
-            <Setter Property="Template">
-              <Setter.Value>
-                <ControlTemplate TargetType="DataGridRowHeader">
-                  <Grid Background="{StaticResource AppBackground}">
-                    <ContentPresenter HorizontalAlignment="Center"/>
-                  </Grid>
-                </ControlTemplate>
-              </Setter.Value>
-            </Setter>
-            <Setter Property="Content" Value="{Binding Header}"/>
-            <Setter Property="Foreground" Value="{StaticResource AppTextColor}"/>
-            <Setter Property="FontFamily" Value="{StaticResource AppTextFont}"/>
-            <Setter Property="FontWeight" Value="ExtraBold"/>
-            <Setter Property="FontSize" Value="25"/>
-            <Setter Property="Height" Value="33"/>
-            <Style.Triggers>
-              <Trigger Property="IsVisible" Value="true">
-                <Setter Property="Height" Value="32"/>
-              </Trigger>
-            </Style.Triggers>
-          </Style>
-        </DataGrid.RowHeaderStyle>
-        <DataGrid.ColumnHeaderStyle>
-          <Style TargetType="{x:Type DataGridColumnHeader}">
-            <Setter Property="Foreground" Value="{StaticResource AppTextColor}"/>
-            <Setter Property="FontFamily" Value="{StaticResource AppTextFont}"/>
-            <Setter Property="FontSize" Value="25"/>
-            <Setter Property="FontWeight" Value="ExtraBold"/>
-            <Setter Property="Template">
-              <Setter.Value>
-                <ControlTemplate TargetType="DataGridColumnHeader">
-                  <Grid Background="{StaticResource AppBackground}">
-                    <ContentPresenter HorizontalAlignment="Center"/>
-                  </Grid>
-                </ControlTemplate>
-              </Setter.Value>
-            </Setter>
-          </Style>
-        </DataGrid.ColumnHeaderStyle>
-        <DataGrid.Columns>
-          <DataGridTemplateColumn Header="1" Width="SizeToCells"
+                      </DataTrigger>
+                    </ControlTemplate.Triggers>
+                  </ControlTemplate>
+                </Setter.Value>
+              </Setter>
+            </Style>
+          </DataGrid.CellStyle>
+          <DataGrid.RowHeaderStyle>
+            <Style TargetType="{x:Type DataGridRowHeader}">
+              <Setter Property="Template">
+                <Setter.Value>
+                  <ControlTemplate TargetType="DataGridRowHeader">
+                    <Grid Background="{StaticResource AppBackground}">
+                      <ContentPresenter HorizontalAlignment="Center"/>
+                    </Grid>
+                  </ControlTemplate>
+                </Setter.Value>
+              </Setter>
+              <Setter Property="Content" Value="{Binding Header}"/>
+              <Setter Property="Foreground" Value="{StaticResource AppTextColor}"/>
+              <Setter Property="FontFamily" Value="{StaticResource AppTextFont}"/>
+              <Setter Property="FontWeight" Value="ExtraBold"/>
+              <Setter Property="FontSize" Value="25"/>
+              <Setter Property="Height" Value="33"/>
+              <Style.Triggers>
+                <Trigger Property="IsVisible" Value="true">
+                  <Setter Property="Height" Value="32"/>
+                </Trigger>
+              </Style.Triggers>
+            </Style>
+          </DataGrid.RowHeaderStyle>
+          <DataGrid.ColumnHeaderStyle>
+            <Style TargetType="{x:Type DataGridColumnHeader}">
+              <Setter Property="Foreground" Value="{StaticResource AppTextColor}"/>
+              <Setter Property="FontFamily" Value="{StaticResource AppTextFont}"/>
+              <Setter Property="FontSize" Value="25"/>
+              <Setter Property="FontWeight" Value="ExtraBold"/>
+              <Setter Property="Template">
+                <Setter.Value>
+                  <ControlTemplate TargetType="DataGridColumnHeader">
+                    <Grid Background="{StaticResource AppBackground}">
+                      <ContentPresenter HorizontalAlignment="Center"/>
+                    </Grid>
+                  </ControlTemplate>
+                </Setter.Value>
+              </Setter>
+            </Style>
+          </DataGrid.ColumnHeaderStyle>
+          <DataGrid.Columns>
+            <DataGridTemplateColumn Header="1" Width="SizeToCells"
                                 IsReadOnly="True">
-            <DataGridTemplateColumn.CellTemplate>
-              <DataTemplate>
-                <Image Source="{Binding Images[0]}"/>
-              </DataTemplate>
-            </DataGridTemplateColumn.CellTemplate>
-          </DataGridTemplateColumn>
-          <DataGridTemplateColumn Header="2" Width="SizeToCells"
+              <DataGridTemplateColumn.CellTemplate>
+                <DataTemplate>
+                  <Image Source="{Binding Images[0]}"/>
+                </DataTemplate>
+              </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+            <DataGridTemplateColumn Header="2" Width="SizeToCells"
                                 IsReadOnly="True">
-            <DataGridTemplateColumn.CellTemplate>
-              <DataTemplate>
-                <Image Source="{Binding Images[1]}"/>
-              </DataTemplate>
-            </DataGridTemplateColumn.CellTemplate>
-          </DataGridTemplateColumn>
-          <DataGridTemplateColumn Header="3" Width="SizeToCells"
+              <DataGridTemplateColumn.CellTemplate>
+                <DataTemplate>
+                  <Image Source="{Binding Images[1]}"/>
+                </DataTemplate>
+              </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+            <DataGridTemplateColumn Header="3" Width="SizeToCells"
                                 IsReadOnly="True">
-            <DataGridTemplateColumn.CellTemplate>
-              <DataTemplate>
-                <Image Source="{Binding Images[2]}"/>
-              </DataTemplate>
-            </DataGridTemplateColumn.CellTemplate>
-          </DataGridTemplateColumn>
-          <DataGridTemplateColumn Header="4" Width="SizeToCells"
+              <DataGridTemplateColumn.CellTemplate>
+                <DataTemplate>
+                  <Image Source="{Binding Images[2]}"/>
+                </DataTemplate>
+              </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+            <DataGridTemplateColumn Header="4" Width="SizeToCells"
                                 IsReadOnly="True">
-            <DataGridTemplateColumn.CellTemplate>
-              <DataTemplate>
-                <Image Source="{Binding Images[3]}"/>
-              </DataTemplate>
-            </DataGridTemplateColumn.CellTemplate>
-          </DataGridTemplateColumn>
-          <DataGridTemplateColumn Header="5" Width="SizeToCells"
+              <DataGridTemplateColumn.CellTemplate>
+                <DataTemplate>
+                  <Image Source="{Binding Images[3]}"/>
+                </DataTemplate>
+              </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+            <DataGridTemplateColumn Header="5" Width="SizeToCells"
                                 IsReadOnly="True">
-            <DataGridTemplateColumn.CellTemplate>
-              <DataTemplate>
-                <Image Source="{Binding Images[4]}"/>
-              </DataTemplate>
-            </DataGridTemplateColumn.CellTemplate>
-          </DataGridTemplateColumn>
-          <DataGridTemplateColumn Header="6" Width="SizeToCells"
+              <DataGridTemplateColumn.CellTemplate>
+                <DataTemplate>
+                  <Image Source="{Binding Images[4]}"/>
+                </DataTemplate>
+              </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+            <DataGridTemplateColumn Header="6" Width="SizeToCells"
                                 IsReadOnly="True">
-            <DataGridTemplateColumn.CellTemplate>
-              <DataTemplate>
-                <Image Source="{Binding Images[5]}"/>
-              </DataTemplate>
-            </DataGridTemplateColumn.CellTemplate>
-          </DataGridTemplateColumn>
-          <DataGridTemplateColumn Header="7" Width="SizeToCells"
+              <DataGridTemplateColumn.CellTemplate>
+                <DataTemplate>
+                  <Image Source="{Binding Images[5]}"/>
+                </DataTemplate>
+              </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+            <DataGridTemplateColumn Header="7" Width="SizeToCells"
                                 IsReadOnly="True">
-            <DataGridTemplateColumn.CellTemplate>
-              <DataTemplate>
-                <Image Source="{Binding Images[6]}"/>
-              </DataTemplate>
-            </DataGridTemplateColumn.CellTemplate>
-          </DataGridTemplateColumn>
-          <DataGridTemplateColumn Header="8" Width="SizeToCells"
+              <DataGridTemplateColumn.CellTemplate>
+                <DataTemplate>
+                  <Image Source="{Binding Images[6]}"/>
+                </DataTemplate>
+              </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+            <DataGridTemplateColumn Header="8" Width="SizeToCells"
                                 IsReadOnly="True">
-            <DataGridTemplateColumn.CellTemplate>
-              <DataTemplate>
-                <Image Source="{Binding Images[7]}"/>
-              </DataTemplate>
-            </DataGridTemplateColumn.CellTemplate>
-          </DataGridTemplateColumn>
-          <DataGridTemplateColumn Header="9" Width="SizeToCells"
+              <DataGridTemplateColumn.CellTemplate>
+                <DataTemplate>
+                  <Image Source="{Binding Images[7]}"/>
+                </DataTemplate>
+              </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+            <DataGridTemplateColumn Header="9" Width="SizeToCells"
                                 IsReadOnly="True">
-            <DataGridTemplateColumn.CellTemplate>
-              <DataTemplate>
-                <Image Source="{Binding Images[8]}"/>
-              </DataTemplate>
-            </DataGridTemplateColumn.CellTemplate>
-          </DataGridTemplateColumn>
-          <DataGridTemplateColumn Header="10" Width="SizeToCells"
+              <DataGridTemplateColumn.CellTemplate>
+                <DataTemplate>
+                  <Image Source="{Binding Images[8]}"/>
+                </DataTemplate>
+              </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+            <DataGridTemplateColumn Header="10" Width="SizeToCells"
                                 IsReadOnly="True">
-            <DataGridTemplateColumn.CellTemplate>
-              <DataTemplate>
-                <Image Source="{Binding Images[9]}"/>
-              </DataTemplate>
-            </DataGridTemplateColumn.CellTemplate>
-          </DataGridTemplateColumn>
-          <DataGridTemplateColumn Header="11" Width="SizeToCells"
+              <DataGridTemplateColumn.CellTemplate>
+                <DataTemplate>
+                  <Image Source="{Binding Images[9]}"/>
+                </DataTemplate>
+              </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+            <DataGridTemplateColumn Header="11" Width="SizeToCells"
                                 IsReadOnly="True">
-            <DataGridTemplateColumn.CellTemplate>
-              <DataTemplate>
-                <Image Source="{Binding Images[10]}"/>
-              </DataTemplate>
-            </DataGridTemplateColumn.CellTemplate>
-          </DataGridTemplateColumn>
-          <DataGridTemplateColumn Header="12" Width="SizeToCells"
+              <DataGridTemplateColumn.CellTemplate>
+                <DataTemplate>
+                  <Image Source="{Binding Images[10]}"/>
+                </DataTemplate>
+              </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+            <DataGridTemplateColumn Header="12" Width="SizeToCells"
                                 IsReadOnly="True">
-            <DataGridTemplateColumn.CellTemplate>
-              <DataTemplate>
-                <Image Source="{Binding Images[11]}"/>
-              </DataTemplate>
-            </DataGridTemplateColumn.CellTemplate>
-          </DataGridTemplateColumn>
-          <DataGridTemplateColumn Header="13" Width="SizeToCells"
+              <DataGridTemplateColumn.CellTemplate>
+                <DataTemplate>
+                  <Image Source="{Binding Images[11]}"/>
+                </DataTemplate>
+              </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+            <DataGridTemplateColumn Header="13" Width="SizeToCells"
                                 IsReadOnly="True">
-            <DataGridTemplateColumn.CellTemplate>
-              <DataTemplate>
-                <Image Source="{Binding Images[12]}"/>
-              </DataTemplate>
-            </DataGridTemplateColumn.CellTemplate>
-          </DataGridTemplateColumn>
-          <DataGridTemplateColumn Header="14" Width="SizeToCells"
+              <DataGridTemplateColumn.CellTemplate>
+                <DataTemplate>
+                  <Image Source="{Binding Images[12]}"/>
+                </DataTemplate>
+              </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+            <DataGridTemplateColumn Header="14" Width="SizeToCells"
                                 IsReadOnly="True">
-            <DataGridTemplateColumn.CellTemplate>
-              <DataTemplate>
-                <Image Source="{Binding Images[13]}"/>
-              </DataTemplate>
-            </DataGridTemplateColumn.CellTemplate>
-          </DataGridTemplateColumn>
-          <DataGridTemplateColumn Header="15" Width="SizeToCells"
+              <DataGridTemplateColumn.CellTemplate>
+                <DataTemplate>
+                  <Image Source="{Binding Images[13]}"/>
+                </DataTemplate>
+              </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+            <DataGridTemplateColumn Header="15" Width="SizeToCells"
                                 IsReadOnly="True">
-            <DataGridTemplateColumn.CellTemplate>
-              <DataTemplate>
-                <Image Source="{Binding Images[14]}"/>
-              </DataTemplate>
-            </DataGridTemplateColumn.CellTemplate>
-          </DataGridTemplateColumn>
-          <DataGridTemplateColumn Header="16" Width="SizeToCells"
+              <DataGridTemplateColumn.CellTemplate>
+                <DataTemplate>
+                  <Image Source="{Binding Images[14]}"/>
+                </DataTemplate>
+              </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+            <DataGridTemplateColumn Header="16" Width="SizeToCells"
                                 IsReadOnly="True">
-            <DataGridTemplateColumn.CellTemplate>
-              <DataTemplate>
-                <Image Source="{Binding Images[15]}"/>
-              </DataTemplate>
-            </DataGridTemplateColumn.CellTemplate>
-          </DataGridTemplateColumn>
-          <DataGridTemplateColumn Header="17" Width="SizeToCells"
+              <DataGridTemplateColumn.CellTemplate>
+                <DataTemplate>
+                  <Image Source="{Binding Images[15]}"/>
+                </DataTemplate>
+              </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+            <DataGridTemplateColumn Header="17" Width="SizeToCells"
                                 IsReadOnly="True">
-            <DataGridTemplateColumn.CellTemplate>
-              <DataTemplate>
-                <Image Source="{Binding Images[16]}"/>
-              </DataTemplate>
-            </DataGridTemplateColumn.CellTemplate>
-          </DataGridTemplateColumn>
-          <DataGridTemplateColumn Header="18" Width="SizeToCells"
+              <DataGridTemplateColumn.CellTemplate>
+                <DataTemplate>
+                  <Image Source="{Binding Images[16]}"/>
+                </DataTemplate>
+              </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+            <DataGridTemplateColumn Header="18" Width="SizeToCells"
                                 IsReadOnly="True">
-            <DataGridTemplateColumn.CellTemplate>
-              <DataTemplate>
-                <Image Source="{Binding Images[17]}"/>
-              </DataTemplate>
-            </DataGridTemplateColumn.CellTemplate>
-          </DataGridTemplateColumn>
-          <DataGridTemplateColumn Header="19" Width="SizeToCells"
+              <DataGridTemplateColumn.CellTemplate>
+                <DataTemplate>
+                  <Image Source="{Binding Images[17]}"/>
+                </DataTemplate>
+              </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+            <DataGridTemplateColumn Header="19" Width="SizeToCells"
                                 IsReadOnly="True">
-            <DataGridTemplateColumn.CellTemplate>
-              <DataTemplate>
-                <Image Source="{Binding Images[18]}"/>
-              </DataTemplate>
-            </DataGridTemplateColumn.CellTemplate>
-          </DataGridTemplateColumn>
-          <DataGridTemplateColumn Header="20" Width="SizeToCells"
+              <DataGridTemplateColumn.CellTemplate>
+                <DataTemplate>
+                  <Image Source="{Binding Images[18]}"/>
+                </DataTemplate>
+              </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+            <DataGridTemplateColumn Header="20" Width="SizeToCells"
                                 IsReadOnly="True">
-            <DataGridTemplateColumn.CellTemplate>
-              <DataTemplate>
-                <Image Source="{Binding Images[19]}"/>
-              </DataTemplate>
-            </DataGridTemplateColumn.CellTemplate>
-          </DataGridTemplateColumn>
-          <DataGridTemplateColumn Header="21" Width="SizeToCells"
+              <DataGridTemplateColumn.CellTemplate>
+                <DataTemplate>
+                  <Image Source="{Binding Images[19]}"/>
+                </DataTemplate>
+              </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+            <DataGridTemplateColumn Header="21" Width="SizeToCells"
                                 IsReadOnly="True">
-            <DataGridTemplateColumn.CellTemplate>
-              <DataTemplate>
-                <Image Source="{Binding Images[20]}"/>
-              </DataTemplate>
-            </DataGridTemplateColumn.CellTemplate>
-          </DataGridTemplateColumn>
-          <DataGridTemplateColumn Header="22" Width="SizeToCells"
+              <DataGridTemplateColumn.CellTemplate>
+                <DataTemplate>
+                  <Image Source="{Binding Images[20]}"/>
+                </DataTemplate>
+              </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+            <DataGridTemplateColumn Header="22" Width="SizeToCells"
                                 IsReadOnly="True">
-            <DataGridTemplateColumn.CellTemplate>
-              <DataTemplate>
-                <Image Source="{Binding Images[21]}"/>
-              </DataTemplate>
-            </DataGridTemplateColumn.CellTemplate>
-          </DataGridTemplateColumn>
-          <DataGridTemplateColumn Header="23" Width="SizeToCells"
+              <DataGridTemplateColumn.CellTemplate>
+                <DataTemplate>
+                  <Image Source="{Binding Images[21]}"/>
+                </DataTemplate>
+              </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+            <DataGridTemplateColumn Header="23" Width="SizeToCells"
                                 IsReadOnly="True">
-            <DataGridTemplateColumn.CellTemplate>
-              <DataTemplate>
-                <Image Source="{Binding Images[22]}"/>
-              </DataTemplate>
-            </DataGridTemplateColumn.CellTemplate>
-          </DataGridTemplateColumn>
-          <DataGridTemplateColumn Header="24" Width="SizeToCells"
+              <DataGridTemplateColumn.CellTemplate>
+                <DataTemplate>
+                  <Image Source="{Binding Images[22]}"/>
+                </DataTemplate>
+              </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+            <DataGridTemplateColumn Header="24" Width="SizeToCells"
                                 IsReadOnly="True">
-            <DataGridTemplateColumn.CellTemplate>
-              <DataTemplate>
-                <Image Source="{Binding Images[23]}"/>
-              </DataTemplate>
-            </DataGridTemplateColumn.CellTemplate>
-          </DataGridTemplateColumn>
-        </DataGrid.Columns>
-      </DataGrid>
+              <DataGridTemplateColumn.CellTemplate>
+                <DataTemplate>
+                  <Image Source="{Binding Images[23]}"/>
+                </DataTemplate>
+              </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+          </DataGrid.Columns>
+        </DataGrid>
+      </Grid>
     </Border>
 
     <!--Well Assignment Buttons-->
     <Border HorizontalAlignment="Left" VerticalAlignment="Top"
-            Margin="1200,210,0,0" Grid.ColumnSpan="2">
+            Margin="1200,210,0,0">
       <StackPanel>
         <Button Width="50" Height="50"
                 Command="{Binding AssignWellTypeButtonClickCommand}"
@@ -545,5 +1051,25 @@
       </StackPanel>
     </Border>
 
+    <Border HorizontalAlignment="Left" VerticalAlignment="Top"
+            Margin="1300,210,0,0">
+      <StackPanel>
+        <Button Width="200" Height="80"
+              HorizontalAlignment="Left"
+              VerticalAlignment="Top"
+              FontSize="36"
+              Content="{lang:Loc WellSel_Select_ALL}"
+              Style="{StaticResource ButtonStyle}"
+              Command="{Binding AllSelectClickCommand}"/>
+        <ToggleButton Style="{StaticResource ToggleButtonThemeStyle}"
+                      Height="80" Cursor="Hand"
+                      Width="200"
+                      Margin="0,6,0,0"
+                      Content="Square Selection Mode"
+                      IsChecked="{Binding SquareSelActive, Mode=OneWay}"
+                      Command="{Binding ToggleSqareSelectionCommand}"/>
+      </StackPanel>
+    </Border>
+    <!--pack://application:,,,/DevExpress.Images.v21.1;component/SvgImages/DiagramIcons/connector.svg-->
   </Grid>
 </UserControl>

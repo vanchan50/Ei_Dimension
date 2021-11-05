@@ -734,6 +734,9 @@ Factory Defaults</value>
   <data name="Tube" xml:space="preserve">
     <value>Tube</value>
   </data>
+  <data name="WellSel_Select_ALL" xml:space="preserve">
+    <value>Select All</value>
+  </data>
   <data name="X" xml:space="preserve">
     <value>X</value>
   </data>

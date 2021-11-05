@@ -67,7 +67,6 @@ namespace MicroCy
     public bool ReadActive { get; set; }
     public bool Everyevent { get; set; }
     public bool RMeans { get; set; }
-    public bool CalStats { get; set; }
     public bool PltRept { get; set; }
     public bool OnlyClassified { get; set; }
     public bool Reg0stats { get; set; }
@@ -115,7 +114,6 @@ namespace MicroCy
       LoadMaps();
       MainCommand("Set Property", code: 1, parameter: 1);    //set version as 1 to enable work order handling
       Reg0stats = false;
-      CalStats = false;
       _serialConnection.BeginRead(ReplyFromMC);   //default termination is end of sample
       Outdir = RootDirectory.FullName;
       EndState = 0;
@@ -187,8 +185,11 @@ namespace MicroCy
         }
         OutputSummaryFiles();
       }
-      if (CalStats && (SavBeadCount > 2))
+      if (SavBeadCount > 2)
       {
+        SavBeadCount = SavBeadCount > 5000 ? 5000 : SavBeadCount;
+        _gStats.Clear();
+        FillGStats();
         OnNewStatsAvailable();
       }
       Console.WriteLine(string.Format("{0} Reporting Background File Save Complete", DateTime.Now.ToString()));
@@ -464,11 +465,13 @@ namespace MicroCy
     private void SetSystemDirectories()
     {
       RootDirectory = new DirectoryInfo(Path.Combine(@"C:\Emissioninc", Environment.MachineName));
-      List<string> subDirectories = new List<string>(7) { "Config", "WorkOrder", "Summary", "Archive", "Result", "Status", "AcquisitionData", "SystemLogs" };
+      List<string> subDirectories = new List<string>(7) { "Config", "WorkOrder", "Archive", "Result", "Status", "AcquisitionData", "SystemLogs" };
       foreach (var d in subDirectories)
       {
         RootDirectory.CreateSubdirectory(d);
       }
+      Directory.CreateDirectory(RootDirectory.FullName + @"\Result" + @"\Summary");
+      Directory.CreateDirectory(RootDirectory.FullName + @"\Result" + @"\Detail");
     }
     /// <summary>
     /// Sends a command OUT to the USB device, then checks the IN pipe for a return value.
@@ -487,7 +490,7 @@ namespace MicroCy
       string summaryFileName = "";
       for (var i = 0; i < int.MaxValue; i++)
       {
-        summaryFileName = Outdir + "\\Summary\\" + "Summary_" + Outfilename + '_' + i.ToString() + ".csv";
+        summaryFileName = Outdir + "\\Result\\Summary\\" + "Summary_" + Outfilename + '_' + i.ToString() + ".csv";
         if (!File.Exists(summaryFileName))
           break;
       }
@@ -589,7 +592,7 @@ namespace MicroCy
 
     private void FillCalibrationStatsRow(in BeadInfoStruct outbead)
     {
-      if (CalStats && (BeadCount < 5000))
+      if (BeadCount < 5000)
       {
         _sfi[BeadCount, 0] = outbead.greenssc;
         _sfi[BeadCount, 1] = outbead.greenB;
@@ -811,9 +814,6 @@ namespace MicroCy
 
     private void OnNewStatsAvailable()
     {
-      SavBeadCount = SavBeadCount > 5000 ? 5000 : SavBeadCount;
-      _gStats.Clear();
-      FillGStats();
       NewStatsAvailable?.Invoke(this, new GstatsEventArgs(_gStats));
     }
 

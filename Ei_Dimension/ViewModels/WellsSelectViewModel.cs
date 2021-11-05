@@ -21,6 +21,7 @@ namespace Ei_Dimension.ViewModels
     private List<(int row, int col)> _selectedWell96Indices;
     private List<(int row, int col)> _selectedWell384Indices;
     public static WellsSelectViewModel Instance { get; private set; }
+    public virtual bool SquareSelActive { get; set; }
 
     protected WellsSelectViewModel()
     {
@@ -29,7 +30,7 @@ namespace Ei_Dimension.ViewModels
       _selectedWell96Indices = new List<(int, int)>();
       _selectedWell384Indices = new List<(int, int)>();
       CurrentTableSize = 0;
-
+      SquareSelActive = true;
       Instance = this;
     }
 
@@ -126,6 +127,12 @@ namespace Ei_Dimension.ViewModels
         ResultsViewModel.Instance.PlatePictogram.ChangeMode(num);
         ResultsViewModel.Instance.CornerButtonClick(1);
         MotorsViewModel.Instance.ChangeAmountOfWells(num);
+        Views.WellsSelectView.Instance.grd96.UnselectAllCells();
+        Views.WellsSelectView.Instance.grd384.UnselectAllCells();
+        Views.WellsSelectView.Instance.grd96.SelectedCells.Clear();
+        Views.WellsSelectView.Instance.grd384.SelectedCells.Clear();
+        _selectedWell384Indices.Clear();
+        _selectedWell96Indices.Clear();
       }
     }
 
@@ -160,6 +167,20 @@ namespace Ei_Dimension.ViewModels
       Table384Wells.Add(new WellTableRow(13, 24)); //N
       Table384Wells.Add(new WellTableRow(14, 24)); //O
       Table384Wells.Add(new WellTableRow(15, 24)); //P
+    }
+
+    public void AllSelectClick()
+    {
+      if (CurrentTableSize == 96)
+        Views.WellsSelectView.Instance.grd96.SelectAllCells();
+      else if (CurrentTableSize == 384)
+        Views.WellsSelectView.Instance.grd384.SelectAllCells();
+    }
+
+    public void ToggleSqareSelection()
+    {
+      SquareSelActive = !SquareSelActive;
+      Views.WellsSelectView.SquareSelectionMode = SquareSelActive;
     }
   }
 }

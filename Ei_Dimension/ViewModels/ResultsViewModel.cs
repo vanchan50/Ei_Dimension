@@ -639,7 +639,6 @@ namespace Ei_Dimension.ViewModels
 
     public void PlexButtonClick()
     {
-      App.Device.CalStats = !App.Device.CalStats;
       if (MultiPlexVisible == System.Windows.Visibility.Visible)
       {
         PlexButtonString = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Experiment_Stats), Language.TranslationSource.Instance.CurrentCulture);

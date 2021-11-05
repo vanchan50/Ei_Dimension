@@ -1450,8 +1450,8 @@ namespace Ei_Dimension
               if (MessageBox.Show(ws + "\nPower Off System", "Operator Alert", MessageBoxButton.OK, MessageBoxImage.Warning) == MessageBoxResult.OK)
               {
                 Device.WellsToRead = Device.CurrentWellIdx;
-                _ = Task.Run(Device.SaveBeadFile);
-                //                                Environment.Exit(0);
+                Device.SaveBeadFile();
+                Environment.Exit(0);
               }
             }
             break;
@@ -1510,24 +1510,6 @@ namespace Ei_Dimension
           Device.WellNext();  //saves current well address for filename in state 5
           Device.EndState++;
           Console.WriteLine(string.Format("{0} Reporting Setting up next well", DateTime.Now.ToString()));
-          //highling the current well on the plate on the screen
-          /*
-          well384dgv.ClearSelection();
-          well96dgv.ClearSelection();
-          if (ExperimentViewModel.Instance.CurrentTableSize > 1)   
-          {
-            if (ExperimentViewModel.Instance.CurrentTableSize == 384)
-            {
-              well384dgv.Rows[m_MicroCy.readingRow].Cells[m_MicroCy.readingCol].Selected = true;
-              well384dgv.Refresh();
-            }
-            else
-            {
-              well96dgv.Rows[m_MicroCy.readingRow].Cells[m_MicroCy.readingCol].Selected = true;
-              well96dgv.Refresh();
-            }
-          }
-          */
           break;
         case 5:
           Device.MainCommand("FlushCmdQueue");

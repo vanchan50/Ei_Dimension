@@ -876,6 +876,9 @@ Speeds</value>
   <data name="Violet" xml:space="preserve">
     <value>Violet</value>
   </data>
+  <data name="WellSel_Select_ALL" xml:space="preserve">
+    <value>Select All</value>
+  </data>
   <data name="X" xml:space="preserve">
     <value>X</value>
   </data>

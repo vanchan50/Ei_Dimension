@@ -25,7 +25,6 @@ The commands that change the dropdown state are legacy from keeping parameters i
 
 what does chart2.Series["CLTARGET"].Enabled mean? another chart displayed? ---> CalibrationVM CalibrationSelector()
 
-ExperimentVM EndButtonClick has workorder not imlemented;
 
 PlateReport class has useless members except list
 
@@ -41,10 +40,6 @@ Devexpress dxb:PopupMenu can be used for numpad near textbox
 
 resultsVM has obscollections of obsobjects. can ez be translated to arrays[obsobjects], so obscollection not neeeded?
 
-results page table should display mean and current stats for the current well being read or
-
-wellresults[i].RP1vals.Count(); - count
-wellresults[i].RP1vals.Average(); - mean
 
 save template name somewhere, also display somewhere. fill it when template loaded.
 
@@ -61,11 +56,8 @@ Fixed a TerminationReadyCheck() possible bug scenario, where assuming EndRegion 
 Device.TerminationReadyCheck() case 1
   looks wrong. don't copy EndRead button function here? why not?
 
-Analysis if beads hit a certain region is still done with log(x * num) and not log10() with proper binning. fix it
 
 
-ResultsVM.FillWorldMaps() has to be called on map selection in Dashboard.(and in dashboard constructor).
-  should probably go to a dedicated folder with worldmaps, and import by name.
 
 select the text in a text box when a box is selected
   so that typing replaces the value. it adds now, a second select of the text box should bring up the curosr for editing
