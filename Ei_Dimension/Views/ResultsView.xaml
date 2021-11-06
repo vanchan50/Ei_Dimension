@@ -1,6 +1,7 @@
 ﻿<UserControl x:Class="Ei_Dimension.Views.ResultsView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:dxc="http://schemas.devexpress.com/winfx/2008/xaml/charts"
@@ -286,7 +287,7 @@
     <dxc:ChartControl Width="740" Height="472"
                       HorizontalAlignment="Left"
                       VerticalAlignment="Top"
-                      Focusable="False"
+                      Focusable="False" Name="ScatterPlot"
                       BorderThickness="0">
       <dxc:ChartControl.Legends>
         <dxc:Legend HorizontalPosition="Left"
@@ -305,12 +306,15 @@
           <dxc:AxisY2D Interlaced="False"
                        GridLinesVisible="False"
                        TickmarksMinorVisible="False"
+                       FontFamily="{StaticResource AppTextFont}"
                        TickmarksVisible="False">
+            <dxc:AxisY2D.Label>
+              <dxc:AxisLabel FontSize="24"/>
+            </dxc:AxisY2D.Label>
             <dxc:AxisY2D.Title>
               <dxc:AxisTitle Content="{lang:Loc Count}"
                              FontSize="30"
                              FontWeight="UltraBold"
-                             FontFamily="{StaticResource AppTextFont}"
                              Visible="True"/>
             </dxc:AxisY2D.Title>
           </dxc:AxisY2D>
@@ -319,14 +323,17 @@
           <dxc:AxisX2D TickmarksMinorVisible="False"
                        TickmarksVisible="False"
                        Logarithmic="True"
+                       FontFamily="{StaticResource AppTextFont}"
                        GridLinesMinorVisible="True"
                        GridLinesVisible="True"
                        MinorCount="9">
+            <dxc:AxisX2D.Label>
+              <dxc:AxisLabel FontSize="24"/>
+            </dxc:AxisX2D.Label>
             <dxc:AxisX2D.Title>
               <dxc:AxisTitle Content="{lang:Loc Value}"
                              FontSize="30"
                              FontWeight="UltraBold"
-                             FontFamily="{StaticResource AppTextFont}"
                              Visible="True"/>
             </dxc:AxisX2D.Title>
             <dxc:AxisX2D.Range>
@@ -366,16 +373,23 @@
                           CheckedInLegend="{Binding ScatterSelectorState[4]}"/>
       </dxc:XYDiagram2D>
     </dxc:ChartControl>
+    <Button Width="50" Height="50"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Margin="665,40,0,0"
+            Command="{Binding ScatterprintCommand}">
+      <Button.Content>
+        <Image Stretch="Fill" Source="{dx:DXImage 'SvgImages/XAF/Action_Export_ToImage.svg'}"/>
+      </Button.Content>
+    </Button>
     <!--Heatmap Chart-->
-    <dxc:ChartControl Width="740" Height="472"
+    <dxc:ChartControl Width="660" Height="412"
                       HorizontalAlignment="Left"
                       VerticalAlignment="Top"
-                      BorderThickness="0"
+                      BorderThickness="0" Name="XYPlot"
                       Focusable="False"
-                      Margin="0,452,0,0">
-      <dxc:XYDiagram2D Width="632" Height="388"
-                       Margin="76,-8,0,0" 
-                       Focusable="False" Name="ChC"
+                      Margin="80,444,0,0">
+      <dxc:XYDiagram2D Focusable="False" Name="ChC"
                        HorizontalAlignment="Left"
                        VerticalAlignment="Top">
         <dxc:XYDiagram2D.AxisY>
@@ -384,7 +398,11 @@
                        MinorCount="9"
                        Interlaced="False"
                        TickmarksMinorVisible="False"
+                       FontFamily="{StaticResource AppTextFont}"
                        TickmarksVisible="False">
+            <dxc:AxisY2D.Label>
+              <dxc:AxisLabel FontSize="24"/>
+            </dxc:AxisY2D.Label>
             <dxc:AxisY2D.WholeRange>
               <dxc:Range dxc:AxisY2D.AlwaysShowZeroLevel="False" >
                 <dxc:Range.MinValue>
@@ -398,9 +416,13 @@
           <dxc:AxisX2D Logarithmic="True"
                        GridLinesMinorVisible="True"
                        MinorCount="9"
+                       FontFamily="{StaticResource AppTextFont}"
                        GridLinesVisible="True"
                        TickmarksMinorVisible="False"
                        TickmarksVisible="False">
+            <dxc:AxisX2D.Label>
+              <dxc:AxisLabel FontSize="24"/>
+            </dxc:AxisX2D.Label>
             <dxc:AxisX2D.WholeRange>
               <dxc:Range>
                 <dxc:Range.MinValue>
@@ -426,7 +448,15 @@
         </dxc:PointSeries2D>
       </dxc:XYDiagram2D>
     </dxc:ChartControl>
-
+    <Button Width="50" Height="50"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Margin="175,470,0,0"
+            Command="{Binding XYprintCommand}">
+      <Button.Content>
+        <Image Stretch="Fill" Source="{dx:DXImage 'SvgImages/XAF/Action_Export_ToImage.svg'}"/>
+      </Button.Content>
+    </Button>
     <StackPanel HorizontalAlignment="Left"
                 VerticalAlignment="Top"
                 Margin="15,550,0,0">

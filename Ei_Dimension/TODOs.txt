@@ -71,9 +71,7 @@ MicroCyDevice.IsNewWorkOrder() is crazy, since it is checked by app.TimerTick ev
 
 active regions stats for well click
 
-area select for touch
 custom version for load/save template with big fonts
-saving graphs, maybe as .png
 
 sampling button on ComponentsView could have an issue
 

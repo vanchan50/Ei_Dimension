@@ -652,5 +652,15 @@ namespace Ei_Dimension.ViewModels
         SinglePlexVisible = System.Windows.Visibility.Hidden;
       }
     }
+
+    public void XYprint()
+    {
+      Views.ResultsView.Instance.PrintXY();
+    }
+
+    public void Scatterprint()
+    {
+      Views.ResultsView.Instance.PrintScatter();
+    }
   }
 }

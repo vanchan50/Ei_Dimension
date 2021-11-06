@@ -43,5 +43,22 @@ namespace Ei_Dimension.Views
     {
       HeatMap.Points.Clear();
     }
+
+    public void PrintXY(int Resoultion_dpi = 800)
+    {
+      var options = new DevExpress.XtraPrinting.ImageExportOptions();
+      options.TextRenderingMode = DevExpress.XtraPrinting.TextRenderingMode.SingleBitPerPixelGridFit;
+      options.Resolution = Resoultion_dpi; options.Format = new System.Drawing.Imaging.ImageFormat(System.Drawing.Imaging.ImageFormat.Png.Guid);
+      string date = DateTime.Now.ToString("dd.MM.yyyy.hhtt-mm-ss", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"));
+      XYPlot.ExportToImage(App.Device.RootDirectory + @"\SavedImages\" + date + ".png", options);
+    }
+    public void PrintScatter(int Resoultion_dpi = 800)
+    {
+      var options = new DevExpress.XtraPrinting.ImageExportOptions();
+      options.TextRenderingMode = DevExpress.XtraPrinting.TextRenderingMode.SingleBitPerPixelGridFit;
+      options.Resolution = Resoultion_dpi; options.Format = new System.Drawing.Imaging.ImageFormat(System.Drawing.Imaging.ImageFormat.Png.Guid);
+      string date = DateTime.Now.ToString("dd.MM.yyyy.hhtt-mm-ss", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"));
+      ScatterPlot.ExportToImage(App.Device.RootDirectory + @"\SavedImages\" + date + ".png", options);
+    }
   }
 }
