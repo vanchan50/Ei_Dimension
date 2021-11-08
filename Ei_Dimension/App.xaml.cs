@@ -911,6 +911,9 @@ namespace Ei_Dimension
               Settings.Default.MaxPressure = iRes;
             }
             break;
+          case "TemplateSaveName":
+            TemplateSelectViewModel.Instance.TemplateSaveName[0] = temp;
+            break;
         }
         Settings.Default.Save();
       }
@@ -944,7 +947,7 @@ namespace Ei_Dimension
 
       if (Device.IsMeasurementGoing)
       {
-        HistogramHandler();
+        GraphsHandler();
         ActiveRegionsStatsHandler();
         UpdateEventCounter();
         WellStateHandler();
@@ -1570,7 +1573,7 @@ namespace Ei_Dimension
       }
     }
 
-    private static void HistogramHandler()
+    private static void GraphsHandler()
     {
       if (!_histogramUpdateGoing)
       {

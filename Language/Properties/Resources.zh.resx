@@ -465,6 +465,13 @@
   <data name="Experiment_Load" xml:space="preserve">
     <value>加载孔板</value>
   </data>
+  <data name="Experiment_Load_Save_Template" xml:space="preserve">
+    <value>保存/加载
+模板</value>
+  </data>
+  <data name="Experiment_Load_Save_Template_1" xml:space="preserve">
+    <value>保存 / 加载 模板</value>
+  </data>
   <data name="Experiment_Load_Template" xml:space="preserve">
     <value>加载模板</value>
   </data>

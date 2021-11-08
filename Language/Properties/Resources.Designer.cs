@@ -941,6 +941,16 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to   Delete
+        ///Template.
+        /// </summary>
+        public static string Experiment_Delete_Template {
+            get {
+                return ResourceManager.GetString("Experiment_Delete_Template", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Eject Plate.
         /// </summary>
         public static string Experiment_Eject {
@@ -1002,6 +1012,25 @@ namespace Ei_Dimension.Language {
         public static string Experiment_Load {
             get {
                 return ResourceManager.GetString("Experiment_Load", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Load / Save
+        ///Template.
+        /// </summary>
+        public static string Experiment_Load_Save_Template {
+            get {
+                return ResourceManager.GetString("Experiment_Load_Save_Template", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Load / Save Template.
+        /// </summary>
+        public static string Experiment_Load_Save_Template_1 {
+            get {
+                return ResourceManager.GetString("Experiment_Load_Save_Template_1", resourceCulture);
             }
         }
         

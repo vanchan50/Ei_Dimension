@@ -77,6 +77,7 @@
       <HintPath>C:\Program Files (x86)\DevExpress 21.1\Components\Bin\Framework\DevExpress.Xpf.Dialogs.v21.1.dll</HintPath>
     </Reference>
     <Reference Include="DevExpress.Xpf.Docking.v21.1, Version=21.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.Gauges.v21.1, Version=21.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Xpf.Grid.v21.1, Version=21.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Xpf.Grid.v21.1.Core, Version=21.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Xpf.LayoutControl.v21.1, Version=21.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
@@ -156,6 +157,7 @@
     <Compile Include="ViewModels\NumpadViewModel.cs" />
     <Compile Include="ViewModels\ResultsViewModel.cs" />
     <Compile Include="ViewModels\SelRegionsViewModel.cs" />
+    <Compile Include="ViewModels\TemplateSelectViewModel.cs" />
     <Compile Include="Views\MainButtonsView.xaml.cs">
       <DependentUpon>MainButtonsView.xaml</DependentUpon>
     </Compile>
@@ -206,6 +208,9 @@
     </Compile>
     <Compile Include="Views\SyringeSpeedsView.xaml.cs">
       <DependentUpon>SyringeSpeedsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TemplateSelectView.xaml.cs">
+      <DependentUpon>TemplateSelectView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\WellsSelectView.xaml.cs">
       <DependentUpon>WellsSelectView.xaml</DependentUpon>
@@ -340,6 +345,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\SyringeSpeedsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TemplateSelectView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

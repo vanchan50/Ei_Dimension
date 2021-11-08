@@ -23,7 +23,6 @@
     <dxmvvm:SaveFileDialogService/>
   </dxmvvm:Interaction.Behaviors>
   <Grid>
-
     <dxwui:NavigationFrame AnimationType="Fade"
                            NavigationCacheMode="Required"
                            Margin="288,0,0,0">
@@ -34,7 +33,7 @@
         <dxwuin:FrameNavigationService />
       </dxmvvm:Interaction.Behaviors>
     </dxwui:NavigationFrame>
-    
+
     <!--Tile Ribbon-->
     <StackPanel Margin="30,60,0,0"
                 Width="240"
@@ -50,16 +49,11 @@
                    img:EmbeddedImg.Image="/Icons/components icon.png"
                    Style="{StaticResource SubRibbonButtonStyle}"
                    Command="{Binding NavigateSelRegionsCommand}"/>
-      <Button Content="{lang:Loc Experiment_Load_Template}"
+      <RadioButton Content="{lang:Loc Experiment_Load_Save_Template}"
                    Height="84" Cursor="Hand"
                    img:EmbeddedImg.Image="{dx:DXImage 'SvgImages/Export/Export.svg'}"
-                   Style="{StaticResource DashboardButtonStyle}"
-                   Command="{Binding LoadTemplateCommand}"/>
-      <Button Content="{lang:Loc Experiment_Save_Template}"
-                   Height="84" Cursor="Hand"
-                   img:EmbeddedImg.Image="{dx:DXImage 'SvgImages/PDF Viewer/Import.svg'}"
-                   Style="{StaticResource DashboardButtonStyle}"
-                   Command="{Binding SaveTemplateCommand}"/>
+                   Style="{StaticResource SubRibbonButtonStyle}"
+                   Command="{Binding NavigateTemplateSelectCommand}"/>
       <RadioButton Content="{lang:Loc Experiment_FileSave}"
                    Height="84" Name="SelFileButton" Cursor="Hand"
                    img:EmbeddedImg.Image="{dx:DXImage 'SvgImages/Reports/PrintPageRange.svg'}"

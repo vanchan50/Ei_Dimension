@@ -87,147 +87,20 @@ namespace Ei_Dimension.ViewModels
         WellsSelectViewModel.Instance.ChangeWellTableSize(num);
     }
 
-    public void LoadTemplate()
+    public void NavigateTemplateSelect()
     {
-      OpenFileDialogService.InitialDirectory = App.Device.RootDirectory.FullName + @"\Config";
-      OpenFileDialogService.Filter = DialogFilter;
-      OpenFileDialogService.FilterIndex = 1;
-      OpenFileDialogService.Title = DialogTitleLoad;
-      if (OpenFileDialogService.ShowDialog())
+      App.ResetFocusedTextbox();
+      App.HideNumpad();
+      if(Views.TemplateSelectView.Instance != null)
       {
-        AcquisitionTemplate newTemplate = null;
-        var file = OpenFileDialogService.GetFullFileName();
-        try
-        {
-          using (TextReader reader = new StreamReader(file))
-          {
-            var fileContents = reader.ReadToEnd();
-            newTemplate = JsonConvert.DeserializeObject<AcquisitionTemplate>(fileContents);
-          }
-        }
-        catch { }
-        if(newTemplate != null)
-        {
-          try
-          {
-            int iRes;
-            var DashVM = DashboardViewModel.Instance;
-            DashVM.SpeedItems[newTemplate.Speed].Click(1);
-            DashVM.ClassiMapItems[App.GetMapIndex(newTemplate.Map)].Click(2);
-            DashVM.ChConfigItems[newTemplate.ChConfig].Click(3);
-            DashVM.OrderItems[newTemplate.Order].Click(4);
-            DashVM.SysControlItems[newTemplate.SysControl].Click(5);
-            DashVM.EndReadItems[newTemplate.EndRead].Click(6);
-            DashVM.EndRead[0] = newTemplate.MinPerRegion.ToString();
-            if (int.TryParse(DashVM.EndRead[0], out iRes))
-            {
-              App.Device.MinPerRegion = iRes;
-              Settings.Default.MinPerRegion = iRes;
-            }
-            else
-              MessageBox.Show("Error loading Template");
-            DashVM.EndRead[1] = newTemplate.TotalEvents.ToString();
-            if (int.TryParse(DashVM.EndRead[1], out iRes))
-            {
-              App.Device.BeadsToCapture = iRes;
-              Settings.Default.BeadsToCapture = iRes;
-            }
-            else
-              MessageBox.Show("Error loading Template");
-            DashVM.Volumes[0] = newTemplate.SampleVolume.ToString();
-            if (int.TryParse(DashVM.Volumes[0], out iRes))
-            {
-              App.Device.MainCommand("Set Property", code: 0xaf, parameter: (ushort)iRes);
-            }
-            else
-              MessageBox.Show("Error loading Template");
-            DashVM.Volumes[1] = newTemplate.WashVolume.ToString();
-            if (int.TryParse(DashVM.Volumes[1], out iRes))
-            {
-              App.Device.MainCommand("Set Property", code: 0xac, parameter: (ushort)iRes);
-            }
-            else
-              MessageBox.Show("Error loading Template");
-            DashVM.Volumes[2] = newTemplate.AgitateVolume.ToString();
-            if (int.TryParse(DashVM.Volumes[2], out iRes))
-            {
-              App.Device.MainCommand("Set Property", code: 0xc4, parameter: (ushort)iRes);
-            }
-            else
-              MessageBox.Show("Error loading Template");
-            uint chkBox = newTemplate.FileSaveCheckboxes;
-            for (var i = FileSaveViewModel.Instance.Checkboxes.Count -1 -1; i > -1 ; i--)// -1 to not store system log
-            {
-              uint pow = (uint)Math.Pow(2, i);
-              if (chkBox >= pow)
-              {
-                FileSaveViewModel.Instance.CheckedBox(i);
-                chkBox -= pow;
-              }
-              else
-                FileSaveViewModel.Instance.UncheckedBox(i); ;
-            }
-            for(var i = 0; i < App.MapRegions.ActiveRegions.Count; i++)
-            {
-              if (newTemplate.ActiveRegions[i])
-              {
-                App.MapRegions.SelectedRegionTextboxIndex = i;
-                SelRegionsViewModel.Instance.AddActiveRegion(1);
-              }
-              App.MapRegions.RegionsNamesList[i] = newTemplate.RegionsNamesList[i];
-            }
-            _templateName = file.Substring(file.LastIndexOf('\\') + 1);
-          }
-          catch { }
-        }
+        Views.TemplateSelectView.Instance.list.SelectedItem = null;
+        TemplateSelectViewModel.Instance.SelectedItem = null;
+        TemplateSelectViewModel.Instance.DeleteVisible = Visibility.Hidden;
       }
+      MainViewModel.Instance.StartButtonsVisible = Visibility.Hidden;
+      NavigationService.Navigate("TemplateSelectView", null, this);
     }
 
-    public void SaveTemplate()
-    {
-      SaveFileDialogService.InitialDirectory = App.Device.RootDirectory.FullName + @"\Config";
-      SaveFileDialogService.Filter = DialogFilter;
-      SaveFileDialogService.FilterIndex = 1;
-      SaveFileDialogService.Title = DialogTitleSave;
-      SaveFileDialogService.DefaultExt = "json";
-      if (_templateName != null)
-        SaveFileDialogService.DefaultFileName = _templateName;
-      if (SaveFileDialogService.ShowDialog())
-      {
-        try
-        {
-          using (var stream = new StreamWriter(SaveFileDialogService.OpenFile()))
-          {
-            var temp = new AcquisitionTemplate();
-            temp.Name = SaveFileDialogService.File.Name;
-            temp.SysControl = DashboardViewModel.Instance.SelectedSystemControlIndex;
-            temp.ChConfig = DashboardViewModel.Instance.SelectedChConfigIndex;
-            temp.Order = DashboardViewModel.Instance.SelectedOrderIndex;
-            temp.Speed = DashboardViewModel.Instance.SelectedSpeedIndex;
-            temp.Map = DashboardViewModel.Instance.SelectedClassiMapContent;
-            temp.EndRead = DashboardViewModel.Instance.SelectedEndReadIndex;
-            temp.SampleVolume = uint.Parse(DashboardViewModel.Instance.Volumes[0]);
-            temp.WashVolume = uint.Parse(DashboardViewModel.Instance.Volumes[1]);
-            temp.AgitateVolume = uint.Parse(DashboardViewModel.Instance.Volumes[2]);
-            temp.MinPerRegion = uint.Parse(DashboardViewModel.Instance.EndRead[0]);
-            temp.TotalEvents = uint.Parse(DashboardViewModel.Instance.EndRead[1]);
-            uint checkboxes = 0;
-            int currVal = 0;
-            for(var i = 0; i < FileSaveViewModel.Instance.Checkboxes.Count - 1; i++)  // -1 to not store system log
-            {
-              currVal = (int)Math.Pow(2,i) * (FileSaveViewModel.Instance.Checkboxes[i] ? 1 : 0);
-              checkboxes += (uint)currVal;
-            }
-            temp.FileSaveCheckboxes = checkboxes;
-            temp.ActiveRegions.AddRange(App.MapRegions.ActiveRegions);
-            temp.RegionsNamesList.AddRange(App.MapRegions.RegionsNamesList);
-            var contents = JsonConvert.SerializeObject(temp);
-            _ = stream.WriteAsync(contents);
-          }
-        }
-        catch { }
-      }
-    }
     public void InitChildren()
     {
       NavigateWellsSelect(96);

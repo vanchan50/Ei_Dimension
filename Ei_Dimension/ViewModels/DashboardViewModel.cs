@@ -47,7 +47,7 @@ namespace Ei_Dimension.ViewModels
     {
       EndRead = new ObservableCollection<string> { "100", "500" };
 
-      Volumes = new ObservableCollection<string> { "0", "", "" };
+      Volumes = new ObservableCollection<string> { "0", "0", "0" };
       WorkOrder = new ObservableCollection<string> { "" };
 
       var RM = Language.Resources.ResourceManager;

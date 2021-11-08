@@ -415,6 +415,10 @@ Coefficient</value>
     <value>Приборная
 Панель</value>
   </data>
+  <data name="Experiment_Delete_Template" xml:space="preserve">
+    <value>  Delete
+Template</value>
+  </data>
   <data name="Experiment_Eject" xml:space="preserve">
     <value>Eject Plate</value>
   </data>
@@ -437,6 +441,13 @@ and Folder</value>
   </data>
   <data name="Experiment_Load" xml:space="preserve">
     <value>Load Plate</value>
+  </data>
+  <data name="Experiment_Load_Save_Template" xml:space="preserve">
+    <value>Load / Save
+Template</value>
+  </data>
+  <data name="Experiment_Load_Save_Template_1" xml:space="preserve">
+    <value>Load / Save Template</value>
   </data>
   <data name="Experiment_Load_Template" xml:space="preserve">
     <value>Открыть

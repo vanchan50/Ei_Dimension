@@ -74,6 +74,7 @@ namespace Ei_Dimension.ViewModels
     public virtual string PlexButtonString { get; set; }
     public virtual ObservableCollection<bool> CornerButtonsChecked { get; set; }
     public virtual ObservableCollection<bool> CLButtonsChecked { get; set; }
+    public virtual ObservableCollection<string> CLAxis { get; set; }
     public static ResultsViewModel Instance { get; private set; }
 
     protected ResultsViewModel()
@@ -180,6 +181,7 @@ namespace Ei_Dimension.ViewModels
       Buttons384Visible = System.Windows.Visibility.Hidden;
       CornerButtonsChecked = new ObservableCollection<bool> { true, false, false, false };
       CLButtonsChecked = new ObservableCollection<bool> { false, false, true, false, false, true, false, false };
+      CLAxis = new ObservableCollection<string> { "CL1", "CL2" };
       DisplayedMap = CurrentCL12Map;
       FlipMapAnalysis = false;
       LeftLabel384Visible = System.Windows.Visibility.Visible;
@@ -209,6 +211,7 @@ namespace Ei_Dimension.ViewModels
         CLButtonsChecked[1] = false;
         CLButtonsChecked[2] = false;
         CLButtonsChecked[3] = false;
+        CLAxis[1] = $"CL {CL}";
       }
       else
       {
@@ -216,6 +219,7 @@ namespace Ei_Dimension.ViewModels
         CLButtonsChecked[5] = false;
         CLButtonsChecked[6] = false;
         CLButtonsChecked[7] = false;
+        CLAxis[0] = $"CL {CL - 4}";
       }
       CLButtonsChecked[CL] = true;
       SetDisplayedMap();
@@ -384,11 +388,7 @@ namespace Ei_Dimension.ViewModels
     {
       _ = Task.Run(async ()=>
       {
-#if DEBUG
-        var path = @"C:\Emissioninc\KEIZ0R-LEGION\AcquisitionData\BeadAssayB1_0.csv";
-#else
         var path = PlatePictogram.GetSelectedFilePath();
-#endif
         if (path == null)
           return;
         var beadStructslist = new List<MicroCy.BeadInfoStruct>();
@@ -635,6 +635,8 @@ namespace Ei_Dimension.ViewModels
           WorldMap.Clear();
         }
       }
+      if (DisplayedMap != null && DisplayedMap.Count > 0)
+        DisplayedMap.Sort((x, y) => x.A.CompareTo(y.A));
     }
 
     public void PlexButtonClick()

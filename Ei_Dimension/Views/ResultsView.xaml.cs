@@ -50,7 +50,12 @@ namespace Ei_Dimension.Views
       options.TextRenderingMode = DevExpress.XtraPrinting.TextRenderingMode.SingleBitPerPixelGridFit;
       options.Resolution = Resoultion_dpi; options.Format = new System.Drawing.Imaging.ImageFormat(System.Drawing.Imaging.ImageFormat.Png.Guid);
       string date = DateTime.Now.ToString("dd.MM.yyyy.hhtt-mm-ss", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"));
+      ChC.AxisX.Title.Visible = true;
+      ChC.AxisY.Title.Visible = true;
       XYPlot.ExportToImage(App.Device.RootDirectory + @"\SavedImages\" + date + ".png", options);
+      ChC.AxisX.Title.Visible = false;
+      ChC.AxisY.Title.Visible = false;
+      printXY.Visibility = Visibility.Hidden;
     }
     public void PrintScatter(int Resoultion_dpi = 800)
     {
@@ -59,6 +64,27 @@ namespace Ei_Dimension.Views
       options.Resolution = Resoultion_dpi; options.Format = new System.Drawing.Imaging.ImageFormat(System.Drawing.Imaging.ImageFormat.Png.Guid);
       string date = DateTime.Now.ToString("dd.MM.yyyy.hhtt-mm-ss", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"));
       ScatterPlot.ExportToImage(App.Device.RootDirectory + @"\SavedImages\" + date + ".png", options);
+      printSC.Visibility = Visibility.Hidden;
+    }
+
+    private void XYPlot_MouseEnter(object sender, MouseEventArgs e)
+    {
+      printXY.Visibility = Visibility.Visible;
+    }
+
+    private void XYPlot_MouseLeave(object sender, MouseEventArgs e)
+    {
+      printXY.Visibility = Visibility.Hidden;
+    }
+
+    private void Grid_MouseEnter(object sender, MouseEventArgs e)
+    {
+      printSC.Visibility = Visibility.Visible;
+    }
+
+    private void Grid_MouseLeave(object sender, MouseEventArgs e)
+    {
+      printSC.Visibility = Visibility.Hidden;
     }
   }
 }

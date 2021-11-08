@@ -400,6 +400,8 @@ namespace Ei_Dimension.Core
           }
         }
       }
+      if (ResVM.DisplayedMap != null && ResVM.DisplayedMap.Count > 0)
+        ResVM.DisplayedMap.Sort((x, y) => x.A.CompareTo(y.A));
     }
   }
 }
