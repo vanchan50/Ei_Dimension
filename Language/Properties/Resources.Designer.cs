@@ -516,6 +516,15 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Current Template:.
+        /// </summary>
+        public static string Dashboard_Current_Template {
+            get {
+                return ResourceManager.GetString("Dashboard_Current_Template", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to   Inactive.
         /// </summary>
         public static string Dashboard_Inactive_Region {

@@ -56,12 +56,8 @@ Fixed a TerminationReadyCheck() possible bug scenario, where assuming EndRegion 
 Device.TerminationReadyCheck() case 1
   looks wrong. don't copy EndRead button function here? why not?
 
-
-
-
 select the text in a text box when a box is selected
   so that typing replaces the value. it adds now, a second select of the text box should bring up the curosr for editing
-
 
 DataProcessor.BinMapData() could use some optimisation
 ResultsVM.SetDisplayedMap() can be optimised
@@ -70,8 +66,6 @@ MicroCyDevice.IsNewWorkOrder() is crazy, since it is checked by app.TimerTick ev
 
 
 active regions stats for well click
-
-custom version for load/save template with big fonts
 
 sampling button on ComponentsView could have an issue
 

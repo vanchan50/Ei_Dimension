@@ -170,6 +170,8 @@ namespace Ei_Dimension.ViewModels
       catch { MessageBox.Show("There was a problem saving the Template"); }
       NameList.Add(TemplateSaveName[0]);
       DeleteVisible = Visibility.Hidden;
+      _templateName = TemplateSaveName[0];
+      DashboardViewModel.Instance.CurrentTemplateName = _templateName;
     }
 
     public void DeleteTemplate()
@@ -189,6 +191,7 @@ namespace Ei_Dimension.ViewModels
       _templateName = e.AddedItems[0].ToString();
       SelectedItem = App.Device.RootDirectory + @"\Config\" + e.AddedItems[0].ToString() + ".dtml";
       DeleteVisible = Visibility.Visible;
+      DashboardViewModel.Instance.CurrentTemplateName = _templateName;
     }
 
     public void FocusedBox(int num)
@@ -200,6 +203,5 @@ namespace Ei_Dimension.ViewModels
           break;
       }
     }
-
   }
 }

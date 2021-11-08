@@ -272,6 +272,9 @@ Coefficient</value>
   <data name="Dashboard_Active_Region" xml:space="preserve">
     <value>  Active</value>
   </data>
+  <data name="Dashboard_Current_Template" xml:space="preserve">
+    <value>Current Template:</value>
+  </data>
   <data name="Dashboard_Inactive_Region" xml:space="preserve">
     <value>  Inactive</value>
   </data>
