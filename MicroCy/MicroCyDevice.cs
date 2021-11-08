@@ -614,21 +614,22 @@ namespace MicroCy
       rout.col = WellsInOrder[SavingWellIdx].colIdx + 1;    //columns are 1 based
       rout.count = regionNumber.RP1vals.Count;
       rout.region = regionNumber.regionNumber;
+      List<float> rp1temp = new List<float>(regionNumber.RP1vals);
       if (rout.count > 2)
-        rout.meanfi = regionNumber.RP1vals.Average();
+        rout.meanfi = rp1temp.Average();
       if (rout.count >= 20)
       {
-        regionNumber.RP1vals.Sort();
+        rp1temp.Sort();
         float rpbg = regionNumber.RP1bgnd.Average() * 16;
         int quarter = rout.count / 4;
-        regionNumber.RP1vals.RemoveRange(rout.count - quarter, quarter);
-        regionNumber.RP1vals.RemoveRange(0, quarter);
-        rout.meanfi = regionNumber.RP1vals.Average();
-        double sumsq = regionNumber.RP1vals.Sum(dataout => Math.Pow(dataout - rout.meanfi, 2));
-        double stddev = Math.Sqrt(sumsq / regionNumber.RP1vals.Count() - 1);
+        rp1temp.RemoveRange(rout.count - quarter, quarter);
+        rp1temp.RemoveRange(0, quarter);
+        rout.meanfi = rp1temp.Average();
+        double sumsq = rp1temp.Sum(dataout => Math.Pow(dataout - rout.meanfi, 2));
+        double stddev = Math.Sqrt(sumsq / rp1temp.Count() - 1);
         rout.cv = (float)stddev / rout.meanfi * 100;
         if (double.IsNaN(rout.cv)) rout.cv = 0;
-        rout.medfi = (float)Math.Round(regionNumber.RP1vals[quarter] - rpbg);
+        rout.medfi = (float)Math.Round(rp1temp[quarter] - rpbg);
         rout.meanfi -= rpbg;
       }
       return rout;
@@ -697,7 +698,8 @@ namespace MicroCy
       {
         WellResults[index].RP1vals.Add(outbead.reporter);
         WellResults[index].RP1bgnd.Add(outbead.greenC_bg);
-        _chkRegionCount = WellResults[index].RP1vals.Count == MinPerRegion;  //see if assay is done via sufficient beads in each region
+        if (!_chkRegionCount)
+          _chkRegionCount = WellResults[index].RP1vals.Count == MinPerRegion;  //see if assay is done via sufficient beads in each region
       }
     }
 

@@ -1658,7 +1658,7 @@ namespace Ei_Dimension
           type = Models.WellType.Fail;
           break;
         }
-        if (Device.WellResults[i].RP1vals.Count != Device.MinPerRegion)
+        if (Device.WellResults[i].RP1vals.Count < Device.MinPerRegion)
         {
           type = Models.WellType.LightFail;
           break;

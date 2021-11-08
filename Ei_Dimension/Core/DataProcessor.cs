@@ -185,8 +185,8 @@ namespace Ei_Dimension.Core
         else
           failed = true;
       }
-      if (failed)
-        System.Windows.MessageBox.Show("An error occured during Well File Read");
+      //if (failed)
+      //  System.Windows.MessageBox.Show("An error occured during Well File Read");
 
       _ = App.Current.Dispatcher.BeginInvoke((Action)(() =>
       {
