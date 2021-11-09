@@ -182,5 +182,29 @@ namespace Ei_Dimension.ViewModels
       SquareSelActive = !SquareSelActive;
       Views.WellsSelectView.SquareSelectionMode = SquareSelActive;
     }
+
+    public void ResetPlateClick()
+    {
+      if (CurrentTableSize == 96)
+      {
+        foreach (var row in Table96Wells)
+        {
+          for (var i = 0; i < 12; i++)
+          {
+            row.SetType(i, WellType.Empty);
+          }
+        }
+      }
+      else if (CurrentTableSize == 384)
+      {
+        foreach (var row in Table384Wells)
+        {
+          for (var i = 0; i < 24; i++)
+          {
+            row.SetType(i, WellType.Empty);
+          }
+        }
+      }
+    }
   }
 }

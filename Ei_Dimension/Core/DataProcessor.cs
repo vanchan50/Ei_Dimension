@@ -182,11 +182,13 @@ namespace Ei_Dimension.Core
         var index = App.MapRegions.RegionsList.IndexOf(beadD.region.ToString());
         if (index != -1)
           ActiveRegionsStats[index].Add(beadD.reporter);
+        else if (beadD.region == 0)
+          continue;
         else
           failed = true;
       }
-      //if (failed)
-      //  System.Windows.MessageBox.Show("An error occured during Well File Read");
+      if (failed)
+        System.Windows.MessageBox.Show("An error occured during Well File Read");
 
       _ = App.Current.Dispatcher.BeginInvoke((Action)(() =>
       {
@@ -207,7 +209,7 @@ namespace Ei_Dimension.Core
             if(lst.Count > 0)
             {
               App.MapRegions.BackingActiveRegionsCount[j] = lst.Count.ToString();
-              App.MapRegions.BackingActiveRegionsMean[j] = lst.Average().ToString($"{0:0.0}");
+              App.MapRegions.BackingActiveRegionsMean[j] = string.Format("{0:n0}", lst.Average());
             }
             j++;
           }

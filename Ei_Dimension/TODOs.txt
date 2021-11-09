@@ -72,13 +72,6 @@ sampling button on ComponentsView could have an issue
 make an Installer
 mouse select doesn't work, from selected single well
 
-if (failed)
-  System.Windows.MessageBox.Show("An error occured during Well File Read"); makes a problem during reading
-
-  well select can have a reset plate button
-
-  
-
   hide service with clicking logo once
 
   trycatch on disconnect doen'st work

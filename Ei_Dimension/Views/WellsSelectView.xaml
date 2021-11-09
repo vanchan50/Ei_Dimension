@@ -204,7 +204,7 @@
               BorderThickness="0"
               TouchMove="grd96_TouchMove"
               TouchDown="grd96_TouchDown"
-                  Margin="40,50,0,0">
+              Margin="40,50,0,0">
           <DataGrid.Resources>
             <Style x:Key="{ComponentResourceKey ResourceId=DataGridSelectAllButtonStyle, TypeInTargetAssembly={x:Type DataGrid}}"
                TargetType="{x:Type Button}">
@@ -1054,16 +1054,24 @@
     <Border HorizontalAlignment="Left" VerticalAlignment="Top"
             Margin="1300,210,0,0">
       <StackPanel>
-        <Button Width="200" Height="80"
-              HorizontalAlignment="Left"
-              VerticalAlignment="Top"
-              FontSize="36"
-              Content="{lang:Loc WellSel_Select_ALL}"
-              Style="{StaticResource ButtonStyle}"
-              Command="{Binding AllSelectClickCommand}"/>
+        <Button Width="280" Height="100"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                FontSize="36"
+                Content="{lang:Loc WellSel_Reset_Plate}"
+                Style="{StaticResource ButtonStyle}"
+                Command="{Binding ResetPlateClickCommand}"/>
+        <Button Width="280" Height="100"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                FontSize="36"
+                Margin="0,6,0,0"
+                Content="{lang:Loc WellSel_Select_ALL}"
+                Style="{StaticResource ButtonStyle}"
+                Command="{Binding AllSelectClickCommand}"/>
         <ToggleButton Style="{StaticResource ToggleButtonThemeStyle}"
-                      Height="80" Cursor="Hand"
-                      Width="200"
+                      Height="100" Cursor="Hand"
+                      Width="280"
                       Margin="0,6,0,0"
                       Content="Square Selection Mode"
                       IsChecked="{Binding SquareSelActive, Mode=OneWay}"

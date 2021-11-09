@@ -748,6 +748,9 @@ Factory Defaults</value>
   <data name="Tube" xml:space="preserve">
     <value>Tube</value>
   </data>
+  <data name="WellSel_Reset_Plate" xml:space="preserve">
+    <value>Reset Plate</value>
+  </data>
   <data name="WellSel_Select_ALL" xml:space="preserve">
     <value>Select All</value>
   </data>

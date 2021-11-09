@@ -890,6 +890,9 @@ Speeds</value>
   <data name="Violet" xml:space="preserve">
     <value>Violet</value>
   </data>
+  <data name="WellSel_Reset_Plate" xml:space="preserve">
+    <value>Reset Plate</value>
+  </data>
   <data name="WellSel_Select_ALL" xml:space="preserve">
     <value>Select All</value>
   </data>

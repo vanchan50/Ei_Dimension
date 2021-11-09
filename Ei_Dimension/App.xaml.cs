@@ -239,14 +239,6 @@ namespace Ei_Dimension
         DashVM.EndReadItems[2].Content = RM.GetString(nameof(Language.Resources.Experiment_End_of_Sample), curCulture);
         DashVM.SelectedEndReadContent = DashVM.EndReadItems[0].Content;
       }
-      var ExperimentVM = ExperimentViewModel.Instance;
-      if (ExperimentVM != null)
-      {
-        ExperimentVM.DialogFilter = RM.GetString(nameof(Language.Resources.Text_Files), curCulture) +
-          "|*.txt|" + RM.GetString(nameof(Language.Resources.All_Files), curCulture) + "|*.*";
-        ExperimentVM.DialogTitleSave = RM.GetString(nameof(Language.Resources.Experiment_Save_Template_Dialog_Title), curCulture);
-        ExperimentVM.DialogTitleLoad = RM.GetString(nameof(Language.Resources.Experiment_Load_Template_Dialog_Title), curCulture);
-      }
       var ChannelsVM = ChannelsViewModel.Instance;
       if (ChannelsVM != null)
       {
@@ -1614,7 +1606,7 @@ namespace Ei_Dimension
             if (index == -1 || result.RP1vals.Count == 0)
               continue;
             MapRegions.CurrentActiveRegionsCount[index] = result.RP1vals.Count.ToString();
-            MapRegions.CurrentActiveRegionsMean[index] = result.RP1vals.Average().ToString($"{0:0.0}");
+            MapRegions.CurrentActiveRegionsMean[index] = string.Format("{0:n0}", result.RP1vals.Average());
           }
           _ActiveRegionsUpdateGoing = false;
         }));

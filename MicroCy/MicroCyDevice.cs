@@ -218,14 +218,7 @@ namespace MicroCy
 
     private void ReplyFromMC(IAsyncResult result)
     {
-      try
-      {
-        _serialConnection.EndRead(result);
-      }
-      catch (MadWizard.WinUSBNet.USBException e)
-      {
-        Console.WriteLine("USB error");
-      }
+      _serialConnection.EndRead(result);
       
       if ((_serialConnection.InputBuffer[0] == 0xbe) && (_serialConnection.InputBuffer[1] == 0xad))
       {

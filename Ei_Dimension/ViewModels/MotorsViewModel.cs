@@ -106,7 +106,7 @@ namespace Ei_Dimension.ViewModels
             WellRowButtonItems.Add(new DropDownButtonContents(Convert.ToChar('A' + i).ToString()));
           }
           DropDownButtonContents.ResetIndex();
-          for (var i = 0; i < 13; i++)
+          for (var i = 1; i < 13; i++)
           {
             WellColumnButtonItems.Add(new DropDownButtonContents(i.ToString()));
           }
@@ -119,7 +119,7 @@ namespace Ei_Dimension.ViewModels
             WellRowButtonItems.Add(new DropDownButtonContents(Convert.ToChar('A' + i).ToString()));
           }
           DropDownButtonContents.ResetIndex();
-          for (var i = 0; i < 25; i++)
+          for (var i = 1; i < 25; i++)
           {
             WellColumnButtonItems.Add(new DropDownButtonContents(i.ToString()));
           }

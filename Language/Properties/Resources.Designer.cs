@@ -1910,6 +1910,15 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Reset Plate.
+        /// </summary>
+        public static string WellSel_Reset_Plate {
+            get {
+                return ResourceManager.GetString("WellSel_Reset_Plate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select All.
         /// </summary>
         public static string WellSel_Select_ALL {
