@@ -1,6 +1,7 @@
 ﻿using DevExpress.Xpf.Charts;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -52,7 +53,9 @@ namespace Ei_Dimension.Views
       string date = DateTime.Now.ToString("dd.MM.yyyy.hhtt-mm-ss", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"));
       ChC.AxisX.Title.Visible = true;
       ChC.AxisY.Title.Visible = true;
-      XYPlot.ExportToImage(App.Device.RootDirectory + @"\SavedImages\" + date + ".png", options);
+      if (!Directory.Exists(App.Device.Outdir + "\\SavedImages"))
+        Directory.CreateDirectory(App.Device.Outdir + "\\SavedImages");
+      XYPlot.ExportToImage(App.Device.Outdir + @"\SavedImages\" + date + ".png", options);
       ChC.AxisX.Title.Visible = false;
       ChC.AxisY.Title.Visible = false;
       printXY.Visibility = Visibility.Hidden;
@@ -63,7 +66,9 @@ namespace Ei_Dimension.Views
       options.TextRenderingMode = DevExpress.XtraPrinting.TextRenderingMode.SingleBitPerPixelGridFit;
       options.Resolution = Resoultion_dpi; options.Format = new System.Drawing.Imaging.ImageFormat(System.Drawing.Imaging.ImageFormat.Png.Guid);
       string date = DateTime.Now.ToString("dd.MM.yyyy.hhtt-mm-ss", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"));
-      ScatterPlot.ExportToImage(App.Device.RootDirectory + @"\SavedImages\" + date + ".png", options);
+      if (!Directory.Exists(App.Device.Outdir + "\\SavedImages"))
+        Directory.CreateDirectory(App.Device.Outdir + "\\SavedImages");
+      ScatterPlot.ExportToImage(App.Device.Outdir + @"\SavedImages\" + date + ".png", options);
       printSC.Visibility = Visibility.Hidden;
     }
 

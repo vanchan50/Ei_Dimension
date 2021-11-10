@@ -145,8 +145,8 @@ namespace MicroCy
       //if(!isTube)
       coln++;  //use 0 for tubes and true column for plates
       char rowletter = (char)(0x41 + rown);
-      if (!Directory.Exists(Outdir))
-        Outdir = RootDirectory.FullName;
+      if (!Directory.Exists(Outdir + "\\AcquisitionData"))
+        Directory.CreateDirectory(Outdir + "\\AcquisitionData");
       for (var differ = 0; differ < int.MaxValue; differ++)
       {
         _fullFileName = Outdir + "\\AcquisitionData\\" + Outfilename + rowletter + coln.ToString() + '_' + differ.ToString() + ".csv";
@@ -481,6 +481,8 @@ namespace MicroCy
     private string GetSummaryFileName()
     {
       string summaryFileName = "";
+      if (!Directory.Exists(Outdir + "\\Result\\Summary"))
+        Directory.CreateDirectory(Outdir + "\\Result\\Summary");
       for (var i = 0; i < int.MaxValue; i++)
       {
         summaryFileName = Outdir + "\\Result\\Summary\\" + "Summary_" + Outfilename + '_' + i.ToString() + ".csv";
@@ -726,20 +728,14 @@ namespace MicroCy
       if ((SavingWellIdx == WellsToRead) && (_summaryout.Length > 0) && PltRept)    //end of read and json results requested
       {
         string rfilename = SystemControl == 0 ? Outfilename : WorkOrder.plateID.ToString();
-        string resultfilename = Path.Combine(RootDirectory.FullName, "Result", rfilename);
-        TextWriter jwriter = null;
-        try
+        if (!Directory.Exists($"{Outdir}\\Result"))
+          _ = Directory.CreateDirectory($"{Outdir}\\Result");
+        using (TextWriter jwriter = new StreamWriter($"{Outdir}\\Result\\" + rfilename + ".json"))
         {
           var jcontents = JsonConvert.SerializeObject(PlateReport);
-          jwriter = new StreamWriter(resultfilename + ".json");
           jwriter.Write(jcontents);
           if (File.Exists(_workOrderPath))
             File.Delete(_workOrderPath);   //result is posted, delete work order
-        }
-        finally
-        {
-          if (jwriter != null)
-            jwriter.Close();
         }
       }
     }

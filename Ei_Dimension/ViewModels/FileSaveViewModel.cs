@@ -52,7 +52,7 @@ namespace Ei_Dimension.ViewModels
 
     public void SelectOutFolder()
     {
-       FolderBrowserDialogService.StartPath = App.Device.Outdir;
+      FolderBrowserDialogService.StartPath = App.Device.Outdir;
       if (FolderBrowserDialogService.ShowDialog())
         App.Device.Outdir = FolderBrowserDialogService.ResultPath;
     }
