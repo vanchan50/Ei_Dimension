@@ -948,6 +948,10 @@
                    VerticalAlignment="Top"
                    Margin="5,-3,0,0"/>
         </StackPanel>
+        <Grid x:Name="WarningGrid"
+              HorizontalAlignment="Left"
+              VerticalAlignment="Top"
+              Margin="35,39,0,0"/>
         <DataGrid SelectionMode="Single"
                   Name="DrawingPlate"
                   SelectionUnit="Cell"
@@ -991,14 +995,14 @@
               <Setter Property="Template">
                 <Setter.Value>
                   <ControlTemplate TargetType="DataGridCell">
-                    <Border x:Name="border" Width="50">
+                    <Border x:Name="border" Width="50" BorderThickness="3" CornerRadius="22">
                       <ContentPresenter />
                     </Border>
                     <ControlTemplate.Triggers>
                       <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsSelected}"
                                Value="true">
-                        <Setter TargetName="border" Property="Background"
-                                Value="{StaticResource RibbonBackgroundActive}"/>
+                        <Setter TargetName="border" Property="BorderBrush"
+                                Value="Red"/>
                       </DataTrigger>
                     </ControlTemplate.Triggers>
                   </ControlTemplate>

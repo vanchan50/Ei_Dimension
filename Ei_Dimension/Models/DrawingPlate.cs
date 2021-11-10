@@ -5,8 +5,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 using System.Windows.Shapes;
+using System.Windows.Media;
 
 namespace Ei_Dimension.Models
 {
@@ -18,6 +18,7 @@ namespace Ei_Dimension.Models
     public (int row, int col) SelectedCell { get; set; }
     public bool FollowingCurrentCell { get; set; }
     private readonly PlateWell[,] _wells; //actual data
+    private Warning[,] _warnings;
     private int _mode;
     private int _CurrentCorner;
     private DataGrid _drawingGrid;
@@ -40,7 +41,7 @@ namespace Ei_Dimension.Models
       {
         for (var j = 0; j < 24; j++)
         {
-          _wells[i, j] = new PlateWell(i, j);
+          _wells[i, j] = new PlateWell();
         }
       }
       _mode = 96;
@@ -81,6 +82,7 @@ namespace Ei_Dimension.Models
         for (var j = 0; j < 12; j++)
         {
           DrawingWells[i].SetType(j, WellType.Empty);
+          _warnings[i, j].SetWarning(WellWarningState.OK);
         }
       }
       for (var i = 0; i < 16; i++)
@@ -89,30 +91,34 @@ namespace Ei_Dimension.Models
         {
           _wells[i, j].Type = WellType.Empty;
           _wells[i, j].FilePath = null;
+          _wells[i, j].WarningState = WellWarningState.OK;
         }
       }
     }
 
-    public void ChangeState(byte row, byte col, WellType type, string FilePath = null)
+    public void ChangeState(byte row, byte col, WellType? type = null, WellWarningState? warning = null, string FilePath = null)
     {
-      _wells[row, col].Type = type;
+      if(type != null)
+        _wells[row, col].Type = (WellType)type;
+      if(warning != null)
+        _wells[row, col].WarningState = (WellWarningState)warning;
       if (FilePath != null)
         _wells[row, col].FilePath = FilePath;
       if (_mode == 96)
       {
-        DrawingWells[row].SetType(col, type);
+        DrawingWells[row].SetType(col, _wells[row, col].Type);
+        _warnings[row, col].SetWarning(_wells[row, col].WarningState);
       }
       else if (_mode == 384)
       {
-        var tempCorner = CalculateCorner(row, col);
-
-        if (_CurrentCorner == tempCorner)
+        if (_CurrentCorner == CalculateCorner(row, col))
         {
           //if currently displayed -> draw
           byte shiftX = 0;
           byte shiftY = 0;
           CorrectionForCorner(_CurrentCorner, ref shiftX, ref shiftY);
-          DrawingWells[row - shiftY].SetType(col - shiftX, type);
+          DrawingWells[row - shiftY].SetType(col - shiftX, _wells[row, col].Type);
+          _warnings[row - shiftY, col - shiftX].SetWarning(_wells[row, col].WarningState);
         }
       }
     }
@@ -129,10 +135,10 @@ namespace Ei_Dimension.Models
         for (var j = 0; j < 12; j++)
         {
           DrawingWells[i].SetType(j, _wells[i + shiftY, j + shiftX].Type);
+          _warnings[i, j].SetWarning(_wells[i + shiftY, j + shiftX].WarningState);
         }
       }
       _CurrentCorner = corner;
-
     }
 
     public void SetWellsForReading(List<MicroCy.Wells> wells)
@@ -176,7 +182,7 @@ namespace Ei_Dimension.Models
 
     public (int row, int col) GetSelectedCell() //probably should be a VM function
     {
-      if(_drawingGrid != null)
+      if (_drawingGrid != null)
       {
         var SelectedCell = _drawingGrid.CurrentCell;
         if (SelectedCell.IsValid)
@@ -207,17 +213,72 @@ namespace Ei_Dimension.Models
       throw new Exception("Grid property was set more than once");
     }
 
+    public void SetWarningGrid(Grid grid)
+    {
+      Warning.SetGrid(grid);
+      _warnings = new Warning[8, 12];
+      for (var i = 0; i < 8; i++)
+      {
+        for (var j = 0; j < 12; j++)
+        {
+          _warnings[i, j] = new Warning(i, j);
+        }
+      }
+    }
+
     private class PlateWell
     {
-      public int Row { get; }
-      public int Column { get; }
       public WellType Type { get; set; }
       public string FilePath { get; set; }
-      public PlateWell(int row, int col)
+      public WellWarningState WarningState { get; set; }
+      public PlateWell()
       {
-        Row = row;
-        Column = col;
         Type = WellType.Empty;
+        WarningState = WellWarningState.OK;
+      }
+    }
+
+    private class Warning
+    {
+      private Border _rect;
+      private static Grid _warningGrid;
+      private static bool _warningGridSet = false;
+      public Warning(int row, int col)
+      {
+        _rect = new Border();
+        _rect.Width = 50;
+        _rect.Height = 50;
+        _rect.Margin = new Thickness(col * 50, row * 50, 0, 0);
+        _rect.HorizontalAlignment = HorizontalAlignment.Left;
+        _rect.VerticalAlignment = VerticalAlignment.Top;
+        _rect.Background = Brushes.Transparent;
+        _rect.BorderThickness = new Thickness(3);
+        _rect.CornerRadius = new CornerRadius(22);
+        _warningGrid.Children.Add(_rect);
+      }
+
+      public void SetWarning(WellWarningState warning)
+      {
+        switch (warning)
+        {
+          case WellWarningState.OK:
+            _rect.Background = Brushes.Transparent;
+            break;
+          case WellWarningState.YellowWarning:
+            _rect.Background = Brushes.Orange;
+            break;
+        }
+      }
+
+      public static void SetGrid(Grid grid)
+      {
+        if (!_warningGridSet)
+        {
+          _warningGrid = grid;
+          _warningGridSet = true;
+          return;
+        }
+        throw new Exception("WarningGrid property was set more than once");
       }
     }
   }

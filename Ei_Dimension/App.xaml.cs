@@ -19,6 +19,7 @@ namespace Ei_Dimension
     public static (PropertyInfo prop, object VM, int index) SelectedTextBox { get; set; }
     public static MicroCyDevice Device { get; private set; }
     public static Models.MapRegions MapRegions { get; set; }  //Performs operations on injected views
+    public static byte WellReadingIssue { get; set; }
 
     private static DispatcherTimer _dispatcherTimer;
     private static bool _workOrderPending;
@@ -80,6 +81,7 @@ namespace Ei_Dimension
       _ActiveRegionsUpdateGoing = false;
       _isStartup = true;
       _timerTickcounter = 0;
+      WellReadingIssue = 0;
     }
 
     public static int GetMapIndex(string MapName)
@@ -932,6 +934,7 @@ namespace Ei_Dimension
           Views.DashboardView.Instance.DbActiveRegionNo,
           Views.DashboardView.Instance.DbActiveRegionName);
         ResultsViewModel.Instance.PlatePictogram.SetGrid(Views.ResultsView.Instance.DrawingPlate);
+        ResultsViewModel.Instance.PlatePictogram.SetWarningGrid(Views.ResultsView.Instance.WarningGrid);
         Views.CalibrationView.Instance.clmap.DataContext = DashboardViewModel.Instance;
         _isStartup = false;
       }
@@ -1465,6 +1468,10 @@ namespace Ei_Dimension
           case 0xbf:
             CalibrationViewModel.Instance.AttenuationBox = exe.Parameter.ToString();
             break;
+          case 0xf3:
+            WellReadingIssue = 1;
+            ResultsViewModel.Instance.PlatePictogram.ChangeState(Device.ReadingRow, Device.ReadingCol, warning: Models.WellWarningState.YellowWarning);
+            break;
         }
       }
       UpdatePressureMonitor();
@@ -1626,8 +1633,11 @@ namespace Ei_Dimension
 
     public static void StartingToReadWellEventhandler(object sender, ReadingWellEventArgs e)
     {
+      var warning = Models.WellWarningState.OK;
+      if (WellReadingIssue > 0)
+        warning = Models.WellWarningState.YellowWarning;
       ResultsViewModel.Instance.PlatePictogram.CurrentlyReadCell = (e.Row, e.Column);
-      ResultsViewModel.Instance.PlatePictogram.ChangeState(e.Row, e.Column, Models.WellType.NowReading, e.FilePath);
+      ResultsViewModel.Instance.PlatePictogram.ChangeState(e.Row, e.Column, Models.WellType.NowReading, warning, FilePath: e.FilePath);
       ResultsViewModel.Instance.CornerButtonClick(Models.DrawingPlate.CalculateCorner(e.Row, e.Column));
       ResultsViewModel.Instance.ClearGraphs();
       for (var i = 0; i < MapRegions.CurrentActiveRegionsCount.Count; i++)
@@ -1656,6 +1666,7 @@ namespace Ei_Dimension
           break;
         }
       }
+      if (WellReadingIssue > 0)
       ResultsViewModel.Instance.PlatePictogram.ChangeState(e.Row, e.Column, type);
     }
 

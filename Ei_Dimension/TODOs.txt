@@ -78,8 +78,9 @@ mouse select doesn't work, from selected single well
 
   template select with finger problematic?
 
-  Mean counter remove decimal point (make int) and put a comma to separate thousands
-
   sort heatmap when inbetween wells
 
   for keyboard entry make existing text disappear
+
+
+  0xf3 message about fault. save currentlyreadwell and make background yellow
