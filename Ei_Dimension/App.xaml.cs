@@ -937,6 +937,8 @@ namespace Ei_Dimension
         ResultsViewModel.Instance.PlatePictogram.SetWarningGrid(Views.ResultsView.Instance.WarningGrid);
         Views.CalibrationView.Instance.clmap.DataContext = DashboardViewModel.Instance;
         _isStartup = false;
+
+        Device.WellResults.Add(new WellResults {regionNumber=1,RP1vals = new List<float> {1,2,3,4,5 } });
       }
       TextBoxUpdater();
 
@@ -953,6 +955,7 @@ namespace Ei_Dimension
       {
         MainViewModel.Instance.ServiceVisibilityCheck = 0;
         _timerTickcounter = 0;
+        ActiveRegionsStatsHandler();
       }
     }
 
@@ -1606,9 +1609,9 @@ namespace Ei_Dimension
       {
         _ActiveRegionsUpdateGoing = true;
         var tempResults = new List<(ushort region, List<float> vals)>(Device.WellResults.Count);
-        for (var i = 0; i < tempResults.Count; i++)
+        for (var i = 0; i < Device.WellResults.Count; i++)
         {
-          tempResults[i] = (Device.WellResults[i].regionNumber, new List<float>(Device.WellResults[i].RP1vals));
+          tempResults.Add((Device.WellResults[i].regionNumber, new List<float>(Device.WellResults[i].RP1vals)));
         }
         _ = Current.Dispatcher.BeginInvoke((Action)(() =>
         {
