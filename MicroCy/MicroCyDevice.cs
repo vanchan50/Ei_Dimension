@@ -668,6 +668,8 @@ namespace MicroCy
       y = Array.BinarySearch(_classificationBins, cl[_actSecondaryIndex]);
       if (y < 0)
         y = ~y;
+      x = x < 255 ? x : 255;
+      y = y < 255 ? y : 255;
       return _classificationMap[x, y];
     }
 
