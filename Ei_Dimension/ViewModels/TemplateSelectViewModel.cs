@@ -123,6 +123,7 @@ namespace Ei_Dimension.ViewModels
           }
         }
         catch { }
+        ExperimentViewModel.Instance.CurrentTemplateName = _templateName;
         ExperimentViewModel.Instance.NavigateDashboard();
       }
     }
@@ -170,8 +171,6 @@ namespace Ei_Dimension.ViewModels
       catch { MessageBox.Show("There was a problem saving the Template"); }
       NameList.Add(TemplateSaveName[0]);
       DeleteVisible = Visibility.Hidden;
-      _templateName = TemplateSaveName[0];
-      DashboardViewModel.Instance.CurrentTemplateName = _templateName;
     }
 
     public void DeleteTemplate()
@@ -179,7 +178,9 @@ namespace Ei_Dimension.ViewModels
       if (SelectedItem != null && File.Exists(SelectedItem))
       {
         File.Delete(SelectedItem);
-        NameList.Remove((string)Views.TemplateSelectView.Instance.list.SelectedItem);
+        NameList.Remove(_templateName);
+        if (ExperimentViewModel.Instance.CurrentTemplateName == _templateName)
+          ExperimentViewModel.Instance.CurrentTemplateName = "None";
         DeleteVisible = Visibility.Hidden;
       }
     }
@@ -191,7 +192,6 @@ namespace Ei_Dimension.ViewModels
       _templateName = e.AddedItems[0].ToString();
       SelectedItem = App.Device.RootDirectory + @"\Config\" + e.AddedItems[0].ToString() + ".dtml";
       DeleteVisible = Visibility.Visible;
-      DashboardViewModel.Instance.CurrentTemplateName = _templateName;
     }
 
     public void FocusedBox(int num)

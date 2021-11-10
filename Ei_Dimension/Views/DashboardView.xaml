@@ -517,24 +517,5 @@
         </Grid>
       </StackPanel>
     </Border>
-
-    <Border HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Margin="1250,650,0,0"
-            Width="332">
-      <StackPanel>
-        <TextBlock Text="{lang:Loc Dashboard_Current_Template}"
-                   FontFamily="{StaticResource AppTextFont}"
-                   FontSize="36"
-                   FontWeight="UltraBold"
-                   Foreground="{StaticResource AppTextColor}"/>
-        <TextBox HorizontalAlignment="Stretch"
-                 Margin="0,4,0,0"
-                 IsReadOnly="True"
-                 Style="{StaticResource InputFieldStyle}"
-                 Text="{Binding CurrentTemplateName}"/>
-      </StackPanel>
-    </Border>
-
   </Grid>
 </UserControl>

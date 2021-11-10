@@ -42,7 +42,6 @@ namespace Ei_Dimension.ViewModels
     public byte SelectedEndReadIndex { get; set; }
     public virtual ObservableCollection<Visibility> EndReadVisibility { get; set; }
     public virtual Visibility WorkOrderVisibility { get; set; }
-    public virtual string CurrentTemplateName { get; set; }
 
     protected DashboardViewModel()
     {
@@ -133,7 +132,6 @@ namespace Ei_Dimension.ViewModels
 
       PressureMonToggleButtonState = false;
       PressureMon = new ObservableCollection<string> {"","",""};
-      CurrentTemplateName = "None";
       Instance = this;
     }
 

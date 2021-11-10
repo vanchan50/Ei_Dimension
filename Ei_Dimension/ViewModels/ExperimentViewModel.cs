@@ -10,11 +10,13 @@ namespace Ei_Dimension.ViewModels
   {
     public virtual Visibility WellSelectVisible { get; set; }
     public static ExperimentViewModel Instance { get; private set; }
+    public virtual string CurrentTemplateName { get; set; }
     private INavigationService NavigationService => this.GetService<INavigationService>();
 
     protected ExperimentViewModel()
     {
       WellSelectVisible = Settings.Default.SystemControl == 0 ? Visibility.Visible : Visibility.Hidden;
+      CurrentTemplateName = "None";
       Instance = this;
     }
 
