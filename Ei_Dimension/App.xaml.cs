@@ -1605,15 +1605,20 @@ namespace Ei_Dimension
       if (!_ActiveRegionsUpdateGoing)
       {
         _ActiveRegionsUpdateGoing = true;
+        var tempResults = new List<(ushort region, List<float> vals)>(Device.WellResults.Count);
+        for (var i = 0; i < tempResults.Count; i++)
+        {
+          tempResults[i] = (Device.WellResults[i].regionNumber, new List<float>(Device.WellResults[i].RP1vals));
+        }
         _ = Current.Dispatcher.BeginInvoke((Action)(() =>
         {
-          foreach (var result in Device.WellResults)
+          foreach (var result in tempResults)
           {
-            var index = MapRegions.RegionsList.IndexOf(result.regionNumber.ToString());
-            if (index == -1 || result.RP1vals.Count == 0)
+            var index = MapRegions.RegionsList.IndexOf(result.region.ToString());
+            if (index == -1 || result.vals.Count == 0)
               continue;
-            MapRegions.CurrentActiveRegionsCount[index] = result.RP1vals.Count.ToString();
-            MapRegions.CurrentActiveRegionsMean[index] = string.Format("{0:n0}", result.RP1vals.Average());
+            MapRegions.CurrentActiveRegionsCount[index] = result.vals.Count.ToString();
+            MapRegions.CurrentActiveRegionsMean[index] = string.Format("{0:n0}", result.vals.Average());
           }
           _ActiveRegionsUpdateGoing = false;
         }));
