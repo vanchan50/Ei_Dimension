@@ -1609,7 +1609,7 @@ namespace Ei_Dimension
         for (var i = 0; i < Device.WellResults.Count; i++)
         {
           var rp1 = new float[Device.WellResults[i].RP1vals.Count];
-          Device.WellResults[i].RP1vals.CopyTo(rp1);
+          Device.WellResults[i].RP1vals.CopyTo(0, rp1, 0, rp1.Length);
           tempResults.Add((Device.WellResults[i].regionNumber, rp1));
         }
         _ = Current.Dispatcher.BeginInvoke((Action)(() =>
