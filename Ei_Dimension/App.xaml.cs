@@ -937,8 +937,6 @@ namespace Ei_Dimension
         ResultsViewModel.Instance.PlatePictogram.SetWarningGrid(Views.ResultsView.Instance.WarningGrid);
         Views.CalibrationView.Instance.clmap.DataContext = DashboardViewModel.Instance;
         _isStartup = false;
-
-        Device.WellResults.Add(new WellResults {regionNumber=1,RP1vals = new List<float> {1,2,3,4,5 } });
       }
       TextBoxUpdater();
 
@@ -955,7 +953,6 @@ namespace Ei_Dimension
       {
         MainViewModel.Instance.ServiceVisibilityCheck = 0;
         _timerTickcounter = 0;
-        ActiveRegionsStatsHandler();
       }
     }
 
