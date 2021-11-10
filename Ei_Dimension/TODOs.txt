@@ -72,8 +72,6 @@ sampling button on ComponentsView could have an issue
 make an Installer
 mouse select doesn't work, from selected single well
 
-  hide service with clicking logo once
-
   trycatch on disconnect doen'st work
 
   template select with finger problematic?
@@ -81,6 +79,3 @@ mouse select doesn't work, from selected single well
   sort heatmap when inbetween wells
 
   for keyboard entry make existing text disappear
-
-
-  0xf3 message about fault. save currentlyreadwell and make background yellow

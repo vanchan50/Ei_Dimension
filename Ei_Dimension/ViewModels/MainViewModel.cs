@@ -44,7 +44,6 @@ namespace Ei_Dimension.ViewModels
     {
       App.ResetFocusedTextbox();
       App.HideNumpad();
-      ServiceVisibility = System.Windows.Visibility.Hidden;
       EventCountVisible = System.Windows.Visibility.Visible;
       StartButtonsVisible = System.Windows.Visibility.Visible;
       NavigationService.Navigate("ExperimentView", null, this);
@@ -55,7 +54,6 @@ namespace Ei_Dimension.ViewModels
     {
       App.ResetFocusedTextbox();
       App.HideNumpad();
-      ServiceVisibility = System.Windows.Visibility.Hidden;
       EventCountVisible = System.Windows.Visibility.Visible;
       StartButtonsVisible = System.Windows.Visibility.Visible;
       NavigationService.Navigate("ResultsView", null, this);
@@ -65,7 +63,6 @@ namespace Ei_Dimension.ViewModels
     {
       App.ResetFocusedTextbox();
       App.HideNumpad();
-      ServiceVisibility = System.Windows.Visibility.Hidden;
       StartButtonsVisible = System.Windows.Visibility.Hidden;
       EventCountVisible = System.Windows.Visibility.Hidden;
       NavigationService.Navigate("MaintenanceView", null, this);
@@ -103,9 +100,14 @@ namespace Ei_Dimension.ViewModels
     public void LogoClick()
     {
       ServiceVisibilityCheck++;
-      if (ServiceVisibilityCheck > 2)
+      if (ServiceVisibility == System.Windows.Visibility.Hidden && ServiceVisibilityCheck > 2)
       {
         ServiceVisibility = System.Windows.Visibility.Visible;
+        ServiceVisibilityCheck = 0;
+      }
+      else if (ServiceVisibility == System.Windows.Visibility.Visible && ServiceVisibilityCheck > 2)
+      {
+        ServiceVisibility = System.Windows.Visibility.Hidden;
         ServiceVisibilityCheck = 0;
       }
     }
