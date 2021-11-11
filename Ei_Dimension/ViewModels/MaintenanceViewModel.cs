@@ -66,6 +66,11 @@ namespace Ei_Dimension.ViewModels
       }
     }
 
+    public void TouchModeToggle()
+    {
+      MainViewModel.Instance.TouchControlsEnabled = !MainViewModel.Instance.TouchControlsEnabled;
+    }
+
     public void UVCSanitizeClick()
     {
       if (int.TryParse(SanitizeSecondsContent[0], out int res))
@@ -103,6 +108,7 @@ namespace Ei_Dimension.ViewModels
     {
       App.InjectToFocusedTextbox(((TextBox)e.Source).Text, true);
     }
+
     public void InitChildren()
     {
       NavigateCalibration();

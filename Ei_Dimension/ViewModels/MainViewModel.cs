@@ -18,6 +18,7 @@ namespace Ei_Dimension.ViewModels
     public virtual System.Windows.Visibility StartButtonsVisible { get; set; }
     public virtual System.Windows.Visibility ServiceVisibility { get; set; }
     public int ServiceVisibilityCheck { get; set; }
+    public bool TouchControlsEnabled { get; set; }
 
     public static MainViewModel Instance { get; private set; }
     private INavigationService NavigationService => this.GetService<INavigationService>();
@@ -36,6 +37,7 @@ namespace Ei_Dimension.ViewModels
       EventCountField = EventCountCurrent;
       Instance = this;
       ServiceVisibilityCheck = 0;
+      TouchControlsEnabled = true;
     }
 
     public static MainViewModel Create()
@@ -86,54 +88,60 @@ namespace Ei_Dimension.ViewModels
 
     public void NumpadToggleButton(System.Windows.Controls.TextBox tb)
     {
-      var p = tb.PointToScreen(new System.Windows.Point(0, 0));
-      double shiftX;
-      double shiftY;
-      double NpdHeight = 340;
-      if (p.X > 100)
-        shiftX = 100;
-      else if (p.X > 50)
-        shiftX = 50;
-      else
-        shiftX = 0;
+      if (TouchControlsEnabled)
+      {
+        var p = tb.PointToScreen(new System.Windows.Point(0, 0));
+        double shiftX;
+        double shiftY;
+        double NpdHeight = 340;
+        if (p.X > 100)
+          shiftX = 100;
+        else if (p.X > 50)
+          shiftX = 50;
+        else
+          shiftX = 0;
 
-      if (MainWindow.Instance.wndw.Height - p.Y > NpdHeight + tb.Height + 5)
-        shiftY = tb.Height + 5;
-      else
-        shiftY = p.Y - NpdHeight - 5;
+        if (MainWindow.Instance.wndw.Height - p.Y > NpdHeight + tb.Height + 5)
+          shiftY = tb.Height + 5;
+        else
+          shiftY = p.Y - NpdHeight - 5;
 
-      MainWindow.Instance.Npd.Margin = new System.Windows.Thickness(p.X - shiftX, p.Y + shiftY, 0, 0);
-      NumpadVisible = System.Windows.Visibility.Visible;
+        MainWindow.Instance.Npd.Margin = new System.Windows.Thickness(p.X - shiftX, p.Y + shiftY, 0, 0);
+        NumpadVisible = System.Windows.Visibility.Visible;
+      }
     }
 
     public void KeyboardToggle(System.Windows.Controls.TextBox tb)
     {
-      var p = tb.PointToScreen(new System.Windows.Point(0, 0));
-      double shiftX;
-      double shiftY;
-      double KbdHeight = 410;
-      if (p.X > 300)
-        shiftX = 300;
-      else if (p.X > 250)
-        shiftX = 250;
-      else if (p.X > 200)
-        shiftX = 200;
-      else if (p.X > 150)
-        shiftX = 150;
-      else if (p.X > 100)
-        shiftX = 100;
-      else if (p.X > 50)
-        shiftX = 50;
-      else
-        shiftX = 0;
+      if (TouchControlsEnabled)
+      {
+        var p = tb.PointToScreen(new System.Windows.Point(0, 0));
+        double shiftX;
+        double shiftY;
+        double KbdHeight = 410;
+        if (p.X > 300)
+          shiftX = 300;
+        else if (p.X > 250)
+          shiftX = 250;
+        else if (p.X > 200)
+          shiftX = 200;
+        else if (p.X > 150)
+          shiftX = 150;
+        else if (p.X > 100)
+          shiftX = 100;
+        else if (p.X > 50)
+          shiftX = 50;
+        else
+          shiftX = 0;
 
-      if (MainWindow.Instance.wndw.Height - p.Y > KbdHeight + tb.Height + 5)
-        shiftY = tb.Height + 5;
-      else
-        shiftY = p.Y - KbdHeight - 5;
+        if (MainWindow.Instance.wndw.Height - p.Y > KbdHeight + tb.Height + 5)
+          shiftY = tb.Height + 5;
+        else
+          shiftY = p.Y - KbdHeight - 5;
 
-      MainWindow.Instance.Kbd.Margin = new System.Windows.Thickness(p.X - shiftX, p.Y + shiftY, 0, 0);
-      KeyboardVisible = System.Windows.Visibility.Visible;
+        MainWindow.Instance.Kbd.Margin = new System.Windows.Thickness(p.X - shiftX, p.Y + shiftY, 0, 0);
+        KeyboardVisible = System.Windows.Visibility.Visible;
+      }
     }
 
     public void InitChildren()

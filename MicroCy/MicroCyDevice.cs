@@ -357,30 +357,22 @@ namespace MicroCy
       }
     }
 
-    public void SaveCalVals(bool temps, ushort minSSC = 0, ushort maxSSC = 0)
+    public void SaveCalVals(BiasAt30Temp? temps = null, ushort minSSC = 0, ushort maxSSC = 0)
     {
       var idx = MapList.FindIndex(x => x.mapName == ActiveMap.mapName);
       var map = MapList[idx];
-      if (temps)
+      if (temps != null)
       {
-        if (BiasAt30Temp.TempRpMin != 0)
-          map.calrpmin = BiasAt30Temp.TempRpMin;
-        if (BiasAt30Temp.TempRpMaj != 0)
-          map.calrpmaj = BiasAt30Temp.TempRpMaj;
-        if (BiasAt30Temp.TempRedSsc != 0)
-          map.calrssc = BiasAt30Temp.TempRedSsc;
-        if (BiasAt30Temp.TempGreenSsc != 0)
-          map.calgssc = BiasAt30Temp.TempGreenSsc;
-        if (BiasAt30Temp.TempVioletSsc != 0)
-          map.calvssc = BiasAt30Temp.TempVioletSsc;
-        if (BiasAt30Temp.TempCl0 != 0)
-          map.calcl0 = BiasAt30Temp.TempCl0;
-        if (BiasAt30Temp.TempCl1 != 0)
-          map.calcl1 = BiasAt30Temp.TempCl1;
-        if (BiasAt30Temp.TempCl2 != 0)
-          map.calcl2 = BiasAt30Temp.TempCl2;
-        if (BiasAt30Temp.TempCl3 != 0)
-          map.calcl3 = BiasAt30Temp.TempCl3;
+        map.calrpmin = temps.Value.TempRpMin;
+        map.calrpmaj = temps.Value.TempRpMaj;
+        map.calrssc = temps.Value.TempRedSsc;
+        map.calgssc = temps.Value.TempGreenSsc;
+        map.calvssc = temps.Value.TempVioletSsc;
+        map.calcl0 = temps.Value.TempCl0;
+        map.calcl1 = temps.Value.TempCl1;
+        map.calcl2 = temps.Value.TempCl2;
+        map.calcl3 = temps.Value.TempCl3;
+        map.calfsc = temps.Value.TempFsc;
       }
       else
       {

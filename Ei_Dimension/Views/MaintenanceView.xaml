@@ -42,7 +42,7 @@
     </StackPanel>
 
     <Border Grid.Column="0"
-            Margin="30,460,0,0"
+            Margin="30,420,0,0"
             HorizontalAlignment="Left"
             Width="240">
       <StackPanel>
@@ -140,6 +140,12 @@
                      VerticalAlignment="Top"
                      Margin="0,0,0,0"/>
         </StackPanel>
+        <ToggleButton Content="{lang:Loc Maintenance_Touch}"
+                      Command="{Binding TouchModeToggleCommand}"
+                      Style="{StaticResource ToggleButtonThemeStyle}"
+                      Height="60" Width="220"
+                      IsChecked="True"
+                      Margin="0,20,0,10"/>
         <TextBlock Text="{lang:Loc Language}"
                  FontFamily="{StaticResource AppTextFont}"
                  FontSize="30"
@@ -147,7 +153,7 @@
                  Foreground="{StaticResource AppTextColor}"
                  HorizontalAlignment="Center"
                  VerticalAlignment="Top"
-                 Margin="0,50,0,0"/>
+                 Margin="0,0,0,0"/>
         <dx:DropDownButton FontSize="30"
                            Cursor="Hand"
                            Margin="10,0,10,0"

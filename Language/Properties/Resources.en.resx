@@ -679,6 +679,9 @@ Order</value>
   <data name="Maintenance_Sanitize" xml:space="preserve">
     <value>UVC Sanitize</value>
   </data>
+  <data name="Maintenance_Touch" xml:space="preserve">
+    <value>Touch Mode</value>
+  </data>
   <data name="Mean" xml:space="preserve">
     <value> Mean</value>
   </data>

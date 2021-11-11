@@ -62,7 +62,7 @@
     <Compile Include="Structs\CustomMap.cs" />
     <Compile Include="Structs\BeadInfoStruct.cs" />
     <Compile Include="CommandLists.cs" />
-    <Compile Include="InstrumentParameters\BiasAt30TempParameters.cs" />
+    <Compile Include="Structs\BiasAt30TempParameters.cs" />
     <Compile Include="InstrumentParameters\CalibrationParameters.cs" />
     <Compile Include="Structs\CommandStruct.cs" />
     <Compile Include="ConnectionFactory.cs" />

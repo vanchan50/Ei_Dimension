@@ -1394,6 +1394,15 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Touch Mode.
+        /// </summary>
+        public static string Maintenance_Touch {
+            get {
+                return ResourceManager.GetString("Maintenance_Touch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to  Mean.
         /// </summary>
         public static string Mean {

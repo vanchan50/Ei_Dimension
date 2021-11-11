@@ -521,7 +521,6 @@ namespace Ei_Dimension
               if (int.TryParse(temp, out iRes))
               {
                 Device.MainCommand("Set Property", code: 0x28, parameter: (ushort)iRes);
-                MicroCy.InstrumentParameters.BiasAt30Temp.TempGreenSsc = iRes;
               }
             }
             if (SelectedTextBox.index == 1)
@@ -529,7 +528,6 @@ namespace Ei_Dimension
               if (int.TryParse(temp, out iRes))
               {
                 Device.MainCommand("Set Property", code: 0x29, parameter: (ushort)iRes);
-                MicroCy.InstrumentParameters.BiasAt30Temp.TempRpMaj = iRes;
               }
             }
             if (SelectedTextBox.index == 2)
@@ -537,7 +535,6 @@ namespace Ei_Dimension
               if (int.TryParse(temp, out iRes))
               {
                 Device.MainCommand("Set Property", code: 0x2a, parameter: (ushort)iRes);
-                MicroCy.InstrumentParameters.BiasAt30Temp.TempRpMin = iRes;
               }
             }
             if (SelectedTextBox.index == 3)
@@ -545,7 +542,6 @@ namespace Ei_Dimension
               if (int.TryParse(temp, out iRes))
               {
                 Device.MainCommand("Set Property", code: 0x2c, parameter: (ushort)iRes);
-                MicroCy.InstrumentParameters.BiasAt30Temp.TempCl3 = iRes;
               }
             }
             if (SelectedTextBox.index == 4)
@@ -553,7 +549,6 @@ namespace Ei_Dimension
               if (int.TryParse(temp, out iRes))
               {
                 Device.MainCommand("Set Property", code: 0x2d, parameter: (ushort)iRes);
-                MicroCy.InstrumentParameters.BiasAt30Temp.TempRedSsc = iRes;
               }
             }
             if (SelectedTextBox.index == 5)
@@ -561,7 +556,6 @@ namespace Ei_Dimension
               if (int.TryParse(temp, out iRes))
               {
                 Device.MainCommand("Set Property", code: 0x2e, parameter: (ushort)iRes);
-                MicroCy.InstrumentParameters.BiasAt30Temp.TempCl1 = iRes;
               }
             }
             if (SelectedTextBox.index == 6)
@@ -569,7 +563,6 @@ namespace Ei_Dimension
               if (int.TryParse(temp, out iRes))
               {
                 Device.MainCommand("Set Property", code: 0x2f, parameter: (ushort)iRes);
-                MicroCy.InstrumentParameters.BiasAt30Temp.TempCl2 = iRes;
               }
             }
             if (SelectedTextBox.index == 7)
@@ -577,7 +570,6 @@ namespace Ei_Dimension
               if (int.TryParse(temp, out iRes))
               {
                 Device.MainCommand("Set Property", code: 0x25, parameter: (ushort)iRes);
-                MicroCy.InstrumentParameters.BiasAt30Temp.TempVioletSsc = iRes;
               }
             }
             if (SelectedTextBox.index == 8)
@@ -585,7 +577,6 @@ namespace Ei_Dimension
               if (int.TryParse(temp, out iRes))
               {
                 Device.MainCommand("Set Property", code: 0x26, parameter: (ushort)iRes);
-                MicroCy.InstrumentParameters.BiasAt30Temp.TempCl0 = iRes;
               }
             }
             if (SelectedTextBox.index == 9)
