@@ -71,7 +71,7 @@
               Margin="800,330,0,0"/>
       <TextBox HorizontalAlignment="Left"
                VerticalAlignment="Top"
-               Width="300"
+               Width="300" Name="TmplBox"
                Margin="800,490,0,0"
                Style="{StaticResource InputFieldStyle}"
                Text="{Binding TemplateSaveName[0]}">

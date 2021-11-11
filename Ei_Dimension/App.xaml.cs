@@ -16,6 +16,7 @@ namespace Ei_Dimension
   public partial class App : Application
   {
     public static (PropertyInfo prop, object VM) NumpadShow { get; set; }
+    public static (PropertyInfo prop, object VM) KeyboardShow { get; set; }
     public static (PropertyInfo prop, object VM, int index) SelectedTextBox { get; set; }
     public static MicroCyDevice Device { get; private set; }
     public static Models.MapRegions MapRegions { get; set; }  //Performs operations on injected views
@@ -922,6 +923,12 @@ namespace Ei_Dimension
     {
       NumpadShow.prop.SetValue(NumpadShow.VM, Visibility.Hidden);
     }
+
+    public static void HideKeyboard()
+    {
+      KeyboardShow.prop.SetValue(KeyboardShow.VM, Visibility.Hidden);
+    }
+    
 
     private static void TimerTick(object sender, EventArgs e)
     {

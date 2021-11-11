@@ -1,5 +1,4 @@
-﻿using DevExpress.Xpf.Core;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,18 +12,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Ei_Dimension
+namespace Ei_Dimension.Views
 {
   /// <summary>
-  /// Interaction logic for MainWindow.xaml
+  /// Interaction logic for ScreenKeyboardView.xaml
   /// </summary>
-  public partial class MainWindow : ThemedWindow
+  public partial class ScreenKeyboardView : UserControl
   {
-    public static MainWindow Instance { get; private set; }
-    public MainWindow()
+    public ScreenKeyboardView()
     {
       InitializeComponent();
-      Instance = this;
     }
   }
 }

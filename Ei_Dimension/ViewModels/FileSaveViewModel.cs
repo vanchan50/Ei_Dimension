@@ -63,6 +63,7 @@ namespace Ei_Dimension.ViewModels
       {
         case 0:
           App.SelectedTextBox = (this.GetType().GetProperty(nameof(BaseFileName)), this, 0);
+          MainViewModel.Instance.KeyboardToggle(Views.FileSaveView.Instance.FNBox);
           break;
       }
     }

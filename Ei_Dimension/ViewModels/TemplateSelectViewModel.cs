@@ -200,6 +200,7 @@ namespace Ei_Dimension.ViewModels
       {
         case 0:
           App.SelectedTextBox = (this.GetType().GetProperty(nameof(TemplateSaveName)), this, 0);
+          MainViewModel.Instance.KeyboardToggle(Views.TemplateSelectView.Instance.TmplBox);
           break;
       }
     }

@@ -57,6 +57,9 @@ namespace Ei_Dimension.ViewModels
         case 11:
           App.InjectToFocusedTextbox(".");
           break;
+        case 100:
+          App.HideNumpad();
+          break;
       }
     }
   }

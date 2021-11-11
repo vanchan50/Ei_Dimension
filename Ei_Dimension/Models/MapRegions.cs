@@ -223,6 +223,7 @@ namespace Ei_Dimension.Models
       App.SelectedTextBox = (this.GetType()
         .GetProperty(nameof(RegionsNamesList)),
         this, int.Parse(((TextBox)e.Source).Name.Trim('_')));
+      MainViewModel.Instance.KeyboardToggle((TextBox)e.Source);
     }
     //Resultsview functionality
     private void AddRegionToTable(string name, BindingBase bind)

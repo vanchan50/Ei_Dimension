@@ -99,13 +99,21 @@
                      Glyph="{dx:DXImage 'SvgImages/Icon Builder/Electronics_Keyboard.svg'}"
                      GlyphHeight="40"
                      GlyphWidth="40" Cursor="Hand"
-                     Command="{Binding NumpadToggleButonCommand}"/>
+                     Visibility="{Binding NumpadButtonVisible}"
+                     Command="{Binding NumpadToggleButtonCommand}"/>
 
-    <Grid Width="202" Height="280"
+    <Grid Width="260" Height="340" x:Name="Npd"
           VerticalAlignment="Top" HorizontalAlignment="Left"
           Margin="1670,740,0,0"
           Visibility="{Binding NumpadVisible}">
       <Views:NumpadView />
+    </Grid>
+    
+    <Grid Width="900" Height="410" Name="Kbd"
+          VerticalAlignment="Top" HorizontalAlignment="Left"
+          Margin="370,340,0,0"
+          Visibility="{Binding KeyboardVisible}">
+      <Views:ScreenKeyboardView />
     </Grid>
 
     <!--Event Count-->

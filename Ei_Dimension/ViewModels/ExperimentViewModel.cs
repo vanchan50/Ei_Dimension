@@ -29,6 +29,7 @@ namespace Ei_Dimension.ViewModels
     {
       App.ResetFocusedTextbox();
       App.HideNumpad();
+      App.HideKeyboard();
       MainViewModel.Instance.StartButtonsVisible = Visibility.Visible;
       NavigationService.Navigate("DashboardView", null, this);
     }
@@ -37,6 +38,7 @@ namespace Ei_Dimension.ViewModels
     {
       App.ResetFocusedTextbox();
       App.HideNumpad();
+      App.HideKeyboard();
       MainViewModel.Instance.StartButtonsVisible = Visibility.Hidden;
       NavigationService.Navigate("SelRegionsView", null, this);
     }
@@ -45,6 +47,7 @@ namespace Ei_Dimension.ViewModels
     {
       App.ResetFocusedTextbox();
       App.HideNumpad();
+      App.HideKeyboard();
       App.Device.InitSTab("reportingtab");
       MainViewModel.Instance.StartButtonsVisible = Visibility.Hidden;
       NavigationService.Navigate("FileSaveView", null, this);
@@ -54,6 +57,7 @@ namespace Ei_Dimension.ViewModels
     {
       App.ResetFocusedTextbox();
       App.HideNumpad();
+      App.HideKeyboard();
       if (num != 1)
       {
         MainViewModel.Instance.StartButtonsVisible = Visibility.Hidden;
@@ -69,7 +73,8 @@ namespace Ei_Dimension.ViewModels
     {
       App.ResetFocusedTextbox();
       App.HideNumpad();
-      if(Views.TemplateSelectView.Instance != null)
+      App.HideKeyboard();
+      if (Views.TemplateSelectView.Instance != null)
       {
         Views.TemplateSelectView.Instance.list.SelectedItem = null;
         TemplateSelectViewModel.Instance.SelectedItem = null;

@@ -19,9 +19,12 @@ namespace Ei_Dimension.Views
   /// </summary>
   public partial class FileSaveView : UserControl
   {
+    public static FileSaveView Instance { get; private set;
+    }
     public FileSaveView()
     {
       InitializeComponent();
+      Instance = this;
     }
   }
 }
