@@ -116,21 +116,34 @@ namespace Ei_Dimension
       {
         CaliVM.CurrentMapName[0] = Device.ActiveMap.mapName;
         CaliVM.EventTriggerContents[1] = Device.ActiveMap.minmapssc.ToString();
+        Device.MainCommand("Set Property", code: 0xce, parameter: (ushort)Device.ActiveMap.minmapssc);
         CaliVM.EventTriggerContents[2] = Device.ActiveMap.maxmapssc.ToString();
+        Device.MainCommand("Set Property", code: 0xcf, parameter: (ushort)Device.ActiveMap.maxmapssc);
       }
       var ChannelsVM = ChannelsViewModel.Instance;
       if (ChannelsVM != null)
       {
         ChannelsVM.CurrentMapName[0] = Device.ActiveMap.mapName;
         ChannelsVM.Bias30Parameters[0] = Device.ActiveMap.calgssc.ToString();
+        Device.MainCommand("Set Property", code: 0x28, parameter: (ushort)Device.ActiveMap.calgssc);
         ChannelsVM.Bias30Parameters[1] = Device.ActiveMap.calrpmaj.ToString();
+        Device.MainCommand("Set Property", code: 0x29, parameter: (ushort)Device.ActiveMap.calrpmaj);
         ChannelsVM.Bias30Parameters[2] = Device.ActiveMap.calrpmin.ToString();
-        ChannelsVM.Bias30Parameters[4] = Device.ActiveMap.calrssc.ToString();
-        ChannelsVM.Bias30Parameters[5] = Device.ActiveMap.calcl1.ToString();
-        ChannelsVM.Bias30Parameters[6] = Device.ActiveMap.calcl2.ToString();
-        ChannelsVM.Bias30Parameters[7] = Device.ActiveMap.calvssc.ToString();
+        Device.MainCommand("Set Property", code: 0x2a, parameter: (ushort)Device.ActiveMap.calrpmin);
         ChannelsVM.Bias30Parameters[3] = Device.ActiveMap.calcl3.ToString();
+        Device.MainCommand("Set Property", code: 0x2c, parameter: (ushort)Device.ActiveMap.calcl3);
+        ChannelsVM.Bias30Parameters[4] = Device.ActiveMap.calrssc.ToString();
+        Device.MainCommand("Set Property", code: 0x2d, parameter: (ushort)Device.ActiveMap.calrssc);
+        ChannelsVM.Bias30Parameters[5] = Device.ActiveMap.calcl1.ToString();
+        Device.MainCommand("Set Property", code: 0x2e, parameter: (ushort)Device.ActiveMap.calcl1);
+        ChannelsVM.Bias30Parameters[6] = Device.ActiveMap.calcl2.ToString();
+        Device.MainCommand("Set Property", code: 0x2f, parameter: (ushort)Device.ActiveMap.calcl2);
+        ChannelsVM.Bias30Parameters[7] = Device.ActiveMap.calvssc.ToString();
+        Device.MainCommand("Set Property", code: 0x25, parameter: (ushort)Device.ActiveMap.calvssc);
         ChannelsVM.Bias30Parameters[8] = Device.ActiveMap.calcl0.ToString();
+        Device.MainCommand("Set Property", code: 0x26, parameter: (ushort)Device.ActiveMap.calcl0);
+        ChannelsVM.Bias30Parameters[9] = Device.ActiveMap.calfsc.ToString();
+        Device.MainCommand("Set Property", code: 0x24, parameter: (ushort)Device.ActiveMap.calfsc);
       }
     }
 
