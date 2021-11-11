@@ -33,7 +33,7 @@
                        FontWeight="UltraBold"
                        Foreground="{StaticResource AppTextColor}"
                        HorizontalAlignment="Center"/>
-        <TextBox Width="140"
+        <TextBox Width="140" Name="TB2"
                  Style="{StaticResource InputFieldStyle}"
                  Text="{Binding MaxPressureBox}">
           <dxmvvm:Interaction.Behaviors>
@@ -142,7 +142,7 @@
                   Margin="5,8,0,27" Cursor="Hand"/>
               <Border Background="{StaticResource RibbonBackgroundActive}">
                 <StackPanel>
-                  <TextBox Width="120"
+                  <TextBox Width="120" Name="TB0"
                            Margin="10,10,10,0"
                            Style="{StaticResource InputFieldStyle}"
                            Text="{Binding IdexTextBoxInputs[0]}">
@@ -151,7 +151,7 @@
                       <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
                     </dxmvvm:Interaction.Behaviors>
                   </TextBox>
-                  <TextBox Width="120"
+                  <TextBox Width="120" Name="TB1"
                            Margin="10,10,10,10"
                            Style="{StaticResource InputFieldStyle}"
                            Text="{Binding IdexTextBoxInputs[1]}">
@@ -438,7 +438,7 @@
                    VerticalAlignment="Bottom"
                    HorizontalAlignment="Left"
                    Margin="292,0,0,52"/>
-                <TextBox Width="80"
+                <TextBox Width="80" Name="TB5"
                          Margin="280,0,5,5"
                          HorizontalAlignment="Left"
                          VerticalAlignment="Bottom"
@@ -507,7 +507,7 @@
                    VerticalAlignment="Bottom"
                    HorizontalAlignment="Left"
                    Margin="292,0,0,52"/>
-                <TextBox Width="80"
+                <TextBox Width="80" Name="TB6"
                          Margin="280,0,5,5"
                          HorizontalAlignment="Left"
                          VerticalAlignment="Bottom"
@@ -576,7 +576,7 @@
                            VerticalAlignment="Bottom"
                            HorizontalAlignment="Left"
                            Margin="292,0,0,52"/>
-                <TextBox Width="80"
+                <TextBox Width="80" Name="TB7"
                          Margin="280,0,5,5"
                          HorizontalAlignment="Left"
                          VerticalAlignment="Bottom"

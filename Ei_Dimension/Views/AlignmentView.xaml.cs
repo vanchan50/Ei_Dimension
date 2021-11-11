@@ -19,9 +19,11 @@ namespace Ei_Dimension.Views
   /// </summary>
   public partial class AlignmentView : UserControl
   {
+    public static AlignmentView Instance { get; private set; }
     public AlignmentView()
     {
       InitializeComponent();
+      Instance = this;
     }
   }
 }

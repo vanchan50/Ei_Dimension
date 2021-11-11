@@ -20,7 +20,7 @@ namespace Ei_Dimension.ViewModels
     public virtual ObservableCollection<string> CompensationPercentageContent { get; set; }
     public virtual ObservableCollection<string> DNRContents { get; set; }
     public virtual ObservableCollection<string> CurrentMapName { get; set; }
-    public virtual string AttenuationBox { get; set; }
+    public virtual ObservableCollection<string> AttenuationBox { get; set; }
 
     public static CalibrationViewModel Instance { get; private set; }
 
@@ -52,7 +52,7 @@ namespace Ei_Dimension.ViewModels
       DNRContents = new ObservableCollection<string> { "", MicroCy.InstrumentParameters.Calibration.HdnrTrans.ToString() };
 
       CurrentMapName = new ObservableCollection<string> { App.Device.ActiveMap.mapName };
-      AttenuationBox = App.Device.ActiveMap.att.ToString();
+      AttenuationBox = new ObservableCollection<string> { App.Device.ActiveMap.att.ToString() };
       Instance = this;
     }
 
@@ -82,36 +82,51 @@ namespace Ei_Dimension.ViewModels
       {
         case 0:
           App.SelectedTextBox = (this.GetType().GetProperty(nameof(CompensationPercentageContent)), this, 0);
+          MainViewModel.Instance.NumpadToggleButton(Views.CalibrationView.Instance.TB0);
           break;
         case 1:
           App.SelectedTextBox = (this.GetType().GetProperty(nameof(EventTriggerContents)), this, 0);
+          MainViewModel.Instance.NumpadToggleButton(Views.CalibrationView.Instance.TB1);
           break;
         case 2:
           App.SelectedTextBox = (this.GetType().GetProperty(nameof(EventTriggerContents)), this, 1);
+          MainViewModel.Instance.NumpadToggleButton(Views.CalibrationView.Instance.TB2);
           break;
         case 3:
           App.SelectedTextBox = (this.GetType().GetProperty(nameof(EventTriggerContents)), this, 2);
+          MainViewModel.Instance.NumpadToggleButton(Views.CalibrationView.Instance.TB3);
           break;
         case 4:
           App.SelectedTextBox = (this.GetType().GetProperty(nameof(DNRContents)), this, 0);
+          MainViewModel.Instance.NumpadToggleButton(Views.CalibrationView.Instance.TB4);
           break;
         case 5:
           App.SelectedTextBox = (this.GetType().GetProperty(nameof(DNRContents)), this, 1);
+          MainViewModel.Instance.NumpadToggleButton(Views.CalibrationView.Instance.TB5);
           break;
         case 6:
           App.SelectedTextBox = (this.GetType().GetProperty(nameof(ClassificationTargetsContents)), this, 0);
+          MainViewModel.Instance.NumpadToggleButton((TextBox)Views.CalibrationView.Instance.targetsSP.Children[0]);
           break;
         case 7:
           App.SelectedTextBox = (this.GetType().GetProperty(nameof(ClassificationTargetsContents)), this, 1);
+          MainViewModel.Instance.NumpadToggleButton((TextBox)Views.CalibrationView.Instance.targetsSP.Children[1]);
           break;
         case 8:
           App.SelectedTextBox = (this.GetType().GetProperty(nameof(ClassificationTargetsContents)), this, 2);
+          MainViewModel.Instance.NumpadToggleButton((TextBox)Views.CalibrationView.Instance.targetsSP.Children[2]);
           break;
         case 9:
           App.SelectedTextBox = (this.GetType().GetProperty(nameof(ClassificationTargetsContents)), this, 3);
+          MainViewModel.Instance.NumpadToggleButton((TextBox)Views.CalibrationView.Instance.targetsSP.Children[3]);
           break;
         case 10:
           App.SelectedTextBox = (this.GetType().GetProperty(nameof(ClassificationTargetsContents)), this, 4);
+          MainViewModel.Instance.NumpadToggleButton((TextBox)Views.CalibrationView.Instance.targetsSP.Children[4]);
+          break;
+        case 11:
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(ClassificationTargetsContents)), this, 0);
+          MainViewModel.Instance.NumpadToggleButton(Views.CalibrationView.Instance.TB10);
           break;
       }
     }

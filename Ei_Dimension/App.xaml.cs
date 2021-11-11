@@ -1473,7 +1473,7 @@ namespace Ei_Dimension
               Device.EndState = 1;
             break;
           case 0xbf:
-            CalibrationViewModel.Instance.AttenuationBox = exe.Parameter.ToString();
+            CalibrationViewModel.Instance.AttenuationBox[0] = exe.Parameter.ToString();
             break;
           case 0xf3:
             WellReadingIssue = 1;

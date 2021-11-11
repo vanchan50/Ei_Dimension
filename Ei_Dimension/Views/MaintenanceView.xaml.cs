@@ -19,9 +19,11 @@ namespace Ei_Dimension.Views
   /// </summary>
   public partial class MaintenanceView : UserControl
   {
+    public static MaintenanceView Instance { get; private set; }
     public MaintenanceView()
     {
       InitializeComponent();
+      Instance = this;
     }
 
     private void UserControl_Loaded(object sender, RoutedEventArgs e)

@@ -88,36 +88,47 @@ namespace Ei_Dimension.ViewModels
       {
         case 0:
           App.SelectedTextBox = (this.GetType().GetProperty(nameof(Bias30Parameters)), this, 0);
+          MainViewModel.Instance.NumpadToggleButton((TextBox)Views.ChannelsView.Instance.SP.Children[0]);
           break;
         case 1:
           App.SelectedTextBox = (this.GetType().GetProperty(nameof(Bias30Parameters)), this, 1);
+          MainViewModel.Instance.NumpadToggleButton((TextBox)Views.ChannelsView.Instance.SP.Children[1]);
           break;
         case 2:
           App.SelectedTextBox = (this.GetType().GetProperty(nameof(Bias30Parameters)), this, 2);
+          MainViewModel.Instance.NumpadToggleButton((TextBox)Views.ChannelsView.Instance.SP.Children[2]);
           break;
         case 3:
           App.SelectedTextBox = (this.GetType().GetProperty(nameof(Bias30Parameters)), this, 3);
+          MainViewModel.Instance.NumpadToggleButton((TextBox)Views.ChannelsView.Instance.SP.Children[3]);
           break;
         case 4:
           App.SelectedTextBox = (this.GetType().GetProperty(nameof(Bias30Parameters)), this, 4);
+          MainViewModel.Instance.NumpadToggleButton((TextBox)Views.ChannelsView.Instance.SP.Children[4]);
           break;
         case 5:
           App.SelectedTextBox = (this.GetType().GetProperty(nameof(Bias30Parameters)), this, 5);
+          MainViewModel.Instance.NumpadToggleButton((TextBox)Views.ChannelsView.Instance.SP.Children[5]);
           break;
         case 6:
           App.SelectedTextBox = (this.GetType().GetProperty(nameof(Bias30Parameters)), this, 6);
+          MainViewModel.Instance.NumpadToggleButton((TextBox)Views.ChannelsView.Instance.SP.Children[6]);
           break;
         case 7:
           App.SelectedTextBox = (this.GetType().GetProperty(nameof(Bias30Parameters)), this, 7);
+          MainViewModel.Instance.NumpadToggleButton((TextBox)Views.ChannelsView.Instance.SP.Children[7]);
           break;
         case 8:
           App.SelectedTextBox = (this.GetType().GetProperty(nameof(Bias30Parameters)), this, 8);
+          MainViewModel.Instance.NumpadToggleButton((TextBox)Views.ChannelsView.Instance.SP.Children[8]);
           break;
         case 9:
           App.SelectedTextBox = (this.GetType().GetProperty(nameof(Bias30Parameters)), this, 9);
+          MainViewModel.Instance.NumpadToggleButton((TextBox)Views.ChannelsView.Instance.SP.Children[9]);
           break;
         case 10:
           App.SelectedTextBox = (this.GetType().GetProperty(nameof(SiPMTempCoeff)), this, 0);
+          MainViewModel.Instance.NumpadToggleButton(Views.ChannelsView.Instance.CoefTB);
           break;
       }
     }

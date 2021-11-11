@@ -92,16 +92,6 @@
     </Grid>
 
     <!--Numpad-->
-    <dx:SimpleButton Height="40" Width="50"
-                     HorizontalAlignment="Left"
-                     VerticalAlignment="Top"
-                     Margin="1760,80,0,0"
-                     Glyph="{dx:DXImage 'SvgImages/Icon Builder/Electronics_Keyboard.svg'}"
-                     GlyphHeight="40"
-                     GlyphWidth="40" Cursor="Hand"
-                     Visibility="{Binding NumpadButtonVisible}"
-                     Command="{Binding NumpadToggleButtonCommand}"/>
-
     <Grid Width="260" Height="340" x:Name="Npd"
           VerticalAlignment="Top" HorizontalAlignment="Left"
           Margin="1670,740,0,0"

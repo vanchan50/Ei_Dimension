@@ -19,9 +19,11 @@ namespace Ei_Dimension.Views
   /// </summary>
   public partial class ChannelOffsetView : UserControl
   {
+    public static ChannelOffsetView Instance { get; private set; }
     public ChannelOffsetView()
     {
       InitializeComponent();
+      Instance = this;
     }
   }
 }

@@ -281,21 +281,27 @@ namespace Ei_Dimension.ViewModels
       {
         case 0:
           App.SelectedTextBox = (this.GetType().GetProperty(nameof(IdexTextBoxInputs)), this, 0);
+          MainViewModel.Instance.NumpadToggleButton(Views.ComponentsView.Instance.TB0);
           break;
         case 1:
           App.SelectedTextBox = (this.GetType().GetProperty(nameof(IdexTextBoxInputs)), this, 1);
+          MainViewModel.Instance.NumpadToggleButton(Views.ComponentsView.Instance.TB1);
           break;
         case 2:
           App.SelectedTextBox = (this.GetType().GetProperty(nameof(MaxPressureBox)), this, 0);
+          MainViewModel.Instance.NumpadToggleButton(Views.ComponentsView.Instance.TB2);
           break;
         case 5:
           App.SelectedTextBox = (this.GetType().GetProperty(nameof(SyringeControlSheathValue)), this, 0);
+          MainViewModel.Instance.NumpadToggleButton(Views.ComponentsView.Instance.TB5);
           break;
         case 6:
           App.SelectedTextBox = (this.GetType().GetProperty(nameof(SyringeControlSampleAValue)), this, 0);
+          MainViewModel.Instance.NumpadToggleButton(Views.ComponentsView.Instance.TB6);
           break;
         case 7:
           App.SelectedTextBox = (this.GetType().GetProperty(nameof(SyringeControlSampleBValue)), this, 0);
+          MainViewModel.Instance.NumpadToggleButton(Views.ComponentsView.Instance.TB7);
           break;
       }
     }

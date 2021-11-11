@@ -19,9 +19,11 @@ namespace Ei_Dimension.Views
   /// </summary>
   public partial class ChannelsView : UserControl
   {
+    public static ChannelsView Instance { get; private set; }
     public ChannelsView()
     {
       InitializeComponent();
+      Instance = this;
     }
   }
 }

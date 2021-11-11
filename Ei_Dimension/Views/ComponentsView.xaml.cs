@@ -19,9 +19,11 @@ namespace Ei_Dimension.Views
   /// </summary>
   public partial class ComponentsView : UserControl
   {
+    public static ComponentsView Instance { get; private set; }
     public ComponentsView()
     {
       InitializeComponent();
+      Instance = this;
     }
   }
 }

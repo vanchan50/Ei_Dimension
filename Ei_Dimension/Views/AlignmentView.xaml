@@ -35,7 +35,7 @@
                  HorizontalAlignment="Center"
                  VerticalAlignment="Top"
                  Margin="0,0,0,0"/>
-        <TextBox  Height="36"
+        <TextBox  Height="36" Name="TB0"
                   HorizontalAlignment="Stretch"
                   Margin="0,0,0,0"
                   Width="180"
@@ -55,7 +55,7 @@
         <TextBox  Height="36"
                   HorizontalAlignment="Stretch"
                   Margin="0,8,0,0"
-                  Width="180"
+                  Width="180" Name="TB1"
                   Style="{StaticResource InputFieldStyle}"
                   Text="{Binding LastCalibratedPosition[1]}">
           <dxmvvm:Interaction.Behaviors>
@@ -85,7 +85,7 @@
         <TextBox Height="36"
                  HorizontalAlignment="Stretch"
                  Margin="0,4,0,13"
-                 Width="180"
+                 Width="180" Name="TB2"
                  Style="{StaticResource InputFieldStyle}"
                  Text="{Binding LaserAlignMotor[0]}">
           <dxmvvm:Interaction.Behaviors>

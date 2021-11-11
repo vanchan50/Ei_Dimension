@@ -19,9 +19,11 @@ namespace Ei_Dimension.Views
   /// </summary>
   public partial class SyringeSpeedsView : UserControl
   {
+    public static SyringeSpeedsView Instance { get; private set; }
     public SyringeSpeedsView()
     {
       InitializeComponent();
+      Instance = this;
     }
   }
 }

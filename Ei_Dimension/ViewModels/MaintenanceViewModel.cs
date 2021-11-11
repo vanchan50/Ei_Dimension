@@ -94,6 +94,7 @@ namespace Ei_Dimension.ViewModels
       {
         case 0:
           App.SelectedTextBox = (this.GetType().GetProperty(nameof(SanitizeSecondsContent)), this, 0);
+          MainViewModel.Instance.NumpadToggleButton(Views.MaintenanceView.Instance.SecsTB);
           break;
       }
     }

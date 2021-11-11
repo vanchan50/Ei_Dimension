@@ -110,7 +110,7 @@
                  Margin="0,11,4,0"/>
         </StackPanel>
         <Border Background="{StaticResource RibbonBackgroundActive}">
-          <StackPanel VerticalAlignment="Stretch"
+          <StackPanel VerticalAlignment="Stretch" Name="SP"
                     Width="180">
 
             <TextBox HorizontalAlignment="Stretch"

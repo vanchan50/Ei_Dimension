@@ -112,7 +112,7 @@
           <Border Background="{StaticResource RibbonBackgroundActive}"
                    Margin="0,-5,0,4">
             <TextBox HorizontalAlignment="Stretch"
-                   Margin="10,10,5,10"
+                   Margin="10,10,5,10" Name="xStep"
                    Style="{StaticResource InputFieldStyle}"
                    Text="{Binding ParametersX[0]}">
               <dxmvvm:Interaction.Behaviors>
@@ -165,7 +165,7 @@
               </Button.CommandParameter>
             </Button>
           <Border Background="{StaticResource RibbonBackgroundActive}">
-            <StackPanel>
+            <StackPanel Name="xStepsSP">
               <TextBox HorizontalAlignment="Stretch"
                    Margin="10,10,5,0"
                    Style="{StaticResource InputFieldStyle}"
@@ -233,7 +233,7 @@
           <Border Background="{StaticResource RibbonBackgroundActive}"
                    Margin="0,-5,0,4">
             <TextBox HorizontalAlignment="Stretch"
-                     Margin="5,10,5,10"
+                     Margin="5,10,5,10" Name="yStep"
                      Style="{StaticResource InputFieldStyle}"
                      Text="{Binding ParametersY[0]}">
               <dxmvvm:Interaction.Behaviors>
@@ -286,7 +286,7 @@
               </Button.CommandParameter>
             </Button>
           <Border Background="{StaticResource RibbonBackgroundActive}">
-            <StackPanel>
+            <StackPanel Name="yStepsSP">
               <TextBox HorizontalAlignment="Stretch"
                        Margin="5,10,5,0"
                        Style="{StaticResource InputFieldStyle}"
@@ -354,7 +354,7 @@
           <Border Background="{StaticResource RibbonBackgroundActive}"
                    Margin="0,-5,0,4">
             <TextBox HorizontalAlignment="Stretch"
-                     Margin="5,10,10,10"
+                     Margin="5,10,10,10" Name="zStep"
                      Style="{StaticResource InputFieldStyle}"
                      Text="{Binding ParametersZ[0]}">
               <dxmvvm:Interaction.Behaviors>
@@ -406,7 +406,7 @@
             </Button.CommandParameter>
           </Button>
           <Border Background="{StaticResource RibbonBackgroundActive}">
-            <StackPanel>
+            <StackPanel Name="zStepsSP">
               <TextBox HorizontalAlignment="Stretch"
                    Margin="5,10,10,0"
                    Style="{StaticResource InputFieldStyle}"
@@ -533,7 +533,7 @@
                  VerticalAlignment="Top"
                  Margin="0,0,0,0"/>
             <Border Background="{StaticResource RibbonBackgroundActive}">
-              <StackPanel>
+              <StackPanel Name="xSP">
                 <TextBox HorizontalAlignment="Stretch"
                          Margin="10,10,10,0"
                          Style="{StaticResource InputFieldStyle}"
@@ -633,7 +633,7 @@
                        VerticalAlignment="Top"
                        Margin="0,0,0,0"/>
             <Border Background="{StaticResource RibbonBackgroundActive}">
-              <StackPanel>
+              <StackPanel Name="ySP">
                 <TextBox HorizontalAlignment="Stretch"
                          Margin="10,10,10,0"
                          Style="{StaticResource InputFieldStyle}"
@@ -733,7 +733,7 @@
                  VerticalAlignment="Top"
                  Margin="0,0,0,0"/>
             <Border Background="{StaticResource RibbonBackgroundActive}">
-              <StackPanel>
+              <StackPanel Name="zSP">
                 <TextBox HorizontalAlignment="Stretch"
                          Margin="10,10,10,0"
                       Style="{StaticResource InputFieldStyle}"

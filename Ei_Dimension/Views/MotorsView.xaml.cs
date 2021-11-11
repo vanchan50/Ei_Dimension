@@ -19,9 +19,11 @@ namespace Ei_Dimension.Views
   /// </summary>
   public partial class MotorsView : UserControl
   {
+    public static MotorsView Instance { get; private set; }
     public MotorsView()
     {
       InitializeComponent();
+      Instance = this;
     }
   }
 }

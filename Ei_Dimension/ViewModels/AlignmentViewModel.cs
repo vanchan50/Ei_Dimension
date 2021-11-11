@@ -91,12 +91,15 @@ namespace Ei_Dimension.ViewModels
       {
         case 0:
           App.SelectedTextBox = (this.GetType().GetProperty(nameof(LastCalibratedPosition)), this, 0);
+          MainViewModel.Instance.NumpadToggleButton(Views.AlignmentView.Instance.TB0);
           break;
         case 1:
           App.SelectedTextBox = (this.GetType().GetProperty(nameof(LastCalibratedPosition)), this, 1);
+          MainViewModel.Instance.NumpadToggleButton(Views.AlignmentView.Instance.TB1);
           break;
         case 2:
           App.SelectedTextBox = (this.GetType().GetProperty(nameof(LaserAlignMotor)), this, 0);
+          MainViewModel.Instance.NumpadToggleButton(Views.AlignmentView.Instance.TB2);
           break;
       }
     }

@@ -95,7 +95,7 @@
                  HorizontalAlignment="Center"
                  VerticalAlignment="Top"/>
 
-              <TextBox Margin="10,11,5,10"
+              <TextBox Margin="10,11,5,10" Name="TB1"
                       HorizontalAlignment="Stretch"
                       Style="{StaticResource InputFieldStyle}"
                       Text="{Binding EventTriggerContents[0]}">
@@ -114,7 +114,7 @@
                  Foreground="{StaticResource AppTextColor}"
                  HorizontalAlignment="Center"
                  VerticalAlignment="Top"/>
-              <TextBox Margin="5,11,5,10"
+              <TextBox Margin="5,11,5,10" Name="TB2"
                       HorizontalAlignment="Stretch"
                       Style="{StaticResource InputFieldStyle}"
                       Text="{Binding EventTriggerContents[1]}">
@@ -133,7 +133,7 @@
                  Foreground="{StaticResource AppTextColor}"
                  HorizontalAlignment="Center"
                  VerticalAlignment="Top"/>
-              <TextBox Margin="5,11,10,10"
+              <TextBox Margin="5,11,10,10" Name="TB3"
                       HorizontalAlignment="Stretch"
                       Style="{StaticResource InputFieldStyle}"
                       Text="{Binding EventTriggerContents[2]}">
@@ -270,7 +270,7 @@
                  Margin="0,5,4,0"/>
           </StackPanel>
           <Border Background="{StaticResource RibbonBackgroundActive}">
-            <StackPanel Width="160">
+            <StackPanel Width="160" Name="targetsSP">
               <TextBox HorizontalAlignment="Stretch"
                       Margin="10,10,10,10"
                       Style="{StaticResource InputFieldStyle}"
@@ -320,7 +320,6 @@
           </Border>
         </StackPanel>
       </StackPanel>
-
     </Border>
 
     <!--Compensation-->
@@ -338,7 +337,7 @@
                    HorizontalAlignment="Center"
                    VerticalAlignment="Top"
                    Margin="0,0,0,3"/>
-        <TextBox HorizontalAlignment="Stretch"
+        <TextBox HorizontalAlignment="Stretch" Name="TB0"
                  Style="{StaticResource InputFieldStyle}"
                  Text="{Binding CompensationPercentageContent[0]}">
           <dxmvvm:Interaction.Behaviors>
@@ -375,7 +374,7 @@
                 HorizontalAlignment="Left"
                 Margin="410,0,0,0">
             <StackPanel>
-            <TextBox Width="150"
+            <TextBox Width="150" Name="TB4"
                      HorizontalAlignment="Center"
                      Margin="10,10,10,0"
                      Style="{StaticResource InputFieldStyle}"
@@ -385,7 +384,7 @@
                 <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
               </dxmvvm:Interaction.Behaviors>
             </TextBox>
-            <TextBox Width="150"
+            <TextBox Width="150" Name="TB5"
                      HorizontalAlignment="Center"
                      Margin="10,8,10,10"
                      Style="{StaticResource InputFieldStyle}"
@@ -466,11 +465,11 @@
                    HorizontalAlignment="Center"
                    VerticalAlignment="Top"/>
         <TextBox HorizontalAlignment="Stretch"
-                 Width="140"
+                 Width="140" Name="TB10"
                  Style="{StaticResource InputFieldStyle}"
-                 Text="{Binding AttenuationBox}">
+                 Text="{Binding AttenuationBox[0]}">
           <dxmvvm:Interaction.Behaviors>
-            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="10"/>
+            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="11"/>
             <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
           </dxmvvm:Interaction.Behaviors>
         </TextBox>

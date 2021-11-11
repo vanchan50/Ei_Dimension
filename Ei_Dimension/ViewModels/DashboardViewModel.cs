@@ -179,21 +179,27 @@ namespace Ei_Dimension.ViewModels
       {
         case 0:
           App.SelectedTextBox = (this.GetType().GetProperty(nameof(EndRead)), this, 0);
+          MainViewModel.Instance.NumpadToggleButton(Views.DashboardView.Instance.Endr0TB);
           break; 
         case 1:
           App.SelectedTextBox = (this.GetType().GetProperty(nameof(EndRead)), this, 1);
+          MainViewModel.Instance.NumpadToggleButton(Views.DashboardView.Instance.Endr1TB);
           break;
         case 2:
           App.SelectedTextBox = (this.GetType().GetProperty(nameof(Volumes)), this, 0);
+          MainViewModel.Instance.NumpadToggleButton(Views.DashboardView.Instance.SampVTB);
           break;
         case 3:
           App.SelectedTextBox = (this.GetType().GetProperty(nameof(Volumes)), this, 1);
+          MainViewModel.Instance.NumpadToggleButton(Views.DashboardView.Instance.WashVTB);
           break;
         case 4:
           App.SelectedTextBox = (this.GetType().GetProperty(nameof(Volumes)), this, 2);
+          MainViewModel.Instance.NumpadToggleButton(Views.DashboardView.Instance.AgitVTB);
           break;
         case 5:
           App.SelectedTextBox = (this.GetType().GetProperty(nameof(WorkOrder)), this, 0);
+          MainViewModel.Instance.NumpadToggleButton(Views.DashboardView.Instance.SysCTB);
           break;
       }
     }

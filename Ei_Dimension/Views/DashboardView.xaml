@@ -125,7 +125,7 @@
                        HorizontalAlignment="Center"
                        Foreground="{StaticResource AppTextColor}"/>
             <TextBox HorizontalAlignment="Stretch"
-                     Margin="0,4,0,0"
+                     Margin="0,4,0,0" Name="SampVTB"
                      Style="{StaticResource InputFieldStyle}"
                      Text="{Binding Volumes[0]}">
               <dxmvvm:Interaction.Behaviors>
@@ -177,7 +177,7 @@
                        HorizontalAlignment="Center"
                        Foreground="{StaticResource AppTextColor}"/>
             <TextBox HorizontalAlignment="Stretch"
-                     Margin="0,4,0,0"
+                     Margin="0,4,0,0" Name="WashVTB"
                      Style="{StaticResource InputFieldStyle}"
                      Text="{Binding Volumes[1]}">
               <dxmvvm:Interaction.Behaviors>
@@ -193,7 +193,7 @@
                        Foreground="{StaticResource AppTextColor}"
                        Margin="0,3,0,0"/>
             <TextBox HorizontalAlignment="Stretch"
-                     Margin="0,4,0,0"
+                     Margin="0,4,0,0" Name="AgitVTB"
                      Style="{StaticResource InputFieldStyle}"
                      Text="{Binding Volumes[2]}">
               <dxmvvm:Interaction.Behaviors>
@@ -285,7 +285,7 @@
           </dxb:PopupMenu>
         </dx:DropDownButton>
         <TextBox HorizontalAlignment="Center"
-                   Width="170"
+                   Width="170" Name="SysCTB"
                    Style="{StaticResource InputFieldStyle}"
                    Text="{Binding WorkOrder[0]}"
                    Visibility="{Binding WorkOrderVisibility}"
@@ -495,7 +495,7 @@
         </dx:DropDownButton>
         <Grid Margin="0,5,0,0" Height="45">
           <TextBox HorizontalAlignment="Center"
-                   Width="170"
+                   Width="170" Name="Endr0TB"
                    Style="{StaticResource InputFieldStyle}"
                    Text="{Binding EndRead[0]}"
                    Visibility="{Binding EndReadVisibility[0]}">
@@ -505,7 +505,7 @@
             </dxmvvm:Interaction.Behaviors>
           </TextBox>
           <TextBox HorizontalAlignment="Center"
-                   Width="170"
+                   Width="170" Name="Endr1TB"
                    Style="{StaticResource InputFieldStyle}"
                    Text="{Binding EndRead[1]}"
                    Visibility="{Binding EndReadVisibility[1]}">
