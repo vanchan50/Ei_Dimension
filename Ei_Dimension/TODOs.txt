@@ -58,7 +58,6 @@ ResultsVM.SetDisplayedMap() can be optimised
 
 MicroCyDevice.IsNewWorkOrder() is crazy, since it is checked by app.TimerTick every tick. should be put on file watcher
 
-
 active regions stats for well click
 
 sampling button on ComponentsView could have an issue
@@ -66,27 +65,29 @@ sampling button on ComponentsView could have an issue
 make an Installer
 mouse select doesn't work, from selected single well
 
-  trycatch on disconnect doen'st work
+trycatch on disconnect doen'st work
 
-  template select with finger problematic?
+template select with finger problematic?
 
-  sort heatmap when inbetween wells
+template select red color
 
-  for keyboard entry make existing text disappear
+sort heatmap when inbetween wells
 
-  put outdir to settings? could be eh for usb sticks
+for keyboard entry make existing text disappear
 
-  template should save wells selected (and plate size?)
+put outdir to settings? could be eh for usb sticks
 
-  current heatmap is way brighter than loaded from file. probably because I don't recheck previous values
+template should save wells selected (and plate size?)
 
-  maybe add a loading screen while data loads from file (clicking prev read well on results page) (why does it load for so long?)
+current heatmap is way brighter than loaded from file. probably because I don't recheck previous values
 
-  mark with 0xf3 only the current and if aspirating the next, mark it too.
+maybe add a loading screen while data loads from file (clicking prev read well on results page) (why does it load for so long?)
 
-  filters:
-  1st one - don't save this bead record
-  2nd - still report it
-  3rd postponed
+mark with 0xf3 only the current and if aspirating the next, mark it too.
 
-  ActiveRegionsStatsHandler could use a Span<T> instad of array allocation
+  filters:                                done?
+  1st one - don't save this bead record   done?
+  2nd - still report it                   done?
+  3rd postponed                           done?
+
+ActiveRegionsStatsHandler could use a Span<T> instad of array allocation

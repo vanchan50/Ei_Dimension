@@ -93,6 +93,7 @@ namespace Ei_Dimension.ViewModels
           App.Device.OnlyClassified = !Checkboxes[num];
           break;
         case 4:
+          App.Device.Reg0stats = Checkboxes[num];
           break;
         case 5:
           break;
