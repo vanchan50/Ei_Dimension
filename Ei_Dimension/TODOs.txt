@@ -91,3 +91,6 @@ mark with 0xf3 only the current and if aspirating the next, mark it too.
   3rd postponed                           done?
 
 ActiveRegionsStatsHandler could use a Span<T> instad of array allocation
+
+!!!DataProcessor.BinMapData() could use arrays[,] instead of lists, for speed increase, and "sorting" would be done automatically!!! massive potential speed increase
+sorting DisplayedMap is evil, since there is a high chancem that some other thread is working with it. even for backingMap

@@ -60,6 +60,7 @@ namespace Ei_Dimension
       Device.TerminationType = Settings.Default.EndRead;
       Device.MinPerRegion = Settings.Default.MinPerRegion;
       Device.BeadsToCapture = Settings.Default.BeadsToCapture;
+      Device.OnlyClassified = Settings.Default.OnlyClassifed;
       Device.ChannelBIsHiSensitivity = Settings.Default.SensitivityChannelB;
       Device.MainCommand("Set Property", code: 0xbf, parameter: (ushort)Device.ActiveMap.att);
       if (!System.Windows.Input.Keyboard.IsKeyDown(System.Windows.Input.Key.LeftCtrl))

@@ -24,7 +24,7 @@ namespace Ei_Dimension.ViewModels
         Settings.Default.Everyevent,
         Settings.Default.RMeans,
         Settings.Default.PlateReport,
-        false,
+        Settings.Default.OnlyClassifed,
         false,
         false,
         true
@@ -90,7 +90,8 @@ namespace Ei_Dimension.ViewModels
           Settings.Default.PlateReport = Checkboxes[num];
           break;
         case 3:
-          App.Device.OnlyClassified = !Checkboxes[num];
+          App.Device.OnlyClassified = Checkboxes[num];
+          Settings.Default.OnlyClassifed = Checkboxes[num];
           break;
         case 4:
           App.Device.Reg0stats = Checkboxes[num];

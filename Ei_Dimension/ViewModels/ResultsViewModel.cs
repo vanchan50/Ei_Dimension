@@ -395,6 +395,7 @@ namespace Ei_Dimension.ViewModels
         await ParseBeadInfoAsync(path, beadStructslist);
         _ = Task.Run(() => Core.DataProcessor.BinScatterData(beadStructslist, fromFile: true));
         Core.DataProcessor.BinMapData(beadStructslist, current: false);
+        //DisplayedMap.Sort((x, y) => x.A.CompareTo(y.A));
         _ = App.Current.Dispatcher.BeginInvoke((Action)(()=>
         {
           Core.DataProcessor.AnalyzeHeatMap(DisplayedMap);
@@ -420,8 +421,6 @@ namespace Ei_Dimension.ViewModels
           App.MapRegions.DisplayedActiveRegionsMean = App.MapRegions.CurrentActiveRegionsMean;
         }
 
-        if (Views.ResultsView.Instance != null)
-          Views.ResultsView.Instance.ClearPoints();
         _ = App.Current.Dispatcher.BeginInvoke((Action)(() =>
         {
           Core.DataProcessor.AnalyzeHeatMap(DisplayedMap);
@@ -635,8 +634,6 @@ namespace Ei_Dimension.ViewModels
           WorldMap.Clear();
         }
       }
-      if (DisplayedMap != null && DisplayedMap.Count > 0)
-        DisplayedMap.Sort((x, y) => x.A.CompareTo(y.A));
     }
 
     public void PlexButtonClick()

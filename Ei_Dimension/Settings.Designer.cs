@@ -274,5 +274,17 @@ namespace Ei_Dimension {
                 this["LastTemplate"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool OnlyClassifed {
+            get {
+                return ((bool)(this["OnlyClassifed"]));
+            }
+            set {
+                this["OnlyClassifed"] = value;
+            }
+        }
     }
 }
