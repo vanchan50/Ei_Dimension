@@ -90,6 +90,7 @@ namespace Ei_Dimension.ViewModels
       NavigateDashboard();
       NavigateFileSave();
       NavigateSelRegions();
+      NavigateTemplateSelect();
     }
   }
 }

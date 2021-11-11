@@ -262,5 +262,17 @@ namespace Ei_Dimension {
                 this["MaxPressure"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("None")]
+        public string LastTemplate {
+            get {
+                return ((string)(this["LastTemplate"]));
+            }
+            set {
+                this["LastTemplate"] = value;
+            }
+        }
     }
 }

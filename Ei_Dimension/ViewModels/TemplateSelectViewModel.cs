@@ -123,7 +123,13 @@ namespace Ei_Dimension.ViewModels
           }
         }
         catch { }
+        if (_templateName == null)
+        {
+          _templateName = SelectedItem.Substring(SelectedItem.LastIndexOf("\\") + 1, SelectedItem.Length - SelectedItem.LastIndexOf("\\") - 5);
+        }
         ExperimentViewModel.Instance.CurrentTemplateName = _templateName;
+        Settings.Default.LastTemplate = SelectedItem;
+        Settings.Default.Save();
         ExperimentViewModel.Instance.NavigateDashboard();
       }
     }

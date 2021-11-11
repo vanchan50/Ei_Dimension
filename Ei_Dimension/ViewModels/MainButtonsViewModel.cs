@@ -53,7 +53,6 @@ namespace Ei_Dimension.ViewModels
       ResultsViewModel.Instance.PlatePictogram.Clear();
       ResultsViewModel.Instance.PlatePictogram.SetWellsForReading(App.Device.WellsInOrder);
 
-      App.WellReadingIssue = 0;
       App.Device.SetAspirateParamsForWell(0);  //setup for first read
       App.Device.SetReadingParamsForWell(0);
       App.Device.MainCommand("Set Property", code: 0x19, parameter: 1); //bubble detect on

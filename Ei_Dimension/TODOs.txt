@@ -76,23 +76,17 @@ mouse select doesn't work, from selected single well
 
   put outdir to settings? could be eh for usb sticks
 
-  load last template on startup
-
   template should save wells selected (and plate size?)
-
-  bead had > 50k cl1. that sounds like wrong compensation?
 
   current heatmap is way brighter than loaded from file. probably because I don't recheck previous values
 
   maybe add a loading screen while data loads from file (clicking prev read well on results page) (why does it load for so long?)
 
-  mark with 0xf3 only the current and if aspirating the next, mark it too. not every other well
+  mark with 0xf3 only the current and if aspirating the next, mark it too.
 
   filters:
   1st one - don't save this bead record
   2nd - still report it
   3rd postponed
-
-  keyboard for filename and templatename
 
   ActiveRegionsStatsHandler could use a Span<T> instad of array allocation
