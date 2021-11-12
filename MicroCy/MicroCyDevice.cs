@@ -647,7 +647,7 @@ namespace MicroCy
       outbead.cl2 = cl[2];
       outbead.region = (ushort)ClassifyBeadToRegion(cl);
       //handle HI dnr channel
-      outbead.reporter = _greenMaj > Calibration.HdnrTrans ? _greenMaj * Calibration.HDnrCoef : _greenMin;
+      outbead.reporter = _greenMin > Calibration.HdnrTrans ? _greenMaj * Calibration.HDnrCoef : _greenMin;
     }
 
     private int ClassifyBeadToRegion(float[] cl)

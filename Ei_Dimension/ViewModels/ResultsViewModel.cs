@@ -392,7 +392,7 @@ namespace Ei_Dimension.ViewModels
     {
       _ = Task.Run(async ()=>
       {
-        var path = PlatePictogram.GetSelectedFilePath();
+        var path = @"C:\Emissioninc\KEIZ0R-LEGION\AcquisitionData\val speed test 2E7_0.csv";// PlatePictogram.GetSelectedFilePath();
         if (path == null)
           return;
         var beadStructslist = new List<MicroCy.BeadInfoStruct>();
