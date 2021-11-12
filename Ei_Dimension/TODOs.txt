@@ -77,8 +77,6 @@ for keyboard entry make existing text disappear
 
 put outdir to settings? could be eh for usb sticks
 
-template should save wells selected (and plate size?)
-
 maybe add a loading screen while data loads from file (clicking prev read well on results page) (why does it load for so long?)
 
 mark with 0xf3 only the current and if aspirating the next, mark it too.

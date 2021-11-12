@@ -29,7 +29,6 @@ namespace Ei_Dimension.ViewModels
         false,
         true
       };
-      Program.SplashScreen.Close(TimeSpan.FromMilliseconds(300));
       Instance = this;
     }
     

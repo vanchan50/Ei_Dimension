@@ -9,6 +9,7 @@ namespace Ei_Dimension.ViewModels
   [POCOViewModel]
   public class MainViewModel
   {
+    public virtual ObservableCollection<bool> MainSelectorState { get; set; }
     public virtual System.Windows.Visibility NumpadVisible { get; set; }
     public virtual System.Windows.Visibility KeyboardVisible { get; set; }
     public virtual ObservableCollection<string> EventCountField { get; set; }
@@ -25,6 +26,7 @@ namespace Ei_Dimension.ViewModels
 
     protected MainViewModel()
     {
+      MainSelectorState = new ObservableCollection<bool> { false, false, false, false };
       App.NumpadShow = (this.GetType().GetProperty(nameof(NumpadVisible)), this);
       App.KeyboardShow = (this.GetType().GetProperty(nameof(KeyboardVisible)), this);
       NumpadVisible = System.Windows.Visibility.Hidden;
@@ -45,42 +47,59 @@ namespace Ei_Dimension.ViewModels
       return ViewModelSource.Create(() => new MainViewModel());
     }
 
-    public void NavigateExperiment()
+    public void NavigationSelector(byte num)
     {
+      if (MainSelectorState[num])
+        return;
+      MainSelectorState[0] = false;
+      MainSelectorState[1] = false;
+      MainSelectorState[2] = false;
+      MainSelectorState[3] = false;
+      MainSelectorState[num] = true;
       App.ResetFocusedTextbox();
       App.HideNumpad();
       App.HideKeyboard();
+      switch (num)
+      {
+        case 0:
+          NavigateExperiment();
+          break;
+        case 1:
+          NavigateResults();
+          break;
+        case 2:
+          NavigateMaintenance();
+          break;
+        case 3:
+          NavigateSettings();
+          break;
+      }
+    }
+
+    private void NavigateExperiment()
+    {
       EventCountVisible = System.Windows.Visibility.Visible;
       StartButtonsVisible = System.Windows.Visibility.Visible;
       NavigationService.Navigate("ExperimentView", null, this);
       App.Device.InitSTab("readertab");
     }
 
-    public void NavigateResults()
+    private void NavigateResults()
     {
-      App.ResetFocusedTextbox();
-      App.HideNumpad();
-      App.HideKeyboard();
       EventCountVisible = System.Windows.Visibility.Visible;
       StartButtonsVisible = System.Windows.Visibility.Visible;
       NavigationService.Navigate("ResultsView", null, this);
     }
 
-    public void NavigateMaintenance()
+    private void NavigateMaintenance()
     {
-      App.ResetFocusedTextbox();
-      App.HideNumpad();
-      App.HideKeyboard();
       StartButtonsVisible = System.Windows.Visibility.Hidden;
       EventCountVisible = System.Windows.Visibility.Hidden;
       NavigationService.Navigate("MaintenanceView", null, this);
     }
 
-    public void NavigateSettings()
+    private void NavigateSettings()
     {
-      App.ResetFocusedTextbox();
-      App.HideNumpad();
-      App.HideKeyboard();
       StartButtonsVisible = System.Windows.Visibility.Hidden;
       EventCountVisible = System.Windows.Visibility.Hidden;
       NavigationService.Navigate("ServiceView", null, this);

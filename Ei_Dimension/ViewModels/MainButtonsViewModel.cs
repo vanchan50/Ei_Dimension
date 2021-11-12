@@ -72,7 +72,7 @@ namespace Ei_Dimension.ViewModels
       App.Device.CurrentWellIdx = 0;
       if (App.Device.TerminationType != 1)    //set some limit for running to eos or if regions are wrong
         App.Device.BeadsToCapture = 100000;
-      MainViewModel.Instance.NavigateResults();
+      MainViewModel.Instance.NavigationSelector(1);
     }
 
     public void EndButtonClick()
@@ -86,7 +86,7 @@ namespace Ei_Dimension.ViewModels
       {
         App.Device.ReadActive = false;
         App.Device.EndState = 1;
-        if (App.Device.WellsToRead > 0)   //if end read on tube or single well, nothing else is aspirated otherwise
+        if (App.Device.WellsToRead > 0) //if end read on tube or single well, nothing else is aspirated otherwise
           App.Device.WellsToRead = App.Device.CurrentWellIdx + 1; //just read the next well in order since it is already aspirated
       }
     }

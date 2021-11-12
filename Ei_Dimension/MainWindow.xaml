@@ -9,6 +9,7 @@
     xmlns:dxwuin="http://schemas.devexpress.com/winfx/2008/xaml/windowsui/navigation"
     xmlns:lang="clr-namespace:Ei_Dimension.Language;assembly=Language"
     xmlns:img="clr-namespace:Ei_Dimension.Styles"
+    xmlns:System="clr-namespace:System;assembly=mscorlib"
     x:Class="Ei_Dimension.MainWindow"
     Title="Ei_Dimension"
     Height="1080"
@@ -55,20 +56,40 @@
       <RadioButton Content="{lang:Loc Ribbon_Acquire}" Width="216"
                    img:EmbeddedImg.Image="/Icons/acquire sample icon.png"
                    Style="{DynamicResource MainRibbonButtonStyle}"
-                   Command="{Binding NavigateExperimentCommand}"/>
+                   Command="{Binding NavigationSelectorCommand}"
+                   IsChecked="{Binding MainSelectorState[0], Mode=OneWay}">
+        <RadioButton.CommandParameter>
+          <System:Byte>0</System:Byte>
+        </RadioButton.CommandParameter>
+      </RadioButton>
       <RadioButton Content="{lang:Loc Ribbon_Results}" Width="216"
-                    img:EmbeddedImg.Image="/Icons/results icon.png"
-                    Style="{DynamicResource MainRibbonButtonStyle}"
-                    Command="{Binding NavigateResultsCommand}"/>
+                   img:EmbeddedImg.Image="/Icons/results icon.png"
+                   Style="{DynamicResource MainRibbonButtonStyle}"
+                   Command="{Binding NavigationSelectorCommand}"
+                   IsChecked="{Binding MainSelectorState[1], Mode=OneWay}">
+        <RadioButton.CommandParameter>
+          <System:Byte>1</System:Byte>
+        </RadioButton.CommandParameter>
+      </RadioButton>
       <RadioButton Content="{lang:Loc Ribbon_Maintenance}" Width="216"
-                    img:EmbeddedImg.Image="/Icons/maintenance icon.png"
-                    Style="{DynamicResource MainRibbonButtonStyle}"
-                    Command="{Binding NavigateMaintenanceCommand}"/>
+                   img:EmbeddedImg.Image="/Icons/maintenance icon.png"
+                   Style="{DynamicResource MainRibbonButtonStyle}"
+                   Command="{Binding NavigationSelectorCommand}"
+                   IsChecked="{Binding MainSelectorState[2], Mode=OneWay}">
+        <RadioButton.CommandParameter>
+          <System:Byte>2</System:Byte>
+        </RadioButton.CommandParameter>
+      </RadioButton>
       <RadioButton Content="{lang:Loc Ribbon_Service}" Width="216"
                    img:EmbeddedImg.Image="/Icons/service iconV2.png"
                    Style="{DynamicResource MainRibbonButtonStyle}"
-                   Command="{Binding NavigateSettingsCommand}"
-                   Visibility="{Binding ServiceVisibility}"/>
+                   Command="{Binding NavigationSelectorCommand}"
+                   Visibility="{Binding ServiceVisibility}"
+                   IsChecked="{Binding MainSelectorState[3], Mode=OneWay}">
+        <RadioButton.CommandParameter>
+          <System:Byte>3</System:Byte>
+        </RadioButton.CommandParameter>
+      </RadioButton>
     </StackPanel>
 
     <dxwui:NavigationFrame HorizontalAlignment="Left"
@@ -77,7 +98,7 @@
                            AnimationType="Fade"
                            NavigationCacheMode="Required">
       <dxmvvm:Interaction.Triggers>
-        <dxmvvm:EventToCommand EventName="Loaded" Command="{Binding NavigateExperimentCommand}" />
+        <dxmvvm:EventToCommand EventName="Loaded" Command="{Binding NavigationSelectorCommand}" CommandParameter="0"/>
       </dxmvvm:Interaction.Triggers>
       <dxmvvm:Interaction.Behaviors>
         <dxwuin:FrameNavigationService/>

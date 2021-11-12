@@ -14,7 +14,6 @@ namespace Ei_Dimension.ViewModels
     public virtual ObservableCollection<DropDownButtonContents> GatingItems { get; set; }
     public virtual byte CalibrationParameter { get; set; }
     public virtual ObservableCollection<bool> CalibrationSelectorState { get; set; }
-
     public virtual ObservableCollection<string> EventTriggerContents { get; set; }
     public virtual ObservableCollection<string> ClassificationTargetsContents { get; set; }
     public virtual ObservableCollection<string> CompensationPercentageContent { get; set; }

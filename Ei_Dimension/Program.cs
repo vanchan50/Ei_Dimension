@@ -13,7 +13,7 @@ namespace Ei_Dimension
     [STAThread]
     public static void Main(string[] args)
     {
-      //SplashScreen.Show(false, true);
+      SplashScreen.Show(false, true);
       var app = new App();
       app.InitializeComponent();
       _ = app.Run();
