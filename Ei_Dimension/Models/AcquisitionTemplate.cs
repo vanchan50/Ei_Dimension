@@ -25,11 +25,13 @@ namespace Ei_Dimension.Models
     public uint TotalEvents;
     public uint FileSaveCheckboxes;
     public int TableSize;
+    public List<List<WellType>> SelectedWells;
 
     public AcquisitionTemplate()
     {
       ActiveRegions = new List<bool>();
       RegionsNamesList = new List<string>();
+      SelectedWells = new List<List<WellType>>();
     }
   }
 }

@@ -20,9 +20,11 @@ namespace Ei_Dimension.Views
   /// </summary>
   public partial class ExperimentView : UserControl
   {
+    public static ExperimentView Instance { get; private set; }
     public ExperimentView()
     {
       InitializeComponent();
+      Instance = this;
     }
 
     private void DbTube_Click(object sender, RoutedEventArgs e)

@@ -183,7 +183,8 @@ namespace MicroCy
           _ = _summaryout.Append(rout.ToString());
           AddToPlateReport(in rout);
         }
-        OutputSummaryFiles();
+        OutputSummaryFile();
+        OutputPlateReport();
       }
       if (SavBeadCount > 2)
       {
@@ -470,18 +471,21 @@ namespace MicroCy
       Console.WriteLine(string.Format("{0} Sending [{1}]: {2}", DateTime.Now.ToString(), sCmdName, cs.ToString())); //  MARK1 END
     }
 
-    private string GetSummaryFileName()
+    private void OutputSummaryFile()
     {
-      string summaryFileName = "";
-      if (!Directory.Exists(Outdir + "\\Result\\Summary"))
-        Directory.CreateDirectory(Outdir + "\\Result\\Summary");
-      for (var i = 0; i < int.MaxValue; i++)
+      if ((SavingWellIdx == WellsToRead) && (_summaryout.Length > 0))  //end of read session (plate, plate section or tube) write summary stat file
       {
-        summaryFileName = Outdir + "\\Result\\Summary\\" + "Summary_" + Outfilename + '_' + i.ToString() + ".csv";
-        if (!File.Exists(summaryFileName))
-          break;
+        string summaryFileName = "";
+        if (!Directory.Exists(Outdir + "\\Result\\Summary"))
+          Directory.CreateDirectory(Outdir + "\\Result\\Summary");
+        for (var i = 0; i < int.MaxValue; i++)
+        {
+          summaryFileName = Outdir + "\\Result\\Summary\\" + "Summary_" + Outfilename + '_' + i.ToString() + ".csv";
+          if (!File.Exists(summaryFileName))
+            break;
+        }
+        File.WriteAllText(summaryFileName, _summaryout.ToString());
       }
-      return summaryFileName;
     }
 
     private static byte[] StructToByteArray(object obj)
@@ -708,13 +712,6 @@ namespace MicroCy
     {
       _ = _summaryout.Clear();
       _ = _summaryout.Append(Sheader);
-    }
-
-    private void OutputSummaryFiles()
-    {
-      if ((SavingWellIdx == WellsToRead) && (_summaryout.Length > 0))  //end of read session (plate, plate section or tube) write summary stat file
-        File.WriteAllText(GetSummaryFileName(), _summaryout.ToString());
-      OutputPlateReport();
     }
 
     private void OutputPlateReport()

@@ -122,11 +122,32 @@ namespace Ei_Dimension.ViewModels
             App.MapRegions.RegionsNamesList[i] = newTemplate.RegionsNamesList[i];
           }
           WellsSelectViewModel.Instance.ChangeWellTableSize(newTemplate.TableSize);
+          if (newTemplate.TableSize == 96)
+            Views.ExperimentView.Instance.DbWell96.IsChecked = true;
+          else if (newTemplate.TableSize == 384)
+            Views.ExperimentView.Instance.DbWell384.IsChecked = true;
+          var size = newTemplate.TableSize == 96 ? 12 : 24;
+          var Wells = WellsSelectViewModel.Instance.CurrentTableSize == 96 ?
+            WellsSelectViewModel.Instance.Table96Wells : WellsSelectViewModel.Instance.Table384Wells;
+          if (newTemplate.TableSize > 1)
+          {
+            var j = 0;
+            foreach (var row in Wells)
+            {
+              for (var i = 0; i < size; i++)
+              {
+                row.SetType(i, newTemplate.SelectedWells[j][i]);
+              }
+              j++;
+            }
+          }
+          else
+            Views.ExperimentView.Instance.DbTube.IsChecked = true;
         }
         catch { }
         if (_templateName == null)
         {
-          _templateName = SelectedItem.Substring(SelectedItem.LastIndexOf("\\") + 1, SelectedItem.Length - SelectedItem.LastIndexOf("\\") - 5);
+          _templateName = SelectedItem.Substring(SelectedItem.LastIndexOf("\\") + 1, SelectedItem.Length - SelectedItem.LastIndexOf("\\") - 6);
         }
         ExperimentViewModel.Instance.CurrentTemplateName = _templateName;
         Settings.Default.LastTemplate = SelectedItem;
@@ -172,11 +193,27 @@ namespace Ei_Dimension.ViewModels
           temp.ActiveRegions.AddRange(App.MapRegions.ActiveRegions);
           temp.RegionsNamesList.AddRange(App.MapRegions.RegionsNamesList);
           temp.TableSize = WellsSelectViewModel.Instance.CurrentTableSize;
+          if (temp.TableSize != 1)
+          {
+            var tempSelWells = WellsSelectViewModel.Instance.CurrentTableSize == 96 ?
+              WellsSelectViewModel.Instance.Table96Wells : WellsSelectViewModel.Instance.Table384Wells;
+            foreach (var wellRow in tempSelWells)
+            {
+              var list = new List<WellType>();
+              foreach (var type in wellRow.Types)
+              {
+                list.Add(type);
+              }
+              temp.SelectedWells.Add(list);
+            }
+          }
+
           var contents = JsonConvert.SerializeObject(temp);
-          _ = stream.WriteAsync(contents);
+          stream.Write(contents);
         }
       }
-      catch { MessageBox.Show("There was a problem saving the Template"); }
+      catch {
+        MessageBox.Show("There was a problem saving the Template"); }
       NameList.Add(TemplateSaveName[0]);
       DeleteVisible = Visibility.Hidden;
     }
