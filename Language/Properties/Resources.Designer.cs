@@ -1691,6 +1691,15 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cutoff value.
+        /// </summary>
+        public static string Results_CutOff {
+            get {
+                return ResourceManager.GetString("Results_CutOff", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Измерение.
         /// </summary>
         public static string Ribbon_Acquire {

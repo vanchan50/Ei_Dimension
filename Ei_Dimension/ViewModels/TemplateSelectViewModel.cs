@@ -170,6 +170,7 @@ namespace Ei_Dimension.ViewModels
           temp.FileSaveCheckboxes = checkboxes;
           temp.ActiveRegions.AddRange(App.MapRegions.ActiveRegions);
           temp.RegionsNamesList.AddRange(App.MapRegions.RegionsNamesList);
+          temp.TableSize = WellsSelectViewModel.Instance.CurrentTableSize;
           var contents = JsonConvert.SerializeObject(temp);
           _ = stream.WriteAsync(contents);
         }

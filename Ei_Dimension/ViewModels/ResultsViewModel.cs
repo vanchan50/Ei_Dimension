@@ -75,6 +75,8 @@ namespace Ei_Dimension.ViewModels
     public virtual ObservableCollection<bool> CornerButtonsChecked { get; set; }
     public virtual ObservableCollection<bool> CLButtonsChecked { get; set; }
     public virtual ObservableCollection<string> CLAxis { get; set; }
+    public virtual ObservableCollection<string> XYCutOffString { get; set; }
+    public int XYCutoff { get; set; }
     public static ResultsViewModel Instance { get; private set; }
 
     protected ResultsViewModel()
@@ -196,6 +198,8 @@ namespace Ei_Dimension.ViewModels
         MfiItems.Add("");
         CvItems.Add("");
       }
+      XYCutoff = Settings.Default.XYCutOff;
+      XYCutOffString = new ObservableCollection<string> { XYCutoff.ToString() };
     }
 
     public static ResultsViewModel Create()

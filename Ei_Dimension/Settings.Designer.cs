@@ -286,5 +286,17 @@ namespace Ei_Dimension {
                 this["OnlyClassifed"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("4")]
+        public int XYCutOff {
+            get {
+                return ((int)(this["XYCutOff"]));
+            }
+            set {
+                this["XYCutOff"] = value;
+            }
+        }
     }
 }

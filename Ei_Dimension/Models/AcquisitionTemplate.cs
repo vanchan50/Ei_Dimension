@@ -24,6 +24,7 @@ namespace Ei_Dimension.Models
     public uint MinPerRegion;
     public uint TotalEvents;
     public uint FileSaveCheckboxes;
+    public int TableSize;
 
     public AcquisitionTemplate()
     {

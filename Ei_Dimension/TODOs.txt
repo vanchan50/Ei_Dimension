@@ -71,15 +71,13 @@ template select with finger problematic?
 
 template select red color
 
-sort heatmap when inbetween wells
+sort heatmap when inbetween wells - DONT!
 
 for keyboard entry make existing text disappear
 
 put outdir to settings? could be eh for usb sticks
 
 template should save wells selected (and plate size?)
-
-current heatmap is way brighter than loaded from file. probably because I don't recheck previous values
 
 maybe add a loading screen while data loads from file (clicking prev read well on results page) (why does it load for so long?)
 

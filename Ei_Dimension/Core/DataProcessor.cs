@@ -233,6 +233,7 @@ namespace Ei_Dimension.Core
       if (heatmap != null && heatmap.Count > 0)
       {
         int max = 0;
+        
         foreach (var p in heatmap)
         {
           if (p.A > max)
@@ -242,9 +243,10 @@ namespace Ei_Dimension.Core
         Views.ResultsView.Instance.ClearPoints();
         for (var i = 0; i < heatmap.Count; i++)
         {
-          for(var j = 0; j < _heatColors.Length; j++)
+          for (var j = 0; j < _heatColors.Length; j++)
           {
-            if (heatmap[i].A <= bins[j])
+            int cutoff = (heatmap[i].X > 100 && heatmap[i].Y > 100) ? ViewModels.ResultsViewModel.Instance.XYCutoff : 2;
+            if (heatmap[i].A > cutoff && heatmap[i].A <= bins[j])
             {
               if (ViewModels.ResultsViewModel.Instance.FlipMapAnalysis)
                 Views.ResultsView.Instance.AddXYPoint(heatmap[i].Y, heatmap[i].X, _heatColors[j]);
