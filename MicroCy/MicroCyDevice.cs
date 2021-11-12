@@ -476,11 +476,11 @@ namespace MicroCy
       if ((SavingWellIdx == WellsToRead) && (_summaryout.Length > 0))  //end of read session (plate, plate section or tube) write summary stat file
       {
         string summaryFileName = "";
-        if (!Directory.Exists(Outdir + "\\Result\\Summary"))
-          Directory.CreateDirectory(Outdir + "\\Result\\Summary");
+        if (!Directory.Exists($"{Outdir}\\AcquisitionData"))
+          Directory.CreateDirectory($"{Outdir}\\AcquisitionData");
         for (var i = 0; i < int.MaxValue; i++)
         {
-          summaryFileName = Outdir + "\\Result\\Summary\\" + "Summary_" + Outfilename + '_' + i.ToString() + ".csv";
+          summaryFileName = $"{Outdir}\\AcquisitionData\\" + "Results_" + Outfilename + '_' + i.ToString() + ".csv";
           if (!File.Exists(summaryFileName))
             break;
         }
@@ -719,9 +719,9 @@ namespace MicroCy
       if ((SavingWellIdx == WellsToRead) && (_summaryout.Length > 0) && PltRept)    //end of read and json results requested
       {
         string rfilename = SystemControl == 0 ? Outfilename : WorkOrder.plateID.ToString();
-        if (!Directory.Exists($"{Outdir}\\Result"))
-          _ = Directory.CreateDirectory($"{Outdir}\\Result");
-        using (TextWriter jwriter = new StreamWriter($"{Outdir}\\Result\\" + rfilename + ".json"))
+        if (!Directory.Exists($"{RootDirectory.FullName}\\Result\\Summary"))
+          _ = Directory.CreateDirectory($"{RootDirectory.FullName}\\Result\\Summary");
+        using (TextWriter jwriter = new StreamWriter($"{RootDirectory.FullName}\\Result\\Summary\\"+ "Summary_" + rfilename + ".json"))
         {
           var jcontents = JsonConvert.SerializeObject(PlateReport);
           jwriter.Write(jcontents);

@@ -951,6 +951,35 @@ namespace Ei_Dimension
           TemplateSelectViewModel.Instance.LoadTemplate();
         }
         _isStartup = false;
+
+        for (byte j = 0; j < 12; j++)
+        {
+          ResultsViewModel.Instance.PlatePictogram.ChangeState(0, j, Models.WellType.Empty);
+        }
+        for (byte j = 0; j < 12; j++)
+        {
+          ResultsViewModel.Instance.PlatePictogram.ChangeState(1, j, Models.WellType.Fail);
+        }
+        for (byte j = 0; j < 12; j++)
+        {
+          ResultsViewModel.Instance.PlatePictogram.ChangeState(2, j, Models.WellType.LightFail);
+        }
+        for (byte j = 0; j < 12; j++)
+        {
+          ResultsViewModel.Instance.PlatePictogram.ChangeState(3, j, Models.WellType.Success);
+        }
+        for (byte j = 0; j < 12; j++)
+        {
+          ResultsViewModel.Instance.PlatePictogram.ChangeState(4, j, Models.WellType.NowReading);
+        }
+        for (byte j = 0; j < 12; j++)
+        {
+          ResultsViewModel.Instance.PlatePictogram.ChangeState(5, j, Models.WellType.ReadyForReading);
+        }
+        ResultsViewModel.Instance.PlatePictogram.ChangeState(6, 0, Models.WellType.Fail, Models.WellWarningState.YellowWarning);
+        ResultsViewModel.Instance.PlatePictogram.ChangeState(6, 1, Models.WellType.LightFail, Models.WellWarningState.YellowWarning);
+        ResultsViewModel.Instance.PlatePictogram.ChangeState(6, 2, Models.WellType.Success, Models.WellWarningState.YellowWarning);
+        ResultsViewModel.Instance.PlatePictogram.ChangeState(6, 3, Models.WellType.NowReading, Models.WellWarningState.YellowWarning);
       }
       TextBoxUpdater();
 
