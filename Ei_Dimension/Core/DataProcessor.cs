@@ -13,12 +13,14 @@ namespace Ei_Dimension.Core
 
     static  DataProcessor()
     {
-      _heatColors = new SolidColorBrush[5];
-      _heatColors[0] = new SolidColorBrush(Color.FromRgb(0x0a, 0x6d, 0xaa));
-      _heatColors[1] = new SolidColorBrush(Color.FromRgb(0x00, 0xcc, 0x49));
-      _heatColors[2] = Brushes.Orange;
-      _heatColors[3] = Brushes.OrangeRed;
-      _heatColors[4] = Brushes.Red;
+      _heatColors = new SolidColorBrush[7];
+      _heatColors[0] = Brushes.Black;
+      _heatColors[1] = Brushes.DarkViolet;
+      _heatColors[2] = new SolidColorBrush(Color.FromRgb(0x0a, 0x6d, 0xaa));
+      _heatColors[3] = new SolidColorBrush(Color.FromRgb(0x00, 0xcc, 0x49));
+      _heatColors[4] = Brushes.Orange;
+      _heatColors[5] = Brushes.OrangeRed;
+      _heatColors[6] = Brushes.Red;
     }
 
     static public async Task<List<string>> GetDataFromFileAsync(string path)
@@ -239,7 +241,7 @@ namespace Ei_Dimension.Core
           if (p.A > max)
             max = p.A;
         }
-        double[] bins = GenerateLogSpaceD(1, max + 1, 5, true);
+        double[] bins = GenerateLogSpaceD(1, max + 1, _heatColors.Length, true);
         Views.ResultsView.Instance.ClearPoints();
         for (var i = 0; i < heatmap.Count; i++)
         {
