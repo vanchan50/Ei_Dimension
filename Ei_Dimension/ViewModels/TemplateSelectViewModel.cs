@@ -121,6 +121,7 @@ namespace Ei_Dimension.ViewModels
             }
             App.MapRegions.RegionsNamesList[i] = newTemplate.RegionsNamesList[i];
           }
+          WellsSelectViewModel.Instance.ChangeWellTableSize(newTemplate.TableSize);
         }
         catch { }
         if (_templateName == null)
