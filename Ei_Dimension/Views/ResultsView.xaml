@@ -60,6 +60,19 @@
             </ListBox>
           </ScrollViewer>
         </StackPanel>
+        <dx:WaitIndicator DeferedVisibility="{Binding WaitIndicatorVisibility}" Content="Loading..."
+                          HorizontalAlignment="Left"
+                          VerticalAlignment="Top"
+                          Margin="120,400,0,0">
+          <dx:WaitIndicator.ContentTemplate>
+            <DataTemplate>
+              <StackPanel Orientation="Vertical">
+                <TextBlock Text="Please Wait" FontSize="20"/>
+                <TextBlock Text="{Binding}"/>
+              </StackPanel>
+            </DataTemplate>
+          </dx:WaitIndicator.ContentTemplate>
+        </dx:WaitIndicator>
         <!--Calibration Statistics-->
         <Border HorizontalAlignment="Left"
                   VerticalAlignment="Top"
@@ -318,9 +331,10 @@
               </dxc:AxisY2D.Label>
               <dxc:AxisY2D.Title>
                 <dxc:AxisTitle Content="{lang:Loc Count}"
-                             FontSize="30"
-                             FontWeight="UltraBold"
-                             Visible="True"/>
+                               FontSize="30"
+                               Foreground="{StaticResource AppTextColor}"
+                               FontWeight="UltraBold"
+                               Visible="True"/>
               </dxc:AxisY2D.Title>
             </dxc:AxisY2D>
           </dxc:XYDiagram2D.AxisY>
@@ -337,9 +351,10 @@
               </dxc:AxisX2D.Label>
               <dxc:AxisX2D.Title>
                 <dxc:AxisTitle Content="{lang:Loc Value}"
-                             FontSize="30"
-                             FontWeight="UltraBold"
-                             Visible="True"/>
+                               FontSize="30"
+                               Foreground="{StaticResource AppTextColor}"
+                               FontWeight="UltraBold"
+                               Visible="True"/>
               </dxc:AxisX2D.Title>
               <dxc:AxisX2D.Range>
                 <dxc:AxisRange SideMarginsEnabled="False"/>
@@ -383,9 +398,7 @@
             VerticalAlignment="Top" Visibility="Hidden"
             Margin="665,40,0,0" Name="printSC"
             Command="{Binding ScatterprintCommand}">
-        <Button.Content>
-          <Image Stretch="Fill" Source="{dx:DXImage 'SvgImages/XAF/Action_Export_ToImage.svg'}"/>
-        </Button.Content>
+        <Image Stretch="Fill" Source="{dx:DXImage 'SvgImages/XAF/Action_Export_ToImage.svg'}"/>
       </Button>
     </Grid>
     
@@ -415,6 +428,7 @@
               <dxc:AxisY2D.Title >
                 <dxc:AxisTitle Content="{Binding CLAxis[1]}"
                              FontSize="30"
+                               Foreground="{StaticResource AppTextColor}"
                              FontWeight="UltraBold"
                              Visible="False"/>
               </dxc:AxisY2D.Title>
@@ -441,6 +455,7 @@
               <dxc:AxisX2D.Title>
                 <dxc:AxisTitle Content="{Binding CLAxis[0]}"
                              FontSize="30"
+                               Foreground="{StaticResource AppTextColor}"
                              FontWeight="UltraBold"
                              Visible="False"/>
               </dxc:AxisX2D.Title>
@@ -474,9 +489,7 @@
             VerticalAlignment="Top" Visibility="Hidden"
             Margin="175,470,0,0" Name="printXY"
             Command="{Binding XYprintCommand}">
-        <Button.Content>
-          <Image Stretch="Fill" Source="{dx:DXImage 'SvgImages/XAF/Action_Export_ToImage.svg'}"/>
-        </Button.Content>
+        <Image Stretch="Fill" Source="{dx:DXImage 'SvgImages/XAF/Action_Export_ToImage.svg'}"/>
       </Button>
     </Grid>
     <StackPanel HorizontalAlignment="Left"

@@ -13,6 +13,7 @@ namespace Ei_Dimension.ViewModels
   {
     public virtual System.Windows.Visibility MultiPlexVisible { get; set; }
     public virtual System.Windows.Visibility SinglePlexVisible { get; set; }
+    public virtual bool WaitIndicatorVisibility { get; set; }
     public virtual ObservableCollection<bool> ScatterSelectorState { get; set; }
     public virtual ObservableCollection<HistogramData> CurrentForwardSsc { get; set; }
     public virtual ObservableCollection<HistogramData> CurrentVioletSsc { get; set; }
@@ -82,6 +83,7 @@ namespace Ei_Dimension.ViewModels
     protected ResultsViewModel()
     {
       ScatterSelectorState = new ObservableCollection<bool> { false, false, false, false, false };
+      WaitIndicatorVisibility = false;
       MultiPlexVisible = System.Windows.Visibility.Visible;
       SinglePlexVisible = System.Windows.Visibility.Hidden;
       PlexButtonString = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Experiment_Active_Regions), Language.TranslationSource.Instance.CurrentCulture);
@@ -394,7 +396,10 @@ namespace Ei_Dimension.ViewModels
       {
         var path = PlatePictogram.GetSelectedFilePath();
         if (path == null)
+        {
+          WaitIndicatorVisibility = false;
           return;
+        }
         var beadStructslist = new List<MicroCy.BeadInfoStruct>();
         await ParseBeadInfoAsync(path, beadStructslist);
         _ = Task.Run(() => Core.DataProcessor.BinScatterData(beadStructslist, fromFile: true));
@@ -440,6 +445,7 @@ namespace Ei_Dimension.ViewModels
         DisplayedReporter = BackingReporter;
         if (App.MapRegions != null)
         {
+          WaitIndicatorVisibility = true;
           App.MapRegions.DisplayedActiveRegionsCount = App.MapRegions.BackingActiveRegionsCount;
           App.MapRegions.DisplayedActiveRegionsMean = App.MapRegions.BackingActiveRegionsMean;
         }
@@ -476,6 +482,7 @@ namespace Ei_Dimension.ViewModels
           World12Map.Add(new HeatMapData((int)HeatMapData.bins[point.x], (int)HeatMapData.bins[point.y]));
         }
         PlotCurrent(DisplaysCurrentmap);
+        WaitIndicatorVisibility = false;
       }));
     }
 

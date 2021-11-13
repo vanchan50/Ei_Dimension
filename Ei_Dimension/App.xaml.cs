@@ -1634,7 +1634,7 @@ namespace Ei_Dimension
             if (index == -1 || result.vals.Length == 0)
               continue;
             MapRegions.CurrentActiveRegionsCount[index] = result.vals.Count().ToString();
-            MapRegions.CurrentActiveRegionsMean[index] = string.Format("{0:n0}", result.vals.Average());
+            MapRegions.CurrentActiveRegionsMean[index] = result.vals.Average().ToString("0,0");
           }
           _ActiveRegionsUpdateGoing = false;
         }));
@@ -1703,8 +1703,8 @@ namespace Ei_Dimension
       {
         for (var i = 0; i < 10; i++)
         {
-          ResultsViewModel.Instance.MfiItems[i] = e.GStats[i].mfi.ToString();
-          ResultsViewModel.Instance.CvItems[i] = e.GStats[i].cv.ToString();
+          ResultsViewModel.Instance.MfiItems[i] = e.GStats[i].mfi.ToString($"{0:0.0}");
+          ResultsViewModel.Instance.CvItems[i] = e.GStats[i].cv.ToString($"{0:0.00}");
         }
       }));
     }
@@ -1724,5 +1724,11 @@ namespace Ei_Dimension
       logwriter.AutoFlush = true;
       Console.SetOut(logwriter);
     }
+
+    //protected override void OnStartup(StartupEventArgs e)
+    //{
+    //  DevExpress.Xpf.Core.ApplicationThemeHelper.ApplicationThemeName = DevExpress.Xpf.Core.Theme.DeepBlueName;
+    //  base.OnStartup(e);
+    //}
   }
 }

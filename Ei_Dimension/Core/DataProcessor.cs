@@ -145,7 +145,7 @@ namespace Ei_Dimension.Core
           r = point.r;
         }
       }
-      bool failed = false;
+      //bool failed = false;
       foreach (var beadD in list)
       {
         var bead = beadD;
@@ -186,11 +186,11 @@ namespace Ei_Dimension.Core
           ActiveRegionsStats[index].Add(beadD.reporter);
         else if (beadD.region == 0)
           continue;
-        else
-          failed = true;
+        //else
+        //  failed = true;
       }
-      if (failed)
-        System.Windows.MessageBox.Show("An error occured during Well File Read");
+      //if (failed)
+      //  System.Windows.MessageBox.Show("An error occured during Well File Read");
 
       _ = App.Current.Dispatcher.BeginInvoke((Action)(() =>
       {
@@ -211,10 +211,11 @@ namespace Ei_Dimension.Core
             if(lst.Count > 0)
             {
               App.MapRegions.BackingActiveRegionsCount[j] = lst.Count.ToString();
-              App.MapRegions.BackingActiveRegionsMean[j] = string.Format("{0:n0}", lst.Average());
+              App.MapRegions.BackingActiveRegionsMean[j] = lst.Average().ToString("0,0");
             }
             j++;
           }
+          ResVM.WaitIndicatorVisibility = false;
         }
         else
         {
