@@ -33,7 +33,7 @@ namespace Ei_Dimension
     {
       SetLogOutput();
       _cancelKeyboardInjectionFlag = false;
-      SetLanguage("en-US");
+      SetLanguage(Settings.Default.Language);
       Device = new MicroCyDevice(typeof(USBConnection));
       if (Settings.Default.DefaultMap > Device.MapList.Count - 1)
       {
@@ -265,6 +265,8 @@ namespace Ei_Dimension
         ChannelsVM.SelectedSensitivityContent = ChannelsVM.SensitivityItems[i].Content;
       }
       #endregion
+      Settings.Default.Language = locale;
+      Settings.Default.Save();
     }
 
     public static void InjectToFocusedTextbox(string input, bool keyboardinput = false)
