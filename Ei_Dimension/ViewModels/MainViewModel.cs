@@ -134,7 +134,7 @@ namespace Ei_Dimension.ViewModels
     {
       if (TouchControlsEnabled)
       {
-        var p = tb.PointToScreen(new System.Windows.Point(0, 0));
+        var p = tb.PointToScreen(MainWindow.Instance.wndw.PointFromScreen(new System.Windows.Point(0, 0)));
         double shiftX;
         double shiftY;
         double KbdHeight = 410;
