@@ -453,25 +453,6 @@ namespace Ei_Dimension.ViewModels
       }
     }
 
-    public void FillWorldMapsOLD(string path)
-    {
-      World12Map.Clear();
-      try
-      {
-        using (System.IO.TextReader reader = new System.IO.StreamReader(path))
-        {
-          var fileContents = reader.ReadToEnd();
-          List<(int x, int y)> XYList = Newtonsoft.Json.JsonConvert.DeserializeObject<List<(int x, int y)>>(fileContents);
-          foreach (var point in XYList)
-          {
-            World12Map.Add(new HeatMapData(point.x, point.y));
-          }
-        }
-      }
-      catch { }
-      PlotCurrent(DisplaysCurrentmap);
-    }
-
     public void FillWorldMaps()
     {
       _ = App.Current.Dispatcher.BeginInvoke((Action)(() =>

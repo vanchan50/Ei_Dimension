@@ -75,8 +75,6 @@ for keyboard entry make existing text disappear
 
 put outdir to settings? could be eh for usb sticks
 
-mark with 0xf3 only the current and if aspirating the next, mark it too.
-
   filters:                                done?
   1st one - don't save this bead record   done?
   2nd - still report it                   done?

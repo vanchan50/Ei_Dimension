@@ -28,6 +28,7 @@ namespace Ei_Dimension
     private static bool _ActiveRegionsUpdateGoing;
     private static bool _isStartup;
     private static int _timerTickcounter;
+    private static bool _nextWellWarning;
     public App()
     {
       SetLogOutput();
@@ -82,6 +83,7 @@ namespace Ei_Dimension
       _ActiveRegionsUpdateGoing = false;
       _isStartup = true;
       _timerTickcounter = 0;
+      _nextWellWarning = false;
     }
 
     public static int GetMapIndex(string MapName)
@@ -1485,6 +1487,8 @@ namespace Ei_Dimension
             break;
           case 0xf3:
             ResultsViewModel.Instance.PlatePictogram.ChangeState(Device.ReadingRow, Device.ReadingCol, warning: Models.WellWarningState.YellowWarning);
+            if (Device.CurrentWellIdx < Device.WellsToRead) //aspirating next
+              _nextWellWarning = true;
             break;
         }
       }
@@ -1654,8 +1658,14 @@ namespace Ei_Dimension
 
     public static void StartingToReadWellEventhandler(object sender, ReadingWellEventArgs e)
     {
+      var warning = Models.WellWarningState.OK;
+      if (_nextWellWarning)
+      {
+        _nextWellWarning = false;
+        warning = Models.WellWarningState.YellowWarning;
+      }
       ResultsViewModel.Instance.PlatePictogram.CurrentlyReadCell = (e.Row, e.Column);
-      ResultsViewModel.Instance.PlatePictogram.ChangeState(e.Row, e.Column, Models.WellType.NowReading, FilePath: e.FilePath);
+      ResultsViewModel.Instance.PlatePictogram.ChangeState(e.Row, e.Column, Models.WellType.NowReading, warning, FilePath: e.FilePath);
       ResultsViewModel.Instance.CornerButtonClick(Models.DrawingPlate.CalculateCorner(e.Row, e.Column));
       ResultsViewModel.Instance.ClearGraphs();
       for (var i = 0; i < MapRegions.CurrentActiveRegionsCount.Count; i++)
