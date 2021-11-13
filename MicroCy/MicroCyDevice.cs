@@ -111,6 +111,7 @@ namespace MicroCy
       _classificationBins = GenerateLogSpace(1, 50000, 256);
       _serialConnection = ConnectionFactory.MakeNewConnection(connectionType);
       SetSystemDirectories();
+      MoveMaps();
       LoadMaps();
       MainCommand("Set Property", code: 1, parameter: 1);    //set version as 1 to enable work order handling
       Reg0stats = false;
@@ -402,9 +403,9 @@ namespace MicroCy
     public void EndBeadRead()
     {
       if (_readingA)
-        MainCommand("End Bead Read A");         //sends EE to instrument
+        MainCommand("End Bead Read A");
       else
-        MainCommand("End Bead Read B");    //send EF to instrument
+        MainCommand("End Bead Read B");
       CurrentWellIdx++;
       if (CurrentWellIdx <= WellsToRead)  //are there more to go
       {
@@ -459,6 +460,26 @@ namespace MicroCy
       Directory.CreateDirectory(RootDirectory.FullName + @"\Result" + @"\Summary");
       Directory.CreateDirectory(RootDirectory.FullName + @"\Result" + @"\Detail");
     }
+
+    private void MoveMaps()
+    {
+      string path = $"{Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName)}\\Maps";
+      string[] files = null;
+      try
+      {
+        files = Directory.GetFiles(path, "*.dmap");
+      }
+      catch { return; }
+
+      foreach (var mp in files)
+      {
+        string name = mp.Substring(mp.LastIndexOf("\\") + 1);
+        string destination = $"{RootDirectory.FullName}\\Config\\{name}";
+        if (!File.Exists(destination))
+          File.Copy(mp, destination);
+      }
+    }
+
     /// <summary>
     /// Sends a command OUT to the USB device, then checks the IN pipe for a return value.
     /// </summary>
