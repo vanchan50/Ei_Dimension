@@ -156,7 +156,7 @@ namespace Ei_Dimension.ViewModels
         if (MainWindow.Instance.wndw.Height - p.Y > KbdHeight + tb.Height + 5)
           shiftY = tb.Height + 5;
         else
-          shiftY = p.Y - KbdHeight - 5;
+          shiftY = -KbdHeight - 5;
 
         MainWindow.Instance.Kbd.Margin = new System.Windows.Thickness(p.X - shiftX, p.Y + shiftY, 0, 0);
         KeyboardVisible = System.Windows.Visibility.Visible;
