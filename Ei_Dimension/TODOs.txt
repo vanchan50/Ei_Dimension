@@ -69,15 +69,11 @@ trycatch on disconnect doen'st work
 
 template select with finger problematic?
 
-template select red color
-
 sort heatmap when inbetween wells - DONT!
 
 for keyboard entry make existing text disappear
 
 put outdir to settings? could be eh for usb sticks
-
-maybe add a loading screen while data loads from file (clicking prev read well on results page) (why does it load for so long?)
 
 mark with 0xf3 only the current and if aspirating the next, mark it too.
 

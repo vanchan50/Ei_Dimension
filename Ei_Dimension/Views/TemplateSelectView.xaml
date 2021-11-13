@@ -37,15 +37,38 @@
                          Fill="{StaticResource HaltButtonBackground}"
                          Stroke="{StaticResource ButtonBackgroundHighlighted}"
                          StrokeThickness="1"
-                         Margin="30,0,30,0"/>
+                         Margin="5,0,5,0"/>
                 <TextBlock Text="{Binding}"
                            Height="43"
-                           Margin="30,0,60,0"
+                           Margin="5,0,10,0"
                            HorizontalAlignment="Center"
                            Foreground="{StaticResource AppTextColor}"/>
               </Grid>
             </ItemContainerTemplate>
           </ListBox.ItemTemplate>
+          <ListBox.ItemContainerStyle>
+            <Style TargetType="ListBoxItem">
+              <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+              <Setter Property="Template">
+                <Setter.Value>
+                  <ControlTemplate TargetType="ListBoxItem">
+                    <Border Name="LBorder" BorderThickness="4"
+                            SnapsToDevicePixels="true">
+                      <ContentPresenter />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                      <Trigger Property="IsSelected" Value="true">
+                        <Setter TargetName="LBorder" Property="BorderBrush"
+                                Value="Red"/>
+                        <Setter TargetName="LBorder" Property="Background"
+                                Value="DarkRed"/>
+                      </Trigger>
+                    </ControlTemplate.Triggers>
+                  </ControlTemplate>
+                </Setter.Value>
+              </Setter>
+            </Style>
+          </ListBox.ItemContainerStyle>
           <dxmvvm:Interaction.Triggers>
             <dxmvvm:EventToCommand EventName="SelectionChanged" Command="{Binding SelectedCommand}" PassEventArgsToCommand="True"/>
           </dxmvvm:Interaction.Triggers>
