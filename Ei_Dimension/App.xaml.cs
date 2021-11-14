@@ -1638,10 +1638,18 @@ namespace Ei_Dimension
           foreach (var result in tempResults)
           {
             var index = MapRegions.RegionsList.IndexOf(result.region.ToString());
-            if (index == -1 || result.vals.Length == 0)
+            if (index == -1)
               continue;
-            MapRegions.CurrentActiveRegionsCount[index] = result.vals.Count().ToString();
-            MapRegions.CurrentActiveRegionsMean[index] = result.vals.Average().ToString("0,0");
+            if (result.vals.Length == 0)
+            {
+              MapRegions.CurrentActiveRegionsCount[index] = "0";
+              MapRegions.CurrentActiveRegionsMean[index] = "0";
+            }
+            else
+            {
+              MapRegions.CurrentActiveRegionsCount[index] = result.vals.Count().ToString();
+              MapRegions.CurrentActiveRegionsMean[index] = result.vals.Average().ToString("0,0");
+            }
           }
           _ActiveRegionsUpdateGoing = false;
         }));
