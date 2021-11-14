@@ -1649,8 +1649,10 @@ namespace Ei_Dimension
             {
               MapRegions.CurrentActiveRegionsCount[index] = result.vals.Count().ToString();
               MapRegions.CurrentActiveRegionsMean[index] = result.vals.Average().ToString("0,0");
+              Array.Clear(result.vals, 0, result.vals.Length);
             }
           }
+          tempResults = null;
           _ActiveRegionsUpdateGoing = false;
         }));
       }
