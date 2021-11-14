@@ -33,7 +33,7 @@ namespace Ei_Dimension.ViewModels
       {
         LanguageItems.Add(new DropDownButtonContents(lang.Item1, lang.Item2, this));
       }
-      SelectedLanguage = LanguageItems[0].Content;
+      SelectedLanguage = LanguageItems[Settings.Default.Language].Content;
       Instance = this;
     }
 
@@ -118,8 +118,10 @@ namespace Ei_Dimension.ViewModels
     public class DropDownButtonContents
     {
       public string Content { get; set; }
-      private string _locale;
+      public string Locale { get; }
       private static MaintenanceViewModel _vm;
+      public byte Index { get; set; }
+      private static byte _nextIndex = 0;
       public DropDownButtonContents(string content, string locale, MaintenanceViewModel vm = null)
       {
         if (_vm == null)
@@ -127,13 +129,16 @@ namespace Ei_Dimension.ViewModels
           _vm = vm;
         }
         Content = content;
-        _locale = locale;
+        Locale = locale;
+        Index = _nextIndex++;
       }
 
       public void Click()
       {
         _vm.SelectedLanguage = Content;
-        App.SetLanguage(_locale);
+        App.SetLanguage(Locale);
+        Settings.Default.Language = Index;
+        Settings.Default.Save();
       }
     }
   }

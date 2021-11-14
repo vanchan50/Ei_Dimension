@@ -39,6 +39,7 @@ namespace Ei_Dimension.ViewModels
     public virtual string MaxPressureBox { get; set; }
 
     public static ComponentsViewModel Instance { get; private set; }
+    public virtual bool SuppressWarnings { get; set; }
 
     private byte[] _syringeControlStates;
     private ushort _activeLasers;
@@ -95,6 +96,7 @@ namespace Ei_Dimension.ViewModels
       IdexTextBoxInputs = new ObservableCollection<string> { "", "" };
       CWDirectionActive = false;
       MaxPressureBox = Settings.Default.MaxPressure.ToString();
+      SuppressWarnings = Settings.Default.SuppressWarnings;
       Instance = this;
     }
 
@@ -273,6 +275,13 @@ namespace Ei_Dimension.ViewModels
     public void IdexPositionButtonClick()
     {
       App.Device.MainCommand("Get Property", code: 0x04);
+    }
+
+    public void SuppressWarningsClick()
+    {
+      SuppressWarnings = !SuppressWarnings;
+      Settings.Default.SuppressWarnings = SuppressWarnings;
+      Settings.Default.Save();
     }
 
     public void FocusedBox(int num)

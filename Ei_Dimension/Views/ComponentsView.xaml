@@ -707,5 +707,12 @@
       </StackPanel>
     </Border>
 
+    <ToggleButton Style="{StaticResource ToggleButtonThemeStyle}"
+                  Height="80" Width="200" HorizontalAlignment="Left"
+                  VerticalAlignment="Top"
+                  Margin="600,800,0,0"
+                  Content="Suppress&#x0a;Warnings"
+                  IsChecked="{Binding SuppressWarnings, Mode=OneWay}"
+                  Command="{Binding SuppressWarningsClickCommand}"/>
   </Grid>
 </UserControl>

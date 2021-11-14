@@ -301,13 +301,25 @@ namespace Ei_Dimension {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("en-US")]
-        public string Language {
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int Language {
             get {
-                return ((string)(this["Language"]));
+                return ((int)(this["Language"]));
             }
             set {
                 this["Language"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool SuppressWarnings {
+            get {
+                return ((bool)(this["SuppressWarnings"]));
+            }
+            set {
+                this["SuppressWarnings"] = value;
             }
         }
     }

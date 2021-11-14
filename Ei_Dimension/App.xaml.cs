@@ -33,7 +33,6 @@ namespace Ei_Dimension
     {
       SetLogOutput();
       _cancelKeyboardInjectionFlag = false;
-      SetLanguage(Settings.Default.Language);
       Device = new MicroCyDevice(typeof(USBConnection));
       if (Settings.Default.DefaultMap > Device.MapList.Count - 1)
       {
@@ -265,8 +264,6 @@ namespace Ei_Dimension
         ChannelsVM.SelectedSensitivityContent = ChannelsVM.SensitivityItems[i].Content;
       }
       #endregion
-      Settings.Default.Language = locale;
-      Settings.Default.Save();
     }
 
     public static void InjectToFocusedTextbox(string input, bool keyboardinput = false)
@@ -955,6 +952,7 @@ namespace Ei_Dimension
           TemplateSelectViewModel.Instance.LoadTemplate();
         }
         _isStartup = false;
+        SetLanguage(MaintenanceViewModel.Instance.LanguageItems[Settings.Default.Language].Locale);
         Program.SplashScreen.Close(TimeSpan.FromMilliseconds(1000));
       }
       TextBoxUpdater();
@@ -1488,9 +1486,12 @@ namespace Ei_Dimension
             CalibrationViewModel.Instance.AttenuationBox[0] = exe.Parameter.ToString();
             break;
           case 0xf3:
-            ResultsViewModel.Instance.PlatePictogram.ChangeState(Device.ReadingRow, Device.ReadingCol, warning: Models.WellWarningState.YellowWarning);
-            if (Device.CurrentWellIdx < Device.WellsToRead) //aspirating next
-              _nextWellWarning = true;
+            if (!ComponentsViewModel.Instance.SuppressWarnings)
+            {
+              ResultsViewModel.Instance.PlatePictogram.ChangeState(Device.ReadingRow, Device.ReadingCol, warning: Models.WellWarningState.YellowWarning);
+              if (Device.CurrentWellIdx < Device.WellsToRead) //aspirating next
+                _nextWellWarning = true;
+            }
             break;
         }
       }
