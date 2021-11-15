@@ -497,7 +497,7 @@ namespace MicroCy
 
     private void OutputSummaryFile()
     {
-      if ((SavingWellIdx == WellsToRead) && (_summaryout.Length > 0))  //end of read session (plate, plate section or tube) write summary stat file
+      if (_summaryout.Length > 0)  //end of read session (plate, plate section or tube) write summary stat file
       {
         if (!Directory.Exists($"{Outdir}\\AcquisitionData"))
           Directory.CreateDirectory($"{Outdir}\\AcquisitionData");

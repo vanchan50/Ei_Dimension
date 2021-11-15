@@ -86,3 +86,5 @@ ActiveRegionsStatsHandler could use a Span<T> instad of array allocation
 sorting DisplayedMap is evil, since there is a high chancem that some other thread is working with it. even for backingMap
 
 feature for double tap XY plot to magnify a region
+
+WellResults cause a bunch of Multithreaded issues, I might look for another approach instead
