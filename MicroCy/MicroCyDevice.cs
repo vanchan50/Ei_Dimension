@@ -163,7 +163,7 @@ namespace MicroCy
       OnStartingToReadWell();
     }
 
-    public void SaveBeadFile() //cancels the begin read from endpoint 2
+    public void SaveBeadFile(List<WellResults> wellres) //cancels the begin read from endpoint 2
     {
       //write file
       Console.WriteLine(string.Format("{0} Reporting Background results cloned for save", DateTime.Now.ToString()));
@@ -178,9 +178,9 @@ namespace MicroCy
             pcol = WellsInOrder[SavingWellIdx].colIdx
           });
         char[] alphabet = Enumerable.Range('A', 16).Select(x => (char)x).ToArray();
-        for (var i = 0; i < WellResults.Count; i++)
+        for (var i = 0; i < wellres.Count; i++)
         {
-          WellResults regionNumber = WellResults[i];
+          WellResults regionNumber = wellres[i];
           SavingWellIdx = SavingWellIdx > WellsInOrder.Count - 1 ? WellsInOrder.Count - 1 : SavingWellIdx;
           OutResults rout = FillOutResults(regionNumber, in alphabet);
           _ = _summaryout.Append(rout.ToString());
@@ -188,6 +188,7 @@ namespace MicroCy
         }
         OutputSummaryFile();
         OutputPlateReport();
+        wellres = null;
       }
       if (SavBeadCount > 2)
       {
@@ -743,7 +744,8 @@ namespace MicroCy
     public void ClearSummary()
     {
       _ = _summaryout.Clear();
-      _ = _summaryout.Append(Sheader);
+      if(_thisRunResultsFileName == null)
+        _ = _summaryout.Append(Sheader);
     }
 
     private void OutputPlateReport()

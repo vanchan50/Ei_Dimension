@@ -1464,8 +1464,17 @@ namespace Ei_Dimension
 
               if (MessageBox.Show(ws + "\nPower Off System", "Operator Alert", MessageBoxButton.OK, MessageBoxImage.Warning) == MessageBoxResult.OK)
               {
+                var tempres = new List<WellResults>(Device.WellResults.Count);
+                for (var i = 0; i < Device.WellResults.Count; i++)
+                {
+                  var r = new WellResults();
+                  r.RP1vals = new List<float>(Device.WellResults[i].RP1vals);
+                  r.RP1bgnd = new List<float>(Device.WellResults[i].RP1bgnd);
+                  r.regionNumber = Device.WellResults[i].regionNumber;
+                  tempres.Add(r);
+                }
                 Device.WellsToRead = Device.CurrentWellIdx;
-                Device.SaveBeadFile();
+                Device.SaveBeadFile(tempres);
                 Environment.Exit(0);
               }
             }
@@ -1513,7 +1522,16 @@ namespace Ei_Dimension
           Console.WriteLine(string.Format("{0} Reporting End Sampling", DateTime.Now.ToString()));
           break;
         case 2:
-          _ = Task.Run(Device.SaveBeadFile);
+          var tempres = new List<WellResults>(Device.WellResults.Count);
+          for(var i = 0; i < Device.WellResults.Count; i++)
+          {
+            var r = new WellResults();
+            r.RP1vals = new List<float>(Device.WellResults[i].RP1vals);
+            r.RP1bgnd = new List<float>(Device.WellResults[i].RP1bgnd);
+            r.regionNumber = Device.WellResults[i].regionNumber;
+            tempres.Add(r);
+          }
+          _ = Task.Run(()=>Device.SaveBeadFile(tempres));
           Device.EndState++;
           Console.WriteLine(string.Format("{0} Reporting Background File Save Init", DateTime.Now.ToString()));
           break;
