@@ -109,7 +109,7 @@ namespace Ei_Dimension.ViewModels
     {
       if (TouchControlsEnabled)
       {
-        var p = tb.PointToScreen(new System.Windows.Point(0, 0));
+        var p = tb.PointToScreen(MainWindow.Instance.wndw.PointFromScreen(new System.Windows.Point(0, 0)));
         double shiftX;
         double shiftY;
         double NpdHeight = 340;
@@ -123,7 +123,7 @@ namespace Ei_Dimension.ViewModels
         if (MainWindow.Instance.wndw.Height - p.Y > NpdHeight + tb.Height + 5)
           shiftY = tb.Height + 5;
         else
-          shiftY = p.Y - NpdHeight - 5;
+          shiftY = - NpdHeight - 5;
 
         MainWindow.Instance.Npd.Margin = new System.Windows.Thickness(p.X - shiftX, p.Y + shiftY, 0, 0);
         NumpadVisible = System.Windows.Visibility.Visible;
