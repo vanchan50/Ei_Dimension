@@ -505,7 +505,7 @@ namespace MicroCy
           if (!File.Exists(summaryFileName))
             break;
         }
-        File.WriteAllText(summaryFileName, _summaryout.ToString());
+        File.AppendAllText(summaryFileName, _summaryout.ToString());
       }
     }
 
