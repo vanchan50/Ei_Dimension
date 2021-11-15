@@ -105,6 +105,7 @@ namespace MicroCy
     private const string Sheader = "Row,Col,Region,Bead Count,Median FI,Trimmed Mean FI,CV%\r";
     private static double[] _classificationBins;
     private int[,] _classificationMap;
+    private string _thisRunResultsFileName;
 
     public MicroCyDevice(Type connectionType)
     {
@@ -121,6 +122,7 @@ namespace MicroCy
       ReadActive = false;
       Outfilename = "ResultFile";
       IsMeasurementGoing = false;
+      _thisRunResultsFileName = null;
     }
 
     public void ConstructClassificationMap(CustomMap Cmap)
@@ -496,16 +498,25 @@ namespace MicroCy
     {
       if ((SavingWellIdx == WellsToRead) && (_summaryout.Length > 0))  //end of read session (plate, plate section or tube) write summary stat file
       {
-        string summaryFileName = "";
         if (!Directory.Exists($"{Outdir}\\AcquisitionData"))
           Directory.CreateDirectory($"{Outdir}\\AcquisitionData");
-        for (var i = 0; i < int.MaxValue; i++)
+        GetThisRunFileName();
+        File.AppendAllText(_thisRunResultsFileName, _summaryout.ToString());
+      }
+    }
+    private void GetThisRunFileName()
+    {
+      if (_thisRunResultsFileName != null)
+        return;
+      string summaryFileName = "";
+      for (var i = 0; i < int.MaxValue; i++)
+      {
+        summaryFileName = $"{Outdir}\\AcquisitionData\\" + "Results_" + Outfilename + '_' + i.ToString() + ".csv";
+        if (!File.Exists(summaryFileName))
         {
-          summaryFileName = $"{Outdir}\\AcquisitionData\\" + "Results_" + Outfilename + '_' + i.ToString() + ".csv";
-          if (!File.Exists(summaryFileName))
-            break;
+          _thisRunResultsFileName = summaryFileName;
+          break;
         }
-        File.AppendAllText(summaryFileName, _summaryout.ToString());
       }
     }
 
@@ -812,6 +823,7 @@ namespace MicroCy
     private void OnFinishedMeasurement()
     {
       IsMeasurementGoing = false;
+      _thisRunResultsFileName = null;
       FinishedMeasurement?.Invoke(this, EventArgs.Empty);
     }
 
