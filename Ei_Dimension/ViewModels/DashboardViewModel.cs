@@ -1,13 +1,10 @@
-﻿using DevExpress.Mvvm;
-using DevExpress.Mvvm.DataAnnotations;
+﻿using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
-using System;
 using Ei_Dimension.Models;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
-using System.Threading.Tasks;
+using System.Linq;
 
 namespace Ei_Dimension.ViewModels
 {
@@ -251,7 +248,7 @@ namespace Ei_Dimension.ViewModels
           if (SelectedOrderIndex == 0)
           {
             //sort list by col/row
-            App.Device.WellsInOrder.Sort((x, y) => x.colIdx.CompareTo(y.colIdx));
+            App.Device.WellsInOrder = App.Device.WellsInOrder.OrderBy(x => x.colIdx).ThenBy(x => x.rowIdx).ToList();
           }
         }
         else  //Work Order control of plate

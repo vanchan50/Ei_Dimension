@@ -88,3 +88,15 @@ sorting DisplayedMap is evil, since there is a high chancem that some other thre
 feature for double tap XY plot to magnify a region
 
 WellResults cause a bunch of Multithreaded issues, I might look for another approach instead
+
+
+--------------------------------------------------------
+
+build a detail file that has info on all wells one file or 96/384 files
+open another endpoint in usb?
+
+calibration/validation
+
+each map has it's own calibration
+need info on which regions we are testing and input desired reporter value and desired Coefficient Variation
+math: be in x% of true region center, desired Coefficient Variation
