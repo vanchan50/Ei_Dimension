@@ -32,6 +32,12 @@
                    Style="{DynamicResource SubRibbonButtonStyle}"
                    Command="{Binding NavigateCalibrationCommand}">
       </RadioButton>
+      <RadioButton Content="{lang:Loc Maintenance_Validation}"
+                   Height="84"
+                   img:EmbeddedImg.Image="/Icons/channels icon.png"
+                   Style="{DynamicResource SubRibbonButtonStyle}"
+                   Command="{Binding NavigateValidationCommand}">
+      </RadioButton>
       <RadioButton Content="{lang:Loc Maintenance_Channels}"
                    Height="84"
                    img:EmbeddedImg.Image="/Icons/channels icon.png"

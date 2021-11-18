@@ -1403,6 +1403,15 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Validation.
+        /// </summary>
+        public static string Maintenance_Validation {
+            get {
+                return ResourceManager.GetString("Maintenance_Validation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to  Mean.
         /// </summary>
         public static string Mean {
@@ -1924,6 +1933,16 @@ namespace Ei_Dimension.Language {
         public static string Tube {
             get {
                 return ResourceManager.GetString("Tube", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to    Start
+        ///Validation.
+        /// </summary>
+        public static string Validation_Start_Validation {
+            get {
+                return ResourceManager.GetString("Validation_Start_Validation", resourceCulture);
             }
         }
         

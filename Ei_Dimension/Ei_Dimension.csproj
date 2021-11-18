@@ -241,6 +241,7 @@
     <Compile Include="ViewModels\ScreenKeyboardViewModel.cs" />
     <Compile Include="ViewModels\SelRegionsViewModel.cs" />
     <Compile Include="ViewModels\TemplateSelectViewModel.cs" />
+    <Compile Include="ViewModels\ValidationViewModel.cs" />
     <Compile Include="Views\MainButtonsView.xaml.cs">
       <DependentUpon>MainButtonsView.xaml</DependentUpon>
     </Compile>
@@ -297,6 +298,9 @@
     </Compile>
     <Compile Include="Views\TemplateSelectView.xaml.cs">
       <DependentUpon>TemplateSelectView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ValidationView.xaml.cs">
+      <DependentUpon>ValidationView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\WellsSelectView.xaml.cs">
       <DependentUpon>WellsSelectView.xaml</DependentUpon>
@@ -439,6 +443,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\TemplateSelectView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ValidationView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

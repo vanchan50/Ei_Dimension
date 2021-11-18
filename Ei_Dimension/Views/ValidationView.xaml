@@ -1,0 +1,159 @@
+﻿<UserControl x:Class="Ei_Dimension.Views.ValidationView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+             xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
+             xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+             xmlns:ViewModels="clr-namespace:Ei_Dimension.ViewModels"
+             xmlns:lang="clr-namespace:Ei_Dimension.Language;assembly=Language"
+             mc:Ignorable="d"
+             DataContext="{dxmvvm:ViewModelSource Type=ViewModels:ValidationViewModel}"
+             d:DesignHeight="944" d:DesignWidth="1632">
+  <Grid>
+    <TextBlock Text="{lang:Loc Maintenance_Validation}"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="50"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Left"
+                 VerticalAlignment="Top"
+                 Margin="500,20,250,0"/>
+
+    <!--Classification Map-->
+    <Border HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Margin="145,130,0,0" x:Name="clmap">
+      <StackPanel>
+        <TextBlock Text="{lang:Loc Experiment_Classific_Map}"
+                   FontFamily="{StaticResource AppTextFont}"
+                   FontSize="26"
+                   FontWeight="UltraBold"
+                   Foreground="{StaticResource AppTextColor}"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Top"
+                   Margin="0,16,0,3"/>
+        <dx:DropDownButton Width="170"
+                           Height="80" Cursor="Hand"
+                           FontSize="25"
+                           HorizontalAlignment="Center"
+                           dxb:BarManager.ShowGlyphsInPopupMenus="False"
+                           FontFamily="{StaticResource AppTextFont}"
+                           Foreground="{StaticResource AppTextColor}"
+                           Content="{Binding SelectedClassiMapContent}">
+          <dxb:PopupControlContainer>
+            <ScrollViewer MaxHeight="600">
+              <dxb:MenuBarControl>
+                <dxb:MenuBarControl.Menu>
+                  <dxb:PopupMenu ItemLinksSource="{Binding ClassiMapItems}">
+                    <dxb:PopupMenu.ItemTemplate>
+                      <DataTemplate>
+                        <ContentControl>
+                          <dxb:BarButtonItem Content="{Binding Content}"  
+                                 ItemClick="{DXEvent Click((int)2)}">
+                            <dxb:BarButtonItem.ContentTemplate>
+                              <DataTemplate>
+                                <Grid Width="130">
+                                  <TextBlock Text="{Binding}" HorizontalAlignment="Center"
+                                   FontFamily="{StaticResource AppTextFont}"
+                                   Foreground="{StaticResource AppTextColor}"
+                                   FontSize="25"/>
+                                </Grid>
+                              </DataTemplate>
+                            </dxb:BarButtonItem.ContentTemplate>
+                          </dxb:BarButtonItem>
+                        </ContentControl>
+                      </DataTemplate>
+                    </dxb:PopupMenu.ItemTemplate>
+                  </dxb:PopupMenu>
+                </dxb:MenuBarControl.Menu>
+              </dxb:MenuBarControl>
+            </ScrollViewer>
+          </dxb:PopupControlContainer>
+        </dx:DropDownButton>
+      </StackPanel>
+    </Border>
+
+
+    <Button Content="{lang:Loc Validation_Start_Validation}"
+            Command="{Binding StartValidationClickCommand}"
+            Style="{StaticResource ButtonStyle}"
+            Height="100" Width="180"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Margin="150,320,0,10"/>
+    
+    <!--Table-->
+    <Border HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Margin="550,80,0,0">
+      <StackPanel>
+        <TextBlock Text="{lang:Loc Experiment_Available_Regions}"
+                   FontFamily="{StaticResource AppTextFont}"
+                   FontSize="36"
+                   Width="650"
+                   FontWeight="UltraBold"
+                   TextAlignment="Center"
+                   Foreground="{StaticResource AppTextColor}"
+                   Margin="0,0,0,4"/>
+        <Border Height="45" Width="605"
+                HorizontalAlignment="Left">
+          <Grid>
+            <TextBlock Text="{lang:Loc Dashboard_Inactive_Region}"
+                       FontSize="30"
+                       Width="140"
+                       HorizontalAlignment="Left"/>
+            <TextBlock Text="{lang:Loc Dashboard_Active_Region}"
+                       FontSize="30"
+                       Width="120"
+                       Margin="140,0,0,0"
+                       HorizontalAlignment="Left"/>
+            <TextBlock Text="{lang:Loc Reporter}"
+                       Width="200"
+                       FontSize="30"
+                       Margin="270,0,0,0"
+                       HorizontalAlignment="Left"
+                       TextAlignment="Center"/>
+            <TextBlock Text="{lang:Loc DataAn_CV}"
+                       Width="100"
+                       FontSize="30"
+                       Margin="480,0,0,0"
+                       HorizontalAlignment="Left"
+                       TextAlignment="Center"/>
+          </Grid>
+        </Border>
+        <ScrollViewer Width="605" Height="646" HorizontalAlignment="Left"
+                      VerticalScrollBarVisibility="Auto">
+          <Border Background="{StaticResource RibbonBackgroundActive}">
+            <StackPanel Orientation="Horizontal">
+              <StackPanel Name="ValidationNums"
+                          Width="270"
+                          HorizontalAlignment="Left"/>
+              <StackPanel Name="ValidationReporterValues"
+                          HorizontalAlignment="Left"
+                          Width="200"/>
+              <StackPanel Name="ValidationCVValues"
+                          HorizontalAlignment="Left"
+                          Width="100"
+                          Margin="10,0,0,0"/>
+            </StackPanel>
+          </Border>
+        </ScrollViewer>
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Left"
+                    Width="270" Height="60"
+                    Margin="0,4,0,0">
+          <Button Width="100" Height="60"
+                  Margin="20,0,0,0"
+                  Style="{StaticResource LeftArrowButtonThemeStyle}"
+                  Command="{Binding AddValidationRegionCommand}" CommandParameter="0"/>
+          <Button Width="100" Height="60"
+                  Margin="30,0,0,0"
+                  Style="{StaticResource RightArrowButtonThemeStyle}"
+                  Command="{Binding AddValidationRegionCommand}" CommandParameter="1"/>
+        </StackPanel>
+      </StackPanel>
+    </Border>
+  </Grid>
+</UserControl>

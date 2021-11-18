@@ -682,6 +682,9 @@ Order</value>
   <data name="Maintenance_Touch" xml:space="preserve">
     <value>Touch Mode</value>
   </data>
+  <data name="Maintenance_Validation" xml:space="preserve">
+    <value>Validation</value>
+  </data>
   <data name="Mean" xml:space="preserve">
     <value> Mean</value>
   </data>
@@ -889,6 +892,10 @@ Speeds</value>
   </data>
   <data name="Tube" xml:space="preserve">
     <value>Tube</value>
+  </data>
+  <data name="Validation_Start_Validation" xml:space="preserve">
+    <value>   Start
+Validation</value>
   </data>
   <data name="Value" xml:space="preserve">
     <value>Value</value>

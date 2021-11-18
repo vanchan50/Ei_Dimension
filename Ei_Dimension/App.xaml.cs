@@ -942,11 +942,15 @@ namespace Ei_Dimension
           Views.SelRegionsView.Instance.RegionsNamesBorder,
           Views.ResultsView.Instance.Table,
           Views.DashboardView.Instance.DbActiveRegionNo,
-          Views.DashboardView.Instance.DbActiveRegionName);
+          Views.DashboardView.Instance.DbActiveRegionName,
+          Views.ValidationView.Instance.ValidationNums,
+          Views.ValidationView.Instance.ValidationReporterValues,
+          Views.ValidationView.Instance.ValidationCVValues);
         ResultsViewModel.Instance.PlatePictogram.SetGrid(Views.ResultsView.Instance.DrawingPlate);
         ResultsViewModel.Instance.PlatePictogram.SetWarningGrid(Views.ResultsView.Instance.WarningGrid);
         Views.CalibrationView.Instance.clmap.DataContext = DashboardViewModel.Instance;
-        if(Settings.Default.LastTemplate != "None")
+        Views.ValidationView.Instance.clmap.DataContext = DashboardViewModel.Instance;
+        if (Settings.Default.LastTemplate != "None")
         {
           TemplateSelectViewModel.Instance.SelectedItem = Settings.Default.LastTemplate;
           TemplateSelectViewModel.Instance.LoadTemplate();

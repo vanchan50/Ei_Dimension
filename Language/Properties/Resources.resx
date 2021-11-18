@@ -577,6 +577,9 @@ Barcode</value>
   <data name="Maintenance_Touch" xml:space="preserve">
     <value>Touch Mode</value>
   </data>
+  <data name="Maintenance_Validation" xml:space="preserve">
+    <value>Validation</value>
+  </data>
   <data name="Mean" xml:space="preserve">
     <value> Mean</value>
   </data>
@@ -753,6 +756,10 @@ Factory Defaults</value>
   </data>
   <data name="Tube" xml:space="preserve">
     <value>Tube</value>
+  </data>
+  <data name="Validation_Start_Validation" xml:space="preserve">
+    <value>   Start
+Validation</value>
   </data>
   <data name="WellSel_Reset_Plate" xml:space="preserve">
     <value>Reset Plate</value>
