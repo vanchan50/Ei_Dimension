@@ -78,5 +78,10 @@ namespace Ei_Dimension.ViewModels
     {
       App.InjectToFocusedTextbox(((TextBox)e.Source).Text, true);
     }
+
+    public void SetOffsetClick()
+    {
+      App.Device.MainCommand("SetBaseline");
+    }
   }
 }

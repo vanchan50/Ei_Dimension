@@ -208,5 +208,13 @@
         </Border>
       </StackPanel>
     </Border>
+
+    <Button Content="{lang:Loc Ch_Offset_Set_Offset}"
+            Command="{Binding SetOffsetClickCommand}"
+            Style="{StaticResource ButtonStyle}"
+            Height="100" Width="180"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Margin="850,580,0,10"/>
   </Grid>
 </UserControl>

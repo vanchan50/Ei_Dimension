@@ -206,6 +206,10 @@ Coefficient</value>
   <data name="Channels_Violet_B" xml:space="preserve">
     <value>Violet B (CL0)</value>
   </data>
+  <data name="Ch_Offset_Set_Offset" xml:space="preserve">
+    <value>  Set
+Offset</value>
+  </data>
   <data name="CL0" xml:space="preserve">
     <value>CL0</value>
   </data>

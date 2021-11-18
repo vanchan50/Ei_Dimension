@@ -1546,10 +1546,7 @@ namespace Ei_Dimension
             Console.WriteLine(string.Format("{0} Reporting Washing Complete", DateTime.Now.ToString()));
           }
           else
-          {
             Device.MainCommand("Get Property", code: 0xcc);
-            System.Threading.Thread.Sleep(10);  //this is kind of a loop. This is a polling delay
-          }
           break;
         case 4:
           Device.WellNext();  //saves current well address for filename in state 5

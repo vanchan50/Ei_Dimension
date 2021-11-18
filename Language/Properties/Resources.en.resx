@@ -264,6 +264,10 @@ Coefficient</value>
   <data name="Ch_Offset_Ch_Offset" xml:space="preserve">
     <value>Channel Offset</value>
   </data>
+  <data name="Ch_Offset_Set_Offset" xml:space="preserve">
+    <value>  Set
+Offset</value>
+  </data>
   <data name="CL0" xml:space="preserve">
     <value>CL0</value>
   </data>
