@@ -116,8 +116,7 @@ namespace Ei_Dimension.ViewModels
           {
             if (newTemplate.ActiveRegions[i])
             {
-              App.MapRegions.SelectedRegionTextboxIndex = i;
-              SelRegionsViewModel.Instance.AddActiveRegion(1);
+              App.MapRegions.AddActiveRegion(i);
             }
             App.MapRegions.RegionsNamesList[i] = newTemplate.RegionsNamesList[i];
           }

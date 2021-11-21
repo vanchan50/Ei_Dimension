@@ -30,7 +30,6 @@ namespace Ei_Dimension.Models
     public List<bool> ValidationRegions { get; } = new List<bool>();
     private StackPanel _regionsBorder;
     private StackPanel _regionsNamesBorder;
-    public int? SelectedRegionTextboxIndex { get; set; }
     public int? SelectedValidationRegionTextboxIndex { get; set; }
     private bool _firstLoadflag;
     //Results
@@ -121,22 +120,20 @@ namespace Ei_Dimension.Models
       }
     }
 
-    public void AddActiveRegion(byte num)
+    public void AddActiveRegion(int index)
     {
-      if (SelectedRegionTextboxIndex != null)
+      if (!ActiveRegions[index])
       {
-        if (num == 1 && !ActiveRegions[(int)SelectedRegionTextboxIndex])
-        {
-          ShiftTextBox(true);
-          ActiveRegions[(int)SelectedRegionTextboxIndex] = true;
-        }
-        else if (num == 0 && ActiveRegions[(int)SelectedRegionTextboxIndex])
-        {
-          ActiveRegions[(int)SelectedRegionTextboxIndex] = false;
-          ShiftTextBox(false);
-        }
-        SelectedRegionTextboxIndex = null;
+        ShiftTextBox(index, true);
+        ActiveRegions[index] = true;
       }
+      else
+      {
+        ActiveRegions[index] = false;
+        ShiftTextBox(index, false);
+      }
+      System.Windows.Input.FocusManager.SetFocusedElement(System.Windows.Input.FocusManager.GetFocusScope(Views.SelRegionsView.Instance), null);
+      System.Windows.Input.Keyboard.ClearFocus();
     }
 
     private void AddTextboxes(string RegionsNums, string RegionsNames, string ValidationReporter, string ValidationCV)
@@ -211,14 +208,14 @@ namespace Ei_Dimension.Models
       _lastValidationCVBox = null;
     }
 
-    private void ShiftTextBox(bool right)
+    private void ShiftTextBox(int index, bool right)
     {
-      var tb = (TextBox)_regionsBorder.Children[(int)SelectedRegionTextboxIndex];
+      var tb = (TextBox)_regionsBorder.Children[index];
       var shift = tb.Margin;
       shift.Left = right ? 140 : 10;
       tb.Margin = shift;
 
-      var NameTb = (TextBox)_regionsNamesBorder.Children[(int)SelectedRegionTextboxIndex];
+      var NameTb = (TextBox)_regionsNamesBorder.Children[index];
       NameTb.Visibility = right ? Visibility.Visible : Visibility.Hidden;
 
       if (right)
@@ -277,7 +274,8 @@ namespace Ei_Dimension.Models
 
     private void RegionsTbGotFocus(object sender, RoutedEventArgs e)
     {
-      SelectedRegionTextboxIndex = int.Parse(((TextBox)e.Source).Name.Trim('_'));
+      var Index = int.Parse(((TextBox)e.Source).Name.Trim('_'));
+      AddActiveRegion(Index);
     }
 
     private void RegionsNamesTbGotFocus(object sender, RoutedEventArgs e)

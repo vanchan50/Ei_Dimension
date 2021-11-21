@@ -34,7 +34,7 @@
       </RadioButton>
       <RadioButton Content="{lang:Loc Maintenance_Validation}"
                    Height="84"
-                   img:EmbeddedImg.Image="/Icons/channels icon.png"
+                   img:EmbeddedImg.Image="{dx:DXImage 'SvgImages/Reports/FitBoundsToGrid.svg'}"
                    Style="{DynamicResource SubRibbonButtonStyle}"
                    Command="{Binding NavigateValidationCommand}">
       </RadioButton>
@@ -44,7 +44,6 @@
                    Style="{DynamicResource SubRibbonButtonStyle}"
                    Command="{Binding NavigateChannelsCommand}">
       </RadioButton>
-
     </StackPanel>
 
     <Border Grid.Column="0"

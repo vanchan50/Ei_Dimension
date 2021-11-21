@@ -141,6 +141,10 @@
   <data name="Calibration_Min_SSC" xml:space="preserve">
     <value>Min SSC</value>
   </data>
+  <data name="Calibration_Mode" xml:space="preserve">
+    <value>Calibration
+    Mode</value>
+  </data>
   <data name="Channels_Background" xml:space="preserve">
     <value>Background</value>
   </data>
@@ -760,6 +764,13 @@ Factory Defaults</value>
   </data>
   <data name="Tube" xml:space="preserve">
     <value>Tube</value>
+  </data>
+  <data name="Validation_Mode" xml:space="preserve">
+    <value>Validation
+   Mode</value>
+  </data>
+  <data name="Validation_Prev_Validation_Date" xml:space="preserve">
+    <value>Previous Validation Date</value>
   </data>
   <data name="Validation_Start_Validation" xml:space="preserve">
     <value>   Start

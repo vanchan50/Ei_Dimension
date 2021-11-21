@@ -37,6 +37,8 @@ namespace Ei_Dimension.ViewModels
     public List<HeatMapData> World12Map { get; private set; }
     public List<HeatMapData> World13Map { get; private set; }
     public List<HeatMapData> World23Map { get; private set; }
+    public List<HeatMapData> CalibrationWorldMap { get; set; }
+    public List<HeatMapData> ValidationWorldMap { get; set; }
     public bool DisplaysCurrentmap { get; private set; }
     public bool FlipMapAnalysis { get; private set; }
     public List<HeatMapData> DisplayedMap { get; set; }
@@ -452,7 +454,9 @@ namespace Ei_Dimension.ViewModels
         MainViewModel.Instance.EventCountField = MainViewModel.Instance.EventCountLocal;
       }
     }
-
+    /// <summary>
+    /// Called on Activemap change to fill all world maps with data from files
+    /// </summary>
     public void FillWorldMaps()
     {
       _ = App.Current.Dispatcher.BeginInvoke((Action)(() =>
@@ -463,16 +467,26 @@ namespace Ei_Dimension.ViewModels
           World12Map.Add(new HeatMapData((int)HeatMapData.bins[point.x], (int)HeatMapData.bins[point.y]));
         }
         PlotCurrent(DisplaysCurrentmap);
-        WaitIndicatorVisibility = false;
       }));
     }
 
     private void SetWorldMap(List<HeatMapData> Map)
     {
+      switch (App.Device.Mode)
+      {
+        case MicroCy.OperationMode.Normal:
+          break;
+        case MicroCy.OperationMode.Calibration:
+          Map = CalibrationWorldMap;
+          break;
+        case MicroCy.OperationMode.Validation:
+          Map = ValidationWorldMap;
+          break;
+      }
+
       if (Map != null)
       {
-        _ = App.Current.Dispatcher.BeginInvoke((Action)(() =>
-        {
+        Action Wmap = () => {
           WorldMap.Clear();
           foreach (var point in Map)
           {
@@ -481,13 +495,15 @@ namespace Ei_Dimension.ViewModels
             else
               WorldMap.Add(new HeatMapData(point.X, point.Y));
           }
-        }));
+        };
+        _ = App.Current.Dispatcher.BeginInvoke(Wmap);
       }
     }
 
     private void SetDisplayedMap()
     {
       FlipMapAnalysis = false;
+      List<HeatMapData> WldMap = null;
       if (CLButtonsChecked[4])
       {
         if (CLButtonsChecked[1])
@@ -496,7 +512,7 @@ namespace Ei_Dimension.ViewModels
             DisplayedMap = CurrentCL01Map;
           else
             DisplayedMap = BackingCL01Map;
-          SetWorldMap(World01Map);
+          WldMap = World01Map;
         }
         else if (CLButtonsChecked[2])
         {
@@ -504,7 +520,7 @@ namespace Ei_Dimension.ViewModels
             DisplayedMap = CurrentCL02Map;
           else
             DisplayedMap = BackingCL02Map;
-          SetWorldMap(World02Map);
+          WldMap = World02Map;
         }
         else if (CLButtonsChecked[3])
         {
@@ -512,7 +528,7 @@ namespace Ei_Dimension.ViewModels
             DisplayedMap = CurrentCL03Map;
           else
             DisplayedMap = BackingCL03Map;
-          SetWorldMap(World03Map);
+          WldMap = World03Map;
         }
         else
         {
@@ -530,7 +546,7 @@ namespace Ei_Dimension.ViewModels
           else
             DisplayedMap = BackingCL01Map;
           FlipMapAnalysis = true;
-          SetWorldMap(World01Map);
+          WldMap = World01Map;
         }
         else if (CLButtonsChecked[2])
         {
@@ -538,7 +554,7 @@ namespace Ei_Dimension.ViewModels
             DisplayedMap = CurrentCL12Map;
           else
             DisplayedMap = BackingCL12Map;
-          SetWorldMap(World12Map);
+          WldMap = World12Map;
         }
         else if (CLButtonsChecked[3])
         {
@@ -546,7 +562,7 @@ namespace Ei_Dimension.ViewModels
             DisplayedMap = CurrentCL13Map;
           else
             DisplayedMap = BackingCL13Map;
-          SetWorldMap(World13Map);
+          WldMap = World13Map;
         }
         else
         {
@@ -564,7 +580,7 @@ namespace Ei_Dimension.ViewModels
           else
             DisplayedMap = BackingCL02Map;
           FlipMapAnalysis = true;
-          SetWorldMap(World02Map);
+          WldMap = World02Map;
         }
         else if (CLButtonsChecked[1])
         {
@@ -573,7 +589,7 @@ namespace Ei_Dimension.ViewModels
           else
             DisplayedMap = BackingCL12Map;
           FlipMapAnalysis = true;
-          SetWorldMap(World12Map);
+          WldMap = World12Map;
         }
         else if (CLButtonsChecked[3])
         {
@@ -581,7 +597,7 @@ namespace Ei_Dimension.ViewModels
             DisplayedMap = CurrentCL23Map;
           else
             DisplayedMap = BackingCL23Map;
-          SetWorldMap(World23Map);
+          WldMap = World23Map;
         }
         else
         {
@@ -599,7 +615,7 @@ namespace Ei_Dimension.ViewModels
           else
             DisplayedMap = BackingCL03Map;
           FlipMapAnalysis = true;
-          SetWorldMap(World03Map);
+          WldMap = World03Map;
         }
         else if (CLButtonsChecked[1])
         {
@@ -608,7 +624,7 @@ namespace Ei_Dimension.ViewModels
           else
             DisplayedMap = BackingCL13Map;
           FlipMapAnalysis = true;
-          SetWorldMap(World13Map);
+          WldMap = World13Map;
         }
         else if (CLButtonsChecked[2])
         {
@@ -617,7 +633,7 @@ namespace Ei_Dimension.ViewModels
           else
             DisplayedMap = BackingCL23Map;
           FlipMapAnalysis = true;
-          SetWorldMap(World23Map);
+          WldMap = World23Map;
         }
         else
         {
@@ -626,6 +642,7 @@ namespace Ei_Dimension.ViewModels
           WorldMap.Clear();
         }
       }
+      SetWorldMap(WldMap);
     }
 
     public void PlexButtonClick()

@@ -11,9 +11,6 @@
     <Setting Name="Compensation" Type="System.Single" Scope="User">
       <Value Profile="(Default)">0.5</Value>
     </Setting>
-    <Setting Name="SampleSize" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">1000</Value>
-    </Setting>
     <Setting Name="Everyevent" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>

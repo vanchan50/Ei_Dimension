@@ -3,6 +3,8 @@ using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
 using System.Collections.ObjectModel;
 using System.Windows.Controls;
+using Ei_Dimension.Models;
+using System.Collections.Generic;
 
 namespace Ei_Dimension.ViewModels
 {
@@ -11,9 +13,12 @@ namespace Ei_Dimension.ViewModels
   {
     public virtual string SelectedGatingContent { get; set; }
     public byte SelectedGatingIndex { get; set; }
-    public virtual ObservableCollection<DropDownButtonContents> GatingItems { get; set; }
+    public virtual ObservableCollection<DropDownButtonContents> GatingItems { get; }
     public virtual byte CalibrationParameter { get; set; }
     public virtual ObservableCollection<bool> CalibrationSelectorState { get; set; }
+    public virtual bool CalModeOn { get; set; }
+    public virtual bool ValModeOn { get; set; }
+    public virtual System.Windows.Visibility CalValModeVisible { get; set; }
     public virtual ObservableCollection<string> EventTriggerContents { get; set; }
     public virtual ObservableCollection<string> ClassificationTargetsContents { get; set; }
     public virtual ObservableCollection<string> CompensationPercentageContent { get; set; }
@@ -46,6 +51,9 @@ namespace Ei_Dimension.ViewModels
 
       CalibrationParameter = 0;
       CalibrationSelectorState = new ObservableCollection<bool> { true, false, false };
+      CalModeOn = false;
+      ValModeOn = false;
+      CalValModeVisible = App.Device.ActiveMap.validation ? System.Windows.Visibility.Visible : System.Windows.Visibility.Hidden;
 
       CompensationPercentageContent = new ObservableCollection<string> { MicroCy.InstrumentParameters.Calibration.Compensation.ToString() };
       DNRContents = new ObservableCollection<string> { "", MicroCy.InstrumentParameters.Calibration.HdnrTrans.ToString() };
@@ -73,6 +81,50 @@ namespace Ei_Dimension.ViewModels
     public void SaveCalibrationToMapClick()
     {
       App.Device.SaveCalVals(minSSC: ushort.Parse(EventTriggerContents[1]), maxSSC: ushort.Parse(EventTriggerContents[2]));
+    }
+
+    public void CalModeToggle()
+    {
+      if (CalModeOn)
+      {
+        if (App.Device.Mode == MicroCy.OperationMode.Normal)
+        {
+          App.Device.Mode = MicroCy.OperationMode.Calibration;
+          MakeCalMap();
+          return;
+        }
+        CalModeOn = false;
+      }
+      else
+        App.Device.Mode = MicroCy.OperationMode.Normal;
+    }
+
+    public void ValModeToggle()
+    {
+      if (ValModeOn)
+      {
+        if (App.Device.Mode == MicroCy.OperationMode.Normal)
+        {
+          App.Device.Mode = MicroCy.OperationMode.Validation;
+          MakeValMap();
+          return;
+        }
+        ValModeOn = false;
+      }
+      else
+        App.Device.Mode = MicroCy.OperationMode.Normal;
+    }
+
+    public void MakeCalMap()
+    {
+      ResultsViewModel.Instance.CalibrationWorldMap = new List<HeatMapData>();
+      //ResultsViewModel.Instance.CalibrationWorldMap.Add(new HeatMapData((int)HeatMapData.bins[point.x], (int)HeatMapData.bins[point.y]));
+    }
+
+    public void MakeValMap()
+    {
+      ResultsViewModel.Instance.ValidationWorldMap = new List<HeatMapData>();
+      //ResultsViewModel.Instance.ValidationWorldMap.Add(new HeatMapData((int)HeatMapData.bins[point.x], (int)HeatMapData.bins[point.y]));
     }
 
     public void FocusedBox(int num)

@@ -42,7 +42,6 @@ namespace MicroCy
   public class MicroCyDevice
   {
     public WorkOrder WorkOrder { get; private set; }
-    public PlateReport PlateReport { get; set; }
     public CustomMap ActiveMap { get; set; }
     public Queue<CommandStruct> Commands { get; } = new Queue<CommandStruct>();
     public ConcurrentQueue<BeadInfoStruct> DataOut { get; } = new ConcurrentQueue<BeadInfoStruct>();
@@ -53,6 +52,7 @@ namespace MicroCy
     public event EventHandler<ReadingWellEventArgs> FinishedReadingWell;
     public event EventHandler FinishedMeasurement;
     public event EventHandler<GstatsEventArgs> NewStatsAvailable;
+    public OperationMode Mode { get; set; }
     public int SavingWellIdx { get; set; }
     public int WellsToRead { get; set; }
     public int BeadsToCapture { get; set; }
@@ -60,7 +60,6 @@ namespace MicroCy
     public int SavBeadCount { get; set; }
     public int CurrentWellIdx { get; set; }
     public int SampleSize { get; set; }
-    public int BeadCntMapCreate { get; set; }
     public int ScatterGate { get; set; }
     public int MinPerRegion { get; set; }
     public bool IsMeasurementGoing { get; private set; }
@@ -95,6 +94,7 @@ namespace MicroCy
     private float _greenMaj;
     private string _workOrderPath;
     private string _fullFileName; //TODO: probably not necessary. look at refactoring InitBeadRead()
+    private PlateReport _plateReport;
     private StringBuilder _summaryout = new StringBuilder();
     private StringBuilder _dataout = new StringBuilder();
     private List<Gstats> _gStats = new List<Gstats>(10);
@@ -109,6 +109,7 @@ namespace MicroCy
 
     public MicroCyDevice(Type connectionType)
     {
+      Mode = OperationMode.Normal;
       _classificationBins = GenerateLogSpace(1, 50000, 256);
       _serialConnection = ConnectionFactory.MakeNewConnection(connectionType);
       SetSystemDirectories();
@@ -172,8 +173,8 @@ namespace MicroCy
       if (RMeans)
       {
         ClearSummary();
-        if (PlateReport != null && WellsInOrder.Count != 0)
-          PlateReport.rpWells.Add(new WellReport {
+        if (_plateReport != null && WellsInOrder.Count != 0)
+          _plateReport.rpWells.Add(new WellReport {
             prow = WellsInOrder[SavingWellIdx].rowIdx,
             pcol = WellsInOrder[SavingWellIdx].colIdx
           });
@@ -731,7 +732,7 @@ namespace MicroCy
 
     private void AddToPlateReport(in OutResults outRes)
     {
-      PlateReport.rpWells[SavingWellIdx].rpReg.Add(new RegionReport
+      _plateReport.rpWells[SavingWellIdx].rpReg.Add(new RegionReport
       {
         region = outRes.region,
         count = (uint)outRes.count,
@@ -748,6 +749,35 @@ namespace MicroCy
         _ = _summaryout.Append(Sheader);
     }
 
+    public void StartOperation()
+    {
+      //read section of plate
+      MainCommand("Get FProperty", code: 0x58);
+      MainCommand("Get FProperty", code: 0x68);
+      _plateReport = new PlateReport();
+      MainCommand("Get FProperty", code: 0x20); //get high dnr property
+      ReadActive = true;
+      SetAspirateParamsForWell(0);  //setup for first read
+      SetReadingParamsForWell(0);
+      MainCommand("Set Property", code: 0x19, parameter: 1); //bubble detect on
+      MainCommand("Position Well Plate");   //move motors. next position is set in properties 0xad and 0xae
+      MainCommand("Aspirate Syringe A"); //handles down and pickup sample
+      WellNext();   //save well numbers for file name
+      InitBeadRead(ReadingRow, ReadingCol);   //gets output file redy
+      ClearSummary();
+
+      if (WellsToRead == 0)    //only one well in region
+        MainCommand("Read A");
+      else
+      {
+        SetAspirateParamsForWell(1);
+        MainCommand("Read A Aspirate B");
+      }
+      CurrentWellIdx = 0;
+      if (TerminationType != 1)    //set some limit for running to eos or if regions are wrong
+        BeadsToCapture = 100000;
+    }
+
     private void OutputPlateReport()
     {
       if ((SavingWellIdx == WellsToRead) && (_summaryout.Length > 0) && PltRept)    //end of read and json results requested
@@ -757,7 +787,7 @@ namespace MicroCy
           _ = Directory.CreateDirectory($"{RootDirectory.FullName}\\Result\\Summary");
         using (TextWriter jwriter = new StreamWriter($"{RootDirectory.FullName}\\Result\\Summary\\"+ "Summary_" + rfilename + ".json"))
         {
-          var jcontents = JsonConvert.SerializeObject(PlateReport);
+          var jcontents = JsonConvert.SerializeObject(_plateReport);
           jwriter.Write(jcontents);
           if (File.Exists(_workOrderPath))
             File.Delete(_workOrderPath);   //result is posted, delete work order
@@ -854,6 +884,16 @@ namespace MicroCy
         accDelta += delta;
       }
       return Result;
+    }
+
+    public bool AnalyzeCalibrationResults()
+    {
+      return true;
+    }
+
+    public bool AnalyzeValidationResults()
+    {
+      return true;
     }
   }
 }

@@ -321,7 +321,6 @@ namespace Ei_Dimension.ViewModels
             App.SetActiveMap(Content);
             App.Device.MainCommand("Set Property", code: 0xa9, parameter: (ushort)Index);
             App.MapRegions.FillRegions();
-            ResultsViewModel.Instance.FillWorldMaps();
             break;
           case 3:
             _vm.SelectedChConfigContent = Content;

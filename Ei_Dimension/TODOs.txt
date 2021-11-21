@@ -100,3 +100,8 @@ calibration/validation
 each map has it's own calibration
 need info on which regions we are testing and input desired reporter value and desired Coefficient Variation
 math: be in x% of true region center, desired Coefficient Variation
+
+none/daily/weekly/monthly/quarterly/yearly
+
+fill cal val map in methods which turn mode on
+in end run event call checker if mode == such

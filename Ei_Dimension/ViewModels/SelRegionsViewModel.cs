@@ -21,7 +21,7 @@ namespace Ei_Dimension.ViewModels
 
     public void AddActiveRegion(byte num)
     {
-      App.MapRegions.AddActiveRegion(num);
+      //App.MapRegions.AddActiveRegion();
     }
   }
 }

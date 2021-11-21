@@ -51,8 +51,6 @@ namespace Ei_Dimension
         Device.ActiveMap = Device.MapList[Settings.Default.DefaultMap];
       }
       Device.SystemControl = Settings.Default.SystemControl;
-      Device.SampleSize = Settings.Default.SampleSize;
-      // RegCtr_SampSize.Text = Device.SampleSize.ToString(); //bead maps
       Device.Outfilename = Settings.Default.SaveFileName;
       Device.Everyevent = Settings.Default.Everyevent;
       Device.RMeans = Settings.Default.RMeans;
@@ -100,7 +98,7 @@ namespace Ei_Dimension
 
     public static void SetActiveMap(string mapName)
     {
-      for(var i = 0; i < Device.MapList.Count; i++)
+      for (var i = 0; i < Device.MapList.Count; i++)
       {
         if (Device.MapList[i].mapName == mapName)
         {
@@ -111,6 +109,15 @@ namespace Ei_Dimension
           break;
         }
       }
+      ResultsViewModel.Instance.FillWorldMaps();
+      var date = DateTime.Parse(Device.ActiveMap.caltime);
+      if(date.AddDays(2) < DateTime.Today)
+      DevExpress.Xpf.Core.ThemeManager.SetThemeName(Views.DashboardView.Instance.MapSelectr,
+        DevExpress.Xpf.Core.Theme.Office2010BlackName); //Office2007BlueName
+      else
+        DevExpress.Xpf.Core.ThemeManager.SetThemeName(Views.DashboardView.Instance.MapSelectr,
+          DevExpress.Xpf.Core.Theme.DeepBlueName);
+
       var CaliVM = CalibrationViewModel.Instance;
       if (CaliVM != null)
       {
@@ -120,6 +127,8 @@ namespace Ei_Dimension
         CaliVM.EventTriggerContents[2] = Device.ActiveMap.maxmapssc.ToString();
         Device.MainCommand("Set Property", code: 0xcf, parameter: (ushort)Device.ActiveMap.maxmapssc);
       }
+      CaliVM.CalValModeVisible = Device.ActiveMap.validation ? Visibility.Visible : Visibility.Hidden;
+
       var ChannelsVM = ChannelsViewModel.Instance;
       if (ChannelsVM != null)
       {
@@ -144,6 +153,11 @@ namespace Ei_Dimension
         Device.MainCommand("Set Property", code: 0x26, parameter: (ushort)Device.ActiveMap.calcl0);
         ChannelsVM.Bias30Parameters[9] = Device.ActiveMap.calfsc.ToString();
         Device.MainCommand("Set Property", code: 0x24, parameter: (ushort)Device.ActiveMap.calfsc);
+      }
+      var ValidVM = ValidationViewModel.Instance;
+      if (ValidVM != null)
+      {
+        ValidVM.ValidDateBox[0] = Device.ActiveMap.caltime;
       }
     }
 
@@ -1737,6 +1751,17 @@ namespace Ei_Dimension
       Device.ReadActive = false;
       MainButtonsViewModel.Instance.StartButtonEnabled = true;
       ResultsViewModel.Instance.PlatePictogram.CurrentlyReadCell = (-1, -1);
+      switch (Device.Mode)
+      {
+        case OperationMode.Normal:
+          break;
+        case OperationMode.Calibration:
+          Device.AnalyzeCalibrationResults();
+          break;
+        case OperationMode.Validation:
+          Device.AnalyzeValidationResults();
+          break;
+      }
     }
 
     public static void NewStatsAvailableEventHandler(object sender, GstatsEventArgs e)
@@ -1769,7 +1794,7 @@ namespace Ei_Dimension
 
     //protected override void OnStartup(StartupEventArgs e)
     //{
-    //  DevExpress.Xpf.Core.ApplicationThemeHelper.ApplicationThemeName = DevExpress.Xpf.Core.Theme.DeepBlueName;
+    //  DevExpress.Xpf.Core.ApplicationThemeHelper.ApplicationThemeName = DevExpress.Xpf.Core.Theme.Office2007BlueName;
     //  base.OnStartup(e);
     //}
   }

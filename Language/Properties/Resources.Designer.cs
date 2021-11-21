@@ -133,6 +133,16 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Calibration
+        ///    Mode.
+        /// </summary>
+        public static string Calibration_Mode {
+            get {
+                return ResourceManager.GetString("Calibration_Mode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to   Set
         ///Offset.
         /// </summary>
@@ -1943,6 +1953,25 @@ namespace Ei_Dimension.Language {
         public static string Tube {
             get {
                 return ResourceManager.GetString("Tube", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Validation
+        ///   Mode.
+        /// </summary>
+        public static string Validation_Mode {
+            get {
+                return ResourceManager.GetString("Validation_Mode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Previous Validation Date.
+        /// </summary>
+        public static string Validation_Prev_Validation_Date {
+            get {
+                return ResourceManager.GetString("Validation_Prev_Validation_Date", resourceCulture);
             }
         }
         

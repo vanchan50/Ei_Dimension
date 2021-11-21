@@ -21,7 +21,6 @@
                HorizontalAlignment="Left"
                VerticalAlignment="Top"
                Margin="524,20,250,0"/>
-    
     <!--Gating-->
     <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"
@@ -177,7 +176,7 @@
             </RadioButton>
             <RadioButton Content="{lang:Loc Calibration_Classification_To_map}"
                          Style="{StaticResource RadioButtonVerticalThemeStyle}"
-                         Height="100" Cursor="Hand"
+                         Height="100"
                          FontSize="30"
                          IsChecked="{Binding CalibrationSelectorState[1], Mode=OneWay}"
                          Command="{Binding CalibrationSelectorCommand}">
@@ -187,7 +186,7 @@
             </RadioButton>
             <RadioButton Content="{lang:Loc Reporter}"
                          Style="{StaticResource RadioButtonVerticalThemeStyle}"
-                         Height="60" Cursor="Hand"
+                         Height="60"
                          IsChecked="{Binding CalibrationSelectorState[2], Mode=OneWay}"
                          Command="{Binding CalibrationSelectorCommand}">
               <RadioButton.CommandParameter>
@@ -200,7 +199,7 @@
                 Command="{Binding SaveCalibrationToMapClickCommand}"
                 Style="{StaticResource ButtonStyle}"
                 Height="100" Width="230"
-                Margin="0,10,0,3" Cursor="Hand"/>
+                Margin="0,10,0,3"/>
         <TextBlock Text="{Binding CurrentMapName[0]}"
                    FontFamily="{StaticResource AppTextFont}"
                    FontSize="18"
@@ -321,7 +320,6 @@
         </StackPanel>
       </StackPanel>
     </Border>
-
     <!--Compensation-->
     <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"
@@ -347,7 +345,6 @@
         </TextBox>
       </StackPanel>
     </Border>
-    
     <!--DNR-->
     <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"
@@ -450,6 +447,29 @@
           </dxb:PopupControlContainer>
         </dx:DropDownButton>
       </StackPanel>
+    </Border>
+
+    <Border HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Margin="460,730,0,3"
+            Visibility="{Binding CalValModeVisible}">
+      <Grid>
+        <ToggleButton HorizontalAlignment="Left"
+                      VerticalAlignment="Top"
+                      Content="{lang:Loc Calibration_Mode}"
+                      Command="{Binding CalModeToggleCommand}"
+                      IsChecked="{Binding CalModeOn}"
+                      Style="{StaticResource ToggleButtonThemeStyle}"
+                      Height="90" Width="170"/>
+        <ToggleButton HorizontalAlignment="Left"
+                      VerticalAlignment="Top"
+                      Content="{lang:Loc Validation_Mode}"
+                      Command="{Binding ValModeToggleCommand}"
+                      IsChecked="{Binding ValModeOn}"
+                      Style="{StaticResource ToggleButtonThemeStyle}"
+                      Height="90" Width="170"
+                      Margin="200,0,0,0"/>
+      </Grid>
     </Border>
 
 

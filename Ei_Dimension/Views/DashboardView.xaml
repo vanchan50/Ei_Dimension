@@ -50,12 +50,12 @@
             </Button.CommandParameter>
           </Button>
           <Button Content="{lang:Loc Components_Wash_B}"
-                Style="{StaticResource ButtonStyle}"
-                Command="{Binding FluidicsButtonClickCommand}"
-                Height="75" Width="160"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Margin="0,5,0,0" Cursor="Hand">
+                  Style="{StaticResource ButtonStyle}"
+                  Command="{Binding FluidicsButtonClickCommand}"
+                  Height="75" Width="160"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center"
+                  Margin="0,5,0,0" Cursor="Hand">
             <Button.CommandParameter>
               <System:Int32>2</System:Int32>
             </Button.CommandParameter>
@@ -63,7 +63,7 @@
         </StackPanel>
       </StackPanel>
     </Border>
-
+    
     <!--Active Regions-->
     <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"
@@ -341,7 +341,7 @@
                    HorizontalAlignment="Center"
                    VerticalAlignment="Top"
                    Margin="0,16,0,3"/>
-        <dx:DropDownButton Width="170"
+        <dx:DropDownButton Width="170" Name="MapSelectr"
                            Height="80" Cursor="Hand"
                            FontSize="25"
                            HorizontalAlignment="Center"
