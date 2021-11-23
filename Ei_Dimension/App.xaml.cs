@@ -1756,10 +1756,10 @@ namespace Ei_Dimension
         case OperationMode.Normal:
           break;
         case OperationMode.Calibration:
-          Device.AnalyzeCalibrationResults();
+          AnalyzeCalibrationResults();
           break;
         case OperationMode.Validation:
-          Device.AnalyzeValidationResults();
+          AnalyzeValidationResults();
           break;
       }
     }
@@ -1797,5 +1797,27 @@ namespace Ei_Dimension
     //  DevExpress.Xpf.Core.ApplicationThemeHelper.ApplicationThemeName = DevExpress.Xpf.Core.Theme.Office2007BlueName;
     //  base.OnStartup(e);
     //}
+
+    private static bool AnalyzeCalibrationResults()
+    {
+      return true;
+    }
+
+    private static bool AnalyzeValidationResults()
+    {
+      /*
+      Find the ratio of the entered values as a percentage to the middle value if there is an odd number of regions with reporter above 0 in the validation map,
+      or the lower of the 2 middle numbers if there is an even number. perform the same calculation on the validation run, each ratio from the run must be
+      within 10% of the ratios entered for the V map. The lowest median read value must be within 20% of the entered value and the highest median must be
+      within 20% of the entered value. The CV of CL1 CL2 median for each V region must be within 20% of the CV entered.
+      Also, C should calculate and save the DNR coefficient by dividing the median Green Minor by media Green Major, i.e. the high sensitivity channel
+      by the other green channel. this should be done after the 0x1b message has been sent and the bias adjustments are fixed, using the remaining beads
+      in the sample loop
+      */
+
+      //1 odd/even number of regions with reporter>0
+      //find ratio
+      return true;
+    }
   }
 }

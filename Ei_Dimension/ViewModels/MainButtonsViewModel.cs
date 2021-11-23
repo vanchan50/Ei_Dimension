@@ -47,6 +47,16 @@ namespace Ei_Dimension.ViewModels
       ResultsViewModel.Instance.PlatePictogram.SetWellsForReading(App.Device.WellsInOrder);
 
       App.Device.StartOperation();
+      switch (App.Device.Mode)
+      {
+        case MicroCy.OperationMode.Normal:
+          break;
+        case MicroCy.OperationMode.Calibration:
+          ResultsViewModel.Instance.ShowSinglePlexResults();
+          break;
+        case MicroCy.OperationMode.Validation:
+          break;
+      }
 
       MainViewModel.Instance.NavigationSelector(1);
     }

@@ -105,3 +105,18 @@ none/daily/weekly/monthly/quarterly/yearly
 
 fill cal val map in methods which turn mode on
 in end run event call checker if mode == such
+
+firmware cehcks for the cal success. I should only wait for the success message
+set volume to 100ml (max), but save the old values to restore them. fail case - start was hit for 3 times, and success message not received
+cal always runs in end of sample mode
+
+calibration page and channels page "save bias to map" button should do everything (the same thing)
+
+
+----
+val mode
+set volume 25ml
+mean/median  of cl1/cl2 compared to region center
+
+cv ~20% for bottom left is kinda ok, cv should be small for region 100. comparing cv of a region to input cv
+median reporter for a region compared to input reporter

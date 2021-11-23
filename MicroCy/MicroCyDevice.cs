@@ -805,7 +805,7 @@ namespace MicroCy
           sumit += _sfi[beads, finx];
         }
         double robustcnt = SavBeadCount; //start with total bead count
-        double mean = sumit / SavBeadCount;
+        double mean = sumit / robustcnt;
         //find high and low bounds
         double min = mean * 0.5;
         double max = mean * 2;
@@ -884,16 +884,6 @@ namespace MicroCy
         accDelta += delta;
       }
       return Result;
-    }
-
-    public bool AnalyzeCalibrationResults()
-    {
-      return true;
-    }
-
-    public bool AnalyzeValidationResults()
-    {
-      return true;
     }
   }
 }

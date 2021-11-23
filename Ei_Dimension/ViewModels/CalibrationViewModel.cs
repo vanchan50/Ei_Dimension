@@ -118,13 +118,42 @@ namespace Ei_Dimension.ViewModels
     public void MakeCalMap()
     {
       ResultsViewModel.Instance.CalibrationWorldMap = new List<HeatMapData>();
-      //ResultsViewModel.Instance.CalibrationWorldMap.Add(new HeatMapData((int)HeatMapData.bins[point.x], (int)HeatMapData.bins[point.y]));
+      int cl1Index = System.Array.BinarySearch(HeatMapData.bins, int.Parse(ClassificationTargetsContents[1]));
+      if (cl1Index < 0)
+        cl1Index = ~cl1Index;
+      int cl2Index = System.Array.BinarySearch(HeatMapData.bins, int.Parse(ClassificationTargetsContents[2]));
+      if (cl2Index < 0)
+        cl2Index = ~cl2Index;
+      for (var i = -5; i < 6; i++)
+      {
+        for (var j = -6; j < 7; j++)
+        {
+          if(System.Math.Pow(i, 2) + System.Math.Pow(j, 2) <= 16
+            && cl1Index + i >= 0 && cl1Index + i < 256 && cl2Index + j >= 0 && cl2Index + j < 256)
+            ResultsViewModel.Instance.CalibrationWorldMap.Add(
+              new HeatMapData((int)HeatMapData.bins[cl1Index + i], (int)HeatMapData.bins[cl2Index + j]));
+        }
+      }
     }
 
     public void MakeValMap()
     {
       ResultsViewModel.Instance.ValidationWorldMap = new List<HeatMapData>();
-      //ResultsViewModel.Instance.ValidationWorldMap.Add(new HeatMapData((int)HeatMapData.bins[point.x], (int)HeatMapData.bins[point.y]));
+      var regs = new List<int>();
+      for (var i = 0; i < App.MapRegions.ValidationRegions.Count; i++)
+      {
+        if (App.MapRegions.ValidationRegions[i])
+        {
+          regs.Add(int.Parse(App.MapRegions.RegionsList[i]));
+        }
+      }
+      foreach (var point in App.Device.ActiveMap.classificationMap)
+      {
+        if (regs.Contains(point.r))
+        {
+          ResultsViewModel.Instance.ValidationWorldMap.Add(new HeatMapData((int)HeatMapData.bins[point.x], (int)HeatMapData.bins[point.y]));
+        }
+      }
     }
 
     public void FocusedBox(int num)

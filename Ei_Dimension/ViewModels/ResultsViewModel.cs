@@ -478,9 +478,11 @@ namespace Ei_Dimension.ViewModels
           break;
         case MicroCy.OperationMode.Calibration:
           Map = CalibrationWorldMap;
+          FlipMapAnalysis = false;
           break;
         case MicroCy.OperationMode.Validation:
           Map = ValidationWorldMap;
+          FlipMapAnalysis = false;
           break;
       }
 
@@ -649,16 +651,26 @@ namespace Ei_Dimension.ViewModels
     {
       if (MultiPlexVisible == System.Windows.Visibility.Visible)
       {
-        PlexButtonString = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Experiment_Stats), Language.TranslationSource.Instance.CurrentCulture);
-        MultiPlexVisible = System.Windows.Visibility.Hidden;
-        SinglePlexVisible = System.Windows.Visibility.Visible;
+        ShowSinglePlexResults();
       }
       else
       {
-        PlexButtonString = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Experiment_Active_Regions), Language.TranslationSource.Instance.CurrentCulture);
-        MultiPlexVisible = System.Windows.Visibility.Visible;
-        SinglePlexVisible = System.Windows.Visibility.Hidden;
+        ShowMultiPlexResults();
       }
+    }
+
+    public void ShowSinglePlexResults()
+    {
+      PlexButtonString = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Experiment_Stats), Language.TranslationSource.Instance.CurrentCulture);
+      MultiPlexVisible = System.Windows.Visibility.Hidden;
+      SinglePlexVisible = System.Windows.Visibility.Visible;
+    }
+
+    public void ShowMultiPlexResults()
+    {
+      PlexButtonString = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Experiment_Active_Regions), Language.TranslationSource.Instance.CurrentCulture);
+      MultiPlexVisible = System.Windows.Visibility.Visible;
+      SinglePlexVisible = System.Windows.Visibility.Hidden;
     }
 
     public void XYprint()
