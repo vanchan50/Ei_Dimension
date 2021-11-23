@@ -401,10 +401,14 @@
         <Image Stretch="Fill" Source="{dx:DXImage 'SvgImages/XAF/Action_Export_ToImage.svg'}"/>
       </Button>
     </Grid>
-    
     <!--Heatmap Chart-->
     <Grid MouseEnter="XYPlot_MouseEnter"
           MouseLeave="XYPlot_MouseLeave">
+      <Rectangle Fill="{StaticResource AppBackground}"
+                 HorizontalAlignment="Left"
+                 VerticalAlignment="Top"
+                 Width="740" Height="428"
+                 Margin="0,472,0,0"/>
       <dxc:ChartControl Width="660" Height="412"
                       HorizontalAlignment="Left"
                       VerticalAlignment="Top"

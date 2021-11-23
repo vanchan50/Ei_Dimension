@@ -111,7 +111,7 @@ namespace Ei_Dimension
       }
       ResultsViewModel.Instance.FillWorldMaps();
       var date = DateTime.Parse(Device.ActiveMap.caltime);
-      if(date.AddDays(2) < DateTime.Today)
+      if(Device.ActiveMap.validation && date.AddDays(2) < DateTime.Today)
       DevExpress.Xpf.Core.ThemeManager.SetThemeName(Views.DashboardView.Instance.MapSelectr,
         DevExpress.Xpf.Core.Theme.Office2010BlackName); //Office2007BlueName
       else
@@ -1756,7 +1756,17 @@ namespace Ei_Dimension
         case OperationMode.Normal:
           break;
         case OperationMode.Calibration:
-          AnalyzeCalibrationResults();
+          if (AnalyzeCalibrationResults())
+          {
+
+          }
+          else
+          {
+            if (++CalibrationViewModel.Instance.CalFailsInARow > 3)
+            {
+              //Cal fail notification
+            }
+          }
           break;
         case OperationMode.Validation:
           AnalyzeValidationResults();

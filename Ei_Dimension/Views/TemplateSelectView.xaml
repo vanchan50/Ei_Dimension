@@ -27,7 +27,7 @@
                     Margin="20,150,0,0">
         <ListBox Width="700" BorderThickness="0"
              FontFamily="{StaticResource AppTextFont}"
-             FontSize="30" Name="list"
+             FontSize="30" Name="list" Background="Transparent"
              ItemsSource="{Binding NameList}">
           <ListBox.ItemTemplate>
             <ItemContainerTemplate>

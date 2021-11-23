@@ -23,7 +23,28 @@
                    Margin="0,0,0,4"/>
         <ListBox Width="220" Height="310"
                  ItemsSource="{Binding ActiveList}"
-                 FontSize="24"/>
+                 Background="Transparent"
+                 BorderThickness="1" BorderBrush="Black">
+          <ListBox.ItemTemplate>
+            <ItemContainerTemplate>
+              <Grid Width="205">
+                <Rectangle Name="ToggleButtonRect" VerticalAlignment="Stretch"
+                           HorizontalAlignment="Stretch"
+                           Fill="{StaticResource HaltButtonBackground}"
+                           Stroke="{StaticResource ButtonBackgroundHighlighted}"
+                           StrokeThickness="1"
+                           Margin="0,0,0,0"/>
+                <TextBlock Text="{Binding}"
+                           Height="36"
+                           FontSize="24"
+                           FontFamily="{StaticResource AppTextFont}"
+                           Margin="1,0,1,0"
+                           HorizontalAlignment="Center"
+                           Foreground="{StaticResource AppTextColor}"/>
+              </Grid>
+            </ItemContainerTemplate>
+          </ListBox.ItemTemplate>
+        </ListBox>
       </StackPanel>
     </Border>
     <!--Start & End-->
@@ -32,22 +53,44 @@
           Margin="290,26,0,0">
       <StackPanel>
         <StackPanel Orientation="Horizontal">
-          <Button Content="{lang:Loc Experiment_End}"
+          <Grid>
+            <Button Content="{lang:Loc Experiment_End}"
                   Style="{StaticResource ButtonStyle}"
                   Command="{Binding EndButtonClickCommand}"
                   Height="160" Width="160"
                   HorizontalAlignment="Center"
                   VerticalAlignment="Center"
                   Background="DarkRed"
-                  Margin="0,0,12,0" Cursor="Hand"/>
-          <Button Content="{lang:Loc Experiment_Start}"
+                  Margin="0,0,12,0"/>
+            <TextBlock Text="{Binding Flavor[0]}"
+                       Width="160"
+                       FontFamily="{StaticResource AppTextFont}"
+                       FontSize="26"
+                       TextWrapping="Wrap" TextAlignment="Center"
+                       Foreground="{StaticResource ButtonForeground}"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Top"
+                       Margin="0,90,0,0"/>
+          </Grid>
+          <Grid>
+            <Button Content="{lang:Loc Experiment_Start}"
                   Style="{StaticResource ButtonStyle}"
                   Command="{Binding StartButtonClickCommand}"
-                  Height="160" Width="160" Cursor="Hand"
+                  Height="160" Width="160"
                   IsEnabled="{Binding StartButtonEnabled}"
                   HorizontalAlignment="Center"
                   VerticalAlignment="Center"
                   Background="ForestGreen"/>
+            <TextBlock Text="{Binding Flavor[0]}"
+                       Width="160"
+                       FontFamily="{StaticResource AppTextFont}"
+                       FontSize="26"
+                       TextWrapping="Wrap" TextAlignment="Center"
+                       Foreground="{StaticResource ButtonForeground}"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Top"
+                       Margin="0,90,0,0"/>
+          </Grid>
         </StackPanel>
         <StackPanel Orientation="Horizontal"
                     Margin="0,12,0,0">

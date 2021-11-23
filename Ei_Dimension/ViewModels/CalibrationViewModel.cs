@@ -25,8 +25,12 @@ namespace Ei_Dimension.ViewModels
     public virtual ObservableCollection<string> DNRContents { get; set; }
     public virtual ObservableCollection<string> CurrentMapName { get; set; }
     public virtual ObservableCollection<string> AttenuationBox { get; set; }
+    public byte CalFailsInARow { get; set; }
 
     public static CalibrationViewModel Instance { get; private set; }
+    private string _dbsampleVolumeTempHolder;
+    private int _dbEndReadIndexTempHolder;
+
 
     protected CalibrationViewModel()
     {
@@ -60,6 +64,9 @@ namespace Ei_Dimension.ViewModels
 
       CurrentMapName = new ObservableCollection<string> { App.Device.ActiveMap.mapName };
       AttenuationBox = new ObservableCollection<string> { App.Device.ActiveMap.att.ToString() };
+
+      CalFailsInARow = 0;
+      _dbEndReadIndexTempHolder = 0;
       Instance = this;
     }
 
@@ -89,14 +96,29 @@ namespace Ei_Dimension.ViewModels
       {
         if (App.Device.Mode == MicroCy.OperationMode.Normal)
         {
+          _dbsampleVolumeTempHolder = DashboardViewModel.Instance.Volumes[0];
+          DashboardViewModel.Instance.SetFixedVolumeButtonClick(100);
           App.Device.Mode = MicroCy.OperationMode.Calibration;
+          CalFailsInARow = 0;
           MakeCalMap();
+          _dbEndReadIndexTempHolder = DashboardViewModel.Instance.SelectedEndReadIndex;
+          DashboardViewModel.Instance.EndReadItems[2].Click(6);
+          MainButtonsViewModel.Instance.Flavor[0] = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Maintenance_Calibration),
+            Language.TranslationSource.Instance.CurrentCulture);
+          MainWindow.Instance.wndw.Background = System.Windows.Media.Brushes.LightPink;
           return;
         }
         CalModeOn = false;
       }
       else
+      {
         App.Device.Mode = MicroCy.OperationMode.Normal;
+        DashboardViewModel.Instance.EndReadItems[_dbEndReadIndexTempHolder].Click(6);
+        DashboardViewModel.Instance.Volumes[0] = _dbsampleVolumeTempHolder;
+        App.Device.MainCommand("Set Property", code: 0xaf, parameter: ushort.Parse(_dbsampleVolumeTempHolder));
+        MainButtonsViewModel.Instance.Flavor[0] = null;
+        MainWindow.Instance.wndw.Background = (System.Windows.Media.SolidColorBrush)App.Current.Resources["AppBackground"];
+      }
     }
 
     public void ValModeToggle()
@@ -105,14 +127,25 @@ namespace Ei_Dimension.ViewModels
       {
         if (App.Device.Mode == MicroCy.OperationMode.Normal)
         {
+          _dbsampleVolumeTempHolder = DashboardViewModel.Instance.Volumes[0];
+          DashboardViewModel.Instance.SetFixedVolumeButtonClick(25);
           App.Device.Mode = MicroCy.OperationMode.Validation;
           MakeValMap();
+          MainButtonsViewModel.Instance.Flavor[0] = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Maintenance_Validation),
+            Language.TranslationSource.Instance.CurrentCulture);
+          MainWindow.Instance.wndw.Background = System.Windows.Media.Brushes.LightYellow;
           return;
         }
         ValModeOn = false;
       }
       else
+      {
         App.Device.Mode = MicroCy.OperationMode.Normal;
+        DashboardViewModel.Instance.Volumes[0] = _dbsampleVolumeTempHolder;
+        App.Device.MainCommand("Set Property", code: 0xaf, parameter: ushort.Parse(_dbsampleVolumeTempHolder));
+        MainButtonsViewModel.Instance.Flavor[0] = null;
+        MainWindow.Instance.wndw.Background = (System.Windows.Media.SolidColorBrush)App.Current.Resources["AppBackground"];
+      }
     }
 
     public void MakeCalMap()

@@ -110,7 +110,7 @@ namespace Ei_Dimension.ViewModels
               chkBox -= pow;
             }
             else
-              FileSaveViewModel.Instance.UncheckedBox(i); ;
+              FileSaveViewModel.Instance.UncheckedBox(i);
           }
           for (var i = 0; i < App.MapRegions.ActiveRegions.Count; i++)
           {

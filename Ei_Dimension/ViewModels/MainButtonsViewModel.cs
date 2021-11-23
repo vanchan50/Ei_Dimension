@@ -12,10 +12,12 @@ namespace Ei_Dimension.ViewModels
     public virtual bool StartButtonEnabled { get; set; }
     public static MainButtonsViewModel Instance { get; private set; }
     public virtual ObservableCollection<string> ActiveList { get; set; }
+    public virtual ObservableCollection<string> Flavor { get; set; }
     protected MainButtonsViewModel()
     {
       StartButtonEnabled = true;
       ActiveList = new ObservableCollection<string>();
+      Flavor = new ObservableCollection<string> { null };
       Instance = this;
     }
 
