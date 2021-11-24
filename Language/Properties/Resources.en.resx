@@ -196,6 +196,9 @@ Compensation
     <value>Calibration
     Mode</value>
   </data>
+  <data name="Calibration_Prev_Calibration_Date" xml:space="preserve">
+    <value>Previous Calibration Date</value>
+  </data>
   <data name="Calibration_Save_Calibration_To_Map" xml:space="preserve">
     <value>Save Calibration
 To Current Map</value>

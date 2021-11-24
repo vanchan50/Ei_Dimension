@@ -143,6 +143,15 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Previous Calibration Date.
+        /// </summary>
+        public static string Calibration_Prev_Calibration_Date {
+            get {
+                return ResourceManager.GetString("Calibration_Prev_Calibration_Date", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to   Set
         ///Offset.
         /// </summary>

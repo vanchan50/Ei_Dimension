@@ -1,5 +1,4 @@
-﻿using DevExpress.Mvvm;
-using DevExpress.Mvvm.DataAnnotations;
+﻿using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
 using System.Collections.ObjectModel;
 using System.Windows.Controls;
@@ -14,7 +13,6 @@ namespace Ei_Dimension.ViewModels
     public virtual string SelectedGatingContent { get; set; }
     public byte SelectedGatingIndex { get; set; }
     public virtual ObservableCollection<DropDownButtonContents> GatingItems { get; }
-    public virtual byte CalibrationParameter { get; set; }
     public virtual ObservableCollection<bool> CalibrationSelectorState { get; set; }
     public virtual bool CalModeOn { get; set; }
     public virtual bool ValModeOn { get; set; }
@@ -25,6 +23,7 @@ namespace Ei_Dimension.ViewModels
     public virtual ObservableCollection<string> DNRContents { get; set; }
     public virtual ObservableCollection<string> CurrentMapName { get; set; }
     public virtual ObservableCollection<string> AttenuationBox { get; set; }
+    public virtual ObservableCollection<string> CaliDateBox { get; set; }
     public byte CalFailsInARow { get; set; }
 
     public static CalibrationViewModel Instance { get; private set; }
@@ -53,7 +52,6 @@ namespace Ei_Dimension.ViewModels
 
       ClassificationTargetsContents = new ObservableCollection<string> { "1", "1", "1", "1", "3500"};
 
-      CalibrationParameter = 0;
       CalibrationSelectorState = new ObservableCollection<bool> { true, false, false };
       CalModeOn = false;
       ValModeOn = false;
@@ -66,6 +64,8 @@ namespace Ei_Dimension.ViewModels
       AttenuationBox = new ObservableCollection<string> { App.Device.ActiveMap.att.ToString() };
 
       CalFailsInARow = 0;
+      CaliDateBox = new ObservableCollection<string> { App.Device.ActiveMap.caltime };
+
       _dbEndReadIndexTempHolder = 0;
       Instance = this;
     }
@@ -81,7 +81,6 @@ namespace Ei_Dimension.ViewModels
       CalibrationSelectorState[1] = false;
       CalibrationSelectorState[2] = false;
       CalibrationSelectorState[num] = true;
-      CalibrationParameter = num;
       App.Device.MainCommand("Set Property", code: 0x1b, parameter: num);
     }
 

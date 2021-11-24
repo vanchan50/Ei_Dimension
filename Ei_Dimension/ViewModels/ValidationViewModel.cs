@@ -1,5 +1,4 @@
-﻿using DevExpress.Mvvm;
-using DevExpress.Mvvm.DataAnnotations;
+﻿using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
 using System;
 using System.Collections.ObjectModel;
@@ -13,7 +12,7 @@ namespace Ei_Dimension.ViewModels
     public static ValidationViewModel Instance { get; private set; }
     protected ValidationViewModel()
     {
-      ValidDateBox = new ObservableCollection<string> { App.Device.ActiveMap.caltime };
+      ValidDateBox = new ObservableCollection<string> { App.Device.ActiveMap.valtime };
       Instance = this;
     }
 
@@ -24,12 +23,7 @@ namespace Ei_Dimension.ViewModels
 
     public void AddValidationRegion(byte num)
     {
-      App.MapRegions.AddValidationRegion(num);
-    }
-
-    public void StartValidationClick()
-    {
-      ValidDateBox[0] = DateTime.Now.ToString("dd.MM.yyyy");
+      //App.MapRegions.AddValidationRegion(num);
     }
   }
 }

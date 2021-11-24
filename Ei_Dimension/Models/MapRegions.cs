@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -30,7 +26,6 @@ namespace Ei_Dimension.Models
     public List<bool> ValidationRegions { get; } = new List<bool>();
     private StackPanel _regionsBorder;
     private StackPanel _regionsNamesBorder;
-    public int? SelectedValidationRegionTextboxIndex { get; set; }
     private bool _firstLoadflag;
     //Results
     private static uint _tbCounter = 0;
@@ -507,7 +502,8 @@ namespace Ei_Dimension.Models
 
     private void ValidationRegionsTbGotFocus(object sender, RoutedEventArgs e)
     {
-      SelectedValidationRegionTextboxIndex = int.Parse(((TextBox)e.Source).Name.Trim('_'));
+      int Index = int.Parse(((TextBox)e.Source).Name.Trim('_'));
+      AddValidationRegion(Index);
     }
 
     private void ValidationReporterTbGotFocus(object sender, RoutedEventArgs e)
@@ -526,34 +522,32 @@ namespace Ei_Dimension.Models
       MainViewModel.Instance.NumpadToggleButton((TextBox)e.Source);
     }
 
-    public void AddValidationRegion(byte num)
+    public void AddValidationRegion(int index)
     {
-      if (SelectedValidationRegionTextboxIndex != null)
+      if (!ValidationRegions[index])
       {
-        if (num == 1 && !ValidationRegions[(int)SelectedValidationRegionTextboxIndex])
-        {
-          ShiftValidationTextBox(true);
-          ValidationRegions[(int)SelectedValidationRegionTextboxIndex] = true;
-        }
-        else if (num == 0 && ValidationRegions[(int)SelectedValidationRegionTextboxIndex])
-        {
-          ValidationRegions[(int)SelectedValidationRegionTextboxIndex] = false;
-          ShiftValidationTextBox(false);
-        }
-        SelectedValidationRegionTextboxIndex = null;
+        ShiftValidationTextBox(index, true);
+        ValidationRegions[index] = true;
       }
+      else
+      {
+        ValidationRegions[index] = false;
+        ShiftValidationTextBox(index, false);
+      }
+      System.Windows.Input.FocusManager.SetFocusedElement(System.Windows.Input.FocusManager.GetFocusScope(Views.ValidationView.Instance), null);
+      System.Windows.Input.Keyboard.ClearFocus();
     }
 
-    private void ShiftValidationTextBox(bool right)
+    private void ShiftValidationTextBox(int index, bool right)
     {
-      var tb = (TextBox)_validationNum.Children[(int)SelectedValidationRegionTextboxIndex];
+      var tb = (TextBox)_validationNum.Children[index];
       var shift = tb.Margin;
       shift.Left = right ? 140 : 10;
       tb.Margin = shift;
 
-      var ReporterTb = (TextBox)_validationReporterBorder.Children[(int)SelectedValidationRegionTextboxIndex];
+      var ReporterTb = (TextBox)_validationReporterBorder.Children[index];
       ReporterTb.Visibility = right ? Visibility.Visible : Visibility.Hidden;
-      var CVTb = (TextBox)_validationCVBorder.Children[(int)SelectedValidationRegionTextboxIndex];
+      var CVTb = (TextBox)_validationCVBorder.Children[index];
       CVTb.Visibility = right ? Visibility.Visible : Visibility.Hidden;
     }
 

@@ -145,6 +145,9 @@
     <value>Calibration
     Mode</value>
   </data>
+  <data name="Calibration_Prev_Calibration_Date" xml:space="preserve">
+    <value>Previous Calibration Date</value>
+  </data>
   <data name="Channels_Background" xml:space="preserve">
     <value>Background</value>
   </data>

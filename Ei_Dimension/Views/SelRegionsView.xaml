@@ -57,10 +57,11 @@
             </StackPanel>
           </Border>
         </ScrollViewer>
+        <!--
         <StackPanel Orientation="Horizontal"
                     HorizontalAlignment="Left"
                     Width="270" Height="60"
-                    Margin="0,4,0,0" Visibility="Hidden">
+                    Margin="0,4,0,0">
           <Button Width="100" Height="60"
                   Margin="20,0,0,0"
                   Style="{StaticResource LeftArrowButtonThemeStyle}"
@@ -70,6 +71,7 @@
                   Style="{StaticResource RightArrowButtonThemeStyle}"
                   Command="{Binding AddActiveRegionCommand}" CommandParameter="1"/>
         </StackPanel>
+        -->
       </StackPanel>
     </Border>
   </Grid>

@@ -89,12 +89,6 @@
                Margin="10,0,10,15"
                Style="{StaticResource InputFieldStyle}"
                Text="{Binding ValidDateBox[0]}"/>
-
-      <Button Content="{lang:Loc Validation_Start_Validation}"
-              Command="{Binding StartValidationClickCommand}"
-              Style="{StaticResource ButtonStyle}"
-              Height="100" Width="180"
-              Margin="0,20,0,0"/>
     </StackPanel>
     
     <!--Table-->
@@ -153,6 +147,7 @@
             </StackPanel>
           </Border>
         </ScrollViewer>
+        <!--
         <StackPanel Orientation="Horizontal"
                     HorizontalAlignment="Left"
                     Width="270" Height="60"
@@ -166,6 +161,7 @@
                   Style="{StaticResource RightArrowButtonThemeStyle}"
                   Command="{Binding AddValidationRegionCommand}" CommandParameter="1"/>
         </StackPanel>
+        -->
       </StackPanel>
     </Border>
   </Grid>

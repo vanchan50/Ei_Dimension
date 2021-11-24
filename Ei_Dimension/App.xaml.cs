@@ -31,9 +31,9 @@ namespace Ei_Dimension
     private static bool _nextWellWarning;
     public App()
     {
-      SetLogOutput();
       _cancelKeyboardInjectionFlag = false;
       Device = new MicroCyDevice(typeof(USBConnection));
+      SetLogOutput();
       if (Settings.Default.DefaultMap > Device.MapList.Count - 1)
       {
         try
@@ -110,10 +110,16 @@ namespace Ei_Dimension
         }
       }
       ResultsViewModel.Instance.FillWorldMaps();
-      var date = DateTime.Parse(Device.ActiveMap.caltime);
-      if(Device.ActiveMap.validation && date.AddDays(2) < DateTime.Today)
-      DevExpress.Xpf.Core.ThemeManager.SetThemeName(Views.DashboardView.Instance.MapSelectr,
-        DevExpress.Xpf.Core.Theme.Office2010BlackName); //Office2007BlueName
+      if (Device.ActiveMap.valtime != null)
+      {
+        var valDate = DateTime.Parse(Device.ActiveMap.valtime);
+        if (Device.ActiveMap.validation && valDate.AddDays(2) < DateTime.Today)
+          DevExpress.Xpf.Core.ThemeManager.SetThemeName(Views.DashboardView.Instance.MapSelectr,
+            DevExpress.Xpf.Core.Theme.Office2010BlackName); //Office2007BlueName
+        else
+          DevExpress.Xpf.Core.ThemeManager.SetThemeName(Views.DashboardView.Instance.MapSelectr,
+            DevExpress.Xpf.Core.Theme.DeepBlueName);
+      }
       else
         DevExpress.Xpf.Core.ThemeManager.SetThemeName(Views.DashboardView.Instance.MapSelectr,
           DevExpress.Xpf.Core.Theme.DeepBlueName);
@@ -126,6 +132,7 @@ namespace Ei_Dimension
         Device.MainCommand("Set Property", code: 0xce, parameter: (ushort)Device.ActiveMap.minmapssc);
         CaliVM.EventTriggerContents[2] = Device.ActiveMap.maxmapssc.ToString();
         Device.MainCommand("Set Property", code: 0xcf, parameter: (ushort)Device.ActiveMap.maxmapssc);
+        CaliVM.CaliDateBox[0] = Device.ActiveMap.caltime;
       }
       CaliVM.CalValModeVisible = Device.ActiveMap.validation ? Visibility.Visible : Visibility.Hidden;
 
@@ -157,7 +164,7 @@ namespace Ei_Dimension
       var ValidVM = ValidationViewModel.Instance;
       if (ValidVM != null)
       {
-        ValidVM.ValidDateBox[0] = Device.ActiveMap.caltime;
+        ValidVM.ValidDateBox[0] = Device.ActiveMap.valtime;
       }
     }
 
@@ -1072,7 +1079,9 @@ namespace Ei_Dimension
               CalibrationViewModel.Instance.CalibrationSelectorState[1] = false;
               CalibrationViewModel.Instance.CalibrationSelectorState[2] = false;
               CalibrationViewModel.Instance.CalibrationSelectorState[0] = true;
-              CalibrationViewModel.Instance.CalibrationParameter = 0;
+              CalibrationViewModel.Instance.CalFailsInARow = 0;
+              CalibrationViewModel.Instance.CaliDateBox[0] = DateTime.Now.ToString("dd.MM.yyyy");
+              //TODO: Signify success
             }
             break;
           case 0x20:
@@ -1090,7 +1099,7 @@ namespace Ei_Dimension
             DashboardViewModel.Instance.PressureMon[2] = DashboardViewModel.Instance.MinPressure.ToString("f3");
             break;
           case 0x24:
-            ChannelsViewModel.Instance.Bias30Parameters[9] = exe.Parameter.ToString(); 
+            ChannelsViewModel.Instance.Bias30Parameters[9] = exe.Parameter.ToString();
             break;
           case 0x25:
             ChannelsViewModel.Instance.Bias30Parameters[7] = exe.Parameter.ToString();
@@ -1788,6 +1797,8 @@ namespace Ei_Dimension
 
     public static void SetLogOutput()
     {
+      if (!Directory.Exists(App.Device.Outdir + "\\SystemLogs"))
+        Directory.CreateDirectory(App.Device.Outdir + "\\SystemLogs");
       string logpath = Path.Combine(Path.Combine(@"C:\Emissioninc", Environment.MachineName), "SystemLogs", "EventLog");
       string logfilepath = logpath + ".txt";
       string backfilepath = logpath + ".bak";
