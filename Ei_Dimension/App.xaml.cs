@@ -1799,8 +1799,8 @@ namespace Ei_Dimension
 
     public static void SetLogOutput()
     {
-      if (!Directory.Exists(App.Device.Outdir + "\\SystemLogs"))
-        Directory.CreateDirectory(App.Device.Outdir + "\\SystemLogs");
+      if (!Directory.Exists(Device.Outdir + "\\SystemLogs"))
+        Directory.CreateDirectory(Device.Outdir + "\\SystemLogs");
       string logpath = Path.Combine(Path.Combine(@"C:\Emissioninc", Environment.MachineName), "SystemLogs", "EventLog");
       string logfilepath = logpath + ".txt";
       string backfilepath = logpath + ".bak";

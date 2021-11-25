@@ -15,8 +15,8 @@ namespace MicroCy
       VStats = new List<ValidationStats>(regions.Count);
       foreach (var reg in regions)
       {
-        VStats.Add(new ValidationStats(reg));
         _dict.Add(reg, VStats.Count);
+        VStats.Add(new ValidationStats(reg));
       }
     }
 
