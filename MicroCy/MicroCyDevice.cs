@@ -136,9 +136,12 @@ namespace MicroCy
       _actSecondaryIndex = (byte)Cmap.loworderidx;
 
       _classificationMap = new int[256, 256];
-      foreach(var point in Cmap.classificationMap)
+      foreach (var region in Cmap.regions)
       {
-        _classificationMap[point.x, point.y] = point.r;
+        foreach(var point in region.Points)
+        {
+        _classificationMap[point.x, point.y] = region.Number;
+        }
       }
     }
 
@@ -211,13 +214,9 @@ namespace MicroCy
       TerminationType = WellsInOrder[index].termType;
       ConstructClassificationMap(ActiveMap);
       WellResults.Clear();
-      // regions should have been added in ascending order
-      foreach (var point in ActiveMap.classificationMap)
+      foreach (var region in ActiveMap.regions)
       {
-        if(!WellResults.Any(x => x.regionNumber == point.r ))
-        {
-          WellResults.Add(new WellResults { regionNumber = (ushort)point.r });
-        }
+        WellResults.Add(new WellResults { regionNumber = (ushort)region.Number });
       }
       if (Reg0stats)
         WellResults.Add(new WellResults { regionNumber = 0 });

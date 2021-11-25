@@ -92,26 +92,20 @@ namespace Ei_Dimension.Models
       BackingActiveRegionsCount.Clear();
       BackingActiveRegionsMean.Clear();
       var i = 0;
-      var r = 0;
-      // regions should have been added in ascending order
-      foreach (var point in App.Device.ActiveMap.classificationMap)
+      foreach (var region in App.Device.ActiveMap.regions)
       {
-        if (point.r > r)
-        {
-          r = point.r;
-          RegionsList.Add(point.r.ToString());
-          RegionsNamesList.Add("");
-          ValidationReporterList.Add("");
-          ValidationCVList.Add("");
-          ActiveRegions.Add(false);
-          ValidationRegions.Add(false);
-          CurrentActiveRegionsCount.Add("0");
-          CurrentActiveRegionsMean.Add("0");
-          BackingActiveRegionsCount.Add("0");
-          BackingActiveRegionsMean.Add("0");
-          AddTextboxes($"RegionsList[{i}]", $"RegionsNamesList[{i}]", $"ValidationReporterList[{i}]", $"ValidationCVList[{i}]");
-          i++;
-        }
+        RegionsList.Add(region.Number.ToString());
+        RegionsNamesList.Add("");
+        ValidationReporterList.Add("");
+        ValidationCVList.Add("");
+        ActiveRegions.Add(false);
+        ValidationRegions.Add(false);
+        CurrentActiveRegionsCount.Add("0");
+        CurrentActiveRegionsMean.Add("0");
+        BackingActiveRegionsCount.Add("0");
+        BackingActiveRegionsMean.Add("0");
+        AddTextboxes($"RegionsList[{i}]", $"RegionsNamesList[{i}]", $"ValidationReporterList[{i}]", $"ValidationCVList[{i}]");
+        i++;
       }
     }
 

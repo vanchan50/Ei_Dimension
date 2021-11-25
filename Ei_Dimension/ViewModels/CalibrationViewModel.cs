@@ -179,11 +179,14 @@ namespace Ei_Dimension.ViewModels
           regs.Add(int.Parse(App.MapRegions.RegionsList[i]));
         }
       }
-      foreach (var point in App.Device.ActiveMap.classificationMap)
+      foreach (var region in App.Device.ActiveMap.regions)
       {
-        if (regs.Contains(point.r))
+        if (regs.Contains(region.Number))
         {
-          ResultsViewModel.Instance.ValidationWorldMap.Add(new HeatMapData((int)HeatMapData.bins[point.x], (int)HeatMapData.bins[point.y]));
+          foreach (var point in region.Points)
+          {
+            ResultsViewModel.Instance.ValidationWorldMap.Add(new HeatMapData((int)HeatMapData.bins[point.x], (int)HeatMapData.bins[point.y]));
+          }
         }
       }
     }

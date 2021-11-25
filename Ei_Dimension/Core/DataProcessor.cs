@@ -134,16 +134,10 @@ namespace Ei_Dimension.Core
       var green = new int[ResVM.CurrentReporter.Count];
       var violet = new int[ResVM.CurrentReporter.Count];
 
-      var r = 0;
-      // regions should have been added in ascending order
       List<List<float>> ActiveRegionsStats = new List<List<float>>();  //for mean and count
-      foreach (var point in App.Device.ActiveMap.classificationMap)
+      foreach (var region in App.Device.ActiveMap.regions)
       {
-        if (point.r > r)
-        {
-          ActiveRegionsStats.Add(new List<float>());
-          r = point.r;
-        }
+        ActiveRegionsStats.Add(new List<float>());
       }
       //bool failed = false;
       foreach (var beadD in list)

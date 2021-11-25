@@ -462,9 +462,12 @@ namespace Ei_Dimension.ViewModels
       _ = App.Current.Dispatcher.BeginInvoke((Action)(() =>
       {
         World12Map.Clear();
-        foreach (var point in App.Device.ActiveMap.classificationMap)
+        foreach (var region in App.Device.ActiveMap.regions)
         {
-          World12Map.Add(new HeatMapData((int)HeatMapData.bins[point.x], (int)HeatMapData.bins[point.y]));
+          foreach (var point in region.Points)
+          {
+            World12Map.Add(new HeatMapData((int)HeatMapData.bins[point.x], (int)HeatMapData.bins[point.y]));
+          }
         }
         PlotCurrent(DisplaysCurrentmap);
       }));
