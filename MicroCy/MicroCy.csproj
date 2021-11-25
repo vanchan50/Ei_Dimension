@@ -78,6 +78,8 @@
     <Compile Include="Structs\ReadingWellEventArgs.cs" />
     <Compile Include="Structs\RegionReport.cs" />
     <Compile Include="USBConnection.cs" />
+    <Compile Include="ValidationStats.cs" />
+    <Compile Include="Validator.cs" />
     <Compile Include="WellReport.cs" />
     <Compile Include="WellResults.cs" />
     <Compile Include="Structs\Wells.cs" />

@@ -1778,7 +1778,9 @@ namespace Ei_Dimension
           }
           break;
         case OperationMode.Validation:
-          AnalyzeValidationResults();
+          Device.Validator.CalculateResults();
+          if (AnalyzeValidationResults())
+            ValidationViewModel.Instance.ValidateMap();
           break;
       }
     }
@@ -1826,18 +1828,33 @@ namespace Ei_Dimension
 
     private static bool AnalyzeValidationResults()
     {
-      /*
-      Find the ratio of the entered values as a percentage to the middle value if there is an odd number of regions with reporter above 0 in the validation map,
-      or the lower of the 2 middle numbers if there is an even number. perform the same calculation on the validation run, each ratio from the run must be
-      within 10% of the ratios entered for the V map. The lowest median read value must be within 20% of the entered value and the highest median must be
-      within 20% of the entered value. The CV of CL1 CL2 median for each V region must be within 20% of the CV entered.
-      Also, C should calculate and save the DNR coefficient by dividing the median Green Minor by media Green Major, i.e. the high sensitivity channel
-      by the other green channel. this should be done after the 0x1b message has been sent and the bias adjustments are fixed, using the remaining beads
-      in the sample loop
-      */
+      double reporterMedianPercentage = 0.1;
+      double cl12MedianPercentage = 0.1;
+      double cl12CoefficientVariation = 0.1;
+      for (var i = 0; i < MapRegions.RegionsList.Count; i++)
+      {
+        if (MapRegions.ValidationRegions[i])
+        {
+          int regionNum = int.Parse(MapRegions.RegionsList[i]);
+          int index = Device.Validator.VStats.FindIndex(x => x.Region == regionNum);
+          double inputReporter = double.Parse(MapRegions.ValidationReporterList[index]);
+          double inputCV = double.Parse(MapRegions.ValidationCVList[index]);
 
-      //1 odd/even number of regions with reporter>0
-      //find ratio
+
+          if (Math.Pow(Device.Validator.VStats[index].Stats[1].cv - inputCV, 2) +
+          Math.Pow(Device.Validator.VStats[index].Stats[2].cv - inputCV, 2) > cl12CoefficientVariation)
+          {
+            return false;
+          }
+          if (Device.Validator.VStats[index].Stats[0].mfi < inputReporter * (1 - reporterMedianPercentage) &&
+            Device.Validator.VStats[index].Stats[0].mfi > inputReporter * (1 + reporterMedianPercentage))
+          {
+            return false;
+          }
+        }
+      }
+
+
       return true;
     }
   }

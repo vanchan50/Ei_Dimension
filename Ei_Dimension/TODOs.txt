@@ -117,7 +117,7 @@ calibration page and channels page "save bias to map" button should do everythin
 ----
 val mode
 set volume 25ml
-mean/median  of cl1/cl2 compared to region center
+!!!!!mean/median  of cl1/cl2 compared to region center!!!!
 
 cv ~20% for bottom left is kinda ok, cv should be small for region 100. comparing cv of a region to input cv
 median reporter for a region compared to input reporter

@@ -25,5 +25,10 @@ namespace Ei_Dimension.ViewModels
     {
       //App.MapRegions.AddValidationRegion(num);
     }
+
+    public void ValidateMap()
+    {
+
+    }
   }
 }

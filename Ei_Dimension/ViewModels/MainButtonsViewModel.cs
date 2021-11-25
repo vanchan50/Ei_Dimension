@@ -2,6 +2,7 @@
 using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace Ei_Dimension.ViewModels
@@ -57,6 +58,7 @@ namespace Ei_Dimension.ViewModels
           ResultsViewModel.Instance.ShowSinglePlexResults();
           break;
         case MicroCy.OperationMode.Validation:
+          MakeNewValidator();
           break;
       }
 
@@ -77,6 +79,20 @@ namespace Ei_Dimension.ViewModels
         if (App.Device.WellsToRead > 0) //if end read on tube or single well, nothing else is aspirated otherwise
           App.Device.WellsToRead = App.Device.CurrentWellIdx + 1; //just read the next well in order since it is already aspirated
       }
+    }
+
+    private void MakeNewValidator()
+    {
+      var regions = new List<int>();
+      for (var i = 0; i < App.MapRegions.RegionsList.Count; i++)
+      {
+        if (App.MapRegions.ValidationRegions[i])
+        {
+          int reg = int.Parse(App.MapRegions.RegionsList[i]);
+          regions.Add(reg);
+        }
+      }
+      App.Device.Validator = new MicroCy.Validator(regions);
     }
   }
 }
