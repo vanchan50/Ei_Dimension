@@ -72,7 +72,7 @@ namespace Ei_Dimension.ViewModels
 
     public void SaveBiasButtonClick()
     {
-      App.Device.SaveCalVals(new MicroCy.BiasAt30Temp
+      App.Device.SaveCalVals(new MicroCy.MapCalParameters
       {
         TempCl0 = int.Parse(Bias30Parameters[8]),
         TempCl1 = int.Parse(Bias30Parameters[5]),
@@ -83,7 +83,11 @@ namespace Ei_Dimension.ViewModels
         TempVioletSsc = int.Parse(Bias30Parameters[7]),
         TempRpMaj = int.Parse(Bias30Parameters[1]),
         TempRpMin = int.Parse(Bias30Parameters[2]),
-        TempFsc = int.Parse(Bias30Parameters[9])
+        TempFsc = int.Parse(Bias30Parameters[9]),
+        MinSSC = ushort.Parse(CalibrationViewModel.Instance.EventTriggerContents[1]),
+        MaxSSC = ushort.Parse(CalibrationViewModel.Instance.EventTriggerContents[2]),
+        Caldate = null,
+        Valdate = null
       });
     }
 

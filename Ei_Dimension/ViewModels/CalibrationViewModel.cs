@@ -84,9 +84,47 @@ namespace Ei_Dimension.ViewModels
       App.Device.MainCommand("Set Property", code: 0x1b, parameter: num);
     }
 
+    public void ConfirmCalibration()
+    {
+      App.Device.SaveCalVals(new MicroCy.MapCalParameters
+      {
+        TempCl0 = -1,
+        TempCl1 = -1,
+        TempCl2 = -1,
+        TempCl3 = -1,
+        TempRedSsc = -1,
+        TempGreenSsc = -1,
+        TempVioletSsc = -1,
+        TempRpMaj = -1,
+        TempRpMin = -1,
+        TempFsc = -1,
+        MinSSC = -1,
+        MaxSSC = -1,
+        Caldate = System.DateTime.Now.ToString("dd.MM.yyyy"),
+        Valdate = null
+      });
+      CaliDateBox[0] = App.Device.ActiveMap.caltime;
+    }
+
     public void SaveCalibrationToMapClick()
     {
-      App.Device.SaveCalVals(minSSC: ushort.Parse(EventTriggerContents[1]), maxSSC: ushort.Parse(EventTriggerContents[2]));
+      App.Device.SaveCalVals(new MicroCy.MapCalParameters
+      {
+        TempCl0 = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[8]),
+        TempCl1 = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[5]),
+        TempCl2 = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[6]),
+        TempCl3 = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[3]),
+        TempRedSsc = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[4]),
+        TempGreenSsc = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[0]),
+        TempVioletSsc = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[7]),
+        TempRpMaj = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[1]),
+        TempRpMin = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[2]),
+        TempFsc = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[9]),
+        MinSSC = ushort.Parse(EventTriggerContents[1]),
+        MaxSSC = ushort.Parse(EventTriggerContents[2]),
+        Caldate = null,
+        Valdate = null
+      });
     }
 
     public void CalModeToggle()
@@ -105,6 +143,7 @@ namespace Ei_Dimension.ViewModels
           MainButtonsViewModel.Instance.Flavor[0] = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Maintenance_Calibration),
             Language.TranslationSource.Instance.CurrentCulture);
           MainWindow.Instance.wndw.Background = System.Windows.Media.Brushes.LightPink;
+          App.LockMapSelection();
           return;
         }
         CalModeOn = false;
@@ -117,6 +156,7 @@ namespace Ei_Dimension.ViewModels
         App.Device.MainCommand("Set Property", code: 0xaf, parameter: ushort.Parse(_dbsampleVolumeTempHolder));
         MainButtonsViewModel.Instance.Flavor[0] = null;
         MainWindow.Instance.wndw.Background = (System.Windows.Media.SolidColorBrush)App.Current.Resources["AppBackground"];
+        App.UnlockMapSelection();
       }
     }
 
@@ -124,7 +164,7 @@ namespace Ei_Dimension.ViewModels
     {
       if (ValModeOn)
       {
-        if (App.Device.Mode == MicroCy.OperationMode.Normal)
+        if (App.Device.Mode == MicroCy.OperationMode.Normal && ValMapInfoReady())
         {
           _dbsampleVolumeTempHolder = DashboardViewModel.Instance.Volumes[0];
           DashboardViewModel.Instance.SetFixedVolumeButtonClick(25);
@@ -133,6 +173,7 @@ namespace Ei_Dimension.ViewModels
           MainButtonsViewModel.Instance.Flavor[0] = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Maintenance_Validation),
             Language.TranslationSource.Instance.CurrentCulture);
           MainWindow.Instance.wndw.Background = System.Windows.Media.Brushes.LightYellow;
+          App.LockMapSelection();
           return;
         }
         ValModeOn = false;
@@ -144,6 +185,7 @@ namespace Ei_Dimension.ViewModels
         App.Device.MainCommand("Set Property", code: 0xaf, parameter: ushort.Parse(_dbsampleVolumeTempHolder));
         MainButtonsViewModel.Instance.Flavor[0] = null;
         MainWindow.Instance.wndw.Background = (System.Windows.Media.SolidColorBrush)App.Current.Resources["AppBackground"];
+        App.UnlockMapSelection();
       }
     }
 
@@ -166,6 +208,25 @@ namespace Ei_Dimension.ViewModels
               new HeatMapData((int)HeatMapData.bins[cl1Index + i], (int)HeatMapData.bins[cl2Index + j]));
         }
       }
+    }
+
+    private bool ValMapInfoReady()
+    {
+      bool activeRegions = false;
+      for (var i = 0; i < App.MapRegions.RegionsList.Count; i++)
+      {
+        if (App.MapRegions.ValidationRegions[i])
+        {
+          activeRegions = true;
+          if(App.MapRegions.ValidationReporterList[i] == "" || App.MapRegions.ValidationCVList[i] == "")
+          {
+            return false;
+          }
+        }
+      }
+      if (!activeRegions)
+        return false;
+      return true;
     }
 
     public void MakeValMap()

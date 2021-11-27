@@ -168,6 +168,20 @@ namespace Ei_Dimension
       }
     }
 
+    public static void LockMapSelection()
+    {
+      Views.DashboardView.Instance.MapSelectr.IsEnabled = false;
+      Views.CalibrationView.Instance.MapSelectr.IsEnabled = false;
+      Views.ValidationView.Instance.MapSelectr.IsEnabled = false;
+    }
+
+    public static void UnlockMapSelection()
+    {
+      Views.DashboardView.Instance.MapSelectr.IsEnabled = true;
+      Views.CalibrationView.Instance.MapSelectr.IsEnabled = true;
+      Views.ValidationView.Instance.MapSelectr.IsEnabled = true;
+    }
+
     public static void SetSystemControl(byte num)
     {
       Device.SystemControl = num;
@@ -957,29 +971,8 @@ namespace Ei_Dimension
     private static void TimerTick(object sender, EventArgs e)
     {
       if (_isStartup) //TODO: can be a Task launched from ctor, that polls if all instances are != null
-      {
-        MapRegions = Models.MapRegions.Create(
-          Views.SelRegionsView.Instance.RegionsBorder,
-          Views.SelRegionsView.Instance.RegionsNamesBorder,
-          Views.ResultsView.Instance.Table,
-          Views.DashboardView.Instance.DbActiveRegionNo,
-          Views.DashboardView.Instance.DbActiveRegionName,
-          Views.ValidationView.Instance.ValidationNums,
-          Views.ValidationView.Instance.ValidationReporterValues,
-          Views.ValidationView.Instance.ValidationCVValues);
-        ResultsViewModel.Instance.PlatePictogram.SetGrid(Views.ResultsView.Instance.DrawingPlate);
-        ResultsViewModel.Instance.PlatePictogram.SetWarningGrid(Views.ResultsView.Instance.WarningGrid);
-        Views.CalibrationView.Instance.clmap.DataContext = DashboardViewModel.Instance;
-        Views.ValidationView.Instance.clmap.DataContext = DashboardViewModel.Instance;
-        if (Settings.Default.LastTemplate != "None")
-        {
-          TemplateSelectViewModel.Instance.SelectedItem = Settings.Default.LastTemplate;
-          TemplateSelectViewModel.Instance.LoadTemplate();
-        }
-        _isStartup = false;
-        SetLanguage(MaintenanceViewModel.Instance.LanguageItems[Settings.Default.Language].Locale);
-        Program.SplashScreen.Close(TimeSpan.FromMilliseconds(1000));
-      }
+        OnAppLoaded();
+
       TextBoxUpdater();
 
       if (Device.IsMeasurementGoing)
@@ -1081,7 +1074,7 @@ namespace Ei_Dimension
               CalibrationViewModel.Instance.CalibrationSelectorState[0] = true;
               CalibrationViewModel.Instance.CalFailsInARow = 0;
               CalibrationViewModel.Instance.CaliDateBox[0] = DateTime.Now.ToString("dd.MM.yyyy");
-              //TODO: Signify success
+              CalibrationViewModel.Instance.ConfirmCalibration();
             }
             break;
           case 0x20:
@@ -1765,22 +1758,15 @@ namespace Ei_Dimension
         case OperationMode.Normal:
           break;
         case OperationMode.Calibration:
-          if (AnalyzeCalibrationResults())
+          if (++CalibrationViewModel.Instance.CalFailsInARow > 3)
           {
-
-          }
-          else
-          {
-            if (++CalibrationViewModel.Instance.CalFailsInARow > 3)
-            {
-              //Cal fail notification
-            }
+            //Cal fail notification
           }
           break;
         case OperationMode.Validation:
           Device.Validator.CalculateResults();
           if (AnalyzeValidationResults())
-            ValidationViewModel.Instance.ValidateMap();
+            ValidationViewModel.Instance.ConfirmValidation();
           break;
       }
     }
@@ -1821,9 +1807,29 @@ namespace Ei_Dimension
     //  base.OnStartup(e);
     //}
 
-    private static bool AnalyzeCalibrationResults()
+    private static void OnAppLoaded()
     {
-      return true;
+      MapRegions = Models.MapRegions.Create(
+        Views.SelRegionsView.Instance.RegionsBorder,
+        Views.SelRegionsView.Instance.RegionsNamesBorder,
+        Views.ResultsView.Instance.Table,
+        Views.DashboardView.Instance.DbActiveRegionNo,
+        Views.DashboardView.Instance.DbActiveRegionName,
+        Views.ValidationView.Instance.ValidationNums,
+        Views.ValidationView.Instance.ValidationReporterValues,
+        Views.ValidationView.Instance.ValidationCVValues);
+      ResultsViewModel.Instance.PlatePictogram.SetGrid(Views.ResultsView.Instance.DrawingPlate);
+      ResultsViewModel.Instance.PlatePictogram.SetWarningGrid(Views.ResultsView.Instance.WarningGrid);
+      Views.CalibrationView.Instance.clmap.DataContext = DashboardViewModel.Instance;
+      Views.ValidationView.Instance.clmap.DataContext = DashboardViewModel.Instance;
+      if (Settings.Default.LastTemplate != "None")
+      {
+        TemplateSelectViewModel.Instance.SelectedItem = Settings.Default.LastTemplate;
+        TemplateSelectViewModel.Instance.LoadTemplate();
+      }
+      _isStartup = false;
+      SetLanguage(MaintenanceViewModel.Instance.LanguageItems[Settings.Default.Language].Locale);
+      Program.SplashScreen.Close(TimeSpan.FromMilliseconds(1000));
     }
 
     private static bool AnalyzeValidationResults()
@@ -1840,12 +1846,18 @@ namespace Ei_Dimension
           double inputReporter = double.Parse(MapRegions.ValidationReporterList[index]);
           double inputCV = double.Parse(MapRegions.ValidationCVList[index]);
 
+          if (Math.Pow(Device.Validator.VStats[index].Stats[1].mfi - Models.HeatMapData.bins[Device.ActiveMap.regions[i].Center.x], 2) +
+          Math.Pow(Device.Validator.VStats[index].Stats[2].mfi - Models.HeatMapData.bins[Device.ActiveMap.regions[i].Center.y], 2) > cl12MedianPercentage)
+          {
+            return false;
+          }
 
           if (Math.Pow(Device.Validator.VStats[index].Stats[1].cv - inputCV, 2) +
           Math.Pow(Device.Validator.VStats[index].Stats[2].cv - inputCV, 2) > cl12CoefficientVariation)
           {
             return false;
           }
+
           if (Device.Validator.VStats[index].Stats[0].mfi < inputReporter * (1 - reporterMedianPercentage) &&
             Device.Validator.VStats[index].Stats[0].mfi > inputReporter * (1 + reporterMedianPercentage))
           {

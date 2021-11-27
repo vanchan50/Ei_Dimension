@@ -1,6 +1,5 @@
 ﻿using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
-using System;
 using System.Collections.ObjectModel;
 
 namespace Ei_Dimension.ViewModels
@@ -26,9 +25,27 @@ namespace Ei_Dimension.ViewModels
       //App.MapRegions.AddValidationRegion(num);
     }
 
-    public void ValidateMap()
+    public void ConfirmValidation()
     {
 
+      App.Device.SaveCalVals(new MicroCy.MapCalParameters
+      {
+        TempCl0 = -1,
+        TempCl1 = -1,
+        TempCl2 = -1,
+        TempCl3 = -1,
+        TempRedSsc = -1,
+        TempGreenSsc = -1,
+        TempVioletSsc = -1,
+        TempRpMaj = -1,
+        TempRpMin = -1,
+        TempFsc = -1,
+        MinSSC = -1,
+        MaxSSC = -1,
+        Caldate = null,
+        Valdate = System.DateTime.Now.ToString("dd.MM.yyyy")
+      });
+      ValidDateBox[0] = App.Device.ActiveMap.valtime;
     }
   }
 }

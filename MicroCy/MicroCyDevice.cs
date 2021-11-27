@@ -373,31 +373,39 @@ namespace MicroCy
       }
     }
 
-    public void SaveCalVals(BiasAt30Temp? temps = null, ushort minSSC = 0, ushort maxSSC = 0)
+    public void SaveCalVals(MapCalParameters param)
     {
       var idx = MapList.FindIndex(x => x.mapName == ActiveMap.mapName);
       var map = MapList[idx];
-      if (temps != null)
-      {
-        map.calrpmin = temps.Value.TempRpMin;
-        map.calrpmaj = temps.Value.TempRpMaj;
-        map.calrssc = temps.Value.TempRedSsc;
-        map.calgssc = temps.Value.TempGreenSsc;
-        map.calvssc = temps.Value.TempVioletSsc;
-        map.calcl0 = temps.Value.TempCl0;
-        map.calcl1 = temps.Value.TempCl1;
-        map.calcl2 = temps.Value.TempCl2;
-        map.calcl3 = temps.Value.TempCl3;
-        map.calfsc = temps.Value.TempFsc;
-      }
-      else
-      {
-        if (minSSC != 0 && maxSSC != 0)
-        {
-          map.minmapssc = minSSC;
-          map.maxmapssc = maxSSC;
-        }
-      }
+      if(param.TempRpMin >= 0)
+        map.calrpmin = param.TempRpMin;
+      if (param.TempRpMaj >= 0)
+        map.calrpmaj = param.TempRpMaj;
+      if (param.TempRedSsc >= 0)
+        map.calrssc = param.TempRedSsc;
+      if (param.TempGreenSsc >= 0)
+        map.calgssc = param.TempGreenSsc;
+      if (param.TempVioletSsc >= 0)
+        map.calvssc = param.TempVioletSsc;
+      if (param.TempCl0 >= 0)
+        map.calcl0 = param.TempCl0;
+      if (param.TempCl1 >= 0)
+        map.calcl1 = param.TempCl1;
+      if (param.TempCl2 >= 0)
+        map.calcl2 = param.TempCl2;
+      if (param.TempCl3 >= 0)
+        map.calcl3 = param.TempCl3;
+      if (param.TempFsc >= 0)
+        map.calfsc = param.TempFsc;
+      if (param.MinSSC >= 0)
+        map.minmapssc = (ushort)param.MinSSC;
+      if (param.MaxSSC >= 0)
+        map.maxmapssc = (ushort)param.MaxSSC;
+      if (param.Caldate != null)
+        map.caltime = param.Caldate;
+      if (param.Valdate != null)
+        map.valtime = param.Valdate;
+
       MapList[idx] = map;
       ActiveMap = MapList[idx];
 

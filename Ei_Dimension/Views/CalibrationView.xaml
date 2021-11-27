@@ -411,7 +411,7 @@
                    HorizontalAlignment="Center"
                    VerticalAlignment="Top"
                    Margin="0,16,0,3"/>
-          <dx:DropDownButton Width="170"
+          <dx:DropDownButton Width="170" Name="MapSelectr"
                            Height="80" Cursor="Hand"
                            FontSize="25"
                            HorizontalAlignment="Center"

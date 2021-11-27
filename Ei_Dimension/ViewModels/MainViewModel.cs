@@ -109,6 +109,7 @@ namespace Ei_Dimension.ViewModels
     {
       if (TouchControlsEnabled)
       {
+        tb.CaretBrush = System.Windows.Media.Brushes.Transparent;
         var p = tb.PointToScreen(MainWindow.Instance.wndw.PointFromScreen(new System.Windows.Point(0, 0)));
         double shiftX;
         double shiftY;
@@ -128,12 +129,18 @@ namespace Ei_Dimension.ViewModels
         MainWindow.Instance.Npd.Margin = new System.Windows.Thickness(p.X - shiftX, p.Y + shiftY, 0, 0);
         NumpadVisible = System.Windows.Visibility.Visible;
       }
+      else
+      {
+        tb.CaretBrush = (System.Windows.Media.Brush)App.Current.Resources["AppTextColor"];
+        tb.SelectAll();
+      }
     }
 
     public void KeyboardToggle(System.Windows.Controls.TextBox tb)
     {
       if (TouchControlsEnabled)
       {
+        tb.CaretBrush = System.Windows.Media.Brushes.Transparent;
         var p = tb.PointToScreen(MainWindow.Instance.wndw.PointFromScreen(new System.Windows.Point(0, 0)));
         double shiftX;
         double shiftY;
@@ -160,6 +167,11 @@ namespace Ei_Dimension.ViewModels
 
         MainWindow.Instance.Kbd.Margin = new System.Windows.Thickness(p.X - shiftX, p.Y + shiftY, 0, 0);
         KeyboardVisible = System.Windows.Visibility.Visible;
+      }
+      else
+      {
+        tb.CaretBrush = (System.Windows.Media.Brush)App.Current.Resources["AppTextColor"];
+        tb.SelectAll();
       }
     }
 

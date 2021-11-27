@@ -1,7 +1,7 @@
 ﻿
 namespace MicroCy
 {
-  public struct BiasAt30Temp
+  public struct MapCalParameters
   {
     public int TempCl0;
     public int TempCl1;
@@ -13,5 +13,9 @@ namespace MicroCy
     public int TempRpMaj;
     public int TempRpMin;
     public int TempFsc;
+    public int MinSSC;
+    public int MaxSSC;
+    public string Caldate;
+    public string Valdate;
   }
 }
