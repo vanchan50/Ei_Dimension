@@ -31,15 +31,17 @@ namespace Ei_Dimension.Models
         OnPropertyChanged();
       }
     }
+    public int Region { get; }
     private int _x;
     private int _y;
     private int _a;
     public static double[] bins { get; }
-    public HeatMapData(int x, int y)
+    public HeatMapData(int x, int y, int r = -1)
     {
       X = x;
       Y = y;
       _a = 0;
+      Region = r;
     }
     static HeatMapData()
     {

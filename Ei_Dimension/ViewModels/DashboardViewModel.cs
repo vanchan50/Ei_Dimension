@@ -71,7 +71,6 @@ namespace Ei_Dimension.ViewModels
         ClassiMapItems.Add(new DropDownButtonContents("No map", this));
       SelectedClassiMapContent = App.Device.ActiveMap.mapName;
       DropDownButtonContents.ResetIndex();
-      ResultsViewModel.Instance.FillWorldMaps();
 
       ChConfigItems = new ObservableCollection<DropDownButtonContents>
       {

@@ -25,41 +25,49 @@
                   Content="{Binding PlexButtonString}"
                   Style="{StaticResource ButtonStyle}"
                   Command="{Binding PlexButtonClickCommand}"/>
-        <StackPanel Margin="0,48,0,4"
-                    Visibility="{Binding MultiPlexVisible}">
-          <Border Height="45"
+        <Grid Visibility="{Binding MultiPlexVisible}">
+          <StackPanel Margin="0,48,0,4">
+            <Border Height="45"
                 HorizontalAlignment="Left">
-            <Grid>
-              <TextBlock Text="{lang:Loc Name}"
+              <Grid>
+                <TextBlock Text="{lang:Loc Name}"
                          Width="178"
                          FontSize="30"
                          TextAlignment="Center"
                          HorizontalAlignment="Left"/>
-              <TextBlock Text="{lang:Loc Count}"
+                <TextBlock Text="{lang:Loc Count}"
                          FontSize="30"
                          Width="119"
                          Margin="178,0,0,0"
                          TextAlignment="Center"
                          HorizontalAlignment="Left"/>
-              <TextBlock Text="{lang:Loc Mean}"
+                <TextBlock Text="{lang:Loc Mean}"
                          FontSize="30"
                          Width="155"
                          Margin="317,0,0,0"
                          TextAlignment="Left"
                          HorizontalAlignment="Left"/>
-            </Grid>
-          </Border>
-          <ScrollViewer HorizontalScrollBarVisibility="Disabled"
+              </Grid>
+            </Border>
+            <ScrollViewer HorizontalScrollBarVisibility="Disabled"
                     VerticalScrollBarVisibility="Visible" Height="803">
-            <ListBox Name="Table" Background="{StaticResource RibbonBackgroundActive}">
-              <ListBox.ItemsPanel>
-                <ItemsPanelTemplate>
-                  <WrapPanel Width="440"/>
-                </ItemsPanelTemplate>
-              </ListBox.ItemsPanel>
-            </ListBox>
-          </ScrollViewer>
-        </StackPanel>
+              <ListBox Name="Table" Background="{StaticResource RibbonBackgroundActive}">
+                <ListBox.ItemsPanel>
+                  <ItemsPanelTemplate>
+                    <WrapPanel Width="440"/>
+                  </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+              </ListBox>
+            </ScrollViewer>
+          </StackPanel>
+          <Rectangle Visibility="{Binding ValidationCoverVisible}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Width="451"
+                   Height="801"
+                   Fill="{StaticResource RibbonBackgroundActive}"
+                   Margin="1,94,0,0"/>
+        </Grid>
         <dx:WaitIndicator DeferedVisibility="{Binding WaitIndicatorVisibility}" Content="Loading..."
                           HorizontalAlignment="Left"
                           VerticalAlignment="Top"
@@ -75,9 +83,10 @@
         </dx:WaitIndicator>
         <!--Calibration Statistics-->
         <Border HorizontalAlignment="Left"
-                  VerticalAlignment="Top"
-                  Margin="0,50,0,0"
-                  Visibility="{Binding SinglePlexVisible}">
+                VerticalAlignment="Top"
+                Height="846"
+                Margin="0,50,0,0"
+                Visibility="{Binding SinglePlexVisible}">
           <StackPanel Orientation="Horizontal"
                   HorizontalAlignment="Stretch"
                   VerticalAlignment="Stretch">

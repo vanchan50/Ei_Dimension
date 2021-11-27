@@ -126,6 +126,13 @@
           Visibility="{Binding KeyboardVisible}">
       <Views:ScreenKeyboardView />
     </Grid>
+    
+    <!--Notification-->
+    <Grid Width="700" Height="300"
+          VerticalAlignment="Top" HorizontalAlignment="Left"
+          Margin="600,390,0,0">
+      <Views:NotificationView />
+    </Grid>
 
     <!--Event Count-->
     <Border HorizontalAlignment="Left"

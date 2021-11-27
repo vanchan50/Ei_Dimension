@@ -169,10 +169,10 @@ namespace Ei_Dimension.ViewModels
           _dbsampleVolumeTempHolder = DashboardViewModel.Instance.Volumes[0];
           DashboardViewModel.Instance.SetFixedVolumeButtonClick(25);
           App.Device.Mode = MicroCy.OperationMode.Validation;
-          MakeValMap();
           MainButtonsViewModel.Instance.Flavor[0] = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Maintenance_Validation),
             Language.TranslationSource.Instance.CurrentCulture);
           MainWindow.Instance.wndw.Background = System.Windows.Media.Brushes.LightYellow;
+          ResultsViewModel.Instance.ValidationCoverVisible = System.Windows.Visibility.Visible;
           App.LockMapSelection();
           return;
         }
@@ -185,6 +185,7 @@ namespace Ei_Dimension.ViewModels
         App.Device.MainCommand("Set Property", code: 0xaf, parameter: ushort.Parse(_dbsampleVolumeTempHolder));
         MainButtonsViewModel.Instance.Flavor[0] = null;
         MainWindow.Instance.wndw.Background = (System.Windows.Media.SolidColorBrush)App.Current.Resources["AppBackground"];
+        ResultsViewModel.Instance.ValidationCoverVisible = System.Windows.Visibility.Hidden;
         App.UnlockMapSelection();
       }
     }
@@ -227,29 +228,6 @@ namespace Ei_Dimension.ViewModels
       if (!activeRegions)
         return false;
       return true;
-    }
-
-    public void MakeValMap()
-    {
-      ResultsViewModel.Instance.ValidationWorldMap = new List<HeatMapData>();
-      var regs = new List<int>();
-      for (var i = 0; i < App.MapRegions.ValidationRegions.Count; i++)
-      {
-        if (App.MapRegions.ValidationRegions[i])
-        {
-          regs.Add(int.Parse(App.MapRegions.RegionsList[i]));
-        }
-      }
-      foreach (var region in App.Device.ActiveMap.regions)
-      {
-        if (regs.Contains(region.Number))
-        {
-          foreach (var point in region.Points)
-          {
-            ResultsViewModel.Instance.ValidationWorldMap.Add(new HeatMapData((int)HeatMapData.bins[point.x], (int)HeatMapData.bins[point.y]));
-          }
-        }
-      }
     }
 
     public void FocusedBox(int num)

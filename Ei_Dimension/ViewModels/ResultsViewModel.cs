@@ -13,6 +13,7 @@ namespace Ei_Dimension.ViewModels
   {
     public virtual System.Windows.Visibility MultiPlexVisible { get; set; }
     public virtual System.Windows.Visibility SinglePlexVisible { get; set; }
+    public virtual System.Windows.Visibility ValidationCoverVisible { get; set; }
     public virtual bool WaitIndicatorVisibility { get; set; }
     public virtual ObservableCollection<bool> ScatterSelectorState { get; set; }
     public virtual ObservableCollection<HistogramData> CurrentForwardSsc { get; set; }
@@ -38,7 +39,6 @@ namespace Ei_Dimension.ViewModels
     public List<HeatMapData> World13Map { get; private set; }
     public List<HeatMapData> World23Map { get; private set; }
     public List<HeatMapData> CalibrationWorldMap { get; set; }
-    public List<HeatMapData> ValidationWorldMap { get; set; }
     public bool DisplaysCurrentmap { get; private set; }
     public bool FlipMapAnalysis { get; private set; }
     public List<HeatMapData> DisplayedMap { get; set; }
@@ -88,6 +88,7 @@ namespace Ei_Dimension.ViewModels
       WaitIndicatorVisibility = false;
       MultiPlexVisible = System.Windows.Visibility.Visible;
       SinglePlexVisible = System.Windows.Visibility.Hidden;
+      ValidationCoverVisible = System.Windows.Visibility.Hidden;
       PlexButtonString = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Experiment_Active_Regions), Language.TranslationSource.Instance.CurrentCulture);
       byte temp = Settings.Default.ScatterGraphSelector;
       if (temp >= 16)
@@ -143,16 +144,16 @@ namespace Ei_Dimension.ViewModels
       for (var i = 0; i < HistogramData.Bins.Length; i++)
       {
         CurrentForwardSsc.Add(new HistogramData(0, HistogramData.Bins[i]));
-         CurrentVioletSsc.Add(new HistogramData(0, HistogramData.Bins[i]));
-            CurrentRedSsc.Add(new HistogramData(0, HistogramData.Bins[i]));
-          CurrentGreenSsc.Add(new HistogramData(0, HistogramData.Bins[i]));
-          CurrentReporter.Add(new HistogramData(0, HistogramData.Bins[i]));
-                                                   
+        CurrentVioletSsc.Add(new HistogramData(0, HistogramData.Bins[i]));
+        CurrentRedSsc.Add(new HistogramData(0, HistogramData.Bins[i]));
+        CurrentGreenSsc.Add(new HistogramData(0, HistogramData.Bins[i]));
+        CurrentReporter.Add(new HistogramData(0, HistogramData.Bins[i]));
+
         BackingForwardSsc.Add(new HistogramData(0, HistogramData.Bins[i]));
-         BackingVioletSsc.Add(new HistogramData(0, HistogramData.Bins[i]));
-            BackingRedSsc.Add(new HistogramData(0, HistogramData.Bins[i]));
-          BackingGreenSsc.Add(new HistogramData(0, HistogramData.Bins[i]));
-          BackingReporter.Add(new HistogramData(0, HistogramData.Bins[i]));
+        BackingVioletSsc.Add(new HistogramData(0, HistogramData.Bins[i]));
+        BackingRedSsc.Add(new HistogramData(0, HistogramData.Bins[i]));
+        BackingGreenSsc.Add(new HistogramData(0, HistogramData.Bins[i]));
+        BackingReporter.Add(new HistogramData(0, HistogramData.Bins[i]));
       }
 
       CurrentCL01Map = new List<HeatMapData>();
@@ -271,7 +272,7 @@ namespace Ei_Dimension.ViewModels
       CornerButtonsChecked[1] = false;
       CornerButtonsChecked[2] = false;
       CornerButtonsChecked[3] = false;
-      CornerButtonsChecked[corner - 1 ] = true;
+      CornerButtonsChecked[corner - 1] = true;
       PlatePictogram.ChangeCorner(corner);
     }
 
@@ -335,7 +336,7 @@ namespace Ei_Dimension.ViewModels
         BackingCL12Dict.Clear();
         BackingCL13Dict.Clear();
         BackingCL23Dict.Clear();
-        for(var i = 0; i < App.MapRegions.BackingActiveRegionsCount.Count; i++)
+        for (var i = 0; i < App.MapRegions.BackingActiveRegionsCount.Count; i++)
         {
           App.MapRegions.BackingActiveRegionsCount[i] = "0";
           App.MapRegions.BackingActiveRegionsMean[i] = "0";
@@ -394,7 +395,7 @@ namespace Ei_Dimension.ViewModels
 
     public void FillAllData()
     {
-      _ = Task.Run(async ()=>
+      _ = Task.Run(async () =>
       {
         var path = PlatePictogram.GetSelectedFilePath();
         if (path == null)
@@ -407,7 +408,7 @@ namespace Ei_Dimension.ViewModels
         _ = Task.Run(() => Core.DataProcessor.BinScatterData(beadStructslist, fromFile: true));
         Core.DataProcessor.BinMapData(beadStructslist, current: false);
         //DisplayedMap.Sort((x, y) => x.A.CompareTo(y.A));
-        _ = App.Current.Dispatcher.BeginInvoke((Action)(()=>
+        _ = App.Current.Dispatcher.BeginInvoke((Action)(() =>
         {
           Core.DataProcessor.AnalyzeHeatMap(DisplayedMap);
         }));
@@ -426,7 +427,7 @@ namespace Ei_Dimension.ViewModels
         DisplayedRedSsc = CurrentRedSsc;
         DisplayedGreenSsc = CurrentGreenSsc;
         DisplayedReporter = CurrentReporter;
-        if(App.MapRegions != null)
+        if (App.MapRegions != null)
         {
           App.MapRegions.DisplayedActiveRegionsCount = App.MapRegions.CurrentActiveRegionsCount;
           App.MapRegions.DisplayedActiveRegionsMean = App.MapRegions.CurrentActiveRegionsMean;
@@ -466,41 +467,56 @@ namespace Ei_Dimension.ViewModels
         {
           foreach (var point in region.Points)
           {
-            World12Map.Add(new HeatMapData((int)HeatMapData.bins[point.x], (int)HeatMapData.bins[point.y]));
+            World12Map.Add(new HeatMapData((int)HeatMapData.bins[point.x], (int)HeatMapData.bins[point.y], region.Number));
           }
         }
         PlotCurrent(DisplaysCurrentmap);
       }));
     }
-
+    
     private void SetWorldMap(List<HeatMapData> Map)
     {
+      Action Wmap = null;
       switch (App.Device.Mode)
       {
         case MicroCy.OperationMode.Normal:
+          Wmap = () => {
+            foreach (var point in Map)
+            {
+              if (App.MapRegions.ActiveRegionNums.Contains(point.Region))
+              {
+                if (FlipMapAnalysis)
+                  WorldMap.Add(new HeatMapData(point.Y, point.X));
+                else
+                  WorldMap.Add(new HeatMapData(point.X, point.Y));
+              }
+            }
+          };
           break;
         case MicroCy.OperationMode.Calibration:
           Map = CalibrationWorldMap;
           FlipMapAnalysis = false;
           break;
         case MicroCy.OperationMode.Validation:
-          Map = ValidationWorldMap;
-          FlipMapAnalysis = false;
+          Wmap = () => {
+            foreach (var point in Map)
+            {
+              if (App.MapRegions.ValidationRegionNums.Contains(point.Region))
+              {
+                if (FlipMapAnalysis)
+                  WorldMap.Add(new HeatMapData(point.Y, point.X));
+                else
+                  WorldMap.Add(new HeatMapData(point.X, point.Y));
+              }
+            }
+          };
           break;
       }
-
+      //cal worldmap is unique instance, that is produced by special function.
+      //regular maps are produced in a regular way, so they can be switched with cl0-cl3 switches
       if (Map != null)
       {
-        Action Wmap = () => {
-          WorldMap.Clear();
-          foreach (var point in Map)
-          {
-            if (FlipMapAnalysis)
-              WorldMap.Add(new HeatMapData(point.Y, point.X));
-            else
-              WorldMap.Add(new HeatMapData(point.X, point.Y));
-          }
-        };
+        WorldMap.Clear();
         _ = App.Current.Dispatcher.BeginInvoke(Wmap);
       }
     }

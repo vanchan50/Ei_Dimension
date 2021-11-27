@@ -13,6 +13,8 @@ namespace Ei_Dimension.Models
   public class MapRegions
   {
     public ObservableCollection<string> RegionsList { get; } = new ObservableCollection<string>();
+    public HashSet<int> ActiveRegionNums { get; } = new HashSet<int>();
+    public HashSet<int> ValidationRegionNums { get; } = new HashSet<int>();
     public ObservableCollection<string> RegionsNamesList { get; } = new ObservableCollection<string>();
     public ObservableCollection<string> ValidationReporterList { get; } = new ObservableCollection<string>();
     public ObservableCollection<string> ValidationCVList { get; } = new ObservableCollection<string>();
@@ -82,6 +84,8 @@ namespace Ei_Dimension.Models
       ClearDashboardTextBoxes();
       ClearValidationTextBoxes();
       RegionsList.Clear();
+      ActiveRegionNums.Clear();
+      ValidationRegionNums.Clear();
       RegionsNamesList.Clear();
       ActiveRegions.Clear();
       ValidationRegions.Clear();
@@ -214,12 +218,14 @@ namespace Ei_Dimension.Models
         AddRegionToTable(NameTb.Name, nameBindToCopy);
         AddDbNumBox(tb.Name, numBindToCopy);
         AddDbNameBox(NameTb.Name, nameBindToCopy);
+        ActiveRegionNums.Add(int.Parse(tb.Text.Trim('_')));
       }
       else
       {
         RemoveRegionFromTable(NameTb.Name);
         RemoveDbNumBox(tb.Name);
         RemoveDbNameBox(NameTb.Name);
+        ActiveRegionNums.Remove(int.Parse(tb.Text.Trim('_')));
       }
     }
 
@@ -543,6 +549,10 @@ namespace Ei_Dimension.Models
       ReporterTb.Visibility = right ? Visibility.Visible : Visibility.Hidden;
       var CVTb = (TextBox)_validationCVBorder.Children[index];
       CVTb.Visibility = right ? Visibility.Visible : Visibility.Hidden;
+      if(right)
+        ValidationRegionNums.Add(int.Parse(tb.Text.Trim('_')));
+      else
+        ValidationRegionNums.Remove(int.Parse(tb.Text.Trim('_')));
     }
 
   }

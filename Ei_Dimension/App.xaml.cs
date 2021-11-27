@@ -1827,9 +1827,10 @@ namespace Ei_Dimension
         TemplateSelectViewModel.Instance.SelectedItem = Settings.Default.LastTemplate;
         TemplateSelectViewModel.Instance.LoadTemplate();
       }
-      _isStartup = false;
+      ResultsViewModel.Instance.FillWorldMaps();
       SetLanguage(MaintenanceViewModel.Instance.LanguageItems[Settings.Default.Language].Locale);
       Program.SplashScreen.Close(TimeSpan.FromMilliseconds(1000));
+      _isStartup = false;
     }
 
     private static bool AnalyzeValidationResults()
@@ -1865,9 +1866,13 @@ namespace Ei_Dimension
           }
         }
       }
-
-
       return true;
+    }
+
+    public static void ShowNotification(string text = null)
+    {
+      NotificationViewModel.Instance.Text[0] = text;
+      NotificationViewModel.Instance.NotificationVisible = Visibility.Visible;
     }
   }
 }
