@@ -112,7 +112,7 @@ namespace Ei_Dimension
       ResultsViewModel.Instance.FillWorldMaps();
       if (Device.ActiveMap.valtime != null)
       {
-        var valDate = DateTime.Parse(Device.ActiveMap.valtime);
+        var valDate = DateTime.Parse(Device.ActiveMap.valtime, new System.Globalization.CultureInfo("en-GB"));
         if (Device.ActiveMap.validation && valDate.AddDays(2) < DateTime.Today)
           DevExpress.Xpf.Core.ThemeManager.SetThemeName(Views.DashboardView.Instance.MapSelectr,
             DevExpress.Xpf.Core.Theme.Office2010BlackName); //Office2007BlueName
