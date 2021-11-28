@@ -3,11 +3,45 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm" xmlns:ViewModels="clr-namespace:Ei_Dimension.ViewModels"
+             xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+             xmlns:ViewModels="clr-namespace:Ei_Dimension.ViewModels"
+             xmlns:lang="clr-namespace:Ei_Dimension.Language;assembly=Language"
              mc:Ignorable="d"
              DataContext="{dxmvvm:ViewModelSource Type=ViewModels:NotificationViewModel}"
-             d:DesignHeight="300" d:DesignWidth="700">
-  <Grid Background="YellowGreen" 
+             d:DesignHeight="1080" d:DesignWidth="1920">
+  <Grid Background="Transparent"
         Visibility="{Binding NotificationVisible}">
+    <Rectangle Width="1920" Height="1080"
+               HorizontalAlignment="Left"
+               VerticalAlignment="Top"
+               Fill="Black"
+               Opacity="0.3"/>
+    <Border Background="{StaticResource RibbonBackgroundActive}"
+            BorderBrush="Black"
+            BorderThickness="1"
+            CornerRadius="8"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Margin="610,390,0,0" 
+            Width="700" Height="300">
+      <Grid>
+        <TextBlock Text="{Binding Text[0]}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   FontFamily="{StaticResource AppTextFont}"
+                   FontWeight="UltraBold"
+                   TextWrapping="Wrap"
+                   Height="140" Width="639" TextAlignment="Center"
+                   Margin="30,60,0,0"
+                   FontSize="40"/>
+        <Button Content="{lang:Loc OK}"
+            Command="{Binding CloseCommand}"
+            Style="{StaticResource ButtonStyle}"
+            Height="60" Width="120"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Margin="550,210,0,3"/>
+      </Grid>
+      </Border>
   </Grid>
 </UserControl>

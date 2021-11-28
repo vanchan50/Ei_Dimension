@@ -104,6 +104,9 @@ namespace Ei_Dimension.ViewModels
         Valdate = null
       });
       CaliDateBox[0] = App.Device.ActiveMap.caltime;
+      CalModeOn = false;
+      CalModeToggle();
+      App.ShowLocalizedNotification(nameof(Language.Resources.Calibration_Success));
     }
 
     public void SaveCalibrationToMapClick()
@@ -142,7 +145,7 @@ namespace Ei_Dimension.ViewModels
           DashboardViewModel.Instance.EndReadItems[2].Click(6);
           MainButtonsViewModel.Instance.Flavor[0] = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Maintenance_Calibration),
             Language.TranslationSource.Instance.CurrentCulture);
-          MainWindow.Instance.wndw.Background = System.Windows.Media.Brushes.LightPink;
+          MainWindow.Instance.wndw.Background = System.Windows.Media.Brushes.LightGray;
           App.LockMapSelection();
           return;
         }

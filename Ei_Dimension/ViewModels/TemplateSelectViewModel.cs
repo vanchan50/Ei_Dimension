@@ -50,7 +50,10 @@ namespace Ei_Dimension.ViewModels
           newTemplate = JsonConvert.DeserializeObject<AcquisitionTemplate>(fileContents);
         }
       }
-      catch { MessageBox.Show("No Template selected"); }
+      catch
+      {
+        App.ShowNotification("No Template selected");
+      }
       if (newTemplate != null)
       {
         try
@@ -70,7 +73,7 @@ namespace Ei_Dimension.ViewModels
             Settings.Default.MinPerRegion = iRes;
           }
           else
-            MessageBox.Show("Error loading Template");
+            throw new Exception();
           DashVM.EndRead[1] = newTemplate.TotalEvents.ToString();
           if (int.TryParse(DashVM.EndRead[1], out iRes))
           {
@@ -78,28 +81,28 @@ namespace Ei_Dimension.ViewModels
             Settings.Default.BeadsToCapture = iRes;
           }
           else
-            MessageBox.Show("Error loading Template");
+            throw new Exception();
           DashVM.Volumes[0] = newTemplate.SampleVolume.ToString();
           if (int.TryParse(DashVM.Volumes[0], out iRes))
           {
             App.Device.MainCommand("Set Property", code: 0xaf, parameter: (ushort)iRes);
           }
           else
-            MessageBox.Show("Error loading Template");
+            throw new Exception();
           DashVM.Volumes[1] = newTemplate.WashVolume.ToString();
           if (int.TryParse(DashVM.Volumes[1], out iRes))
           {
             App.Device.MainCommand("Set Property", code: 0xac, parameter: (ushort)iRes);
           }
           else
-            MessageBox.Show("Error loading Template");
+            throw new Exception();
           DashVM.Volumes[2] = newTemplate.AgitateVolume.ToString();
           if (int.TryParse(DashVM.Volumes[2], out iRes))
           {
             App.Device.MainCommand("Set Property", code: 0xc4, parameter: (ushort)iRes);
           }
           else
-            MessageBox.Show("Error loading Template");
+            throw new Exception();
           uint chkBox = newTemplate.FileSaveCheckboxes;
           for (var i = FileSaveViewModel.Instance.Checkboxes.Count - 1 - 1; i > -1; i--)// -1 to not store system log
           {
@@ -143,7 +146,11 @@ namespace Ei_Dimension.ViewModels
           else
             Views.ExperimentView.Instance.DbTube.IsChecked = true;
         }
-        catch { }
+        catch
+        {
+          App.ShowNotification("Error loading Template");
+          return;
+        }
         if (_templateName == null)
         {
           _templateName = SelectedItem.Substring(SelectedItem.LastIndexOf("\\") + 1, SelectedItem.Length - SelectedItem.LastIndexOf("\\") - 6);
@@ -160,7 +167,7 @@ namespace Ei_Dimension.ViewModels
       var path = App.Device.RootDirectory + @"\Config\" + TemplateSaveName[0] + ".dtml";
       if (File.Exists(path))
       {
-        MessageBox.Show($"A template with name {TemplateSaveName[0]} already exists");
+        App.ShowNotification($"A template with name {TemplateSaveName[0]} already exists");
         return;
       }
       try
@@ -211,8 +218,10 @@ namespace Ei_Dimension.ViewModels
           stream.Write(contents);
         }
       }
-      catch {
-        MessageBox.Show("There was a problem saving the Template"); }
+      catch
+      {
+        App.ShowNotification("There was a problem saving the Template");
+      }
       NameList.Add(TemplateSaveName[0]);
       DeleteVisible = Visibility.Hidden;
     }

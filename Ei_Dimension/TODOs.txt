@@ -113,7 +113,7 @@ cal always runs in end of sample mode
 calibration page and channels page "save bias to map" button should do everything (the same thing)
   also write datebox contents to map
 
-  case 0x1b: add condition of CalFailsInARow < 3?
+  case 0x1b: what happens earlier message or endOfMeasurement? if latter - can lead to bug 
 
 C should calculate and save the DNR coefficient by dividing the median Green Minor by media Green Major, i.e. the high sensitivity channel by the other green channel
 ----

@@ -113,14 +113,14 @@
     </Grid>
 
     <!--Numpad-->
-    <Grid Width="260" Height="340" x:Name="Npd"
+    <Grid Width="310" Height="390" x:Name="Npd"
           VerticalAlignment="Top" HorizontalAlignment="Left"
           Margin="1670,740,0,0"
           Visibility="{Binding NumpadVisible}">
       <Views:NumpadView />
     </Grid>
     
-    <Grid Width="900" Height="410" Name="Kbd"
+    <Grid Width="950" Height="460" Name="Kbd"
           VerticalAlignment="Top" HorizontalAlignment="Left"
           Margin="370,340,0,0"
           Visibility="{Binding KeyboardVisible}">
@@ -128,9 +128,8 @@
     </Grid>
     
     <!--Notification-->
-    <Grid Width="700" Height="300"
-          VerticalAlignment="Top" HorizontalAlignment="Left"
-          Margin="600,390,0,0">
+    <Grid Width="1920" Height="1080"
+          VerticalAlignment="Top" HorizontalAlignment="Left">
       <Views:NotificationView />
     </Grid>
 

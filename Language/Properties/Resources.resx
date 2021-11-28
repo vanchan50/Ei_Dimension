@@ -126,6 +126,9 @@
   <data name="Calibration_Classification_targets" xml:space="preserve">
     <value>Classification</value>
   </data>
+  <data name="Calibration_Fail" xml:space="preserve">
+    <value>Calibration Failed!</value>
+  </data>
   <data name="Calibration_Height" xml:space="preserve">
     <value>Height</value>
   </data>
@@ -147,6 +150,9 @@
   </data>
   <data name="Calibration_Prev_Calibration_Date" xml:space="preserve">
     <value>Previous Calibration Date</value>
+  </data>
+  <data name="Calibration_Success" xml:space="preserve">
+    <value>Calibration Succesful!</value>
   </data>
   <data name="Channels_Background" xml:space="preserve">
     <value>Background</value>
@@ -681,6 +687,9 @@ Barcode</value>
   <data name="OFF" xml:space="preserve">
     <value>Выкл</value>
   </data>
+  <data name="OK" xml:space="preserve">
+    <value>OK</value>
+  </data>
   <data name="ON" xml:space="preserve">
     <value>Вкл</value>
   </data>
@@ -759,6 +768,9 @@ Factory Defaults</value>
   <data name="String3" xml:space="preserve">
     <value>Open</value>
   </data>
+  <data name="String4" xml:space="preserve">
+    <value />
+  </data>
   <data name="Temp" xml:space="preserve">
     <value>Temp</value>
   </data>
@@ -767,6 +779,9 @@ Factory Defaults</value>
   </data>
   <data name="Tube" xml:space="preserve">
     <value>Tube</value>
+  </data>
+  <data name="Validation_Fail" xml:space="preserve">
+    <value>Validation Failed!</value>
   </data>
   <data name="Validation_Mode" xml:space="preserve">
     <value>Validation
@@ -778,6 +793,9 @@ Factory Defaults</value>
   <data name="Validation_Start_Validation" xml:space="preserve">
     <value>   Start
 Validation</value>
+  </data>
+  <data name="Validation_Success" xml:space="preserve">
+    <value>Validation Succesful!</value>
   </data>
   <data name="WellSel_Reset_Plate" xml:space="preserve">
     <value>Reset Plate</value>

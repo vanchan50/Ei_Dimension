@@ -1072,8 +1072,6 @@ namespace Ei_Dimension
               CalibrationViewModel.Instance.CalibrationSelectorState[1] = false;
               CalibrationViewModel.Instance.CalibrationSelectorState[2] = false;
               CalibrationViewModel.Instance.CalibrationSelectorState[0] = true;
-              CalibrationViewModel.Instance.CalFailsInARow = 0;
-              CalibrationViewModel.Instance.CaliDateBox[0] = DateTime.Now.ToString("dd.MM.yyyy");
               CalibrationViewModel.Instance.ConfirmCalibration();
             }
             break;
@@ -1758,15 +1756,21 @@ namespace Ei_Dimension
         case OperationMode.Normal:
           break;
         case OperationMode.Calibration:
-          if (++CalibrationViewModel.Instance.CalFailsInARow > 3)
+          if (++CalibrationViewModel.Instance.CalFailsInARow >= 3)
           {
-            //Cal fail notification
+            ShowLocalizedNotification(nameof(Language.Resources.Calibration_Fail));
+            CalibrationViewModel.Instance.CalModeToggle();
           }
           break;
         case OperationMode.Validation:
           Device.Validator.CalculateResults();
           if (AnalyzeValidationResults())
+          {
             ValidationViewModel.Instance.ConfirmValidation();
+            ShowLocalizedNotification(nameof(Language.Resources.Validation_Success));
+          }
+          else
+            ShowLocalizedNotification(nameof(Language.Resources.Validation_Fail));
           break;
       }
     }
@@ -1843,24 +1847,24 @@ namespace Ei_Dimension
         if (MapRegions.ValidationRegions[i])
         {
           int regionNum = int.Parse(MapRegions.RegionsList[i]);
-          int index = Device.Validator.VStats.FindIndex(x => x.Region == regionNum);
-          double inputReporter = double.Parse(MapRegions.ValidationReporterList[index]);
-          double inputCV = double.Parse(MapRegions.ValidationCVList[index]);
+          double inputReporter = double.Parse(MapRegions.ValidationReporterList[i]);
+          double inputCV = double.Parse(MapRegions.ValidationCVList[i]);
+          int validatorIndex = Device.Validator.VStats.FindIndex(x => x.Region == regionNum);
 
-          if (Math.Pow(Device.Validator.VStats[index].Stats[1].mfi - Models.HeatMapData.bins[Device.ActiveMap.regions[i].Center.x], 2) +
-          Math.Pow(Device.Validator.VStats[index].Stats[2].mfi - Models.HeatMapData.bins[Device.ActiveMap.regions[i].Center.y], 2) > cl12MedianPercentage)
+          if (Math.Pow(Device.Validator.VStats[validatorIndex].Stats[1].mfi - Models.HeatMapData.bins[Device.ActiveMap.regions[i].Center.x], 2) +
+          Math.Pow(Device.Validator.VStats[validatorIndex].Stats[2].mfi - Models.HeatMapData.bins[Device.ActiveMap.regions[i].Center.y], 2) > cl12MedianPercentage)
           {
             return false;
           }
 
-          if (Math.Pow(Device.Validator.VStats[index].Stats[1].cv - inputCV, 2) +
-          Math.Pow(Device.Validator.VStats[index].Stats[2].cv - inputCV, 2) > cl12CoefficientVariation)
+          if (Math.Pow(Device.Validator.VStats[validatorIndex].Stats[1].cv - inputCV, 2) +
+          Math.Pow(Device.Validator.VStats[validatorIndex].Stats[2].cv - inputCV, 2) > cl12CoefficientVariation)
           {
             return false;
           }
 
-          if (Device.Validator.VStats[index].Stats[0].mfi < inputReporter * (1 - reporterMedianPercentage) &&
-            Device.Validator.VStats[index].Stats[0].mfi > inputReporter * (1 + reporterMedianPercentage))
+          if (Device.Validator.VStats[validatorIndex].Stats[0].mfi < inputReporter * (1 - reporterMedianPercentage) &&
+            Device.Validator.VStats[validatorIndex].Stats[0].mfi > inputReporter * (1 + reporterMedianPercentage))
           {
             return false;
           }
@@ -1873,6 +1877,12 @@ namespace Ei_Dimension
     {
       NotificationViewModel.Instance.Text[0] = text;
       NotificationViewModel.Instance.NotificationVisible = Visibility.Visible;
+    }
+
+    public static void ShowLocalizedNotification(string nameofLocalizationString)
+    {
+      ShowNotification(Language.Resources.ResourceManager.GetString(nameofLocalizationString,
+          Language.TranslationSource.Instance.CurrentCulture));
     }
   }
 }

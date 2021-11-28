@@ -88,6 +88,15 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Calibration Failed!.
+        /// </summary>
+        public static string Calibration_Fail {
+            get {
+                return ResourceManager.GetString("Calibration_Fail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Height.
         /// </summary>
         public static string Calibration_Height {
@@ -148,6 +157,15 @@ namespace Ei_Dimension.Language {
         public static string Calibration_Prev_Calibration_Date {
             get {
                 return ResourceManager.GetString("Calibration_Prev_Calibration_Date", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Calibration Succesful!.
+        /// </summary>
+        public static string Calibration_Success {
+            get {
+                return ResourceManager.GetString("Calibration_Success", resourceCulture);
             }
         }
         
@@ -1711,6 +1729,15 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to OK.
+        /// </summary>
+        public static string OK {
+            get {
+                return ResourceManager.GetString("OK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Вкл.
         /// </summary>
         public static string ON {
@@ -1939,6 +1966,15 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string String4 {
+            get {
+                return ResourceManager.GetString("String4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Temp.
         /// </summary>
         public static string Temp {
@@ -1962,6 +1998,15 @@ namespace Ei_Dimension.Language {
         public static string Tube {
             get {
                 return ResourceManager.GetString("Tube", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Validation Failed!.
+        /// </summary>
+        public static string Validation_Fail {
+            get {
+                return ResourceManager.GetString("Validation_Fail", resourceCulture);
             }
         }
         
@@ -1991,6 +2036,15 @@ namespace Ei_Dimension.Language {
         public static string Validation_Start_Validation {
             get {
                 return ResourceManager.GetString("Validation_Start_Validation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Validation Succesful!.
+        /// </summary>
+        public static string Validation_Success {
+            get {
+                return ResourceManager.GetString("Validation_Success", resourceCulture);
             }
         }
         

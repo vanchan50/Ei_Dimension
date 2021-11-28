@@ -384,7 +384,7 @@ namespace Ei_Dimension.ViewModels
       List<string> LinesInFile = await Core.DataProcessor.GetDataFromFileAsync(path);
       if (LinesInFile.Count == 1 && LinesInFile[0] == " ")
       {
-        System.Windows.MessageBox.Show("File is empty");
+        App.ShowNotification("File is empty");
         return;
       }
       for (var i = 0; i < LinesInFile.Count; i++)

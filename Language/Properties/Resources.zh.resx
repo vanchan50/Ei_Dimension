@@ -644,6 +644,9 @@
   <data name="OFF" xml:space="preserve">
     <value>关闭</value>
   </data>
+  <data name="OK" xml:space="preserve">
+    <value>好的</value>
+  </data>
   <data name="ON" xml:space="preserve">
     <value>开启</value>
   </data>

@@ -27,7 +27,6 @@ namespace Ei_Dimension.ViewModels
 
     public void ConfirmValidation()
     {
-
       App.Device.SaveCalVals(new MicroCy.MapCalParameters
       {
         TempCl0 = -1,

@@ -7,9 +7,11 @@
              xmlns:ViewModels="clr-namespace:Ei_Dimension.ViewModels"
              mc:Ignorable="d"
              DataContext="{dxmvvm:ViewModelSource Type=ViewModels:ScreenKeyboardViewModel}"
-             d:DesignHeight="410" d:DesignWidth="900">
+             d:DesignHeight="460" d:DesignWidth="950">
   <Grid>
-    <Border Background="White" Opacity="0.7"/>
+    <Border Background="Black" Opacity="0.3"
+            Height="460"
+            CornerRadius="9"/>
     <Button Content="❌"
               Command="{Binding KeyboardInputClickCommand}"
               Style="{StaticResource ButtonStyle}"
@@ -19,8 +21,8 @@
               FontSize="40" FontWeight="ExtraBold"
               HorizontalAlignment="Left"
               VerticalAlignment="Top"
-              Margin="850,0,0,0"/>
-    <StackPanel Margin="0,70,0,0">
+              Margin="900,0,0,0"/>
+    <StackPanel Margin="50,70,0,0">
       <StackPanel Orientation="Horizontal"
                   Margin="0,0,0,10">
         <Button Content="1"

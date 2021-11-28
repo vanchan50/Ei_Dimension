@@ -174,6 +174,9 @@ Compensation
   <data name="Calibration_Event_Trigger" xml:space="preserve">
     <value>Event Trigger</value>
   </data>
+  <data name="Calibration_Fail" xml:space="preserve">
+    <value>Calibration Failed!</value>
+  </data>
   <data name="Calibration_Gating" xml:space="preserve">
     <value>Gating</value>
   </data>
@@ -202,6 +205,9 @@ Compensation
   <data name="Calibration_Save_Calibration_To_Map" xml:space="preserve">
     <value>Save Calibration
 To Current Map</value>
+  </data>
+  <data name="Calibration_Success" xml:space="preserve">
+    <value>Calibration Succesful!</value>
   </data>
   <data name="Channels_Background" xml:space="preserve">
     <value>Background</value>
@@ -786,6 +792,9 @@ Order</value>
   <data name="OFF" xml:space="preserve">
     <value>OFF</value>
   </data>
+  <data name="OK" xml:space="preserve">
+    <value>OK</value>
+  </data>
   <data name="ON" xml:space="preserve">
     <value>ON</value>
   </data>
@@ -904,6 +913,9 @@ Speeds</value>
   <data name="Tube" xml:space="preserve">
     <value>Tube</value>
   </data>
+  <data name="Validation_Fail" xml:space="preserve">
+    <value>Validation Failed!</value>
+  </data>
   <data name="Validation_Mode" xml:space="preserve">
     <value>Validation
    Mode</value>
@@ -914,6 +926,9 @@ Speeds</value>
   <data name="Validation_Start_Validation" xml:space="preserve">
     <value>   Start
 Validation</value>
+  </data>
+  <data name="Validation_Success" xml:space="preserve">
+    <value>Validation Succesful!</value>
   </data>
   <data name="Value" xml:space="preserve">
     <value>Value</value>

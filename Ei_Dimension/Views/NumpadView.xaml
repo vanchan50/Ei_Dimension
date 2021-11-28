@@ -7,9 +7,11 @@
              xmlns:ViewModels="clr-namespace:Ei_Dimension.ViewModels"
              mc:Ignorable="d"
              DataContext="{dxmvvm:ViewModelSource Type=ViewModels:NumpadViewModel}"
-             d:DesignHeight="340" d:DesignWidth="260">
+             d:DesignHeight="390" d:DesignWidth="310">
   <Grid>
-    <Border Background="White" Opacity="0.7"/>
+    <Border Background="Black" Opacity="0.3"
+            Width="310" Height="390"
+            CornerRadius="9"/>
     <Button Content="❌"
               Command="{Binding NumpadInputClickCommand}"
               Style="{StaticResource ButtonStyle}"
@@ -19,8 +21,9 @@
               FontSize="40" FontWeight="ExtraBold"
               HorizontalAlignment="Left"
               VerticalAlignment="Top"
-              Margin="210,0,0,0"/>
-    <StackPanel>
+              Margin="260,0,0,0"/>
+    <StackPanel
+                  Margin="50,0,0,0">
       <StackPanel Orientation="Horizontal"
                   Margin="0,70,0,10">
         <Button Content="1"
