@@ -495,7 +495,15 @@ namespace Ei_Dimension.ViewModels
           break;
         case MicroCy.OperationMode.Calibration:
           Map = CalibrationWorldMap;
-          FlipMapAnalysis = false;
+          Wmap = () => {
+            foreach (var point in Map)
+            {
+              if (App.MapRegions.ActiveRegionNums.Contains(point.Region))
+              {
+                WorldMap.Add(new HeatMapData(point.X, point.Y));
+              }
+            }
+          };
           break;
         case MicroCy.OperationMode.Validation:
           Wmap = () => {
