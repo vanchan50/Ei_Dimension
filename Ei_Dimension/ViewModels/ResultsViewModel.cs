@@ -498,10 +498,7 @@ namespace Ei_Dimension.ViewModels
           Wmap = () => {
             foreach (var point in Map)
             {
-              if (App.MapRegions.ActiveRegionNums.Contains(point.Region))
-              {
-                WorldMap.Add(new HeatMapData(point.X, point.Y));
-              }
+              WorldMap.Add(new HeatMapData(point.X, point.Y));
             }
           };
           break;
