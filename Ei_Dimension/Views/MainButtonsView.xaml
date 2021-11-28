@@ -63,7 +63,7 @@
                   Background="DarkRed"
                   Margin="0,0,12,0"/>
             <TextBlock Text="{Binding Flavor[0]}"
-                       Width="160"
+                       Width="160" IsHitTestVisible="False"
                        FontFamily="{StaticResource AppTextFont}"
                        FontSize="26"
                        TextWrapping="Wrap" TextAlignment="Center"
@@ -82,7 +82,7 @@
                   VerticalAlignment="Center"
                   Background="ForestGreen"/>
             <TextBlock Text="{Binding Flavor[0]}"
-                       Width="160"
+                       Width="160" IsHitTestVisible="False"
                        FontFamily="{StaticResource AppTextFont}"
                        FontSize="26"
                        TextWrapping="Wrap" TextAlignment="Center"
