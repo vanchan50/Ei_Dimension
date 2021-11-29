@@ -14,21 +14,15 @@ namespace Ei_Dimension.ViewModels
     public byte SelectedGatingIndex { get; set; }
     public virtual ObservableCollection<DropDownButtonContents> GatingItems { get; }
     public virtual ObservableCollection<bool> CalibrationSelectorState { get; set; }
-    public virtual bool CalModeOn { get; set; }
-    public virtual bool ValModeOn { get; set; }
-    public virtual System.Windows.Visibility CalValModeVisible { get; set; }
     public virtual ObservableCollection<string> EventTriggerContents { get; set; }
     public virtual ObservableCollection<string> ClassificationTargetsContents { get; set; }
     public virtual ObservableCollection<string> CompensationPercentageContent { get; set; }
     public virtual ObservableCollection<string> DNRContents { get; set; }
     public virtual ObservableCollection<string> CurrentMapName { get; set; }
     public virtual ObservableCollection<string> AttenuationBox { get; set; }
-    public virtual ObservableCollection<string> CaliDateBox { get; set; }
     public byte CalFailsInARow { get; set; }
 
     public static CalibrationViewModel Instance { get; private set; }
-    private string _dbsampleVolumeTempHolder;
-    private int _dbEndReadIndexTempHolder;
 
 
     protected CalibrationViewModel()
@@ -53,9 +47,6 @@ namespace Ei_Dimension.ViewModels
       ClassificationTargetsContents = new ObservableCollection<string> { "1", "1", "1", "1", "3500"};
 
       CalibrationSelectorState = new ObservableCollection<bool> { true, false, false };
-      CalModeOn = false;
-      ValModeOn = false;
-      CalValModeVisible = App.Device.ActiveMap.validation ? System.Windows.Visibility.Visible : System.Windows.Visibility.Hidden;
 
       CompensationPercentageContent = new ObservableCollection<string> { MicroCy.InstrumentParameters.Calibration.Compensation.ToString() };
       DNRContents = new ObservableCollection<string> { "", MicroCy.InstrumentParameters.Calibration.HdnrTrans.ToString() };
@@ -64,9 +55,7 @@ namespace Ei_Dimension.ViewModels
       AttenuationBox = new ObservableCollection<string> { App.Device.ActiveMap.att.ToString() };
 
       CalFailsInARow = 0;
-      CaliDateBox = new ObservableCollection<string> { App.Device.ActiveMap.caltime };
 
-      _dbEndReadIndexTempHolder = 0;
       Instance = this;
     }
 
@@ -103,9 +92,9 @@ namespace Ei_Dimension.ViewModels
         Caldate = System.DateTime.Now.ToString("dd.MM.yyyy"),
         Valdate = null
       });
-      CaliDateBox[0] = App.Device.ActiveMap.caltime;
-      CalModeOn = false;
-      CalModeToggle();
+      DashboardViewModel.Instance.CaliDateBox[0] = App.Device.ActiveMap.caltime;
+      DashboardViewModel.Instance.CalModeOn = false;
+      DashboardViewModel.Instance.CalModeToggle();
       App.ShowLocalizedNotification(nameof(Language.Resources.Calibration_Success));
     }
 
@@ -130,69 +119,6 @@ namespace Ei_Dimension.ViewModels
       });
     }
 
-    public void CalModeToggle()
-    {
-      if (CalModeOn)
-      {
-        if (App.Device.Mode == MicroCy.OperationMode.Normal)
-        {
-          _dbsampleVolumeTempHolder = DashboardViewModel.Instance.Volumes[0];
-          DashboardViewModel.Instance.SetFixedVolumeButtonClick(100);
-          App.Device.Mode = MicroCy.OperationMode.Calibration;
-          CalFailsInARow = 0;
-          MakeCalMap();
-          _dbEndReadIndexTempHolder = DashboardViewModel.Instance.SelectedEndReadIndex;
-          DashboardViewModel.Instance.EndReadItems[2].Click(6);
-          MainButtonsViewModel.Instance.Flavor[0] = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Maintenance_Calibration),
-            Language.TranslationSource.Instance.CurrentCulture);
-          MainWindow.Instance.wndw.Background = System.Windows.Media.Brushes.LightGray;
-          App.LockMapSelection();
-          return;
-        }
-        CalModeOn = false;
-      }
-      else
-      {
-        App.Device.Mode = MicroCy.OperationMode.Normal;
-        DashboardViewModel.Instance.EndReadItems[_dbEndReadIndexTempHolder].Click(6);
-        DashboardViewModel.Instance.Volumes[0] = _dbsampleVolumeTempHolder;
-        App.Device.MainCommand("Set Property", code: 0xaf, parameter: ushort.Parse(_dbsampleVolumeTempHolder));
-        MainButtonsViewModel.Instance.Flavor[0] = null;
-        MainWindow.Instance.wndw.Background = (System.Windows.Media.SolidColorBrush)App.Current.Resources["AppBackground"];
-        App.UnlockMapSelection();
-      }
-    }
-
-    public void ValModeToggle()
-    {
-      if (ValModeOn)
-      {
-        if (App.Device.Mode == MicroCy.OperationMode.Normal && ValMapInfoReady())
-        {
-          _dbsampleVolumeTempHolder = DashboardViewModel.Instance.Volumes[0];
-          DashboardViewModel.Instance.SetFixedVolumeButtonClick(25);
-          App.Device.Mode = MicroCy.OperationMode.Validation;
-          MainButtonsViewModel.Instance.Flavor[0] = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Maintenance_Validation),
-            Language.TranslationSource.Instance.CurrentCulture);
-          MainWindow.Instance.wndw.Background = System.Windows.Media.Brushes.LightYellow;
-          ResultsViewModel.Instance.ValidationCoverVisible = System.Windows.Visibility.Visible;
-          App.LockMapSelection();
-          return;
-        }
-        ValModeOn = false;
-      }
-      else
-      {
-        App.Device.Mode = MicroCy.OperationMode.Normal;
-        DashboardViewModel.Instance.Volumes[0] = _dbsampleVolumeTempHolder;
-        App.Device.MainCommand("Set Property", code: 0xaf, parameter: ushort.Parse(_dbsampleVolumeTempHolder));
-        MainButtonsViewModel.Instance.Flavor[0] = null;
-        MainWindow.Instance.wndw.Background = (System.Windows.Media.SolidColorBrush)App.Current.Resources["AppBackground"];
-        ResultsViewModel.Instance.ValidationCoverVisible = System.Windows.Visibility.Hidden;
-        App.UnlockMapSelection();
-      }
-    }
-
     public void MakeCalMap()
     {
       ResultsViewModel.Instance.CalibrationWorldMap = new List<HeatMapData>();
@@ -212,25 +138,6 @@ namespace Ei_Dimension.ViewModels
               new HeatMapData((int)HeatMapData.bins[cl1Index + i], (int)HeatMapData.bins[cl2Index + j]));
         }
       }
-    }
-
-    private bool ValMapInfoReady()
-    {
-      bool activeRegions = false;
-      for (var i = 0; i < App.MapRegions.RegionsList.Count; i++)
-      {
-        if (App.MapRegions.ValidationRegions[i])
-        {
-          activeRegions = true;
-          if(App.MapRegions.ValidationReporterList[i] == "" || App.MapRegions.ValidationCVList[i] == "")
-          {
-            return false;
-          }
-        }
-      }
-      if (!activeRegions)
-        return false;
-      return true;
     }
 
     public void FocusedBox(int num)

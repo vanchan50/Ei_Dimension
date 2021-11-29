@@ -46,5 +46,24 @@ namespace Ei_Dimension.ViewModels
       });
       ValidDateBox[0] = App.Device.ActiveMap.valtime;
     }
+
+    public bool ValMapInfoReady()
+    {
+      bool activeRegions = false;
+      for (var i = 0; i < App.MapRegions.RegionsList.Count; i++)
+      {
+        if (App.MapRegions.ValidationRegions[i])
+        {
+          activeRegions = true;
+          if (App.MapRegions.ValidationReporterList[i] == "" || App.MapRegions.ValidationCVList[i] == "")
+          {
+            return false;
+          }
+        }
+      }
+      if (!activeRegions)
+        return false;
+      return true;
+    }
   }
 }

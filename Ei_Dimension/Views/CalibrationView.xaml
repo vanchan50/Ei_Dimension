@@ -451,44 +451,7 @@
           </dx:DropDownButton>
         </StackPanel>
       </Border>
-      <TextBlock Text="{lang:Loc Calibration_Prev_Calibration_Date}"
-                   FontFamily="{StaticResource AppTextFont}"
-                   FontSize="26" Width="200"
-                   FontWeight="UltraBold"
-                   TextAlignment="Center" TextWrapping="Wrap"
-                   Foreground="{StaticResource AppTextColor}"
-                   Margin="0,16,0,4"/>
-      <TextBox HorizontalAlignment="Stretch"
-               IsReadOnly="True"
-               Margin="10,0,10,15"
-               Style="{StaticResource InputFieldStyle}"
-               Text="{Binding CaliDateBox[0]}"/>
     </StackPanel>
-    
-
-    <Border HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Margin="460,730,0,3"
-            Visibility="{Binding CalValModeVisible}">
-      <Grid>
-        <ToggleButton HorizontalAlignment="Left"
-                      VerticalAlignment="Top"
-                      Content="{lang:Loc Calibration_Mode}"
-                      Command="{Binding CalModeToggleCommand}"
-                      IsChecked="{Binding CalModeOn}"
-                      Style="{StaticResource ToggleButtonThemeStyle}"
-                      Height="90" Width="170"/>
-        <ToggleButton HorizontalAlignment="Left"
-                      VerticalAlignment="Top"
-                      Content="{lang:Loc Validation_Mode}"
-                      Command="{Binding ValModeToggleCommand}"
-                      IsChecked="{Binding ValModeOn}"
-                      Style="{StaticResource ToggleButtonThemeStyle}"
-                      Height="90" Width="170"
-                      Margin="200,0,0,0"/>
-      </Grid>
-    </Border>
-
 
     <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"

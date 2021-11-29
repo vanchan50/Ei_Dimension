@@ -9,14 +9,13 @@
              mc:Ignorable="d"
              DataContext="{dxmvvm:ViewModelSource Type=ViewModels:NotificationViewModel}"
              d:DesignHeight="1080" d:DesignWidth="1920">
-  <Grid Background="Transparent"
-        Visibility="{Binding NotificationVisible}">
+  <Grid Background="Transparent" Visibility="{Binding NotificationVisible}">
     <Rectangle Width="1920" Height="1080"
                HorizontalAlignment="Left"
                VerticalAlignment="Top"
                Fill="Black"
                Opacity="0.3"/>
-    <Border Background="{StaticResource RibbonBackgroundActive}"
+    <Border Background="{Binding Background}"
             BorderBrush="Black"
             BorderThickness="1"
             CornerRadius="8"
@@ -35,13 +34,36 @@
                    Margin="30,60,0,0"
                    FontSize="40"/>
         <Button Content="{lang:Loc OK}"
-            Command="{Binding CloseCommand}"
-            Style="{StaticResource ButtonStyle}"
-            Height="60" Width="120"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Margin="550,210,0,3"/>
+                Command="{Binding CloseCommand}"
+                Style="{StaticResource ButtonStyle}"
+                Visibility="{Binding ButtonVisible[2]}"
+                Height="60" Width="120"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Margin="550,210,0,3"/>
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Margin="30,210,0,3">
+          <Button Content="{Binding ActionButtonText[0]}"
+                  Command="{Binding PerformAction1Command}"
+                  Style="{StaticResource ButtonStyle}"
+                  Visibility="{Binding ButtonVisible[0]}"
+                  Height="60" Width="120"
+                  HorizontalAlignment="Left"
+                  VerticalAlignment="Top"
+                  Margin="0,0,0,0"/>
+          <Button Content="{Binding ActionButtonText[1]}"
+                  Command="{Binding PerformAction2Command}"
+                  Style="{StaticResource ButtonStyle}"
+                  Visibility="{Binding ButtonVisible[1]}"
+                  Height="60" Width="120"
+                  HorizontalAlignment="Left"
+                  VerticalAlignment="Top"
+                  Margin="30,0,0,0"/>
+        </StackPanel>
       </Grid>
       </Border>
   </Grid>
 </UserControl>
+<!-- Visibility="{Binding NotificationVisible}" -->

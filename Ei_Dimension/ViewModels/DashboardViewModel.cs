@@ -30,6 +30,10 @@ namespace Ei_Dimension.ViewModels
     public virtual bool PressureMonToggleButtonState { get; set; }
     public double MaxPressure { get; set; }
     public double MinPressure { get; set; }
+    public virtual bool CalValModeEnabled { get; set; }
+    public virtual bool CalModeOn { get; set; }
+    public virtual bool ValModeOn { get; set; }
+    public virtual ObservableCollection<string> CaliDateBox { get; set; }
     public static DashboardViewModel Instance { get; private set; }
 
     public byte SelectedSystemControlIndex { get; set; }
@@ -39,6 +43,9 @@ namespace Ei_Dimension.ViewModels
     public byte SelectedEndReadIndex { get; set; }
     public virtual ObservableCollection<Visibility> EndReadVisibility { get; set; }
     public virtual Visibility WorkOrderVisibility { get; set; }
+
+    private string _dbsampleVolumeTempHolder;
+    private int _dbEndReadIndexTempHolder;
 
     protected DashboardViewModel()
     {
@@ -128,6 +135,14 @@ namespace Ei_Dimension.ViewModels
 
       PressureMonToggleButtonState = false;
       PressureMon = new ObservableCollection<string> {"","",""};
+
+      CalValModeEnabled = App.Device.ActiveMap.validation ? true : false;
+      CalModeOn = false;
+      ValModeOn = false;
+      CaliDateBox = new ObservableCollection<string> { App.Device.ActiveMap.caltime };
+      _dbsampleVolumeTempHolder = null;
+      _dbEndReadIndexTempHolder = 0;
+
       Instance = this;
     }
 
@@ -278,6 +293,69 @@ namespace Ei_Dimension.ViewModels
           EndReadVisibility[0] = Visibility.Hidden;
           EndReadVisibility[1] = Visibility.Hidden;
           break;
+      }
+    }
+
+    public void CalModeToggle()
+    {
+      if (CalModeOn)
+      {
+        if (App.Device.Mode == MicroCy.OperationMode.Normal)
+        {
+          _dbsampleVolumeTempHolder = Volumes[0];
+          SetFixedVolumeButtonClick(100);
+          App.Device.Mode = MicroCy.OperationMode.Calibration;
+          CalibrationViewModel.Instance.CalFailsInARow = 0;
+          CalibrationViewModel.Instance.MakeCalMap();
+          _dbEndReadIndexTempHolder = SelectedEndReadIndex;
+          EndReadItems[2].Click(6);
+          MainButtonsViewModel.Instance.Flavor[0] = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Maintenance_Calibration),
+            Language.TranslationSource.Instance.CurrentCulture);
+          MainWindow.Instance.wndw.Background = System.Windows.Media.Brushes.LightGray;
+          App.LockMapSelection();
+          return;
+        }
+        CalModeOn = false;
+      }
+      else
+      {
+        App.Device.Mode = MicroCy.OperationMode.Normal;
+        EndReadItems[_dbEndReadIndexTempHolder].Click(6);
+        Volumes[0] = _dbsampleVolumeTempHolder;
+        App.Device.MainCommand("Set Property", code: 0xaf, parameter: ushort.Parse(_dbsampleVolumeTempHolder));
+        MainButtonsViewModel.Instance.Flavor[0] = null;
+        MainWindow.Instance.wndw.Background = (System.Windows.Media.SolidColorBrush)App.Current.Resources["AppBackground"];
+        App.UnlockMapSelection();
+      }
+    }
+
+    public void ValModeToggle()
+    {
+      if (ValModeOn)
+      {
+        if (App.Device.Mode == MicroCy.OperationMode.Normal && ValidationViewModel.Instance.ValMapInfoReady())
+        {
+          _dbsampleVolumeTempHolder = Volumes[0];
+          SetFixedVolumeButtonClick(25);
+          App.Device.Mode = MicroCy.OperationMode.Validation;
+          MainButtonsViewModel.Instance.Flavor[0] = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Maintenance_Validation),
+            Language.TranslationSource.Instance.CurrentCulture);
+          MainWindow.Instance.wndw.Background = System.Windows.Media.Brushes.LightYellow;
+          ResultsViewModel.Instance.ValidationCoverVisible = Visibility.Visible;
+          App.LockMapSelection();
+          return;
+        }
+        ValModeOn = false;
+      }
+      else
+      {
+        App.Device.Mode = MicroCy.OperationMode.Normal;
+        Volumes[0] = _dbsampleVolumeTempHolder;
+        App.Device.MainCommand("Set Property", code: 0xaf, parameter: ushort.Parse(_dbsampleVolumeTempHolder));
+        MainButtonsViewModel.Instance.Flavor[0] = null;
+        MainWindow.Instance.wndw.Background = (System.Windows.Media.SolidColorBrush)App.Current.Resources["AppBackground"];
+        ResultsViewModel.Instance.ValidationCoverVisible = Visibility.Hidden;
+        App.UnlockMapSelection();
       }
     }
 

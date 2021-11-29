@@ -132,9 +132,7 @@ namespace Ei_Dimension
         Device.MainCommand("Set Property", code: 0xce, parameter: (ushort)Device.ActiveMap.minmapssc);
         CaliVM.EventTriggerContents[2] = Device.ActiveMap.maxmapssc.ToString();
         Device.MainCommand("Set Property", code: 0xcf, parameter: (ushort)Device.ActiveMap.maxmapssc);
-        CaliVM.CaliDateBox[0] = Device.ActiveMap.caltime;
       }
-      CaliVM.CalValModeVisible = Device.ActiveMap.validation ? Visibility.Visible : Visibility.Hidden;
 
       var ChannelsVM = ChannelsViewModel.Instance;
       if (ChannelsVM != null)
@@ -165,6 +163,13 @@ namespace Ei_Dimension
       if (ValidVM != null)
       {
         ValidVM.ValidDateBox[0] = Device.ActiveMap.valtime;
+      }
+
+      var DashBVM = DashboardViewModel.Instance;
+      if (DashBVM != null)
+      {
+        DashBVM.CalValModeEnabled = Device.ActiveMap.validation ? true : false;
+        DashBVM.CaliDateBox[0] = Device.ActiveMap.caltime;
       }
     }
 
@@ -1759,7 +1764,7 @@ namespace Ei_Dimension
           if (++CalibrationViewModel.Instance.CalFailsInARow >= 3)
           {
             ShowLocalizedNotification(nameof(Language.Resources.Calibration_Fail));
-            CalibrationViewModel.Instance.CalModeToggle();
+            DashboardViewModel.Instance.CalModeToggle();
           }
           break;
         case OperationMode.Validation:
@@ -1834,6 +1839,7 @@ namespace Ei_Dimension
       ResultsViewModel.Instance.FillWorldMaps();
       SetLanguage(MaintenanceViewModel.Instance.LanguageItems[Settings.Default.Language].Locale);
       Program.SplashScreen.Close(TimeSpan.FromMilliseconds(1000));
+      Views.ExperimentView.Instance.DbButton.IsChecked = true;
       _isStartup = false;
     }
 
@@ -1873,16 +1879,53 @@ namespace Ei_Dimension
       return true;
     }
 
-    public static void ShowNotification(string text = null)
+    public static void ShowNotification(string text, System.Windows.Media.Brush Background = null)
     {
       NotificationViewModel.Instance.Text[0] = text;
+      if (Background != null)
+        NotificationViewModel.Instance.Background = Background;
       NotificationViewModel.Instance.NotificationVisible = Visibility.Visible;
     }
 
-    public static void ShowLocalizedNotification(string nameofLocalizationString)
+    public static void ShowNotification(string text, Action action1, string actionButton1Text, System.Windows.Media.Brush Background = null )
+    {
+      NotificationViewModel.Instance.Action1 = action1;
+      NotificationViewModel.Instance.ActionButtonText[0] = actionButton1Text;
+      NotificationViewModel.Instance.ButtonVisible[0] = Visibility.Visible;
+      NotificationViewModel.Instance.ButtonVisible[2] = Visibility.Hidden;
+      ShowNotification(text, Background);
+    }
+
+    public static void ShowNotification(string text, Action action1, string actionButton1Text, Action action2, string actionButton2Text, System.Windows.Media.Brush Background = null)
+    {
+      NotificationViewModel.Instance.Action2 = action2;
+      NotificationViewModel.Instance.ActionButtonText[1] = actionButton2Text;
+      NotificationViewModel.Instance.ButtonVisible[1] = Visibility.Visible;
+      ShowNotification(text, action1, actionButton1Text, Background);
+    }
+
+    public static void ShowLocalizedNotification(string nameofLocalizationString, System.Windows.Media.Brush Background = null)
     {
       ShowNotification(Language.Resources.ResourceManager.GetString(nameofLocalizationString,
-          Language.TranslationSource.Instance.CurrentCulture));
+          Language.TranslationSource.Instance.CurrentCulture), Background);
+    }
+
+    public static void ShowLocalizedNotification(string nameofLocalizationString, Action action1, string nameofActionButton1Text, System.Windows.Media.Brush Background = null)
+    {
+      NotificationViewModel.Instance.Action1 = action1;
+      NotificationViewModel.Instance.ActionButtonText[0] = Language.Resources.ResourceManager.GetString(nameofActionButton1Text,
+          Language.TranslationSource.Instance.CurrentCulture);
+      NotificationViewModel.Instance.ButtonVisible[0] = Visibility.Visible;
+      NotificationViewModel.Instance.ButtonVisible[2] = Visibility.Hidden;
+      ShowLocalizedNotification(nameofLocalizationString, Background);
+    }
+    public static void ShowLocalizedNotification(string nameofLocalizationString, Action action1, string nameofActionButton1Text, Action action2, string nameofActionButton2Text, System.Windows.Media.Brush Background = null)
+    {
+      NotificationViewModel.Instance.Action2 = action2;
+      NotificationViewModel.Instance.ActionButtonText[1] = Language.Resources.ResourceManager.GetString(nameofActionButton2Text,
+          Language.TranslationSource.Instance.CurrentCulture);
+      NotificationViewModel.Instance.ButtonVisible[1] = Visibility.Visible;
+      ShowLocalizedNotification(nameofLocalizationString, action1, nameofActionButton1Text, Background);
     }
   }
 }

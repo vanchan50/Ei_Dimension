@@ -19,10 +19,5 @@ namespace Ei_Dimension.Views
     {
       DbButton.IsChecked = true;
     }
-
-    private void UserControl_Loaded(object sender, RoutedEventArgs e)
-    {
-      DbButton.IsChecked = true;
-    }
   }
 }
