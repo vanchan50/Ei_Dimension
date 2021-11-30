@@ -989,7 +989,6 @@ namespace Ei_Dimension
       {
         MainViewModel.Instance.ServiceVisibilityCheck = 0;
         _timerTickcounter = 0;
-        ShowLocalizedNotification(nameof(Language.Resources.Calibration_in_Progress), System.Windows.Media.Brushes.Green);
       }
     }
 
