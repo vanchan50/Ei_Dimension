@@ -7,11 +7,9 @@ namespace Ei_Dimension.ViewModels
   [POCOViewModel]
   public class ValidationViewModel
   {
-    public virtual ObservableCollection<string> ValidDateBox { get; set; }
     public static ValidationViewModel Instance { get; private set; }
     protected ValidationViewModel()
     {
-      ValidDateBox = new ObservableCollection<string> { App.Device.ActiveMap.valtime };
       Instance = this;
     }
 
@@ -42,9 +40,9 @@ namespace Ei_Dimension.ViewModels
         MinSSC = -1,
         MaxSSC = -1,
         Caldate = null,
-        Valdate = System.DateTime.Now.ToString("dd.MM.yyyy")
+        Valdate = System.DateTime.Now.ToString("dd.MM.yyyy", new System.Globalization.CultureInfo("en-GB"))
       });
-      ValidDateBox[0] = App.Device.ActiveMap.valtime;
+      DashboardViewModel.Instance.ValidDateBox[0] = App.Device.ActiveMap.valtime;
     }
 
     public bool ValMapInfoReady()

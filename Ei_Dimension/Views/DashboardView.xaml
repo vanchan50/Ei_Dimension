@@ -92,14 +92,31 @@
                    FontWeight="UltraBold"
                    TextAlignment="Center" TextWrapping="Wrap"
                    Foreground="{StaticResource AppTextColor}"
-                   Margin="0,16,0,4"/>
+                   Margin="0,16,0,4"
+                   Visibility="Hidden"/>
         
-        <TextBox IsReadOnly="True" Width="200"
+        <TextBox IsReadOnly="True" Width="160"
                  Margin="0,100,0,0"
                  HorizontalAlignment="Left"
                  VerticalAlignment="Top"
                  Style="{StaticResource InputFieldStyle}"
                  Text="{Binding CaliDateBox[0]}"/>
+
+        <TextBlock Text="{lang:Loc Validation_Prev_Validation_Date}"
+                   FontFamily="{StaticResource AppTextFont}"
+                   FontSize="26" Width="200"
+                   FontWeight="UltraBold"
+                   TextAlignment="Center" TextWrapping="Wrap"
+                   Foreground="{StaticResource AppTextColor}"
+                   Margin="0,16,0,4"
+                   Visibility="Hidden"/>
+        
+        <TextBox HorizontalAlignment="Left"
+                 VerticalAlignment="Top"
+                 IsReadOnly="True" Width="160"
+                 Margin="172,100,0,0"
+                 Style="{StaticResource InputFieldStyle}"
+                 Text="{Binding ValidDateBox[0]}"/>
       </Grid>
     </Border>
     

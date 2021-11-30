@@ -34,6 +34,7 @@ namespace Ei_Dimension.ViewModels
     public virtual bool CalModeOn { get; set; }
     public virtual bool ValModeOn { get; set; }
     public virtual ObservableCollection<string> CaliDateBox { get; set; }
+    public virtual ObservableCollection<string> ValidDateBox { get; set; }
     public static DashboardViewModel Instance { get; private set; }
 
     public byte SelectedSystemControlIndex { get; set; }
@@ -140,6 +141,7 @@ namespace Ei_Dimension.ViewModels
       CalModeOn = false;
       ValModeOn = false;
       CaliDateBox = new ObservableCollection<string> { App.Device.ActiveMap.caltime };
+      ValidDateBox = new ObservableCollection<string> { App.Device.ActiveMap.valtime };
       _dbsampleVolumeTempHolder = null;
       _dbEndReadIndexTempHolder = 0;
 
@@ -311,7 +313,7 @@ namespace Ei_Dimension.ViewModels
           EndReadItems[2].Click(6);
           MainButtonsViewModel.Instance.Flavor[0] = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Maintenance_Calibration),
             Language.TranslationSource.Instance.CurrentCulture);
-          MainWindow.Instance.wndw.Background = System.Windows.Media.Brushes.LightGray;
+          MainWindow.Instance.wndw.Background = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(255, 255, 191));
           App.LockMapSelection();
           return;
         }
@@ -340,7 +342,7 @@ namespace Ei_Dimension.ViewModels
           App.Device.Mode = MicroCy.OperationMode.Validation;
           MainButtonsViewModel.Instance.Flavor[0] = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Maintenance_Validation),
             Language.TranslationSource.Instance.CurrentCulture);
-          MainWindow.Instance.wndw.Background = System.Windows.Media.Brushes.LightYellow;
+          MainWindow.Instance.wndw.Background = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(97, 162, 135));
           ResultsViewModel.Instance.ValidationCoverVisible = Visibility.Visible;
           App.LockMapSelection();
           return;

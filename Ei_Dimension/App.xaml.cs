@@ -159,17 +159,13 @@ namespace Ei_Dimension
         ChannelsVM.Bias30Parameters[9] = Device.ActiveMap.calfsc.ToString();
         Device.MainCommand("Set Property", code: 0x24, parameter: (ushort)Device.ActiveMap.calfsc);
       }
-      var ValidVM = ValidationViewModel.Instance;
-      if (ValidVM != null)
-      {
-        ValidVM.ValidDateBox[0] = Device.ActiveMap.valtime;
-      }
 
-      var DashBVM = DashboardViewModel.Instance;
-      if (DashBVM != null)
+      var DashVM = DashboardViewModel.Instance;
+      if (DashVM != null)
       {
-        DashBVM.CalValModeEnabled = Device.ActiveMap.validation ? true : false;
-        DashBVM.CaliDateBox[0] = Device.ActiveMap.caltime;
+        DashVM.CalValModeEnabled = Device.ActiveMap.validation ? true : false;
+        DashVM.CaliDateBox[0] = Device.ActiveMap.caltime;
+        DashVM.ValidDateBox[0] = Device.ActiveMap.valtime;
       }
     }
 
@@ -993,6 +989,7 @@ namespace Ei_Dimension
       {
         MainViewModel.Instance.ServiceVisibilityCheck = 0;
         _timerTickcounter = 0;
+        ShowLocalizedNotification(nameof(Language.Resources.Calibration_in_Progress), System.Windows.Media.Brushes.Green);
       }
     }
 
@@ -1074,10 +1071,11 @@ namespace Ei_Dimension
           case 0x1b:
             if (exe.Parameter == 0)
             {
-              CalibrationViewModel.Instance.CalibrationSelectorState[1] = false;
-              CalibrationViewModel.Instance.CalibrationSelectorState[2] = false;
-              CalibrationViewModel.Instance.CalibrationSelectorState[0] = true;
-              CalibrationViewModel.Instance.ConfirmCalibration();
+              Device.EndState = 1;
+              _ = Current.Dispatcher.BeginInvoke((Action)(() =>
+              {
+                CalibrationViewModel.Instance.CalibrationSuccess();
+              }));
             }
             break;
           case 0x20:
@@ -1763,19 +1761,21 @@ namespace Ei_Dimension
         case OperationMode.Calibration:
           if (++CalibrationViewModel.Instance.CalFailsInARow >= 3)
           {
-            ShowLocalizedNotification(nameof(Language.Resources.Calibration_Fail));
+            ShowLocalizedNotification(nameof(Language.Resources.Calibration_Fail), System.Windows.Media.Brushes.Red);
             DashboardViewModel.Instance.CalModeToggle();
           }
+          else
+            ShowLocalizedNotification(nameof(Language.Resources.Calibration_in_Progress), System.Windows.Media.Brushes.Green);
           break;
         case OperationMode.Validation:
           Device.Validator.CalculateResults();
           if (AnalyzeValidationResults())
           {
             ValidationViewModel.Instance.ConfirmValidation();
-            ShowLocalizedNotification(nameof(Language.Resources.Validation_Success));
+            ShowLocalizedNotification(nameof(Language.Resources.Validation_Success), System.Windows.Media.Brushes.Green);
           }
           else
-            ShowLocalizedNotification(nameof(Language.Resources.Validation_Fail));
+            ShowLocalizedNotification(nameof(Language.Resources.Validation_Fail), System.Windows.Media.Brushes.Red);
           break;
       }
     }

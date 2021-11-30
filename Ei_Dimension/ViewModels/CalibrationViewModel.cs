@@ -4,6 +4,8 @@ using System.Collections.ObjectModel;
 using System.Windows.Controls;
 using Ei_Dimension.Models;
 using System.Collections.Generic;
+using System.Windows.Media;
+using System;
 
 namespace Ei_Dimension.ViewModels
 {
@@ -73,29 +75,40 @@ namespace Ei_Dimension.ViewModels
       App.Device.MainCommand("Set Property", code: 0x1b, parameter: num);
     }
 
-    public void ConfirmCalibration()
+    public void CalibrationSuccess()
     {
-      App.Device.SaveCalVals(new MicroCy.MapCalParameters
+      Action Cancel = () =>
       {
-        TempCl0 = -1,
-        TempCl1 = -1,
-        TempCl2 = -1,
-        TempCl3 = -1,
-        TempRedSsc = -1,
-        TempGreenSsc = -1,
-        TempVioletSsc = -1,
-        TempRpMaj = -1,
-        TempRpMin = -1,
-        TempFsc = -1,
-        MinSSC = -1,
-        MaxSSC = -1,
-        Caldate = System.DateTime.Now.ToString("dd.MM.yyyy"),
-        Valdate = null
-      });
-      DashboardViewModel.Instance.CaliDateBox[0] = App.Device.ActiveMap.caltime;
-      DashboardViewModel.Instance.CalModeOn = false;
-      DashboardViewModel.Instance.CalModeToggle();
-      App.ShowLocalizedNotification(nameof(Language.Resources.Calibration_Success));
+        CalibrationSelectorState[1] = false;
+        CalibrationSelectorState[2] = false;
+        CalibrationSelectorState[0] = true;
+        DashboardViewModel.Instance.CalModeOn = false;
+        DashboardViewModel.Instance.CalModeToggle();
+      };
+      Action Save = () =>
+      {
+        App.Device.SaveCalVals(new MicroCy.MapCalParameters
+        {
+          TempCl0 = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[8]),
+          TempCl1 = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[5]),
+          TempCl2 = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[6]),
+          TempCl3 = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[3]),
+          TempRedSsc = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[4]),
+          TempGreenSsc = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[0]),
+          TempVioletSsc = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[7]),
+          TempRpMaj = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[1]),
+          TempRpMin = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[2]),
+          TempFsc = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[9]),
+          MinSSC = ushort.Parse(EventTriggerContents[1]),
+          MaxSSC = ushort.Parse(EventTriggerContents[2]),
+          Caldate = DateTime.Now.ToString("dd.MM.yyyy", new System.Globalization.CultureInfo("en-GB")),
+          Valdate = null
+        });
+        DashboardViewModel.Instance.CaliDateBox[0] = App.Device.ActiveMap.caltime;
+        Cancel.Invoke();
+      };
+      App.ShowLocalizedNotification(nameof(Language.Resources.Calibration_Success), Save, nameof(Language.Resources.Calibration_Save_Calibration_To_Map),
+        Cancel, nameof(Language.Resources.Calibration_Cancel_Calibration), Brushes.Green);
     }
 
     public void SaveCalibrationToMapClick()

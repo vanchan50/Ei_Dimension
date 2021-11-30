@@ -158,6 +158,10 @@ Align Motor</value>
   <data name="Calibration_Calibration" xml:space="preserve">
     <value>Calibration</value>
   </data>
+  <data name="Calibration_Cancel_Calibration" xml:space="preserve">
+    <value>   Cancel
+Calibration</value>
+  </data>
   <data name="Calibration_Classification_targets" xml:space="preserve">
     <value>Classification
     Targets</value>
@@ -188,6 +192,10 @@ Compensation
   </data>
   <data name="Calibration_High_DNR_Trans" xml:space="preserve">
     <value>High DNR Transition</value>
+  </data>
+  <data name="Calibration_in_Progress" xml:space="preserve">
+    <value>Calibration still in progress.
+Check tube volume for additional cycle</value>
   </data>
   <data name="Calibration_Max_SSC" xml:space="preserve">
     <value>Max SSC</value>

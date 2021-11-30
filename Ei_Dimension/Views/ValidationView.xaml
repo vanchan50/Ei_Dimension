@@ -76,19 +76,6 @@
           </dx:DropDownButton>
         </StackPanel>
       </Border>
-
-      <TextBlock Text="{lang:Loc Validation_Prev_Validation_Date}"
-                   FontFamily="{StaticResource AppTextFont}"
-                   FontSize="26" Width="200"
-                   FontWeight="UltraBold"
-                   TextAlignment="Center" TextWrapping="Wrap"
-                   Foreground="{StaticResource AppTextColor}"
-                   Margin="0,16,0,4"/>
-      <TextBox HorizontalAlignment="Stretch"
-               IsReadOnly="True"
-               Margin="10,0,10,15"
-               Style="{StaticResource InputFieldStyle}"
-               Text="{Binding ValidDateBox[0]}"/>
     </StackPanel>
     
     <!--Table-->

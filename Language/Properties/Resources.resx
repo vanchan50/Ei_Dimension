@@ -123,6 +123,10 @@
   <data name="Calibration_Attenuation" xml:space="preserve">
     <value>Attenuation %</value>
   </data>
+  <data name="Calibration_Cancel_Calibration" xml:space="preserve">
+    <value>   Cancel
+Calibration</value>
+  </data>
   <data name="Calibration_Classification_targets" xml:space="preserve">
     <value>Classification</value>
   </data>
@@ -138,6 +142,10 @@
   <data name="Calibration_High_DNR_Trans" xml:space="preserve">
     <value>High DNR Transition</value>
   </data>
+  <data name="Calibration_in_Progress" xml:space="preserve">
+    <value>Calibration still in progress.
+Check tube volume for additional cycle</value>
+  </data>
   <data name="Calibration_Max_SSC" xml:space="preserve">
     <value>Max SSC</value>
   </data>
@@ -150,6 +158,10 @@
   </data>
   <data name="Calibration_Prev_Calibration_Date" xml:space="preserve">
     <value>Previous Calibration Date</value>
+  </data>
+  <data name="Calibration_Save_Calibration_To_Map" xml:space="preserve">
+    <value>Save Calibration
+To Current Map</value>
   </data>
   <data name="Calibration_Success" xml:space="preserve">
     <value>Calibration Succesful!</value>

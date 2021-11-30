@@ -79,6 +79,16 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to    Cancel
+        ///Calibration.
+        /// </summary>
+        public static string Calibration_Cancel_Calibration {
+            get {
+                return ResourceManager.GetString("Calibration_Cancel_Calibration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Classification.
         /// </summary>
         public static string Calibration_Classification_targets {
@@ -124,6 +134,16 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Calibration still in progress.
+        ///Check tube volume for additional cycle.
+        /// </summary>
+        public static string Calibration_in_Progress {
+            get {
+                return ResourceManager.GetString("Calibration_in_Progress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Max SSC.
         /// </summary>
         public static string Calibration_Max_SSC {
@@ -157,6 +177,16 @@ namespace Ei_Dimension.Language {
         public static string Calibration_Prev_Calibration_Date {
             get {
                 return ResourceManager.GetString("Calibration_Prev_Calibration_Date", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save Calibration
+        ///To Current Map.
+        /// </summary>
+        public static string Calibration_Save_Calibration_To_Map {
+            get {
+                return ResourceManager.GetString("Calibration_Save_Calibration_To_Map", resourceCulture);
             }
         }
         
