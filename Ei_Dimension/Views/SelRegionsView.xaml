@@ -74,5 +74,26 @@
         -->
       </StackPanel>
     </Border>
+
+    <Border HorizontalAlignment="Left" VerticalAlignment="Top"
+            Margin="1050,340,0,0">
+      <StackPanel>
+        <Button Width="280" Height="140"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                FontSize="36"
+                Content="{lang:Loc WellSel_Select_ALL}"
+                Style="{StaticResource ButtonStyle}"
+                Command="{Binding AllSelectClickCommand}"/>
+        <Button Width="280" Height="140"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                FontSize="36"
+                Margin="0,16,0,0"
+                Content="{lang:Loc Reset}"
+                Style="{StaticResource ButtonStyle}"
+                Command="{Binding ResetClickCommand}"/>
+      </StackPanel>
+    </Border>
   </Grid>
 </UserControl>

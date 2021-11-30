@@ -23,5 +23,18 @@ namespace Ei_Dimension.ViewModels
     {
       //App.MapRegions.AddActiveRegion();
     }
+
+    public void AllSelectClick()
+    {
+      for (var i = 0; i < App.MapRegions.ActiveRegions.Count; i++)
+      {
+        App.MapRegions.AddActiveRegion(i);
+      }
+    }
+
+    public void ResetClick()
+    {
+      App.MapRegions.FillRegions();
+    }
   }
 }

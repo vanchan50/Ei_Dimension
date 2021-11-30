@@ -818,6 +818,9 @@ Order</value>
   <data name="Reporter" xml:space="preserve">
     <value>Reporter</value>
   </data>
+  <data name="Reset" xml:space="preserve">
+    <value>Reset</value>
+  </data>
   <data name="Results_CutOff" xml:space="preserve">
     <value>Cutoff value</value>
   </data>

@@ -24,7 +24,7 @@
 
     <StackPanel HorizontalAlignment="Left"
                 VerticalAlignment="Top"
-                Margin="150,320,0,10">
+                Margin="750,320,0,10">
       <!--Classification Map-->
       <Border x:Name="clmap">
         <StackPanel>
@@ -81,17 +81,17 @@
     <!--Table-->
     <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Margin="550,80,0,0">
+            Margin="150,120,0,0">
       <StackPanel>
         <TextBlock Text="{lang:Loc Experiment_Available_Regions}"
                    FontFamily="{StaticResource AppTextFont}"
                    FontSize="36"
-                   Width="650"
+                   Width="497"
                    FontWeight="UltraBold"
                    TextAlignment="Center"
                    Foreground="{StaticResource AppTextColor}"
                    Margin="0,0,0,4"/>
-        <Border Height="45" Width="605"
+        <Border Height="45" Width="497"
                 HorizontalAlignment="Left">
           <Grid>
             <TextBlock Text="{lang:Loc Dashboard_Inactive_Region}"
@@ -109,15 +109,9 @@
                        Margin="270,0,0,0"
                        HorizontalAlignment="Left"
                        TextAlignment="Center"/>
-            <TextBlock Text="{lang:Loc DataAn_CV}"
-                       Width="100"
-                       FontSize="30"
-                       Margin="480,0,0,0"
-                       HorizontalAlignment="Left"
-                       TextAlignment="Center"/>
           </Grid>
         </Border>
-        <ScrollViewer Width="605" Height="646" HorizontalAlignment="Left"
+        <ScrollViewer Width="497" Height="646" HorizontalAlignment="Left"
                       VerticalScrollBarVisibility="Auto">
           <Border Background="{StaticResource RibbonBackgroundActive}">
             <StackPanel Orientation="Horizontal">

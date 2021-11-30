@@ -708,6 +708,9 @@ Barcode</value>
   <data name="Program_Name" xml:space="preserve">
     <value>Ei Dimension</value>
   </data>
+  <data name="Reset" xml:space="preserve">
+    <value>Reset</value>
+  </data>
   <data name="Results_CutOff" xml:space="preserve">
     <value>Cutoff value</value>
   </data>
