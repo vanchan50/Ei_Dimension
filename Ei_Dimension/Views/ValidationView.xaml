@@ -127,10 +127,6 @@
               <StackPanel Name="ValidationReporterValues"
                           HorizontalAlignment="Left"
                           Width="200"/>
-              <StackPanel Name="ValidationCVValues"
-                          HorizontalAlignment="Left"
-                          Width="100"
-                          Margin="10,0,0,0"/>
             </StackPanel>
           </Border>
         </ScrollViewer>

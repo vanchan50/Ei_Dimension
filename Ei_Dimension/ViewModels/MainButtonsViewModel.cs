@@ -59,6 +59,7 @@ namespace Ei_Dimension.ViewModels
         case MicroCy.OperationMode.Normal:
           break;
         case MicroCy.OperationMode.Calibration:
+          CalibrationViewModel.Instance.CalJustFailed = true;
           ResultsViewModel.Instance.ShowSinglePlexResults();
           break;
         case MicroCy.OperationMode.Validation:

@@ -126,3 +126,7 @@ median reporter for a region compared to input reporter
 
 lock map for val active. don't allow val active if regions are not selected/filled
 map centers should be real values? not binned. probably
+
+
+Validator doesn't capture the beads nearby; make regions ~ 4 times bigger size?
+right now it analyzes base only on beads registered to region. Result makes no sense anyway

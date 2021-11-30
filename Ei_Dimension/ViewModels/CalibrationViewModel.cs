@@ -15,7 +15,6 @@ namespace Ei_Dimension.ViewModels
     public virtual string SelectedGatingContent { get; set; }
     public byte SelectedGatingIndex { get; set; }
     public virtual ObservableCollection<DropDownButtonContents> GatingItems { get; }
-    public virtual ObservableCollection<bool> CalibrationSelectorState { get; set; }
     public virtual ObservableCollection<string> EventTriggerContents { get; set; }
     public virtual ObservableCollection<string> ClassificationTargetsContents { get; set; }
     public virtual ObservableCollection<string> CompensationPercentageContent { get; set; }
@@ -23,6 +22,7 @@ namespace Ei_Dimension.ViewModels
     public virtual ObservableCollection<string> CurrentMapName { get; set; }
     public virtual ObservableCollection<string> AttenuationBox { get; set; }
     public byte CalFailsInARow { get; set; }
+    public bool CalJustFailed { get; set; }
 
     public static CalibrationViewModel Instance { get; private set; }
 
@@ -48,8 +48,6 @@ namespace Ei_Dimension.ViewModels
 
       ClassificationTargetsContents = new ObservableCollection<string> { "1", "1", "1", "1", "3500"};
 
-      CalibrationSelectorState = new ObservableCollection<bool> { true, false, false };
-
       CompensationPercentageContent = new ObservableCollection<string> { MicroCy.InstrumentParameters.Calibration.Compensation.ToString() };
       DNRContents = new ObservableCollection<string> { "", MicroCy.InstrumentParameters.Calibration.HdnrTrans.ToString() };
 
@@ -57,8 +55,9 @@ namespace Ei_Dimension.ViewModels
       AttenuationBox = new ObservableCollection<string> { App.Device.ActiveMap.att.ToString() };
 
       CalFailsInARow = 0;
+      CalJustFailed = true;
 
-      Instance = this;
+    Instance = this;
     }
 
     public static CalibrationViewModel Create()
@@ -66,22 +65,10 @@ namespace Ei_Dimension.ViewModels
       return ViewModelSource.Create(() => new CalibrationViewModel());
     }
 
-    public void CalibrationSelector(byte num)
-    {
-      CalibrationSelectorState[0] = false;
-      CalibrationSelectorState[1] = false;
-      CalibrationSelectorState[2] = false;
-      CalibrationSelectorState[num] = true;
-      App.Device.MainCommand("Set Property", code: 0x1b, parameter: num);
-    }
-
     public void CalibrationSuccess()
     {
       Action Cancel = () =>
       {
-        CalibrationSelectorState[1] = false;
-        CalibrationSelectorState[2] = false;
-        CalibrationSelectorState[0] = true;
         DashboardViewModel.Instance.CalModeOn = false;
         DashboardViewModel.Instance.CalModeToggle();
       };
@@ -101,6 +88,7 @@ namespace Ei_Dimension.ViewModels
           TempFsc = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[9]),
           MinSSC = ushort.Parse(EventTriggerContents[1]),
           MaxSSC = ushort.Parse(EventTriggerContents[2]),
+          Attenuation = int.Parse(AttenuationBox[0]),
           Caldate = DateTime.Now.ToString("dd.MM.yyyy", new System.Globalization.CultureInfo("en-GB")),
           Valdate = null
         });
@@ -109,27 +97,6 @@ namespace Ei_Dimension.ViewModels
       };
       App.ShowLocalizedNotification(nameof(Language.Resources.Calibration_Success), Save, nameof(Language.Resources.Calibration_Save_Calibration_To_Map),
         Cancel, nameof(Language.Resources.Calibration_Cancel_Calibration), Brushes.Green);
-    }
-
-    public void SaveCalibrationToMapClick()
-    {
-      App.Device.SaveCalVals(new MicroCy.MapCalParameters
-      {
-        TempCl0 = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[8]),
-        TempCl1 = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[5]),
-        TempCl2 = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[6]),
-        TempCl3 = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[3]),
-        TempRedSsc = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[4]),
-        TempGreenSsc = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[0]),
-        TempVioletSsc = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[7]),
-        TempRpMaj = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[1]),
-        TempRpMin = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[2]),
-        TempFsc = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[9]),
-        MinSSC = ushort.Parse(EventTriggerContents[1]),
-        MaxSSC = ushort.Parse(EventTriggerContents[2]),
-        Caldate = null,
-        Valdate = null
-      });
     }
 
     public void MakeCalMap()
@@ -202,7 +169,7 @@ namespace Ei_Dimension.ViewModels
           MainViewModel.Instance.NumpadToggleButton((TextBox)Views.CalibrationView.Instance.targetsSP.Children[4]);
           break;
         case 11:
-          App.SelectedTextBox = (this.GetType().GetProperty(nameof(ClassificationTargetsContents)), this, 0);
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(AttenuationBox)), this, 0);
           MainViewModel.Instance.NumpadToggleButton(Views.CalibrationView.Instance.TB10);
           break;
       }

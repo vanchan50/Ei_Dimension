@@ -132,6 +132,8 @@ namespace Ei_Dimension
         Device.MainCommand("Set Property", code: 0xce, parameter: (ushort)Device.ActiveMap.minmapssc);
         CaliVM.EventTriggerContents[2] = Device.ActiveMap.maxmapssc.ToString();
         Device.MainCommand("Set Property", code: 0xcf, parameter: (ushort)Device.ActiveMap.maxmapssc);
+        CaliVM.AttenuationBox[0] = Device.ActiveMap.att.ToString();
+        Device.MainCommand("Set Property", code: 0xbf, parameter: (ushort)Device.ActiveMap.att);
       }
 
       var ChannelsVM = ChannelsViewModel.Instance;
@@ -455,6 +457,12 @@ namespace Ei_Dimension
               {
                 Device.MainCommand("Set Property", code: 0x8f, parameter: (ushort)iRes);
               }
+            }
+            break;
+          case "AttenuationBox":
+            if (int.TryParse(temp, out iRes))
+            {
+              Device.MainCommand("Set Property", code: 0xbf, parameter: (ushort)iRes);
             }
             break;
           case "SheathSyringeParameters":
@@ -1071,6 +1079,7 @@ namespace Ei_Dimension
             if (exe.Parameter == 0)
             {
               Device.EndState = 1;
+              CalibrationViewModel.Instance.CalJustFailed = false;
               _ = Current.Dispatcher.BeginInvoke((Action)(() =>
               {
                 CalibrationViewModel.Instance.CalibrationSuccess();
@@ -1763,15 +1772,17 @@ namespace Ei_Dimension
             ShowLocalizedNotification(nameof(Language.Resources.Calibration_Fail), System.Windows.Media.Brushes.Red);
             DashboardViewModel.Instance.CalModeToggle();
           }
-          else
+          else if (CalibrationViewModel.Instance.CalJustFailed)
             ShowLocalizedNotification(nameof(Language.Resources.Calibration_in_Progress), System.Windows.Media.Brushes.Green);
           break;
         case OperationMode.Validation:
           Device.Validator.CalculateResults();
           if (AnalyzeValidationResults())
           {
-            ValidationViewModel.Instance.ConfirmValidation();
-            ShowLocalizedNotification(nameof(Language.Resources.Validation_Success), System.Windows.Media.Brushes.Green);
+            _ = Current.Dispatcher.BeginInvoke((Action)(() =>
+            {
+              ValidationViewModel.Instance.ValidationSuccess();
+            }));
           }
           else
             ShowLocalizedNotification(nameof(Language.Resources.Validation_Fail), System.Windows.Media.Brushes.Red);
@@ -1824,8 +1835,7 @@ namespace Ei_Dimension
         Views.DashboardView.Instance.DbActiveRegionNo,
         Views.DashboardView.Instance.DbActiveRegionName,
         Views.ValidationView.Instance.ValidationNums,
-        Views.ValidationView.Instance.ValidationReporterValues,
-        Views.ValidationView.Instance.ValidationCVValues);
+        Views.ValidationView.Instance.ValidationReporterValues);
       ResultsViewModel.Instance.PlatePictogram.SetGrid(Views.ResultsView.Instance.DrawingPlate);
       ResultsViewModel.Instance.PlatePictogram.SetWarningGrid(Views.ResultsView.Instance.WarningGrid);
       Views.CalibrationView.Instance.clmap.DataContext = DashboardViewModel.Instance;
@@ -1844,38 +1854,31 @@ namespace Ei_Dimension
 
     private static bool AnalyzeValidationResults()
     {
-      double reporterMedianPercentage = 0.1;
-      double cl12MedianPercentage = 0.1;
-      double cl12CoefficientVariation = 0.1;
+      bool passed = true;
+      if (Device.Validator.TotalClassifiedBeads < Device.TotalBeads * 0.8)
+      {
+        Console.WriteLine("Validation Fail: Less than 80% of beads hit the regions");
+        passed = false;
+      }
+
+      double reporterErrorMargin = 0.2;
       for (var i = 0; i < MapRegions.RegionsList.Count; i++)
       {
         if (MapRegions.ValidationRegions[i])
         {
           int regionNum = int.Parse(MapRegions.RegionsList[i]);
           double inputReporter = double.Parse(MapRegions.ValidationReporterList[i]);
-          double inputCV = double.Parse(MapRegions.ValidationCVList[i]);
-          int validatorIndex = Device.Validator.VStats.FindIndex(x => x.Region == regionNum);
+          int validatorIndex = Device.Validator.RegionalStats.FindIndex(x => x.Region == regionNum);
 
-          if (Math.Pow(Device.Validator.VStats[validatorIndex].Stats[1].mfi - Models.HeatMapData.bins[Device.ActiveMap.regions[i].Center.x], 2) +
-          Math.Pow(Device.Validator.VStats[validatorIndex].Stats[2].mfi - Models.HeatMapData.bins[Device.ActiveMap.regions[i].Center.y], 2) > cl12MedianPercentage)
+          if (Device.Validator.RegionalStats[validatorIndex].Stats[0].mfi <= inputReporter * (1 - reporterErrorMargin) &&
+            Device.Validator.RegionalStats[validatorIndex].Stats[0].mfi >= inputReporter * (1 + reporterErrorMargin))
           {
-            return false;
-          }
-
-          if (Math.Pow(Device.Validator.VStats[validatorIndex].Stats[1].cv - inputCV, 2) +
-          Math.Pow(Device.Validator.VStats[validatorIndex].Stats[2].cv - inputCV, 2) > cl12CoefficientVariation)
-          {
-            return false;
-          }
-
-          if (Device.Validator.VStats[validatorIndex].Stats[0].mfi < inputReporter * (1 - reporterMedianPercentage) &&
-            Device.Validator.VStats[validatorIndex].Stats[0].mfi > inputReporter * (1 + reporterMedianPercentage))
-          {
-            return false;
+            Console.WriteLine($"Validation Fail: Reporter value ({Device.Validator.RegionalStats[validatorIndex].Stats[0].mfi}) deviation is more than 20% from the target ({MapRegions.ValidationReporterList[i]})");
+            passed = false;
           }
         }
       }
-      return true;
+      return passed;
     }
 
     public static void ShowNotification(string text, System.Windows.Media.Brush Background = null)

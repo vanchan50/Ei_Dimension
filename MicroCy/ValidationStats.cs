@@ -6,9 +6,9 @@ namespace MicroCy
   public class ValidationStats
   {
     public int Region { get; }
-    public List<Gstats> Stats = new List<Gstats>(3);
+    public List<Gstats> Stats { get; } = new List<Gstats>(3);
+    public int Count { get; private set; }
     private readonly float[,] _sfi = new float[5000, 3];
-    private int _count;
 
     public ValidationStats(int reg)
     {
@@ -17,10 +17,10 @@ namespace MicroCy
 
     public void FillCalibrationStatsRow(in BeadInfoStruct outbead)
     {
-      _sfi[_count, 0] = outbead.reporter;
-      _sfi[_count, 1] = outbead.cl1;
-      _sfi[_count, 2] = outbead.cl2;
-      _count++;
+      _sfi[Count, 0] = outbead.reporter;
+      _sfi[Count, 1] = outbead.cl1;
+      _sfi[Count, 2] = outbead.cl2;
+      Count++;
     }
 
     public void CalculateResults()
@@ -28,17 +28,17 @@ namespace MicroCy
       for (int i = 0; i < 3; i++)
       {
         double sumit = 0;
-        for (int beads = 0; beads < _count; beads++)
+        for (int beads = 0; beads < Count; beads++)
         {
           sumit += _sfi[beads, i];
         }
-        double robustcnt = _count; //start with total bead count
+        double robustcnt = Count; //start with total bead count
         double mean = sumit / robustcnt;
         //find high and low bounds
         double min = mean * 0.5;
         double max = mean * 2;
         sumit = 0;
-        for (int beads = 0; beads < _count; beads++)
+        for (int beads = 0; beads < Count; beads++)
         {
           if ((_sfi[beads, i] > min) && (_sfi[beads, i] < max))
             sumit += _sfi[beads, i];
@@ -50,7 +50,7 @@ namespace MicroCy
         }
         mean = sumit / robustcnt;
         double sumsq = 0;
-        for (int beads = 0; beads < _count; beads++)
+        for (int beads = 0; beads < Count; beads++)
         {
           if (_sfi[beads, i] == 0)
             continue;

@@ -17,7 +17,6 @@ namespace Ei_Dimension.Models
     public HashSet<int> ValidationRegionNums { get; } = new HashSet<int>();
     public ObservableCollection<string> RegionsNamesList { get; } = new ObservableCollection<string>();
     public ObservableCollection<string> ValidationReporterList { get; } = new ObservableCollection<string>();
-    public ObservableCollection<string> ValidationCVList { get; } = new ObservableCollection<string>();
     public ObservableCollection<string> CurrentActiveRegionsCount { get; } = new ObservableCollection<string>();
     public ObservableCollection<string> CurrentActiveRegionsMean { get; } = new ObservableCollection<string>();
     public ObservableCollection<string> BackingActiveRegionsCount { get; } = new ObservableCollection<string>();
@@ -42,7 +41,6 @@ namespace Ei_Dimension.Models
     private static TextBox _lastRegionsNameBox;
     private static TextBox _lastValidationRegionsBox;
     private static TextBox _lastValidationReporterBox;
-    private static TextBox _lastValidationCVBox;
     private ListBox _resultsTable;
     private static Thickness _TbAlignment = new Thickness(5, 5, 5, 0);
     //DB
@@ -51,10 +49,9 @@ namespace Ei_Dimension.Models
     //Validation
     private StackPanel _validationNum;
     private StackPanel _validationReporterBorder;
-    private StackPanel _validationCVBorder;
 
     protected MapRegions(StackPanel RegionsBorder, StackPanel RegionsNamesBorder, ListBox Table, StackPanel Db_Num, StackPanel Db_Name, StackPanel Validat_Num,
-      StackPanel Validat_Reporter, StackPanel Validat_CV)
+      StackPanel Validat_Reporter)
     {
       _regionsBorder = RegionsBorder;
       _regionsNamesBorder = RegionsNamesBorder;
@@ -63,15 +60,14 @@ namespace Ei_Dimension.Models
       _dashboardName = Db_Name;
       _validationNum = Validat_Num;
       _validationReporterBorder = Validat_Reporter;
-      _validationCVBorder = Validat_CV;
       DisplayedActiveRegionsCount = CurrentActiveRegionsCount;
       DisplayedActiveRegionsMean = CurrentActiveRegionsMean;
       FillRegions();
     }
     public static MapRegions Create(StackPanel RegionsBorder, StackPanel RegionsNamesBorder, ListBox Table, StackPanel Db_Num, StackPanel Db_Name, StackPanel Validat_Num,
-      StackPanel Validat_Reporter, StackPanel Validat_CV)
+      StackPanel Validat_Reporter)
     {
-      return ViewModelSource.Create(() => new MapRegions(RegionsBorder, RegionsNamesBorder, Table, Db_Num, Db_Name, Validat_Num, Validat_Reporter, Validat_CV));
+      return ViewModelSource.Create(() => new MapRegions(RegionsBorder, RegionsNamesBorder, Table, Db_Num, Db_Name, Validat_Num, Validat_Reporter));
     }
 
     public void FillRegions(bool loadByPage = false)
@@ -90,7 +86,6 @@ namespace Ei_Dimension.Models
       ActiveRegions.Clear();
       ValidationRegions.Clear();
       ValidationReporterList.Clear();
-      ValidationCVList.Clear();
       CurrentActiveRegionsCount.Clear();
       CurrentActiveRegionsMean.Clear();
       BackingActiveRegionsCount.Clear();
@@ -101,14 +96,13 @@ namespace Ei_Dimension.Models
         RegionsList.Add(region.Number.ToString());
         RegionsNamesList.Add("");
         ValidationReporterList.Add("");
-        ValidationCVList.Add("");
         ActiveRegions.Add(false);
         ValidationRegions.Add(false);
         CurrentActiveRegionsCount.Add("0");
         CurrentActiveRegionsMean.Add("0");
         BackingActiveRegionsCount.Add("0");
         BackingActiveRegionsMean.Add("0");
-        AddTextboxes($"RegionsList[{i}]", $"RegionsNamesList[{i}]", $"ValidationReporterList[{i}]", $"ValidationCVList[{i}]");
+        AddTextboxes($"RegionsList[{i}]", $"RegionsNamesList[{i}]", $"ValidationReporterList[{i}]");
         i++;
       }
     }
@@ -129,13 +123,12 @@ namespace Ei_Dimension.Models
       System.Windows.Input.Keyboard.ClearFocus();
     }
 
-    private void AddTextboxes(string RegionsNums, string RegionsNames, string ValidationReporter, string ValidationCV)
+    private void AddTextboxes(string RegionsNums, string RegionsNames, string ValidationReporter)
     {
       AddRegionsTextBox(RegionsNums);
       AddRegionsNamesTextBox(RegionsNames);
       AddValidationRegionsTextBox(RegionsNums);
       AddValidationReporterTextBox(ValidationReporter);
-      AddValidationCVTextBox(ValidationCV);
       _tbCounter++;
     }
 
@@ -191,14 +184,6 @@ namespace Ei_Dimension.Models
       }
       _validationReporterBorder.Children.Clear();
       _lastValidationReporterBox = null;
-
-      foreach (UIElement UIEl in _validationCVBorder.Children)
-      {
-        BindingOperations.ClearAllBindings(UIEl);
-        ((TextBox)UIEl).GotFocus -= ValidationCVTbGotFocus;
-      }
-      _validationCVBorder.Children.Clear();
-      _lastValidationCVBox = null;
     }
 
     private void ShiftTextBox(int index, bool right)
@@ -481,25 +466,6 @@ namespace Ei_Dimension.Models
       _validationReporterBorder.Children.Add(tb);
     }
 
-    private void AddValidationCVTextBox(string propertyPath)
-    {
-      var tb = new TextBox();
-      tb.Style = _regionsNamesStyle;
-      if (_lastValidationCVBox != null)
-        _lastValidationCVBox.Margin = _NameBoxAlignment;
-      _lastValidationCVBox = tb;
-      tb.Margin = _lastNameBoxAlignment;
-      tb.Name = $"___{_tbCounter}";
-      tb.Visibility = Visibility.Hidden;
-      Binding bind = new Binding();
-      bind.Source = this;
-      bind.Path = new PropertyPath(propertyPath);
-      bind.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
-      BindingOperations.SetBinding(tb, TextBox.TextProperty, bind);
-      tb.GotFocus += ValidationCVTbGotFocus;
-      _validationCVBorder.Children.Add(tb);
-    }
-
     private void ValidationRegionsTbGotFocus(object sender, RoutedEventArgs e)
     {
       int Index = int.Parse(((TextBox)e.Source).Name.Trim('_'));
@@ -510,14 +476,6 @@ namespace Ei_Dimension.Models
     {
       App.SelectedTextBox = (this.GetType()
         .GetProperty(nameof(ValidationReporterList)),
-        this, int.Parse(((TextBox)e.Source).Name.Trim('_')));
-      MainViewModel.Instance.NumpadToggleButton((TextBox)e.Source);
-    }
-
-    private void ValidationCVTbGotFocus(object sender, RoutedEventArgs e)
-    {
-      App.SelectedTextBox = (this.GetType()
-        .GetProperty(nameof(ValidationCVList)),
         this, int.Parse(((TextBox)e.Source).Name.Trim('_')));
       MainViewModel.Instance.NumpadToggleButton((TextBox)e.Source);
     }
@@ -547,8 +505,6 @@ namespace Ei_Dimension.Models
 
       var ReporterTb = (TextBox)_validationReporterBorder.Children[index];
       ReporterTb.Visibility = right ? Visibility.Visible : Visibility.Hidden;
-      var CVTb = (TextBox)_validationCVBorder.Children[index];
-      CVTb.Visibility = right ? Visibility.Visible : Visibility.Hidden;
       if(right)
         ValidationRegionNums.Add(int.Parse(tb.Text.Trim('_')));
       else

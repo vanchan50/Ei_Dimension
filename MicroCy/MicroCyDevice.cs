@@ -57,6 +57,7 @@ namespace MicroCy
     public int WellsToRead { get; set; }
     public int BeadsToCapture { get; set; }
     public int BeadCount { get; private set; }
+    public int TotalBeads { get; private set; }
     public int SavBeadCount { get; set; }
     public int CurrentWellIdx { get; set; }
     public int SampleSize { get; set; }
@@ -110,6 +111,7 @@ namespace MicroCy
 
     public MicroCyDevice(Type connectionType)
     {
+      TotalBeads = 0;
       Mode = OperationMode.Normal;
       _classificationBins = GenerateLogSpace(1, 50000, 256);
       _serialConnection = ConnectionFactory.MakeNewConnection(connectionType);
@@ -256,6 +258,7 @@ namespace MicroCy
             //accum stats for run as a whole, used during aligment and QC
             FillCalibrationStatsRow(in outbead);
             BeadCount++;
+            TotalBeads++;
           }
         }
         Array.Clear(_serialConnection.InputBuffer, 0, _serialConnection.InputBuffer.Length);
@@ -401,6 +404,8 @@ namespace MicroCy
         map.minmapssc = (ushort)param.MinSSC;
       if (param.MaxSSC >= 0)
         map.maxmapssc = (ushort)param.MaxSSC;
+      if (param.Attenuation >= 0)
+        map.att = param.Attenuation;
       if (param.Caldate != null)
         map.caltime = param.Caldate;
       if (param.Valdate != null)
@@ -783,6 +788,7 @@ namespace MicroCy
       WellNext();   //save well numbers for file name
       InitBeadRead(ReadingRow, ReadingCol);   //gets output file redy
       ClearSummary();
+      TotalBeads = 0;
 
       if (WellsToRead == 0)    //only one well in region
         MainCommand("Read A");

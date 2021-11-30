@@ -8,15 +8,17 @@ namespace MicroCy
 {
   public class Validator
   {
-    public List<ValidationStats> VStats = new List<ValidationStats>();
+    public List<ValidationStats> RegionalStats = new List<ValidationStats>();
+    public int TotalClassifiedBeads;
     private Dictionary<int, int> _dict = new Dictionary<int, int>();
     public Validator(List<int> regions)
     {
-      VStats = new List<ValidationStats>(regions.Count);
+      RegionalStats = new List<ValidationStats>(regions.Count);
+      TotalClassifiedBeads = 0;
       foreach (var reg in regions)
       {
-        _dict.Add(reg, VStats.Count);
-        VStats.Add(new ValidationStats(reg));
+        _dict.Add(reg, RegionalStats.Count);
+        RegionalStats.Add(new ValidationStats(reg));
       }
     }
 
@@ -25,15 +27,16 @@ namespace MicroCy
       int index;
       if (_dict.TryGetValue(outbead.region, out index))
       {
-        VStats[index].FillCalibrationStatsRow(in outbead);
+        RegionalStats[index].FillCalibrationStatsRow(in outbead);
       }
     }
 
     public void CalculateResults()
     {
-      foreach (var s in VStats)
+      foreach (var s in RegionalStats)
       {
         s.CalculateResults();
+        TotalClassifiedBeads += s.Count;
       }
     }
   }

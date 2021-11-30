@@ -1,5 +1,6 @@
 ﻿using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
+using System;
 using System.Collections.ObjectModel;
 
 namespace Ei_Dimension.ViewModels
@@ -23,7 +24,7 @@ namespace Ei_Dimension.ViewModels
       //App.MapRegions.AddValidationRegion(num);
     }
 
-    public void ConfirmValidation()
+    public void ValidationSuccess()
     {
       App.Device.SaveCalVals(new MicroCy.MapCalParameters
       {
@@ -39,10 +40,12 @@ namespace Ei_Dimension.ViewModels
         TempFsc = -1,
         MinSSC = -1,
         MaxSSC = -1,
+        Attenuation = -1,
         Caldate = null,
-        Valdate = System.DateTime.Now.ToString("dd.MM.yyyy", new System.Globalization.CultureInfo("en-GB"))
+        Valdate = DateTime.Now.ToString("dd.MM.yyyy", new System.Globalization.CultureInfo("en-GB"))
       });
       DashboardViewModel.Instance.ValidDateBox[0] = App.Device.ActiveMap.valtime;
+      App.ShowLocalizedNotification(nameof(Language.Resources.Validation_Success), System.Windows.Media.Brushes.Green);
     }
 
     public bool ValMapInfoReady()
@@ -53,7 +56,7 @@ namespace Ei_Dimension.ViewModels
         if (App.MapRegions.ValidationRegions[i])
         {
           activeRegions = true;
-          if (App.MapRegions.ValidationReporterList[i] == "" || App.MapRegions.ValidationCVList[i] == "")
+          if (App.MapRegions.ValidationReporterList[i] == "")
           {
             return false;
           }

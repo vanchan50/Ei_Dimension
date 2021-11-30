@@ -146,71 +146,7 @@
         </StackPanel>
       </Grid>
     </Border>
-    
-    <!--Calibration-->
-    <Border HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Margin="25,300,0,0">
-      <StackPanel VerticalAlignment="Stretch">
-        <TextBlock Text="{lang:Loc Calibration_Calibration}"
-                   FontFamily="{StaticResource AppTextFont}"
-                   FontSize="36"
-                   FontWeight="UltraBold"
-                   Foreground="{StaticResource AppTextColor}"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Top"
-                   Margin="0,0,0,0"/>
-        <Border BorderThickness="1"
-                BorderBrush="{StaticResource HaltButtonBackgroundHighlighted}"
-                Margin="0,4,0,0"
-                Width="230">
-          <StackPanel>
-            <RadioButton Content="{lang:Loc OFF}"
-                         Style="{StaticResource RadioButtonVerticalThemeStyle}"
-                         Height="60" Cursor="Hand"
-                         IsChecked="{Binding CalibrationSelectorState[0], Mode=OneWay}"
-                         Command="{Binding CalibrationSelectorCommand}">
-              <RadioButton.CommandParameter>
-                <System:Byte>0</System:Byte>
-              </RadioButton.CommandParameter>
-            </RadioButton>
-            <RadioButton Content="{lang:Loc Calibration_Classification_To_map}"
-                         Style="{StaticResource RadioButtonVerticalThemeStyle}"
-                         Height="100"
-                         FontSize="30"
-                         IsChecked="{Binding CalibrationSelectorState[1], Mode=OneWay}"
-                         Command="{Binding CalibrationSelectorCommand}">
-              <RadioButton.CommandParameter>
-                <System:Byte>1</System:Byte>
-              </RadioButton.CommandParameter>
-            </RadioButton>
-            <RadioButton Content="{lang:Loc Reporter}"
-                         Style="{StaticResource RadioButtonVerticalThemeStyle}"
-                         Height="60"
-                         IsChecked="{Binding CalibrationSelectorState[2], Mode=OneWay}"
-                         Command="{Binding CalibrationSelectorCommand}">
-              <RadioButton.CommandParameter>
-                <System:Byte>2</System:Byte>
-              </RadioButton.CommandParameter>
-            </RadioButton>
-          </StackPanel>
-        </Border>
-        <Button Content="{lang:Loc Calibration_Save_Calibration_To_Map}"
-                Command="{Binding SaveCalibrationToMapClickCommand}"
-                Style="{StaticResource ButtonStyle}"
-                Height="100" Width="230"
-                Margin="0,10,0,3"/>
-        <TextBlock Text="{Binding CurrentMapName[0]}"
-                   FontFamily="{StaticResource AppTextFont}"
-                   FontSize="18"
-                   FontWeight="UltraBold"
-                   Foreground="{StaticResource AppTextColor}"
-                   HorizontalAlignment="Right"
-                   VerticalAlignment="Top"
-                   Margin="0,2,0,0"/>
-      </StackPanel>
-    </Border>
-    
+
     <!--Classification Targets-->
     <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"

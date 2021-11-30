@@ -315,6 +315,7 @@ namespace Ei_Dimension.ViewModels
             Language.TranslationSource.Instance.CurrentCulture);
           MainWindow.Instance.wndw.Background = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(255, 255, 191));
           App.LockMapSelection();
+          App.Device.MainCommand("Set Property", code: 0x1b, parameter: 1);
           return;
         }
         CalModeOn = false;
@@ -328,6 +329,7 @@ namespace Ei_Dimension.ViewModels
         MainButtonsViewModel.Instance.Flavor[0] = null;
         MainWindow.Instance.wndw.Background = (System.Windows.Media.SolidColorBrush)App.Current.Resources["AppBackground"];
         App.UnlockMapSelection();
+        App.Device.MainCommand("Set Property", code: 0x1b, parameter: 0);
       }
     }
 

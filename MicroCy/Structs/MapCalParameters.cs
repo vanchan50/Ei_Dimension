@@ -15,6 +15,7 @@ namespace MicroCy
     public int TempFsc;
     public int MinSSC;
     public int MaxSSC;
+    public int Attenuation;
     public string Caldate;
     public string Valdate;
   }
