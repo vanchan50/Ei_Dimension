@@ -41,7 +41,10 @@ namespace Ei_Dimension.ViewModels
     {
       DashboardViewModel.Instance.SetWellsInOrder();
       if (App.Device.WellsInOrder.Count < 1)
+      {
+        App.ShowNotification("No wells or Tube selected");
         return;
+      }
 
       StartButtonEnabled = false;
       ResultsViewModel.Instance.ClearGraphs();
@@ -53,10 +56,15 @@ namespace Ei_Dimension.ViewModels
         ResultsViewModel.Instance.MfiItems[i] = "";
         ResultsViewModel.Instance.CvItems[i] = "";
       }
-      App.Device.StartOperation();
       switch (App.Device.Mode)
       {
         case MicroCy.OperationMode.Normal:
+          if (!MapInfoReady())
+          {
+            App.ShowNotification("No Active regions selected");
+            StartButtonEnabled = true;
+            return;
+          }
           break;
         case MicroCy.OperationMode.Calibration:
           CalibrationViewModel.Instance.CalJustFailed = true;
@@ -66,7 +74,7 @@ namespace Ei_Dimension.ViewModels
           MakeNewValidator();
           break;
       }
-
+      App.Device.StartOperation();
       MainViewModel.Instance.NavigationSelector(1);
     }
 
@@ -98,6 +106,22 @@ namespace Ei_Dimension.ViewModels
         }
       }
       App.Device.Validator = new MicroCy.Validator(regions);
+    }
+
+    public bool MapInfoReady()
+    {
+      if (App.MapRegions.ActiveRegionNums.Count == 0)
+        return false;
+
+      for (var i = 0; i < App.MapRegions.RegionsList.Count; i++)
+      {
+        if (App.MapRegions.ActiveRegions[i])
+        {
+          if (App.MapRegions.RegionsNamesList[i] == "")
+            App.MapRegions.RegionsNamesList[i] = i.ToString();
+        }
+      }
+      return true;
     }
   }
 }

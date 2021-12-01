@@ -50,20 +50,23 @@ namespace Ei_Dimension.ViewModels
 
     public bool ValMapInfoReady()
     {
-      bool activeRegions = false;
+      if (App.MapRegions.ValidationRegionNums.Count == 0)
+      {
+        App.ShowNotification("No Validation regions selected");
+        return false;
+      }
+
       for (var i = 0; i < App.MapRegions.RegionsList.Count; i++)
       {
         if (App.MapRegions.ValidationRegions[i])
         {
-          activeRegions = true;
           if (App.MapRegions.ValidationReporterList[i] == "")
           {
+            App.ShowNotification($"Validation region {App.MapRegions.RegionsList[i]} Reporter is not specified");
             return false;
           }
         }
       }
-      if (!activeRegions)
-        return false;
       return true;
     }
   }

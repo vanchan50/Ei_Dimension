@@ -319,6 +319,8 @@ namespace Ei_Dimension.ViewModels
           return;
         }
         CalModeOn = false;
+        if (App.Device.Mode == MicroCy.OperationMode.Validation)
+          App.ShowNotification("The instrument is in Validation mode");
       }
       else
       {
@@ -350,6 +352,8 @@ namespace Ei_Dimension.ViewModels
           return;
         }
         ValModeOn = false;
+        if (App.Device.Mode == MicroCy.OperationMode.Calibration)
+          App.ShowNotification("The instrument is in Calibration mode");
       }
       else
       {

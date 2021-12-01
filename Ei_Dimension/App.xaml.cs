@@ -110,19 +110,18 @@ namespace Ei_Dimension
         }
       }
       ResultsViewModel.Instance.FillWorldMaps();
-      if (Device.ActiveMap.valtime != null)
+
+      string Theme;
+      if (Device.ActiveMap.validation)
       {
         var valDate = DateTime.Parse(Device.ActiveMap.valtime, new System.Globalization.CultureInfo("en-GB"));
-        if (Device.ActiveMap.validation && valDate.AddDays(2) < DateTime.Today)
-          DevExpress.Xpf.Core.ThemeManager.SetThemeName(Views.DashboardView.Instance.MapSelectr,
-            DevExpress.Xpf.Core.Theme.Office2010BlackName); //Office2007BlueName
-        else
-          DevExpress.Xpf.Core.ThemeManager.SetThemeName(Views.DashboardView.Instance.MapSelectr,
-            DevExpress.Xpf.Core.Theme.DeepBlueName);
+        Theme = valDate.AddDays(2) < DateTime.Today ? DevExpress.Xpf.Core.Theme.Office2010BlackName : DevExpress.Xpf.Core.Theme.DeepBlueName; //Office2007BlueName
       }
       else
-        DevExpress.Xpf.Core.ThemeManager.SetThemeName(Views.DashboardView.Instance.MapSelectr,
-          DevExpress.Xpf.Core.Theme.DeepBlueName);
+        Theme = DevExpress.Xpf.Core.Theme.DeepBlueName;
+
+      DevExpress.Xpf.Core.ThemeManager.SetThemeName(Views.DashboardView.Instance.MapSelectr,
+        Theme);
 
       var CaliVM = CalibrationViewModel.Instance;
       if (CaliVM != null)
@@ -165,9 +164,18 @@ namespace Ei_Dimension
       var DashVM = DashboardViewModel.Instance;
       if (DashVM != null)
       {
-        DashVM.CalValModeEnabled = Device.ActiveMap.validation ? true : false;
-        DashVM.CaliDateBox[0] = Device.ActiveMap.caltime;
-        DashVM.ValidDateBox[0] = Device.ActiveMap.valtime;
+        if (Device.ActiveMap.validation)
+        {
+          DashVM.CalValModeEnabled = true;
+          DashVM.CaliDateBox[0] = Device.ActiveMap.caltime;
+          DashVM.ValidDateBox[0] = Device.ActiveMap.valtime;
+        }
+        else
+        {
+          DashVM.CalValModeEnabled = false;
+          DashVM.CaliDateBox[0] = null;
+          DashVM.ValidDateBox[0] = null;
+        }
       }
     }
 
@@ -976,7 +984,7 @@ namespace Ei_Dimension
     {
       KeyboardShow.prop.SetValue(KeyboardShow.VM, Visibility.Hidden);
     }
-    
+
     private static void TimerTick(object sender, EventArgs e)
     {
       if (_isStartup) //TODO: can be a Task launched from ctor, that polls if all instances are != null
@@ -993,7 +1001,7 @@ namespace Ei_Dimension
       }
       WorkOrderHandler();
       _timerTickcounter++;
-      if(_timerTickcounter > 4)
+      if (_timerTickcounter > 4)
       {
         MainViewModel.Instance.ServiceVisibilityCheck = 0;
         _timerTickcounter = 0;

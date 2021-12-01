@@ -28,7 +28,8 @@ namespace Ei_Dimension.ViewModels
     {
       for (var i = 0; i < App.MapRegions.ActiveRegions.Count; i++)
       {
-        App.MapRegions.AddActiveRegion(i);
+        if(!App.MapRegions.ActiveRegions[i])
+          App.MapRegions.AddActiveRegion(i);
       }
     }
 
