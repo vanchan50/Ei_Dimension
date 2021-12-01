@@ -618,14 +618,14 @@
         </RadioButton.CommandParameter>
       </RadioButton>
     </StackPanel>
-    
+
     <!-- Company Logo Left -->
     <Image HorizontalAlignment="Left" VerticalAlignment="Top"
            Margin="10,898,0,0"
            Width="430" Height="40"
            Source="/Icons/dimension flow analyzer logo.png"
            RenderOptions.BitmapScalingMode="HighQuality"/>
-    
+
     <!--Plate pictogram-->
     <Border Width="780" Height="524"
             Margin="1230,372,0,0"
@@ -1153,7 +1153,7 @@
                 <System:Int32>1</System:Int32>
               </RadioButton.CommandParameter>
             </RadioButton>
-              <RadioButton Width="100" Height="70"
+            <RadioButton Width="100" Height="70"
                        Margin="10,0,0,0" Cursor="Hand"
                        HorizontalAlignment="Left"
                        VerticalAlignment="Top"

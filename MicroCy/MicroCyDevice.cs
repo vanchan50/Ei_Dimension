@@ -207,7 +207,7 @@ namespace MicroCy
       Console.WriteLine(string.Format("{0} Reporting Background File Save Complete", DateTime.Now.ToString()));
     }
 
-    public void SetReadingParamsForWell(int index)
+    public void SetReadingParamsForWell(int index, HashSet<int> regionsToOutput = null)
     {
       MainCommand("Set Property", code: 0xaa, parameter: (ushort)WellsInOrder[index].runSpeed);
       MainCommand("Set Property", code: 0xc2, parameter: (ushort)WellsInOrder[index].chanConfig);
@@ -218,7 +218,8 @@ namespace MicroCy
       WellResults.Clear();
       foreach (var region in ActiveMap.regions)
       {
-        WellResults.Add(new WellResults { regionNumber = (ushort)region.Number });
+        if(regionsToOutput != null && regionsToOutput.Contains(region.Number))
+          WellResults.Add(new WellResults { regionNumber = (ushort)region.Number });
       }
       if (Reg0stats)
         WellResults.Add(new WellResults { regionNumber = 0 });
@@ -427,7 +428,7 @@ namespace MicroCy
       ReadingCol = PlateCol;
     }
 
-    public void EndBeadRead()
+    public void EndBeadRead(HashSet<int> regionsToOutput = null)
     {
       if (_readingA)
         MainCommand("End Bead Read A");
@@ -436,7 +437,7 @@ namespace MicroCy
       CurrentWellIdx++;
       if (CurrentWellIdx <= WellsToRead)  //are there more to go
       {
-        SetReadingParamsForWell(CurrentWellIdx);
+        SetReadingParamsForWell(CurrentWellIdx, regionsToOutput);
         if (_readingA)
         {
           if (CurrentWellIdx < WellsToRead)   //more than one to go
@@ -772,7 +773,7 @@ namespace MicroCy
         _ = _summaryout.Append(Sheader);
     }
 
-    public void StartOperation()
+    public void StartOperation(HashSet<int> regionsToOutput = null)
     {
       //read section of plate
       MainCommand("Get FProperty", code: 0x58);
@@ -781,7 +782,7 @@ namespace MicroCy
       MainCommand("Get FProperty", code: 0x20); //get high dnr property
       ReadActive = true;
       SetAspirateParamsForWell(0);  //setup for first read
-      SetReadingParamsForWell(0);
+      SetReadingParamsForWell(0, regionsToOutput);
       MainCommand("Set Property", code: 0x19, parameter: 1); //bubble detect on
       MainCommand("Position Well Plate");   //move motors. next position is set in properties 0xad and 0xae
       MainCommand("Aspirate Syringe A"); //handles down and pickup sample

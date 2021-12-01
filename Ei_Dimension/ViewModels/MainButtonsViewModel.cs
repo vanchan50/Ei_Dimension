@@ -65,16 +65,18 @@ namespace Ei_Dimension.ViewModels
             StartButtonEnabled = true;
             return;
           }
+          App.Device.StartOperation(App.MapRegions.ActiveRegionNums);
           break;
         case MicroCy.OperationMode.Calibration:
           CalibrationViewModel.Instance.CalJustFailed = true;
           ResultsViewModel.Instance.ShowSinglePlexResults();
+          App.Device.StartOperation();
           break;
         case MicroCy.OperationMode.Validation:
           MakeNewValidator();
+          App.Device.StartOperation();
           break;
       }
-      App.Device.StartOperation();
       MainViewModel.Instance.NavigationSelector(1);
     }
 

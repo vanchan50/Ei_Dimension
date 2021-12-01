@@ -1590,7 +1590,14 @@ namespace Ei_Dimension
           Device.MainCommand("FlushCmdQueue");
           Device.MainCommand("Set Property", code: 0xc3); //clear empty syringe token
           Device.MainCommand("Set Property", code: 0xcb); //clear sync token to allow next sequence to execute
-          Device.EndBeadRead();
+          if (Device.Mode == OperationMode.Normal)
+          {
+            Device.EndBeadRead(MapRegions.ActiveRegionNums);
+          }
+          else
+          {
+            Device.EndBeadRead();
+          }
           Device.EndState = 0;
           if (Device.CurrentWellIdx == (Device.WellsToRead + 1)) //if only one more to go
           {
