@@ -67,6 +67,18 @@ namespace Ei_Dimension.ViewModels
 
     public void CalibrationSuccess()
     {
+      System.Threading.Thread.Sleep(1000);
+      App.Device.MainCommand("Get Property", code: 0x24);
+      App.Device.MainCommand("Get Property", code: 0x25);
+      App.Device.MainCommand("Get Property", code: 0x26);
+      App.Device.MainCommand("Get Property", code: 0x28);
+      App.Device.MainCommand("Get Property", code: 0x29);
+      App.Device.MainCommand("Get Property", code: 0x2a);
+      App.Device.MainCommand("Get Property", code: 0x2c);
+      App.Device.MainCommand("Get Property", code: 0x2d);
+      App.Device.MainCommand("Get Property", code: 0x2e);
+      App.Device.MainCommand("Get Property", code: 0x2f);
+      System.Threading.Thread.Sleep(1000);
       Action Cancel = () =>
       {
         DashboardViewModel.Instance.CalModeOn = false;
