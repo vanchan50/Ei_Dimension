@@ -120,7 +120,7 @@ namespace Ei_Dimension.ViewModels
         if (App.MapRegions.ActiveRegions[i])
         {
           if (App.MapRegions.RegionsNamesList[i] == "")
-            App.MapRegions.RegionsNamesList[i] = i.ToString();
+            App.MapRegions.RegionsNamesList[i] = App.MapRegions.RegionsList[i];
         }
       }
       return true;

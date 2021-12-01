@@ -1750,22 +1750,25 @@ namespace Ei_Dimension
     public static void FinishedReadingWellEventhandler(object sender, ReadingWellEventArgs e)
     {
       var type = Models.WellType.Success;
-      if (Device.TerminationType == 0)
+      if (Device.Mode == OperationMode.Normal)
       {
-        for (var i = 0; i < MapRegions.ActiveRegions.Count; i++)
+        if (Device.TerminationType == 0)
         {
-          if (!MapRegions.ActiveRegions[i])
-            continue;
+          for (var i = 0; i < MapRegions.ActiveRegions.Count; i++)
+          {
+            if (!MapRegions.ActiveRegions[i])
+              continue;
 
-          if (Device.WellResults[i].RP1vals.Count < Device.MinPerRegion * 0.75)
-          {
-            type = Models.WellType.Fail;
-            break;
-          }
-          if (Device.WellResults[i].RP1vals.Count < Device.MinPerRegion)
-          {
-            type = Models.WellType.LightFail;
-            break;
+            if (Device.WellResults[i].RP1vals.Count < Device.MinPerRegion * 0.75)
+            {
+              type = Models.WellType.Fail;
+              break;
+            }
+            if (Device.WellResults[i].RP1vals.Count < Device.MinPerRegion)
+            {
+              type = Models.WellType.LightFail;
+              break;
+            }
           }
         }
       }
