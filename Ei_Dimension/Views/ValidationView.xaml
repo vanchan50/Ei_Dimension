@@ -141,5 +141,27 @@
         -->
       </StackPanel>
     </Border>
+
+
+    <Border HorizontalAlignment="Left" VerticalAlignment="Top"
+            Margin="700,567,0,0">
+      <StackPanel>
+        <Button Width="280" Height="140"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                FontSize="36"
+                Content="{lang:Loc Validation_Load}"
+                Style="{StaticResource ButtonStyle}"
+                Command="{Binding LoadClickCommand}"/>
+        <Button Width="280" Height="140"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                FontSize="36"
+                Margin="0,16,0,0"
+                Content="{lang:Loc Validation_Save}"
+                Style="{StaticResource ButtonStyle}"
+                Command="{Binding SaveClickCommand}"/>
+      </StackPanel>
+    </Border>
   </Grid>
 </UserControl>

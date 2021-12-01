@@ -504,7 +504,20 @@ namespace MicroCy
         string name = mp.Substring(mp.LastIndexOf("\\") + 1);
         string destination = $"{RootDirectory.FullName}\\Config\\{name}";
         if (!File.Exists(destination))
+        {
           File.Copy(mp, destination);
+        }
+        //else
+        //{
+        //  var badDate = new DateTime(2021, 12, 1);  // File.GetCreationTime(mp);
+        //  var date = File.GetCreationTime(destination);
+        //  date = date.Date;
+        //  if(date < badDate)
+        //  {
+        //    File.Copy(mp, destination);
+        //  }
+        //}
+        
       }
     }
 
@@ -530,6 +543,7 @@ namespace MicroCy
         File.AppendAllText(_thisRunResultsFileName, _summaryout.ToString());
       }
     }
+
     private void GetThisRunFileName()
     {
       if (_thisRunResultsFileName != null)

@@ -798,12 +798,20 @@ Factory Defaults</value>
   <data name="Validation_Fail" xml:space="preserve">
     <value>Validation Failed!</value>
   </data>
+  <data name="Validation_Load" xml:space="preserve">
+    <value> Load
+Target</value>
+  </data>
   <data name="Validation_Mode" xml:space="preserve">
     <value>Validation
    Mode</value>
   </data>
   <data name="Validation_Prev_Validation_Date" xml:space="preserve">
     <value>Previous Validation Date</value>
+  </data>
+  <data name="Validation_Save" xml:space="preserve">
+    <value> Save
+Target</value>
   </data>
   <data name="Validation_Start_Validation" xml:space="preserve">
     <value>   Start

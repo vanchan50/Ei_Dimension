@@ -2050,6 +2050,16 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to  Load
+        ///Target.
+        /// </summary>
+        public static string Validation_Load {
+            get {
+                return ResourceManager.GetString("Validation_Load", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Validation
         ///   Mode.
         /// </summary>
@@ -2065,6 +2075,16 @@ namespace Ei_Dimension.Language {
         public static string Validation_Prev_Validation_Date {
             get {
                 return ResourceManager.GetString("Validation_Prev_Validation_Date", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  Save
+        ///Target.
+        /// </summary>
+        public static string Validation_Save {
+            get {
+                return ResourceManager.GetString("Validation_Save", resourceCulture);
             }
         }
         
