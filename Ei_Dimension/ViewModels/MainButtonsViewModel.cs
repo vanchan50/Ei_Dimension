@@ -72,7 +72,7 @@ namespace Ei_Dimension.ViewModels
           ResultsViewModel.Instance.ShowSinglePlexResults();
           App.Device.StartOperation();
           break;
-        case MicroCy.OperationMode.Validation:
+        case MicroCy.OperationMode.Verification:
           MakeNewValidator();
           App.Device.StartOperation();
           break;
@@ -101,13 +101,13 @@ namespace Ei_Dimension.ViewModels
       var regions = new List<int>();
       for (var i = 0; i < App.MapRegions.RegionsList.Count; i++)
       {
-        if (App.MapRegions.ValidationRegions[i])
+        if (App.MapRegions.VerificationRegions[i])
         {
           int reg = int.Parse(App.MapRegions.RegionsList[i]);
           regions.Add(reg);
         }
       }
-      App.Device.Validator = new MicroCy.Validator(regions);
+      App.Device.Verificator = new MicroCy.Validator(regions);
     }
 
     public bool MapInfoReady()

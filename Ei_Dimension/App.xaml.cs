@@ -183,14 +183,14 @@ namespace Ei_Dimension
     {
       Views.DashboardView.Instance.MapSelectr.IsEnabled = false;
       Views.CalibrationView.Instance.MapSelectr.IsEnabled = false;
-      Views.ValidationView.Instance.MapSelectr.IsEnabled = false;
+      Views.VerificationView.Instance.MapSelectr.IsEnabled = false;
     }
 
     public static void UnlockMapSelection()
     {
       Views.DashboardView.Instance.MapSelectr.IsEnabled = true;
       Views.CalibrationView.Instance.MapSelectr.IsEnabled = true;
-      Views.ValidationView.Instance.MapSelectr.IsEnabled = true;
+      Views.VerificationView.Instance.MapSelectr.IsEnabled = true;
     }
 
     public static void SetSystemControl(byte num)
@@ -1793,13 +1793,13 @@ namespace Ei_Dimension
           else if (CalibrationViewModel.Instance.CalJustFailed)
             ShowLocalizedNotification(nameof(Language.Resources.Calibration_in_Progress), System.Windows.Media.Brushes.Green);
           break;
-        case OperationMode.Validation:
-          Device.Validator.CalculateResults();
-          if (AnalyzeValidationResults())
+        case OperationMode.Verification:
+          Device.Verificator.CalculateResults();
+          if (AnalyzeVerificationResults())
           {
             _ = Current.Dispatcher.BeginInvoke((Action)(() =>
             {
-              ValidationViewModel.Instance.ValidationSuccess();
+              VerificationViewModel.Instance.VerificationSuccess();
             }));
           }
           else
@@ -1852,12 +1852,12 @@ namespace Ei_Dimension
         Views.ResultsView.Instance.Table,
         Views.DashboardView.Instance.DbActiveRegionNo,
         Views.DashboardView.Instance.DbActiveRegionName,
-        Views.ValidationView.Instance.ValidationNums,
-        Views.ValidationView.Instance.ValidationReporterValues);
+        Views.VerificationView.Instance.VerificationNums,
+        Views.VerificationView.Instance.VerificationReporterValues);
       ResultsViewModel.Instance.PlatePictogram.SetGrid(Views.ResultsView.Instance.DrawingPlate);
       ResultsViewModel.Instance.PlatePictogram.SetWarningGrid(Views.ResultsView.Instance.WarningGrid);
       Views.CalibrationView.Instance.clmap.DataContext = DashboardViewModel.Instance;
-      Views.ValidationView.Instance.clmap.DataContext = DashboardViewModel.Instance;
+      Views.VerificationView.Instance.clmap.DataContext = DashboardViewModel.Instance;
       if (Settings.Default.LastTemplate != "None")
       {
         TemplateSelectViewModel.Instance.SelectedItem = Settings.Default.LastTemplate;
@@ -1870,28 +1870,28 @@ namespace Ei_Dimension
       _isStartup = false;
     }
 
-    private static bool AnalyzeValidationResults()
+    private static bool AnalyzeVerificationResults()
     {
       bool passed = true;
-      if (Device.Validator.TotalClassifiedBeads < Device.TotalBeads * 0.8)
+      if (Device.Verificator.TotalClassifiedBeads < Device.TotalBeads * 0.8)
       {
-        Console.WriteLine("Validation Fail: Less than 80% of beads hit the regions");
+        Console.WriteLine("Verification Fail: Less than 80% of beads hit the regions");
         passed = false;
       }
 
       double reporterErrorMargin = 0.2;
       for (var i = 0; i < MapRegions.RegionsList.Count; i++)
       {
-        if (MapRegions.ValidationRegions[i])
+        if (MapRegions.VerificationRegions[i])
         {
           int regionNum = int.Parse(MapRegions.RegionsList[i]);
-          double inputReporter = double.Parse(MapRegions.ValidationReporterList[i]);
-          int validatorIndex = Device.Validator.RegionalStats.FindIndex(x => x.Region == regionNum);
+          double inputReporter = double.Parse(MapRegions.VerificationReporterList[i]);
+          int validatorIndex = Device.Verificator.RegionalStats.FindIndex(x => x.Region == regionNum);
 
-          if (Device.Validator.RegionalStats[validatorIndex].Stats[0].mfi <= inputReporter * (1 - reporterErrorMargin) &&
-            Device.Validator.RegionalStats[validatorIndex].Stats[0].mfi >= inputReporter * (1 + reporterErrorMargin))
+          if (Device.Verificator.RegionalStats[validatorIndex].Stats[0].mfi <= inputReporter * (1 - reporterErrorMargin) &&
+            Device.Verificator.RegionalStats[validatorIndex].Stats[0].mfi >= inputReporter * (1 + reporterErrorMargin))
           {
-            Console.WriteLine($"Validation Fail: Reporter value ({Device.Validator.RegionalStats[validatorIndex].Stats[0].mfi}) deviation is more than 20% from the target ({MapRegions.ValidationReporterList[i]})");
+            Console.WriteLine($"Verification Fail: Reporter value ({Device.Verificator.RegionalStats[validatorIndex].Stats[0].mfi}) deviation is more than 20% from the target ({MapRegions.VerificationReporterList[i]})");
             passed = false;
           }
         }

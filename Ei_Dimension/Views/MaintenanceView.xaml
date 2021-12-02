@@ -36,7 +36,7 @@
                    Height="84"
                    img:EmbeddedImg.Image="{dx:DXImage 'SvgImages/Reports/FitBoundsToGrid.svg'}"
                    Style="{DynamicResource SubRibbonButtonStyle}"
-                   Command="{Binding NavigateValidationCommand}">
+                   Command="{Binding NavigateVerificationCommand}">
       </RadioButton>
       <RadioButton Content="{lang:Loc Maintenance_Channels}"
                    Height="84"

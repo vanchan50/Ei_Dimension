@@ -99,7 +99,7 @@ namespace MicroCy
     private StringBuilder _summaryout = new StringBuilder();
     private StringBuilder _dataout = new StringBuilder();
     private List<Gstats> _gStats = new List<Gstats>(10);
-    public Validator Validator;
+    public Validator Verificator;
     private readonly ISerial _serialConnection;
     private const string Bheader = "Preamble,Time(1 us Tick),FSC bg,Viol SSC bg,CL0 bg,CL1 bg,CL2 bg,CL3 bg,Red SSC bg,Green SSC bg," +
             "Green Maj bg, Green Min bg,Green Major,Green Minor,Red-Grn Offset,Grn-Viol Offset,Region,Forward Scatter,Violet SSC,CL0," +
@@ -252,8 +252,8 @@ namespace MicroCy
                 break;
               case OperationMode.Calibration:
                 break;
-              case OperationMode.Validation:
-                Validator.FillStats(in outbead);
+              case OperationMode.Verification:
+                Verificator.FillStats(in outbead);
                 break;
             }
             //accum stats for run as a whole, used during aligment and QC

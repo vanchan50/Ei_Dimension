@@ -1480,7 +1480,7 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Validation.
+        ///   Looks up a localized string similar to Verification.
         /// </summary>
         public static string Maintenance_Validation {
             get {
@@ -2041,7 +2041,7 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Validation Failed!.
+        ///   Looks up a localized string similar to Verification Failed!.
         /// </summary>
         public static string Validation_Fail {
             get {
@@ -2060,8 +2060,8 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Validation
-        ///   Mode.
+        ///   Looks up a localized string similar to Verification
+        ///    Mode.
         /// </summary>
         public static string Validation_Mode {
             get {
@@ -2070,7 +2070,7 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Previous Validation Date.
+        ///   Looks up a localized string similar to Previous Verification Date.
         /// </summary>
         public static string Validation_Prev_Validation_Date {
             get {
@@ -2089,8 +2089,8 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to    Start
-        ///Validation.
+        ///   Looks up a localized string similar to     Start
+        ///Verification.
         /// </summary>
         public static string Validation_Start_Validation {
             get {
@@ -2099,7 +2099,7 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Validation Succesful!.
+        ///   Looks up a localized string similar to Verification Succesful!.
         /// </summary>
         public static string Validation_Success {
             get {

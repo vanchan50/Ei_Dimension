@@ -14,9 +14,9 @@ namespace Ei_Dimension.Models
   {
     public ObservableCollection<string> RegionsList { get; } = new ObservableCollection<string>();
     public HashSet<int> ActiveRegionNums { get; } = new HashSet<int>();
-    public HashSet<int> ValidationRegionNums { get; } = new HashSet<int>();
+    public HashSet<int> VerificationRegionNums { get; } = new HashSet<int>();
     public ObservableCollection<string> RegionsNamesList { get; } = new ObservableCollection<string>();
-    public ObservableCollection<string> ValidationReporterList { get; } = new ObservableCollection<string>();
+    public ObservableCollection<string> VerificationReporterList { get; } = new ObservableCollection<string>();
     public ObservableCollection<string> CurrentActiveRegionsCount { get; } = new ObservableCollection<string>();
     public ObservableCollection<string> CurrentActiveRegionsMean { get; } = new ObservableCollection<string>();
     public ObservableCollection<string> BackingActiveRegionsCount { get; } = new ObservableCollection<string>();
@@ -24,7 +24,7 @@ namespace Ei_Dimension.Models
     public virtual ObservableCollection<string> DisplayedActiveRegionsCount { get; set; }
     public virtual ObservableCollection<string> DisplayedActiveRegionsMean { get; set; }
     public List<bool> ActiveRegions { get; } = new List<bool>();
-    public List<bool> ValidationRegions { get; } = new List<bool>();
+    public List<bool> VerificationRegions { get; } = new List<bool>();
     private StackPanel _regionsBorder;
     private StackPanel _regionsNamesBorder;
     private bool _firstLoadflag;
@@ -81,11 +81,11 @@ namespace Ei_Dimension.Models
       ClearValidationTextBoxes();
       RegionsList.Clear();
       ActiveRegionNums.Clear();
-      ValidationRegionNums.Clear();
+      VerificationRegionNums.Clear();
       RegionsNamesList.Clear();
       ActiveRegions.Clear();
-      ValidationRegions.Clear();
-      ValidationReporterList.Clear();
+      VerificationRegions.Clear();
+      VerificationReporterList.Clear();
       CurrentActiveRegionsCount.Clear();
       CurrentActiveRegionsMean.Clear();
       BackingActiveRegionsCount.Clear();
@@ -95,14 +95,14 @@ namespace Ei_Dimension.Models
       {
         RegionsList.Add(region.Number.ToString());
         RegionsNamesList.Add("");
-        ValidationReporterList.Add("");
+        VerificationReporterList.Add("");
         ActiveRegions.Add(false);
-        ValidationRegions.Add(false);
+        VerificationRegions.Add(false);
         CurrentActiveRegionsCount.Add("0");
         CurrentActiveRegionsMean.Add("0");
         BackingActiveRegionsCount.Add("0");
         BackingActiveRegionsMean.Add("0");
-        AddTextboxes($"RegionsList[{i}]", $"RegionsNamesList[{i}]", $"ValidationReporterList[{i}]");
+        AddTextboxes($"RegionsList[{i}]", $"RegionsNamesList[{i}]", $"VerificationReporterList[{i}]");
         i++;
       }
     }
@@ -475,24 +475,24 @@ namespace Ei_Dimension.Models
     private void ValidationReporterTbGotFocus(object sender, RoutedEventArgs e)
     {
       App.SelectedTextBox = (this.GetType()
-        .GetProperty(nameof(ValidationReporterList)),
+        .GetProperty(nameof(VerificationReporterList)),
         this, int.Parse(((TextBox)e.Source).Name.Trim('_')));
       MainViewModel.Instance.NumpadToggleButton((TextBox)e.Source);
     }
 
     public void AddValidationRegion(int index)
     {
-      if (!ValidationRegions[index])
+      if (!VerificationRegions[index])
       {
         ShiftValidationTextBox(index, true);
-        ValidationRegions[index] = true;
+        VerificationRegions[index] = true;
       }
       else
       {
-        ValidationRegions[index] = false;
+        VerificationRegions[index] = false;
         ShiftValidationTextBox(index, false);
       }
-      System.Windows.Input.FocusManager.SetFocusedElement(System.Windows.Input.FocusManager.GetFocusScope(Views.ValidationView.Instance), null);
+      System.Windows.Input.FocusManager.SetFocusedElement(System.Windows.Input.FocusManager.GetFocusScope(Views.VerificationView.Instance), null);
       System.Windows.Input.Keyboard.ClearFocus();
     }
 
@@ -506,9 +506,9 @@ namespace Ei_Dimension.Models
       var ReporterTb = (TextBox)_validationReporterBorder.Children[index];
       ReporterTb.Visibility = right ? Visibility.Visible : Visibility.Hidden;
       if(right)
-        ValidationRegionNums.Add(int.Parse(tb.Text.Trim('_')));
+        VerificationRegionNums.Add(int.Parse(tb.Text.Trim('_')));
       else
-        ValidationRegionNums.Remove(int.Parse(tb.Text.Trim('_')));
+        VerificationRegionNums.Remove(int.Parse(tb.Text.Trim('_')));
     }
 
   }

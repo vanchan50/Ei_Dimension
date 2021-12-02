@@ -10,6 +10,6 @@ namespace MicroCy
   {
     Normal,
     Calibration,
-    Validation
+    Verification
   }
 }

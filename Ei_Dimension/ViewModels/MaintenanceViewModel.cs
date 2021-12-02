@@ -85,11 +85,12 @@ namespace Ei_Dimension.ViewModels
       NavigationService.Navigate("CalibrationView", null, this);
       App.Device.InitSTab("calibtab");
     }
-    public void NavigateValidation()
+
+    public void NavigateVerification()
     {
       App.ResetFocusedTextbox();
       App.HideNumpad();
-      NavigationService.Navigate("ValidationView", null, this);
+      NavigationService.Navigate("VerificationView", null, this);
     }
 
     public void NavigateChannels()
@@ -119,7 +120,7 @@ namespace Ei_Dimension.ViewModels
     public void InitChildren()
     {
       NavigateCalibration();
-      NavigateValidation();
+      NavigateVerification();
       NavigateChannels();
     }
 

@@ -17,10 +17,10 @@ namespace Ei_Dimension.Views
   /// <summary>
   /// Interaction logic for ValidationView.xaml
   /// </summary>
-  public partial class ValidationView : UserControl
+  public partial class VerificationView : UserControl
   {
-    public static ValidationView Instance { get; private set; }
-    public ValidationView()
+    public static VerificationView Instance { get; private set; }
+    public VerificationView()
     {
       InitializeComponent();
       Instance = this;

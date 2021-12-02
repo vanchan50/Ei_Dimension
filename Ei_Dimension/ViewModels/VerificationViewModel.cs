@@ -6,17 +6,17 @@ using System.Collections.ObjectModel;
 namespace Ei_Dimension.ViewModels
 {
   [POCOViewModel]
-  public class ValidationViewModel
+  public class VerificationViewModel
   {
-    public static ValidationViewModel Instance { get; private set; }
-    protected ValidationViewModel()
+    public static VerificationViewModel Instance { get; private set; }
+    protected VerificationViewModel()
     {
       Instance = this;
     }
 
-    public static ValidationViewModel Create()
+    public static VerificationViewModel Create()
     {
-      return ViewModelSource.Create(() => new ValidationViewModel());
+      return ViewModelSource.Create(() => new VerificationViewModel());
     }
 
     public void AddValidationRegion(byte num)
@@ -31,14 +31,14 @@ namespace Ei_Dimension.ViewModels
       var map = App.Device.MapList[idx];
       for (var i = 0; i < map.regions.Count; i++)
       {
-        App.MapRegions.ValidationRegions[i] = true;
+        App.MapRegions.VerificationRegions[i] = true;
         App.MapRegions.AddValidationRegion(i);
-        App.MapRegions.ValidationReporterList[i] = "";
+        App.MapRegions.VerificationReporterList[i] = "";
         if (map.regions[i].isValidator)
         {
           App.MapRegions.AddValidationRegion(i);
-          if(map.regions[i].ValidationTargetReporter > 0.01)
-            App.MapRegions.ValidationReporterList[i] = map.regions[i].ValidationTargetReporter.ToString();
+          if(map.regions[i].VerificationTargetReporter > 0.01)
+            App.MapRegions.VerificationReporterList[i] = map.regions[i].VerificationTargetReporter.ToString();
         }
       }
     }
@@ -49,15 +49,15 @@ namespace Ei_Dimension.ViewModels
       var map = App.Device.MapList[idx];
       for (var i = 0; i < App.MapRegions.RegionsList.Count; i++)
       {
-        if (App.MapRegions.ValidationRegions[i])
+        if (App.MapRegions.VerificationRegions[i])
         {
           var index = map.regions.FindIndex(x => x.Number == int.Parse(App.MapRegions.RegionsList[i]));
           if(index != -1)
           {
             map.regions[index].isValidator = true;
             double temp;
-            if (double.TryParse(App.MapRegions.ValidationReporterList[i], out temp))
-              map.regions[index].ValidationTargetReporter = temp;
+            if (double.TryParse(App.MapRegions.VerificationReporterList[i], out temp))
+              map.regions[index].VerificationTargetReporter = temp;
           }
         }
       }
@@ -81,7 +81,7 @@ namespace Ei_Dimension.ViewModels
       });
     }
 
-    public void ValidationSuccess()
+    public void VerificationSuccess()
     {
       App.Device.SaveCalVals(new MicroCy.MapCalParameters
       {
@@ -107,19 +107,19 @@ namespace Ei_Dimension.ViewModels
 
     public bool ValMapInfoReady()
     {
-      if (App.MapRegions.ValidationRegionNums.Count == 0)
+      if (App.MapRegions.VerificationRegionNums.Count == 0)
       {
-        App.ShowNotification("No Validation regions selected");
+        App.ShowNotification("No Verification regions selected");
         return false;
       }
 
       for (var i = 0; i < App.MapRegions.RegionsList.Count; i++)
       {
-        if (App.MapRegions.ValidationRegions[i])
+        if (App.MapRegions.VerificationRegions[i])
         {
-          if (App.MapRegions.ValidationReporterList[i] == "")
+          if (App.MapRegions.VerificationReporterList[i] == "")
           {
-            App.ShowNotification($"Validation region {App.MapRegions.RegionsList[i]} Reporter is not specified");
+            App.ShowNotification($"Verification region {App.MapRegions.RegionsList[i]} Reporter is not specified");
             return false;
           }
         }

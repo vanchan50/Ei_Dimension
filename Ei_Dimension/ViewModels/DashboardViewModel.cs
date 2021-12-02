@@ -319,8 +319,8 @@ namespace Ei_Dimension.ViewModels
           return;
         }
         CalModeOn = false;
-        if (App.Device.Mode == MicroCy.OperationMode.Validation)
-          App.ShowNotification("The instrument is in Validation mode");
+        if (App.Device.Mode == MicroCy.OperationMode.Verification)
+          App.ShowNotification("The instrument is in Verificationtion mode");
       }
       else
       {
@@ -339,11 +339,11 @@ namespace Ei_Dimension.ViewModels
     {
       if (ValModeOn)
       {
-        if (App.Device.Mode == MicroCy.OperationMode.Normal && ValidationViewModel.Instance.ValMapInfoReady())
+        if (App.Device.Mode == MicroCy.OperationMode.Normal && VerificationViewModel.Instance.ValMapInfoReady())
         {
           _dbsampleVolumeTempHolder = Volumes[0];
           SetFixedVolumeButtonClick(25);
-          App.Device.Mode = MicroCy.OperationMode.Validation;
+          App.Device.Mode = MicroCy.OperationMode.Verification;
           MainButtonsViewModel.Instance.Flavor[0] = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Maintenance_Validation),
             Language.TranslationSource.Instance.CurrentCulture);
           MainWindow.Instance.wndw.Background = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(97, 162, 135));

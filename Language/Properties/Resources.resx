@@ -607,7 +607,7 @@ Barcode</value>
     <value>Touch Mode</value>
   </data>
   <data name="Maintenance_Validation" xml:space="preserve">
-    <value>Validation</value>
+    <value>Verification</value>
   </data>
   <data name="Mean" xml:space="preserve">
     <value> Mean</value>
@@ -796,29 +796,29 @@ Factory Defaults</value>
     <value>Tube</value>
   </data>
   <data name="Validation_Fail" xml:space="preserve">
-    <value>Validation Failed!</value>
+    <value>Verification Failed!</value>
   </data>
   <data name="Validation_Load" xml:space="preserve">
     <value> Load
 Target</value>
   </data>
   <data name="Validation_Mode" xml:space="preserve">
-    <value>Validation
-   Mode</value>
+    <value>Verification
+    Mode</value>
   </data>
   <data name="Validation_Prev_Validation_Date" xml:space="preserve">
-    <value>Previous Validation Date</value>
+    <value>Previous Verification Date</value>
   </data>
   <data name="Validation_Save" xml:space="preserve">
     <value> Save
 Target</value>
   </data>
   <data name="Validation_Start_Validation" xml:space="preserve">
-    <value>   Start
-Validation</value>
+    <value>    Start
+Verification</value>
   </data>
   <data name="Validation_Success" xml:space="preserve">
-    <value>Validation Succesful!</value>
+    <value>Verification Succesful!</value>
   </data>
   <data name="WellSel_Reset_Plate" xml:space="preserve">
     <value>Reset Plate</value>

@@ -502,11 +502,11 @@ namespace Ei_Dimension.ViewModels
             }
           };
           break;
-        case MicroCy.OperationMode.Validation:
+        case MicroCy.OperationMode.Verification:
           Wmap = () => {
             foreach (var point in Map)
             {
-              if (App.MapRegions.ValidationRegionNums.Contains(point.Region))
+              if (App.MapRegions.VerificationRegionNums.Contains(point.Region))
               {
                 if (FlipMapAnalysis)
                   WorldMap.Add(new HeatMapData(point.Y, point.X));

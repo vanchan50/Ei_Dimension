@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Ei_Dimension.Views.ValidationView"
+﻿<UserControl x:Class="Ei_Dimension.Views.VerificationView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -9,7 +9,7 @@
              xmlns:ViewModels="clr-namespace:Ei_Dimension.ViewModels"
              xmlns:lang="clr-namespace:Ei_Dimension.Language;assembly=Language"
              mc:Ignorable="d"
-             DataContext="{dxmvvm:ViewModelSource Type=ViewModels:ValidationViewModel}"
+             DataContext="{dxmvvm:ViewModelSource Type=ViewModels:VerificationViewModel}"
              d:DesignHeight="944" d:DesignWidth="1632">
   <Grid>
     <TextBlock Text="{lang:Loc Maintenance_Validation}"
@@ -115,10 +115,10 @@
                       VerticalScrollBarVisibility="Auto">
           <Border Background="{StaticResource RibbonBackgroundActive}">
             <StackPanel Orientation="Horizontal">
-              <StackPanel Name="ValidationNums"
+              <StackPanel Name="VerificationNums"
                           Width="270"
                           HorizontalAlignment="Left"/>
-              <StackPanel Name="ValidationReporterValues"
+              <StackPanel Name="VerificationReporterValues"
                           HorizontalAlignment="Left"
                           Width="200"/>
             </StackPanel>
