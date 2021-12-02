@@ -514,10 +514,9 @@ namespace MicroCy
           date = date.Date;
           if(date < badDate)
           {
-            File.Copy(mp, destination);
+            File.Copy(mp, destination, true);
           }
         }
-        
       }
     }
 
