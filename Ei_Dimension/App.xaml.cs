@@ -131,7 +131,7 @@ namespace Ei_Dimension
         CaliVM.EventTriggerContents[2] = Device.ActiveMap.calParams.maxmapssc.ToString();
         Device.MainCommand("Set Property", code: 0xcf, parameter: (ushort)Device.ActiveMap.calParams.maxmapssc);
         CaliVM.AttenuationBox[0] = Device.ActiveMap.calParams.att.ToString();
-        Device.MainCommand("Set Property", code: 0xbf, parameter: (ushort)Device.ActiveMap.calParams.att);
+        Device.MainCommand("Set Property", code: 0xbf, parameter: (ushort)Device.ActiveMap.calParams.att);  //firmware can override this
 
 
         CaliVM.EventTriggerContents[0] = Device.ActiveMap.calParams.height.ToString();
@@ -1115,8 +1115,8 @@ namespace Ei_Dimension
             }
             break;
           case 0x20:
-            CalibrationViewModel.Instance.DNRContents[0] = exe.FParameter.ToString();
-            MicroCy.InstrumentParameters.Calibration.HDnrCoef = exe.FParameter;
+            //CalibrationViewModel.Instance.DNRContents[0] = exe.FParameter.ToString();
+            //MicroCy.InstrumentParameters.Calibration.HDnrCoef = exe.FParameter;
             break;
           case 0x22:  //pressure
             double dd = exe.FParameter;
@@ -1294,13 +1294,13 @@ namespace Ei_Dimension
             ChannelsViewModel.Instance.BackgroundParameters[9] = exe.Parameter.ToString();
             break;
           case 0x8b:
-            CalibrationViewModel.Instance.ClassificationTargetsContents[0] = exe.Parameter.ToString();
+            //CalibrationViewModel.Instance.ClassificationTargetsContents[0] = exe.Parameter.ToString();
             break;
           case 0x8c:
-            CalibrationViewModel.Instance.ClassificationTargetsContents[1] = exe.Parameter.ToString();
+            //CalibrationViewModel.Instance.ClassificationTargetsContents[1] = exe.Parameter.ToString();
             break;
           case 0x8d:
-            CalibrationViewModel.Instance.ClassificationTargetsContents[2] = exe.Parameter.ToString();
+            //CalibrationViewModel.Instance.ClassificationTargetsContents[2] = exe.Parameter.ToString();
             break;
           case 0x90:
             MotorsViewModel.Instance.ParametersX[7] = exe.Parameter.ToString();
@@ -1477,13 +1477,13 @@ namespace Ei_Dimension
             }
             break;
           case 0xcd:
-            CalibrationViewModel.Instance.EventTriggerContents[0] = exe.Parameter.ToString();
+            //CalibrationViewModel.Instance.EventTriggerContents[0] = exe.Parameter.ToString();
             break;
           case 0xce:
-            CalibrationViewModel.Instance.EventTriggerContents[1] = exe.Parameter.ToString();
+            //CalibrationViewModel.Instance.EventTriggerContents[1] = exe.Parameter.ToString();
             break;
           case 0xcf:
-            CalibrationViewModel.Instance.EventTriggerContents[2] = exe.Parameter.ToString();
+            //CalibrationViewModel.Instance.EventTriggerContents[2] = exe.Parameter.ToString();
             break;
           case 0xf1:
             if (exe.Command == 1)  //sheath empty
