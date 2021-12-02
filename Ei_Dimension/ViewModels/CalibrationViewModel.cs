@@ -19,7 +19,6 @@ namespace Ei_Dimension.ViewModels
     public virtual ObservableCollection<string> ClassificationTargetsContents { get; set; }
     public virtual ObservableCollection<string> CompensationPercentageContent { get; set; }
     public virtual ObservableCollection<string> DNRContents { get; set; }
-    public virtual ObservableCollection<string> CurrentMapName { get; set; }
     public virtual ObservableCollection<string> AttenuationBox { get; set; }
     public byte CalFailsInARow { get; set; }
     public bool CalJustFailed { get; set; }
@@ -44,15 +43,14 @@ namespace Ei_Dimension.ViewModels
       };
       SelectedGatingIndex = 0;
       SelectedGatingContent = GatingItems[SelectedGatingIndex].Content;
-      EventTriggerContents = new ObservableCollection<string> {"", App.Device.ActiveMap.minmapssc.ToString(), App.Device.ActiveMap.maxmapssc.ToString()};
+      EventTriggerContents = new ObservableCollection<string> {"", App.Device.ActiveMap.calParams.minmapssc.ToString(), App.Device.ActiveMap.calParams.maxmapssc.ToString()};
 
       ClassificationTargetsContents = new ObservableCollection<string> { "1", "1", "1", "1", "3500"};
 
       CompensationPercentageContent = new ObservableCollection<string> { MicroCy.InstrumentParameters.Calibration.Compensation.ToString() };
       DNRContents = new ObservableCollection<string> { "", MicroCy.InstrumentParameters.Calibration.HdnrTrans.ToString() };
 
-      CurrentMapName = new ObservableCollection<string> { App.Device.ActiveMap.mapName };
-      AttenuationBox = new ObservableCollection<string> { App.Device.ActiveMap.att.ToString() };
+      AttenuationBox = new ObservableCollection<string> { App.Device.ActiveMap.calParams.att.ToString() };
 
       CalFailsInARow = 0;
       CalJustFailed = true;
@@ -98,9 +96,19 @@ namespace Ei_Dimension.ViewModels
           TempRpMaj = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[1]),
           TempRpMin = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[2]),
           TempFsc = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[9]),
+          Compensation = float.Parse(CompensationPercentageContent[0]),
+          Gating = SelectedGatingIndex,
+          Height = short.Parse(EventTriggerContents[0]),
           MinSSC = ushort.Parse(EventTriggerContents[1]),
           MaxSSC = ushort.Parse(EventTriggerContents[2]),
+          DNRCoef = float.Parse(DNRContents[0]),
+          DNRTrans = float.Parse(DNRContents[1]),
           Attenuation = int.Parse(AttenuationBox[0]),
+          CL0 = int.Parse(ClassificationTargetsContents[0]),
+          CL1 = int.Parse(ClassificationTargetsContents[1]),
+          CL2 = int.Parse(ClassificationTargetsContents[2]),
+          CL3 = int.Parse(ClassificationTargetsContents[3]),
+          RP1 = int.Parse(ClassificationTargetsContents[4]),
           Caldate = DateTime.Now.ToString("dd.MM.yyyy", new System.Globalization.CultureInfo("en-GB")),
           Valdate = null
         });
@@ -130,6 +138,50 @@ namespace Ei_Dimension.ViewModels
               new HeatMapData((int)HeatMapData.bins[cl1Index + i], (int)HeatMapData.bins[cl2Index + j]));
         }
       }
+    }
+
+    public void SaveCalButtonClick()
+    {
+      App.Device.MainCommand("Get Property", code: 0x24);
+      App.Device.MainCommand("Get Property", code: 0x25);
+      App.Device.MainCommand("Get Property", code: 0x26);
+      App.Device.MainCommand("Get Property", code: 0x28);
+      App.Device.MainCommand("Get Property", code: 0x29);
+      App.Device.MainCommand("Get Property", code: 0x2a);
+      App.Device.MainCommand("Get Property", code: 0x2c);
+      App.Device.MainCommand("Get Property", code: 0x2d);
+      App.Device.MainCommand("Get Property", code: 0x2e);
+      App.Device.MainCommand("Get Property", code: 0x2f);
+      System.Threading.Thread.Sleep(1000);
+      App.Device.SaveCalVals(new MicroCy.MapCalParameters
+      {
+        TempCl0 = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[8]),
+        TempCl1 = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[5]),
+        TempCl2 = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[6]),
+        TempCl3 = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[3]),
+        TempRedSsc = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[4]),
+        TempGreenSsc = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[0]),
+        TempVioletSsc = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[7]),
+        TempRpMaj = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[1]),
+        TempRpMin = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[2]),
+        TempFsc = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[9]),
+        Compensation = float.Parse(CompensationPercentageContent[0]),
+        Gating = SelectedGatingIndex,
+        Height = short.Parse(EventTriggerContents[0]),
+        MinSSC = ushort.Parse(EventTriggerContents[1]),
+        MaxSSC = ushort.Parse(EventTriggerContents[2]),
+        DNRCoef = float.Parse(DNRContents[0]),
+        DNRTrans = float.Parse(DNRContents[1]),
+        Attenuation = int.Parse(AttenuationBox[0]),
+        CL0 = int.Parse(ClassificationTargetsContents[0]),
+        CL1 = int.Parse(ClassificationTargetsContents[1]),
+        CL2 = int.Parse(ClassificationTargetsContents[2]),
+        CL3 = int.Parse(ClassificationTargetsContents[3]),
+        RP1 = int.Parse(ClassificationTargetsContents[4]),
+        Caldate = null,
+        Valdate = null
+      });
+      App.ShowNotification($"Calibration Parameters Saved to map {App.Device.ActiveMap.mapName}");
     }
 
     public void FocusedBox(int num)
@@ -220,6 +272,7 @@ namespace Ei_Dimension.ViewModels
       public void Click()
       {
         _vm.SelectedGatingContent = Content;
+        _vm.SelectedGatingIndex = Index;
         App.Device.MainCommand("Set Property", code: 0xca, parameter: (ushort)Index);
         App.Device.ScatterGate = Index;
       }
@@ -228,6 +281,7 @@ namespace Ei_Dimension.ViewModels
       {
         _vm.SelectedGatingContent = Content;
         App.Device.ScatterGate = Index;
+        _vm.SelectedGatingIndex = Index;
       }
 
       public static void ResetIndex()

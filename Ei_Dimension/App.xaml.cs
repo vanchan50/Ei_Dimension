@@ -60,11 +60,11 @@ namespace Ei_Dimension
       Device.BeadsToCapture = Settings.Default.BeadsToCapture;
       Device.OnlyClassified = Settings.Default.OnlyClassifed;
       Device.ChannelBIsHiSensitivity = Settings.Default.SensitivityChannelB;
-      Device.MainCommand("Set Property", code: 0xbf, parameter: (ushort)Device.ActiveMap.att);
+      Device.MainCommand("Set Property", code: 0xbf, parameter: (ushort)Device.ActiveMap.calParams.att);
       if (!System.Windows.Input.Keyboard.IsKeyDown(System.Windows.Input.Key.LeftCtrl))
         Device.MainCommand("Startup");
-      MicroCy.InstrumentParameters.Calibration.HdnrTrans = Settings.Default.HDnrTrans;
-      MicroCy.InstrumentParameters.Calibration.Compensation = Settings.Default.Compensation;
+      MicroCy.InstrumentParameters.Calibration.HdnrTrans = Device.ActiveMap.calParams.DNRTrans;
+      MicroCy.InstrumentParameters.Calibration.Compensation = Device.ActiveMap.calParams.compensation;
       Device.MainCommand("Set Property", code: 0x97, parameter: 1170);  //set current limit of aligner motors if leds are off
       Device.MainCommand("Get Property", code: 0xca);
       Device.StartingToReadWell += StartingToReadWellEventhandler;
@@ -105,7 +105,7 @@ namespace Ei_Dimension
           Device.ActiveMap = Device.MapList[i];
           Settings.Default.DefaultMap = i;
           Settings.Default.Save();
-          Device.MainCommand("Set Property", code: 0xbf, parameter: (ushort)Device.ActiveMap.att);
+          Device.MainCommand("Set Property", code: 0xbf, parameter: (ushort)Device.ActiveMap.calParams.att);
           break;
         }
       }
@@ -126,19 +126,39 @@ namespace Ei_Dimension
       var CaliVM = CalibrationViewModel.Instance;
       if (CaliVM != null)
       {
-        CaliVM.CurrentMapName[0] = Device.ActiveMap.mapName;
-        CaliVM.EventTriggerContents[1] = Device.ActiveMap.minmapssc.ToString();
-        Device.MainCommand("Set Property", code: 0xce, parameter: (ushort)Device.ActiveMap.minmapssc);
-        CaliVM.EventTriggerContents[2] = Device.ActiveMap.maxmapssc.ToString();
-        Device.MainCommand("Set Property", code: 0xcf, parameter: (ushort)Device.ActiveMap.maxmapssc);
-        CaliVM.AttenuationBox[0] = Device.ActiveMap.att.ToString();
-        Device.MainCommand("Set Property", code: 0xbf, parameter: (ushort)Device.ActiveMap.att);
+        CaliVM.EventTriggerContents[1] = Device.ActiveMap.calParams.minmapssc.ToString();
+        Device.MainCommand("Set Property", code: 0xce, parameter: (ushort)Device.ActiveMap.calParams.minmapssc);
+        CaliVM.EventTriggerContents[2] = Device.ActiveMap.calParams.maxmapssc.ToString();
+        Device.MainCommand("Set Property", code: 0xcf, parameter: (ushort)Device.ActiveMap.calParams.maxmapssc);
+        CaliVM.AttenuationBox[0] = Device.ActiveMap.calParams.att.ToString();
+        Device.MainCommand("Set Property", code: 0xbf, parameter: (ushort)Device.ActiveMap.calParams.att);
+
+
+        CaliVM.EventTriggerContents[0] = Device.ActiveMap.calParams.height.ToString();
+        Device.MainCommand("Set Property", code: 0xcd, parameter: Device.ActiveMap.calParams.height);
+        CaliVM.CompensationPercentageContent[0] = Device.ActiveMap.calParams.compensation.ToString();
+        MicroCy.InstrumentParameters.Calibration.Compensation = Device.ActiveMap.calParams.compensation;
+        CaliVM.DNRContents[0] = Device.ActiveMap.calParams.DNRCoef.ToString();
+        MicroCy.InstrumentParameters.Calibration.HDnrCoef = Device.ActiveMap.calParams.DNRCoef;
+        Device.MainCommand("Set FProperty", code: 0x20, fparameter: Device.ActiveMap.calParams.DNRCoef);
+        CaliVM.DNRContents[1] = Device.ActiveMap.calParams.DNRTrans.ToString();
+        MicroCy.InstrumentParameters.Calibration.HdnrTrans = Device.ActiveMap.calParams.DNRTrans;
+        CaliVM.ClassificationTargetsContents[0] = Device.ActiveMap.calParams.CL0.ToString();
+        Device.MainCommand("Set Property", code: 0x8b, parameter: (ushort)Device.ActiveMap.calParams.CL0);
+        CaliVM.ClassificationTargetsContents[1] = Device.ActiveMap.calParams.CL1.ToString();
+        Device.MainCommand("Set Property", code: 0x8c, parameter: (ushort)Device.ActiveMap.calParams.CL1);
+        CaliVM.ClassificationTargetsContents[2] = Device.ActiveMap.calParams.CL2.ToString();
+        Device.MainCommand("Set Property", code: 0x8d, parameter: (ushort)Device.ActiveMap.calParams.CL2);
+        CaliVM.ClassificationTargetsContents[3] = Device.ActiveMap.calParams.CL3.ToString();
+        Device.MainCommand("Set Property", code: 0x8e, parameter: (ushort)Device.ActiveMap.calParams.CL3);
+        CaliVM.ClassificationTargetsContents[4] = Device.ActiveMap.calParams.RP1.ToString();
+        Device.MainCommand("Set Property", code: 0x8f, parameter: (ushort)Device.ActiveMap.calParams.RP1);
+        CaliVM.GatingItems[Device.ActiveMap.calParams.gate].Click();
       }
 
       var ChannelsVM = ChannelsViewModel.Instance;
       if (ChannelsVM != null)
       {
-        ChannelsVM.CurrentMapName[0] = Device.ActiveMap.mapName;
         ChannelsVM.Bias30Parameters[0] = Device.ActiveMap.calgssc.ToString();
         Device.MainCommand("Set Property", code: 0x28, parameter: (ushort)Device.ActiveMap.calgssc);
         ChannelsVM.Bias30Parameters[1] = Device.ActiveMap.calrpmaj.ToString();
@@ -184,6 +204,7 @@ namespace Ei_Dimension
       Views.DashboardView.Instance.MapSelectr.IsEnabled = false;
       Views.CalibrationView.Instance.MapSelectr.IsEnabled = false;
       Views.VerificationView.Instance.MapSelectr.IsEnabled = false;
+      Views.ChannelsView.Instance.MapSelectr.IsEnabled = false;
     }
 
     public static void UnlockMapSelection()
@@ -191,6 +212,7 @@ namespace Ei_Dimension
       Views.DashboardView.Instance.MapSelectr.IsEnabled = true;
       Views.CalibrationView.Instance.MapSelectr.IsEnabled = true;
       Views.VerificationView.Instance.MapSelectr.IsEnabled = true;
+      Views.ChannelsView.Instance.MapSelectr.IsEnabled = true;
     }
 
     public static void SetSystemControl(byte num)
@@ -345,7 +367,6 @@ namespace Ei_Dimension
             if (float.TryParse(temp, out fRes))
             {
               MicroCy.InstrumentParameters.Calibration.Compensation = fRes;
-              Settings.Default.Compensation = fRes;
             }
             break;
           case "DNRContents":
@@ -362,7 +383,6 @@ namespace Ei_Dimension
               if (float.TryParse(temp, out fRes))
               {
                 MicroCy.InstrumentParameters.Calibration.HdnrTrans = fRes;
-                Settings.Default.HDnrTrans = fRes;
               }
             }
             break;
@@ -1858,6 +1878,7 @@ namespace Ei_Dimension
       ResultsViewModel.Instance.PlatePictogram.SetWarningGrid(Views.ResultsView.Instance.WarningGrid);
       Views.CalibrationView.Instance.clmap.DataContext = DashboardViewModel.Instance;
       Views.VerificationView.Instance.clmap.DataContext = DashboardViewModel.Instance;
+      Views.ChannelsView.Instance.clmap.DataContext = DashboardViewModel.Instance;
       if (Settings.Default.LastTemplate != "None")
       {
         TemplateSelectViewModel.Instance.SelectedItem = Settings.Default.LastTemplate;

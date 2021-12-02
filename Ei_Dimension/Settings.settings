@@ -8,9 +8,6 @@
     <Setting Name="DefaultMap" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="Compensation" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">0.5</Value>
-    </Setting>
     <Setting Name="Everyevent" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
@@ -31,9 +28,6 @@
     </Setting>
     <Setting Name="YAxisG" Type="System.Byte" Scope="User">
       <Value Profile="(Default)">2</Value>
-    </Setting>
-    <Setting Name="HDnrTrans" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">20000</Value>
     </Setting>
     <Setting Name="ScatterGraphSelector" Type="System.Byte" Scope="User">
       <Value Profile="(Default)">18</Value>

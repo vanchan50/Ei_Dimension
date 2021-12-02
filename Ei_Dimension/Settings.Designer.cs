@@ -49,18 +49,6 @@ namespace Ei_Dimension {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.5")]
-        public float Compensation {
-            get {
-                return ((float)(this["Compensation"]));
-            }
-            set {
-                this["Compensation"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool Everyevent {
             get {
@@ -140,18 +128,6 @@ namespace Ei_Dimension {
             }
             set {
                 this["YAxisG"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("20000")]
-        public float HDnrTrans {
-            get {
-                return ((float)(this["HDnrTrans"]));
-            }
-            set {
-                this["HDnrTrans"] = value;
             }
         }
         

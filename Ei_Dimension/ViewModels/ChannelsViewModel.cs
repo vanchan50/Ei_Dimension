@@ -14,7 +14,6 @@ namespace Ei_Dimension.ViewModels
     public virtual ObservableCollection<string> TempParameters { get; set; }
     public virtual ObservableCollection<string> BackgroundParameters { get; set; }
     public virtual ObservableCollection<string> SiPMTempCoeff { get; set; }
-    public virtual ObservableCollection<string> CurrentMapName { get; set; }
     public virtual string SelectedSensitivityContent { get; set; }
     public virtual ObservableCollection<DropDownButtonContents> SensitivityItems { get; set; }
 
@@ -23,8 +22,6 @@ namespace Ei_Dimension.ViewModels
 
     protected ChannelsViewModel()
     {
-      CurrentMapName = new ObservableCollection<string> { App.Device.ActiveMap.mapName };
-
       Bias30Parameters = new ObservableCollection<string>();
       Bias30Parameters.Add(App.Device.ActiveMap.calgssc.ToString());
       Bias30Parameters.Add(App.Device.ActiveMap.calrpmaj.ToString());
@@ -84,11 +81,23 @@ namespace Ei_Dimension.ViewModels
         TempRpMaj = int.Parse(Bias30Parameters[1]),
         TempRpMin = int.Parse(Bias30Parameters[2]),
         TempFsc = int.Parse(Bias30Parameters[9]),
+        Compensation = float.Parse(CalibrationViewModel.Instance.CompensationPercentageContent[0]),
+        Gating = CalibrationViewModel.Instance.SelectedGatingIndex,
+        Height = short.Parse(CalibrationViewModel.Instance.EventTriggerContents[0]),
         MinSSC = ushort.Parse(CalibrationViewModel.Instance.EventTriggerContents[1]),
         MaxSSC = ushort.Parse(CalibrationViewModel.Instance.EventTriggerContents[2]),
+        DNRCoef = float.Parse(CalibrationViewModel.Instance.DNRContents[0]),
+        DNRTrans = float.Parse(CalibrationViewModel.Instance.DNRContents[1]),
+        Attenuation = int.Parse(CalibrationViewModel.Instance.AttenuationBox[0]),
+        CL0 = int.Parse(CalibrationViewModel.Instance.ClassificationTargetsContents[0]),
+        CL1 = int.Parse(CalibrationViewModel.Instance.ClassificationTargetsContents[1]),
+        CL2 = int.Parse(CalibrationViewModel.Instance.ClassificationTargetsContents[2]),
+        CL3 = int.Parse(CalibrationViewModel.Instance.ClassificationTargetsContents[3]),
+        RP1 = int.Parse(CalibrationViewModel.Instance.ClassificationTargetsContents[4]),
         Caldate = null,
         Valdate = null
       });
+      App.ShowNotification($"Calibration Parameters Saved to map {App.Device.ActiveMap.mapName}");
     }
 
     public void SetOffsetButtonClick()

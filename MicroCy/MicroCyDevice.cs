@@ -131,8 +131,8 @@ namespace MicroCy
 
     public void ConstructClassificationMap(CustomMap Cmap)
     {
-      MainCommand("Set Property", code: 0xce, parameter: Cmap.minmapssc);  //set ssc gates for this map
-      MainCommand("Set Property", code: 0xcf, parameter: Cmap.maxmapssc);
+      MainCommand("Set Property", code: 0xce, parameter: Cmap.calParams.minmapssc);  //set ssc gates for this map
+      MainCommand("Set Property", code: 0xcf, parameter: Cmap.calParams.maxmapssc);
 
       _actPrimaryIndex = (byte)Cmap.midorderidx; //what channel cl0 - cl3?
       _actSecondaryIndex = (byte)Cmap.loworderidx;
@@ -401,18 +401,38 @@ namespace MicroCy
         map.calcl3 = param.TempCl3;
       if (param.TempFsc >= 0)
         map.calfsc = param.TempFsc;
+      if (param.Compensation >= 0)
+        map.calParams.compensation = param.Compensation;
+      if (param.Gating >= 0)
+        map.calParams.gate = (ushort)param.Gating;
+      if (param.Height >= 0)
+        map.calParams.height = (ushort)param.Height;
+      if (param.DNRCoef >= 0)
+        map.calParams.DNRCoef = param.DNRCoef;
+      if (param.DNRTrans >= 0)
+        map.calParams.DNRTrans = param.DNRTrans;
       if (param.MinSSC >= 0)
-        map.minmapssc = (ushort)param.MinSSC;
+        map.calParams.minmapssc = (ushort)param.MinSSC;
       if (param.MaxSSC >= 0)
-        map.maxmapssc = (ushort)param.MaxSSC;
+        map.calParams.maxmapssc = (ushort)param.MaxSSC;
       if (param.Attenuation >= 0)
-        map.att = param.Attenuation;
+        map.calParams.att = param.Attenuation;
+      if (param.CL0 >= 0)
+        map.calParams.CL0 = param.CL0;
+      if (param.CL1 >= 0)
+        map.calParams.CL1 = param.CL1;
+      if (param.CL2 >= 0)
+        map.calParams.CL2 = param.CL2;
+      if (param.CL3 >= 0)
+        map.calParams.CL3 = param.CL3;
+      if (param.RP1 >= 0)
+        map.calParams.RP1 = param.RP1;
       if (param.Caldate != null)
         map.caltime = param.Caldate;
       if (param.Valdate != null)
         map.valtime = param.Valdate;
 
-      MapList[idx] = map;
+    MapList[idx] = map;
       ActiveMap = MapList[idx];
 
       var contents = JsonConvert.SerializeObject(map);
@@ -514,7 +534,9 @@ namespace MicroCy
           date = date.Date;
           if(date < badDate)
           {
-            File.Copy(mp, destination, true);
+            File.Delete(destination);
+            File.Copy(mp, destination);
+            File.SetCreationTime(destination, DateTime.Now);
           }
         }
       }

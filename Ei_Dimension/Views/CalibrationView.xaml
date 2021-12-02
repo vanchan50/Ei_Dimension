@@ -411,6 +411,14 @@
         </TextBox>
       </StackPanel>
     </Border>
-    
+
+    <Border HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Margin="60,530,0,0">
+      <Button Content="{lang:Loc Calibration_Save_Calibration_To_Map}"
+              Command="{Binding SaveCalButtonClickCommand}"
+              Style="{StaticResource ButtonStyle}"
+              Height="150" Width="240"/>
+    </Border>
   </Grid>
 </UserControl>

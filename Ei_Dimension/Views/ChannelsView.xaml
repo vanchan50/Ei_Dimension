@@ -487,16 +487,65 @@
                   Style="{StaticResource ButtonStyle}"
                   Height="150" Cursor="Hand"
                   Margin="0,0,0,3"/>
-          <TextBlock Text="{Binding CurrentMapName[0]}"
-                     FontFamily="{StaticResource AppTextFont}"
-                     FontSize="18"
-                     FontWeight="UltraBold"
-                     Foreground="{StaticResource AppTextColor}"
-                     HorizontalAlignment="Right"
-                     VerticalAlignment="Top"
-                     Margin="0,2,0,0"/>
         </StackPanel>
       </StackPanel>
     </Border>
+
+    <StackPanel HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Margin="1360,630,0,0">
+      <Border HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            x:Name="clmap">
+        <StackPanel>
+          <TextBlock Text="{lang:Loc Experiment_Classific_Map}"
+                   FontFamily="{StaticResource AppTextFont}"
+                   FontSize="26"
+                   FontWeight="UltraBold"
+                   Foreground="{StaticResource AppTextColor}"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Top"
+                   Margin="0,16,0,3"/>
+          <dx:DropDownButton Width="170" Name="MapSelectr"
+                           Height="80" Cursor="Hand"
+                           FontSize="25"
+                           HorizontalAlignment="Center"
+                           dxb:BarManager.ShowGlyphsInPopupMenus="False"
+                           FontFamily="{StaticResource AppTextFont}"
+                           Foreground="{StaticResource AppTextColor}"
+                           Content="{Binding SelectedClassiMapContent}">
+            <dxb:PopupControlContainer>
+              <ScrollViewer MaxHeight="600">
+                <dxb:MenuBarControl>
+                  <dxb:MenuBarControl.Menu>
+                    <dxb:PopupMenu ItemLinksSource="{Binding ClassiMapItems}">
+                      <dxb:PopupMenu.ItemTemplate>
+                        <DataTemplate>
+                          <ContentControl>
+                            <dxb:BarButtonItem Content="{Binding Content}"  
+                                 ItemClick="{DXEvent Click((int)2)}">
+                              <dxb:BarButtonItem.ContentTemplate>
+                                <DataTemplate>
+                                  <Grid Width="130">
+                                    <TextBlock Text="{Binding}" HorizontalAlignment="Center"
+                                   FontFamily="{StaticResource AppTextFont}"
+                                   Foreground="{StaticResource AppTextColor}"
+                                   FontSize="25"/>
+                                  </Grid>
+                                </DataTemplate>
+                              </dxb:BarButtonItem.ContentTemplate>
+                            </dxb:BarButtonItem>
+                          </ContentControl>
+                        </DataTemplate>
+                      </dxb:PopupMenu.ItemTemplate>
+                    </dxb:PopupMenu>
+                  </dxb:MenuBarControl.Menu>
+                </dxb:MenuBarControl>
+              </ScrollViewer>
+            </dxb:PopupControlContainer>
+          </dx:DropDownButton>
+        </StackPanel>
+      </Border>
+    </StackPanel>
   </Grid>
 </UserControl>

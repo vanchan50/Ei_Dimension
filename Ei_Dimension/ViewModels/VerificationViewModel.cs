@@ -37,7 +37,7 @@ namespace Ei_Dimension.ViewModels
         if (map.regions[i].isValidator)
         {
           App.MapRegions.AddValidationRegion(i);
-          if(map.regions[i].VerificationTargetReporter > 0.01)
+          if(map.regions[i].VerificationTargetReporter > -0.1)
             App.MapRegions.VerificationReporterList[i] = map.regions[i].VerificationTargetReporter.ToString();
         }
       }
@@ -49,15 +49,25 @@ namespace Ei_Dimension.ViewModels
       var map = App.Device.MapList[idx];
       for (var i = 0; i < App.MapRegions.RegionsList.Count; i++)
       {
-        if (App.MapRegions.VerificationRegions[i])
+        var index = map.regions.FindIndex(x => x.Number == int.Parse(App.MapRegions.RegionsList[i]));
+        if(index != -1)
         {
-          var index = map.regions.FindIndex(x => x.Number == int.Parse(App.MapRegions.RegionsList[i]));
-          if(index != -1)
+          double temp = -1;
+          if (App.MapRegions.VerificationRegions[i])
           {
             map.regions[index].isValidator = true;
-            double temp;
-            if (double.TryParse(App.MapRegions.VerificationReporterList[i], out temp))
+            if (App.MapRegions.VerificationReporterList[i] != "" && double.TryParse(App.MapRegions.VerificationReporterList[i], out temp))
+            {
+              if(temp < 0)
+                map.regions[index].VerificationTargetReporter = -1;
+            }
+            else
               map.regions[index].VerificationTargetReporter = temp;
+          }
+          else
+          {
+            map.regions[index].isValidator = false;
+            map.regions[index].VerificationTargetReporter = -1;
           }
         }
       }
@@ -73,9 +83,19 @@ namespace Ei_Dimension.ViewModels
         TempRpMaj = -1,
         TempRpMin = -1,
         TempFsc = -1,
+        Compensation = -1,
+        Gating = -1,
+        Height = -1,
         MinSSC = -1,
         MaxSSC = -1,
+        DNRCoef = -1,
+        DNRTrans = -1,
         Attenuation = -1,
+        CL0 = -1,
+        CL1 = -1,
+        CL2 = -1,
+        CL3 = -1,
+        RP1 = -1,
         Caldate = null,
         Valdate = null
       });
@@ -95,9 +115,19 @@ namespace Ei_Dimension.ViewModels
         TempRpMaj = -1,
         TempRpMin = -1,
         TempFsc = -1,
+        Compensation = -1,
+        Gating = -1,
+        Height = -1,
         MinSSC = -1,
         MaxSSC = -1,
+        DNRCoef = -1,
+        DNRTrans = -1,
         Attenuation = -1,
+        CL0 = -1,
+        CL1 = -1,
+        CL2 = -1,
+        CL3 = -1,
+        RP1 = -1,
         Caldate = null,
         Valdate = DateTime.Now.ToString("dd.MM.yyyy", new System.Globalization.CultureInfo("en-GB"))
       });
