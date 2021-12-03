@@ -112,17 +112,17 @@ namespace Ei_Dimension
       }
       ResultsViewModel.Instance.FillWorldMaps();
 
-      string Theme;
-      if (Device.ActiveMap.validation)
-      {
-        var valDate = DateTime.Parse(Device.ActiveMap.valtime, new System.Globalization.CultureInfo("en-GB"));
-        Theme = valDate.AddDays(2) < DateTime.Today ? DevExpress.Xpf.Core.Theme.Office2010BlackName : DevExpress.Xpf.Core.Theme.DeepBlueName; //Office2007BlueName
-      }
-      else
-        Theme = DevExpress.Xpf.Core.Theme.DeepBlueName;
-
-      DevExpress.Xpf.Core.ThemeManager.SetThemeName(Views.DashboardView.Instance.MapSelectr,
-        Theme);
+      //string Theme;
+      //if (Device.ActiveMap.validation)
+      //{
+      //  var valDate = DateTime.Parse(Device.ActiveMap.valtime, new System.Globalization.CultureInfo("en-GB"));
+      //  Theme = valDate.AddDays(2) < DateTime.Today ? DevExpress.Xpf.Core.Theme.Office2010BlackName : DevExpress.Xpf.Core.Theme.DeepBlueName; //Office2007BlueName
+      //}
+      //else
+      //  Theme = DevExpress.Xpf.Core.Theme.DeepBlueName;
+      //
+      //DevExpress.Xpf.Core.ThemeManager.SetThemeName(Views.DashboardView.Instance.MapSelectr,
+      //  Theme);
 
       var CaliVM = CalibrationViewModel.Instance;
       if (CaliVM != null)
