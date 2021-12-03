@@ -1893,6 +1893,7 @@ namespace Ei_Dimension
       SetLanguage(MaintenanceViewModel.Instance.LanguageItems[Settings.Default.Language].Locale);
       Program.SplashScreen.Close(TimeSpan.FromMilliseconds(1000));
       Views.ExperimentView.Instance.DbButton.IsChecked = true;
+      Device.MainCommand("Get Property", code: 0x01);
       _isStartup = false;
     }
 
