@@ -1397,7 +1397,7 @@ namespace Ei_Dimension
           case 0xae:  //TODO: remove?
             if (exe.Parameter > 24)
               exe.Parameter = 0;
-            MotorsViewModel.Instance.WellColumnButtonItems[exe.Parameter].ForAppUpdater(2);
+            //MotorsViewModel.Instance.WellColumnButtonItems[exe.Parameter].ForAppUpdater(2);
             Device.PlateCol = (byte)exe.Parameter;  //TODO: it doesn't accout for 96well; can go overboard and crash
             break;
           case 0xaf:
