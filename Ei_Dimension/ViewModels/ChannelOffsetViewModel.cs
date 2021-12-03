@@ -10,15 +10,18 @@ namespace Ei_Dimension.ViewModels
   public class ChannelOffsetViewModel
   {
     public virtual ObservableCollection<string> ChannelsOffsetParameters { get; set; }
+    public virtual System.Windows.Visibility OldBoardOffsetsVisible { get; set; }
     public virtual ObservableCollection<string> SiPMTempCoeff { get; set; }
     public virtual string SelectedSensitivityContent { get; set; }
     public virtual ObservableCollection<DropDownButtonContents> SensitivityItems { get; set; }
     public byte SelectedSensitivityIndex { get; set; }
     public static ChannelOffsetViewModel Instance { get; private set; }
+    
 
     protected ChannelOffsetViewModel()
     {
       ChannelsOffsetParameters = new ObservableCollection<string>();
+      OldBoardOffsetsVisible = System.Windows.Visibility.Visible;
       SiPMTempCoeff = new ObservableCollection<string> { Settings.Default.SiPM.ToString() };
       for (var i = 0; i < 10; i++)
       {
@@ -95,11 +98,6 @@ namespace Ei_Dimension.ViewModels
     public void TextChanged(TextChangedEventArgs e)
     {
       App.InjectToFocusedTextbox(((TextBox)e.Source).Text, true);
-    }
-
-    public void SetOffsetClick()
-    {
-      App.Device.MainCommand("SetBaseline");
     }
 
     public class DropDownButtonContents : Core.ObservableObject

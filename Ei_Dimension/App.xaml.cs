@@ -1041,6 +1041,11 @@ namespace Ei_Dimension
         }
         switch (exe.Code)
         {
+          case 0x01:
+            Device.BoardVersion = exe.Parameter;
+            if(Device.BoardVersion > 1)
+              HideChannels();
+            break;
           case 0x02:
             //ChannelsViewModel.Instance.SiPMTempCoeff[0] = exe.FParameter.ToString();
             break;
@@ -1919,6 +1924,12 @@ namespace Ei_Dimension
         }
       }
       return passed;
+    }
+
+    private static void HideChannels()
+    {
+      ChannelOffsetViewModel.Instance.OldBoardOffsetsVisible = Visibility.Hidden;
+      Views.ChannelOffsetView.Instance.cover.Visibility = Visibility.Visible;
     }
 
     public static void ShowNotification(string text, System.Windows.Media.Brush Background = null)

@@ -85,11 +85,6 @@ namespace Ei_Dimension.ViewModels
       App.ShowNotification($"Calibration Parameters Saved to map {App.Device.ActiveMap.mapName}");
     }
 
-    public void SetOffsetButtonClick()
-    {
-      App.Device.MainCommand("SetBaseline");
-    }
-
     public void FocusedBox(int num)
     {
       switch (num)

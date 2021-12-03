@@ -53,6 +53,7 @@ namespace MicroCy
     public event EventHandler FinishedMeasurement;
     public event EventHandler<GstatsEventArgs> NewStatsAvailable;
     public OperationMode Mode { get; set; }
+    public int BoardVersion { get; set; }
     public int SavingWellIdx { get; set; }
     public int WellsToRead { get; set; }
     public int BeadsToCapture { get; set; }
