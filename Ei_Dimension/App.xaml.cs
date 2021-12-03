@@ -60,6 +60,7 @@ namespace Ei_Dimension
       Device.BeadsToCapture = Settings.Default.BeadsToCapture;
       Device.OnlyClassified = Settings.Default.OnlyClassifed;
       Device.ChannelBIsHiSensitivity = Settings.Default.SensitivityChannelB;
+      Device.MainCommand("Set FProperty", code: 0x02, fparameter: Settings.Default.SiPM);
       Device.MainCommand("Set Property", code: 0xbf, parameter: (ushort)Device.ActiveMap.calParams.att);
       if (!System.Windows.Input.Keyboard.IsKeyDown(System.Windows.Input.Key.LeftCtrl))
         Device.MainCommand("Startup");
@@ -131,7 +132,7 @@ namespace Ei_Dimension
         CaliVM.EventTriggerContents[2] = Device.ActiveMap.calParams.maxmapssc.ToString();
         Device.MainCommand("Set Property", code: 0xcf, parameter: (ushort)Device.ActiveMap.calParams.maxmapssc);
         CaliVM.AttenuationBox[0] = Device.ActiveMap.calParams.att.ToString();
-        Device.MainCommand("Set Property", code: 0xbf, parameter: (ushort)Device.ActiveMap.calParams.att);  //firmware can override this
+        Device.MainCommand("Set Property", code: 0xbf, parameter: (ushort)Device.ActiveMap.calParams.att);
 
 
         CaliVM.EventTriggerContents[0] = Device.ActiveMap.calParams.height.ToString();
@@ -323,7 +324,7 @@ namespace Ei_Dimension
         DashVM.EndReadItems[2].Content = RM.GetString(nameof(Language.Resources.Experiment_End_of_Sample), curCulture);
         DashVM.SelectedEndReadContent = DashVM.EndReadItems[0].Content;
       }
-      var ChannelsVM = ChannelsViewModel.Instance;
+      var ChannelsVM = ChannelOffsetViewModel.Instance;
       if (ChannelsVM != null)
       {
         ChannelsVM.SensitivityItems[0].Content = RM.GetString(nameof(Language.Resources.Channels_Sens_B), curCulture);
@@ -1041,7 +1042,7 @@ namespace Ei_Dimension
         switch (exe.Code)
         {
           case 0x02:
-            ChannelsViewModel.Instance.SiPMTempCoeff[0] = exe.FParameter.ToString();
+            //ChannelsViewModel.Instance.SiPMTempCoeff[0] = exe.FParameter.ToString();
             break;
           case 0x04:
             ComponentsViewModel.Instance.IdexTextBoxInputs[0] = exe.Parameter.ToString("X2");
@@ -1549,7 +1550,7 @@ namespace Ei_Dimension
               Device.EndState = 1;
             break;
           case 0xbf:
-            CalibrationViewModel.Instance.AttenuationBox[0] = exe.Parameter.ToString();
+            //CalibrationViewModel.Instance.AttenuationBox[0] = exe.Parameter.ToString();
             break;
           case 0xf3:
             if (!ComponentsViewModel.Instance.SuppressWarnings)

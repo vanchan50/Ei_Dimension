@@ -26,7 +26,6 @@ namespace Ei_Dimension.ViewModels
 
     public void LoadClick()
     {
-
       var idx = App.Device.MapList.FindIndex(x => x.mapName == App.Device.ActiveMap.mapName);
       var map = App.Device.MapList[idx];
       for (var i = 0; i < map.regions.Count; i++)
@@ -60,6 +59,8 @@ namespace Ei_Dimension.ViewModels
             {
               if(temp < 0)
                 map.regions[index].VerificationTargetReporter = -1;
+              else
+                map.regions[index].VerificationTargetReporter = temp;
             }
             else
               map.regions[index].VerificationTargetReporter = temp;

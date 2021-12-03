@@ -39,7 +39,7 @@ namespace Ei_Dimension.ViewModels
       EventCountField = EventCountCurrent;
       Instance = this;
       ServiceVisibilityCheck = 0;
-      TouchControlsEnabled = true;
+      TouchControlsEnabled = Settings.Default.TouchMode;
     }
 
     public static MainViewModel Create()

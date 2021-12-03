@@ -149,7 +149,7 @@
                       Command="{Binding TouchModeToggleCommand}"
                       Style="{StaticResource ToggleButtonThemeStyle}"
                       Height="60" Width="220"
-                      IsChecked="True"
+                      IsChecked="{Binding TouchModeEnabled[0]}"
                       Margin="0,20,0,10"/>
         <TextBlock Text="{lang:Loc Language}"
                  FontFamily="{StaticResource AppTextFont}"

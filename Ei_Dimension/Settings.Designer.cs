@@ -286,5 +286,29 @@ namespace Ei_Dimension {
                 this["SuppressWarnings"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public float SiPM {
+            get {
+                return ((float)(this["SiPM"]));
+            }
+            set {
+                this["SiPM"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool TouchMode {
+            get {
+                return ((bool)(this["TouchMode"]));
+            }
+            set {
+                this["TouchMode"] = value;
+            }
+        }
     }
 }

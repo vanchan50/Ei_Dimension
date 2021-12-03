@@ -3,6 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+             xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
              xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
              xmlns:ViewModels="clr-namespace:Ei_Dimension.ViewModels"
              xmlns:lang="clr-namespace:Ei_Dimension.Language;assembly=Language"
@@ -206,15 +208,73 @@
 
           </StackPanel>
         </Border>
+        <StackPanel VerticalAlignment="Stretch"
+                    Width="220"
+                    Margin="30,-15,0,0">
+          <TextBlock Text="{lang:Loc Channels_Hi_Sens_Chan}"
+                   FontFamily="{StaticResource AppTextFont}"
+                   FontSize="36"
+                     Height="100"
+                   FontWeight="UltraBold"
+                   Foreground="{StaticResource AppTextColor}"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Top"
+                   Margin="0,16,0,3"/>
+          <dx:DropDownButton 
+                           Height="50" Cursor="Hand"
+                           FontSize="25"
+                           dxb:BarManager.ShowGlyphsInPopupMenus="False"
+                           FontFamily="{StaticResource AppTextFont}"
+                           Foreground="{StaticResource AppTextColor}"
+                           Content="{Binding SelectedSensitivityContent}">
+            <dxb:PopupMenu ItemLinksSource="{Binding SensitivityItems}">
+              <dxb:PopupMenu.ItemTemplate>
+                <DataTemplate>
+                  <ContentControl>
+                    <dxb:BarButtonItem Content="{Binding Content}"  
+                                 ItemClick="{DXEvent Click()}">
+                      <dxb:BarButtonItem.ContentTemplate>
+                        <DataTemplate>
+                          <Grid Width="180">
+                            <TextBlock Text="{Binding}" HorizontalAlignment="Center"
+                                   FontFamily="{StaticResource AppTextFont}"
+                                   Foreground="{StaticResource AppTextColor}"
+                                   FontSize="25"/>
+                          </Grid>
+                        </DataTemplate>
+                      </dxb:BarButtonItem.ContentTemplate>
+                    </dxb:BarButtonItem>
+                  </ContentControl>
+                </DataTemplate>
+              </dxb:PopupMenu.ItemTemplate>
+            </dxb:PopupMenu>
+          </dx:DropDownButton>
+          <TextBlock Text="{lang:Loc Channels_SiPM_Temp_Coefficient}"
+                     FontFamily="{StaticResource AppTextFont}"
+                     FontSize="36"
+                     Height="100"
+                     FontWeight="UltraBold"
+                     Foreground="{StaticResource AppTextColor}"
+                     HorizontalAlignment="Center"
+                     VerticalAlignment="Top"
+                     Margin="0,5,0,0"/>
+          <TextBox HorizontalAlignment="Stretch"
+                    Margin="30,0,30,13" Name="CoefTB"
+                    Style="{StaticResource InputFieldStyle}"
+                    Text="{Binding SiPMTempCoeff[0]}">
+            <dxmvvm:Interaction.Behaviors>
+              <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="10"/>
+              <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+            </dxmvvm:Interaction.Behaviors>
+          </TextBox>
+          <Button Content="{lang:Loc Ch_Offset_Set_Offset}"
+                  Command="{Binding SetOffsetClickCommand}"
+                  Style="{StaticResource ButtonStyle}"
+                  Height="100" Width="180"
+                  Margin="0,20,0,0"/>
+        </StackPanel>
       </StackPanel>
     </Border>
 
-    <Button Content="{lang:Loc Ch_Offset_Set_Offset}"
-            Command="{Binding SetOffsetClickCommand}"
-            Style="{StaticResource ButtonStyle}"
-            Height="100" Width="180"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Margin="850,580,0,10"/>
   </Grid>
 </UserControl>

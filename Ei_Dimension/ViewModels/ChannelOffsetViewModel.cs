@@ -10,15 +10,29 @@ namespace Ei_Dimension.ViewModels
   public class ChannelOffsetViewModel
   {
     public virtual ObservableCollection<string> ChannelsOffsetParameters { get; set; }
+    public virtual ObservableCollection<string> SiPMTempCoeff { get; set; }
+    public virtual string SelectedSensitivityContent { get; set; }
+    public virtual ObservableCollection<DropDownButtonContents> SensitivityItems { get; set; }
+    public byte SelectedSensitivityIndex { get; set; }
     public static ChannelOffsetViewModel Instance { get; private set; }
 
     protected ChannelOffsetViewModel()
     {
       ChannelsOffsetParameters = new ObservableCollection<string>();
+      SiPMTempCoeff = new ObservableCollection<string> { Settings.Default.SiPM.ToString() };
       for (var i = 0; i < 10; i++)
       {
         ChannelsOffsetParameters.Add("");
       }
+      var RM = Language.Resources.ResourceManager;
+      var curCulture = Language.TranslationSource.Instance.CurrentCulture;
+      SensitivityItems = new ObservableCollection<DropDownButtonContents>
+      {
+        new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Channels_Sens_B), curCulture), this),
+        new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Channels_Sens_C), curCulture), this)
+      };
+      SelectedSensitivityIndex = Settings.Default.SensitivityChannelB ? (byte)0 : (byte)1;
+      SelectedSensitivityContent = SensitivityItems[SelectedSensitivityIndex].Content;
       Instance = this;
     }
 
@@ -71,6 +85,10 @@ namespace Ei_Dimension.ViewModels
           App.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsOffsetParameters)), this, 9);
           MainViewModel.Instance.NumpadToggleButton((TextBox)Views.ChannelOffsetView.Instance.SP.Children[9]);
           break;
+        case 10:
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(SiPMTempCoeff)), this, 0);
+          MainViewModel.Instance.NumpadToggleButton(Views.ChannelOffsetView.Instance.CoefTB);
+          break;
       }
     }
 
@@ -82,6 +100,44 @@ namespace Ei_Dimension.ViewModels
     public void SetOffsetClick()
     {
       App.Device.MainCommand("SetBaseline");
+    }
+
+    public class DropDownButtonContents : Core.ObservableObject
+    {
+      public string Content
+      {
+        get => _content;
+        set
+        {
+          _content = value;
+          OnPropertyChanged();
+        }
+      }
+      public byte Index { get; set; }
+      private static byte _nextIndex = 0;
+      private string _content;
+      private static ChannelOffsetViewModel _vm;
+      public DropDownButtonContents(string content, ChannelOffsetViewModel vm = null)
+      {
+        if (_vm == null)
+        {
+          _vm = vm;
+        }
+        Content = content;
+        Index = _nextIndex++;
+      }
+
+      public void Click()
+      {
+        _vm.SelectedSensitivityContent = Content;
+        _vm.SelectedSensitivityIndex = Index;
+        App.SetSensitivityChannel(Index);
+      }
+
+      public static void ResetIndex()
+      {
+        _nextIndex = 0;
+      }
     }
   }
 }

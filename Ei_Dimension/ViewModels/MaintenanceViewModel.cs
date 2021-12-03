@@ -15,6 +15,7 @@ namespace Ei_Dimension.ViewModels
     public virtual bool LEDsEnabled { get; set; }
     public virtual object LEDSliderValue { get; set; }
     public virtual ObservableCollection<string> SanitizeSecondsContent { get; set; }
+    public virtual ObservableCollection<bool> TouchModeEnabled { get; set; }
 
     public virtual ObservableCollection<DropDownButtonContents> LanguageItems { get; set; }
     public virtual string SelectedLanguage { get; set; }
@@ -29,6 +30,7 @@ namespace Ei_Dimension.ViewModels
       LEDsEnabled = true;
       LEDsToggleButtonState = false;
       SanitizeSecondsContent = new ObservableCollection<string> { "" };
+      TouchModeEnabled = new ObservableCollection<bool> { Settings.Default.TouchMode };
       LanguageItems = new ObservableCollection<DropDownButtonContents>();
       foreach(var lang in Language.Supported.Languages)
       {
@@ -70,6 +72,8 @@ namespace Ei_Dimension.ViewModels
     public void TouchModeToggle()
     {
       MainViewModel.Instance.TouchControlsEnabled = !MainViewModel.Instance.TouchControlsEnabled;
+      Settings.Default.TouchMode = TouchModeEnabled[0];
+      Settings.Default.Save();
     }
 
     public void UVCSanitizeClick()
