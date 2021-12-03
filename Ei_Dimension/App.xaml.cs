@@ -1391,7 +1391,7 @@ namespace Ei_Dimension
           case 0xad:  //TODO: remove?
             if (exe.Parameter > 15)
               exe.Parameter = 0;
-            MotorsViewModel.Instance.WellRowButtonItems[exe.Parameter].ForAppUpdater(1);
+            //MotorsViewModel.Instance.WellRowButtonItems[exe.Parameter].ForAppUpdater(1);
             Device.PlateRow = (byte)exe.Parameter;
             break;
           case 0xae:  //TODO: remove?

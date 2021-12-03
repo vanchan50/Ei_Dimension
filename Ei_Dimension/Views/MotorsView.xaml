@@ -806,30 +806,30 @@
                 Width="420"
                 Height="80">
           <StackPanel HorizontalAlignment="Center"
-                    Orientation="Horizontal">
+                      Orientation="Horizontal">
             <RadioButton Content="96"
-                       Style="{StaticResource RadioButtonHorizontalThemeStyle}"
-                       IsChecked="{Binding WellSelectionButtonsChecked[0], Mode=OneWay}"
-                       Width="140"
-                       Command="{Binding ChangeAmountOfWellsCommand}">
+                         Style="{StaticResource RadioButtonHorizontalThemeStyle}"
+                         IsChecked="{Binding WellSelectionButtonsChecked[0], Mode=OneWay}"
+                         Width="140"
+                         Command="{Binding ChangeAmountOfWellsCommand}">
               <RadioButton.CommandParameter>
                 <System:Int32>96</System:Int32>
               </RadioButton.CommandParameter>
             </RadioButton>
             <RadioButton Content="384"
-                       Style="{StaticResource RadioButtonHorizontalThemeStyle}"
-                       IsChecked="{Binding WellSelectionButtonsChecked[1], Mode=OneWay}"
-                       Width="140"
-                       Command="{Binding ChangeAmountOfWellsCommand}">
+                         Style="{StaticResource RadioButtonHorizontalThemeStyle}"
+                         IsChecked="{Binding WellSelectionButtonsChecked[1], Mode=OneWay}"
+                         Width="140"
+                         Command="{Binding ChangeAmountOfWellsCommand}">
               <RadioButton.CommandParameter>
                 <System:Int32>384</System:Int32>
               </RadioButton.CommandParameter>
             </RadioButton>
             <RadioButton Content="{lang:Loc Experiment_Tube}"
-                       Style="{StaticResource RadioButtonHorizontalThemeStyle}"
-                       IsChecked="{Binding WellSelectionButtonsChecked[2], Mode=OneWay}"
-                       Width="140"
-                       Command="{Binding ChangeAmountOfWellsCommand}">
+                         Style="{StaticResource RadioButtonHorizontalThemeStyle}"
+                         IsChecked="{Binding WellSelectionButtonsChecked[2], Mode=OneWay}"
+                         Width="140"
+                         Command="{Binding ChangeAmountOfWellsCommand}">
               <RadioButton.CommandParameter>
                 <System:Int32>1</System:Int32>
               </RadioButton.CommandParameter>
@@ -838,8 +838,8 @@
         </Border>
 
         <StackPanel Orientation="Horizontal"
-                  Height="80"
-                  Width="280">
+                    Height="80"
+                    Width="280">
           <dx:DropDownButton Width="140"
                              Cursor="Hand"
                              FontSize="50"
@@ -857,9 +857,9 @@
                         <DataTemplate>
                           <Grid Width="100">
                             <TextBlock Text="{Binding}" HorizontalAlignment="Center"
-                                   FontFamily="{StaticResource AppTextFont}"
-                                   Foreground="{StaticResource AppTextColor}"
-                                   FontSize="25"/>
+                                       FontFamily="{StaticResource AppTextFont}"
+                                       Foreground="{StaticResource AppTextColor}"
+                                       FontSize="25"/>
                           </Grid>
                         </DataTemplate>
                       </dxb:BarButtonItem.ContentTemplate>
