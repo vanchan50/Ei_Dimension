@@ -42,6 +42,10 @@
       <dxmvvm:Interaction.Triggers>
         <dxmvvm:EventToCommand EventName="MouseLeftButtonDown" Command="{Binding LogoClickCommand}"/>
       </dxmvvm:Interaction.Triggers>
+      <ToolTipService.ToolTip>
+        <TextBlock FontSize="32" Text="{Binding AppVersion}"
+                   FontFamily="{StaticResource AppTextFont}"/>
+      </ToolTipService.ToolTip>
     </Image>
     <!-- Company Logo Left -->
     <Image HorizontalAlignment="Left" VerticalAlignment="Top"

@@ -9,6 +9,7 @@ namespace Ei_Dimension.ViewModels
   [POCOViewModel]
   public class MainViewModel
   {
+    public static string AppVersion { get; } = "Application Version: 0.8.1";
     public virtual ObservableCollection<bool> MainSelectorState { get; set; }
     public virtual System.Windows.Visibility NumpadVisible { get; set; }
     public virtual System.Windows.Visibility KeyboardVisible { get; set; }
