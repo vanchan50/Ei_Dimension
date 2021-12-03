@@ -60,7 +60,6 @@ namespace Ei_Dimension
       Device.BeadsToCapture = Settings.Default.BeadsToCapture;
       Device.OnlyClassified = Settings.Default.OnlyClassifed;
       Device.ChannelBIsHiSensitivity = Settings.Default.SensitivityChannelB;
-      Device.MainCommand("Set FProperty", code: 0x02, fparameter: Settings.Default.SiPM);
       Device.MainCommand("Set Property", code: 0xbf, parameter: (ushort)Device.ActiveMap.calParams.att);
       if (!System.Windows.Input.Keyboard.IsKeyDown(System.Windows.Input.Key.LeftCtrl))
         Device.MainCommand("Startup");
@@ -1047,7 +1046,7 @@ namespace Ei_Dimension
               HideChannels();
             break;
           case 0x02:
-            //ChannelsViewModel.Instance.SiPMTempCoeff[0] = exe.FParameter.ToString();
+            ChannelOffsetViewModel.Instance.SiPMTempCoeff[0] = exe.FParameter.ToString();
             break;
           case 0x04:
             ComponentsViewModel.Instance.IdexTextBoxInputs[0] = exe.Parameter.ToString("X2");

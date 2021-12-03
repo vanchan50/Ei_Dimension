@@ -22,7 +22,7 @@ namespace Ei_Dimension.ViewModels
     {
       ChannelsOffsetParameters = new ObservableCollection<string>();
       OldBoardOffsetsVisible = System.Windows.Visibility.Visible;
-      SiPMTempCoeff = new ObservableCollection<string> { Settings.Default.SiPM.ToString() };
+      SiPMTempCoeff = new ObservableCollection<string> { "" };
       for (var i = 0; i < 10; i++)
       {
         ChannelsOffsetParameters.Add("");
