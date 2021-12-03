@@ -119,7 +119,6 @@ namespace MicroCy
       SetSystemDirectories();
       MoveMaps();
       LoadMaps();
-      MainCommand("Set Property", code: 1, parameter: 1);    //set version as 1 to enable work order handling
       Reg0stats = false;
       _serialConnection.BeginRead(ReplyFromMC);   //default termination is end of sample
       Outdir = RootDirectory.FullName;
