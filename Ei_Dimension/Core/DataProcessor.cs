@@ -266,15 +266,19 @@ namespace Ei_Dimension.Core
         int cl0 = Array.BinarySearch(HeatMapData.bins, bead.cl0);
         if (cl0 < 0)
           cl0 = ~cl0;
+        cl0 = cl0 > 255 ? 255 : cl0;
         int cl1 = Array.BinarySearch(HeatMapData.bins, bead.cl1);
         if (cl1 < 0)
           cl1 = ~cl1;
+        cl1 = cl1 > 255 ? 255 : cl1;
         int cl2 = Array.BinarySearch(HeatMapData.bins, bead.cl2);
         if (cl2 < 0)
           cl2 = ~cl2;
+        cl2 = cl2 > 255 ? 255 : cl2;
         int cl3 = Array.BinarySearch(HeatMapData.bins, bead.cl3);
         if (cl3 < 0)
           cl3 = ~cl3;
+        cl3 = cl3 > 255 ? 255 : cl3;
 
         if (current)
         {
