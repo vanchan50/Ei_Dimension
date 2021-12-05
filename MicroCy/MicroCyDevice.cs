@@ -112,10 +112,11 @@ namespace MicroCy
 
     public MicroCyDevice(Type connectionType)
     {
+      _serialConnection = ConnectionFactory.MakeNewConnection(connectionType);
+      MainCommand("Sync");
       TotalBeads = 0;
       Mode = OperationMode.Normal;
       _classificationBins = GenerateLogSpace(1, 50000, 256);
-      _serialConnection = ConnectionFactory.MakeNewConnection(connectionType);
       SetSystemDirectories();
       MoveMaps();
       LoadMaps();

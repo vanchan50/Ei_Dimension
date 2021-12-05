@@ -6,6 +6,7 @@ namespace MicroCy
   {
     public static readonly Dictionary<string, CommandStruct> MainCmdTemplatesDict = new Dictionary<string, CommandStruct>()
     {
+      { "Sync",                 new CommandStruct{ Code=0xfa, Command=0x0, Parameter=0, FParameter=0} },
       { "Sheath",               new CommandStruct{ Code=0xd0, Command=0x0, Parameter=0, FParameter=0} },
       { "SampleA",              new CommandStruct{ Code=0xd1, Command=0x0, Parameter=0, FParameter=0} },
       { "SampleB",              new CommandStruct{ Code=0xd2, Command=0x0, Parameter=0, FParameter=0} },
