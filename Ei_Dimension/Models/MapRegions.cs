@@ -181,6 +181,7 @@ namespace Ei_Dimension.Models
       {
         BindingOperations.ClearAllBindings(UIEl);
         ((TextBox)UIEl).GotFocus -= ValidationReporterTbGotFocus;
+        ((TextBox)UIEl).TextChanged -= ValidationReporterTextChanged;
       }
       _validationReporterBorder.Children.Clear();
       _lastValidationReporterBox = null;
@@ -463,6 +464,7 @@ namespace Ei_Dimension.Models
       bind.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
       BindingOperations.SetBinding(tb, TextBox.TextProperty, bind);
       tb.GotFocus += ValidationReporterTbGotFocus;
+      tb.TextChanged += ValidationReporterTextChanged;
       _validationReporterBorder.Children.Add(tb);
     }
 
@@ -478,6 +480,11 @@ namespace Ei_Dimension.Models
         .GetProperty(nameof(VerificationReporterList)),
         this, int.Parse(((TextBox)e.Source).Name.Trim('_')));
       MainViewModel.Instance.NumpadToggleButton((TextBox)e.Source);
+    }
+      
+    private void ValidationReporterTextChanged(object sender, TextChangedEventArgs e)
+    {
+      App.InjectToFocusedTextbox(((TextBox)e.Source).Text, true);
     }
 
     public void AddValidationRegion(int index)

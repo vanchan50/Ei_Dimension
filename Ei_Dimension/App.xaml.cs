@@ -382,19 +382,20 @@ namespace Ei_Dimension
         ushort usRes;
         byte bRes;
         bool failed = false;
+        string ErrorMessage = null;
         switch (SelectedTextBox.prop.Name)
         {
           case "CompensationPercentageContent":
             if (float.TryParse(_tempNewString, out fRes))
             {
               if (fRes >= 0 && fRes <= 10)
-                MicroCy.InstrumentParameters.Calibration.Compensation = fRes;
-              else
               {
-                failed = true;
-                ShowNotification("Compensation is out of range [0-10]");
+                MicroCy.InstrumentParameters.Calibration.Compensation = fRes;
+                break;
               }
             }
+            failed = true;
+            ErrorMessage = "Compensation is out of range [0-10]";
             break;
           case "DNRContents":
             if (SelectedTextBox.index == 0)
@@ -405,13 +406,11 @@ namespace Ei_Dimension
                 {
                   MicroCy.InstrumentParameters.Calibration.HDnrCoef = fRes;
                   Device.MainCommand("Set FProperty", code: 0x20, fparameter: fRes);
-                }
-                else
-                {
-                  failed = true;
-                  ShowNotification("High DNR Coefficient is out of range [1-300]");
+                  break;
                 }
               }
+              failed = true;
+              ErrorMessage = "High DNR Coefficient is out of range [1-300]";
             }
             if (SelectedTextBox.index == 1)
             {
@@ -420,13 +419,11 @@ namespace Ei_Dimension
                 if (fRes >= 1 && fRes <= 30000)
                 {
                   MicroCy.InstrumentParameters.Calibration.HdnrTrans = fRes;
-                }
-                else
-                {
-                  failed = true;
-                  ShowNotification("High DNR Transition is out of range [1-30000]");
+                  break;
                 }
               }
+              failed = true;
+              ErrorMessage = "High DNR Transition is out of range [1-30000]";
             }
             break;
           case "EndRead":
@@ -438,13 +435,11 @@ namespace Ei_Dimension
                 {
                   Device.MinPerRegion = iRes;
                   Settings.Default.MinPerRegion = iRes;
-                }
-                else
-                {
-                  failed = true;
-                  ShowNotification("Minimum amount of beads should be a positive number");
+                  break;
                 }
               }
+              failed = true;
+              ErrorMessage = "Minimum amount of beads should be a positive number";
             }
             if (SelectedTextBox.index == 1)
             {
@@ -454,13 +449,11 @@ namespace Ei_Dimension
                 {
                   Device.BeadsToCapture = iRes;
                   Settings.Default.BeadsToCapture = iRes;
-                }
-                else
-                {
-                  failed = true;
-                  ShowNotification("Total amount of bead events should be a positive number");
+                  break;
                 }
               }
+              failed = true;
+              ErrorMessage = "Total amount of bead events should be a positive number";
             }
             break;
           case "Volumes":
@@ -471,13 +464,11 @@ namespace Ei_Dimension
                 if (iRes >= 10 && iRes <= 100)
                 {
                   Device.MainCommand("Set Property", code: 0xaf, parameter: (ushort)iRes);
-                }
-                else
-                {
-                  failed = true;
-                  ShowNotification("Sample Volume is out of range [10-100]");
+                  break;
                 }
               }
+              failed = true;
+              ErrorMessage = "Sample Volume is out of range [10-100]";
             }
             if (SelectedTextBox.index == 1)
             {
@@ -486,13 +477,11 @@ namespace Ei_Dimension
                 if (iRes >= 1 && iRes <= 100)
                 {
                   Device.MainCommand("Set Property", code: 0xac, parameter: (ushort)iRes);
-                }
-                else
-                {
-                  failed = true;
-                  ShowNotification("Wash Volume is out of range [1-100]");
+                  break;
                 }
               }
+              failed = true;
+              ErrorMessage = "Wash Volume is out of range [1-100]";
             }
             if (SelectedTextBox.index == 2)
             {
@@ -501,13 +490,11 @@ namespace Ei_Dimension
                 if (iRes >= 1 && iRes <= 500)
                 {
                   Device.MainCommand("Set Property", code: 0xc4, parameter: (ushort)iRes);
-                }
-                else
-                {
-                  failed = true;
-                  ShowNotification("Agitate Volume is out of range [1-500]");
+                  break;
                 }
               }
+              failed = true;
+              ErrorMessage = "Agitate Volume is out of range [1-500]";
             }
             break;
           case "EventTriggerContents":
@@ -518,13 +505,11 @@ namespace Ei_Dimension
                 if (iRes >= 1 && iRes <= 2000)
                 {
                   Device.MainCommand("Set Property", code: 0xcd, parameter: (ushort)iRes);
-                }
-                else
-                {
-                  failed = true;
-                  ShowNotification("Event height is out of range [1-2000]");
+                  break;
                 }
               }
+              failed = true;
+              ErrorMessage = "Event height is out of range [1-2000]";
             }
             if (SelectedTextBox.index == 1)
             {
@@ -533,13 +518,11 @@ namespace Ei_Dimension
                 if (iRes >= 0 && iRes <= 20000)
                 {
                   Device.MainCommand("Set Property", code: 0xce, parameter: (ushort)iRes);
-                }
-                else
-                {
-                  failed = true;
-                  ShowNotification("Min SSC is out of range [0-20000]");
+                  break;
                 }
               }
+              failed = true;
+              ErrorMessage = "Min SSC is out of range [0-20000]";
             }
             if (SelectedTextBox.index == 2)
             {
@@ -548,13 +531,11 @@ namespace Ei_Dimension
                 if (iRes >= 0 && iRes <= 30000)
                 {
                   Device.MainCommand("Set Property", code: 0xcf, parameter: (ushort)iRes);
-                }
-                else
-                {
-                  failed = true;
-                  ShowNotification("Max SSC is out of range [0-30000]");
+                  break;
                 }
               }
+              failed = true;
+              ErrorMessage = "Max SSC is out of range [0-30000]";
             }
             break;
           case "ClassificationTargetsContents":
@@ -565,13 +546,11 @@ namespace Ei_Dimension
                 if (iRes >= 0 && iRes <= 30000)
                 {
                   Device.MainCommand("Set Property", code: 0x8b, parameter: (ushort)iRes);
-                }
-                else
-                {
-                  failed = true;
-                  ShowNotification("CL0 Classification Target is out of range [0-30000]");
+                  break;
                 }
               }
+              failed = true;
+              ErrorMessage = "CL0 Classification Target is out of range [0-30000]";
             }
             if (SelectedTextBox.index == 1)
             {
@@ -580,13 +559,11 @@ namespace Ei_Dimension
                 if (iRes >= 0 && iRes <= 30000)
                 {
                   Device.MainCommand("Set Property", code: 0x8c, parameter: (ushort)iRes);
-                }
-                else
-                {
-                  failed = true;
-                  ShowNotification("CL1 Classification Target is out of range [0-30000]");
+                  break;
                 }
               }
+              failed = true;
+              ErrorMessage = "CL1 Classification Target is out of range [0-30000]";
             }
             if (SelectedTextBox.index == 2)
             {
@@ -595,13 +572,11 @@ namespace Ei_Dimension
                 if (iRes >= 0 && iRes <= 30000)
                 {
                   Device.MainCommand("Set Property", code: 0x8d, parameter: (ushort)iRes);
-                }
-                else
-                {
-                  failed = true;
-                  ShowNotification("CL2 Classification Target is out of range [0-30000]");
+                  break;
                 }
               }
+              failed = true;
+              ErrorMessage = "CL2 Classification Target is out of range [0-30000]";
             }
             if (SelectedTextBox.index == 3)
             {
@@ -610,13 +585,11 @@ namespace Ei_Dimension
                 if (iRes >= 0 && iRes <= 30000)
                 {
                   Device.MainCommand("Set Property", code: 0x8e, parameter: (ushort)iRes);
-                }
-                else
-                {
-                  failed = true;
-                  ShowNotification("CL3 Classification Target is out of range [0-30000]");
+                  break;
                 }
               }
+              failed = true;
+              ErrorMessage = "CL3 Classification Target is out of range [0-30000]";
             }
             if (SelectedTextBox.index == 4)
             {
@@ -625,13 +598,11 @@ namespace Ei_Dimension
                 if (iRes >= 0 && iRes <= 30000)
                 {
                   Device.MainCommand("Set Property", code: 0x8f, parameter: (ushort)iRes);
-                }
-                else
-                {
-                  failed = true;
-                  ShowNotification("RP1 Classification Target is out of range [0-30000]");
+                  break;
                 }
               }
+              failed = true;
+              ErrorMessage = "RP1 Classification Target is out of range [0-30000]";
             }
             break;
           case "AttenuationBox":
@@ -640,13 +611,11 @@ namespace Ei_Dimension
               if (iRes >= 0 && iRes <= 100)
               {
                 Device.MainCommand("Set Property", code: 0xbf, parameter: (ushort)iRes);
-              }
-              else
-              {
-                failed = true;
-                ShowNotification("Attenuation is out of range [0-100]");
+                break;
               }
             }
+            failed = true;
+            ErrorMessage = "Attenuation is out of range [0-100]";
             break;
           case "SheathSyringeParameters":
             if (SelectedTextBox.index == 0)
@@ -656,13 +625,11 @@ namespace Ei_Dimension
                 if (iRes >= 0 && iRes <= 1000)
                 {
                   Device.MainCommand("Set Property", code: 0x30, parameter: (ushort)iRes);
-                }
-                else
-                {
-                  failed = true;
-                  ShowNotification("Normal Sheath is out of range [1-1000]");
+                  break;
                 }
               }
+              failed = true;
+              ErrorMessage = "Normal Sheath is out of range [1-1000]";
             }
             if (SelectedTextBox.index == 1)
             {
@@ -671,13 +638,11 @@ namespace Ei_Dimension
                 if (iRes >= 0 && iRes <= 1000)
                 {
                   Device.MainCommand("Set Property", code: 0x31, parameter: (ushort)iRes);
-                }
-                else
-                {
-                  failed = true;
-                  ShowNotification("Hi Speed Sheath is out of range [1-1000]");
+                  break;
                 }
               }
+              failed = true;
+              ErrorMessage = "Hi Speed Sheath is out of range [1-1000]";
             }
             if (SelectedTextBox.index == 2)
             {
@@ -686,13 +651,11 @@ namespace Ei_Dimension
                 if (iRes >= 0 && iRes <= 1000)
                 {
                   Device.MainCommand("Set Property", code: 0x32, parameter: (ushort)iRes);
-                }
-                else
-                {
-                  failed = true;
-                  ShowNotification("Hi Sens Sheath is out of range [1-1000]");
+                  break;
                 }
               }
+              failed = true;
+              ErrorMessage = "Hi Sens Sheath is out of range [1-1000]";
             }
             if (SelectedTextBox.index == 3)
             {
@@ -701,13 +664,11 @@ namespace Ei_Dimension
                 if (iRes >= 0 && iRes <= 8000)
                 {
                   Device.MainCommand("Set Property", code: 0x33, parameter: (ushort)iRes);
-                }
-                else
-                {
-                  failed = true;
-                  ShowNotification("Flush Sheath is out of range [1-8000]");
+                  break;
                 }
               }
+              failed = true;
+              ErrorMessage = "Flush Sheath is out of range [1-8000]";
             }
             if (SelectedTextBox.index == 4)
             {
@@ -716,13 +677,11 @@ namespace Ei_Dimension
                 if (iRes >= 0 && iRes <= 8000)
                 {
                   Device.MainCommand("Set Property", code: 0x34, parameter: (ushort)iRes);
-                }
-                else
-                {
-                  failed = true;
-                  ShowNotification("Pickup Sheath is out of range [1-8000]");
+                  break;
                 }
               }
+              failed = true;
+              ErrorMessage = "Pickup Sheath is out of range [1-8000]";
             }
             if (SelectedTextBox.index == 5)
             {
@@ -731,13 +690,11 @@ namespace Ei_Dimension
                 if (iRes >= 0 && iRes <= 8000)
                 {
                   Device.MainCommand("Set Property", code: 0x35, parameter: (ushort)iRes);
-                }
-                else
-                {
-                  failed = true;
-                  ShowNotification("Max Speed is out of range [1-8000]");
+                  break;
                 }
               }
+              failed = true;
+              ErrorMessage = "Max Speed is out of range [1-8000]";
             }
             break;
           case "SamplesSyringeParameters":
@@ -748,13 +705,11 @@ namespace Ei_Dimension
                 if (iRes >= 0 && iRes <= 1000)
                 {
                   Device.MainCommand("Set Property", code: 0x38, parameter: (ushort)iRes);
-                }
-                else
-                {
-                  failed = true;
-                  ShowNotification("Normal Samples is out of range [1-1000]");
+                  break;
                 }
               }
+              failed = true;
+              ErrorMessage = "Normal Samples is out of range [1-1000]";
             }
             if (SelectedTextBox.index == 1)
             {
@@ -763,13 +718,11 @@ namespace Ei_Dimension
                 if (iRes >= 0 && iRes <= 1000)
                 {
                   Device.MainCommand("Set Property", code: 0x39, parameter: (ushort)iRes);
-                }
-                else
-                {
-                  failed = true;
-                  ShowNotification("Hi Speed Samples is out of range [1-1000]");
+                  break;
                 }
               }
+              failed = true;
+              ErrorMessage = "Hi Speed Samples is out of range [1-1000]";
             }
             if (SelectedTextBox.index == 2)
             {
@@ -778,13 +731,11 @@ namespace Ei_Dimension
                 if (iRes >= 0 && iRes <= 1000)
                 {
                   Device.MainCommand("Set Property", code: 0x3a, parameter: (ushort)iRes);
-                }
-                else
-                {
-                  failed = true;
-                  ShowNotification("Hi Sens Samples is out of range [1-1000]");
+                  break;
                 }
               }
+              failed = true;
+              ErrorMessage = "Hi Sens Samples is out of range [1-1000]";
             }
             if (SelectedTextBox.index == 3)
             {
@@ -793,13 +744,11 @@ namespace Ei_Dimension
                 if (iRes >= 0 && iRes <= 8000)
                 {
                   Device.MainCommand("Set Property", code: 0x3b, parameter: (ushort)iRes);
-                }
-                else
-                {
-                  failed = true;
-                  ShowNotification("Flush Samples is out of range [1-8000]");
+                  break;
                 }
               }
+              failed = true;
+              ErrorMessage = "Flush Samples is out of range [1-8000]";
             }
             if (SelectedTextBox.index == 4)
             {
@@ -808,13 +757,11 @@ namespace Ei_Dimension
                 if (iRes >= 0 && iRes <= 8000)
                 {
                   Device.MainCommand("Set Property", code: 0x3c, parameter: (ushort)iRes);
-                }
-                else
-                {
-                  failed = true;
-                  ShowNotification("Pickup Samples is out of range [1-8000]");
+                  break;
                 }
               }
+              failed = true;
+              ErrorMessage = "Pickup Samples is out of range [1-8000]";
             }
             if (SelectedTextBox.index == 5)
             {
@@ -823,13 +770,11 @@ namespace Ei_Dimension
                 if (iRes >= 0 && iRes <= 8000)
                 {
                   Device.MainCommand("Set Property", code: 0x3d, parameter: (ushort)iRes);
-                }
-                else
-                {
-                  failed = true;
-                  ShowNotification("Max Speed Samples is out of range [1-8000]");
+                  break;
                 }
               }
+              failed = true;
+              ErrorMessage = "Max Speed Samples is out of range [1-8000]";
             }
             break;
           case "SiPMTempCoeff":
@@ -838,13 +783,11 @@ namespace Ei_Dimension
               if (fRes >= -10.0000000001 && fRes <= 10.00000000000001)
               {
                 Device.MainCommand("Set FProperty", code: 0x02, fparameter: fRes);
-              }
-              else
-              {
-                failed = true;
-                ShowNotification("SiPM Temp erature Coefficient is out of range [-10.0 - 10.0]");
+                break;
               }
             }
+            failed = true;
+            ErrorMessage = "SiPM Temp erature Coefficient is out of range [-10.0 - 10.0]";
             break;
           case "Bias30Parameters":
             if (SelectedTextBox.index == 0)
@@ -854,14 +797,12 @@ namespace Ei_Dimension
                 if (iRes >= 0 && ((Device.BoardVersion == 0 && iRes <= 3500) || (Device.BoardVersion >= 1 && iRes <= 10000)))
                 {
                   Device.MainCommand("Set Property", code: 0x28, parameter: (ushort)iRes);
-                }
-                else
-                {
-                  failed = true;
-                  string range = Device.BoardVersion >= 1 ? "[0-10000]" : "[0-3500]";
-                  ShowNotification($"Green A (SSC) is out of range {range}");
+                  break;
                 }
               }
+              failed = true;
+              string range = Device.BoardVersion >= 1 ? "[0-10000]" : "[0-3500]";
+              ErrorMessage = $"Green A (SSC) is out of range {range}";
             }
             if (SelectedTextBox.index == 1)
             {
@@ -870,14 +811,12 @@ namespace Ei_Dimension
                 if (iRes >= 0 && ((Device.BoardVersion == 0 && iRes <= 3500) || (Device.BoardVersion >= 1 && iRes <= 10000)))
                 {
                   Device.MainCommand("Set Property", code: 0x29, parameter: (ushort)iRes);
-                }
-                else
-                {
-                  failed = true;
-                  string range = Device.BoardVersion >= 1 ? "[0-10000]" : "[0-3500]";
-                  ShowNotification($"Green B (PE 2%) is out of range {range}");
+                  break;
                 }
               }
+              failed = true;
+              string range = Device.BoardVersion >= 1 ? "[0-10000]" : "[0-3500]";
+              ErrorMessage = $"Green B (PE 2%) is out of range {range}";
             }
             if (SelectedTextBox.index == 2)
             {
@@ -886,14 +825,12 @@ namespace Ei_Dimension
                 if (iRes >= 0 && ((Device.BoardVersion == 0 && iRes <= 3500) || (Device.BoardVersion >= 1 && iRes <= 10000)))
                 {
                   Device.MainCommand("Set Property", code: 0x2a, parameter: (ushort)iRes);
-                }
-                else
-                {
-                  failed = true;
-                  string range = Device.BoardVersion >= 1 ? "[0-10000]" : "[0-3500]";
-                  ShowNotification($"Green C PE is out of range {range}");
+                  break;
                 }
               }
+              failed = true;
+              string range = Device.BoardVersion >= 1 ? "[0-10000]" : "[0-3500]";
+              ErrorMessage = $"Green C PE is out of range {range}";
             }
             if (SelectedTextBox.index == 3)
             {
@@ -902,14 +839,12 @@ namespace Ei_Dimension
                 if (iRes >= 0 && ((Device.BoardVersion == 0 && iRes <= 3500) || (Device.BoardVersion >= 1 && iRes <= 10000)))
                 {
                   Device.MainCommand("Set Property", code: 0x2c, parameter: (ushort)iRes);
-                }
-                else
-                {
-                  failed = true;
-                  string range = Device.BoardVersion >= 1 ? "[0-10000]" : "[0-3500]";
-                  ShowNotification($"Red A (CL3) is out of range {range}");
+                  break;
                 }
               }
+              failed = true;
+              string range = Device.BoardVersion >= 1 ? "[0-10000]" : "[0-3500]";
+              ErrorMessage = $"Red A (CL3) is out of range {range}";
             }
             if (SelectedTextBox.index == 4)
             {
@@ -918,14 +853,12 @@ namespace Ei_Dimension
                 if (iRes >= 0 && ((Device.BoardVersion == 0 && iRes <= 3500) || (Device.BoardVersion >= 1 && iRes <= 10000)))
                 {
                   Device.MainCommand("Set Property", code: 0x2d, parameter: (ushort)iRes);
-                }
-                else
-                {
-                  failed = true;
-                  string range = Device.BoardVersion >= 1 ? "[0-10000]" : "[0-3500]";
-                  ShowNotification($"Red B (SSC) is out of range {range}");
+                  break;
                 }
               }
+              failed = true;
+              string range = Device.BoardVersion >= 1 ? "[0-10000]" : "[0-3500]";
+              ErrorMessage = $"Red B (SSC) is out of range {range}";
             }
             if (SelectedTextBox.index == 5)
             {
@@ -934,14 +867,12 @@ namespace Ei_Dimension
                 if (iRes >= 0 && ((Device.BoardVersion == 0 && iRes <= 3500) || (Device.BoardVersion >= 1 && iRes <= 10000)))
                 {
                   Device.MainCommand("Set Property", code: 0x2e, parameter: (ushort)iRes);
-                }
-                else
-                {
-                  failed = true;
-                  string range = Device.BoardVersion >= 1 ? "[0-10000]" : "[0-3500]";
-                  ShowNotification($"Red C (CL1) is out of range {range}");
+                  break;
                 }
               }
+              failed = true;
+              string range = Device.BoardVersion >= 1 ? "[0-10000]" : "[0-3500]";
+              ErrorMessage = $"Red C (CL1) is out of range {range}";
             }
             if (SelectedTextBox.index == 6)
             {
@@ -950,14 +881,12 @@ namespace Ei_Dimension
                 if (iRes >= 0 && ((Device.BoardVersion == 0 && iRes <= 3500) || (Device.BoardVersion >= 1 && iRes <= 10000)))
                 {
                   Device.MainCommand("Set Property", code: 0x2f, parameter: (ushort)iRes);
-                }
-                else
-                {
-                  failed = true;
-                  string range = Device.BoardVersion >= 1 ? "[0-10000]" : "[0-3500]";
-                  ShowNotification($"Red D (CL2) is out of range {range}");
+                  break;
                 }
               }
+              failed = true;
+              string range = Device.BoardVersion >= 1 ? "[0-10000]" : "[0-3500]";
+              ErrorMessage = $"Red D (CL2) is out of range {range}";
             }
             if (SelectedTextBox.index == 7)
             {
@@ -966,14 +895,12 @@ namespace Ei_Dimension
                 if (iRes >= 0 && ((Device.BoardVersion == 0 && iRes <= 3500) || (Device.BoardVersion >= 1 && iRes <= 10000)))
                 {
                   Device.MainCommand("Set Property", code: 0x25, parameter: (ushort)iRes);
-                }
-                else
-                {
-                  failed = true;
-                  string range = Device.BoardVersion >= 1 ? "[0-10000]" : "[0-3500]";
-                  ShowNotification($"Violet A (SSC) is out of range {range}");
+                  break;
                 }
               }
+              failed = true;
+              string range = Device.BoardVersion >= 1 ? "[0-10000]" : "[0-3500]";
+              ErrorMessage = $"Violet A (SSC) is out of range {range}";
             }
             if (SelectedTextBox.index == 8)
             {
@@ -982,14 +909,12 @@ namespace Ei_Dimension
                 if (iRes >= 0 && ((Device.BoardVersion == 0 && iRes <= 3500) || (Device.BoardVersion >= 1 && iRes <= 10000)))
                 {
                   Device.MainCommand("Set Property", code: 0x26, parameter: (ushort)iRes);
-                }
-                else
-                {
-                  failed = true;
-                  string range = Device.BoardVersion >= 1 ? "[0-10000]" : "[0-3500]";
-                  ShowNotification($"Violet B (CL0) is out of range {range}");
+                  break;
                 }
               }
+              failed = true;
+              string range = Device.BoardVersion >= 1 ? "[0-10000]" : "[0-3500]";
+              ErrorMessage = $"Violet B (CL0) is out of range {range}";
             }
             if (SelectedTextBox.index == 9)
             {
@@ -998,14 +923,12 @@ namespace Ei_Dimension
                 if (iRes >= 0 && ((Device.BoardVersion == 0 && iRes <= 3500) || (Device.BoardVersion >= 1 && iRes <= 10000)))
                 {
                   Device.MainCommand("Set Property", code: 0x24, parameter: (ushort)iRes);
-                }
-                else
-                {
-                  failed = true;
-                  string range = Device.BoardVersion >= 1 ? "[0-10000]" : "[0-3500]";
-                  ShowNotification($"Forward Scatter is out of range {range}");
+                  break;
                 }
               }
+              failed = true;
+              string range = Device.BoardVersion >= 1 ? "[0-10000]" : "[0-3500]";
+              ErrorMessage = $"Forward Scatter is out of range {range}";
             }
             break;
           case "ChannelsOffsetParameters":
@@ -1016,14 +939,12 @@ namespace Ei_Dimension
                 if (iRes >= 0 && ((Device.BoardVersion == 0 && iRes <= 4095) || (Device.BoardVersion >= 1 && iRes <= 65535)))
                 {
                   Device.MainCommand("Set Property", code: 0xa0, parameter: (ushort)iRes);
-                }
-                else
-                {
-                  failed = true;
-                  string range = Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
-                  ShowNotification($"Green A (SSC) is out of range {range}");
+                  break;
                 }
               }
+              failed = true;
+              string range = Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
+              ErrorMessage = $"Green A (SSC) is out of range {range}";
             }
             if (SelectedTextBox.index == 1)
             {
@@ -1032,14 +953,12 @@ namespace Ei_Dimension
                 if (iRes >= 0 && ((Device.BoardVersion == 0 && iRes <= 4095) || (Device.BoardVersion >= 1 && iRes <= 65535)))
                 {
                   Device.MainCommand("Set Property", code: 0xa4, parameter: (ushort)iRes);
-                }
-                else
-                {
-                  failed = true;
-                  string range = Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
-                  ShowNotification($"Green B (PE 2%) is out of range {range}");
+                  break;
                 }
               }
+              failed = true;
+              string range = Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
+              ErrorMessage = $"Green B (PE 2%) is out of range {range}";
             }
             if (SelectedTextBox.index == 2)
             {
@@ -1048,14 +967,12 @@ namespace Ei_Dimension
                 if (iRes >= 0 && ((Device.BoardVersion == 0 && iRes <= 4095) || (Device.BoardVersion >= 1 && iRes <= 65535)))
                 {
                   Device.MainCommand("Set Property", code: 0xa5, parameter: (ushort)iRes);
-                }
-                else
-                {
-                  failed = true;
-                  string range = Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
-                  ShowNotification($"Green C PE is out of range {range}");
+                  break;
                 }
               }
+              failed = true;
+              string range = Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
+              ErrorMessage = $"Green C PE is out of range {range}";
             }
             if (SelectedTextBox.index == 3)
             {
@@ -1064,14 +981,12 @@ namespace Ei_Dimension
                 if (iRes >= 0 && ((Device.BoardVersion == 0 && iRes <= 4095) || (Device.BoardVersion >= 1 && iRes <= 65535)))
                 {
                   Device.MainCommand("Set Property", code: 0xa3, parameter: (ushort)iRes);
-                }
-                else
-                {
-                  failed = true;
-                  string range = Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
-                  ShowNotification($"Red A (CL3) is out of range {range}");
+                  break;
                 }
               }
+              failed = true;
+              string range = Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
+              ErrorMessage = $"Red A (CL3) is out of range {range}";
             }
             if (SelectedTextBox.index == 4)
             {
@@ -1080,14 +995,12 @@ namespace Ei_Dimension
                 if (iRes >= 0 && ((Device.BoardVersion == 0 && iRes <= 4095) || (Device.BoardVersion >= 1 && iRes <= 65535)))
                 {
                   Device.MainCommand("Set Property", code: 0xa2, parameter: (ushort)iRes);
-                }
-                else
-                {
-                  failed = true;
-                  string range = Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
-                  ShowNotification($"Red B (SSC) is out of range {range}");
+                  break;
                 }
               }
+              failed = true;
+              string range = Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
+              ErrorMessage = $"Red B (SSC) is out of range {range}";
             }
             if (SelectedTextBox.index == 5)
             {
@@ -1096,14 +1009,12 @@ namespace Ei_Dimension
                 if (iRes >= 0 && ((Device.BoardVersion == 0 && iRes <= 4095) || (Device.BoardVersion >= 1 && iRes <= 65535)))
                 {
                   Device.MainCommand("Set Property", code: 0xa1, parameter: (ushort)iRes);
-                }
-                else
-                {
-                  failed = true;
-                  string range = Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
-                  ShowNotification($"Red C (CL1) is out of range {range}");
+                  break;
                 }
               }
+              failed = true;
+              string range = Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
+              ErrorMessage = $"Red C (CL1) is out of range {range}";
             }
             if (SelectedTextBox.index == 6)
             {
@@ -1112,14 +1023,12 @@ namespace Ei_Dimension
                 if (iRes >= 0 && ((Device.BoardVersion == 0 && iRes <= 4095) || (Device.BoardVersion >= 1 && iRes <= 65535)))
                 {
                   Device.MainCommand("Set Property", code: 0x9f, parameter: (ushort)iRes);
-                }
-                else
-                {
-                  failed = true;
-                  string range = Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
-                  ShowNotification($"Red D (CL2) is out of range {range}");
+                  break;
                 }
               }
+              failed = true;
+              string range = Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
+              ErrorMessage = $"Red D (CL2) is out of range {range}";
             }
             if (SelectedTextBox.index == 7)
             {
@@ -1128,14 +1037,12 @@ namespace Ei_Dimension
                 if (iRes >= 0 && ((Device.BoardVersion == 0 && iRes <= 4095) || (Device.BoardVersion >= 1 && iRes <= 65535)))
                 {
                   Device.MainCommand("Set Property", code: 0x9d, parameter: (ushort)iRes);
-                }
-                else
-                {
-                  failed = true;
-                  string range = Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
-                  ShowNotification($"Violet A (SSC) is out of range {range}");
+                  break;
                 }
               }
+              failed = true;
+              string range = Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
+              ErrorMessage = $"Violet A (SSC) is out of range {range}";
             }
             if (SelectedTextBox.index == 8)
             {
@@ -1144,14 +1051,12 @@ namespace Ei_Dimension
                 if (iRes >= 0 && ((Device.BoardVersion == 0 && iRes <= 4095) || (Device.BoardVersion >= 1 && iRes <= 65535)))
                 {
                   Device.MainCommand("Set Property", code: 0x9c, parameter: (ushort)iRes);
-                }
-                else
-                {
-                  failed = true;
-                  string range = Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
-                  ShowNotification($"Violet B (CL0) is out of range {range}");
+                  break;
                 }
               }
+              failed = true;
+              string range = Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
+              ErrorMessage = $"Violet B (CL0) is out of range {range}";
             }
             if (SelectedTextBox.index == 9)
             {
@@ -1160,14 +1065,12 @@ namespace Ei_Dimension
                 if (iRes >= 0 && ((Device.BoardVersion == 0 && iRes <= 4095) || (Device.BoardVersion >= 1 && iRes <= 65535)))
                 {
                   Device.MainCommand("Set Property", code: 0x9e, parameter: (ushort)iRes);
-                }
-                else
-                {
-                  failed = true;
-                  string range = Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
-                  ShowNotification($"Forward Scatter is out of range {range}");
+                  break;
                 }
               }
+              failed = true;
+              string range = Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
+              ErrorMessage = $"Forward Scatter is out of range {range}";
             }
             break;
           case "ParametersX":
@@ -1175,12 +1078,13 @@ namespace Ei_Dimension
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes < 0 && iRes > 65535)
+                if (iRes >= 0 && iRes <= 65535)
                 {
-                  failed = true;
-                  ShowNotification("X Steps is out of range [0-65535]");
+                  break;
                 }
               }
+              failed = true;
+              ErrorMessage = "X Steps is out of range [0-65535]";
             }
             if (SelectedTextBox.index == 2)
             {
@@ -1189,13 +1093,11 @@ namespace Ei_Dimension
                 if (iRes >= 1000 && iRes <= 3000)
                 {
                   Device.MainCommand("Set Property", code: 0x53, parameter: (ushort)iRes);
-                }
-                else
-                {
-                  failed = true;
-                  ShowNotification("X Slope is out of range [1000-3000]");
+                  break;
                 }
               }
+              failed = true;
+              ErrorMessage = "X Slope is out of range [1000-3000]";
             }
             if (SelectedTextBox.index == 3)
             {
@@ -1204,13 +1106,11 @@ namespace Ei_Dimension
                 if (iRes >= 1000 && iRes <= 5000)
                 {
                   Device.MainCommand("Set Property", code: 0x51, parameter: (ushort)iRes);
-                }
-                else
-                {
-                  failed = true;
-                  ShowNotification("X Start Speed is out of range [1000-5000]");
+                  break;
                 }
               }
+              failed = true;
+              ErrorMessage = "X Start Speed is out of range [1000-5000]";
             }
             if (SelectedTextBox.index == 4)
             {
@@ -1219,13 +1119,11 @@ namespace Ei_Dimension
                 if (iRes >= 1000 && iRes <= 10000)
                 {
                   Device.MainCommand("Set Property", code: 0x52, parameter: (ushort)iRes);
-                }
-                else
-                {
-                  failed = true;
-                  ShowNotification("X Run Speed is out of range [1000-10000]");
+                  break;
                 }
               }
+              failed = true;
+              ErrorMessage = "X Run Speed is out of range [1000-10000]";
             }
             if (SelectedTextBox.index == 6)
             {
@@ -1235,13 +1133,11 @@ namespace Ei_Dimension
                 {
                   Device.MainCommand("Set Property", code: 0x50, parameter: (ushort)usRes);
                   Settings.Default.StepsPerRevX = usRes;
-                }
-                else
-                {
-                  failed = true;
-                  ShowNotification("X Encoder Steps is out of range [200-2000]");
+                  break;
                 }
               }
+              failed = true;
+              ErrorMessage = "X Encoder Steps is out of range [200-2000]";
             }
             if (SelectedTextBox.index == 7)
             {
@@ -1250,14 +1146,12 @@ namespace Ei_Dimension
                 if (iRes >= 0 && ((Device.BoardVersion == 0 && iRes <= 4095) || (Device.BoardVersion >= 1 && iRes <= 65535)))
                 {
                   Device.MainCommand("Set Property", code: 0x90, parameter: (ushort)iRes);
-                }
-                else
-                {
-                  failed = true;
-                  string range = Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
-                  ShowNotification($"X Current Limit is out of range {range}");
+                  break;
                 }
               }
+              failed = true;
+              string range = Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
+              ErrorMessage = $"X Current Limit is out of range {range}";
             }
             break;
           case "ParametersY":
@@ -1265,12 +1159,13 @@ namespace Ei_Dimension
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes < 0 && iRes > 65535)
+                if (iRes >= 0 && iRes <= 65535)
                 {
-                  failed = true;
-                  ShowNotification("Y Steps is out of range [0-65535]");
+                  break;
                 }
               }
+              failed = true;
+              ErrorMessage = "Y Steps is out of range [0-65535]";
             }
             if (SelectedTextBox.index == 2)
             {
@@ -1279,13 +1174,11 @@ namespace Ei_Dimension
                 if (iRes >= 1000 && iRes <= 3000)
                 {
                   Device.MainCommand("Set Property", code: 0x63, parameter: (ushort)iRes);
-                }
-                else
-                {
-                  failed = true;
-                  ShowNotification("Y Slope is out of range [1000-3000]");
+                  break;
                 }
               }
+              failed = true;
+              ErrorMessage = "Y Slope is out of range [1000-3000]";
             }
             if (SelectedTextBox.index == 3)
             {
@@ -1294,13 +1187,11 @@ namespace Ei_Dimension
                 if (iRes >= 1000 && iRes <= 5000)
                 {
                   Device.MainCommand("Set Property", code: 0x61, parameter: (ushort)iRes);
-                }
-                else
-                {
-                  failed = true;
-                  ShowNotification("Y Start Speed is out of range [1000-5000]");
+                  break;
                 }
               }
+              failed = true;
+              ErrorMessage = "Y Start Speed is out of range [1000-5000]";
             }
             if (SelectedTextBox.index == 4)
             {
@@ -1309,13 +1200,11 @@ namespace Ei_Dimension
                 if (iRes >= 1000 && iRes <= 10000)
                 {
                   Device.MainCommand("Set Property", code: 0x62, parameter: (ushort)iRes);
-                }
-                else
-                {
-                  failed = true;
-                  ShowNotification("Y Run Speed is out of range [1000-10000]");
+                  break;
                 }
               }
+              failed = true;
+              ErrorMessage = "Y Run Speed is out of range [1000-10000]";
             }
             if (SelectedTextBox.index == 6)
             {
@@ -1325,13 +1214,11 @@ namespace Ei_Dimension
                 {
                   Device.MainCommand("Set Property", code: 0x60, parameter: (ushort)usRes);
                   Settings.Default.StepsPerRevY = usRes;
-                }
-                else
-                {
-                  failed = true;
-                  ShowNotification("Y Encoder Steps is out of range [200-2000]");
+                  break;
                 }
               }
+              failed = true;
+              ErrorMessage = "Y Encoder Steps is out of range [200-2000]";
             }
             if (SelectedTextBox.index == 7)
             {
@@ -1340,14 +1227,12 @@ namespace Ei_Dimension
                 if (iRes >= 0 && ((Device.BoardVersion == 0 && iRes <= 4095) || (Device.BoardVersion >= 1 && iRes <= 65535)))
                 {
                   Device.MainCommand("Set Property", code: 0x91, parameter: (ushort)iRes);
-                }
-                else
-                {
-                  failed = true;
-                  string range = Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
-                  ShowNotification($"Y Current Limit is out of range {range}");
+                  break;
                 }
               }
+              failed = true;
+              string range = Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
+              ErrorMessage = $"Y Current Limit is out of range {range}";
             }
             break;
           case "ParametersZ":
@@ -1355,12 +1240,13 @@ namespace Ei_Dimension
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes < 0 && iRes > 65535)
+                if (iRes >= 0 && iRes <= 65535)
                 {
-                  failed = true;
-                  ShowNotification("Z Steps is out of range [0-65535]");
+                  break;
                 }
               }
+              failed = true;
+              ErrorMessage = "Z Steps is out of range [0-65535]";
             }
             if (SelectedTextBox.index == 2)
             {
@@ -1369,13 +1255,11 @@ namespace Ei_Dimension
                 if (iRes >= 1000 && iRes <= 3000)
                 {
                   Device.MainCommand("Set Property", code: 0x43, parameter: (ushort)iRes);
-                }
-                else
-                {
-                  failed = true;
-                  ShowNotification("Z Slope is out of range [1000-3000]");
+                  break;
                 }
               }
+              failed = true;
+              ErrorMessage = "Z Slope is out of range [1000-3000]";
             }
             if (SelectedTextBox.index == 3)
             {
@@ -1384,13 +1268,11 @@ namespace Ei_Dimension
                 if (iRes >= 1000 && iRes <= 5000)
                 {
                   Device.MainCommand("Set Property", code: 0x41, parameter: (ushort)iRes);
-                }
-                else
-                {
-                  failed = true;
-                  ShowNotification("Z Start Speed is out of range [1000-5000]");
+                  break;
                 }
               }
+              failed = true;
+              ErrorMessage = "Z Start Speed is out of range [1000-5000]";
             }
             if (SelectedTextBox.index == 4)
             {
@@ -1399,13 +1281,11 @@ namespace Ei_Dimension
                 if (iRes >= 1000 && iRes <= 10000)
                 {
                   Device.MainCommand("Set Property", code: 0x42, parameter: (ushort)iRes);
-                }
-                else
-                {
-                  failed = true;
-                  ShowNotification("Z Run Speed is out of range [1000-10000]");
+                  break;
                 }
               }
+              failed = true;
+              ErrorMessage = "Z Run Speed is out of range [1000-10000]";
             }
             if (SelectedTextBox.index == 6)
             {
@@ -1415,13 +1295,11 @@ namespace Ei_Dimension
                 {
                   Device.MainCommand("Set Property", code: 0x40, parameter: (ushort)usRes);
                   Settings.Default.StepsPerRevZ = usRes;
-                }
-                else
-                {
-                  failed = true;
-                  ShowNotification("Z Encoder Steps is out of range [200-2000]");
+                  break;
                 }
               }
+              failed = true;
+              ErrorMessage = "Z Encoder Steps is out of range [200-2000]";
             }
             if (SelectedTextBox.index == 7)
             {
@@ -1430,14 +1308,12 @@ namespace Ei_Dimension
                 if (iRes >= 0 && ((Device.BoardVersion == 0 && iRes <= 4095) || (Device.BoardVersion >= 1 && iRes <= 65535)))
                 {
                   Device.MainCommand("Set Property", code: 0x92, parameter: (ushort)iRes);
-                }
-                else
-                {
-                  failed = true;
-                  string range = Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
-                  ShowNotification($"Y Current Limit is out of range {range}");
+                  break;
                 }
               }
+              failed = true;
+              string range = Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
+              ErrorMessage = $"Y Current Limit is out of range {range}";
             }
             break;
           case "StepsParametersX":
@@ -1448,13 +1324,11 @@ namespace Ei_Dimension
                 if (fRes >= 0 && fRes <= 20000.0000000001)
                 {
                   Device.MainCommand("Set FProperty", code: 0x58, fparameter: fRes);
-                }
-                else
-                {
-                  failed = true;
-                  ShowNotification("X 96W C1 is out of range [0-20000]");
+                  break;
                 }
               }
+              failed = true;
+              ErrorMessage = "X 96W C1 is out of range [0-20000]";
             }
             if (SelectedTextBox.index == 1)
             {
@@ -1463,13 +1337,11 @@ namespace Ei_Dimension
                 if (fRes >= 0 && fRes <= 20000.0000000001)
                 {
                   Device.MainCommand("Set FProperty", code: 0x5a, fparameter: fRes);
-                }
-                else
-                {
-                  failed = true;
-                  ShowNotification("X 96W C12 is out of range [0-20000]");
+                  break;
                 }
               }
+              failed = true;
+              ErrorMessage = "X 96W C12 is out of range [0-20000]";
             }
             if (SelectedTextBox.index == 2)
             {
@@ -1478,13 +1350,11 @@ namespace Ei_Dimension
                 if (fRes >= 0 && fRes <= 20000.0000000001)
                 {
                   Device.MainCommand("Set FProperty", code: 0x5c, fparameter: fRes);
-                }
-                else
-                {
-                  failed = true;
-                  ShowNotification("X 384W C1 is out of range [0-20000]");
+                  break;
                 }
               }
+              failed = true;
+              ErrorMessage = "X 384W C1 is out of range [0-20000]";
             }
             if (SelectedTextBox.index == 3)
             {
@@ -1493,13 +1363,11 @@ namespace Ei_Dimension
                 if (fRes >= 0 && fRes <= 20000.0000000001)
                 {
                   Device.MainCommand("Set FProperty", code: 0x5e, fparameter: fRes);
-                }
-                else
-                {
-                  failed = true;
-                  ShowNotification("X 384W C24 is out of range [0-20000]");
+                  break;
                 }
               }
+              failed = true;
+              ErrorMessage = "X 384W C24 is out of range [0-20000]";
             }
             if (SelectedTextBox.index == 4)
             {
@@ -1508,13 +1376,11 @@ namespace Ei_Dimension
                 if (fRes >= 0 && fRes <= 20000.0000000001)
                 {
                   Device.MainCommand("Set FProperty", code: 0x56, fparameter: fRes);
-                }
-                else
-                {
-                  failed = true;
-                  ShowNotification("X Tube is out of range [0-20000]");
+                  break;
                 }
               }
+              failed = true;
+              ErrorMessage = "X Tube is out of range [0-20000]";
             }
             break;
           case "StepsParametersY":
@@ -1525,13 +1391,11 @@ namespace Ei_Dimension
                 if (fRes >= 0 && fRes <= 20000.0000000001)
                 {
                   Device.MainCommand("Set FProperty", code: 0x68, fparameter: fRes);
-                }
-                else
-                {
-                  failed = true;
-                  ShowNotification("Y Row A is out of range [0-20000]");
+                  break;
                 }
               }
+              failed = true;
+              ErrorMessage = "Y Row A is out of range [0-20000]";
             }
             if (SelectedTextBox.index == 1)
             {
@@ -1540,13 +1404,11 @@ namespace Ei_Dimension
                 if (fRes >= 0 && fRes <= 20000.0000000001)
                 {
                   Device.MainCommand("Set FProperty", code: 0x6a, fparameter: fRes);
-                }
-                else
-                {
-                  failed = true;
-                  ShowNotification("Y Row H is out of range [0-20000]");
+                  break;
                 }
               }
+              failed = true;
+              ErrorMessage = "Y Row H is out of range [0-20000]";
             }
             if (SelectedTextBox.index == 2)
             {
@@ -1555,13 +1417,11 @@ namespace Ei_Dimension
                 if (fRes >= 0 && fRes <= 20000.0000000001)
                 {
                   Device.MainCommand("Set FProperty", code: 0x6c, fparameter: fRes);
-                }
-                else
-                {
-                  failed = true;
-                  ShowNotification("Y Row A is out of range [0-20000]");
+                  break;
                 }
               }
+              failed = true;
+              ErrorMessage = "Y Row A is out of range [0-20000]";
             }
             if (SelectedTextBox.index == 3)
             {
@@ -1570,13 +1430,11 @@ namespace Ei_Dimension
                 if (fRes >= 0 && fRes <= 20000.0000000001)
                 {
                   Device.MainCommand("Set FProperty", code: 0x6e, fparameter: fRes);
-                }
-                else
-                {
-                  failed = true;
-                  ShowNotification("Y Row P is out of range [0-20000]");
+                  break;
                 }
               }
+              failed = true;
+              ErrorMessage = "Y Row P is out of range [0-20000]";
             }
             if (SelectedTextBox.index == 4)
             {
@@ -1585,13 +1443,11 @@ namespace Ei_Dimension
                 if (fRes >= 0 && fRes <= 20000.0000000001)
                 {
                   Device.MainCommand("Set FProperty", code: 0x66, fparameter: fRes);
-                }
-                else
-                {
-                  failed = true;
-                  ShowNotification("Y Tube is out of range [0-20000]");
+                  break;
                 }
               }
+              failed = true;
+              ErrorMessage = "Y Tube is out of range [0-20000]";
             }
             break;
           case "StepsParametersZ":
@@ -1602,13 +1458,11 @@ namespace Ei_Dimension
                 if (fRes >= 0 && fRes <= 1000.0000000001)
                 {
                   Device.MainCommand("Set FProperty", code: 0x48, fparameter: fRes);
-                }
-                else
-                {
-                  failed = true;
-                  ShowNotification("Z A1 is out of range [0-1000]");
+                  break;
                 }
               }
+              failed = true;
+              ErrorMessage = "Z A1 is out of range [0-1000]";
             }
             if (SelectedTextBox.index == 1)
             {
@@ -1617,13 +1471,11 @@ namespace Ei_Dimension
                 if (fRes >= 0 && fRes <= 1000.0000000001)
                 {
                   Device.MainCommand("Set FProperty", code: 0x4a, fparameter: fRes);
-                }
-                else
-                {
-                  failed = true;
-                  ShowNotification("Z A12 is out of range [0-1000]");
+                  break;
                 }
               }
+              failed = true;
+              ErrorMessage = "Z A12 is out of range [0-1000]";
             }
             if (SelectedTextBox.index == 2)
             {
@@ -1632,13 +1484,11 @@ namespace Ei_Dimension
                 if (fRes >= 0 && fRes <= 1000.0000000001)
                 {
                   Device.MainCommand("Set FProperty", code: 0x4c, fparameter: fRes);
-                }
-                else
-                {
-                  failed = true;
-                  ShowNotification("Z H1 is out of range [0-1000]");
+                  break;
                 }
               }
+              failed = true;
+              ErrorMessage = "Z H1 is out of range [0-1000]";
             }
             if (SelectedTextBox.index == 3)
             {
@@ -1647,13 +1497,11 @@ namespace Ei_Dimension
                 if (fRes >= 0 && fRes <= 1000.0000000001)
                 {
                   Device.MainCommand("Set FProperty", code: 0x4e, fparameter: fRes);
-                }
-                else
-                {
-                  failed = true;
-                  ShowNotification("Z H12 is out of range [0-1000]");
+                  break;
                 }
               }
+              failed = true;
+              ErrorMessage = "Z H12 is out of range [0-1000]";
             }
             if (SelectedTextBox.index == 4)
             {
@@ -1662,13 +1510,11 @@ namespace Ei_Dimension
                 if (fRes >= 0 && fRes <= 1000.0000000001)
                 {
                   Device.MainCommand("Set FProperty", code: 0x46, fparameter: fRes);
-                }
-                else
-                {
-                  failed = true;
-                  ShowNotification("Z Tube is out of range [0-1000]");
+                  break;
                 }
               }
+              failed = true;
+              ErrorMessage = "Z Tube is out of range [0-1000]";
             }
             break;
           case "IdexTextBoxInputs":
@@ -1679,13 +1525,11 @@ namespace Ei_Dimension
                 if (bRes >= 0 && bRes <= 255)
                 {
                   MicroCy.InstrumentParameters.Idex.Pos = bRes;
-                }
-                else
-                {
-                  failed = true;
-                  ShowNotification("Idex Position is out of range [0-255]");
+                  break;
                 }
               }
+              failed = true;
+              ErrorMessage = "Idex Position is out of range [0-255]";
             }
             if (SelectedTextBox.index == 1)
             {
@@ -1694,13 +1538,11 @@ namespace Ei_Dimension
                 if (usRes >= 0 && usRes <= 65535)
                 {
                   MicroCy.InstrumentParameters.Idex.Steps = usRes;
-                }
-                else
-                {
-                  failed = true;
-                  ShowNotification("Idex Max Steps is out of range [0-65535]");
+                  break;
                 }
               }
+              failed = true;
+              ErrorMessage = "Idex Max Steps is out of range [0-65535]";
             }
             break;
           case "BaseFileName":
@@ -1713,13 +1555,11 @@ namespace Ei_Dimension
               if (iRes >= 5 && iRes <= 40)
               {
                 Settings.Default.MaxPressure = iRes;
-              }
-              else
-              {
-                failed = true;
-                ShowNotification("Max Pressure is out of range [5-40]");
+                break;
               }
             }
+            failed = true;
+            ErrorMessage = "Max Pressure is out of range [5-40]";
             break;
           case "TemplateSaveName":
             TemplateSelectViewModel.Instance.TemplateSaveName[0] = _tempNewString;
@@ -1727,18 +1567,36 @@ namespace Ei_Dimension
           case "SanitizeSecondsContent":
             if (int.TryParse(_tempNewString, out iRes))
             {
-              if (iRes < 1 && iRes > 100)
+              if (iRes >= 1 && iRes <= 100)
               {
-                failed = true;
-                ShowNotification("UVC Sanitize Seconds is out of range [1-100]");
+                break;
               }
             }
+            failed = true;
+            ErrorMessage = "UVC Sanitize Seconds is out of range [1-100]";
             break;
+        }
+        if(VerificationViewModel.Instance.isActivePage)
+        {
+          if (int.TryParse(_tempNewString, out iRes))
+          {
+            if (iRes < 0 || iRes > 65535)
+            {
+              failed = true;
+              ErrorMessage = "Reporter value is out of range [0-65535]";
+            }
+          }
+          else
+          {
+            failed = true;
+            ErrorMessage = "Reporter value is out of range [0-65535]";
+          }
         }
         Settings.Default.Save();
         if (failed)
         {
           ((ObservableCollection<string>)SelectedTextBox.prop.GetValue(SelectedTextBox.VM))[SelectedTextBox.index] = _tempOldString;
+          ShowNotification(ErrorMessage);
         }
         _tempNewString = null;
         SelectedTextBox = (null, null, 0);

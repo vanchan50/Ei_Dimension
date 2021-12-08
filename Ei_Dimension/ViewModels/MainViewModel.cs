@@ -59,6 +59,8 @@ namespace Ei_Dimension.ViewModels
       MainSelectorState[num] = true;
       App.HideNumpad();
       App.HideKeyboard();
+      if(VerificationViewModel.Instance != null)
+        VerificationViewModel.Instance.isActivePage = false;
       switch (num)
       {
         case 0:

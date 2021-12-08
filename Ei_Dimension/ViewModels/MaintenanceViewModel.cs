@@ -85,6 +85,8 @@ namespace Ei_Dimension.ViewModels
     public void NavigateCalibration()
     {
       App.HideNumpad();
+      if (VerificationViewModel.Instance != null)
+        VerificationViewModel.Instance.isActivePage = false;
       NavigationService.Navigate("CalibrationView", null, this);
       App.Device.InitSTab("calibtab");
     }
@@ -92,12 +94,16 @@ namespace Ei_Dimension.ViewModels
     public void NavigateVerification()
     {
       App.HideNumpad();
+      if (VerificationViewModel.Instance != null)
+        VerificationViewModel.Instance.isActivePage = true;
       NavigationService.Navigate("VerificationView", null, this);
     }
 
     public void NavigateChannels()
     {
       App.HideNumpad();
+      if (VerificationViewModel.Instance != null)
+        VerificationViewModel.Instance.isActivePage = false;
       NavigationService.Navigate("ChannelsView", null, this);
       App.Device.InitSTab("channeltab");
     }

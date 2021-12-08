@@ -9,9 +9,11 @@ namespace Ei_Dimension.ViewModels
   public class VerificationViewModel
   {
     public static VerificationViewModel Instance { get; private set; }
+    public bool isActivePage { get; set; }
     protected VerificationViewModel()
     {
       Instance = this;
+      isActivePage = false;
     }
 
     public static VerificationViewModel Create()
