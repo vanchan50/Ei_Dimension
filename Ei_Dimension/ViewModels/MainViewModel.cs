@@ -57,7 +57,6 @@ namespace Ei_Dimension.ViewModels
       MainSelectorState[2] = false;
       MainSelectorState[3] = false;
       MainSelectorState[num] = true;
-      App.ResetFocusedTextbox();
       App.HideNumpad();
       App.HideKeyboard();
       switch (num)
@@ -196,6 +195,14 @@ namespace Ei_Dimension.ViewModels
       {
         ServiceVisibility = System.Windows.Visibility.Hidden;
         ServiceVisibilityCheck = 0;
+      }
+    }
+
+    public void KeyDown(System.Windows.Input.KeyEventArgs e)
+    {
+      if (e.Key == System.Windows.Input.Key.Return)
+      {
+        App.InputSanityCheck();
       }
     }
   }

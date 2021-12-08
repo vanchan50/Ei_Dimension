@@ -8,7 +8,7 @@ namespace MicroCy
     public int Region { get; }
     public List<Gstats> Stats { get; } = new List<Gstats>(3);
     public int Count { get; private set; }
-    private readonly float[,] _sfi = new float[5000, 3];
+    private readonly float[,] _sfi = new float[100000, 3];
 
     public ValidationStats(int reg)
     {

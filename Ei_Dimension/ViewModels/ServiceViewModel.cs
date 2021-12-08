@@ -24,7 +24,6 @@ namespace Ei_Dimension.ViewModels
 
     public void NavigateMotors()
     {
-      App.ResetFocusedTextbox();
       App.HideNumpad();
       NavigationService.Navigate("MotorsView", null, this);
       App.Device.InitSTab("motorstab");
@@ -32,7 +31,6 @@ namespace Ei_Dimension.ViewModels
 
     public void NavigateComponents()
     {
-      App.ResetFocusedTextbox();
       App.HideNumpad();
       NavigationService.Navigate("ComponentsView", null, this);
       App.Device.InitSTab("componentstab");
@@ -40,14 +38,12 @@ namespace Ei_Dimension.ViewModels
 
     public void NavigateAlignment()
     {
-      App.ResetFocusedTextbox();
       App.HideNumpad();
       NavigationService.Navigate("AlignmentView", null, this);
     }
 
     public void NavigateChannelOffset()
     {
-      App.ResetFocusedTextbox();
       App.HideNumpad();
       NavigationService.Navigate("ChannelOffsetView", null, this);
       App.Device.InitSTab("channeltab");
@@ -55,7 +51,6 @@ namespace Ei_Dimension.ViewModels
 
     public void NavigateSyringeSpeeds()
     {
-      App.ResetFocusedTextbox();
       App.HideNumpad();
       NavigationService.Navigate("SyringeSpeedsView", null, this);
       App.Device.InitSTab("calibtab");

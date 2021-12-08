@@ -84,7 +84,6 @@ namespace Ei_Dimension.ViewModels
 
     public void NavigateCalibration()
     {
-      App.ResetFocusedTextbox();
       App.HideNumpad();
       NavigationService.Navigate("CalibrationView", null, this);
       App.Device.InitSTab("calibtab");
@@ -92,14 +91,12 @@ namespace Ei_Dimension.ViewModels
 
     public void NavigateVerification()
     {
-      App.ResetFocusedTextbox();
       App.HideNumpad();
       NavigationService.Navigate("VerificationView", null, this);
     }
 
     public void NavigateChannels()
     {
-      App.ResetFocusedTextbox();
       App.HideNumpad();
       NavigationService.Navigate("ChannelsView", null, this);
       App.Device.InitSTab("channeltab");

@@ -31,6 +31,7 @@
   <!--make window topmost, maximized-->
   <dxmvvm:Interaction.Triggers>
     <dxmvvm:EventToCommand EventName="Initialized" Command="{Binding InitChildrenCommand}"/>
+    <dxmvvm:EventToCommand EventName="KeyDown" Command="{Binding KeyDownCommand}" PassEventArgsToCommand="True"/>
   </dxmvvm:Interaction.Triggers>
   <Grid>
     <!-- Company Logo Right-->
@@ -117,7 +118,7 @@
     </Grid>
 
     <!--Numpad-->
-    <Grid Width="310" Height="390" x:Name="Npd"
+    <Grid Width="360" Height="390" x:Name="Npd"
           VerticalAlignment="Top" HorizontalAlignment="Left"
           Margin="1670,740,0,0"
           Visibility="{Binding NumpadVisible}">

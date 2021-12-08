@@ -386,5 +386,15 @@
               FontSize="40"
               Margin="160,0,10,0"/>
     </StackPanel>
+    <Button Content="&#9166;"
+            Command="{Binding EnterInputClickCommand}"
+            Style="{StaticResource ButtonStyle}"
+            Background="Green"
+            Height="150"
+            Width="100"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            FontSize="50"
+            Margin="840,210,0,0"/>
   </Grid>
 </UserControl>

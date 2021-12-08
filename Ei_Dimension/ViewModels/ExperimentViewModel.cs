@@ -27,7 +27,6 @@ namespace Ei_Dimension.ViewModels
 
     public void NavigateDashboard()
     {
-      App.ResetFocusedTextbox();
       App.HideNumpad();
       App.HideKeyboard();
       MainViewModel.Instance.StartButtonsVisible = Visibility.Visible;
@@ -36,7 +35,6 @@ namespace Ei_Dimension.ViewModels
 
     public void NavigateSelRegions()
     {
-      App.ResetFocusedTextbox();
       App.HideNumpad();
       App.HideKeyboard();
       MainViewModel.Instance.StartButtonsVisible = Visibility.Hidden;
@@ -45,7 +43,6 @@ namespace Ei_Dimension.ViewModels
 
     public void NavigateFileSave()
     {
-      App.ResetFocusedTextbox();
       App.HideNumpad();
       App.HideKeyboard();
       App.Device.InitSTab("reportingtab");
@@ -55,7 +52,6 @@ namespace Ei_Dimension.ViewModels
 
     public void NavigateWellsSelect(int num)
     {
-      App.ResetFocusedTextbox();
       App.HideNumpad();
       App.HideKeyboard();
       if (num != 1)
@@ -71,7 +67,6 @@ namespace Ei_Dimension.ViewModels
 
     public void NavigateTemplateSelect()
     {
-      App.ResetFocusedTextbox();
       App.HideNumpad();
       App.HideKeyboard();
       if (Views.TemplateSelectView.Instance != null)

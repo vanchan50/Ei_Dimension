@@ -151,9 +151,15 @@ namespace Ei_Dimension.ViewModels
           App.InjectToFocusedTextbox("m");
           break;
         case 100:
+          App.InputSanityCheck();
           App.HideKeyboard();
           break;
       }
+    }
+
+    public void EnterInputClick()
+    {
+      App.InputSanityCheck();
     }
   }
 }

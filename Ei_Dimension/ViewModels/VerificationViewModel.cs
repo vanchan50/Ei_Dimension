@@ -157,5 +157,32 @@ namespace Ei_Dimension.ViewModels
       }
       return true;
     }
+
+    public class DropDownButtonContents
+    {
+      public string Content { get; set; }
+      public string Locale { get; }
+      private static VerificationViewModel _vm;
+      public byte Index { get; set; }
+      private static byte _nextIndex = 0;
+      public DropDownButtonContents(string content, string locale, VerificationViewModel vm = null)
+      {
+        if (_vm == null)
+        {
+          _vm = vm;
+        }
+        Content = content;
+        Locale = locale;
+        Index = _nextIndex++;
+      }
+
+      //public void Click()
+      //{
+      //  _vm.SelectedLanguage = Content;
+      //  App.SetLanguage(Locale);
+      //  Settings.Default.Language = Index;
+      //  Settings.Default.Save();
+      //}
+    }
   }
 }
