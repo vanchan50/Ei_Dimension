@@ -232,7 +232,7 @@ namespace Ei_Dimension.Models
     /// <returns>Returns a JSON string of a plate pictogram. Returns null if a Tube is selcted.</returns>
     public string GetSerializedPlate()
     {
-      (int, int)[,] arr = null;
+       (int, int)[,] arr = null;
       if(_mode == 96)
       {
         arr = new (int, int)[8,12];
@@ -254,6 +254,11 @@ namespace Ei_Dimension.Models
             arr[i, j] = ((int)_wells[i, j].Type, (int)_wells[i, j].WarningState);
           }
         }
+      }
+      if (_mode == 1)
+      {
+        arr = new (int, int)[1,1];
+        arr[0, 0] = ((int)_wells[0, 0].Type, (int)_wells[0, 0].WarningState);
       }
       var res =  Newtonsoft.Json.JsonConvert.SerializeObject(arr);
       return res;
