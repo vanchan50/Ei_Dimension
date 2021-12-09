@@ -2408,6 +2408,7 @@ namespace Ei_Dimension
         }
       }
       ResultsViewModel.Instance.PlatePictogram.ChangeState(e.Row, e.Column, type);
+      SavePlateState();
     }
 
     public static void FinishedMeasurementEventhandler(object sender, EventArgs e)
@@ -2589,6 +2590,13 @@ namespace Ei_Dimension
           Language.TranslationSource.Instance.CurrentCulture);
       NotificationViewModel.Instance.ButtonVisible[1] = Visibility.Visible;
       ShowLocalizedNotification(nameofLocalizationString, action1, nameofActionButton1Text, Background);
+    }
+
+    public static void SavePlateState()
+    {
+      //overwrite the whole thing
+      string contents = ResultsViewModel.Instance.PlatePictogram.GetSerializedPlate();
+      File.WriteAllText($"{Device.RootDirectory.FullName}\\Status\\StatusFile.json", contents);
     }
   }
 }

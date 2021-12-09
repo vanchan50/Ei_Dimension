@@ -132,10 +132,7 @@ Validator doesn't capture the beads nearby; make regions ~ 4 times bigger size?
 right now it analyzes base only on beads registered to region. Result makes no sense anyway
 
 
-
-
 --------------------------------------------------------
-
 
 
 Large version of XY or 3d plot, with REporter avg as height

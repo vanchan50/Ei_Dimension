@@ -51,6 +51,7 @@ namespace Ei_Dimension.Models
       SelectedCell = (-1, -1);
       FollowingCurrentCell = true;
     }
+
     public static DrawingPlate Create()
     {
       return ViewModelSource.Create(() => new DrawingPlate());
@@ -225,10 +226,42 @@ namespace Ei_Dimension.Models
         }
       }
     }
+    /// <summary>
+    /// Serialize WellType and Warnings.
+    /// </summary>
+    /// <returns>Returns a JSON string of a plate pictogram. Returns null if a Tube is selcted.</returns>
+    public string GetSerializedPlate()
+    {
+      (int, int)[,] arr = null;
+      if(_mode == 96)
+      {
+        arr = new (int, int)[8,12];
+        for(var i = 0; i < 8; i++)
+        {
+          for(var j = 0; j < 12; j++)
+          {
+            arr[i, j] = ((int)_wells[i, j].Type, (int)_wells[i, j].WarningState);
+          }
+        }
+      }
+      if(_mode == 384)
+      {
+        arr = new (int, int)[16, 24];
+        for (var i = 0; i < 16; i++)
+        {
+          for (var j = 0; j < 24; j++)
+          {
+            arr[i, j] = ((int)_wells[i, j].Type, (int)_wells[i, j].WarningState);
+          }
+        }
+      }
+      var res =  Newtonsoft.Json.JsonConvert.SerializeObject(arr);
+      return res;
+    }
 
     private class PlateWell
     {
-      public WellType Type { get; set; }
+       public WellType Type { get; set; }
       public string FilePath { get; set; }
       public WellWarningState WarningState { get; set; }
       public PlateWell()
