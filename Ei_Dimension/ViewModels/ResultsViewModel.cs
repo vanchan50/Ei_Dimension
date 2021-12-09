@@ -16,6 +16,7 @@ namespace Ei_Dimension.ViewModels
     public virtual System.Windows.Visibility ValidationCoverVisible { get; set; }
     public virtual bool WaitIndicatorVisibility { get; set; }
     public virtual ObservableCollection<bool> ScatterSelectorState { get; set; }
+    public virtual ObservableCollection<DoubleHeatMapData> AnalysisMap { get; set; }
     public virtual ObservableCollection<HistogramData> CurrentForwardSsc { get; set; }
     public virtual ObservableCollection<HistogramData> CurrentVioletSsc { get; set; }
     public virtual ObservableCollection<HistogramData> CurrentRedSsc { get; set; }
@@ -72,6 +73,9 @@ namespace Ei_Dimension.ViewModels
     public virtual System.Windows.Visibility RightLabel384Visible { get; set; }
     public virtual System.Windows.Visibility TopLabel384Visible { get; set; }
     public virtual System.Windows.Visibility BottomLabel384Visible { get; set; }
+    public virtual System.Windows.Visibility AnalysisVisible { get; set; }
+    public virtual System.Windows.Visibility Analysis2DVisible { get; set; }
+    public virtual System.Windows.Visibility Analysis3DVisible { get; set; }
     public virtual ObservableCollection<string> MfiItems { get; set; }
     public virtual ObservableCollection<string> CvItems { get; set; }
     public virtual string PlexButtonString { get; set; }
@@ -84,6 +88,19 @@ namespace Ei_Dimension.ViewModels
 
     protected ResultsViewModel()
     {
+      AnalysisMap = new ObservableCollection<DoubleHeatMapData>();
+      AnalysisMap.Add(new DoubleHeatMapData(0, 0, 1));
+
+      AnalysisMap.Add(new DoubleHeatMapData(0, 0.5, 1));
+      AnalysisMap.Add(new DoubleHeatMapData(0, 1, 1));
+
+      AnalysisMap.Add(new DoubleHeatMapData(0.5, 0.5, 4));
+
+      AnalysisMap.Add(new DoubleHeatMapData(0.5, 0, 1));
+      AnalysisMap.Add(new DoubleHeatMapData(1, 0, 1));
+
+      AnalysisMap.Add(new DoubleHeatMapData(1, 1, 1));
+
       ScatterSelectorState = new ObservableCollection<bool> { false, false, false, false, false };
       WaitIndicatorVisibility = false;
       MultiPlexVisible = System.Windows.Visibility.Visible;
@@ -195,6 +212,9 @@ namespace Ei_Dimension.ViewModels
       RightLabel384Visible = System.Windows.Visibility.Hidden;
       TopLabel384Visible = System.Windows.Visibility.Visible;
       BottomLabel384Visible = System.Windows.Visibility.Hidden;
+      AnalysisVisible = System.Windows.Visibility.Hidden;
+      Analysis2DVisible = System.Windows.Visibility.Hidden;
+      Analysis3DVisible = System.Windows.Visibility.Hidden;
 
       MfiItems = new ObservableCollection<string>();
       CvItems = new ObservableCollection<string>();
@@ -695,6 +715,32 @@ namespace Ei_Dimension.ViewModels
       PlexButtonString = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Experiment_Active_Regions), Language.TranslationSource.Instance.CurrentCulture);
       MultiPlexVisible = System.Windows.Visibility.Visible;
       SinglePlexVisible = System.Windows.Visibility.Hidden;
+    }
+
+    public void Show3D()
+    {
+      Analysis3DVisible = System.Windows.Visibility.Visible;
+      Analysis2DVisible = System.Windows.Visibility.Hidden;
+    }
+
+    public void Show2D()
+    {
+      Analysis2DVisible = System.Windows.Visibility.Visible;
+      Analysis3DVisible = System.Windows.Visibility.Hidden;
+    }
+
+    public void ShowAnalysis()
+    {
+      AnalysisVisible = System.Windows.Visibility.Visible;
+      Analysis2DVisible = System.Windows.Visibility.Visible;
+      Analysis3DVisible = System.Windows.Visibility.Hidden;
+    }
+
+    public void ShowResults()
+    {
+      AnalysisVisible = System.Windows.Visibility.Hidden;
+      Analysis2DVisible = System.Windows.Visibility.Visible;
+      Analysis3DVisible = System.Windows.Visibility.Hidden;
     }
 
     public void XYprint()

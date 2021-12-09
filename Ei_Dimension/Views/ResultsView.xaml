@@ -12,7 +12,8 @@
              xmlns:img="clr-namespace:Ei_Dimension.Styles"
              xmlns:System="clr-namespace:System;assembly=mscorlib"
              DataContext="{dxmvvm:ViewModelSource Type=ViewModels:ResultsViewModel}"
-             d:DesignHeight="944" d:DesignWidth="1920">
+             d:DesignHeight="944" d:DesignWidth="1920"
+             Loaded="UserControl_Loaded">
   <Grid>
     <Border HorizontalAlignment="Left" VerticalAlignment="Top"
             Margin="750,0,0,0" Width="470" Height="900">
@@ -467,10 +468,10 @@
               </dxc:AxisX2D.Label>
               <dxc:AxisX2D.Title>
                 <dxc:AxisTitle Content="{Binding CLAxis[0]}"
-                             FontSize="30"
+                               FontSize="30"
                                Foreground="{StaticResource AppTextColor}"
-                             FontWeight="UltraBold"
-                             Visible="False"/>
+                               FontWeight="UltraBold"
+                               Visible="False"/>
               </dxc:AxisX2D.Title>
               <dxc:AxisX2D.WholeRange>
                 <dxc:Range>
@@ -506,13 +507,121 @@
         <Image Stretch="Fill" Source="{dx:DXImage 'SvgImages/XAF/Action_Export_ToImage.svg'}"/>
       </Button>
     </Grid>
+
+    <!--Analysis Chart-->
+    <!--<Grid Visibility="{Binding AnalysisVisible}">-->
+    <Grid>
+      <Rectangle Fill="{StaticResource AppBackground}"
+                 HorizontalAlignment="Left"
+                 VerticalAlignment="Top"
+                 Width="1220" Height="900"
+                 Margin="0,0,0,0"/>
+      <!--<Grid Visibility="{Binding Analysis3DVisible}">-->
+      <Grid Visibility="Visible">
+        <dxc:Chart3DControl Width="1220" Height="880"
+                          HorizontalAlignment="Left"
+                          VerticalAlignment="Top"
+                          BorderThickness="0" Name="AnalysisPlot"
+                          Focusable="False"
+                          Margin="0,0,0,0">
+          <dxc:Chart3DControl.Legends>
+            <dxc:Legend HorizontalPosition="Right"
+                      VerticalPosition="Top"
+                      Orientation="Horizontal">
+            </dxc:Legend>
+          </dxc:Chart3DControl.Legends>
+          <dxc:Chart3DControl.XAxis>
+            <dxc:XAxis3D>
+              <dxc:XAxis3D.Title>
+                <dxc:AxisTitle Content="{Binding CLAxis[0]}"
+                             FontSize="40"
+                             Foreground="{StaticResource AppTextColor}"/>
+              </dxc:XAxis3D.Title>
+            </dxc:XAxis3D>
+          </dxc:Chart3DControl.XAxis>
+          <dxc:Chart3DControl.YAxis>
+            <dxc:YAxis3D>
+              <dxc:YAxis3D.Title>
+                <dxc:AxisTitle Content="{Binding CLAxis[1]}"
+                             FontSize="40"
+                             Foreground="{StaticResource AppTextColor}"/>
+              </dxc:YAxis3D.Title>
+            </dxc:YAxis3D>
+          </dxc:Chart3DControl.YAxis>
+          <dxc:Chart3DControl.ZAxis>
+            <dxc:ZAxis3D>
+              <dxc:ZAxis3D.Title>
+                <dxc:AxisTitle Content="{lang:Loc Reporter}"
+                             FontSize="40"
+                             Foreground="{StaticResource AppTextColor}"/>
+              </dxc:ZAxis3D.Title>
+            </dxc:ZAxis3D>
+          </dxc:Chart3DControl.ZAxis>
+
+          <dxc:Series3DStorage>
+            <dxc:Series3D DisplayName="Height Map">
+              <dxc:SeriesPoint3DDataSourceAdapter DataSource="{Binding AnalysisMap}"
+                                                XArgumentDataMember="X"
+                                                YArgumentDataMember="Y" 
+                                                ValueDataMember="A"/>
+              <dxc:Series3D.View>
+                <dxc:SurfaceSeriesView>
+                  <dxc:SurfaceSeriesView.FillStyle>
+                    <dxc:GradientFillStyle LegendTextPattern="{}{V}">
+                      <dxc:GradientFillStyle.ColorStops>
+                        <dxc:ColorStop Color="#FF4472C4" Offset="0%"/>
+                        <dxc:ColorStop Color="#FF5B9BD5" Offset="25%"/>
+                        <dxc:ColorStop Color="#FF70AD47" Offset="50%"/>
+                        <dxc:ColorStop Color="#FFFFC000" Offset="75%"/>
+                        <dxc:ColorStop Color="#FFED7D31" Offset="100%"/>
+                      </dxc:GradientFillStyle.ColorStops>
+                    </dxc:GradientFillStyle>
+                  </dxc:SurfaceSeriesView.FillStyle>
+                </dxc:SurfaceSeriesView>
+              </dxc:Series3D.View>
+            </dxc:Series3D>
+          </dxc:Series3DStorage>
+        </dxc:Chart3DControl>
+        <Button Width="50" Height="50"
+              HorizontalAlignment="Left"
+              VerticalAlignment="Top" Visibility="Hidden"
+              Margin="175,470,0,0" Name="printAnalysis"
+              Command="{Binding XYprintCommand}">
+          <Image Stretch="Fill" Source="{dx:DXImage 'SvgImages/XAF/Action_Export_ToImage.svg'}"/>
+        </Button>
+      </Grid>
+      <!--<Grid Visibility="{Binding Analysis2DVisible}">-->
+      <Grid Visibility="Visible">
+
+      </Grid>
+      <StackPanel Margin="30,60,0,0"
+                  Width="240"
+                  HorizontalAlignment="Left"
+                  VerticalAlignment="Top">
+        <RadioButton Content="{lang:Loc Analysis_Plot3D}"
+                     Height="84" Name="Plot3DButton"
+                     IsChecked="True"
+                     img:EmbeddedImg.Image="{dx:DXImage 'SvgImages/XAF/ModelEditor_Class_Object.svg'}"
+                     Style="{DynamicResource SubRibbonButtonStyle}"
+                     Command="{Binding Show3DCommand}">
+        </RadioButton>
+        <RadioButton Content="{lang:Loc Analysis_Plot2D}"
+                     Height="84"
+                     img:EmbeddedImg.Image="{dx:DXImage 'SvgImages/XAF/Action_Debug_Stop.svg'}"
+                     Style="{DynamicResource SubRibbonButtonStyle}"
+                     Command="{Binding Show2DCommand}">
+        </RadioButton>
+      </StackPanel>
+    </Grid>
+    
+    <!--Cl0-3Y Buttons-->
     <StackPanel HorizontalAlignment="Left"
                 VerticalAlignment="Top"
                 Margin="15,550,0,0">
       <RadioButton Width="80" Height="50"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Top"
-                   Content="CL0"
+                   Content="CL0" 
                    FontSize="35" Cursor="Hand"
                    IsChecked="{Binding CLButtonsChecked[0], Mode=OneWay}"
                    Style="{StaticResource RadioButtonHorizontalThemeStyle}"
@@ -561,7 +670,7 @@
         </RadioButton.CommandParameter>
       </RadioButton>
     </StackPanel>
-
+    <!--Cl0-3X Buttons-->
     <StackPanel Orientation="Horizontal"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
@@ -1200,5 +1309,6 @@
         </StackPanel>
       </Grid>
     </Border>
+     
   </Grid>
 </UserControl>

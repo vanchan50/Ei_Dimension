@@ -27,7 +27,7 @@ namespace Ei_Dimension.ViewModels
 
     protected MainViewModel()
     {
-      MainSelectorState = new ObservableCollection<bool> { false, false, false, false };
+      MainSelectorState = new ObservableCollection<bool> { false, false, false, false, false };
       App.NumpadShow = (this.GetType().GetProperty(nameof(NumpadVisible)), this);
       App.KeyboardShow = (this.GetType().GetProperty(nameof(KeyboardVisible)), this);
       NumpadVisible = System.Windows.Visibility.Hidden;
@@ -56,6 +56,7 @@ namespace Ei_Dimension.ViewModels
       MainSelectorState[1] = false;
       MainSelectorState[2] = false;
       MainSelectorState[3] = false;
+      MainSelectorState[4] = false;
       MainSelectorState[num] = true;
       App.HideNumpad();
       App.HideKeyboard();
@@ -67,12 +68,17 @@ namespace Ei_Dimension.ViewModels
           NavigateExperiment();
           break;
         case 1:
+          ResultsViewModel.Instance.ShowResults();
           NavigateResults();
           break;
         case 2:
-          NavigateMaintenance();
+          ResultsViewModel.Instance.ShowAnalysis();
+          NavigateResults();
           break;
         case 3:
+          NavigateMaintenance();
+          break;
+        case 4:
           NavigateSettings();
           break;
       }

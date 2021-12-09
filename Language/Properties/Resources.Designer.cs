@@ -61,11 +61,121 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Все файлы.
+        ///   Looks up a localized string similar to Align Sequence.
+        /// </summary>
+        public static string Alignment_Align_Seq {
+            get {
+                return ResourceManager.GetString("Alignment_Align_Seq", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Auto Align.
+        /// </summary>
+        public static string Alignment_Auto_Align {
+            get {
+                return ResourceManager.GetString("Alignment_Auto_Align", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Find Peak.
+        /// </summary>
+        public static string Alignment_Find_Peak {
+            get {
+                return ResourceManager.GetString("Alignment_Find_Peak", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GoTo.
+        /// </summary>
+        public static string Alignment_GoTo {
+            get {
+                return ResourceManager.GetString("Alignment_GoTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GoTo Peak.
+        /// </summary>
+        public static string Alignment_GoTo_Peak {
+            get {
+                return ResourceManager.GetString("Alignment_GoTo_Peak", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to      Laser
+        ///Align Motor.
+        /// </summary>
+        public static string Alignment_Laser_Align_Motor {
+            get {
+                return ResourceManager.GetString("Alignment_Laser_Align_Motor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last Calibrated
+        ///     Position.
+        /// </summary>
+        public static string Alignment_Last_Calib_Pos {
+            get {
+                return ResourceManager.GetString("Alignment_Last_Calib_Pos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Left.
+        /// </summary>
+        public static string Alignment_Left {
+            get {
+                return ResourceManager.GetString("Alignment_Left", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Right.
+        /// </summary>
+        public static string Alignment_Right {
+            get {
+                return ResourceManager.GetString("Alignment_Right", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Scan.
+        /// </summary>
+        public static string Alignment_Scan {
+            get {
+                return ResourceManager.GetString("Alignment_Scan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All Files.
         /// </summary>
         public static string All_Files {
             get {
                 return ResourceManager.GetString("All Files", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2D Chart.
+        /// </summary>
+        public static string Analysis_Plot2D {
+            get {
+                return ResourceManager.GetString("Analysis_Plot2D", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 3D Chart.
+        /// </summary>
+        public static string Analysis_Plot3D {
+            get {
+                return ResourceManager.GetString("Analysis_Plot3D", resourceCulture);
             }
         }
         
@@ -75,6 +185,15 @@ namespace Ei_Dimension.Language {
         public static string Calibration_Attenuation {
             get {
                 return ResourceManager.GetString("Calibration_Attenuation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Calibration.
+        /// </summary>
+        public static string Calibration_Calibration {
+            get {
+                return ResourceManager.GetString("Calibration_Calibration", resourceCulture);
             }
         }
         
@@ -89,11 +208,42 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Classification.
+        ///   Looks up a localized string similar to Classification
+        ///    Targets.
         /// </summary>
         public static string Calibration_Classification_targets {
             get {
                 return ResourceManager.GetString("Calibration_Classification_targets", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Classification To
+        ///  Current Map.
+        /// </summary>
+        public static string Calibration_Classification_To_map {
+            get {
+                return ResourceManager.GetString("Calibration_Classification_To_map", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to    RP1 To CL1
+        ///Compensation
+        ///   Percentage.
+        /// </summary>
+        public static string Calibration_Compensation_Percent {
+            get {
+                return ResourceManager.GetString("Calibration_Compensation_Percent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Event Trigger.
+        /// </summary>
+        public static string Calibration_Event_Trigger {
+            get {
+                return ResourceManager.GetString("Calibration_Event_Trigger", resourceCulture);
             }
         }
         
@@ -103,6 +253,15 @@ namespace Ei_Dimension.Language {
         public static string Calibration_Fail {
             get {
                 return ResourceManager.GetString("Calibration_Fail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gating.
+        /// </summary>
+        public static string Calibration_Gating {
+            get {
+                return ResourceManager.GetString("Calibration_Gating", resourceCulture);
             }
         }
         
@@ -196,6 +355,15 @@ namespace Ei_Dimension.Language {
         public static string Calibration_Success {
             get {
                 return ResourceManager.GetString("Calibration_Success", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Channel Offset.
+        /// </summary>
+        public static string Ch_Offset_Ch_Offset {
+            get {
+                return ResourceManager.GetString("Ch_Offset_Ch_Offset", resourceCulture);
             }
         }
         
@@ -312,7 +480,7 @@ namespace Ei_Dimension.Language {
         /// <summary>
         ///   Looks up a localized string similar to  Save Bias
         ///To Current
-        ///       Map.
+        ///     Map.
         /// </summary>
         public static string Channels_Save_Bias_To_Map {
             get {
@@ -440,7 +608,8 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cuvet Drain.
+        ///   Looks up a localized string similar to Cuvet Drain
+        ///     Open.
         /// </summary>
         public static string Components_Cuvet_Drain_Open {
             get {
@@ -449,7 +618,8 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to      CW.
+        ///   Looks up a localized string similar to     CW
+        ///Direction.
         /// </summary>
         public static string Components_CW_Dir {
             get {
@@ -458,7 +628,7 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Вентилятор.
+        ///   Looks up a localized string similar to Fan 1.
         /// </summary>
         public static string Components_Fan {
             get {
@@ -476,11 +646,47 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Flush.
+        /// </summary>
+        public static string Components_Flush {
+            get {
+                return ResourceManager.GetString("Components_Flush", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Get Position.
+        /// </summary>
+        public static string Components_Get_Pos {
+            get {
+                return ResourceManager.GetString("Components_Get_Pos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Input Selector.
         /// </summary>
         public static string Components_Input_Sel {
             get {
                 return ResourceManager.GetString("Components_Input_Sel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lasers.
+        /// </summary>
+        public static string Components_Lasers {
+            get {
+                return ResourceManager.GetString("Components_Lasers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Max Steps.
+        /// </summary>
+        public static string Components_Max_Steps {
+            get {
+                return ResourceManager.GetString("Components_Max_Steps", resourceCulture);
             }
         }
         
@@ -494,6 +700,15 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Position.
+        /// </summary>
+        public static string Components_Position {
+            get {
+                return ResourceManager.GetString("Components_Position", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Prime.
         /// </summary>
         public static string Components_Prime {
@@ -503,7 +718,54 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to В кювет.
+        ///   Looks up a localized string similar to Sampling
+        ///    ON.
+        /// </summary>
+        public static string Components_Sampling_ON {
+            get {
+                return ResourceManager.GetString("Components_Sampling_ON", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sheath.
+        /// </summary>
+        public static string Components_Sheath {
+            get {
+                return ResourceManager.GetString("Components_Sheath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Single Step
+        ///    Debug.
+        /// </summary>
+        public static string Components_Singl_Step_Deb {
+            get {
+                return ResourceManager.GetString("Components_Singl_Step_Deb", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Startup.
+        /// </summary>
+        public static string Components_Startup {
+            get {
+                return ResourceManager.GetString("Components_Startup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Syringe Control.
+        /// </summary>
+        public static string Components_Syringe_Ctrl {
+            get {
+                return ResourceManager.GetString("Components_Syringe_Ctrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To Cuvet.
         /// </summary>
         public static string Components_To_Cuvet {
             get {
@@ -521,7 +783,7 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Valve 1.
+        ///   Looks up a localized string similar to Fan 2.
         /// </summary>
         public static string Components_Valve1 {
             get {
@@ -620,7 +882,8 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Pressure Monitor.
+        ///   Looks up a localized string similar to Pressure
+        ///Monitor.
         /// </summary>
         public static string Dashboard_Pressure_Mon {
             get {
@@ -629,7 +892,8 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Max Pressure.
+        ///   Looks up a localized string similar to    Max
+        ///Pressure.
         /// </summary>
         public static string Dashboard_Pressure_Mon_Max {
             get {
@@ -638,7 +902,8 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Min Pressure.
+        ///   Looks up a localized string similar to    Min
+        ///Pressure.
         /// </summary>
         public static string Dashboard_Pressure_Mon_Min {
             get {
@@ -647,7 +912,7 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sel.
+        ///   Looks up a localized string similar to Select.
         /// </summary>
         public static string Dashboard_Select_Regions {
             get {
@@ -738,7 +1003,7 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Загрузить.
+        ///   Looks up a localized string similar to Boot.
         /// </summary>
         public static string Dropdown_Boot {
             get {
@@ -810,7 +1075,8 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Hi Sensitivity.
+        ///   Looks up a localized string similar to       Hi
+        ///Sensitivity.
         /// </summary>
         public static string Dropdown_Hi_Sens {
             get {
@@ -819,7 +1085,8 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Hi Speed.
+        ///   Looks up a localized string similar to    Hi
+        ///Speed.
         /// </summary>
         public static string Dropdown_Hi_Speed {
             get {
@@ -900,7 +1167,7 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ТЕст.
+        ///   Looks up a localized string similar to Red + RP bg.
         /// </summary>
         public static string Dropdown_Red_Rp_bg {
             get {
@@ -981,7 +1248,8 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Agitate Vol.
+        ///   Looks up a localized string similar to Agitate
+        ///Volume.
         /// </summary>
         public static string Experiment_Agitate_Vol {
             get {
@@ -1017,8 +1285,7 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Приборная
-        ///Панель.
+        ///   Looks up a localized string similar to Dashboard.
         /// </summary>
         public static string Experiment_Dashboard {
             get {
@@ -1037,7 +1304,8 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Eject Plate.
+        ///   Looks up a localized string similar to Eject
+        ///Plate.
         /// </summary>
         public static string Experiment_Eject {
             get {
@@ -1093,7 +1361,8 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Load Plate.
+        ///   Looks up a localized string similar to Load
+        ///Plate.
         /// </summary>
         public static string Experiment_Load {
             get {
@@ -1121,8 +1390,8 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Открыть
-        ///Шаблон.
+        ///   Looks up a localized string similar to    Load
+        ///Template.
         /// </summary>
         public static string Experiment_Load_Template {
             get {
@@ -1131,7 +1400,7 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Открыть Шаблон.
+        ///   Looks up a localized string similar to Load Template.
         /// </summary>
         public static string Experiment_Load_Template_Dialog_Title {
             get {
@@ -1168,7 +1437,8 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Samp Vol.
+        ///   Looks up a localized string similar to Sample
+        ///Volume.
         /// </summary>
         public static string Experiment_Samp_Vol {
             get {
@@ -1177,8 +1447,8 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Сохранить
-        /// Шаблон.
+        ///   Looks up a localized string similar to    Save
+        ///Template.
         /// </summary>
         public static string Experiment_Save_Template {
             get {
@@ -1187,7 +1457,7 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Сохранить Шаблон.
+        ///   Looks up a localized string similar to Save Template.
         /// </summary>
         public static string Experiment_Save_Template_Dialog_Title {
             get {
@@ -1289,7 +1559,8 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Wash Vol.
+        ///   Looks up a localized string similar to  Wash
+        ///Volume.
         /// </summary>
         public static string Experiment_Wash_Vol {
             get {
@@ -1298,7 +1569,8 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Work Order.
+        ///   Looks up a localized string similar to Work
+        ///Order.
         /// </summary>
         public static string Experiment_Work_Order {
             get {
@@ -1307,8 +1579,9 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Work Order +
-        ///  Barcode.
+        ///   Looks up a localized string similar to    Work
+        ///   Order
+        ///+Barcode.
         /// </summary>
         public static string Experiment_Work_Order_Plus_Bcode {
             get {
@@ -1407,6 +1680,15 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Green.
+        /// </summary>
+        public static string Green {
+            get {
+                return ResourceManager.GetString("Green", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Halt.
         /// </summary>
         public static string Halt {
@@ -1425,7 +1707,7 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Язык.
+        ///   Looks up a localized string similar to Language.
         /// </summary>
         public static string Language {
             get {
@@ -1434,7 +1716,7 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Калибровка.
+        ///   Looks up a localized string similar to Calibration.
         /// </summary>
         public static string Maintenance_Calibration {
             get {
@@ -1443,7 +1725,7 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Каналы.
+        ///   Looks up a localized string similar to Channels.
         /// </summary>
         public static string Maintenance_Channels {
             get {
@@ -1452,8 +1734,7 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to LED
-        ///Вкл.
+        ///   Looks up a localized string similar to LEDs ON.
         /// </summary>
         public static string Maintenance_LEDs {
             get {
@@ -1750,7 +2031,7 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Выкл.
+        ///   Looks up a localized string similar to OFF.
         /// </summary>
         public static string OFF {
             get {
@@ -1768,11 +2049,20 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Вкл.
+        ///   Looks up a localized string similar to ON.
         /// </summary>
         public static string ON {
             get {
                 return ResourceManager.GetString("ON", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Power.
+        /// </summary>
+        public static string Power {
+            get {
+                return ResourceManager.GetString("Power", resourceCulture);
             }
         }
         
@@ -1782,6 +2072,24 @@ namespace Ei_Dimension.Language {
         public static string Program_Name {
             get {
                 return ResourceManager.GetString("Program_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Red.
+        /// </summary>
+        public static string Red {
+            get {
+                return ResourceManager.GetString("Red", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reporter.
+        /// </summary>
+        public static string Reporter {
+            get {
+                return ResourceManager.GetString("Reporter", resourceCulture);
             }
         }
         
@@ -1804,7 +2112,7 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Измерение.
+        ///   Looks up a localized string similar to Acquire Sample.
         /// </summary>
         public static string Ribbon_Acquire {
             get {
@@ -1813,8 +2121,7 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Анализ
-        ///Данных.
+        ///   Looks up a localized string similar to Charts.
         /// </summary>
         public static string Ribbon_Analysis {
             get {
@@ -1823,7 +2130,7 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Настройки.
+        ///   Looks up a localized string similar to Maintenance.
         /// </summary>
         public static string Ribbon_Maintenance {
             get {
@@ -1832,7 +2139,7 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Результаты.
+        ///   Looks up a localized string similar to Results.
         /// </summary>
         public static string Ribbon_Results {
             get {
@@ -1841,7 +2148,7 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Обслуживание.
+        ///   Looks up a localized string similar to Service.
         /// </summary>
         public static string Ribbon_Service {
             get {
@@ -1877,7 +2184,25 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Сек.
+        ///   Looks up a localized string similar to Sample A.
+        /// </summary>
+        public static string Sample_A {
+            get {
+                return ResourceManager.GetString("Sample_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sample B.
+        /// </summary>
+        public static string Sample_B {
+            get {
+                return ResourceManager.GetString("Sample_B", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Seconds.
         /// </summary>
         public static string Seconds {
             get {
@@ -1895,7 +2220,8 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Channel.
+        ///   Looks up a localized string similar to Channel
+        ///Offset.
         /// </summary>
         public static string Service_Ch_Offset {
             get {
@@ -1960,7 +2286,8 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Syringe.
+        ///   Looks up a localized string similar to Syringe
+        ///Speeds.
         /// </summary>
         public static string Service_Syringe_Speeds {
             get {
@@ -1969,47 +2296,83 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Targets.
+        ///   Looks up a localized string similar to Sheath.
         /// </summary>
-        public static string String {
+        public static string Sheath {
             get {
-                return ResourceManager.GetString("String", resourceCulture);
+                return ResourceManager.GetString("Sheath", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Offset.
+        ///   Looks up a localized string similar to Flush.
         /// </summary>
-        public static string String1 {
+        public static string SyringeSpeeds_Flush {
             get {
-                return ResourceManager.GetString("String1", resourceCulture);
+                return ResourceManager.GetString("SyringeSpeeds_Flush", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Speeds.
+        ///   Looks up a localized string similar to Hi Sens.
         /// </summary>
-        public static string String2 {
+        public static string SyringeSpeeds_HiSens {
             get {
-                return ResourceManager.GetString("String2", resourceCulture);
+                return ResourceManager.GetString("SyringeSpeeds_HiSens", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Open.
+        ///   Looks up a localized string similar to Hi Speed.
         /// </summary>
-        public static string String3 {
+        public static string SyringeSpeeds_HiSpeed {
             get {
-                return ResourceManager.GetString("String3", resourceCulture);
+                return ResourceManager.GetString("SyringeSpeeds_HiSpeed", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Max Speed.
         /// </summary>
-        public static string String4 {
+        public static string SyringeSpeeds_Max_Speed {
             get {
-                return ResourceManager.GetString("String4", resourceCulture);
+                return ResourceManager.GetString("SyringeSpeeds_Max_Speed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Normal.
+        /// </summary>
+        public static string SyringeSpeeds_Normal {
+            get {
+                return ResourceManager.GetString("SyringeSpeeds_Normal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pickup.
+        /// </summary>
+        public static string SyringeSpeeds_Pickup {
+            get {
+                return ResourceManager.GetString("SyringeSpeeds_Pickup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Samples.
+        /// </summary>
+        public static string SyringeSpeeds_Samples {
+            get {
+                return ResourceManager.GetString("SyringeSpeeds_Samples", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Syringe Speeds.
+        /// </summary>
+        public static string SyringeSpeeds_Speeds {
+            get {
+                return ResourceManager.GetString("SyringeSpeeds_Speeds", resourceCulture);
             }
         }
         
@@ -2023,7 +2386,7 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Текстовые документы.
+        ///   Looks up a localized string similar to Text Files.
         /// </summary>
         public static string Text_Files {
             get {
@@ -2089,7 +2452,7 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to     Start
+        ///   Looks up a localized string similar to      Start
         ///Verification.
         /// </summary>
         public static string Validation_Start_Validation {
@@ -2104,6 +2467,24 @@ namespace Ei_Dimension.Language {
         public static string Validation_Success {
             get {
                 return ResourceManager.GetString("Validation_Success", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value.
+        /// </summary>
+        public static string Value {
+            get {
+                return ResourceManager.GetString("Value", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Violet.
+        /// </summary>
+        public static string Violet {
+            get {
+                return ResourceManager.GetString("Violet", resourceCulture);
             }
         }
         

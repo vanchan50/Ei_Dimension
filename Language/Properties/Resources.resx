@@ -117,21 +117,78 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Alignment_Align_Seq" xml:space="preserve">
+    <value>Align Sequence</value>
+  </data>
+  <data name="Alignment_Auto_Align" xml:space="preserve">
+    <value>Auto Align</value>
+  </data>
+  <data name="Alignment_Find_Peak" xml:space="preserve">
+    <value>Find Peak</value>
+  </data>
+  <data name="Alignment_GoTo" xml:space="preserve">
+    <value>GoTo</value>
+  </data>
+  <data name="Alignment_GoTo_Peak" xml:space="preserve">
+    <value>GoTo Peak</value>
+  </data>
+  <data name="Alignment_Laser_Align_Motor" xml:space="preserve">
+    <value>     Laser
+Align Motor</value>
+  </data>
+  <data name="Alignment_Last_Calib_Pos" xml:space="preserve">
+    <value>Last Calibrated
+     Position</value>
+  </data>
+  <data name="Alignment_Left" xml:space="preserve">
+    <value>Left</value>
+  </data>
+  <data name="Alignment_Right" xml:space="preserve">
+    <value>Right</value>
+  </data>
+  <data name="Alignment_Scan" xml:space="preserve">
+    <value>Scan</value>
+  </data>
   <data name="All Files" xml:space="preserve">
-    <value>Все файлы</value>
+    <value>All Files</value>
+  </data>
+  <data name="Analysis_Plot2D" xml:space="preserve">
+    <value>2D Chart</value>
+  </data>
+  <data name="Analysis_Plot3D" xml:space="preserve">
+    <value>3D Chart</value>
   </data>
   <data name="Calibration_Attenuation" xml:space="preserve">
     <value>Attenuation %</value>
+  </data>
+  <data name="Calibration_Calibration" xml:space="preserve">
+    <value>Calibration</value>
   </data>
   <data name="Calibration_Cancel_Calibration" xml:space="preserve">
     <value>   Cancel
 Calibration</value>
   </data>
   <data name="Calibration_Classification_targets" xml:space="preserve">
-    <value>Classification</value>
+    <value>Classification
+    Targets</value>
+  </data>
+  <data name="Calibration_Classification_To_map" xml:space="preserve">
+    <value>Classification To
+  Current Map</value>
+  </data>
+  <data name="Calibration_Compensation_Percent" xml:space="preserve">
+    <value>   RP1 To CL1
+Compensation
+   Percentage</value>
+  </data>
+  <data name="Calibration_Event_Trigger" xml:space="preserve">
+    <value>Event Trigger</value>
   </data>
   <data name="Calibration_Fail" xml:space="preserve">
     <value>Calibration Failed!</value>
+  </data>
+  <data name="Calibration_Gating" xml:space="preserve">
+    <value>Gating</value>
   </data>
   <data name="Calibration_Height" xml:space="preserve">
     <value>Height</value>
@@ -203,7 +260,7 @@ To Current Map</value>
   <data name="Channels_Save_Bias_To_Map" xml:space="preserve">
     <value> Save Bias
 To Current
-       Map</value>
+     Map</value>
   </data>
   <data name="Channels_Sens_B" xml:space="preserve">
     <value>Green B</value>
@@ -231,6 +288,9 @@ Coefficient</value>
   <data name="Channels_Violet_B" xml:space="preserve">
     <value>Violet B (CL0)</value>
   </data>
+  <data name="Ch_Offset_Ch_Offset" xml:space="preserve">
+    <value>Channel Offset</value>
+  </data>
   <data name="Ch_Offset_Set_Offset" xml:space="preserve">
     <value>  Set
 Offset</value>
@@ -251,34 +311,68 @@ Offset</value>
     <value>Column</value>
   </data>
   <data name="Components_Cuvet_Drain_Open" xml:space="preserve">
-    <value>Cuvet Drain</value>
+    <value>Cuvet Drain
+     Open</value>
   </data>
   <data name="Components_CW_Dir" xml:space="preserve">
-    <value>     CW</value>
+    <value>    CW
+Direction</value>
   </data>
   <data name="Components_Fan" xml:space="preserve">
-    <value>Вентилятор</value>
+    <value>Fan 1</value>
   </data>
   <data name="Components_Fluidics" xml:space="preserve">
     <value>Fluidics</value>
   </data>
+  <data name="Components_Flush" xml:space="preserve">
+    <value>Flush</value>
+  </data>
+  <data name="Components_Get_Pos" xml:space="preserve">
+    <value>Get Position</value>
+  </data>
   <data name="Components_Input_Sel" xml:space="preserve">
     <value>Input Selector</value>
+  </data>
+  <data name="Components_Lasers" xml:space="preserve">
+    <value>Lasers</value>
+  </data>
+  <data name="Components_Max_Steps" xml:space="preserve">
+    <value>Max Steps</value>
   </data>
   <data name="Components_Move_Idex" xml:space="preserve">
     <value>Move Idex</value>
   </data>
+  <data name="Components_Position" xml:space="preserve">
+    <value>Position</value>
+  </data>
   <data name="Components_Prime" xml:space="preserve">
     <value>Prime</value>
   </data>
+  <data name="Components_Sampling_ON" xml:space="preserve">
+    <value>Sampling
+    ON</value>
+  </data>
+  <data name="Components_Sheath" xml:space="preserve">
+    <value>Sheath</value>
+  </data>
+  <data name="Components_Singl_Step_Deb" xml:space="preserve">
+    <value>Single Step
+    Debug</value>
+  </data>
+  <data name="Components_Startup" xml:space="preserve">
+    <value>Startup</value>
+  </data>
+  <data name="Components_Syringe_Ctrl" xml:space="preserve">
+    <value>Syringe Control</value>
+  </data>
   <data name="Components_To_Cuvet" xml:space="preserve">
-    <value>В кювет</value>
+    <value>To Cuvet</value>
   </data>
   <data name="Components_To_Pickup" xml:space="preserve">
     <value>To Pickup</value>
   </data>
   <data name="Components_Valve1" xml:space="preserve">
-    <value>Valve 1</value>
+    <value>Fan 2</value>
   </data>
   <data name="Components_Valve2" xml:space="preserve">
     <value>Valve 2</value>
@@ -311,16 +405,19 @@ Offset</value>
     <value>Name</value>
   </data>
   <data name="Dashboard_Pressure_Mon" xml:space="preserve">
-    <value>Pressure Monitor</value>
+    <value>Pressure
+Monitor</value>
   </data>
   <data name="Dashboard_Pressure_Mon_Max" xml:space="preserve">
-    <value>Max Pressure</value>
+    <value>   Max
+Pressure</value>
   </data>
   <data name="Dashboard_Pressure_Mon_Min" xml:space="preserve">
-    <value>Min Pressure</value>
+    <value>   Min
+Pressure</value>
   </data>
   <data name="Dashboard_Select_Regions" xml:space="preserve">
-    <value>Sel</value>
+    <value>Select</value>
   </data>
   <data name="DataAn_Calib_stats" xml:space="preserve">
     <value>Calibration
@@ -351,7 +448,7 @@ Offset</value>
     <value>Violet SSC</value>
   </data>
   <data name="Dropdown_Boot" xml:space="preserve">
-    <value>Загрузить</value>
+    <value>Boot</value>
   </data>
   <data name="Dropdown_Cells" xml:space="preserve">
     <value>Cells</value>
@@ -375,10 +472,12 @@ Offset</value>
     <value>Halt</value>
   </data>
   <data name="Dropdown_Hi_Sens" xml:space="preserve">
-    <value>Hi Sensitivity</value>
+    <value>      Hi
+Sensitivity</value>
   </data>
   <data name="Dropdown_Hi_Speed" xml:space="preserve">
-    <value>Hi Speed</value>
+    <value>   Hi
+Speed</value>
   </data>
   <data name="Dropdown_Initialize" xml:space="preserve">
     <value>Initialize</value>
@@ -405,7 +504,7 @@ Offset</value>
     <value>Pre Inject</value>
   </data>
   <data name="Dropdown_Red_Rp_bg" xml:space="preserve">
-    <value>ТЕст</value>
+    <value>Red + RP bg</value>
   </data>
   <data name="Dropdown_Red_SSC" xml:space="preserve">
     <value>Red SSC</value>
@@ -432,7 +531,8 @@ Offset</value>
     <value>Active Regions</value>
   </data>
   <data name="Experiment_Agitate_Vol" xml:space="preserve">
-    <value>Agitate Vol</value>
+    <value>Agitate
+Volume</value>
   </data>
   <data name="Experiment_Available_Regions" xml:space="preserve">
     <value>Available Regions</value>
@@ -444,15 +544,15 @@ Offset</value>
     <value>Classification Map</value>
   </data>
   <data name="Experiment_Dashboard" xml:space="preserve">
-    <value>Приборная
-Панель</value>
+    <value>Dashboard</value>
   </data>
   <data name="Experiment_Delete_Template" xml:space="preserve">
     <value>  Delete
 Template</value>
   </data>
   <data name="Experiment_Eject" xml:space="preserve">
-    <value>Eject Plate</value>
+    <value>Eject
+Plate</value>
   </data>
   <data name="Experiment_End" xml:space="preserve">
     <value>End</value>
@@ -472,7 +572,8 @@ Sample</value>
 and Folder</value>
   </data>
   <data name="Experiment_Load" xml:space="preserve">
-    <value>Load Plate</value>
+    <value>Load
+Plate</value>
   </data>
   <data name="Experiment_Load_Save_Template" xml:space="preserve">
     <value>Load / Save
@@ -482,11 +583,11 @@ Template</value>
     <value>Load / Save Template</value>
   </data>
   <data name="Experiment_Load_Template" xml:space="preserve">
-    <value>Открыть
-Шаблон</value>
+    <value>   Load
+Template</value>
   </data>
   <data name="Experiment_Load_Template_Dialog_Title" xml:space="preserve">
-    <value>Открыть Шаблон</value>
+    <value>Load Template</value>
   </data>
   <data name="Experiment_Manual" xml:space="preserve">
     <value>Manual</value>
@@ -499,14 +600,15 @@ Region</value>
     <value>Order</value>
   </data>
   <data name="Experiment_Samp_Vol" xml:space="preserve">
-    <value>Samp Vol</value>
+    <value>Sample
+Volume</value>
   </data>
   <data name="Experiment_Save_Template" xml:space="preserve">
-    <value>Сохранить
- Шаблон</value>
+    <value>   Save
+Template</value>
   </data>
   <data name="Experiment_Save_Template_Dialog_Title" xml:space="preserve">
-    <value>Сохранить Шаблон</value>
+    <value>Save Template</value>
   </data>
   <data name="Experiment_Select_Wells" xml:space="preserve">
     <value>Select Wells</value>
@@ -542,14 +644,17 @@ Events</value>
 Barcode</value>
   </data>
   <data name="Experiment_Wash_Vol" xml:space="preserve">
-    <value>Wash Vol</value>
+    <value> Wash
+Volume</value>
   </data>
   <data name="Experiment_Work_Order" xml:space="preserve">
-    <value>Work Order</value>
+    <value>Work
+Order</value>
   </data>
   <data name="Experiment_Work_Order_Plus_Bcode" xml:space="preserve">
-    <value>Work Order +
-  Barcode</value>
+    <value>   Work
+   Order
++Barcode</value>
   </data>
   <data name="FileSave_Base_Filename" xml:space="preserve">
     <value>Base File Name</value>
@@ -581,6 +686,9 @@ Barcode</value>
   <data name="FileSave_Sys_Log" xml:space="preserve">
     <value>Log to File</value>
   </data>
+  <data name="Green" xml:space="preserve">
+    <value>Green</value>
+  </data>
   <data name="Halt" xml:space="preserve">
     <value>Halt</value>
   </data>
@@ -588,17 +696,16 @@ Barcode</value>
     <value>JSON Files</value>
   </data>
   <data name="Language" xml:space="preserve">
-    <value>Язык</value>
+    <value>Language</value>
   </data>
   <data name="Maintenance_Calibration" xml:space="preserve">
-    <value>Калибровка</value>
+    <value>Calibration</value>
   </data>
   <data name="Maintenance_Channels" xml:space="preserve">
-    <value>Каналы</value>
+    <value>Channels</value>
   </data>
   <data name="Maintenance_LEDs" xml:space="preserve">
-    <value>LED
-Вкл</value>
+    <value>LEDs ON</value>
   </data>
   <data name="Maintenance_Sanitize" xml:space="preserve">
     <value>UVC Sanitize</value>
@@ -697,16 +804,25 @@ Barcode</value>
     <value>Name</value>
   </data>
   <data name="OFF" xml:space="preserve">
-    <value>Выкл</value>
+    <value>OFF</value>
   </data>
   <data name="OK" xml:space="preserve">
     <value>OK</value>
   </data>
   <data name="ON" xml:space="preserve">
-    <value>Вкл</value>
+    <value>ON</value>
+  </data>
+  <data name="Power" xml:space="preserve">
+    <value>Power</value>
   </data>
   <data name="Program_Name" xml:space="preserve">
     <value>Ei Dimension</value>
+  </data>
+  <data name="Red" xml:space="preserve">
+    <value>Red</value>
+  </data>
+  <data name="Reporter" xml:space="preserve">
+    <value>Reporter</value>
   </data>
   <data name="Reset" xml:space="preserve">
     <value>Reset</value>
@@ -715,20 +831,19 @@ Barcode</value>
     <value>Cutoff value</value>
   </data>
   <data name="Ribbon_Acquire" xml:space="preserve">
-    <value>Измерение</value>
+    <value>Acquire Sample</value>
   </data>
   <data name="Ribbon_Analysis" xml:space="preserve">
-    <value>Анализ
-Данных</value>
+    <value>Charts</value>
   </data>
   <data name="Ribbon_Maintenance" xml:space="preserve">
-    <value>Настройки</value>
+    <value>Maintenance</value>
   </data>
   <data name="Ribbon_Results" xml:space="preserve">
-    <value>Результаты</value>
+    <value>Results</value>
   </data>
   <data name="Ribbon_Service" xml:space="preserve">
-    <value>Обслуживание</value>
+    <value>Service</value>
   </data>
   <data name="Row" xml:space="preserve">
     <value>Row</value>
@@ -739,14 +854,21 @@ Barcode</value>
   <data name="Run" xml:space="preserve">
     <value>Run</value>
   </data>
+  <data name="Sample_A" xml:space="preserve">
+    <value>Sample A</value>
+  </data>
+  <data name="Sample_B" xml:space="preserve">
+    <value>Sample B</value>
+  </data>
   <data name="Seconds" xml:space="preserve">
-    <value>Сек</value>
+    <value>Seconds</value>
   </data>
   <data name="Service_Alignment" xml:space="preserve">
     <value>Alignment</value>
   </data>
   <data name="Service_Ch_Offset" xml:space="preserve">
-    <value>Channel</value>
+    <value>Channel
+Offset</value>
   </data>
   <data name="Service_Components" xml:space="preserve">
     <value>Components</value>
@@ -769,28 +891,41 @@ Factory Defaults</value>
     <value>Motors</value>
   </data>
   <data name="Service_Syringe_Speeds" xml:space="preserve">
-    <value>Syringe</value>
+    <value>Syringe
+Speeds</value>
   </data>
-  <data name="String" xml:space="preserve">
-    <value>Targets</value>
+  <data name="Sheath" xml:space="preserve">
+    <value>Sheath</value>
   </data>
-  <data name="String1" xml:space="preserve">
-    <value>Offset</value>
+  <data name="SyringeSpeeds_Flush" xml:space="preserve">
+    <value>Flush</value>
   </data>
-  <data name="String2" xml:space="preserve">
-    <value>Speeds</value>
+  <data name="SyringeSpeeds_HiSens" xml:space="preserve">
+    <value>Hi Sens</value>
   </data>
-  <data name="String3" xml:space="preserve">
-    <value>Open</value>
+  <data name="SyringeSpeeds_HiSpeed" xml:space="preserve">
+    <value>Hi Speed</value>
   </data>
-  <data name="String4" xml:space="preserve">
-    <value />
+  <data name="SyringeSpeeds_Max_Speed" xml:space="preserve">
+    <value>Max Speed</value>
+  </data>
+  <data name="SyringeSpeeds_Normal" xml:space="preserve">
+    <value>Normal</value>
+  </data>
+  <data name="SyringeSpeeds_Pickup" xml:space="preserve">
+    <value>Pickup</value>
+  </data>
+  <data name="SyringeSpeeds_Samples" xml:space="preserve">
+    <value>Samples</value>
+  </data>
+  <data name="SyringeSpeeds_Speeds" xml:space="preserve">
+    <value>Syringe Speeds</value>
   </data>
   <data name="Temp" xml:space="preserve">
     <value>Temp</value>
   </data>
   <data name="Text_Files" xml:space="preserve">
-    <value>Текстовые документы</value>
+    <value>Text Files</value>
   </data>
   <data name="Tube" xml:space="preserve">
     <value>Tube</value>
@@ -814,11 +949,17 @@ Target</value>
 Target</value>
   </data>
   <data name="Validation_Start_Validation" xml:space="preserve">
-    <value>    Start
+    <value>     Start
 Verification</value>
   </data>
   <data name="Validation_Success" xml:space="preserve">
     <value>Verification Succesful!</value>
+  </data>
+  <data name="Value" xml:space="preserve">
+    <value>Value</value>
+  </data>
+  <data name="Violet" xml:space="preserve">
+    <value>Violet</value>
   </data>
   <data name="WellSel_Reset_Plate" xml:space="preserve">
     <value>Reset Plate</value>

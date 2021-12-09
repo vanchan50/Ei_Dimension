@@ -152,6 +152,12 @@ Align Motor</value>
   <data name="All Files" xml:space="preserve">
     <value>All Files</value>
   </data>
+  <data name="Analysis_Plot2D" xml:space="preserve">
+    <value>2D Chart</value>
+  </data>
+  <data name="Analysis_Plot3D" xml:space="preserve">
+    <value>3D Chart</value>
+  </data>
   <data name="Calibration_Attenuation" xml:space="preserve">
     <value>Attenuation %</value>
   </data>
@@ -828,7 +834,7 @@ Order</value>
     <value>Acquire Sample</value>
   </data>
   <data name="Ribbon_Analysis" xml:space="preserve">
-    <value>Data Analysis</value>
+    <value>Charts</value>
   </data>
   <data name="Ribbon_Maintenance" xml:space="preserve">
     <value>Maintenance</value>

@@ -57,7 +57,7 @@
     <!--Tile Ribbon-->
     <StackPanel Orientation="Horizontal"
                 Height="96" HorizontalAlignment="Left" VerticalAlignment="Top"
-                Margin="312,30,0,0">
+                Margin="262,30,0,0">
       <RadioButton Content="{lang:Loc Ribbon_Acquire}" Width="216"
                    img:EmbeddedImg.Image="/Icons/acquire sample icon.png"
                    Style="{DynamicResource MainRibbonButtonStyle}"
@@ -76,8 +76,8 @@
           <System:Byte>1</System:Byte>
         </RadioButton.CommandParameter>
       </RadioButton>
-      <RadioButton Content="{lang:Loc Ribbon_Maintenance}" Width="216"
-                   img:EmbeddedImg.Image="/Icons/maintenance icon.png"
+      <RadioButton Content="{lang:Loc Ribbon_Analysis}" Width="216"
+                   img:EmbeddedImg.Image="/Icons/data analysis icon.png"
                    Style="{DynamicResource MainRibbonButtonStyle}"
                    Command="{Binding NavigationSelectorCommand}"
                    IsChecked="{Binding MainSelectorState[2], Mode=OneWay}">
@@ -85,14 +85,23 @@
           <System:Byte>2</System:Byte>
         </RadioButton.CommandParameter>
       </RadioButton>
+      <RadioButton Content="{lang:Loc Ribbon_Maintenance}" Width="216"
+                   img:EmbeddedImg.Image="/Icons/maintenance icon.png"
+                   Style="{DynamicResource MainRibbonButtonStyle}"
+                   Command="{Binding NavigationSelectorCommand}"
+                   IsChecked="{Binding MainSelectorState[3], Mode=OneWay}">
+        <RadioButton.CommandParameter>
+          <System:Byte>3</System:Byte>
+        </RadioButton.CommandParameter>
+      </RadioButton>
       <RadioButton Content="{lang:Loc Ribbon_Service}" Width="216"
                    img:EmbeddedImg.Image="/Icons/service iconV2.png"
                    Style="{DynamicResource MainRibbonButtonStyle}"
                    Command="{Binding NavigationSelectorCommand}"
                    Visibility="{Binding ServiceVisibility}"
-                   IsChecked="{Binding MainSelectorState[3], Mode=OneWay}">
+                   IsChecked="{Binding MainSelectorState[4], Mode=OneWay}">
         <RadioButton.CommandParameter>
-          <System:Byte>3</System:Byte>
+          <System:Byte>4</System:Byte>
         </RadioButton.CommandParameter>
       </RadioButton>
     </StackPanel>
