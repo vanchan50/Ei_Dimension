@@ -732,8 +732,7 @@ namespace Ei_Dimension.ViewModels
     public void ShowAnalysis()
     {
       AnalysisVisible = System.Windows.Visibility.Visible;
-      Analysis2DVisible = System.Windows.Visibility.Visible;
-      Analysis3DVisible = System.Windows.Visibility.Hidden;
+      Show3D();
     }
 
     public void ShowResults()

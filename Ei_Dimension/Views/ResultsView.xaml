@@ -518,29 +518,30 @@
                  Margin="0,0,0,0"/>
       <!--<Grid Visibility="{Binding Analysis3DVisible}">-->
       <Grid Visibility="Visible">
-        <dxc:Chart3DControl Width="1220" Height="880"
+        <dxc:Chart3DControl Width="1120" Height="850"
                           HorizontalAlignment="Left"
                           VerticalAlignment="Top"
                           BorderThickness="0" Name="AnalysisPlot"
                           Focusable="False"
-                          Margin="0,0,0,0">
+                          Margin="100,0,0,0">
           <dxc:Chart3DControl.Legends>
             <dxc:Legend HorizontalPosition="Right"
-                      VerticalPosition="Top"
-                      Orientation="Horizontal">
+                        VerticalPosition="Top"
+                        Orientation="Vertical"
+                        BorderThickness="0">
             </dxc:Legend>
           </dxc:Chart3DControl.Legends>
           <dxc:Chart3DControl.XAxis>
-            <dxc:XAxis3D>
+            <dxc:XAxis3D Logarithmic="True">
               <dxc:XAxis3D.Title>
                 <dxc:AxisTitle Content="{Binding CLAxis[0]}"
-                             FontSize="40"
-                             Foreground="{StaticResource AppTextColor}"/>
+                               FontSize="40"
+                               Foreground="{StaticResource AppTextColor}"/>
               </dxc:XAxis3D.Title>
             </dxc:XAxis3D>
           </dxc:Chart3DControl.XAxis>
           <dxc:Chart3DControl.YAxis>
-            <dxc:YAxis3D>
+            <dxc:YAxis3D Logarithmic="True">
               <dxc:YAxis3D.Title>
                 <dxc:AxisTitle Content="{Binding CLAxis[1]}"
                              FontSize="40"
@@ -549,23 +550,26 @@
             </dxc:YAxis3D>
           </dxc:Chart3DControl.YAxis>
           <dxc:Chart3DControl.ZAxis>
-            <dxc:ZAxis3D>
+            <dxc:ZAxis3D Logarithmic="True">
               <dxc:ZAxis3D.Title>
                 <dxc:AxisTitle Content="{lang:Loc Reporter}"
-                             FontSize="40"
-                             Foreground="{StaticResource AppTextColor}"/>
+                               FontSize="40"
+                               Foreground="{StaticResource AppTextColor}"/>
               </dxc:ZAxis3D.Title>
             </dxc:ZAxis3D>
           </dxc:Chart3DControl.ZAxis>
 
           <dxc:Series3DStorage>
-            <dxc:Series3D DisplayName="Height Map">
+            <dxc:Series3D LabelsVisibility="True">
               <dxc:SeriesPoint3DDataSourceAdapter DataSource="{Binding AnalysisMap}"
-                                                XArgumentDataMember="X"
-                                                YArgumentDataMember="Y" 
-                                                ValueDataMember="A"/>
+                                                  XArgumentDataMember="X"
+                                                  YArgumentDataMember="Y" 
+                                                  ValueDataMember="A"/>
               <dxc:Series3D.View>
                 <dxc:SurfaceSeriesView>
+                  <dxc:SurfaceSeriesView.BackFillStyle>
+                    <dxc:SolidFillStyle Brush="Black"/>
+                  </dxc:SurfaceSeriesView.BackFillStyle>
                   <dxc:SurfaceSeriesView.FillStyle>
                     <dxc:GradientFillStyle LegendTextPattern="{}{V}">
                       <dxc:GradientFillStyle.ColorStops>

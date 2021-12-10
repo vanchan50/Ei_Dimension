@@ -1730,8 +1730,8 @@ namespace Ei_Dimension
             }
             break;
           case 0x20:
-            //CalibrationViewModel.Instance.DNRContents[0] = exe.FParameter.ToString();
-            //MicroCy.InstrumentParameters.Calibration.HDnrCoef = exe.FParameter;
+            CalibrationViewModel.Instance.DNRContents[0] = exe.FParameter.ToString();
+            MicroCy.InstrumentParameters.Calibration.HDnrCoef = exe.FParameter;
             break;
           case 0x22:  //pressure
             double dd = exe.FParameter;
