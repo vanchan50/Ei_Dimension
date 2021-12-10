@@ -101,6 +101,11 @@ namespace Ei_Dimension.ViewModels
 
       AnalysisMap.Add(new DoubleHeatMapData(1, 1, 1));
 
+      AnalysisMap.Add(new DoubleHeatMapData(10, 30000, 300000));
+      AnalysisMap.Add(new DoubleHeatMapData(10, 10, 300000));
+      AnalysisMap.Add(new DoubleHeatMapData(30000, 10, 300000));
+      AnalysisMap.Add(new DoubleHeatMapData(30000, 30000, 300000));
+
       ScatterSelectorState = new ObservableCollection<bool> { false, false, false, false, false };
       WaitIndicatorVisibility = false;
       MultiPlexVisible = System.Windows.Visibility.Visible;

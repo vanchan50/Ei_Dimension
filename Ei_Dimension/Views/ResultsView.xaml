@@ -534,7 +534,7 @@
           <dxc:Chart3DControl.XAxis>
             <dxc:XAxis3D Logarithmic="True">
               <dxc:XAxis3D.Title>
-                <dxc:AxisTitle Content="{Binding CLAxis[0]}"
+                <dxc:AxisTitle Content="{Binding CLAxis[1]}"
                                FontSize="40"
                                Foreground="{StaticResource AppTextColor}"/>
               </dxc:XAxis3D.Title>
@@ -543,7 +543,7 @@
           <dxc:Chart3DControl.YAxis>
             <dxc:YAxis3D Logarithmic="True">
               <dxc:YAxis3D.Title>
-                <dxc:AxisTitle Content="{Binding CLAxis[1]}"
+                <dxc:AxisTitle Content="{Binding CLAxis[0]}"
                              FontSize="40"
                              Foreground="{StaticResource AppTextColor}"/>
               </dxc:YAxis3D.Title>
@@ -562,10 +562,47 @@
           <dxc:Series3DStorage>
             <dxc:Series3D LabelsVisibility="True">
               <dxc:SeriesPoint3DDataSourceAdapter DataSource="{Binding AnalysisMap}"
-                                                  XArgumentDataMember="X"
-                                                  YArgumentDataMember="Y" 
+                                                  XArgumentDataMember="Y"
+                                                  YArgumentDataMember="X" 
                                                   ValueDataMember="A"/>
               <dxc:Series3D.View>
+                <dxc:Bar3DSeriesView EqualBarSize="True">
+                  <dxc:Bar3DSeriesView.Colorizer>
+                    <dxc:RangeColorizer3D ApproximateColors="True"
+                                                      RangeStops="2000 4000 8000 16000 32000">
+                      <dxc:RangeColorizer3D.Palette>
+                        <dxc:CustomPalette>
+                          <dxc:CustomPalette.Colors>
+                            <Color>#FD5915</Color>
+                            <Color>#F09D25</Color>
+                            <Color>#E2E232</Color>
+                            <Color>#A5D648</Color>
+                            <Color>#6EC95C</Color>
+                          </dxc:CustomPalette.Colors>
+                        </dxc:CustomPalette>
+                      </dxc:RangeColorizer3D.Palette>
+                    </dxc:RangeColorizer3D>
+                  </dxc:Bar3DSeriesView.Colorizer>
+                  <dxc:Bar3DSeriesView.BarSize>
+                    <dxc:Bar3DSize X="0.03" Z="1"/>
+                  </dxc:Bar3DSeriesView.BarSize>
+                  <dxc:Bar3DSeriesView.BarModel>
+                    <dxc:Bar3DOctagonPointModel ShowFacets="True"/>
+                  </dxc:Bar3DSeriesView.BarModel>
+                </dxc:Bar3DSeriesView>
+              </dxc:Series3D.View>
+            </dxc:Series3D>
+          </dxc:Series3DStorage>
+        </dxc:Chart3DControl>
+        <Button Width="50" Height="50"
+              HorizontalAlignment="Left"
+              VerticalAlignment="Top" Visibility="Hidden"
+              Margin="175,470,0,0" Name="printAnalysis"
+              Command="{Binding XYprintCommand}">
+          <Image Stretch="Fill" Source="{dx:DXImage 'SvgImages/XAF/Action_Export_ToImage.svg'}"/>
+        </Button>
+      </Grid>
+      <!--
                 <dxc:SurfaceSeriesView>
                   <dxc:SurfaceSeriesView.BackFillStyle>
                     <dxc:SolidFillStyle Brush="Black"/>
@@ -582,18 +619,7 @@
                     </dxc:GradientFillStyle>
                   </dxc:SurfaceSeriesView.FillStyle>
                 </dxc:SurfaceSeriesView>
-              </dxc:Series3D.View>
-            </dxc:Series3D>
-          </dxc:Series3DStorage>
-        </dxc:Chart3DControl>
-        <Button Width="50" Height="50"
-              HorizontalAlignment="Left"
-              VerticalAlignment="Top" Visibility="Hidden"
-              Margin="175,470,0,0" Name="printAnalysis"
-              Command="{Binding XYprintCommand}">
-          <Image Stretch="Fill" Source="{dx:DXImage 'SvgImages/XAF/Action_Export_ToImage.svg'}"/>
-        </Button>
-      </Grid>
+      -->
       <!--<Grid Visibility="{Binding Analysis2DVisible}">-->
       <Grid Visibility="Visible">
 

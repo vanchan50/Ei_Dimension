@@ -21,7 +21,7 @@ namespace Ei_Dimension
     {
       get { return _selectedTextBox; }
       set {
-        if (value.prop != null)
+        if ((value.prop != null) && ((value.prop != _selectedTextBox.prop) || (value.index != _selectedTextBox.index)))
           InputSanityCheck();
         _selectedTextBox = value;
         if (value.prop != null)
@@ -375,7 +375,7 @@ namespace Ei_Dimension
 
     public static void InputSanityCheck()
     {
-      if (SelectedTextBox.prop != null)
+      if (SelectedTextBox.prop != null && _tempNewString != null)
       {
         float fRes;
         int iRes;
@@ -1598,20 +1598,24 @@ namespace Ei_Dimension
           ((ObservableCollection<string>)SelectedTextBox.prop.GetValue(SelectedTextBox.VM))[SelectedTextBox.index] = _tempOldString;
           ShowNotification(ErrorMessage);
         }
+        else
+          ((ObservableCollection<string>)SelectedTextBox.prop.GetValue(SelectedTextBox.VM))[SelectedTextBox.index] = _tempNewString.Trim('0');
         _tempNewString = null;
-        SelectedTextBox = (null, null, 0);
+        //SelectedTextBox = (null, null, 0);
       }
     }
 
     public static void HideNumpad()
     {
       InputSanityCheck();
+      SelectedTextBox = (null, null, 0);
       NumpadShow.prop.SetValue(NumpadShow.VM, Visibility.Hidden);
     }
 
     public static void HideKeyboard()
     {
       InputSanityCheck();
+      SelectedTextBox = (null, null, 0);
       KeyboardShow.prop.SetValue(KeyboardShow.VM, Visibility.Hidden);
     }
 

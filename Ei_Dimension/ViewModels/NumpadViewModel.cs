@@ -58,7 +58,6 @@ namespace Ei_Dimension.ViewModels
           App.InjectToFocusedTextbox(".");
           break;
         case 100:
-          App.InputSanityCheck();
           App.HideNumpad();
           break;
       }
@@ -66,7 +65,7 @@ namespace Ei_Dimension.ViewModels
 
     public void EnterInputClick()
     {
-      App.InputSanityCheck();
+      App.HideNumpad();
     }
   }
 }
