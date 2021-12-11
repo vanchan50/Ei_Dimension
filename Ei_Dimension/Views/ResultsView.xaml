@@ -12,8 +12,7 @@
              xmlns:img="clr-namespace:Ei_Dimension.Styles"
              xmlns:System="clr-namespace:System;assembly=mscorlib"
              DataContext="{dxmvvm:ViewModelSource Type=ViewModels:ResultsViewModel}"
-             d:DesignHeight="944" d:DesignWidth="1920"
-             Loaded="UserControl_Loaded">
+             d:DesignHeight="944" d:DesignWidth="1920">
   <Grid>
     <Border HorizontalAlignment="Left" VerticalAlignment="Top"
             Margin="750,0,0,0" Width="470" Height="900">
@@ -569,15 +568,18 @@
                 <dxc:Bar3DSeriesView EqualBarSize="True">
                   <dxc:Bar3DSeriesView.Colorizer>
                     <dxc:RangeColorizer3D ApproximateColors="True"
-                                                      RangeStops="2000 4000 8000 16000 32000">
+                                          RangeStops="0 500 2000 4000 8000 16000 32000 64000">
                       <dxc:RangeColorizer3D.Palette>
                         <dxc:CustomPalette>
                           <dxc:CustomPalette.Colors>
-                            <Color>#FD5915</Color>
-                            <Color>#F09D25</Color>
-                            <Color>#E2E232</Color>
-                            <Color>#A5D648</Color>
-                            <Color>#6EC95C</Color>
+                            <Color>#FF9400D3</Color>
+                            <Color>#FF4472C4</Color>
+                            <Color>#FF5B9BD5</Color>
+                            <Color>#FF70AD47</Color>
+                            <Color>#FFFFC000</Color>
+                            <Color>#FFED7D31</Color>
+                            <Color>#FFFF4500</Color>
+                            <Color>#FFFF0000</Color>
                           </dxc:CustomPalette.Colors>
                         </dxc:CustomPalette>
                       </dxc:RangeColorizer3D.Palette>

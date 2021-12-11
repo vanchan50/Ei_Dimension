@@ -91,10 +91,5 @@ namespace Ei_Dimension.Views
     {
       printSC.Visibility = Visibility.Hidden;
     }
-
-    private void UserControl_Loaded(object sender, RoutedEventArgs e)
-    {
-      Plot3DButton.IsChecked = true;
-    }
   }
 }

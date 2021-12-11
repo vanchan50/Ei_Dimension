@@ -101,10 +101,10 @@ namespace Ei_Dimension.ViewModels
 
       AnalysisMap.Add(new DoubleHeatMapData(1, 1, 1));
 
-      AnalysisMap.Add(new DoubleHeatMapData(10, 30000, 300000));
-      AnalysisMap.Add(new DoubleHeatMapData(10, 10, 300000));
-      AnalysisMap.Add(new DoubleHeatMapData(30000, 10, 300000));
-      AnalysisMap.Add(new DoubleHeatMapData(30000, 30000, 300000));
+      AnalysisMap.Add(new DoubleHeatMapData(10, 30000, 16000));
+      AnalysisMap.Add(new DoubleHeatMapData(10, 10, 18000));
+      AnalysisMap.Add(new DoubleHeatMapData(30000, 10, 14000));
+      AnalysisMap.Add(new DoubleHeatMapData(30000, 30000, 12000));
 
       ScatterSelectorState = new ObservableCollection<bool> { false, false, false, false, false };
       WaitIndicatorVisibility = false;
@@ -736,6 +736,7 @@ namespace Ei_Dimension.ViewModels
 
     public void ShowAnalysis()
     {
+      Views.ResultsView.Instance.Plot3DButton.IsChecked = true;
       AnalysisVisible = System.Windows.Visibility.Visible;
       Show3D();
     }
