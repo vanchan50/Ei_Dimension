@@ -72,6 +72,22 @@ namespace Ei_Dimension.Views
       printSC.Visibility = Visibility.Hidden;
     }
 
+    public void ShowSmallXYPlot()
+    {
+      XYPlot.Width = 660;
+      XYPlot.Height = 412;
+      XYPlot.Margin = new Thickness(80, 444, 0, 0);
+      printXY.Margin = new Thickness(175, 470, 0, 0);
+    }
+
+    public void ShowLargeXYPlot()
+    {
+      XYPlot.Width = 1140;
+      XYPlot.Height = 856;
+      XYPlot.Margin = new Thickness(80, 0, 0, 0);
+      printXY.Margin = new Thickness(280, 26, 0, 0);
+    }
+
     private void XYPlot_MouseEnter(object sender, MouseEventArgs e)
     {
       printXY.Visibility = Visibility.Visible;

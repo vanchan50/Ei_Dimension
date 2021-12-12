@@ -410,113 +410,17 @@
         <Image Stretch="Fill" Source="{dx:DXImage 'SvgImages/XAF/Action_Export_ToImage.svg'}"/>
       </Button>
     </Grid>
-    <!--Heatmap Chart-->
-    <Grid MouseEnter="XYPlot_MouseEnter"
-          MouseLeave="XYPlot_MouseLeave">
-      <Rectangle Fill="{StaticResource AppBackground}"
-                 HorizontalAlignment="Left"
-                 VerticalAlignment="Top"
-                 Width="740" Height="428"
-                 Margin="0,472,0,0"/>
-      <dxc:ChartControl Width="660" Height="412"
-                      HorizontalAlignment="Left"
-                      VerticalAlignment="Top"
-                      BorderThickness="0" Name="XYPlot"
-                      Focusable="False"
-                      Margin="80,444,0,0">
-        <dxc:XYDiagram2D Focusable="False" Name="ChC"
-                       HorizontalAlignment="Left"
-                       VerticalAlignment="Top">
-          <dxc:XYDiagram2D.AxisY>
-            <dxc:AxisY2D Logarithmic="True"
-                       GridLinesMinorVisible="True"
-                       MinorCount="9"
-                       Interlaced="False"
-                       TickmarksMinorVisible="False"
-                       FontFamily="{StaticResource AppTextFont}"
-                       TickmarksVisible="False">
-              <dxc:AxisY2D.Label>
-                <dxc:AxisLabel FontSize="24"/>
-              </dxc:AxisY2D.Label>
-              <dxc:AxisY2D.Title >
-                <dxc:AxisTitle Content="{Binding CLAxis[1]}"
-                             FontSize="30"
-                               Foreground="{StaticResource AppTextColor}"
-                             FontWeight="UltraBold"
-                             Visible="False"/>
-              </dxc:AxisY2D.Title>
-              <dxc:AxisY2D.WholeRange>
-                <dxc:Range dxc:AxisY2D.AlwaysShowZeroLevel="False" >
-                  <dxc:Range.MinValue>
-                    <System:Double>10</System:Double>
-                  </dxc:Range.MinValue>
-                </dxc:Range>
-              </dxc:AxisY2D.WholeRange>
-            </dxc:AxisY2D>
-          </dxc:XYDiagram2D.AxisY>
-          <dxc:XYDiagram2D.AxisX>
-            <dxc:AxisX2D Logarithmic="True"
-                       GridLinesMinorVisible="True"
-                       MinorCount="9"
-                       FontFamily="{StaticResource AppTextFont}"
-                       GridLinesVisible="True"
-                       TickmarksMinorVisible="False"
-                       TickmarksVisible="False">
-              <dxc:AxisX2D.Label>
-                <dxc:AxisLabel FontSize="24"/>
-              </dxc:AxisX2D.Label>
-              <dxc:AxisX2D.Title>
-                <dxc:AxisTitle Content="{Binding CLAxis[0]}"
-                               FontSize="30"
-                               Foreground="{StaticResource AppTextColor}"
-                               FontWeight="UltraBold"
-                               Visible="False"/>
-              </dxc:AxisX2D.Title>
-              <dxc:AxisX2D.WholeRange>
-                <dxc:Range>
-                  <dxc:Range.MinValue>
-                    <System:Double>10</System:Double>
-                  </dxc:Range.MinValue>
-                </dxc:Range>
-              </dxc:AxisX2D.WholeRange>
-            </dxc:AxisX2D>
-          </dxc:XYDiagram2D.AxisX>
-          <dxc:PointSeries2D DataSource="{Binding WorldMap}"
-                             ArgumentDataMember="X"
-                             ValueDataMember="Y"
-                             CrosshairContentShowMode="Legend"
-                             MarkerSize="5"
-                             Brush="LightGray">
-            <dxc:PointSeries2D.MarkerModel>
-              <dxc:BorderlessSimpleMarker2DModel/>
-            </dxc:PointSeries2D.MarkerModel>
-          </dxc:PointSeries2D>
-          <dxc:PointSeries2D Name="HeatMap" DisplayName="HeatMap" MarkerSize="3">
-            <dxc:PointSeries2D.MarkerModel>
-              <dxc:BorderlessSimpleMarker2DModel/>
-            </dxc:PointSeries2D.MarkerModel>
-          </dxc:PointSeries2D>
-        </dxc:XYDiagram2D>
-      </dxc:ChartControl>
-      <Button Width="50" Height="50"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top" Visibility="Hidden"
-            Margin="175,470,0,0" Name="printXY"
-            Command="{Binding XYprintCommand}">
-        <Image Stretch="Fill" Source="{dx:DXImage 'SvgImages/XAF/Action_Export_ToImage.svg'}"/>
-      </Button>
-    </Grid>
 
     <!--Analysis Chart-->
     <!--<Grid Visibility="{Binding AnalysisVisible}">-->
-    <Grid>
+    <Grid Visibility="{Binding AnalysisVisible}">
       <Rectangle Fill="{StaticResource AppBackground}"
                  HorizontalAlignment="Left"
                  VerticalAlignment="Top"
                  Width="1220" Height="900"
                  Margin="0,0,0,0"/>
       <!--<Grid Visibility="{Binding Analysis3DVisible}">-->
-      <Grid Visibility="Visible">
+      <Grid Visibility="{Binding Analysis3DVisible}">
         <dxc:Chart3DControl Width="1120" Height="850"
                           HorizontalAlignment="Left"
                           VerticalAlignment="Top"
@@ -622,11 +526,109 @@
                   </dxc:SurfaceSeriesView.FillStyle>
                 </dxc:SurfaceSeriesView>
       -->
-      <!--<Grid Visibility="{Binding Analysis2DVisible}">-->
-      <Grid Visibility="Visible">
+    </Grid>
 
-      </Grid>
+    <!--Heatmap Chart-->
+    <!--<Grid Visibility="{Binding Analysis2DVisible}">-->
+    <Grid MouseEnter="XYPlot_MouseEnter"
+          MouseLeave="XYPlot_MouseLeave"
+          Visibility="{Binding Analysis2DVisible}">
+      <Rectangle Fill="{StaticResource AppBackground}"
+                 HorizontalAlignment="Left"
+                 VerticalAlignment="Top"
+                 Width="740" Height="428"
+                 Margin="0,472,0,0"/>
+      <dxc:ChartControl Width="660" Height="412"
+                      HorizontalAlignment="Left"
+                      VerticalAlignment="Top"
+                      BorderThickness="0" Name="XYPlot"
+                      Focusable="False"
+                      Margin="80,444,0,0">
+        <dxc:XYDiagram2D Focusable="False" Name="ChC"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Top">
+          <dxc:XYDiagram2D.AxisY>
+            <dxc:AxisY2D Logarithmic="True"
+                       GridLinesMinorVisible="True"
+                       MinorCount="9"
+                       Interlaced="False"
+                       TickmarksMinorVisible="False"
+                       FontFamily="{StaticResource AppTextFont}"
+                       TickmarksVisible="False">
+              <dxc:AxisY2D.Label>
+                <dxc:AxisLabel FontSize="24"/>
+              </dxc:AxisY2D.Label>
+              <dxc:AxisY2D.Title >
+                <dxc:AxisTitle Content="{Binding CLAxis[1]}"
+                             FontSize="30"
+                               Foreground="{StaticResource AppTextColor}"
+                             FontWeight="UltraBold"
+                             Visible="False"/>
+              </dxc:AxisY2D.Title>
+              <dxc:AxisY2D.WholeRange>
+                <dxc:Range dxc:AxisY2D.AlwaysShowZeroLevel="False" >
+                  <dxc:Range.MinValue>
+                    <System:Double>10</System:Double>
+                  </dxc:Range.MinValue>
+                </dxc:Range>
+              </dxc:AxisY2D.WholeRange>
+            </dxc:AxisY2D>
+          </dxc:XYDiagram2D.AxisY>
+          <dxc:XYDiagram2D.AxisX>
+            <dxc:AxisX2D Logarithmic="True"
+                       GridLinesMinorVisible="True"
+                       MinorCount="9"
+                       FontFamily="{StaticResource AppTextFont}"
+                       GridLinesVisible="True"
+                       TickmarksMinorVisible="False"
+                       TickmarksVisible="False">
+              <dxc:AxisX2D.Label>
+                <dxc:AxisLabel FontSize="24"/>
+              </dxc:AxisX2D.Label>
+              <dxc:AxisX2D.Title>
+                <dxc:AxisTitle Content="{Binding CLAxis[0]}"
+                               FontSize="30"
+                               Foreground="{StaticResource AppTextColor}"
+                               FontWeight="UltraBold"
+                               Visible="False"/>
+              </dxc:AxisX2D.Title>
+              <dxc:AxisX2D.WholeRange>
+                <dxc:Range>
+                  <dxc:Range.MinValue>
+                    <System:Double>10</System:Double>
+                  </dxc:Range.MinValue>
+                </dxc:Range>
+              </dxc:AxisX2D.WholeRange>
+            </dxc:AxisX2D>
+          </dxc:XYDiagram2D.AxisX>
+          <dxc:PointSeries2D DataSource="{Binding WorldMap}"
+                             ArgumentDataMember="X"
+                             ValueDataMember="Y"
+                             CrosshairContentShowMode="Legend"
+                             MarkerSize="5"
+                             Brush="LightGray">
+            <dxc:PointSeries2D.MarkerModel>
+              <dxc:BorderlessSimpleMarker2DModel/>
+            </dxc:PointSeries2D.MarkerModel>
+          </dxc:PointSeries2D>
+          <dxc:PointSeries2D Name="HeatMap" DisplayName="HeatMap" MarkerSize="3">
+            <dxc:PointSeries2D.MarkerModel>
+              <dxc:BorderlessSimpleMarker2DModel/>
+            </dxc:PointSeries2D.MarkerModel>
+          </dxc:PointSeries2D>
+        </dxc:XYDiagram2D>
+      </dxc:ChartControl>
+      <Button Width="50" Height="50"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top" Visibility="Hidden"
+            Margin="175,470,0,0" Name="printXY"
+            Command="{Binding XYprintCommand}">
+        <Image Stretch="Fill" Source="{dx:DXImage 'SvgImages/XAF/Action_Export_ToImage.svg'}"/>
+      </Button>
+    </Grid>
 
+    <!--<Grid Visibility="{Binding AnalysisVisible}">-->
+    <Grid Visibility="{Binding AnalysisVisible}">
       <dx:WaitIndicator DeferedVisibility="{Binding ChartWaitIndicatorVisibility}"
                         Content="Loading..."
                         HorizontalAlignment="Left"
@@ -650,17 +652,19 @@
                      IsChecked="True"
                      img:EmbeddedImg.Image="{dx:DXImage 'SvgImages/XAF/ModelEditor_Class_Object.svg'}"
                      Style="{DynamicResource SubRibbonButtonStyle}"
-                     Command="{Binding Show3DCommand}">
+                     Command="{Binding Show3DCommand}"
+                     Opacity="0.6">
         </RadioButton>
         <RadioButton Content="{lang:Loc Analysis_Plot2D}"
                      Height="84"
                      img:EmbeddedImg.Image="{dx:DXImage 'SvgImages/XAF/Action_Debug_Stop.svg'}"
                      Style="{DynamicResource SubRibbonButtonStyle}"
-                     Command="{Binding Show2DCommand}">
+                     Command="{Binding Show2DCommand}"
+                     Opacity="0.6">
         </RadioButton>
       </StackPanel>
     </Grid>
-    
+
     <!--Cl0-3Y Buttons-->
     <StackPanel HorizontalAlignment="Left"
                 VerticalAlignment="Top"

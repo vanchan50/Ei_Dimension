@@ -232,7 +232,7 @@ namespace Ei_Dimension.ViewModels
       TopLabel384Visible = System.Windows.Visibility.Visible;
       BottomLabel384Visible = System.Windows.Visibility.Hidden;
       AnalysisVisible = System.Windows.Visibility.Hidden;
-      Analysis2DVisible = System.Windows.Visibility.Hidden;
+      Analysis2DVisible = System.Windows.Visibility.Visible;
       Analysis3DVisible = System.Windows.Visibility.Hidden;
 
       MfiItems = new ObservableCollection<string>();
@@ -451,7 +451,7 @@ namespace Ei_Dimension.ViewModels
     {
       _ = Task.Run(async () =>
       {
-        var path = @"C:\Emissioninc\KEIZ0R-LEGION\AcquisitionData\val speed test 2E7_0.csv";//PlatePictogram.GetSelectedFilePath();
+        var path = PlatePictogram.GetSelectedFilePath();  //@"C:\Emissioninc\KEIZ0R-LEGION\AcquisitionData\val speed test 2E7_0.csv";
         if (path == null)
         {
           ResultsWaitIndicatorVisibility = false;
@@ -869,6 +869,7 @@ namespace Ei_Dimension.ViewModels
 
     public void Show2D()
     {
+      Views.ResultsView.Instance.ShowLargeXYPlot();
       Analysis2DVisible = System.Windows.Visibility.Visible;
       Analysis3DVisible = System.Windows.Visibility.Hidden;
     }
@@ -882,6 +883,7 @@ namespace Ei_Dimension.ViewModels
 
     public void ShowResults()
     {
+      Views.ResultsView.Instance.ShowSmallXYPlot();
       AnalysisVisible = System.Windows.Visibility.Hidden;
       Analysis2DVisible = System.Windows.Visibility.Visible;
       Analysis3DVisible = System.Windows.Visibility.Hidden;
