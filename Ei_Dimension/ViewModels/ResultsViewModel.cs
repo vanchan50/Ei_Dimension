@@ -4,6 +4,7 @@ using Ei_Dimension.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Ei_Dimension.ViewModels
@@ -14,9 +15,9 @@ namespace Ei_Dimension.ViewModels
     public virtual System.Windows.Visibility MultiPlexVisible { get; set; }
     public virtual System.Windows.Visibility SinglePlexVisible { get; set; }
     public virtual System.Windows.Visibility ValidationCoverVisible { get; set; }
-    public virtual bool WaitIndicatorVisibility { get; set; }
+    public virtual bool ResultsWaitIndicatorVisibility { get; set; }
+    public virtual bool ChartWaitIndicatorVisibility { get; set; }
     public virtual ObservableCollection<bool> ScatterSelectorState { get; set; }
-    public virtual ObservableCollection<DoubleHeatMapData> AnalysisMap { get; set; }
     public virtual ObservableCollection<HistogramData> CurrentForwardSsc { get; set; }
     public virtual ObservableCollection<HistogramData> CurrentVioletSsc { get; set; }
     public virtual ObservableCollection<HistogramData> CurrentRedSsc { get; set; }
@@ -67,6 +68,20 @@ namespace Ei_Dimension.ViewModels
     public Dictionary<(int x, int y), int> BackingCL12Dict { get; private set; }
     public Dictionary<(int x, int y), int> BackingCL13Dict { get; private set; }
     public Dictionary<(int x, int y), int> BackingCL23Dict { get; private set; }
+    public virtual ObservableCollection<DoubleHeatMapData> DisplayedAnalysisMap { get; set; }
+    public virtual ObservableCollection<DoubleHeatMapData> CurrentAnalysis01Map { get; set; }
+    public virtual ObservableCollection<DoubleHeatMapData> CurrentAnalysis02Map { get; set; }
+    public virtual ObservableCollection<DoubleHeatMapData> CurrentAnalysis03Map { get; set; }
+    public virtual ObservableCollection<DoubleHeatMapData> CurrentAnalysis12Map { get; set; }
+    public virtual ObservableCollection<DoubleHeatMapData> CurrentAnalysis13Map { get; set; }
+    public virtual ObservableCollection<DoubleHeatMapData> CurrentAnalysis23Map { get; set; }
+    public virtual ObservableCollection<DoubleHeatMapData> BackingAnalysis01Map { get; set; }
+    public virtual ObservableCollection<DoubleHeatMapData> BackingAnalysis02Map { get; set; }
+    public virtual ObservableCollection<DoubleHeatMapData> BackingAnalysis03Map { get; set; }
+    public virtual ObservableCollection<DoubleHeatMapData> BackingAnalysis12Map { get; set; }
+    public virtual ObservableCollection<DoubleHeatMapData> BackingAnalysis13Map { get; set; }
+    public virtual ObservableCollection<DoubleHeatMapData> BackingAnalysis23Map { get; set; }
+    public List<MicroCy.WellResults> BackingWResults { get; set; }
     public virtual DrawingPlate PlatePictogram { get; set; }
     public virtual System.Windows.Visibility Buttons384Visible { get; set; }
     public virtual System.Windows.Visibility LeftLabel384Visible { get; set; }
@@ -88,26 +103,9 @@ namespace Ei_Dimension.ViewModels
 
     protected ResultsViewModel()
     {
-      AnalysisMap = new ObservableCollection<DoubleHeatMapData>();
-      AnalysisMap.Add(new DoubleHeatMapData(0, 0, 1));
-
-      AnalysisMap.Add(new DoubleHeatMapData(0, 0.5, 1));
-      AnalysisMap.Add(new DoubleHeatMapData(0, 1, 1));
-
-      AnalysisMap.Add(new DoubleHeatMapData(0.5, 0.5, 4));
-
-      AnalysisMap.Add(new DoubleHeatMapData(0.5, 0, 1));
-      AnalysisMap.Add(new DoubleHeatMapData(1, 0, 1));
-
-      AnalysisMap.Add(new DoubleHeatMapData(1, 1, 1));
-
-      AnalysisMap.Add(new DoubleHeatMapData(10, 30000, 16000));
-      AnalysisMap.Add(new DoubleHeatMapData(10, 10, 18000));
-      AnalysisMap.Add(new DoubleHeatMapData(30000, 10, 14000));
-      AnalysisMap.Add(new DoubleHeatMapData(30000, 30000, 12000));
-
       ScatterSelectorState = new ObservableCollection<bool> { false, false, false, false, false };
-      WaitIndicatorVisibility = false;
+      ResultsWaitIndicatorVisibility = false;
+      ChartWaitIndicatorVisibility = false;
       MultiPlexVisible = System.Windows.Visibility.Visible;
       SinglePlexVisible = System.Windows.Visibility.Hidden;
       ValidationCoverVisible = System.Windows.Visibility.Hidden;
@@ -205,6 +203,22 @@ namespace Ei_Dimension.ViewModels
       DisplayedGreenSsc = CurrentGreenSsc;
       DisplayedReporter = CurrentReporter;
       DisplaysCurrentmap = true;
+
+      CurrentAnalysis01Map = new ObservableCollection<DoubleHeatMapData>();
+      CurrentAnalysis02Map = new ObservableCollection<DoubleHeatMapData>();
+      CurrentAnalysis03Map = new ObservableCollection<DoubleHeatMapData>();
+      CurrentAnalysis12Map = new ObservableCollection<DoubleHeatMapData>();
+      CurrentAnalysis13Map = new ObservableCollection<DoubleHeatMapData>();
+      CurrentAnalysis23Map = new ObservableCollection<DoubleHeatMapData>();
+      BackingAnalysis01Map = new ObservableCollection<DoubleHeatMapData>();
+      BackingAnalysis02Map = new ObservableCollection<DoubleHeatMapData>();
+      BackingAnalysis03Map = new ObservableCollection<DoubleHeatMapData>();
+      BackingAnalysis12Map = new ObservableCollection<DoubleHeatMapData>();
+      BackingAnalysis13Map = new ObservableCollection<DoubleHeatMapData>();
+      BackingAnalysis23Map = new ObservableCollection<DoubleHeatMapData>();
+      BackingWResults = new List<MicroCy.WellResults>();
+
+      DisplayedAnalysisMap = CurrentAnalysis12Map;
 
       PlatePictogram = DrawingPlate.Create();
       Buttons384Visible = System.Windows.Visibility.Hidden;
@@ -338,6 +352,12 @@ namespace Ei_Dimension.ViewModels
         CurrentCL12Dict.Clear();
         CurrentCL13Dict.Clear();
         CurrentCL23Dict.Clear();
+        CurrentAnalysis01Map.Clear();
+        CurrentAnalysis02Map.Clear();
+        CurrentAnalysis03Map.Clear();
+        CurrentAnalysis12Map.Clear();
+        CurrentAnalysis13Map.Clear();
+        CurrentAnalysis23Map.Clear();
       }
       else
       {
@@ -361,6 +381,15 @@ namespace Ei_Dimension.ViewModels
         BackingCL12Dict.Clear();
         BackingCL13Dict.Clear();
         BackingCL23Dict.Clear();
+        BackingAnalysis01Map.Clear();
+        BackingAnalysis02Map.Clear();
+        BackingAnalysis03Map.Clear();
+        lock (BackingAnalysis12Map)
+        {
+          BackingAnalysis12Map.Clear();
+        }
+        BackingAnalysis13Map.Clear();
+        BackingAnalysis23Map.Clear();
         for (var i = 0; i < App.MapRegions.BackingActiveRegionsCount.Count; i++)
         {
           App.MapRegions.BackingActiveRegionsCount[i] = "0";
@@ -422,12 +451,14 @@ namespace Ei_Dimension.ViewModels
     {
       _ = Task.Run(async () =>
       {
-        var path = PlatePictogram.GetSelectedFilePath();
+        var path = @"C:\Emissioninc\KEIZ0R-LEGION\AcquisitionData\val speed test 2E7_0.csv";//PlatePictogram.GetSelectedFilePath();
         if (path == null)
         {
-          WaitIndicatorVisibility = false;
+          ResultsWaitIndicatorVisibility = false;
+          ChartWaitIndicatorVisibility = false;
           return;
         }
+        FillBackingWellResults();
         var beadStructslist = new List<MicroCy.BeadInfoStruct>();
         await ParseBeadInfoAsync(path, beadStructslist);
         _ = Task.Run(() => Core.DataProcessor.BinScatterData(beadStructslist, fromFile: true));
@@ -436,9 +467,40 @@ namespace Ei_Dimension.ViewModels
         _ = App.Current.Dispatcher.BeginInvoke((Action)(() =>
         {
           Core.DataProcessor.AnalyzeHeatMap(DisplayedMap);
+          FillBackingAnalysis();
         }));
         MainViewModel.Instance.EventCountLocal[0] = beadStructslist.Count.ToString();
       });
+    }
+
+    private void FillBackingWellResults()
+    {
+      BackingWResults.Clear();
+      foreach(var reg in App.MapRegions.ActiveRegionNums)
+      {
+        BackingWResults.Add(new MicroCy.WellResults { regionNumber = (ushort)reg});
+      }
+    }
+
+    private void FillBackingAnalysis()
+    {
+      foreach (var result in BackingWResults)
+      {
+        var RegionIndex = App.Device.ActiveMap.regions.FindIndex(r => r.Number == result.regionNumber);
+        if (RegionIndex != -1)
+        {
+          var x = HeatMapData.bins[App.Device.ActiveMap.regions[RegionIndex].Center.x];
+          var y = HeatMapData.bins[App.Device.ActiveMap.regions[RegionIndex].Center.y];
+          lock (BackingAnalysis12Map)
+          {
+            if (result.RP1vals.Count > 0)
+            {
+              BackingAnalysis12Map.Add(new DoubleHeatMapData(x, y, result.RP1vals.Average()));
+            }
+          }
+        }
+      }
+      ChartWaitIndicatorVisibility = false;
     }
 
     public void PlotCurrent(bool current = true)
@@ -473,7 +535,8 @@ namespace Ei_Dimension.ViewModels
         DisplayedReporter = BackingReporter;
         if (App.MapRegions != null)
         {
-          WaitIndicatorVisibility = true;
+          ResultsWaitIndicatorVisibility = true;
+          ChartWaitIndicatorVisibility = true;
           App.MapRegions.DisplayedActiveRegionsCount = App.MapRegions.BackingActiveRegionsCount;
           App.MapRegions.DisplayedActiveRegionsMean = App.MapRegions.BackingActiveRegionsMean;
         }
@@ -501,11 +564,11 @@ namespace Ei_Dimension.ViewModels
     
     private void SetWorldMap(List<HeatMapData> Map)
     {
-      Action Wmap = null;
+      Action BuildWmap = null;
       switch (App.Device.Mode)
       {
         case MicroCy.OperationMode.Normal:
-          Wmap = () => {
+          BuildWmap = () => {
             foreach (var point in Map)
             {
               if (App.MapRegions.ActiveRegionNums.Contains(point.Region))
@@ -520,7 +583,7 @@ namespace Ei_Dimension.ViewModels
           break;
         case MicroCy.OperationMode.Calibration:
           Map = CalibrationWorldMap;
-          Wmap = () => {
+          BuildWmap = () => {
             foreach (var point in Map)
             {
               WorldMap.Add(new HeatMapData(point.X, point.Y));
@@ -528,7 +591,7 @@ namespace Ei_Dimension.ViewModels
           };
           break;
         case MicroCy.OperationMode.Verification:
-          Wmap = () => {
+          BuildWmap = () => {
             foreach (var point in Map)
             {
               if (App.MapRegions.VerificationRegionNums.Contains(point.Region))
@@ -547,7 +610,7 @@ namespace Ei_Dimension.ViewModels
       if (Map != null)
       {
         WorldMap.Clear();
-        _ = App.Current.Dispatcher.BeginInvoke(Wmap);
+        _ = App.Current.Dispatcher.BeginInvoke(BuildWmap);
       }
     }
 
@@ -560,30 +623,49 @@ namespace Ei_Dimension.ViewModels
         if (CLButtonsChecked[1])
         {
           if (DisplaysCurrentmap)
+          {
             DisplayedMap = CurrentCL01Map;
+            DisplayedAnalysisMap = CurrentAnalysis01Map;
+          }
           else
+          {
             DisplayedMap = BackingCL01Map;
+            DisplayedAnalysisMap = BackingAnalysis01Map;
+          }
           WldMap = World01Map;
         }
         else if (CLButtonsChecked[2])
         {
           if (DisplaysCurrentmap)
+          {
             DisplayedMap = CurrentCL02Map;
+            DisplayedAnalysisMap = CurrentAnalysis02Map;
+          }
           else
+          {
             DisplayedMap = BackingCL02Map;
+            DisplayedAnalysisMap = BackingAnalysis02Map;
+          }
           WldMap = World02Map;
         }
         else if (CLButtonsChecked[3])
         {
           if (DisplaysCurrentmap)
+          {
             DisplayedMap = CurrentCL03Map;
+            DisplayedAnalysisMap = CurrentAnalysis03Map;
+          }
           else
+          {
             DisplayedMap = BackingCL03Map;
+            DisplayedAnalysisMap = BackingAnalysis03Map;
+          }
           WldMap = World03Map;
         }
         else
         {
           DisplayedMap = null;
+          DisplayedAnalysisMap = null;
           Views.ResultsView.Instance.ClearPoints();
           WorldMap.Clear();
         }
@@ -593,31 +675,50 @@ namespace Ei_Dimension.ViewModels
         if (CLButtonsChecked[0])
         {
           if (DisplaysCurrentmap)
+          {
             DisplayedMap = CurrentCL01Map;
+            DisplayedAnalysisMap = CurrentAnalysis01Map;
+          }
           else
+          {
             DisplayedMap = BackingCL01Map;
+            DisplayedAnalysisMap = BackingAnalysis01Map;
+          }
           FlipMapAnalysis = true;
           WldMap = World01Map;
         }
         else if (CLButtonsChecked[2])
         {
           if (DisplaysCurrentmap)
+          {
             DisplayedMap = CurrentCL12Map;
+            DisplayedAnalysisMap = CurrentAnalysis12Map;
+          }
           else
+          {
             DisplayedMap = BackingCL12Map;
+            DisplayedAnalysisMap = BackingAnalysis12Map;
+          }
           WldMap = World12Map;
         }
         else if (CLButtonsChecked[3])
         {
           if (DisplaysCurrentmap)
+          {
             DisplayedMap = CurrentCL13Map;
+            DisplayedAnalysisMap = CurrentAnalysis13Map;
+          }
           else
+          {
             DisplayedMap = BackingCL13Map;
+            DisplayedAnalysisMap = BackingAnalysis13Map;
+          }
           WldMap = World13Map;
         }
         else
         {
           DisplayedMap = null;
+          DisplayedAnalysisMap = null;
           Views.ResultsView.Instance.ClearPoints();
           WorldMap.Clear();
         }
@@ -627,32 +728,51 @@ namespace Ei_Dimension.ViewModels
         if (CLButtonsChecked[0])
         {
           if (DisplaysCurrentmap)
+          {
             DisplayedMap = CurrentCL02Map;
+            DisplayedAnalysisMap = CurrentAnalysis02Map;
+          }
           else
+          {
             DisplayedMap = BackingCL02Map;
+            DisplayedAnalysisMap = BackingAnalysis02Map;
+          }
           FlipMapAnalysis = true;
           WldMap = World02Map;
         }
         else if (CLButtonsChecked[1])
         {
           if (DisplaysCurrentmap)
+          {
             DisplayedMap = CurrentCL12Map;
+            DisplayedAnalysisMap = CurrentAnalysis12Map;
+          }
           else
+          {
             DisplayedMap = BackingCL12Map;
+            DisplayedAnalysisMap = BackingAnalysis12Map;
+          }
           FlipMapAnalysis = true;
           WldMap = World12Map;
         }
         else if (CLButtonsChecked[3])
         {
           if (DisplaysCurrentmap)
+          {
             DisplayedMap = CurrentCL23Map;
+            DisplayedAnalysisMap = CurrentAnalysis23Map;
+          }
           else
+          {
             DisplayedMap = BackingCL23Map;
+            DisplayedAnalysisMap = BackingAnalysis23Map;
+          }
           WldMap = World23Map;
         }
         else
         {
           DisplayedMap = null;
+          DisplayedAnalysisMap = null;
           Views.ResultsView.Instance.ClearPoints();
           WorldMap.Clear();
         }
@@ -662,33 +782,52 @@ namespace Ei_Dimension.ViewModels
         if (CLButtonsChecked[0])
         {
           if (DisplaysCurrentmap)
+          {
             DisplayedMap = CurrentCL03Map;
+            DisplayedAnalysisMap = CurrentAnalysis03Map;
+          }
           else
+          {
             DisplayedMap = BackingCL03Map;
+            DisplayedAnalysisMap = BackingAnalysis03Map;
+          }
           FlipMapAnalysis = true;
           WldMap = World03Map;
         }
         else if (CLButtonsChecked[1])
         {
           if (DisplaysCurrentmap)
+          {
             DisplayedMap = CurrentCL13Map;
+            DisplayedAnalysisMap = CurrentAnalysis13Map;
+          }
           else
+          {
             DisplayedMap = BackingCL13Map;
+            DisplayedAnalysisMap = BackingAnalysis13Map;
+          }
           FlipMapAnalysis = true;
           WldMap = World13Map;
         }
         else if (CLButtonsChecked[2])
         {
           if (DisplaysCurrentmap)
+          {
             DisplayedMap = CurrentCL23Map;
+            DisplayedAnalysisMap = CurrentAnalysis23Map;
+          }
           else
+          {
             DisplayedMap = BackingCL23Map;
+            DisplayedAnalysisMap = BackingAnalysis23Map;
+          }
           FlipMapAnalysis = true;
           WldMap = World23Map;
         }
         else
         {
           DisplayedMap = null;
+          DisplayedAnalysisMap = null;
           Views.ResultsView.Instance.ClearPoints();
           WorldMap.Clear();
         }

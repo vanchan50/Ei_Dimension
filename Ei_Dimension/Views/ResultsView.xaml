@@ -68,7 +68,7 @@
                    Fill="{StaticResource RibbonBackgroundActive}"
                    Margin="1,94,0,0"/>
         </Grid>
-        <dx:WaitIndicator DeferedVisibility="{Binding WaitIndicatorVisibility}" Content="Loading..."
+        <dx:WaitIndicator DeferedVisibility="{Binding ResultsWaitIndicatorVisibility}" Content="Loading..."
                           HorizontalAlignment="Left"
                           VerticalAlignment="Top"
                           Margin="120,400,0,0">
@@ -560,7 +560,7 @@
 
           <dxc:Series3DStorage>
             <dxc:Series3D LabelsVisibility="True">
-              <dxc:SeriesPoint3DDataSourceAdapter DataSource="{Binding AnalysisMap}"
+              <dxc:SeriesPoint3DDataSourceAdapter DataSource="{Binding DisplayedAnalysisMap}"
                                                   XArgumentDataMember="Y"
                                                   YArgumentDataMember="X" 
                                                   ValueDataMember="A"/>
@@ -586,7 +586,7 @@
                     </dxc:RangeColorizer3D>
                   </dxc:Bar3DSeriesView.Colorizer>
                   <dxc:Bar3DSeriesView.BarSize>
-                    <dxc:Bar3DSize X="0.03" Z="1"/>
+                    <dxc:Bar3DSize X="0.13" Z="1"/>
                   </dxc:Bar3DSeriesView.BarSize>
                   <dxc:Bar3DSeriesView.BarModel>
                     <dxc:Bar3DOctagonPointModel ShowFacets="True"/>
@@ -626,6 +626,21 @@
       <Grid Visibility="Visible">
 
       </Grid>
+
+      <dx:WaitIndicator DeferedVisibility="{Binding ChartWaitIndicatorVisibility}"
+                        Content="Loading..."
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Margin="560,380,0,0">
+        <dx:WaitIndicator.ContentTemplate>
+          <DataTemplate>
+            <StackPanel Orientation="Vertical">
+              <TextBlock Text="Please Wait" FontSize="20"/>
+              <TextBlock Text="{Binding}"/>
+            </StackPanel>
+          </DataTemplate>
+        </dx:WaitIndicator.ContentTemplate>
+      </dx:WaitIndicator>
       <StackPanel Margin="30,60,0,0"
                   Width="240"
                   HorizontalAlignment="Left"

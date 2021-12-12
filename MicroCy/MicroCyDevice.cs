@@ -433,7 +433,7 @@ namespace MicroCy
       if (param.Valdate != null)
         map.valtime = param.Valdate;
 
-    MapList[idx] = map;
+      MapList[idx] = map;
       ActiveMap = MapList[idx];
 
       var contents = JsonConvert.SerializeObject(map);

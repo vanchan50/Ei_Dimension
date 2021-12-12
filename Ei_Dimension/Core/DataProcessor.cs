@@ -209,7 +209,7 @@ namespace Ei_Dimension.Core
             }
             j++;
           }
-          ResVM.WaitIndicatorVisibility = false;
+          ResVM.ResultsWaitIndicatorVisibility = false;
         }
         else
         {
@@ -405,6 +405,14 @@ namespace Ei_Dimension.Core
           {
             ResVM.BackingCL23Map[ResVM.BackingCL23Dict[(cl2, cl3)]].A++;
           }
+
+          //3DReporterPlot
+          var index = ResVM.BackingWResults.FindIndex(x => x.regionNumber == bead.region);
+          if(index != -1)
+          {
+            ResVM.BackingWResults[index].RP1vals.Add(bead.reporter);
+          }
+          
         }
       }
     }

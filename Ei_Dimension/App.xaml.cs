@@ -1599,7 +1599,7 @@ namespace Ei_Dimension
           ShowNotification(ErrorMessage);
         }
         else
-          ((ObservableCollection<string>)SelectedTextBox.prop.GetValue(SelectedTextBox.VM))[SelectedTextBox.index] = _tempNewString.Trim('0');
+          ((ObservableCollection<string>)SelectedTextBox.prop.GetValue(SelectedTextBox.VM))[SelectedTextBox.index] = _tempNewString.TrimStart('0');
         _tempNewString = null;
         //SelectedTextBox = (null, null, 0);
       }
@@ -2330,6 +2330,7 @@ namespace Ei_Dimension
           var rp1 = new float[Device.WellResults[i].RP1vals.Count];
           Device.WellResults[i].RP1vals.CopyTo(0, rp1, 0, rp1.Length);
           tempResults.Add((Device.WellResults[i].regionNumber, rp1));
+          ResultsViewModel.Instance.CurrentAnalysis12Map.Clear();
         }
         _ = Current.Dispatcher.BeginInvoke((Action)(() =>
         {
@@ -2338,6 +2339,7 @@ namespace Ei_Dimension
             var index = MapRegions.RegionsList.IndexOf(result.region.ToString());
             if (index == -1)
               continue;
+            float Avg = 0;
             if (result.vals.Length == 0)
             {
               MapRegions.CurrentActiveRegionsCount[index] = "0";
@@ -2346,14 +2348,23 @@ namespace Ei_Dimension
             else
             {
               MapRegions.CurrentActiveRegionsCount[index] = result.vals.Count().ToString();
-              MapRegions.CurrentActiveRegionsMean[index] = result.vals.Average().ToString("0,0");
-              Array.Clear(result.vals, 0, result.vals.Length);
+              Avg = result.vals.Average();
+              MapRegions.CurrentActiveRegionsMean[index] = Avg.ToString("0,0");
+              Array.Clear(result.vals, 0, result.vals.Length);  //Crutch. Explicit clear needed for some reason
             }
+            Reporter3DGraphHandler(index, Avg);
           }
           tempResults = null;
           _ActiveRegionsUpdateGoing = false;
         }));
       }
+    }
+
+    private static void Reporter3DGraphHandler(int RegionIndex, double ReporterAVG)
+    {
+      var x = Models.HeatMapData.bins[Device.ActiveMap.regions[RegionIndex].Center.x];
+      var y = Models.HeatMapData.bins[Device.ActiveMap.regions[RegionIndex].Center.y];
+      ResultsViewModel.Instance.CurrentAnalysis12Map.Add(new Models.DoubleHeatMapData(x, y, ReporterAVG));
     }
 
     private static void UpdateEventCounter()
