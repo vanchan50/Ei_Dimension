@@ -294,6 +294,13 @@ namespace Ei_Dimension
         ComponentsVM.SelectedSampleAContent = ComponentsVM.SyringeControlItems[0].Content;
         ComponentsVM.SelectedSampleBContent = ComponentsVM.SyringeControlItems[0].Content;
 
+        ComponentsVM.VerificationWarningItems[0].Content = RM.GetString(nameof(Language.Resources.Daily), curCulture);
+        ComponentsVM.VerificationWarningItems[1].Content = RM.GetString(nameof(Language.Resources.Weekly), curCulture);
+        ComponentsVM.VerificationWarningItems[2].Content = RM.GetString(nameof(Language.Resources.Monthly), curCulture);
+        ComponentsVM.VerificationWarningItems[3].Content = RM.GetString(nameof(Language.Resources.Quarterly), curCulture);
+        ComponentsVM.VerificationWarningItems[4].Content = RM.GetString(nameof(Language.Resources.Yearly), curCulture);
+        ComponentsVM.SelectedVerificationWarningContent = ComponentsVM.VerificationWarningItems[Settings.Default.VerificationWarningIndex].Content;
+
         ComponentsVM.GetPositionToggleButtonState = ComponentsVM.GetPositionToggleButtonState ==
           RM.GetString(nameof(Language.Resources.OFF), exCulture) ? RM.GetString(nameof(Language.Resources.OFF), curCulture)
           : RM.GetString(nameof(Language.Resources.ON), curCulture);
@@ -2446,11 +2453,11 @@ namespace Ei_Dimension
           break;
         case OperationMode.Verification:
           Device.Verificator.CalculateResults();
-          if (AnalyzeVerificationResults())
+          if (VerificationViewModel.AnalyzeVerificationResults())
           {
             _ = Current.Dispatcher.BeginInvoke((Action)(() =>
             {
-              VerificationViewModel.Instance.VerificationSuccess();
+              VerificationViewModel.VerificationSuccess();
             }));
           }
           else
@@ -2489,11 +2496,11 @@ namespace Ei_Dimension
       Console.SetOut(logwriter);
     }
 
-    //protected override void OnStartup(StartupEventArgs e)
-    //{
-    //  DevExpress.Xpf.Core.ApplicationThemeHelper.ApplicationThemeName = DevExpress.Xpf.Core.Theme.Office2007BlueName;
-    //  base.OnStartup(e);
-    //}
+    protected override void OnStartup(StartupEventArgs e)
+    {
+      DevExpress.Xpf.Core.ApplicationThemeHelper.ApplicationThemeName = DevExpress.Xpf.Core.Theme.Office2019ColorfulName;
+      base.OnStartup(e);
+    }
 
     private static void OnAppLoaded()
     {
@@ -2521,35 +2528,6 @@ namespace Ei_Dimension
       Views.ExperimentView.Instance.DbButton.IsChecked = true;
       Device.MainCommand("Get Property", code: 0x01);
       _isStartup = false;
-    }
-
-    private static bool AnalyzeVerificationResults()
-    {
-      bool passed = true;
-      if (Device.Verificator.TotalClassifiedBeads < Device.TotalBeads * 0.8)
-      {
-        Console.WriteLine("Verification Fail: Less than 80% of beads hit the regions");
-        passed = false;
-      }
-
-      double reporterErrorMargin = 0.2;
-      for (var i = 0; i < MapRegions.RegionsList.Count; i++)
-      {
-        if (MapRegions.VerificationRegions[i])
-        {
-          int regionNum = int.Parse(MapRegions.RegionsList[i]);
-          double inputReporter = double.Parse(MapRegions.VerificationReporterList[i]);
-          int validatorIndex = Device.Verificator.RegionalStats.FindIndex(x => x.Region == regionNum);
-
-          if (Device.Verificator.RegionalStats[validatorIndex].Stats[0].mfi <= inputReporter * (1 - reporterErrorMargin) &&
-            Device.Verificator.RegionalStats[validatorIndex].Stats[0].mfi >= inputReporter * (1 + reporterErrorMargin))
-          {
-            Console.WriteLine($"Verification Fail: Reporter value ({Device.Verificator.RegionalStats[validatorIndex].Stats[0].mfi}) deviation is more than 20% from the target ({MapRegions.VerificationReporterList[i]})");
-            passed = false;
-          }
-        }
-      }
-      return passed;
     }
 
     private static void HideChannels()

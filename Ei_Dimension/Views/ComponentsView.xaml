@@ -707,6 +707,55 @@
       </StackPanel>
     </Border>
 
+    <Border HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Margin="600,610,0,0">
+      <StackPanel>
+        <TextBlock Text="{lang:Loc Verification_Warning_Schedule}"
+                   FontFamily="{StaticResource AppTextFont}"
+                   FontSize="26"
+                   Width="200"
+                   FontWeight="UltraBold"
+                   Foreground="{StaticResource AppTextColor}"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Top"
+                   TextWrapping="Wrap"
+                   TextAlignment="Center"
+                   Margin="0,16,0,3"/>
+        <dx:DropDownButton Width="200"
+                           Height="80" Cursor="Hand"
+                           FontSize="25"
+                           HorizontalAlignment="Left"
+                           VerticalAlignment="Top"
+                           dxb:BarManager.ShowGlyphsInPopupMenus="False"
+                           FontFamily="{StaticResource AppTextFont}"
+                           Foreground="{StaticResource AppTextColor}"
+                           Content="{Binding SelectedVerificationWarningContent}"
+                           Margin="0,4,0,0">
+          <dxb:PopupMenu ItemLinksSource="{Binding VerificationWarningItems}">
+            <dxb:PopupMenu.ItemTemplate>
+              <DataTemplate>
+                <ContentControl>
+                  <dxb:BarButtonItem Content="{Binding Content}"  
+                                   ItemClick="{DXEvent Click((int)4)}">
+                    <dxb:BarButtonItem.ContentTemplate>
+                      <DataTemplate>
+                        <Grid Width="130">
+                          <TextBlock Text="{Binding}" HorizontalAlignment="Center"
+                                   FontFamily="{StaticResource AppTextFont}"
+                                   Foreground="{StaticResource AppTextColor}"
+                                   FontSize="25"/>
+                        </Grid>
+                      </DataTemplate>
+                    </dxb:BarButtonItem.ContentTemplate>
+                  </dxb:BarButtonItem>
+                </ContentControl>
+              </DataTemplate>
+            </dxb:PopupMenu.ItemTemplate>
+          </dxb:PopupMenu>
+        </dx:DropDownButton>
+      </StackPanel>
+    </Border>
     <ToggleButton Style="{StaticResource ToggleButtonThemeStyle}"
                   Height="80" Width="200" HorizontalAlignment="Left"
                   VerticalAlignment="Top"

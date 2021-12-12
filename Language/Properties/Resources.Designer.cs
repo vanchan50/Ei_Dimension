@@ -846,6 +846,15 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Daily.
+        /// </summary>
+        public static string Daily {
+            get {
+                return ResourceManager.GetString("Daily", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to   Active.
         /// </summary>
         public static string Dashboard_Active_Region {
@@ -1779,6 +1788,15 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Monthly.
+        /// </summary>
+        public static string Monthly {
+            get {
+                return ResourceManager.GetString("Monthly", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 384W C1.
         /// </summary>
         public static string Motors_384W_C1 {
@@ -2072,6 +2090,15 @@ namespace Ei_Dimension.Language {
         public static string Program_Name {
             get {
                 return ResourceManager.GetString("Program_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quarterly.
+        /// </summary>
+        public static string Quarterly {
+            get {
+                return ResourceManager.GetString("Quarterly", resourceCulture);
             }
         }
         
@@ -2480,11 +2507,29 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Verification warning schedule.
+        /// </summary>
+        public static string Verification_Warning_Schedule {
+            get {
+                return ResourceManager.GetString("Verification_Warning_Schedule", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Violet.
         /// </summary>
         public static string Violet {
             get {
                 return ResourceManager.GetString("Violet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Weekly.
+        /// </summary>
+        public static string Weekly {
+            get {
+                return ResourceManager.GetString("Weekly", resourceCulture);
             }
         }
         
@@ -2521,6 +2566,15 @@ namespace Ei_Dimension.Language {
         public static string Y {
             get {
                 return ResourceManager.GetString("Y", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yearly.
+        /// </summary>
+        public static string Yearly {
+            get {
+                return ResourceManager.GetString("Yearly", resourceCulture);
             }
         }
         

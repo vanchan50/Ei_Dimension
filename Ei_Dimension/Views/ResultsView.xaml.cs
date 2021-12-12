@@ -76,6 +76,8 @@ namespace Ei_Dimension.Views
     {
       XYPlot.Width = 660;
       XYPlot.Height = 412;
+      WldMap.MarkerSize = 5;
+      HeatMap.MarkerSize = 3;
       XYPlot.Margin = new Thickness(80, 444, 0, 0);
       printXY.Margin = new Thickness(175, 470, 0, 0);
     }
@@ -84,6 +86,8 @@ namespace Ei_Dimension.Views
     {
       XYPlot.Width = 1140;
       XYPlot.Height = 856;
+      WldMap.MarkerSize = 7;
+      HeatMap.MarkerSize = 7;
       XYPlot.Margin = new Thickness(80, 0, 0, 0);
       printXY.Margin = new Thickness(280, 26, 0, 0);
     }

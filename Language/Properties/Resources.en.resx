@@ -392,6 +392,9 @@ Direction</value>
   <data name="Counter" xml:space="preserve">
     <value>Counter</value>
   </data>
+  <data name="Daily" xml:space="preserve">
+    <value>Daily</value>
+  </data>
   <data name="Dashboard_Active_Region" xml:space="preserve">
     <value>  Active</value>
   </data>
@@ -719,6 +722,9 @@ Order</value>
   <data name="Mean" xml:space="preserve">
     <value> Mean</value>
   </data>
+  <data name="Monthly" xml:space="preserve">
+    <value>Monthly</value>
+  </data>
   <data name="Motors_384W_C1" xml:space="preserve">
     <value>384W C1</value>
   </data>
@@ -817,6 +823,9 @@ Order</value>
   </data>
   <data name="Program_Name" xml:space="preserve">
     <value>Ei Dimension</value>
+  </data>
+  <data name="Quarterly" xml:space="preserve">
+    <value>Quarterly</value>
   </data>
   <data name="Red" xml:space="preserve">
     <value>Red</value>
@@ -958,8 +967,14 @@ Verification</value>
   <data name="Value" xml:space="preserve">
     <value>Value</value>
   </data>
+  <data name="Verification_Warning_Schedule" xml:space="preserve">
+    <value>Verification warning schedule</value>
+  </data>
   <data name="Violet" xml:space="preserve">
     <value>Violet</value>
+  </data>
+  <data name="Weekly" xml:space="preserve">
+    <value>Weekly</value>
   </data>
   <data name="WellSel_Reset_Plate" xml:space="preserve">
     <value>Reset Plate</value>
@@ -972,6 +987,9 @@ Verification</value>
   </data>
   <data name="Y" xml:space="preserve">
     <value>Y</value>
+  </data>
+  <data name="Yearly" xml:space="preserve">
+    <value>Yearly</value>
   </data>
   <data name="Z" xml:space="preserve">
     <value>Z</value>

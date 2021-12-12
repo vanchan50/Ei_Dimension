@@ -104,7 +104,7 @@ namespace Ei_Dimension.ViewModels
       });
     }
 
-    public void VerificationSuccess()
+    public static void VerificationSuccess()
     {
       App.Device.SaveCalVals(new MicroCy.MapCalParameters
       {
@@ -158,6 +158,35 @@ namespace Ei_Dimension.ViewModels
         }
       }
       return true;
+    }
+
+    public static bool AnalyzeVerificationResults()
+    {
+      bool passed = true;
+      if (App.Device.Verificator.TotalClassifiedBeads < App.Device.TotalBeads * 0.8)
+      {
+        Console.WriteLine("Verification Fail: Less than 80% of beads hit the regions");
+        passed = false;
+      }
+
+      double reporterErrorMargin = 0.2;
+      for (var i = 0; i < App.MapRegions.RegionsList.Count; i++)
+      {
+        if (App.MapRegions.VerificationRegions[i])
+        {
+          int regionNum = int.Parse(App.MapRegions.RegionsList[i]);
+          double inputReporter = double.Parse(App.MapRegions.VerificationReporterList[i]);
+          int validatorIndex = App.Device.Verificator.RegionalStats.FindIndex(x => x.Region == regionNum);
+
+          if (App.Device.Verificator.RegionalStats[validatorIndex].Stats[0].mfi <= inputReporter * (1 - reporterErrorMargin) &&
+            App.Device.Verificator.RegionalStats[validatorIndex].Stats[0].mfi >= inputReporter * (1 + reporterErrorMargin))
+          {
+            Console.WriteLine($"Verification Fail: Reporter value ({App.Device.Verificator.RegionalStats[validatorIndex].Stats[0].mfi}) deviation is more than 20% from the target ({App.MapRegions.VerificationReporterList[i]})");
+            passed = false;
+          }
+        }
+      }
+      return passed;
     }
 
     public class DropDownButtonContents

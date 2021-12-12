@@ -44,6 +44,8 @@ namespace Ei_Dimension.ViewModels
     public byte SelectedEndReadIndex { get; set; }
     public virtual ObservableCollection<Visibility> EndReadVisibility { get; set; }
     public virtual Visibility WorkOrderVisibility { get; set; }
+    public virtual Visibility VerificationWarningVisible { get; set; }
+    
 
     private string _dbsampleVolumeTempHolder;
     private int _dbEndReadIndexTempHolder;
@@ -112,6 +114,8 @@ namespace Ei_Dimension.ViewModels
         WorkOrderVisibility = Visibility.Visible;
       else
         WorkOrderVisibility = Visibility.Hidden;
+
+      VerificationWarningVisible = Visibility.Hidden;
 
       EndReadItems = new ObservableCollection<DropDownButtonContents>
       {

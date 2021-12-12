@@ -605,7 +605,7 @@
                              ArgumentDataMember="X"
                              ValueDataMember="Y"
                              CrosshairContentShowMode="Legend"
-                             MarkerSize="5"
+                             MarkerSize="5" Name="WldMap"
                              Brush="LightGray">
             <dxc:PointSeries2D.MarkerModel>
               <dxc:BorderlessSimpleMarker2DModel/>

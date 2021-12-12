@@ -298,5 +298,17 @@ namespace Ei_Dimension {
                 this["TouchMode"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2")]
+        public int VerificationWarningIndex {
+            get {
+                return ((int)(this["VerificationWarningIndex"]));
+            }
+            set {
+                this["VerificationWarningIndex"] = value;
+            }
+        }
     }
 }

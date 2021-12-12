@@ -573,5 +573,14 @@
         </Grid>
       </StackPanel>
     </Border>
+    <Rectangle HorizontalAlignment="Left"
+               VerticalAlignment="Top"
+               Width="168"
+               Height="80"
+               Margin="82,354,0,0"
+               Opacity="0.4"
+               Fill="Orange"
+               IsHitTestVisible="False"
+               Visibility="{Binding VerificationWarningVisible}"/>
   </Grid>
 </UserControl>
