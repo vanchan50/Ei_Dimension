@@ -2457,7 +2457,7 @@ namespace Ei_Dimension
         case OperationMode.Normal:
           break;
         case OperationMode.Calibration:
-          if (++CalibrationViewModel.Instance.CalFailsInARow >= 3)
+          if (++CalibrationViewModel.Instance.CalFailsInARow >= 3 && CalibrationViewModel.Instance.CalJustFailed)
           {
             ShowLocalizedNotification(nameof(Language.Resources.Calibration_Fail), System.Windows.Media.Brushes.Red);
             DashboardViewModel.Instance.CalModeToggle();
@@ -2541,10 +2541,6 @@ namespace Ei_Dimension
       Program.SplashScreen.Close(TimeSpan.FromMilliseconds(1000));
       Views.ExperimentView.Instance.DbButton.IsChecked = true;
       Device.MainCommand("Get Property", code: 0x01);
-      DevExpress.Xpf.Core.ThemeManager.SetThemeName(Views.ResultsView.Instance.printSC,
-        DevExpress.Xpf.Core.Theme.DeepBlueName);
-      DevExpress.Xpf.Core.ThemeManager.SetThemeName(Views.ResultsView.Instance.printXY,
-        DevExpress.Xpf.Core.Theme.DeepBlueName);
       _isStartup = false;
     }
 

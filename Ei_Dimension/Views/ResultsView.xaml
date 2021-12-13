@@ -403,11 +403,12 @@
         </dxc:XYDiagram2D>
       </dxc:ChartControl>
       <Button Width="50" Height="50"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top" Visibility="Hidden"
-            Margin="665,40,0,0" Name="printSC"
-            Command="{Binding ScatterprintCommand}">
-        <Image Stretch="Fill" Source="{dx:DXImage 'SvgImages/XAF/Action_Export_ToImage.svg'}"/>
+              HorizontalAlignment="Left"
+              VerticalAlignment="Top" Visibility="Hidden"
+              Margin="665,40,0,0" Name="printSC"
+              Command="{Binding ScatterprintCommand}"
+              Style="{StaticResource PrintButtonStyle}"
+              img:EmbeddedImg.Image="{dx:DXImage 'SvgImages/XAF/Action_Export_ToImage.svg'}">
       </Button>
     </Grid>
 
@@ -622,8 +623,9 @@
             HorizontalAlignment="Left"
             VerticalAlignment="Top" Visibility="Hidden"
             Margin="175,470,0,0" Name="printXY"
-            Command="{Binding XYprintCommand}">
-        <Image Stretch="Fill" Source="{dx:DXImage 'SvgImages/XAF/Action_Export_ToImage.svg'}"/>
+            Command="{Binding XYprintCommand}"
+            Style="{StaticResource PrintButtonStyle}"
+            img:EmbeddedImg.Image="{dx:DXImage 'SvgImages/XAF/Action_Export_ToImage.svg'}">
       </Button>
     </Grid>
 

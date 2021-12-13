@@ -34,6 +34,7 @@
         <ResourceDictionary Source="/Styles/DashboardButtonStyle.xaml"/>
         <ResourceDictionary Source="/Styles/CheckboxStyle.xaml"/>
         <ResourceDictionary Source="/Styles/ArrowButtonThemeStyle.xaml"/>
+        <ResourceDictionary Source="/Styles/PrintButtonStyle.xaml"/>
       </ResourceDictionary.MergedDictionaries>
     </ResourceDictionary>
   </Application.Resources>
