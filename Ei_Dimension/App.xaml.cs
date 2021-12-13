@@ -126,18 +126,6 @@ namespace Ei_Dimension
       }
       ResultsViewModel.Instance.FillWorldMaps();
 
-      //string Theme;
-      //if (Device.ActiveMap.validation)
-      //{
-      //  var valDate = DateTime.Parse(Device.ActiveMap.valtime, new System.Globalization.CultureInfo("en-GB"));
-      //  Theme = valDate.AddDays(2) < DateTime.Today ? DevExpress.Xpf.Core.Theme.Office2010BlackName : DevExpress.Xpf.Core.Theme.DeepBlueName; //Office2007BlueName
-      //}
-      //else
-      //  Theme = DevExpress.Xpf.Core.Theme.DeepBlueName;
-      //
-      //DevExpress.Xpf.Core.ThemeManager.SetThemeName(Views.DashboardView.Instance.MapSelectr,
-      //  Theme);
-
       var CaliVM = CalibrationViewModel.Instance;
       if (CaliVM != null)
       {
@@ -212,6 +200,32 @@ namespace Ei_Dimension
           DashVM.ValidDateBox[0] = null;
         }
       }
+
+      bool Warning = false;
+      if (Device.ActiveMap.validation)
+      {
+        var valDate = DateTime.Parse(Device.ActiveMap.valtime, new System.Globalization.CultureInfo("en-GB"));
+        switch (Settings.Default.VerificationWarningIndex)
+        {
+          case 0:
+            Warning = valDate.AddDays(1) < DateTime.Today;
+            break;
+          case 1:
+            Warning = valDate.AddDays(7) < DateTime.Today;
+            break;
+          case 2:
+            Warning = valDate.AddMonths(1) < DateTime.Today;
+            break;
+          case 3:
+            Warning = valDate.AddMonths(3) < DateTime.Today;
+            break;
+          case 4:
+            Warning = valDate.AddYears(1) < DateTime.Today;
+            break;
+        }
+      }
+      DashVM.VerificationWarningVisible = Warning? Visibility.Visible : Visibility.Hidden;
+
     }
 
     public static void LockMapSelection()
@@ -2527,6 +2541,10 @@ namespace Ei_Dimension
       Program.SplashScreen.Close(TimeSpan.FromMilliseconds(1000));
       Views.ExperimentView.Instance.DbButton.IsChecked = true;
       Device.MainCommand("Get Property", code: 0x01);
+      DevExpress.Xpf.Core.ThemeManager.SetThemeName(Views.ResultsView.Instance.printSC,
+        DevExpress.Xpf.Core.Theme.DeepBlueName);
+      DevExpress.Xpf.Core.ThemeManager.SetThemeName(Views.ResultsView.Instance.printXY,
+        DevExpress.Xpf.Core.Theme.DeepBlueName);
       _isStartup = false;
     }
 
