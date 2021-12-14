@@ -40,8 +40,6 @@ namespace Ei_Dimension.ViewModels
 
     public static ComponentsViewModel Instance { get; private set; }
     public virtual bool SuppressWarnings { get; set; }
-    public virtual ObservableCollection<DropDownButtonContents> VerificationWarningItems { get; set; }
-    public virtual string SelectedVerificationWarningContent { get; set; }
 
     private byte[] _syringeControlStates;
     private ushort _activeLasers;
@@ -56,11 +54,11 @@ namespace Ei_Dimension.ViewModels
         Language.TranslationSource.Instance.CurrentCulture));
       IInputSelectorState = 0;
 
-      LasersActive = new ObservableCollection<bool> { false, false, false };
+      LasersActive = new ObservableCollection<bool> { true, true, true };
       LaserRedPowerValue = new ObservableCollection<string> {""};
       LaserGreenPowerValue = new ObservableCollection<string> {""};
       LaserVioletPowerValue = new ObservableCollection<string> {""};
-      _activeLasers = 0;
+      _activeLasers = 7;
 
       var RM = Language.Resources.ResourceManager;
       var curCulture = Language.TranslationSource.Instance.CurrentCulture;
@@ -99,17 +97,6 @@ namespace Ei_Dimension.ViewModels
       CWDirectionActive = false;
       MaxPressureBox = Settings.Default.MaxPressure.ToString();
       SuppressWarnings = Settings.Default.SuppressWarnings;
-
-      DropDownButtonContents.ResetIndex();
-      VerificationWarningItems = new ObservableCollection<DropDownButtonContents>
-      {
-        new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Daily), curCulture), this),
-        new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Weekly), curCulture), this),
-        new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Monthly), curCulture), this),
-        new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Quarterly), curCulture), this),
-        new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Yearly), curCulture), this)
-      };
-      SelectedVerificationWarningContent = VerificationWarningItems[Settings.Default.VerificationWarningIndex].Content;
 
       Instance = this;
     }
@@ -373,11 +360,6 @@ namespace Ei_Dimension.ViewModels
           case 3:
             _vm.SelectedSampleBContent = Content;
             _vm._syringeControlStates[2] = Index;
-            break;
-          case 4:
-            _vm.SelectedVerificationWarningContent = Content;
-            Settings.Default.VerificationWarningIndex = Index;
-            Settings.Default.Save();
             break;
         }
       }

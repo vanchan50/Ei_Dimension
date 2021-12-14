@@ -326,6 +326,7 @@
                     Width="525" Visible="True"/>
         </dxc:ChartControl.Legends>
         <dxc:XYDiagram2D Focusable="False"
+                         Width="640" Height="440"
                          HorizontalAlignment="Left"
                          VerticalAlignment="Top"
                          Margin="60,0,0,0">
@@ -350,7 +351,7 @@
           <dxc:XYDiagram2D.AxisX>
             <dxc:AxisX2D TickmarksMinorVisible="False"
                        TickmarksVisible="False"
-                       Logarithmic="True"
+                       Logarithmic="True" Width="640"
                        FontFamily="{StaticResource AppTextFont}"
                        GridLinesMinorVisible="True"
                        GridLinesVisible="True"
@@ -414,7 +415,9 @@
 
     <!--Analysis Chart-->
     <!--<Grid Visibility="{Binding AnalysisVisible}">-->
-    <Grid Visibility="{Binding AnalysisVisible}">
+    <Grid Visibility="{Binding AnalysisVisible}"
+          MouseEnter="Plot3D_MouseEnter"
+          MouseLeave="Plot3D_MouseLeave">
       <Rectangle Fill="{StaticResource AppBackground}"
                  HorizontalAlignment="Left"
                  VerticalAlignment="Top"
@@ -423,11 +426,21 @@
       <!--<Grid Visibility="{Binding Analysis3DVisible}">-->
       <Grid Visibility="{Binding Analysis3DVisible}">
         <dxc:Chart3DControl Width="1120" Height="850"
-                          HorizontalAlignment="Left"
-                          VerticalAlignment="Top"
-                          BorderThickness="0" Name="AnalysisPlot"
-                          Focusable="False"
-                          Margin="100,0,0,0">
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            BorderThickness="0" Name="AnalysisPlot"
+                            EnableRuntimeZooming="False"
+                            EnableRuntimeRotation="False"
+                            EnableRuntimeScrolling="False"
+                            ShowXOZPlane="False"
+                            ShowYOZPlane="False"
+                            ShowXOYPlane="True"
+                            ZoomPercent="117"
+                            Focusable="False"
+                            Margin="100,0,0,0">
+          <dxc:Chart3DControl.ContentTransform>
+            <MatrixTransform3D/>
+          </dxc:Chart3DControl.ContentTransform>
           <dxc:Chart3DControl.Legends>
             <dxc:Legend HorizontalPosition="Right"
                         VerticalPosition="Top"
@@ -436,7 +449,11 @@
             </dxc:Legend>
           </dxc:Chart3DControl.Legends>
           <dxc:Chart3DControl.XAxis>
-            <dxc:XAxis3D Logarithmic="True">
+            <dxc:XAxis3D Logarithmic="True" GridLinesMinorVisible="True" MinorCount="9"
+                         GridLinesMinorBrush="Gray" GridLinesBrush="Gray">
+              <dxc:XAxis3D.WholeRange>
+                <dxc:Range MinValue="10" MaxValue="35000"/>
+              </dxc:XAxis3D.WholeRange>
               <dxc:XAxis3D.Title>
                 <dxc:AxisTitle Content="{Binding CLAxis[1]}"
                                FontSize="40"
@@ -445,26 +462,35 @@
             </dxc:XAxis3D>
           </dxc:Chart3DControl.XAxis>
           <dxc:Chart3DControl.YAxis>
-            <dxc:YAxis3D Logarithmic="True">
+            <dxc:YAxis3D Logarithmic="True" GridLinesMinorVisible="True" MinorCount="9"
+                         GridLinesMinorBrush="Gray" GridLinesBrush="Gray">
+              <dxc:YAxis3D.WholeRange>
+                <dxc:Range MinValue="10" MaxValue="35000"/>
+              </dxc:YAxis3D.WholeRange>
               <dxc:YAxis3D.Title>
                 <dxc:AxisTitle Content="{Binding CLAxis[0]}"
-                             FontSize="40"
-                             Foreground="{StaticResource AppTextColor}"/>
+                               FontSize="40"
+                               Foreground="{StaticResource AppTextColor}"/>
               </dxc:YAxis3D.Title>
             </dxc:YAxis3D>
           </dxc:Chart3DControl.YAxis>
           <dxc:Chart3DControl.ZAxis>
             <dxc:ZAxis3D Logarithmic="True">
+              <dxc:ZAxis3D.Label>
+                <dxc:AxisLabel Visible="False"/>
+              </dxc:ZAxis3D.Label>
               <dxc:ZAxis3D.Title>
                 <dxc:AxisTitle Content="{lang:Loc Reporter}"
-                               FontSize="40"
+                               FontSize="40" Visible="False"
                                Foreground="{StaticResource AppTextColor}"/>
               </dxc:ZAxis3D.Title>
             </dxc:ZAxis3D>
           </dxc:Chart3DControl.ZAxis>
 
           <dxc:Series3DStorage>
-            <dxc:Series3D LabelsVisibility="True">
+            <dxc:Series3D CrosshairEnabled="False"
+                          LabelsVisibility="False"
+                          CrosshairLabelVisibility="False">
               <dxc:SeriesPoint3DDataSourceAdapter DataSource="{Binding DisplayedAnalysisMap}"
                                                   XArgumentDataMember="Y"
                                                   YArgumentDataMember="X" 
@@ -491,7 +517,7 @@
                     </dxc:RangeColorizer3D>
                   </dxc:Bar3DSeriesView.Colorizer>
                   <dxc:Bar3DSeriesView.BarSize>
-                    <dxc:Bar3DSize X="0.13" Z="1"/>
+                    <dxc:Bar3DSize X="10.13" Z="1.5"/>
                   </dxc:Bar3DSeriesView.BarSize>
                   <dxc:Bar3DSeriesView.BarModel>
                     <dxc:Bar3DOctagonPointModel ShowFacets="True"/>
@@ -502,11 +528,12 @@
           </dxc:Series3DStorage>
         </dxc:Chart3DControl>
         <Button Width="50" Height="50"
-              HorizontalAlignment="Left"
-              VerticalAlignment="Top" Visibility="Hidden"
-              Margin="175,470,0,0" Name="printAnalysis"
-              Command="{Binding XYprintCommand}">
-          <Image Stretch="Fill" Source="{dx:DXImage 'SvgImages/XAF/Action_Export_ToImage.svg'}"/>
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top" Visibility="Hidden"
+                Margin="280,26,0,0" Name="printAnalysis"
+                Command="{Binding AnalysisPrintCommand}"
+                Style="{StaticResource PrintButtonStyle}"
+                img:EmbeddedImg.Image="{dx:DXImage 'SvgImages/XAF/Action_Export_ToImage.svg'}">
         </Button>
       </Grid>
       <!--

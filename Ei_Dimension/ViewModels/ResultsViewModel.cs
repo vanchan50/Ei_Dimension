@@ -451,7 +451,7 @@ namespace Ei_Dimension.ViewModels
     {
       _ = Task.Run(async () =>
       {
-        var path = PlatePictogram.GetSelectedFilePath();  //@"C:\Emissioninc\KEIZ0R-LEGION\AcquisitionData\val speed test 2E7_0.csv";
+        var path = @"C:\Emissioninc\KEIZ0R-LEGION\AcquisitionData\val speed test 2E7_0.csv"; //PlatePictogram.GetSelectedFilePath();  //
         if (path == null)
         {
           ResultsWaitIndicatorVisibility = false;
@@ -897,6 +897,11 @@ namespace Ei_Dimension.ViewModels
     public void Scatterprint()
     {
       Views.ResultsView.Instance.PrintScatter();
+    }
+
+    public void AnalysisPrint()
+    {
+      Views.ResultsView.Instance.Print3D();
     }
   }
 }

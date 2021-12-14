@@ -55,7 +55,7 @@ namespace Ei_Dimension.ViewModels
       CalFailsInARow = 0;
       CalJustFailed = true;
 
-    Instance = this;
+      Instance = this;
     }
 
     public static CalibrationViewModel Create()

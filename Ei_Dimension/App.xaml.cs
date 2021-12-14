@@ -308,13 +308,6 @@ namespace Ei_Dimension
         ComponentsVM.SelectedSampleAContent = ComponentsVM.SyringeControlItems[0].Content;
         ComponentsVM.SelectedSampleBContent = ComponentsVM.SyringeControlItems[0].Content;
 
-        ComponentsVM.VerificationWarningItems[0].Content = RM.GetString(nameof(Language.Resources.Daily), curCulture);
-        ComponentsVM.VerificationWarningItems[1].Content = RM.GetString(nameof(Language.Resources.Weekly), curCulture);
-        ComponentsVM.VerificationWarningItems[2].Content = RM.GetString(nameof(Language.Resources.Monthly), curCulture);
-        ComponentsVM.VerificationWarningItems[3].Content = RM.GetString(nameof(Language.Resources.Quarterly), curCulture);
-        ComponentsVM.VerificationWarningItems[4].Content = RM.GetString(nameof(Language.Resources.Yearly), curCulture);
-        ComponentsVM.SelectedVerificationWarningContent = ComponentsVM.VerificationWarningItems[Settings.Default.VerificationWarningIndex].Content;
-
         ComponentsVM.GetPositionToggleButtonState = ComponentsVM.GetPositionToggleButtonState ==
           RM.GetString(nameof(Language.Resources.OFF), exCulture) ? RM.GetString(nameof(Language.Resources.OFF), curCulture)
           : RM.GetString(nameof(Language.Resources.ON), curCulture);
@@ -366,6 +359,16 @@ namespace Ei_Dimension
         ChannelsVM.SensitivityItems[1].Content = RM.GetString(nameof(Language.Resources.Channels_Sens_C), curCulture);
         int i = Device.ChannelBIsHiSensitivity ? 0 : 1;
         ChannelsVM.SelectedSensitivityContent = ChannelsVM.SensitivityItems[i].Content;
+      }
+      var VerVM = VerificationViewModel.Instance;
+      if (VerVM != null)
+      {
+        VerVM.VerificationWarningItems[0].Content = RM.GetString(nameof(Language.Resources.Daily), curCulture);
+        VerVM.VerificationWarningItems[1].Content = RM.GetString(nameof(Language.Resources.Weekly), curCulture);
+        VerVM.VerificationWarningItems[2].Content = RM.GetString(nameof(Language.Resources.Monthly), curCulture);
+        VerVM.VerificationWarningItems[3].Content = RM.GetString(nameof(Language.Resources.Quarterly), curCulture);
+        VerVM.VerificationWarningItems[4].Content = RM.GetString(nameof(Language.Resources.Yearly), curCulture);
+        VerVM.SelectedVerificationWarningContent = VerVM.VerificationWarningItems[Settings.Default.VerificationWarningIndex].Content;
       }
       #endregion
     }
@@ -1647,6 +1650,7 @@ namespace Ei_Dimension
 
       TextBoxUpdater();
 
+      Console.WriteLine($"UI {System.Threading.Thread.CurrentThread.ManagedThreadId}");
       if (Device.IsMeasurementGoing)
       {
         GraphsHandler();
@@ -2541,6 +2545,13 @@ namespace Ei_Dimension
       Program.SplashScreen.Close(TimeSpan.FromMilliseconds(1000));
       Views.ExperimentView.Instance.DbButton.IsChecked = true;
       Device.MainCommand("Get Property", code: 0x01);
+
+      var matrix = Views.ResultsView.Instance.AnalysisPlot.ContentTransform.Value;
+      matrix.Rotate(new System.Windows.Media.Media3D.Quaternion(new System.Windows.Media.Media3D.Vector3D(0, 1, 0), 90));
+      matrix.Rotate(new System.Windows.Media.Media3D.Quaternion(new System.Windows.Media.Media3D.Vector3D(1, 0, 0), 40));
+      matrix.Rotate(new System.Windows.Media.Media3D.Quaternion(new System.Windows.Media.Media3D.Vector3D(0, 1, 0), -15));
+      matrix.Translate(new System.Windows.Media.Media3D.Vector3D(-100, 100, 0));
+      ((System.Windows.Media.Media3D.MatrixTransform3D)Views.ResultsView.Instance.AnalysisPlot.ContentTransform).Matrix = matrix;
       _isStartup = false;
     }
 

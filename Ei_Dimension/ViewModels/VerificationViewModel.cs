@@ -8,10 +8,23 @@ namespace Ei_Dimension.ViewModels
   [POCOViewModel]
   public class VerificationViewModel
   {
+    public virtual ObservableCollection<DropDownButtonContents> VerificationWarningItems { get; set; }
+    public virtual string SelectedVerificationWarningContent { get; set; }
     public static VerificationViewModel Instance { get; private set; }
     public bool isActivePage { get; set; }
     protected VerificationViewModel()
     {
+      var RM = Language.Resources.ResourceManager;
+      var curCulture = Language.TranslationSource.Instance.CurrentCulture;
+      VerificationWarningItems = new ObservableCollection<DropDownButtonContents>
+      {
+        new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Daily), curCulture), this),
+        new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Weekly), curCulture), this),
+        new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Monthly), curCulture), this),
+        new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Quarterly), curCulture), this),
+        new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Yearly), curCulture), this)
+      };
+      SelectedVerificationWarningContent = VerificationWarningItems[Settings.Default.VerificationWarningIndex].Content;
       Instance = this;
       isActivePage = false;
     }
@@ -189,31 +202,37 @@ namespace Ei_Dimension.ViewModels
       return passed;
     }
 
-    public class DropDownButtonContents
+    public class DropDownButtonContents : Core.ObservableObject
     {
-      public string Content { get; set; }
-      public string Locale { get; }
-      private static VerificationViewModel _vm;
+      public string Content
+      {
+        get => _content;
+        set
+        {
+          _content = value;
+          OnPropertyChanged();
+        }
+      }
       public byte Index { get; set; }
       private static byte _nextIndex = 0;
-      public DropDownButtonContents(string content, string locale, VerificationViewModel vm = null)
+      private string _content;
+      private static VerificationViewModel _vm;
+      public DropDownButtonContents(string content, VerificationViewModel vm = null)
       {
         if (_vm == null)
         {
           _vm = vm;
         }
         Content = content;
-        Locale = locale;
         Index = _nextIndex++;
       }
 
-      //public void Click()
-      //{
-      //  _vm.SelectedLanguage = Content;
-      //  App.SetLanguage(Locale);
-      //  Settings.Default.Language = Index;
-      //  Settings.Default.Save();
-      //}
+      public void Click()
+      {
+        _vm.SelectedVerificationWarningContent = Content;
+        Settings.Default.VerificationWarningIndex = Index;
+        Settings.Default.Save();
+      }
     }
   }
 }
