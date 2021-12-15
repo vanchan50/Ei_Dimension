@@ -145,3 +145,6 @@ map paraameters don't load on startup. need to switch maps for it to work
 
 fix 3d plot.
 check possiblility to run without selected regions
+
+ReplyFromMC should just fill a FIFO. don't do any processing in that function
+Move that processing to the other project?

@@ -48,6 +48,12 @@ namespace MicroCy
         _ = USBDevice.Interfaces[0].Pipes[0x81].BeginRead(InputBuffer, 0, InputBuffer.Length, new AsyncCallback(func), null);
     }
 
+    public void Read()
+    {
+      if (IsActive)
+        USBDevice.Interfaces[0].Pipes[0x81].Read(InputBuffer, 0, InputBuffer.Length);
+    }
+
     public void EndRead(IAsyncResult result)
     {
       _ = USBDevice.Interfaces[0].Pipes[0x81].EndRead(result);

@@ -1649,7 +1649,6 @@ namespace Ei_Dimension
         OnAppLoaded();
 
       TextBoxUpdater();
-
       Console.WriteLine($"UI {System.Threading.Thread.CurrentThread.ManagedThreadId}");
       if (Device.IsMeasurementGoing)
       {

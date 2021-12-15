@@ -451,7 +451,7 @@ namespace Ei_Dimension.ViewModels
     {
       _ = Task.Run(async () =>
       {
-        var path = @"C:\Emissioninc\KEIZ0R-LEGION\AcquisitionData\val speed test 2E7_0.csv"; //PlatePictogram.GetSelectedFilePath();  //
+        var path = PlatePictogram.GetSelectedFilePath();  //@"C:\Emissioninc\KEIZ0R-LEGION\AcquisitionData\val speed test 2E7_0.csv"; //
         if (path == null)
         {
           ResultsWaitIndicatorVisibility = false;

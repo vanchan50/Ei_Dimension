@@ -121,7 +121,10 @@ namespace MicroCy
       MoveMaps();
       LoadMaps();
       Reg0stats = false;
-      _serialConnection.BeginRead(ReplyFromMC);   //default termination is end of sample
+      var Priothread = new System.Threading.Thread(NewReplyFromMC);
+      Priothread.Priority = System.Threading.ThreadPriority.Highest;
+      Priothread.Start();
+      //_serialConnection.BeginRead(ReplyFromMC);   //default termination is end of sample
       Outdir = RootDirectory.FullName;
       EndState = 0;
       ReadActive = false;
@@ -224,6 +227,59 @@ namespace MicroCy
       }
       if (Reg0stats)
         WellResults.Add(new WellResults { regionNumber = 0 });
+    }
+
+    private void NewReplyFromMC()
+    {
+      var timer = new System.Diagnostics.Stopwatch();
+      while (true)
+      {
+        timer.Stop();
+        var elapsed = timer.ElapsedMilliseconds;
+        if (elapsed < 3)
+          System.Threading.Thread.Sleep(3 - (int)elapsed);
+        timer.Restart();
+        _serialConnection.Read();
+
+        if ((_serialConnection.InputBuffer[0] == 0xbe) && (_serialConnection.InputBuffer[1] == 0xad))
+        {
+          if (IsMeasurementGoing) //  this condition avoids the necessity of cleaning up leftover data in the system USB interface. That could happen after operation abortion and program restart
+          {
+            for (byte i = 0; i < 8; i++)
+            {
+              BeadInfoStruct outbead;
+              if (!GetBeadFromBuffer(_serialConnection.InputBuffer, i, out outbead))
+                break;
+              CalculateBeadParams(ref outbead);
+
+              FillActiveWellResults(in outbead);
+              if (outbead.region == 0 && OnlyClassified)
+                continue;
+              DataOut.Enqueue(outbead);
+              if (Everyevent)
+                _ = _dataout.Append(outbead.ToString());
+              switch (Mode)
+              {
+                case OperationMode.Normal:
+                  break;
+                case OperationMode.Calibration:
+                  break;
+                case OperationMode.Verification:
+                  Verificator.FillStats(in outbead);
+                  break;
+              }
+              //accum stats for run as a whole, used during aligment and QC
+              FillCalibrationStatsRow(in outbead);
+              BeadCount++;
+              TotalBeads++;
+            }
+          }
+          Array.Clear(_serialConnection.InputBuffer, 0, _serialConnection.InputBuffer.Length);
+          TerminationReadyCheck();
+        }
+        else
+          GetCommandFromBuffer();
+      }
     }
 
     private void ReplyFromMC(IAsyncResult result)
