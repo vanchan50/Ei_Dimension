@@ -285,7 +285,6 @@ namespace MicroCy
     private void ReplyFromMC(IAsyncResult result)
     {
       _serialConnection.EndRead(result);
-      Console.WriteLine($"MC {System.Threading.Thread.CurrentThread.ManagedThreadId}");
       if ((_serialConnection.InputBuffer[0] == 0xbe) && (_serialConnection.InputBuffer[1] == 0xad))
       {
         if (IsMeasurementGoing) //  this condition avoids the necessity of cleaning up leftover data in the system USB interface. That could happen after operation abortion and program restart
