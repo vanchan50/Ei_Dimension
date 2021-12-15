@@ -113,7 +113,7 @@ namespace Ei_Dimension.ViewModels
       switch (num)
       {
         case 0:
-          App.SelectedTextBox = (this.GetType().GetProperty(nameof(SanitizeSecondsContent)), this, 0);
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(SanitizeSecondsContent)), this, 0, Views.MaintenanceView.Instance.SecsTB);
           MainViewModel.Instance.NumpadToggleButton(Views.MaintenanceView.Instance.SecsTB);
           break;
       }

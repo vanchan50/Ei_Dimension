@@ -49,47 +49,47 @@ namespace Ei_Dimension.ViewModels
       switch (num)
       {
         case 0:
-          App.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsOffsetParameters)), this, 0);
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsOffsetParameters)), this, 0, (TextBox)Views.ChannelOffsetView.Instance.SP.Children[0]);
           MainViewModel.Instance.NumpadToggleButton((TextBox)Views.ChannelOffsetView.Instance.SP.Children[0]);
           break;
         case 1:
-          App.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsOffsetParameters)), this, 1);
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsOffsetParameters)), this, 1, (TextBox)Views.ChannelOffsetView.Instance.SP.Children[1]);
           MainViewModel.Instance.NumpadToggleButton((TextBox)Views.ChannelOffsetView.Instance.SP.Children[1]);
           break;
         case 2:
-          App.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsOffsetParameters)), this, 2);
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsOffsetParameters)), this, 2, (TextBox)Views.ChannelOffsetView.Instance.SP.Children[2]);
           MainViewModel.Instance.NumpadToggleButton((TextBox)Views.ChannelOffsetView.Instance.SP.Children[2]);
           break;
         case 3:
-          App.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsOffsetParameters)), this, 3);
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsOffsetParameters)), this, 3, (TextBox)Views.ChannelOffsetView.Instance.SP.Children[3]);
           MainViewModel.Instance.NumpadToggleButton((TextBox)Views.ChannelOffsetView.Instance.SP.Children[3]);
           break;
         case 4:
-          App.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsOffsetParameters)), this, 4);
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsOffsetParameters)), this, 4, (TextBox)Views.ChannelOffsetView.Instance.SP.Children[4]);
           MainViewModel.Instance.NumpadToggleButton((TextBox)Views.ChannelOffsetView.Instance.SP.Children[4]);
           break;
         case 5:
-          App.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsOffsetParameters)), this, 5);
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsOffsetParameters)), this, 5, (TextBox)Views.ChannelOffsetView.Instance.SP.Children[5]);
           MainViewModel.Instance.NumpadToggleButton((TextBox)Views.ChannelOffsetView.Instance.SP.Children[5]);
           break;
         case 6:
-          App.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsOffsetParameters)), this, 6);
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsOffsetParameters)), this, 6, (TextBox)Views.ChannelOffsetView.Instance.SP.Children[6]);
           MainViewModel.Instance.NumpadToggleButton((TextBox)Views.ChannelOffsetView.Instance.SP.Children[6]);
           break;
         case 7:
-          App.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsOffsetParameters)), this, 7);
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsOffsetParameters)), this, 7, (TextBox)Views.ChannelOffsetView.Instance.SP.Children[7]);
           MainViewModel.Instance.NumpadToggleButton((TextBox)Views.ChannelOffsetView.Instance.SP.Children[7]);
           break;
         case 8:
-          App.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsOffsetParameters)), this, 8);
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsOffsetParameters)), this, 8, (TextBox)Views.ChannelOffsetView.Instance.SP.Children[8]);
           MainViewModel.Instance.NumpadToggleButton((TextBox)Views.ChannelOffsetView.Instance.SP.Children[8]);
           break;
         case 9:
-          App.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsOffsetParameters)), this, 9);
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsOffsetParameters)), this, 9, (TextBox)Views.ChannelOffsetView.Instance.SP.Children[9]);
           MainViewModel.Instance.NumpadToggleButton((TextBox)Views.ChannelOffsetView.Instance.SP.Children[9]);
           break;
         case 10:
-          App.SelectedTextBox = (this.GetType().GetProperty(nameof(SiPMTempCoeff)), this, 0);
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(SiPMTempCoeff)), this, 0, Views.ChannelOffsetView.Instance.CoefTB);
           MainViewModel.Instance.NumpadToggleButton(Views.ChannelOffsetView.Instance.CoefTB);
           break;
       }

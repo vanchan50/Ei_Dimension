@@ -195,27 +195,27 @@ namespace Ei_Dimension.ViewModels
       switch (num)
       {
         case 0:
-          App.SelectedTextBox = (this.GetType().GetProperty(nameof(EndRead)), this, 0);
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(EndRead)), this, 0, Views.DashboardView.Instance.Endr0TB);
           MainViewModel.Instance.NumpadToggleButton(Views.DashboardView.Instance.Endr0TB);
           break; 
         case 1:
-          App.SelectedTextBox = (this.GetType().GetProperty(nameof(EndRead)), this, 1);
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(EndRead)), this, 1, Views.DashboardView.Instance.Endr1TB);
           MainViewModel.Instance.NumpadToggleButton(Views.DashboardView.Instance.Endr1TB);
           break;
         case 2:
-          App.SelectedTextBox = (this.GetType().GetProperty(nameof(Volumes)), this, 0);
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(Volumes)), this, 0, Views.DashboardView.Instance.SampVTB);
           MainViewModel.Instance.NumpadToggleButton(Views.DashboardView.Instance.SampVTB);
           break;
         case 3:
-          App.SelectedTextBox = (this.GetType().GetProperty(nameof(Volumes)), this, 1);
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(Volumes)), this, 1, Views.DashboardView.Instance.WashVTB);
           MainViewModel.Instance.NumpadToggleButton(Views.DashboardView.Instance.WashVTB);
           break;
         case 4:
-          App.SelectedTextBox = (this.GetType().GetProperty(nameof(Volumes)), this, 2);
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(Volumes)), this, 2, Views.DashboardView.Instance.AgitVTB);
           MainViewModel.Instance.NumpadToggleButton(Views.DashboardView.Instance.AgitVTB);
           break;
         case 5:
-          App.SelectedTextBox = (this.GetType().GetProperty(nameof(WorkOrder)), this, 0);
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(WorkOrder)), this, 0, Views.DashboardView.Instance.SysCTB);
           MainViewModel.Instance.NumpadToggleButton(Views.DashboardView.Instance.SysCTB);
           break;
       }

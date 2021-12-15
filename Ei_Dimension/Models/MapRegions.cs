@@ -263,7 +263,7 @@ namespace Ei_Dimension.Models
     {
       App.SelectedTextBox = (this.GetType()
         .GetProperty(nameof(RegionsNamesList)),
-        this, int.Parse(((TextBox)e.Source).Name.Trim('_')));
+        this, int.Parse(((TextBox)e.Source).Name.Trim('_')), (TextBox)sender);
       MainViewModel.Instance.KeyboardToggle((TextBox)e.Source);
     }
 
@@ -478,7 +478,7 @@ namespace Ei_Dimension.Models
     {
       App.SelectedTextBox = (this.GetType()
         .GetProperty(nameof(VerificationReporterList)),
-        this, int.Parse(((TextBox)e.Source).Name.Trim('_')));
+        this, int.Parse(((TextBox)e.Source).Name.Trim('_')), (TextBox)sender);
       MainViewModel.Instance.NumpadToggleButton((TextBox)e.Source);
     }
       

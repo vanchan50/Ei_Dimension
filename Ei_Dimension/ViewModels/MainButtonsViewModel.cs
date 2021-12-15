@@ -45,7 +45,9 @@ namespace Ei_Dimension.ViewModels
         App.ShowNotification("No wells or Tube selected");
         return;
       }
-
+#if DEBUG
+      App.Device.MainCommand("Set FProperty", code: 0x06);
+#endif
       StartButtonEnabled = false;
       ResultsViewModel.Instance.ClearGraphs();
       ResultsViewModel.Instance.PlatePictogram.Clear();

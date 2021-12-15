@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Linq;
 using System.Collections.Generic;
 using System.IO;
+using System.Windows.Controls;
 
 namespace Ei_Dimension
 {
@@ -17,15 +18,20 @@ namespace Ei_Dimension
   {
     public static (PropertyInfo prop, object VM) NumpadShow { get; set; }
     public static (PropertyInfo prop, object VM) KeyboardShow { get; set; }
-    public static (PropertyInfo prop, object VM, int index) SelectedTextBox
+    public static (PropertyInfo prop, object VM, int index, TextBox tb) SelectedTextBox
     {
       get { return _selectedTextBox; }
       set {
         if ((value.prop != null) && ((value.prop != _selectedTextBox.prop) || (value.index != _selectedTextBox.index)))
+        {
           InputSanityCheck();
+        }
         _selectedTextBox = value;
         if (value.prop != null)
+        {
           _tempOldString = ((ObservableCollection<string>)_selectedTextBox.prop.GetValue(_selectedTextBox.VM))[_selectedTextBox.index];
+          value.tb.Background = (System.Windows.Media.Brush)App.Current.Resources["MenuButtonBackgroundActive"];
+        }
         else
           _tempOldString = null;
       }
@@ -33,7 +39,7 @@ namespace Ei_Dimension
     public static MicroCyDevice Device { get; private set; }
     public static Models.MapRegions MapRegions { get; set; }  //Performs operations on injected views
 
-    private static (PropertyInfo prop, object VM, int index) _selectedTextBox;
+    private static (PropertyInfo prop, object VM, int index, TextBox tb) _selectedTextBox;
     private static string _tempOldString;
     private static string _tempNewString;
     private static DispatcherTimer _dispatcherTimer;
@@ -1620,26 +1626,34 @@ namespace Ei_Dimension
         if (failed)
         {
           ((ObservableCollection<string>)SelectedTextBox.prop.GetValue(SelectedTextBox.VM))[SelectedTextBox.index] = _tempOldString;
-          ShowNotification(ErrorMessage);
+          //ShowNotification(ErrorMessage);
+          SelectedTextBox.tb.Background = System.Windows.Media.Brushes.Red;
         }
         else
+        {
           ((ObservableCollection<string>)SelectedTextBox.prop.GetValue(SelectedTextBox.VM))[SelectedTextBox.index] = _tempNewString.TrimStart('0');
+          SelectedTextBox.tb.Background = (System.Windows.Media.Brush)App.Current.Resources["AppBackground"];
+        }
         _tempNewString = null;
         //SelectedTextBox = (null, null, 0);
+      }
+      else if (SelectedTextBox.prop != null && _tempNewString == null)
+      {
+        SelectedTextBox.tb.Background = (System.Windows.Media.Brush)App.Current.Resources["AppBackground"];
       }
     }
 
     public static void HideNumpad()
     {
       InputSanityCheck();
-      SelectedTextBox = (null, null, 0);
+      SelectedTextBox = (null, null, 0, null);
       NumpadShow.prop.SetValue(NumpadShow.VM, Visibility.Hidden);
     }
 
     public static void HideKeyboard()
     {
       InputSanityCheck();
-      SelectedTextBox = (null, null, 0);
+      SelectedTextBox = (null, null, 0, null);
       KeyboardShow.prop.SetValue(KeyboardShow.VM, Visibility.Hidden);
     }
 
@@ -1689,6 +1703,11 @@ namespace Ei_Dimension
           case 0x04:
             ComponentsViewModel.Instance.IdexTextBoxInputs[0] = exe.Parameter.ToString("X2");
             break;
+#if DEBUG
+          case 0x06:
+            MainViewModel.Instance.TotalBeadsInFirmware[0] = exe.FParameter.ToString();
+            break;
+#endif
           case 0x10:  //cuvet drain cb
             ComponentsViewModel.Instance.ValvesStates[2] = exe.Parameter == 1;
             break;
@@ -2448,6 +2467,9 @@ namespace Ei_Dimension
       }
       ResultsViewModel.Instance.PlatePictogram.ChangeState(e.Row, e.Column, type);
       SavePlateState();
+#if DEBUG
+      Device.MainCommand("Get FProperty", code: 0x06);
+#endif
     }
 
     public static void FinishedMeasurementEventhandler(object sender, EventArgs e)

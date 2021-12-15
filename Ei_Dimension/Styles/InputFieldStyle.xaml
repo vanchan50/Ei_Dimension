@@ -12,6 +12,7 @@
     <Setter Property="FontSize" Value="30"/>
     <Setter Property="Height" Value="43"/>
     <Setter Property="CaretBrush" Value="Transparent"/>
+    <Setter Property="Background" Value="{DynamicResource AppBackground}"/>
     <Setter Property="Template">
       <Setter.Value>
 
@@ -20,7 +21,7 @@
             <Grid>
               <Rectangle Name="ToggleButtonRect" VerticalAlignment="Stretch"
                          HorizontalAlignment="Stretch"
-                         Fill="{DynamicResource AppBackground}"
+                         Fill="{TemplateBinding Background}"
                          Stroke="{DynamicResource ButtonBackgroundHighlighted}"
                          StrokeThickness="1"/>
               <ScrollViewer Margin="10,0,10,0"
@@ -34,10 +35,10 @@
                 <Condition Property="IsFocused" Value="True"/>
                 <Condition Property="IsReadOnly" Value="False"/>
               </MultiTrigger.Conditions>
-              <Setter TargetName="ToggleButtonRect" Property="Fill" Value="{DynamicResource MenuButtonBackgroundActive}"/>
+              <Setter Property="Background" Value="{DynamicResource MenuButtonBackgroundActive}"/>
             </MultiTrigger>
             <Trigger Property="IsReadOnly" Value="True">
-              <Setter TargetName="ToggleButtonRect" Property="Fill" Value="{DynamicResource HaltButtonBackground}"/>
+              <Setter Property="Background" Value="{DynamicResource HaltButtonBackground}"/>
             </Trigger>
           </ControlTemplate.Triggers>
         </ControlTemplate>

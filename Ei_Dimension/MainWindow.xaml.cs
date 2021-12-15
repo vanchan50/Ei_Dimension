@@ -25,6 +25,15 @@ namespace Ei_Dimension
     {
       InitializeComponent();
       Instance = this;
+#if DEBUG
+      Binding bind = new Binding();
+      bind.Source = ViewModels.MainViewModel.Instance;
+      bind.Path = new PropertyPath("TotalBeadsInFirmware[0]");
+      bind.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
+      _ = BindingOperations.SetBinding(EventCounter, TextBlock.TextProperty, bind);
+#else
+      EventCounterParent.IsHitTestVisible = false;
+#endif
     }
   }
 }
