@@ -44,6 +44,12 @@ namespace Ei_Dimension.ViewModels
       return ViewModelSource.Create(() => new ChannelOffsetViewModel());
     }
 
+    public void UpdateBiasButtonClick()
+    {
+      App.Device.MainCommand("RefreshDac");
+      App.Device.InitSTab("channeltab");
+    }
+
     public void FocusedBox(int num)
     {
       switch (num)

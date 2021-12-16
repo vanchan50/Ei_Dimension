@@ -271,6 +271,11 @@
               <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
             </dxmvvm:Interaction.Behaviors>
           </TextBox>
+          <Button Content="{lang:Loc Channels_Update_Bias}"
+                  Command="{Binding UpdateBiasButtonClickCommand}"
+                  Style="{StaticResource ButtonStyle}"
+                  Height="85" Cursor="Hand"
+                  Margin="0,0,0,6"/>
         </StackPanel>
       </StackPanel>
     </Border>
