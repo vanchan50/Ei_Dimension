@@ -100,6 +100,8 @@ namespace Ei_Dimension.ViewModels
     public virtual ObservableCollection<string> XYCutOffString { get; set; }
     public int XYCutoff { get; set; }
     public static ResultsViewModel Instance { get; private set; }
+    private bool _fillDataActive;
+    public const int HIREZDEFINITION = 1024;
 
     protected ResultsViewModel()
     {
@@ -244,6 +246,7 @@ namespace Ei_Dimension.ViewModels
       }
       XYCutoff = Settings.Default.XYCutOff;
       XYCutOffString = new ObservableCollection<string> { XYCutoff.ToString() };
+      _fillDataActive = false;
     }
 
     public static ResultsViewModel Create()
@@ -447,29 +450,41 @@ namespace Ei_Dimension.ViewModels
       }
     }
 
+    /// <summary>
+    /// Task to fill XY plot with data from file
+    /// </summary>
     public void FillAllData()
     {
+      if (_fillDataActive)
+      {
+        App.ShowNotification("Results loading failed:\nPlease wait for the previous well to load");
+        return;
+      }
+      _fillDataActive = true;
+      var hiRez = AnalysisVisible == System.Windows.Visibility.Visible ? true : false;
       _ = Task.Run(async () =>
       {
-        var path = PlatePictogram.GetSelectedFilePath();  //@"C:\Emissioninc\KEIZ0R-LEGION\AcquisitionData\val speed test 2E7_0.csv"; //
+        var path = @"C:\Emissioninc\KEIZ0R-LEGION\AcquisitionData\val speed test 2E7_0.csv"; //PlatePictogram.GetSelectedFilePath();  //
         if (path == null)
         {
           ResultsWaitIndicatorVisibility = false;
           ChartWaitIndicatorVisibility = false;
+          _fillDataActive = false;
           return;
         }
         FillBackingWellResults();
         var beadStructslist = new List<MicroCy.BeadInfoStruct>();
         await ParseBeadInfoAsync(path, beadStructslist);
         _ = Task.Run(() => Core.DataProcessor.BinScatterData(beadStructslist, fromFile: true));
-        Core.DataProcessor.BinMapData(beadStructslist, current: false);
+        Core.DataProcessor.BinMapData(beadStructslist, current: false, hiRez);
         //DisplayedMap.Sort((x, y) => x.A.CompareTo(y.A));
         _ = App.Current.Dispatcher.BeginInvoke((Action)(() =>
         {
-          Core.DataProcessor.AnalyzeHeatMap(DisplayedMap);
+          Core.DataProcessor.AnalyzeHeatMap(DisplayedMap, hiRez);
           FillBackingAnalysis();
         }));
         MainViewModel.Instance.EventCountLocal[0] = beadStructslist.Count.ToString();
+        _fillDataActive = false;
       });
     }
 

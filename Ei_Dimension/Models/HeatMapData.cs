@@ -36,6 +36,7 @@ namespace Ei_Dimension.Models
     private int _y;
     private int _a;
     public static double[] bins { get; }
+    public static double[] HiRezbins { get; }
     public HeatMapData(int x, int y, int r = -1)
     {
       X = x;
@@ -46,6 +47,7 @@ namespace Ei_Dimension.Models
     static HeatMapData()
     {
       bins = DataProcessor.GenerateLogSpaceD(1, 50000, 256);
+      HiRezbins = DataProcessor.GenerateLogSpaceD(1, 50000, ViewModels.ResultsViewModel.HIREZDEFINITION);
     }
   }
 }

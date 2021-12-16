@@ -225,7 +225,7 @@ namespace Ei_Dimension.Core
       }));
     }
 
-    public static void AnalyzeHeatMap(List<HeatMapData> heatmap)
+    public static void AnalyzeHeatMap(List<HeatMapData> heatmap, bool hiRez = false)
     {
       if (heatmap != null && heatmap.Count > 0)
       {
@@ -245,7 +245,7 @@ namespace Ei_Dimension.Core
             //int cutoff = (heatmap[i].X > 100 && heatmap[i].Y > 100) ? ViewModels.ResultsViewModel.Instance.XYCutoff : 2;
             if (heatmap[i].A <= bins[j])
             {
-              if (j == 0)
+              if (!hiRez && j == 0)
                 break;
               if (ViewModels.ResultsViewModel.Instance.FlipMapAnalysis)
                 Views.ResultsView.Instance.AddXYPoint(heatmap[i].Y, heatmap[i].X, _heatColors[j]);
@@ -258,27 +258,29 @@ namespace Ei_Dimension.Core
       }
     }
 
-    public static void BinMapData(List<MicroCy.BeadInfoStruct> BeadInfoList, bool current = true)
+    public static void BinMapData(List<MicroCy.BeadInfoStruct> BeadInfoList, bool current = true, bool hiRez = false)
     {
       var ResVM = ViewModels.ResultsViewModel.Instance;
+      var bins = hiRez ? HeatMapData.HiRezbins : HeatMapData.bins;
+      var boundary = hiRez ? HeatMapData.HiRezbins.Length - 1 : HeatMapData.bins.Length - 1;
       foreach (var bead in BeadInfoList)
       {
-        int cl0 = Array.BinarySearch(HeatMapData.bins, bead.cl0);
+        int cl0 = Array.BinarySearch(bins, bead.cl0);
         if (cl0 < 0)
           cl0 = ~cl0;
-        cl0 = cl0 > 255 ? 255 : cl0;
-        int cl1 = Array.BinarySearch(HeatMapData.bins, bead.cl1);
+        cl0 = cl0 > boundary ? boundary : cl0;
+        int cl1 = Array.BinarySearch(bins, bead.cl1);
         if (cl1 < 0)
           cl1 = ~cl1;
-        cl1 = cl1 > 255 ? 255 : cl1;
-        int cl2 = Array.BinarySearch(HeatMapData.bins, bead.cl2);
+        cl1 = cl1 > boundary ? boundary : cl1;
+        int cl2 = Array.BinarySearch(bins, bead.cl2);
         if (cl2 < 0)
           cl2 = ~cl2;
-        cl2 = cl2 > 255 ? 255 : cl2;
-        int cl3 = Array.BinarySearch(HeatMapData.bins, bead.cl3);
+        cl2 = cl2 > boundary ? boundary : cl2;
+        int cl3 = Array.BinarySearch(bins, bead.cl3);
         if (cl3 < 0)
           cl3 = ~cl3;
-        cl3 = cl3 > 255 ? 255 : cl3;
+        cl3 = cl3 > boundary ? boundary : cl3;
 
         if (current)
         {
@@ -286,7 +288,7 @@ namespace Ei_Dimension.Core
           if (!ResVM.CurrentCL01Dict.ContainsKey((cl0, cl1)))
           {
             ResVM.CurrentCL01Dict.Add((cl0, cl1), ResVM.CurrentCL01Map.Count);
-            ResVM.CurrentCL01Map.Add(new HeatMapData((int)HeatMapData.bins[cl0], (int)HeatMapData.bins[cl1]));
+            ResVM.CurrentCL01Map.Add(new HeatMapData((int)bins[cl0], (int)bins[cl1]));
           }
           else
           {
@@ -296,7 +298,7 @@ namespace Ei_Dimension.Core
           if (!ResVM.CurrentCL02Dict.ContainsKey((cl0, cl2)))
           {
             ResVM.CurrentCL02Dict.Add((cl0, cl2), ResVM.CurrentCL02Map.Count);
-            ResVM.CurrentCL02Map.Add(new HeatMapData((int)HeatMapData.bins[cl0], (int)HeatMapData.bins[cl2]));
+            ResVM.CurrentCL02Map.Add(new HeatMapData((int)bins[cl0], (int)bins[cl2]));
           }
           else
           {
@@ -306,7 +308,7 @@ namespace Ei_Dimension.Core
           if (!ResVM.CurrentCL03Dict.ContainsKey((cl0, cl3)))
           {
             ResVM.CurrentCL03Dict.Add((cl0, cl3), ResVM.CurrentCL03Map.Count);
-            ResVM.CurrentCL03Map.Add(new HeatMapData((int)HeatMapData.bins[cl0], (int)HeatMapData.bins[cl3]));
+            ResVM.CurrentCL03Map.Add(new HeatMapData((int)bins[cl0], (int)bins[cl3]));
           }
           else
           {
@@ -316,7 +318,7 @@ namespace Ei_Dimension.Core
           if (!ResVM.CurrentCL12Dict.ContainsKey((cl1, cl2)))
           {
             ResVM.CurrentCL12Dict.Add((cl1, cl2), ResVM.CurrentCL12Map.Count);
-            ResVM.CurrentCL12Map.Add(new HeatMapData((int)HeatMapData.bins[cl1], (int)HeatMapData.bins[cl2]));
+            ResVM.CurrentCL12Map.Add(new HeatMapData((int)bins[cl1], (int)bins[cl2]));
           }
           else
           {
@@ -326,7 +328,7 @@ namespace Ei_Dimension.Core
           if (!ResVM.CurrentCL13Dict.ContainsKey((cl1, cl3)))
           {
             ResVM.CurrentCL13Dict.Add((cl1, cl3), ResVM.CurrentCL13Map.Count);
-            ResVM.CurrentCL13Map.Add(new HeatMapData((int)HeatMapData.bins[cl1], (int)HeatMapData.bins[cl3]));
+            ResVM.CurrentCL13Map.Add(new HeatMapData((int)bins[cl1], (int)bins[cl3]));
           }
           else
           {
@@ -336,7 +338,7 @@ namespace Ei_Dimension.Core
           if (!ResVM.CurrentCL23Dict.ContainsKey((cl2, cl3)))
           {
             ResVM.CurrentCL23Dict.Add((cl2, cl3), ResVM.CurrentCL23Map.Count);
-            ResVM.CurrentCL23Map.Add(new HeatMapData((int)HeatMapData.bins[cl2], (int)HeatMapData.bins[cl3]));
+            ResVM.CurrentCL23Map.Add(new HeatMapData((int)bins[cl2], (int)bins[cl3]));
           }
           else
           {
@@ -349,7 +351,7 @@ namespace Ei_Dimension.Core
           if (!ResVM.BackingCL01Dict.ContainsKey((cl0, cl1)))
           {
             ResVM.BackingCL01Dict.Add((cl0, cl1), ResVM.BackingCL01Map.Count);
-            ResVM.BackingCL01Map.Add(new HeatMapData((int)HeatMapData.bins[cl0], (int)HeatMapData.bins[cl1]));
+            ResVM.BackingCL01Map.Add(new HeatMapData((int)bins[cl0], (int)bins[cl1]));
           }
           else
           {
@@ -359,7 +361,7 @@ namespace Ei_Dimension.Core
           if (!ResVM.BackingCL02Dict.ContainsKey((cl0, cl2)))
           {
             ResVM.BackingCL02Dict.Add((cl0, cl2), ResVM.BackingCL02Map.Count);
-            ResVM.BackingCL02Map.Add(new HeatMapData((int)HeatMapData.bins[cl0], (int)HeatMapData.bins[cl2]));
+            ResVM.BackingCL02Map.Add(new HeatMapData((int)bins[cl0], (int)bins[cl2]));
           }
           else
           {
@@ -369,7 +371,7 @@ namespace Ei_Dimension.Core
           if (!ResVM.BackingCL03Dict.ContainsKey((cl0, cl3)))
           {
             ResVM.BackingCL03Dict.Add((cl0, cl3), ResVM.BackingCL03Map.Count);
-            ResVM.BackingCL03Map.Add(new HeatMapData((int)HeatMapData.bins[cl0], (int)HeatMapData.bins[cl3]));
+            ResVM.BackingCL03Map.Add(new HeatMapData((int)bins[cl0], (int)bins[cl3]));
           }
           else
           {
@@ -379,7 +381,7 @@ namespace Ei_Dimension.Core
           if (!ResVM.BackingCL12Dict.ContainsKey((cl1, cl2)))
           {
             ResVM.BackingCL12Dict.Add((cl1, cl2), ResVM.BackingCL12Map.Count);
-            ResVM.BackingCL12Map.Add(new HeatMapData((int)HeatMapData.bins[cl1], (int)HeatMapData.bins[cl2]));
+            ResVM.BackingCL12Map.Add(new HeatMapData((int)bins[cl1], (int)bins[cl2]));
           }
           else
           {
@@ -389,7 +391,7 @@ namespace Ei_Dimension.Core
           if (!ResVM.BackingCL13Dict.ContainsKey((cl1, cl3)))
           {
             ResVM.BackingCL13Dict.Add((cl1, cl3), ResVM.BackingCL13Map.Count);
-            ResVM.BackingCL13Map.Add(new HeatMapData((int)HeatMapData.bins[cl1], (int)HeatMapData.bins[cl3]));
+            ResVM.BackingCL13Map.Add(new HeatMapData((int)bins[cl1], (int)bins[cl3]));
           }
           else
           {
@@ -399,7 +401,7 @@ namespace Ei_Dimension.Core
           if (!ResVM.BackingCL23Dict.ContainsKey((cl2, cl3)))
           {
             ResVM.BackingCL23Dict.Add((cl2, cl3), ResVM.BackingCL23Map.Count);
-            ResVM.BackingCL23Map.Add(new HeatMapData((int)HeatMapData.bins[cl2], (int)HeatMapData.bins[cl3]));
+            ResVM.BackingCL23Map.Add(new HeatMapData((int)bins[cl2], (int)bins[cl3]));
           }
           else
           {

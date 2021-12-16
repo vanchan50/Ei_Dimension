@@ -17,7 +17,6 @@
     <Border HorizontalAlignment="Left" VerticalAlignment="Top"
             Margin="750,0,0,0" Width="470" Height="900">
       <Grid>
-
         <Button Width="470" Height="50"
                   HorizontalAlignment="Left"
                   VerticalAlignment="Top"

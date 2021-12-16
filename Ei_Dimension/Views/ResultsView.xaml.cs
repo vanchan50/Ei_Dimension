@@ -40,6 +40,7 @@ namespace Ei_Dimension.Views
     {
       HeatMap.Points[index].Brush = brush;
     }
+
     public void ClearPoints()
     {
       HeatMap.Points.Clear();
@@ -99,8 +100,8 @@ namespace Ei_Dimension.Views
     {
       XYPlot.Width = 1140;
       XYPlot.Height = 856;
-      WldMap.MarkerSize = 3;
-      HeatMap.MarkerSize = 7;
+      WldMap.MarkerSize = 7;
+      HeatMap.MarkerSize = 2;
       XYPlot.Margin = new Thickness(80, 0, 0, 0);
       printXY.Margin = new Thickness(280, 26, 0, 0);
     }
