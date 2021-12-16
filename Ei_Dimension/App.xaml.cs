@@ -846,7 +846,7 @@ namespace Ei_Dimension
               }
               failed = true;
               string range = Device.BoardVersion >= 1 ? "[0-10000]" : "[0-3500]";
-              ErrorMessage = $"Green B (PE 2%) is out of range {range}";
+              ErrorMessage = $"Green B (PE) is out of range {range}";
             }
             if (SelectedTextBox.index == 2)
             {
@@ -988,7 +988,7 @@ namespace Ei_Dimension
               }
               failed = true;
               string range = Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
-              ErrorMessage = $"Green B (PE 2%) is out of range {range}";
+              ErrorMessage = $"Green B (PE) is out of range {range}";
             }
             if (SelectedTextBox.index == 2)
             {

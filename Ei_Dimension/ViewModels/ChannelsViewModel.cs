@@ -98,7 +98,7 @@ namespace Ei_Dimension.ViewModels
           MainViewModel.Instance.NumpadToggleButton((TextBox)Views.ChannelsView.Instance.SP.Children[1]);
           break;
         case 2:
-          App.SelectedTextBox = (this.GetType().GetProperty(nameof(Bias30Parameters)), this, 2, (TextBox)Views.ChannelsView.Instance.SP.Children[3]);
+          App.SelectedTextBox = (this.GetType().GetProperty(nameof(Bias30Parameters)), this, 2, (TextBox)Views.ChannelsView.Instance.SP.Children[2]);
           MainViewModel.Instance.NumpadToggleButton((TextBox)Views.ChannelsView.Instance.SP.Children[2]);
           break;
         case 3:

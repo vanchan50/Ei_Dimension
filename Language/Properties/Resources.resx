@@ -236,7 +236,7 @@ To Current Map</value>
     <value>Green A (SSC)</value>
   </data>
   <data name="Channels_Green_B" xml:space="preserve">
-    <value>Green B (PE 2%)</value>
+    <value>Green B (PE)</value>
   </data>
   <data name="Channels_Green_C" xml:space="preserve">
     <value>Green C PE</value>
