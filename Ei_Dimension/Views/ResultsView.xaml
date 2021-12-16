@@ -643,6 +643,11 @@
               <dxc:BorderlessSimpleMarker2DModel/>
             </dxc:PointSeries2D.MarkerModel>
           </dxc:PointSeries2D>
+          <dxc:PointSeries2D Name="LargeHeatMap" DisplayName="LHeatMap" MarkerSize="2">
+            <dxc:PointSeries2D.MarkerModel>
+              <dxc:BorderlessSimpleMarker2DModel/>
+            </dxc:PointSeries2D.MarkerModel>
+          </dxc:PointSeries2D>
         </dxc:XYDiagram2D>
       </dxc:ChartControl>
       <Button Width="50" Height="50"

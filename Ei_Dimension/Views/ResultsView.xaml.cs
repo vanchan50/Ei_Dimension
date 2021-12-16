@@ -30,12 +30,15 @@ namespace Ei_Dimension.Views
       ChC.AxisY.WholeRange.AutoSideMargins = false;
       ChC.AxisY.WholeRange.SetMinMaxValues(10, 35000);
     }
-    public void AddXYPoint(double x, double y, SolidColorBrush brush)
+
+    public void AddXYPoint(double x, double y, SolidColorBrush brush, bool LargeXY = false)
     {
       var Point = new SeriesPoint(x, y);
       Point.Brush = brush;
-      HeatMap.Points.Add(Point);
+      var heatmap = LargeXY ? LargeHeatMap : HeatMap;
+      heatmap.Points.Add(Point);
     }
+
     public void ChangePointColor(int index, SolidColorBrush brush)
     {
       HeatMap.Points[index].Brush = brush;
@@ -44,6 +47,7 @@ namespace Ei_Dimension.Views
     public void ClearPoints()
     {
       HeatMap.Points.Clear();
+      LargeHeatMap.Points.Clear();
     }
 
     public void PrintXY(int Resoultion_dpi = 800)
@@ -88,20 +92,22 @@ namespace Ei_Dimension.Views
 
     public void ShowSmallXYPlot()
     {
+      HeatMap.Visible = true;
+      LargeHeatMap.Visible = false;
       XYPlot.Width = 660;
       XYPlot.Height = 412;
       WldMap.MarkerSize = 5;
-      HeatMap.MarkerSize = 3;
       XYPlot.Margin = new Thickness(80, 444, 0, 0);
       printXY.Margin = new Thickness(175, 470, 0, 0);
     }
 
     public void ShowLargeXYPlot()
     {
+      HeatMap.Visible = false;
+      LargeHeatMap.Visible = true;
       XYPlot.Width = 1140;
       XYPlot.Height = 856;
       WldMap.MarkerSize = 7;
-      HeatMap.MarkerSize = 2;
       XYPlot.Margin = new Thickness(80, 0, 0, 0);
       printXY.Margin = new Thickness(280, 26, 0, 0);
     }
