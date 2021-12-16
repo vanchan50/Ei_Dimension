@@ -150,30 +150,27 @@ namespace Ei_Dimension.Core
         bead.greenssc = bead.greenssc < MaxValue ? bead.greenssc : MaxValue;
         bead.reporter = bead.reporter < MaxValue ? bead.reporter : MaxValue;
 
-        for (var i = 0; i < reporter.Length; i++)
-        {
-          int j = 0;
-          j = Array.BinarySearch(HistogramData.Bins, (int)bead.fsc);
-          if (j < 0)
-            j = ~j;
-          fsc[j]++;
-          j = Array.BinarySearch(HistogramData.Bins, (int)bead.redssc);
-          if (j < 0)
-            j = ~j;
-          red[j]++;
-          j = Array.BinarySearch(HistogramData.Bins, (int)bead.greenssc);
-          if (j < 0)
-            j = ~j;
-          green[j]++;
-          j = Array.BinarySearch(HistogramData.Bins, (int)bead.violetssc);
-          if (j < 0)
-            j = ~j;
-          violet[j]++;
-          j = Array.BinarySearch(HistogramData.Bins, (int)bead.reporter);
-          if (j < 0)
-            j = ~j;
-          reporter[j]++;
-        }
+        int j = 0;
+        j = Array.BinarySearch(HistogramData.Bins, (int)bead.fsc);
+        if (j < 0)
+          j = ~j;
+        fsc[j]++;
+        j = Array.BinarySearch(HistogramData.Bins, (int)bead.redssc);
+        if (j < 0)
+          j = ~j;
+        red[j]++;
+        j = Array.BinarySearch(HistogramData.Bins, (int)bead.greenssc);
+        if (j < 0)
+          j = ~j;
+        green[j]++;
+        j = Array.BinarySearch(HistogramData.Bins, (int)bead.violetssc);
+        if (j < 0)
+          j = ~j;
+        violet[j]++;
+        j = Array.BinarySearch(HistogramData.Bins, (int)bead.reporter);
+        if (j < 0)
+          j = ~j;
+        reporter[j]++;
 
         var index = App.MapRegions.RegionsList.IndexOf(beadD.region.ToString());
         if (index != -1)
@@ -261,14 +258,16 @@ namespace Ei_Dimension.Core
     public static void BinMapData(List<MicroCy.BeadInfoStruct> BeadInfoList, bool current = true, bool hiRez = false)
     {
       var ResVM = ViewModels.ResultsViewModel.Instance;
-      var bins = hiRez ? HeatMapData.HiRezbins : HeatMapData.bins;
-      var boundary = hiRez ? HeatMapData.HiRezbins.Length - 1 : HeatMapData.bins.Length - 1;
+      var bins = hiRez ? HeatMapData.HiRezBins : HeatMapData.bins;
+      var boundary = hiRez ? HeatMapData.HiRezBins.Length - 1 : HeatMapData.bins.Length - 1;
       foreach (var bead in BeadInfoList)
       {
+        /*
         int cl0 = Array.BinarySearch(bins, bead.cl0);
         if (cl0 < 0)
           cl0 = ~cl0;
         cl0 = cl0 > boundary ? boundary : cl0;
+        */
         int cl1 = Array.BinarySearch(bins, bead.cl1);
         if (cl1 < 0)
           cl1 = ~cl1;
@@ -277,13 +276,16 @@ namespace Ei_Dimension.Core
         if (cl2 < 0)
           cl2 = ~cl2;
         cl2 = cl2 > boundary ? boundary : cl2;
+        /*
         int cl3 = Array.BinarySearch(bins, bead.cl3);
         if (cl3 < 0)
           cl3 = ~cl3;
         cl3 = cl3 > boundary ? boundary : cl3;
+        */
 
         if (current)
         {
+          /*
           //01
           if (!ResVM.CurrentCL01Dict.ContainsKey((cl0, cl1)))
           {
@@ -314,6 +316,7 @@ namespace Ei_Dimension.Core
           {
             ResVM.CurrentCL03Map[ResVM.CurrentCL03Dict[(cl0, cl3)]].A++;
           }
+          */
           //12
           if (!ResVM.CurrentCL12Dict.ContainsKey((cl1, cl2)))
           {
@@ -324,6 +327,7 @@ namespace Ei_Dimension.Core
           {
             ResVM.CurrentCL12Map[ResVM.CurrentCL12Dict[(cl1, cl2)]].A++;
           }
+          /*
           //13
           if (!ResVM.CurrentCL13Dict.ContainsKey((cl1, cl3)))
           {
@@ -344,9 +348,11 @@ namespace Ei_Dimension.Core
           {
             ResVM.CurrentCL23Map[ResVM.CurrentCL23Dict[(cl2, cl3)]].A++;
           }
+          */
         }
         else
         {
+          /*
           //01
           if (!ResVM.BackingCL01Dict.ContainsKey((cl0, cl1)))
           {
@@ -377,6 +383,7 @@ namespace Ei_Dimension.Core
           {
             ResVM.BackingCL03Map[ResVM.BackingCL03Dict[(cl0, cl3)]].A++;
           }
+          */
           //12
           if (!ResVM.BackingCL12Dict.ContainsKey((cl1, cl2)))
           {
@@ -387,6 +394,7 @@ namespace Ei_Dimension.Core
           {
             ResVM.BackingCL12Map[ResVM.BackingCL12Dict[(cl1, cl2)]].A++;
           }
+          /*
           //13
           if (!ResVM.BackingCL13Dict.ContainsKey((cl1, cl3)))
           {
@@ -407,6 +415,7 @@ namespace Ei_Dimension.Core
           {
             ResVM.BackingCL23Map[ResVM.BackingCL23Dict[(cl2, cl3)]].A++;
           }
+          */
 
           //3DReporterPlot
           var index = ResVM.BackingWResults.FindIndex(x => x.regionNumber == bead.region);

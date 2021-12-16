@@ -480,11 +480,22 @@ namespace Ei_Dimension.ViewModels
         //DisplayedMap.Sort((x, y) => x.A.CompareTo(y.A));
         _ = App.Current.Dispatcher.BeginInvoke((Action)(() =>
         {
-          Core.DataProcessor.AnalyzeHeatMap(DisplayedMap, hiRez);
-          FillBackingAnalysis();
+          try
+          {
+            Core.DataProcessor.AnalyzeHeatMap(DisplayedMap, hiRez);
+            FillBackingAnalysisMap();
+          }
+          catch (Exception e)
+          {
+            App.ShowNotification($"Something went wrong during File loading.\nPlease report this issue to the manufacturer\n {e.Message}");
+          }
+          finally
+          {
+            ChartWaitIndicatorVisibility = false;
+            _fillDataActive = false;
+          }
         }));
         MainViewModel.Instance.EventCountLocal[0] = beadStructslist.Count.ToString();
-        _fillDataActive = false;
       });
     }
 
@@ -497,7 +508,7 @@ namespace Ei_Dimension.ViewModels
       }
     }
 
-    private void FillBackingAnalysis()
+    private void FillBackingAnalysisMap()
     {
       foreach (var result in BackingWResults)
       {
@@ -515,7 +526,6 @@ namespace Ei_Dimension.ViewModels
           }
         }
       }
-      ChartWaitIndicatorVisibility = false;
     }
 
     public void PlotCurrent(bool current = true)
