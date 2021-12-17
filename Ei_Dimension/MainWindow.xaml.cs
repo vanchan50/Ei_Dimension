@@ -25,6 +25,11 @@ namespace Ei_Dimension
     {
       InitializeComponent();
       Instance = this;
+      if (Program.SpecializedVer == 1)
+      {
+        CompanyLogo.Source = new BitmapImage(new Uri(@"/Ei_Dimension;component/Icons/Emission_LogoCh.png", UriKind.Relative));
+        InstrumentLogo.Source = new BitmapImage(new Uri(@"/Ei_Dimension;component/Icons/dimension flow analyzer logoCh.png", UriKind.Relative));
+      }
 #if DEBUG
       Binding bind = new Binding();
       bind.Source = ViewModels.MainViewModel.Instance;

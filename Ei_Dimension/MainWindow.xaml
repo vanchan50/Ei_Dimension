@@ -36,7 +36,7 @@
   <Grid>
     <!-- Company Logo Right-->
     <Image HorizontalAlignment="Left" VerticalAlignment="Top"
-           Margin="1626,1030,5,0"
+           Margin="1626,1030,5,0" Name="CompanyLogo"
            Width="290" Height="40"
            Source="/Icons/Emission_Logo.png"
            RenderOptions.BitmapScalingMode="HighQuality">
@@ -50,7 +50,7 @@
     </Image>
     <!-- Company Logo Left -->
     <Image HorizontalAlignment="Left" VerticalAlignment="Top"
-           Margin="10,1034,0,0"
+           Margin="10,1034,0,0" Name="InstrumentLogo"
            Width="430" Height="40"
            Source="/Icons/dimension flow analyzer logo.png"
            RenderOptions.BitmapScalingMode="HighQuality"/>

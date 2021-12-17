@@ -814,7 +814,7 @@
 
     <!-- Company Logo Left -->
     <Image HorizontalAlignment="Left" VerticalAlignment="Top"
-           Margin="10,898,0,0"
+           Margin="10,898,0,0" Name="InstrumentLogo"
            Width="430" Height="40"
            Source="/Icons/dimension flow analyzer logo.png"
            RenderOptions.BitmapScalingMode="HighQuality"/>

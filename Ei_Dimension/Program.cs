@@ -9,11 +9,16 @@ namespace Ei_Dimension
 {
   public class Program
   {
-    public static SplashScreen SplashScreen { get; } = new SplashScreen(@"/Icons/Splash.png");
+    public static int SpecializedVer = 1;
+    public static SplashScreen SplashScreen { get; private set; }
     [STAThread]
     public static void Main(string[] args)
     {
-      //SplashScreen.Show(false, true);
+      if (SpecializedVer == 0)
+        SplashScreen = new SplashScreen(@"/Icons/Splash.png");
+      else
+        SplashScreen = new SplashScreen(@"/Icons/SplashCh.png");
+      SplashScreen.Show(false, true);
       var app = new App();
       app.InitializeComponent();
       _ = app.Run();

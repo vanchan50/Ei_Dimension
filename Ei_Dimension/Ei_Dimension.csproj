@@ -571,6 +571,11 @@
     <Resource Include="Icons\Plate384_icon.png" />
     <Resource Include="Icons\Plate96_icon.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\dimension flow analyzer logoCh.png" />
+    <Resource Include="Icons\Emission_LogoCh.png" />
+    <Resource Include="Icons\SplashCh.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
