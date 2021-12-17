@@ -55,6 +55,7 @@ namespace Ei_Dimension.ViewModels
       NavigationService.Navigate("SyringeSpeedsView", null, this);
       App.Device.InitSTab("calibtab");
     }
+
     public void InitChildren()
     {
       NavigateMotors();

@@ -2250,6 +2250,7 @@ namespace Ei_Dimension
             tempres.Add(r);
           }
           _ = Task.Run(()=>Device.SaveBeadFile(tempres));
+          Device.GStatsFiller();
           Device.EndState++;
           Console.WriteLine(string.Format("{0} Reporting Background File Save Init", DateTime.Now.ToString()));
           break;
@@ -2633,8 +2634,15 @@ namespace Ei_Dimension
     public static void SavePlateState()
     {
       //overwrite the whole thing
-      string contents = ResultsViewModel.Instance.PlatePictogram.GetSerializedPlate();
-      File.WriteAllText($"{Device.RootDirectory.FullName}\\Status\\StatusFile.json", contents);
+      try
+      {
+        string contents = ResultsViewModel.Instance.PlatePictogram.GetSerializedPlate();
+        File.WriteAllText($"{Device.RootDirectory.FullName}\\Status\\StatusFile.json", contents);
+      }
+      catch(Exception e)
+      {
+        ShowNotification($"Problem with status file save, Please report this issue to the Manufacturer {e.Message}");
+      }
     }
   }
 }

@@ -72,6 +72,7 @@ namespace MicroCy
     public bool OnlyClassified { get; set; }
     public bool Reg0stats { get; set; }
     public bool ChannelBIsHiSensitivity { get; set; }
+    public bool StopUSBPolling { get; set; }
     public byte PlateRow { get; set; }
     public byte PlateCol { get; set; }
     public byte TerminationType { get; set; }
@@ -201,6 +202,11 @@ namespace MicroCy
         OutputPlateReport();
         wellres = null;
       }
+      Console.WriteLine(string.Format("{0} Reporting Background File Save Complete", DateTime.Now.ToString()));
+    }
+
+    public void GStatsFiller()
+    {
       if (SavBeadCount > 2)
       {
         SavBeadCount = SavBeadCount > 5000 ? 5000 : SavBeadCount;
@@ -208,7 +214,6 @@ namespace MicroCy
         FillGStats();
         OnNewStatsAvailable();
       }
-      Console.WriteLine(string.Format("{0} Reporting Background File Save Complete", DateTime.Now.ToString()));
     }
 
     public void SetReadingParamsForWell(int index, HashSet<int> regionsToOutput = null)
@@ -218,7 +223,7 @@ namespace MicroCy
       BeadsToCapture = WellsInOrder[index].termCnt;
       MinPerRegion = WellsInOrder[index].regTermCnt;
       TerminationType = WellsInOrder[index].termType;
-      ConstructClassificationMap(ActiveMap);
+    //  ConstructClassificationMap(ActiveMap);
       WellResults.Clear();
       foreach (var region in ActiveMap.regions)
       {
@@ -232,13 +237,16 @@ namespace MicroCy
     private void NewReplyFromMC()
     {
       var timer = new System.Diagnostics.Stopwatch();
-      while (true)
+      while (!StopUSBPolling)
       {
         timer.Stop();
         var elapsed = timer.ElapsedMilliseconds;
         if (elapsed < 3)
           System.Threading.Thread.Sleep(3 - (int)elapsed);
         timer.Restart();
+#if DEBUG
+        Console.WriteLine($"{DateTime.Now} USB POLL");
+#endif
         _serialConnection.Read();
 
         if ((_serialConnection.InputBuffer[0] == 0xbe) && (_serialConnection.InputBuffer[1] == 0xad))
@@ -405,7 +413,7 @@ namespace MicroCy
     {
       //Removing this can lead to unforseen crucial bugs in instrument operation. If so - do with extra care
       //one example is a check in CommandLists.Readertab for changed plate parameter,which could happen in manual well selection in motors tab
-      List<byte> list = CommandLists.Readertab;
+      List<byte> list = null;
       switch (tabname)
       {
         case "readertab":
@@ -426,6 +434,8 @@ namespace MicroCy
         case "componentstab":
           list = CommandLists.Componentstab;
           break;
+        default:
+          return;
       }
       foreach (byte Code in list)
       {
@@ -866,6 +876,7 @@ namespace MicroCy
 
     public void StartOperation(HashSet<int> regionsToOutput = null)
     {
+      ConstructClassificationMap(ActiveMap);
       //read section of plate
       MainCommand("Get FProperty", code: 0x58);
       MainCommand("Get FProperty", code: 0x68);
