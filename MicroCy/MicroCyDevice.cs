@@ -239,14 +239,10 @@ namespace MicroCy
       var timer = new System.Diagnostics.Stopwatch();
       while (!StopUSBPolling)
       {
-        timer.Stop();
-        var elapsed = timer.ElapsedMilliseconds;
-        if (elapsed < 3)
-          System.Threading.Thread.Sleep(3 - (int)elapsed);
-        timer.Restart();
-#if DEBUG
-        Console.WriteLine($"{DateTime.Now} USB POLL");
-#endif
+        //Console.Error.Write("\r");
+        //if(_serialConnection.IsActive)
+        //  System.Threading.Thread.Sleep(2);
+        //Console.WriteLine($"{DateTime.Now} USB POLL");
         _serialConnection.Read();
 
         if ((_serialConnection.InputBuffer[0] == 0xbe) && (_serialConnection.InputBuffer[1] == 0xad))

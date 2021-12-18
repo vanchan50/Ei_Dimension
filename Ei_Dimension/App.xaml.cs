@@ -2438,6 +2438,9 @@ namespace Ei_Dimension
         MapRegions.CurrentActiveRegionsCount[i] = "0";
         MapRegions.CurrentActiveRegionsMean[i] = "0";
       }
+#if DEBUG
+      Device.MainCommand("Set FProperty", code: 0x06);
+#endif
     }
 
     public static void FinishedReadingWellEventhandler(object sender, ReadingWellEventArgs e)
