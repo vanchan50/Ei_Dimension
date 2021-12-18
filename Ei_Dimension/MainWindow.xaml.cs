@@ -25,9 +25,10 @@ namespace Ei_Dimension
     {
       InitializeComponent();
       Instance = this;
-      if (Program.SpecializedVer == 1)
+      if (Program.SpecializedVer == CompanyID.China)
       {
         CompanyLogo.Source = new BitmapImage(new Uri(@"/Ei_Dimension;component/Icons/Emission_LogoCh.png", UriKind.Relative));
+        CompanyLogo.Margin = new Thickness(1730, 1030, 5, 0);
         InstrumentLogo.Source = new BitmapImage(new Uri(@"/Ei_Dimension;component/Icons/dimension flow analyzer logoCh.png", UriKind.Relative));
       }
 #if DEBUG

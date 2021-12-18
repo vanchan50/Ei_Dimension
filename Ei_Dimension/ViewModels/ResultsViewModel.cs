@@ -321,7 +321,6 @@ namespace Ei_Dimension.ViewModels
     public void ToCurrentButtonClick()
     {
       PlotCurrent();
-      PlatePictogram.FollowingCurrentCell = true;
 
       int tempCorner = 1;
       if (PlatePictogram.CurrentlyReadCell.row < 8)
@@ -418,7 +417,6 @@ namespace Ei_Dimension.ViewModels
         PlotCurrent(false);
         ClearGraphs(false);
         FillAllData();
-        PlatePictogram.FollowingCurrentCell = false;
       }
       catch { }
     }

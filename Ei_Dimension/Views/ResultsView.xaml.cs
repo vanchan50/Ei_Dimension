@@ -24,7 +24,7 @@ namespace Ei_Dimension.Views
     public ResultsView()
     {
       InitializeComponent();
-      if (Program.SpecializedVer == 1)
+      if (Program.SpecializedVer == CompanyID.China)
       {
         InstrumentLogo.Source = new BitmapImage(new Uri(@"/Ei_Dimension;component/Icons/dimension flow analyzer logoCh.png", UriKind.Relative));
       }

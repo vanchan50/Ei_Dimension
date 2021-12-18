@@ -9,6 +9,7 @@ using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Collections.Concurrent;
 using MicroCy.InstrumentParameters;
+using System.Threading;
 
 /*
  * Most commands on the host side parallel the Properties and Methods document fo QB-1000
@@ -110,6 +111,7 @@ namespace MicroCy
     private static double[] _classificationBins;
     private int[,] _classificationMap;
     private string _thisRunResultsFileName;
+    private Thread _prioUsbThread;
 
     public MicroCyDevice(Type connectionType)
     {
@@ -122,9 +124,12 @@ namespace MicroCy
       MoveMaps();
       LoadMaps();
       Reg0stats = false;
-      var Priothread = new System.Threading.Thread(NewReplyFromMC);
-      Priothread.Priority = System.Threading.ThreadPriority.Highest;
-      Priothread.Start();
+      if (_serialConnection.IsActive)
+      {
+        _prioUsbThread = new Thread(NewReplyFromMC);
+        _prioUsbThread.Priority = ThreadPriority.Highest;
+        _prioUsbThread.Start();
+      }
       //_serialConnection.BeginRead(ReplyFromMC);   //default termination is end of sample
       Outdir = RootDirectory.FullName;
       EndState = 0;
@@ -239,10 +244,6 @@ namespace MicroCy
       var timer = new System.Diagnostics.Stopwatch();
       while (!StopUSBPolling)
       {
-        //Console.Error.Write("\r");
-        //if(_serialConnection.IsActive)
-        //  System.Threading.Thread.Sleep(2);
-        //Console.WriteLine($"{DateTime.Now} USB POLL");
         _serialConnection.Read();
 
         if ((_serialConnection.InputBuffer[0] == 0xbe) && (_serialConnection.InputBuffer[1] == 0xad))

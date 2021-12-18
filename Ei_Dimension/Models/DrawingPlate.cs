@@ -16,7 +16,6 @@ namespace Ei_Dimension.Models
     public virtual ObservableCollection<WellTableRow> DrawingWells { get; protected set; }  //drawing data
     public (int row, int col) CurrentlyReadCell { get; set; }
     public (int row, int col) SelectedCell { get; set; }
-    public bool FollowingCurrentCell { get; set; }
     private readonly PlateWell[,] _wells; //actual data
     private Warning[,] _warnings;
     private int _mode;
@@ -49,7 +48,6 @@ namespace Ei_Dimension.Models
       _gridSet = false;
       CurrentlyReadCell = (-1, -1);
       SelectedCell = (-1, -1);
-      FollowingCurrentCell = true;
     }
 
     public static DrawingPlate Create()

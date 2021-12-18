@@ -9,14 +9,14 @@ namespace Ei_Dimension
 {
   public class Program
   {
-    public static int SpecializedVer = 1;
+    internal static CompanyID SpecializedVer = CompanyID.US;
     public static SplashScreen SplashScreen { get; private set; }
     [STAThread]
     public static void Main(string[] args)
     {
-      if (SpecializedVer == 0)
+      if (SpecializedVer == CompanyID.US)
         SplashScreen = new SplashScreen(@"/Icons/Splash.png");
-      else
+      else if (SpecializedVer == CompanyID.China)
         SplashScreen = new SplashScreen(@"/Icons/SplashCh.png");
       SplashScreen.Show(false, true);
       var app = new App();
