@@ -41,9 +41,9 @@ namespace MicroCy
     {
       try
       {
-        USBDevice.Interfaces[0].OutPipe.Write(buffer);
+        USBDevice.Interfaces[0].OutPipe.Write(buffer, 0, buffer.Length);
       }
-      catch(USBException e)
+      catch (USBException e)
       {
         Console.Error.WriteLine(e.Message);
         Write(buffer);
