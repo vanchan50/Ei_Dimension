@@ -1631,7 +1631,10 @@ namespace Ei_Dimension
         }
         else
         {
-          ((ObservableCollection<string>)SelectedTextBox.prop.GetValue(SelectedTextBox.VM))[SelectedTextBox.index] = _tempNewString.TrimStart('0');
+          if (_tempNewString.TrimStart('0') != "")
+            ((ObservableCollection<string>)SelectedTextBox.prop.GetValue(SelectedTextBox.VM))[SelectedTextBox.index] = _tempNewString.TrimStart('0');
+          else
+            ((ObservableCollection<string>)SelectedTextBox.prop.GetValue(SelectedTextBox.VM))[SelectedTextBox.index] = "0";
           SelectedTextBox.tb.Background = (System.Windows.Media.Brush)App.Current.Resources["AppBackground"];
         }
         _tempNewString = null;
