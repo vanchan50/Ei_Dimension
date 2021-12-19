@@ -39,7 +39,15 @@ namespace MicroCy
 
     public void Write(byte[] buffer)
     {
-      USBDevice.Interfaces[0].OutPipe.Write(buffer);
+      try
+      {
+        USBDevice.Interfaces[0].OutPipe.Write(buffer);
+      }
+      catch(USBException e)
+      {
+        Console.Error.WriteLine(e.Message);
+        Write(buffer);
+      }
     }
 
     public void BeginRead(AsyncCallback func)
