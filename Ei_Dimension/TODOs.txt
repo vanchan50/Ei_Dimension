@@ -144,3 +144,7 @@ check possiblility to run without selected regions
 
 ReplyFromMC should just fill a FIFO. don't do any processing in that function
 Move that processing to the other project?
+
+???????????????
+NavigateCalibration()
+  InitStab() happens during the run. WTF????

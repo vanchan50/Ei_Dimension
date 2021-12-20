@@ -39,6 +39,12 @@ namespace Ei_Dimension.ViewModels
 
     public void StartButtonClick()
     {
+      if (DashboardViewModel.Instance.SelectedEndReadIndex == 0 && App.MapRegions.ActiveRegionNums.Count == 0)
+      {
+        App.ShowNotification("\"Min Per Region\" End of Read requires at least 1 active region");
+        return;
+      }
+
       DashboardViewModel.Instance.SetWellsInOrder();
       if (App.Device.WellsInOrder.Count < 1)
       {

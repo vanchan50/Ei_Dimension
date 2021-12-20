@@ -2451,19 +2451,16 @@ namespace Ei_Dimension
       var type = Models.WellType.Success;
       if (Device.Mode == OperationMode.Normal)
       {
-        if (Device.TerminationType == 0)
+        if (Device.TerminationType == 0 && Device.WellResults.Count > 0)
         {
-          for (var i = 0; i < MapRegions.ActiveRegions.Count; i++)
+          foreach (var WR in Device.WellResults)
           {
-            if (!MapRegions.ActiveRegions[i])
-              continue;
-
-            if (Device.WellResults[i].RP1vals.Count < Device.MinPerRegion * 0.75)
+            if (WR.RP1vals.Count < Device.MinPerRegion * 0.75)
             {
               type = Models.WellType.Fail;
               break;
             }
-            if (Device.WellResults[i].RP1vals.Count < Device.MinPerRegion)
+            if (WR.RP1vals.Count < Device.MinPerRegion)
             {
               type = Models.WellType.LightFail;
               break;

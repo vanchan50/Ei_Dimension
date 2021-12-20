@@ -45,6 +45,7 @@ namespace MicroCy
       }
       catch (USBException e)
       {
+        Console.WriteLine(e.Message);
         Console.Error.WriteLine(e.Message);
         Write(buffer);
       }
