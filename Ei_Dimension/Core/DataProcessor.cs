@@ -244,7 +244,7 @@ namespace Ei_Dimension.Core
             {
               if (!hiRez && j == 0)
                 break;
-              if (ViewModels.ResultsViewModel.Instance.FlipMapAnalysis)
+              if (ViewModels.ResultsViewModel.Instance.WrldMap.Flipped)
                 Views.ResultsView.Instance.AddXYPoint(heatmap[i].Y, heatmap[i].X, _heatColors[j], hiRez);
               else
                 Views.ResultsView.Instance.AddXYPoint(heatmap[i].X, heatmap[i].Y, _heatColors[j], hiRez);

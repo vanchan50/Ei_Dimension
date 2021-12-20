@@ -64,6 +64,7 @@ namespace Ei_Dimension.Models
       DisplayedActiveRegionsMean = CurrentActiveRegionsMean;
       FillRegions();
     }
+
     public static MapRegions Create(StackPanel RegionsBorder, StackPanel RegionsNamesBorder, ListBox Table, StackPanel Db_Num, StackPanel Db_Name, StackPanel Validat_Num,
       StackPanel Validat_Reporter)
     {

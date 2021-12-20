@@ -628,7 +628,7 @@
               </dxc:AxisX2D.WholeRange>
             </dxc:AxisX2D>
           </dxc:XYDiagram2D.AxisX>
-          <dxc:PointSeries2D DataSource="{Binding WorldMap}"
+          <dxc:PointSeries2D DataSource="{Binding WrldMap.DisplayedWorldMap}"
                              ArgumentDataMember="X"
                              ValueDataMember="Y"
                              CrosshairContentShowMode="Legend"

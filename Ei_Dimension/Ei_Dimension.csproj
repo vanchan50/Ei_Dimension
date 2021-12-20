@@ -219,6 +219,7 @@
     <Compile Include="Models\WellTableRow.cs" />
     <Compile Include="Models\WellType.cs" />
     <Compile Include="Models\WellWarningState.cs" />
+    <Compile Include="Models\WorldMap.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Settings.Designer.cs">
