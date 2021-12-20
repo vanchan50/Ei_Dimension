@@ -127,12 +127,30 @@ namespace Ei_Dimension.Core
     public static void BinScatterData(List<MicroCy.BeadInfoStruct> list, bool fromFile = false)
     {
       var ResVM = ViewModels.ResultsViewModel.Instance;
-      var MaxValue = ResVM.CurrentReporter[ResVM.CurrentReporter.Count - 1].Argument;
-      var reporter = new int[ResVM.CurrentReporter.Count];
-      var fsc = new int[ResVM.CurrentReporter.Count];
-      var red = new int[ResVM.CurrentReporter.Count];
-      var green = new int[ResVM.CurrentReporter.Count];
-      var violet = new int[ResVM.CurrentReporter.Count];
+      var ScatterData = ResVM.ScttrData;
+      var ScatterDataCount = ScatterData.CurrentReporter.Count;
+      var MaxValue = ScatterData.CurrentReporter[ScatterDataCount - 1].Argument;
+      int[] reporter;
+      int[] fsc;
+      int[] red;
+      int[] green;
+      int[] violet;
+      if (fromFile)
+      {
+        reporter = ScatterData.bReporter;
+        fsc = ScatterData.bFsc;
+        red = ScatterData.bRed;
+        green = ScatterData.bGreen;
+        violet = ScatterData.bViolet;
+      }
+      else
+      {
+        reporter = ScatterData.cReporter;
+        fsc = ScatterData.cFsc;
+        red = ScatterData.cRed;
+        green = ScatterData.cGreen;
+        violet = ScatterData.cViolet;
+      }
 
       List<List<float>> ActiveRegionsStats = new List<List<float>>();  //for mean and count
       foreach (var region in App.Device.ActiveMap.regions)
@@ -175,8 +193,8 @@ namespace Ei_Dimension.Core
         var index = App.MapRegions.RegionsList.IndexOf(beadD.region.ToString());
         if (index != -1)
           ActiveRegionsStats[index].Add(beadD.reporter);
-        else if (beadD.region == 0)
-          continue;
+        //else if (beadD.region == 0)
+        //  continue;
         //else
         //  failed = true;
       }
@@ -185,17 +203,9 @@ namespace Ei_Dimension.Core
 
       _ = App.Current.Dispatcher.BeginInvoke((Action)(() =>
       {
+        ResVM.ScttrData.FillCurrentData(fromFile);
         if (fromFile)
         {
-          for (var i = 0; i < ResVM.BackingReporter.Count; i++)
-          {
-            ResVM.BackingReporter[i].Value += reporter[i];
-            ResVM.BackingForwardSsc[i].Value += fsc[i];
-            ResVM.BackingRedSsc[i].Value += red[i];
-            ResVM.BackingGreenSsc[i].Value += green[i];
-            ResVM.BackingVioletSsc[i].Value += violet[i];
-
-          }
           var j = 0;
           foreach (var lst in ActiveRegionsStats)
           {
@@ -207,17 +217,6 @@ namespace Ei_Dimension.Core
             j++;
           }
           ResVM.ResultsWaitIndicatorVisibility = false;
-        }
-        else
-        {
-          for (var i = 0; i < ResVM.CurrentReporter.Count; i++)
-          {
-            ResVM.CurrentReporter[i].Value += reporter[i];
-            ResVM.CurrentForwardSsc[i].Value += fsc[i];
-            ResVM.CurrentRedSsc[i].Value += red[i];
-            ResVM.CurrentGreenSsc[i].Value += green[i];
-            ResVM.CurrentVioletSsc[i].Value += violet[i];
-          }
         }
       }));
     }

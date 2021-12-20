@@ -370,31 +370,31 @@
               </dxc:AxisX2D.Range>
             </dxc:AxisX2D>
           </dxc:XYDiagram2D.AxisX>
-          <dxc:LineSeries2D DataSource="{Binding DisplayedRedSsc}"
+          <dxc:LineSeries2D DataSource="{Binding ScttrData.DisplayedRedSsc}"
                           ValueDataMember="Value"
                           ArgumentDataMember="Argument"
                           DisplayName="Red"
                           Brush="Red"
                           CheckedInLegend="{Binding ScatterSelectorState[0]}"/>
-          <dxc:LineSeries2D DataSource="{Binding DisplayedGreenSsc}"
+          <dxc:LineSeries2D DataSource="{Binding ScttrData.DisplayedGreenSsc}"
                           ValueDataMember="Value"
                           ArgumentDataMember="Argument"
                           DisplayName="Green"
                           Brush="Green"
                           CheckedInLegend="{Binding ScatterSelectorState[1]}"/>
-          <dxc:LineSeries2D DataSource="{Binding DisplayedVioletSsc}"
+          <dxc:LineSeries2D DataSource="{Binding ScttrData.DisplayedVioletSsc}"
                           ValueDataMember="Value"
                           ArgumentDataMember="Argument"
                           DisplayName="Violet"
                           Brush="DarkViolet"
                           CheckedInLegend="{Binding ScatterSelectorState[2]}"/>
-          <dxc:LineSeries2D DataSource="{Binding DisplayedForwardSsc}"
+          <dxc:LineSeries2D DataSource="{Binding ScttrData.DisplayedForwardSsc}"
                           ValueDataMember="Value"
                           ArgumentDataMember="Argument"
                           DisplayName="Forward"
                           Brush="Chocolate"
                           CheckedInLegend="{Binding ScatterSelectorState[3]}"/>
-          <dxc:LineSeries2D DataSource="{Binding DisplayedReporter}"
+          <dxc:LineSeries2D DataSource="{Binding ScttrData.DisplayedReporter}"
                           ValueDataMember="Value"
                           ArgumentDataMember="Argument"
                           DisplayName="Reporter"

@@ -18,22 +18,8 @@ namespace Ei_Dimension.ViewModels
     public virtual bool ResultsWaitIndicatorVisibility { get; set; }
     public virtual bool ChartWaitIndicatorVisibility { get; set; }
     public virtual ObservableCollection<bool> ScatterSelectorState { get; set; }
-    public virtual ObservableCollection<HistogramData> CurrentForwardSsc { get; set; }
-    public virtual ObservableCollection<HistogramData> CurrentVioletSsc { get; set; }
-    public virtual ObservableCollection<HistogramData> CurrentRedSsc { get; set; }
-    public virtual ObservableCollection<HistogramData> CurrentGreenSsc { get; set; }
-    public virtual ObservableCollection<HistogramData> CurrentReporter { get; set; }
-    public virtual ObservableCollection<HistogramData> DisplayedForwardSsc { get; set; }
-    public virtual ObservableCollection<HistogramData> DisplayedVioletSsc { get; set; }
-    public virtual ObservableCollection<HistogramData> DisplayedRedSsc { get; set; }
-    public virtual ObservableCollection<HistogramData> DisplayedGreenSsc { get; set; }
-    public virtual ObservableCollection<HistogramData> DisplayedReporter { get; set; }
-    public virtual ObservableCollection<HistogramData> BackingForwardSsc { get; set; }
-    public virtual ObservableCollection<HistogramData> BackingVioletSsc { get; set; }
-    public virtual ObservableCollection<HistogramData> BackingRedSsc { get; set; }
-    public virtual ObservableCollection<HistogramData> BackingGreenSsc { get; set; }
-    public virtual ObservableCollection<HistogramData> BackingReporter { get; set; }
-    public WorldMap WrldMap { get; set; }
+    public ScatterData ScttrData { get; set; }
+    public WorldMap WrldMap { get; set;}
     public bool DisplaysCurrentmap { get; private set; }
     public List<HeatMapData> DisplayedMap { get; set; }
     public List<HeatMapData> CurrentCL01Map { get; private set; }
@@ -131,16 +117,6 @@ namespace Ei_Dimension.ViewModels
       }
 
       Instance = this;
-      CurrentForwardSsc = new ObservableCollection<HistogramData>();
-      CurrentVioletSsc = new ObservableCollection<HistogramData>();
-      CurrentRedSsc = new ObservableCollection<HistogramData>();
-      CurrentGreenSsc = new ObservableCollection<HistogramData>();
-      CurrentReporter = new ObservableCollection<HistogramData>();
-      BackingForwardSsc = new ObservableCollection<HistogramData>();
-      BackingVioletSsc = new ObservableCollection<HistogramData>();
-      BackingRedSsc = new ObservableCollection<HistogramData>();
-      BackingGreenSsc = new ObservableCollection<HistogramData>();
-      BackingReporter = new ObservableCollection<HistogramData>();
 
       CurrentCL01Dict = new Dictionary<(int x, int y), int>();
       CurrentCL02Dict = new Dictionary<(int x, int y), int>();
@@ -155,20 +131,6 @@ namespace Ei_Dimension.ViewModels
       BackingCL13Dict = new Dictionary<(int x, int y), int>();
       BackingCL23Dict = new Dictionary<(int x, int y), int>();
 
-      for (var i = 0; i < HistogramData.Bins.Length; i++)
-      {
-        CurrentForwardSsc.Add(new HistogramData(0, HistogramData.Bins[i]));
-        CurrentVioletSsc.Add(new HistogramData(0, HistogramData.Bins[i]));
-        CurrentRedSsc.Add(new HistogramData(0, HistogramData.Bins[i]));
-        CurrentGreenSsc.Add(new HistogramData(0, HistogramData.Bins[i]));
-        CurrentReporter.Add(new HistogramData(0, HistogramData.Bins[i]));
-
-        BackingForwardSsc.Add(new HistogramData(0, HistogramData.Bins[i]));
-        BackingVioletSsc.Add(new HistogramData(0, HistogramData.Bins[i]));
-        BackingRedSsc.Add(new HistogramData(0, HistogramData.Bins[i]));
-        BackingGreenSsc.Add(new HistogramData(0, HistogramData.Bins[i]));
-        BackingReporter.Add(new HistogramData(0, HistogramData.Bins[i]));
-      }
 
       CurrentCL01Map = new List<HeatMapData>();
       CurrentCL02Map = new List<HeatMapData>();
@@ -183,14 +145,10 @@ namespace Ei_Dimension.ViewModels
       BackingCL13Map = new List<HeatMapData>();
       BackingCL23Map = new List<HeatMapData>();
 
-      DisplayedForwardSsc = CurrentForwardSsc;
-      DisplayedVioletSsc = CurrentVioletSsc;
-      DisplayedRedSsc = CurrentRedSsc;
-      DisplayedGreenSsc = CurrentGreenSsc;
-      DisplayedReporter = CurrentReporter;
       DisplaysCurrentmap = true;
 
       WorldMap.Create();
+      ScatterData.Create();
 
       CurrentAnalysis01Map = new ObservableCollection<DoubleHeatMapData>();
       CurrentAnalysis02Map = new ObservableCollection<DoubleHeatMapData>();
@@ -317,16 +275,9 @@ namespace Ei_Dimension.ViewModels
 
     public void ClearGraphs(bool current = true)
     {
+      ScttrData.ClearData(current);
       if (current)
       {
-        for (var i = 0; i < CurrentReporter.Count; i++)
-        {
-          CurrentForwardSsc[i].Value = 0;
-          CurrentVioletSsc[i].Value = 0;
-          CurrentRedSsc[i].Value = 0;
-          CurrentGreenSsc[i].Value = 0;
-          CurrentReporter[i].Value = 0;
-        }
         CurrentCL01Map.Clear();
         CurrentCL02Map.Clear();
         CurrentCL03Map.Clear();
@@ -348,14 +299,6 @@ namespace Ei_Dimension.ViewModels
       }
       else
       {
-        for (var i = 0; i < BackingReporter.Count; i++)
-        {
-          BackingForwardSsc[i].Value = 0;
-          BackingVioletSsc[i].Value = 0;
-          BackingRedSsc[i].Value = 0;
-          BackingGreenSsc[i].Value = 0;
-          BackingReporter[i].Value = 0;
-        }
         BackingCL01Map.Clear();
         BackingCL02Map.Clear();
         BackingCL03Map.Clear();
@@ -447,7 +390,7 @@ namespace Ei_Dimension.ViewModels
       var hiRez = AnalysisVisible == System.Windows.Visibility.Visible ? true : false;
       _ = Task.Run(async () =>
       {
-        var path = PlatePictogram.GetSelectedFilePath();  //@"C:\Emissioninc\KEIZ0R-LEGION\AcquisitionData\val speed test 2E7_0.csv"; //
+        var path = @"C:\Emissioninc\KEIZ0R-LEGION\AcquisitionData\val speed test 2E7_0.csv"; //PlatePictogram.GetSelectedFilePath();  //
         if (path == null)
         {
           ResultsWaitIndicatorVisibility = false;
@@ -515,13 +458,9 @@ namespace Ei_Dimension.ViewModels
     {
       DisplaysCurrentmap = current;
       SetDisplayedMap();
+      ScttrData.DisplayCurrent(current);
       if (current)
       {
-        DisplayedForwardSsc = CurrentForwardSsc;
-        DisplayedVioletSsc = CurrentVioletSsc;
-        DisplayedRedSsc = CurrentRedSsc;
-        DisplayedGreenSsc = CurrentGreenSsc;
-        DisplayedReporter = CurrentReporter;
         if (App.MapRegions != null)
         {
           App.MapRegions.DisplayedActiveRegionsCount = App.MapRegions.CurrentActiveRegionsCount;
@@ -536,11 +475,6 @@ namespace Ei_Dimension.ViewModels
       }
       else
       {
-        DisplayedForwardSsc = BackingForwardSsc;
-        DisplayedVioletSsc = BackingVioletSsc;
-        DisplayedRedSsc = BackingRedSsc;
-        DisplayedGreenSsc = BackingGreenSsc;
-        DisplayedReporter = BackingReporter;
         if (App.MapRegions != null)
         {
           ResultsWaitIndicatorVisibility = true;
