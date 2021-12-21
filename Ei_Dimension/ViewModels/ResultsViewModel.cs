@@ -219,7 +219,7 @@ namespace Ei_Dimension.ViewModels
       SetDisplayedMap();
       _ = App.Current.Dispatcher.BeginInvoke((Action)(() =>
         {
-          Core.DataProcessor.AnalyzeHeatMap(DisplayedMap);
+          Core.DataProcessor.AnalyzeHeatMap();
         }));
     }
 
@@ -399,16 +399,16 @@ namespace Ei_Dimension.ViewModels
           return;
         }
         FillBackingWellResults();
-        var beadStructslist = new List<MicroCy.BeadInfoStruct>();
-        await ParseBeadInfoAsync(path, beadStructslist);
-        _ = Task.Run(() => Core.DataProcessor.BinScatterData(beadStructslist, fromFile: true));
-        Core.DataProcessor.BinMapData(beadStructslist, current: false, hiRez);
+        var beadStructsList = new List<MicroCy.BeadInfoStruct>();
+        await ParseBeadInfoAsync(path, beadStructsList);
+        _ = Task.Run(() => Core.DataProcessor.BinScatterData(beadStructsList, fromFile: true));
+        Core.DataProcessor.BinMapData(beadStructsList, current: false, hiRez);
         //DisplayedMap.Sort((x, y) => x.A.CompareTo(y.A));
         _ = App.Current.Dispatcher.BeginInvoke((Action)(() =>
         {
           try
           {
-            Core.DataProcessor.AnalyzeHeatMap(DisplayedMap, hiRez);
+            Core.DataProcessor.AnalyzeHeatMap(hiRez);
             FillBackingAnalysisMap();
           }
           catch (Exception e)
@@ -421,7 +421,7 @@ namespace Ei_Dimension.ViewModels
             _fillDataActive = false;
           }
         }));
-        MainViewModel.Instance.EventCountLocal[0] = beadStructslist.Count.ToString();
+        MainViewModel.Instance.EventCountLocal[0] = beadStructsList.Count.ToString();
       });
     }
 
@@ -469,7 +469,7 @@ namespace Ei_Dimension.ViewModels
 
         _ = App.Current.Dispatcher.BeginInvoke((Action)(() =>
         {
-          Core.DataProcessor.AnalyzeHeatMap(DisplayedMap);
+          Core.DataProcessor.AnalyzeHeatMap();
         }));
         MainViewModel.Instance.EventCountField = MainViewModel.Instance.EventCountCurrent;
       }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Media;
+using Ei_Dimension.ViewModels;
 
 namespace Ei_Dimension.Core
 {
@@ -23,12 +24,14 @@ namespace Ei_Dimension.Core
       _heatColors[6] = Brushes.Red;
     }
 
-    static public async Task<List<string>> GetDataFromFileAsync(string path)
+    public static async Task<List<string>> GetDataFromFileAsync(string path)
     {
       var str = new List<string>();
-      using (System.IO.FileStream fin = new System.IO.FileStream(path, System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.Read))
-      using (System.IO.StreamReader sr = new System.IO.StreamReader(fin))
+      using (var fin = new System.IO.FileStream(path, System.IO.FileMode.Open, System.IO.FileAccess.Read,
+               System.IO.FileShare.Read))
+      using (var sr = new System.IO.StreamReader(fin))
       {
+        // ReSharper disable once MethodHasAsyncOverload
         sr.ReadLine();
         while (!sr.EndOfStream)
         {
@@ -38,40 +41,40 @@ namespace Ei_Dimension.Core
       return str;
     }
 
-    static public MicroCy.BeadInfoStruct ParseRow(string data)
+    public static MicroCy.BeadInfoStruct ParseRow(string data)
     {
-      MicroCy.BeadInfoStruct Binfo;
+      MicroCy.BeadInfoStruct binfo;
       string[] words = data.Split(',');
-      Binfo.Header = uint.Parse(words[0]);
-      Binfo.EventTime = uint.Parse(words[1]);
-      Binfo.fsc_bg = byte.Parse(words[2]);
-      Binfo.vssc_bg = byte.Parse(words[3]);
-      Binfo.cl0_bg = byte.Parse(words[4]);
-      Binfo.cl1_bg = byte.Parse(words[5]);
-      Binfo.cl2_bg = byte.Parse(words[6]);
-      Binfo.cl3_bg = byte.Parse(words[7]);
-      Binfo.rssc_bg = byte.Parse(words[8]);
-      Binfo.gssc_bg = byte.Parse(words[9]);
-      Binfo.greenB_bg = ushort.Parse(words[10]);
-      Binfo.greenC_bg = ushort.Parse(words[11]);
-      Binfo.greenB = ushort.Parse(words[12]);
-      Binfo.greenC = ushort.Parse(words[13]);
-      Binfo.l_offset_rg = byte.Parse(words[14]);
-      Binfo.l_offset_gv = byte.Parse(words[15]);
-      Binfo.region = ushort.Parse(words[16]);
-      Binfo.fsc = float.Parse(words[17], System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
-      Binfo.violetssc = float.Parse(words[18], System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
-      Binfo.cl0 = float.Parse(words[19], System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
-      Binfo.redssc = float.Parse(words[20], System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
-      Binfo.cl1 = float.Parse(words[21], System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
-      Binfo.cl2 = float.Parse(words[22], System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
-      Binfo.cl3 = float.Parse(words[23], System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
-      Binfo.greenssc = float.Parse(words[24], System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
-      Binfo.reporter = float.Parse(words[25], System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
-      return Binfo;
+      binfo.Header = uint.Parse(words[0]);
+      binfo.EventTime = uint.Parse(words[1]);
+      binfo.fsc_bg = byte.Parse(words[2]);
+      binfo.vssc_bg = byte.Parse(words[3]);
+      binfo.cl0_bg = byte.Parse(words[4]);
+      binfo.cl1_bg = byte.Parse(words[5]);
+      binfo.cl2_bg = byte.Parse(words[6]);
+      binfo.cl3_bg = byte.Parse(words[7]);
+      binfo.rssc_bg = byte.Parse(words[8]);
+      binfo.gssc_bg = byte.Parse(words[9]);
+      binfo.greenB_bg = ushort.Parse(words[10]);
+      binfo.greenC_bg = ushort.Parse(words[11]);
+      binfo.greenB = ushort.Parse(words[12]);
+      binfo.greenC = ushort.Parse(words[13]);
+      binfo.l_offset_rg = byte.Parse(words[14]);
+      binfo.l_offset_gv = byte.Parse(words[15]);
+      binfo.region = ushort.Parse(words[16]);
+      binfo.fsc = float.Parse(words[17], System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
+      binfo.violetssc = float.Parse(words[18], System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
+      binfo.cl0 = float.Parse(words[19], System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
+      binfo.redssc = float.Parse(words[20], System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
+      binfo.cl1 = float.Parse(words[21], System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
+      binfo.cl2 = float.Parse(words[22], System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
+      binfo.cl3 = float.Parse(words[23], System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
+      binfo.greenssc = float.Parse(words[24], System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
+      binfo.reporter = float.Parse(words[25], System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
+      return binfo;
     }
 
-    static public List<HistogramData> LinearizeDictionary(SortedDictionary<int,int> dict)
+    public static List<HistogramData> LinearizeDictionary(SortedDictionary<int,int> dict)
     {
       var result = new List<HistogramData>();
       foreach (var x in dict)
@@ -94,13 +97,13 @@ namespace Ei_Dimension.Core
       }
       double delta = (logMax - logMin) / logBins;
       double accDelta = delta;
-      int[] Result = new int[logBins];
-      for (int i = 1; i <= logBins; ++i)
+      int[] result = new int[logBins];
+      for (var i = 1; i <= logBins; ++i)
       {
-        Result[i - 1] = (int)Math.Round(Math.Pow(logarithmicBase, logMin + accDelta));
+        result[i - 1] = (int)Math.Round(Math.Pow(logarithmicBase, logMin + accDelta));
         accDelta += delta;
       }
-      return Result;
+      return result;
     }
     public static double[] GenerateLogSpaceD(int min, int max, int logBins, bool baseE = false)
     {
@@ -130,11 +133,7 @@ namespace Ei_Dimension.Core
       var ScatterData = ResVM.ScttrData;
       var ScatterDataCount = ScatterData.CurrentReporter.Count;
       var MaxValue = ScatterData.CurrentReporter[ScatterDataCount - 1].Argument;
-      int[] reporter;
-      int[] fsc;
-      int[] red;
-      int[] green;
-      int[] violet;
+      int[] reporter, fsc, red, green, violet;
       if (fromFile)
       {
         reporter = ScatterData.bReporter;
@@ -152,10 +151,10 @@ namespace Ei_Dimension.Core
         violet = ScatterData.cViolet;
       }
 
-      List<List<float>> ActiveRegionsStats = new List<List<float>>();  //for mean and count
+      List<List<float>> activeRegionsStats = new List<List<float>>();  //for mean and count
       foreach (var region in App.Device.ActiveMap.regions)
       {
-        ActiveRegionsStats.Add(new List<float>());
+        activeRegionsStats.Add(new List<float>());
       }
       //bool failed = false;
       foreach (var beadD in list)
@@ -192,7 +191,7 @@ namespace Ei_Dimension.Core
 
         var index = App.MapRegions.RegionsList.IndexOf(beadD.region.ToString());
         if (index != -1)
-          ActiveRegionsStats[index].Add(beadD.reporter);
+          activeRegionsStats[index].Add(beadD.reporter);
         //else if (beadD.region == 0)
         //  continue;
         //else
@@ -207,9 +206,9 @@ namespace Ei_Dimension.Core
         if (fromFile)
         {
           var j = 0;
-          foreach (var lst in ActiveRegionsStats)
+          foreach (var lst in activeRegionsStats)
           {
-            if(lst.Count > 0)
+            if (lst.Count > 0)
             {
               App.MapRegions.BackingActiveRegionsCount[j] = lst.Count.ToString();
               App.MapRegions.BackingActiveRegionsMean[j] = lst.Average().ToString("0,0");
@@ -221,32 +220,28 @@ namespace Ei_Dimension.Core
       }));
     }
 
-    public static void AnalyzeHeatMap(List<HeatMapData> heatmap, bool hiRez = false)
+    public static void AnalyzeHeatMap(bool hiRez = false)
     {
-      if (heatmap != null && heatmap.Count > 0)
+      var heatMap = ResultsViewModel.Instance.DisplayedMap;
+      if (heatMap != null && heatMap.Count > 0)
       {
-        int max = 0;
-        
-        foreach (var p in heatmap)
-        {
-          if (p.A > max)
-            max = p.A;
-        }
-        double[] bins = GenerateLogSpaceD(1, max + 1, _heatColors.Length, true);
+        int max = heatMap.Select(p => p.A).Max();
+
+        var bins = GenerateLogSpaceD(1, max + 1, _heatColors.Length, true);
         Views.ResultsView.Instance.ClearPoints();
-        for (var i = 0; i < heatmap.Count; i++)
+        for (var i = 0; i < heatMap.Count; i++)
         {
           for (var j = 0; j < _heatColors.Length; j++)
           {
-            //int cutoff = (heatmap[i].X > 100 && heatmap[i].Y > 100) ? ViewModels.ResultsViewModel.Instance.XYCutoff : 2;
-            if (heatmap[i].A <= bins[j])
+            //int cutoff = (heatMap[i].X > 100 && heatMap[i].Y > 100) ? ViewModels.ResultsViewModel.Instance.XYCutoff : 2;
+            if (heatMap[i].A <= bins[j])
             {
               if (!hiRez && j == 0)
                 break;
               if (ViewModels.ResultsViewModel.Instance.WrldMap.Flipped)
-                Views.ResultsView.Instance.AddXYPoint(heatmap[i].Y, heatmap[i].X, _heatColors[j], hiRez);
+                Views.ResultsView.Instance.AddXYPoint(heatMap[i].Y, heatMap[i].X, _heatColors[j], hiRez);
               else
-                Views.ResultsView.Instance.AddXYPoint(heatmap[i].X, heatmap[i].Y, _heatColors[j], hiRez);
+                Views.ResultsView.Instance.AddXYPoint(heatMap[i].X, heatMap[i].Y, _heatColors[j], hiRez);
               break;
             }
           }
@@ -254,12 +249,12 @@ namespace Ei_Dimension.Core
       }
     }
 
-    public static void BinMapData(List<MicroCy.BeadInfoStruct> BeadInfoList, bool current = true, bool hiRez = false)
+    public static void BinMapData(List<MicroCy.BeadInfoStruct> beadInfoList, bool current = true, bool hiRez = false)
     {
-      var ResVM = ViewModels.ResultsViewModel.Instance;
+      var resVm = ViewModels.ResultsViewModel.Instance;
       var bins = hiRez ? HeatMapData.HiRezBins : HeatMapData.bins;
       var boundary = hiRez ? HeatMapData.HiRezBins.Length - 1 : HeatMapData.bins.Length - 1;
-      foreach (var bead in BeadInfoList)
+      foreach (var bead in beadInfoList)
       {
         /*
         int cl0 = Array.BinarySearch(bins, bead.cl0);
@@ -317,14 +312,14 @@ namespace Ei_Dimension.Core
           }
           */
           //12
-          if (!ResVM.CurrentCL12Dict.ContainsKey((cl1, cl2)))
+          if (!resVm.CurrentCL12Dict.ContainsKey((cl1, cl2)))
           {
-            ResVM.CurrentCL12Dict.Add((cl1, cl2), ResVM.CurrentCL12Map.Count);
-            ResVM.CurrentCL12Map.Add(new HeatMapData((int)bins[cl1], (int)bins[cl2]));
+            resVm.CurrentCL12Dict.Add((cl1, cl2), resVm.CurrentCL12Map.Count);
+            resVm.CurrentCL12Map.Add(new HeatMapData((int)bins[cl1], (int)bins[cl2]));
           }
           else
           {
-            ResVM.CurrentCL12Map[ResVM.CurrentCL12Dict[(cl1, cl2)]].A++;
+            resVm.CurrentCL12Map[resVm.CurrentCL12Dict[(cl1, cl2)]].A++;
           }
           /*
           //13
@@ -384,14 +379,14 @@ namespace Ei_Dimension.Core
           }
           */
           //12
-          if (!ResVM.BackingCL12Dict.ContainsKey((cl1, cl2)))
+          if (!resVm.BackingCL12Dict.ContainsKey((cl1, cl2)))
           {
-            ResVM.BackingCL12Dict.Add((cl1, cl2), ResVM.BackingCL12Map.Count);
-            ResVM.BackingCL12Map.Add(new HeatMapData((int)bins[cl1], (int)bins[cl2]));
+            resVm.BackingCL12Dict.Add((cl1, cl2), resVm.BackingCL12Map.Count);
+            resVm.BackingCL12Map.Add(new HeatMapData((int)bins[cl1], (int)bins[cl2]));
           }
           else
           {
-            ResVM.BackingCL12Map[ResVM.BackingCL12Dict[(cl1, cl2)]].A++;
+            resVm.BackingCL12Map[resVm.BackingCL12Dict[(cl1, cl2)]].A++;
           }
           /*
           //13
@@ -417,10 +412,10 @@ namespace Ei_Dimension.Core
           */
 
           //3DReporterPlot
-          var index = ResVM.BackingWResults.FindIndex(x => x.regionNumber == bead.region);
+          var index = resVm.BackingWResults.FindIndex(x => x.regionNumber == bead.region);
           if(index != -1)
           {
-            ResVM.BackingWResults[index].RP1vals.Add(bead.reporter);
+            resVm.BackingWResults[index].RP1vals.Add(bead.reporter);
           }
           
         }

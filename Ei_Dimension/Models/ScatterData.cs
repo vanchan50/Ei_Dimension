@@ -10,21 +10,21 @@ namespace Ei_Dimension.Models
   [POCOViewModel]
   public class ScatterData
   {
-    public virtual ObservableCollection<HistogramData> CurrentForwardSsc { get; set; }
-    public virtual ObservableCollection<HistogramData> CurrentVioletSsc { get; set; }
-    public virtual ObservableCollection<HistogramData> CurrentRedSsc { get; set; }
-    public virtual ObservableCollection<HistogramData> CurrentGreenSsc { get; set; }
-    public virtual ObservableCollection<HistogramData> CurrentReporter { get; set; }
     public virtual ObservableCollection<HistogramData> DisplayedForwardSsc { get; set; }
     public virtual ObservableCollection<HistogramData> DisplayedVioletSsc { get; set; }
     public virtual ObservableCollection<HistogramData> DisplayedRedSsc { get; set; }
     public virtual ObservableCollection<HistogramData> DisplayedGreenSsc { get; set; }
     public virtual ObservableCollection<HistogramData> DisplayedReporter { get; set; }
-    public virtual ObservableCollection<HistogramData> BackingForwardSsc { get; set; }
-    public virtual ObservableCollection<HistogramData> BackingVioletSsc { get; set; }
-    public virtual ObservableCollection<HistogramData> BackingRedSsc { get; set; }
-    public virtual ObservableCollection<HistogramData> BackingGreenSsc { get; set; }
-    public virtual ObservableCollection<HistogramData> BackingReporter { get; set; }
+    public static ObservableCollection<HistogramData> CurrentForwardSsc { get; set; }
+    public static ObservableCollection<HistogramData> CurrentVioletSsc { get; set; }
+    public static ObservableCollection<HistogramData> CurrentRedSsc { get; set; }
+    public static ObservableCollection<HistogramData> CurrentGreenSsc { get; set; }
+    public static ObservableCollection<HistogramData> CurrentReporter { get; set; }
+    public static ObservableCollection<HistogramData> BackingForwardSsc { get; set; }
+    public static ObservableCollection<HistogramData> BackingVioletSsc { get; set; }
+    public static ObservableCollection<HistogramData> BackingRedSsc { get; set; }
+    public static ObservableCollection<HistogramData> BackingGreenSsc { get; set; }
+    public static ObservableCollection<HistogramData> BackingReporter { get; set; }
     public static int[] bReporter = new int[HistogramData.Bins.Length];
     public static int[] bFsc = new int[HistogramData.Bins.Length];
     public static int[] bRed = new int[HistogramData.Bins.Length];

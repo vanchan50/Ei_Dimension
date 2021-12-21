@@ -114,7 +114,7 @@ namespace MadWizard.WinUSBNet.API
         private static extern bool WinUsb_ControlTransfer(IntPtr InterfaceHandle, WINUSB_SETUP_PACKET SetupPacket, Byte[] Buffer, UInt32 BufferLength, ref UInt32 LengthTransferred, IntPtr Overlapped);
 
         [DllImport("winusb.dll", SetLastError = true)]
-        private static unsafe extern bool WinUsb_ControlTransfer(IntPtr InterfaceHandle, WINUSB_SETUP_PACKET SetupPacket, Byte[] Buffer, UInt32 BufferLength, ref UInt32 LengthTransferred, NativeOverlapped* pOverlapped);
+        private static extern unsafe bool WinUsb_ControlTransfer(IntPtr InterfaceHandle, WINUSB_SETUP_PACKET SetupPacket, Byte[] Buffer, UInt32 BufferLength, ref UInt32 LengthTransferred, NativeOverlapped* pOverlapped);
 
 		[DllImport("winusb.dll", SetLastError = true)]
         private static extern bool WinUsb_Free(IntPtr InterfaceHandle);
@@ -132,10 +132,10 @@ namespace MadWizard.WinUSBNet.API
         private static extern bool WinUsb_QueryPipe(IntPtr InterfaceHandle, Byte AlternateInterfaceNumber, Byte PipeIndex, out WINUSB_PIPE_INFORMATION PipeInformation);
 
 		[DllImport("winusb.dll", SetLastError = true)]
-        private static unsafe extern bool WinUsb_ReadPipe(IntPtr InterfaceHandle, byte PipeID, byte* pBuffer, uint BufferLength, out uint LengthTransferred, IntPtr Overlapped);
+        private static extern unsafe bool WinUsb_ReadPipe(IntPtr InterfaceHandle, byte PipeID, byte* pBuffer, uint BufferLength, out uint LengthTransferred, IntPtr Overlapped);
 
         [DllImport("winusb.dll", SetLastError = true)]
-        private static unsafe extern bool WinUsb_ReadPipe(IntPtr InterfaceHandle, byte PipeID, byte* pBuffer, uint BufferLength, out uint LengthTransferred, NativeOverlapped* pOverlapped);
+        private static extern unsafe bool WinUsb_ReadPipe(IntPtr InterfaceHandle, byte PipeID, byte* pBuffer, uint BufferLength, out uint LengthTransferred, NativeOverlapped* pOverlapped);
         
         [DllImport("winusb.dll", SetLastError = true)]
         private static extern bool WinUsb_AbortPipe(IntPtr InterfaceHandle, byte PipeID);
@@ -158,17 +158,17 @@ namespace MadWizard.WinUSBNet.API
         private static extern bool WinUsb_GetPipePolicy(IntPtr InterfaceHandle, Byte PipeID, UInt32 PolicyType, ref UInt32 ValueLength, out UInt32 Value);
 
 		[DllImport("winusb.dll", SetLastError = true)]
-        private static unsafe extern bool WinUsb_WritePipe(IntPtr InterfaceHandle, byte PipeID, byte* pBuffer, uint BufferLength, out uint LengthTransferred, IntPtr Overlapped);
+        private static extern unsafe bool WinUsb_WritePipe(IntPtr InterfaceHandle, byte PipeID, byte* pBuffer, uint BufferLength, out uint LengthTransferred, IntPtr Overlapped);
         
         [DllImport("winusb.dll", SetLastError = true)]
-        private static unsafe extern bool WinUsb_WritePipe(IntPtr InterfaceHandle, byte PipeID, byte* pBuffer, uint BufferLength, out uint LengthTransferred, NativeOverlapped* pOverlapped);
+        private static extern unsafe bool WinUsb_WritePipe(IntPtr InterfaceHandle, byte PipeID, byte* pBuffer, uint BufferLength, out uint LengthTransferred, NativeOverlapped* pOverlapped);
 
 
         [DllImport("kernel32.dll", SetLastError = true)]
-        private static unsafe extern bool CancelIo(IntPtr hFile);
+        private static extern unsafe bool CancelIo(IntPtr hFile);
         
         [DllImport("kernel32.dll", SetLastError = true)]
-        private static unsafe extern bool CancelIoEx(IntPtr hFile, NativeOverlapped* pOverlapped);
+        private static extern unsafe bool CancelIoEx(IntPtr hFile, NativeOverlapped* pOverlapped);
         
         
 

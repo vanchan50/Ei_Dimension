@@ -19,7 +19,7 @@ namespace MadWizard.WinUSBNet.API
 	///  API declarations relating to file I/O (and used by WinUsb).
 	///  </summary>
 
-	sealed internal class FileIO
+	internal sealed class FileIO
 	{
 		public const Int32 FILE_ATTRIBUTE_NORMAL = 0X80;
         public const Int32 FILE_FLAG_OVERLAPPED = 0X40000000;

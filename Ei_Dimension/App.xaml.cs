@@ -46,7 +46,7 @@ namespace Ei_Dimension
     private static bool _workOrderPending;
     private static bool _cancelKeyboardInjectionFlag;
     private static bool _histogramUpdateGoing;
-    private static bool _ActiveRegionsUpdateGoing;
+    private static bool _activeRegionsUpdateGoing;
     private static bool _isStartup;
     private static int _timerTickcounter;
     private static bool _nextWellWarning;
@@ -88,9 +88,9 @@ namespace Ei_Dimension
       MicroCy.InstrumentParameters.Calibration.Compensation = Device.ActiveMap.calParams.compensation;
       Device.MainCommand("Set Property", code: 0x97, parameter: 1170);  //set current limit of aligner motors if leds are off
       Device.MainCommand("Get Property", code: 0xca);
-      Device.StartingToReadWell += StartingToReadWellEventhandler;
-      Device.FinishedReadingWell += FinishedReadingWellEventhandler;
-      Device.FinishedMeasurement += FinishedMeasurementEventhandler;
+      Device.StartingToReadWell += StartingToReadWellEventHandler;
+      Device.FinishedReadingWell += FinishedReadingWellEventHandler;
+      Device.FinishedMeasurement += FinishedMeasurementEventHandler;
       Device.NewStatsAvailable += NewStatsAvailableEventHandler;
       _dispatcherTimer = new DispatcherTimer();
       _dispatcherTimer.Tick += TimerTick;
@@ -98,7 +98,7 @@ namespace Ei_Dimension
       _dispatcherTimer.Start();
       _workOrderPending = false;
       _histogramUpdateGoing = false;
-      _ActiveRegionsUpdateGoing = false;
+      _activeRegionsUpdateGoing = false;
       _isStartup = true;
       _timerTickcounter = 0;
       _nextWellWarning = false;
@@ -2344,18 +2344,18 @@ namespace Ei_Dimension
         _histogramUpdateGoing = true;
         _ = Task.Run(()=>
         {
-          var BeadInfoList = new List<BeadInfoStruct>();
+          var beadInfoList = new List<BeadInfoStruct>();
           while (Device.DataOut.TryDequeue(out BeadInfoStruct bead))
           {
-            BeadInfoList.Add(bead);
+            beadInfoList.Add(bead);
           }
-          _ = Task.Run(() => { Core.DataProcessor.BinScatterData(BeadInfoList); });
-          Core.DataProcessor.BinMapData(BeadInfoList, current: true);
+          _ = Task.Run(() => { Core.DataProcessor.BinScatterData(beadInfoList); });
+          Core.DataProcessor.BinMapData(beadInfoList, current: true);
           if (ResultsViewModel.Instance.DisplaysCurrentmap)
           {
             _ = Current.Dispatcher.BeginInvoke((Action)(() =>
             {
-              Core.DataProcessor.AnalyzeHeatMap(ResultsViewModel.Instance.DisplayedMap);
+              Core.DataProcessor.AnalyzeHeatMap();
               _histogramUpdateGoing = false;
             }));
           }
@@ -2367,9 +2367,9 @@ namespace Ei_Dimension
 
     private static void ActiveRegionsStatsHandler()
     {
-      if (!_ActiveRegionsUpdateGoing)
+      if (!_activeRegionsUpdateGoing)
       {
-        _ActiveRegionsUpdateGoing = true;
+        _activeRegionsUpdateGoing = true;
         var tempResults = new List<(ushort region, float[] vals)>(Device.WellResults.Count);
         for (var i = 0; i < Device.WellResults.Count; i++)
         {
@@ -2385,7 +2385,7 @@ namespace Ei_Dimension
             var index = MapRegions.RegionsList.IndexOf(result.region.ToString());
             if (index == -1)
               continue;
-            float Avg = 0;
+            float avg = 0;
             if (result.vals.Length == 0)
             {
               MapRegions.CurrentActiveRegionsCount[index] = "0";
@@ -2394,23 +2394,23 @@ namespace Ei_Dimension
             else
             {
               MapRegions.CurrentActiveRegionsCount[index] = result.vals.Count().ToString();
-              Avg = result.vals.Average();
-              MapRegions.CurrentActiveRegionsMean[index] = Avg.ToString("0,0");
+              avg = result.vals.Average();
+              MapRegions.CurrentActiveRegionsMean[index] = avg.ToString("0,0");
               Array.Clear(result.vals, 0, result.vals.Length);  //Crutch. Explicit clear needed for some reason
             }
-            Reporter3DGraphHandler(index, Avg);
+            Reporter3DGraphHandler(index, avg);
           }
           tempResults = null;
-          _ActiveRegionsUpdateGoing = false;
+          _activeRegionsUpdateGoing = false;
         }));
       }
     }
 
-    private static void Reporter3DGraphHandler(int RegionIndex, double ReporterAVG)
+    private static void Reporter3DGraphHandler(int regionIndex, double reporterAvg)
     {
-      var x = Models.HeatMapData.bins[Device.ActiveMap.regions[RegionIndex].Center.x];
-      var y = Models.HeatMapData.bins[Device.ActiveMap.regions[RegionIndex].Center.y];
-      ResultsViewModel.Instance.CurrentAnalysis12Map.Add(new Models.DoubleHeatMapData(x, y, ReporterAVG));
+      var x = Models.HeatMapData.bins[Device.ActiveMap.regions[regionIndex].Center.x];
+      var y = Models.HeatMapData.bins[Device.ActiveMap.regions[regionIndex].Center.y];
+      ResultsViewModel.Instance.CurrentAnalysis12Map.Add(new Models.DoubleHeatMapData(x, y, reporterAvg));
     }
 
     private static void UpdateEventCounter()
@@ -2424,7 +2424,7 @@ namespace Ei_Dimension
         Device.MainCommand("Get FProperty", code: 0x22);
     }
 
-    public static void StartingToReadWellEventhandler(object sender, ReadingWellEventArgs e)
+    private static void StartingToReadWellEventHandler(object sender, ReadingWellEventArgs e)
     {
       var warning = Models.WellWarningState.OK;
       if (_nextWellWarning)
@@ -2446,21 +2446,21 @@ namespace Ei_Dimension
 #endif
     }
 
-    public static void FinishedReadingWellEventhandler(object sender, ReadingWellEventArgs e)
+    public static void FinishedReadingWellEventHandler(object sender, ReadingWellEventArgs e)
     {
       var type = Models.WellType.Success;
       if (Device.Mode == OperationMode.Normal)
       {
         if (Device.TerminationType == 0 && Device.WellResults.Count > 0)
         {
-          foreach (var WR in Device.WellResults)
+          foreach (var wr in Device.WellResults)
           {
-            if (WR.RP1vals.Count < Device.MinPerRegion * 0.75)
+            if (wr.RP1vals.Count < Device.MinPerRegion * 0.75)
             {
               type = Models.WellType.Fail;
               break;
             }
-            if (WR.RP1vals.Count < Device.MinPerRegion)
+            if (wr.RP1vals.Count < Device.MinPerRegion)
             {
               type = Models.WellType.LightFail;
               break;
@@ -2475,7 +2475,7 @@ namespace Ei_Dimension
 #endif
     }
 
-    public static void FinishedMeasurementEventhandler(object sender, EventArgs e)
+    public static void FinishedMeasurementEventHandler(object sender, EventArgs e)
     {
       Device.ReadActive = false;
       MainButtonsViewModel.Instance.StartButtonEnabled = true;
@@ -2497,10 +2497,7 @@ namespace Ei_Dimension
           Device.Verificator.CalculateResults();
           if (VerificationViewModel.AnalyzeVerificationResults())
           {
-            _ = Current.Dispatcher.BeginInvoke((Action)(() =>
-            {
-              VerificationViewModel.VerificationSuccess();
-            }));
+            _ = Current.Dispatcher.BeginInvoke((Action)VerificationViewModel.VerificationSuccess);
           }
           else
             ShowLocalizedNotification(nameof(Language.Resources.Validation_Fail), System.Windows.Media.Brushes.Red);
@@ -2532,8 +2529,8 @@ namespace Ei_Dimension
         File.Delete(backfilepath);
         File.Move(logfilepath, backfilepath);
       }
-      FileStream fs = new FileStream(logfilepath, FileMode.Create);
-      StreamWriter logwriter = new StreamWriter(fs);
+      var fs = new FileStream(logfilepath, FileMode.Create);
+      var logwriter = new StreamWriter(fs);
       logwriter.AutoFlush = true;
       Console.SetOut(logwriter);
     }
@@ -2585,53 +2582,53 @@ namespace Ei_Dimension
       Views.ChannelOffsetView.Instance.cover.Visibility = Visibility.Visible;
     }
 
-    public static void ShowNotification(string text, System.Windows.Media.Brush Background = null)
+    public static void ShowNotification(string text, System.Windows.Media.Brush background = null)
     {
       NotificationViewModel.Instance.Text[0] = text;
-      if (Background != null)
-        NotificationViewModel.Instance.Background = Background;
+      if (background != null)
+        NotificationViewModel.Instance.Background = background;
       NotificationViewModel.Instance.NotificationVisible = Visibility.Visible;
     }
 
-    public static void ShowNotification(string text, Action action1, string actionButton1Text, System.Windows.Media.Brush Background = null )
+    public static void ShowNotification(string text, Action action1, string actionButton1Text, System.Windows.Media.Brush background = null )
     {
       NotificationViewModel.Instance.Action1 = action1;
       NotificationViewModel.Instance.ActionButtonText[0] = actionButton1Text;
       NotificationViewModel.Instance.ButtonVisible[0] = Visibility.Visible;
       NotificationViewModel.Instance.ButtonVisible[2] = Visibility.Hidden;
-      ShowNotification(text, Background);
+      ShowNotification(text, background);
     }
 
-    public static void ShowNotification(string text, Action action1, string actionButton1Text, Action action2, string actionButton2Text, System.Windows.Media.Brush Background = null)
+    public static void ShowNotification(string text, Action action1, string actionButton1Text, Action action2, string actionButton2Text, System.Windows.Media.Brush background = null)
     {
       NotificationViewModel.Instance.Action2 = action2;
       NotificationViewModel.Instance.ActionButtonText[1] = actionButton2Text;
       NotificationViewModel.Instance.ButtonVisible[1] = Visibility.Visible;
-      ShowNotification(text, action1, actionButton1Text, Background);
+      ShowNotification(text, action1, actionButton1Text, background);
     }
 
-    public static void ShowLocalizedNotification(string nameofLocalizationString, System.Windows.Media.Brush Background = null)
+    public static void ShowLocalizedNotification(string nameofLocalizationString, System.Windows.Media.Brush background = null)
     {
       ShowNotification(Language.Resources.ResourceManager.GetString(nameofLocalizationString,
-          Language.TranslationSource.Instance.CurrentCulture), Background);
+          Language.TranslationSource.Instance.CurrentCulture), background);
     }
 
-    public static void ShowLocalizedNotification(string nameofLocalizationString, Action action1, string nameofActionButton1Text, System.Windows.Media.Brush Background = null)
+    public static void ShowLocalizedNotification(string nameofLocalizationString, Action action1, string nameofActionButton1Text, System.Windows.Media.Brush background = null)
     {
       NotificationViewModel.Instance.Action1 = action1;
       NotificationViewModel.Instance.ActionButtonText[0] = Language.Resources.ResourceManager.GetString(nameofActionButton1Text,
           Language.TranslationSource.Instance.CurrentCulture);
       NotificationViewModel.Instance.ButtonVisible[0] = Visibility.Visible;
       NotificationViewModel.Instance.ButtonVisible[2] = Visibility.Hidden;
-      ShowLocalizedNotification(nameofLocalizationString, Background);
+      ShowLocalizedNotification(nameofLocalizationString, background);
     }
-    public static void ShowLocalizedNotification(string nameofLocalizationString, Action action1, string nameofActionButton1Text, Action action2, string nameofActionButton2Text, System.Windows.Media.Brush Background = null)
+    public static void ShowLocalizedNotification(string nameofLocalizationString, Action action1, string nameofActionButton1Text, Action action2, string nameofActionButton2Text, System.Windows.Media.Brush background = null)
     {
       NotificationViewModel.Instance.Action2 = action2;
       NotificationViewModel.Instance.ActionButtonText[1] = Language.Resources.ResourceManager.GetString(nameofActionButton2Text,
           Language.TranslationSource.Instance.CurrentCulture);
       NotificationViewModel.Instance.ButtonVisible[1] = Visibility.Visible;
-      ShowLocalizedNotification(nameofLocalizationString, action1, nameofActionButton1Text, Background);
+      ShowLocalizedNotification(nameofLocalizationString, action1, nameofActionButton1Text, background);
     }
 
     public static void SavePlateState()
