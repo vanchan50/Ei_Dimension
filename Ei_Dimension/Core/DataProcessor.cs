@@ -238,7 +238,7 @@ namespace Ei_Dimension.Core
             {
               if (!hiRez && j == 0)
                 break;
-              if (ViewModels.ResultsViewModel.Instance.WrldMap.Flipped)
+              if (ResultsViewModel.Instance.WrldMap.Flipped)
                 Views.ResultsView.Instance.AddXYPoint(heatMap[i].Y, heatMap[i].X, _heatColors[j], hiRez);
               else
                 Views.ResultsView.Instance.AddXYPoint(heatMap[i].X, heatMap[i].Y, _heatColors[j], hiRez);
@@ -251,10 +251,11 @@ namespace Ei_Dimension.Core
 
     public static void BinMapData(List<MicroCy.BeadInfoStruct> beadInfoList, bool current = true, bool hiRez = false)
     {
-      var resVm = ViewModels.ResultsViewModel.Instance;
+      var resVm = ResultsViewModel.Instance;
       var bins = hiRez ? HeatMapData.HiRezBins : HeatMapData.bins;
       var boundary = hiRez ? HeatMapData.HiRezBins.Length - 1 : HeatMapData.bins.Length - 1;
-      foreach (var bead in beadInfoList)
+      var i = 0;
+      while (i < beadInfoList.Count)
       {
         /*
         int cl0 = Array.BinarySearch(bins, bead.cl0);
@@ -262,11 +263,11 @@ namespace Ei_Dimension.Core
           cl0 = ~cl0;
         cl0 = cl0 > boundary ? boundary : cl0;
         */
-        int cl1 = Array.BinarySearch(bins, bead.cl1);
+        int cl1 = Array.BinarySearch(bins, beadInfoList[i].cl1);
         if (cl1 < 0)
           cl1 = ~cl1;
         cl1 = cl1 > boundary ? boundary : cl1;
-        int cl2 = Array.BinarySearch(bins, bead.cl2);
+        int cl2 = Array.BinarySearch(bins, beadInfoList[i].cl2);
         if (cl2 < 0)
           cl2 = ~cl2;
         cl2 = cl2 > boundary ? boundary : cl2;
@@ -412,13 +413,13 @@ namespace Ei_Dimension.Core
           */
 
           //3DReporterPlot
-          var index = resVm.BackingWResults.FindIndex(x => x.regionNumber == bead.region);
+          var index = resVm.BackingWResults.FindIndex(x => x.regionNumber == beadInfoList[i].region);
           if(index != -1)
           {
-            resVm.BackingWResults[index].RP1vals.Add(bead.reporter);
+            resVm.BackingWResults[index].RP1vals.Add(beadInfoList[i].reporter);
           }
-          
         }
+        i++;
       }
     }
   }

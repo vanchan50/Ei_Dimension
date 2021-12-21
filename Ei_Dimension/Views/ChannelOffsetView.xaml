@@ -275,7 +275,11 @@
                   Command="{Binding UpdateBiasButtonClickCommand}"
                   Style="{StaticResource ButtonStyle}"
                   Height="85" Cursor="Hand"
-                  Margin="0,0,0,6"/>
+                  Margin="0,0,0,8"/>
+          <Button Content="{lang:Loc Ch_Offset_Set_Offset}"
+                  Command="{Binding SetOffsetClickCommand}"
+                  Style="{StaticResource ButtonStyle}"
+                  Height="85"/>
         </StackPanel>
       </StackPanel>
     </Border>

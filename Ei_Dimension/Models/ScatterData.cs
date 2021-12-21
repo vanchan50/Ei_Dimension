@@ -142,9 +142,9 @@ namespace Ei_Dimension.Models
       }
     }
 
-    public void FillCurrentData(bool FromFile = false)
+    public void FillCurrentData(bool fromFile = false)
     {
-      if (FromFile)
+      if (fromFile)
       {
         for (var i = 0; i < BackingReporter.Count; i++)
         {
@@ -166,7 +166,7 @@ namespace Ei_Dimension.Models
           CurrentVioletSsc[i].Value += cViolet[i];
         }
       }
-      ClearCounterArrays(!FromFile);
+      ClearCounterArrays(!fromFile);
     }
   }
 }

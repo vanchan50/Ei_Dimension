@@ -496,6 +496,9 @@
     <None Include="Maps\BioRad.dmap">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Maps\Ei100_plex.dmap">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Maps\ULBG50.dmap">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

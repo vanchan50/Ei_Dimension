@@ -119,7 +119,7 @@ namespace MicroCy
       MainCommand("Sync");
       TotalBeads = 0;
       Mode = OperationMode.Normal;
-      _classificationBins = GenerateLogSpace(1, 50000, 256);
+      _classificationBins = GenerateLogSpace(1, 60000, 256);
       SetSystemDirectories();
       MoveMaps();
       LoadMaps();

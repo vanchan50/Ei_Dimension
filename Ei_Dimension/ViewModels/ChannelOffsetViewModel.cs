@@ -50,6 +50,11 @@ namespace Ei_Dimension.ViewModels
       App.Device.InitSTab("channeltab");
     }
 
+    public void SetOffsetClick()
+    {
+      App.Device.MainCommand("SetBaseline");
+    }
+
     public void FocusedBox(int num)
     {
       var Stackpanel = Views.ChannelOffsetView.Instance.SP.Children;

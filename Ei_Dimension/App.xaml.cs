@@ -1610,16 +1610,16 @@ namespace Ei_Dimension
         {
           if (int.TryParse(_tempNewString, out iRes))
           {
-            if (iRes < 0 || iRes > 65535)
+            if (iRes < 0 || iRes > 100000)
             {
               failed = true;
-              ErrorMessage = "Reporter value is out of range [0-65535]";
+              ErrorMessage = "Reporter value is out of range [0-100000]";
             }
           }
           else
           {
             failed = true;
-            ErrorMessage = "Reporter value is out of range [0-65535]";
+            ErrorMessage = "Reporter value is out of range [0-100000]";
           }
         }
         Settings.Default.Save();

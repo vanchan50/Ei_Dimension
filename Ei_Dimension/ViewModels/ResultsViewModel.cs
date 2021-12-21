@@ -494,6 +494,8 @@ namespace Ei_Dimension.ViewModels
       {
         WrldMap.InitMaps();
         PlotCurrent(DisplaysCurrentmap);
+        ResultsWaitIndicatorVisibility = false;
+        ChartWaitIndicatorVisibility = false;
       }));
     }
 
