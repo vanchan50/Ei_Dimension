@@ -19,12 +19,12 @@ using System.Threading;
  * 1. Manually with the END SECTION READ button
  * 2. Manually with the END READ button which just ends the current well read and goes on the the next well
  * 3. OUT OF SHEATH condition, the sheath syringe is a position 0
- * 4. OUT OF SAMPLE contition, the sample syringe (either A or B) is at postion 0
- * 5. Require number of beads read
+ * 4. OUT OF SAMPLE condition, the sample syringe (either A or B) is at position 0
+ * 5. Required number of beads read
  * 6. Required number of beads read in each region.
  * 7. Instrument fault (bubbles, plunger overload, clog, low laser power, etc)
  * 
- * When the instrument detects one of these end condtions: QB_cmd_proc.c / SyringeEmpty()
+ * When the instrument detects one of these end conditions: QB_cmd_proc.c / SyringeEmpty()
  * 1. The command Queue is cleared (the queue is only holding instructions for the currently read well)
  * 2. The sync token is cleared allowing new commands to execute immediately
  * 3. An FD or FE is sent to the host to tell it to save the data file and then it sends an EE or EF
@@ -33,9 +33,7 @@ using System.Threading;
  * 
  * When the host initiates an end condition (isDone== true)
  * This version is being used at MRBM
- 
-     
-     */
+ */
 
 namespace MicroCy
 {
@@ -139,16 +137,16 @@ namespace MicroCy
       _thisRunResultsFileName = null;
     }
 
-    public void ConstructClassificationMap(CustomMap Cmap)
+    public void ConstructClassificationMap(CustomMap cMap)
     {
-      MainCommand("Set Property", code: 0xce, parameter: Cmap.calParams.minmapssc);  //set ssc gates for this map
-      MainCommand("Set Property", code: 0xcf, parameter: Cmap.calParams.maxmapssc);
+      MainCommand("Set Property", code: 0xce, parameter: cMap.calParams.minmapssc);  //set ssc gates for this map
+      MainCommand("Set Property", code: 0xcf, parameter: cMap.calParams.maxmapssc);
 
-      _actPrimaryIndex = (byte)Cmap.midorderidx; //what channel cl0 - cl3?
-      _actSecondaryIndex = (byte)Cmap.loworderidx;
+      _actPrimaryIndex = (byte)cMap.midorderidx; //what channel cl0 - cl3?
+      _actSecondaryIndex = (byte)cMap.loworderidx;
 
       _classificationMap = new int[256, 256];
-      foreach (var region in Cmap.regions)
+      foreach (var region in cMap.regions)
       {
         foreach(var point in region.Points)
         {
@@ -165,11 +163,11 @@ namespace MicroCy
       //if(!isTube)
       coln++;  //use 0 for tubes and true column for plates
       char rowletter = (char)(0x41 + rown);
-      if (!Directory.Exists(Outdir + "\\AcquisitionData"))
-        Directory.CreateDirectory(Outdir + "\\AcquisitionData");
+      if (!Directory.Exists("{Outdir}\\AcquisitionData"))
+        Directory.CreateDirectory($"{Outdir}\\AcquisitionData");
       for (var differ = 0; differ < int.MaxValue; differ++)
       {
-        _fullFileName = Outdir + "\\AcquisitionData\\" + Outfilename + rowletter + coln.ToString() + '_' + differ.ToString() + ".csv";
+        _fullFileName = $"{Outdir}\\AcquisitionData\\{Outfilename}{rowletter}{coln}_{differ}.csv";
         if (!File.Exists(_fullFileName))
           break;
       }
@@ -241,7 +239,6 @@ namespace MicroCy
 
     private void NewReplyFromMC()
     {
-      var timer = new System.Diagnostics.Stopwatch();
       while (!StopUSBPolling)
       {
         _serialConnection.Read();
@@ -410,7 +407,7 @@ namespace MicroCy
     {
       //Removing this can lead to unforseen crucial bugs in instrument operation. If so - do with extra care
       //one example is a check in CommandLists.Readertab for changed plate parameter,which could happen in manual well selection in motors tab
-      List<byte> list = null;
+      List<byte> list;
       switch (tabname)
       {
         case "readertab":
@@ -635,7 +632,7 @@ namespace MicroCy
       string summaryFileName = "";
       for (var i = 0; i < int.MaxValue; i++)
       {
-        summaryFileName = $"{Outdir}\\AcquisitionData\\" + "Results_" + Outfilename + '_' + i.ToString() + ".csv";
+        summaryFileName = $"{Outdir}\\AcquisitionData\\Results_{Outfilename}_{i}.csv";
         if (!File.Exists(summaryFileName))
         {
           _thisRunResultsFileName = summaryFileName;
@@ -657,7 +654,7 @@ namespace MicroCy
       return arrRet;
     }
 
-    private static CommandStruct ByteArrayToStruct<CommandStruct>(byte[] inmsg)
+    private static CommandStruct ByteArrayToStruct(byte[] inmsg)
     {
       IntPtr ptr = Marshal.AllocHGlobal(8);
       try
@@ -671,7 +668,7 @@ namespace MicroCy
       }
     }
 
-    private static BeadInfoStruct BeadArrayToStruct<BeadInfoStruct>(byte[] beadmsg, byte shift)
+    private static BeadInfoStruct BeadArrayToStruct(byte[] beadmsg, byte shift)
     {
       IntPtr ptr = Marshal.AllocHGlobal(64);
       try
@@ -691,7 +688,7 @@ namespace MicroCy
       lock (Commands)
       {
         // move received command to queue
-        newcmd = ByteArrayToStruct<CommandStruct>(_serialConnection.InputBuffer);
+        newcmd = ByteArrayToStruct(_serialConnection.InputBuffer);
         Commands.Enqueue(newcmd);
       }
       if ((newcmd.Code >= 0xd0) && (newcmd.Code <= 0xdf))
@@ -784,7 +781,7 @@ namespace MicroCy
 
     private bool GetBeadFromBuffer(byte[] buffer,byte shift, out BeadInfoStruct outbead)
     {
-      outbead = BeadArrayToStruct<BeadInfoStruct>(buffer, shift);
+      outbead = BeadArrayToStruct(buffer, shift);
       return outbead.Header == 0xadbeadbe ? true : false;
     }
 
@@ -812,12 +809,10 @@ namespace MicroCy
 
     private int ClassifyBeadToRegion(float[] cl)
     {
-      int x = 0;
-      int y = 0;
-      x = Array.BinarySearch(_classificationBins, cl[_actPrimaryIndex]);
+      int x = Array.BinarySearch(_classificationBins, cl[_actPrimaryIndex]);
       if (x < 0)
         x = ~x;
-      y = Array.BinarySearch(_classificationBins, cl[_actSecondaryIndex]);
+      int y = Array.BinarySearch(_classificationBins, cl[_actSecondaryIndex]);
       if (y < 0)
         y = ~y;
       x = x < 255 ? x : 255;
@@ -827,8 +822,8 @@ namespace MicroCy
 
     private float[] MakeClArr(in BeadInfoStruct outbead)
     {
-      float cl1comp = _greenMaj * Calibration.Compensation / 100;
-      float cl2comp = cl1comp * 0.26f;
+      var cl1comp = _greenMaj * Calibration.Compensation / 100;
+      var cl2comp = cl1comp * 0.26f;
       return new float[]{
             outbead.cl0,
             outbead.cl1 - cl1comp,  //Compensation
@@ -886,7 +881,7 @@ namespace MicroCy
       MainCommand("Position Well Plate");   //move motors. next position is set in properties 0xad and 0xae
       MainCommand("Aspirate Syringe A"); //handles down and pickup sample
       WellNext();   //save well numbers for file name
-      InitBeadRead(ReadingRow, ReadingCol);   //gets output file redy
+      InitBeadRead(ReadingRow, ReadingCol);   //gets output file ready
       ClearSummary();
       TotalBeads = 0;
 

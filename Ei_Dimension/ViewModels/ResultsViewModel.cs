@@ -428,9 +428,12 @@ namespace Ei_Dimension.ViewModels
     private void FillBackingWellResults()
     {
       BackingWResults.Clear();
-      foreach(var reg in App.MapRegions.ActiveRegionNums)
+      if (App.MapRegions.ActiveRegionNums.Count > 0)
       {
-        BackingWResults.Add(new MicroCy.WellResults { regionNumber = (ushort)reg});
+        foreach (var reg in App.MapRegions.ActiveRegionNums)
+        {
+          BackingWResults.Add(new MicroCy.WellResults { regionNumber = (ushort)reg });
+        }
       }
     }
 

@@ -39,7 +39,7 @@ namespace Ei_Dimension.ViewModels
 
     public void StartButtonClick()
     {
-      if (DashboardViewModel.Instance.SelectedEndReadIndex == 0 && App.MapRegions.ActiveRegionNums.Count == 0)
+      if (App.Device.TerminationType == 0 && App.MapRegions.ActiveRegionNums.Count == 0)
       {
         App.ShowNotification("\"Min Per Region\" End of Read requires at least 1 active region");
         return;
@@ -54,6 +54,29 @@ namespace Ei_Dimension.ViewModels
 #if DEBUG
       App.Device.MainCommand("Set FProperty", code: 0x06);
 #endif
+      HashSet<int> startArg = null;
+      switch (App.Device.Mode)
+      {
+        case MicroCy.OperationMode.Normal:
+          if (App.MapRegions.ActiveRegionNums.Count == 0)
+          {
+            App.ShowNotification("No Active regions selected");
+            for (var i = 0; i < App.MapRegions.ActiveRegions.Count; i++)
+            {
+              App.MapRegions.AddActiveRegion(i);
+            }
+          }
+          DefaultRegionNaming();
+          startArg = App.MapRegions.ActiveRegionNums;
+          break;
+        case MicroCy.OperationMode.Calibration:
+          CalibrationViewModel.Instance.CalJustFailed = true;
+          ResultsViewModel.Instance.ShowSinglePlexResults();
+          break;
+        case MicroCy.OperationMode.Verification:
+          MakeNewValidator();
+          break;
+      }
       StartButtonEnabled = false;
       ResultsViewModel.Instance.ClearGraphs();
       ResultsViewModel.Instance.PlatePictogram.Clear();
@@ -64,27 +87,7 @@ namespace Ei_Dimension.ViewModels
         ResultsViewModel.Instance.MfiItems[i] = "";
         ResultsViewModel.Instance.CvItems[i] = "";
       }
-      switch (App.Device.Mode)
-      {
-        case MicroCy.OperationMode.Normal:
-          if (!MapInfoReady())
-          {
-            App.ShowNotification("No Active regions selected");
-            StartButtonEnabled = true;
-            return;
-          }
-          App.Device.StartOperation(App.MapRegions.ActiveRegionNums);
-          break;
-        case MicroCy.OperationMode.Calibration:
-          CalibrationViewModel.Instance.CalJustFailed = true;
-          ResultsViewModel.Instance.ShowSinglePlexResults();
-          App.Device.StartOperation();
-          break;
-        case MicroCy.OperationMode.Verification:
-          MakeNewValidator();
-          App.Device.StartOperation();
-          break;
-      }
+      App.Device.StartOperation(startArg);
       MainViewModel.Instance.NavigationSelector(1);
     }
 
@@ -118,11 +121,8 @@ namespace Ei_Dimension.ViewModels
       App.Device.Verificator = new MicroCy.Validator(regions);
     }
 
-    public bool MapInfoReady()
+    public void DefaultRegionNaming()
     {
-      if (App.MapRegions.ActiveRegionNums.Count == 0)
-        return false;
-
       for (var i = 0; i < App.MapRegions.RegionsList.Count; i++)
       {
         if (App.MapRegions.ActiveRegions[i])
@@ -131,7 +131,6 @@ namespace Ei_Dimension.ViewModels
             App.MapRegions.RegionsNamesList[i] = App.MapRegions.RegionsList[i];
         }
       }
-      return true;
     }
   }
 }
