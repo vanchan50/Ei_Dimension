@@ -43,6 +43,7 @@ namespace Ei_Dimension.Core
 
     public static MicroCy.BeadInfoStruct ParseRow(string data)
     {
+      var numFormat = System.Globalization.CultureInfo.InvariantCulture.NumberFormat;
       MicroCy.BeadInfoStruct binfo;
       string[] words = data.Split(',');
       binfo.Header = uint.Parse(words[0]);
@@ -62,15 +63,15 @@ namespace Ei_Dimension.Core
       binfo.l_offset_rg = byte.Parse(words[14]);
       binfo.l_offset_gv = byte.Parse(words[15]);
       binfo.region = ushort.Parse(words[16]);
-      binfo.fsc = float.Parse(words[17], System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
-      binfo.violetssc = float.Parse(words[18], System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
-      binfo.cl0 = float.Parse(words[19], System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
-      binfo.redssc = float.Parse(words[20], System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
-      binfo.cl1 = float.Parse(words[21], System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
-      binfo.cl2 = float.Parse(words[22], System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
-      binfo.cl3 = float.Parse(words[23], System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
-      binfo.greenssc = float.Parse(words[24], System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
-      binfo.reporter = float.Parse(words[25], System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
+      binfo.fsc = float.Parse(words[17], numFormat);
+      binfo.violetssc = float.Parse(words[18], numFormat);
+      binfo.cl0 = float.Parse(words[19], numFormat);
+      binfo.redssc = float.Parse(words[20], numFormat);
+      binfo.cl1 = float.Parse(words[21], numFormat);
+      binfo.cl2 = float.Parse(words[22], numFormat);
+      binfo.cl3 = float.Parse(words[23], numFormat);
+      binfo.greenssc = float.Parse(words[24], numFormat);
+      binfo.reporter = float.Parse(words[25], numFormat);
       return binfo;
     }
 
@@ -220,7 +221,7 @@ namespace Ei_Dimension.Core
 
     public static void AnalyzeHeatMap(bool hiRez = false)
     {
-      var heatMap = ResultsViewModel.Instance.DisplayedMap;
+      var heatMap = HeatMap.DisplayedMap;
       if (heatMap != null && heatMap.Count > 0)
       {
         int max = heatMap.Select(p => p.A).Max();
@@ -279,143 +280,17 @@ namespace Ei_Dimension.Core
         cl3 = cl3 > boundary ? boundary : cl3;
         */
 
-        if (current)
-        {
-          /*
-          //01
-          if (!ResVM.CurrentCL01Dict.ContainsKey((cl0, cl1)))
-          {
-            ResVM.CurrentCL01Dict.Add((cl0, cl1), ResVM.CurrentCL01Map.Count);
-            ResVM.CurrentCL01Map.Add(new HeatMapData((int)bins[cl0], (int)bins[cl1]));
-          }
-          else
-          {
-            ResVM.CurrentCL01Map[ResVM.CurrentCL01Dict[(cl0, cl1)]].A++;
-          }
-          //02
-          if (!ResVM.CurrentCL02Dict.ContainsKey((cl0, cl2)))
-          {
-            ResVM.CurrentCL02Dict.Add((cl0, cl2), ResVM.CurrentCL02Map.Count);
-            ResVM.CurrentCL02Map.Add(new HeatMapData((int)bins[cl0], (int)bins[cl2]));
-          }
-          else
-          {
-            ResVM.CurrentCL02Map[ResVM.CurrentCL02Dict[(cl0, cl2)]].A++;
-          }
-          //03
-          if (!ResVM.CurrentCL03Dict.ContainsKey((cl0, cl3)))
-          {
-            ResVM.CurrentCL03Dict.Add((cl0, cl3), ResVM.CurrentCL03Map.Count);
-            ResVM.CurrentCL03Map.Add(new HeatMapData((int)bins[cl0], (int)bins[cl3]));
-          }
-          else
-          {
-            ResVM.CurrentCL03Map[ResVM.CurrentCL03Dict[(cl0, cl3)]].A++;
-          }
-          */
-          //12
-          if (!resVm.CurrentCL12Dict.ContainsKey((cl1, cl2)))
-          {
-            resVm.CurrentCL12Dict.Add((cl1, cl2), resVm.CurrentCL12Map.Count);
-            resVm.CurrentCL12Map.Add(new HeatMapData((int)bins[cl1], (int)bins[cl2]));
-          }
-          else
-          {
-            resVm.CurrentCL12Map[resVm.CurrentCL12Dict[(cl1, cl2)]].A++;
-          }
-          /*
-          //13
-          if (!ResVM.CurrentCL13Dict.ContainsKey((cl1, cl3)))
-          {
-            ResVM.CurrentCL13Dict.Add((cl1, cl3), ResVM.CurrentCL13Map.Count);
-            ResVM.CurrentCL13Map.Add(new HeatMapData((int)bins[cl1], (int)bins[cl3]));
-          }
-          else
-          {
-            ResVM.CurrentCL13Map[ResVM.CurrentCL13Dict[(cl1, cl3)]].A++;
-          }
-          //23
-          if (!ResVM.CurrentCL23Dict.ContainsKey((cl2, cl3)))
-          {
-            ResVM.CurrentCL23Dict.Add((cl2, cl3), ResVM.CurrentCL23Map.Count);
-            ResVM.CurrentCL23Map.Add(new HeatMapData((int)bins[cl2], (int)bins[cl3]));
-          }
-          else
-          {
-            ResVM.CurrentCL23Map[ResVM.CurrentCL23Dict[(cl2, cl3)]].A++;
-          }
-          */
-        }
-        else
-        {
-          /*
-          //01
-          if (!ResVM.BackingCL01Dict.ContainsKey((cl0, cl1)))
-          {
-            ResVM.BackingCL01Dict.Add((cl0, cl1), ResVM.BackingCL01Map.Count);
-            ResVM.BackingCL01Map.Add(new HeatMapData((int)bins[cl0], (int)bins[cl1]));
-          }
-          else
-          {
-            ResVM.BackingCL01Map[ResVM.BackingCL01Dict[(cl0, cl1)]].A++;
-          }
-          //02
-          if (!ResVM.BackingCL02Dict.ContainsKey((cl0, cl2)))
-          {
-            ResVM.BackingCL02Dict.Add((cl0, cl2), ResVM.BackingCL02Map.Count);
-            ResVM.BackingCL02Map.Add(new HeatMapData((int)bins[cl0], (int)bins[cl2]));
-          }
-          else
-          {
-            ResVM.BackingCL02Map[ResVM.BackingCL02Dict[(cl0, cl2)]].A++;
-          }
-          //03
-          if (!ResVM.BackingCL03Dict.ContainsKey((cl0, cl3)))
-          {
-            ResVM.BackingCL03Dict.Add((cl0, cl3), ResVM.BackingCL03Map.Count);
-            ResVM.BackingCL03Map.Add(new HeatMapData((int)bins[cl0], (int)bins[cl3]));
-          }
-          else
-          {
-            ResVM.BackingCL03Map[ResVM.BackingCL03Dict[(cl0, cl3)]].A++;
-          }
-          */
-          //12
-          if (!resVm.BackingCL12Dict.ContainsKey((cl1, cl2)))
-          {
-            resVm.BackingCL12Dict.Add((cl1, cl2), resVm.BackingCL12Map.Count);
-            resVm.BackingCL12Map.Add(new HeatMapData((int)bins[cl1], (int)bins[cl2]));
-          }
-          else
-          {
-            resVm.BackingCL12Map[resVm.BackingCL12Dict[(cl1, cl2)]].A++;
-          }
-          /*
-          //13
-          if (!ResVM.BackingCL13Dict.ContainsKey((cl1, cl3)))
-          {
-            ResVM.BackingCL13Dict.Add((cl1, cl3), ResVM.BackingCL13Map.Count);
-            ResVM.BackingCL13Map.Add(new HeatMapData((int)bins[cl1], (int)bins[cl3]));
-          }
-          else
-          {
-            ResVM.BackingCL13Map[ResVM.BackingCL13Dict[(cl1, cl3)]].A++;
-          }
-          //23
-          if (!ResVM.BackingCL23Dict.ContainsKey((cl2, cl3)))
-          {
-            ResVM.BackingCL23Dict.Add((cl2, cl3), ResVM.BackingCL23Map.Count);
-            ResVM.BackingCL23Map.Add(new HeatMapData((int)bins[cl2], (int)bins[cl3]));
-          }
-          else
-          {
-            ResVM.BackingCL23Map[ResVM.BackingCL23Dict[(cl2, cl3)]].A++;
-          }
-          */
+        //foreach (MapIndex mapIndex in (MapIndex[])Enum.GetValues(typeof(MapIndex)))
+        //{
+        //  HeatMap.AddPoint((cl1, cl2), bins, mapIndex, current);
+        //}
+        HeatMap.AddPoint((cl1, cl2), bins, MapIndex.CL12, current);
 
-          //3DReporterPlot
+        //3DReporterPlot
+        if (!current)
+        {
           var index = resVm.BackingWResults.FindIndex(x => x.regionNumber == beadInfoList[i].region);
-          if(index != -1)
+          if (index != -1)
           {
             resVm.BackingWResults[index].RP1vals.Add(beadInfoList[i].reporter);
           }

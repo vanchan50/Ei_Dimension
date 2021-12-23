@@ -18,14 +18,14 @@ namespace Ei_Dimension.Models
     public List<HeatMapData> Map13 { get; }
     public List<HeatMapData> Map23 { get; }
     public List<HeatMapData> CalibrationMap { get; set; }
-    public WmapIndex DisplayedWmap { get; set; }
+    public MapIndex DisplayedWmap { get; set; }
     public bool Flipped { get; set; }
     public const int WORLDMAPCAPACITY = 15000;
 
     protected WorldMap()
     {
       Flipped = false;
-      DisplayedWmap = WmapIndex.CL12;
+      DisplayedWmap = MapIndex.CL12;
       Map01 = new List<HeatMapData>(WORLDMAPCAPACITY);
       Map02 = new List<HeatMapData>(WORLDMAPCAPACITY);
       Map03 = new List<HeatMapData>(WORLDMAPCAPACITY);
@@ -121,40 +121,29 @@ namespace Ei_Dimension.Models
       List<HeatMapData> map = null;
       switch (DisplayedWmap)
       {
-        case WmapIndex.CL01:
+        case MapIndex.CL01:
           map = Map01;
           break;
-        case WmapIndex.CL02:
+        case MapIndex.CL02:
           map = Map02;
           break;
-        case WmapIndex.CL03:
+        case MapIndex.CL03:
           map = Map03;
           break;
-        case WmapIndex.CL12:
+        case MapIndex.CL12:
           map = Map12;
           break;
-        case WmapIndex.CL13:
+        case MapIndex.CL13:
           map = Map13;
           break;
-        case WmapIndex.CL23:
+        case MapIndex.CL23:
           map = Map23;
           break;
-        case WmapIndex.Empty:
+        case MapIndex.Empty:
           map = null;
           break;
       }
       return map;
-    }
-
-    public enum WmapIndex
-    {
-      CL01 = 0,
-      CL02 = 1,
-      CL03 = 2,
-      CL12 = 3,
-      CL13 = 4,
-      CL23 = 5,
-      Empty = 6
     }
   }
 }

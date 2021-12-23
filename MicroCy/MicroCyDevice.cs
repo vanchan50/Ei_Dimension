@@ -40,7 +40,7 @@ namespace MicroCy
 
   public class MicroCyDevice
   {
-    public WorkOrder WorkOrder { get; private set; }
+    public WorkOrder WorkOrder { get;set; }
     public CustomMap ActiveMap { get; set; }
     public Queue<CommandStruct> Commands { get; } = new Queue<CommandStruct>();
     public ConcurrentQueue<BeadInfoStruct> DataOut { get; } = new ConcurrentQueue<BeadInfoStruct>();
@@ -85,7 +85,7 @@ namespace MicroCy
 
     public string[] SyncElements { get; } = { "SHEATH", "SAMPLE_A", "SAMPLE_B", "FLASH", "END_WELL", "VALVES", "X_MOTOR",
       "Y_MOTOR", "Z_MOTOR", "PROXIMITY", "PRESSURE", "WASHING", "FAULT", "ALIGN MOTOR", "MAIN VALVE", "SINGLE STEP" };
-    public string WorkOrderName { get; private set; }
+    public string WorkOrderPath { get; set; }
     public DirectoryInfo RootDirectory { get; private set; }
     private bool _chkRegionCount;
     private bool _readingA;
@@ -94,7 +94,6 @@ namespace MicroCy
     private float[,] _sfi = new float[5000, 10];
     private float _greenMin;
     private float _greenMaj;
-    private string _workOrderPath;
     private string _fullFileName; //TODO: probably not necessary. look at refactoring InitBeadRead()
     private PlateReport _plateReport;
     private StringBuilder _summaryout = new StringBuilder();
@@ -206,6 +205,9 @@ namespace MicroCy
         wellres = null;
       }
       Console.WriteLine(string.Format("{0} Reporting Background File Save Complete", DateTime.Now.ToString()));
+      if (File.Exists(WorkOrderPath))
+        File.Delete(WorkOrderPath);   //result is posted, delete work order
+      //need to clear textbox in UI. this has to be an event
     }
 
     public void GStatsFiller()
@@ -346,28 +348,6 @@ namespace MicroCy
         }
       }
     }
-
-    public bool IsNewWorkOrder()
-    {
-      string chkpath = Path.Combine(RootDirectory.FullName, "WorkOrder");
-      string[] fileEntries = Directory.GetFiles(chkpath, "*.txt");
-      if (fileEntries.Length == 0)
-        return false;
-      WorkOrderName = Path.GetFileNameWithoutExtension(fileEntries[0]);
-      _workOrderPath = fileEntries[0];
-      try
-      {
-        using (TextReader reader = new StreamReader(_workOrderPath))
-        {
-          var contents = reader.ReadToEnd();
-          WorkOrder = JsonConvert.DeserializeObject<WorkOrder>(contents);
-        }
-      }
-      catch { }
-      // send well depth once that is worked out
-      return true;
-    }
-
     //Refactored
 
     public void MainCommand(string command, byte? cmd = null, byte? code = null, ushort? parameter = null, float? fparameter = null)
@@ -908,8 +888,6 @@ namespace MicroCy
         {
           var jcontents = JsonConvert.SerializeObject(_plateReport);
           jwriter.Write(jcontents);
-          if (File.Exists(_workOrderPath))
-            File.Delete(_workOrderPath);   //result is posted, delete work order
         }
       }
     }

@@ -102,6 +102,11 @@ namespace Ei_Dimension
       _isStartup = true;
       _timerTickcounter = 0;
       _nextWellWarning = false;
+      var watcher = new FileSystemWatcher($"{Device.RootDirectory.FullName}\\WorkOrder");
+      watcher.NotifyFilter = NotifyFilters.FileName;
+      watcher.Filter = "*.txt";
+      watcher.EnableRaisingEvents = true;
+      watcher.Created += OnNewWorkOrder;
     }
 
     public static int GetMapIndex(string MapName)
@@ -1673,7 +1678,6 @@ namespace Ei_Dimension
         UpdateEventCounter();
         WellStateHandler();
       }
-      WorkOrderHandler();
       _timerTickcounter++;
       if (_timerTickcounter > 4)
       {
@@ -2294,6 +2298,7 @@ namespace Ei_Dimension
       }
     }
 
+    /*
     private static void WorkOrderHandler()
     {
       //see if work order is available
@@ -2305,7 +2310,7 @@ namespace Ei_Dimension
           _workOrderPending = true;
         }
       }
-      if (_workOrderPending == true)
+      if (_workOrderPending)
       {
         if (DashboardViewModel.Instance.SelectedSystemControlIndex == 1)  //no barcode required so allow start
         {
@@ -2336,6 +2341,7 @@ namespace Ei_Dimension
         }
       }
     }
+    */
 
     private static void GraphsHandler()
     {
@@ -2573,6 +2579,7 @@ namespace Ei_Dimension
       matrix.Rotate(new System.Windows.Media.Media3D.Quaternion(new System.Windows.Media.Media3D.Vector3D(0, 1, 0), -15));
       matrix.Translate(new System.Windows.Media.Media3D.Vector3D(-100, 100, 0));
       ((System.Windows.Media.Media3D.MatrixTransform3D)Views.ResultsView.Instance.AnalysisPlot.ContentTransform).Matrix = matrix;
+      CheckAvailableWorkOrders();
       _isStartup = false;
     }
 
@@ -2643,6 +2650,70 @@ namespace Ei_Dimension
       {
         ShowNotification($"Problem with status file save, Please report this issue to the Manufacturer {e.Message}");
       }
+    }
+
+    public void OnNewWorkOrder(object sender, FileSystemEventArgs e)
+    {
+      var name = Path.GetFileNameWithoutExtension(e.Name);
+      Device.WorkOrderPath = e.FullPath;
+      if (!ParseWorkOrder())
+        return;
+      
+      _workOrderPending = true;
+      DashboardViewModel.Instance.WorkOrder[0] = name;  //check for already existing one 
+      // if WO already selected -> allow start. else the WO checking action should perform the same check
+      if (DashboardViewModel.Instance.SelectedSystemControlIndex == 1)  //no barcode required so allow start
+      {
+        MainButtonsViewModel.Instance.StartButtonEnabled = true;
+        _workOrderPending = false;  //questionable logic. can check on non empty textbox
+      }
+    }
+
+    public static void CheckAvailableWorkOrders()
+    {
+      string[] fileEntries = Directory.GetFiles($"{Device.RootDirectory.FullName}\\WorkOrder", "*.txt");
+      if (fileEntries.Length == 0)
+        return;
+      var name = Path.GetFileNameWithoutExtension(fileEntries[0]);
+      Device.WorkOrderPath = fileEntries[0];
+      int i = 1;
+      while (!ParseWorkOrder())
+      {
+        if (i < fileEntries.Length)
+        {
+          Device.WorkOrderPath = fileEntries[i];
+          name = Path.GetFileNameWithoutExtension(fileEntries[i]);
+          i++;
+        }
+        else
+          return;
+      }
+
+      DashboardViewModel.Instance.WorkOrder[0] = name;  //should be first succesfully parsed
+      _workOrderPending = true;
+      // if WO already selected -> allow start. else the WO checking action should perform the same check
+      if (DashboardViewModel.Instance.SelectedSystemControlIndex == 1)  //no barcode required so allow start
+      {
+        MainButtonsViewModel.Instance.StartButtonEnabled = true;
+        _workOrderPending = false;
+      }
+    }
+
+    private static bool ParseWorkOrder()
+    {
+      try
+      {
+        using (TextReader reader = new StreamReader(Device.WorkOrderPath))
+        {
+          var contents = reader.ReadToEnd();
+          Device.WorkOrder = Newtonsoft.Json.JsonConvert.DeserializeObject<WorkOrder>(contents);
+        }
+      }
+      catch
+      {
+        return false;
+      }
+      return true;
     }
   }
 }

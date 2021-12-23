@@ -12,6 +12,7 @@ namespace Ei_Dimension.ViewModels
   [POCOViewModel]
   public class ResultsViewModel
   {
+    public bool DisplaysCurrentmap { get; private set; }
     public virtual System.Windows.Visibility MultiPlexVisible { get; set; }
     public virtual System.Windows.Visibility SinglePlexVisible { get; set; }
     public virtual System.Windows.Visibility ValidationCoverVisible { get; set; }
@@ -20,32 +21,6 @@ namespace Ei_Dimension.ViewModels
     public virtual ObservableCollection<bool> ScatterSelectorState { get; set; }
     public ScatterData ScttrData { get; set; }
     public WorldMap WrldMap { get; set;}
-    public bool DisplaysCurrentmap { get; private set; }
-    public List<HeatMapData> DisplayedMap { get; set; }
-    public List<HeatMapData> CurrentCL01Map { get; private set; }
-    public List<HeatMapData> CurrentCL02Map { get; private set; }
-    public List<HeatMapData> CurrentCL03Map { get; private set; }
-    public List<HeatMapData> CurrentCL12Map { get; private set; }
-    public List<HeatMapData> CurrentCL13Map { get; private set; }
-    public List<HeatMapData> CurrentCL23Map { get; private set; }
-    public List<HeatMapData> BackingCL01Map { get; private set; }
-    public List<HeatMapData> BackingCL02Map { get; private set; }
-    public List<HeatMapData> BackingCL03Map { get; private set; }
-    public List<HeatMapData> BackingCL12Map { get; private set; }
-    public List<HeatMapData> BackingCL13Map { get; private set; }
-    public List<HeatMapData> BackingCL23Map { get; private set; }
-    public Dictionary<(int x, int y), int> CurrentCL01Dict { get; private set; }
-    public Dictionary<(int x, int y), int> CurrentCL02Dict { get; private set; }
-    public Dictionary<(int x, int y), int> CurrentCL03Dict { get; private set; }
-    public Dictionary<(int x, int y), int> CurrentCL12Dict { get; private set; }
-    public Dictionary<(int x, int y), int> CurrentCL13Dict { get; private set; }
-    public Dictionary<(int x, int y), int> CurrentCL23Dict { get; private set; }
-    public Dictionary<(int x, int y), int> BackingCL01Dict { get; private set; }
-    public Dictionary<(int x, int y), int> BackingCL02Dict { get; private set; }
-    public Dictionary<(int x, int y), int> BackingCL03Dict { get; private set; }
-    public Dictionary<(int x, int y), int> BackingCL12Dict { get; private set; }
-    public Dictionary<(int x, int y), int> BackingCL13Dict { get; private set; }
-    public Dictionary<(int x, int y), int> BackingCL23Dict { get; private set; }
     public virtual ObservableCollection<DoubleHeatMapData> DisplayedAnalysisMap { get; set; }
     public virtual ObservableCollection<DoubleHeatMapData> CurrentAnalysis01Map { get; set; }
     public virtual ObservableCollection<DoubleHeatMapData> CurrentAnalysis02Map { get; set; }
@@ -80,10 +55,10 @@ namespace Ei_Dimension.ViewModels
     public static ResultsViewModel Instance { get; private set; }
     private bool _fillDataActive;
     public const int HIREZDEFINITION = 1024;
-    public const int XYMAPCAPACITY = 50000;  //max possible capacity is 256x256. Realistic 3/4 is ~49k
 
     protected ResultsViewModel()
     {
+      DisplaysCurrentmap = true;
       ScatterSelectorState = new ObservableCollection<bool> { false, false, false, false, false };
       ResultsWaitIndicatorVisibility = false;
       ChartWaitIndicatorVisibility = false;
@@ -119,35 +94,6 @@ namespace Ei_Dimension.ViewModels
 
       Instance = this;
 
-      CurrentCL01Dict = new Dictionary<(int x, int y), int>(XYMAPCAPACITY);
-      CurrentCL02Dict = new Dictionary<(int x, int y), int>(XYMAPCAPACITY);
-      CurrentCL03Dict = new Dictionary<(int x, int y), int>(XYMAPCAPACITY);
-      CurrentCL12Dict = new Dictionary<(int x, int y), int>(XYMAPCAPACITY);
-      CurrentCL13Dict = new Dictionary<(int x, int y), int>(XYMAPCAPACITY);
-      CurrentCL23Dict = new Dictionary<(int x, int y), int>(XYMAPCAPACITY);
-      BackingCL01Dict = new Dictionary<(int x, int y), int>(XYMAPCAPACITY);
-      BackingCL02Dict = new Dictionary<(int x, int y), int>(XYMAPCAPACITY);
-      BackingCL03Dict = new Dictionary<(int x, int y), int>(XYMAPCAPACITY);
-      BackingCL12Dict = new Dictionary<(int x, int y), int>(XYMAPCAPACITY);
-      BackingCL13Dict = new Dictionary<(int x, int y), int>(XYMAPCAPACITY);
-      BackingCL23Dict = new Dictionary<(int x, int y), int>(XYMAPCAPACITY);
-
-
-      CurrentCL01Map = new List<HeatMapData>(XYMAPCAPACITY);
-      CurrentCL02Map = new List<HeatMapData>(XYMAPCAPACITY);
-      CurrentCL03Map = new List<HeatMapData>(XYMAPCAPACITY);
-      CurrentCL12Map = new List<HeatMapData>(XYMAPCAPACITY);
-      CurrentCL13Map = new List<HeatMapData>(XYMAPCAPACITY);
-      CurrentCL23Map = new List<HeatMapData>(XYMAPCAPACITY);
-      BackingCL01Map = new List<HeatMapData>(XYMAPCAPACITY);
-      BackingCL02Map = new List<HeatMapData>(XYMAPCAPACITY);
-      BackingCL03Map = new List<HeatMapData>(XYMAPCAPACITY);
-      BackingCL12Map = new List<HeatMapData>(XYMAPCAPACITY);
-      BackingCL13Map = new List<HeatMapData>(XYMAPCAPACITY);
-      BackingCL23Map = new List<HeatMapData>(XYMAPCAPACITY);
-      
-      DisplaysCurrentmap = true;
-
       WorldMap.Create();
       ScatterData.Create();
 
@@ -172,7 +118,6 @@ namespace Ei_Dimension.ViewModels
       CornerButtonsChecked = new ObservableCollection<bool> { true, false, false, false };
       CLButtonsChecked = new ObservableCollection<bool> { false, false, true, false, false, true, false, false };
       CLAxis = new ObservableCollection<string> { "CL1", "CL2" };
-      DisplayedMap = CurrentCL12Map;
       LeftLabel384Visible = System.Windows.Visibility.Visible;
       RightLabel384Visible = System.Windows.Visibility.Hidden;
       TopLabel384Visible = System.Windows.Visibility.Visible;
@@ -277,20 +222,9 @@ namespace Ei_Dimension.ViewModels
     public void ClearGraphs(bool current = true)
     {
       ScttrData.ClearData(current);
+      HeatMap.Clear(current);
       if (current)
       {
-        CurrentCL01Map.Clear();
-        CurrentCL02Map.Clear();
-        CurrentCL03Map.Clear();
-        CurrentCL12Map.Clear();
-        CurrentCL13Map.Clear();
-        CurrentCL23Map.Clear();
-        CurrentCL01Dict.Clear();
-        CurrentCL02Dict.Clear();
-        CurrentCL03Dict.Clear();
-        CurrentCL12Dict.Clear();
-        CurrentCL13Dict.Clear();
-        CurrentCL23Dict.Clear();
         CurrentAnalysis01Map.Clear();
         CurrentAnalysis02Map.Clear();
         CurrentAnalysis03Map.Clear();
@@ -300,18 +234,6 @@ namespace Ei_Dimension.ViewModels
       }
       else
       {
-        BackingCL01Map.Clear();
-        BackingCL02Map.Clear();
-        BackingCL03Map.Clear();
-        BackingCL12Map.Clear();
-        BackingCL13Map.Clear();
-        BackingCL23Map.Clear();
-        BackingCL01Dict.Clear();
-        BackingCL02Dict.Clear();
-        BackingCL03Dict.Clear();
-        BackingCL12Dict.Clear();
-        BackingCL13Dict.Clear();
-        BackingCL23Dict.Clear();
         BackingAnalysis01Map.Clear();
         BackingAnalysis02Map.Clear();
         BackingAnalysis03Map.Clear();
@@ -391,7 +313,7 @@ namespace Ei_Dimension.ViewModels
       var hiRez = AnalysisVisible == System.Windows.Visibility.Visible;
       _ = Task.Run(async () =>
       {
-        var path = PlatePictogram.GetSelectedFilePath();  //@"C:\Emissioninc\KEIZ0R-LEGION\AcquisitionData\val speed test 2E7_0.csv"; //
+        var path = @"C:\Emissioninc\KEIZ0R-LEGION\AcquisitionData\val speed test 2E7_0.csv"; //PlatePictogram.GetSelectedFilePath();  //
         if (path == null)
         {
           ResultsWaitIndicatorVisibility = false;
@@ -506,57 +428,51 @@ namespace Ei_Dimension.ViewModels
     private void SetDisplayedMap()
     {
       WrldMap.Flipped = false;
-      WrldMap.DisplayedWmap = WorldMap.WmapIndex.Empty;
+      MapIndex mapIndex = MapIndex.Empty;
       if (CLButtonsChecked[4])
       {
         if (CLButtonsChecked[1])
         {
           if (DisplaysCurrentmap)
           {
-            DisplayedMap = CurrentCL01Map;
             DisplayedAnalysisMap = CurrentAnalysis01Map;
           }
           else
           {
-            DisplayedMap = BackingCL01Map;
             DisplayedAnalysisMap = BackingAnalysis01Map;
           }
-          WrldMap.DisplayedWmap = WorldMap.WmapIndex.CL01;
+          mapIndex = MapIndex.CL01;
         }
         else if (CLButtonsChecked[2])
         {
           if (DisplaysCurrentmap)
           {
-            DisplayedMap = CurrentCL02Map;
             DisplayedAnalysisMap = CurrentAnalysis02Map;
           }
           else
           {
-            DisplayedMap = BackingCL02Map;
             DisplayedAnalysisMap = BackingAnalysis02Map;
           }
-          WrldMap.DisplayedWmap = WorldMap.WmapIndex.CL02;
+          mapIndex = MapIndex.CL02;
         }
         else if (CLButtonsChecked[3])
         {
           if (DisplaysCurrentmap)
           {
-            DisplayedMap = CurrentCL03Map;
             DisplayedAnalysisMap = CurrentAnalysis03Map;
           }
           else
           {
-            DisplayedMap = BackingCL03Map;
             DisplayedAnalysisMap = BackingAnalysis03Map;
           }
-          WrldMap.DisplayedWmap = WorldMap.WmapIndex.CL03;
+          mapIndex = MapIndex.CL03;
         }
         else
         {
-          DisplayedMap = null;
           DisplayedAnalysisMap = null;
           Views.ResultsView.Instance.ClearPoints();
           WrldMap.DisplayedWorldMap.Clear();
+          mapIndex = MapIndex.Empty;
         }
       }
       else if (CLButtonsChecked[5])
@@ -565,48 +481,41 @@ namespace Ei_Dimension.ViewModels
         {
           if (DisplaysCurrentmap)
           {
-            DisplayedMap = CurrentCL01Map;
             DisplayedAnalysisMap = CurrentAnalysis01Map;
           }
           else
           {
-            DisplayedMap = BackingCL01Map;
             DisplayedAnalysisMap = BackingAnalysis01Map;
           }
           WrldMap.Flipped = true;
-          WrldMap.DisplayedWmap = WorldMap.WmapIndex.CL01;
+          mapIndex = MapIndex.CL01;
         }
         else if (CLButtonsChecked[2])
         {
           if (DisplaysCurrentmap)
           {
-            DisplayedMap = CurrentCL12Map;
             DisplayedAnalysisMap = CurrentAnalysis12Map;
           }
           else
           {
-            DisplayedMap = BackingCL12Map;
             DisplayedAnalysisMap = BackingAnalysis12Map;
           }
-          WrldMap.DisplayedWmap = WorldMap.WmapIndex.CL12;
+          mapIndex = MapIndex.CL12;
         }
         else if (CLButtonsChecked[3])
         {
           if (DisplaysCurrentmap)
           {
-            DisplayedMap = CurrentCL13Map;
             DisplayedAnalysisMap = CurrentAnalysis13Map;
           }
           else
           {
-            DisplayedMap = BackingCL13Map;
             DisplayedAnalysisMap = BackingAnalysis13Map;
           }
-          WrldMap.DisplayedWmap = WorldMap.WmapIndex.CL13;
+          mapIndex = MapIndex.CL13;
         }
         else
         {
-          DisplayedMap = null;
           DisplayedAnalysisMap = null;
           Views.ResultsView.Instance.ClearPoints();
           WrldMap.DisplayedWorldMap.Clear();
@@ -618,52 +527,46 @@ namespace Ei_Dimension.ViewModels
         {
           if (DisplaysCurrentmap)
           {
-            DisplayedMap = CurrentCL02Map;
             DisplayedAnalysisMap = CurrentAnalysis02Map;
           }
           else
           {
-            DisplayedMap = BackingCL02Map;
             DisplayedAnalysisMap = BackingAnalysis02Map;
           }
           WrldMap.Flipped = true;
-          WrldMap.DisplayedWmap = WorldMap.WmapIndex.CL02;
+          mapIndex = MapIndex.CL02;
         }
         else if (CLButtonsChecked[1])
         {
           if (DisplaysCurrentmap)
           {
-            DisplayedMap = CurrentCL12Map;
             DisplayedAnalysisMap = CurrentAnalysis12Map;
           }
           else
           {
-            DisplayedMap = BackingCL12Map;
             DisplayedAnalysisMap = BackingAnalysis12Map;
           }
           WrldMap.Flipped = true;
-          WrldMap.DisplayedWmap = WorldMap.WmapIndex.CL12;
+          mapIndex = MapIndex.CL12;
         }
         else if (CLButtonsChecked[3])
         {
           if (DisplaysCurrentmap)
           {
-            DisplayedMap = CurrentCL23Map;
             DisplayedAnalysisMap = CurrentAnalysis23Map;
           }
           else
           {
-            DisplayedMap = BackingCL23Map;
             DisplayedAnalysisMap = BackingAnalysis23Map;
           }
-          WrldMap.DisplayedWmap = WorldMap.WmapIndex.CL23;
+          mapIndex = MapIndex.CL23;
         }
         else
         {
-          DisplayedMap = null;
           DisplayedAnalysisMap = null;
           Views.ResultsView.Instance.ClearPoints();
           WrldMap.DisplayedWorldMap.Clear();
+          mapIndex = MapIndex.Empty;
         }
       }
       else if (CLButtonsChecked[7])
@@ -672,55 +575,51 @@ namespace Ei_Dimension.ViewModels
         {
           if (DisplaysCurrentmap)
           {
-            DisplayedMap = CurrentCL03Map;
             DisplayedAnalysisMap = CurrentAnalysis03Map;
           }
           else
           {
-            DisplayedMap = BackingCL03Map;
             DisplayedAnalysisMap = BackingAnalysis03Map;
           }
           WrldMap.Flipped = true;
-          WrldMap.DisplayedWmap = WorldMap.WmapIndex.CL03;
+          mapIndex = MapIndex.CL03;
         }
         else if (CLButtonsChecked[1])
         {
           if (DisplaysCurrentmap)
           {
-            DisplayedMap = CurrentCL13Map;
             DisplayedAnalysisMap = CurrentAnalysis13Map;
           }
           else
           {
-            DisplayedMap = BackingCL13Map;
             DisplayedAnalysisMap = BackingAnalysis13Map;
           }
           WrldMap.Flipped = true;
-          WrldMap.DisplayedWmap = WorldMap.WmapIndex.CL13;
+          mapIndex = MapIndex.CL13;
         }
         else if (CLButtonsChecked[2])
         {
           if (DisplaysCurrentmap)
           {
-            DisplayedMap = CurrentCL23Map;
             DisplayedAnalysisMap = CurrentAnalysis23Map;
           }
           else
           {
-            DisplayedMap = BackingCL23Map;
             DisplayedAnalysisMap = BackingAnalysis23Map;
           }
           WrldMap.Flipped = true;
-          WrldMap.DisplayedWmap = WorldMap.WmapIndex.CL23;
+          mapIndex = MapIndex.CL23;
         }
         else
         {
-          DisplayedMap = null;
           DisplayedAnalysisMap = null;
           Views.ResultsView.Instance.ClearPoints();
           WrldMap.DisplayedWorldMap.Clear();
+          mapIndex = MapIndex.Empty;
         }
       }
+      HeatMap.Display(mapIndex, DisplaysCurrentmap);
+      WrldMap.DisplayedWmap = mapIndex;
       WrldMap.FillDisplayedMap();
     }
 
