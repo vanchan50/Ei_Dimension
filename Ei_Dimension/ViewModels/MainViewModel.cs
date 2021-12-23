@@ -135,7 +135,7 @@ namespace Ei_Dimension.ViewModels
         if (MainWindow.Instance.wndw.Height - p.Y > NpdHeight + tb.Height + 5)
           shiftY = tb.Height + 5;
         else
-          shiftY = - NpdHeight - 5;
+          shiftY = -NpdHeight - 5;
 
         MainWindow.Instance.Npd.Margin = new System.Windows.Thickness(p.X - shiftX, p.Y + shiftY, 0, 0);
         NumpadVisible = System.Windows.Visibility.Visible;

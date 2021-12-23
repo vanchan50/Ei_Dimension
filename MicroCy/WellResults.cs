@@ -7,7 +7,7 @@ namespace MicroCy
   public class WellResults
   {
     public ushort regionNumber;
-    public List<float> RP1vals = new List<float>();
-    public List<float> RP1bgnd = new List<float>();
+    public List<float> RP1vals = new List<float>(40000);
+    public List<float> RP1bgnd = new List<float>(40000);
   }
 }

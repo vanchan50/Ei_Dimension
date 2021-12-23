@@ -20,17 +20,18 @@ namespace Ei_Dimension.Models
     public List<HeatMapData> CalibrationMap { get; set; }
     public WmapIndex DisplayedWmap { get; set; }
     public bool Flipped { get; set; }
+    public const int WORLDMAPCAPACITY = 15000;
 
     protected WorldMap()
     {
       Flipped = false;
       DisplayedWmap = WmapIndex.CL12;
-      Map01 = new List<HeatMapData>();
-      Map02 = new List<HeatMapData>();
-      Map03 = new List<HeatMapData>();
-      Map12 = new List<HeatMapData>();
-      Map13 = new List<HeatMapData>();
-      Map23 = new List<HeatMapData>();
+      Map01 = new List<HeatMapData>(WORLDMAPCAPACITY);
+      Map02 = new List<HeatMapData>(WORLDMAPCAPACITY);
+      Map03 = new List<HeatMapData>(WORLDMAPCAPACITY);
+      Map12 = new List<HeatMapData>(WORLDMAPCAPACITY);
+      Map13 = new List<HeatMapData>(WORLDMAPCAPACITY);
+      Map23 = new List<HeatMapData>(WORLDMAPCAPACITY);
 
       DisplayedWorldMap = new ObservableCollection<HeatMapData>();
     }

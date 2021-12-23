@@ -129,8 +129,6 @@ namespace Ei_Dimension.Core
 
     public static void BinScatterData(List<MicroCy.BeadInfoStruct> list, bool fromFile = false)
     {
-      var ResVM = ViewModels.ResultsViewModel.Instance;
-      var ScatterData = ResVM.ScttrData;
       var ScatterDataCount = ScatterData.CurrentReporter.Count;
       var MaxValue = ScatterData.CurrentReporter[ScatterDataCount - 1].Argument;
       int[] reporter, fsc, red, green, violet;
@@ -167,32 +165,32 @@ namespace Ei_Dimension.Core
         bead.greenssc = bead.greenssc < MaxValue ? bead.greenssc : MaxValue;
         bead.reporter = bead.reporter < MaxValue ? bead.reporter : MaxValue;
 
-        int j = 0;
-        j = Array.BinarySearch(HistogramData.Bins, (int)bead.fsc);
+        int i = Array.BinarySearch(HistogramData.Bins, (int)bead.fsc);
+        if (i < 0)
+          i = ~i;
+        int j = Array.BinarySearch(HistogramData.Bins, (int)bead.redssc);
         if (j < 0)
           j = ~j;
-        fsc[j]++;
-        j = Array.BinarySearch(HistogramData.Bins, (int)bead.redssc);
-        if (j < 0)
-          j = ~j;
-        red[j]++;
-        j = Array.BinarySearch(HistogramData.Bins, (int)bead.greenssc);
-        if (j < 0)
-          j = ~j;
-        green[j]++;
-        j = Array.BinarySearch(HistogramData.Bins, (int)bead.violetssc);
-        if (j < 0)
-          j = ~j;
-        violet[j]++;
-        j = Array.BinarySearch(HistogramData.Bins, (int)bead.reporter);
-        if (j < 0)
-          j = ~j;
-        reporter[j]++;
+        int k = Array.BinarySearch(HistogramData.Bins, (int)bead.greenssc);
+        if (k < 0)
+          k = ~k;
+        int o = Array.BinarySearch(HistogramData.Bins, (int)bead.violetssc);
+        if (o < 0)
+          o = ~o;
+        int l = Array.BinarySearch(HistogramData.Bins, (int)bead.reporter);
+        if (l < 0)
+          l = ~l;
 
-        var index = App.MapRegions.RegionsList.IndexOf(beadD.region.ToString());
+        fsc[i]++;
+        red[j]++;
+        green[k]++;
+        violet[o]++;
+        reporter[l]++;
+
+        var index = App.MapRegions.RegionsList.IndexOf(bead.region.ToString());
         if (index != -1)
-          activeRegionsStats[index].Add(beadD.reporter);
-        //else if (beadD.region == 0)
+          activeRegionsStats[index].Add(bead.reporter);
+        //else if (bead.region == 0)
         //  continue;
         //else
         //  failed = true;
@@ -202,7 +200,7 @@ namespace Ei_Dimension.Core
 
       _ = App.Current.Dispatcher.BeginInvoke((Action)(() =>
       {
-        ResVM.ScttrData.FillCurrentData(fromFile);
+        ResultsViewModel.Instance.ScttrData.FillCurrentData(fromFile);
         if (fromFile)
         {
           var j = 0;
@@ -215,7 +213,7 @@ namespace Ei_Dimension.Core
             }
             j++;
           }
-          ResVM.ResultsWaitIndicatorVisibility = false;
+          ResultsViewModel.Instance.ResultsWaitIndicatorVisibility = false;
         }
       }));
     }
@@ -251,6 +249,9 @@ namespace Ei_Dimension.Core
 
     public static void BinMapData(List<MicroCy.BeadInfoStruct> beadInfoList, bool current = true, bool hiRez = false)
     {
+      //Puts points to Lists instead of filling 256x256 arrays.
+      //traversing [,] array would be a downside, and condition check would also be included for every step.
+      //Traversing a list is better.
       var resVm = ResultsViewModel.Instance;
       var bins = hiRez ? HeatMapData.HiRezBins : HeatMapData.bins;
       var boundary = hiRez ? HeatMapData.HiRezBins.Length - 1 : HeatMapData.bins.Length - 1;

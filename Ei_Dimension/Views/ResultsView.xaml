@@ -334,7 +334,7 @@
                        GridLinesVisible="False"
                        TickmarksMinorVisible="False"
                        FontFamily="{StaticResource AppTextFont}"
-                       TickmarksVisible="False">
+                       TickmarksVisible="False" Alignment="Near">
               <dxc:AxisY2D.Label>
                 <dxc:AxisLabel FontSize="24"/>
               </dxc:AxisY2D.Label>

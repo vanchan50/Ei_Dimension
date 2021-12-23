@@ -18,7 +18,9 @@ namespace Ei_Dimension
         SplashScreen = new SplashScreen(@"/Icons/Splash.png");
       else if (SpecializedVer == CompanyID.China)
         SplashScreen = new SplashScreen(@"/Icons/SplashCh.png");
-      //SplashScreen.Show(false, true);
+#if !DEBUG
+      SplashScreen.Show(false, true);
+#endif
       var app = new App();
       app.InitializeComponent();
       _ = app.Run();

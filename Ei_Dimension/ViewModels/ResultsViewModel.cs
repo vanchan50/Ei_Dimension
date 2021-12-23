@@ -80,6 +80,7 @@ namespace Ei_Dimension.ViewModels
     public static ResultsViewModel Instance { get; private set; }
     private bool _fillDataActive;
     public const int HIREZDEFINITION = 1024;
+    public const int XYMAPCAPACITY = 50000;  //max possible capacity is 256x256. Realistic 3/4 is ~49k
 
     protected ResultsViewModel()
     {
@@ -118,33 +119,33 @@ namespace Ei_Dimension.ViewModels
 
       Instance = this;
 
-      CurrentCL01Dict = new Dictionary<(int x, int y), int>();
-      CurrentCL02Dict = new Dictionary<(int x, int y), int>();
-      CurrentCL03Dict = new Dictionary<(int x, int y), int>();
-      CurrentCL12Dict = new Dictionary<(int x, int y), int>();
-      CurrentCL13Dict = new Dictionary<(int x, int y), int>();
-      CurrentCL23Dict = new Dictionary<(int x, int y), int>();
-      BackingCL01Dict = new Dictionary<(int x, int y), int>();
-      BackingCL02Dict = new Dictionary<(int x, int y), int>();
-      BackingCL03Dict = new Dictionary<(int x, int y), int>();
-      BackingCL12Dict = new Dictionary<(int x, int y), int>();
-      BackingCL13Dict = new Dictionary<(int x, int y), int>();
-      BackingCL23Dict = new Dictionary<(int x, int y), int>();
+      CurrentCL01Dict = new Dictionary<(int x, int y), int>(XYMAPCAPACITY);
+      CurrentCL02Dict = new Dictionary<(int x, int y), int>(XYMAPCAPACITY);
+      CurrentCL03Dict = new Dictionary<(int x, int y), int>(XYMAPCAPACITY);
+      CurrentCL12Dict = new Dictionary<(int x, int y), int>(XYMAPCAPACITY);
+      CurrentCL13Dict = new Dictionary<(int x, int y), int>(XYMAPCAPACITY);
+      CurrentCL23Dict = new Dictionary<(int x, int y), int>(XYMAPCAPACITY);
+      BackingCL01Dict = new Dictionary<(int x, int y), int>(XYMAPCAPACITY);
+      BackingCL02Dict = new Dictionary<(int x, int y), int>(XYMAPCAPACITY);
+      BackingCL03Dict = new Dictionary<(int x, int y), int>(XYMAPCAPACITY);
+      BackingCL12Dict = new Dictionary<(int x, int y), int>(XYMAPCAPACITY);
+      BackingCL13Dict = new Dictionary<(int x, int y), int>(XYMAPCAPACITY);
+      BackingCL23Dict = new Dictionary<(int x, int y), int>(XYMAPCAPACITY);
 
 
-      CurrentCL01Map = new List<HeatMapData>();
-      CurrentCL02Map = new List<HeatMapData>();
-      CurrentCL03Map = new List<HeatMapData>();
-      CurrentCL12Map = new List<HeatMapData>();
-      CurrentCL13Map = new List<HeatMapData>();
-      CurrentCL23Map = new List<HeatMapData>();
-      BackingCL01Map = new List<HeatMapData>();
-      BackingCL02Map = new List<HeatMapData>();
-      BackingCL03Map = new List<HeatMapData>();
-      BackingCL12Map = new List<HeatMapData>();
-      BackingCL13Map = new List<HeatMapData>();
-      BackingCL23Map = new List<HeatMapData>();
-
+      CurrentCL01Map = new List<HeatMapData>(XYMAPCAPACITY);
+      CurrentCL02Map = new List<HeatMapData>(XYMAPCAPACITY);
+      CurrentCL03Map = new List<HeatMapData>(XYMAPCAPACITY);
+      CurrentCL12Map = new List<HeatMapData>(XYMAPCAPACITY);
+      CurrentCL13Map = new List<HeatMapData>(XYMAPCAPACITY);
+      CurrentCL23Map = new List<HeatMapData>(XYMAPCAPACITY);
+      BackingCL01Map = new List<HeatMapData>(XYMAPCAPACITY);
+      BackingCL02Map = new List<HeatMapData>(XYMAPCAPACITY);
+      BackingCL03Map = new List<HeatMapData>(XYMAPCAPACITY);
+      BackingCL12Map = new List<HeatMapData>(XYMAPCAPACITY);
+      BackingCL13Map = new List<HeatMapData>(XYMAPCAPACITY);
+      BackingCL23Map = new List<HeatMapData>(XYMAPCAPACITY);
+      
       DisplaysCurrentmap = true;
 
       WorldMap.Create();
@@ -387,10 +388,10 @@ namespace Ei_Dimension.ViewModels
         return;
       }
       _fillDataActive = true;
-      var hiRez = AnalysisVisible == System.Windows.Visibility.Visible ? true : false;
+      var hiRez = AnalysisVisible == System.Windows.Visibility.Visible;
       _ = Task.Run(async () =>
       {
-        var path = @"C:\Emissioninc\KEIZ0R-LEGION\AcquisitionData\val speed test 2E7_0.csv"; //PlatePictogram.GetSelectedFilePath();  //
+        var path = PlatePictogram.GetSelectedFilePath();  //@"C:\Emissioninc\KEIZ0R-LEGION\AcquisitionData\val speed test 2E7_0.csv"; //
         if (path == null)
         {
           ResultsWaitIndicatorVisibility = false;

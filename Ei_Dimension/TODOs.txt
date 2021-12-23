@@ -25,7 +25,6 @@ The commands that change the dropdown state are legacy from keeping parameters i
 
 what does chart2.Series["CLTARGET"].Enabled mean? another chart displayed? ---> CalibrationVM CalibrationSelector()
 
-
 PlateReport class has useless members except list
 
 Subtract bed region background button. useless?
@@ -34,31 +33,17 @@ Switch language should account for selected settings in device. like for Channel
 
 resultsVM has obscollections of obsobjects. can ez be translated to arrays[obsobjects], so obscollection not neeeded?
 
-
-save template name somewhere, also display somewhere. fill it when template loaded.
-
 TimerTick looks like not the best option. should be used only to update UI. program logic should be on a separate thread?
 
 case "ClassificationTargetsContents": (CalibrationView Classification Targets)
   Save Calibration to current map button is viable?
 
-Fixed a bug, also present in Legacy: second press of END button results in crash by SetReadingParamsForWell() accesing index+1
-  State machine should not be active at all, if measurement is inactive
-
-Fixed a TerminationReadyCheck() possible bug scenario, where assuming EndRegion = 1 could fuck up state machine
-
 Device.TerminationReadyCheck() case 1
   looks wrong. don't copy EndRead button function here? why not?
 
-select the text in a text box when a box is selected
-  so that typing replaces the value. it adds now, a second select of the text box should bring up the curosr for editing
-
-DataProcessor.BinMapData() could use some optimisation
 ResultsVM.SetDisplayedMap() can be optimised
 
 MicroCyDevice.IsNewWorkOrder() is crazy, since it is checked by app.TimerTick every tick. should be put on file watcher
-
-active regions stats for well click
 
 sampling button on ComponentsView could have an issue
 
@@ -69,10 +54,6 @@ trycatch on disconnect doen'st work
 
 template select with finger problematic?
 
-sort heatmap when inbetween wells - DONT!
-
-for keyboard entry make existing text disappear
-
 put outdir to settings? could be eh for usb sticks
 
   filters:                                done?
@@ -82,65 +63,29 @@ put outdir to settings? could be eh for usb sticks
 
 ActiveRegionsStatsHandler could use a Span<T> instad of array allocation
 
-!!!DataProcessor.BinMapData() could use arrays[,] instead of lists, for speed increase, and "sorting" would be done automatically!!! massive potential speed increase
 sorting DisplayedMap is evil, since there is a high chancem that some other thread is working with it. even for backingMap
-
-feature for double tap XY plot to magnify a region
 
 WellResults cause a bunch of Multithreaded issues, I might look for another approach instead
 
 
 --------------------------------------------------------
-
-build a detail file that has info on all wells one file or 96/384 files
 open another endpoint in usb?
-
-calibration/validation
-
-each map has it's own calibration
-need info on which regions we are testing and input desired reporter value and desired Coefficient Variation
-math: be in x% of true region center, desired Coefficient Variation
 
 none/daily/weekly/monthly/quarterly/yearly
 
-fill cal val map in methods which turn mode on
-in end run event call checker if mode == such
+case 0x1b: what happens earlier message or endOfMeasurement? if latter - can lead to bug 
 
-firmware cehcks for the cal success. I should only wait for the success message (0x1b)
-set volume to 100ml (max), but save the old values to restore them. fail case - start was hit for 3 times, and success message not received
-cal always runs in end of sample mode
-
-calibration page and channels page "save bias to map" button should do everything (the same thing)
-  also write datebox contents to map
-
-  case 0x1b: what happens earlier message or endOfMeasurement? if latter - can lead to bug 
-
-C should calculate and save the DNR coefficient by dividing the median Green Minor by media Green Major, i.e. the high sensitivity channel by the other green channel
+Cal should calculate and save the DNR coefficient by dividing the median Green Minor by media Green Major, i.e. the high sensitivity channel by the other green channel
 ----
 val mode
-set volume 25ml
-mean/median  of cl1/cl2 compared to region center
-
-cv ~20% for bottom left is kinda ok, cv should be small for region 100. comparing cv of a region to input cv
-median reporter for a region compared to input reporter
-
-lock map for val active. don't allow val active if regions are not selected/filled
 map centers should be real values? not binned. probably
-
 
 Validator doesn't capture the beads nearby; make regions ~ 4 times bigger size?
 right now it analyzes base only on beads registered to region. Result makes no sense anyway
 
-
 --------------------------------------------------------
-
-status file - encoded plate picogram to send as json
-
-
 !!!!!map paraameters don't load on startup. need to switch maps for it to work
 in non-touch mode, pressing a button does not trigger sanity check,leading to losing input data, without checking. pressing enter does help, but this has to work
-
-check possiblility to run without selected regions
 
 ReplyFromMC should just fill a FIFO. don't do any processing in that function
 Move that processing to the other project?
