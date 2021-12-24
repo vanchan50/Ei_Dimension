@@ -142,6 +142,7 @@ namespace Ei_Dimension.ViewModels
 
     public void SaveCalButtonClick()
     {
+      App.InputSanityCheck();
       App.Device.MainCommand("Get Property", code: 0x24);
       App.Device.MainCommand("Get Property", code: 0x25);
       App.Device.MainCommand("Get Property", code: 0x26);
@@ -242,6 +243,11 @@ namespace Ei_Dimension.ViewModels
     public void TextChanged(TextChangedEventArgs e)
     {
       App.InjectToFocusedTextbox(((TextBox)e.Source).Text, true);
+    }
+
+    public void DropPress()
+    {
+      App.InputSanityCheck();
     }
 
     public class DropDownButtonContents : Core.ObservableObject

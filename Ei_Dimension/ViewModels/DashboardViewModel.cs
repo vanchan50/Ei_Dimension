@@ -159,6 +159,7 @@ namespace Ei_Dimension.ViewModels
 
     public void PressureMonToggleButtonClick()
     {
+      App.InputSanityCheck();
       PressureMonToggleButtonState = !PressureMonToggleButtonState;
       MaxPressure = 0;
       MinPressure = 9999999999;
@@ -166,12 +167,14 @@ namespace Ei_Dimension.ViewModels
 
     public void SetFixedVolumeButtonClick(ushort num)
     {
+      App.InputSanityCheck();
       App.Device.MainCommand("Set Property", code: 0xaf, parameter: num);
       Volumes[0] = num.ToString();
     }
 
     public void FluidicsButtonClick(int i)
     {
+      App.InputSanityCheck();
       string cmd = "";
       switch (i)
       {
@@ -304,6 +307,7 @@ namespace Ei_Dimension.ViewModels
 
     public void CalModeToggle()
     {
+      App.InputSanityCheck();
       if (CalModeOn)
       {
         if (App.Device.Mode == MicroCy.OperationMode.Normal)
@@ -341,6 +345,7 @@ namespace Ei_Dimension.ViewModels
 
     public void ValModeToggle()
     {
+      App.InputSanityCheck();
       if (ValModeOn)
       {
         if (App.Device.Mode == MicroCy.OperationMode.Normal && VerificationViewModel.Instance.ValMapInfoReady())
@@ -369,6 +374,11 @@ namespace Ei_Dimension.ViewModels
         ResultsViewModel.Instance.ValidationCoverVisible = Visibility.Hidden;
         App.UnlockMapSelection();
       }
+    }
+
+    public void DropPress()
+    {
+      App.InputSanityCheck();
     }
 
     public class DropDownButtonContents : Core.ObservableObject

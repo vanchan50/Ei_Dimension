@@ -1643,12 +1643,13 @@ namespace Ei_Dimension
           SelectedTextBox.tb.Background = (System.Windows.Media.Brush)App.Current.Resources["AppBackground"];
         }
         _tempNewString = null;
-        //SelectedTextBox = (null, null, 0);
+        _tempOldString = null;
       }
       else if (SelectedTextBox.prop != null && _tempNewString == null)
       {
         SelectedTextBox.tb.Background = (System.Windows.Media.Brush)App.Current.Resources["AppBackground"];
       }
+      SelectedTextBox = (null, null, 0, null);
     }
 
     public static void HideNumpad()

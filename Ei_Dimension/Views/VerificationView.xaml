@@ -40,7 +40,7 @@
                    Margin="0,16,0,3"/>
         <dx:DropDownButton Width="200"
                            Height="80" Cursor="Hand"
-                           FontSize="25"
+                           FontSize="25" Command="{Binding DropPressCommand}"
                            HorizontalAlignment="Left"
                            VerticalAlignment="Top"
                            dxb:BarManager.ShowGlyphsInPopupMenus="False"
@@ -90,7 +90,7 @@
           <dx:DropDownButton Width="200"
                            Height="80" Cursor="Hand"
                            FontSize="25" Name="MapSelectr"
-                           HorizontalAlignment="Center"
+                           HorizontalAlignment="Center" Command="{Binding DropPressCommand}"
                            dxb:BarManager.ShowGlyphsInPopupMenus="False"
                            FontFamily="{StaticResource AppTextFont}"
                            Foreground="{StaticResource AppTextColor}"

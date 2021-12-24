@@ -108,6 +108,7 @@ namespace Ei_Dimension.ViewModels
 
     public void InputSelectorSwapButtonClick()
     {
+      App.InputSanityCheck();
       var temp = InputSelectorState[0];
       InputSelectorState[0] = InputSelectorState[1];
       InputSelectorState[1] = temp;
@@ -117,6 +118,7 @@ namespace Ei_Dimension.ViewModels
 
     public void ValvesButtonClick(int num)
     {
+      App.InputSanityCheck();
       int param = 0;
       byte Code = 0x00;
       switch (num)
@@ -147,6 +149,7 @@ namespace Ei_Dimension.ViewModels
 
     public void LasersButtonClick(int num)
     {
+      App.InputSanityCheck();
       switch (num)
       {
         case 1:
@@ -176,6 +179,7 @@ namespace Ei_Dimension.ViewModels
 
     public void SheathRunButtonClick()
     {
+      App.InputSanityCheck();
       if (SyringeControlSheathValue[0] == "")
         App.Device.MainCommand("Sheath", cmd: _syringeControlStates[0]);
       else if (ushort.TryParse(SyringeControlSheathValue[0], out ushort usRes))
@@ -184,6 +188,7 @@ namespace Ei_Dimension.ViewModels
 
     public void SampleARunButtonClick()
     {
+      App.InputSanityCheck();
       if (SyringeControlSampleAValue[0] == "")
         App.Device.MainCommand("SampleA", cmd: _syringeControlStates[1]);
       else if (ushort.TryParse(SyringeControlSampleAValue[0], out ushort usRes))
@@ -192,6 +197,7 @@ namespace Ei_Dimension.ViewModels
 
     public void SampleBRunButtonClick()
     {
+      App.InputSanityCheck();
       if (SyringeControlSampleBValue[0] == "")
         App.Device.MainCommand("SampleB", cmd: _syringeControlStates[2]);
       else if (ushort.TryParse(SyringeControlSampleBValue[0], out ushort usRes))
@@ -200,6 +206,7 @@ namespace Ei_Dimension.ViewModels
 
     public void GetPositionToggleButtonClick()
     {
+      App.InputSanityCheck();
       var RM = Language.Resources.ResourceManager;
       var curCulture = Language.TranslationSource.Instance.CurrentCulture;
       ushort state = 0;
@@ -220,6 +227,7 @@ namespace Ei_Dimension.ViewModels
 
     public void GetPositionButtonsClick(int num)
     {
+      App.InputSanityCheck();
       ushort param = 0;
       switch (num)
       {
@@ -238,6 +246,7 @@ namespace Ei_Dimension.ViewModels
 
     public void SamplingToggleButtonClick()
     {
+      App.InputSanityCheck();
       SamplingActive = !SamplingActive;
       if(SamplingActive)
         App.Device.MainCommand("Start Sampling");
@@ -247,6 +256,7 @@ namespace Ei_Dimension.ViewModels
 
     public void SingleStepDebugToggleButtonClick()
     {
+      App.InputSanityCheck();
       SingleStepDebugActive = !SingleStepDebugActive;
       var param = SingleStepDebugActive ? 1 : 0;
       App.Device.MainCommand("Set Property", code: 0xf7, parameter: (ushort)param);
@@ -254,27 +264,32 @@ namespace Ei_Dimension.ViewModels
 
     public void FlushButtonClick()
     {
+      App.InputSanityCheck();
       App.Device.MainCommand("Set Property", code: 0xd9);
     }
 
     public void StartupButtonClick()
     {
+      App.InputSanityCheck();
       App.Device.MainCommand("Startup");
     }
 
     public void MoveIdexButtonClick()
     {
+      App.InputSanityCheck();
       App.Device.MainCommand("Idex");
     }
 
     public void CWDirectionToggleButtonClick()
     {
+      App.InputSanityCheck();
       CWDirectionActive = !CWDirectionActive;
       MicroCy.InstrumentParameters.Idex.Dir = CWDirectionActive ? 1 : 0;
     }
 
     public void IdexPositionButtonClick()
     {
+      App.InputSanityCheck();
       App.Device.MainCommand("Get Property", code: 0x04);
     }
 

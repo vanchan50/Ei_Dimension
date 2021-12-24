@@ -29,16 +29,19 @@ namespace Ei_Dimension.ViewModels
 
     public void LoadButtonClick()
     {
+      App.InputSanityCheck();
       App.Device.MainCommand("Load Plate");
     }
 
     public void EjectButtonClick()
     {
+      App.InputSanityCheck();
       App.Device.MainCommand("Eject Plate");
     }
 
     public void StartButtonClick()
     {
+      App.InputSanityCheck();
       if (App.Device.TerminationType == 0 && App.MapRegions.ActiveRegionNums.Count == 0)
       {
         App.ShowNotification("\"Min Per Region\" End of Read requires at least 1 active region");
@@ -93,6 +96,7 @@ namespace Ei_Dimension.ViewModels
 
     public void EndButtonClick()
     {
+      App.InputSanityCheck();
       if (!App.Device.ReadActive)  //end button press before start, cancel work order
       {
         App.Device.MainCommand("Set Property", code: 0x17); //leds off

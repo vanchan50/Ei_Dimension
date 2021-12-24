@@ -85,6 +85,7 @@ namespace Ei_Dimension.ViewModels
 
     public void ChangeAmountOfWells(int num)
     {
+      App.InputSanityCheck();
       if (_amountOfWells == num)
         return;
       _amountOfWells = num;
@@ -142,6 +143,7 @@ namespace Ei_Dimension.ViewModels
 
     public void RunMotorButtonClick(string s)
     {
+      App.InputSanityCheck();
       float fRes;
       switch (s)
       {
@@ -171,6 +173,7 @@ namespace Ei_Dimension.ViewModels
 
     public void HaltMotorButtonClick(string s)
     {
+      App.InputSanityCheck();
       switch (s)
       {
         case "x":
@@ -187,6 +190,7 @@ namespace Ei_Dimension.ViewModels
 
     public void GoToWellButtonClick()
     {
+      App.InputSanityCheck();
       App.Device.MainCommand("Set Property", code: 0xad, parameter: (ushort)RowColIndex.rowIndex);
       App.Device.ReadingRow = RowColIndex.rowIndex;
       App.Device.MainCommand("Set Property", code: 0xae, parameter: (ushort)RowColIndex.colIndex);
@@ -196,6 +200,7 @@ namespace Ei_Dimension.ViewModels
 
     public void PollStepToggleButtonClick()
     {
+      App.InputSanityCheck();
       PollStepActive[0] = !PollStepActive[0];
       var param = PollStepActive[0] ? 1 : 0;
       App.Device.MainCommand("Set Property", code: 0x16, parameter: (ushort)param);
@@ -203,6 +208,7 @@ namespace Ei_Dimension.ViewModels
 
     public void PollStepSelector(string s)
     {
+      App.InputSanityCheck();
       switch (s)
       {
         case "Left":
@@ -224,6 +230,11 @@ namespace Ei_Dimension.ViewModels
           ParametersZ[1] = s;
           break;
       }
+    }
+
+    public void DropPress()
+    {
+      App.InputSanityCheck();
     }
 
     public void FocusedBox(int num)

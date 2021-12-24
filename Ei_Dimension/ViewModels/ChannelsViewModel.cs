@@ -48,12 +48,14 @@ namespace Ei_Dimension.ViewModels
 
     public void UpdateBiasButtonClick()
     {
+      App.InputSanityCheck();
       App.Device.MainCommand("RefreshDac");
       App.Device.InitSTab("channeltab");
     }
 
     public void SaveBiasButtonClick()
     {
+      App.InputSanityCheck();
       App.Device.SaveCalVals(new MicroCy.MapCalParameters
       {
         TempCl0 = int.Parse(Bias30Parameters[8]),

@@ -39,18 +39,21 @@ namespace Ei_Dimension.ViewModels
 
     public void CheckedBox(int num)
     {
+      App.InputSanityCheck();
       Checkboxes[num] = true;
       CheckBox(num);
     }
 
     public void UncheckedBox(int num)
     {
+      App.InputSanityCheck();
       Checkboxes[num] = false;
       CheckBox(num);
     }
 
     public void SelectOutFolder()
     {
+      App.InputSanityCheck();
       FolderBrowserDialogService.StartPath = App.Device.Outdir;
       if (FolderBrowserDialogService.ShowDialog())
         App.Device.Outdir = FolderBrowserDialogService.ResultPath;

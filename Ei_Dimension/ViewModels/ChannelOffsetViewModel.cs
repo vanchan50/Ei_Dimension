@@ -46,12 +46,14 @@ namespace Ei_Dimension.ViewModels
 
     public void UpdateBiasButtonClick()
     {
+      App.InputSanityCheck();
       App.Device.MainCommand("RefreshDac");
       App.Device.InitSTab("channeltab");
     }
 
     public void SetOffsetClick()
     {
+      App.InputSanityCheck();
       App.Device.MainCommand("SetBaseline");
     }
 
@@ -111,6 +113,11 @@ namespace Ei_Dimension.ViewModels
     public void TextChanged(TextChangedEventArgs e)
     {
       App.InjectToFocusedTextbox(((TextBox)e.Source).Text, true);
+    }
+
+    public void DropPress()
+    {
+      App.InputSanityCheck();
     }
 
     public class DropDownButtonContents : Core.ObservableObject

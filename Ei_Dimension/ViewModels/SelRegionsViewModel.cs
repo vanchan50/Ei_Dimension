@@ -26,6 +26,7 @@ namespace Ei_Dimension.ViewModels
 
     public void AllSelectClick()
     {
+      App.InputSanityCheck();
       for (var i = 0; i < App.MapRegions.ActiveRegions.Count; i++)
       {
         if(!App.MapRegions.ActiveRegions[i])
@@ -35,6 +36,7 @@ namespace Ei_Dimension.ViewModels
 
     public void ResetClick()
     {
+      App.InputSanityCheck();
       App.MapRegions.FillRegions();
     }
   }

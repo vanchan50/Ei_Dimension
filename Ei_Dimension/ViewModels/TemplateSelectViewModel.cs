@@ -41,6 +41,7 @@ namespace Ei_Dimension.ViewModels
 
     public void LoadTemplate()
     {
+      App.InputSanityCheck();
       AcquisitionTemplate newTemplate = null;
       try
       {
@@ -164,6 +165,7 @@ namespace Ei_Dimension.ViewModels
 
     public void SaveTemplate()
     {
+      App.InputSanityCheck();
       var path = App.Device.RootDirectory + @"\Config\" + TemplateSaveName[0] + ".dtml";
       if (File.Exists(path))
       {
@@ -228,6 +230,7 @@ namespace Ei_Dimension.ViewModels
 
     public void DeleteTemplate()
     {
+      App.InputSanityCheck();
       if (SelectedItem != null && File.Exists(SelectedItem))
       {
         File.Delete(SelectedItem);

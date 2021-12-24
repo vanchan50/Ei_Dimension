@@ -226,7 +226,7 @@
                    Margin="0,16,0,3"/>
           <dx:DropDownButton 
                            Height="50" Cursor="Hand"
-                           FontSize="25"
+                           FontSize="25" Command="{Binding DropPressCommand}"
                            dxb:BarManager.ShowGlyphsInPopupMenus="False"
                            FontFamily="{StaticResource AppTextFont}"
                            Foreground="{StaticResource AppTextColor}"

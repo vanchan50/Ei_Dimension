@@ -47,6 +47,7 @@ namespace Ei_Dimension.ViewModels
 
     public void LEDsButtonClick()
     {
+      App.InputSanityCheck();
       if (LEDsEnabled)
       {
         LEDsToggleButtonState = !LEDsToggleButtonState;
@@ -71,6 +72,7 @@ namespace Ei_Dimension.ViewModels
 
     public void TouchModeToggle()
     {
+      App.InputSanityCheck();
       MainViewModel.Instance.TouchControlsEnabled = !MainViewModel.Instance.TouchControlsEnabled;
       Settings.Default.TouchMode = TouchModeEnabled[0];
       Settings.Default.Save();
@@ -78,6 +80,7 @@ namespace Ei_Dimension.ViewModels
 
     public void UVCSanitizeClick()
     {
+      App.InputSanityCheck();
       if (int.TryParse(SanitizeSecondsContent[0], out int res))
         App.Device.MainCommand("Set Property", code: 0x1f, parameter: (ushort)res);
     }
