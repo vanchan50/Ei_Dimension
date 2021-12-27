@@ -50,6 +50,8 @@ namespace Ei_Dimension
     private static bool _isStartup;
     private static int _timerTickcounter;
     private static bool _nextWellWarning;
+    private static byte _multiTubeRow;
+    private static byte _multiTubeCol;
     public App()
     {
       _cancelKeyboardInjectionFlag = false;
@@ -107,6 +109,8 @@ namespace Ei_Dimension
       watcher.Filter = "*.txt";
       watcher.EnableRaisingEvents = true;
       watcher.Created += OnNewWorkOrder;
+      _multiTubeRow = 1;
+      _multiTubeCol = 0;
     }
 
     public static int GetMapIndex(string MapName)
@@ -2439,9 +2443,26 @@ namespace Ei_Dimension
         _nextWellWarning = false;
         warning = Models.WellWarningState.YellowWarning;
       }
-      ResultsViewModel.Instance.PlatePictogram.CurrentlyReadCell = (e.Row, e.Column);
-      ResultsViewModel.Instance.PlatePictogram.ChangeState(e.Row, e.Column, Models.WellType.NowReading, warning, FilePath: e.FilePath);
-      ResultsViewModel.Instance.CornerButtonClick(Models.DrawingPlate.CalculateCorner(e.Row, e.Column));
+
+      byte row;
+      byte col;
+      
+      //override for Multitube
+      if (WellsSelectViewModel.Instance.CurrentTableSize == 1)
+      {
+        row = _multiTubeRow;
+        col = _multiTubeCol;  //calc for case 96 to reset position
+      } //clear drawingboard if just switched to multitube!!! //DrawingPlate.MultitubeOverrideReset switchflip jsut for that
+      //finishedreadingeventhandler should call calc func for multitube
+      else
+      {
+        row = e.Row;
+        col = e.Column;
+      }
+
+      ResultsViewModel.Instance.PlatePictogram.CurrentlyReadCell = (row, col);
+      ResultsViewModel.Instance.PlatePictogram.ChangeState(row, col, Models.WellType.NowReading, warning, FilePath: e.FilePath);
+      ResultsViewModel.Instance.CornerButtonClick(Models.DrawingPlate.CalculateCorner(row, col));
       ResultsViewModel.Instance.ClearGraphs();
       for (var i = 0; i < MapRegions.CurrentActiveRegionsCount.Count; i++)
       {

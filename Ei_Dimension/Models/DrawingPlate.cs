@@ -16,6 +16,7 @@ namespace Ei_Dimension.Models
     public virtual ObservableCollection<WellTableRow> DrawingWells { get; protected set; }  //drawing data
     public (int row, int col) CurrentlyReadCell { get; set; }
     public (int row, int col) SelectedCell { get; set; }
+    public bool MultitubeOverrideReset { get; set; }
     private readonly PlateWell[,] _wells; //actual data
     private Warning[,] _warnings;
     private int _mode;
@@ -48,6 +49,7 @@ namespace Ei_Dimension.Models
       _gridSet = false;
       CurrentlyReadCell = (-1, -1);
       SelectedCell = (-1, -1);
+      MultitubeOverrideReset = false;
     }
 
     public static DrawingPlate Create()
@@ -60,6 +62,8 @@ namespace Ei_Dimension.Models
       switch (mode)
       {
         case 1:
+          _mode = 1;
+          ViewModels.ResultsViewModel.Instance.Buttons384Visible = Visibility.Hidden;
           break;
         case 96:
           _mode = 96;
@@ -76,6 +80,11 @@ namespace Ei_Dimension.Models
 
     public void Clear()
     {
+      if (MultitubeOverrideReset)
+      {
+        return;
+      }
+
       for (var i = 0; i < 8; i++)
       {
         for (var j = 0; j < 12; j++)
@@ -103,7 +112,7 @@ namespace Ei_Dimension.Models
         _wells[row, col].WarningState = (WellWarningState)warning;
       if (FilePath != null)
         _wells[row, col].FilePath = FilePath;
-      if (_mode == 96)
+      if (_mode == 96 || _mode == 1)
       {
         DrawingWells[row].SetType(col, _wells[row, col].Type);
         _warnings[row, col].SetWarning(_wells[row, col].WarningState);
@@ -142,6 +151,9 @@ namespace Ei_Dimension.Models
 
     public void SetWellsForReading(List<MicroCy.Wells> wells)
     {
+      //Multitube case Override
+      if (ViewModels.WellsSelectViewModel.Instance.CurrentTableSize == 1)
+        return;
       foreach(var well in wells)
       {
         ChangeState(well.rowIdx, well.colIdx, WellType.ReadyForReading);
@@ -171,7 +183,7 @@ namespace Ei_Dimension.Models
 
     public static int CalculateCorner(int row, int col)
     {
-      var tempCorner = 1;
+      int tempCorner;
       if (row < 8)
         tempCorner = col < 12 ? 1 : 2;
       else
