@@ -109,7 +109,7 @@ namespace Ei_Dimension
       watcher.Filter = "*.txt";
       watcher.EnableRaisingEvents = true;
       watcher.Created += OnNewWorkOrder;
-      _multiTubeRow = 1;
+      _multiTubeRow = 0;
       _multiTubeCol = 0;
     }
 
@@ -2444,21 +2444,8 @@ namespace Ei_Dimension
         warning = Models.WellWarningState.YellowWarning;
       }
 
-      byte row;
-      byte col;
-      
       //override for Multitube
-      if (WellsSelectViewModel.Instance.CurrentTableSize == 1)
-      {
-        row = _multiTubeRow;
-        col = _multiTubeCol;  //calc for case 96 to reset position
-      } //clear drawingboard if just switched to multitube!!! //DrawingPlate.MultitubeOverrideReset switchflip jsut for that
-      //finishedreadingeventhandler should call calc func for multitube
-      else
-      {
-        row = e.Row;
-        col = e.Column;
-      }
+      MultitubeConsiderations(e, out var row, out var col);
 
       ResultsViewModel.Instance.PlatePictogram.CurrentlyReadCell = (row, col);
       ResultsViewModel.Instance.PlatePictogram.ChangeState(row, col, Models.WellType.NowReading, warning, FilePath: e.FilePath);
@@ -2496,7 +2483,12 @@ namespace Ei_Dimension
           }
         }
       }
-      ResultsViewModel.Instance.PlatePictogram.ChangeState(e.Row, e.Column, type);
+      
+      //override for Multitube
+      MultitubeConsiderations(e, out var row, out var col);
+      CalculateNextMultitube();
+
+      ResultsViewModel.Instance.PlatePictogram.ChangeState(row, col, type);
       SavePlateState();
 #if DEBUG
       Device.MainCommand("Get FProperty", code: 0x06);
@@ -2736,6 +2728,40 @@ namespace Ei_Dimension
         return false;
       }
       return true;
+    }
+
+    private static void MultitubeConsiderations(ReadingWellEventArgs e, out byte row, out byte col)
+    {
+      if (WellsSelectViewModel.Instance.CurrentTableSize == 1)
+      {
+        row = _multiTubeRow;
+        col = _multiTubeCol;  //calc for case 96 to reset position
+        return;
+      }
+      //clear drawingboard if just switched to multitube!!! //DrawingPlate.MultitubeOverrideReset switchflip jsut for that
+      row = e.Row;
+      col = e.Column;
+    }
+
+    private static void CalculateNextMultitube()
+    {
+      if (WellsSelectViewModel.Instance.CurrentTableSize != 1)
+        return;
+
+      if (_multiTubeCol == 11 && _multiTubeRow == 7)
+      {
+        _multiTubeCol = 0;
+        _multiTubeRow = 0;
+        return;
+      }
+
+      if (_multiTubeCol < 11)
+        _multiTubeCol++;
+      else
+      {
+        _multiTubeCol = 0;
+        _multiTubeRow++;
+      }
     }
   }
 }

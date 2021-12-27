@@ -16,13 +16,13 @@ namespace Ei_Dimension.Models
     public virtual ObservableCollection<WellTableRow> DrawingWells { get; protected set; }  //drawing data
     public (int row, int col) CurrentlyReadCell { get; set; }
     public (int row, int col) SelectedCell { get; set; }
-    public bool MultitubeOverrideReset { get; set; }
     private readonly PlateWell[,] _wells; //actual data
     private Warning[,] _warnings;
     private int _mode;
     private int _CurrentCorner;
     private DataGrid _drawingGrid;
     private bool _gridSet;
+    private bool _multitubeOverrideReset;
 
     protected DrawingPlate()
     {
@@ -49,7 +49,7 @@ namespace Ei_Dimension.Models
       _gridSet = false;
       CurrentlyReadCell = (-1, -1);
       SelectedCell = (-1, -1);
-      MultitubeOverrideReset = false;
+      _multitubeOverrideReset = false;
     }
 
     public static DrawingPlate Create()
@@ -76,11 +76,12 @@ namespace Ei_Dimension.Models
         default:
           throw new Exception("Only modes 1, 96 or 384 supported");
       }
+      _multitubeOverrideReset = false;
     }
 
     public void Clear()
     {
-      if (MultitubeOverrideReset)
+      if (_multitubeOverrideReset)
       {
         return;
       }
@@ -102,6 +103,9 @@ namespace Ei_Dimension.Models
           _wells[i, j].WarningState = WellWarningState.OK;
         }
       }
+
+      if (_mode == 1)
+        _multitubeOverrideReset = true;
     }
 
     public void ChangeState(byte row, byte col, WellType? type = null, WellWarningState? warning = null, string FilePath = null)
