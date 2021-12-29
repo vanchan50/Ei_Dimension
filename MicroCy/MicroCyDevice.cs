@@ -149,7 +149,7 @@ namespace MicroCy
       {
         foreach(var point in region.Points)
         {
-        _classificationMap[point.x, point.y] = region.Number;
+          _classificationMap[point.x, point.y] = region.Number;
         }
       }
     }
@@ -735,7 +735,7 @@ namespace MicroCy
     {
       OutResults rout = new OutResults();
       rout.row = alphabet[WellsInOrder[SavingWellIdx].rowIdx].ToString();
-      rout.col = WellsInOrder[SavingWellIdx].colIdx + 1;    //columns are 1 based
+      rout.col = WellsInOrder[SavingWellIdx].colIdx + 1;  //columns are 1 based
       rout.count = regionNumber.RP1vals.Count;
       rout.region = regionNumber.regionNumber;
       List<float> rp1temp = new List<float>(regionNumber.RP1vals);
@@ -815,7 +815,7 @@ namespace MicroCy
     private void FillActiveWellResults(in BeadInfoStruct outbead)
     {
       //WellResults is a list of region numbers that are active
-      //each entry has a list of rp1 values from each bead in that reagion
+      //each entry has a list of rp1 values from each bead in that region
       ushort region = outbead.region;
       int index = WellResults.FindIndex(w => w.regionNumber == region);
       if (index >= 0)
@@ -925,9 +925,9 @@ namespace MicroCy
             continue;
           sumsq += Math.Pow(mean - _sfi[beads, finx], 2);
         }
-        double stddev = Math.Sqrt(sumsq / (robustcnt - 1));
+        double stdDev = Math.Sqrt(sumsq / (robustcnt - 1));
 
-        double gcv = (stddev / mean) * 100;
+        double gcv = (stdDev / mean) * 100;
         if (double.IsNaN(gcv))
           gcv = 0;
         _gStats.Add(new Gstats

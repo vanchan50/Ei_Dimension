@@ -29,10 +29,6 @@ namespace Ei_Dimension.Views
         InstrumentLogo.Source = new BitmapImage(new Uri(@"/Ei_Dimension;component/Icons/dimension flow analyzer logoCh.png", UriKind.Relative));
       }
       Instance = this;
-      ChC.AxisX.WholeRange.AutoSideMargins = false;
-      ChC.AxisX.WholeRange.SetMinMaxValues(10, 35000);
-      ChC.AxisY.WholeRange.AutoSideMargins = false;
-      ChC.AxisY.WholeRange.SetMinMaxValues(10, 35000);
     }
 
     public void AddXYPoint(double x, double y, SolidColorBrush brush, bool LargeXY = false)

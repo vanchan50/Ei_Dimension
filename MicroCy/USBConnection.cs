@@ -30,11 +30,8 @@ namespace MicroCy
         catch { return false; }
         return true;
       }
-      else
-      {
-        Console.WriteLine("USB devices not found");
-        return false;
-      }
+      Console.WriteLine("USB devices not found");
+      return false;
     }
 
     public void Write(byte[] buffer)
@@ -45,8 +42,8 @@ namespace MicroCy
       }
       catch (USBException e)
       {
-        Console.WriteLine(e.Message);
-        Console.Error.WriteLine(e.Message);
+        Console.WriteLine($"{e.Message} {e.InnerException}");
+        Console.Error.WriteLine($"{e.Message} {e.InnerException}");
         Write(buffer);
       }
     }
@@ -60,7 +57,15 @@ namespace MicroCy
     public void Read()
     {
       if (IsActive)
-        USBDevice.Interfaces[0].Pipes[0x81].Read(InputBuffer, 0, InputBuffer.Length);
+        try
+        {
+          USBDevice.Interfaces[0].Pipes[0x81].Read(InputBuffer, 0, InputBuffer.Length);
+        }
+        catch (USBException e)
+        {
+          Console.WriteLine($"{e.Message} {e.InnerException}");
+          Console.Error.WriteLine($"{e.Message} {e.InnerException}");
+        }
     }
 
     public void EndRead(IAsyncResult result)

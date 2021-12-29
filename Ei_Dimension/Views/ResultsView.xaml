@@ -316,7 +316,7 @@
           <dxc:Legend HorizontalPosition="Left"
                     MarkerMode="CheckBox"
                     Orientation="Horizontal"
-                    Margin="-30,-38,0,0"
+                    Margin="30,-28,0,0"
                     FontSize="24"
                     Background="Transparent"
                     BorderBrush="Transparent"
@@ -325,16 +325,30 @@
                     Width="525" Visible="True"/>
         </dxc:ChartControl.Legends>
         <dxc:XYDiagram2D Focusable="False"
-                         Width="640" Height="440"
+                         Width="690" Height="460"
                          HorizontalAlignment="Left"
                          VerticalAlignment="Top"
-                         Margin="60,0,0,0">
+                         Margin="18,-20,0,0">
           <dxc:XYDiagram2D.AxisY>
             <dxc:AxisY2D Interlaced="False"
-                       GridLinesVisible="False"
-                       TickmarksMinorVisible="False"
-                       FontFamily="{StaticResource AppTextFont}"
-                       TickmarksVisible="False" Alignment="Near">
+                         TickmarksMinorVisible="False"
+                         Logarithmic="True"
+                         TickmarksVisible="False"
+                         FontFamily="{StaticResource AppTextFont}"
+                         GridLinesMinorVisible="True"
+                         GridLinesVisible="True"
+                         MinorCount="9">
+              <dxc:AxisY2D.WholeRange>
+                <dxc:Range MinValue="1"
+                           MaxValue="100000"
+                           AutoSideMargins="False"
+                           dxc:AxisY2D.AlwaysShowZeroLevel="False"/>
+              </dxc:AxisY2D.WholeRange>
+              <dxc:AxisY2D.VisualRange>
+                <dxc:Range MinValue="1"
+                           MaxValue="100000"
+                           AutoSideMargins="False"/>
+              </dxc:AxisY2D.VisualRange>
               <dxc:AxisY2D.Label>
                 <dxc:AxisLabel FontSize="24"/>
               </dxc:AxisY2D.Label>
@@ -349,12 +363,12 @@
           </dxc:XYDiagram2D.AxisY>
           <dxc:XYDiagram2D.AxisX>
             <dxc:AxisX2D TickmarksMinorVisible="False"
-                       TickmarksVisible="False"
-                       Logarithmic="True" Width="640"
-                       FontFamily="{StaticResource AppTextFont}"
-                       GridLinesMinorVisible="True"
-                       GridLinesVisible="True"
-                       MinorCount="9">
+                         TickmarksVisible="False"
+                         Logarithmic="True" Width="640"
+                         FontFamily="{StaticResource AppTextFont}"
+                         GridLinesMinorVisible="True"
+                         GridLinesVisible="True"
+                         MinorCount="9">
               <dxc:AxisX2D.Label>
                 <dxc:AxisLabel FontSize="24"/>
               </dxc:AxisX2D.Label>
@@ -365,9 +379,9 @@
                                FontWeight="UltraBold"
                                Visible="True"/>
               </dxc:AxisX2D.Title>
-              <dxc:AxisX2D.Range>
-                <dxc:AxisRange SideMarginsEnabled="False"/>
-              </dxc:AxisX2D.Range>
+              <dxc:AxisX2D.WholeRange>
+                <dxc:Range AutoSideMargins="False"/>
+              </dxc:AxisX2D.WholeRange>
             </dxc:AxisX2D>
           </dxc:XYDiagram2D.AxisX>
           <dxc:LineSeries2D DataSource="{Binding ScttrData.DisplayedRedSsc}"
@@ -405,7 +419,7 @@
       <Button Width="50" Height="50"
               HorizontalAlignment="Left"
               VerticalAlignment="Top" Visibility="Hidden"
-              Margin="665,40,0,0" Name="printSC"
+              Margin="171,23,0,0" Name="printSC"
               Command="{Binding ScatterprintCommand}"
               Style="{StaticResource PrintButtonStyle}"
               img:EmbeddedImg.Image="{dx:DXImage 'SvgImages/XAF/Action_Export_ToImage.svg'}">
@@ -593,12 +607,15 @@
                              Visible="False"/>
               </dxc:AxisY2D.Title>
               <dxc:AxisY2D.WholeRange>
-                <dxc:Range dxc:AxisY2D.AlwaysShowZeroLevel="False" >
-                  <dxc:Range.MinValue>
-                    <System:Double>10</System:Double>
-                  </dxc:Range.MinValue>
-                </dxc:Range>
+                <dxc:Range MinValue="10"
+                           MaxValue="60000"
+                           AutoSideMargins="False"/>
               </dxc:AxisY2D.WholeRange>
+              <dxc:AxisY2D.VisualRange>
+                <dxc:Range MinValue="10"
+                           MaxValue="60000"
+                           AutoSideMargins="False"/>
+              </dxc:AxisY2D.VisualRange>
             </dxc:AxisY2D>
           </dxc:XYDiagram2D.AxisY>
           <dxc:XYDiagram2D.AxisX>
@@ -620,12 +637,15 @@
                                Visible="False"/>
               </dxc:AxisX2D.Title>
               <dxc:AxisX2D.WholeRange>
-                <dxc:Range>
-                  <dxc:Range.MinValue>
-                    <System:Double>10</System:Double>
-                  </dxc:Range.MinValue>
-                </dxc:Range>
+                <dxc:Range MinValue="10"
+                           MaxValue="60000"
+                           AutoSideMargins="False"/>
               </dxc:AxisX2D.WholeRange>
+              <dxc:AxisX2D.VisualRange>
+                <dxc:Range MinValue="10"
+                           MaxValue="60000"
+                           AutoSideMargins="False"/>
+              </dxc:AxisX2D.VisualRange>
             </dxc:AxisX2D>
           </dxc:XYDiagram2D.AxisX>
           <dxc:PointSeries2D DataSource="{Binding WrldMap.DisplayedWorldMap}"
@@ -1393,6 +1413,6 @@
         </StackPanel>
       </Grid>
     </Border>
-     
+
   </Grid>
 </UserControl>

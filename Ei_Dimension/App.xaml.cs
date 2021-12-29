@@ -2643,6 +2643,7 @@ namespace Ei_Dimension
       NotificationViewModel.Instance.ButtonVisible[2] = Visibility.Hidden;
       ShowLocalizedNotification(nameofLocalizationString, background);
     }
+
     public static void ShowLocalizedNotification(string nameofLocalizationString, Action action1, string nameofActionButton1Text, Action action2, string nameofActionButton2Text, System.Windows.Media.Brush background = null)
     {
       NotificationViewModel.Instance.Action2 = action2;
