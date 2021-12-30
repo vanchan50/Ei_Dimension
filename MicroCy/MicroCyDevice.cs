@@ -60,7 +60,6 @@ namespace MicroCy
     public int TotalBeads { get; private set; }
     public int SavBeadCount { get; set; }
     public int CurrentWellIdx { get; set; }
-    public int SampleSize { get; set; }
     public int ScatterGate { get; set; }
     public int MinPerRegion { get; set; }
     public bool IsMeasurementGoing { get; private set; }
@@ -108,7 +107,11 @@ namespace MicroCy
     private static double[] _classificationBins;
     private int[,] _classificationMap;
     private string _thisRunResultsFileName;
-    private Thread _prioUsbThread;
+    private Thread _prioUsbInThread;
+    private Thread _prioUsbOutThread;
+    private readonly object _usbOutCV= new object();
+    private readonly ConcurrentQueue<(string name, CommandStruct cs)> _outCommands = new ConcurrentQueue<(string name, CommandStruct cs)>();
+
 
     public MicroCyDevice(Type connectionType)
     {
@@ -123,9 +126,13 @@ namespace MicroCy
       Reg0stats = false;
       if (_serialConnection.IsActive)
       {
-        _prioUsbThread = new Thread(NewReplyFromMC);
-        _prioUsbThread.Priority = ThreadPriority.Highest;
-        _prioUsbThread.Start();
+        _prioUsbInThread = new Thread(NewReplyFromMC);
+        _prioUsbInThread.Priority = ThreadPriority.Highest;
+        _prioUsbInThread.Start();
+
+        _prioUsbOutThread = new Thread(WriteToMC);
+        _prioUsbOutThread.Priority = ThreadPriority.AboveNormal;
+        _prioUsbOutThread.Start();
       }
       //_serialConnection.BeginRead(ReplyFromMC);   //default termination is end of sample
       Outdir = RootDirectory.FullName;
@@ -331,6 +338,23 @@ namespace MicroCy
       _serialConnection.BeginRead(ReplyFromMC);
     }
 
+    private void WriteToMC()
+    {
+      while (true)
+      {
+        while (_outCommands.TryDequeue(out var cmd))
+        {
+          RunCmd(cmd.name, cmd.cs);
+        }
+        if (StopUSBPolling)
+          return;
+        lock (_usbOutCV)
+        {
+          Monitor.Wait(_usbOutCV);
+        }
+      }
+    }
+
     public void LoadMaps()
     {
       string path = Path.Combine(RootDirectory.FullName, "Config");
@@ -348,7 +372,6 @@ namespace MicroCy
         }
       }
     }
-    //Refactored
 
     public void MainCommand(string command, byte? cmd = null, byte? code = null, ushort? parameter = null, float? fparameter = null)
     {
@@ -380,7 +403,14 @@ namespace MicroCy
           cs.FParameter = Idex.Dir;
           break;
       }
-      RunCmd(command, cs);
+      _outCommands.Enqueue((command, cs));
+
+      lock (_usbOutCV)
+      {
+        Monitor.Pulse(_usbOutCV);
+      }
+
+      //RunCmd(command, cs);
     }
 
     public void InitSTab(string tabname)
@@ -589,6 +619,8 @@ namespace MicroCy
     /// <param name="cs">The CommandStruct object containing the command parameters.  This will get converted to an 8-byte array.</param>
     private void RunCmd(string sCmdName, CommandStruct cs)
     {
+      if (sCmdName == null)
+        return;
       if (_serialConnection.IsActive)
         _serialConnection.Write(StructToByteArray(cs));
       Console.WriteLine(string.Format("{0} Sending [{1}]: {2}", DateTime.Now.ToString(), sCmdName, cs.ToString())); //  MARK1 END
@@ -669,7 +701,8 @@ namespace MicroCy
       {
         // move received command to queue
         newcmd = ByteArrayToStruct(_serialConnection.InputBuffer);
-        Commands.Enqueue(newcmd);
+        if(newcmd.Code != 0)
+          Commands.Enqueue(newcmd);
       }
       if ((newcmd.Code >= 0xd0) && (newcmd.Code <= 0xdf))
       {
