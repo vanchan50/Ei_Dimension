@@ -26,7 +26,7 @@ namespace MicroCy
           USBDevice = new USBDevice(di[0].DevicePath);     // just grab the first one for now, but should support multiples
           Console.WriteLine(string.Format("{0}:{1}", USBDevice.Descriptor.FullName, USBDevice.Descriptor.SerialNumber));
           USBDevice.Interfaces[0].OutPipe.Policy.PipeTransferTimeout = 400;
-          USBDevice.Interfaces[0].InPipe.Policy.PipeTransferTimeout = 600;
+          //USBDevice.Interfaces[0].InPipe.Policy.PipeTransferTimeout = 600;
           USBDevice.Interfaces[0].InPipe.Policy.AutoClearStall = true;
           USBDevice.Interfaces[0].OutPipe.Policy.AutoClearStall = true;
           IsActive = true;

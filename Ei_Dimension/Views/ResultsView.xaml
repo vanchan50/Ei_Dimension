@@ -380,8 +380,16 @@
                                Visible="True"/>
               </dxc:AxisX2D.Title>
               <dxc:AxisX2D.WholeRange>
-                <dxc:Range AutoSideMargins="False"/>
+                <dxc:Range MinValue="1"
+                           MaxValue="1000000"
+                           AutoSideMargins="False"
+                           dxc:AxisY2D.AlwaysShowZeroLevel="False"/>
               </dxc:AxisX2D.WholeRange>
+              <dxc:AxisX2D.VisualRange>
+                <dxc:Range MinValue="1"
+                           MaxValue="1000000"
+                           AutoSideMargins="False"/>
+              </dxc:AxisX2D.VisualRange>
             </dxc:AxisX2D>
           </dxc:XYDiagram2D.AxisX>
           <dxc:LineSeries2D DataSource="{Binding ScttrData.DisplayedRedSsc}"
