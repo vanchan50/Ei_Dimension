@@ -2293,6 +2293,11 @@ namespace Ei_Dimension
             Device.EndBeadRead();
           }
           Device.EndState = 0;
+          Task.Run(()=>
+          {
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+          });
           if (Device.CurrentWellIdx == (Device.WellsToRead + 1)) //if only one more to go
           {
             DashboardViewModel.Instance.WorkOrder[0] = "";
@@ -2497,7 +2502,6 @@ namespace Ei_Dimension
 
     public static void FinishedMeasurementEventHandler(object sender, EventArgs e)
     {
-      Device.ReadActive = false;
       MainButtonsViewModel.Instance.StartButtonEnabled = true;
       ResultsViewModel.Instance.PlatePictogram.CurrentlyReadCell = (-1, -1);
       switch (Device.Mode)

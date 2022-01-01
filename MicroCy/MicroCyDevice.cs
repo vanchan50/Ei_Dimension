@@ -623,7 +623,7 @@ namespace MicroCy
         return;
       if (_serialConnection.IsActive)
         _serialConnection.Write(StructToByteArray(cs));
-      Console.WriteLine(string.Format("{0} Sending [{1}]: {2}", DateTime.Now.ToString(), sCmdName, cs.ToString())); //  MARK1 END
+      Console.WriteLine($"{DateTime.Now.ToString()} Sending [{sCmdName}]: {cs.ToString()}"); //  MARK1 END
     }
 
     private void OutputSummaryFile()
@@ -644,7 +644,7 @@ namespace MicroCy
       string summaryFileName = "";
       for (var i = 0; i < int.MaxValue; i++)
       {
-        summaryFileName = $"{Outdir}\\AcquisitionData\\Results_{Outfilename}_{i}.csv";
+        summaryFileName = $"{Outdir}\\AcquisitionData\\Results_{Outfilename}_{i.ToString()}.csv";
         if (!File.Exists(summaryFileName))
         {
           _thisRunResultsFileName = summaryFileName;
@@ -680,6 +680,28 @@ namespace MicroCy
       }
     }
 
+    private static CommandStruct NEWByteArrayToStruct(byte[] inmsg)
+    {
+      unsafe
+      {
+        fixed (byte* cs = &inmsg[0])
+        {
+          return *(CommandStruct*)cs;
+        }
+      }
+    }
+
+    private static BeadInfoStruct NEWBeadArrayToStruct(byte[] beadmsg, byte shift)
+    {
+      unsafe
+      {
+        fixed (byte* cs = &beadmsg[shift * 64])
+        {
+          return *(BeadInfoStruct*)cs;
+        }
+      }
+    }
+
     private static BeadInfoStruct BeadArrayToStruct(byte[] beadmsg, byte shift)
     {
       IntPtr ptr = Marshal.AllocHGlobal(64);
@@ -700,7 +722,7 @@ namespace MicroCy
       lock (Commands)
       {
         // move received command to queue
-        newcmd = ByteArrayToStruct(_serialConnection.InputBuffer);
+        newcmd = NEWByteArrayToStruct(_serialConnection.InputBuffer);
         if(newcmd.Code != 0)
           Commands.Enqueue(newcmd);
       }
@@ -794,8 +816,8 @@ namespace MicroCy
 
     private bool GetBeadFromBuffer(byte[] buffer,byte shift, out BeadInfoStruct outbead)
     {
-      outbead = BeadArrayToStruct(buffer, shift);
-      return outbead.Header == 0xadbeadbe ? true : false;
+      outbead = NEWBeadArrayToStruct(buffer, shift);
+      return outbead.Header == 0xadbeadbe;
     }
 
     private void CalculateBeadParams(ref BeadInfoStruct outbead)
@@ -985,6 +1007,7 @@ namespace MicroCy
     private void OnFinishedMeasurement()
     {
       IsMeasurementGoing = false;
+      ReadActive = false;
       _thisRunResultsFileName = null;
       FinishedMeasurement?.Invoke(this, EventArgs.Empty);
     }
