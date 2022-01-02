@@ -235,7 +235,6 @@ namespace MicroCy
       BeadsToCapture = WellsInOrder[index].termCnt;
       MinPerRegion = WellsInOrder[index].regTermCnt;
       TerminationType = WellsInOrder[index].termType;
-    //  ConstructClassificationMap(ActiveMap);
       WellResults.Clear();
       foreach (var region in ActiveMap.regions)
       {
@@ -622,7 +621,7 @@ namespace MicroCy
       if (sCmdName == null)
         return;
       if (_serialConnection.IsActive)
-        _serialConnection.Write(StructToByteArray(cs));
+        _serialConnection.Write(NEWStructToByteArray(in cs));
       Console.WriteLine($"{DateTime.Now.ToString()} Sending [{sCmdName}]: {cs.ToString()}"); //  MARK1 END
     }
 
@@ -653,31 +652,21 @@ namespace MicroCy
       }
     }
 
-    private static byte[] StructToByteArray(object obj)
+    private static byte[] NEWStructToByteArray(in CommandStruct cs)
     {
-      int len = Marshal.SizeOf(obj);
-      byte[] arrRet = new byte[len];
-
-      IntPtr ptr = Marshal.AllocHGlobal(len);
-      Marshal.StructureToPtr(obj, ptr, true);
-      Marshal.Copy(ptr, arrRet, 0, len);
-      Marshal.FreeHGlobal(ptr);
+      byte[] arrRet = new byte[8];
+      unsafe
+      {
+        fixed (CommandStruct* pCS = &cs)
+        {
+          for (var i = 0; i < 8; i++)
+          {
+            arrRet[i] = *((byte*)pCS + i);
+          }
+        }
+      }
 
       return arrRet;
-    }
-
-    private static CommandStruct ByteArrayToStruct(byte[] inmsg)
-    {
-      IntPtr ptr = Marshal.AllocHGlobal(8);
-      try
-      {
-        Marshal.Copy(inmsg, 0, ptr, 8);
-        return (CommandStruct)Marshal.PtrToStructure(ptr, typeof(CommandStruct));
-      }
-      finally
-      {
-        Marshal.FreeHGlobal(ptr);
-      }
     }
 
     private static CommandStruct NEWByteArrayToStruct(byte[] inmsg)
@@ -699,20 +688,6 @@ namespace MicroCy
         {
           return *(BeadInfoStruct*)cs;
         }
-      }
-    }
-
-    private static BeadInfoStruct BeadArrayToStruct(byte[] beadmsg, byte shift)
-    {
-      IntPtr ptr = Marshal.AllocHGlobal(64);
-      try
-      {
-        Marshal.Copy(beadmsg, shift * 64, ptr, 64);
-        return (BeadInfoStruct)Marshal.PtrToStructure(ptr, typeof(BeadInfoStruct));
-      }
-      finally
-      {
-        Marshal.FreeHGlobal(ptr);
       }
     }
 
@@ -867,16 +842,16 @@ namespace MicroCy
       };
     }
 
-    private void FillActiveWellResults(in BeadInfoStruct outbead)
+    private void FillActiveWellResults(in BeadInfoStruct outBead)
     {
       //WellResults is a list of region numbers that are active
       //each entry has a list of rp1 values from each bead in that region
-      ushort region = outbead.region;
+      ushort region = outBead.region;
       int index = WellResults.FindIndex(w => w.regionNumber == region);
       if (index >= 0)
       {
-        WellResults[index].RP1vals.Add(outbead.reporter);
-        WellResults[index].RP1bgnd.Add(outbead.greenC_bg);
+        WellResults[index].RP1vals.Add(outBead.reporter);
+        WellResults[index].RP1bgnd.Add(outBead.greenC_bg);
         if (!_chkRegionCount)
           _chkRegionCount = WellResults[index].RP1vals.Count == MinPerRegion;  //see if assay is done via sufficient beads in each region
       }
@@ -1037,6 +1012,48 @@ namespace MicroCy
         accDelta += delta;
       }
       return Result;
+    }
+
+    private static CommandStruct ByteArrayToStruct(byte[] inmsg)
+    {
+      IntPtr ptr = Marshal.AllocHGlobal(8);
+      try
+      {
+        Marshal.Copy(inmsg, 0, ptr, 8);
+        return (CommandStruct)Marshal.PtrToStructure(ptr, typeof(CommandStruct));
+      }
+      finally
+      {
+        Marshal.FreeHGlobal(ptr);
+      }
+    }
+
+    private static byte[] StructToByteArray(object obj)
+    {
+      int len = Marshal.SizeOf(obj);
+      byte[] arrRet = new byte[len];
+
+      IntPtr ptr = Marshal.AllocHGlobal(len);
+      Marshal.StructureToPtr(obj, ptr, true);
+      Marshal.Copy(ptr, arrRet, 0, len);
+      Marshal.FreeHGlobal(ptr);
+
+      return arrRet;
+    }
+
+
+    private static BeadInfoStruct BeadArrayToStruct(byte[] beadmsg, byte shift)
+    {
+      IntPtr ptr = Marshal.AllocHGlobal(64);
+      try
+      {
+        Marshal.Copy(beadmsg, shift * 64, ptr, 64);
+        return (BeadInfoStruct)Marshal.PtrToStructure(ptr, typeof(BeadInfoStruct));
+      }
+      finally
+      {
+        Marshal.FreeHGlobal(ptr);
+      }
     }
   }
 }

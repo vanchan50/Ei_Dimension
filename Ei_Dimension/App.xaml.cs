@@ -52,6 +52,7 @@ namespace Ei_Dimension
     private static bool _nextWellWarning;
     private static byte _multiTubeRow;
     private static byte _multiTubeCol;
+    private static readonly List<(ushort region, float[] vals)> _tempWellResults = new List<(ushort region, float[] vals)>(100);
     public App()
     {
       _cancelKeyboardInjectionFlag = false;
@@ -1676,6 +1677,7 @@ namespace Ei_Dimension
         OnAppLoaded();
 
       TextBoxUpdater();
+      UpdatePressureMonitor();
       if (Device.IsMeasurementGoing)
       {
         GraphsHandler();
@@ -2234,7 +2236,6 @@ namespace Ei_Dimension
             break;
         }
       }
-      UpdatePressureMonitor();
     }
 
     private static void WellStateHandler()
@@ -2386,17 +2387,16 @@ namespace Ei_Dimension
       if (!_activeRegionsUpdateGoing)
       {
         _activeRegionsUpdateGoing = true;
-        var tempResults = new List<(ushort region, float[] vals)>(Device.WellResults.Count);
         for (var i = 0; i < Device.WellResults.Count; i++)
         {
           var rp1 = new float[Device.WellResults[i].RP1vals.Count];
           Device.WellResults[i].RP1vals.CopyTo(0, rp1, 0, rp1.Length);
-          tempResults.Add((Device.WellResults[i].regionNumber, rp1));
-          ResultsViewModel.Instance.CurrentAnalysis12Map.Clear();
+          _tempWellResults.Add((Device.WellResults[i].regionNumber, rp1));
         }
+        ResultsViewModel.Instance.CurrentAnalysis12Map.Clear();
         _ = Current.Dispatcher.BeginInvoke((Action)(() =>
         {
-          foreach (var result in tempResults)
+          foreach (var result in _tempWellResults)
           {
             var index = MapRegions.RegionsList.IndexOf(result.region.ToString());
             if (index == -1)
@@ -2409,14 +2409,14 @@ namespace Ei_Dimension
             }
             else
             {
-              MapRegions.CurrentActiveRegionsCount[index] = result.vals.Count().ToString();
               avg = result.vals.Average();
+              MapRegions.CurrentActiveRegionsCount[index] = result.vals.Length.ToString();
               MapRegions.CurrentActiveRegionsMean[index] = avg.ToString("0,0");
               Array.Clear(result.vals, 0, result.vals.Length);  //Crutch. Explicit clear needed for some reason
             }
             Reporter3DGraphHandler(index, avg);
           }
-          tempResults = null;
+          _tempWellResults.Clear();
           _activeRegionsUpdateGoing = false;
         }));
       }
@@ -2468,6 +2468,21 @@ namespace Ei_Dimension
 
     public static void FinishedReadingWellEventHandler(object sender, ReadingWellEventArgs e)
     {
+      var type = GetWellStateForPictogram();
+      
+      //override for Multitube
+      MultitubeConsiderations(e, out var row, out var col);
+      CalculateNextMultitube();
+
+      ResultsViewModel.Instance.PlatePictogram.ChangeState(row, col, type);
+      SavePlateState();
+#if DEBUG
+      Device.MainCommand("Get FProperty", code: 0x06);
+#endif
+    }
+
+    private static Models.WellType GetWellStateForPictogram()
+    {
       var type = Models.WellType.Success;
       if (Device.Mode == OperationMode.Normal)
       {
@@ -2488,16 +2503,7 @@ namespace Ei_Dimension
           }
         }
       }
-      
-      //override for Multitube
-      MultitubeConsiderations(e, out var row, out var col);
-      CalculateNextMultitube();
-
-      ResultsViewModel.Instance.PlatePictogram.ChangeState(row, col, type);
-      SavePlateState();
-#if DEBUG
-      Device.MainCommand("Get FProperty", code: 0x06);
-#endif
+      return type;
     }
 
     public static void FinishedMeasurementEventHandler(object sender, EventArgs e)
@@ -2545,18 +2551,18 @@ namespace Ei_Dimension
     {
       if (!Directory.Exists(Device.Outdir + "\\SystemLogs"))
         Directory.CreateDirectory(Device.Outdir + "\\SystemLogs");
-      string logpath = Path.Combine(Path.Combine(@"C:\Emissioninc", Environment.MachineName), "SystemLogs", "EventLog");
-      string logfilepath = logpath + ".txt";
-      string backfilepath = logpath + ".bak";
-      if (File.Exists(logfilepath))
+      string logPath = Path.Combine(Path.Combine(@"C:\Emissioninc", Environment.MachineName), "SystemLogs", "EventLog");
+      string logFilePath = logPath + ".txt";
+      string backFilePath = logPath + ".bak";
+      if (File.Exists(logFilePath))
       {
-        File.Delete(backfilepath);
-        File.Move(logfilepath, backfilepath);
+        File.Delete(backFilePath);
+        File.Move(logFilePath, backFilePath);
       }
-      var fs = new FileStream(logfilepath, FileMode.Create);
-      var logwriter = new StreamWriter(fs);
-      logwriter.AutoFlush = true;
-      Console.SetOut(logwriter);
+      var fs = new FileStream(logFilePath, FileMode.Create);
+      var logWriter = new StreamWriter(fs);
+      logWriter.AutoFlush = true;
+      Console.SetOut(logWriter);
     }
 
     protected override void OnStartup(StartupEventArgs e)

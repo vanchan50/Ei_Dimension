@@ -311,7 +311,7 @@ namespace Ei_Dimension.ViewModels
       }
       _fillDataActive = true;
       var hiRez = AnalysisVisible == System.Windows.Visibility.Visible;
-      _ = Task.Run(async () =>
+      _ = Task.Run(() =>
       {
         var path = PlatePictogram.GetSelectedFilePath();  //@"C:\Emissioninc\KEIZ0R-LEGION\AcquisitionData\val speed test 2E7_0.csv"; //
         if (path == null)
@@ -411,6 +411,7 @@ namespace Ei_Dimension.ViewModels
         MainViewModel.Instance.EventCountField = MainViewModel.Instance.EventCountLocal;
       }
     }
+
     /// <summary>
     /// Called on Activemap change to fill all world maps with data from files
     /// </summary>
