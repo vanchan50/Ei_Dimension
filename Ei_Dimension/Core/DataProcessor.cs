@@ -11,6 +11,7 @@ namespace Ei_Dimension.Core
   public static class DataProcessor
   {
     private static SolidColorBrush[] _heatColors;
+    private static readonly char[] _separator = {','};
 
     static  DataProcessor()
     {
@@ -24,9 +25,9 @@ namespace Ei_Dimension.Core
       _heatColors[6] = Brushes.Red;
     }
 
-    public static async Task<List<string>> GetDataFromFileAsync(string path)
+    public static List<string> GetDataFromFile(string path)
     {
-      var str = new List<string>();
+      var str = new List<string>(100000);
       using (var fin = new System.IO.FileStream(path, System.IO.FileMode.Open, System.IO.FileAccess.Read,
                System.IO.FileShare.Read))
       using (var sr = new System.IO.StreamReader(fin))
@@ -35,7 +36,7 @@ namespace Ei_Dimension.Core
         sr.ReadLine();
         while (!sr.EndOfStream)
         {
-          str.Add(await sr.ReadLineAsync());
+          str.Add(sr.ReadLine());
         }
       }
       return str;
@@ -45,7 +46,7 @@ namespace Ei_Dimension.Core
     {
       var numFormat = System.Globalization.CultureInfo.InvariantCulture.NumberFormat;
       MicroCy.BeadInfoStruct binfo;
-      string[] words = data.Split(',');
+      string[] words = data.Split(_separator);
       binfo.Header = uint.Parse(words[0]);
       binfo.EventTime = uint.Parse(words[1]);
       binfo.fsc_bg = byte.Parse(words[2]);

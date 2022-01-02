@@ -285,17 +285,17 @@ namespace Ei_Dimension.ViewModels
       Settings.Default.Save();
     }
 
-    private async Task ParseBeadInfoAsync(string path, List<MicroCy.BeadInfoStruct> beadstructs)
+    private void ParseBeadInfo(string path, List<MicroCy.BeadInfoStruct> beadStructs)
     {
-      List<string> LinesInFile = await Core.DataProcessor.GetDataFromFileAsync(path);
-      if (LinesInFile.Count == 1 && LinesInFile[0] == " ")
+      List<string> linesInFile = Core.DataProcessor.GetDataFromFile(path);
+      if (linesInFile.Count == 1 && linesInFile[0] == " ")
       {
         App.ShowNotification("File is empty");
         return;
       }
-      for (var i = 0; i < LinesInFile.Count; i++)
+      for (var i = 0; i < linesInFile.Count; i++)
       {
-        beadstructs.Add(Core.DataProcessor.ParseRow(LinesInFile[i]));
+        beadStructs.Add(Core.DataProcessor.ParseRow(linesInFile[i]));
       }
     }
 
@@ -322,8 +322,8 @@ namespace Ei_Dimension.ViewModels
           return;
         }
         FillBackingWellResults();
-        var beadStructsList = new List<MicroCy.BeadInfoStruct>();
-        await ParseBeadInfoAsync(path, beadStructsList);
+        var beadStructsList = new List<MicroCy.BeadInfoStruct>(100000);
+        ParseBeadInfo(path, beadStructsList);
         _ = Task.Run(() => Core.DataProcessor.BinScatterData(beadStructsList, fromFile: true));
         Core.DataProcessor.BinMapData(beadStructsList, current: false, hiRez);
         //DisplayedMap.Sort((x, y) => x.A.CompareTo(y.A));
