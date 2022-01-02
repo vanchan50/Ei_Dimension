@@ -45,14 +45,10 @@ namespace Ei_Dimension
     private static DispatcherTimer _dispatcherTimer;
     private static bool _workOrderPending;
     private static bool _cancelKeyboardInjectionFlag;
-    private static bool _histogramUpdateGoing;
-    private static bool _activeRegionsUpdateGoing;
     private static bool _isStartup;
-    private static int _timerTickcounter;
-    private static bool _nextWellWarning;
+    public static bool _nextWellWarning;
     private static byte _multiTubeRow;
     private static byte _multiTubeCol;
-    private static readonly List<(ushort region, float[] vals)> _tempWellResults = new List<(ushort region, float[] vals)>(100);
     public App()
     {
       _cancelKeyboardInjectionFlag = false;
@@ -100,10 +96,7 @@ namespace Ei_Dimension
       _dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 500);
       _dispatcherTimer.Start();
       _workOrderPending = false;
-      _histogramUpdateGoing = false;
-      _activeRegionsUpdateGoing = false;
       _isStartup = true;
-      _timerTickcounter = 0;
       _nextWellWarning = false;
       var watcher = new FileSystemWatcher($"{Device.RootDirectory.FullName}\\WorkOrder");
       watcher.NotifyFilter = NotifyFilters.FileName;
@@ -1676,566 +1669,15 @@ namespace Ei_Dimension
       if (_isStartup) //TODO: can be a Task launched from ctor, that polls if all instances are != null
         OnAppLoaded();
 
-      TextBoxUpdater();
-      UpdatePressureMonitor();
+      TextBoxHandler.Update();
       if (Device.IsMeasurementGoing)
       {
-        GraphsHandler();
-        ActiveRegionsStatsHandler();
-        UpdateEventCounter();
+        GraphsHandler.Update();
+        ActiveRegionsStatsHandler.Update();
+        TextBoxHandler.UpdateEventCounter();
         WellStateHandler();
       }
-      _timerTickcounter++;
-      if (_timerTickcounter > 4)
-      {
-        MainViewModel.Instance.ServiceVisibilityCheck = 0;
-        _timerTickcounter = 0;
-      }
-    }
-
-    private static void TextBoxUpdater()
-    {
-      float g = 0;
-      while (Device.Commands.Count != 0)
-      {
-        CommandStruct exe;
-        lock (Device.Commands)
-        {
-          exe = Device.Commands.Dequeue();
-        }
-        switch (exe.Code)
-        {
-          case 0x01:
-            Device.BoardVersion = exe.Parameter;
-            if(Device.BoardVersion > 1)
-              HideChannels();
-            break;
-          case 0x02:
-            ChannelOffsetViewModel.Instance.SiPMTempCoeff[0] = exe.FParameter.ToString();
-            break;
-          case 0x04:
-            ComponentsViewModel.Instance.IdexTextBoxInputs[0] = exe.Parameter.ToString("X2");
-            break;
-#if DEBUG
-          case 0x06:
-            MainViewModel.Instance.TotalBeadsInFirmware[0] = exe.FParameter.ToString();
-            break;
-#endif
-          case 0x10:  //cuvet drain cb
-            ComponentsViewModel.Instance.ValvesStates[2] = exe.Parameter == 1;
-            break;
-          case 0x11:  //Fan
-            ComponentsViewModel.Instance.ValvesStates[3] = exe.Parameter == 1;
-            break;
-          case 0x12:  //sample A valve cb LEGACY, use 0x18 to switch with IDEX
-            ComponentsViewModel.Instance.ValvesStates[0] = exe.Parameter == 1;
-            break;
-          //case 0x13:  //sample b LEGACY
-          //  ComponentsViewModel.Instance.ValvesStates[1] = exe.Parameter == 1;
-          //  break;
-          case 0x14:
-            switch (exe.Parameter)
-            {
-              case 0:
-                ComponentsViewModel.Instance.GetPositionTextBoxInputs[0] = exe.FParameter.ToString();
-                break;
-              case 1:
-                ComponentsViewModel.Instance.GetPositionTextBoxInputs[1] = exe.FParameter.ToString();
-                break;
-              case 2:
-                ComponentsViewModel.Instance.GetPositionTextBoxInputs[2] = exe.FParameter.ToString();
-                break;
-            }
-            break;
-          case 0x15:
-            ComponentsViewModel.Instance.GetPositionToggleButtonStateBool[0] = exe.Parameter == 1;
-            break;
-          case 0x16:
-            MotorsViewModel.Instance.PollStepActive[0] = exe.Parameter == 1;
-            break;
-          case 0x18:
-            if (exe.Parameter == 1)
-            {
-              if (ComponentsViewModel.Instance.IInputSelectorState == 0)
-              {
-                var temp = ComponentsViewModel.Instance.InputSelectorState[0];
-                ComponentsViewModel.Instance.InputSelectorState[0] = ComponentsViewModel.Instance.InputSelectorState[1];
-                ComponentsViewModel.Instance.InputSelectorState[1] = temp;
-                ComponentsViewModel.Instance.IInputSelectorState = 1;
-              }
-            }
-            else
-            {
-              if (ComponentsViewModel.Instance.IInputSelectorState == 1)
-              {
-                var temp = ComponentsViewModel.Instance.InputSelectorState[0];
-                ComponentsViewModel.Instance.InputSelectorState[0] = ComponentsViewModel.Instance.InputSelectorState[1];
-                ComponentsViewModel.Instance.InputSelectorState[1] = temp;
-                ComponentsViewModel.Instance.IInputSelectorState = 0;
-              }
-            }
-            break;
-          //case 0x1a:
-          //  ProxOncb.Checked = (exe.Parameter == 1);
-          //  break;
-          case 0x1b:
-            if (exe.Parameter == 0)
-            {
-              Device.EndState = 1;
-              CalibrationViewModel.Instance.CalJustFailed = false;
-              _ = Current.Dispatcher.BeginInvoke((Action)(() =>
-              {
-                CalibrationViewModel.Instance.CalibrationSuccess();
-              }));
-            }
-            break;
-          case 0x20:
-            CalibrationViewModel.Instance.DNRContents[0] = exe.FParameter.ToString();
-            MicroCy.InstrumentParameters.Calibration.HDnrCoef = exe.FParameter;
-            break;
-          case 0x22:  //pressure
-            double dd = exe.FParameter;
-            DashboardViewModel.Instance.PressureMon[0] = dd.ToString("f3");
-            if (dd < DashboardViewModel.Instance.MinPressure)
-              DashboardViewModel.Instance.MinPressure = dd;
-            if (dd > DashboardViewModel.Instance.MaxPressure)
-              DashboardViewModel.Instance.MaxPressure = dd;
-            DashboardViewModel.Instance.PressureMon[1] = DashboardViewModel.Instance.MaxPressure.ToString("f3");
-            DashboardViewModel.Instance.PressureMon[2] = DashboardViewModel.Instance.MinPressure.ToString("f3");
-            break;
-          case 0x24:
-            ChannelsViewModel.Instance.Bias30Parameters[9] = exe.Parameter.ToString();
-            break;
-          case 0x25:
-            ChannelsViewModel.Instance.Bias30Parameters[7] = exe.Parameter.ToString();
-            break;
-          case 0x26:
-            ChannelsViewModel.Instance.Bias30Parameters[8] = exe.Parameter.ToString();
-            break;
-          case 0x28:
-            ChannelsViewModel.Instance.Bias30Parameters[0] = exe.Parameter.ToString();
-            break;
-          case 0x29:
-            ChannelsViewModel.Instance.Bias30Parameters[1] = exe.Parameter.ToString();
-            break;
-          case 0x2a:
-            ChannelsViewModel.Instance.Bias30Parameters[2] = exe.Parameter.ToString();
-            break;
-          case 0x2c:
-            ChannelsViewModel.Instance.Bias30Parameters[3] = exe.Parameter.ToString();
-            break;
-          case 0x2d:
-            ChannelsViewModel.Instance.Bias30Parameters[4] = exe.Parameter.ToString();
-            break;
-          case 0x2e:
-            ChannelsViewModel.Instance.Bias30Parameters[5] = exe.Parameter.ToString();
-            break;
-          case 0x2f:
-            ChannelsViewModel.Instance.Bias30Parameters[6] = exe.Parameter.ToString();
-            break;
-          case 0x30:
-            SyringeSpeedsViewModel.Instance.SheathSyringeParameters[0] = exe.Parameter.ToString();
-            break;
-          case 0x31:
-            SyringeSpeedsViewModel.Instance.SheathSyringeParameters[1] = exe.Parameter.ToString();
-            break;
-          case 0x32:
-            SyringeSpeedsViewModel.Instance.SheathSyringeParameters[2] = exe.Parameter.ToString();
-            break;
-          case 0x33:
-            SyringeSpeedsViewModel.Instance.SheathSyringeParameters[3] = exe.Parameter.ToString();
-            break;
-          case 0x34:
-            SyringeSpeedsViewModel.Instance.SheathSyringeParameters[4] = exe.Parameter.ToString();
-            break;
-          case 0x35:
-            SyringeSpeedsViewModel.Instance.SheathSyringeParameters[5] = exe.Parameter.ToString();
-            break;
-          case 0x38:
-            SyringeSpeedsViewModel.Instance.SamplesSyringeParameters[0] = exe.Parameter.ToString();
-            break;
-          case 0x39:
-            SyringeSpeedsViewModel.Instance.SamplesSyringeParameters[1] = exe.Parameter.ToString();
-            break;
-          case 0x3a:
-            SyringeSpeedsViewModel.Instance.SamplesSyringeParameters[2] = exe.Parameter.ToString();
-            break;
-          case 0x3b:
-            SyringeSpeedsViewModel.Instance.SamplesSyringeParameters[3] = exe.Parameter.ToString();
-            break;
-          case 0x3c:
-            SyringeSpeedsViewModel.Instance.SamplesSyringeParameters[4] = exe.Parameter.ToString();
-            break;
-          case 0x3d:
-            SyringeSpeedsViewModel.Instance.SamplesSyringeParameters[5] = exe.Parameter.ToString();
-            break;
-          case 0x41:
-            MotorsViewModel.Instance.ParametersZ[3] = exe.Parameter.ToString();
-            break;
-          case 0x42:
-            MotorsViewModel.Instance.ParametersZ[4] = exe.Parameter.ToString();
-            break;
-          case 0x43:
-            MotorsViewModel.Instance.ParametersZ[2] = exe.Parameter.ToString();
-            break;
-          case 0x44:
-            MotorsViewModel.Instance.ParametersZ[5] = exe.FParameter.ToString();
-            break;
-          case 0x46:
-            MotorsViewModel.Instance.StepsParametersZ[4] = exe.FParameter.ToString();
-            break;
-          case 0x48:
-            MotorsViewModel.Instance.StepsParametersZ[0] = exe.FParameter.ToString();
-            break;
-          case 0x4a:
-            MotorsViewModel.Instance.StepsParametersZ[1] = exe.FParameter.ToString();
-            break;
-          case 0x4c:
-            MotorsViewModel.Instance.StepsParametersZ[2] = exe.FParameter.ToString();
-            break;
-          case 0x4e:
-            MotorsViewModel.Instance.StepsParametersZ[3] = exe.FParameter.ToString();
-            break;
-          case 0x51:
-            MotorsViewModel.Instance.ParametersX[3] = exe.Parameter.ToString();
-            break;
-          case 0x52:
-            MotorsViewModel.Instance.ParametersX[4] = exe.Parameter.ToString();
-            break;
-          case 0x53:
-            MotorsViewModel.Instance.ParametersX[2] = exe.Parameter.ToString();
-            break;
-          case 0x54:
-            MotorsViewModel.Instance.ParametersX[5] = exe.FParameter.ToString();
-            break;
-          case 0x56:
-            MotorsViewModel.Instance.StepsParametersX[4] = exe.FParameter.ToString();
-            break;
-          case 0x58:
-            MotorsViewModel.Instance.StepsParametersX[0] = exe.FParameter.ToString();
-            break;
-          case 0x5a:
-            MotorsViewModel.Instance.StepsParametersX[1] = exe.FParameter.ToString();
-            break;
-          case 0x5c:
-            MotorsViewModel.Instance.StepsParametersX[2] = exe.FParameter.ToString();
-            break;
-          case 0x5e:
-            MotorsViewModel.Instance.StepsParametersX[3] = exe.FParameter.ToString();
-            break;
-          case 0x61:
-            MotorsViewModel.Instance.ParametersY[3] = exe.Parameter.ToString();
-            break;
-          case 0x62:
-            MotorsViewModel.Instance.ParametersY[4] = exe.Parameter.ToString();
-            break;
-          case 0x63:
-            MotorsViewModel.Instance.ParametersY[2] = exe.Parameter.ToString();
-            break;
-          case 0x64:
-            MotorsViewModel.Instance.ParametersY[5] = exe.FParameter.ToString();
-            break;
-          case 0x66:
-            MotorsViewModel.Instance.StepsParametersY[4] = exe.FParameter.ToString();
-            break;
-          case 0x68:
-            MotorsViewModel.Instance.StepsParametersY[0] = exe.FParameter.ToString();
-            break;
-          case 0x6a:
-            MotorsViewModel.Instance.StepsParametersY[1] = exe.FParameter.ToString();
-            break;
-          case 0x6c:
-            MotorsViewModel.Instance.StepsParametersY[2] = exe.FParameter.ToString();
-            break;
-          case 0x6e:
-            MotorsViewModel.Instance.StepsParametersY[3] = exe.FParameter.ToString();
-            break;
-          case 0x80:
-            ChannelsViewModel.Instance.TempParameters[7] = (exe.Parameter / 10.0).ToString("N1");
-            break;
-          case 0x81:
-            ChannelsViewModel.Instance.TempParameters[8] = (exe.Parameter / 10.0).ToString("N1");
-            break;
-          case 0x82:
-            ChannelsViewModel.Instance.BackgroundParameters[7] = exe.Parameter.ToString();
-            break;
-          case 0x83:
-            ChannelsViewModel.Instance.BackgroundParameters[8] = exe.Parameter.ToString();
-            break;
-          case 0x84:
-            ChannelsViewModel.Instance.TempParameters[9] = (exe.Parameter / 10.0).ToString("N1");
-            break;
-          case 0x85:
-            ChannelsViewModel.Instance.BackgroundParameters[9] = exe.Parameter.ToString();
-            break;
-          case 0x8b:
-            //CalibrationViewModel.Instance.ClassificationTargetsContents[0] = exe.Parameter.ToString();
-            break;
-          case 0x8c:
-            //CalibrationViewModel.Instance.ClassificationTargetsContents[1] = exe.Parameter.ToString();
-            break;
-          case 0x8d:
-            //CalibrationViewModel.Instance.ClassificationTargetsContents[2] = exe.Parameter.ToString();
-            break;
-          case 0x90:
-            MotorsViewModel.Instance.ParametersX[7] = exe.Parameter.ToString();
-            break;
-          case 0x91:
-            MotorsViewModel.Instance.ParametersY[7] = exe.Parameter.ToString();
-            break;
-          case 0x92:
-            MotorsViewModel.Instance.ParametersZ[7] = exe.Parameter.ToString();
-            break;
-          case 0x93:
-            ChannelsViewModel.Instance.TcompBiasParameters[9] = exe.Parameter.ToString();
-            break;
-          case 0x94:
-            ChannelsViewModel.Instance.TcompBiasParameters[8] = exe.Parameter.ToString();
-            break;
-          case 0x95:
-            ChannelsViewModel.Instance.TcompBiasParameters[7] = exe.Parameter.ToString();
-            break;
-          case 0x96:
-            ChannelsViewModel.Instance.TcompBiasParameters[6] = exe.Parameter.ToString();
-            break;
-          case 0x98:
-            ChannelsViewModel.Instance.TcompBiasParameters[4] = exe.Parameter.ToString();
-            break;
-          case 0x99:
-            ChannelsViewModel.Instance.TcompBiasParameters[3] = exe.Parameter.ToString();
-            break;
-          case 0x9a:
-            ChannelsViewModel.Instance.TcompBiasParameters[1] = exe.Parameter.ToString();
-            break;
-          case 0x9b:
-            ChannelsViewModel.Instance.TcompBiasParameters[2] = exe.Parameter.ToString();
-            break;
-          case 0x9c:
-            ChannelOffsetViewModel.Instance.ChannelsOffsetParameters[8] = exe.Parameter.ToString();
-            break;
-          case 0x9d:
-            ChannelOffsetViewModel.Instance.ChannelsOffsetParameters[7] = exe.Parameter.ToString();
-            break;
-          case 0x9e:
-            ChannelOffsetViewModel.Instance.ChannelsOffsetParameters[9] = exe.Parameter.ToString();
-            break;
-          case 0x9f:
-            ChannelOffsetViewModel.Instance.ChannelsOffsetParameters[6] = exe.Parameter.ToString();
-            break;
-          case 0xa0:
-            ChannelOffsetViewModel.Instance.ChannelsOffsetParameters[0] = exe.Parameter.ToString();
-            break;
-          case 0xa1:
-            ChannelOffsetViewModel.Instance.ChannelsOffsetParameters[5] = exe.Parameter.ToString();
-            break;
-          case 0xa2:
-            ChannelOffsetViewModel.Instance.ChannelsOffsetParameters[4] = exe.Parameter.ToString();
-            break;
-          case 0xa3:
-            ChannelOffsetViewModel.Instance.ChannelsOffsetParameters[3] = exe.Parameter.ToString();
-            break;
-          case 0xa4:
-            ChannelOffsetViewModel.Instance.ChannelsOffsetParameters[1] = exe.Parameter.ToString();
-            break;
-          case 0xa5:
-            ChannelOffsetViewModel.Instance.ChannelsOffsetParameters[2] = exe.Parameter.ToString();
-            break;
-          case 0xa6:
-            ChannelsViewModel.Instance.TcompBiasParameters[0] = exe.Parameter.ToString();
-            break;
-          case 0xa7:
-            ChannelsViewModel.Instance.TcompBiasParameters[5] = exe.Parameter.ToString();
-            break;
-          case 0xa8:
-            DashboardViewModel.Instance.OrderItems[exe.Parameter].ForAppUpdater(4);
-            break;
-          case 0xa9:
-            DashboardViewModel.Instance.ClassiMapItems[exe.Parameter].ForAppUpdater(2);
-            break;
-          case 0xaa:  //read speed
-            DashboardViewModel.Instance.SpeedItems[exe.Parameter].ForAppUpdater(1);
-            break;
-          case 0xac:
-            DashboardViewModel.Instance.Volumes[1] = exe.Parameter.ToString();
-            break;
-          case 0xad:  //TODO: remove?
-            if (exe.Parameter > 15)
-              exe.Parameter = 0;
-            //MotorsViewModel.Instance.WellRowButtonItems[exe.Parameter].ForAppUpdater(1);
-            Device.PlateRow = (byte)exe.Parameter;
-            break;
-          case 0xae:  //TODO: remove?
-            if (exe.Parameter > 24)
-              exe.Parameter = 0;
-            //MotorsViewModel.Instance.WellColumnButtonItems[exe.Parameter].ForAppUpdater(2);
-            Device.PlateCol = (byte)exe.Parameter;  //TODO: it doesn't accout for 96well; can go overboard and crash
-            break;
-          case 0xaf:
-            DashboardViewModel.Instance.Volumes[0] = exe.Parameter.ToString();
-            break;
-          case 0xb0:
-            ChannelsViewModel.Instance.TempParameters[0] = (exe.Parameter / 10.0).ToString("N1");
-            break;
-          case 0xb1:
-            ChannelsViewModel.Instance.TempParameters[1] = (exe.Parameter / 10.0).ToString("N1");
-            break;
-          case 0xb2:
-            ChannelsViewModel.Instance.TempParameters[2] = (exe.Parameter / 10.0).ToString("N1");
-            break;
-          case 0xb3:
-            ChannelsViewModel.Instance.TempParameters[3] = (exe.Parameter / 10.0).ToString("N1");
-            break;
-          case 0xb4:
-            ChannelsViewModel.Instance.TempParameters[4] = (exe.Parameter / 10.0).ToString("N1");
-            break;
-          case 0xb5:
-            ChannelsViewModel.Instance.TempParameters[5] = (exe.Parameter / 10.0).ToString("N1");
-            break;
-          case 0xb6:
-            ChannelsViewModel.Instance.TempParameters[6] = (exe.Parameter / 10.0).ToString("N1");
-            break;
-          case 0xb8:
-            ChannelsViewModel.Instance.BackgroundParameters[0] = exe.Parameter.ToString();
-            break;
-          case 0xb9:
-            ChannelsViewModel.Instance.BackgroundParameters[1] = exe.Parameter.ToString();
-            break;
-          case 0xba:
-            ChannelsViewModel.Instance.BackgroundParameters[2] = exe.Parameter.ToString();
-            break;
-          case 0xbb:
-            ChannelsViewModel.Instance.BackgroundParameters[3] = exe.Parameter.ToString();
-            break;
-          case 0xbc:
-            ChannelsViewModel.Instance.BackgroundParameters[4] = exe.Parameter.ToString();
-            break;
-          case 0xbd:
-            ChannelsViewModel.Instance.BackgroundParameters[5] = exe.Parameter.ToString();
-            break;
-          case 0xbe:
-            ChannelsViewModel.Instance.BackgroundParameters[6] = exe.Parameter.ToString();
-            break;
-          case 0xc0:
-            ComponentsViewModel.Instance.LasersActive[0] = (exe.Parameter & 0x01) == 1;
-            ComponentsViewModel.Instance.LasersActive[1] = (exe.Parameter & 0x02) == 2;
-            ComponentsViewModel.Instance.LasersActive[2] = (exe.Parameter & 0x04) == 4;
-            break;
-          case 0xc4:
-            DashboardViewModel.Instance.Volumes[2] = exe.FParameter.ToString();
-            break;
-          case 0xc7:
-            g = (float)(exe.Parameter / 4096.0 / 0.040 * 3.3);
-            ComponentsViewModel.Instance.LaserVioletPowerValue[0] = g.ToString("N1") + " mw";
-            break;
-          case 0xc8:
-            g = (float)(exe.Parameter / 4096.0 / 0.04 * 3.3);
-            ComponentsViewModel.Instance.LaserGreenPowerValue[0] = g.ToString("N1") + " mw";
-            break;
-          case 0xc9:
-            g = (float)(exe.Parameter / 4096.0 / 0.04 * 3.3);
-            ComponentsViewModel.Instance.LaserRedPowerValue[0] = g.ToString("N1") + " mw";
-            break;
-          case 0xca:  //TODO: remove?
-            CalibrationViewModel.Instance.GatingItems[exe.Parameter].ForAppUpdater();
-            break;
-          case 0xcc:  //sync pending
-            var list = MainButtonsViewModel.Instance.ActiveList;
-            for (var i = 0; i < 16; i++)
-            {
-              if ((exe.Parameter & (1 << i)) != 0)
-              {
-                if (!list.Contains(Device.SyncElements[i]))
-                  list.Add(Device.SyncElements[i]);
-              }
-              else if (list.Contains(Device.SyncElements[i]))
-                list.Remove(Device.SyncElements[i]);
-            }
-            break;
-          case 0xcd:
-            //CalibrationViewModel.Instance.EventTriggerContents[0] = exe.Parameter.ToString();
-            break;
-          case 0xce:
-            //CalibrationViewModel.Instance.EventTriggerContents[1] = exe.Parameter.ToString();
-            break;
-          case 0xcf:
-            //CalibrationViewModel.Instance.EventTriggerContents[2] = exe.Parameter.ToString();
-            break;
-          case 0xf1:
-            if (exe.Command == 1)  //sheath empty
-            {
-              Device.MainCommand("Set Property", code: 0xcb, parameter: 0x1000);
-              Device.MainCommand("Sheath"); //halt 
-              Device.MainCommand("Set Property", code: 0xc1, parameter: 1);  //switch to recovery command buffer #1
-              if (MessageBox.Show("Sheath Empty\nRefill and press OK", "Operator Alert", MessageBoxButton.OK, MessageBoxImage.Warning) == MessageBoxResult.OK)
-              {
-                Device.MainCommand("Sheath Empty Prime");
-                Device.MainCommand("Set Property", code: 0xcb); //clear sync token to allow recovery to run
-              }
-            }
-            else if (exe.Command == 2) //pressure overload
-            {
-              if (exe.FParameter > int.Parse(ComponentsViewModel.Instance.MaxPressureBox))
-              {
-                if (MessageBox.Show("Pressure Overload\nCheck for waste line obstructions\nPower Off System",
-                  "Operator Alert", MessageBoxButton.OK, MessageBoxImage.Warning) == MessageBoxResult.OK)
-                {
-                  Environment.Exit(0);
-                }
-              }
-            }
-            break;
-          case 0xf2:
-            string ws;
-            if (exe.Command > 0x63)
-            {
-              if (exe.Parameter == 0x501)  //sample syringe A
-              {
-                ws = "Sample syringe A Error " + exe.Command.ToString();
-              }
-              else ws = "Sample syringe B Error " + exe.Command.ToString();
-
-              if (MessageBox.Show(ws + "\nPower Off System", "Operator Alert", MessageBoxButton.OK, MessageBoxImage.Warning) == MessageBoxResult.OK)
-              {
-                var tempres = new List<WellResults>(Device.WellResults.Count);
-                for (var i = 0; i < Device.WellResults.Count; i++)
-                {
-                  var r = new WellResults();
-                  r.RP1vals = new List<float>(Device.WellResults[i].RP1vals);
-                  r.RP1bgnd = new List<float>(Device.WellResults[i].RP1bgnd);
-                  r.regionNumber = Device.WellResults[i].regionNumber;
-                  tempres.Add(r);
-                }
-                Device.WellsToRead = Device.CurrentWellIdx;
-                Device.SaveBeadFile(tempres);
-                Environment.Exit(0);
-              }
-            }
-            break;
-          //  case 0xf8:
-          //    string tabnam = tabControl1.SelectedTab.Name;
-          //    Device.InitSTab(tabnam);
-          //    break;
-          case 0xfd:
-            if (Device.EndState == 0)
-              Device.EndState = 1; //start the end of well state machine
-            break;
-          case 0xfe:
-            if (Device.EndState == 0)
-              Device.EndState = 1;
-            break;
-          case 0xbf:
-            //CalibrationViewModel.Instance.AttenuationBox[0] = exe.Parameter.ToString();
-            break;
-          case 0xf3:
-            if (!ComponentsViewModel.Instance.SuppressWarnings)
-            {
-              ResultsViewModel.Instance.PlatePictogram.ChangeState(Device.ReadingRow, Device.ReadingCol, warning: Models.WellWarningState.YellowWarning);
-              if (Device.CurrentWellIdx < Device.WellsToRead) //aspirating next
-                _nextWellWarning = true;
-            }
-            break;
-        }
-      }
+      ServiceMenuEnabler.Update();
     }
 
     private static void WellStateHandler()
@@ -2250,7 +1692,7 @@ namespace Ei_Dimension
           Device.SavingWellIdx = Device.CurrentWellIdx; //save the index of the currrent well for background file save
           Device.MainCommand("End Sampling");    //sends message to instrument to stop sampling
           Device.EndState++;
-          Console.WriteLine(string.Format("{0} Reporting End Sampling", DateTime.Now.ToString()));
+          Console.WriteLine($"{DateTime.Now.ToString()} Reporting End Sampling");
           break;
         case 2:
           var tempres = new List<WellResults>(Device.WellResults.Count);
@@ -2265,13 +1707,13 @@ namespace Ei_Dimension
           _ = Task.Run(()=>Device.SaveBeadFile(tempres));
           Device.GStatsFiller();
           Device.EndState++;
-          Console.WriteLine(string.Format("{0} Reporting Background File Save Init", DateTime.Now.ToString()));
+          Console.WriteLine($"{DateTime.Now.ToString()} Reporting Background File Save Init");
           break;
         case 3:
           if (!MainButtonsViewModel.Instance.ActiveList.Contains("WASHING"))
           {
             Device.EndState++;  //wait here until alternate syringe is finished washing
-            Console.WriteLine(string.Format("{0} Reporting Washing Complete", DateTime.Now.ToString()));
+            Console.WriteLine($"{DateTime.Now.ToString()} Reporting Washing Complete");
           }
           else
             Device.MainCommand("Get Property", code: 0xcc);
@@ -2279,7 +1721,7 @@ namespace Ei_Dimension
         case 4:
           Device.WellNext();  //saves current well address for filename in state 5
           Device.EndState++;
-          Console.WriteLine(string.Format("{0} Reporting Setting up next well", DateTime.Now.ToString()));
+          Console.WriteLine($"{DateTime.Now.ToString()} Reporting Setting up next well");
           break;
         case 5:
           Device.MainCommand("FlushCmdQueue");
@@ -2304,7 +1746,7 @@ namespace Ei_Dimension
             DashboardViewModel.Instance.WorkOrder[0] = "";
             Device.MainCommand("Set Property", code: 0x19);  //bubble detect off
           }
-          Console.WriteLine(string.Format("{0} Reporting End of current well", DateTime.Now.ToString()));
+          Console.WriteLine($"{DateTime.Now.ToString()} Reporting End of current well");
           break;
       }
     }
@@ -2353,92 +1795,6 @@ namespace Ei_Dimension
       }
     }
     */
-
-    private static void GraphsHandler()
-    {
-      if (!_histogramUpdateGoing)
-      {
-        _histogramUpdateGoing = true;
-        _ = Task.Run(()=>
-        {
-          var beadInfoList = new List<BeadInfoStruct>();
-          while (Device.DataOut.TryDequeue(out BeadInfoStruct bead))
-          {
-            beadInfoList.Add(bead);
-          }
-          _ = Task.Run(() => { Core.DataProcessor.BinScatterData(beadInfoList); });
-          Core.DataProcessor.BinMapData(beadInfoList, current: true);
-          if (ResultsViewModel.Instance.DisplaysCurrentmap)
-          {
-            _ = Current.Dispatcher.BeginInvoke((Action)(() =>
-            {
-              Core.DataProcessor.AnalyzeHeatMap();
-              _histogramUpdateGoing = false;
-            }));
-          }
-          else
-            _histogramUpdateGoing = false;
-        });
-      }
-    }
-
-    private static void ActiveRegionsStatsHandler()
-    {
-      if (!_activeRegionsUpdateGoing)
-      {
-        _activeRegionsUpdateGoing = true;
-        for (var i = 0; i < Device.WellResults.Count; i++)
-        {
-          var rp1 = new float[Device.WellResults[i].RP1vals.Count];
-          Device.WellResults[i].RP1vals.CopyTo(0, rp1, 0, rp1.Length);
-          _tempWellResults.Add((Device.WellResults[i].regionNumber, rp1));
-        }
-        ResultsViewModel.Instance.CurrentAnalysis12Map.Clear();
-        _ = Current.Dispatcher.BeginInvoke((Action)(() =>
-        {
-          foreach (var result in _tempWellResults)
-          {
-            var index = MapRegions.RegionsList.IndexOf(result.region.ToString());
-            if (index == -1)
-              continue;
-            float avg = 0;
-            if (result.vals.Length == 0)
-            {
-              MapRegions.CurrentActiveRegionsCount[index] = "0";
-              MapRegions.CurrentActiveRegionsMean[index] = "0";
-            }
-            else
-            {
-              avg = result.vals.Average();
-              MapRegions.CurrentActiveRegionsCount[index] = result.vals.Length.ToString();
-              MapRegions.CurrentActiveRegionsMean[index] = avg.ToString("0,0");
-              Array.Clear(result.vals, 0, result.vals.Length);  //Crutch. Explicit clear needed for some reason
-            }
-            Reporter3DGraphHandler(index, avg);
-          }
-          _tempWellResults.Clear();
-          _activeRegionsUpdateGoing = false;
-        }));
-      }
-    }
-
-    private static void Reporter3DGraphHandler(int regionIndex, double reporterAvg)
-    {
-      var x = Models.HeatMapData.bins[Device.ActiveMap.regions[regionIndex].Center.x];
-      var y = Models.HeatMapData.bins[Device.ActiveMap.regions[regionIndex].Center.y];
-      ResultsViewModel.Instance.CurrentAnalysis12Map.Add(new Models.DoubleHeatMapData(x, y, reporterAvg));
-    }
-
-    private static void UpdateEventCounter()
-    {
-      MainViewModel.Instance.EventCountCurrent[0] = Device.BeadCount.ToString();
-    }
-
-    private static void UpdatePressureMonitor()
-    {
-      if (DashboardViewModel.Instance.PressureMonToggleButtonState)
-        Device.MainCommand("Get FProperty", code: 0x22);
-    }
 
     private static void StartingToReadWellEventHandler(object sender, ReadingWellEventArgs e)
     {
@@ -2605,12 +1961,6 @@ namespace Ei_Dimension
       ((System.Windows.Media.Media3D.MatrixTransform3D)Views.ResultsView.Instance.AnalysisPlot.ContentTransform).Matrix = matrix;
       CheckAvailableWorkOrders();
       _isStartup = false;
-    }
-
-    private static void HideChannels()
-    {
-      ChannelOffsetViewModel.Instance.OldBoardOffsetsVisible = Visibility.Hidden;
-      Views.ChannelOffsetView.Instance.cover.Visibility = Visibility.Visible;
     }
 
     public static void ShowNotification(string text, System.Windows.Media.Brush background = null)

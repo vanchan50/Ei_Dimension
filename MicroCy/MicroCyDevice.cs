@@ -42,7 +42,7 @@ namespace MicroCy
   {
     public WorkOrder WorkOrder { get;set; }
     public CustomMap ActiveMap { get; set; }
-    public Queue<CommandStruct> Commands { get; } = new Queue<CommandStruct>();
+    public ConcurrentQueue<CommandStruct> Commands { get; } = new ConcurrentQueue<CommandStruct>();
     public ConcurrentQueue<BeadInfoStruct> DataOut { get; } = new ConcurrentQueue<BeadInfoStruct>();
     public List<Wells> WellsInOrder { get; set; } = new List<Wells>();
     public List<CustomMap> MapList { get; private set; } = new List<CustomMap>();
@@ -694,13 +694,10 @@ namespace MicroCy
     private void GetCommandFromBuffer()
     {
       CommandStruct newcmd;
-      lock (Commands)
-      {
-        // move received command to queue
-        newcmd = NEWByteArrayToStruct(_serialConnection.InputBuffer);
-        if(newcmd.Code != 0)
-          Commands.Enqueue(newcmd);
-      }
+      // move received command to queue
+      newcmd = NEWByteArrayToStruct(_serialConnection.InputBuffer);
+      if(newcmd.Code != 0)
+        Commands.Enqueue(newcmd);
       if ((newcmd.Code >= 0xd0) && (newcmd.Code <= 0xdf))
       {
         Console.WriteLine(string.Format("{0} E-series script [{1}]", DateTime.Now.ToString(), newcmd.ToString()));

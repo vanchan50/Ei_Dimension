@@ -205,9 +205,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ActiveRegionsStatsHandler.cs" />
     <Compile Include="CompanyID.cs" />
     <Compile Include="Core\DataProcessor.cs" />
     <Compile Include="Core\ObservableObject.cs" />
+    <Compile Include="GraphsHandler.cs" />
     <Compile Include="Models\AcquisitionTemplate.cs" />
     <Compile Include="Models\DoubleHeatMapData.cs" />
     <Compile Include="Models\DrawingPlate.cs" />
@@ -224,6 +226,7 @@
     <Compile Include="Models\WellWarningState.cs" />
     <Compile Include="Models\WorldMap.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="ServiceMenuEnabler.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -231,6 +234,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="Styles\EmbeddedImg.cs" />
+    <Compile Include="TextBoxHandler.cs" />
     <Compile Include="ViewModels\AlignmentViewModel.cs" />
     <Compile Include="ViewModels\CalibrationViewModel.cs" />
     <Compile Include="ViewModels\ChannelOffsetViewModel.cs" />
