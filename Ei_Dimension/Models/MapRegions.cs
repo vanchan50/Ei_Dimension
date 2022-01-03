@@ -519,5 +519,14 @@ namespace Ei_Dimension.Models
         VerificationRegionNums.Remove(int.Parse(tb.Text.Trim('_')));
     }
 
+    public void ResetCurrentActiveRegionsDisplayedStats()
+    {
+      for (var i = 0; i < CurrentActiveRegionsCount.Count; i++)
+      {
+        CurrentActiveRegionsCount[i] = "0";
+        CurrentActiveRegionsMean[i] = "0";
+      }
+    }
+
   }
 }

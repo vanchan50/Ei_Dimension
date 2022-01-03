@@ -38,6 +38,7 @@ namespace Ei_Dimension
     }
     public static MicroCyDevice Device { get; private set; }
     public static Models.MapRegions MapRegions { get; set; }  //Performs operations on injected views
+    public static bool _nextWellWarning;
 
     private static (PropertyInfo prop, object VM, int index, TextBox tb) _selectedTextBox;
     private static string _tempOldString;
@@ -46,9 +47,6 @@ namespace Ei_Dimension
     private static bool _workOrderPending;
     private static bool _cancelKeyboardInjectionFlag;
     private static bool _isStartup;
-    public static bool _nextWellWarning;
-    private static byte _multiTubeRow;
-    private static byte _multiTubeCol;
     public App()
     {
       _cancelKeyboardInjectionFlag = false;
@@ -103,8 +101,6 @@ namespace Ei_Dimension
       watcher.Filter = "*.txt";
       watcher.EnableRaisingEvents = true;
       watcher.Created += OnNewWorkOrder;
-      _multiTubeRow = 0;
-      _multiTubeCol = 0;
     }
 
     public static int GetMapIndex(string MapName)
@@ -1804,19 +1800,14 @@ namespace Ei_Dimension
         _nextWellWarning = false;
         warning = Models.WellWarningState.YellowWarning;
       }
-
-      //override for Multitube
-      MultitubeConsiderations(e, out var row, out var col);
+      
+      MultiTube.GetModifiedWellIndexes(e, out var row, out var col);
 
       ResultsViewModel.Instance.PlatePictogram.CurrentlyReadCell = (row, col);
       ResultsViewModel.Instance.PlatePictogram.ChangeState(row, col, Models.WellType.NowReading, warning, FilePath: e.FilePath);
       ResultsViewModel.Instance.CornerButtonClick(Models.DrawingPlate.CalculateCorner(row, col));
       ResultsViewModel.Instance.ClearGraphs();
-      for (var i = 0; i < MapRegions.CurrentActiveRegionsCount.Count; i++)
-      {
-        MapRegions.CurrentActiveRegionsCount[i] = "0";
-        MapRegions.CurrentActiveRegionsMean[i] = "0";
-      }
+      MapRegions.ResetCurrentActiveRegionsDisplayedStats();
 #if DEBUG
       Device.MainCommand("Set FProperty", code: 0x06);
 #endif
@@ -1826,9 +1817,8 @@ namespace Ei_Dimension
     {
       var type = GetWellStateForPictogram();
       
-      //override for Multitube
-      MultitubeConsiderations(e, out var row, out var col);
-      CalculateNextMultitube();
+      MultiTube.GetModifiedWellIndexes(e, out var row, out var col);
+      MultiTube.Proceed();
 
       ResultsViewModel.Instance.PlatePictogram.ChangeState(row, col, type);
       SavePlateState();
@@ -2089,40 +2079,6 @@ namespace Ei_Dimension
         return false;
       }
       return true;
-    }
-
-    private static void MultitubeConsiderations(ReadingWellEventArgs e, out byte row, out byte col)
-    {
-      if (WellsSelectViewModel.Instance.CurrentTableSize == 1)
-      {
-        row = _multiTubeRow;
-        col = _multiTubeCol;  //calc for case 96 to reset position
-        return;
-      }
-      //clear drawingboard if just switched to multitube!!! //DrawingPlate.MultitubeOverrideReset switchflip jsut for that
-      row = e.Row;
-      col = e.Column;
-    }
-
-    private static void CalculateNextMultitube()
-    {
-      if (WellsSelectViewModel.Instance.CurrentTableSize != 1)
-        return;
-
-      if (_multiTubeCol == 11 && _multiTubeRow == 7)
-      {
-        _multiTubeCol = 0;
-        _multiTubeRow = 0;
-        return;
-      }
-
-      if (_multiTubeCol < 11)
-        _multiTubeCol++;
-      else
-      {
-        _multiTubeCol = 0;
-        _multiTubeRow++;
-      }
     }
   }
 }
