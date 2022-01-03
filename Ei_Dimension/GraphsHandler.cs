@@ -20,7 +20,7 @@ namespace Ei_Dimension
         _ = Task.Run(()=>
         {
           TempBeadInfoList.Clear();
-          while (App.Device.DataOut.TryDequeue(out BeadInfoStruct bead))
+          while (MicroCyDevice.DataOut.TryDequeue(out BeadInfoStruct bead))
           {
             TempBeadInfoList.Add(bead);
           }

@@ -9,6 +9,7 @@ using System.Windows;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using System.Windows.Controls;
+using MicroCy;
 
 namespace Ei_Dimension.ViewModels
 {
@@ -70,7 +71,7 @@ namespace Ei_Dimension.ViewModels
           DashVM.EndRead[0] = newTemplate.MinPerRegion.ToString();
           if (int.TryParse(DashVM.EndRead[0], out iRes))
           {
-            App.Device.MinPerRegion = iRes;
+            MicroCyDevice.MinPerRegion = iRes;
             Settings.Default.MinPerRegion = iRes;
           }
           else
@@ -78,7 +79,7 @@ namespace Ei_Dimension.ViewModels
           DashVM.EndRead[1] = newTemplate.TotalEvents.ToString();
           if (int.TryParse(DashVM.EndRead[1], out iRes))
           {
-            App.Device.BeadsToCapture = iRes;
+            MicroCyDevice.BeadsToCapture = iRes;
             Settings.Default.BeadsToCapture = iRes;
           }
           else

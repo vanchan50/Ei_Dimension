@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Linq;
+using MicroCy;
 
 namespace Ei_Dimension.ViewModels
 {
@@ -123,7 +124,7 @@ namespace Ei_Dimension.ViewModels
         new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Experiment_Total_Events), curCulture), this),
         new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Experiment_End_of_Sample), curCulture), this),
       };
-      SelectedEndReadIndex = App.Device.TerminationType;
+      SelectedEndReadIndex = MicroCyDevice.TerminationType;
       SelectedEndReadContent = EndReadItems[SelectedEndReadIndex].Content;
       EndReadVisibility = new ObservableCollection<Visibility>
       {
@@ -244,10 +245,10 @@ namespace Ei_Dimension.ViewModels
       sRes = 0;
       _ = short.TryParse(Volumes[2], out sRes);
       newwell.agitateVol = sRes;
-      newwell.termType = App.Device.TerminationType;
+      newwell.termType = MicroCyDevice.TerminationType;
       newwell.chanConfig = SelectedChConfigIndex;
-      newwell.regTermCnt = App.Device.MinPerRegion;
-      newwell.termCnt = App.Device.BeadsToCapture;
+      newwell.regTermCnt = MicroCyDevice.MinPerRegion;
+      newwell.termCnt = MicroCyDevice.BeadsToCapture;
       return newwell;
     }
 
@@ -310,11 +311,11 @@ namespace Ei_Dimension.ViewModels
       App.InputSanityCheck();
       if (CalModeOn)
       {
-        if (App.Device.Mode == MicroCy.OperationMode.Normal)
+        if (MicroCyDevice.Mode == OperationMode.Normal)
         {
           _dbsampleVolumeTempHolder = Volumes[0];
           SetFixedVolumeButtonClick(100);
-          App.Device.Mode = MicroCy.OperationMode.Calibration;
+          MicroCyDevice.Mode = OperationMode.Calibration;
           CalibrationViewModel.Instance.CalFailsInARow = 0;
           CalibrationViewModel.Instance.MakeCalMap();
           _dbEndReadIndexTempHolder = SelectedEndReadIndex;
@@ -327,12 +328,12 @@ namespace Ei_Dimension.ViewModels
           return;
         }
         CalModeOn = false;
-        if (App.Device.Mode == MicroCy.OperationMode.Verification)
+        if (MicroCyDevice.Mode == OperationMode.Verification)
           App.ShowNotification("The instrument is in Verificationtion mode");
       }
       else
       {
-        App.Device.Mode = MicroCy.OperationMode.Normal;
+        MicroCyDevice.Mode = OperationMode.Normal;
         EndReadItems[_dbEndReadIndexTempHolder].Click(6);
         Volumes[0] = _dbsampleVolumeTempHolder;
         App.Device.MainCommand("Set Property", code: 0xaf, parameter: ushort.Parse(_dbsampleVolumeTempHolder));
@@ -348,11 +349,11 @@ namespace Ei_Dimension.ViewModels
       App.InputSanityCheck();
       if (ValModeOn)
       {
-        if (App.Device.Mode == MicroCy.OperationMode.Normal && VerificationViewModel.Instance.ValMapInfoReady())
+        if (MicroCyDevice.Mode == OperationMode.Normal && VerificationViewModel.Instance.ValMapInfoReady())
         {
           _dbsampleVolumeTempHolder = Volumes[0];
           SetFixedVolumeButtonClick(25);
-          App.Device.Mode = MicroCy.OperationMode.Verification;
+          MicroCyDevice.Mode = OperationMode.Verification;
           MainButtonsViewModel.Instance.Flavor[0] = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Maintenance_Validation),
             Language.TranslationSource.Instance.CurrentCulture);
           MainWindow.Instance.wndw.Background = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(97, 162, 135));
@@ -361,12 +362,12 @@ namespace Ei_Dimension.ViewModels
           return;
         }
         ValModeOn = false;
-        if (App.Device.Mode == MicroCy.OperationMode.Calibration)
+        if (MicroCyDevice.Mode == OperationMode.Calibration)
           App.ShowNotification("The instrument is in Calibration mode");
       }
       else
       {
-        App.Device.Mode = MicroCy.OperationMode.Normal;
+        MicroCyDevice.Mode = OperationMode.Normal;
         Volumes[0] = _dbsampleVolumeTempHolder;
         App.Device.MainCommand("Set Property", code: 0xaf, parameter: ushort.Parse(_dbsampleVolumeTempHolder));
         MainButtonsViewModel.Instance.Flavor[0] = null;

@@ -6,15 +6,17 @@ using System.Threading.Tasks;
 
 namespace MicroCy
 {
-  public class Validator
+  public static class Validator
   {
-    public List<ValidationStats> RegionalStats = new List<ValidationStats>();
-    public int TotalClassifiedBeads;
-    private Dictionary<int, int> _dict = new Dictionary<int, int>();
-    public Validator(List<int> regions)
+    public static List<ValidationStats> RegionalStats = new List<ValidationStats>(50);
+    public static int TotalClassifiedBeads;
+    private static Dictionary<int, int> _dict = new Dictionary<int, int>();
+
+    public static void Reset(List<int> regions)
     {
-      RegionalStats = new List<ValidationStats>(regions.Count);
+      RegionalStats.Clear();
       TotalClassifiedBeads = 0;
+      _dict.Clear();
       foreach (var reg in regions)
       {
         _dict.Add(reg, RegionalStats.Count);
@@ -22,7 +24,7 @@ namespace MicroCy
       }
     }
 
-    public void FillStats(in BeadInfoStruct outbead)
+    public static void FillStats(in BeadInfoStruct outbead)
     {
       int index;
       if (_dict.TryGetValue(outbead.region, out index))
@@ -31,7 +33,7 @@ namespace MicroCy
       }
     }
 
-    public void CalculateResults()
+    public static void CalculateResults()
     {
       foreach (var s in RegionalStats)
       {

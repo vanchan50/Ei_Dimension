@@ -1,6 +1,7 @@
 ﻿using DevExpress.Mvvm;
 using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
+using MicroCy;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -68,9 +69,9 @@ namespace Ei_Dimension.Models
     {
       Action BuildWmap = null;
       List<HeatMapData> Map = GetCurrentMap();
-      switch (App.Device.Mode)
+      switch (MicroCyDevice.Mode)
       {
-        case MicroCy.OperationMode.Normal:
+        case OperationMode.Normal:
           BuildWmap = () => {
             foreach (var point in Map)
             {
@@ -84,7 +85,7 @@ namespace Ei_Dimension.Models
             }
           };
           break;
-        case MicroCy.OperationMode.Calibration:
+        case OperationMode.Calibration:
           BuildWmap = () => {
             foreach (var point in CalibrationMap)
             {
@@ -92,7 +93,7 @@ namespace Ei_Dimension.Models
             }
           };
           break;
-        case MicroCy.OperationMode.Verification:
+        case OperationMode.Verification:
           BuildWmap = () => {
             foreach (var point in Map)
             {

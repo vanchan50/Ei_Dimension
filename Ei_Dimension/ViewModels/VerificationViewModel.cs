@@ -1,5 +1,6 @@
 ﻿using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
+using MicroCy;
 using System;
 using System.Collections.ObjectModel;
 
@@ -177,7 +178,7 @@ namespace Ei_Dimension.ViewModels
     public static bool AnalyzeVerificationResults()
     {
       bool passed = true;
-      if (App.Device.Verificator.TotalClassifiedBeads < App.Device.TotalBeads * 0.8)
+      if (Validator.TotalClassifiedBeads < MicroCyDevice.TotalBeads * 0.8)
       {
         Console.WriteLine("Verification Fail: Less than 80% of beads hit the regions");
         passed = false;
@@ -190,12 +191,12 @@ namespace Ei_Dimension.ViewModels
         {
           int regionNum = int.Parse(App.MapRegions.RegionsList[i]);
           double inputReporter = double.Parse(App.MapRegions.VerificationReporterList[i]);
-          int validatorIndex = App.Device.Verificator.RegionalStats.FindIndex(x => x.Region == regionNum);
+          int validatorIndex = Validator.RegionalStats.FindIndex(x => x.Region == regionNum);
 
-          if (App.Device.Verificator.RegionalStats[validatorIndex].Stats[0].mfi <= inputReporter * (1 - reporterErrorMargin) &&
-            App.Device.Verificator.RegionalStats[validatorIndex].Stats[0].mfi >= inputReporter * (1 + reporterErrorMargin))
+          if (Validator.RegionalStats[validatorIndex].Stats[0].mfi <= inputReporter * (1 - reporterErrorMargin) &&
+              Validator.RegionalStats[validatorIndex].Stats[0].mfi >= inputReporter * (1 + reporterErrorMargin))
           {
-            Console.WriteLine($"Verification Fail: Reporter value ({App.Device.Verificator.RegionalStats[validatorIndex].Stats[0].mfi}) deviation is more than 20% from the target ({App.MapRegions.VerificationReporterList[i]})");
+            Console.WriteLine($"Verification Fail: Reporter value ({Validator.RegionalStats[validatorIndex].Stats[0].mfi.ToString()}) deviation is more than 20% from the target ({App.MapRegions.VerificationReporterList[i]})");
             passed = false;
           }
         }

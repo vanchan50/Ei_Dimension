@@ -14,7 +14,7 @@ namespace Ei_Dimension
     public static void Update()
     {
       float g = 0;
-      while (App.Device.Commands.TryDequeue(out var exe))
+      while (MicroCyDevice.Commands.TryDequeue(out var exe))
       {
         switch (exe.Code)
         {
@@ -94,7 +94,7 @@ namespace Ei_Dimension
           case 0x1b:
             if (exe.Parameter == 0)
             {
-              App.Device.EndState = 1;
+              MicroCyDevice.EndState = 1;
               CalibrationViewModel.Instance.CalJustFailed = false;
               _ = App.Current.Dispatcher.BeginInvoke((Action)(() =>
               {
@@ -509,13 +509,13 @@ namespace Ei_Dimension
 
               if (MessageBox.Show(ws + "\nPower Off System", "Operator Alert", MessageBoxButton.OK, MessageBoxImage.Warning) == MessageBoxResult.OK)
               {
-                var tempres = new List<WellResults>(App.Device.WellResults.Count);
-                for (var i = 0; i < App.Device.WellResults.Count; i++)
+                var tempres = new List<WellResults>(MicroCyDevice.WellResults.Count);
+                for (var i = 0; i < MicroCyDevice.WellResults.Count; i++)
                 {
                   var r = new WellResults();
-                  r.RP1vals = new List<float>(App.Device.WellResults[i].RP1vals);
-                  r.RP1bgnd = new List<float>(App.Device.WellResults[i].RP1bgnd);
-                  r.regionNumber = App.Device.WellResults[i].regionNumber;
+                  r.RP1vals = new List<float>(MicroCyDevice.WellResults[i].RP1vals);
+                  r.RP1bgnd = new List<float>(MicroCyDevice.WellResults[i].RP1bgnd);
+                  r.regionNumber = MicroCyDevice.WellResults[i].regionNumber;
                   tempres.Add(r);
                 }
                 App.Device.WellsToRead = App.Device.CurrentWellIdx;
@@ -529,12 +529,12 @@ namespace Ei_Dimension
           //    App.Device.InitSTab(tabnam);
           //    break;
           case 0xfd:
-            if (App.Device.EndState == 0)
-              App.Device.EndState = 1; //start the end of well state machine
+            if (MicroCyDevice.EndState == 0)
+              MicroCyDevice.EndState = 1; //start the end of well state machine
             break;
           case 0xfe:
-            if (App.Device.EndState == 0)
-              App.Device.EndState = 1;
+            if (MicroCyDevice.EndState == 0)
+              MicroCyDevice.EndState = 1;
             break;
           case 0xbf:
             //CalibrationViewModel.Instance.AttenuationBox[0] = exe.Parameter.ToString();
@@ -554,7 +554,7 @@ namespace Ei_Dimension
 
     public static void UpdateEventCounter()
     {
-      MainViewModel.Instance.EventCountCurrent[0] = App.Device.BeadCount.ToString();
+      MainViewModel.Instance.EventCountCurrent[0] = MicroCyDevice.BeadCount.ToString();
     }
 
     private static void UpdatePressureMonitor()

@@ -24,7 +24,6 @@ namespace Ei_Dimension
       var app = new App();
       app.InitializeComponent();
       _ = app.Run();
-      App.Device.StopUSBPolling = true;
     }
   }
 }

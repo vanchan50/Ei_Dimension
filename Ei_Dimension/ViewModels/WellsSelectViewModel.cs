@@ -2,6 +2,7 @@
 using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
 using Ei_Dimension.Models;
+using MicroCy;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -83,7 +84,7 @@ namespace Ei_Dimension.ViewModels
 
     public void ChangeWellTableSize(int num)
     {
-      if (!App.Device.ReadActive)
+      if (!MicroCyDevice.ReadActive)
       {
         switch (num)
         {

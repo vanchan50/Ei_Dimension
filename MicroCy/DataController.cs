@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,7 +10,10 @@ namespace MicroCy
 {
   internal class DataController
   {
-    public bool StopUSBPolling { get; set; }
+    public static ConcurrentQueue<(string name, CommandStruct cs)> OutCommands { get; } = new ConcurrentQueue<(string name, CommandStruct cs)>();
+    public static object UsbOutCV { get; }= new object();
+
+    public static bool StopUSBPolling { get; set; }
     private readonly ISerial _serialConnection;
     private Thread _prioUsbInThread;
     private Thread _prioUsbOutThread;
@@ -19,17 +23,22 @@ namespace MicroCy
       _serialConnection = ConnectionFactory.MakeNewConnection(connectionType);
       if (_serialConnection.IsActive)
       {
-        _prioUsbInThread = new Thread(NewReplyFromMC);
+        var _prioUsbInThread = new Thread(ReplyFromMC);
         _prioUsbInThread.Priority = ThreadPriority.Highest;
         _prioUsbInThread.Start();
 
-        _prioUsbOutThread = new Thread(WriteToMC);
+        var _prioUsbOutThread = new Thread(WriteToMC);
         _prioUsbOutThread.Priority = ThreadPriority.AboveNormal;
         _prioUsbOutThread.Start();
       }
     }
+
+    ~DataController()
+    {
+      StopUSBPolling = true;
+    }
     
-    private void NewReplyFromMC()
+    private void ReplyFromMC()
     {
       while (!StopUSBPolling)
       {
@@ -37,39 +46,39 @@ namespace MicroCy
 
         if ((_serialConnection.InputBuffer[0] == 0xbe) && (_serialConnection.InputBuffer[1] == 0xad))
         {
-          if (IsMeasurementGoing) //  this condition avoids the necessity of cleaning up leftover data in the system USB interface. That could happen after operation abortion and program restart
+          if (MicroCyDevice.IsMeasurementGoing) //  this condition avoids the necessity of cleaning up leftover data in the system USB interface. That could happen after operation abortion and program restart
           {
             for (byte i = 0; i < 8; i++)
             {
               BeadInfoStruct outbead;
               if (!GetBeadFromBuffer(_serialConnection.InputBuffer, i, out outbead))
                 break;
-              CalculateBeadParams(ref outbead);
+              BeadProcessor.CalculateBeadParams(ref outbead);
 
-              FillActiveWellResults(in outbead);
-              if (outbead.region == 0 && OnlyClassified)
+              MicroCyDevice.FillActiveWellResults(in outbead);
+              if (outbead.region == 0 && MicroCyDevice.OnlyClassified)
                 continue;
-              DataOut.Enqueue(outbead);
-              if (Everyevent)
-                _ = _dataout.Append(outbead.ToString());
-              switch (Mode)
+              MicroCyDevice.DataOut.Enqueue(outbead);
+              if (MicroCyDevice.Everyevent)
+                ResultReporter.AddBeadStats(in outbead);
+              switch (MicroCyDevice.Mode)
               {
                 case OperationMode.Normal:
                   break;
                 case OperationMode.Calibration:
                   break;
                 case OperationMode.Verification:
-                  Verificator.FillStats(in outbead);
+                  Validator.FillStats(in outbead);
                   break;
               }
               //accum stats for run as a whole, used during aligment and QC
-              FillCalibrationStatsRow(in outbead);
-              BeadCount++;
-              TotalBeads++;
+              BeadProcessor.FillCalibrationStatsRow(in outbead);
+              MicroCyDevice.BeadCount++;
+              MicroCyDevice.TotalBeads++;
             }
           }
           Array.Clear(_serialConnection.InputBuffer, 0, _serialConnection.InputBuffer.Length);
-          TerminationReadyCheck();
+          MicroCyDevice.TerminationReadyCheck();
         }
         else
           GetCommandFromBuffer();
@@ -80,17 +89,93 @@ namespace MicroCy
     {
       while (true)
       {
-        while (_outCommands.TryDequeue(out var cmd))
+        while (OutCommands.TryDequeue(out var cmd))
         {
           RunCmd(cmd.name, cmd.cs);
         }
         if (StopUSBPolling)
           return;
-        lock (_usbOutCV)
+        lock (UsbOutCV)
         {
-          Monitor.Wait(_usbOutCV);
+          Monitor.Wait(UsbOutCV);
         }
       }
+    }
+
+    /// <summary>
+    /// Sends a command OUT to the USB device, then checks the IN pipe for a return value.
+    /// </summary>
+    /// <param name="sCmdName">A friendly name for the command.</param>
+    /// <param name="cs">The CommandStruct object containing the command parameters.  This will get converted to an 8-byte array.</param>
+    private void RunCmd(string sCmdName, CommandStruct cs)
+    {
+      if (sCmdName == null)
+        return;
+      if (_serialConnection.IsActive)
+        _serialConnection.Write(NEWStructToByteArray(in cs));
+      Console.WriteLine($"{DateTime.Now.ToString()} Sending [{sCmdName}]: {cs.ToString()}"); //  MARK1 END
+    }
+
+    private static byte[] NEWStructToByteArray(in CommandStruct cs)
+    {
+      byte[] arrRet = new byte[8];
+      unsafe
+      {
+        fixed (CommandStruct* pCS = &cs)
+        {
+          for (var i = 0; i < 8; i++)
+          {
+            arrRet[i] = *((byte*)pCS + i);
+          }
+        }
+      }
+
+      return arrRet;
+    }
+
+    private static CommandStruct NEWByteArrayToStruct(byte[] inmsg)
+    {
+      unsafe
+      {
+        fixed (byte* cs = &inmsg[0])
+        {
+          return *(CommandStruct*)cs;
+        }
+      }
+    }
+
+    private static BeadInfoStruct NEWBeadArrayToStruct(byte[] beadmsg, byte shift)
+    {
+      unsafe
+      {
+        fixed (byte* cs = &beadmsg[shift * 64])
+        {
+          return *(BeadInfoStruct*)cs;
+        }
+      }
+    }
+
+    private void GetCommandFromBuffer()
+    {
+      CommandStruct newcmd;
+      // move received command to queue
+      newcmd = NEWByteArrayToStruct(_serialConnection.InputBuffer);
+      if(newcmd.Code != 0)
+        MicroCyDevice.Commands.Enqueue(newcmd);
+      if ((newcmd.Code >= 0xd0) && (newcmd.Code <= 0xdf))
+      {
+        Console.WriteLine(string.Format("{0} E-series script [{1}]", DateTime.Now.ToString(), newcmd.ToString()));
+      }
+      else if (newcmd.Code > 0)
+      {
+        Console.Out.WriteLine(string.Format("{0} Received [{1}]", DateTime.Now.ToString(), newcmd.ToString()));
+      }
+    }
+
+    private bool GetBeadFromBuffer(byte[] buffer,byte shift, out BeadInfoStruct outbead)
+    {
+      outbead = NEWBeadArrayToStruct(buffer, shift);
+      return outbead.Header == 0xadbeadbe;
     }
   }
 }

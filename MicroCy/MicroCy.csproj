@@ -59,8 +59,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BeadProcessor.cs" />
     <Compile Include="DataController.cs" />
     <Compile Include="Enums\OperationMode.cs" />
+    <Compile Include="ResultReporter.cs" />
     <Compile Include="Structs\CalParams.cs" />
     <Compile Include="Structs\CustomMap.cs" />
     <Compile Include="Structs\BeadInfoStruct.cs" />

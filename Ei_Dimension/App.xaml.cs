@@ -70,14 +70,14 @@ namespace Ei_Dimension
       }
       Device.SystemControl = Settings.Default.SystemControl;
       Device.Outfilename = Settings.Default.SaveFileName;
-      Device.Everyevent = Settings.Default.Everyevent;
+      MicroCyDevice.Everyevent = Settings.Default.Everyevent;
       Device.RMeans = Settings.Default.RMeans;
       Device.PltRept = Settings.Default.PlateReport;
-      Device.TerminationType = Settings.Default.EndRead;
-      Device.MinPerRegion = Settings.Default.MinPerRegion;
-      Device.BeadsToCapture = Settings.Default.BeadsToCapture;
-      Device.OnlyClassified = Settings.Default.OnlyClassifed;
-      Device.ChannelBIsHiSensitivity = Settings.Default.SensitivityChannelB;
+      MicroCyDevice.TerminationType = Settings.Default.EndRead;
+      MicroCyDevice.MinPerRegion = Settings.Default.MinPerRegion;
+      MicroCyDevice.BeadsToCapture = Settings.Default.BeadsToCapture;
+      MicroCyDevice.OnlyClassified = Settings.Default.OnlyClassifed;
+      MicroCyDevice.ChannelBIsHiSensitivity = Settings.Default.SensitivityChannelB;
       Device.MainCommand("Set Property", code: 0xbf, parameter: (ushort)Device.ActiveMap.calParams.att);
       if (!System.Windows.Input.Keyboard.IsKeyDown(System.Windows.Input.Key.LeftCtrl))
         Device.MainCommand("Startup");
@@ -258,14 +258,14 @@ namespace Ei_Dimension
 
     public static void SetTerminationType(byte num)
     {
-      Device.TerminationType = num;
+      MicroCyDevice.TerminationType = num;
       Settings.Default.EndRead = num;
       Settings.Default.Save();
     }
 
     public static void SetSensitivityChannel(byte num)
     {
-      Device.ChannelBIsHiSensitivity = num == 0;
+      MicroCyDevice.ChannelBIsHiSensitivity = num == 0;
       Settings.Default.SensitivityChannelB = num == 0;
       Settings.Default.Save();
     }
@@ -362,7 +362,7 @@ namespace Ei_Dimension
       {
         ChannelsVM.SensitivityItems[0].Content = RM.GetString(nameof(Language.Resources.Channels_Sens_B), curCulture);
         ChannelsVM.SensitivityItems[1].Content = RM.GetString(nameof(Language.Resources.Channels_Sens_C), curCulture);
-        int i = Device.ChannelBIsHiSensitivity ? 0 : 1;
+        int i = MicroCyDevice.ChannelBIsHiSensitivity ? 0 : 1;
         ChannelsVM.SelectedSensitivityContent = ChannelsVM.SensitivityItems[i].Content;
       }
       var VerVM = VerificationViewModel.Instance;
@@ -462,7 +462,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 1)
                 {
-                  Device.MinPerRegion = iRes;
+                  MicroCyDevice.MinPerRegion = iRes;
                   Settings.Default.MinPerRegion = iRes;
                   break;
                 }
@@ -476,7 +476,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 1)
                 {
-                  Device.BeadsToCapture = iRes;
+                  MicroCyDevice.BeadsToCapture = iRes;
                   Settings.Default.BeadsToCapture = iRes;
                   break;
                 }
@@ -1666,7 +1666,7 @@ namespace Ei_Dimension
         OnAppLoaded();
 
       TextBoxHandler.Update();
-      if (Device.IsMeasurementGoing)
+      if (MicroCyDevice.IsMeasurementGoing)
       {
         GraphsHandler.Update();
         ActiveRegionsStatsHandler.Update();
@@ -1679,36 +1679,33 @@ namespace Ei_Dimension
     private static void WellStateHandler()
     {
       // end of well state machine
-      switch (Device.EndState)
+      switch (MicroCyDevice.EndState)
       {
         case 0:
           break;
         case 1:
-          Device.SavBeadCount = Device.BeadCount;   //save for stats
-          Device.SavingWellIdx = Device.CurrentWellIdx; //save the index of the currrent well for background file save
-          Device.MainCommand("End Sampling");    //sends message to instrument to stop sampling
-          Device.EndState++;
-          Console.WriteLine($"{DateTime.Now.ToString()} Reporting End Sampling");
+          Device.StopWellMeasurement();
+          MicroCyDevice.EndState++;
           break;
         case 2:
-          var tempres = new List<WellResults>(Device.WellResults.Count);
-          for(var i = 0; i < Device.WellResults.Count; i++)
+          var tempres = new List<WellResults>(MicroCyDevice.WellResults.Count);
+          for(var i = 0; i < MicroCyDevice.WellResults.Count; i++)
           {
             var r = new WellResults();
-            r.RP1vals = new List<float>(Device.WellResults[i].RP1vals);
-            r.RP1bgnd = new List<float>(Device.WellResults[i].RP1bgnd);
-            r.regionNumber = Device.WellResults[i].regionNumber;
+            r.RP1vals = new List<float>(MicroCyDevice.WellResults[i].RP1vals);
+            r.RP1bgnd = new List<float>(MicroCyDevice.WellResults[i].RP1bgnd);
+            r.regionNumber = MicroCyDevice.WellResults[i].regionNumber;
             tempres.Add(r);
           }
           _ = Task.Run(()=>Device.SaveBeadFile(tempres));
           Device.GStatsFiller();
-          Device.EndState++;
+          MicroCyDevice.EndState++;
           Console.WriteLine($"{DateTime.Now.ToString()} Reporting Background File Save Init");
           break;
         case 3:
           if (!MainButtonsViewModel.Instance.ActiveList.Contains("WASHING"))
           {
-            Device.EndState++;  //wait here until alternate syringe is finished washing
+            MicroCyDevice.EndState++;  //wait here until alternate syringe is finished washing
             Console.WriteLine($"{DateTime.Now.ToString()} Reporting Washing Complete");
           }
           else
@@ -1716,14 +1713,14 @@ namespace Ei_Dimension
           break;
         case 4:
           Device.WellNext();  //saves current well address for filename in state 5
-          Device.EndState++;
+          MicroCyDevice.EndState++;
           Console.WriteLine($"{DateTime.Now.ToString()} Reporting Setting up next well");
           break;
         case 5:
           Device.MainCommand("FlushCmdQueue");
           Device.MainCommand("Set Property", code: 0xc3); //clear empty syringe token
           Device.MainCommand("Set Property", code: 0xcb); //clear sync token to allow next sequence to execute
-          if (Device.Mode == OperationMode.Normal)
+          if (MicroCyDevice.Mode == OperationMode.Normal)
           {
             Device.EndBeadRead(MapRegions.ActiveRegionNums);
           }
@@ -1731,7 +1728,7 @@ namespace Ei_Dimension
           {
             Device.EndBeadRead();
           }
-          Device.EndState = 0;
+          MicroCyDevice.EndState = 0;
           Task.Run(()=>
           {
             GC.Collect();
@@ -1791,7 +1788,7 @@ namespace Ei_Dimension
       }
     }
     */
-
+    
     private static void StartingToReadWellEventHandler(object sender, ReadingWellEventArgs e)
     {
       var warning = Models.WellWarningState.OK;
@@ -1826,22 +1823,21 @@ namespace Ei_Dimension
       Device.MainCommand("Get FProperty", code: 0x06);
 #endif
     }
-
     private static Models.WellType GetWellStateForPictogram()
     {
       var type = Models.WellType.Success;
-      if (Device.Mode == OperationMode.Normal)
+      if (MicroCyDevice.Mode == OperationMode.Normal)
       {
-        if (Device.TerminationType == 0 && Device.WellResults.Count > 0)
+        if (MicroCyDevice.TerminationType == 0 && MicroCyDevice.WellResults.Count > 0)
         {
-          foreach (var wr in Device.WellResults)
+          foreach (var wr in MicroCyDevice.WellResults)
           {
-            if (wr.RP1vals.Count < Device.MinPerRegion * 0.75)
+            if (wr.RP1vals.Count < MicroCyDevice.MinPerRegion * 0.75)
             {
               type = Models.WellType.Fail;
               break;
             }
-            if (wr.RP1vals.Count < Device.MinPerRegion)
+            if (wr.RP1vals.Count < MicroCyDevice.MinPerRegion)
             {
               type = Models.WellType.LightFail;
               break;
@@ -1856,7 +1852,7 @@ namespace Ei_Dimension
     {
       MainButtonsViewModel.Instance.StartButtonEnabled = true;
       ResultsViewModel.Instance.PlatePictogram.CurrentlyReadCell = (-1, -1);
-      switch (Device.Mode)
+      switch (MicroCyDevice.Mode)
       {
         case OperationMode.Normal:
           break;
@@ -1870,7 +1866,7 @@ namespace Ei_Dimension
             ShowLocalizedNotification(nameof(Language.Resources.Calibration_in_Progress), System.Windows.Media.Brushes.Green);
           break;
         case OperationMode.Verification:
-          Device.Verificator.CalculateResults();
+          Validator.CalculateResults();
           if (VerificationViewModel.AnalyzeVerificationResults())
           {
             _ = Current.Dispatcher.BeginInvoke((Action)VerificationViewModel.VerificationSuccess);

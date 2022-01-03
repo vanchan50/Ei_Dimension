@@ -1,6 +1,7 @@
 ﻿using DevExpress.Mvvm;
 using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
+using MicroCy;
 using System;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -80,7 +81,7 @@ namespace Ei_Dimension.ViewModels
       switch (num)
       {
         case 0:
-          App.Device.Everyevent = Checkboxes[num];
+          MicroCyDevice.Everyevent = Checkboxes[num];
           Settings.Default.Everyevent = Checkboxes[num];
           break;
         case 1:
@@ -92,7 +93,7 @@ namespace Ei_Dimension.ViewModels
           Settings.Default.PlateReport = Checkboxes[num];
           break;
         case 3:
-          App.Device.OnlyClassified = Checkboxes[num];
+          MicroCyDevice.OnlyClassified = Checkboxes[num];
           Settings.Default.OnlyClassifed = Checkboxes[num];
           break;
         case 4:

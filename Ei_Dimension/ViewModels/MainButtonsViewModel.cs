@@ -1,6 +1,7 @@
 ﻿using DevExpress.Mvvm;
 using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
+using MicroCy;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -42,7 +43,7 @@ namespace Ei_Dimension.ViewModels
     public void StartButtonClick()
     {
       App.InputSanityCheck();
-      if (App.Device.TerminationType == 0 && App.MapRegions.ActiveRegionNums.Count == 0)
+      if (MicroCyDevice.TerminationType == 0 && App.MapRegions.ActiveRegionNums.Count == 0)
       {
         App.ShowNotification("\"Min Per Region\" End of Read requires at least 1 active region");
         return;
@@ -58,7 +59,7 @@ namespace Ei_Dimension.ViewModels
       App.Device.MainCommand("Set FProperty", code: 0x06);
 #endif
       HashSet<int> startArg = null;
-      switch (App.Device.Mode)
+      switch (MicroCyDevice.Mode)
       {
         case MicroCy.OperationMode.Normal:
           if (App.MapRegions.ActiveRegionNums.Count == 0)
@@ -97,15 +98,15 @@ namespace Ei_Dimension.ViewModels
     public void EndButtonClick()
     {
       App.InputSanityCheck();
-      if (!App.Device.ReadActive)  //end button press before start, cancel work order
+      if (!MicroCyDevice.ReadActive)  //end button press before start, cancel work order
       {
         App.Device.MainCommand("Set Property", code: 0x17); //leds off
         DashboardViewModel.Instance.WorkOrder[0] = "";
       }
       else
       {
-        App.Device.ReadActive = false;
-        App.Device.EndState = 1;
+        MicroCyDevice.ReadActive = false;
+        MicroCyDevice.EndState = 1;
         if (App.Device.WellsToRead > 0) //if end read on tube or single well, nothing else is aspirated otherwise
           App.Device.WellsToRead = App.Device.CurrentWellIdx + 1; //just read the next well in order since it is already aspirated
       }
@@ -122,7 +123,7 @@ namespace Ei_Dimension.ViewModels
           regions.Add(reg);
         }
       }
-      App.Device.Verificator = new MicroCy.Validator(regions);
+      Validator.Reset(regions);
     }
 
     public void DefaultRegionNaming()
