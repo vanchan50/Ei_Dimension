@@ -254,7 +254,7 @@ namespace Ei_Dimension.ViewModels
 
     public void SetWellsInOrder()
     {
-      App.Device.WellsInOrder.Clear();
+      MicroCyDevice.WellsInOrder.Clear();
       if (WellsSelectViewModel.Instance.CurrentTableSize > 1)
       {
         ObservableCollection<WellTableRow> plate = WellsSelectViewModel.Instance.CurrentTableSize == 96 ?
@@ -266,25 +266,25 @@ namespace Ei_Dimension.ViewModels
             for (byte c = 0; c < plate[r].Types.Count; c++)
             {
               if (plate[r].Types[c] != WellType.Empty)
-                App.Device.WellsInOrder.Add(MakeWell(r, c));
+                MicroCyDevice.WellsInOrder.Add(MakeWell(r, c));
             }
           }
           if (SelectedOrderIndex == 0)
           {
             //sort list by col/row
-            App.Device.WellsInOrder = App.Device.WellsInOrder.OrderBy(x => x.colIdx).ThenBy(x => x.rowIdx).ToList();
+            MicroCyDevice.WellsInOrder = MicroCyDevice.WellsInOrder.OrderBy(x => x.colIdx).ThenBy(x => x.rowIdx).ToList();
           }
         }
         else  //Work Order control of plate
         {
           //fill wells from work order
-          App.Device.WellsInOrder = App.Device.WorkOrder.woWells;
+          MicroCyDevice.WellsInOrder = MicroCyDevice.WorkOrder.woWells;
         }
       }
       else if (WellsSelectViewModel.Instance.CurrentTableSize == 1)  //tube
-        App.Device.WellsInOrder.Add(MakeWell(0, 0));  //  a 1 record work order
+        MicroCyDevice.WellsInOrder.Add(MakeWell(0, 0));  //  a 1 record work order
 
-      App.Device.WellsToRead = App.Device.WellsInOrder.Count - 1;  //make zero based like well index is
+      MicroCyDevice.WellsToRead = MicroCyDevice.WellsInOrder.Count - 1;  //make zero based like well index is
     }
 
     private void EndReadVisibilitySwitch()

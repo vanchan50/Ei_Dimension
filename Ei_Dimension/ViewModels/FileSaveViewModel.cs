@@ -55,9 +55,9 @@ namespace Ei_Dimension.ViewModels
     public void SelectOutFolder()
     {
       App.InputSanityCheck();
-      FolderBrowserDialogService.StartPath = App.Device.Outdir;
+      FolderBrowserDialogService.StartPath = ResultReporter.Outdir;
       if (FolderBrowserDialogService.ShowDialog())
-        App.Device.Outdir = FolderBrowserDialogService.ResultPath;
+        ResultReporter.Outdir = FolderBrowserDialogService.ResultPath;
     }
 
     public void FocusedBox(int num)
@@ -85,11 +85,11 @@ namespace Ei_Dimension.ViewModels
           Settings.Default.Everyevent = Checkboxes[num];
           break;
         case 1:
-          App.Device.RMeans = Checkboxes[num];
+          MicroCyDevice.RMeans = Checkboxes[num];
           Settings.Default.RMeans = Checkboxes[num];
           break;
         case 2:
-          App.Device.PltRept = Checkboxes[num];
+          MicroCyDevice.PltRept = Checkboxes[num];
           Settings.Default.PlateReport = Checkboxes[num];
           break;
         case 3:

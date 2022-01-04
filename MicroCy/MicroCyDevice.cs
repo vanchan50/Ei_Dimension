@@ -40,12 +40,12 @@ namespace MicroCy
 
   public class MicroCyDevice
   {
-    public WorkOrder WorkOrder { get;set; }
+    public static WorkOrder WorkOrder { get;set; }
     public CustomMap ActiveMap { get; set; }
     public static ConcurrentQueue<CommandStruct> Commands { get; } = new ConcurrentQueue<CommandStruct>();
     public static ConcurrentQueue<BeadInfoStruct> DataOut { get; } = new ConcurrentQueue<BeadInfoStruct>();
-    public List<Wells> WellsInOrder { get; set; } = new List<Wells>();
-    public List<CustomMap> MapList { get; private set; } = new List<CustomMap>();
+    public static List<Wells> WellsInOrder { get; set; } = new List<Wells>();
+    public List<CustomMap> MapList { get; } = new List<CustomMap>();
     public static List<WellResults> WellResults { get; } = new List<WellResults>();
     public event EventHandler<ReadingWellEventArgs> StartingToReadWell;
     public event EventHandler<ReadingWellEventArgs> FinishedReadingWell;
@@ -53,8 +53,7 @@ namespace MicroCy
     public event EventHandler<GstatsEventArgs> NewStatsAvailable;
     public static OperationMode Mode { get; set; }
     public int BoardVersion { get; set; }
-    public int SavingWellIdx { get; set; }
-    public int WellsToRead { get; set; }
+    public static int WellsToRead { get; set; }
     public static int BeadsToCapture { get; set; }
     public static int BeadCount { get; internal set; }
     public static int TotalBeads { get; internal set; }
@@ -64,39 +63,26 @@ namespace MicroCy
     public static bool IsMeasurementGoing { get; private set; }
     public static bool ReadActive { get; set; }
     public static bool Everyevent { get; set; }
-    public bool RMeans { get; set; }
-    public bool PltRept { get; set; }
+    public static bool RMeans { get; set; }
+    public static bool PltRept { get; set; }
     public static bool OnlyClassified { get; set; }
     public bool Reg0stats { get; set; }
     public static bool ChannelBIsHiSensitivity { get; set; }
     public byte PlateRow { get; set; }
     public byte PlateCol { get; set; }
     public static byte TerminationType { get; set; }
-    public byte ReadingRow { get; set; }
-    public byte ReadingCol { get; set; }
+    public static byte ReadingRow { get; set; }
+    public static byte ReadingCol { get; set; }
     public static byte EndState { get; set; }
-    public byte SystemControl { get; set; }
-
-    public string Outdir { get; set; }  //  user selectable
-    public string Outfilename { get; set; }
-
-    public string[] SyncElements { get; } = { "SHEATH", "SAMPLE_A", "SAMPLE_B", "FLASH", "END_WELL", "VALVES", "X_MOTOR",
-      "Y_MOTOR", "Z_MOTOR", "PROXIMITY", "PRESSURE", "WASHING", "FAULT", "ALIGN MOTOR", "MAIN VALVE", "SINGLE STEP" };
-    public string WorkOrderPath { get; set; }
-    public DirectoryInfo RootDirectory { get; private set; }
+    public static byte SystemControl { get; set; }
+    public static DirectoryInfo RootDirectory { get; private set; }
     private static bool _chkRegionCount;
     private static bool _readingA;
-    private string _fullFileName; //TODO: probably not necessary. look at refactoring InitBeadRead()
-    private PlateReport _plateReport;
-    private StringBuilder _summaryout = new StringBuilder();
-    private const string Sheader = "Row,Col,Region,Bead Count,Median FI,Trimmed Mean FI,CV%\r";
-    private string _thisRunResultsFileName;
-    private static DataController DataController;
-
+    private static DataController _dataController;
 
     public MicroCyDevice(Type connectionType)
     {
-      DataController = new DataController(connectionType);
+      _dataController = new DataController(connectionType);
       MainCommand("Sync");
       TotalBeads = 0;
       Mode = OperationMode.Normal;
@@ -105,67 +91,21 @@ namespace MicroCy
       LoadMaps();
       Reg0stats = false;
       //_serialConnection.BeginRead(ReplyFromMC);   //default termination is end of sample
-      Outdir = RootDirectory.FullName;
+      ResultReporter.Outdir = RootDirectory.FullName;
       EndState = 0;
       ReadActive = false;
-      Outfilename = "ResultFile";
       IsMeasurementGoing = false;
-      _thisRunResultsFileName = null;
     }
 
-    public void InitBeadRead(byte rown, byte coln)
+    public void InitBeadRead()
     {
-      //open file
-      //first create uninique filename
-
-      //if(!isTube)
-      coln++;  //use 0 for tubes and true column for plates
-      char rowletter = (char)(0x41 + rown);
-      if (!Directory.Exists("{Outdir}\\AcquisitionData"))
-        Directory.CreateDirectory($"{Outdir}\\AcquisitionData");
-      for (var differ = 0; differ < int.MaxValue; differ++)
-      {
-        _fullFileName = $"{Outdir}\\AcquisitionData\\{Outfilename}{rowletter}{coln}_{differ}.csv";
-        if (!File.Exists(_fullFileName))
-          break;
-      }
+      if (!Directory.Exists($"{ResultReporter.Outdir}\\AcquisitionData"))
+        Directory.CreateDirectory($"{ResultReporter.Outdir}\\AcquisitionData");
+      ResultReporter.GetNewFileName();
       ResultReporter.StartNewWellReport();
       _chkRegionCount = false;
       BeadCount = 0;
       OnStartingToReadWell();
-    }
-
-    public void SaveBeadFile(List<WellResults> wellres) //cancels the begin read from endpoint 2
-    {
-      //write file
-      Console.WriteLine(string.Format("{0} Reporting Background results cloned for save", DateTime.Now.ToString()));
-      if ((_fullFileName != null) && Everyevent)
-        File.WriteAllText(_fullFileName, ResultReporter.GetWellReport());
-      if (RMeans)
-      {
-        ClearSummary();
-        if (_plateReport != null && WellsInOrder.Count != 0)
-          _plateReport.rpWells.Add(new WellReport {
-            prow = WellsInOrder[SavingWellIdx].rowIdx,
-            pcol = WellsInOrder[SavingWellIdx].colIdx
-          });
-        char[] alphabet = Enumerable.Range('A', 16).Select(x => (char)x).ToArray();
-        for (var i = 0; i < wellres.Count; i++)
-        {
-          WellResults regionNumber = wellres[i];
-          SavingWellIdx = SavingWellIdx > WellsInOrder.Count - 1 ? WellsInOrder.Count - 1 : SavingWellIdx;
-          OutResults rout = FillOutResults(regionNumber, in alphabet);
-          _ = _summaryout.Append(rout.ToString());
-          AddToPlateReport(in rout);
-        }
-        OutputSummaryFile();
-        OutputPlateReport();
-        wellres = null;
-      }
-      Console.WriteLine(string.Format("{0} Reporting Background File Save Complete", DateTime.Now.ToString()));
-      if (File.Exists(WorkOrderPath))
-        File.Delete(WorkOrderPath);   //result is posted, delete work order
-      //need to clear textbox in UI. this has to be an event
     }
 
     public void GStatsFiller()
@@ -255,7 +195,7 @@ namespace MicroCy
     public void StopWellMeasurement()
     {
       BeadProcessor.SavBeadCount = BeadCount;   //save for stats
-      SavingWellIdx = CurrentWellIdx; //save the index of the currrent well for background file save
+      ResultReporter.SavingWellIdx = CurrentWellIdx; //save the index of the currrent well for background file save
       MainCommand("End Sampling");    //sends message to instrument to stop sampling
       Console.WriteLine($"{DateTime.Now.ToString()} Reporting End Sampling");
     }
@@ -382,7 +322,7 @@ namespace MicroCy
             SetAspirateParamsForWell(CurrentWellIdx + 1);
             MainCommand("Read B Aspirate A");
           }
-          else if (CurrentWellIdx == WellsToRead)
+          else
             //handle end of plate things
             MainCommand("Read B");
         }
@@ -393,11 +333,11 @@ namespace MicroCy
             SetAspirateParamsForWell(CurrentWellIdx + 1);
             MainCommand("Read A Aspirate B");
           }
-          else if (CurrentWellIdx == WellsToRead)
+          else
             //handle end of plate things
             MainCommand("Read A");
         }
-        InitBeadRead(ReadingRow, ReadingCol);   //gets output file redy
+        InitBeadRead();   //gets output file redy
       }
       else
         OnFinishedMeasurement();
@@ -459,33 +399,6 @@ namespace MicroCy
       }
     }
 
-    private void OutputSummaryFile()
-    {
-      if (_summaryout.Length > 0)  //end of read session (plate, plate section or tube) write summary stat file
-      {
-        if (!Directory.Exists($"{Outdir}\\AcquisitionData"))
-          Directory.CreateDirectory($"{Outdir}\\AcquisitionData");
-        GetThisRunFileName();
-        File.AppendAllText(_thisRunResultsFileName, _summaryout.ToString());
-      }
-    }
-
-    private void GetThisRunFileName()
-    {
-      if (_thisRunResultsFileName != null)
-        return;
-      string summaryFileName = "";
-      for (var i = 0; i < int.MaxValue; i++)
-      {
-        summaryFileName = $"{Outdir}\\AcquisitionData\\Results_{Outfilename}_{i.ToString()}.csv";
-        if (!File.Exists(summaryFileName))
-        {
-          _thisRunResultsFileName = summaryFileName;
-          break;
-        }
-      }
-    }
-
     internal static void TerminationReadyCheck()
     {
       switch (TerminationType)
@@ -519,34 +432,6 @@ namespace MicroCy
       }
     }
 
-    private OutResults FillOutResults(WellResults regionNumber, in char[] alphabet)
-    {
-      OutResults rout = new OutResults();
-      rout.row = alphabet[WellsInOrder[SavingWellIdx].rowIdx].ToString();
-      rout.col = WellsInOrder[SavingWellIdx].colIdx + 1;  //columns are 1 based
-      rout.count = regionNumber.RP1vals.Count;
-      rout.region = regionNumber.regionNumber;
-      List<float> rp1temp = new List<float>(regionNumber.RP1vals);
-      if (rout.count > 2)
-        rout.meanfi = rp1temp.Average();
-      if (rout.count >= 20)
-      {
-        rp1temp.Sort();
-        float rpbg = regionNumber.RP1bgnd.Average() * 16;
-        int quarter = rout.count / 4;
-        rp1temp.RemoveRange(rout.count - quarter, quarter);
-        rp1temp.RemoveRange(0, quarter);
-        rout.meanfi = rp1temp.Average();
-        double sumsq = rp1temp.Sum(dataout => Math.Pow(dataout - rout.meanfi, 2));
-        double stddev = Math.Sqrt(sumsq / rp1temp.Count() - 1);
-        rout.cv = (float)stddev / rout.meanfi * 100;
-        if (double.IsNaN(rout.cv)) rout.cv = 0;
-        rout.medfi = (float)Math.Round(rp1temp[quarter] - rpbg);
-        rout.meanfi -= rpbg;
-      }
-      return rout;
-    }
-
     internal static void FillActiveWellResults(in BeadInfoStruct outBead)
     {
       //WellResults is a list of region numbers that are active
@@ -562,25 +447,6 @@ namespace MicroCy
       }
     }
 
-    private void AddToPlateReport(in OutResults outRes)
-    {
-      _plateReport.rpWells[SavingWellIdx].rpReg.Add(new RegionReport
-      {
-        region = outRes.region,
-        count = (uint)outRes.count,
-        medfi = outRes.medfi,
-        meanfi = outRes.meanfi,
-        coefVar = outRes.cv
-      });
-    }
-
-    public void ClearSummary()
-    {
-      _ = _summaryout.Clear();
-      if(_thisRunResultsFileName == null)
-        _ = _summaryout.Append(Sheader);
-    }
-
     public void StartOperation(HashSet<int> regionsToOutput = null)
     {
       MainCommand("Set Property", code: 0xce, parameter: ActiveMap.calParams.minmapssc);  //set ssc gates for this map
@@ -589,7 +455,7 @@ namespace MicroCy
       //read section of plate
       MainCommand("Get FProperty", code: 0x58);
       MainCommand("Get FProperty", code: 0x68);
-      _plateReport = new PlateReport();
+      ResultReporter.StartNewPlateReport();
       MainCommand("Get FProperty", code: 0x20); //get high dnr property
       ReadActive = true;
       SetAspirateParamsForWell(0);  //setup for first read
@@ -598,8 +464,8 @@ namespace MicroCy
       MainCommand("Position Well Plate");   //move motors. next position is set in properties 0xad and 0xae
       MainCommand("Aspirate Syringe A"); //handles down and pickup sample
       WellNext();   //save well numbers for file name
-      InitBeadRead(ReadingRow, ReadingCol);   //gets output file ready
-      ClearSummary();
+      InitBeadRead();   //gets output file ready
+      ResultReporter.ClearSummary();
       TotalBeads = 0;
 
       if (WellsToRead == 0)    //only one well in region
@@ -614,25 +480,10 @@ namespace MicroCy
         BeadsToCapture = 100000;
     }
 
-    private void OutputPlateReport()
-    {
-      if ((SavingWellIdx == WellsToRead) && (_summaryout.Length > 0) && PltRept)    //end of read and json results requested
-      {
-        string rfilename = SystemControl == 0 ? Outfilename : WorkOrder.plateID.ToString();
-        if (!Directory.Exists($"{RootDirectory.FullName}\\Result\\Summary"))
-          _ = Directory.CreateDirectory($"{RootDirectory.FullName}\\Result\\Summary");
-        using (TextWriter jwriter = new StreamWriter($"{RootDirectory.FullName}\\Result\\Summary\\"+ "Summary_" + rfilename + ".json"))
-        {
-          var jcontents = JsonConvert.SerializeObject(_plateReport);
-          jwriter.Write(jcontents);
-        }
-      }
-    }
-
     private void OnStartingToReadWell()
     {
       IsMeasurementGoing = true;
-      StartingToReadWell?.Invoke(this, new ReadingWellEventArgs(ReadingRow, ReadingCol, _fullFileName));
+      StartingToReadWell?.Invoke(this, new ReadingWellEventArgs(ReadingRow, ReadingCol, ResultReporter.FullFileName));
     }
 
     private void OnFinishedReadingWell()
@@ -644,7 +495,7 @@ namespace MicroCy
     {
       IsMeasurementGoing = false;
       ReadActive = false;
-      _thisRunResultsFileName = null;
+      ResultReporter.StartNewSummaryReport();
       FinishedMeasurement?.Invoke(this, EventArgs.Empty);
     }
 

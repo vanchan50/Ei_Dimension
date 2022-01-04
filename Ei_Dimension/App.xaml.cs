@@ -60,19 +60,19 @@ namespace Ei_Dimension
         }
         catch
         {
-          MessageBox.Show($"Could not find Maps in {Device.RootDirectory.FullName + @"\Config"} folder");
-          throw new Exception($"Could not find Maps in { Device.RootDirectory.FullName + @"\Config" } folder");
+          MessageBox.Show($"Could not find Maps in {MicroCyDevice.RootDirectory.FullName + @"\Config"} folder");
+          throw new Exception($"Could not find Maps in {MicroCyDevice.RootDirectory.FullName + @"\Config" } folder");
         }
       }
       else
       {
         Device.ActiveMap = Device.MapList[Settings.Default.DefaultMap];
       }
-      Device.SystemControl = Settings.Default.SystemControl;
-      Device.Outfilename = Settings.Default.SaveFileName;
+      MicroCyDevice.SystemControl = Settings.Default.SystemControl;
+      ResultReporter.Outfilename = Settings.Default.SaveFileName;
       MicroCyDevice.Everyevent = Settings.Default.Everyevent;
-      Device.RMeans = Settings.Default.RMeans;
-      Device.PltRept = Settings.Default.PlateReport;
+      MicroCyDevice.RMeans = Settings.Default.RMeans;
+      MicroCyDevice.PltRept = Settings.Default.PlateReport;
       MicroCyDevice.TerminationType = Settings.Default.EndRead;
       MicroCyDevice.MinPerRegion = Settings.Default.MinPerRegion;
       MicroCyDevice.BeadsToCapture = Settings.Default.BeadsToCapture;
@@ -96,7 +96,7 @@ namespace Ei_Dimension
       _workOrderPending = false;
       _isStartup = true;
       _nextWellWarning = false;
-      var watcher = new FileSystemWatcher($"{Device.RootDirectory.FullName}\\WorkOrder");
+      var watcher = new FileSystemWatcher($"{MicroCyDevice.RootDirectory.FullName}\\WorkOrder");
       watcher.NotifyFilter = NotifyFilters.FileName;
       watcher.Filter = "*.txt";
       watcher.EnableRaisingEvents = true;
@@ -251,7 +251,7 @@ namespace Ei_Dimension
 
     public static void SetSystemControl(byte num)
     {
-      Device.SystemControl = num;
+      MicroCyDevice.SystemControl = num;
       Settings.Default.SystemControl = num;
       Settings.Default.Save();
     }
@@ -1575,7 +1575,7 @@ namespace Ei_Dimension
             }
             break;
           case "BaseFileName":
-            Device.Outfilename = _tempNewString;
+            ResultReporter.Outfilename = _tempNewString;
             Settings.Default.SaveFileName = _tempNewString;
             break;
           case "MaxPressureBox":
@@ -1697,7 +1697,7 @@ namespace Ei_Dimension
             r.regionNumber = MicroCyDevice.WellResults[i].regionNumber;
             tempres.Add(r);
           }
-          _ = Task.Run(()=>Device.SaveBeadFile(tempres));
+          _ = Task.Run(() => ResultReporter.SaveBeadFile(tempres));
           Device.GStatsFiller();
           MicroCyDevice.EndState++;
           Console.WriteLine($"{DateTime.Now.ToString()} Reporting Background File Save Init");
@@ -1734,7 +1734,7 @@ namespace Ei_Dimension
             GC.Collect();
             GC.WaitForPendingFinalizers();
           });
-          if (Device.CurrentWellIdx == (Device.WellsToRead + 1)) //if only one more to go
+          if (Device.CurrentWellIdx == (MicroCyDevice.WellsToRead + 1)) //if only one more to go
           {
             DashboardViewModel.Instance.WorkOrder[0] = "";
             Device.MainCommand("Set Property", code: 0x19);  //bubble detect off
@@ -1891,8 +1891,8 @@ namespace Ei_Dimension
 
     public static void SetLogOutput()
     {
-      if (!Directory.Exists(Device.Outdir + "\\SystemLogs"))
-        Directory.CreateDirectory(Device.Outdir + "\\SystemLogs");
+      if (!Directory.Exists(ResultReporter.Outdir + "\\SystemLogs"))
+        Directory.CreateDirectory(ResultReporter.Outdir + "\\SystemLogs");
       string logPath = Path.Combine(Path.Combine(@"C:\Emissioninc", Environment.MachineName), "SystemLogs", "EventLog");
       string logFilePath = logPath + ".txt";
       string backFilePath = logPath + ".bak";
@@ -2005,7 +2005,7 @@ namespace Ei_Dimension
       try
       {
         string contents = ResultsViewModel.Instance.PlatePictogram.GetSerializedPlate();
-        File.WriteAllText($"{Device.RootDirectory.FullName}\\Status\\StatusFile.json", contents);
+        File.WriteAllText($"{MicroCyDevice.RootDirectory.FullName}\\Status\\StatusFile.json", contents);
       }
       catch(Exception e)
       {
@@ -2016,7 +2016,7 @@ namespace Ei_Dimension
     public void OnNewWorkOrder(object sender, FileSystemEventArgs e)
     {
       var name = Path.GetFileNameWithoutExtension(e.Name);
-      Device.WorkOrderPath = e.FullPath;
+      ResultReporter.WorkOrderPath = e.FullPath;
       if (!ParseWorkOrder())
         return;
       
@@ -2032,17 +2032,17 @@ namespace Ei_Dimension
 
     public static void CheckAvailableWorkOrders()
     {
-      string[] fileEntries = Directory.GetFiles($"{Device.RootDirectory.FullName}\\WorkOrder", "*.txt");
+      string[] fileEntries = Directory.GetFiles($"{MicroCyDevice.RootDirectory.FullName}\\WorkOrder", "*.txt");
       if (fileEntries.Length == 0)
         return;
       var name = Path.GetFileNameWithoutExtension(fileEntries[0]);
-      Device.WorkOrderPath = fileEntries[0];
+      ResultReporter.WorkOrderPath = fileEntries[0];
       int i = 1;
       while (!ParseWorkOrder())
       {
         if (i < fileEntries.Length)
         {
-          Device.WorkOrderPath = fileEntries[i];
+          ResultReporter.WorkOrderPath = fileEntries[i];
           name = Path.GetFileNameWithoutExtension(fileEntries[i]);
           i++;
         }
@@ -2064,10 +2064,10 @@ namespace Ei_Dimension
     {
       try
       {
-        using (TextReader reader = new StreamReader(Device.WorkOrderPath))
+        using (TextReader reader = new StreamReader(ResultReporter.WorkOrderPath))
         {
           var contents = reader.ReadToEnd();
-          Device.WorkOrder = Newtonsoft.Json.JsonConvert.DeserializeObject<WorkOrder>(contents);
+          MicroCyDevice.WorkOrder = Newtonsoft.Json.JsonConvert.DeserializeObject<WorkOrder>(contents);
         }
       }
       catch

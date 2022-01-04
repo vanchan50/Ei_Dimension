@@ -50,7 +50,7 @@ namespace Ei_Dimension.ViewModels
       }
 
       DashboardViewModel.Instance.SetWellsInOrder();
-      if (App.Device.WellsInOrder.Count < 1)
+      if (MicroCyDevice.WellsInOrder.Count < 1)
       {
         App.ShowNotification("No wells or Tube selected");
         return;
@@ -61,7 +61,7 @@ namespace Ei_Dimension.ViewModels
       HashSet<int> startArg = null;
       switch (MicroCyDevice.Mode)
       {
-        case MicroCy.OperationMode.Normal:
+        case OperationMode.Normal:
           if (App.MapRegions.ActiveRegionNums.Count == 0)
           {
             App.ShowNotification("No Active regions selected");
@@ -73,11 +73,11 @@ namespace Ei_Dimension.ViewModels
           DefaultRegionNaming();
           startArg = App.MapRegions.ActiveRegionNums;
           break;
-        case MicroCy.OperationMode.Calibration:
+        case OperationMode.Calibration:
           CalibrationViewModel.Instance.CalJustFailed = true;
           ResultsViewModel.Instance.ShowSinglePlexResults();
           break;
-        case MicroCy.OperationMode.Verification:
+        case OperationMode.Verification:
           MakeNewValidator();
           break;
       }
@@ -85,7 +85,7 @@ namespace Ei_Dimension.ViewModels
       ResultsViewModel.Instance.ClearGraphs();
       ResultsViewModel.Instance.PlatePictogram.Clear();
       ResultsViewModel.Instance.PlotCurrent();
-      ResultsViewModel.Instance.PlatePictogram.SetWellsForReading(App.Device.WellsInOrder);
+      ResultsViewModel.Instance.PlatePictogram.SetWellsForReading(MicroCyDevice.WellsInOrder);
       for(var i = 0; i < 10; i++)
       {
         ResultsViewModel.Instance.MfiItems[i] = "";
@@ -107,8 +107,8 @@ namespace Ei_Dimension.ViewModels
       {
         MicroCyDevice.ReadActive = false;
         MicroCyDevice.EndState = 1;
-        if (App.Device.WellsToRead > 0) //if end read on tube or single well, nothing else is aspirated otherwise
-          App.Device.WellsToRead = App.Device.CurrentWellIdx + 1; //just read the next well in order since it is already aspirated
+        if (MicroCyDevice.WellsToRead > 0) //if end read on tube or single well, nothing else is aspirated otherwise
+          MicroCyDevice.WellsToRead = App.Device.CurrentWellIdx + 1; //just read the next well in order since it is already aspirated
       }
     }
 

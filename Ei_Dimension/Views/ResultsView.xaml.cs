@@ -1,4 +1,5 @@
 ﻿using DevExpress.Xpf.Charts;
+using MicroCy;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -52,18 +53,9 @@ namespace Ei_Dimension.Views
 
     public void PrintXY(int resoultionDpi = 800)
     {
-      var options = new DevExpress.XtraPrinting.ImageExportOptions
-      {
-        TextRenderingMode = DevExpress.XtraPrinting.TextRenderingMode.SingleBitPerPixelGridFit,
-        Resolution = resoultionDpi,
-        Format = new System.Drawing.Imaging.ImageFormat(System.Drawing.Imaging.ImageFormat.Png.Guid)
-      };
-      string date = DateTime.Now.ToString("dd.MM.yyyy.hhtt-mm-ss", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"));
       ChC.AxisX.Title.Visible = true;
       ChC.AxisY.Title.Visible = true;
-      if (!Directory.Exists(App.Device.Outdir + "\\SavedImages"))
-        Directory.CreateDirectory(App.Device.Outdir + "\\SavedImages");
-      XYPlot.ExportToImage(App.Device.Outdir + @"\SavedImages\" + date + ".png", options);
+      Export(XYPlot, resoultionDpi);
       ChC.AxisX.Title.Visible = false;
       ChC.AxisY.Title.Visible = false;
       printXY.Visibility = Visibility.Hidden;
@@ -71,32 +63,28 @@ namespace Ei_Dimension.Views
 
     public void PrintScatter(int resoultionDpi = 800)
     {
-      var options = new DevExpress.XtraPrinting.ImageExportOptions
-      {
-        TextRenderingMode = DevExpress.XtraPrinting.TextRenderingMode.SingleBitPerPixelGridFit,
-        Resolution = resoultionDpi,
-        Format = new System.Drawing.Imaging.ImageFormat(System.Drawing.Imaging.ImageFormat.Png.Guid)
-      };
-      string date = DateTime.Now.ToString("dd.MM.yyyy.hhtt-mm-ss", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"));
-      if (!Directory.Exists(App.Device.Outdir + "\\SavedImages"))
-        Directory.CreateDirectory(App.Device.Outdir + "\\SavedImages");
-      ScatterPlot.ExportToImage(App.Device.Outdir + @"\SavedImages\" + date + ".png", options);
+      Export(ScatterPlot, resoultionDpi);
       printSC.Visibility = Visibility.Hidden;
     }
 
     public void Print3D(int resoultionDpi = 800)
     {
+      Export(AnalysisPlot, resoultionDpi);
+      printAnalysis.Visibility = Visibility.Hidden;
+    }
+
+    private void Export(ChartControlBase chart, in int dpi)
+    {
       var options = new DevExpress.XtraPrinting.ImageExportOptions
       {
         TextRenderingMode = DevExpress.XtraPrinting.TextRenderingMode.SingleBitPerPixelGridFit,
-        Resolution = resoultionDpi,
+        Resolution = dpi,
         Format = new System.Drawing.Imaging.ImageFormat(System.Drawing.Imaging.ImageFormat.Png.Guid)
       };
       string date = DateTime.Now.ToString("dd.MM.yyyy.hhtt-mm-ss", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"));
-      if (!Directory.Exists(App.Device.Outdir + "\\SavedImages"))
-        Directory.CreateDirectory(App.Device.Outdir + "\\SavedImages");
-      AnalysisPlot.ExportToImage(App.Device.Outdir + @"\SavedImages\" + date + ".png", options);
-      printAnalysis.Visibility = Visibility.Hidden;
+      if (!Directory.Exists(ResultReporter.Outdir + "\\SavedImages"))
+        Directory.CreateDirectory(ResultReporter.Outdir + "\\SavedImages");
+      chart.ExportToImage(ResultReporter.Outdir + @"\SavedImages\" + date + ".png", options);
     }
 
     public void ShowSmallXYPlot()

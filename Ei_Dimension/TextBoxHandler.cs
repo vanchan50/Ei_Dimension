@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using Ei_Dimension.ViewModels;
 using MicroCy;
@@ -11,6 +8,8 @@ namespace Ei_Dimension
 {
   internal class TextBoxHandler
   {
+    private static readonly string[] SyncElements = { "SHEATH", "SAMPLE_A", "SAMPLE_B", "FLASH", "END_WELL", "VALVES", "X_MOTOR",
+      "Y_MOTOR", "Z_MOTOR", "PROXIMITY", "PRESSURE", "WASHING", "FAULT", "ALIGN MOTOR", "MAIN VALVE", "SINGLE STEP" };
     public static void Update()
     {
       float g = 0;
@@ -457,11 +456,11 @@ namespace Ei_Dimension
             {
               if ((exe.Parameter & (1 << i)) != 0)
               {
-                if (!list.Contains(App.Device.SyncElements[i]))
-                  list.Add(App.Device.SyncElements[i]);
+                if (!list.Contains(SyncElements[i]))
+                  list.Add(SyncElements[i]);
               }
-              else if (list.Contains(App.Device.SyncElements[i]))
-                list.Remove(App.Device.SyncElements[i]);
+              else if (list.Contains(SyncElements[i]))
+                list.Remove(SyncElements[i]);
             }
             break;
           case 0xcd:
@@ -518,8 +517,8 @@ namespace Ei_Dimension
                   r.regionNumber = MicroCyDevice.WellResults[i].regionNumber;
                   tempres.Add(r);
                 }
-                App.Device.WellsToRead = App.Device.CurrentWellIdx;
-                App.Device.SaveBeadFile(tempres);
+                MicroCyDevice.WellsToRead = App.Device.CurrentWellIdx;
+                ResultReporter.SaveBeadFile(tempres);
                 Environment.Exit(0);
               }
             }
@@ -542,8 +541,8 @@ namespace Ei_Dimension
           case 0xf3:
             if (!ComponentsViewModel.Instance.SuppressWarnings)
             {
-              ResultsViewModel.Instance.PlatePictogram.ChangeState(App.Device.ReadingRow, App.Device.ReadingCol, warning: Models.WellWarningState.YellowWarning);
-              if (App.Device.CurrentWellIdx < App.Device.WellsToRead) //aspirating next
+              ResultsViewModel.Instance.PlatePictogram.ChangeState(MicroCyDevice.ReadingRow, MicroCyDevice.ReadingCol, warning: Models.WellWarningState.YellowWarning);
+              if (App.Device.CurrentWellIdx < MicroCyDevice.WellsToRead) //aspirating next
                 App._nextWellWarning = true;
             }
             break;

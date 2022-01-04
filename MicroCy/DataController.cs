@@ -1,22 +1,18 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace MicroCy
 {
   internal class DataController
   {
     public static ConcurrentQueue<(string name, CommandStruct cs)> OutCommands { get; } = new ConcurrentQueue<(string name, CommandStruct cs)>();
-    public static object UsbOutCV { get; }= new object();
+    public static object UsbOutCV { get; } = new object();
 
     public static bool StopUSBPolling { get; set; }
     private readonly ISerial _serialConnection;
-    private Thread _prioUsbInThread;
-    private Thread _prioUsbOutThread;
+    private static Thread _prioUsbInThread;
+    private static Thread _prioUsbOutThread;
 
     public DataController(Type connectionType)
     {

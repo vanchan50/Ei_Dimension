@@ -2,6 +2,7 @@
 using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
 using DevExpress.Mvvm.UI;
+using MicroCy;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -192,9 +193,9 @@ namespace Ei_Dimension.ViewModels
     {
       App.InputSanityCheck();
       App.Device.MainCommand("Set Property", code: 0xad, parameter: (ushort)RowColIndex.rowIndex);
-      App.Device.ReadingRow = RowColIndex.rowIndex;
+      MicroCyDevice.ReadingRow = RowColIndex.rowIndex;
       App.Device.MainCommand("Set Property", code: 0xae, parameter: (ushort)RowColIndex.colIndex);
-      App.Device.ReadingCol = RowColIndex.colIndex;
+      MicroCyDevice.ReadingCol = RowColIndex.colIndex;
       App.Device.MainCommand("Position Well Plate");
     }
 
@@ -404,13 +405,13 @@ namespace Ei_Dimension.ViewModels
           case 1:
             _vm.SelectedWellRow = Content;
             App.Device.MainCommand("Set Property", code: 0xad, parameter: (ushort)Index);
-            App.Device.ReadingRow = Index;
+            MicroCyDevice.ReadingRow = Index;
             _vm.RowColIndex = (Index, _vm.RowColIndex.colIndex);
             break;
           case 2:
             _vm.SelectedWellColumn = Content;
             App.Device.MainCommand("Set Property", code: 0xae, parameter: (ushort)Index);
-            App.Device.ReadingCol = Index;
+            MicroCyDevice.ReadingCol = Index;
             _vm.RowColIndex = (_vm.RowColIndex.rowIndex, Index);
             break;
         }

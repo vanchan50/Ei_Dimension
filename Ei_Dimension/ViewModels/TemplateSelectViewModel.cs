@@ -25,7 +25,7 @@ namespace Ei_Dimension.ViewModels
     protected TemplateSelectViewModel()
     {
       TemplateSaveName = new ObservableCollection<string> { "TemplateName" };
-      var TemplateList = Directory.GetFiles(App.Device.RootDirectory + @"\Config", "*.dtml");
+      var TemplateList = Directory.GetFiles(MicroCyDevice.RootDirectory + @"\Config", "*.dtml");
       NameList = new ObservableCollection<string>();
       foreach (var template in TemplateList)
       {
@@ -167,7 +167,7 @@ namespace Ei_Dimension.ViewModels
     public void SaveTemplate()
     {
       App.InputSanityCheck();
-      var path = App.Device.RootDirectory + @"\Config\" + TemplateSaveName[0] + ".dtml";
+      var path = MicroCyDevice.RootDirectory + @"\Config\" + TemplateSaveName[0] + ".dtml";
       if (File.Exists(path))
       {
         App.ShowNotification($"A template with name {TemplateSaveName[0]} already exists");
@@ -247,7 +247,7 @@ namespace Ei_Dimension.ViewModels
       if (e.AddedItems.Count == 0)
         return;
       _templateName = e.AddedItems[0].ToString();
-      SelectedItem = App.Device.RootDirectory + @"\Config\" + e.AddedItems[0].ToString() + ".dtml";
+      SelectedItem = MicroCyDevice.RootDirectory + @"\Config\" + e.AddedItems[0].ToString() + ".dtml";
       DeleteVisible = Visibility.Visible;
     }
 
