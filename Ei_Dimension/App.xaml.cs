@@ -1928,15 +1928,15 @@ namespace Ei_Dimension
       Views.CalibrationView.Instance.clmap.DataContext = DashboardViewModel.Instance;
       Views.VerificationView.Instance.clmap.DataContext = DashboardViewModel.Instance;
       Views.ChannelsView.Instance.clmap.DataContext = DashboardViewModel.Instance;
-      //if (Settings.Default.LastTemplate != "None")
-      //{
-      //  TemplateSelectViewModel.Instance.SelectedItem = Settings.Default.LastTemplate;
-      //  TemplateSelectViewModel.Instance.LoadTemplate();
-      //}
-      //else
-      //{
+      if (Settings.Default.LastTemplate != "None")
+      {
+        TemplateSelectViewModel.Instance.SelectedItem = Settings.Default.LastTemplate;
+        TemplateSelectViewModel.Instance.LoadTemplate();
+      }
+      else
+      {
         DashboardViewModel.Instance.ClassiMapItems[Settings.Default.DefaultMap].Click(2);
-      //}
+      }
       ResultsViewModel.Instance.FillWorldMaps();
       SetLanguage(MaintenanceViewModel.Instance.LanguageItems[Settings.Default.Language].Locale);
       Program.SplashScreen.Close(TimeSpan.FromMilliseconds(1000));
