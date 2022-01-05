@@ -170,12 +170,22 @@ namespace Ei_Dimension.ViewModels
       var path = MicroCyDevice.RootDirectory + @"\Config\" + TemplateSaveName[0] + ".dtml";
       if (File.Exists(path))
       {
-        App.ShowNotification($"A template with name {TemplateSaveName[0]} already exists");
+        void Overwrite()
+        {
+          SavingProcedure(path);
+        }
+        App.ShowNotification($"A template with name \"{TemplateSaveName[0]}\" already exists.",
+          Overwrite, "Overwrite", null, "Cancel");
         return;
       }
+      SavingProcedure(path);
+    }
+    
+    private void SavingProcedure(string path)
+    {
       try
       {
-        using (var stream = new StreamWriter(path))
+        using (var stream = new StreamWriter(path, append: false))
         {
           var temp = new AcquisitionTemplate();
           var DashVM = DashboardViewModel.Instance;
@@ -216,7 +226,6 @@ namespace Ei_Dimension.ViewModels
               temp.SelectedWells.Add(list);
             }
           }
-
           var contents = JsonConvert.SerializeObject(temp);
           stream.Write(contents);
         }
@@ -234,11 +243,17 @@ namespace Ei_Dimension.ViewModels
       App.InputSanityCheck();
       if (SelectedItem != null && File.Exists(SelectedItem))
       {
-        File.Delete(SelectedItem);
-        NameList.Remove(_templateName);
-        if (ExperimentViewModel.Instance.CurrentTemplateName == _templateName)
-          ExperimentViewModel.Instance.CurrentTemplateName = "None";
-        DeleteVisible = Visibility.Hidden;
+        
+        void Delete()
+        {
+          File.Delete(SelectedItem);
+          NameList.Remove(_templateName);
+          if (ExperimentViewModel.Instance.CurrentTemplateName == _templateName)
+            ExperimentViewModel.Instance.CurrentTemplateName = "None";
+          DeleteVisible = Visibility.Hidden;
+        }
+        App.ShowNotification($"Do you want to delete \"{Path.GetFileNameWithoutExtension(SelectedItem)}\" template?",
+          Delete, "Delete", null, "Cancel");
       }
     }
 

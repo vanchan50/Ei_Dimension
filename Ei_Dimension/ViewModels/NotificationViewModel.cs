@@ -49,13 +49,13 @@ namespace Ei_Dimension.ViewModels
 
     public void PerformAction1()
     {
-      _action1.Invoke();
+      _action1?.Invoke();
       Close();
     }
 
     public void PerformAction2()
     {
-      _action2.Invoke();
+      _action2?.Invoke();
       Close();
     }
   }
