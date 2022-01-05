@@ -22,6 +22,7 @@ namespace Ei_Dimension.ViewModels
     public string _templateName;
     public static TemplateSelectViewModel Instance { get; private set; }
     public virtual Visibility DeleteVisible { get; set; }
+    private static List<char> _invalidChars;
     protected TemplateSelectViewModel()
     {
       TemplateSaveName = new ObservableCollection<string> { "TemplateName" };
@@ -32,6 +33,9 @@ namespace Ei_Dimension.ViewModels
         NameList.Add(Path.GetFileNameWithoutExtension(template));
       }
       DeleteVisible = Visibility.Hidden;
+      _invalidChars = new List<char>();
+      _invalidChars.AddRange(Path.GetInvalidPathChars());
+      _invalidChars.AddRange(Path.GetInvalidFileNameChars());
       Instance = this;
     }
 
@@ -168,6 +172,14 @@ namespace Ei_Dimension.ViewModels
     {
       App.InputSanityCheck();
       var path = MicroCyDevice.RootDirectory + @"\Config\" + TemplateSaveName[0] + ".dtml";
+      foreach (var c in _invalidChars)
+      {
+        if (TemplateSaveName[0].Contains(c.ToString()))
+        {
+          App.ShowNotification("Invalid File name");
+          return;
+        }
+      }
       if (File.Exists(path))
       {
         void Overwrite()
@@ -243,7 +255,6 @@ namespace Ei_Dimension.ViewModels
       App.InputSanityCheck();
       if (SelectedItem != null && File.Exists(SelectedItem))
       {
-        
         void Delete()
         {
           File.Delete(SelectedItem);

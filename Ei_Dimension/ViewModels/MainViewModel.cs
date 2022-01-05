@@ -124,7 +124,7 @@ namespace Ei_Dimension.ViewModels
         var p = tb.PointToScreen(MainWindow.Instance.wndw.PointFromScreen(new System.Windows.Point(0, 0)));
         double shiftX;
         double shiftY;
-        double NpdHeight = 340;
+        double NpdHeight = 390;
         if (p.X > 100)
           shiftX = 100;
         else if (p.X > 50)
@@ -155,7 +155,7 @@ namespace Ei_Dimension.ViewModels
         var p = tb.PointToScreen(MainWindow.Instance.wndw.PointFromScreen(new System.Windows.Point(0, 0)));
         double shiftX;
         double shiftY;
-        double KbdHeight = 410;
+        double KbdHeight = 460;
         if (p.X > 300)
           shiftX = 300;
         else if (p.X > 250)
