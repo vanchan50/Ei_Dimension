@@ -247,6 +247,10 @@ namespace Ei_Dimension.Core
           }
         }
       }
+      else if (heatMap != null && heatMap.Count == 0)
+      {
+        Views.ResultsView.Instance.ClearPoints();
+      }
     }
 
     public static void BinMapData(List<MicroCy.BeadInfoStruct> beadInfoList, bool current = true, bool hiRez = false)

@@ -254,22 +254,18 @@ namespace Ei_Dimension.ViewModels
 
     public void SelectedCellChanged()
     {
-      try
+      var temp = PlatePictogram.GetSelectedCell();
+      if (temp.row == -1)
+        return;
+      PlatePictogram.SelectedCell = temp;
+      if (temp == PlatePictogram.CurrentlyReadCell)
       {
-        var temp = PlatePictogram.GetSelectedCell();
-        if (temp.row == -1)
-          return;
-        PlatePictogram.SelectedCell = temp;
-        if (temp == PlatePictogram.CurrentlyReadCell)
-        {
-          ToCurrentButtonClick();
-          return;
-        }
-        PlotCurrent(false);
-        ClearGraphs(false);
-        FillAllData();
+        ToCurrentButtonClick();
+        return;
       }
-      catch { }
+      PlotCurrent(false);
+      ClearGraphs(false);
+      FillAllData();
     }
 
     public void ChangeScatterLegend(int num)  //TODO: For buttons
@@ -314,8 +310,9 @@ namespace Ei_Dimension.ViewModels
       _ = Task.Run(() =>
       {
         var path = PlatePictogram.GetSelectedFilePath();  //@"C:\Emissioninc\KEIZ0R-LEGION\AcquisitionData\val speed test 2E7_0.csv"; //
-        if (path == null)
+        if (!System.IO.File.Exists(path))
         {
+          App.ShowNotification($"File does not exist.\nPlease report this issue to the manufacturer");
           ResultsWaitIndicatorVisibility = false;
           ChartWaitIndicatorVisibility = false;
           _fillDataActive = false;
@@ -324,6 +321,12 @@ namespace Ei_Dimension.ViewModels
         FillBackingWellResults();
         var beadStructsList = new List<MicroCy.BeadInfoStruct>(100000);
         ParseBeadInfo(path, beadStructsList);
+        if (beadStructsList.Count == 0)
+        {
+          ResultsWaitIndicatorVisibility = false;
+          ChartWaitIndicatorVisibility = false;
+          return;
+        }
         _ = Task.Run(() => Core.DataProcessor.BinScatterData(beadStructsList, fromFile: true));
         Core.DataProcessor.BinMapData(beadStructsList, current: false, hiRez);
         //DisplayedMap.Sort((x, y) => x.A.CompareTo(y.A));

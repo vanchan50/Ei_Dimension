@@ -64,11 +64,7 @@ namespace Ei_Dimension.ViewModels
         case OperationMode.Normal:
           if (App.MapRegions.ActiveRegionNums.Count == 0)
           {
-            App.ShowNotification("No Active regions selected");
-            for (var i = 0; i < App.MapRegions.ActiveRegions.Count; i++)
-            {
-              App.MapRegions.AddActiveRegion(i);
-            }
+            SelectAllMapRegions();
           }
           DefaultRegionNaming();
           startArg = App.MapRegions.ActiveRegionNums;
@@ -112,7 +108,7 @@ namespace Ei_Dimension.ViewModels
       }
     }
 
-    private void MakeNewValidator()
+    private static void MakeNewValidator()
     {
       var regions = new List<int>();
       for (var i = 0; i < App.MapRegions.RegionsList.Count; i++)
@@ -126,15 +122,23 @@ namespace Ei_Dimension.ViewModels
       Validator.Reset(regions);
     }
 
-    public void DefaultRegionNaming()
+    private static void DefaultRegionNaming()
     {
       for (var i = 0; i < App.MapRegions.RegionsList.Count; i++)
       {
-        if (App.MapRegions.ActiveRegions[i])
+        if (App.MapRegions.ActiveRegions[i] && App.MapRegions.RegionsNamesList[i] == "")
         {
-          if (App.MapRegions.RegionsNamesList[i] == "")
-            App.MapRegions.RegionsNamesList[i] = App.MapRegions.RegionsList[i];
+          App.MapRegions.RegionsNamesList[i] = App.MapRegions.RegionsList[i];
         }
+      }
+    }
+
+    private static void SelectAllMapRegions()
+    {
+      App.ShowNotification("No Active regions selected");
+      for (var i = 0; i < App.MapRegions.ActiveRegions.Count; i++)
+      {
+        App.MapRegions.AddActiveRegion(i, callFromCode: true);
       }
     }
   }

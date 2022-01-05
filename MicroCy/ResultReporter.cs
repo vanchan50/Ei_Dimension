@@ -46,10 +46,10 @@ namespace MicroCy
 
       char rowletter = (char)(0x41 + MicroCyDevice.ReadingRow);
       //if(!isTube)
-      char colLetter = (char)(MicroCyDevice.ReadingCol + 1);  //use 0 for tubes and true column for plates
+      string colLetter = (MicroCyDevice.ReadingCol + 1).ToString();  //use 0 for tubes and true column for plates
       for (var differ = 0; differ < int.MaxValue; differ++)
       {
-        FullFileName = $"{Outdir}\\AcquisitionData\\{Outfilename}{rowletter}{colLetter}_{differ}.csv";
+        FullFileName = $"{Outdir}\\AcquisitionData\\{Outfilename}{rowletter}{colLetter}_{differ.ToString()}.csv";
         if (!File.Exists(FullFileName))
           break;
       }

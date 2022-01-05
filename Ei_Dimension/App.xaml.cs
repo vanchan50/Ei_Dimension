@@ -1928,6 +1928,7 @@ namespace Ei_Dimension
       Views.CalibrationView.Instance.clmap.DataContext = DashboardViewModel.Instance;
       Views.VerificationView.Instance.clmap.DataContext = DashboardViewModel.Instance;
       Views.ChannelsView.Instance.clmap.DataContext = DashboardViewModel.Instance;
+      //load map parameters
       if (Settings.Default.LastTemplate != "None")
       {
         TemplateSelectViewModel.Instance.SelectedItem = Settings.Default.LastTemplate;
@@ -1937,18 +1938,20 @@ namespace Ei_Dimension
       {
         DashboardViewModel.Instance.ClassiMapItems[Settings.Default.DefaultMap].Click(2);
       }
+
       ResultsViewModel.Instance.FillWorldMaps();
       SetLanguage(MaintenanceViewModel.Instance.LanguageItems[Settings.Default.Language].Locale);
       Program.SplashScreen.Close(TimeSpan.FromMilliseconds(1000));
       Views.ExperimentView.Instance.DbButton.IsChecked = true;
       Device.MainCommand("Get Property", code: 0x01);
-
+      //3D plot TRS transforms
       var matrix = Views.ResultsView.Instance.AnalysisPlot.ContentTransform.Value;
       matrix.Rotate(new System.Windows.Media.Media3D.Quaternion(new System.Windows.Media.Media3D.Vector3D(0, 1, 0), 90));
       matrix.Rotate(new System.Windows.Media.Media3D.Quaternion(new System.Windows.Media.Media3D.Vector3D(1, 0, 0), 40));
       matrix.Rotate(new System.Windows.Media.Media3D.Quaternion(new System.Windows.Media.Media3D.Vector3D(0, 1, 0), -15));
       matrix.Translate(new System.Windows.Media.Media3D.Vector3D(-100, 100, 0));
       ((System.Windows.Media.Media3D.MatrixTransform3D)Views.ResultsView.Instance.AnalysisPlot.ContentTransform).Matrix = matrix;
+
       CheckAvailableWorkOrders();
       _isStartup = false;
     }

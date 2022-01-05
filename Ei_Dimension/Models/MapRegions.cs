@@ -108,7 +108,7 @@ namespace Ei_Dimension.Models
       }
     }
 
-    public void AddActiveRegion(int index)
+    public void AddActiveRegion(int index, bool callFromCode = false)
     {
       if (!ActiveRegions[index])
       {
@@ -120,6 +120,9 @@ namespace Ei_Dimension.Models
         ActiveRegions[index] = false;
         ShiftTextBox(index, false);
       }
+
+      if (callFromCode)
+        return;
       System.Windows.Input.FocusManager.SetFocusedElement(System.Windows.Input.FocusManager.GetFocusScope(Views.SelRegionsView.Instance), null);
       System.Windows.Input.Keyboard.ClearFocus();
     }
