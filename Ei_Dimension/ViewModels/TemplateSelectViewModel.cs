@@ -246,8 +246,12 @@ namespace Ei_Dimension.ViewModels
       {
         App.ShowNotification("There was a problem saving the Template");
       }
-      NameList.Add(TemplateSaveName[0]);
+      if (!NameList.Contains(TemplateSaveName[0]))
+      {
+        NameList.Add(TemplateSaveName[0]);
+      }
       DeleteVisible = Visibility.Hidden;
+      Views.TemplateSelectView.Instance.list.UnselectAll();
     }
 
     public void DeleteTemplate()
@@ -274,6 +278,7 @@ namespace Ei_Dimension.ViewModels
         return;
       _templateName = e.AddedItems[0].ToString();
       SelectedItem = MicroCyDevice.RootDirectory + @"\Config\" + e.AddedItems[0].ToString() + ".dtml";
+      TemplateSaveName[0] = _templateName;
       DeleteVisible = Visibility.Visible;
     }
 

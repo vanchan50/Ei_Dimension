@@ -180,12 +180,19 @@
         </StackPanel>
       </StackPanel>
     </StackPanel>
-    <Button Content="Select folder"
-            Width="150" Height="50"
+    <Button Content="Select Custom&#x0a;output folder"
+            Width="180" Height="100"
             HorizontalAlignment="Left" VerticalAlignment="Top"
             Margin="80,600,0,0" Cursor="Hand"
             Style="{StaticResource ButtonStyle}"
             Command="{Binding SelectOutFolderCommand}"/>
+    <Button Content="Select Default&#x0a;output folder"
+            Width="180" Height="100"
+            HorizontalAlignment="Left" VerticalAlignment="Top"
+            Margin="280,600,0,0" Cursor="Hand"
+            Style="{StaticResource ButtonStyle}"
+            Command="{Binding SelectOutFolderCommand}"
+            CommandParameter="True"/>
     <StackPanel Orientation="Horizontal" 
                 Height="40"
                 Margin="750,800,0,0"

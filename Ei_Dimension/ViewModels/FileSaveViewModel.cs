@@ -52,9 +52,14 @@ namespace Ei_Dimension.ViewModels
       CheckBox(num);
     }
 
-    public void SelectOutFolder()
+    public void SelectOutFolder(bool defaultDir = false)
     {
       App.InputSanityCheck();
+      if (defaultDir)
+      {
+        ResultReporter.Outdir = MicroCyDevice.RootDirectory.FullName;
+        return;
+      }
       FolderBrowserDialogService.StartPath = ResultReporter.Outdir;
       if (FolderBrowserDialogService.ShowDialog())
         ResultReporter.Outdir = FolderBrowserDialogService.ResultPath;
@@ -102,7 +107,7 @@ namespace Ei_Dimension.ViewModels
         case 5:
           break;
         case 6:
-          if (Checkboxes[num] == true)
+          if (Checkboxes[num])
             App.SetLogOutput();
           else
           {

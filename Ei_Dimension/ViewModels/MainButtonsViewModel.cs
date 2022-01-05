@@ -66,7 +66,7 @@ namespace Ei_Dimension.ViewModels
           {
             SelectAllMapRegions();
           }
-          DefaultRegionNaming();
+          //DefaultRegionNaming();
           startArg = App.MapRegions.ActiveRegionNums;
           break;
         case OperationMode.Calibration:

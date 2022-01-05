@@ -114,6 +114,10 @@ namespace Ei_Dimension.Models
       {
         ShiftTextBox(index, true);
         ActiveRegions[index] = true;
+        if (RegionsNamesList[index] == "")
+        {
+          RegionsNamesList[index] = RegionsList[index].ToString();
+        }
       }
       else
       {
