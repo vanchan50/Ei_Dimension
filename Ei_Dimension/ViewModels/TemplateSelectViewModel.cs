@@ -8,6 +8,7 @@ using Ei_Dimension.Models;
 using System.Windows;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows.Controls;
 using MicroCy;
 
@@ -19,6 +20,8 @@ namespace Ei_Dimension.ViewModels
     public virtual ObservableCollection<string> NameList { get; set; }
     public string SelectedItem;
     public virtual ObservableCollection<string> TemplateSaveName { get; set; }
+    public virtual Visibility WaitIndicatorBorderVisibility { get; set; }
+    public virtual bool WaitIndicatorVisibility { get; set; }
     public string _templateName;
     public static TemplateSelectViewModel Instance { get; private set; }
     public virtual Visibility DeleteVisible { get; set; }
@@ -36,6 +39,8 @@ namespace Ei_Dimension.ViewModels
       _invalidChars = new List<char>();
       _invalidChars.AddRange(Path.GetInvalidPathChars());
       _invalidChars.AddRange(Path.GetInvalidFileNameChars());
+      WaitIndicatorBorderVisibility = Visibility.Hidden;
+      WaitIndicatorVisibility = false;
       Instance = this;
     }
 
@@ -62,109 +67,130 @@ namespace Ei_Dimension.ViewModels
       }
       if (newTemplate != null)
       {
-        try
+        ShowWaitIndicator();
+        Task.Run(() =>
         {
-          int iRes;
-          var DashVM = DashboardViewModel.Instance;
-          DashVM.SpeedItems[newTemplate.Speed].Click(1);
-          DashVM.ClassiMapItems[App.GetMapIndex(newTemplate.Map)].Click(2);
-          DashVM.ChConfigItems[newTemplate.ChConfig].Click(3);
-          DashVM.OrderItems[newTemplate.Order].Click(4);
-          DashVM.SysControlItems[newTemplate.SysControl].Click(5);
-          DashVM.EndReadItems[newTemplate.EndRead].Click(6);
-          DashVM.EndRead[0] = newTemplate.MinPerRegion.ToString();
-          if (int.TryParse(DashVM.EndRead[0], out iRes))
+          App.Current.Dispatcher.Invoke((Action) (() =>
           {
-            MicroCyDevice.MinPerRegion = iRes;
-            Settings.Default.MinPerRegion = iRes;
-          }
-          else
-            throw new Exception();
-          DashVM.EndRead[1] = newTemplate.TotalEvents.ToString();
-          if (int.TryParse(DashVM.EndRead[1], out iRes))
-          {
-            MicroCyDevice.BeadsToCapture = iRes;
-            Settings.Default.BeadsToCapture = iRes;
-          }
-          else
-            throw new Exception();
-          DashVM.Volumes[0] = newTemplate.SampleVolume.ToString();
-          if (int.TryParse(DashVM.Volumes[0], out iRes))
-          {
-            App.Device.MainCommand("Set Property", code: 0xaf, parameter: (ushort)iRes);
-          }
-          else
-            throw new Exception();
-          DashVM.Volumes[1] = newTemplate.WashVolume.ToString();
-          if (int.TryParse(DashVM.Volumes[1], out iRes))
-          {
-            App.Device.MainCommand("Set Property", code: 0xac, parameter: (ushort)iRes);
-          }
-          else
-            throw new Exception();
-          DashVM.Volumes[2] = newTemplate.AgitateVolume.ToString();
-          if (int.TryParse(DashVM.Volumes[2], out iRes))
-          {
-            App.Device.MainCommand("Set Property", code: 0xc4, parameter: (ushort)iRes);
-          }
-          else
-            throw new Exception();
-          uint chkBox = newTemplate.FileSaveCheckboxes;
-          for (var i = FileSaveViewModel.Instance.Checkboxes.Count - 1 - 1; i > -1; i--)// -1 to not store system log
-          {
-            uint pow = (uint)Math.Pow(2, i);
-            if (chkBox >= pow)
+            try
             {
-              FileSaveViewModel.Instance.CheckedBox(i);
-              chkBox -= pow;
-            }
-            else
-              FileSaveViewModel.Instance.UncheckedBox(i);
-          }
-          for (var i = 0; i < App.MapRegions.ActiveRegions.Count; i++)
-          {
-            if (newTemplate.ActiveRegions[i])
-            {
-              App.MapRegions.AddActiveRegion(i);
-            }
-            App.MapRegions.RegionsNamesList[i] = newTemplate.RegionsNamesList[i];
-          }
-          WellsSelectViewModel.Instance.ChangeWellTableSize(newTemplate.TableSize);
-          if (newTemplate.TableSize == 96)
-            Views.ExperimentView.Instance.DbWell96.IsChecked = true;
-          else if (newTemplate.TableSize == 384)
-            Views.ExperimentView.Instance.DbWell384.IsChecked = true;
-          var size = newTemplate.TableSize == 96 ? 12 : 24;
-          var Wells = WellsSelectViewModel.Instance.CurrentTableSize == 96 ?
-            WellsSelectViewModel.Instance.Table96Wells : WellsSelectViewModel.Instance.Table384Wells;
-          if (newTemplate.TableSize > 1)
-          {
-            var j = 0;
-            foreach (var row in Wells)
-            {
-              for (var i = 0; i < size; i++)
+              int iRes;
+              var DashVM = DashboardViewModel.Instance;
+              DashVM.SpeedItems[newTemplate.Speed].Click(1);
+              DashVM.ClassiMapItems[App.GetMapIndex(newTemplate.Map)].Click(2);
+              DashVM.ChConfigItems[newTemplate.ChConfig].Click(3);
+              DashVM.OrderItems[newTemplate.Order].Click(4);
+              DashVM.SysControlItems[newTemplate.SysControl].Click(5);
+              DashVM.EndReadItems[newTemplate.EndRead].Click(6);
+              DashVM.EndRead[0] = newTemplate.MinPerRegion.ToString();
+              if (int.TryParse(DashVM.EndRead[0], out iRes))
               {
-                row.SetType(i, newTemplate.SelectedWells[j][i]);
+                MicroCyDevice.MinPerRegion = iRes;
+                Settings.Default.MinPerRegion = iRes;
               }
-              j++;
+              else
+                throw new Exception();
+
+              DashVM.EndRead[1] = newTemplate.TotalEvents.ToString();
+              if (int.TryParse(DashVM.EndRead[1], out iRes))
+              {
+                MicroCyDevice.BeadsToCapture = iRes;
+                Settings.Default.BeadsToCapture = iRes;
+              }
+              else
+                throw new Exception();
+
+              DashVM.Volumes[0] = newTemplate.SampleVolume.ToString();
+              if (int.TryParse(DashVM.Volumes[0], out iRes))
+              {
+                App.Device.MainCommand("Set Property", code: 0xaf, parameter: (ushort) iRes);
+              }
+              else
+                throw new Exception();
+
+              DashVM.Volumes[1] = newTemplate.WashVolume.ToString();
+              if (int.TryParse(DashVM.Volumes[1], out iRes))
+              {
+                App.Device.MainCommand("Set Property", code: 0xac, parameter: (ushort) iRes);
+              }
+              else
+                throw new Exception();
+
+              DashVM.Volumes[2] = newTemplate.AgitateVolume.ToString();
+              if (int.TryParse(DashVM.Volumes[2], out iRes))
+              {
+                App.Device.MainCommand("Set Property", code: 0xc4, parameter: (ushort) iRes);
+              }
+              else
+                throw new Exception();
+
+              uint chkBox = newTemplate.FileSaveCheckboxes;
+              for (var i = FileSaveViewModel.Instance.Checkboxes.Count - 1 - 1; i > -1; i--) // -1 to not store system log
+              {
+                uint pow = (uint) Math.Pow(2, i);
+                if (chkBox >= pow)
+                {
+                  FileSaveViewModel.Instance.CheckedBox(i);
+                  chkBox -= pow;
+                }
+                else
+                  FileSaveViewModel.Instance.UncheckedBox(i);
+              }
+
+              for (var i = 0; i < App.MapRegions.ActiveRegions.Count; i++)
+              {
+                if (newTemplate.ActiveRegions[i])
+                {
+                  App.MapRegions.AddActiveRegion(i);
+                }
+
+                App.MapRegions.RegionsNamesList[i] = newTemplate.RegionsNamesList[i];
+              }
+
+              WellsSelectViewModel.Instance.ChangeWellTableSize(newTemplate.TableSize);
+              if (newTemplate.TableSize == 96)
+                Views.ExperimentView.Instance.DbWell96.IsChecked = true;
+              else if (newTemplate.TableSize == 384)
+                Views.ExperimentView.Instance.DbWell384.IsChecked = true;
+              var size = newTemplate.TableSize == 96 ? 12 : 24;
+              var Wells = WellsSelectViewModel.Instance.CurrentTableSize == 96
+                ? WellsSelectViewModel.Instance.Table96Wells
+                : WellsSelectViewModel.Instance.Table384Wells;
+              if (newTemplate.TableSize > 1)
+              {
+                var j = 0;
+                foreach (var row in Wells)
+                {
+                  for (var i = 0; i < size; i++)
+                  {
+                    row.SetType(i, newTemplate.SelectedWells[j][i]);
+                  }
+
+                  j++;
+                }
+              }
+              else
+                Views.ExperimentView.Instance.DbTube.IsChecked = true;
             }
-          }
-          else
-            Views.ExperimentView.Instance.DbTube.IsChecked = true;
-        }
-        catch
-        {
-          App.ShowNotification("Error loading Template");
-          return;
-        }
-        if (_templateName == null)
-        {
-          _templateName = SelectedItem.Substring(SelectedItem.LastIndexOf("\\") + 1, SelectedItem.Length - SelectedItem.LastIndexOf("\\") - 6);
-        }
-        ExperimentViewModel.Instance.CurrentTemplateName = _templateName;
-        Settings.Default.LastTemplate = SelectedItem;
-        Settings.Default.Save();
-        ExperimentViewModel.Instance.NavigateDashboard();
+            catch
+            {
+              App.ShowNotification("Error loading Template");
+              return;
+            }
+            finally
+            {
+              HideWaitIndicator();
+            }
+            if (_templateName == null)
+            {
+              _templateName = SelectedItem.Substring(SelectedItem.LastIndexOf("\\") + 1, SelectedItem.Length - SelectedItem.LastIndexOf("\\") - 6);
+            }
+            ExperimentViewModel.Instance.CurrentTemplateName = _templateName;
+            Settings.Default.LastTemplate = SelectedItem;
+            Settings.Default.Save();
+            ExperimentViewModel.Instance.NavigateDashboard();
+          }));
+        });
       }
     }
 
@@ -291,6 +317,18 @@ namespace Ei_Dimension.ViewModels
           MainViewModel.Instance.KeyboardToggle(Views.TemplateSelectView.Instance.TmplBox);
           break;
       }
+    }
+
+    private void ShowWaitIndicator()
+    {
+      WaitIndicatorBorderVisibility = Visibility.Visible;
+      WaitIndicatorVisibility = true;
+    }
+
+    private void HideWaitIndicator()
+    {
+      WaitIndicatorBorderVisibility = Visibility.Hidden;
+      WaitIndicatorVisibility = false;
     }
   }
 }

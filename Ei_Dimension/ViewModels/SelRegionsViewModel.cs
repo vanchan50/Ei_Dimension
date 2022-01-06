@@ -2,6 +2,8 @@
 using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
 using System;
+using System.Threading.Tasks;
+using System.Windows;
 
 namespace Ei_Dimension.ViewModels
 {
@@ -9,8 +11,13 @@ namespace Ei_Dimension.ViewModels
   public class SelRegionsViewModel
   {
     public static SelRegionsViewModel Instance { get; private set; }
+    public virtual Visibility WaitIndicatorBorderVisibility { get; set; }
+    public virtual bool WaitIndicatorVisibility { get; set; }
+
     protected SelRegionsViewModel()
     {
+      WaitIndicatorBorderVisibility = Visibility.Hidden;
+      WaitIndicatorVisibility = false;
       Instance = this;
     }
 
@@ -26,18 +33,49 @@ namespace Ei_Dimension.ViewModels
 
     public void AllSelectClick()
     {
-      App.InputSanityCheck();
-      for (var i = 0; i < App.MapRegions.ActiveRegions.Count; i++)
+      ShowWaitIndicator();
+      Task.Run(() =>
       {
-        if(!App.MapRegions.ActiveRegions[i])
-          App.MapRegions.AddActiveRegion(i);
-      }
+        App.Current.Dispatcher.Invoke((Action)
+          (() =>
+          {
+            App.InputSanityCheck();
+            for (var i = 0; i < App.MapRegions.ActiveRegions.Count; i++)
+            {
+              if (!App.MapRegions.ActiveRegions[i])
+                App.MapRegions.AddActiveRegion(i);
+            }
+
+            HideWaitIndicator();
+          }));
+      });
     }
 
     public void ResetClick()
     {
-      App.InputSanityCheck();
-      App.MapRegions.FillRegions();
+      ShowWaitIndicator();
+      Task.Run(() =>
+      {
+        App.Current.Dispatcher.Invoke((Action)
+          (() =>
+          {
+            App.InputSanityCheck();
+            App.MapRegions.FillRegions();
+            HideWaitIndicator();
+          }));
+      });
+    }
+
+    private void ShowWaitIndicator()
+    {
+      WaitIndicatorBorderVisibility = Visibility.Visible;
+      WaitIndicatorVisibility = true;
+    }
+
+    private void HideWaitIndicator()
+    {
+      WaitIndicatorBorderVisibility = Visibility.Hidden;
+      WaitIndicatorVisibility = false;
     }
   }
 }

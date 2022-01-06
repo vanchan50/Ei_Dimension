@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
              xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
              xmlns:ViewModels="clr-namespace:Ei_Dimension.ViewModels"
              mc:Ignorable="d"
@@ -74,6 +75,34 @@
           </dxmvvm:Interaction.Triggers>
         </ListBox>
       </ScrollViewer>
+
+      <Border Visibility="{Binding WaitIndicatorBorderVisibility}"
+              HorizontalAlignment="Left"
+              VerticalAlignment="Top"
+              Width="730" Height="640"
+              Margin="20,135,0,0">
+        <Grid>
+          <Border HorizontalAlignment="Left"
+                  VerticalAlignment="Top"
+                  Width="730" Height="640"
+                  Opacity="0.3"
+                  Background="Black"/>
+          <dx:WaitIndicator DeferedVisibility="{Binding WaitIndicatorVisibility}" Content="Loading..."
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            Margin="270,280,0,0">
+            <dx:WaitIndicator.ContentTemplate>
+              <DataTemplate>
+                <StackPanel Orientation="Vertical">
+                  <TextBlock Text="Please Wait" FontSize="20"/>
+                  <TextBlock Text="{Binding}"/>
+                </StackPanel>
+              </DataTemplate>
+            </dx:WaitIndicator.ContentTemplate>
+          </dx:WaitIndicator>
+        </Grid>
+      </Border>
+
 
       <Button Content="{lang:Loc Experiment_Load_Template}"
               Command="{Binding LoadTemplateCommand}"
