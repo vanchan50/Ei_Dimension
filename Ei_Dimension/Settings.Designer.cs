@@ -169,7 +169,7 @@ namespace Ei_Dimension {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("400")]
+        [global::System.Configuration.DefaultSettingValueAttribute("500")]
         public ushort StepsPerRevX {
             get {
                 return ((ushort)(this["StepsPerRevX"]));
@@ -181,7 +181,7 @@ namespace Ei_Dimension {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("400")]
+        [global::System.Configuration.DefaultSettingValueAttribute("500")]
         public ushort StepsPerRevY {
             get {
                 return ((ushort)(this["StepsPerRevY"]));
@@ -193,7 +193,7 @@ namespace Ei_Dimension {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("400")]
+        [global::System.Configuration.DefaultSettingValueAttribute("500")]
         public ushort StepsPerRevZ {
             get {
                 return ((ushort)(this["StepsPerRevZ"]));

@@ -39,13 +39,13 @@
       <Value Profile="(Default)">500</Value>
     </Setting>
     <Setting Name="StepsPerRevX" Type="System.UInt16" Scope="User">
-      <Value Profile="(Default)">400</Value>
+      <Value Profile="(Default)">500</Value>
     </Setting>
     <Setting Name="StepsPerRevY" Type="System.UInt16" Scope="User">
-      <Value Profile="(Default)">400</Value>
+      <Value Profile="(Default)">500</Value>
     </Setting>
     <Setting Name="StepsPerRevZ" Type="System.UInt16" Scope="User">
-      <Value Profile="(Default)">400</Value>
+      <Value Profile="(Default)">500</Value>
     </Setting>
     <Setting Name="SensitivityChannelB" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
