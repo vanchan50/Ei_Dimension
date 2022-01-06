@@ -75,7 +75,7 @@ namespace Ei_Dimension.ViewModels
         WellColumnButtonItems.Add(new DropDownButtonContents(i.ToString()));
       }
       DropDownButtonContents.ResetIndex();
-      RowColIndex = (1, 1);
+      RowColIndex = (0, 0);
       Instance = this;
     }
 
