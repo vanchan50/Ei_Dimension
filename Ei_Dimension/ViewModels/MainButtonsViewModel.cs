@@ -84,8 +84,8 @@ namespace Ei_Dimension.ViewModels
       ResultsViewModel.Instance.PlatePictogram.SetWellsForReading(MicroCyDevice.WellsInOrder);
       for(var i = 0; i < 10; i++)
       {
-        ResultsViewModel.Instance.MfiItems[i] = "";
-        ResultsViewModel.Instance.CvItems[i] = "";
+        ResultsViewModel.Instance.CurrentMfiItems[i] = "";
+        ResultsViewModel.Instance.CurrentCvItems[i] = "";
       }
       App.Device.StartOperation(startArg);
       MainViewModel.Instance.NavigationSelector(1);

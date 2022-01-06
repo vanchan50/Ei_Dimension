@@ -67,19 +67,6 @@
                    Fill="{StaticResource RibbonBackgroundActive}"
                    Margin="1,94,0,0"/>
         </Grid>
-        <dx:WaitIndicator DeferedVisibility="{Binding ResultsWaitIndicatorVisibility}" Content="Loading..."
-                          HorizontalAlignment="Left"
-                          VerticalAlignment="Top"
-                          Margin="120,400,0,0">
-          <dx:WaitIndicator.ContentTemplate>
-            <DataTemplate>
-              <StackPanel Orientation="Vertical">
-                <TextBlock Text="Please Wait" FontSize="20"/>
-                <TextBlock Text="{Binding}"/>
-              </StackPanel>
-            </DataTemplate>
-          </dx:WaitIndicator.ContentTemplate>
-        </dx:WaitIndicator>
         <!--Calibration Statistics-->
         <Border HorizontalAlignment="Left"
                 VerticalAlignment="Top"
@@ -186,52 +173,52 @@
                       Margin="8,8,8,20"
                       IsReadOnly="True"
                       Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding MfiItems[0]}"/>
+                      Text="{Binding DisplayedMfiItems[0]}"/>
                   <TextBox HorizontalAlignment="Stretch"
                       Margin="8,0,8,20"
                       IsReadOnly="True"
                       Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding MfiItems[1]}"/>
+                      Text="{Binding DisplayedMfiItems[1]}"/>
                   <TextBox HorizontalAlignment="Stretch"
                       Margin="8,0,8,20"
                       IsReadOnly="True"
                       Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding MfiItems[2]}"/>
+                      Text="{Binding DisplayedMfiItems[2]}"/>
                   <TextBox HorizontalAlignment="Stretch"
                       Margin="8,0,8,20"
                       IsReadOnly="True"
                       Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding MfiItems[3]}"/>
+                      Text="{Binding DisplayedMfiItems[3]}"/>
                   <TextBox HorizontalAlignment="Stretch"
                       Margin="8,0,8,20"
                       IsReadOnly="True"
                       Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding MfiItems[4]}"/>
+                      Text="{Binding DisplayedMfiItems[4]}"/>
                   <TextBox HorizontalAlignment="Stretch"
                       Margin="8,0,8,20"
                       IsReadOnly="True"
                       Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding MfiItems[5]}"/>
+                      Text="{Binding DisplayedMfiItems[5]}"/>
                   <TextBox HorizontalAlignment="Stretch"
                       Margin="8,0,8,20"
                       IsReadOnly="True"
                       Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding MfiItems[6]}"/>
+                      Text="{Binding DisplayedMfiItems[6]}"/>
                   <TextBox HorizontalAlignment="Stretch"
                       Margin="8,0,8,20"
                       IsReadOnly="True"
                       Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding MfiItems[7]}"/>
+                      Text="{Binding DisplayedMfiItems[7]}"/>
                   <TextBox HorizontalAlignment="Stretch"
                       Margin="8,0,8,20"
                       IsReadOnly="True"
                       Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding MfiItems[8]}"/>
+                      Text="{Binding DisplayedMfiItems[8]}"/>
                   <TextBox HorizontalAlignment="Stretch"
                       Margin="8,0,8,8"
                       IsReadOnly="True"
                       Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding MfiItems[9]}"/>
+                      Text="{Binding DisplayedMfiItems[9]}"/>
                 </StackPanel>
               </Border>
             </StackPanel>
@@ -250,57 +237,70 @@
                       Margin="8,8,8,20"
                       IsReadOnly="True"
                       Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding CvItems[0]}"/>
+                      Text="{Binding DisplayedCvItems[0]}"/>
                   <TextBox HorizontalAlignment="Stretch"
                       Margin="8,0,8,20"
                       IsReadOnly="True"
                       Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding CvItems[1]}"/>
+                      Text="{Binding DisplayedCvItems[1]}"/>
                   <TextBox HorizontalAlignment="Stretch"
                       Margin="8,0,8,20"
                       IsReadOnly="True"
                       Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding CvItems[2]}"/>
+                      Text="{Binding DisplayedCvItems[2]}"/>
                   <TextBox HorizontalAlignment="Stretch"
                       Margin="8,0,8,20"
                       IsReadOnly="True"
                       Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding CvItems[3]}"/>
+                      Text="{Binding DisplayedCvItems[3]}"/>
                   <TextBox HorizontalAlignment="Stretch"
                       Margin="8,0,8,20"
                       IsReadOnly="True"
                       Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding CvItems[4]}"/>
+                      Text="{Binding DisplayedCvItems[4]}"/>
                   <TextBox HorizontalAlignment="Stretch"
                       Margin="8,0,8,20"
                       IsReadOnly="True"
                       Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding CvItems[5]}"/>
+                      Text="{Binding DisplayedCvItems[5]}"/>
                   <TextBox HorizontalAlignment="Stretch"
                       Margin="8,0,8,20"
                       IsReadOnly="True"
                       Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding CvItems[6]}"/>
+                      Text="{Binding DisplayedCvItems[6]}"/>
                   <TextBox HorizontalAlignment="Stretch"
                       Margin="8,0,8,20"
                       IsReadOnly="True"
                       Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding CvItems[7]}"/>
+                      Text="{Binding DisplayedCvItems[7]}"/>
                   <TextBox HorizontalAlignment="Stretch"
                       Margin="8,0,8,20"
                       IsReadOnly="True"
                       Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding CvItems[8]}"/>
+                      Text="{Binding DisplayedCvItems[8]}"/>
                   <TextBox HorizontalAlignment="Stretch"
                       Margin="8,0,8,8"
                       IsReadOnly="True"
                       Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding CvItems[9]}"/>
+                      Text="{Binding DisplayedCvItems[9]}"/>
                 </StackPanel>
               </Border>
             </StackPanel>
           </StackPanel>
         </Border>
+        <dx:WaitIndicator DeferedVisibility="{Binding ResultsWaitIndicatorVisibility}" Content="Loading..."
+                          HorizontalAlignment="Left"
+                          VerticalAlignment="Top"
+                          Margin="120,400,0,0">
+          <dx:WaitIndicator.ContentTemplate>
+            <DataTemplate>
+              <StackPanel Orientation="Vertical">
+                <TextBlock Text="Please Wait" FontSize="20"/>
+                <TextBlock Text="{Binding}"/>
+              </StackPanel>
+            </DataTemplate>
+          </dx:WaitIndicator.ContentTemplate>
+        </dx:WaitIndicator>
       </Grid>
     </Border>
 

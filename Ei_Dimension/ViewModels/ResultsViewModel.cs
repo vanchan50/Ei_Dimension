@@ -44,8 +44,12 @@ namespace Ei_Dimension.ViewModels
     public virtual System.Windows.Visibility AnalysisVisible { get; set; }
     public virtual System.Windows.Visibility Analysis2DVisible { get; set; }
     public virtual System.Windows.Visibility Analysis3DVisible { get; set; }
-    public virtual ObservableCollection<string> MfiItems { get; set; }
-    public virtual ObservableCollection<string> CvItems { get; set; }
+    public virtual ObservableCollection<string> DisplayedMfiItems { get; set; }
+    public virtual ObservableCollection<string> DisplayedCvItems { get; set; }
+    public virtual ObservableCollection<string> CurrentMfiItems { get; set; }
+    public virtual ObservableCollection<string> CurrentCvItems { get; set; }
+    public virtual ObservableCollection<string> BackingMfiItems { get; set; }
+    public virtual ObservableCollection<string> BackingCvItems { get; set; }
     public virtual string PlexButtonString { get; set; }
     public virtual ObservableCollection<bool> CornerButtonsChecked { get; set; }
     public virtual ObservableCollection<bool> CLButtonsChecked { get; set; }
@@ -126,13 +130,22 @@ namespace Ei_Dimension.ViewModels
       Analysis2DVisible = System.Windows.Visibility.Visible;
       Analysis3DVisible = System.Windows.Visibility.Hidden;
 
-      MfiItems = new ObservableCollection<string>();
-      CvItems = new ObservableCollection<string>();
+      CurrentMfiItems = new ObservableCollection<string>();
+      CurrentCvItems = new ObservableCollection<string>();
       for (var i = 0; i < 10; i++)
       {
-        MfiItems.Add("");
-        CvItems.Add("");
+        CurrentMfiItems.Add("");
+        CurrentCvItems.Add("");
       }
+      BackingMfiItems = new ObservableCollection<string>();
+      BackingCvItems = new ObservableCollection<string>();
+      for (var i = 0; i < 10; i++)
+      {
+        BackingMfiItems.Add("");
+        BackingCvItems.Add("");
+      }
+      DisplayedMfiItems = CurrentMfiItems;
+      DisplayedCvItems = CurrentCvItems;
       XYCutoff = Settings.Default.XYCutOff;
       XYCutOffString = new ObservableCollection<string> { XYCutoff.ToString() };
       _fillDataActive = false;
@@ -305,7 +318,7 @@ namespace Ei_Dimension.ViewModels
         App.ShowNotification("Results loading failed:\nPlease wait for the previous well to load");
         return;
       }
-      _fillDataActive = true;
+      _fillDataActive = true;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
       var hiRez = AnalysisVisible == System.Windows.Visibility.Visible;
       _ = Task.Run(() =>
       {
@@ -328,6 +341,7 @@ namespace Ei_Dimension.ViewModels
           return;
         }
         _ = Task.Run(() => Core.DataProcessor.BinScatterData(beadStructsList, fromFile: true));
+        _ = Task.Run(() => Core.DataProcessor.CalculateStatistics(beadStructsList));
         Core.DataProcessor.BinMapData(beadStructsList, current: false, hiRez);
         //DisplayedMap.Sort((x, y) => x.A.CompareTo(y.A));
         _ = App.Current.Dispatcher.BeginInvoke((Action)(() =>
@@ -401,6 +415,8 @@ namespace Ei_Dimension.ViewModels
           Core.DataProcessor.AnalyzeHeatMap();
         }));
         MainViewModel.Instance.EventCountField = MainViewModel.Instance.EventCountCurrent;
+        DisplayedMfiItems = CurrentMfiItems;
+        DisplayedCvItems = CurrentCvItems;
       }
       else
       {
@@ -412,6 +428,8 @@ namespace Ei_Dimension.ViewModels
           App.MapRegions.DisplayedActiveRegionsMean = App.MapRegions.BackingActiveRegionsMean;
         }
         MainViewModel.Instance.EventCountField = MainViewModel.Instance.EventCountLocal;
+        DisplayedMfiItems = BackingMfiItems;
+        DisplayedCvItems = BackingCvItems;
       }
     }
 

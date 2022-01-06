@@ -1883,8 +1883,8 @@ namespace Ei_Dimension
       {
         for (var i = 0; i < 10; i++)
         {
-          ResultsViewModel.Instance.MfiItems[i] = e.GStats[i].mfi.ToString($"{0:0.0}");
-          ResultsViewModel.Instance.CvItems[i] = e.GStats[i].cv.ToString($"{0:0.00}");
+          ResultsViewModel.Instance.CurrentMfiItems[i] = e.GStats[i].mfi.ToString($"{0:0.0}");
+          ResultsViewModel.Instance.CurrentCvItems[i] = e.GStats[i].cv.ToString($"{0:0.00}");
         }
       }));
     }
@@ -1895,6 +1895,7 @@ namespace Ei_Dimension
         Directory.CreateDirectory(ResultReporter.Outdir + "\\SystemLogs");
       string logPath = Path.Combine(Path.Combine(@"C:\Emissioninc", Environment.MachineName), "SystemLogs", "EventLog");
       string logFilePath = logPath + ".txt";
+    
       string backFilePath = logPath + ".bak";
       if (File.Exists(logFilePath))
       {

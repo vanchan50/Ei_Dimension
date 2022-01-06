@@ -12,7 +12,9 @@ namespace Ei_Dimension.Core
   {
     private static SolidColorBrush[] _heatColors;
     private static readonly char[] _separator = {','};
-
+    private static readonly float[,] Sfi = new float[5000, 10];
+    private static readonly double[] MfiStats = new double[10];
+    private static readonly double[] CvStats = new double[10];
     static  DataProcessor()
     {
       _heatColors = new SolidColorBrush[7];
@@ -127,6 +129,76 @@ namespace Ei_Dimension.Core
         accDelta += delta;
       }
       return Result;
+    }
+
+    public static void CalculateStatistics(List<MicroCy.BeadInfoStruct> list)
+    {
+      var maxBeads = list.Count > 5000 ? 5000 : list.Count;
+      for (var i = 0; i < maxBeads; i++)
+      {
+        Sfi[i, 0] = list[i].greenssc;
+        Sfi[i, 1] = list[i].greenB;
+        Sfi[i, 2] = list[i].greenC;
+        Sfi[i, 3] = list[i].redssc;
+        Sfi[i, 4] = list[i].cl1;
+        Sfi[i, 5] = list[i].cl2;
+        Sfi[i, 6] = list[i].cl3;
+        Sfi[i, 7] = list[i].violetssc;
+        Sfi[i, 8] = list[i].cl0;
+        Sfi[i, 9] = list[i].fsc;
+      }
+      for (int finx = 0; finx < 10; finx++)
+      {
+        double sumit = 0;
+        for (int beads = 0; beads < maxBeads; beads++)
+        {
+          sumit += Sfi[beads, finx];
+        }
+        double robustcnt = maxBeads; //start with total bead count
+        double mean = sumit / robustcnt;
+        //find high and low bounds
+        double min = mean * 0.5;
+        double max = mean * 2;
+        sumit = 0;
+        for (int beads = 0; beads < maxBeads; beads++)
+        {
+          if ((Sfi[beads, finx] > min) && (Sfi[beads, finx] < max))
+            sumit += Sfi[beads, finx];
+          else
+          {
+            Sfi[beads, finx] = 0;
+            robustcnt--;
+          }
+        }
+        mean = sumit / robustcnt;
+        double sumsq = 0;
+        for (int beads = 0; beads < maxBeads; beads++)
+        {
+          if (Sfi[beads, finx] == 0)
+            continue;
+          sumsq += Math.Pow(mean - Sfi[beads, finx], 2);
+        }
+        double stdDev = Math.Sqrt(sumsq / (robustcnt - 1));
+
+        double gcv = (stdDev / mean) * 100;
+        if (double.IsNaN(gcv))
+          gcv = 0;
+
+        MfiStats[finx] = mean;
+        CvStats[finx] = gcv;
+      }
+      _ = App.Current.Dispatcher.BeginInvoke((Action)(() =>
+      {
+        for (var i = 0; i < 10; i++)
+        {
+          ResultsViewModel.Instance.BackingMfiItems[i] = MfiStats[i].ToString($"{0:0.0}");
+          ResultsViewModel.Instance.BackingCvItems[i] = CvStats[i].ToString($"{0:0.00}");
+
+        }
+        Array.Clear(Sfi, 0, Sfi.Length);
+        Array.Clear(MfiStats, 0, MfiStats.Length);
+        Array.Clear(CvStats, 0, CvStats.Length);
+      }));
     }
 
     public static void BinScatterData(List<MicroCy.BeadInfoStruct> list, bool fromFile = false)
