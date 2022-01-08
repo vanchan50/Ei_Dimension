@@ -311,15 +311,18 @@ namespace Ei_Dimension.Models
 
       public void SetWarning(WellWarningState warning)
       {
-        switch (warning)
+        _ = App.Current.Dispatcher.BeginInvoke((Action)(() =>
         {
-          case WellWarningState.OK:
-            _rect.Background = Brushes.Transparent;
-            break;
-          case WellWarningState.YellowWarning:
-            _rect.Background = Brushes.Orange;
-            break;
-        }
+          switch (warning)
+          {
+            case WellWarningState.OK:
+              _rect.Background = Brushes.Transparent;
+              break;
+            case WellWarningState.YellowWarning:
+              _rect.Background = Brushes.Orange;
+              break;
+          }
+        }));
       }
 
       public static void SetGrid(Grid grid)

@@ -1,13 +1,11 @@
 ﻿using System.Reflection;
 using System;
 using System.Collections.ObjectModel;
-using System.Configuration;
 using System.Windows.Threading;
 using System.Windows;
 using Ei_Dimension.ViewModels;
 using MicroCy;
 using System.Threading.Tasks;
-using System.Linq;
 using System.Collections.Generic;
 using System.IO;
 using System.Windows.Controls;
@@ -47,6 +45,9 @@ namespace Ei_Dimension
     private static bool _workOrderPending;
     private static bool _cancelKeyboardInjectionFlag;
     private static bool _isStartup;
+    private static int _uiUpdateIsActive;
+    private static bool UILoaded;//TODO:make an event, which actually loads the timertick
+
     public App()
     {
       _cancelKeyboardInjectionFlag = false;
@@ -89,10 +90,6 @@ namespace Ei_Dimension
       Device.FinishedReadingWell += FinishedReadingWellEventHandler;
       Device.FinishedMeasurement += FinishedMeasurementEventHandler;
       Device.NewStatsAvailable += NewStatsAvailableEventHandler;
-      _dispatcherTimer = new DispatcherTimer();
-      _dispatcherTimer.Tick += TimerTick;
-      _dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 500);
-      _dispatcherTimer.Start();
       _workOrderPending = false;
       _isStartup = true;
       _nextWellWarning = false;
@@ -101,6 +98,10 @@ namespace Ei_Dimension
       watcher.Filter = "*.txt";
       watcher.EnableRaisingEvents = true;
       watcher.Created += OnNewWorkOrder;
+
+      var timer = new System.Threading.Timer(TimerTick);
+      timer.Change(new TimeSpan(0, 0, 0, 10, 0),
+        new TimeSpan(0, 0, 0, 0, 500));
     }
 
     public static int GetMapIndex(string MapName)
@@ -1660,11 +1661,15 @@ namespace Ei_Dimension
       KeyboardShow.prop.SetValue(KeyboardShow.VM, Visibility.Hidden);
     }
 
-    private static void TimerTick(object sender, EventArgs e)
+    private static void TimerTick(object state)
     {
+      if (System.Threading.Interlocked.CompareExchange(ref _uiUpdateIsActive, 1, 0) == 1)
+        return;
+
       if (_isStartup) //TODO: can be a Task launched from ctor, that polls if all instances are != null
         OnAppLoaded();
 
+      //MicroCyDevice.Commands.Enqueue(new CommandStruct{Code = 0xf1, Command = 1});
       TextBoxHandler.Update();
       if (MicroCyDevice.IsMeasurementGoing)
       {
@@ -1674,6 +1679,8 @@ namespace Ei_Dimension
         WellStateHandler();
       }
       ServiceMenuEnabler.Update();
+
+      _uiUpdateIsActive = 0;
     }
 
     private static void WellStateHandler()
@@ -1916,6 +1923,8 @@ namespace Ei_Dimension
 
     private static void OnAppLoaded()
     {
+      void Funci()
+      {
       MapRegions = Models.MapRegions.Create(
         Views.SelRegionsView.Instance.RegionsBorder,
         Views.SelRegionsView.Instance.RegionsNamesBorder,
@@ -1942,7 +1951,6 @@ namespace Ei_Dimension
 
       ResultsViewModel.Instance.FillWorldMaps();
       SetLanguage(MaintenanceViewModel.Instance.LanguageItems[Settings.Default.Language].Locale);
-      Program.SplashScreen.Close(TimeSpan.FromMilliseconds(1000));
       Views.ExperimentView.Instance.DbButton.IsChecked = true;
       Device.MainCommand("Get Property", code: 0x01);
       //3D plot TRS transforms
@@ -1954,6 +1962,9 @@ namespace Ei_Dimension
       ((System.Windows.Media.Media3D.MatrixTransform3D)Views.ResultsView.Instance.AnalysisPlot.ContentTransform).Matrix = matrix;
 
       CheckAvailableWorkOrders();
+      Program.SplashScreen.Close(TimeSpan.FromMilliseconds(1000));
+      };
+      App.Current.Dispatcher.Invoke(Funci);
       _isStartup = false;
     }
 

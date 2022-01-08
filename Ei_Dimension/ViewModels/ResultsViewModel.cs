@@ -294,18 +294,19 @@ namespace Ei_Dimension.ViewModels
       Settings.Default.Save();
     }
 
-    private void ParseBeadInfo(string path, List<MicroCy.BeadInfoStruct> beadStructs)
+    private bool ParseBeadInfo(string path, List<MicroCy.BeadInfoStruct> beadStructs)
     {
       List<string> linesInFile = Core.DataProcessor.GetDataFromFile(path);
       if (linesInFile.Count == 1 && linesInFile[0] == " ")
       {
         App.ShowNotification("File is empty");
-        return;
+        return false;
       }
       for (var i = 0; i < linesInFile.Count; i++)
       {
         beadStructs.Add(Core.DataProcessor.ParseRow(linesInFile[i]));
       }
+      return true;
     }
 
     /// <summary>
@@ -333,11 +334,11 @@ namespace Ei_Dimension.ViewModels
         }
         FillBackingWellResults();
         var beadStructsList = new List<MicroCy.BeadInfoStruct>(100000);
-        ParseBeadInfo(path, beadStructsList);
-        if (beadStructsList.Count == 0)
+        if(!ParseBeadInfo(path, beadStructsList))
         {
           ResultsWaitIndicatorVisibility = false;
           ChartWaitIndicatorVisibility = false;
+          _fillDataActive = false;
           return;
         }
         _ = Task.Run(() => Core.DataProcessor.BinScatterData(beadStructsList, fromFile: true));

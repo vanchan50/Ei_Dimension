@@ -23,9 +23,9 @@ namespace Ei_Dimension
           MicroCyDevice.WellResults[i].RP1vals.CopyTo(0, rp1, 0, rp1.Length);
           TempWellResults.Add((MicroCyDevice.WellResults[i].regionNumber, rp1));
         }
-        ViewModels.ResultsViewModel.Instance.CurrentAnalysis12Map.Clear();
         _ = App.Current.Dispatcher.BeginInvoke((Action)(() =>
         {
+          ViewModels.ResultsViewModel.Instance.CurrentAnalysis12Map.Clear();
           foreach (var result in TempWellResults)
           {
             var index = App.MapRegions.RegionsList.IndexOf(result.region.ToString());

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Windows;
 using Ei_Dimension.ViewModels;
 using MicroCy;
@@ -10,6 +11,8 @@ namespace Ei_Dimension
   {
     private static readonly string[] SyncElements = { "SHEATH", "SAMPLE_A", "SAMPLE_B", "FLASH", "END_WELL", "VALVES", "X_MOTOR",
       "Y_MOTOR", "Z_MOTOR", "PROXIMITY", "PRESSURE", "WASHING", "FAULT", "ALIGN MOTOR", "MAIN VALVE", "SINGLE STEP" };
+
+    private static readonly object ConditionVar = new object();
     public static void Update()
     {
       float g = 0;
@@ -478,10 +481,20 @@ namespace Ei_Dimension
               App.Device.MainCommand("Set Property", code: 0xcb, parameter: 0x1000);
               App.Device.MainCommand("Sheath"); //halt 
               App.Device.MainCommand("Set Property", code: 0xc1, parameter: 1);  //switch to recovery command buffer #1
-              if (MessageBox.Show("Sheath Empty\nRefill and press OK", "Operator Alert", MessageBoxButton.OK, MessageBoxImage.Warning) == MessageBoxResult.OK)
+
+              void Act()
               {
                 App.Device.MainCommand("Sheath Empty Prime");
                 App.Device.MainCommand("Set Property", code: 0xcb); //clear sync token to allow recovery to run
+                lock (ConditionVar)
+                {
+                  Monitor.Pulse(ConditionVar);
+                }
+              }
+              App.ShowNotification("Sheath Empty\nRefill and press OK", Act, "OK");
+              lock (ConditionVar)
+              {
+                Monitor.Wait(ConditionVar);
               }
             }
             else if (exe.Command == 2) //pressure overload
