@@ -14,13 +14,13 @@
     <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Margin="0,0,0,0">
-      <StackPanel>
+      <StackPanel Width="243">
         <TextBlock Text="{lang:Loc Experiment_System_Monitor}"
                    FontFamily="{StaticResource AppTextFont}"
                    FontSize="36"
                    FontWeight="UltraBold"
                    Foreground="{StaticResource AppTextColor}"
-                   Margin="0,0,0,4"/>
+                   HorizontalAlignment="Center"/>
         <ListBox Width="220" Height="310"
                  ItemsSource="{Binding ActiveList}"
                  Background="Transparent"
