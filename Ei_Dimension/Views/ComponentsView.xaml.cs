@@ -24,6 +24,9 @@ namespace Ei_Dimension.Views
     {
       InitializeComponent();
       Instance = this;
+#if DEBUG
+      System.Console.Error.WriteLine("#18 ComponentsView Loaded");
+#endif
     }
   }
 }

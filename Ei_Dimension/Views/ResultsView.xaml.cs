@@ -30,6 +30,9 @@ namespace Ei_Dimension.Views
         InstrumentLogo.Source = new BitmapImage(new Uri(@"/Ei_Dimension;component/Icons/dimension flow analyzer logoCh.png", UriKind.Relative));
       }
       Instance = this;
+#if DEBUG
+      Console.Error.WriteLine("#6 ResultsView Loaded");
+#endif
     }
 
     public void AddXYPoint(double x, double y, SolidColorBrush brush, bool LargeXY = false)

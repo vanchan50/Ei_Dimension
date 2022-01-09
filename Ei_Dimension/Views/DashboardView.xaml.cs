@@ -15,6 +15,9 @@ namespace Ei_Dimension.Views
     {
       InitializeComponent();
       Instance = this;
+#if DEBUG
+      System.Console.Error.WriteLine("#10 DashboardView Loaded");
+#endif
     }
   }
 }

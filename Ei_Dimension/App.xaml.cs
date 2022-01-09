@@ -44,9 +44,9 @@ namespace Ei_Dimension
     private static DispatcherTimer _dispatcherTimer;
     private static bool _workOrderPending;
     private static bool _cancelKeyboardInjectionFlag;
-    private static bool _isStartup;
     private static int _uiUpdateIsActive;
     private static bool UILoaded;//TODO:make an event, which actually loads the timertick
+    private static System.Threading.Timer _timer;
 
     public App()
     {
@@ -61,7 +61,6 @@ namespace Ei_Dimension
         }
         catch
         {
-          MessageBox.Show($"Could not find Maps in {MicroCyDevice.RootDirectory.FullName + @"\Config"} folder");
           throw new Exception($"Could not find Maps in {MicroCyDevice.RootDirectory.FullName + @"\Config" } folder");
         }
       }
@@ -91,17 +90,12 @@ namespace Ei_Dimension
       Device.FinishedMeasurement += FinishedMeasurementEventHandler;
       Device.NewStatsAvailable += NewStatsAvailableEventHandler;
       _workOrderPending = false;
-      _isStartup = true;
       _nextWellWarning = false;
       var watcher = new FileSystemWatcher($"{MicroCyDevice.RootDirectory.FullName}\\WorkOrder");
       watcher.NotifyFilter = NotifyFilters.FileName;
       watcher.Filter = "*.txt";
       watcher.EnableRaisingEvents = true;
       watcher.Created += OnNewWorkOrder;
-
-      var timer = new System.Threading.Timer(TimerTick);
-      timer.Change(new TimeSpan(0, 0, 0, 10, 0),
-        new TimeSpan(0, 0, 0, 0, 500));
     }
 
     public static int GetMapIndex(string MapName)
@@ -1666,10 +1660,6 @@ namespace Ei_Dimension
       if (System.Threading.Interlocked.CompareExchange(ref _uiUpdateIsActive, 1, 0) == 1)
         return;
 
-      if (_isStartup) //TODO: can be a Task launched from ctor, that polls if all instances are != null
-        OnAppLoaded();
-
-      //MicroCyDevice.Commands.Enqueue(new CommandStruct{Code = 0xf1, Command = 1});
       TextBoxHandler.Update();
       if (MicroCyDevice.IsMeasurementGoing)
       {
@@ -1921,7 +1911,11 @@ namespace Ei_Dimension
       base.OnStartup(e);
     }
 
-    private static void OnAppLoaded()
+    /// <summary>
+    /// Finish loading the UI. Should be called only once, after all the views have been loaded.
+    /// Constructs the UI update timer
+    /// </summary>
+    public static void OnAppLoaded()
     {
       void Funci()
       {
@@ -1965,7 +1959,11 @@ namespace Ei_Dimension
       Program.SplashScreen.Close(TimeSpan.FromMilliseconds(1000));
       };
       App.Current.Dispatcher.Invoke(Funci);
-      _isStartup = false;
+      
+      //Form the UI update Timer
+      _timer = new System.Threading.Timer(TimerTick);
+      _timer.Change(new TimeSpan(0, 0, 0, 0, 100),
+        new TimeSpan(0, 0, 0, 0, 500));
     }
 
     public static void ShowNotification(string text, System.Windows.Media.Brush background = null)

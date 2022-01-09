@@ -501,10 +501,18 @@ namespace Ei_Dimension
             {
               if (exe.FParameter > int.Parse(ComponentsViewModel.Instance.MaxPressureBox))
               {
-                if (MessageBox.Show("Pressure Overload\nCheck for waste line obstructions\nPower Off System",
-                  "Operator Alert", MessageBoxButton.OK, MessageBoxImage.Warning) == MessageBoxResult.OK)
+                void Act()
                 {
                   Environment.Exit(0);
+                  lock (ConditionVar)
+                  {
+                    Monitor.Pulse(ConditionVar);
+                  }
+                }
+                App.ShowNotification("Pressure Overload\nCheck for waste line obstructions", Act, "Power Off\n  System");
+                lock (ConditionVar)
+                {
+                  Monitor.Wait(ConditionVar);
                 }
               }
             }
@@ -518,8 +526,8 @@ namespace Ei_Dimension
                 ws = "Sample syringe A Error " + exe.Command.ToString();
               }
               else ws = "Sample syringe B Error " + exe.Command.ToString();
-
-              if (MessageBox.Show(ws + "\nPower Off System", "Operator Alert", MessageBoxButton.OK, MessageBoxImage.Warning) == MessageBoxResult.OK)
+              
+              void Act()
               {
                 var tempres = new List<WellResults>(MicroCyDevice.WellResults.Count);
                 for (var i = 0; i < MicroCyDevice.WellResults.Count; i++)
@@ -533,6 +541,15 @@ namespace Ei_Dimension
                 MicroCyDevice.WellsToRead = App.Device.CurrentWellIdx;
                 ResultReporter.SaveBeadFile(tempres);
                 Environment.Exit(0);
+                lock (ConditionVar)
+                {
+                  Monitor.Pulse(ConditionVar);
+                }
+              }
+              App.ShowNotification(ws + "\nPower Off System", Act, "OK");
+              lock (ConditionVar)
+              {
+                Monitor.Wait(ConditionVar);
               }
             }
             break;

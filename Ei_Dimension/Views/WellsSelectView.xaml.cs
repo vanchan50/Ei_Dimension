@@ -41,6 +41,9 @@ namespace Ei_Dimension.Views
       RowHeight384 = (int)(double)App.Current.Resources["Table384Width"];
       Instance = this;
       SquareSelectionMode = true;
+#if DEBUG
+      Console.Error.WriteLine("#9 WellsSelectView Loaded");
+#endif
     }
 
     private void grd384_TouchMove(object sender, TouchEventArgs e)

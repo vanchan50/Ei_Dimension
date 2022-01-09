@@ -22,6 +22,9 @@ namespace Ei_Dimension.Views
     public ScreenKeyboardView()
     {
       InitializeComponent();
+#if DEBUG
+      Console.Error.WriteLine("#3 ScreenKeyboardView Loaded");
+#endif
     }
   }
 }

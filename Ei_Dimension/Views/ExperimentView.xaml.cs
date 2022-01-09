@@ -13,6 +13,9 @@ namespace Ei_Dimension.Views
     {
       InitializeComponent();
       Instance = this;
+#if DEBUG
+      System.Console.Error.WriteLine("#5 ExperimentView Loaded");
+#endif
     }
 
     private void DbTube_Click(object sender, RoutedEventArgs e)

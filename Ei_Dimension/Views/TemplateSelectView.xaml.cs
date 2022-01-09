@@ -24,6 +24,9 @@ namespace Ei_Dimension.Views
     {
       InitializeComponent();
       Instance = this;
+#if DEBUG
+      Console.Error.WriteLine("#13 TemplateSelectView Loaded");
+#endif
     }
   }
 }

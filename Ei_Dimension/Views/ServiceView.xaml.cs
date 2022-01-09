@@ -22,6 +22,9 @@ namespace Ei_Dimension.Views
     public ServiceView()
     {
       InitializeComponent();
+#if DEBUG
+      Console.Error.WriteLine("#8 ServiceView Loaded");
+#endif
     }
 
     private void UserControl_Loaded(object sender, RoutedEventArgs e)
