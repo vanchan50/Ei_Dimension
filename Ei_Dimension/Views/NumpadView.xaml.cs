@@ -22,6 +22,9 @@ namespace Ei_Dimension.Views
     public NumpadView()
     {
       InitializeComponent();
+#if DEBUG
+      Console.Error.WriteLine("#2 NumpadView Loaded");
+#endif
     }
   }
 }

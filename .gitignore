@@ -339,4 +339,5 @@ ASALocalRun/
 # BeatPulse healthcheck temp database
 healthchecksdb
 
-TODOs.txt
+/Ei_Dimension/TODOs.txt
+/Ei_Dimension/Views_Loading_Sequence.txt

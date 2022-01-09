@@ -22,6 +22,9 @@ namespace Ei_Dimension.Views
     public MainButtonsView()
     {
       InitializeComponent();
+      #if DEBUG
+      Console.Error.WriteLine("#1 MainButtonsView Loaded");
+      #endif
     }
   }
 }

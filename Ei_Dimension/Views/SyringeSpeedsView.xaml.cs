@@ -24,6 +24,10 @@ namespace Ei_Dimension.Views
     {
       InitializeComponent();
       Instance = this;
+#if DEBUG
+      Console.Error.WriteLine("#21 SyringeSpeedsView Loaded");
+#endif
+      App.OnAppLoaded();
     }
   }
 }

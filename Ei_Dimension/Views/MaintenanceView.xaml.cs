@@ -24,6 +24,9 @@ namespace Ei_Dimension.Views
     {
       InitializeComponent();
       Instance = this;
+#if DEBUG
+      Console.Error.WriteLine("#7 MaintenanceView Loaded");
+#endif
     }
 
     private void UserControl_Loaded(object sender, RoutedEventArgs e)
