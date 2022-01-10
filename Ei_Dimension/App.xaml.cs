@@ -263,6 +263,9 @@ namespace Ei_Dimension
       MicroCyDevice.ChannelBIsHiSensitivity = num == 0;
       Settings.Default.SensitivityChannelB = num == 0;
       Settings.Default.Save();
+      var temps = ResultsViewModel.Instance.HiSensitivityChannelName[0];
+      ResultsViewModel.Instance.HiSensitivityChannelName[0] = ResultsViewModel.Instance.HiSensitivityChannelName[1];
+      ResultsViewModel.Instance.HiSensitivityChannelName[1] = temps;
     }
 
     public static void SetLanguage(string locale)
@@ -369,6 +372,24 @@ namespace Ei_Dimension
         VerVM.VerificationWarningItems[3].Content = RM.GetString(nameof(Language.Resources.Quarterly), curCulture);
         VerVM.VerificationWarningItems[4].Content = RM.GetString(nameof(Language.Resources.Yearly), curCulture);
         VerVM.SelectedVerificationWarningContent = VerVM.VerificationWarningItems[Settings.Default.VerificationWarningIndex].Content;
+      }
+      var ResVM = ResultsViewModel.Instance;
+      if (ResVM != null)
+      {
+        if (Settings.Default.SensitivityChannelB)
+        {
+          ResVM.HiSensitivityChannelName[0] = RM.GetString(nameof(Language.Resources.DataAn_Green_Min),
+            curCulture);
+          ResVM.HiSensitivityChannelName[1] = RM.GetString(nameof(Language.Resources.DataAn_Green_Maj),
+            curCulture);
+        }
+        else
+        {
+          ResVM.HiSensitivityChannelName[0] = RM.GetString(nameof(Language.Resources.DataAn_Green_Maj),
+            curCulture);
+          ResVM.HiSensitivityChannelName[1] = RM.GetString(nameof(Language.Resources.DataAn_Green_Min),
+            curCulture);
+        }
       }
       #endregion
     }

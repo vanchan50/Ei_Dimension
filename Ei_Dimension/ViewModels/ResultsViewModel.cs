@@ -55,6 +55,7 @@ namespace Ei_Dimension.ViewModels
     public virtual ObservableCollection<bool> CLButtonsChecked { get; set; }
     public virtual ObservableCollection<string> CLAxis { get; set; }
     public virtual ObservableCollection<string> XYCutOffString { get; set; }
+    public virtual ObservableCollection<string> HiSensitivityChannelName { get; set; }
     public int XYCutoff { get; set; }
     public static ResultsViewModel Instance { get; private set; }
     private bool _fillDataActive;
@@ -148,6 +149,19 @@ namespace Ei_Dimension.ViewModels
       DisplayedCvItems = CurrentCvItems;
       XYCutoff = Settings.Default.XYCutOff;
       XYCutOffString = new ObservableCollection<string> { XYCutoff.ToString() };
+      HiSensitivityChannelName = new ObservableCollection<string>
+      {
+        Language.Resources.ResourceManager.GetString(nameof(Language.Resources.DataAn_Green_Min),
+          Language.TranslationSource.Instance.CurrentCulture),
+        Language.Resources.ResourceManager.GetString(nameof(Language.Resources.DataAn_Green_Maj),
+          Language.TranslationSource.Instance.CurrentCulture)
+      };
+      if (!Settings.Default.SensitivityChannelB)
+      {
+        var temps = HiSensitivityChannelName[0];
+        HiSensitivityChannelName[0] = HiSensitivityChannelName[1];
+        HiSensitivityChannelName[1] = temps;
+      }
       _fillDataActive = false;
     }
 
