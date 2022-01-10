@@ -23,10 +23,24 @@ namespace MicroCy
                                    "Red SSC,CL1,CL2,CL3,Green SSC,Reporter\r ";
     private const string SHEADER = "Row,Col,Region,Bead Count,Median FI,Trimmed Mean FI,CV%\r";
 
+    static ResultReporter()
+    {
+      Outdir = MicroCyDevice.RootDirectory.FullName; 
+    }
+
     internal static void StartNewWellReport()
     {
       _ = DataOut.Clear();
       _ = DataOut.Append(BHEADER);
+    }
+
+    public static void OutDirCheck()
+    {
+      var root = Path.GetPathRoot(Outdir);
+      if (!Directory.Exists(root))
+      {
+        Outdir = MicroCyDevice.RootDirectory.FullName;
+      }
     }
 
     internal static void StartNewPlateReport()
@@ -47,6 +61,7 @@ namespace MicroCy
       char rowletter = (char)(0x41 + MicroCyDevice.ReadingRow);
       //if(!isTube)
       string colLetter = (MicroCyDevice.ReadingCol + 1).ToString();  //use 0 for tubes and true column for plates
+      OutDirCheck();
       for (var differ = 0; differ < int.MaxValue; differ++)
       {
         FullFileName = $"{Outdir}\\AcquisitionData\\{Outfilename}{rowletter}{colLetter}_{differ.ToString()}.csv";
@@ -74,6 +89,7 @@ namespace MicroCy
     {
       if (SummaryOut.Length > 0)  //end of read session (plate, plate section or tube) write summary stat file
       {
+        OutDirCheck();
         if (!Directory.Exists($"{Outdir}\\AcquisitionData"))
           Directory.CreateDirectory($"{Outdir}\\AcquisitionData");
         GetThisRunFileName();
@@ -91,6 +107,7 @@ namespace MicroCy
     {
       if (_thisRunResultsFileName != null)
         return;
+      OutDirCheck();
       for (var i = 0; i < int.MaxValue; i++)
       {
         string summaryFileName = $"{Outdir}\\AcquisitionData\\Results_{Outfilename}_{i.ToString()}.csv";

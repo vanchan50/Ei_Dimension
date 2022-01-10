@@ -91,7 +91,6 @@ namespace MicroCy
       LoadMaps();
       Reg0stats = false;
       //_serialConnection.BeginRead(ReplyFromMC);   //default termination is end of sample
-      ResultReporter.Outdir = RootDirectory.FullName;
       EndState = 0;
       ReadActive = false;
       IsMeasurementGoing = false;
@@ -99,6 +98,7 @@ namespace MicroCy
 
     public void InitBeadRead()
     {
+      ResultReporter.OutDirCheck();
       if (!Directory.Exists($"{ResultReporter.Outdir}\\AcquisitionData"))
         Directory.CreateDirectory($"{ResultReporter.Outdir}\\AcquisitionData");
       ResultReporter.GetNewFileName();

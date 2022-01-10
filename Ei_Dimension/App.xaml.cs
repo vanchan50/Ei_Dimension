@@ -1820,8 +1820,12 @@ namespace Ei_Dimension
 
       ResultsViewModel.Instance.PlatePictogram.CurrentlyReadCell = (row, col);
       ResultsViewModel.Instance.PlatePictogram.ChangeState(row, col, Models.WellType.NowReading, warning, FilePath: e.FilePath);
-      ResultsViewModel.Instance.CornerButtonClick(Models.DrawingPlate.CalculateCorner(row, col));
-      ResultsViewModel.Instance.ClearGraphs();
+      
+      App.Current.Dispatcher.Invoke((Action) (() =>
+      {
+        ResultsViewModel.Instance.CornerButtonClick(Models.DrawingPlate.CalculateCorner(row, col));
+        ResultsViewModel.Instance.ClearGraphs();
+      }));
       MapRegions.ResetCurrentActiveRegionsDisplayedStats();
 #if DEBUG
       Device.MainCommand("Set FProperty", code: 0x06);
@@ -1841,6 +1845,7 @@ namespace Ei_Dimension
       Device.MainCommand("Get FProperty", code: 0x06);
 #endif
     }
+
     private static Models.WellType GetWellStateForPictogram()
     {
       var type = Models.WellType.Success;
@@ -1909,6 +1914,7 @@ namespace Ei_Dimension
 
     public static void SetLogOutput()
     {
+      ResultReporter.OutDirCheck();
       if (!Directory.Exists(ResultReporter.Outdir + "\\SystemLogs"))
         Directory.CreateDirectory(ResultReporter.Outdir + "\\SystemLogs");
       string logPath = Path.Combine(Path.Combine(@"C:\Emissioninc", Environment.MachineName), "SystemLogs", "EventLog");
