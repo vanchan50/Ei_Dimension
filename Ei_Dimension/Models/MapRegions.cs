@@ -127,8 +127,7 @@ namespace Ei_Dimension.Models
 
       if (callFromCode)
         return;
-      System.Windows.Input.FocusManager.SetFocusedElement(System.Windows.Input.FocusManager.GetFocusScope(Views.SelRegionsView.Instance), null);
-      System.Windows.Input.Keyboard.ClearFocus();
+      App.UnfocusUIElement();
     }
 
     private void AddTextboxes(string RegionsNums, string RegionsNames, string ValidationReporter)
@@ -507,8 +506,7 @@ namespace Ei_Dimension.Models
         VerificationRegions[index] = false;
         ShiftValidationTextBox(index, false);
       }
-      System.Windows.Input.FocusManager.SetFocusedElement(System.Windows.Input.FocusManager.GetFocusScope(Views.VerificationView.Instance), null);
-      System.Windows.Input.Keyboard.ClearFocus();
+      App.UnfocusUIElement();
     }
 
     private void ShiftValidationTextBox(int index, bool right)

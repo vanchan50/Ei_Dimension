@@ -183,7 +183,9 @@ namespace MicroCy
           break;
       }
       DataController.OutCommands.Enqueue((command, cs));
-
+      #if DEBUG
+      Console.Error.WriteLine($"{DateTime.Now.ToString()} Enqueued [{command}]: {cs.ToString()}");
+      #endif
       lock (DataController.UsbOutCV)
       {
         Monitor.Pulse(DataController.UsbOutCV);

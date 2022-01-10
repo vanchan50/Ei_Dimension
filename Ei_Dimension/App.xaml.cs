@@ -420,13 +420,13 @@ namespace Ei_Dimension
 
     public static void InputSanityCheck()
     {
+      bool failed = false;
       if (SelectedTextBox.prop != null && _tempNewString != null)
       {
         float fRes;
         int iRes;
         ushort usRes;
         byte bRes;
-        bool failed = false;
         string ErrorMessage = null;
         switch (SelectedTextBox.prop.Name)
         {
@@ -1660,6 +1660,7 @@ namespace Ei_Dimension
         SelectedTextBox.tb.Background = (System.Windows.Media.Brush)App.Current.Resources["AppBackground"];
       }
       SelectedTextBox = (null, null, 0, null);
+      UnfocusUIElement();
     }
 
     public static void HideNumpad()
@@ -1674,6 +1675,12 @@ namespace Ei_Dimension
       InputSanityCheck();
       SelectedTextBox = (null, null, 0, null);
       KeyboardShow.prop.SetValue(KeyboardShow.VM, Visibility.Hidden);
+    }
+
+    public static void UnfocusUIElement()
+    {
+      System.Windows.Input.FocusManager.SetFocusedElement(System.Windows.Input.FocusManager.GetFocusScope(Ei_Dimension.MainWindow.Instance), null);
+      System.Windows.Input.Keyboard.ClearFocus();
     }
 
     private static void TimerTick(object state)
