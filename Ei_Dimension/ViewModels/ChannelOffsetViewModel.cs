@@ -120,6 +120,14 @@ namespace Ei_Dimension.ViewModels
       UserInputHandler.InputSanityCheck();
     }
 
+    private static void SetSensitivityChannel(byte num)
+    {
+      MicroCy.MicroCyDevice.ChannelBIsHiSensitivity = num == 0;
+      Settings.Default.SensitivityChannelB = num == 0;
+      Settings.Default.Save();
+      ResultsViewModel.Instance.SwapHiSensChannelsStats();
+    }
+
     public class DropDownButtonContents : Core.ObservableObject
     {
       public string Content
@@ -149,7 +157,7 @@ namespace Ei_Dimension.ViewModels
       {
         _vm.SelectedSensitivityContent = Content;
         _vm.SelectedSensitivityIndex = Index;
-        App.SetSensitivityChannel(Index);
+        SetSensitivityChannel(Index);
       }
 
       public static void ResetIndex()

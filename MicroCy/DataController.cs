@@ -34,46 +34,49 @@ namespace MicroCy
     
     private void ReplyFromMC()
     {
-      _serialConnection.Read();
-
-      if ((_serialConnection.InputBuffer[0] == 0xbe) && (_serialConnection.InputBuffer[1] == 0xad))
+      while (true)
       {
-        if (MicroCyDevice.IsMeasurementGoing) //  this condition avoids the necessity of cleaning up leftover data in the system USB interface. That could happen after operation abortion and program restart
-        {
-          for (byte i = 0; i < 8; i++)
-          {
-            BeadInfoStruct outbead;
-            if (!GetBeadFromBuffer(_serialConnection.InputBuffer, i, out outbead))
-              break;
-            BeadProcessor.CalculateBeadParams(ref outbead);
+        _serialConnection.Read();
 
-            MicroCyDevice.FillActiveWellResults(in outbead);
-            if (outbead.region == 0 && MicroCyDevice.OnlyClassified)
-              continue;
-            MicroCyDevice.DataOut.Enqueue(outbead);
-            if (MicroCyDevice.Everyevent)
-              ResultReporter.AddBeadStats(in outbead);
-            switch (MicroCyDevice.Mode)
+        if ((_serialConnection.InputBuffer[0] == 0xbe) && (_serialConnection.InputBuffer[1] == 0xad))
+        {
+          if (MicroCyDevice.IsMeasurementGoing) //  this condition avoids the necessity of cleaning up leftover data in the system USB interface. That could happen after operation abortion and program restart
+          {
+            for (byte i = 0; i < 8; i++)
             {
-              case OperationMode.Normal:
+              BeadInfoStruct outbead;
+              if (!GetBeadFromBuffer(_serialConnection.InputBuffer, i, out outbead))
                 break;
-              case OperationMode.Calibration:
-                break;
-              case OperationMode.Verification:
-                Validator.FillStats(in outbead);
-                break;
+              BeadProcessor.CalculateBeadParams(ref outbead);
+
+              MicroCyDevice.FillActiveWellResults(in outbead);
+              if (outbead.region == 0 && MicroCyDevice.OnlyClassified)
+                continue;
+              MicroCyDevice.DataOut.Enqueue(outbead);
+              if (MicroCyDevice.Everyevent)
+                ResultReporter.AddBeadStats(in outbead);
+              switch (MicroCyDevice.Mode)
+              {
+                case OperationMode.Normal:
+                  break;
+                case OperationMode.Calibration:
+                  break;
+                case OperationMode.Verification:
+                  Validator.FillStats(in outbead);
+                  break;
+              }
+              //accum stats for run as a whole, used during aligment and QC
+              BeadProcessor.FillCalibrationStatsRow(in outbead);
+              MicroCyDevice.BeadCount++;
+              MicroCyDevice.TotalBeads++;
             }
-            //accum stats for run as a whole, used during aligment and QC
-            BeadProcessor.FillCalibrationStatsRow(in outbead);
-            MicroCyDevice.BeadCount++;
-            MicroCyDevice.TotalBeads++;
           }
+          Array.Clear(_serialConnection.InputBuffer, 0, _serialConnection.InputBuffer.Length);
+          MicroCyDevice.TerminationReadyCheck();
         }
-        Array.Clear(_serialConnection.InputBuffer, 0, _serialConnection.InputBuffer.Length);
-        MicroCyDevice.TerminationReadyCheck();
+        else
+          GetCommandFromBuffer();
       }
-      else
-        GetCommandFromBuffer();
     }
 
     private void WriteToMC()

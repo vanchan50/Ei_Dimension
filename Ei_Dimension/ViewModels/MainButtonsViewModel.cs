@@ -55,9 +55,7 @@ namespace Ei_Dimension.ViewModels
         App.ShowNotification("No wells or Tube selected");
         return;
       }
-#if DEBUG
       App.Device.MainCommand("Set FProperty", code: 0x06);
-#endif
       HashSet<int> startArg = null;
       switch (MicroCyDevice.Mode)
       {

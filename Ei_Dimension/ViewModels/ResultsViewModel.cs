@@ -157,11 +157,7 @@ namespace Ei_Dimension.ViewModels
           Language.TranslationSource.Instance.CurrentCulture)
       };
       if (!Settings.Default.SensitivityChannelB)
-      {
-        var temps = HiSensitivityChannelName[0];
-        HiSensitivityChannelName[0] = HiSensitivityChannelName[1];
-        HiSensitivityChannelName[1] = temps;
-      }
+        SwapHiSensChannelsStats();
       _fillDataActive = false;
     }
 
@@ -727,6 +723,13 @@ namespace Ei_Dimension.ViewModels
     public void AnalysisPrint()
     {
       Views.ResultsView.Instance.Print3D();
+    }
+
+    public void SwapHiSensChannelsStats()
+    {
+      var temps = HiSensitivityChannelName[0];
+      HiSensitivityChannelName[0] = HiSensitivityChannelName[1];
+      HiSensitivityChannelName[1] = temps;
     }
   }
 }

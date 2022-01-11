@@ -230,26 +230,25 @@ namespace Ei_Dimension.ViewModels
       UserInputHandler.InjectToFocusedTextbox(((TextBox)e.Source).Text, true);
     }
 
-    private MicroCy.Wells MakeWell(byte row, byte col)
+    private Wells MakeWell(byte row, byte col)
     {
-      MicroCy.Wells newwell = new MicroCy.Wells();
-      newwell.rowIdx = row;
-      newwell.colIdx = col;
-      newwell.runSpeed = SelectedSpeedIndex;
-      short sRes = 0;
-      _ = short.TryParse(Volumes[0], out sRes);
-      newwell.sampVol = sRes;
-      sRes = 0;
-      _ = short.TryParse(Volumes[1], out sRes);
-      newwell.washVol = sRes;
-      sRes = 0;
-      _ = short.TryParse(Volumes[2], out sRes);
-      newwell.agitateVol = sRes;
-      newwell.termType = MicroCyDevice.TerminationType;
-      newwell.chanConfig = SelectedChConfigIndex;
-      newwell.regTermCnt = MicroCyDevice.MinPerRegion;
-      newwell.termCnt = MicroCyDevice.BeadsToCapture;
-      return newwell;
+      _ = short.TryParse(Volumes[0], out var volRes);
+      _ = short.TryParse(Volumes[1], out var washRes);
+      _ = short.TryParse(Volumes[2], out var agitRes);
+      
+      return new MicroCy.Wells
+      {
+        rowIdx = row,
+        colIdx = col,
+        runSpeed = SelectedSpeedIndex,
+        sampVol = volRes,
+        washVol = washRes,
+        agitateVol = agitRes,
+        termType = MicroCyDevice.TerminationType,
+        chanConfig = SelectedChConfigIndex,
+        regTermCnt = MicroCyDevice.MinPerRegion,
+        termCnt = MicroCyDevice.BeadsToCapture
+      };
     }
 
     public void SetWellsInOrder()
@@ -382,6 +381,20 @@ namespace Ei_Dimension.ViewModels
       UserInputHandler.InputSanityCheck();
     }
 
+    private static void SetSystemControl(byte num)
+    {
+      MicroCyDevice.SystemControl = num;
+      Settings.Default.SystemControl = num;
+      Settings.Default.Save();
+    }
+
+    private static void SetTerminationType(byte num)
+    {
+      MicroCyDevice.TerminationType = num;
+      Settings.Default.EndRead = num;
+      Settings.Default.Save();
+    }
+
     public class DropDownButtonContents : Core.ObservableObject
     {
       public string Content
@@ -436,7 +449,7 @@ namespace Ei_Dimension.ViewModels
           case 5:
             _vm.SelectedSysControlContent = Content;
             _vm.SelectedSystemControlIndex = Index;
-            App.SetSystemControl(Index);
+            SetSystemControl(Index);
             if (Index != 0)
             {
               ExperimentViewModel.Instance.WellSelectVisible = Visibility.Hidden;
@@ -453,7 +466,7 @@ namespace Ei_Dimension.ViewModels
           case 6:
             _vm.SelectedEndReadContent = Content;
             _vm.SelectedEndReadIndex = Index;
-            App.SetTerminationType(Index);
+            SetTerminationType(Index);
             _vm.EndReadVisibilitySwitch();
             break;
         }
@@ -481,7 +494,7 @@ namespace Ei_Dimension.ViewModels
           case 5:
             _vm.SelectedSysControlContent = Content;
             _vm.SelectedSystemControlIndex = Index;
-            App.SetSystemControl(Index);
+            SetSystemControl(Index);
             if (Index != 0)
             {
               ExperimentViewModel.Instance.WellSelectVisible = Visibility.Hidden;
@@ -498,7 +511,7 @@ namespace Ei_Dimension.ViewModels
           case 6:
             _vm.SelectedEndReadContent = Content;
             _vm.SelectedEndReadIndex = Index;
-            App.SetTerminationType(Index);
+            SetTerminationType(Index);
             _vm.EndReadVisibilitySwitch();
             break;
         }

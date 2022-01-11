@@ -222,30 +222,6 @@ namespace Ei_Dimension
       Views.ChannelsView.Instance.MapSelectr.IsEnabled = true;
     }
 
-    public static void SetSystemControl(byte num)
-    {
-      MicroCyDevice.SystemControl = num;
-      Settings.Default.SystemControl = num;
-      Settings.Default.Save();
-    }
-
-    public static void SetTerminationType(byte num)
-    {
-      MicroCyDevice.TerminationType = num;
-      Settings.Default.EndRead = num;
-      Settings.Default.Save();
-    }
-
-    public static void SetSensitivityChannel(byte num)
-    {
-      MicroCyDevice.ChannelBIsHiSensitivity = num == 0;
-      Settings.Default.SensitivityChannelB = num == 0;
-      Settings.Default.Save();
-      var temps = ResultsViewModel.Instance.HiSensitivityChannelName[0];
-      ResultsViewModel.Instance.HiSensitivityChannelName[0] = ResultsViewModel.Instance.HiSensitivityChannelName[1];
-      ResultsViewModel.Instance.HiSensitivityChannelName[1] = temps;
-    }
-
     public static void SetLanguage(string locale)
     {
       if (string.IsNullOrEmpty(locale))
