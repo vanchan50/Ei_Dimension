@@ -46,14 +46,14 @@ namespace Ei_Dimension.ViewModels
 
     public void UpdateBiasButtonClick()
     {
-      App.InputSanityCheck();
+      UserInputHandler.InputSanityCheck();
       App.Device.MainCommand("RefreshDac");
       App.Device.InitSTab("channeltab");
     }
 
     public void SetOffsetClick()
     {
-      App.InputSanityCheck();
+      UserInputHandler.InputSanityCheck();
       App.Device.MainCommand("SetBaseline");
     }
 
@@ -64,47 +64,47 @@ namespace Ei_Dimension.ViewModels
       switch (num)
       {
         case 0:
-          App.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsOffsetParameters)), this, 0, (TextBox)Stackpanel[0]);
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsOffsetParameters)), this, 0, (TextBox)Stackpanel[0]);
           MainViewModel.Instance.NumpadToggleButton((TextBox)Stackpanel[0]);
           break;
         case 1:
-          App.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsOffsetParameters)), this, 1, (TextBox)Stackpanel[1]);
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsOffsetParameters)), this, 1, (TextBox)Stackpanel[1]);
           MainViewModel.Instance.NumpadToggleButton((TextBox)Stackpanel[1]);
           break;
         case 2:
-          App.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsOffsetParameters)), this, 2, (TextBox)Stackpanel[2]);
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsOffsetParameters)), this, 2, (TextBox)Stackpanel[2]);
           MainViewModel.Instance.NumpadToggleButton((TextBox)Stackpanel[2]);
           break;
         case 3:
-          App.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsOffsetParameters)), this, 3, (TextBox)InnerStackpanel[0]);
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsOffsetParameters)), this, 3, (TextBox)InnerStackpanel[0]);
           MainViewModel.Instance.NumpadToggleButton((TextBox)InnerStackpanel[0]);
           break;
         case 4:
-          App.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsOffsetParameters)), this, 4, (TextBox)InnerStackpanel[1]);
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsOffsetParameters)), this, 4, (TextBox)InnerStackpanel[1]);
           MainViewModel.Instance.NumpadToggleButton((TextBox)InnerStackpanel[1]);
           break;
         case 5:
-          App.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsOffsetParameters)), this, 5, (TextBox)InnerStackpanel[2]);
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsOffsetParameters)), this, 5, (TextBox)InnerStackpanel[2]);
           MainViewModel.Instance.NumpadToggleButton((TextBox)InnerStackpanel[2]);
           break;
         case 6:
-          App.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsOffsetParameters)), this, 6, (TextBox)InnerStackpanel[3]);
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsOffsetParameters)), this, 6, (TextBox)InnerStackpanel[3]);
           MainViewModel.Instance.NumpadToggleButton((TextBox)InnerStackpanel[3]);
           break;
         case 7:
-          App.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsOffsetParameters)), this, 7, (TextBox)InnerStackpanel[4]);
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsOffsetParameters)), this, 7, (TextBox)InnerStackpanel[4]);
           MainViewModel.Instance.NumpadToggleButton((TextBox)InnerStackpanel[4]);
           break;
         case 8:
-          App.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsOffsetParameters)), this, 8, (TextBox)InnerStackpanel[5]);
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsOffsetParameters)), this, 8, (TextBox)InnerStackpanel[5]);
           MainViewModel.Instance.NumpadToggleButton((TextBox)InnerStackpanel[5]);
           break;
         case 9:
-          App.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsOffsetParameters)), this, 9, (TextBox)InnerStackpanel[6]);
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsOffsetParameters)), this, 9, (TextBox)InnerStackpanel[6]);
           MainViewModel.Instance.NumpadToggleButton((TextBox)InnerStackpanel[6]);
           break;
         case 10:
-          App.SelectedTextBox = (this.GetType().GetProperty(nameof(SiPMTempCoeff)), this, 0, Views.ChannelOffsetView.Instance.CoefTB);
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(SiPMTempCoeff)), this, 0, Views.ChannelOffsetView.Instance.CoefTB);
           MainViewModel.Instance.NumpadToggleButton(Views.ChannelOffsetView.Instance.CoefTB);
           break;
       }
@@ -112,12 +112,12 @@ namespace Ei_Dimension.ViewModels
 
     public void TextChanged(TextChangedEventArgs e)
     {
-      App.InjectToFocusedTextbox(((TextBox)e.Source).Text, true);
+      UserInputHandler.InjectToFocusedTextbox(((TextBox)e.Source).Text, true);
     }
 
     public void DropPress()
     {
-      App.InputSanityCheck();
+      UserInputHandler.InputSanityCheck();
     }
 
     public class DropDownButtonContents : Core.ObservableObject

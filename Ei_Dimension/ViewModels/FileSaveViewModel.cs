@@ -40,21 +40,21 @@ namespace Ei_Dimension.ViewModels
 
     public void CheckedBox(int num)
     {
-      App.InputSanityCheck();
+      UserInputHandler.InputSanityCheck();
       Checkboxes[num] = true;
       CheckBox(num);
     }
 
     public void UncheckedBox(int num)
     {
-      App.InputSanityCheck();
+      UserInputHandler.InputSanityCheck();
       Checkboxes[num] = false;
       CheckBox(num);
     }
 
     public void SelectOutFolder(bool defaultDir = false)
     {
-      App.InputSanityCheck();
+      UserInputHandler.InputSanityCheck();
       if (defaultDir)
       {
         ResultReporter.Outdir = MicroCyDevice.RootDirectory.FullName;
@@ -70,7 +70,7 @@ namespace Ei_Dimension.ViewModels
       switch (num)
       {
         case 0:
-          App.SelectedTextBox = (this.GetType().GetProperty(nameof(BaseFileName)), this, 0, Views.FileSaveView.Instance.FNBox);
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(BaseFileName)), this, 0, Views.FileSaveView.Instance.FNBox);
           MainViewModel.Instance.KeyboardToggle(Views.FileSaveView.Instance.FNBox);
           break;
       }
@@ -78,7 +78,7 @@ namespace Ei_Dimension.ViewModels
 
     public void TextChanged(TextChangedEventArgs e)
     {
-      App.InjectToFocusedTextbox(((TextBox)e.Source).Text, true);
+      UserInputHandler.InjectToFocusedTextbox(((TextBox)e.Source).Text, true);
     }
 
     private void CheckBox(int num)

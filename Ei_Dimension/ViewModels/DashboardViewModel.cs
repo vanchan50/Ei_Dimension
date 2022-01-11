@@ -160,7 +160,7 @@ namespace Ei_Dimension.ViewModels
 
     public void PressureMonToggleButtonClick()
     {
-      App.InputSanityCheck();
+      UserInputHandler.InputSanityCheck();
       PressureMonToggleButtonState = !PressureMonToggleButtonState;
       MaxPressure = 0;
       MinPressure = 9999999999;
@@ -168,14 +168,14 @@ namespace Ei_Dimension.ViewModels
 
     public void SetFixedVolumeButtonClick(ushort num)
     {
-      App.InputSanityCheck();
+      UserInputHandler.InputSanityCheck();
       App.Device.MainCommand("Set Property", code: 0xaf, parameter: num);
       Volumes[0] = num.ToString();
     }
 
     public void FluidicsButtonClick(int i)
     {
-      App.InputSanityCheck();
+      UserInputHandler.InputSanityCheck();
       string cmd = "";
       switch (i)
       {
@@ -199,27 +199,27 @@ namespace Ei_Dimension.ViewModels
       switch (num)
       {
         case 0:
-          App.SelectedTextBox = (this.GetType().GetProperty(nameof(EndRead)), this, 0, Views.DashboardView.Instance.Endr0TB);
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(EndRead)), this, 0, Views.DashboardView.Instance.Endr0TB);
           MainViewModel.Instance.NumpadToggleButton(Views.DashboardView.Instance.Endr0TB);
           break; 
         case 1:
-          App.SelectedTextBox = (this.GetType().GetProperty(nameof(EndRead)), this, 1, Views.DashboardView.Instance.Endr1TB);
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(EndRead)), this, 1, Views.DashboardView.Instance.Endr1TB);
           MainViewModel.Instance.NumpadToggleButton(Views.DashboardView.Instance.Endr1TB);
           break;
         case 2:
-          App.SelectedTextBox = (this.GetType().GetProperty(nameof(Volumes)), this, 0, Views.DashboardView.Instance.SampVTB);
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(Volumes)), this, 0, Views.DashboardView.Instance.SampVTB);
           MainViewModel.Instance.NumpadToggleButton(Views.DashboardView.Instance.SampVTB);
           break;
         case 3:
-          App.SelectedTextBox = (this.GetType().GetProperty(nameof(Volumes)), this, 1, Views.DashboardView.Instance.WashVTB);
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(Volumes)), this, 1, Views.DashboardView.Instance.WashVTB);
           MainViewModel.Instance.NumpadToggleButton(Views.DashboardView.Instance.WashVTB);
           break;
         case 4:
-          App.SelectedTextBox = (this.GetType().GetProperty(nameof(Volumes)), this, 2, Views.DashboardView.Instance.AgitVTB);
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(Volumes)), this, 2, Views.DashboardView.Instance.AgitVTB);
           MainViewModel.Instance.NumpadToggleButton(Views.DashboardView.Instance.AgitVTB);
           break;
         case 5:
-          App.SelectedTextBox = (this.GetType().GetProperty(nameof(WorkOrder)), this, 0, Views.DashboardView.Instance.SysCTB);
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(WorkOrder)), this, 0, Views.DashboardView.Instance.SysCTB);
           MainViewModel.Instance.NumpadToggleButton(Views.DashboardView.Instance.SysCTB);
           break;
       }
@@ -227,7 +227,7 @@ namespace Ei_Dimension.ViewModels
 
     public void TextChanged(TextChangedEventArgs e)
     {
-      App.InjectToFocusedTextbox(((TextBox)e.Source).Text, true);
+      UserInputHandler.InjectToFocusedTextbox(((TextBox)e.Source).Text, true);
     }
 
     private MicroCy.Wells MakeWell(byte row, byte col)
@@ -308,7 +308,7 @@ namespace Ei_Dimension.ViewModels
 
     public void CalModeToggle()
     {
-      App.InputSanityCheck();
+      UserInputHandler.InputSanityCheck();
       if (CalModeOn)
       {
         if (MicroCyDevice.Mode == OperationMode.Normal)
@@ -346,7 +346,7 @@ namespace Ei_Dimension.ViewModels
 
     public void ValModeToggle()
     {
-      App.InputSanityCheck();
+      UserInputHandler.InputSanityCheck();
       if (ValModeOn)
       {
         if (MicroCyDevice.Mode == OperationMode.Normal && VerificationViewModel.Instance.ValMapInfoReady())
@@ -379,7 +379,7 @@ namespace Ei_Dimension.ViewModels
 
     public void DropPress()
     {
-      App.InputSanityCheck();
+      UserInputHandler.InputSanityCheck();
     }
 
     public class DropDownButtonContents : Core.ObservableObject

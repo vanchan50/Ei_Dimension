@@ -51,7 +51,7 @@ namespace Ei_Dimension.ViewModels
 
     public void LoadTemplate()
     {
-      App.InputSanityCheck();
+      UserInputHandler.InputSanityCheck();
       AcquisitionTemplate newTemplate = null;
       try
       {
@@ -196,7 +196,7 @@ namespace Ei_Dimension.ViewModels
 
     public void SaveTemplate()
     {
-      App.InputSanityCheck();
+      UserInputHandler.InputSanityCheck();
       var path = MicroCyDevice.RootDirectory + @"\Config\" + TemplateSaveName[0] + ".dtml";
       foreach (var c in _invalidChars)
       {
@@ -282,7 +282,7 @@ namespace Ei_Dimension.ViewModels
 
     public void DeleteTemplate()
     {
-      App.InputSanityCheck();
+      UserInputHandler.InputSanityCheck();
       if (SelectedItem != null && File.Exists(SelectedItem))
       {
         void Delete()
@@ -313,7 +313,7 @@ namespace Ei_Dimension.ViewModels
       switch (num)
       {
         case 0:
-          App.SelectedTextBox = (this.GetType().GetProperty(nameof(TemplateSaveName)), this, 0, Views.TemplateSelectView.Instance.TmplBox);
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(TemplateSaveName)), this, 0, Views.TemplateSelectView.Instance.TmplBox);
           MainViewModel.Instance.KeyboardToggle(Views.TemplateSelectView.Instance.TmplBox);
           break;
       }

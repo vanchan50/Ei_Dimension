@@ -90,7 +90,6 @@ namespace MicroCy
       MoveMaps();
       LoadMaps();
       Reg0stats = false;
-      //_serialConnection.BeginRead(ReplyFromMC);   //default termination is end of sample
       EndState = 0;
       ReadActive = false;
       IsMeasurementGoing = false;

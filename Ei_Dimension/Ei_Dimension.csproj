@@ -233,8 +233,11 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="StartupFinalizer.cs" />
     <Compile Include="Styles\EmbeddedImg.cs" />
     <Compile Include="TextBoxHandler.cs" />
+    <Compile Include="UITimer.cs" />
+    <Compile Include="UserInputHandler.cs" />
     <Compile Include="ViewModels\AlignmentViewModel.cs" />
     <Compile Include="ViewModels\CalibrationViewModel.cs" />
     <Compile Include="ViewModels\ChannelOffsetViewModel.cs" />

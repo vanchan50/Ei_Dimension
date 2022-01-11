@@ -31,18 +31,18 @@ namespace Ei_Dimension.Models
     //Results
     private static uint _tbCounter = 0;
     private static uint _nameTbCounter = 0;
-    private static Thickness _regionsTbAlignment = new Thickness(10, 10, 0, 0);
-    private static Thickness _lastRegionsTbAlignment = new Thickness(10, 10, 0, 10);
-    private static Thickness _NameBoxAlignment = new Thickness(0, 10, 0, 0);
-    private static Thickness _lastNameBoxAlignment = new Thickness(0, 10, 0, 10);
-    private static Style _regionsStyle = (Style)App.Current.Resources.MergedDictionaries[6]["RegionFieldStyle"];
-    private static Style _regionsNamesStyle = (Style)App.Current.Resources.MergedDictionaries[5]["InputFieldStyle"];
+    private static readonly Thickness _regionsTbAlignment = new Thickness(10, 10, 0, 0);
+    private static readonly Thickness _lastRegionsTbAlignment = new Thickness(10, 10, 0, 10);
+    private static readonly Thickness _NameBoxAlignment = new Thickness(0, 10, 0, 0);
+    private static readonly Thickness _lastNameBoxAlignment = new Thickness(0, 10, 0, 10);
+    private static readonly Style _regionsStyle = (Style)App.Current.Resources.MergedDictionaries[6]["RegionFieldStyle"];
+    private static readonly Style _regionsNamesStyle = (Style)App.Current.Resources.MergedDictionaries[5]["InputFieldStyle"];
     private static TextBox _lastRegionsBox;
     private static TextBox _lastRegionsNameBox;
     private static TextBox _lastValidationRegionsBox;
     private static TextBox _lastValidationReporterBox;
     private ListBox _resultsTable;
-    private static Thickness _TbAlignment = new Thickness(5, 5, 5, 0);
+    private static readonly Thickness _TbAlignment = new Thickness(5, 5, 5, 0);
     //DB
     private StackPanel _dashboardNum;
     private StackPanel _dashboardName;
@@ -268,7 +268,7 @@ namespace Ei_Dimension.Models
 
     private void RegionsNamesTbGotFocus(object sender, RoutedEventArgs e)
     {
-      App.SelectedTextBox = (this.GetType()
+      UserInputHandler.SelectedTextBox = (this.GetType()
         .GetProperty(nameof(RegionsNamesList)),
         this, int.Parse(((TextBox)e.Source).Name.Trim('_')), (TextBox)sender);
       MainViewModel.Instance.KeyboardToggle((TextBox)e.Source);
@@ -483,7 +483,7 @@ namespace Ei_Dimension.Models
 
     private void ValidationReporterTbGotFocus(object sender, RoutedEventArgs e)
     {
-      App.SelectedTextBox = (this.GetType()
+      UserInputHandler.SelectedTextBox = (this.GetType()
         .GetProperty(nameof(VerificationReporterList)),
         this, int.Parse(((TextBox)e.Source).Name.Trim('_')), (TextBox)sender);
       MainViewModel.Instance.NumpadToggleButton((TextBox)e.Source);
@@ -491,7 +491,7 @@ namespace Ei_Dimension.Models
       
     private void ValidationReporterTextChanged(object sender, TextChangedEventArgs e)
     {
-      App.InjectToFocusedTextbox(((TextBox)e.Source).Text, true);
+      UserInputHandler.InjectToFocusedTextbox(((TextBox)e.Source).Text, true);
     }
 
     public void AddValidationRegion(int index)

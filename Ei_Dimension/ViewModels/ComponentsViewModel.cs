@@ -108,7 +108,7 @@ namespace Ei_Dimension.ViewModels
 
     public void InputSelectorSwapButtonClick()
     {
-      App.InputSanityCheck();
+      UserInputHandler.InputSanityCheck();
       var temp = InputSelectorState[0];
       InputSelectorState[0] = InputSelectorState[1];
       InputSelectorState[1] = temp;
@@ -118,7 +118,7 @@ namespace Ei_Dimension.ViewModels
 
     public void ValvesButtonClick(int num)
     {
-      App.InputSanityCheck();
+      UserInputHandler.InputSanityCheck();
       int param = 0;
       byte Code = 0x00;
       switch (num)
@@ -149,7 +149,7 @@ namespace Ei_Dimension.ViewModels
 
     public void LasersButtonClick(int num)
     {
-      App.InputSanityCheck();
+      UserInputHandler.InputSanityCheck();
       switch (num)
       {
         case 1:
@@ -179,7 +179,7 @@ namespace Ei_Dimension.ViewModels
 
     public void SheathRunButtonClick()
     {
-      App.InputSanityCheck();
+      UserInputHandler.InputSanityCheck();
       if (SyringeControlSheathValue[0] == "")
         App.Device.MainCommand("Sheath", cmd: _syringeControlStates[0]);
       else if (ushort.TryParse(SyringeControlSheathValue[0], out ushort usRes))
@@ -188,7 +188,7 @@ namespace Ei_Dimension.ViewModels
 
     public void SampleARunButtonClick()
     {
-      App.InputSanityCheck();
+      UserInputHandler.InputSanityCheck();
       if (SyringeControlSampleAValue[0] == "")
         App.Device.MainCommand("SampleA", cmd: _syringeControlStates[1]);
       else if (ushort.TryParse(SyringeControlSampleAValue[0], out ushort usRes))
@@ -197,7 +197,7 @@ namespace Ei_Dimension.ViewModels
 
     public void SampleBRunButtonClick()
     {
-      App.InputSanityCheck();
+      UserInputHandler.InputSanityCheck();
       if (SyringeControlSampleBValue[0] == "")
         App.Device.MainCommand("SampleB", cmd: _syringeControlStates[2]);
       else if (ushort.TryParse(SyringeControlSampleBValue[0], out ushort usRes))
@@ -206,7 +206,7 @@ namespace Ei_Dimension.ViewModels
 
     public void GetPositionToggleButtonClick()
     {
-      App.InputSanityCheck();
+      UserInputHandler.InputSanityCheck();
       var RM = Language.Resources.ResourceManager;
       var curCulture = Language.TranslationSource.Instance.CurrentCulture;
       ushort state = 0;
@@ -227,7 +227,7 @@ namespace Ei_Dimension.ViewModels
 
     public void GetPositionButtonsClick(int num)
     {
-      App.InputSanityCheck();
+      UserInputHandler.InputSanityCheck();
       ushort param = 0;
       switch (num)
       {
@@ -246,7 +246,7 @@ namespace Ei_Dimension.ViewModels
 
     public void SamplingToggleButtonClick()
     {
-      App.InputSanityCheck();
+      UserInputHandler.InputSanityCheck();
       SamplingActive = !SamplingActive;
       if(SamplingActive)
         App.Device.MainCommand("Start Sampling");
@@ -256,7 +256,7 @@ namespace Ei_Dimension.ViewModels
 
     public void SingleStepDebugToggleButtonClick()
     {
-      App.InputSanityCheck();
+      UserInputHandler.InputSanityCheck();
       SingleStepDebugActive = !SingleStepDebugActive;
       var param = SingleStepDebugActive ? 1 : 0;
       App.Device.MainCommand("Set Property", code: 0xf7, parameter: (ushort)param);
@@ -264,32 +264,32 @@ namespace Ei_Dimension.ViewModels
 
     public void FlushButtonClick()
     {
-      App.InputSanityCheck();
+      UserInputHandler.InputSanityCheck();
       App.Device.MainCommand("Set Property", code: 0xd9);
     }
 
     public void StartupButtonClick()
     {
-      App.InputSanityCheck();
+      UserInputHandler.InputSanityCheck();
       App.Device.MainCommand("Startup");
     }
 
     public void MoveIdexButtonClick()
     {
-      App.InputSanityCheck();
+      UserInputHandler.InputSanityCheck();
       App.Device.MainCommand("Idex");
     }
 
     public void CWDirectionToggleButtonClick()
     {
-      App.InputSanityCheck();
+      UserInputHandler.InputSanityCheck();
       CWDirectionActive = !CWDirectionActive;
       MicroCy.InstrumentParameters.Idex.Dir = CWDirectionActive ? 1 : 0;
     }
 
     public void IdexPositionButtonClick()
     {
-      App.InputSanityCheck();
+      UserInputHandler.InputSanityCheck();
       App.Device.MainCommand("Get Property", code: 0x04);
     }
 
@@ -305,27 +305,27 @@ namespace Ei_Dimension.ViewModels
       switch (num)
       {
         case 0:
-          App.SelectedTextBox = (this.GetType().GetProperty(nameof(IdexTextBoxInputs)), this, 0, Views.ComponentsView.Instance.TB0);
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(IdexTextBoxInputs)), this, 0, Views.ComponentsView.Instance.TB0);
           MainViewModel.Instance.NumpadToggleButton(Views.ComponentsView.Instance.TB0);
           break;
         case 1:
-          App.SelectedTextBox = (this.GetType().GetProperty(nameof(IdexTextBoxInputs)), this, 1, Views.ComponentsView.Instance.TB1);
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(IdexTextBoxInputs)), this, 1, Views.ComponentsView.Instance.TB1);
           MainViewModel.Instance.NumpadToggleButton(Views.ComponentsView.Instance.TB1);
           break;
         case 2:
-          App.SelectedTextBox = (this.GetType().GetProperty(nameof(MaxPressureBox)), this, 0, Views.ComponentsView.Instance.TB2);
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(MaxPressureBox)), this, 0, Views.ComponentsView.Instance.TB2);
           MainViewModel.Instance.NumpadToggleButton(Views.ComponentsView.Instance.TB2);
           break;
         case 5:
-          App.SelectedTextBox = (this.GetType().GetProperty(nameof(SyringeControlSheathValue)), this, 0, Views.ComponentsView.Instance.TB5);
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(SyringeControlSheathValue)), this, 0, Views.ComponentsView.Instance.TB5);
           MainViewModel.Instance.NumpadToggleButton(Views.ComponentsView.Instance.TB5);
           break;
         case 6:
-          App.SelectedTextBox = (this.GetType().GetProperty(nameof(SyringeControlSampleAValue)), this, 0, Views.ComponentsView.Instance.TB6);
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(SyringeControlSampleAValue)), this, 0, Views.ComponentsView.Instance.TB6);
           MainViewModel.Instance.NumpadToggleButton(Views.ComponentsView.Instance.TB6);
           break;
         case 7:
-          App.SelectedTextBox = (this.GetType().GetProperty(nameof(SyringeControlSampleBValue)), this, 0, Views.ComponentsView.Instance.TB7);
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(SyringeControlSampleBValue)), this, 0, Views.ComponentsView.Instance.TB7);
           MainViewModel.Instance.NumpadToggleButton(Views.ComponentsView.Instance.TB7);
           break;
       }
@@ -333,7 +333,7 @@ namespace Ei_Dimension.ViewModels
 
     public void TextChanged(TextChangedEventArgs e)
     {
-      App.InjectToFocusedTextbox(((TextBox)e.Source).Text, true);
+      UserInputHandler.InjectToFocusedTextbox(((TextBox)e.Source).Text, true);
     }
 
     public class DropDownButtonContents : Core.ObservableObject

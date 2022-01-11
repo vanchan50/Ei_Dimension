@@ -60,7 +60,7 @@ namespace Ei_Dimension.ViewModels
 
     public void SaveClick()
     {
-      App.InputSanityCheck();
+      UserInputHandler.InputSanityCheck();
       var idx = App.Device.MapList.FindIndex(x => x.mapName == App.Device.ActiveMap.mapName);
       var map = App.Device.MapList[idx];
       for (var i = 0; i < App.MapRegions.RegionsList.Count; i++)
@@ -206,7 +206,7 @@ namespace Ei_Dimension.ViewModels
 
     public void DropPress()
     {
-      App.InputSanityCheck();
+      UserInputHandler.InputSanityCheck();
     }
 
     public class DropDownButtonContents : Core.ObservableObject

@@ -47,7 +47,7 @@ namespace Ei_Dimension.ViewModels
 
     public void LEDsButtonClick()
     {
-      App.InputSanityCheck();
+      UserInputHandler.InputSanityCheck();
       if (LEDsEnabled)
       {
         LEDsToggleButtonState = !LEDsToggleButtonState;
@@ -72,7 +72,7 @@ namespace Ei_Dimension.ViewModels
 
     public void TouchModeToggle()
     {
-      App.InputSanityCheck();
+      UserInputHandler.InputSanityCheck();
       MainViewModel.Instance.TouchControlsEnabled = !MainViewModel.Instance.TouchControlsEnabled;
       Settings.Default.TouchMode = TouchModeEnabled[0];
       Settings.Default.Save();
@@ -80,7 +80,7 @@ namespace Ei_Dimension.ViewModels
 
     public void UVCSanitizeClick()
     {
-      App.InputSanityCheck();
+      UserInputHandler.InputSanityCheck();
       if (int.TryParse(SanitizeSecondsContent[0], out int res))
         App.Device.MainCommand("Set Property", code: 0x1f, parameter: (ushort)res);
     }
@@ -116,7 +116,7 @@ namespace Ei_Dimension.ViewModels
       switch (num)
       {
         case 0:
-          App.SelectedTextBox = (this.GetType().GetProperty(nameof(SanitizeSecondsContent)), this, 0, Views.MaintenanceView.Instance.SecsTB);
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(SanitizeSecondsContent)), this, 0, Views.MaintenanceView.Instance.SecsTB);
           MainViewModel.Instance.NumpadToggleButton(Views.MaintenanceView.Instance.SecsTB);
           break;
       }
@@ -124,7 +124,7 @@ namespace Ei_Dimension.ViewModels
 
     public void TextChanged(TextChangedEventArgs e)
     {
-      App.InjectToFocusedTextbox(((TextBox)e.Source).Text, true);
+      UserInputHandler.InjectToFocusedTextbox(((TextBox)e.Source).Text, true);
     }
 
     public void InitChildren()

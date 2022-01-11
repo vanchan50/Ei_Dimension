@@ -213,7 +213,7 @@ namespace Ei_Dimension.ViewModels
     {
       if (e.Key == System.Windows.Input.Key.Return)
       {
-        App.InputSanityCheck();
+        UserInputHandler.InputSanityCheck();
       }
     }
   }

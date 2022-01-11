@@ -27,7 +27,7 @@ namespace Ei_Dimension.Views
 #if DEBUG
       Console.Error.WriteLine("#21 SyringeSpeedsView Loaded");
 #endif
-      App.OnAppLoaded();
+      StartupFinalizer.Run();
     }
   }
 }

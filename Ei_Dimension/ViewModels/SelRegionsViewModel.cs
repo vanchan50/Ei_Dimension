@@ -39,7 +39,7 @@ namespace Ei_Dimension.ViewModels
         App.Current.Dispatcher.Invoke((Action)
           (() =>
           {
-            App.InputSanityCheck();
+            UserInputHandler.InputSanityCheck();
             for (var i = 0; i < App.MapRegions.ActiveRegions.Count; i++)
             {
               if (!App.MapRegions.ActiveRegions[i])
@@ -59,7 +59,7 @@ namespace Ei_Dimension.ViewModels
         App.Current.Dispatcher.Invoke((Action)
           (() =>
           {
-            App.InputSanityCheck();
+            UserInputHandler.InputSanityCheck();
             App.MapRegions.FillRegions();
             HideWaitIndicator();
           }));
