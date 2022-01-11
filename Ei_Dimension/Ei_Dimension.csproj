@@ -225,6 +225,7 @@
     <Compile Include="Models\WellWarningState.cs" />
     <Compile Include="Models\WorldMap.cs" />
     <Compile Include="MultiTube.cs" />
+    <Compile Include="Notification.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="ServiceMenuEnabler.cs" />
     <Compile Include="Settings.cs" />

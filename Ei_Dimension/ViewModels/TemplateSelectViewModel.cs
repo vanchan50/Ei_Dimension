@@ -63,7 +63,7 @@ namespace Ei_Dimension.ViewModels
       }
       catch
       {
-        App.ShowNotification("No Template selected");
+        Notification.Show("No Template selected");
       }
       if (newTemplate != null)
       {
@@ -174,7 +174,7 @@ namespace Ei_Dimension.ViewModels
             }
             catch
             {
-              App.ShowNotification("Error loading Template");
+              Notification.Show("Error loading Template");
               return;
             }
             finally
@@ -202,7 +202,7 @@ namespace Ei_Dimension.ViewModels
       {
         if (TemplateSaveName[0].Contains(c.ToString()))
         {
-          App.ShowNotification("Invalid File name");
+          Notification.Show("Invalid File name");
           return;
         }
       }
@@ -212,7 +212,7 @@ namespace Ei_Dimension.ViewModels
         {
           SavingProcedure(path);
         }
-        App.ShowNotification($"A template with name \"{TemplateSaveName[0]}\" already exists.",
+        Notification.Show($"A template with name \"{TemplateSaveName[0]}\" already exists.",
           Overwrite, "Overwrite", null, "Cancel");
         return;
       }
@@ -270,7 +270,7 @@ namespace Ei_Dimension.ViewModels
       }
       catch
       {
-        App.ShowNotification("There was a problem saving the Template");
+        Notification.Show("There was a problem saving the Template");
       }
       if (!NameList.Contains(TemplateSaveName[0]))
       {
@@ -293,7 +293,7 @@ namespace Ei_Dimension.ViewModels
             ExperimentViewModel.Instance.CurrentTemplateName = "None";
           DeleteVisible = Visibility.Hidden;
         }
-        App.ShowNotification($"Do you want to delete \"{Path.GetFileNameWithoutExtension(SelectedItem)}\" template?",
+        Notification.Show($"Do you want to delete \"{Path.GetFileNameWithoutExtension(SelectedItem)}\" template?",
           Delete, "Delete", null, "Cancel");
       }
     }

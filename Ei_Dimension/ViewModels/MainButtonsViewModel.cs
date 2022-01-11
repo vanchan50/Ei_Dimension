@@ -45,14 +45,14 @@ namespace Ei_Dimension.ViewModels
       UserInputHandler.InputSanityCheck();
       if (MicroCyDevice.TerminationType == 0 && App.MapRegions.ActiveRegionNums.Count == 0)
       {
-        App.ShowNotification("\"Min Per Region\" End of Read requires at least 1 active region");
+        Notification.Show("\"Min Per Region\" End of Read requires at least 1 active region");
         return;
       }
 
       DashboardViewModel.Instance.SetWellsInOrder();
       if (MicroCyDevice.WellsInOrder.Count < 1)
       {
-        App.ShowNotification("No wells or Tube selected");
+        Notification.Show("No wells or Tube selected");
         return;
       }
       App.Device.MainCommand("Set FProperty", code: 0x06);
@@ -133,7 +133,7 @@ namespace Ei_Dimension.ViewModels
 
     private static void SelectAllMapRegions()
     {
-      App.ShowNotification("No Active regions selected");
+      Notification.Show("No Active regions selected");
       for (var i = 0; i < App.MapRegions.ActiveRegions.Count; i++)
       {
         App.MapRegions.AddActiveRegion(i, callFromCode: true);

@@ -150,14 +150,14 @@ namespace Ei_Dimension.ViewModels
         Valdate = DateTime.Now.ToString("dd.MM.yyyy", new System.Globalization.CultureInfo("en-GB"))
       });
       DashboardViewModel.Instance.ValidDateBox[0] = App.Device.ActiveMap.valtime;
-      App.ShowLocalizedNotification(nameof(Language.Resources.Validation_Success), System.Windows.Media.Brushes.Green);
+      Notification.ShowLocalized(nameof(Language.Resources.Validation_Success), System.Windows.Media.Brushes.Green);
     }
 
     public bool ValMapInfoReady()
     {
       if (App.MapRegions.VerificationRegionNums.Count == 0)
       {
-        App.ShowNotification("No Verification regions selected");
+        Notification.Show("No Verification regions selected");
         return false;
       }
 
@@ -167,7 +167,7 @@ namespace Ei_Dimension.ViewModels
         {
           if (App.MapRegions.VerificationReporterList[i] == "")
           {
-            App.ShowNotification($"Verification region {App.MapRegions.RegionsList[i]} Reporter is not specified");
+            Notification.Show($"Verification region {App.MapRegions.RegionsList[i]} Reporter is not specified");
             return false;
           }
         }

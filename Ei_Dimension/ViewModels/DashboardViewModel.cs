@@ -328,7 +328,7 @@ namespace Ei_Dimension.ViewModels
         }
         CalModeOn = false;
         if (MicroCyDevice.Mode == OperationMode.Verification)
-          App.ShowNotification("The instrument is in Verificationtion mode");
+          Notification.Show("The instrument is in Verificationtion mode");
       }
       else
       {
@@ -362,7 +362,7 @@ namespace Ei_Dimension.ViewModels
         }
         ValModeOn = false;
         if (MicroCyDevice.Mode == OperationMode.Calibration)
-          App.ShowNotification("The instrument is in Calibration mode");
+          Notification.Show("The instrument is in Calibration mode");
       }
       else
       {

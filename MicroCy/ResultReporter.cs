@@ -121,7 +121,7 @@ namespace MicroCy
 
     private static void OutputPlateReport()
     {
-      if ((SavingWellIdx == MicroCyDevice.WellsToRead) && (SummaryOut.Length > 0) && MicroCyDevice.PltRept)    //end of read and json results requested
+      if ((SavingWellIdx == MicroCyDevice.WellsToRead) && (SummaryOut.Length > 0) && MicroCyDevice.PlateReportActive)    //end of read and json results requested
       {
         string rfilename = MicroCyDevice.SystemControl == 0 ? Outfilename : MicroCyDevice.WorkOrder.plateID.ToString();
         if (!Directory.Exists($"{MicroCyDevice.RootDirectory.FullName}\\Result\\Summary"))

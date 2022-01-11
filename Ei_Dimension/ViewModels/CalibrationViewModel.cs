@@ -115,7 +115,7 @@ namespace Ei_Dimension.ViewModels
         DashboardViewModel.Instance.CaliDateBox[0] = App.Device.ActiveMap.caltime;
         Cancel.Invoke();
       };
-      App.ShowLocalizedNotification(nameof(Language.Resources.Calibration_Success), Save, nameof(Language.Resources.Calibration_Save_Calibration_To_Map),
+      Notification.ShowLocalized(nameof(Language.Resources.Calibration_Success), Save, nameof(Language.Resources.Calibration_Save_Calibration_To_Map),
         Cancel, nameof(Language.Resources.Calibration_Cancel_Calibration), Brushes.Green);
     }
 
@@ -182,7 +182,7 @@ namespace Ei_Dimension.ViewModels
         Caldate = null,
         Valdate = null
       });
-      App.ShowNotification($"Calibration Parameters Saved to map {App.Device.ActiveMap.mapName}");
+      Notification.Show($"Calibration Parameters Saved to map {App.Device.ActiveMap.mapName}");
     }
 
     public void FocusedBox(int num)

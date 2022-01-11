@@ -147,20 +147,21 @@ namespace MicroCy
       }
     }
 
+    /// <summary>
+    /// Move the received command to Commands Queue
+    /// </summary>
     private void GetCommandFromBuffer()
     {
-      CommandStruct newcmd;
-      // move received command to queue
-      newcmd = ByteArrayToStruct(_serialConnection.InputBuffer);
+      var newcmd = ByteArrayToStruct(_serialConnection.InputBuffer);
       if(newcmd.Code != 0)
         MicroCyDevice.Commands.Enqueue(newcmd);
       if ((newcmd.Code >= 0xd0) && (newcmd.Code <= 0xdf))
       {
-        Console.WriteLine(string.Format("{0} E-series script [{1}]", DateTime.Now.ToString(), newcmd.ToString()));
+        Console.WriteLine($"{DateTime.Now.ToString()} E-series script [{newcmd.ToString()}]");
       }
       else if (newcmd.Code > 0)
       {
-        Console.Out.WriteLine(string.Format("{0} Received [{1}]", DateTime.Now.ToString(), newcmd.ToString()));
+        Console.WriteLine($"{DateTime.Now.ToString()} Received [{newcmd.ToString()}]");
       }
     }
 

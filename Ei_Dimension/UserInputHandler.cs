@@ -1278,7 +1278,7 @@ namespace Ei_Dimension
         if (failed)
         {
           ((ObservableCollection<string>)SelectedTextBox.prop.GetValue(SelectedTextBox.VM))[SelectedTextBox.index] = _tempOldString;
-          //ShowNotification(ErrorMessage);
+          //Notification.Show(ErrorMessage);
           SelectedTextBox.tb.Background = System.Windows.Media.Brushes.Red;
         }
         else

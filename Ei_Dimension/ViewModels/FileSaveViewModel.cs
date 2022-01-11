@@ -94,7 +94,7 @@ namespace Ei_Dimension.ViewModels
           Settings.Default.RMeans = Checkboxes[num];
           break;
         case 2:
-          MicroCyDevice.PltRept = Checkboxes[num];
+          MicroCyDevice.PlateReportActive = Checkboxes[num];
           Settings.Default.PlateReport = Checkboxes[num];
           break;
         case 3:
@@ -102,7 +102,7 @@ namespace Ei_Dimension.ViewModels
           Settings.Default.OnlyClassifed = Checkboxes[num];
           break;
         case 4:
-          App.Device.Reg0stats = Checkboxes[num];
+          MicroCyDevice.Reg0stats = Checkboxes[num];
           break;
         case 5:
           break;

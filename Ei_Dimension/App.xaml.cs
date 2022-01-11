@@ -21,7 +21,7 @@ namespace Ei_Dimension
 
     public App()
     {
-      Device = new MicroCyDevice(typeof(USBConnection));
+      Device = new MicroCyDevice();
       SetLogOutput();
       SetupDevice();
       Device.StartingToReadWell += StartingToReadWellEventHandler;
@@ -61,7 +61,7 @@ namespace Ei_Dimension
       MicroCyDevice.SystemControl = Settings.Default.SystemControl;
       MicroCyDevice.Everyevent = Settings.Default.Everyevent;
       MicroCyDevice.RMeans = Settings.Default.RMeans;
-      MicroCyDevice.PltRept = Settings.Default.PlateReport;
+      MicroCyDevice.PlateReportActive = Settings.Default.PlateReport;
       MicroCyDevice.TerminationType = Settings.Default.EndRead;
       MicroCyDevice.MinPerRegion = Settings.Default.MinPerRegion;
       MicroCyDevice.BeadsToCapture = Settings.Default.BeadsToCapture;
@@ -554,11 +554,11 @@ namespace Ei_Dimension
         case OperationMode.Calibration:
           if (++CalibrationViewModel.Instance.CalFailsInARow >= 3 && CalibrationViewModel.Instance.CalJustFailed)
           {
-            ShowLocalizedNotification(nameof(Language.Resources.Calibration_Fail), System.Windows.Media.Brushes.Red);
+            Notification.ShowLocalized(nameof(Language.Resources.Calibration_Fail), System.Windows.Media.Brushes.Red);
             DashboardViewModel.Instance.CalModeToggle();
           }
           else if (CalibrationViewModel.Instance.CalJustFailed)
-            ShowLocalizedNotification(nameof(Language.Resources.Calibration_in_Progress), System.Windows.Media.Brushes.Green);
+            Notification.ShowLocalized(nameof(Language.Resources.Calibration_in_Progress), System.Windows.Media.Brushes.Green);
           break;
         case OperationMode.Verification:
           Validator.CalculateResults();
@@ -567,7 +567,7 @@ namespace Ei_Dimension
             _ = Current.Dispatcher.BeginInvoke((Action)VerificationViewModel.VerificationSuccess);
           }
           else
-            ShowLocalizedNotification(nameof(Language.Resources.Validation_Fail), System.Windows.Media.Brushes.Red);
+            Notification.ShowLocalized(nameof(Language.Resources.Validation_Fail), System.Windows.Media.Brushes.Red);
           break;
       }
     }
@@ -610,56 +610,6 @@ namespace Ei_Dimension
       base.OnStartup(e);
     }
 
-    public static void ShowNotification(string text, System.Windows.Media.Brush background = null)
-    {
-      NotificationViewModel.Instance.Text[0] = text;
-      if (background != null)
-        NotificationViewModel.Instance.Background = background;
-      NotificationViewModel.Instance.NotificationVisible = Visibility.Visible;
-    }
-
-    public static void ShowNotification(string text, Action action1, string actionButton1Text, System.Windows.Media.Brush background = null )
-    {
-      NotificationViewModel.Instance.Action1 = action1;
-      NotificationViewModel.Instance.ActionButtonText[0] = actionButton1Text;
-      NotificationViewModel.Instance.ButtonVisible[0] = Visibility.Visible;
-      NotificationViewModel.Instance.ButtonVisible[2] = Visibility.Hidden;
-      ShowNotification(text, background);
-    }
-
-    public static void ShowNotification(string text, Action action1, string actionButton1Text, Action action2, string actionButton2Text, System.Windows.Media.Brush background = null)
-    {
-      NotificationViewModel.Instance.Action2 = action2;
-      NotificationViewModel.Instance.ActionButtonText[1] = actionButton2Text;
-      NotificationViewModel.Instance.ButtonVisible[1] = Visibility.Visible;
-      ShowNotification(text, action1, actionButton1Text, background);
-    }
-
-    public static void ShowLocalizedNotification(string nameofLocalizationString, System.Windows.Media.Brush background = null)
-    {
-      ShowNotification(Language.Resources.ResourceManager.GetString(nameofLocalizationString,
-          Language.TranslationSource.Instance.CurrentCulture), background);
-    }
-
-    public static void ShowLocalizedNotification(string nameofLocalizationString, Action action1, string nameofActionButton1Text, System.Windows.Media.Brush background = null)
-    {
-      NotificationViewModel.Instance.Action1 = action1;
-      NotificationViewModel.Instance.ActionButtonText[0] = Language.Resources.ResourceManager.GetString(nameofActionButton1Text,
-          Language.TranslationSource.Instance.CurrentCulture);
-      NotificationViewModel.Instance.ButtonVisible[0] = Visibility.Visible;
-      NotificationViewModel.Instance.ButtonVisible[2] = Visibility.Hidden;
-      ShowLocalizedNotification(nameofLocalizationString, background);
-    }
-
-    public static void ShowLocalizedNotification(string nameofLocalizationString, Action action1, string nameofActionButton1Text, Action action2, string nameofActionButton2Text, System.Windows.Media.Brush background = null)
-    {
-      NotificationViewModel.Instance.Action2 = action2;
-      NotificationViewModel.Instance.ActionButtonText[1] = Language.Resources.ResourceManager.GetString(nameofActionButton2Text,
-          Language.TranslationSource.Instance.CurrentCulture);
-      NotificationViewModel.Instance.ButtonVisible[1] = Visibility.Visible;
-      ShowLocalizedNotification(nameofLocalizationString, action1, nameofActionButton1Text, background);
-    }
-
     public static void SavePlateState()
     {
       //overwrite the whole thing
@@ -670,7 +620,7 @@ namespace Ei_Dimension
       }
       catch(Exception e)
       {
-        ShowNotification($"Problem with status file save, Please report this issue to the Manufacturer {e.Message}");
+        Notification.Show($"Problem with status file save, Please report this issue to the Manufacturer {e.Message}");
       }
     }
 

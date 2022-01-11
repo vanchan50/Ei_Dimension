@@ -309,7 +309,7 @@ namespace Ei_Dimension.ViewModels
       List<string> linesInFile = Core.DataProcessor.GetDataFromFile(path);
       if (linesInFile.Count == 1 && linesInFile[0] == " ")
       {
-        App.ShowNotification("File is empty");
+        Notification.Show("File is empty");
         return false;
       }
       for (var i = 0; i < linesInFile.Count; i++)
@@ -326,7 +326,7 @@ namespace Ei_Dimension.ViewModels
     {
       if (_fillDataActive)
       {
-        App.ShowNotification("Results loading failed:\nPlease wait for the previous well to load");
+        Notification.Show("Results loading failed:\nPlease wait for the previous well to load");
         return;
       }
       _fillDataActive = true;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
@@ -336,7 +336,7 @@ namespace Ei_Dimension.ViewModels
         var path = PlatePictogram.GetSelectedFilePath();  //@"C:\Emissioninc\KEIZ0R-LEGION\AcquisitionData\val speed test 2E7_0.csv"; //
         if (!System.IO.File.Exists(path))
         {
-          App.ShowNotification($"File does not exist.\nPlease report this issue to the manufacturer");
+          Notification.Show($"File does not exist.\nPlease report this issue to the manufacturer");
           ResultsWaitIndicatorVisibility = false;
           ChartWaitIndicatorVisibility = false;
           _fillDataActive = false;
@@ -364,7 +364,7 @@ namespace Ei_Dimension.ViewModels
           }
           catch (Exception e)
           {
-            App.ShowNotification($"Something went wrong during File loading.\nPlease report this issue to the manufacturer\n {e.Message}");
+            Notification.Show($"Something went wrong during File loading.\nPlease report this issue to the manufacturer\n {e.Message}");
           }
           finally
           {

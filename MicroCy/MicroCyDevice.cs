@@ -64,12 +64,12 @@ namespace MicroCy
     public static bool ReadActive { get; set; }
     public static bool Everyevent { get; set; }
     public static bool RMeans { get; set; }
-    public static bool PltRept { get; set; }
+    public static bool PlateReportActive { get; set; }
     public static bool OnlyClassified { get; set; }
-    public bool Reg0stats { get; set; }
+    public static bool Reg0stats { get; set; }
     public static bool ChannelBIsHiSensitivity { get; set; }
-    public byte PlateRow { get; set; }
-    public byte PlateCol { get; set; }
+    public static byte PlateRow { get; set; }
+    public static byte PlateCol { get; set; }
     public static byte TerminationType { get; set; }
     public static byte ReadingRow { get; set; }
     public static byte ReadingCol { get; set; }
@@ -80,7 +80,7 @@ namespace MicroCy
     private static bool _readingA;
     private static DataController _dataController;
 
-    public MicroCyDevice(Type connectionType)
+    public MicroCyDevice(Type connectionType = null)
     {
       _dataController = new DataController(connectionType);
       MainCommand("Sync");

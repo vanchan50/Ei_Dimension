@@ -383,13 +383,13 @@ namespace Ei_Dimension
             if (exe.Parameter > 15)
               exe.Parameter = 0;
             //update = () => MotorsViewModel.Instance.WellRowButtonItems[exe.Parameter].ForAppUpdater(1);
-            App.Device.PlateRow = (byte)exe.Parameter;
+            MicroCyDevice.PlateRow = (byte)exe.Parameter;
             break;
           case 0xae:  //TODO: remove?
             if (exe.Parameter > 24)
               exe.Parameter = 0;
             //update = () => MotorsViewModel.Instance.WellColumnButtonItems[exe.Parameter].ForAppUpdater(2);
-            App.Device.PlateCol = (byte)exe.Parameter;  //TODO: it doesn't accout for 96well; can go overboard and crash
+            MicroCyDevice.PlateCol = (byte)exe.Parameter;  //TODO: it doesn't accout for 96well; can go overboard and crash
             break;
           case 0xaf:
             update = () => DashboardViewModel.Instance.Volumes[0] = exe.Parameter.ToString();
@@ -513,7 +513,7 @@ namespace Ei_Dimension
                 }
               }
 
-              App.Current.Dispatcher.Invoke(() => App.ShowNotification("Sheath Empty\nRefill and press OK", Act, "OK"));
+              App.Current.Dispatcher.Invoke(() => Notification.Show("Sheath Empty\nRefill and press OK", Act, "OK"));
               lock (ConditionVar)
               {
                 Monitor.Wait(ConditionVar);
@@ -532,7 +532,7 @@ namespace Ei_Dimension
                   }
                 }
                 App.Current.Dispatcher.Invoke(() =>
-                  App.ShowNotification("Pressure Overload\nCheck for waste line obstructions", Act, "Power Off\n  System"));
+                  Notification.Show("Pressure Overload\nCheck for waste line obstructions", Act, "Power Off\n  System"));
                 lock (ConditionVar)
                 {
                   Monitor.Wait(ConditionVar);
@@ -569,7 +569,7 @@ namespace Ei_Dimension
                   Monitor.Pulse(ConditionVar);
                 }
               }
-              App.Current.Dispatcher.Invoke(() => App.ShowNotification(ws + "\nPower Off System", Act, "OK"));
+              App.Current.Dispatcher.Invoke(() => Notification.Show(ws + "\nPower Off System", Act, "OK"));
               lock (ConditionVar)
               {
                 Monitor.Wait(ConditionVar);

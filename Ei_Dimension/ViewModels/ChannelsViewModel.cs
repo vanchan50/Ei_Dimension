@@ -84,7 +84,7 @@ namespace Ei_Dimension.ViewModels
         Caldate = null,
         Valdate = null
       });
-      App.ShowNotification($"Calibration Parameters Saved to map {App.Device.ActiveMap.mapName}");
+      Notification.Show($"Calibration Parameters Saved to map {App.Device.ActiveMap.mapName}");
     }
 
     public void FocusedBox(int num)
