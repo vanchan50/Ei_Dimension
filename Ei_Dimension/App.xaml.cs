@@ -426,7 +426,7 @@ namespace Ei_Dimension
           });
           if (Device.CurrentWellIdx == (MicroCyDevice.WellsToRead + 1)) //if only one more to go
           {
-            DashboardViewModel.Instance.WorkOrder[0] = "";
+            App.Current.Dispatcher.Invoke(() => DashboardViewModel.Instance.WorkOrder[0] = "");
             Device.MainCommand("Set Property", code: 0x19);  //bubble detect off
           }
           Console.WriteLine($"{DateTime.Now.ToString()} Reporting End of current well");
