@@ -15,9 +15,9 @@ namespace Ei_Dimension
     private static readonly object ConditionVar = new object();
     public static void Update()
     {
-      Action update = null;
       while (MicroCyDevice.Commands.TryDequeue(out var exe))
       {
+        Action update = null;
         switch (exe.Code)
         {
           case 0x01:
