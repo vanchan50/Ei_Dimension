@@ -3,6 +3,7 @@ using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
 using System.Collections.ObjectModel;
 using System.Windows.Controls;
+using MicroCy;
 
 namespace Ei_Dimension.ViewModels
 {
@@ -10,7 +11,12 @@ namespace Ei_Dimension.ViewModels
   public class ChannelOffsetViewModel
   {
     public virtual ObservableCollection<string> ChannelsOffsetParameters { get; set; }
+    public virtual ObservableCollection<string> ChannelsBaseline { get; set; }
     public virtual System.Windows.Visibility OldBoardOffsetsVisible { get; set; }
+    public virtual object SliderValue1 { get; set; }
+    public virtual object SliderValue2 { get; set; }
+    public virtual object SliderValue3 { get; set; }
+    public bool OverrideSliderChange { get; set; }
     public virtual ObservableCollection<string> SiPMTempCoeff { get; set; }
     public virtual string SelectedSensitivityContent { get; set; }
     public virtual ObservableCollection<DropDownButtonContents> SensitivityItems { get; set; }
@@ -21,11 +27,13 @@ namespace Ei_Dimension.ViewModels
     protected ChannelOffsetViewModel()
     {
       ChannelsOffsetParameters = new ObservableCollection<string>();
+      ChannelsBaseline = new ObservableCollection<string>();
       OldBoardOffsetsVisible = System.Windows.Visibility.Visible;
       SiPMTempCoeff = new ObservableCollection<string> { "" };
       for (var i = 0; i < 10; i++)
       {
         ChannelsOffsetParameters.Add("");
+        ChannelsBaseline.Add("");
       }
       var RM = Language.Resources.ResourceManager;
       var curCulture = Language.TranslationSource.Instance.CurrentCulture;
@@ -57,9 +65,39 @@ namespace Ei_Dimension.ViewModels
       App.Device.MainCommand("SetBaseline");
     }
 
+    public void SliderValueChanged(int param)
+    {
+      if (MicroCyDevice.BoardVersion <= 1)
+        return;
+
+      if (OverrideSliderChange)
+      {
+        OverrideSliderChange = false;
+        return;
+      }
+
+      switch (param)
+      {
+        case 0:
+          App.Device.MainCommand("Set Property", code: 0xa0, parameter: (ushort)(double)SliderValue1);
+          ChannelsOffsetParameters[0] = ((double)SliderValue1).ToString();
+          break;
+        case 1:
+          App.Device.MainCommand("Set Property", code: 0xa4, parameter: (ushort)(double)SliderValue2);
+          ChannelsOffsetParameters[1] = ((double)SliderValue2).ToString();
+          break;
+        case 2:
+          App.Device.MainCommand("Set Property", code: 0xa5, parameter: (ushort)(double)SliderValue3);
+          ChannelsOffsetParameters[2] = ((double)SliderValue3).ToString();
+          break;
+      }
+      App.Device.MainCommand("RefreshDac");
+    }
+
     public void FocusedBox(int num)
     {
       var Stackpanel = Views.ChannelOffsetView.Instance.SP.Children;
+      var BaselineStackpanel = Views.ChannelOffsetView.Instance.SP2.Children;
       var InnerStackpanel = ((StackPanel)Stackpanel[3]).Children;
       switch (num)
       {
@@ -106,6 +144,46 @@ namespace Ei_Dimension.ViewModels
         case 10:
           UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(SiPMTempCoeff)), this, 0, Views.ChannelOffsetView.Instance.CoefTB);
           MainViewModel.Instance.NumpadToggleButton(Views.ChannelOffsetView.Instance.CoefTB);
+          break;
+        case 11:
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsBaseline)), this, 0, (TextBox)BaselineStackpanel[0]);
+          MainViewModel.Instance.NumpadToggleButton((TextBox)BaselineStackpanel[0]);
+          break;
+        case 12:
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsBaseline)), this, 1, (TextBox)BaselineStackpanel[1]);
+          MainViewModel.Instance.NumpadToggleButton((TextBox)BaselineStackpanel[0]);
+          break;
+        case 13:
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsBaseline)), this, 2, (TextBox)BaselineStackpanel[2]);
+          MainViewModel.Instance.NumpadToggleButton((TextBox)BaselineStackpanel[0]);
+          break;
+        case 14:
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsBaseline)), this, 3, (TextBox)BaselineStackpanel[3]);
+          MainViewModel.Instance.NumpadToggleButton((TextBox)BaselineStackpanel[0]);
+          break;
+        case 15:
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsBaseline)), this, 4, (TextBox)BaselineStackpanel[4]);
+          MainViewModel.Instance.NumpadToggleButton((TextBox)BaselineStackpanel[0]);
+          break;
+        case 16:
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsBaseline)), this, 5, (TextBox)BaselineStackpanel[5]);
+          MainViewModel.Instance.NumpadToggleButton((TextBox)BaselineStackpanel[0]);
+          break;
+        case 17:
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsBaseline)), this, 6, (TextBox)BaselineStackpanel[6]);
+          MainViewModel.Instance.NumpadToggleButton((TextBox)BaselineStackpanel[0]);
+          break;
+        case 18:
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsBaseline)), this, 7, (TextBox)BaselineStackpanel[7]);
+          MainViewModel.Instance.NumpadToggleButton((TextBox)BaselineStackpanel[0]);
+          break;
+        case 19:
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsBaseline)), this, 8, (TextBox)BaselineStackpanel[8]);
+          MainViewModel.Instance.NumpadToggleButton((TextBox)BaselineStackpanel[0]);
+          break;
+        case 20:
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsBaseline)), this, 9, (TextBox)BaselineStackpanel[9]);
+          MainViewModel.Instance.NumpadToggleButton((TextBox)BaselineStackpanel[0]);
           break;
       }
     }

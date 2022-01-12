@@ -21,8 +21,11 @@ namespace Ei_Dimension
         switch (exe.Code)
         {
           case 0x01:
-            App.Device.BoardVersion = exe.Parameter;
-            if (App.Device.BoardVersion > 1)
+            MicroCyDevice.BoardVersion = exe.Parameter;
+#if  DEBUG
+          Console.Error.WriteLine($"Detected Board Rev v{MicroCyDevice.BoardVersion}");  
+#endif
+            if (MicroCyDevice.BoardVersion > 1)
               update = HideChannels;
             break;
           case 0x02:
@@ -278,16 +281,16 @@ namespace Ei_Dimension
             update = () => ChannelsViewModel.Instance.TempParameters[8] = (exe.Parameter / 10.0).ToString("N1");
             break;
           case 0x82:
-            update = () => ChannelsViewModel.Instance.BackgroundParameters[7] = exe.Parameter.ToString();
+            update = () => ChannelOffsetViewModel.Instance.ChannelsBaseline[7] = exe.Parameter.ToString();
             break;
           case 0x83:
-            update = () => ChannelsViewModel.Instance.BackgroundParameters[8] = exe.Parameter.ToString();
+            update = () => ChannelOffsetViewModel.Instance.ChannelsBaseline[8] = exe.Parameter.ToString();
             break;
           case 0x84:
             update = () => ChannelsViewModel.Instance.TempParameters[9] = (exe.Parameter / 10.0).ToString("N1");
             break;
           case 0x85:
-            update = () => ChannelsViewModel.Instance.BackgroundParameters[9] = exe.Parameter.ToString();
+            update = () => ChannelOffsetViewModel.Instance.ChannelsBaseline[9] = exe.Parameter.ToString();
             break;
           case 0x8b:
             //update = () => CalibrationViewModel.Instance.ClassificationTargetsContents[0] = exe.Parameter.ToString();
@@ -344,7 +347,12 @@ namespace Ei_Dimension
             update = () => ChannelOffsetViewModel.Instance.ChannelsOffsetParameters[6] = exe.Parameter.ToString();
             break;
           case 0xa0:
-            update = () => ChannelOffsetViewModel.Instance.ChannelsOffsetParameters[0] = exe.Parameter.ToString();
+            update = () =>
+            {
+              ChannelOffsetViewModel.Instance.ChannelsOffsetParameters[0] = exe.Parameter.ToString();
+              ChannelOffsetViewModel.Instance.OverrideSliderChange = true;
+              ChannelOffsetViewModel.Instance.SliderValue1 = (double)(exe.Parameter);
+            };
             break;
           case 0xa1:
             update = () => ChannelOffsetViewModel.Instance.ChannelsOffsetParameters[5] = exe.Parameter.ToString();
@@ -356,10 +364,20 @@ namespace Ei_Dimension
             update = () => ChannelOffsetViewModel.Instance.ChannelsOffsetParameters[3] = exe.Parameter.ToString();
             break;
           case 0xa4:
-            update = () => ChannelOffsetViewModel.Instance.ChannelsOffsetParameters[1] = exe.Parameter.ToString();
+            update = () =>
+            {
+              ChannelOffsetViewModel.Instance.ChannelsOffsetParameters[1] = exe.Parameter.ToString();
+              ChannelOffsetViewModel.Instance.OverrideSliderChange = true;
+              ChannelOffsetViewModel.Instance.SliderValue2 = (double)(exe.Parameter);
+            };
             break;
           case 0xa5:
-            update = () => ChannelOffsetViewModel.Instance.ChannelsOffsetParameters[2] = exe.Parameter.ToString();
+            update = () =>
+            {
+              ChannelOffsetViewModel.Instance.ChannelsOffsetParameters[2] = exe.Parameter.ToString();
+              ChannelOffsetViewModel.Instance.OverrideSliderChange = true;
+              ChannelOffsetViewModel.Instance.SliderValue3 = (double)(exe.Parameter);
+            };
             break;
           case 0xa6:
             update = () => ChannelsViewModel.Instance.TcompBiasParameters[0] = exe.Parameter.ToString();
@@ -416,25 +434,46 @@ namespace Ei_Dimension
             update = () => ChannelsViewModel.Instance.TempParameters[6] = (exe.Parameter / 10.0).ToString("N1");
             break;
           case 0xb8:
-            update = () => ChannelsViewModel.Instance.BackgroundParameters[0] = exe.Parameter.ToString();
+            update = () =>
+            {
+              ChannelOffsetViewModel.Instance.ChannelsBaseline[0] = exe.Parameter.ToString();
+            };
             break;
           case 0xb9:
-            update = () => ChannelsViewModel.Instance.BackgroundParameters[1] = exe.Parameter.ToString();
+            update = () =>
+            {
+              ChannelOffsetViewModel.Instance.ChannelsBaseline[1] = exe.Parameter.ToString();
+            };
             break;
           case 0xba:
-            update = () => ChannelsViewModel.Instance.BackgroundParameters[2] = exe.Parameter.ToString();
+            update = () =>
+            {
+              ChannelOffsetViewModel.Instance.ChannelsBaseline[2] = exe.Parameter.ToString();
+            };
             break;
           case 0xbb:
-            update = () => ChannelsViewModel.Instance.BackgroundParameters[3] = exe.Parameter.ToString();
+            update = () =>
+            {
+              ChannelOffsetViewModel.Instance.ChannelsBaseline[3] = exe.Parameter.ToString();
+            };
             break;
           case 0xbc:
-            update = () => ChannelsViewModel.Instance.BackgroundParameters[4] = exe.Parameter.ToString();
+            update = () =>
+            {
+              ChannelOffsetViewModel.Instance.ChannelsBaseline[4] = exe.Parameter.ToString();
+            };
             break;
           case 0xbd:
-            update = () => ChannelsViewModel.Instance.BackgroundParameters[5] = exe.Parameter.ToString();
+            update = () =>
+            {
+              ChannelOffsetViewModel.Instance.ChannelsBaseline[5] = exe.Parameter.ToString();
+            };
             break;
           case 0xbe:
-            update = () => ChannelsViewModel.Instance.BackgroundParameters[6] = exe.Parameter.ToString();
+            update = () =>
+            {
+              ChannelOffsetViewModel.Instance.ChannelsBaseline[6] = exe.Parameter.ToString();
+            };
             break;
           case 0xc0:
             update = () =>
@@ -624,7 +663,8 @@ namespace Ei_Dimension
     private static void HideChannels()
     {
       ChannelOffsetViewModel.Instance.OldBoardOffsetsVisible = Visibility.Hidden;
-      Views.ChannelOffsetView.Instance.cover.Visibility = Visibility.Visible;
+      Views.ChannelOffsetView.Instance.SlidersSP.Visibility = Visibility.Visible;
+      Views.ChannelOffsetView.Instance.BaselineSP.Width = 180;
     }
   }
 }

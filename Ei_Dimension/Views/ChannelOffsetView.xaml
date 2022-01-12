@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
              xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
+             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
              xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
              xmlns:ViewModels="clr-namespace:Ei_Dimension.ViewModels"
              xmlns:lang="clr-namespace:Ei_Dimension.Language;assembly=Language"
@@ -23,195 +24,10 @@
 
     <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Margin="200,100,0,00">
+            Margin="50,100,0,00">
       <StackPanel Orientation="Horizontal"
                   HorizontalAlignment="Stretch"
                   VerticalAlignment="Stretch">
-        <StackPanel VerticalAlignment="Stretch"
-                    Margin="0,0,3,0"
-                    Width="400">
-          <TextBlock Text="{lang:Loc Channels_Green_A}"
-                 FontFamily="{StaticResource AppTextFont}"
-                 FontSize="36"
-                 FontWeight="UltraBold"
-                 Foreground="{StaticResource AppTextColor}"
-                 HorizontalAlignment="Right"
-                 VerticalAlignment="Top"
-                 Margin="0,0,4,0"/>
-          <TextBlock Text="{lang:Loc Channels_Green_B}"
-                 FontFamily="{StaticResource AppTextFont}"
-                 FontSize="36"
-                 FontWeight="UltraBold"
-                 Foreground="{StaticResource AppTextColor}"
-                 HorizontalAlignment="Right"
-                 VerticalAlignment="Top"
-                 Margin="0,13,4,0"/>
-          <TextBlock Text="{lang:Loc Channels_Green_C}"
-                 FontFamily="{StaticResource AppTextFont}"
-                 FontSize="36"
-                 FontWeight="UltraBold"
-                 Foreground="{StaticResource AppTextColor}"
-                 HorizontalAlignment="Right"
-                 VerticalAlignment="Top"
-                 Margin="0,13,4,0"/>
-          <StackPanel Visibility="{Binding OldBoardOffsetsVisible}">
-            <TextBlock Text="{lang:Loc Channels_Red_A}"
-                 FontFamily="{StaticResource AppTextFont}"
-                 FontSize="36"
-                 FontWeight="UltraBold"
-                 Foreground="{StaticResource AppTextColor}"
-                 HorizontalAlignment="Right"
-                 VerticalAlignment="Top"
-                 Margin="0,8,4,0"/>
-            <TextBlock Text="{lang:Loc Channels_Red_B}"
-                 FontFamily="{StaticResource AppTextFont}"
-                 FontSize="36"
-                 FontWeight="UltraBold"
-                 Foreground="{StaticResource AppTextColor}"
-                 HorizontalAlignment="Right"
-                 VerticalAlignment="Top"
-                 Margin="0,10,4,0"/>
-            <TextBlock Text="{lang:Loc Channels_Red_C}"
-                 FontFamily="{StaticResource AppTextFont}"
-                 FontSize="36"
-                 FontWeight="UltraBold"
-                 Foreground="{StaticResource AppTextColor}"
-                 HorizontalAlignment="Right"
-                 VerticalAlignment="Top"
-                 Margin="0,9,4,0"/>
-            <TextBlock Text="{lang:Loc Channels_Red_D}"
-                 FontFamily="{StaticResource AppTextFont}"
-                 FontSize="36"
-                 FontWeight="UltraBold"
-                 Foreground="{StaticResource AppTextColor}"
-                 HorizontalAlignment="Right"
-                 VerticalAlignment="Top"
-                 Margin="0,10,4,0"/>
-            <TextBlock Text="{lang:Loc Channels_Violet_A}"
-                 FontFamily="{StaticResource AppTextFont}"
-                 FontSize="36"
-                 FontWeight="UltraBold"
-                 Foreground="{StaticResource AppTextColor}"
-                 HorizontalAlignment="Right"
-                 VerticalAlignment="Top"
-                 Margin="0,10,4,0"/>
-            <TextBlock Text="{lang:Loc Channels_Violet_B}"
-                 FontFamily="{StaticResource AppTextFont}"
-                 FontSize="36"
-                 FontWeight="UltraBold"
-                 Foreground="{StaticResource AppTextColor}"
-                 HorizontalAlignment="Right"
-                 VerticalAlignment="Top"
-                 Margin="0,10,4,0"/>
-            <TextBlock Text="{lang:Loc Channels_Forward_Scatter}"
-                 FontFamily="{StaticResource AppTextFont}"
-                 FontSize="36"
-                 FontWeight="UltraBold"
-                 Foreground="{StaticResource AppTextColor}"
-                 HorizontalAlignment="Right"
-                 VerticalAlignment="Top"
-                 Margin="0,11,4,0"/>
-          </StackPanel>
-        </StackPanel>
-        <Border Background="{StaticResource RibbonBackgroundActive}">
-          <StackPanel VerticalAlignment="Stretch" Name="SP"
-                    Width="180">
-
-            <TextBox HorizontalAlignment="Stretch"
-                      Margin="10,10,10,0"
-                      Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding ChannelsOffsetParameters[0]}">
-              <dxmvvm:Interaction.Behaviors>
-                <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="0"/>
-                <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
-              </dxmvvm:Interaction.Behaviors>
-            </TextBox>
-            <TextBox HorizontalAlignment="Stretch"
-                      Margin="10,15,10,0"
-                      Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding ChannelsOffsetParameters[1]}">
-              <dxmvvm:Interaction.Behaviors>
-                <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="1"/>
-                <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
-              </dxmvvm:Interaction.Behaviors>
-            </TextBox>
-            <TextBox HorizontalAlignment="Stretch"
-                      Margin="10,15,10,0"
-                      Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding ChannelsOffsetParameters[2]}">
-              <dxmvvm:Interaction.Behaviors>
-                <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="2"/>
-                <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
-              </dxmvvm:Interaction.Behaviors>
-            </TextBox>
-            <StackPanel Visibility="{Binding OldBoardOffsetsVisible}">
-              <TextBox HorizontalAlignment="Stretch"
-                      Margin="10,15,10,0"
-                      Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding ChannelsOffsetParameters[3]}">
-                <dxmvvm:Interaction.Behaviors>
-                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="3"/>
-                  <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
-                </dxmvvm:Interaction.Behaviors>
-              </TextBox>
-              <TextBox HorizontalAlignment="Stretch"
-                      Margin="10,15,10,0"
-                      Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding ChannelsOffsetParameters[4]}">
-                <dxmvvm:Interaction.Behaviors>
-                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="4"/>
-                  <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
-                </dxmvvm:Interaction.Behaviors>
-              </TextBox>
-              <TextBox HorizontalAlignment="Stretch"
-                      Margin="10,15,10,0"
-                      Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding ChannelsOffsetParameters[5]}">
-                <dxmvvm:Interaction.Behaviors>
-                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="5"/>
-                  <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
-                </dxmvvm:Interaction.Behaviors>
-              </TextBox>
-              <TextBox HorizontalAlignment="Stretch"
-                      Margin="10,15,10,0"
-                      Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding ChannelsOffsetParameters[6]}">
-                <dxmvvm:Interaction.Behaviors>
-                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="6"/>
-                  <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
-                </dxmvvm:Interaction.Behaviors>
-              </TextBox>
-              <TextBox HorizontalAlignment="Stretch"
-                      Margin="10,15,10,0"
-                      Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding ChannelsOffsetParameters[7]}">
-                <dxmvvm:Interaction.Behaviors>
-                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="7"/>
-                  <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
-                </dxmvvm:Interaction.Behaviors>
-              </TextBox>
-              <TextBox HorizontalAlignment="Stretch"
-                      Margin="10,15,10,0"
-                      Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding ChannelsOffsetParameters[8]}">
-                <dxmvvm:Interaction.Behaviors>
-                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="8"/>
-                  <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
-                </dxmvvm:Interaction.Behaviors>
-              </TextBox>
-              <TextBox HorizontalAlignment="Stretch"
-                      Margin="10,15,10,10"
-                      Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding ChannelsOffsetParameters[9]}">
-                <dxmvvm:Interaction.Behaviors>
-                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="9"/>
-                  <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
-                </dxmvvm:Interaction.Behaviors>
-              </TextBox>
-            </StackPanel>
-
-          </StackPanel>
-        </Border>
         <StackPanel VerticalAlignment="Stretch"
                     Width="220"
                     Margin="30,-15,0,0">
@@ -281,12 +97,393 @@
                   Style="{StaticResource ButtonStyle}"
                   Height="85"/>
         </StackPanel>
+        <!--Names-->
+        <StackPanel VerticalAlignment="Stretch"
+                    Margin="0,48,3,0"
+                    Width="400">
+          <TextBlock Text="{lang:Loc Channels_Green_A}"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="36"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Right"
+                 VerticalAlignment="Top"
+                 Margin="0,0,4,0"/>
+          <TextBlock Text="{lang:Loc Channels_Green_B}"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="36"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Right"
+                 VerticalAlignment="Top"
+                 Margin="0,13,4,0"/>
+          <TextBlock Text="{lang:Loc Channels_Green_C}"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="36"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Right"
+                 VerticalAlignment="Top"
+                 Margin="0,13,4,0"/>
+            <TextBlock Text="{lang:Loc Channels_Red_A}"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="36"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Right"
+                 VerticalAlignment="Top"
+                 Margin="0,28,4,0"/>
+            <TextBlock Text="{lang:Loc Channels_Red_B}"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="36"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Right"
+                 VerticalAlignment="Top"
+                 Margin="0,10,4,0"/>
+            <TextBlock Text="{lang:Loc Channels_Red_C}"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="36"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Right"
+                 VerticalAlignment="Top"
+                 Margin="0,9,4,0"/>
+            <TextBlock Text="{lang:Loc Channels_Red_D}"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="36"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Right"
+                 VerticalAlignment="Top"
+                 Margin="0,10,4,0"/>
+            <TextBlock Text="{lang:Loc Channels_Violet_A}"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="36"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Right"
+                 VerticalAlignment="Top"
+                 Margin="0,10,4,0"/>
+            <TextBlock Text="{lang:Loc Channels_Violet_B}"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="36"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Right"
+                 VerticalAlignment="Top"
+                 Margin="0,10,4,0"/>
+            <TextBlock Text="{lang:Loc Channels_Forward_Scatter}"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="36"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Right"
+                 VerticalAlignment="Top"
+                 Margin="0,11,4,0"/>
+        </StackPanel>
+        <!--Baseline-->
+        <StackPanel Name="BaselineSP" Width="0">
+          <TextBlock Text="Baseline"
+                     FontFamily="{StaticResource AppTextFont}"
+                     FontSize="36"
+                     Width="180"
+                     TextAlignment="Center"
+                     FontWeight="UltraBold"
+                     Foreground="{StaticResource AppTextColor}"
+                     HorizontalAlignment="Left"/>
+        <Border Background="{StaticResource RibbonBackgroundActive}">
+          <StackPanel VerticalAlignment="Stretch" Name="SP2"
+                    Width="180">
+            <TextBox HorizontalAlignment="Stretch"
+                      Margin="10,10,10,0"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding ChannelsBaseline[0]}">
+              <dxmvvm:Interaction.Behaviors>
+                <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="11"/>
+                <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+              </dxmvvm:Interaction.Behaviors>
+            </TextBox>
+            <TextBox HorizontalAlignment="Stretch"
+                      Margin="10,15,10,0"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding ChannelsBaseline[1]}">
+              <dxmvvm:Interaction.Behaviors>
+                <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="12"/>
+                <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+              </dxmvvm:Interaction.Behaviors>
+            </TextBox>
+            <TextBox HorizontalAlignment="Stretch"
+                      Margin="10,15,10,0"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding ChannelsBaseline[2]}">
+              <dxmvvm:Interaction.Behaviors>
+                <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="13"/>
+                <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+              </dxmvvm:Interaction.Behaviors>
+            </TextBox>
+            <TextBox HorizontalAlignment="Stretch"
+                    Margin="10,35,10,0"
+                    Style="{StaticResource InputFieldStyle}"
+                    Text="{Binding ChannelsBaseline[3]}">
+              <dxmvvm:Interaction.Behaviors>
+                <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="14"/>
+                <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+              </dxmvvm:Interaction.Behaviors>
+            </TextBox>
+            <TextBox HorizontalAlignment="Stretch"
+                    Margin="10,15,10,0"
+                    Style="{StaticResource InputFieldStyle}"
+                    Text="{Binding ChannelsBaseline[4]}">
+              <dxmvvm:Interaction.Behaviors>
+                <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="15"/>
+                <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+              </dxmvvm:Interaction.Behaviors>
+            </TextBox>
+            <TextBox HorizontalAlignment="Stretch"
+                    Margin="10,15,10,0"
+                    Style="{StaticResource InputFieldStyle}"
+                    Text="{Binding ChannelsBaseline[5]}">
+              <dxmvvm:Interaction.Behaviors>
+                <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="16"/>
+                <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+              </dxmvvm:Interaction.Behaviors>
+            </TextBox>
+            <TextBox HorizontalAlignment="Stretch"
+                    Margin="10,15,10,0"
+                    Style="{StaticResource InputFieldStyle}"
+                    Text="{Binding ChannelsBaseline[6]}">
+              <dxmvvm:Interaction.Behaviors>
+                <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="17"/>
+                <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+              </dxmvvm:Interaction.Behaviors>
+            </TextBox>
+            <TextBox HorizontalAlignment="Stretch"
+                    Margin="10,15,10,0"
+                    Style="{StaticResource InputFieldStyle}"
+                    Text="{Binding ChannelsBaseline[7]}">
+              <dxmvvm:Interaction.Behaviors>
+                <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="18"/>
+                <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+              </dxmvvm:Interaction.Behaviors>
+            </TextBox>
+            <TextBox HorizontalAlignment="Stretch"
+                    Margin="10,15,10,0"
+                    Style="{StaticResource InputFieldStyle}"
+                    Text="{Binding ChannelsBaseline[8]}">
+              <dxmvvm:Interaction.Behaviors>
+                <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="19"/>
+                <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+              </dxmvvm:Interaction.Behaviors>
+            </TextBox>
+            <TextBox HorizontalAlignment="Stretch"
+                    Margin="10,15,10,10"
+                    Style="{StaticResource InputFieldStyle}"
+                    Text="{Binding ChannelsBaseline[9]}">
+              <dxmvvm:Interaction.Behaviors>
+                <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="20"/>
+                <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+              </dxmvvm:Interaction.Behaviors>
+            </TextBox>
+          </StackPanel>
+        </Border>
+        </StackPanel>
+        <!--Offset-->
+        <StackPanel>
+          <TextBlock Text="Offset"
+                     FontFamily="{StaticResource AppTextFont}"
+                     FontSize="36"
+                     Width="180"
+                     TextAlignment="Center"
+                     FontWeight="UltraBold"
+                     Foreground="{StaticResource AppTextColor}"
+                     HorizontalAlignment="Left"/>
+        <Border Background="{StaticResource RibbonBackgroundActive}">
+          <StackPanel VerticalAlignment="Stretch" Name="SP"
+                    Width="180">
+
+            <TextBox HorizontalAlignment="Stretch"
+                      Margin="10,10,10,0"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding ChannelsOffsetParameters[0]}">
+              <dxmvvm:Interaction.Behaviors>
+                <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="0"/>
+                <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+              </dxmvvm:Interaction.Behaviors>
+            </TextBox>
+            <TextBox HorizontalAlignment="Stretch"
+                      Margin="10,15,10,0"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding ChannelsOffsetParameters[1]}">
+              <dxmvvm:Interaction.Behaviors>
+                <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="1"/>
+                <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+              </dxmvvm:Interaction.Behaviors>
+            </TextBox>
+            <TextBox HorizontalAlignment="Stretch"
+                      Margin="10,15,10,0"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding ChannelsOffsetParameters[2]}">
+              <dxmvvm:Interaction.Behaviors>
+                <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="2"/>
+                <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+              </dxmvvm:Interaction.Behaviors>
+            </TextBox>
+            <StackPanel Visibility="{Binding OldBoardOffsetsVisible}">
+              <TextBox HorizontalAlignment="Stretch"
+                      Margin="10,35,10,0"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding ChannelsOffsetParameters[3]}">
+                <dxmvvm:Interaction.Behaviors>
+                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="3"/>
+                  <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+                </dxmvvm:Interaction.Behaviors>
+              </TextBox>
+              <TextBox HorizontalAlignment="Stretch"
+                      Margin="10,15,10,0"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding ChannelsOffsetParameters[4]}">
+                <dxmvvm:Interaction.Behaviors>
+                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="4"/>
+                  <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+                </dxmvvm:Interaction.Behaviors>
+              </TextBox>
+              <TextBox HorizontalAlignment="Stretch"
+                      Margin="10,15,10,0"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding ChannelsOffsetParameters[5]}">
+                <dxmvvm:Interaction.Behaviors>
+                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="5"/>
+                  <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+                </dxmvvm:Interaction.Behaviors>
+              </TextBox>
+              <TextBox HorizontalAlignment="Stretch"
+                      Margin="10,15,10,0"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding ChannelsOffsetParameters[6]}">
+                <dxmvvm:Interaction.Behaviors>
+                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="6"/>
+                  <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+                </dxmvvm:Interaction.Behaviors>
+              </TextBox>
+              <TextBox HorizontalAlignment="Stretch"
+                      Margin="10,15,10,0"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding ChannelsOffsetParameters[7]}">
+                <dxmvvm:Interaction.Behaviors>
+                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="7"/>
+                  <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+                </dxmvvm:Interaction.Behaviors>
+              </TextBox>
+              <TextBox HorizontalAlignment="Stretch"
+                      Margin="10,15,10,0"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding ChannelsOffsetParameters[8]}">
+                <dxmvvm:Interaction.Behaviors>
+                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="8"/>
+                  <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+                </dxmvvm:Interaction.Behaviors>
+              </TextBox>
+              <TextBox HorizontalAlignment="Stretch"
+                      Margin="10,15,10,10"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding ChannelsOffsetParameters[9]}">
+                <dxmvvm:Interaction.Behaviors>
+                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="9"/>
+                  <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+                </dxmvvm:Interaction.Behaviors>
+              </TextBox>
+            </StackPanel>
+          </StackPanel>
+        </Border>
+        </StackPanel>
+        <!--Sliders-->
+        <StackPanel Margin="10,48,0,0" Name="SlidersSP" Visibility="Hidden">
+          <StackPanel.Resources>
+            <Style x:Key="trackBarEditThumbStyle"
+                   TargetType="Thumb">
+              <Setter Property="Template">
+                <Setter.Value>
+                  <ControlTemplate>
+                    <Ellipse Width="48" Height="48"
+                             Cursor="Hand"
+                             Fill="{StaticResource ButtonBackground}"
+                             Stroke="{StaticResource AppBackground}"
+                             StrokeThickness="2"/>
+                  </ControlTemplate>
+                </Setter.Value>
+              </Setter>
+            </Style>
+            <Style x:Key="nearTrackStyle"
+                   TargetType="RepeatButton">
+              <Setter Property="Template">
+                <Setter.Value>
+                  <ControlTemplate>
+                    <Border Background="{StaticResource ButtonBackground}"
+                            Height="24"
+                            VerticalAlignment="Center"
+                            Margin="5,0,-5,0"
+                            CornerRadius="4"/>
+                  </ControlTemplate>
+                </Setter.Value>
+              </Setter>
+            </Style>
+            <Style x:Key="farTrackStyle"
+                   TargetType="RepeatButton">
+              <Setter Property="Template">
+                <Setter.Value>
+                  <ControlTemplate>
+                    <Border Background="{DynamicResource RibbonBackgroundActive}"
+                            Height="24"
+                            VerticalAlignment="Center"
+                            Margin="-5,0,5,0"
+                            CornerRadius="4" />
+                  </ControlTemplate>
+                </Setter.Value>
+              </Setter>
+            </Style>
+          </StackPanel.Resources>
+          <dxe:TrackBarEdit Margin="0,7,0,0" 
+                            Minimum="21000" Maximum="23000"
+                            Width="500" EditValue="{Binding SliderValue1}"
+                            CornerRadius="4" TickPlacement="None"
+                            EditValuePostMode="Delayed" EditValuePostDelay="5"
+                            NearTrackStyle="{StaticResource nearTrackStyle}"
+                            FarTrackStyle="{StaticResource farTrackStyle}"
+                            ThumbStyle="{StaticResource trackBarEditThumbStyle}">
+            <dxmvvm:Interaction.Behaviors>
+              <dxmvvm:EventToCommand EventName="EditValueChanged"
+                                     Command="{Binding SliderValueChangedCommand}" CommandParameter="0"/>
+            </dxmvvm:Interaction.Behaviors>
+          </dxe:TrackBarEdit>
+          <dxe:TrackBarEdit Margin="0,10,0,0" 
+                            Minimum="21000" Maximum="23000"
+                            Width="500" EditValue="{Binding SliderValue2}"
+                            CornerRadius="4" TickPlacement="None"
+                            EditValuePostMode="Delayed" EditValuePostDelay="5"
+                            NearTrackStyle="{StaticResource nearTrackStyle}"
+                            FarTrackStyle="{StaticResource farTrackStyle}"
+                            ThumbStyle="{StaticResource trackBarEditThumbStyle}">
+            <dxmvvm:Interaction.Behaviors>
+              <dxmvvm:EventToCommand EventName="EditValueChanged"
+                                     Command="{Binding SliderValueChangedCommand}" CommandParameter="1"/>
+            </dxmvvm:Interaction.Behaviors>
+          </dxe:TrackBarEdit>
+          <dxe:TrackBarEdit Margin="0,10,0,0" 
+                            Minimum="21000" Maximum="23000"
+                            Width="500" EditValue="{Binding SliderValue3}"
+                            CornerRadius="4" TickPlacement="None"
+                            EditValuePostMode="Delayed" EditValuePostDelay="5"
+                            NearTrackStyle="{StaticResource nearTrackStyle}"
+                            FarTrackStyle="{StaticResource farTrackStyle}"
+                            ThumbStyle="{StaticResource trackBarEditThumbStyle}">
+            <dxmvvm:Interaction.Behaviors>
+              <dxmvvm:EventToCommand EventName="EditValueChanged"
+                                     Command="{Binding SliderValueChangedCommand}" CommandParameter="2"/>
+            </dxmvvm:Interaction.Behaviors>
+          </dxe:TrackBarEdit>
+        </StackPanel>
       </StackPanel>
     </Border>
-    <Rectangle HorizontalAlignment="Left" x:Name="cover"
-               VerticalAlignment="Top"
-               Margin="600,280,0,0" Height="420" Width="200"
-               Visibility="Hidden"
-               Fill="{DynamicResource AppBackground}"/>
   </Grid>
 </UserControl>

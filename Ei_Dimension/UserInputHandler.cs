@@ -476,140 +476,140 @@ namespace Ei_Dimension
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 0 && ((App.Device.BoardVersion == 0 && iRes <= 3500) || (App.Device.BoardVersion >= 1 && iRes <= 10000)))
+                if (iRes >= 0 && ((MicroCyDevice.BoardVersion == 0 && iRes <= 3500) || (MicroCyDevice.BoardVersion >= 1 && iRes <= 10000)))
                 {
                   App.Device.MainCommand("Set Property", code: 0x28, parameter: (ushort)iRes);
                   break;
                 }
               }
               failed = true;
-              string range = App.Device.BoardVersion >= 1 ? "[0-10000]" : "[0-3500]";
+              string range = MicroCyDevice.BoardVersion >= 1 ? "[0-10000]" : "[0-3500]";
               ErrorMessage = $"Green A (SSC) is out of range {range}";
             }
             if (SelectedTextBox.index == 1)
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 0 && ((App.Device.BoardVersion == 0 && iRes <= 3500) || (App.Device.BoardVersion >= 1 && iRes <= 10000)))
+                if (iRes >= 0 && ((MicroCyDevice.BoardVersion == 0 && iRes <= 3500) || (MicroCyDevice.BoardVersion >= 1 && iRes <= 10000)))
                 {
                   App.Device.MainCommand("Set Property", code: 0x29, parameter: (ushort)iRes);
                   break;
                 }
               }
               failed = true;
-              string range = App.Device.BoardVersion >= 1 ? "[0-10000]" : "[0-3500]";
+              string range = MicroCyDevice.BoardVersion >= 1 ? "[0-10000]" : "[0-3500]";
               ErrorMessage = $"Green B (PE) is out of range {range}";
             }
             if (SelectedTextBox.index == 2)
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 0 && ((App.Device.BoardVersion == 0 && iRes <= 3500) || (App.Device.BoardVersion >= 1 && iRes <= 10000)))
+                if (iRes >= 0 && ((MicroCyDevice.BoardVersion == 0 && iRes <= 3500) || (MicroCyDevice.BoardVersion >= 1 && iRes <= 10000)))
                 {
                   App.Device.MainCommand("Set Property", code: 0x2a, parameter: (ushort)iRes);
                   break;
                 }
               }
               failed = true;
-              string range = App.Device.BoardVersion >= 1 ? "[0-10000]" : "[0-3500]";
+              string range = MicroCyDevice.BoardVersion >= 1 ? "[0-10000]" : "[0-3500]";
               ErrorMessage = $"Green C PE is out of range {range}";
             }
             if (SelectedTextBox.index == 3)
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 0 && ((App.Device.BoardVersion == 0 && iRes <= 3500) || (App.Device.BoardVersion >= 1 && iRes <= 10000)))
+                if (iRes >= 0 && ((MicroCyDevice.BoardVersion == 0 && iRes <= 3500) || (MicroCyDevice.BoardVersion >= 1 && iRes <= 10000)))
                 {
                   App.Device.MainCommand("Set Property", code: 0x2c, parameter: (ushort)iRes);
                   break;
                 }
               }
               failed = true;
-              string range = App.Device.BoardVersion >= 1 ? "[0-10000]" : "[0-3500]";
+              string range = MicroCyDevice.BoardVersion >= 1 ? "[0-10000]" : "[0-3500]";
               ErrorMessage = $"Red A (CL3) is out of range {range}";
             }
             if (SelectedTextBox.index == 4)
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 0 && ((App.Device.BoardVersion == 0 && iRes <= 3500) || (App.Device.BoardVersion >= 1 && iRes <= 10000)))
+                if (iRes >= 0 && ((MicroCyDevice.BoardVersion == 0 && iRes <= 3500) || (MicroCyDevice.BoardVersion >= 1 && iRes <= 10000)))
                 {
                   App.Device.MainCommand("Set Property", code: 0x2d, parameter: (ushort)iRes);
                   break;
                 }
               }
               failed = true;
-              string range = App.Device.BoardVersion >= 1 ? "[0-10000]" : "[0-3500]";
+              string range = MicroCyDevice.BoardVersion >= 1 ? "[0-10000]" : "[0-3500]";
               ErrorMessage = $"Red B (SSC) is out of range {range}";
             }
             if (SelectedTextBox.index == 5)
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 0 && ((App.Device.BoardVersion == 0 && iRes <= 3500) || (App.Device.BoardVersion >= 1 && iRes <= 10000)))
+                if (iRes >= 0 && ((MicroCyDevice.BoardVersion == 0 && iRes <= 3500) || (MicroCyDevice.BoardVersion >= 1 && iRes <= 10000)))
                 {
                   App.Device.MainCommand("Set Property", code: 0x2e, parameter: (ushort)iRes);
                   break;
                 }
               }
               failed = true;
-              string range = App.Device.BoardVersion >= 1 ? "[0-10000]" : "[0-3500]";
+              string range = MicroCyDevice.BoardVersion >= 1 ? "[0-10000]" : "[0-3500]";
               ErrorMessage = $"Red C (CL1) is out of range {range}";
             }
             if (SelectedTextBox.index == 6)
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 0 && ((App.Device.BoardVersion == 0 && iRes <= 3500) || (App.Device.BoardVersion >= 1 && iRes <= 10000)))
+                if (iRes >= 0 && ((MicroCyDevice.BoardVersion == 0 && iRes <= 3500) || (MicroCyDevice.BoardVersion >= 1 && iRes <= 10000)))
                 {
                   App.Device.MainCommand("Set Property", code: 0x2f, parameter: (ushort)iRes);
                   break;
                 }
               }
               failed = true;
-              string range = App.Device.BoardVersion >= 1 ? "[0-10000]" : "[0-3500]";
+              string range = MicroCyDevice.BoardVersion >= 1 ? "[0-10000]" : "[0-3500]";
               ErrorMessage = $"Red D (CL2) is out of range {range}";
             }
             if (SelectedTextBox.index == 7)
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 0 && ((App.Device.BoardVersion == 0 && iRes <= 3500) || (App.Device.BoardVersion >= 1 && iRes <= 10000)))
+                if (iRes >= 0 && ((MicroCyDevice.BoardVersion == 0 && iRes <= 3500) || (MicroCyDevice.BoardVersion >= 1 && iRes <= 10000)))
                 {
                   App.Device.MainCommand("Set Property", code: 0x25, parameter: (ushort)iRes);
                   break;
                 }
               }
               failed = true;
-              string range = App.Device.BoardVersion >= 1 ? "[0-10000]" : "[0-3500]";
+              string range = MicroCyDevice.BoardVersion >= 1 ? "[0-10000]" : "[0-3500]";
               ErrorMessage = $"Violet A (SSC) is out of range {range}";
             }
             if (SelectedTextBox.index == 8)
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 0 && ((App.Device.BoardVersion == 0 && iRes <= 3500) || (App.Device.BoardVersion >= 1 && iRes <= 10000)))
+                if (iRes >= 0 && ((MicroCyDevice.BoardVersion == 0 && iRes <= 3500) || (MicroCyDevice.BoardVersion >= 1 && iRes <= 10000)))
                 {
                   App.Device.MainCommand("Set Property", code: 0x26, parameter: (ushort)iRes);
                   break;
                 }
               }
               failed = true;
-              string range = App.Device.BoardVersion >= 1 ? "[0-10000]" : "[0-3500]";
+              string range = MicroCyDevice.BoardVersion >= 1 ? "[0-10000]" : "[0-3500]";
               ErrorMessage = $"Violet B (CL0) is out of range {range}";
             }
             if (SelectedTextBox.index == 9)
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 0 && ((App.Device.BoardVersion == 0 && iRes <= 3500) || (App.Device.BoardVersion >= 1 && iRes <= 10000)))
+                if (iRes >= 0 && ((MicroCyDevice.BoardVersion == 0 && iRes <= 3500) || (MicroCyDevice.BoardVersion >= 1 && iRes <= 10000)))
                 {
                   App.Device.MainCommand("Set Property", code: 0x24, parameter: (ushort)iRes);
                   break;
                 }
               }
               failed = true;
-              string range = App.Device.BoardVersion >= 1 ? "[0-10000]" : "[0-3500]";
+              string range = MicroCyDevice.BoardVersion >= 1 ? "[0-10000]" : "[0-3500]";
               ErrorMessage = $"Forward Scatter is out of range {range}";
             }
             break;
@@ -618,141 +618,289 @@ namespace Ei_Dimension
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 0 && ((App.Device.BoardVersion == 0 && iRes <= 4095) || (App.Device.BoardVersion >= 1 && iRes <= 65535)))
+                if (iRes >= 0 && ((MicroCyDevice.BoardVersion == 0 && iRes <= 4095) || (MicroCyDevice.BoardVersion >= 1 && iRes <= 65535)))
                 {
                   App.Device.MainCommand("Set Property", code: 0xa0, parameter: (ushort)iRes);
+                  ChannelOffsetViewModel.Instance.OverrideSliderChange = true;
+                  ChannelOffsetViewModel.Instance.SliderValue1 = (double) iRes;
                   break;
                 }
               }
               failed = true;
-              string range = App.Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
+              string range = MicroCyDevice.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
               ErrorMessage = $"Green A (SSC) is out of range {range}";
             }
             if (SelectedTextBox.index == 1)
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 0 && ((App.Device.BoardVersion == 0 && iRes <= 4095) || (App.Device.BoardVersion >= 1 && iRes <= 65535)))
+                if (iRes >= 0 && ((MicroCyDevice.BoardVersion == 0 && iRes <= 4095) || (MicroCyDevice.BoardVersion >= 1 && iRes <= 65535)))
                 {
                   App.Device.MainCommand("Set Property", code: 0xa4, parameter: (ushort)iRes);
+                  ChannelOffsetViewModel.Instance.OverrideSliderChange = true;
+                  ChannelOffsetViewModel.Instance.SliderValue2 = (double) iRes;
                   break;
                 }
               }
               failed = true;
-              string range = App.Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
+              string range = MicroCyDevice.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
               ErrorMessage = $"Green B (PE) is out of range {range}";
             }
             if (SelectedTextBox.index == 2)
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 0 && ((App.Device.BoardVersion == 0 && iRes <= 4095) || (App.Device.BoardVersion >= 1 && iRes <= 65535)))
+                if (iRes >= 0 && ((MicroCyDevice.BoardVersion == 0 && iRes <= 4095) || (MicroCyDevice.BoardVersion >= 1 && iRes <= 65535)))
                 {
                   App.Device.MainCommand("Set Property", code: 0xa5, parameter: (ushort)iRes);
+                  ChannelOffsetViewModel.Instance.OverrideSliderChange = true;
+                  ChannelOffsetViewModel.Instance.SliderValue3 = (double) iRes;
                   break;
                 }
               }
               failed = true;
-              string range = App.Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
+              string range = MicroCyDevice.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
               ErrorMessage = $"Green C PE is out of range {range}";
             }
             if (SelectedTextBox.index == 3)
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 0 && ((App.Device.BoardVersion == 0 && iRes <= 4095) || (App.Device.BoardVersion >= 1 && iRes <= 65535)))
+                if (iRes >= 0 && ((MicroCyDevice.BoardVersion == 0 && iRes <= 4095) || (MicroCyDevice.BoardVersion >= 1 && iRes <= 65535)))
                 {
                   App.Device.MainCommand("Set Property", code: 0xa3, parameter: (ushort)iRes);
                   break;
                 }
               }
               failed = true;
-              string range = App.Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
+              string range = MicroCyDevice.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
               ErrorMessage = $"Red A (CL3) is out of range {range}";
             }
             if (SelectedTextBox.index == 4)
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 0 && ((App.Device.BoardVersion == 0 && iRes <= 4095) || (App.Device.BoardVersion >= 1 && iRes <= 65535)))
+                if (iRes >= 0 && ((MicroCyDevice.BoardVersion == 0 && iRes <= 4095) || (MicroCyDevice.BoardVersion >= 1 && iRes <= 65535)))
                 {
                   App.Device.MainCommand("Set Property", code: 0xa2, parameter: (ushort)iRes);
                   break;
                 }
               }
               failed = true;
-              string range = App.Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
+              string range = MicroCyDevice.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
               ErrorMessage = $"Red B (SSC) is out of range {range}";
             }
             if (SelectedTextBox.index == 5)
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 0 && ((App.Device.BoardVersion == 0 && iRes <= 4095) || (App.Device.BoardVersion >= 1 && iRes <= 65535)))
+                if (iRes >= 0 && ((MicroCyDevice.BoardVersion == 0 && iRes <= 4095) || (MicroCyDevice.BoardVersion >= 1 && iRes <= 65535)))
                 {
                   App.Device.MainCommand("Set Property", code: 0xa1, parameter: (ushort)iRes);
                   break;
                 }
               }
               failed = true;
-              string range = App.Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
+              string range = MicroCyDevice.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
               ErrorMessage = $"Red C (CL1) is out of range {range}";
             }
             if (SelectedTextBox.index == 6)
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 0 && ((App.Device.BoardVersion == 0 && iRes <= 4095) || (App.Device.BoardVersion >= 1 && iRes <= 65535)))
+                if (iRes >= 0 && ((MicroCyDevice.BoardVersion == 0 && iRes <= 4095) || (MicroCyDevice.BoardVersion >= 1 && iRes <= 65535)))
                 {
                   App.Device.MainCommand("Set Property", code: 0x9f, parameter: (ushort)iRes);
                   break;
                 }
               }
               failed = true;
-              string range = App.Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
+              string range = MicroCyDevice.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
               ErrorMessage = $"Red D (CL2) is out of range {range}";
             }
             if (SelectedTextBox.index == 7)
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 0 && ((App.Device.BoardVersion == 0 && iRes <= 4095) || (App.Device.BoardVersion >= 1 && iRes <= 65535)))
+                if (iRes >= 0 && ((MicroCyDevice.BoardVersion == 0 && iRes <= 4095) || (MicroCyDevice.BoardVersion >= 1 && iRes <= 65535)))
                 {
                   App.Device.MainCommand("Set Property", code: 0x9d, parameter: (ushort)iRes);
                   break;
                 }
               }
               failed = true;
-              string range = App.Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
+              string range = MicroCyDevice.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
               ErrorMessage = $"Violet A (SSC) is out of range {range}";
             }
             if (SelectedTextBox.index == 8)
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 0 && ((App.Device.BoardVersion == 0 && iRes <= 4095) || (App.Device.BoardVersion >= 1 && iRes <= 65535)))
+                if (iRes >= 0 && ((MicroCyDevice.BoardVersion == 0 && iRes <= 4095) || (MicroCyDevice.BoardVersion >= 1 && iRes <= 65535)))
                 {
                   App.Device.MainCommand("Set Property", code: 0x9c, parameter: (ushort)iRes);
                   break;
                 }
               }
               failed = true;
-              string range = App.Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
+              string range = MicroCyDevice.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
               ErrorMessage = $"Violet B (CL0) is out of range {range}";
             }
             if (SelectedTextBox.index == 9)
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 0 && ((App.Device.BoardVersion == 0 && iRes <= 4095) || (App.Device.BoardVersion >= 1 && iRes <= 65535)))
+                if (iRes >= 0 && ((MicroCyDevice.BoardVersion == 0 && iRes <= 4095) || (MicroCyDevice.BoardVersion >= 1 && iRes <= 65535)))
                 {
                   App.Device.MainCommand("Set Property", code: 0x9e, parameter: (ushort)iRes);
                   break;
                 }
               }
               failed = true;
-              string range = App.Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
+              string range = MicroCyDevice.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
               ErrorMessage = $"Forward Scatter is out of range {range}";
+            }
+            break;
+          case "ChannelsBaseline":
+            if (SelectedTextBox.index == 0)
+            {
+              if (int.TryParse(_tempNewString, out iRes))
+              {
+                if (iRes >= 0 && ((MicroCyDevice.BoardVersion == 0 && iRes <= 4095) || (MicroCyDevice.BoardVersion >= 1 && iRes <= 65535)))
+                {
+                  App.Device.MainCommand("Set Property", code: 0xb8, parameter: (ushort)iRes);
+                  break;
+                }
+              }
+              failed = true;
+              string range = MicroCyDevice.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
+              ErrorMessage = $"Green A (SSC) Baseline is out of range {range}";
+            }
+            if (SelectedTextBox.index == 1)
+            {
+              if (int.TryParse(_tempNewString, out iRes))
+              {
+                if (iRes >= 0 && ((MicroCyDevice.BoardVersion == 0 && iRes <= 4095) || (MicroCyDevice.BoardVersion >= 1 && iRes <= 65535)))
+                {
+                  App.Device.MainCommand("Set Property", code: 0xb9, parameter: (ushort)iRes);
+                  break;
+                }
+              }
+              failed = true;
+              string range = MicroCyDevice.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
+              ErrorMessage = $"Green B (PE) Baseline is out of range {range}";
+            }
+            if (SelectedTextBox.index == 2)
+            {
+              if (int.TryParse(_tempNewString, out iRes))
+              {
+                if (iRes >= 0 && ((MicroCyDevice.BoardVersion == 0 && iRes <= 4095) || (MicroCyDevice.BoardVersion >= 1 && iRes <= 65535)))
+                {
+                  App.Device.MainCommand("Set Property", code: 0xba, parameter: (ushort)iRes);
+                  break;
+                }
+              }
+              failed = true;
+              string range = MicroCyDevice.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
+              ErrorMessage = $"Green C PE Baseline is out of range {range}";
+            }
+            if (SelectedTextBox.index == 3)
+            {
+              if (int.TryParse(_tempNewString, out iRes))
+              {
+                if (iRes >= 0 && ((MicroCyDevice.BoardVersion == 0 && iRes <= 4095) || (MicroCyDevice.BoardVersion >= 1 && iRes <= 65535)))
+                {
+                  App.Device.MainCommand("Set Property", code: 0xbb, parameter: (ushort)iRes);
+                  break;
+                }
+              }
+              failed = true;
+              string range = MicroCyDevice.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
+              ErrorMessage = $"Red A (CL3) Baseline is out of range {range}";
+            }
+            if (SelectedTextBox.index == 4)
+            {
+              if (int.TryParse(_tempNewString, out iRes))
+              {
+                if (iRes >= 0 && ((MicroCyDevice.BoardVersion == 0 && iRes <= 4095) || (MicroCyDevice.BoardVersion >= 1 && iRes <= 65535)))
+                {
+                  App.Device.MainCommand("Set Property", code: 0xbc, parameter: (ushort)iRes);
+                  break;
+                }
+              }
+              failed = true;
+              string range = MicroCyDevice.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
+              ErrorMessage = $"Red B (SSC) Baseline is out of range {range}";
+            }
+            if (SelectedTextBox.index == 5)
+            {
+              if (int.TryParse(_tempNewString, out iRes))
+              {
+                if (iRes >= 0 && ((MicroCyDevice.BoardVersion == 0 && iRes <= 4095) || (MicroCyDevice.BoardVersion >= 1 && iRes <= 65535)))
+                {
+                  App.Device.MainCommand("Set Property", code: 0xbd, parameter: (ushort)iRes);
+                  break;
+                }
+              }
+              failed = true;
+              string range = MicroCyDevice.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
+              ErrorMessage = $"Red C (CL1) Baseline is out of range {range}";
+            }
+            if (SelectedTextBox.index == 6)
+            {
+              if (int.TryParse(_tempNewString, out iRes))
+              {
+                if (iRes >= 0 && ((MicroCyDevice.BoardVersion == 0 && iRes <= 4095) || (MicroCyDevice.BoardVersion >= 1 && iRes <= 65535)))
+                {
+                  App.Device.MainCommand("Set Property", code: 0xbe, parameter: (ushort)iRes);
+                  break;
+                }
+              }
+              failed = true;
+              string range = MicroCyDevice.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
+              ErrorMessage = $"Red D (CL2) Baseline is out of range {range}";
+            }
+            if (SelectedTextBox.index == 7)
+            {
+              if (int.TryParse(_tempNewString, out iRes))
+              {
+                if (iRes >= 0 && ((MicroCyDevice.BoardVersion == 0 && iRes <= 4095) || (MicroCyDevice.BoardVersion >= 1 && iRes <= 65535)))
+                {
+                  App.Device.MainCommand("Set Property", code: 0x82, parameter: (ushort)iRes);
+                  break;
+                }
+              }
+              failed = true;
+              string range = MicroCyDevice.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
+              ErrorMessage = $"Violet A (SSC) Baseline is out of range {range}";
+            }
+            if (SelectedTextBox.index == 8)
+            {
+              if (int.TryParse(_tempNewString, out iRes))
+              {
+                if (iRes >= 0 && ((MicroCyDevice.BoardVersion == 0 && iRes <= 4095) || (MicroCyDevice.BoardVersion >= 1 && iRes <= 65535)))
+                {
+                  App.Device.MainCommand("Set Property", code: 0x83, parameter: (ushort)iRes);
+                  break;
+                }
+              }
+              failed = true;
+              string range = MicroCyDevice.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
+              ErrorMessage = $"Violet B (CL0) Baseline is out of range {range}";
+            }
+            if (SelectedTextBox.index == 9)
+            {
+              if (int.TryParse(_tempNewString, out iRes))
+              {
+                if (iRes >= 0 && ((MicroCyDevice.BoardVersion == 0 && iRes <= 4095) || (MicroCyDevice.BoardVersion >= 1 && iRes <= 65535)))
+                {
+                  App.Device.MainCommand("Set Property", code: 0x85, parameter: (ushort)iRes);
+                  break;
+                }
+              }
+              failed = true;
+              string range = MicroCyDevice.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
+              ErrorMessage = $"Forward Scatter Baseline is out of range {range}";
             }
             break;
           case "ParametersX":
@@ -825,14 +973,14 @@ namespace Ei_Dimension
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 0 && ((App.Device.BoardVersion == 0 && iRes <= 4095) || (App.Device.BoardVersion >= 1 && iRes <= 65535)))
+                if (iRes >= 0 && ((MicroCyDevice.BoardVersion == 0 && iRes <= 4095) || (MicroCyDevice.BoardVersion >= 1 && iRes <= 65535)))
                 {
                   App.Device.MainCommand("Set Property", code: 0x90, parameter: (ushort)iRes);
                   break;
                 }
               }
               failed = true;
-              string range = App.Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
+              string range = MicroCyDevice.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
               ErrorMessage = $"X Current Limit is out of range {range}";
             }
             break;
@@ -906,14 +1054,14 @@ namespace Ei_Dimension
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 0 && ((App.Device.BoardVersion == 0 && iRes <= 4095) || (App.Device.BoardVersion >= 1 && iRes <= 65535)))
+                if (iRes >= 0 && ((MicroCyDevice.BoardVersion == 0 && iRes <= 4095) || (MicroCyDevice.BoardVersion >= 1 && iRes <= 65535)))
                 {
                   App.Device.MainCommand("Set Property", code: 0x91, parameter: (ushort)iRes);
                   break;
                 }
               }
               failed = true;
-              string range = App.Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
+              string range = MicroCyDevice.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
               ErrorMessage = $"Y Current Limit is out of range {range}";
             }
             break;
@@ -987,14 +1135,14 @@ namespace Ei_Dimension
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 0 && ((App.Device.BoardVersion == 0 && iRes <= 4095) || (App.Device.BoardVersion >= 1 && iRes <= 65535)))
+                if (iRes >= 0 && ((MicroCyDevice.BoardVersion == 0 && iRes <= 4095) || (MicroCyDevice.BoardVersion >= 1 && iRes <= 65535)))
                 {
                   App.Device.MainCommand("Set Property", code: 0x92, parameter: (ushort)iRes);
                   break;
                 }
               }
               failed = true;
-              string range = App.Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
+              string range = MicroCyDevice.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
               ErrorMessage = $"Y Current Limit is out of range {range}";
             }
             break;

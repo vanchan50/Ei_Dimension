@@ -12,7 +12,6 @@ namespace Ei_Dimension.ViewModels
     public virtual ObservableCollection<string> Bias30Parameters { get; set; }
     public virtual ObservableCollection<string> TcompBiasParameters { get; set; }
     public virtual ObservableCollection<string> TempParameters { get; set; }
-    public virtual ObservableCollection<string> BackgroundParameters { get; set; }
 
     public static ChannelsViewModel Instance { get; private set; }
 
@@ -31,12 +30,10 @@ namespace Ei_Dimension.ViewModels
       Bias30Parameters.Add(App.Device.ActiveMap.calfsc.ToString());
       TcompBiasParameters = new ObservableCollection<string>();
       TempParameters = new ObservableCollection<string>();
-      BackgroundParameters = new ObservableCollection<string>();
       for(var i = 0; i < 10; i++)
       {
         TcompBiasParameters.Add("");
         TempParameters.Add("");
-        BackgroundParameters.Add("");
       }
       Instance = this;
     }

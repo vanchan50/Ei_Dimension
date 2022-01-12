@@ -24,7 +24,7 @@
 
     <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Margin="20,120,0,00">
+            Margin="100,120,0,00">
       <StackPanel Orientation="Horizontal"
                   HorizontalAlignment="Stretch"
                   VerticalAlignment="Stretch"
@@ -345,71 +345,6 @@
                        IsReadOnly="True"
                        Style="{StaticResource InputFieldStyle}"
                        Text="{Binding TempParameters[9]}"/>
-            </StackPanel>
-          </Border>
-        </StackPanel>
-        <StackPanel VerticalAlignment="Stretch"
-                    Width="190">
-          <TextBlock Text="{lang:Loc Channels_Background}"
-                     FontFamily="{StaticResource AppTextFont}"
-                     FontSize="33"
-                     FontWeight="UltraBold"
-                     Foreground="{StaticResource AppTextColor}"
-                     HorizontalAlignment="Center"
-                     VerticalAlignment="Top"
-                     Margin="0,0,0,3"/>
-          <Border Background="{StaticResource RibbonBackgroundActive}">
-            <StackPanel>
-              <TextBox HorizontalAlignment="Stretch"
-                       Margin="5,10,10,24"
-                       IsReadOnly="True"
-                       Style="{StaticResource InputFieldStyle}"
-                       Text="{Binding BackgroundParameters[0]}"/>
-              <TextBox HorizontalAlignment="Stretch"
-                       Margin="5,0,10,24"
-                       IsReadOnly="True"
-                       Style="{StaticResource InputFieldStyle}"
-                       Text="{Binding BackgroundParameters[1]}"/>
-              <TextBox HorizontalAlignment="Stretch"
-                       Margin="5,0,10,24"
-                       IsReadOnly="True"
-                       Style="{StaticResource InputFieldStyle}"
-                       Text="{Binding BackgroundParameters[2]}"/>
-              <TextBox HorizontalAlignment="Stretch"
-                       Margin="5,0,10,24"
-                       IsReadOnly="True"
-                       Style="{StaticResource InputFieldStyle}"
-                       Text="{Binding BackgroundParameters[3]}"/>
-              <TextBox HorizontalAlignment="Stretch"
-                       Margin="5,0,10,24"
-                       IsReadOnly="True"
-                       Style="{StaticResource InputFieldStyle}"
-                       Text="{Binding BackgroundParameters[4]}"/>
-              <TextBox HorizontalAlignment="Stretch"
-                       Margin="5,0,10,24"
-                       IsReadOnly="True"
-                       Style="{StaticResource InputFieldStyle}"
-                       Text="{Binding BackgroundParameters[5]}"/>
-              <TextBox HorizontalAlignment="Stretch"
-                       Margin="5,0,10,24"
-                       IsReadOnly="True"
-                       Style="{StaticResource InputFieldStyle}"
-                       Text="{Binding BackgroundParameters[6]}"/>
-              <TextBox HorizontalAlignment="Stretch"
-                       Margin="5,0,10,24"
-                       IsReadOnly="True"
-                       Style="{StaticResource InputFieldStyle}"
-                       Text="{Binding BackgroundParameters[7]}"/>
-              <TextBox HorizontalAlignment="Stretch"
-                       Margin="5,0,10,24"
-                       IsReadOnly="True"
-                       Style="{StaticResource InputFieldStyle}"
-                       Text="{Binding BackgroundParameters[8]}"/>
-              <TextBox HorizontalAlignment="Stretch"
-                       Margin="5,0,10,10"
-                       IsReadOnly="True"
-                       Style="{StaticResource InputFieldStyle}"
-                       Text="{Binding BackgroundParameters[9]}"/>
             </StackPanel>
           </Border>
         </StackPanel>

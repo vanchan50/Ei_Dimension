@@ -60,7 +60,7 @@
                       HorizontalAlignment="Center"
                       IsEnabled="{Binding LEDsEnabled}"
                       Command="{Binding LEDsButtonClickCommand}"/>
-
+        <!--Slider-->
         <StackPanel>
           <StackPanel.Resources>
             <Style x:Key="trackBarEditThumbStyle"
