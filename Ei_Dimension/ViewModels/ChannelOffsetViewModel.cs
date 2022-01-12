@@ -151,39 +151,39 @@ namespace Ei_Dimension.ViewModels
           break;
         case 12:
           UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsBaseline)), this, 1, (TextBox)BaselineStackpanel[1]);
-          MainViewModel.Instance.NumpadToggleButton((TextBox)BaselineStackpanel[0]);
+          MainViewModel.Instance.NumpadToggleButton((TextBox)BaselineStackpanel[1]);
           break;
         case 13:
           UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsBaseline)), this, 2, (TextBox)BaselineStackpanel[2]);
-          MainViewModel.Instance.NumpadToggleButton((TextBox)BaselineStackpanel[0]);
+          MainViewModel.Instance.NumpadToggleButton((TextBox)BaselineStackpanel[2]);
           break;
         case 14:
           UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsBaseline)), this, 3, (TextBox)BaselineStackpanel[3]);
-          MainViewModel.Instance.NumpadToggleButton((TextBox)BaselineStackpanel[0]);
+          MainViewModel.Instance.NumpadToggleButton((TextBox)BaselineStackpanel[3]);
           break;
         case 15:
           UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsBaseline)), this, 4, (TextBox)BaselineStackpanel[4]);
-          MainViewModel.Instance.NumpadToggleButton((TextBox)BaselineStackpanel[0]);
+          MainViewModel.Instance.NumpadToggleButton((TextBox)BaselineStackpanel[4]);
           break;
         case 16:
           UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsBaseline)), this, 5, (TextBox)BaselineStackpanel[5]);
-          MainViewModel.Instance.NumpadToggleButton((TextBox)BaselineStackpanel[0]);
+          MainViewModel.Instance.NumpadToggleButton((TextBox)BaselineStackpanel[5]);
           break;
         case 17:
           UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsBaseline)), this, 6, (TextBox)BaselineStackpanel[6]);
-          MainViewModel.Instance.NumpadToggleButton((TextBox)BaselineStackpanel[0]);
+          MainViewModel.Instance.NumpadToggleButton((TextBox)BaselineStackpanel[6]);
           break;
         case 18:
           UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsBaseline)), this, 7, (TextBox)BaselineStackpanel[7]);
-          MainViewModel.Instance.NumpadToggleButton((TextBox)BaselineStackpanel[0]);
+          MainViewModel.Instance.NumpadToggleButton((TextBox)BaselineStackpanel[7]);
           break;
         case 19:
           UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsBaseline)), this, 8, (TextBox)BaselineStackpanel[8]);
-          MainViewModel.Instance.NumpadToggleButton((TextBox)BaselineStackpanel[0]);
+          MainViewModel.Instance.NumpadToggleButton((TextBox)BaselineStackpanel[8]);
           break;
         case 20:
           UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsBaseline)), this, 9, (TextBox)BaselineStackpanel[9]);
-          MainViewModel.Instance.NumpadToggleButton((TextBox)BaselineStackpanel[0]);
+          MainViewModel.Instance.NumpadToggleButton((TextBox)BaselineStackpanel[9]);
           break;
       }
     }
