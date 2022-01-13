@@ -153,15 +153,27 @@ namespace MicroCy
     private void GetCommandFromBuffer()
     {
       var newcmd = ByteArrayToStruct(_serialConnection.InputBuffer);
-      if(newcmd.Code != 0)
+      if (newcmd.Code != 0)
+      {
         MicroCyDevice.Commands.Enqueue(newcmd);
-      if ((newcmd.Code >= 0xd0) && (newcmd.Code <= 0xdf))
-      {
-        Console.WriteLine($"{DateTime.Now.ToString()} E-series script [{newcmd.ToString()}]");
-      }
-      else if (newcmd.Code > 0)
-      {
-        Console.WriteLine($"{DateTime.Now.ToString()} Received [{newcmd.ToString()}]");
+        if ((newcmd.Code >= 0xd0) && (newcmd.Code <= 0xdf))
+        {
+          Console.WriteLine($"{DateTime.Now.ToString()} E-series script [{newcmd.ToString()}]");
+        }
+        else if (newcmd.Code > 0)
+        {
+          Console.WriteLine($"{DateTime.Now.ToString()} Received [{newcmd.ToString()}]");
+        }
+        if (newcmd.Code == 0xCC)
+        {
+          for (var i = 0; i < MicroCyDevice.SystemActivity.Length; i++)
+          {
+            if ((newcmd.Parameter & (1 << i)) != 0)
+              MicroCyDevice.SystemActivity[i] = true;
+            else
+              MicroCyDevice.SystemActivity[i] = false;
+          }
+        }
       }
     }
 

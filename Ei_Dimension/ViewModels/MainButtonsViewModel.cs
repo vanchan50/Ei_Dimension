@@ -95,14 +95,17 @@ namespace Ei_Dimension.ViewModels
       if (!MicroCyDevice.ReadActive)  //end button press before start, cancel work order
       {
         App.Device.MainCommand("Set Property", code: 0x17); //leds off
-        DashboardViewModel.Instance.WorkOrder[0] = "";
+        if (DashboardViewModel.Instance.SelectedSystemControlIndex == 1)
+        {
+          DashboardViewModel.Instance.WorkOrder[0] = ""; //actually questionable if not in workorder operation
+        }
       }
       else
       {
         MicroCyDevice.ReadActive = false;
         MicroCyDevice.EndState = 1;
         if (MicroCyDevice.WellsToRead > 0) //if end read on tube or single well, nothing else is aspirated otherwise
-          MicroCyDevice.WellsToRead = App.Device.CurrentWellIdx + 1; //just read the next well in order since it is already aspirated
+          MicroCyDevice.WellsToRead = MicroCyDevice.CurrentWellIdx + 1; //just read the next well in order since it is already aspirated
       }
     }
 

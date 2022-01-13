@@ -375,6 +375,8 @@ namespace Ei_Dimension
           break;
         case 1:
           Device.StopWellMeasurement();
+          Device.MainCommand("End Sampling");    //sends message to instrument to stop sampling
+          Console.WriteLine($"{DateTime.Now.ToString()} Reporting End Sampling");
           MicroCyDevice.EndState++;
           break;
         case 2:
@@ -410,25 +412,13 @@ namespace Ei_Dimension
           Device.MainCommand("FlushCmdQueue");
           Device.MainCommand("Set Property", code: 0xc3); //clear empty syringe token
           Device.MainCommand("Set Property", code: 0xcb); //clear sync token to allow next sequence to execute
-          if (MicroCyDevice.Mode == OperationMode.Normal)
-          {
-            Device.EndBeadRead(MapRegions.ActiveRegionNums);
-          }
-          else
-          {
-            Device.EndBeadRead();
-          }
+          Device.EndBeadRead();
           MicroCyDevice.EndState = 0;
           Task.Run(()=>
           {
             GC.Collect();
             GC.WaitForPendingFinalizers();
           });
-          if (Device.CurrentWellIdx == (MicroCyDevice.WellsToRead + 1)) //if only one more to go
-          {
-            App.Current.Dispatcher.Invoke(() => DashboardViewModel.Instance.WorkOrder[0] = "");
-            Device.MainCommand("Set Property", code: 0x19);  //bubble detect off
-          }
           Console.WriteLine($"{DateTime.Now.ToString()} Reporting End of current well");
           break;
       }
@@ -513,6 +503,10 @@ namespace Ei_Dimension
 
       ResultsViewModel.Instance.PlatePictogram.ChangeState(row, col, type);
       SavePlateState();
+      if (DashboardViewModel.Instance.SelectedSystemControlIndex == 1)
+      {
+        App.Current.Dispatcher.Invoke(() => DashboardViewModel.Instance.WorkOrder[0] = ""); //actually questionable if not in workorder operation
+      }
 #if DEBUG
       Device.MainCommand("Get FProperty", code: 0x06);
 #endif
