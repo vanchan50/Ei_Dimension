@@ -444,7 +444,7 @@
             </Style>
           </StackPanel.Resources>
           <dxe:TrackBarEdit Margin="0,7,0,0" 
-                            Minimum="21000" Maximum="23000"
+                            Minimum="21000" Maximum="24000"
                             Width="500" EditValue="{Binding SliderValue1}"
                             CornerRadius="4" TickPlacement="None"
                             EditValuePostMode="Delayed" EditValuePostDelay="5"
@@ -457,7 +457,7 @@
             </dxmvvm:Interaction.Behaviors>
           </dxe:TrackBarEdit>
           <dxe:TrackBarEdit Margin="0,10,0,0" 
-                            Minimum="21000" Maximum="23000"
+                            Minimum="21000" Maximum="24000"
                             Width="500" EditValue="{Binding SliderValue2}"
                             CornerRadius="4" TickPlacement="None"
                             EditValuePostMode="Delayed" EditValuePostDelay="5"
@@ -470,7 +470,7 @@
             </dxmvvm:Interaction.Behaviors>
           </dxe:TrackBarEdit>
           <dxe:TrackBarEdit Margin="0,10,0,0" 
-                            Minimum="21000" Maximum="23000"
+                            Minimum="21000" Maximum="24000"
                             Width="500" EditValue="{Binding SliderValue3}"
                             CornerRadius="4" TickPlacement="None"
                             EditValuePostMode="Delayed" EditValuePostDelay="5"
