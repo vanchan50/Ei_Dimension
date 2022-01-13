@@ -186,13 +186,13 @@ namespace MicroCy
       rout.col = MicroCyDevice.WellsInOrder[SavingWellIdx].colIdx + 1;  //columns are 1 based
       rout.count = regionNumber.RP1vals.Count;
       rout.region = regionNumber.regionNumber;
-      List<float> rp1Temp = new List<float>(regionNumber.RP1vals);
+      var rp1Temp = regionNumber.RP1vals;
       if (rout.count > 2)
         rout.meanfi = rp1Temp.Average();
       if (rout.count >= 20)
       {
         rp1Temp.Sort();
-        float rpbg = regionNumber.RP1bgnd.Average() * 16;
+        //float rpbg = regionNumber.RP1bgnd.Average() * 16;
         int quarter = rout.count / 4;
         rp1Temp.RemoveRange(rout.count - quarter, quarter);
         rp1Temp.RemoveRange(0, quarter);
@@ -200,9 +200,10 @@ namespace MicroCy
         double sumsq = rp1Temp.Sum(dataout => Math.Pow(dataout - rout.meanfi, 2));
         double stddev = Math.Sqrt(sumsq / rp1Temp.Count() - 1);
         rout.cv = (float)stddev / rout.meanfi * 100;
-        if (double.IsNaN(rout.cv)) rout.cv = 0;
-        rout.medfi = (float)Math.Round(rp1Temp[quarter] - rpbg);
-        rout.meanfi -= rpbg;
+        if (double.IsNaN(rout.cv))
+          rout.cv = 0;
+        rout.medfi = (float)Math.Round(rp1Temp[quarter]);// - rpbg);
+        //rout.meanfi -= rpbg;
       }
       return rout;
     }

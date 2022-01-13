@@ -102,7 +102,6 @@ namespace Ei_Dimension
           case 0x1b:
             if (exe.Parameter == 0)
             {
-              MicroCyDevice.EndState = 1;
               CalibrationViewModel.Instance.CalJustFailed = false;
               _ = App.Current.Dispatcher.BeginInvoke((Action)(() =>
               {
@@ -619,13 +618,14 @@ namespace Ei_Dimension
           //    string tabnam = tabControl1.SelectedTab.Name;
           //    App.Device.InitSTab(tabnam);
           //    break;
+          // these are processed in GetCommandFromBuffer
           case 0xfd:
-            if (MicroCyDevice.EndState == 0)
-              MicroCyDevice.EndState = 1; //start the end of well state machine
+          //  if (MicroCyDevice.EndState == 0)
+          //    MicroCyDevice.EndState = 1; //start the end of well state machine
             break;
           case 0xfe:
-            if (MicroCyDevice.EndState == 0)
-              MicroCyDevice.EndState = 1;
+          //  if (MicroCyDevice.EndState == 0)
+          //    MicroCyDevice.EndState = 1;
             break;
           case 0xbf:
             //CalibrationViewModel.Instance.AttenuationBox[0] = exe.Parameter.ToString();

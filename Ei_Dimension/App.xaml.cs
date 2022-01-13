@@ -366,64 +366,6 @@ namespace Ei_Dimension
       System.Windows.Input.Keyboard.ClearFocus();
     }
 
-    internal static void WellStateHandler()
-    {
-      // end of well state machine
-      switch (MicroCyDevice.EndState)
-      {
-        case 0:
-          break;
-        case 1:
-          Device.StopWellMeasurement();
-          Device.MainCommand("End Sampling");    //sends message to instrument to stop sampling
-          Console.WriteLine($"{DateTime.Now.ToString()} Reporting End Sampling");
-          MicroCyDevice.EndState++;
-          break;
-        case 2:
-          var tempres = new List<WellResults>(MicroCyDevice.WellResults.Count);
-          for(var i = 0; i < MicroCyDevice.WellResults.Count; i++)
-          {
-            var r = new WellResults();
-            r.RP1vals = new List<float>(MicroCyDevice.WellResults[i].RP1vals);
-            r.RP1bgnd = new List<float>(MicroCyDevice.WellResults[i].RP1bgnd);
-            r.regionNumber = MicroCyDevice.WellResults[i].regionNumber;
-            tempres.Add(r);
-          }
-          _ = Task.Run(() => ResultReporter.SaveBeadFile(tempres));
-          Device.GStatsFiller();
-          MicroCyDevice.EndState++;
-          Console.WriteLine($"{DateTime.Now.ToString()} Reporting Background File Save Init");
-          break;
-        case 3:
-          if (!MainButtonsViewModel.Instance.ActiveList.Contains("WASHING"))
-          {
-            MicroCyDevice.EndState++;  //wait here until alternate syringe is finished washing
-            Console.WriteLine($"{DateTime.Now.ToString()} Reporting Washing Complete");
-          }
-          else
-            Device.MainCommand("Get Property", code: 0xcc);
-          break;
-        case 4:
-          Device.WellNext();  //saves current well address for filename in state 5
-          MicroCyDevice.EndState++;
-          Console.WriteLine($"{DateTime.Now.ToString()} Reporting Setting up next well");
-          break;
-        case 5:
-          Device.MainCommand("FlushCmdQueue");
-          Device.MainCommand("Set Property", code: 0xc3); //clear empty syringe token
-          Device.MainCommand("Set Property", code: 0xcb); //clear sync token to allow next sequence to execute
-          Device.EndBeadRead();
-          MicroCyDevice.EndState = 0;
-          Task.Run(()=>
-          {
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
-          });
-          Console.WriteLine($"{DateTime.Now.ToString()} Reporting End of current well");
-          break;
-      }
-    }
-
     /*
     private static void WorkOrderHandler()
     {

@@ -76,7 +76,6 @@ namespace MicroCy
     public static byte TerminationType { get; set; }
     public static byte ReadingRow { get; set; }
     public static byte ReadingCol { get; set; }
-    public static byte EndState { get; set; }
     public static byte SystemControl { get; set; }
     public static DirectoryInfo RootDirectory { get; private set; }
     private static bool _chkRegionCount;
@@ -86,7 +85,7 @@ namespace MicroCy
 
     public MicroCyDevice(Type connectionType = null)
     {
-      _dataController = new DataController(connectionType);
+      _dataController = new DataController(this, connectionType);
       StateMach = new StateMachine(this, true);
       MainCommand("Sync");
       TotalBeads = 0;
@@ -95,7 +94,6 @@ namespace MicroCy
       MoveMaps();
       LoadMaps();
       Reg0stats = false;
-      EndState = 0;
       ReadActive = false;
       IsMeasurementGoing = false;
     }
@@ -110,6 +108,16 @@ namespace MicroCy
       _chkRegionCount = false;
       BeadCount = 0;
       OnStartingToReadWell();
+    }
+
+    public void UpdateState()
+    {
+      StateMach.Action();
+    }
+
+    public void StartState()
+    {
+      StateMach.Start();
     }
 
     public void GStatsFiller()
@@ -198,10 +206,7 @@ namespace MicroCy
       #if DEBUG
       Console.Error.WriteLine($"{DateTime.Now.ToString()} Enqueued [{command}]: {cs.ToString()}");
       #endif
-      lock (DataController.UsbOutCV)
-      {
-        Monitor.Pulse(DataController.UsbOutCV);
-      }
+      _dataController.NotifyCommandReceived();
 
       //RunCmd(command, cs);
     }
@@ -410,7 +415,7 @@ namespace MicroCy
       }
     }
 
-    internal static void TerminationReadyCheck()
+    internal void TerminationReadyCheck()
     {
       switch (TerminationType)
       {
@@ -427,14 +432,15 @@ namespace MicroCy
                 break;
               }
             }
-            EndState = IsDone;
+            if (IsDone == 1)
+              StateMach.Start();
             _chkRegionCount = false;
           }
           break;
         case 1: //total beads captured
           if ((BeadCount >= BeadsToCapture) && ReadActive)
           {
-            EndState = 1;
+            StateMach.Start();
             ReadActive = false;
           }
           break;

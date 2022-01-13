@@ -103,7 +103,7 @@ namespace Ei_Dimension.ViewModels
       else
       {
         MicroCyDevice.ReadActive = false;
-        MicroCyDevice.EndState = 1;
+        App.Device.StartState();
         if (MicroCyDevice.WellsToRead > 0) //if end read on tube or single well, nothing else is aspirated otherwise
           MicroCyDevice.WellsToRead = MicroCyDevice.CurrentWellIdx + 1; //just read the next well in order since it is already aspirated
       }

@@ -6,8 +6,8 @@ namespace MicroCy
 {
   internal class StateMachine
   {
-    private MicroCyDevice _device;
-    private static State _state;
+    private readonly MicroCyDevice _device;
+    private State _state;
     public static bool Report { get; set; }
 
     public StateMachine(MicroCyDevice device, bool report)
@@ -16,7 +16,7 @@ namespace MicroCy
       Report = report;
     }
 
-    public static void Start()
+    public void Start()
     {
       if(_state != State.Reset)
         throw new Exception("State machine Start was called during the operation");
@@ -43,6 +43,8 @@ namespace MicroCy
         case State.End:
           Action5();
           break;
+        default:
+          return;
       }
       if(Report)
         ReportState();
@@ -73,7 +75,6 @@ namespace MicroCy
     {
       if (!MicroCyDevice.SystemActivity[11])  //does not contain Washing
       {
-        MicroCyDevice.EndState++;  //wait here until alternate syringe is finished washing
         return true;
       }
       _device.MainCommand("Get Property", code: 0xcc);
@@ -83,7 +84,6 @@ namespace MicroCy
     private void Action4()
     {
       _device.WellNext();  //saves current well address for filename in state 5
-      MicroCyDevice.EndState++;
     }
     
     private void Action5()
@@ -99,7 +99,7 @@ namespace MicroCy
       });
     }
 
-    private static void Advance()
+    private void Advance()
     {
       if (_state < State.End)
         _state++;
@@ -107,7 +107,7 @@ namespace MicroCy
         _state = State.Reset;
     }
 
-    private static void ReportState()
+    private void ReportState()
     {
       string str = null;
       switch (_state)

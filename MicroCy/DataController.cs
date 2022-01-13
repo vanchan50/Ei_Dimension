@@ -7,14 +7,16 @@ namespace MicroCy
   internal class DataController
   {
     public static ConcurrentQueue<(string name, CommandStruct cs)> OutCommands { get; } = new ConcurrentQueue<(string name, CommandStruct cs)>();
-    public static object UsbOutCV { get; } = new object();
 
+    private readonly object _usbOutCV = new object();
     private readonly ISerial _serialConnection;
-    private static Thread _prioUsbInThread;
-    private static Thread _prioUsbOutThread;
+    private readonly Thread _prioUsbInThread;
+    private readonly Thread _prioUsbOutThread;
+    private readonly MicroCyDevice _device;
 
-    public DataController(Type connectionType)
+    public DataController(MicroCyDevice device, Type connectionType)
     {
+      _device = device;
       _serialConnection = ConnectionFactory.MakeNewConnection(connectionType);
       if (_serialConnection.IsActive)
       {
@@ -72,7 +74,7 @@ namespace MicroCy
             }
           }
           Array.Clear(_serialConnection.InputBuffer, 0, _serialConnection.InputBuffer.Length);
-          MicroCyDevice.TerminationReadyCheck();
+          _device.TerminationReadyCheck();
         }
         else
           GetCommandFromBuffer();
@@ -87,10 +89,18 @@ namespace MicroCy
         {
           RunCmd(cmd.name, cmd.cs);
         }
-        lock (UsbOutCV)
+        lock (_usbOutCV)
         {
-          Monitor.Wait(UsbOutCV);
+          Monitor.Wait(_usbOutCV);
         }
+      }
+    }
+
+    public void NotifyCommandReceived()
+    {
+      lock (_usbOutCV)
+      {
+        Monitor.Pulse(_usbOutCV);
       }
     }
 
@@ -155,6 +165,18 @@ namespace MicroCy
       var newcmd = ByteArrayToStruct(_serialConnection.InputBuffer);
       if (newcmd.Code != 0)
       {
+        if (newcmd.Code == 0xFD)
+        {
+          _device.StartState();
+        }
+        if (newcmd.Code == 0xFE)
+        {
+          _device.StartState();
+        }
+        if (newcmd.Code == 0x1B && newcmd.Parameter == 0)
+        {
+          _device.StartState();  //OnCalibrationSuccess
+        }
         MicroCyDevice.Commands.Enqueue(newcmd);
         if ((newcmd.Code >= 0xd0) && (newcmd.Code <= 0xdf))
         {
@@ -177,7 +199,7 @@ namespace MicroCy
       }
     }
 
-    private bool GetBeadFromBuffer(byte[] buffer,byte shift, out BeadInfoStruct outbead)
+    private static bool GetBeadFromBuffer(byte[] buffer,byte shift, out BeadInfoStruct outbead)
     {
       outbead = BeadArrayToStruct(buffer, shift);
       return outbead.Header == 0xadbeadbe;
