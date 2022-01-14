@@ -6,6 +6,7 @@ using MicroCy;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.IO;
+using System.Configuration;
 
 namespace Ei_Dimension
 {
@@ -21,6 +22,7 @@ namespace Ei_Dimension
 
     public App()
     {
+      CorruptSettingsChecker();
       Device = new MicroCyDevice();
       SetLogOutput();
       SetupDevice();
@@ -36,6 +38,21 @@ namespace Ei_Dimension
       watcher.Filter = "*.txt";
       watcher.EnableRaisingEvents = true;
       watcher.Created += OnNewWorkOrder;
+    }
+
+    private static void CorruptSettingsChecker()
+    {
+      try
+      {
+        Settings.Default.Reload();
+        var value = Settings.Default.DefaultMap;
+      }
+      catch (ConfigurationErrorsException ex)
+      {
+        string filename = ((ConfigurationErrorsException)ex.InnerException).Filename;
+        File.Delete(filename);
+        StartupFinalizer.SettingsWiped = true;
+      }
     }
 
     private static void SetupDevice()

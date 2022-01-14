@@ -8,6 +8,7 @@ namespace Ei_Dimension
 {
   internal static class StartupFinalizer
   {
+    public static bool SettingsWiped;
     private static bool _done;
     /// <summary>
     /// Finish loading the UI. Should be called only once, after all the views have been loaded.
@@ -67,6 +68,14 @@ namespace Ei_Dimension
       
       UITimer.Start();
       _done = true;
+
+      if(SettingsWiped)
+        WipedSettingsMessage();
+    }
+
+    private static void WipedSettingsMessage()
+    {
+      Notification.Show("User data was Corrupted.\nDefault Values Restored.\nPlease check the Instrument Settings");
     }
   }
 }
