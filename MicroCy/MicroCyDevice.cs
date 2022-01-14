@@ -46,7 +46,7 @@ namespace MicroCy
     public static ConcurrentQueue<CommandStruct> Commands { get; } = new ConcurrentQueue<CommandStruct>();
     public static ConcurrentQueue<BeadInfoStruct> DataOut { get; } = new ConcurrentQueue<BeadInfoStruct>();
     public static List<Wells> WellsInOrder { get; set; } = new List<Wells>();
-    public static ISet<int> RegionsToOutput { get; set; }
+    public static ICollection<int> RegionsToOutput { get; set; }
     public List<CustomMap> MapList { get; } = new List<CustomMap>();
     public static BitArray SystemActivity { get; } = new BitArray(16, false);
     public static List<WellResults> WellResults { get; } = new List<WellResults>();
