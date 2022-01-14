@@ -163,46 +163,111 @@ namespace MicroCy
     private void GetCommandFromBuffer()
     {
       var newcmd = ByteArrayToStruct(_serialConnection.InputBuffer);
-      if (newcmd.Code != 0)
-      {
-        if (newcmd.Code == 0xFD)
-        {
-          _device.StartState();
-        }
-        if (newcmd.Code == 0xFE)
-        {
-          _device.StartState();
-        }
-        if (newcmd.Code == 0x1B && newcmd.Parameter == 0)
-        {
-          _device.StartState();  //OnCalibrationSuccess
-        }
-        MicroCyDevice.Commands.Enqueue(newcmd);
-        if ((newcmd.Code >= 0xd0) && (newcmd.Code <= 0xdf))
-        {
-          Console.WriteLine($"{DateTime.Now.ToString()} E-series script [{newcmd.ToString()}]");
-        }
-        else if (newcmd.Code > 0)
-        {
-          Console.WriteLine($"{DateTime.Now.ToString()} Received [{newcmd.ToString()}]");
-        }
-        if (newcmd.Code == 0xCC)
-        {
-          for (var i = 0; i < MicroCyDevice.SystemActivity.Length; i++)
-          {
-            if ((newcmd.Parameter & (1 << i)) != 0)
-              MicroCyDevice.SystemActivity[i] = true;
-            else
-              MicroCyDevice.SystemActivity[i] = false;
-          }
-        }
-      }
+      InnerCommandProcessing(in newcmd);
+      MicroCyDevice.Commands.Enqueue(newcmd);
+
+
+      //if (newcmd.Code != 0)
+      //{
+      //  if (newcmd.Code == 0xFD)
+      //  {
+      //    try
+      //    {
+      //      _device.StartState();
+      //    }
+      //    catch {}
+      //  }
+      //  if (newcmd.Code == 0xFE)
+      //  {
+      //    try
+      //    {
+      //      _device.StartState();
+      //    }
+      //    catch {}
+      //  }
+      //  if (newcmd.Code == 0x1B && newcmd.Parameter == 0)
+      //  {
+      //    _device.StartState();  //OnCalibrationSuccess
+      //  }
+      //  MicroCyDevice.Commands.Enqueue(newcmd);
+      //  if ((newcmd.Code >= 0xd0) && (newcmd.Code <= 0xdf))
+      //  {
+      //    Console.WriteLine($"{DateTime.Now.ToString()} E-series script [{newcmd.ToString()}]");
+      //  }
+      //  else if (newcmd.Code > 0)
+      //  {
+      //    Console.WriteLine($"{DateTime.Now.ToString()} Received [{newcmd.ToString()}]");
+      //  }
+      //  if (newcmd.Code == 0xCC)
+      //  {
+      //    for (var i = 0; i < MicroCyDevice.SystemActivity.Length; i++)
+      //    {
+      //      if ((newcmd.Parameter & (1 << i)) != 0)
+      //        MicroCyDevice.SystemActivity[i] = true;
+      //      else
+      //        MicroCyDevice.SystemActivity[i] = false;
+      //    }
+      //  }
+      //}
     }
 
     private static bool GetBeadFromBuffer(byte[] buffer,byte shift, out BeadInfoStruct outbead)
     {
       outbead = BeadArrayToStruct(buffer, shift);
       return outbead.Header == 0xadbeadbe;
+    }
+
+    private void InnerCommandProcessing(in CommandStruct cs)
+    {
+      switch (cs.Code)
+      {
+        case 0:
+          //Skip Error
+          return;
+        case 0x1B:
+          if (cs.Parameter == 0)
+          {
+            _device.StartState();  //OnCalibrationSuccess
+          }
+          break;
+        case 0xCC:
+          for (var i = 0; i < MicroCyDevice.SystemActivity.Length; i++)
+          {
+            if ((cs.Parameter & (1 << i)) != 0)
+              MicroCyDevice.SystemActivity[i] = true;
+            else
+              MicroCyDevice.SystemActivity[i] = false;
+          }
+          break;
+        //FALLTHROUGH
+        case 0xD0:
+        case 0xD1:
+        case 0xD2:
+        case 0xD3:
+        case 0xD4:
+        case 0xD5:
+        case 0xD6:
+        case 0xD7:
+        case 0xD8:
+        case 0xD9:
+        case 0xDA:
+        case 0xDB:
+        case 0xDC:
+        case 0xDD:
+        case 0xDE:
+        case 0xDF:
+          Console.WriteLine($"{DateTime.Now.ToString()} E-series script [{cs.ToString()}]");
+          return;
+        case 0xFD:
+        case 0xFE:
+          try
+          {
+            _device.StartState();
+          }
+          catch {}
+          break;
+      }
+      Console.WriteLine($"{DateTime.Now.ToString()} Received [{cs.ToString()}]");
     }
   }
 }

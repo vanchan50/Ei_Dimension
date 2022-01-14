@@ -19,13 +19,13 @@ namespace MicroCy
     private static readonly StringBuilder SummaryOut = new StringBuilder();
     private static PlateReport _plateReport;
     private const string BHEADER = "Preamble,Time(1 us Tick),FSC bg,Viol SSC bg,CL0 bg,CL1 bg,CL2 bg,CL3 bg,Red SSC bg,Green SSC bg," +
-                                   "Green Maj bg, Green Min bg,Green Major,Green Minor,Red-Grn Offset,Grn-Viol Offset,Region,Forward Scatter,Violet SSC,CL0," +
-                                   "Red SSC,CL1,CL2,CL3,Green SSC,Reporter\r ";
+                                   "Green B bg,Green C bg,Green Major,Green Minor,Red-Grn Offset,Grn-Viol Offset,Region,Forward Scatter,Violet SSC,CL0," +
+                                   "Red SSC,CL1,CL2,CL3,Green SSC,Reporter\r";
     private const string SHEADER = "Row,Col,Region,Bead Count,Median FI,Trimmed Mean FI,CV%\r";
 
     static ResultReporter()
     {
-      Outdir = MicroCyDevice.RootDirectory.FullName; 
+      Outdir = MicroCyDevice.RootDirectory.FullName;
     }
 
     internal static void StartNewWellReport()
@@ -149,9 +149,9 @@ namespace MicroCy
     public static void SaveBeadFile(List<WellResults> wellres) //cancels the begin read from endpoint 2
     {
       //write file
-      Console.WriteLine(string.Format("{0} Reporting Background results cloned for save", DateTime.Now.ToString()));
+      Console.WriteLine($"{DateTime.Now.ToString()} Reporting Background results cloned for save");
       if ((FullFileName != null) && MicroCyDevice.Everyevent)
-        File.WriteAllText(FullFileName, ResultReporter.GetWellReport());
+        File.WriteAllText(FullFileName, GetWellReport());
       if (MicroCyDevice.RMeans)
       {
         ClearSummary();
@@ -173,7 +173,7 @@ namespace MicroCy
         OutputPlateReport();
         wellres = null;
       }
-      Console.WriteLine(string.Format("{0} Reporting Background File Save Complete", DateTime.Now.ToString()));
+      Console.WriteLine($"{DateTime.Now.ToString()} Reporting Background File Save Complete");
       if (File.Exists(WorkOrderPath))
         File.Delete(WorkOrderPath);   //result is posted, delete work order
       //need to clear textbox in UI. this has to be an event

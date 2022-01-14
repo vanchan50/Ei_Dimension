@@ -433,14 +433,14 @@ namespace MicroCy
               }
             }
             if (IsDone == 1)
-              StateMach.Start();
+              StartState();
             _chkRegionCount = false;
           }
           break;
         case 1: //total beads captured
           if ((BeadCount >= BeadsToCapture) && ReadActive)
           {
-            StateMach.Start();
+            StartState();
             ReadActive = false;
           }
           break;

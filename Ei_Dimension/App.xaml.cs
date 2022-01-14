@@ -413,17 +413,10 @@ namespace Ei_Dimension
     
     private static void StartingToReadWellEventHandler(object sender, ReadingWellEventArgs e)
     {
-      var warning = Models.WellWarningState.OK;
-      if (_nextWellWarning)
-      {
-        _nextWellWarning = false;
-        warning = Models.WellWarningState.YellowWarning;
-      }
-      
       MultiTube.GetModifiedWellIndexes(e, out var row, out var col);
 
       ResultsViewModel.Instance.PlatePictogram.CurrentlyReadCell = (row, col);
-      ResultsViewModel.Instance.PlatePictogram.ChangeState(row, col, Models.WellType.NowReading, warning, FilePath: e.FilePath);
+      ResultsViewModel.Instance.PlatePictogram.ChangeState(row, col, Models.WellType.NowReading, GetWarningState(), FilePath: e.FilePath);
       
       App.Current.Dispatcher.Invoke(() =>
       {
@@ -431,9 +424,19 @@ namespace Ei_Dimension
         ResultsViewModel.Instance.ClearGraphs();
       });
       MapRegions.ResetCurrentActiveRegionsDisplayedStats();
-#if DEBUG
+      #if DEBUG
       Device.MainCommand("Set FProperty", code: 0x06);
-#endif
+      #endif
+    }
+
+    private static Models.WellWarningState GetWarningState()
+    {
+      if (_nextWellWarning)
+      {
+        _nextWellWarning = false;
+        return Models.WellWarningState.YellowWarning;
+      }
+      return Models.WellWarningState.OK;
     }
 
     public static void FinishedReadingWellEventHandler(object sender, ReadingWellEventArgs e)
@@ -449,9 +452,9 @@ namespace Ei_Dimension
       {
         App.Current.Dispatcher.Invoke(() => DashboardViewModel.Instance.WorkOrder[0] = ""); //actually questionable if not in workorder operation
       }
-#if DEBUG
+      #if DEBUG
       Device.MainCommand("Get FProperty", code: 0x06);
-#endif
+      #endif
     }
 
     private static Models.WellType GetWellStateForPictogram()
