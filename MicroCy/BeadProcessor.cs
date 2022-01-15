@@ -20,13 +20,18 @@ namespace MicroCy
     private static readonly float[,] Sfi = new float[5000, 10];
     private static int[,] _classificationMap;
     private static List<List<ushort>> _bgValues = new List<List<ushort>>();
+    private static int _nextBgValue;
 
     static BeadProcessor()
     {
       ClassificationBins = GenerateLogSpace(1, 60000, 256);
       for (var i = 0; i < 10; i++)
       {
-        _bgValues.Add(new List<ushort>(50000));
+        _bgValues.Add(new List<ushort>(80000));
+        for (int j = 0; j < 80000; j++)
+        {
+          _bgValues[i].Add(0);
+        }
       }
     }
 
@@ -67,16 +72,20 @@ namespace MicroCy
 
     public static void FillBackgroundAverages(in BeadInfoStruct outbead)
     {
-      _bgValues[0].Add(outbead.gssc_bg);
-      _bgValues[1].Add(outbead.greenB_bg);
-      _bgValues[2].Add(outbead.greenC_bg);
-      _bgValues[3].Add(outbead.rssc_bg);
-      _bgValues[4].Add(outbead.cl1_bg);
-      _bgValues[5].Add(outbead.cl2_bg);
-      _bgValues[6].Add(outbead.cl3_bg);
-      _bgValues[7].Add(outbead.vssc_bg);
-      _bgValues[8].Add(outbead.cl0_bg);
-      _bgValues[9].Add(outbead.fsc_bg);
+      if (MicroCyDevice.BeadCount < 80000)
+      {
+        _bgValues[0][_nextBgValue] = outbead.gssc_bg;
+        _bgValues[1][_nextBgValue] = outbead.greenB_bg;
+        _bgValues[2][_nextBgValue] = outbead.greenC_bg;
+        _bgValues[3][_nextBgValue] = outbead.rssc_bg;
+        _bgValues[4][_nextBgValue] = outbead.cl1_bg;
+        _bgValues[5][_nextBgValue] = outbead.cl2_bg;
+        _bgValues[6][_nextBgValue] = outbead.cl3_bg;
+        _bgValues[7][_nextBgValue] = outbead.vssc_bg;
+        _bgValues[8][_nextBgValue] = outbead.cl0_bg;
+        _bgValues[9][_nextBgValue] = outbead.fsc_bg;
+      }
+      _nextBgValue++;
     }
 
     public static void CalculateBackgroundAverages()
@@ -84,21 +93,17 @@ namespace MicroCy
       AvgBg.Clear();
       for (int i = 0; i < 10; i++)
       {
-        double avg = 0;
-        int counter = 0;
-        foreach (var bg in _bgValues[i])
+        double sum = 0;
+
+        for (int j = 0; j < _nextBgValue; j++)
         {
-          avg += bg;
-          counter++;
+          sum += _bgValues[i][j];
         }
-        avg /= counter;
+        var avg = sum / _nextBgValue;
         AvgBg.Add(avg);
       }
 
-      for (int i = 0; i < 10; i++)
-      {
-        _bgValues[i].Clear();
-      }
+      _nextBgValue = 0;
     }
 
     public static void FillCalibrationStatsRow(in BeadInfoStruct outbead)
