@@ -20,7 +20,6 @@ namespace MicroCy
     private static readonly float[,] Sfi = new float[5000, 10];
     private static int[,] _classificationMap;
     private static List<List<ushort>> _bgValues = new List<List<ushort>>();
-    private static int _nextBgValue;
 
     static BeadProcessor()
     {
@@ -74,36 +73,34 @@ namespace MicroCy
     {
       if (MicroCyDevice.BeadCount < 80000)
       {
-        _bgValues[0][_nextBgValue] = outbead.gssc_bg;
-        _bgValues[1][_nextBgValue] = outbead.greenB_bg;
-        _bgValues[2][_nextBgValue] = outbead.greenC_bg;
-        _bgValues[3][_nextBgValue] = outbead.rssc_bg;
-        _bgValues[4][_nextBgValue] = outbead.cl1_bg;
-        _bgValues[5][_nextBgValue] = outbead.cl2_bg;
-        _bgValues[6][_nextBgValue] = outbead.cl3_bg;
-        _bgValues[7][_nextBgValue] = outbead.vssc_bg;
-        _bgValues[8][_nextBgValue] = outbead.cl0_bg;
-        _bgValues[9][_nextBgValue] = outbead.fsc_bg;
+        _bgValues[0][MicroCyDevice.BeadCount] = outbead.gssc_bg;
+        _bgValues[1][MicroCyDevice.BeadCount] = outbead.greenB_bg;
+        _bgValues[2][MicroCyDevice.BeadCount] = outbead.greenC_bg;
+        _bgValues[3][MicroCyDevice.BeadCount] = outbead.rssc_bg;
+        _bgValues[4][MicroCyDevice.BeadCount] = outbead.cl1_bg;
+        _bgValues[5][MicroCyDevice.BeadCount] = outbead.cl2_bg;
+        _bgValues[6][MicroCyDevice.BeadCount] = outbead.cl3_bg;
+        _bgValues[7][MicroCyDevice.BeadCount] = outbead.vssc_bg;
+        _bgValues[8][MicroCyDevice.BeadCount] = outbead.cl0_bg;
+        _bgValues[9][MicroCyDevice.BeadCount] = outbead.fsc_bg;
       }
-      _nextBgValue++;
     }
 
     public static void CalculateBackgroundAverages()
     {
       AvgBg.Clear();
+      var Count = SavBeadCount > 80000 ? 80000 : SavBeadCount;
       for (int i = 0; i < 10; i++)
       {
         double sum = 0;
 
-        for (int j = 0; j < _nextBgValue; j++)
+        for (int j = 0; j < Count; j++)
         {
           sum += _bgValues[i][j];
         }
-        var avg = sum / _nextBgValue;
+        var avg = sum / Count;
         AvgBg.Add(avg);
       }
-
-      _nextBgValue = 0;
     }
 
     public static void FillCalibrationStatsRow(in BeadInfoStruct outbead)
@@ -126,21 +123,21 @@ namespace MicroCy
     public static void CalculateGStats()
     {
       Stats.Clear();
-      SavBeadCount = SavBeadCount > 5000 ? 5000 : SavBeadCount;
+      var Count = SavBeadCount > 5000 ? 5000 : SavBeadCount;
       for (int finx = 0; finx < 10; finx++)
       {
         double sumit = 0;
-        for (int beads = 0; beads < SavBeadCount; beads++)
+        for (int beads = 0; beads < Count; beads++)
         {
           sumit += Sfi[beads, finx];
         }
-        double robustcnt = SavBeadCount; //start with total bead count
+        double robustcnt = Count; //start with total bead count
         double mean = sumit / robustcnt;
         //find high and low bounds
         double min = mean * 0.5;
         double max = mean * 2;
         sumit = 0;
-        for (int beads = 0; beads < SavBeadCount; beads++)
+        for (int beads = 0; beads < Count; beads++)
         {
           if ((Sfi[beads, finx] > min) && (Sfi[beads, finx] < max))
             sumit += Sfi[beads, finx];
@@ -152,7 +149,7 @@ namespace MicroCy
         }
         mean = sumit / robustcnt;
         double sumsq = 0;
-        for (int beads = 0; beads < SavBeadCount; beads++)
+        for (int beads = 0; beads < Count; beads++)
         {
           if (Sfi[beads, finx] == 0)
             continue;
