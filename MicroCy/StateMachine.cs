@@ -68,7 +68,7 @@ namespace MicroCy
         tempres.Add(r);
       }
       _ = Task.Run(() => ResultReporter.SaveBeadFile(tempres));
-      _device.GStatsFiller();
+      _device.GetRunStatistics();
     }
     
     private bool Action3()

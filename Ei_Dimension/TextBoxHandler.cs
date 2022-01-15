@@ -23,7 +23,7 @@ namespace Ei_Dimension
           case 0x01:
             MicroCyDevice.BoardVersion = exe.Parameter;
 #if  DEBUG
-          Console.Error.WriteLine($"Detected Board Rev v{MicroCyDevice.BoardVersion}");  
+          Console.Error.WriteLine($"Detected Board Rev v{MicroCyDevice.BoardVersion}");
 #endif
             if (MicroCyDevice.BoardVersion > 1)
               update = HideChannels;
@@ -665,6 +665,7 @@ namespace Ei_Dimension
       ChannelOffsetViewModel.Instance.OldBoardOffsetsVisible = Visibility.Hidden;
       Views.ChannelOffsetView.Instance.SlidersSP.Visibility = Visibility.Visible;
       Views.ChannelOffsetView.Instance.BaselineSP.Width = 180;
+      Views.ChannelOffsetView.Instance.AvgBgSP.Width = 180;
     }
   }
 }

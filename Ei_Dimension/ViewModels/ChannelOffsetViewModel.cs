@@ -12,6 +12,7 @@ namespace Ei_Dimension.ViewModels
   {
     public virtual ObservableCollection<string> ChannelsOffsetParameters { get; set; }
     public virtual ObservableCollection<string> ChannelsBaseline { get; set; }
+    public virtual ObservableCollection<string> AverageBg { get; set; }
     public virtual System.Windows.Visibility OldBoardOffsetsVisible { get; set; }
     public virtual object SliderValue1 { get; set; }
     public virtual object SliderValue2 { get; set; }
@@ -28,12 +29,14 @@ namespace Ei_Dimension.ViewModels
     {
       ChannelsOffsetParameters = new ObservableCollection<string>();
       ChannelsBaseline = new ObservableCollection<string>();
+      AverageBg = new ObservableCollection<string>();
       OldBoardOffsetsVisible = System.Windows.Visibility.Visible;
       SiPMTempCoeff = new ObservableCollection<string> { "" };
       for (var i = 0; i < 10; i++)
       {
         ChannelsOffsetParameters.Add("");
         ChannelsBaseline.Add("");
+        AverageBg.Add("");
       }
       var RM = Language.Resources.ResourceManager;
       var curCulture = Language.TranslationSource.Instance.CurrentCulture;

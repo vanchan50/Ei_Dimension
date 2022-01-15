@@ -69,6 +69,7 @@ namespace MicroCy
               }
               //accum stats for run as a whole, used during aligment and QC
               BeadProcessor.FillCalibrationStatsRow(in outbead);
+              BeadProcessor.FillBackgroundAverages(in outbead);
               MicroCyDevice.BeadCount++;
               MicroCyDevice.TotalBeads++;
             }

@@ -76,7 +76,7 @@
     <Compile Include="InstrumentParameters\Idex.cs" />
     <Compile Include="ISerial.cs" />
     <Compile Include="MicroCyDevice.cs" />
-    <Compile Include="Structs\GstatsEventArgs.cs" />
+    <Compile Include="Structs\StatsEventArgs.cs" />
     <Compile Include="Structs\MapRegion.cs" />
     <Compile Include="Structs\OutResults.cs" />
     <Compile Include="PlateReport.cs" />

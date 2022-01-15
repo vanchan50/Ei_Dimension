@@ -53,7 +53,7 @@ namespace MicroCy
     public event EventHandler<ReadingWellEventArgs> StartingToReadWell;
     public event EventHandler<ReadingWellEventArgs> FinishedReadingWell;
     public event EventHandler FinishedMeasurement;
-    public event EventHandler<GstatsEventArgs> NewStatsAvailable;
+    public event EventHandler<StatsEventArgs> NewStatsAvailable;
     public static OperationMode Mode { get; set; }
     public static int BoardVersion { get; set; }
     public static int WellsToRead { get; set; }
@@ -120,13 +120,11 @@ namespace MicroCy
       StateMach.Start();
     }
 
-    public void GStatsFiller()
+    public void GetRunStatistics()
     {
-      if (BeadProcessor.SavBeadCount > 2)
-      {
-        BeadProcessor.FillGStats();
-        OnNewStatsAvailable();
-      }
+      BeadProcessor.CalculateGStats();
+      BeadProcessor.CalculateBackgroundAverages();
+      OnNewStatsAvailable();
     }
 
     public void SetReadingParamsForWell(int index)
@@ -520,7 +518,7 @@ namespace MicroCy
 
     private void OnNewStatsAvailable()
     {
-      NewStatsAvailable?.Invoke(this, new GstatsEventArgs(BeadProcessor.Stats));
+      NewStatsAvailable?.Invoke(this, new StatsEventArgs(BeadProcessor.Stats, BeadProcessor.AvgBg));
     }
   }
 }

@@ -82,44 +82,51 @@ namespace Ei_Dimension.ViewModels
               DashVM.OrderItems[newTemplate.Order].Click(4);
               DashVM.SysControlItems[newTemplate.SysControl].Click(5);
               DashVM.EndReadItems[newTemplate.EndRead].Click(6);
-              DashVM.EndRead[0] = newTemplate.MinPerRegion.ToString();
-              if (int.TryParse(DashVM.EndRead[0], out iRes))
+
+              var temp = newTemplate.MinPerRegion.ToString();
+              if (int.TryParse(temp, out iRes))
               {
                 MicroCyDevice.MinPerRegion = iRes;
                 Settings.Default.MinPerRegion = iRes;
+                DashVM.EndRead[0] = temp;
               }
               else
                 throw new Exception();
-
-              DashVM.EndRead[1] = newTemplate.TotalEvents.ToString();
-              if (int.TryParse(DashVM.EndRead[1], out iRes))
+              
+              temp = newTemplate.TotalEvents.ToString();
+              if (int.TryParse(temp, out iRes))
               {
                 MicroCyDevice.BeadsToCapture = iRes;
                 Settings.Default.BeadsToCapture = iRes;
+                DashVM.EndRead[1] = temp;
               }
               else
                 throw new Exception();
-
-              DashVM.Volumes[0] = newTemplate.SampleVolume.ToString();
-              if (int.TryParse(DashVM.Volumes[0], out iRes))
+              
+              temp = newTemplate.SampleVolume.ToString();
+              if (int.TryParse(temp, out iRes))
               {
                 App.Device.MainCommand("Set Property", code: 0xaf, parameter: (ushort) iRes);
+                DashVM.Volumes[0] = temp;
               }
               else
                 throw new Exception();
-
-              DashVM.Volumes[1] = newTemplate.WashVolume.ToString();
-              if (int.TryParse(DashVM.Volumes[1], out iRes))
+              
+              temp = newTemplate.WashVolume.ToString();
+              if (int.TryParse(temp, out iRes))
               {
                 App.Device.MainCommand("Set Property", code: 0xac, parameter: (ushort) iRes);
+                DashVM.Volumes[1] = temp;
               }
               else
                 throw new Exception();
-
-              DashVM.Volumes[2] = newTemplate.AgitateVolume.ToString();
-              if (int.TryParse(DashVM.Volumes[2], out iRes))
+              
+              
+              temp = newTemplate.AgitateVolume.ToString();
+              if (int.TryParse(temp, out iRes))
               {
                 App.Device.MainCommand("Set Property", code: 0xc4, parameter: (ushort) iRes);
+                DashVM.Volumes[2] = temp;
               }
               else
                 throw new Exception();
@@ -147,17 +154,20 @@ namespace Ei_Dimension.ViewModels
                 App.MapRegions.RegionsNamesList[i] = newTemplate.RegionsNamesList[i];
               }
 
-              WellsSelectViewModel.Instance.ChangeWellTableSize(newTemplate.TableSize);
+              if (newTemplate.TableSize !=0)
+                WellsSelectViewModel.Instance.ChangeWellTableSize(newTemplate.TableSize);
               if (newTemplate.TableSize == 96)
                 Views.ExperimentView.Instance.DbWell96.IsChecked = true;
               else if (newTemplate.TableSize == 384)
                 Views.ExperimentView.Instance.DbWell384.IsChecked = true;
-              var size = newTemplate.TableSize == 96 ? 12 : 24;
-              var Wells = WellsSelectViewModel.Instance.CurrentTableSize == 96
-                ? WellsSelectViewModel.Instance.Table96Wells
-                : WellsSelectViewModel.Instance.Table384Wells;
-              if (newTemplate.TableSize > 1)
+              else if (newTemplate.TableSize == 1)
+                Views.ExperimentView.Instance.DbTube.IsChecked = true;
+              if (newTemplate.TableSize == 96 || newTemplate.TableSize == 384)
               {
+                var size = newTemplate.TableSize == 96 ? 12 : 24;
+                var Wells = WellsSelectViewModel.Instance.CurrentTableSize == 96
+                  ? WellsSelectViewModel.Instance.Table96Wells
+                  : WellsSelectViewModel.Instance.Table384Wells;
                 var j = 0;
                 foreach (var row in Wells)
                 {
@@ -169,8 +179,6 @@ namespace Ei_Dimension.ViewModels
                   j++;
                 }
               }
-              else
-                Views.ExperimentView.Instance.DbTube.IsChecked = true;
             }
             catch
             {

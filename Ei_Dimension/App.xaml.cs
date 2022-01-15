@@ -528,7 +528,7 @@ namespace Ei_Dimension
       }
     }
 
-    public static void NewStatsAvailableEventHandler(object sender, GstatsEventArgs e)
+    public static void NewStatsAvailableEventHandler(object sender, StatsEventArgs e)
     {
       _ = Current.Dispatcher.BeginInvoke((Action)(() =>
       {
@@ -536,6 +536,7 @@ namespace Ei_Dimension
         {
           ResultsViewModel.Instance.CurrentMfiItems[i] = e.GStats[i].mfi.ToString($"{0:0.0}");
           ResultsViewModel.Instance.CurrentCvItems[i] = e.GStats[i].cv.ToString($"{0:0.00}");
+          ChannelOffsetViewModel.Instance.AverageBg[i] = e.AvgBg[i].ToString($"{0:0.00}");
         }
       }));
     }

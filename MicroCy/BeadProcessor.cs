@@ -10,6 +10,7 @@ namespace MicroCy
   internal class BeadProcessor
   {
     public static List<Gstats> Stats { get; } = new List<Gstats>(10);
+    public static List<double> AvgBg { get; } = new List<double>(10);
     public static int SavBeadCount { get; set; }
     private static byte _actPrimaryIndex;
     private static byte _actSecondaryIndex;
@@ -18,10 +19,15 @@ namespace MicroCy
     private static readonly double[] ClassificationBins;
     private static readonly float[,] Sfi = new float[5000, 10];
     private static int[,] _classificationMap;
+    private static List<List<ushort>> _bgValues = new List<List<ushort>>();
 
     static BeadProcessor()
     {
       ClassificationBins = GenerateLogSpace(1, 60000, 256);
+      for (var i = 0; i < 10; i++)
+      {
+        _bgValues.Add(new List<ushort>(50000));
+      }
     }
 
     public static void CalculateBeadParams(ref BeadInfoStruct outbead)
@@ -59,6 +65,42 @@ namespace MicroCy
       return _classificationMap[x, y];
     }
 
+    public static void FillBackgroundAverages(in BeadInfoStruct outbead)
+    {
+      _bgValues[0].Add(outbead.gssc_bg);
+      _bgValues[1].Add(outbead.greenB_bg);
+      _bgValues[2].Add(outbead.greenC_bg);
+      _bgValues[3].Add(outbead.rssc_bg);
+      _bgValues[4].Add(outbead.cl1_bg);
+      _bgValues[5].Add(outbead.cl2_bg);
+      _bgValues[6].Add(outbead.cl3_bg);
+      _bgValues[7].Add(outbead.vssc_bg);
+      _bgValues[8].Add(outbead.cl0_bg);
+      _bgValues[9].Add(outbead.fsc_bg);
+    }
+
+    public static void CalculateBackgroundAverages()
+    {
+      AvgBg.Clear();
+      for (int i = 0; i < 10; i++)
+      {
+        double avg = 0;
+        int counter = 0;
+        foreach (var bg in _bgValues[i])
+        {
+          avg += bg;
+          counter++;
+        }
+        avg /= counter;
+        AvgBg.Add(avg);
+      }
+
+      for (int i = 0; i < 10; i++)
+      {
+        _bgValues[i].Clear();
+      }
+    }
+
     public static void FillCalibrationStatsRow(in BeadInfoStruct outbead)
     {
       if (MicroCyDevice.BeadCount < 5000)
@@ -76,7 +118,7 @@ namespace MicroCy
       }
     }
 
-    public static void FillGStats()
+    public static void CalculateGStats()
     {
       Stats.Clear();
       SavBeadCount = SavBeadCount > 5000 ? 5000 : SavBeadCount;

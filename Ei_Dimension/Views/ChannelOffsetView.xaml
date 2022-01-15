@@ -93,6 +93,7 @@
                   Height="85" Cursor="Hand"
                   Margin="0,0,0,8"/>
           <Button Content="{lang:Loc Ch_Offset_Set_Offset}"
+                  Visibility="Hidden"
                   Command="{Binding SetOffsetClickCommand}"
                   Style="{StaticResource ButtonStyle}"
                   Height="85"/>
@@ -181,6 +182,72 @@
                  HorizontalAlignment="Right"
                  VerticalAlignment="Top"
                  Margin="0,11,4,0"/>
+        </StackPanel>
+        <!--Avg BG-->
+        <StackPanel Name="AvgBgSP" Width="0">
+          <TextBlock Text="Average BG"
+                     FontFamily="{StaticResource AppTextFont}"
+                     FontSize="36"
+                     Width="180"
+                     TextAlignment="Center"
+                     FontWeight="UltraBold"
+                     Foreground="{StaticResource AppTextColor}"
+                     HorizontalAlignment="Left"/>
+        <Border Background="{StaticResource RibbonBackgroundActive}">
+          <StackPanel VerticalAlignment="Stretch" Name="SPAvgBG"
+                    Width="180">
+            <TextBox HorizontalAlignment="Stretch"
+                     IsReadOnly="True"
+                     Margin="10,10,10,0"
+                     Style="{StaticResource InputFieldStyle}"
+                     Text="{Binding AverageBg[0]}"/>
+            <TextBox HorizontalAlignment="Stretch"
+                     IsReadOnly="True"
+                     Margin="10,15,10,0"
+                     Style="{StaticResource InputFieldStyle}"
+                     Text="{Binding AverageBg[1]}"/>
+            <TextBox HorizontalAlignment="Stretch"
+                     IsReadOnly="True"
+                     Margin="10,15,10,0"
+                     Style="{StaticResource InputFieldStyle}"
+                     Text="{Binding AverageBg[2]}"/>
+            <TextBox HorizontalAlignment="Stretch"
+                     IsReadOnly="True"
+                     Margin="10,35,10,0"
+                     Style="{StaticResource InputFieldStyle}"
+                     Text="{Binding AverageBg[3]}"/>
+            <TextBox HorizontalAlignment="Stretch"
+                     IsReadOnly="True"
+                     Margin="10,15,10,0"
+                     Style="{StaticResource InputFieldStyle}"
+                     Text="{Binding AverageBg[4]}"/>
+            <TextBox HorizontalAlignment="Stretch"
+                     IsReadOnly="True"
+                     Margin="10,15,10,0"
+                     Style="{StaticResource InputFieldStyle}"
+                     Text="{Binding AverageBg[5]}"/>
+            <TextBox HorizontalAlignment="Stretch"
+                     IsReadOnly="True"
+                     Margin="10,15,10,0"
+                     Style="{StaticResource InputFieldStyle}"
+                     Text="{Binding AverageBg[6]}"/>
+            <TextBox HorizontalAlignment="Stretch"
+                     IsReadOnly="True"
+                     Margin="10,15,10,0"
+                     Style="{StaticResource InputFieldStyle}"
+                     Text="{Binding AverageBg[7]}"/>
+            <TextBox HorizontalAlignment="Stretch"
+                     IsReadOnly="True"
+                     Margin="10,15,10,0"
+                     Style="{StaticResource InputFieldStyle}"
+                     Text="{Binding AverageBg[8]}"/>
+            <TextBox HorizontalAlignment="Stretch"
+                     IsReadOnly="True"
+                     Margin="10,15,10,10"
+                     Style="{StaticResource InputFieldStyle}"
+                     Text="{Binding AverageBg[9]}"/>
+          </StackPanel>
+        </Border>
         </StackPanel>
         <!--Baseline-->
         <StackPanel Name="BaselineSP" Width="0">
@@ -301,7 +368,6 @@
         <Border Background="{StaticResource RibbonBackgroundActive}">
           <StackPanel VerticalAlignment="Stretch" Name="SP"
                     Width="180">
-
             <TextBox HorizontalAlignment="Stretch"
                       Margin="10,10,10,0"
                       Style="{StaticResource InputFieldStyle}"
@@ -445,7 +511,7 @@
           </StackPanel.Resources>
           <dxe:TrackBarEdit Margin="0,7,0,0" 
                             Minimum="21000" Maximum="24000"
-                            Width="500" EditValue="{Binding SliderValue1}"
+                            Width="360" EditValue="{Binding SliderValue1}"
                             CornerRadius="4" TickPlacement="None"
                             EditValuePostMode="Delayed" EditValuePostDelay="5"
                             NearTrackStyle="{StaticResource nearTrackStyle}"
@@ -458,7 +524,7 @@
           </dxe:TrackBarEdit>
           <dxe:TrackBarEdit Margin="0,10,0,0" 
                             Minimum="21000" Maximum="24000"
-                            Width="500" EditValue="{Binding SliderValue2}"
+                            Width="360" EditValue="{Binding SliderValue2}"
                             CornerRadius="4" TickPlacement="None"
                             EditValuePostMode="Delayed" EditValuePostDelay="5"
                             NearTrackStyle="{StaticResource nearTrackStyle}"
@@ -471,7 +537,7 @@
           </dxe:TrackBarEdit>
           <dxe:TrackBarEdit Margin="0,10,0,0" 
                             Minimum="21000" Maximum="24000"
-                            Width="500" EditValue="{Binding SliderValue3}"
+                            Width="360" EditValue="{Binding SliderValue3}"
                             CornerRadius="4" TickPlacement="None"
                             EditValuePostMode="Delayed" EditValuePostDelay="5"
                             NearTrackStyle="{StaticResource nearTrackStyle}"
