@@ -92,7 +92,7 @@ namespace Ei_Dimension.Models
       BackingActiveRegionsCount.Clear();
       BackingActiveRegionsMean.Clear();
       var i = 0;
-      foreach (var region in App.Device.ActiveMap.regions)
+      foreach (var region in App.Device.MapCtroller.ActiveMap.regions)
       {
         RegionsList.Add(region.Number.ToString());
         RegionsNamesList.Add("");

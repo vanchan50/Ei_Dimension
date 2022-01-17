@@ -392,11 +392,11 @@ namespace Ei_Dimension.ViewModels
     {
       foreach (var result in BackingWResults)
       {
-        var RegionIndex = App.Device.ActiveMap.regions.FindIndex(r => r.Number == result.regionNumber);
+        var RegionIndex = App.Device.MapCtroller.ActiveMap.regions.FindIndex(r => r.Number == result.regionNumber);
         if (RegionIndex != -1)
         {
-          var x = HeatMapData.bins[App.Device.ActiveMap.regions[RegionIndex].Center.x];
-          var y = HeatMapData.bins[App.Device.ActiveMap.regions[RegionIndex].Center.y];
+          var x = HeatMapData.bins[App.Device.MapCtroller.ActiveMap.regions[RegionIndex].Center.x];
+          var y = HeatMapData.bins[App.Device.MapCtroller.ActiveMap.regions[RegionIndex].Center.y];
           lock (BackingAnalysis12Map)
           {
             if (result.RP1vals.Count > 0)

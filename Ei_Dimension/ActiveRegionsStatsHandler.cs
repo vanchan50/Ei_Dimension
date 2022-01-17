@@ -53,8 +53,8 @@ namespace Ei_Dimension
     }
     private static void Reporter3DGraphHandler(int regionIndex, double reporterAvg)
     {
-      var x = Models.HeatMapData.bins[App.Device.ActiveMap.regions[regionIndex].Center.x];
-      var y = Models.HeatMapData.bins[App.Device.ActiveMap.regions[regionIndex].Center.y];
+      var x = Models.HeatMapData.bins[App.Device.MapCtroller.ActiveMap.regions[regionIndex].Center.x];
+      var y = Models.HeatMapData.bins[App.Device.MapCtroller.ActiveMap.regions[regionIndex].Center.y];
       ViewModels.ResultsViewModel.Instance.CurrentAnalysis12Map.Add(new Models.DoubleHeatMapData(x, y, reporterAvg));
     }
   }

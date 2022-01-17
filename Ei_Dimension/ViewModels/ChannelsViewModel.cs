@@ -18,16 +18,16 @@ namespace Ei_Dimension.ViewModels
     protected ChannelsViewModel()
     {
       Bias30Parameters = new ObservableCollection<string>();
-      Bias30Parameters.Add(App.Device.ActiveMap.calgssc.ToString());
-      Bias30Parameters.Add(App.Device.ActiveMap.calrpmaj.ToString());
-      Bias30Parameters.Add(App.Device.ActiveMap.calrpmin.ToString());
-      Bias30Parameters.Add(App.Device.ActiveMap.calcl3.ToString());
-      Bias30Parameters.Add(App.Device.ActiveMap.calrssc.ToString());
-      Bias30Parameters.Add(App.Device.ActiveMap.calcl1.ToString());
-      Bias30Parameters.Add(App.Device.ActiveMap.calcl2.ToString());
-      Bias30Parameters.Add(App.Device.ActiveMap.calvssc.ToString());
-      Bias30Parameters.Add(App.Device.ActiveMap.calcl0.ToString());
-      Bias30Parameters.Add(App.Device.ActiveMap.calfsc.ToString());
+      Bias30Parameters.Add(App.Device.MapCtroller.ActiveMap.calgssc.ToString());
+      Bias30Parameters.Add(App.Device.MapCtroller.ActiveMap.calrpmaj.ToString());
+      Bias30Parameters.Add(App.Device.MapCtroller.ActiveMap.calrpmin.ToString());
+      Bias30Parameters.Add(App.Device.MapCtroller.ActiveMap.calcl3.ToString());
+      Bias30Parameters.Add(App.Device.MapCtroller.ActiveMap.calrssc.ToString());
+      Bias30Parameters.Add(App.Device.MapCtroller.ActiveMap.calcl1.ToString());
+      Bias30Parameters.Add(App.Device.MapCtroller.ActiveMap.calcl2.ToString());
+      Bias30Parameters.Add(App.Device.MapCtroller.ActiveMap.calvssc.ToString());
+      Bias30Parameters.Add(App.Device.MapCtroller.ActiveMap.calcl0.ToString());
+      Bias30Parameters.Add(App.Device.MapCtroller.ActiveMap.calfsc.ToString());
       TcompBiasParameters = new ObservableCollection<string>();
       TempParameters = new ObservableCollection<string>();
       for(var i = 0; i < 10; i++)
@@ -53,7 +53,7 @@ namespace Ei_Dimension.ViewModels
     public void SaveBiasButtonClick()
     {
       UserInputHandler.InputSanityCheck();
-      App.Device.SaveCalVals(new MicroCy.MapCalParameters
+      App.Device.MapCtroller.SaveCalVals(new MicroCy.MapCalParameters
       {
         TempCl0 = int.Parse(Bias30Parameters[8]),
         TempCl1 = int.Parse(Bias30Parameters[5]),
@@ -81,7 +81,7 @@ namespace Ei_Dimension.ViewModels
         Caldate = null,
         Valdate = null
       });
-      Notification.Show($"Calibration Parameters Saved to map {App.Device.ActiveMap.mapName}");
+      Notification.Show($"Calibration Parameters Saved to map {App.Device.MapCtroller.ActiveMap.mapName}");
     }
 
     public void FocusedBox(int num)

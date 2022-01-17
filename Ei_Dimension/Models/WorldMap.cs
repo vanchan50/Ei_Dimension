@@ -56,7 +56,7 @@ namespace Ei_Dimension.Models
     public void InitMaps()
     {
       ClearMaps();
-      foreach (var region in App.Device.ActiveMap.regions)
+      foreach (var region in App.Device.MapCtroller.ActiveMap.regions)
       {
         foreach (var point in region.Points)
         {

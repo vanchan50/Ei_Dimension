@@ -60,11 +60,11 @@ namespace Ei_Dimension
       if (Device == null)
         throw new Exception("Device not initialized");
 
-      if (Settings.Default.DefaultMap > Device.MapList.Count - 1)
+      if (Settings.Default.DefaultMap > Device.MapCtroller.MapList.Count - 1)
       {
         try
         {
-          Device.ActiveMap = Device.MapList[0];
+          Device.MapCtroller.ActiveMap = Device.MapCtroller.MapList[0];
         }
         catch
         {
@@ -73,7 +73,7 @@ namespace Ei_Dimension
       }
       else
       {
-        Device.ActiveMap = Device.MapList[Settings.Default.DefaultMap];
+        Device.MapCtroller.ActiveMap = Device.MapCtroller.MapList[Settings.Default.DefaultMap];
       }
       MicroCyDevice.SystemControl = Settings.Default.SystemControl;
       MicroCyDevice.Everyevent = Settings.Default.Everyevent;
@@ -84,11 +84,11 @@ namespace Ei_Dimension
       MicroCyDevice.BeadsToCapture = Settings.Default.BeadsToCapture;
       MicroCyDevice.OnlyClassified = Settings.Default.OnlyClassifed;
       MicroCyDevice.ChannelBIsHiSensitivity = Settings.Default.SensitivityChannelB;
-      Device.MainCommand("Set Property", code: 0xbf, parameter: (ushort)Device.ActiveMap.calParams.att);
+      Device.MainCommand("Set Property", code: 0xbf, parameter: (ushort)Device.MapCtroller.ActiveMap.calParams.att);
       if (!System.Windows.Input.Keyboard.IsKeyDown(System.Windows.Input.Key.LeftCtrl))
         Device.MainCommand("Startup");
-      MicroCy.InstrumentParameters.Calibration.HdnrTrans = Device.ActiveMap.calParams.DNRTrans;
-      MicroCy.InstrumentParameters.Calibration.Compensation = Device.ActiveMap.calParams.compensation;
+      MicroCy.InstrumentParameters.Calibration.HdnrTrans = Device.MapCtroller.ActiveMap.calParams.DNRTrans;
+      MicroCy.InstrumentParameters.Calibration.Compensation = Device.MapCtroller.ActiveMap.calParams.compensation;
       Device.MainCommand("Set Property", code: 0x97, parameter: 1170);  //set current limit of aligner motors if leds are off
       Device.MainCommand("Get Property", code: 0xca);
     }
@@ -96,26 +96,26 @@ namespace Ei_Dimension
     public static int GetMapIndex(string MapName)
     {
       int i = 0;
-      for (; i < Device.MapList.Count; i++)
+      for (; i < Device.MapCtroller.MapList.Count; i++)
       {
-        if (Device.MapList[i].mapName == MapName)
+        if (Device.MapCtroller.MapList[i].mapName == MapName)
           break;
       }
-      if (i == Device.MapList.Count)
+      if (i == Device.MapCtroller.MapList.Count)
         i = -1;
       return i;
     }
 
     public static void SetActiveMap(string mapName)
     {
-      for (var i = 0; i < Device.MapList.Count; i++)
+      for (var i = 0; i < Device.MapCtroller.MapList.Count; i++)
       {
-        if (Device.MapList[i].mapName == mapName)
+        if (Device.MapCtroller.MapList[i].mapName == mapName)
         {
-          Device.ActiveMap = Device.MapList[i];
+          Device.MapCtroller.ActiveMap = Device.MapCtroller.MapList[i];
           Settings.Default.DefaultMap = i;
           Settings.Default.Save();
-          Device.MainCommand("Set Property", code: 0xbf, parameter: (ushort)Device.ActiveMap.calParams.att);
+          Device.MainCommand("Set Property", code: 0xbf, parameter: (ushort)Device.MapCtroller.ActiveMap.calParams.att);
           break;
         }
       }
@@ -124,69 +124,69 @@ namespace Ei_Dimension
       var CaliVM = CalibrationViewModel.Instance;
       if (CaliVM != null)
       {
-        CaliVM.EventTriggerContents[1] = Device.ActiveMap.calParams.minmapssc.ToString();
-        Device.MainCommand("Set Property", code: 0xce, parameter: (ushort)Device.ActiveMap.calParams.minmapssc);
-        CaliVM.EventTriggerContents[2] = Device.ActiveMap.calParams.maxmapssc.ToString();
-        Device.MainCommand("Set Property", code: 0xcf, parameter: (ushort)Device.ActiveMap.calParams.maxmapssc);
-        CaliVM.AttenuationBox[0] = Device.ActiveMap.calParams.att.ToString();
-        Device.MainCommand("Set Property", code: 0xbf, parameter: (ushort)Device.ActiveMap.calParams.att);
+        CaliVM.EventTriggerContents[1] = Device.MapCtroller.ActiveMap.calParams.minmapssc.ToString();
+        Device.MainCommand("Set Property", code: 0xce, parameter: (ushort)Device.MapCtroller.ActiveMap.calParams.minmapssc);
+        CaliVM.EventTriggerContents[2] = Device.MapCtroller.ActiveMap.calParams.maxmapssc.ToString();
+        Device.MainCommand("Set Property", code: 0xcf, parameter: (ushort)Device.MapCtroller.ActiveMap.calParams.maxmapssc);
+        CaliVM.AttenuationBox[0] = Device.MapCtroller.ActiveMap.calParams.att.ToString();
+        Device.MainCommand("Set Property", code: 0xbf, parameter: (ushort)Device.MapCtroller.ActiveMap.calParams.att);
 
 
-        CaliVM.EventTriggerContents[0] = Device.ActiveMap.calParams.height.ToString();
-        Device.MainCommand("Set Property", code: 0xcd, parameter: Device.ActiveMap.calParams.height);
-        CaliVM.CompensationPercentageContent[0] = Device.ActiveMap.calParams.compensation.ToString();
-        MicroCy.InstrumentParameters.Calibration.Compensation = Device.ActiveMap.calParams.compensation;
-        CaliVM.DNRContents[0] = Device.ActiveMap.calParams.DNRCoef.ToString();
-        MicroCy.InstrumentParameters.Calibration.HDnrCoef = Device.ActiveMap.calParams.DNRCoef;
-        Device.MainCommand("Set FProperty", code: 0x20, fparameter: Device.ActiveMap.calParams.DNRCoef);
-        CaliVM.DNRContents[1] = Device.ActiveMap.calParams.DNRTrans.ToString();
-        MicroCy.InstrumentParameters.Calibration.HdnrTrans = Device.ActiveMap.calParams.DNRTrans;
-        CaliVM.ClassificationTargetsContents[0] = Device.ActiveMap.calParams.CL0.ToString();
-        Device.MainCommand("Set Property", code: 0x8b, parameter: (ushort)Device.ActiveMap.calParams.CL0);
-        CaliVM.ClassificationTargetsContents[1] = Device.ActiveMap.calParams.CL1.ToString();
-        Device.MainCommand("Set Property", code: 0x8c, parameter: (ushort)Device.ActiveMap.calParams.CL1);
-        CaliVM.ClassificationTargetsContents[2] = Device.ActiveMap.calParams.CL2.ToString();
-        Device.MainCommand("Set Property", code: 0x8d, parameter: (ushort)Device.ActiveMap.calParams.CL2);
-        CaliVM.ClassificationTargetsContents[3] = Device.ActiveMap.calParams.CL3.ToString();
-        Device.MainCommand("Set Property", code: 0x8e, parameter: (ushort)Device.ActiveMap.calParams.CL3);
-        CaliVM.ClassificationTargetsContents[4] = Device.ActiveMap.calParams.RP1.ToString();
-        Device.MainCommand("Set Property", code: 0x8f, parameter: (ushort)Device.ActiveMap.calParams.RP1);
-        CaliVM.GatingItems[Device.ActiveMap.calParams.gate].Click();
+        CaliVM.EventTriggerContents[0] = Device.MapCtroller.ActiveMap.calParams.height.ToString();
+        Device.MainCommand("Set Property", code: 0xcd, parameter: Device.MapCtroller.ActiveMap.calParams.height);
+        CaliVM.CompensationPercentageContent[0] = Device.MapCtroller.ActiveMap.calParams.compensation.ToString();
+        MicroCy.InstrumentParameters.Calibration.Compensation = Device.MapCtroller.ActiveMap.calParams.compensation;
+        CaliVM.DNRContents[0] = Device.MapCtroller.ActiveMap.calParams.DNRCoef.ToString();
+        MicroCy.InstrumentParameters.Calibration.HDnrCoef = Device.MapCtroller.ActiveMap.calParams.DNRCoef;
+        Device.MainCommand("Set FProperty", code: 0x20, fparameter: Device.MapCtroller.ActiveMap.calParams.DNRCoef);
+        CaliVM.DNRContents[1] = Device.MapCtroller.ActiveMap.calParams.DNRTrans.ToString();
+        MicroCy.InstrumentParameters.Calibration.HdnrTrans = Device.MapCtroller.ActiveMap.calParams.DNRTrans;
+        CaliVM.ClassificationTargetsContents[0] = Device.MapCtroller.ActiveMap.calParams.CL0.ToString();
+        Device.MainCommand("Set Property", code: 0x8b, parameter: (ushort)Device.MapCtroller.ActiveMap.calParams.CL0);
+        CaliVM.ClassificationTargetsContents[1] = Device.MapCtroller.ActiveMap.calParams.CL1.ToString();
+        Device.MainCommand("Set Property", code: 0x8c, parameter: (ushort)Device.MapCtroller.ActiveMap.calParams.CL1);
+        CaliVM.ClassificationTargetsContents[2] = Device.MapCtroller.ActiveMap.calParams.CL2.ToString();
+        Device.MainCommand("Set Property", code: 0x8d, parameter: (ushort)Device.MapCtroller.ActiveMap.calParams.CL2);
+        CaliVM.ClassificationTargetsContents[3] = Device.MapCtroller.ActiveMap.calParams.CL3.ToString();
+        Device.MainCommand("Set Property", code: 0x8e, parameter: (ushort)Device.MapCtroller.ActiveMap.calParams.CL3);
+        CaliVM.ClassificationTargetsContents[4] = Device.MapCtroller.ActiveMap.calParams.RP1.ToString();
+        Device.MainCommand("Set Property", code: 0x8f, parameter: (ushort)Device.MapCtroller.ActiveMap.calParams.RP1);
+        CaliVM.GatingItems[Device.MapCtroller.ActiveMap.calParams.gate].Click();
       }
 
       var ChannelsVM = ChannelsViewModel.Instance;
       if (ChannelsVM != null)
       {
-        ChannelsVM.Bias30Parameters[0] = Device.ActiveMap.calgssc.ToString();
-        Device.MainCommand("Set Property", code: 0x28, parameter: (ushort)Device.ActiveMap.calgssc);
-        ChannelsVM.Bias30Parameters[1] = Device.ActiveMap.calrpmaj.ToString();
-        Device.MainCommand("Set Property", code: 0x29, parameter: (ushort)Device.ActiveMap.calrpmaj);
-        ChannelsVM.Bias30Parameters[2] = Device.ActiveMap.calrpmin.ToString();
-        Device.MainCommand("Set Property", code: 0x2a, parameter: (ushort)Device.ActiveMap.calrpmin);
-        ChannelsVM.Bias30Parameters[3] = Device.ActiveMap.calcl3.ToString();
-        Device.MainCommand("Set Property", code: 0x2c, parameter: (ushort)Device.ActiveMap.calcl3);
-        ChannelsVM.Bias30Parameters[4] = Device.ActiveMap.calrssc.ToString();
-        Device.MainCommand("Set Property", code: 0x2d, parameter: (ushort)Device.ActiveMap.calrssc);
-        ChannelsVM.Bias30Parameters[5] = Device.ActiveMap.calcl1.ToString();
-        Device.MainCommand("Set Property", code: 0x2e, parameter: (ushort)Device.ActiveMap.calcl1);
-        ChannelsVM.Bias30Parameters[6] = Device.ActiveMap.calcl2.ToString();
-        Device.MainCommand("Set Property", code: 0x2f, parameter: (ushort)Device.ActiveMap.calcl2);
-        ChannelsVM.Bias30Parameters[7] = Device.ActiveMap.calvssc.ToString();
-        Device.MainCommand("Set Property", code: 0x25, parameter: (ushort)Device.ActiveMap.calvssc);
-        ChannelsVM.Bias30Parameters[8] = Device.ActiveMap.calcl0.ToString();
-        Device.MainCommand("Set Property", code: 0x26, parameter: (ushort)Device.ActiveMap.calcl0);
-        ChannelsVM.Bias30Parameters[9] = Device.ActiveMap.calfsc.ToString();
-        Device.MainCommand("Set Property", code: 0x24, parameter: (ushort)Device.ActiveMap.calfsc);
+        ChannelsVM.Bias30Parameters[0] = Device.MapCtroller.ActiveMap.calgssc.ToString();
+        Device.MainCommand("Set Property", code: 0x28, parameter: (ushort)Device.MapCtroller.ActiveMap.calgssc);
+        ChannelsVM.Bias30Parameters[1] = Device.MapCtroller.ActiveMap.calrpmaj.ToString();
+        Device.MainCommand("Set Property", code: 0x29, parameter: (ushort)Device.MapCtroller.ActiveMap.calrpmaj);
+        ChannelsVM.Bias30Parameters[2] = Device.MapCtroller.ActiveMap.calrpmin.ToString();
+        Device.MainCommand("Set Property", code: 0x2a, parameter: (ushort)Device.MapCtroller.ActiveMap.calrpmin);
+        ChannelsVM.Bias30Parameters[3] = Device.MapCtroller.ActiveMap.calcl3.ToString();
+        Device.MainCommand("Set Property", code: 0x2c, parameter: (ushort)Device.MapCtroller.ActiveMap.calcl3);
+        ChannelsVM.Bias30Parameters[4] = Device.MapCtroller.ActiveMap.calrssc.ToString();
+        Device.MainCommand("Set Property", code: 0x2d, parameter: (ushort)Device.MapCtroller.ActiveMap.calrssc);
+        ChannelsVM.Bias30Parameters[5] = Device.MapCtroller.ActiveMap.calcl1.ToString();
+        Device.MainCommand("Set Property", code: 0x2e, parameter: (ushort)Device.MapCtroller.ActiveMap.calcl1);
+        ChannelsVM.Bias30Parameters[6] = Device.MapCtroller.ActiveMap.calcl2.ToString();
+        Device.MainCommand("Set Property", code: 0x2f, parameter: (ushort)Device.MapCtroller.ActiveMap.calcl2);
+        ChannelsVM.Bias30Parameters[7] = Device.MapCtroller.ActiveMap.calvssc.ToString();
+        Device.MainCommand("Set Property", code: 0x25, parameter: (ushort)Device.MapCtroller.ActiveMap.calvssc);
+        ChannelsVM.Bias30Parameters[8] = Device.MapCtroller.ActiveMap.calcl0.ToString();
+        Device.MainCommand("Set Property", code: 0x26, parameter: (ushort)Device.MapCtroller.ActiveMap.calcl0);
+        ChannelsVM.Bias30Parameters[9] = Device.MapCtroller.ActiveMap.calfsc.ToString();
+        Device.MainCommand("Set Property", code: 0x24, parameter: (ushort)Device.MapCtroller.ActiveMap.calfsc);
       }
 
       var DashVM = DashboardViewModel.Instance;
       if (DashVM != null)
       {
-        if (Device.ActiveMap.validation)
+        if (Device.MapCtroller.ActiveMap.validation)
         {
           DashVM.CalValModeEnabled = true;
-          DashVM.CaliDateBox[0] = Device.ActiveMap.caltime;
-          DashVM.ValidDateBox[0] = Device.ActiveMap.valtime;
+          DashVM.CaliDateBox[0] = Device.MapCtroller.ActiveMap.caltime;
+          DashVM.ValidDateBox[0] = Device.MapCtroller.ActiveMap.valtime;
         }
         else
         {
@@ -197,9 +197,9 @@ namespace Ei_Dimension
       }
 
       bool Warning = false;
-      if (Device.ActiveMap.validation)
+      if (Device.MapCtroller.ActiveMap.validation)
       {
-        var valDate = DateTime.Parse(Device.ActiveMap.valtime, new System.Globalization.CultureInfo("en-GB"));
+        var valDate = DateTime.Parse(Device.MapCtroller.ActiveMap.valtime, new System.Globalization.CultureInfo("en-GB"));
         switch (Settings.Default.VerificationWarningIndex)
         {
           case 0:

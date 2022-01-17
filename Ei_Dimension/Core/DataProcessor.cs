@@ -224,7 +224,7 @@ namespace Ei_Dimension.Core
       }
 
       List<List<float>> activeRegionsStats = new List<List<float>>();  //for mean and count
-      foreach (var region in App.Device.ActiveMap.regions)
+      foreach (var region in App.Device.MapCtroller.ActiveMap.regions)
       {
         activeRegionsStats.Add(new List<float>());
       }

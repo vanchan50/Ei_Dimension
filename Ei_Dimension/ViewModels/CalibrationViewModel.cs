@@ -43,14 +43,14 @@ namespace Ei_Dimension.ViewModels
       };
       SelectedGatingIndex = 0;
       SelectedGatingContent = GatingItems[SelectedGatingIndex].Content;
-      EventTriggerContents = new ObservableCollection<string> {"", App.Device.ActiveMap.calParams.minmapssc.ToString(), App.Device.ActiveMap.calParams.maxmapssc.ToString()};
+      EventTriggerContents = new ObservableCollection<string> {"", App.Device.MapCtroller.ActiveMap.calParams.minmapssc.ToString(), App.Device.MapCtroller.ActiveMap.calParams.maxmapssc.ToString()};
 
       ClassificationTargetsContents = new ObservableCollection<string> { "1", "1", "1", "1", "3500"};
 
       CompensationPercentageContent = new ObservableCollection<string> { MicroCy.InstrumentParameters.Calibration.Compensation.ToString() };
       DNRContents = new ObservableCollection<string> { "", MicroCy.InstrumentParameters.Calibration.HdnrTrans.ToString() };
 
-      AttenuationBox = new ObservableCollection<string> { App.Device.ActiveMap.calParams.att.ToString() };
+      AttenuationBox = new ObservableCollection<string> { App.Device.MapCtroller.ActiveMap.calParams.att.ToString() };
 
       CalFailsInARow = 0;
       CalJustFailed = true;
@@ -84,7 +84,7 @@ namespace Ei_Dimension.ViewModels
       };
       Action Save = () =>
       {
-        App.Device.SaveCalVals(new MicroCy.MapCalParameters
+        App.Device.MapCtroller.SaveCalVals(new MicroCy.MapCalParameters
         {
           TempCl0 = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[8]),
           TempCl1 = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[5]),
@@ -112,7 +112,7 @@ namespace Ei_Dimension.ViewModels
           Caldate = DateTime.Now.ToString("dd.MM.yyyy", new System.Globalization.CultureInfo("en-GB")),
           Valdate = null
         });
-        DashboardViewModel.Instance.CaliDateBox[0] = App.Device.ActiveMap.caltime;
+        DashboardViewModel.Instance.CaliDateBox[0] = App.Device.MapCtroller.ActiveMap.caltime;
         Cancel.Invoke();
       };
       Notification.ShowLocalized(nameof(Language.Resources.Calibration_Success), Save, nameof(Language.Resources.Calibration_Save_Calibration_To_Map),
@@ -154,7 +154,7 @@ namespace Ei_Dimension.ViewModels
       App.Device.MainCommand("Get Property", code: 0x2e);
       App.Device.MainCommand("Get Property", code: 0x2f);
       System.Threading.Thread.Sleep(1000);
-      App.Device.SaveCalVals(new MicroCy.MapCalParameters
+      App.Device.MapCtroller.SaveCalVals(new MicroCy.MapCalParameters
       {
         TempCl0 = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[8]),
         TempCl1 = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[5]),
@@ -182,7 +182,7 @@ namespace Ei_Dimension.ViewModels
         Caldate = null,
         Valdate = null
       });
-      Notification.Show($"Calibration Parameters Saved to map {App.Device.ActiveMap.mapName}");
+      Notification.Show($"Calibration Parameters Saved to map {App.Device.MapCtroller.ActiveMap.mapName}");
     }
 
     public void FocusedBox(int num)

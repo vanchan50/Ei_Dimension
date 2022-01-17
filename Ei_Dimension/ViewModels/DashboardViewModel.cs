@@ -71,16 +71,16 @@ namespace Ei_Dimension.ViewModels
       DropDownButtonContents.ResetIndex();
 
       ClassiMapItems = new ObservableCollection<DropDownButtonContents>();
-      if (App.Device.MapList.Count > 0)
+      if (App.Device.MapCtroller.MapList.Count > 0)
       {
-        foreach (var map in App.Device.MapList)
+        foreach (var map in App.Device.MapCtroller.MapList)
         {
           ClassiMapItems.Add(new DropDownButtonContents(map.mapName, this));
         }
       }
       else
         ClassiMapItems.Add(new DropDownButtonContents("No map", this));
-      SelectedClassiMapContent = App.Device.ActiveMap.mapName;
+      SelectedClassiMapContent = App.Device.MapCtroller.ActiveMap.mapName;
       DropDownButtonContents.ResetIndex();
 
       ChConfigItems = new ObservableCollection<DropDownButtonContents>
@@ -142,11 +142,11 @@ namespace Ei_Dimension.ViewModels
       PressureMonToggleButtonState = false;
       PressureMon = new ObservableCollection<string> {"","",""};
 
-      CalValModeEnabled = App.Device.ActiveMap.validation ? true : false;
+      CalValModeEnabled = App.Device.MapCtroller.ActiveMap.validation ? true : false;
       CalModeOn = false;
       ValModeOn = false;
-      CaliDateBox = new ObservableCollection<string> { App.Device.ActiveMap.caltime };
-      ValidDateBox = new ObservableCollection<string> { App.Device.ActiveMap.valtime };
+      CaliDateBox = new ObservableCollection<string> { App.Device.MapCtroller.ActiveMap.caltime };
+      ValidDateBox = new ObservableCollection<string> { App.Device.MapCtroller.ActiveMap.valtime };
       _dbsampleVolumeTempHolder = null;
       _dbEndReadIndexTempHolder = 0;
 

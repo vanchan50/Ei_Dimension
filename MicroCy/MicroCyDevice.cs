@@ -41,13 +41,12 @@ namespace MicroCy
 
   public class MicroCyDevice
   {
+    public MapController MapCtroller { get; private set; }
     public static WorkOrder WorkOrder { get; set; }
-    public CustomMap ActiveMap { get; set; }
     public static ConcurrentQueue<CommandStruct> Commands { get; } = new ConcurrentQueue<CommandStruct>();
     public static ConcurrentQueue<BeadInfoStruct> DataOut { get; } = new ConcurrentQueue<BeadInfoStruct>();
     public static List<Wells> WellsInOrder { get; set; } = new List<Wells>();
     public static ICollection<int> RegionsToOutput { get; set; }
-    public List<CustomMap> MapList { get; } = new List<CustomMap>();
     public static BitArray SystemActivity { get; } = new BitArray(16, false);
     public static List<WellResults> WellResults { get; } = new List<WellResults>();
     public event EventHandler<ReadingWellEventArgs> StartingToReadWell;
@@ -81,18 +80,19 @@ namespace MicroCy
     private static bool _chkRegionCount;
     private static bool _readingA;
     private static DataController _dataController;
-    private readonly StateMachine StateMach;
+    private readonly StateMachine _stateMach;
 
     public MicroCyDevice(Type connectionType = null)
     {
       _dataController = new DataController(this, connectionType);
-      StateMach = new StateMachine(this, true);
+      _stateMach = new StateMachine(this, true);
+      MapCtroller = new MapController();
       MainCommand("Sync");
       TotalBeads = 0;
       Mode = OperationMode.Normal;
       SetSystemDirectories();
-      MoveMaps();
-      LoadMaps();
+      MapCtroller.MoveMaps();
+      MapCtroller.LoadMaps();
       Reg0stats = false;
       ReadActive = false;
       IsMeasurementGoing = false;
@@ -112,12 +112,12 @@ namespace MicroCy
 
     public void UpdateState()
     {
-      StateMach.Action();
+      _stateMach.Action();
     }
 
     public void StartState()
     {
-      StateMach.Start();
+      _stateMach.Start();
     }
 
     public void GetRunStatistics()
@@ -142,7 +142,7 @@ namespace MicroCy
       WellResults.Clear();
       if (RegionsToOutput != null && RegionsToOutput.Count != 0)
       {
-        foreach (var region in ActiveMap.regions)
+        foreach (var region in MapCtroller.ActiveMap.regions)
         {
           if (RegionsToOutput.Contains(region.Number))
             WellResults.Add(new WellResults { regionNumber = (ushort)region.Number });
@@ -150,24 +150,6 @@ namespace MicroCy
       }
       if (Reg0stats)
         WellResults.Add(new WellResults { regionNumber = 0 });
-    }
-
-    public void LoadMaps()
-    {
-      string path = Path.Combine(RootDirectory.FullName, "Config");
-      var files = Directory.GetFiles(path, "*.dmap");
-      foreach(var mp in files)
-      {
-        using (TextReader reader = new StreamReader(mp))
-        {
-          var fileContents = reader.ReadToEnd();
-          try
-          {
-            MapList.Add(JsonConvert.DeserializeObject<CustomMap>(fileContents));
-          }
-          catch { }
-        }
-      }
     }
 
     public void MainCommand(string command, byte? cmd = null, byte? code = null, ushort? parameter = null, float? fparameter = null)
@@ -250,71 +232,6 @@ namespace MicroCy
       }
     }
 
-    public void SaveCalVals(MapCalParameters param)
-    {
-      var idx = MapList.FindIndex(x => x.mapName == ActiveMap.mapName);
-      var map = MapList[idx];
-      if(param.TempRpMin >= 0)
-        map.calrpmin = param.TempRpMin;
-      if (param.TempRpMaj >= 0)
-        map.calrpmaj = param.TempRpMaj;
-      if (param.TempRedSsc >= 0)
-        map.calrssc = param.TempRedSsc;
-      if (param.TempGreenSsc >= 0)
-        map.calgssc = param.TempGreenSsc;
-      if (param.TempVioletSsc >= 0)
-        map.calvssc = param.TempVioletSsc;
-      if (param.TempCl0 >= 0)
-        map.calcl0 = param.TempCl0;
-      if (param.TempCl1 >= 0)
-        map.calcl1 = param.TempCl1;
-      if (param.TempCl2 >= 0)
-        map.calcl2 = param.TempCl2;
-      if (param.TempCl3 >= 0)
-        map.calcl3 = param.TempCl3;
-      if (param.TempFsc >= 0)
-        map.calfsc = param.TempFsc;
-      if (param.Compensation >= 0)
-        map.calParams.compensation = param.Compensation;
-      if (param.Gating >= 0)
-        map.calParams.gate = (ushort)param.Gating;
-      if (param.Height >= 0)
-        map.calParams.height = (ushort)param.Height;
-      if (param.DNRCoef >= 0)
-        map.calParams.DNRCoef = param.DNRCoef;
-      if (param.DNRTrans >= 0)
-        map.calParams.DNRTrans = param.DNRTrans;
-      if (param.MinSSC >= 0)
-        map.calParams.minmapssc = (ushort)param.MinSSC;
-      if (param.MaxSSC >= 0)
-        map.calParams.maxmapssc = (ushort)param.MaxSSC;
-      if (param.Attenuation >= 0)
-        map.calParams.att = param.Attenuation;
-      if (param.CL0 >= 0)
-        map.calParams.CL0 = param.CL0;
-      if (param.CL1 >= 0)
-        map.calParams.CL1 = param.CL1;
-      if (param.CL2 >= 0)
-        map.calParams.CL2 = param.CL2;
-      if (param.CL3 >= 0)
-        map.calParams.CL3 = param.CL3;
-      if (param.RP1 >= 0)
-        map.calParams.RP1 = param.RP1;
-      if (param.Caldate != null)
-        map.caltime = param.Caldate;
-      if (param.Valdate != null)
-        map.valtime = param.Valdate;
-
-      MapList[idx] = map;
-      ActiveMap = MapList[idx];
-
-      var contents = JsonConvert.SerializeObject(map);
-      using (var stream = new StreamWriter(RootDirectory.FullName + @"/Config/" + map.mapName + @".dmap"))
-      {
-        stream.Write(contents);
-      }
-    }
-
     public void WellNext()
     {
       ReadingRow = PlateRow;
@@ -380,39 +297,6 @@ namespace MicroCy
       Directory.CreateDirectory(RootDirectory.FullName + @"\Result" + @"\Detail");
     }
 
-    private void MoveMaps()
-    {
-      string path = $"{Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName)}\\Maps";
-      string[] files = null;
-      try
-      {
-        files = Directory.GetFiles(path, "*.dmap");
-      }
-      catch { return; }
-
-      foreach (var mp in files)
-      {
-        string name = mp.Substring(mp.LastIndexOf("\\") + 1);
-        string destination = $"{RootDirectory.FullName}\\Config\\{name}";
-        if (!File.Exists(destination))
-        {
-          File.Copy(mp, destination);
-        }
-        else
-        {
-          var badDate = new DateTime(2021, 12, 1);  // File.GetCreationTime(mp);
-          var date = File.GetCreationTime(destination);
-          date = date.Date;
-          if(date < badDate)
-          {
-            File.Delete(destination);
-            File.Copy(mp, destination);
-            File.SetCreationTime(destination, DateTime.Now);
-          }
-        }
-      }
-    }
-
     internal void TerminationReadyCheck()
     {
       switch (TerminationType)
@@ -464,9 +348,9 @@ namespace MicroCy
 
     public void StartOperation(HashSet<int> regionsToOutput = null)
     {
-      MainCommand("Set Property", code: 0xce, parameter: ActiveMap.calParams.minmapssc);  //set ssc gates for this map
-      MainCommand("Set Property", code: 0xcf, parameter: ActiveMap.calParams.maxmapssc);
-      BeadProcessor.ConstructClassificationMap(ActiveMap);
+      MainCommand("Set Property", code: 0xce, parameter: MapCtroller.ActiveMap.calParams.minmapssc);  //set ssc gates for this map
+      MainCommand("Set Property", code: 0xcf, parameter: MapCtroller.ActiveMap.calParams.maxmapssc);
+      BeadProcessor.ConstructClassificationMap(MapCtroller.ActiveMap);
       //read section of plate
       MainCommand("Get FProperty", code: 0x58);
       MainCommand("Get FProperty", code: 0x68);

@@ -42,8 +42,8 @@ namespace Ei_Dimension.ViewModels
 
     public void LoadClick()
     {
-      var idx = App.Device.MapList.FindIndex(x => x.mapName == App.Device.ActiveMap.mapName);
-      var map = App.Device.MapList[idx];
+      var idx = App.Device.MapCtroller.MapList.FindIndex(x => x.mapName == App.Device.MapCtroller.ActiveMap.mapName);
+      var map = App.Device.MapCtroller.MapList[idx];
       for (var i = 0; i < map.regions.Count; i++)
       {
         App.MapRegions.VerificationRegions[i] = true;
@@ -61,8 +61,8 @@ namespace Ei_Dimension.ViewModels
     public void SaveClick()
     {
       UserInputHandler.InputSanityCheck();
-      var idx = App.Device.MapList.FindIndex(x => x.mapName == App.Device.ActiveMap.mapName);
-      var map = App.Device.MapList[idx];
+      var idx = App.Device.MapCtroller.MapList.FindIndex(x => x.mapName == App.Device.MapCtroller.ActiveMap.mapName);
+      var map = App.Device.MapCtroller.MapList[idx];
       for (var i = 0; i < App.MapRegions.RegionsList.Count; i++)
       {
         var index = map.regions.FindIndex(x => x.Number == int.Parse(App.MapRegions.RegionsList[i]));
@@ -89,7 +89,7 @@ namespace Ei_Dimension.ViewModels
           }
         }
       }
-      App.Device.SaveCalVals(new MicroCy.MapCalParameters
+      App.Device.MapCtroller.SaveCalVals(new MicroCy.MapCalParameters
       {
         TempCl0 = -1,
         TempCl1 = -1,
@@ -121,7 +121,7 @@ namespace Ei_Dimension.ViewModels
 
     public static void VerificationSuccess()
     {
-      App.Device.SaveCalVals(new MicroCy.MapCalParameters
+      App.Device.MapCtroller.SaveCalVals(new MicroCy.MapCalParameters
       {
         TempCl0 = -1,
         TempCl1 = -1,
@@ -149,7 +149,7 @@ namespace Ei_Dimension.ViewModels
         Caldate = null,
         Valdate = DateTime.Now.ToString("dd.MM.yyyy", new System.Globalization.CultureInfo("en-GB"))
       });
-      DashboardViewModel.Instance.ValidDateBox[0] = App.Device.ActiveMap.valtime;
+      DashboardViewModel.Instance.ValidDateBox[0] = App.Device.MapCtroller.ActiveMap.valtime;
       Notification.ShowLocalized(nameof(Language.Resources.Validation_Success), System.Windows.Media.Brushes.Green);
     }
 
