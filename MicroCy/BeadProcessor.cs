@@ -1,9 +1,6 @@
 ﻿using MicroCy.InstrumentParameters;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MicroCy
 {
@@ -17,7 +14,7 @@ namespace MicroCy
     private static float _greenMin;
     private static float _greenMaj;
     private static readonly double[] ClassificationBins;
-    private static readonly float[,] Sfi = new float[5000, 10];
+    private static readonly float[,] Sfi = new float[80000, 10];
     private static int[,] _classificationMap;
     private static List<List<ushort>> _bgValues = new List<List<ushort>>();
 
@@ -47,25 +44,27 @@ namespace MicroCy
         _greenMaj = outbead.greenB;
         _greenMin = outbead.greenC;
       }
-      float[] cl = MakeClArr(in outbead);
+      var cl = MakeClArr(in outbead);
       //each well can have a different  classification map
-      outbead.cl1 = cl[1];
-      outbead.cl2 = cl[2];
+      outbead.cl1 = cl.cl1;
+      outbead.cl2 = cl.cl2;
       outbead.region = (ushort)ClassifyBeadToRegion(cl);
       //handle HI dnr channel
       outbead.reporter = _greenMin > Calibration.HdnrTrans ? _greenMaj * Calibration.HDnrCoef : _greenMin;
     }
 
-    private static int ClassifyBeadToRegion(float[] cl)
+    private static int ClassifyBeadToRegion((float cl0, float cl1, float cl2, float cl3) cl)
     {
-      int x = Array.BinarySearch(ClassificationBins, cl[_actPrimaryIndex]);
+      //_actPrimaryIndex and _actSecondaryIndex should define _classimap index in a previous call,
+      //and produce an index for the selection of classiMap. For cl0 and cl3 map compatibility
+      int x = Array.BinarySearch(ClassificationBins, cl.cl1);
       if (x < 0)
         x = ~x;
-      int y = Array.BinarySearch(ClassificationBins, cl[_actSecondaryIndex]);
+      int y = Array.BinarySearch(ClassificationBins, cl.cl2);
       if (y < 0)
         y = ~y;
-      x = x < 255 ? x : 255;
-      y = y < 255 ? y : 255;
+      x = x < byte.MaxValue ? x : byte.MaxValue;
+      y = y < byte.MaxValue ? y : byte.MaxValue;
       return _classificationMap[x, y];
     }
 
@@ -105,7 +104,7 @@ namespace MicroCy
 
     public static void FillCalibrationStatsRow(in BeadInfoStruct outbead)
     {
-      if (MicroCyDevice.BeadCount < 5000)
+      if (MicroCyDevice.BeadCount < 80000)
       {
         Sfi[MicroCyDevice.BeadCount, 0] = outbead.greenssc;
         Sfi[MicroCyDevice.BeadCount, 1] = outbead.greenB;
@@ -123,13 +122,13 @@ namespace MicroCy
     public static void CalculateGStats()
     {
       Stats.Clear();
-      var Count = SavBeadCount > 5000 ? 5000 : SavBeadCount;
-      for (int finx = 0; finx < 10; finx++)
+      var Count = SavBeadCount > 80000 ? 80000 : SavBeadCount;
+      for (int i = 0; i < 10; i++)
       {
         double sumit = 0;
         for (int beads = 0; beads < Count; beads++)
         {
-          sumit += Sfi[beads, finx];
+          sumit += Sfi[beads, i];
         }
         double robustcnt = Count; //start with total bead count
         double mean = sumit / robustcnt;
@@ -139,11 +138,11 @@ namespace MicroCy
         sumit = 0;
         for (int beads = 0; beads < Count; beads++)
         {
-          if ((Sfi[beads, finx] > min) && (Sfi[beads, finx] < max))
-            sumit += Sfi[beads, finx];
+          if ((Sfi[beads, i] > min) && (Sfi[beads, i] < max))
+            sumit += Sfi[beads, i];
           else
           {
-            Sfi[beads, finx] = 0;
+            Sfi[beads, i] = 0;
             robustcnt--;
           }
         }
@@ -151,9 +150,9 @@ namespace MicroCy
         double sumsq = 0;
         for (int beads = 0; beads < Count; beads++)
         {
-          if (Sfi[beads, finx] == 0)
+          if (Sfi[beads, i] == 0)
             continue;
-          sumsq += Math.Pow(mean - Sfi[beads, finx], 2);
+          sumsq += Math.Pow(mean - Sfi[beads, i], 2);
         }
         double stdDev = Math.Sqrt(sumsq / (robustcnt - 1));
 
@@ -168,16 +167,16 @@ namespace MicroCy
       }
     }
 
-    private static float[] MakeClArr(in BeadInfoStruct outbead)
+    private static (float cl0, float cl1, float cl2, float cl3) MakeClArr(in BeadInfoStruct outbead)
     {
       var cl1comp = _greenMaj * Calibration.Compensation / 100;
       var cl2comp = cl1comp * 0.26f;
-      return new float[]{
+      return (
         outbead.cl0,
         outbead.cl1 - cl1comp,  //Compensation
         outbead.cl2 - cl2comp,  //Compensation
         outbead.cl3
-      };
+      );
     }
 
     private static double[] GenerateLogSpace(int min, int max, int logBins, bool baseE = false)

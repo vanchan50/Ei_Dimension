@@ -707,6 +707,12 @@
       </StackPanel>
     </Border>
 
+    <Button Content="{lang:Loc Clear}"
+            Height="80" Width="200" HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Margin="600,700,0,0"
+            Style="{StaticResource ButtonStyle}"
+            Command="{Binding ClearButtonClickCommand}"/>
     <ToggleButton Style="{StaticResource ToggleButtonThemeStyle}"
                   Height="80" Width="200" HorizontalAlignment="Left"
                   VerticalAlignment="Top"

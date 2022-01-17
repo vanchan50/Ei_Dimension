@@ -265,7 +265,13 @@ namespace Ei_Dimension.ViewModels
     public void FlushButtonClick()
     {
       UserInputHandler.InputSanityCheck();
-      App.Device.MainCommand("Set Property", code: 0xd9);
+      App.Device.MainCommand("FlushCmdQueue", cmd: 0x02);
+    }
+
+    public void ClearButtonClick()
+    {
+      UserInputHandler.InputSanityCheck();
+      App.Device.MainCommand("Set Property", code: 0xcc);
     }
 
     public void StartupButtonClick()
