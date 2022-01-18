@@ -84,7 +84,7 @@ namespace Ei_Dimension.ViewModels
 
     public void ChangeWellTableSize(int num)
     {
-      if (!MicroCyDevice.ReadActive)
+      if (!App.Device.ReadActive)
       {
         switch (num)
         {

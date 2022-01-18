@@ -21,11 +21,10 @@ namespace Ei_Dimension
         switch (exe.Code)
         {
           case 0x01:
-            MicroCyDevice.BoardVersion = exe.Parameter;
-#if  DEBUG
-          Console.Error.WriteLine($"Detected Board Rev v{MicroCyDevice.BoardVersion}");
-#endif
-            if (MicroCyDevice.BoardVersion > 1)
+            #if DEBUG
+            Console.Error.WriteLine($"Detected Board Rev v{App.Device.BoardVersion}");
+            #endif
+            if (App.Device.BoardVersion > 1)
               update = HideChannels;
             break;
           case 0x02:
@@ -34,11 +33,11 @@ namespace Ei_Dimension
           case 0x04:
             update = () => ComponentsViewModel.Instance.IdexTextBoxInputs[0] = exe.Parameter.ToString("X2");
             break;
-#if DEBUG
+          #if DEBUG
           case 0x06:
             update = () => MainViewModel.Instance.TotalBeadsInFirmware[0] = exe.FParameter.ToString();
             break;
-#endif
+          #endif
           case 0x10:  //cuvet drain cb
             update = () => ComponentsViewModel.Instance.ValvesStates[2] = exe.Parameter == 1;
             break;

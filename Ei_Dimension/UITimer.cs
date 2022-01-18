@@ -32,7 +32,7 @@ namespace Ei_Dimension
         GraphsHandler.Update();
         ActiveRegionsStatsHandler.Update();
         TextBoxHandler.UpdateEventCounter();
-        App.Device.UpdateState();
+        App.Device.UpdateStateMachine();
       }
       ServiceMenuEnabler.Update();
 

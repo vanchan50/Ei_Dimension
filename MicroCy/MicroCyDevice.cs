@@ -47,14 +47,14 @@ namespace MicroCy
     public static ConcurrentQueue<BeadInfoStruct> DataOut { get; } = new ConcurrentQueue<BeadInfoStruct>();
     public static List<Wells> WellsInOrder { get; set; } = new List<Wells>();
     public static ICollection<int> RegionsToOutput { get; set; }
-    public static BitArray SystemActivity { get; } = new BitArray(16, false);
+    public BitArray SystemActivity { get; } = new BitArray(16, false);
     public static List<WellResults> WellResults { get; } = new List<WellResults>();
     public event EventHandler<ReadingWellEventArgs> StartingToReadWell;
     public event EventHandler<ReadingWellEventArgs> FinishedReadingWell;
     public event EventHandler FinishedMeasurement;
     public event EventHandler<StatsEventArgs> NewStatsAvailable;
     public static OperationMode Mode { get; set; }
-    public static int BoardVersion { get; set; }
+    public int BoardVersion { get; internal set; }
     public static int WellsToRead { get; set; }
     public static int BeadsToCapture { get; set; }
     public static int BeadCount { get; internal set; }
@@ -63,7 +63,7 @@ namespace MicroCy
     public int ScatterGate { get; set; }
     public static int MinPerRegion { get; set; }
     public static bool IsMeasurementGoing { get; private set; }
-    public static bool ReadActive { get; set; }
+    public bool ReadActive { get; set; }
     public static bool Everyevent { get; set; }
     public static bool RMeans { get; set; }
     public static bool PlateReportActive { get; set; }
@@ -110,21 +110,14 @@ namespace MicroCy
       OnStartingToReadWell();
     }
 
-    public void UpdateState()
+    public void UpdateStateMachine()
     {
       _stateMach.Action();
     }
 
-    public void StartState()
+    public void StartStateMachine()
     {
       _stateMach.Start();
-    }
-
-    public void GetRunStatistics()
-    {
-      BeadProcessor.CalculateGStats();
-      BeadProcessor.CalculateBackgroundAverages();
-      OnNewStatsAvailable();
     }
 
     public void SetReadingParamsForWell(int index)
@@ -175,6 +168,9 @@ namespace MicroCy
           break;
         case "End Sampling":
           OnFinishedReadingWell();
+          break;
+        case "FlushCmdQueue":
+          cs.Command = 0x02;
           break;
         case "Idex":
           cs.Command = Idex.Pos;
@@ -238,40 +234,39 @@ namespace MicroCy
       ReadingCol = PlateCol;
     }
 
-    public void EndBeadRead()
+    public bool EndBeadRead()
     {
       if (_readingA)
         MainCommand("End Bead Read A");
       else
         MainCommand("End Bead Read B");
       CurrentWellIdx++;
-      if (CurrentWellIdx <= WellsToRead)  //are there more to go
+      return CurrentWellIdx > WellsToRead;
+    }
+
+    internal void SetupRead()
+    {
+      SetReadingParamsForWell(CurrentWellIdx);
+      if (_readingA)
       {
-        SetReadingParamsForWell(CurrentWellIdx);
-        if (_readingA)
+        if (CurrentWellIdx < WellsToRead)   //more than one to go
         {
-          if (CurrentWellIdx < WellsToRead)   //more than one to go
-          {
-            SetAspirateParamsForWell(CurrentWellIdx + 1);
-            MainCommand("Read B Aspirate A");
-          }
-          else
-            MainCommand("Read B");
+          SetAspirateParamsForWell(CurrentWellIdx + 1);
+          MainCommand("Read B Aspirate A");
         }
         else
-        {
-          if (CurrentWellIdx < WellsToRead)
-          {
-            SetAspirateParamsForWell(CurrentWellIdx + 1);
-            MainCommand("Read A Aspirate B");
-          }
-          else
-            MainCommand("Read A");
-        }
-        InitBeadRead();   //gets output file ready
+          MainCommand("Read B");
       }
       else
-        OnFinishedMeasurement();
+      {
+        if (CurrentWellIdx < WellsToRead)
+        {
+          SetAspirateParamsForWell(CurrentWellIdx + 1);
+          MainCommand("Read A Aspirate B");
+        }
+        else
+          MainCommand("Read A");
+      }
     }
 
     public void SetAspirateParamsForWell(int idx)
@@ -315,14 +310,14 @@ namespace MicroCy
               }
             }
             if (IsDone == 1)
-              StartState();
+              StartStateMachine();
             _chkRegionCount = false;
           }
           break;
         case 1: //total beads captured
           if ((BeadCount >= BeadsToCapture) && ReadActive)
           {
-            StartState();
+            StartStateMachine();
             ReadActive = false;
           }
           break;
@@ -391,7 +386,7 @@ namespace MicroCy
       FinishedReadingWell?.Invoke(this, new ReadingWellEventArgs(ReadingRow, ReadingCol));
     }
 
-    private void OnFinishedMeasurement()
+    internal void OnFinishedMeasurement()
     {
       IsMeasurementGoing = false;
       ReadActive = false;
@@ -400,7 +395,7 @@ namespace MicroCy
       FinishedMeasurement?.Invoke(this, EventArgs.Empty);
     }
 
-    private void OnNewStatsAvailable()
+    internal void OnNewStatsAvailable()
     {
       NewStatsAvailable?.Invoke(this, new StatsEventArgs(BeadProcessor.Stats, BeadProcessor.AvgBg));
     }

@@ -150,7 +150,6 @@ namespace Ei_Dimension.ViewModels
                 {
                   App.MapRegions.AddActiveRegion(i);
                 }
-
                 App.MapRegions.RegionsNamesList[i] = newTemplate.RegionsNamesList[i];
               }
 

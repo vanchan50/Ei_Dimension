@@ -265,7 +265,7 @@ namespace Ei_Dimension.ViewModels
     public void FlushButtonClick()
     {
       UserInputHandler.InputSanityCheck();
-      App.Device.MainCommand("FlushCmdQueue", cmd: 0x02);
+      App.Device.MainCommand("FlushCmdQueue");
     }
 
     public void ClearButtonClick()

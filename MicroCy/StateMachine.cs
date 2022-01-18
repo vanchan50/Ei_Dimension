@@ -68,12 +68,12 @@ namespace MicroCy
         tempres.Add(r);
       }
       _ = Task.Run(() => ResultReporter.SaveBeadFile(tempres));
-      _device.GetRunStatistics();
+      GetRunStatistics();
     }
     
     private bool Action3()
     {
-      if (!MicroCyDevice.SystemActivity[11])  //does not contain Washing
+      if (!_device.SystemActivity[11])  //does not contain Washing
       {
         return true;
       }
@@ -91,7 +91,13 @@ namespace MicroCy
       _device.MainCommand("FlushCmdQueue");
       _device.MainCommand("Set Property", code: 0xc3); //clear empty syringe token
       _device.MainCommand("Set Property", code: 0xcb); //clear sync token to allow next sequence to execute
-      _device.EndBeadRead();
+      if(_device.EndBeadRead())
+        _device.OnFinishedMeasurement();
+      else
+      {
+        _device.SetupRead();
+        _device.InitBeadRead();
+      }
       Task.Run(()=>
       {
         GC.Collect();
@@ -129,6 +135,13 @@ namespace MicroCy
           break;
       }
       Console.WriteLine(str);
+    }
+
+    private void GetRunStatistics()
+    {
+      BeadProcessor.CalculateGStats();
+      BeadProcessor.CalculateBackgroundAverages();
+      _device.OnNewStatsAvailable();
     }
 
     private enum State
