@@ -29,6 +29,7 @@ namespace Ei_Dimension.ViewModels
     {
       App.HideNumpad();
       App.HideKeyboard();
+      MainViewModel.Instance.HideHint();
       MainViewModel.Instance.StartButtonsVisible = Visibility.Visible;
       NavigationService.Navigate("DashboardView", null, this);
     }
@@ -37,6 +38,7 @@ namespace Ei_Dimension.ViewModels
     {
       App.HideNumpad();
       App.HideKeyboard();
+      MainViewModel.Instance.HideHint();
       MainViewModel.Instance.StartButtonsVisible = Visibility.Hidden;
       NavigationService.Navigate("SelRegionsView", null, this);
     }
@@ -45,6 +47,7 @@ namespace Ei_Dimension.ViewModels
     {
       App.HideNumpad();
       App.HideKeyboard();
+      MainViewModel.Instance.HideHint();
       App.Device.InitSTab("reportingtab");
       MainViewModel.Instance.StartButtonsVisible = Visibility.Hidden;
       NavigationService.Navigate("FileSaveView", null, this);
@@ -54,6 +57,7 @@ namespace Ei_Dimension.ViewModels
     {
       App.HideNumpad();
       App.HideKeyboard();
+      MainViewModel.Instance.HideHint();
       if (num != 1)
       {
         MainViewModel.Instance.StartButtonsVisible = Visibility.Hidden;
@@ -69,6 +73,7 @@ namespace Ei_Dimension.ViewModels
     {
       App.HideNumpad();
       App.HideKeyboard();
+      MainViewModel.Instance.HideHint();
       if (Views.TemplateSelectView.Instance != null)
       {
         Views.TemplateSelectView.Instance.list.SelectedItem = null;

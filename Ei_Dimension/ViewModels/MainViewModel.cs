@@ -63,6 +63,7 @@ namespace Ei_Dimension.ViewModels
       MainSelectorState[num] = true;
       App.HideNumpad();
       App.HideKeyboard();
+      HideHint();
       if(VerificationViewModel.Instance != null)
         VerificationViewModel.Instance.isActivePage = false;
       switch (num)
@@ -118,6 +119,7 @@ namespace Ei_Dimension.ViewModels
 
     public void NumpadToggleButton(System.Windows.Controls.TextBox tb)
     {
+      HideHint();
       if (TouchControlsEnabled)
       {
         tb.CaretBrush = System.Windows.Media.Brushes.Transparent;
@@ -149,6 +151,7 @@ namespace Ei_Dimension.ViewModels
 
     public void KeyboardToggle(System.Windows.Controls.TextBox tb)
     {
+      HideHint();
       if (TouchControlsEnabled)
       {
         tb.CaretBrush = System.Windows.Media.Brushes.Transparent;
@@ -186,6 +189,24 @@ namespace Ei_Dimension.ViewModels
       }
     }
 
+    public void HintToggle(string text, System.Windows.Controls.TextBox tb)
+    {
+      var p = tb.PointToScreen(MainWindow.Instance.wndw.PointFromScreen(new System.Windows.Point(0, 0)));
+      double shiftX = 0;
+      double shiftY = -30;
+
+      HintViewModel.Instance.Width = tb.ActualWidth;
+      MainWindow.Instance.Hint.Margin = new System.Windows.Thickness(p.X - shiftX, p.Y + shiftY, 0, 0);
+      HintViewModel.Instance.Text[0] = text;
+      HintViewModel.Instance.HintVisible = System.Windows.Visibility.Visible;
+    }
+
+    public void HideHint()
+    {
+      HintViewModel.Instance.Text[0] = null;
+      HintViewModel.Instance.HintVisible = System.Windows.Visibility.Hidden;
+    }
+
     public void InitChildren()
     {
       NavigateExperiment();
@@ -213,7 +234,7 @@ namespace Ei_Dimension.ViewModels
     {
       if (e.Key == System.Windows.Input.Key.Return)
       {
-        UserInputHandler.InputSanityCheck();
+        App.HideNumpad();
       }
     }
   }

@@ -506,7 +506,7 @@ namespace Ei_Dimension
             };
             break;
           case 0xca:  //TODO: remove?
-            update = () => CalibrationViewModel.Instance.GatingItems[exe.Parameter].ForAppUpdater();
+            //update = () => CalibrationViewModel.Instance.GatingItems[exe.Parameter].ForAppUpdater();
             break;
           case 0xcc:  //sync pending
             update = () =>

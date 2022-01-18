@@ -77,7 +77,7 @@ namespace Ei_Dimension
               }
             }
             failed = true;
-            ErrorMessage = "Compensation is out of range [0-10]";
+            ErrorMessage = "[0-10]";
             break;
           case "DNRContents":
             if (SelectedTextBox.index == 0)
@@ -92,7 +92,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              ErrorMessage = "High DNR Coefficient is out of range [1-300]";
+              ErrorMessage = "[1-300]";
             }
             if (SelectedTextBox.index == 1)
             {
@@ -105,7 +105,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              ErrorMessage = "High DNR Transition is out of range [1-30000]";
+              ErrorMessage = "[1-30000]";
             }
             break;
           case "EndRead":
@@ -121,7 +121,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              ErrorMessage = "Minimum amount of beads should be a positive number";
+              ErrorMessage = "[>0]";
             }
             if (SelectedTextBox.index == 1)
             {
@@ -135,7 +135,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              ErrorMessage = "Total amount of bead events should be a positive number";
+              ErrorMessage = "[>0]";
             }
             break;
           case "Volumes":
@@ -150,7 +150,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              ErrorMessage = "Sample Volume is out of range [10-100]";
+              ErrorMessage = "[10-100]";
             }
             if (SelectedTextBox.index == 1)
             {
@@ -163,7 +163,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              ErrorMessage = "Wash Volume is out of range [1-100]";
+              ErrorMessage = "[1-100]";
             }
             if (SelectedTextBox.index == 2)
             {
@@ -176,7 +176,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              ErrorMessage = "Agitate Volume is out of range [1-500]";
+              ErrorMessage = "[1-500]";
             }
             break;
           case "EventTriggerContents":
@@ -191,7 +191,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              ErrorMessage = "Event height is out of range [1-2000]";
+              ErrorMessage = "[1-2000]";
             }
             if (SelectedTextBox.index == 1)
             {
@@ -204,7 +204,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              ErrorMessage = "Min SSC is out of range [0-20000]";
+              ErrorMessage = "[0-20000]";
             }
             if (SelectedTextBox.index == 2)
             {
@@ -217,7 +217,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              ErrorMessage = "Max SSC is out of range [0-30000]";
+              ErrorMessage = "[0-30000]";
             }
             break;
           case "ClassificationTargetsContents":
@@ -232,7 +232,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              ErrorMessage = "CL0 Classification Target is out of range [0-30000]";
+              ErrorMessage = "[0-30000]";
             }
             if (SelectedTextBox.index == 1)
             {
@@ -245,7 +245,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              ErrorMessage = "CL1 Classification Target is out of range [0-30000]";
+              ErrorMessage = "[0-30000]";
             }
             if (SelectedTextBox.index == 2)
             {
@@ -258,7 +258,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              ErrorMessage = "CL2 Classification Target is out of range [0-30000]";
+              ErrorMessage = "[0-30000]";
             }
             if (SelectedTextBox.index == 3)
             {
@@ -271,7 +271,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              ErrorMessage = "CL3 Classification Target is out of range [0-30000]";
+              ErrorMessage = "[0-30000]";
             }
             if (SelectedTextBox.index == 4)
             {
@@ -284,7 +284,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              ErrorMessage = "RP1 Classification Target is out of range [0-30000]";
+              ErrorMessage = "[0-30000]";
             }
             break;
           case "AttenuationBox":
@@ -297,7 +297,7 @@ namespace Ei_Dimension
               }
             }
             failed = true;
-            ErrorMessage = "Attenuation is out of range [0-100]";
+            ErrorMessage = "[0-100]";
             break;
           case "SheathSyringeParameters":
             if (SelectedTextBox.index == 0)
@@ -311,7 +311,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              ErrorMessage = "Normal Sheath is out of range [1-1000]";
+              ErrorMessage = "[1-1000]";
             }
             if (SelectedTextBox.index == 1)
             {
@@ -324,7 +324,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              ErrorMessage = "Hi Speed Sheath is out of range [1-1000]";
+              ErrorMessage = "[1-1000]";
             }
             if (SelectedTextBox.index == 2)
             {
@@ -337,7 +337,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              ErrorMessage = "Hi Sens Sheath is out of range [1-1000]";
+              ErrorMessage = "[1-1000]";
             }
             if (SelectedTextBox.index == 3)
             {
@@ -350,7 +350,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              ErrorMessage = "Flush Sheath is out of range [1-8000]";
+              ErrorMessage = "[1-8000]";
             }
             if (SelectedTextBox.index == 4)
             {
@@ -363,7 +363,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              ErrorMessage = "Pickup Sheath is out of range [1-8000]";
+              ErrorMessage = "[1-8000]";
             }
             if (SelectedTextBox.index == 5)
             {
@@ -376,7 +376,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              ErrorMessage = "Max Speed is out of range [1-8000]";
+              ErrorMessage = "[1-8000]";
             }
             break;
           case "SamplesSyringeParameters":
@@ -391,7 +391,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              ErrorMessage = "Normal Samples is out of range [1-1000]";
+              ErrorMessage = "[1-1000]";
             }
             if (SelectedTextBox.index == 1)
             {
@@ -404,7 +404,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              ErrorMessage = "Hi Speed Samples is out of range [1-1000]";
+              ErrorMessage = "[1-1000]";
             }
             if (SelectedTextBox.index == 2)
             {
@@ -417,7 +417,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              ErrorMessage = "Hi Sens Samples is out of range [1-1000]";
+              ErrorMessage = "[1-1000]";
             }
             if (SelectedTextBox.index == 3)
             {
@@ -430,7 +430,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              ErrorMessage = "Flush Samples is out of range [1-8000]";
+              ErrorMessage = "[1-8000]";
             }
             if (SelectedTextBox.index == 4)
             {
@@ -443,7 +443,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              ErrorMessage = "Pickup Samples is out of range [1-8000]";
+              ErrorMessage = "[1-8000]";
             }
             if (SelectedTextBox.index == 5)
             {
@@ -456,7 +456,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              ErrorMessage = "Max Speed Samples is out of range [1-8000]";
+              ErrorMessage = "[1-8000]";
             }
             break;
           case "SiPMTempCoeff":
@@ -469,7 +469,7 @@ namespace Ei_Dimension
               }
             }
             failed = true;
-            ErrorMessage = "SiPM Temp erature Coefficient is out of range [-10.0 - 10.0]";
+            ErrorMessage = "[-10.0 - 10.0]";
             break;
           case "Bias30Parameters":
             if (SelectedTextBox.index == 0)
@@ -483,8 +483,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              string range = App.Device.BoardVersion >= 1 ? "[0-10000]" : "[0-3500]";
-              ErrorMessage = $"Green A (SSC) is out of range {range}";
+              ErrorMessage = App.Device.BoardVersion >= 1 ? "[0-10000]" : "[0-3500]";
             }
             if (SelectedTextBox.index == 1)
             {
@@ -497,8 +496,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              string range = App.Device.BoardVersion >= 1 ? "[0-10000]" : "[0-3500]";
-              ErrorMessage = $"Green B (PE) is out of range {range}";
+              ErrorMessage = App.Device.BoardVersion >= 1 ? "[0-10000]" : "[0-3500]";
             }
             if (SelectedTextBox.index == 2)
             {
@@ -511,8 +509,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              string range = App.Device.BoardVersion >= 1 ? "[0-10000]" : "[0-3500]";
-              ErrorMessage = $"Green C PE is out of range {range}";
+              ErrorMessage = App.Device.BoardVersion >= 1 ? "[0-10000]" : "[0-3500]";
             }
             if (SelectedTextBox.index == 3)
             {
@@ -525,8 +522,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              string range = App.Device.BoardVersion >= 1 ? "[0-10000]" : "[0-3500]";
-              ErrorMessage = $"Red A (CL3) is out of range {range}";
+              ErrorMessage = App.Device.BoardVersion >= 1 ? "[0-10000]" : "[0-3500]";
             }
             if (SelectedTextBox.index == 4)
             {
@@ -539,8 +535,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              string range = App.Device.BoardVersion >= 1 ? "[0-10000]" : "[0-3500]";
-              ErrorMessage = $"Red B (SSC) is out of range {range}";
+              ErrorMessage = App.Device.BoardVersion >= 1 ? "[0-10000]" : "[0-3500]";
             }
             if (SelectedTextBox.index == 5)
             {
@@ -553,8 +548,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              string range = App.Device.BoardVersion >= 1 ? "[0-10000]" : "[0-3500]";
-              ErrorMessage = $"Red C (CL1) is out of range {range}";
+              ErrorMessage = App.Device.BoardVersion >= 1 ? "[0-10000]" : "[0-3500]";
             }
             if (SelectedTextBox.index == 6)
             {
@@ -567,8 +561,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              string range = App.Device.BoardVersion >= 1 ? "[0-10000]" : "[0-3500]";
-              ErrorMessage = $"Red D (CL2) is out of range {range}";
+              ErrorMessage = App.Device.BoardVersion >= 1 ? "[0-10000]" : "[0-3500]";
             }
             if (SelectedTextBox.index == 7)
             {
@@ -581,8 +574,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              string range = App.Device.BoardVersion >= 1 ? "[0-10000]" : "[0-3500]";
-              ErrorMessage = $"Violet A (SSC) is out of range {range}";
+              ErrorMessage = App.Device.BoardVersion >= 1 ? "[0-10000]" : "[0-3500]";
             }
             if (SelectedTextBox.index == 8)
             {
@@ -595,8 +587,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              string range = App.Device.BoardVersion >= 1 ? "[0-10000]" : "[0-3500]";
-              ErrorMessage = $"Violet B (CL0) is out of range {range}";
+              ErrorMessage = App.Device.BoardVersion >= 1 ? "[0-10000]" : "[0-3500]";
             }
             if (SelectedTextBox.index == 9)
             {
@@ -609,8 +600,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              string range = App.Device.BoardVersion >= 1 ? "[0-10000]" : "[0-3500]";
-              ErrorMessage = $"Forward Scatter is out of range {range}";
+              ErrorMessage = App.Device.BoardVersion >= 1 ? "[0-10000]" : "[0-3500]";
             }
             break;
           case "ChannelsOffsetParameters":
@@ -627,8 +617,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              string range = App.Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
-              ErrorMessage = $"Green A (SSC) is out of range {range}";
+              ErrorMessage = App.Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
             }
             if (SelectedTextBox.index == 1)
             {
@@ -643,8 +632,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              string range = App.Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
-              ErrorMessage = $"Green B (PE) is out of range {range}";
+              ErrorMessage = App.Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
             }
             if (SelectedTextBox.index == 2)
             {
@@ -659,8 +647,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              string range = App.Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
-              ErrorMessage = $"Green C PE is out of range {range}";
+              ErrorMessage = App.Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
             }
             if (SelectedTextBox.index == 3)
             {
@@ -673,8 +660,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              string range = App.Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
-              ErrorMessage = $"Red A (CL3) is out of range {range}";
+              ErrorMessage = App.Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
             }
             if (SelectedTextBox.index == 4)
             {
@@ -687,8 +673,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              string range = App.Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
-              ErrorMessage = $"Red B (SSC) is out of range {range}";
+              ErrorMessage = App.Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
             }
             if (SelectedTextBox.index == 5)
             {
@@ -701,8 +686,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              string range = App.Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
-              ErrorMessage = $"Red C (CL1) is out of range {range}";
+              ErrorMessage = App.Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
             }
             if (SelectedTextBox.index == 6)
             {
@@ -715,8 +699,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              string range = App.Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
-              ErrorMessage = $"Red D (CL2) is out of range {range}";
+              ErrorMessage = App.Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
             }
             if (SelectedTextBox.index == 7)
             {
@@ -729,8 +712,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              string range = App.Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
-              ErrorMessage = $"Violet A (SSC) is out of range {range}";
+              ErrorMessage = App.Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
             }
             if (SelectedTextBox.index == 8)
             {
@@ -743,8 +725,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              string range = App.Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
-              ErrorMessage = $"Violet B (CL0) is out of range {range}";
+              ErrorMessage = App.Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
             }
             if (SelectedTextBox.index == 9)
             {
@@ -757,8 +738,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              string range = App.Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
-              ErrorMessage = $"Forward Scatter is out of range {range}";
+              ErrorMessage = App.Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
             }
             break;
           case "ChannelsBaseline":
@@ -773,8 +753,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              string range = App.Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
-              ErrorMessage = $"Green A (SSC) Baseline is out of range {range}";
+              ErrorMessage = App.Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
             }
             if (SelectedTextBox.index == 1)
             {
@@ -787,8 +766,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              string range = App.Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
-              ErrorMessage = $"Green B (PE) Baseline is out of range {range}";
+              ErrorMessage = App.Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
             }
             if (SelectedTextBox.index == 2)
             {
@@ -801,8 +779,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              string range = App.Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
-              ErrorMessage = $"Green C PE Baseline is out of range {range}";
+              ErrorMessage = App.Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
             }
             if (SelectedTextBox.index == 3)
             {
@@ -815,8 +792,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              string range = App.Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
-              ErrorMessage = $"Red A (CL3) Baseline is out of range {range}";
+              ErrorMessage = App.Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
             }
             if (SelectedTextBox.index == 4)
             {
@@ -829,8 +805,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              string range = App.Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
-              ErrorMessage = $"Red B (SSC) Baseline is out of range {range}";
+              ErrorMessage = App.Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
             }
             if (SelectedTextBox.index == 5)
             {
@@ -843,8 +818,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              string range = App.Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
-              ErrorMessage = $"Red C (CL1) Baseline is out of range {range}";
+              ErrorMessage = App.Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
             }
             if (SelectedTextBox.index == 6)
             {
@@ -857,8 +831,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              string range = App.Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
-              ErrorMessage = $"Red D (CL2) Baseline is out of range {range}";
+              ErrorMessage = App.Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
             }
             if (SelectedTextBox.index == 7)
             {
@@ -871,8 +844,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              string range = App.Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
-              ErrorMessage = $"Violet A (SSC) Baseline is out of range {range}";
+              ErrorMessage = App.Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
             }
             if (SelectedTextBox.index == 8)
             {
@@ -885,8 +857,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              string range = App.Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
-              ErrorMessage = $"Violet B (CL0) Baseline is out of range {range}";
+              ErrorMessage = App.Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
             }
             if (SelectedTextBox.index == 9)
             {
@@ -899,8 +870,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              string range = App.Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
-              ErrorMessage = $"Forward Scatter Baseline is out of range {range}";
+              ErrorMessage = App.Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
             }
             break;
           case "ParametersX":
@@ -914,7 +884,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              ErrorMessage = "X Steps is out of range [0-65535]";
+              ErrorMessage = "[0-65535]";
             }
             if (SelectedTextBox.index == 2)
             {
@@ -927,7 +897,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              ErrorMessage = "X Slope is out of range [1000-3000]";
+              ErrorMessage = "[1000-3000]";
             }
             if (SelectedTextBox.index == 3)
             {
@@ -940,7 +910,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              ErrorMessage = "X Start Speed is out of range [1000-5000]";
+              ErrorMessage = "[1000-5000]";
             }
             if (SelectedTextBox.index == 4)
             {
@@ -953,7 +923,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              ErrorMessage = "X Run Speed is out of range [1000-10000]";
+              ErrorMessage = "[1000-10000]";
             }
             if (SelectedTextBox.index == 6)
             {
@@ -967,7 +937,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              ErrorMessage = "X Encoder Steps is out of range [200-2000]";
+              ErrorMessage = "[200-2000]";
             }
             if (SelectedTextBox.index == 7)
             {
@@ -980,8 +950,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              string range = App.Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
-              ErrorMessage = $"X Current Limit is out of range {range}";
+              ErrorMessage = App.Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
             }
             break;
           case "ParametersY":
@@ -995,7 +964,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              ErrorMessage = "Y Steps is out of range [0-65535]";
+              ErrorMessage = "[0-65535]";
             }
             if (SelectedTextBox.index == 2)
             {
@@ -1008,7 +977,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              ErrorMessage = "Y Slope is out of range [1000-3000]";
+              ErrorMessage = "[1000-3000]";
             }
             if (SelectedTextBox.index == 3)
             {
@@ -1021,7 +990,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              ErrorMessage = "Y Start Speed is out of range [1000-5000]";
+              ErrorMessage = "[1000-5000]";
             }
             if (SelectedTextBox.index == 4)
             {
@@ -1034,7 +1003,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              ErrorMessage = "Y Run Speed is out of range [1000-10000]";
+              ErrorMessage = "[1000-10000]";
             }
             if (SelectedTextBox.index == 6)
             {
@@ -1048,7 +1017,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              ErrorMessage = "Y Encoder Steps is out of range [200-2000]";
+              ErrorMessage = "[200-2000]";
             }
             if (SelectedTextBox.index == 7)
             {
@@ -1061,8 +1030,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              string range = App.Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
-              ErrorMessage = $"Y Current Limit is out of range {range}";
+              ErrorMessage = App.Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
             }
             break;
           case "ParametersZ":
@@ -1076,7 +1044,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              ErrorMessage = "Z Steps is out of range [0-65535]";
+              ErrorMessage = "[0-65535]";
             }
             if (SelectedTextBox.index == 2)
             {
@@ -1089,7 +1057,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              ErrorMessage = "Z Slope is out of range [1000-3000]";
+              ErrorMessage = "[1000-3000]";
             }
             if (SelectedTextBox.index == 3)
             {
@@ -1102,7 +1070,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              ErrorMessage = "Z Start Speed is out of range [1000-5000]";
+              ErrorMessage = "[1000-5000]";
             }
             if (SelectedTextBox.index == 4)
             {
@@ -1115,7 +1083,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              ErrorMessage = "Z Run Speed is out of range [1000-10000]";
+              ErrorMessage = "[1000-10000]";
             }
             if (SelectedTextBox.index == 6)
             {
@@ -1129,7 +1097,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              ErrorMessage = "Z Encoder Steps is out of range [200-2000]";
+              ErrorMessage = "[200-2000]";
             }
             if (SelectedTextBox.index == 7)
             {
@@ -1142,8 +1110,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              string range = App.Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
-              ErrorMessage = $"Y Current Limit is out of range {range}";
+              ErrorMessage = App.Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
             }
             break;
           case "StepsParametersX":
@@ -1158,7 +1125,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              ErrorMessage = "X 96W C1 is out of range [0-20000]";
+              ErrorMessage = "[0-20000]";
             }
             if (SelectedTextBox.index == 1)
             {
@@ -1171,7 +1138,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              ErrorMessage = "X 96W C12 is out of range [0-20000]";
+              ErrorMessage = "[0-20000]";
             }
             if (SelectedTextBox.index == 2)
             {
@@ -1184,7 +1151,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              ErrorMessage = "X 384W C1 is out of range [0-20000]";
+              ErrorMessage = "[0-20000]";
             }
             if (SelectedTextBox.index == 3)
             {
@@ -1197,7 +1164,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              ErrorMessage = "X 384W C24 is out of range [0-20000]";
+              ErrorMessage = "[0-20000]";
             }
             if (SelectedTextBox.index == 4)
             {
@@ -1210,7 +1177,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              ErrorMessage = "X Tube is out of range [0-20000]";
+              ErrorMessage = "[0-20000]";
             }
             break;
           case "StepsParametersY":
@@ -1225,7 +1192,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              ErrorMessage = "Y Row A is out of range [0-20000]";
+              ErrorMessage = "[0-20000]";
             }
             if (SelectedTextBox.index == 1)
             {
@@ -1238,7 +1205,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              ErrorMessage = "Y Row H is out of range [0-20000]";
+              ErrorMessage = "[0-20000]";
             }
             if (SelectedTextBox.index == 2)
             {
@@ -1251,7 +1218,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              ErrorMessage = "Y Row A is out of range [0-20000]";
+              ErrorMessage = "[0-20000]";
             }
             if (SelectedTextBox.index == 3)
             {
@@ -1264,7 +1231,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              ErrorMessage = "Y Row P is out of range [0-20000]";
+              ErrorMessage = "[0-20000]";
             }
             if (SelectedTextBox.index == 4)
             {
@@ -1277,7 +1244,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              ErrorMessage = "Y Tube is out of range [0-20000]";
+              ErrorMessage = "[0-20000]";
             }
             break;
           case "StepsParametersZ":
@@ -1292,7 +1259,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              ErrorMessage = "Z A1 is out of range [0-1000]";
+              ErrorMessage = "[0-1000]";
             }
             if (SelectedTextBox.index == 1)
             {
@@ -1305,7 +1272,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              ErrorMessage = "Z A12 is out of range [0-1000]";
+              ErrorMessage = "[0-1000]";
             }
             if (SelectedTextBox.index == 2)
             {
@@ -1318,7 +1285,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              ErrorMessage = "Z H1 is out of range [0-1000]";
+              ErrorMessage = "[0-1000]";
             }
             if (SelectedTextBox.index == 3)
             {
@@ -1331,7 +1298,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              ErrorMessage = "Z H12 is out of range [0-1000]";
+              ErrorMessage = "[0-1000]";
             }
             if (SelectedTextBox.index == 4)
             {
@@ -1344,7 +1311,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              ErrorMessage = "Z Tube is out of range [0-1000]";
+              ErrorMessage = "[0-1000]";
             }
             break;
           case "IdexTextBoxInputs":
@@ -1359,7 +1326,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              ErrorMessage = "Idex Position is out of range [0-255]";
+              ErrorMessage = "[0-255]";
             }
             if (SelectedTextBox.index == 1)
             {
@@ -1372,7 +1339,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              ErrorMessage = "Idex Max Steps is out of range [0-65535]";
+              ErrorMessage = "[0-65535]";
             }
             break;
           case "BaseFileName":
@@ -1389,7 +1356,7 @@ namespace Ei_Dimension
               }
             }
             failed = true;
-            ErrorMessage = "Max Pressure is out of range [5-40]";
+            ErrorMessage = "[5-40]";
             break;
           case "TemplateSaveName":
             TemplateSelectViewModel.Instance.TemplateSaveName[0] = _tempNewString;
@@ -1403,7 +1370,7 @@ namespace Ei_Dimension
               }
             }
             failed = true;
-            ErrorMessage = "UVC Sanitize Seconds is out of range [1-100]";
+            ErrorMessage = "[1-100]";
             break;
         }
         if(VerificationViewModel.Instance.isActivePage)
@@ -1413,13 +1380,13 @@ namespace Ei_Dimension
             if (iRes < 0 || iRes > 100000)
             {
               failed = true;
-              ErrorMessage = "Reporter value is out of range [0-100000]";
+              ErrorMessage = "[0-100000]";
             }
           }
           else
           {
             failed = true;
-            ErrorMessage = "Reporter value is out of range [0-100000]";
+            ErrorMessage = "[0-100000]";
           }
         }
         Settings.Default.Save();
@@ -1428,9 +1395,11 @@ namespace Ei_Dimension
           ((ObservableCollection<string>)SelectedTextBox.prop.GetValue(SelectedTextBox.VM))[SelectedTextBox.index] = _tempOldString;
           //Notification.Show(ErrorMessage);
           SelectedTextBox.tb.Background = System.Windows.Media.Brushes.Red;
+          MainViewModel.Instance.HintToggle(ErrorMessage, SelectedTextBox.tb);
         }
         else
         {
+          MainViewModel.Instance.HideHint();
           if (_tempNewString.TrimStart('0') != "")
             ((ObservableCollection<string>)SelectedTextBox.prop.GetValue(SelectedTextBox.VM))[SelectedTextBox.index] = _tempNewString.TrimStart('0');
           else

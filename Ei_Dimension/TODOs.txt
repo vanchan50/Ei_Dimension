@@ -89,9 +89,3 @@ in non-touch mode, pressing a button does not trigger sanity check,leading to lo
 
 ReplyFromMC should just fill a FIFO. don't do any processing in that function
 Move that processing to the other project?
-
-???????????????
-NavigateCalibration()
-  InitStab() happens during the run. WTF????
-
-  StartingToReadEventHandler has comments for multitube logic

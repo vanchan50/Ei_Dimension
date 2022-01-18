@@ -248,6 +248,7 @@
     <Compile Include="ViewModels\DashboardViewModel.cs" />
     <Compile Include="ViewModels\ExperimentViewModel.cs" />
     <Compile Include="ViewModels\FileSaveViewModel.cs" />
+    <Compile Include="ViewModels\HintViewModel.cs" />
     <Compile Include="ViewModels\MainButtonsViewModel.cs" />
     <Compile Include="ViewModels\MaintenanceViewModel.cs" />
     <Compile Include="ViewModels\MotorsViewModel.cs" />
@@ -258,6 +259,9 @@
     <Compile Include="ViewModels\SelRegionsViewModel.cs" />
     <Compile Include="ViewModels\TemplateSelectViewModel.cs" />
     <Compile Include="ViewModels\VerificationViewModel.cs" />
+    <Compile Include="Views\HintView.xaml.cs">
+      <DependentUpon>HintView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MainButtonsView.xaml.cs">
       <DependentUpon>MainButtonsView.xaml</DependentUpon>
     </Compile>
@@ -390,6 +394,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Styles\ToggleButtonThemeStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\HintView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

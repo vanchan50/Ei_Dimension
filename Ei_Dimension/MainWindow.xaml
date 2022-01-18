@@ -147,6 +147,12 @@
       <Views:NotificationView />
     </Grid>
 
+    <!--Hint-->
+    <Grid Width="200" Height="28" Name="Hint"
+          VerticalAlignment="Top" HorizontalAlignment="Left">
+      <Views:HintView />
+    </Grid>
+
     <!--Event Count-->
     <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"

@@ -247,10 +247,9 @@ namespace Ei_Dimension.ViewModels
           temp.MinPerRegion = uint.Parse(DashVM.EndRead[0]);
           temp.TotalEvents = uint.Parse(DashVM.EndRead[1]);
           uint checkboxes = 0;
-          int currVal = 0;
           for (var i = 0; i < FileSaveViewModel.Instance.Checkboxes.Count - 1; i++)  // -1 to not store system log
           {
-            currVal = (int)Math.Pow(2, i) * (FileSaveViewModel.Instance.Checkboxes[i] ? 1 : 0);
+            int currVal = (int)Math.Pow(2, i) * (FileSaveViewModel.Instance.Checkboxes[i] ? 1 : 0);
             checkboxes += (uint)currVal;
           }
           temp.FileSaveCheckboxes = checkboxes;
