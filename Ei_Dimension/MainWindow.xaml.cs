@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MicroCy;
 
 namespace Ei_Dimension
 {
@@ -31,9 +32,52 @@ namespace Ei_Dimension
       bind.Path = new PropertyPath("TotalBeadsInFirmware[0]");
       bind.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
       _ = BindingOperations.SetBinding(EventCounter, TextBlock.TextProperty, bind);
+
+      TextBlock BoardV = new TextBlock();
+      BoardV.HorizontalAlignment = HorizontalAlignment.Left;
+      BoardV.VerticalAlignment = VerticalAlignment.Top;
+      BoardV.Margin = new Thickness(10, 5, 0, 0);
+      BoardV.Text = "TEST BoardVersion";
+      BoardV.FontSize = 20;
+      BoardV.Foreground = Brushes.Black;
+      BoardV.Opacity = 0;
+      BoardV.MouseDown += BoardV_MouseDown;
+      BoardV.IsMouseDirectlyOverChanged += BoardVOnIsMouseDirectlyOverChanged;
+      var t = wndw.LogicalChildren;
+      t.MoveNext();
+      ((Grid)t.Current).Children.Add(BoardV);
 #else
       EventCounterParent.IsHitTestVisible = false;
 #endif
     }
+    
+#if DEBUG
+    private void BoardVOnIsMouseDirectlyOverChanged(object sender, DependencyPropertyChangedEventArgs e)
+    {
+      ((TextBlock)sender).Opacity = ((TextBlock)sender).Opacity == 0 ? 1 : 0;
+    }
+
+    private void BoardV_MouseDown(object sender, MouseButtonEventArgs e)
+    {
+      if (Views.ChannelOffsetView.Instance.AvgBgSP.Width == 0)
+      {
+        ViewModels.ChannelOffsetViewModel.Instance.OldBoardOffsetsVisible = Visibility.Hidden;
+        Views.ChannelOffsetView.Instance.SlidersSP.Visibility = Visibility.Visible;
+        Views.ChannelOffsetView.Instance.BaselineSP.Width = 180;
+        Views.ChannelOffsetView.Instance.AvgBgSP.Width = 180;
+        ((TextBlock) sender).Text = "TEST BoardVersion = 3";
+        App.Device.SetBoardVersion(3);
+      }
+      else
+      {
+        ViewModels.ChannelOffsetViewModel.Instance.OldBoardOffsetsVisible = Visibility.Visible;
+        Views.ChannelOffsetView.Instance.SlidersSP.Visibility = Visibility.Hidden;
+        Views.ChannelOffsetView.Instance.BaselineSP.Width = 0;
+        Views.ChannelOffsetView.Instance.AvgBgSP.Width = 0;
+        ((TextBlock) sender).Text = "TEST BoardVersion = 1";
+        App.Device.SetBoardVersion(1);
+      }
+    }
+#endif
   }
 }

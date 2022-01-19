@@ -40,15 +40,17 @@ namespace Ei_Dimension.ViewModels
       //App.MapRegions.AddValidationRegion(num);
     }
 
-    public void LoadClick()
+    public void LoadClick(bool fromCode = false)
     {
       var idx = App.Device.MapCtroller.MapList.FindIndex(x => x.mapName == App.Device.MapCtroller.ActiveMap.mapName);
       var map = App.Device.MapCtroller.MapList[idx];
       for (var i = 0; i < map.regions.Count; i++)
       {
+        //Reset all Verification Regions
         App.MapRegions.VerificationRegions[i] = true;
         App.MapRegions.AddValidationRegion(i);
         App.MapRegions.VerificationReporterList[i] = "";
+
         if (map.regions[i].isValidator)
         {
           App.MapRegions.AddValidationRegion(i);
@@ -56,6 +58,8 @@ namespace Ei_Dimension.ViewModels
             App.MapRegions.VerificationReporterList[i] = map.regions[i].VerificationTargetReporter.ToString();
         }
       }
+      if(!fromCode)
+        Notification.Show("Verification Regions Loaded");
     }
 
     public void SaveClick()
@@ -89,7 +93,7 @@ namespace Ei_Dimension.ViewModels
           }
         }
       }
-      App.Device.MapCtroller.SaveCalVals(new MicroCy.MapCalParameters
+      App.Device.MapCtroller.SaveCalVals(new MapCalParameters
       {
         TempCl0 = -1,
         TempCl1 = -1,
@@ -117,6 +121,7 @@ namespace Ei_Dimension.ViewModels
         Caldate = null,
         Valdate = null
       });
+      Notification.Show("Verification Regions Saved");
     }
 
     public static void VerificationSuccess()

@@ -505,7 +505,7 @@ namespace Ei_Dimension
               ComponentsViewModel.Instance.LaserRedPowerValue[0] = g.ToString("N1") + " mw";
             };
             break;
-          case 0xca:  //TODO: remove?
+          case 0xca:
             //update = () => CalibrationViewModel.Instance.GatingItems[exe.Parameter].ForAppUpdater();
             break;
           case 0xcc:  //sync pending

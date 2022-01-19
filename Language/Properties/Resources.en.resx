@@ -169,8 +169,8 @@ Align Motor</value>
 Calibration</value>
   </data>
   <data name="Calibration_Classification_targets" xml:space="preserve">
-    <value>Classification
-    Targets</value>
+    <value>Calibration
+   Targets</value>
   </data>
   <data name="Calibration_Classification_To_map" xml:space="preserve">
     <value>Classification To

@@ -1377,16 +1377,16 @@ namespace Ei_Dimension
         {
           if (int.TryParse(_tempNewString, out iRes))
           {
-            if (iRes < 0 || iRes > 100000)
+            if (iRes < 0 || iRes > 1000000)
             {
               failed = true;
-              ErrorMessage = "[0-100000]";
+              ErrorMessage = "[0-1000000]";
             }
           }
           else
           {
             failed = true;
-            ErrorMessage = "[0-100000]";
+            ErrorMessage = "[0-1000000]";
           }
         }
         Settings.Default.Save();

@@ -399,5 +399,12 @@ namespace MicroCy
     {
       NewStatsAvailable?.Invoke(this, new StatsEventArgs(BeadProcessor.Stats, BeadProcessor.AvgBg));
     }
+
+    #if DEBUG
+    public void SetBoardVersion(int v)
+    {
+      BoardVersion = v;
+    }
+    #endif
   }
 }
