@@ -511,7 +511,8 @@ namespace Ei_Dimension
           if (++CalibrationViewModel.Instance.CalFailsInARow >= 3 && CalibrationViewModel.Instance.CalJustFailed)
           {
             Notification.ShowLocalized(nameof(Language.Resources.Calibration_Fail), System.Windows.Media.Brushes.Red);
-            DashboardViewModel.Instance.CalModeToggle();
+            App.Current.Dispatcher.Invoke(
+              DashboardViewModel.Instance.CalModeToggle);
           }
           else if (CalibrationViewModel.Instance.CalJustFailed)
             Notification.ShowLocalized(nameof(Language.Resources.Calibration_in_Progress), System.Windows.Media.Brushes.Green);

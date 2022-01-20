@@ -307,6 +307,18 @@ namespace Ei_Dimension.ViewModels
 
     public void CalModeToggle()
     {
+      void ReturnToNormal()
+      {
+        MicroCyDevice.Mode = OperationMode.Normal;
+        EndReadItems[_dbEndReadIndexTempHolder].Click(6);
+        Volumes[0] = _dbsampleVolumeTempHolder;
+        App.Device.MainCommand("Set Property", code: 0xaf, parameter: ushort.Parse(_dbsampleVolumeTempHolder));
+        MainButtonsViewModel.Instance.Flavor[0] = null;
+        MainWindow.Instance.wndw.Background = (System.Windows.Media.SolidColorBrush)App.Current.Resources["AppBackground"];
+        App.UnlockMapSelection();
+        App.Device.MainCommand("Set Property", code: 0x1b, parameter: 0);
+      }
+
       UserInputHandler.InputSanityCheck();
       if (CalModeOn)
       {
@@ -328,23 +340,31 @@ namespace Ei_Dimension.ViewModels
         }
         CalModeOn = false;
         if (MicroCyDevice.Mode == OperationMode.Verification)
+        {
           Notification.Show("The instrument is in Verificationtion mode");
+          return;
+        }
+        ReturnToNormal();
       }
       else
       {
-        MicroCyDevice.Mode = OperationMode.Normal;
-        EndReadItems[_dbEndReadIndexTempHolder].Click(6);
-        Volumes[0] = _dbsampleVolumeTempHolder;
-        App.Device.MainCommand("Set Property", code: 0xaf, parameter: ushort.Parse(_dbsampleVolumeTempHolder));
-        MainButtonsViewModel.Instance.Flavor[0] = null;
-        MainWindow.Instance.wndw.Background = (System.Windows.Media.SolidColorBrush)App.Current.Resources["AppBackground"];
-        App.UnlockMapSelection();
-        App.Device.MainCommand("Set Property", code: 0x1b, parameter: 0);
+        ReturnToNormal();
       }
     }
 
     public void ValModeToggle()
     {
+      void ReturnToNormal()
+      {
+        MicroCyDevice.Mode = OperationMode.Normal;
+        Volumes[0] = _dbsampleVolumeTempHolder;
+        App.Device.MainCommand("Set Property", code: 0xaf, parameter: ushort.Parse(_dbsampleVolumeTempHolder));
+        MainButtonsViewModel.Instance.Flavor[0] = null;
+        MainWindow.Instance.wndw.Background = (System.Windows.Media.SolidColorBrush)App.Current.Resources["AppBackground"];
+        ResultsViewModel.Instance.ValidationCoverVisible = Visibility.Hidden;
+        App.UnlockMapSelection();
+      }
+
       UserInputHandler.InputSanityCheck();
       if (ValModeOn)
       {
@@ -362,17 +382,15 @@ namespace Ei_Dimension.ViewModels
         }
         ValModeOn = false;
         if (MicroCyDevice.Mode == OperationMode.Calibration)
+        {
           Notification.Show("The instrument is in Calibration mode");
+          return;
+        }
+        ReturnToNormal();
       }
       else
       {
-        MicroCyDevice.Mode = OperationMode.Normal;
-        Volumes[0] = _dbsampleVolumeTempHolder;
-        App.Device.MainCommand("Set Property", code: 0xaf, parameter: ushort.Parse(_dbsampleVolumeTempHolder));
-        MainButtonsViewModel.Instance.Flavor[0] = null;
-        MainWindow.Instance.wndw.Background = (System.Windows.Media.SolidColorBrush)App.Current.Resources["AppBackground"];
-        ResultsViewModel.Instance.ValidationCoverVisible = Visibility.Hidden;
-        App.UnlockMapSelection();
+        ReturnToNormal();
       }
     }
 

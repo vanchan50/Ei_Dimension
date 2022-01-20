@@ -79,7 +79,6 @@ namespace Ei_Dimension.ViewModels
       System.Threading.Thread.Sleep(1000);
       Action Cancel = () =>
       {
-        DashboardViewModel.Instance.CalModeOn = false;
         DashboardViewModel.Instance.CalModeToggle();
       };
       Action Save = () =>
