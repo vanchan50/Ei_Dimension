@@ -53,7 +53,7 @@ namespace Ei_Dimension.ViewModels
     public void SaveBiasButtonClick()
     {
       UserInputHandler.InputSanityCheck();
-      App.Device.MapCtroller.SaveCalVals(new MicroCy.MapCalParameters
+      var res = App.Device.MapCtroller.SaveCalVals(new MicroCy.MapCalParameters
       {
         TempCl0 = int.Parse(Bias30Parameters[8]),
         TempCl1 = int.Parse(Bias30Parameters[5]),
@@ -81,6 +81,12 @@ namespace Ei_Dimension.ViewModels
         Caldate = null,
         Valdate = null
       });
+      if (!res)
+      {
+        App.Current.Dispatcher.Invoke(() =>
+          Notification.Show("Save failed"));
+        return;
+      }
       Notification.Show($"Calibration Parameters Saved to map {App.Device.MapCtroller.ActiveMap.mapName}");
     }
 

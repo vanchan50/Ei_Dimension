@@ -34,7 +34,7 @@ namespace MicroCy
           Action2();
           break;
         case State.State3:
-          if(!Action3())
+          if (!Action3())
             return;
           break;
         case State.State4:
@@ -46,7 +46,7 @@ namespace MicroCy
         default:
           return;
       }
-      if(Report)
+      if (Report)
         ReportState();
       Advance();
     }

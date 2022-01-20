@@ -199,6 +199,12 @@ namespace MicroCy
               _device.SystemActivity[i] = false;
           }
           break;
+        case 0xAD:
+          MicroCyDevice.PlateRow = cs.Parameter > 15 ? (byte)0 : (byte)cs.Parameter;
+          break;
+        case 0xAE:
+          MicroCyDevice.PlateCol = cs.Parameter > 24 ? (byte)0 : (byte)cs.Parameter;
+          break;
         //FALLTHROUGH
         case 0xD0:
         case 0xD1:

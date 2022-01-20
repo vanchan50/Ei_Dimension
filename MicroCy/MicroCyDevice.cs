@@ -100,9 +100,6 @@ namespace MicroCy
 
     public void InitBeadRead()
     {
-      ResultReporter.OutDirCheck();
-      if (!Directory.Exists($"{ResultReporter.Outdir}\\AcquisitionData"))
-        Directory.CreateDirectory($"{ResultReporter.Outdir}\\AcquisitionData");
       ResultReporter.GetNewFileName();
       ResultReporter.StartNewWellReport();
       _chkRegionCount = false;
@@ -284,12 +281,19 @@ namespace MicroCy
     {
       RootDirectory = new DirectoryInfo(Path.Combine(@"C:\Emissioninc", Environment.MachineName));
       List<string> subDirectories = new List<string>(7) { "Config", "WorkOrder", "SavedImages", "Archive", "Result", "Status", "AcquisitionData", "SystemLogs" };
-      foreach (var d in subDirectories)
+      try
       {
-        RootDirectory.CreateSubdirectory(d);
+        foreach (var d in subDirectories)
+        {
+          RootDirectory.CreateSubdirectory(d);
+        }
+        Directory.CreateDirectory(RootDirectory.FullName + @"\Result" + @"\Summary");
+        Directory.CreateDirectory(RootDirectory.FullName + @"\Result" + @"\Detail");
       }
-      Directory.CreateDirectory(RootDirectory.FullName + @"\Result" + @"\Summary");
-      Directory.CreateDirectory(RootDirectory.FullName + @"\Result" + @"\Detail");
+      catch
+      {
+        Console.WriteLine("Directory Creation Failed");
+      }
     }
 
     internal void TerminationReadyCheck()

@@ -55,13 +55,23 @@ namespace MicroCy
 
     internal static void GetNewFileName()
     {
+      OutDirCheck();
+      try
+      {
+        if (!Directory.Exists($"{Outdir}\\AcquisitionData"))
+          Directory.CreateDirectory($"{Outdir}\\AcquisitionData");
+      }
+      catch
+      {
+        Console.WriteLine($"Failed to create {Outdir}\\AcquisitionData");
+        return;
+      }
       //open file
       //first create unique filename
 
       char rowletter = (char)(0x41 + MicroCyDevice.ReadingRow);
       //if(!isTube)
       string colLetter = (MicroCyDevice.ReadingCol + 1).ToString();  //use 0 for tubes and true column for plates
-      OutDirCheck();
       for (var differ = 0; differ < int.MaxValue; differ++)
       {
         FullFileName = $"{Outdir}\\AcquisitionData\\{Outfilename}{rowletter}{colLetter}_{differ.ToString()}.csv";
@@ -89,11 +99,26 @@ namespace MicroCy
     {
       if (SummaryOut.Length > 0)  //end of read session (plate, plate section or tube) write summary stat file
       {
-        OutDirCheck();
-        if (!Directory.Exists($"{Outdir}\\AcquisitionData"))
-          Directory.CreateDirectory($"{Outdir}\\AcquisitionData");
+        try
+        {
+          OutDirCheck();
+          if (!Directory.Exists($"{Outdir}\\AcquisitionData"))
+            Directory.CreateDirectory($"{Outdir}\\AcquisitionData");
+        }
+        catch
+        {
+          Console.WriteLine($"Failed to create {Outdir}\\AcquisitionData");
+          return;
+        }
         GetThisRunFileName();
-        File.AppendAllText(_thisRunResultsFileName, SummaryOut.ToString());
+        try
+        {
+          File.AppendAllText(_thisRunResultsFileName, SummaryOut.ToString());
+        }
+        catch
+        {
+          Console.WriteLine($"Failed to append data to {_thisRunResultsFileName}");
+        }
       }
     }
 
@@ -124,12 +149,29 @@ namespace MicroCy
       if ((SavingWellIdx == MicroCyDevice.WellsToRead) && (SummaryOut.Length > 0) && MicroCyDevice.PlateReportActive)    //end of read and json results requested
       {
         string rfilename = MicroCyDevice.SystemControl == 0 ? Outfilename : MicroCyDevice.WorkOrder.plateID.ToString();
-        if (!Directory.Exists($"{MicroCyDevice.RootDirectory.FullName}\\Result\\Summary"))
-          _ = Directory.CreateDirectory($"{MicroCyDevice.RootDirectory.FullName}\\Result\\Summary");
-        using (TextWriter jwriter = new StreamWriter($"{MicroCyDevice.RootDirectory.FullName}\\Result\\Summary\\"+ "Summary_" + rfilename + ".json"))
+        try
         {
-          var jcontents = JsonConvert.SerializeObject(_plateReport);
-          jwriter.Write(jcontents);
+          if (!Directory.Exists($"{MicroCyDevice.RootDirectory.FullName}\\Result\\Summary"))
+            _ = Directory.CreateDirectory($"{MicroCyDevice.RootDirectory.FullName}\\Result\\Summary");
+        }
+        catch
+        {
+          Console.WriteLine($"Failed to create {MicroCyDevice.RootDirectory.FullName}\\Result\\Summary");
+          return;
+        }
+
+        try
+        {
+          using (TextWriter jwriter = new StreamWriter($"{MicroCyDevice.RootDirectory.FullName}\\Result\\Summary\\" +
+                                                       "Summary_" + rfilename + ".json"))
+          {
+            var jcontents = JsonConvert.SerializeObject(_plateReport);
+            jwriter.Write(jcontents);
+          }
+        }
+        catch
+        {
+          Console.WriteLine($"Failed to create Plate Report");
         }
       }
     }
@@ -151,7 +193,16 @@ namespace MicroCy
       //write file
       Console.WriteLine($"{DateTime.Now.ToString()} Reporting Background results cloned for save");
       if ((FullFileName != null) && MicroCyDevice.Everyevent)
-        File.WriteAllText(FullFileName, GetWellReport());
+      {
+        try
+        {
+          File.WriteAllText(FullFileName, GetWellReport());
+        }
+        catch
+        {
+          Console.WriteLine($"Failed to write to {FullFileName}");
+        }
+      }
       if (MicroCyDevice.RMeans)
       {
         ClearSummary();

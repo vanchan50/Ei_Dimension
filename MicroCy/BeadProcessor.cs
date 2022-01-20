@@ -8,7 +8,7 @@ namespace MicroCy
   {
     public static List<Gstats> Stats { get; } = new List<Gstats>(10);
     public static List<double> AvgBg { get; } = new List<double>(10);
-    public static int SavBeadCount { get; set; }
+    internal static int SavBeadCount { get; set; }
     private static byte _actPrimaryIndex;
     private static byte _actSecondaryIndex;
     private static float _greenMin;
@@ -16,19 +16,11 @@ namespace MicroCy
     private static readonly double[] ClassificationBins;
     private static readonly float[,] Sfi = new float[80000, 10];
     private static int[,] _classificationMap;
-    private static List<List<ushort>> _bgValues = new List<List<ushort>>();
+    private static ushort[,] _bgValues = new ushort[10, 80000];
 
     static BeadProcessor()
     {
       ClassificationBins = GenerateLogSpace(1, 60000, 256);
-      for (var i = 0; i < 10; i++)
-      {
-        _bgValues.Add(new List<ushort>(80000));
-        for (int j = 0; j < 80000; j++)
-        {
-          _bgValues[i].Add(0);
-        }
-      }
     }
 
     public static void CalculateBeadParams(ref BeadInfoStruct outbead)
@@ -72,16 +64,16 @@ namespace MicroCy
     {
       if (MicroCyDevice.BeadCount < 80000)
       {
-        _bgValues[0][MicroCyDevice.BeadCount] = outbead.gssc_bg;
-        _bgValues[1][MicroCyDevice.BeadCount] = outbead.greenB_bg;
-        _bgValues[2][MicroCyDevice.BeadCount] = outbead.greenC_bg;
-        _bgValues[3][MicroCyDevice.BeadCount] = outbead.rssc_bg;
-        _bgValues[4][MicroCyDevice.BeadCount] = outbead.cl1_bg;
-        _bgValues[5][MicroCyDevice.BeadCount] = outbead.cl2_bg;
-        _bgValues[6][MicroCyDevice.BeadCount] = outbead.cl3_bg;
-        _bgValues[7][MicroCyDevice.BeadCount] = outbead.vssc_bg;
-        _bgValues[8][MicroCyDevice.BeadCount] = outbead.cl0_bg;
-        _bgValues[9][MicroCyDevice.BeadCount] = outbead.fsc_bg;
+        _bgValues[0, MicroCyDevice.BeadCount] = outbead.gssc_bg;
+        _bgValues[1, MicroCyDevice.BeadCount] = outbead.greenB_bg;
+        _bgValues[2, MicroCyDevice.BeadCount] = outbead.greenC_bg;
+        _bgValues[3, MicroCyDevice.BeadCount] = outbead.rssc_bg;
+        _bgValues[4, MicroCyDevice.BeadCount] = outbead.cl1_bg;
+        _bgValues[5, MicroCyDevice.BeadCount] = outbead.cl2_bg;
+        _bgValues[6, MicroCyDevice.BeadCount] = outbead.cl3_bg;
+        _bgValues[7, MicroCyDevice.BeadCount] = outbead.vssc_bg;
+        _bgValues[8, MicroCyDevice.BeadCount] = outbead.cl0_bg;
+        _bgValues[9, MicroCyDevice.BeadCount] = outbead.fsc_bg;
       }
     }
 
@@ -95,7 +87,7 @@ namespace MicroCy
 
         for (int j = 0; j < Count; j++)
         {
-          sum += _bgValues[i][j];
+          sum += _bgValues[i, j];
         }
         var avg = sum / Count;
         AvgBg.Add(avg);

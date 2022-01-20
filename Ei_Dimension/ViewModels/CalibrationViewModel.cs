@@ -84,7 +84,7 @@ namespace Ei_Dimension.ViewModels
       };
       Action Save = () =>
       {
-        App.Device.MapCtroller.SaveCalVals(new MicroCy.MapCalParameters
+        var res = App.Device.MapCtroller.SaveCalVals(new MicroCy.MapCalParameters
         {
           TempCl0 = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[8]),
           TempCl1 = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[5]),
@@ -112,6 +112,12 @@ namespace Ei_Dimension.ViewModels
           Caldate = DateTime.Now.ToString("dd.MM.yyyy", new System.Globalization.CultureInfo("en-GB")),
           Valdate = null
         });
+        if (!res)
+        {
+          App.Current.Dispatcher.Invoke(() =>
+            Notification.Show("Save failed"));
+          return;
+        }
         DashboardViewModel.Instance.CaliDateBox[0] = App.Device.MapCtroller.ActiveMap.caltime;
         Cancel.Invoke();
       };
@@ -154,7 +160,7 @@ namespace Ei_Dimension.ViewModels
       App.Device.MainCommand("Get Property", code: 0x2e);
       App.Device.MainCommand("Get Property", code: 0x2f);
       System.Threading.Thread.Sleep(1000);
-      App.Device.MapCtroller.SaveCalVals(new MicroCy.MapCalParameters
+      var res = App.Device.MapCtroller.SaveCalVals(new MicroCy.MapCalParameters
       {
         TempCl0 = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[8]),
         TempCl1 = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[5]),
@@ -182,6 +188,12 @@ namespace Ei_Dimension.ViewModels
         Caldate = null,
         Valdate = null
       });
+      if (!res)
+      {
+        App.Current.Dispatcher.Invoke(() =>
+          Notification.Show("Save failed"));
+        return;
+      }
       Notification.Show($"Calibration Parameters Saved to map {App.Device.MapCtroller.ActiveMap.mapName}");
     }
 

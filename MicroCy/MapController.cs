@@ -14,7 +14,7 @@ namespace MicroCy
     public List<CustomMap> MapList { get; } = new List<CustomMap>();
     
 
-    public void SaveCalVals(MapCalParameters param)
+    public bool SaveCalVals(MapCalParameters param)
     {
       var idx = MapList.FindIndex(x => x.mapName == ActiveMap.mapName);
       var map = MapList[idx];
@@ -73,10 +73,20 @@ namespace MicroCy
       ActiveMap = MapList[idx];
 
       var contents = JsonConvert.SerializeObject(map);
-      using (var stream = new StreamWriter(MicroCyDevice.RootDirectory.FullName + @"/Config/" + map.mapName + @".dmap"))
+      try
       {
-        stream.Write(contents);
+        using (var stream =
+               new StreamWriter(MicroCyDevice.RootDirectory.FullName + @"/Config/" + map.mapName + @".dmap"))
+        {
+          stream.Write(contents);
+        }
       }
+      catch
+      {
+        return false;
+      }
+
+      return true;
     }
 
     public void LoadMaps()

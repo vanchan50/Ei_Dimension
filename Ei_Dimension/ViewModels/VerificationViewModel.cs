@@ -93,7 +93,7 @@ namespace Ei_Dimension.ViewModels
           }
         }
       }
-      App.Device.MapCtroller.SaveCalVals(new MapCalParameters
+      var res = App.Device.MapCtroller.SaveCalVals(new MapCalParameters
       {
         TempCl0 = -1,
         TempCl1 = -1,
@@ -121,6 +121,12 @@ namespace Ei_Dimension.ViewModels
         Caldate = null,
         Valdate = null
       });
+      if (!res)
+      {
+        App.Current.Dispatcher.Invoke(() =>
+          Notification.Show("Save failed"));
+        return;
+      }
       Notification.Show("Verification Regions Saved");
     }
 

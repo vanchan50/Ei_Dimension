@@ -81,10 +81,18 @@ namespace Ei_Dimension.Views
         Format = new System.Drawing.Imaging.ImageFormat(System.Drawing.Imaging.ImageFormat.Png.Guid)
       };
       string date = DateTime.Now.ToString("dd.MM.yyyy.hhtt-mm-ss", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"));
-      ResultReporter.OutDirCheck();
-      if (!Directory.Exists(ResultReporter.Outdir + "\\SavedImages"))
-        Directory.CreateDirectory(ResultReporter.Outdir + "\\SavedImages");
-      chart.ExportToImage(ResultReporter.Outdir + @"\SavedImages\" + date + ".png", options);
+      try
+      {
+        ResultReporter.OutDirCheck();
+        if (!Directory.Exists(ResultReporter.Outdir + "\\SavedImages"))
+          Directory.CreateDirectory(ResultReporter.Outdir + "\\SavedImages");
+        chart.ExportToImage(ResultReporter.Outdir + @"\SavedImages\" + date + ".png", options);
+      }
+      catch
+      {
+        App.Current.Dispatcher.Invoke(() =>
+          Notification.Show("Save failed"));
+      }
     }
 
     public void ShowSmallXYPlot()

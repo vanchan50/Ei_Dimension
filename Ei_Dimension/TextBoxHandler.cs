@@ -395,18 +395,6 @@ namespace Ei_Dimension
           case 0xac:
             update = () => DashboardViewModel.Instance.Volumes[1] = exe.Parameter.ToString();
             break;
-          case 0xad:  //TODO: remove?
-            if (exe.Parameter > 15)
-              exe.Parameter = 0;
-            //update = () => MotorsViewModel.Instance.WellRowButtonItems[exe.Parameter].ForAppUpdater(1);
-            MicroCyDevice.PlateRow = (byte)exe.Parameter;
-            break;
-          case 0xae:  //TODO: remove?
-            if (exe.Parameter > 24)
-              exe.Parameter = 0;
-            //update = () => MotorsViewModel.Instance.WellColumnButtonItems[exe.Parameter].ForAppUpdater(2);
-            MicroCyDevice.PlateCol = (byte)exe.Parameter;  //TODO: it doesn't accout for 96well; can go overboard and crash
-            break;
           case 0xaf:
             update = () => DashboardViewModel.Instance.Volumes[0] = exe.Parameter.ToString();
             break;
