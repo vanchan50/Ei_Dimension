@@ -84,6 +84,7 @@ namespace MicroCy
 
     private void WriteToMC()
     {
+      var timeOut = new TimeSpan(0, 0, seconds: 2);
       while (true)
       {
         while (OutCommands.TryDequeue(out var cmd))
@@ -92,7 +93,7 @@ namespace MicroCy
         }
         lock (_usbOutCV)
         {
-          Monitor.Wait(_usbOutCV);
+          Monitor.Wait(_usbOutCV, timeOut);
         }
       }
     }

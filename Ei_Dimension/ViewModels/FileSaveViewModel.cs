@@ -57,12 +57,16 @@ namespace Ei_Dimension.ViewModels
       UserInputHandler.InputSanityCheck();
       if (defaultDir)
       {
-        ResultReporter.Outdir = MicroCyDevice.RootDirectory.FullName;
+        ResultReporter.Outdir = Settings.Default.LastOutFolder = MicroCyDevice.RootDirectory.FullName;
+        Settings.Default.Save();
         return;
       }
       FolderBrowserDialogService.StartPath = ResultReporter.Outdir;
       if (FolderBrowserDialogService.ShowDialog())
-        ResultReporter.Outdir = FolderBrowserDialogService.ResultPath;
+      {
+        ResultReporter.Outdir = Settings.Default.LastOutFolder = FolderBrowserDialogService.ResultPath;
+        Settings.Default.Save();
+      }
     }
 
     public void FocusedBox(int num)

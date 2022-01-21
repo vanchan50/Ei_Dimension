@@ -310,5 +310,17 @@ namespace Ei_Dimension {
                 this["VerificationWarningIndex"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("NULL")]
+        public string LastOutFolder {
+            get {
+                return ((string)(this["LastOutFolder"]));
+            }
+            set {
+                this["LastOutFolder"] = value;
+            }
+        }
     }
 }

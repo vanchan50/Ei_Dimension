@@ -24,6 +24,13 @@ namespace Ei_Dimension
     {
       CorruptSettingsChecker();
       Device = new MicroCyDevice();
+      if(Directory.Exists(Settings.Default.LastOutFolder))
+        ResultReporter.Outdir = Settings.Default.LastOutFolder;
+      else
+      {
+        Settings.Default.LastOutFolder = ResultReporter.Outdir;
+        Settings.Default.Save();
+      }
       SetLogOutput();
       SetupDevice();
       Device.StartingToReadWell += StartingToReadWellEventHandler;
@@ -52,6 +59,8 @@ namespace Ei_Dimension
         string filename = ((ConfigurationErrorsException)ex.InnerException).Filename;
         File.Delete(filename);
         StartupFinalizer.SettingsWiped = true;
+        MessageBox.Show("Settings file is Corrupted.\n\nPlease Restart the Application.");
+        Environment.Exit(1);
       }
     }
 
