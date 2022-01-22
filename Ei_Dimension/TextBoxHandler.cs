@@ -24,7 +24,7 @@ namespace Ei_Dimension
             #if DEBUG
             Console.Error.WriteLine($"Detected Board Rev v{App.Device.BoardVersion}");
             #endif
-            if (App.Device.BoardVersion > 1)
+            if (App.Device.BoardVersion > 0)
               update = HideChannels;
             break;
           case 0x02:
