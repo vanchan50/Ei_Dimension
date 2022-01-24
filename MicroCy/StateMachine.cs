@@ -8,7 +8,7 @@ namespace MicroCy
   {
     private readonly MicroCyDevice _device;
     private State _state;
-    public static bool Report { get; set; }
+    public bool Report { get; set; }
 
     public StateMachine(MicroCyDevice device, bool report)
     {
@@ -18,15 +18,21 @@ namespace MicroCy
 
     public void Start()
     {
-      if(_state != State.Reset)
-        throw new Exception("State machine Start was called during the operation");
-      _state = State.Start;
+      if(_state == State.Reset)
+        _state = State.Start;
+      else
+      {
+        Console.Error.WriteLine("State machine Start was called during the State machine operation");
+      }
     }
 
     public void Action()
     {
       switch (_state)
       {
+        case State.Reset:
+          //Skip the tick
+          return;
         case State.Start:
           Action1();
           break;
@@ -43,8 +49,6 @@ namespace MicroCy
         case State.End:
           Action5();
           break;
-        default:
-          return;
       }
       if (Report)
         ReportState();

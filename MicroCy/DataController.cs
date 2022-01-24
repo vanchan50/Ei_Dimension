@@ -227,11 +227,7 @@ namespace MicroCy
           return;
         case 0xFD:
         case 0xFE:
-          try
-          {
-            _device.StartStateMachine();
-          }
-          catch {}
+          _device.StartStateMachine();
           break;
       }
       Console.WriteLine($"{DateTime.Now.ToString()} Received [{cs.ToString()}]");

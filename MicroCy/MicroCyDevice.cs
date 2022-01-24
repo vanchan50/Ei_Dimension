@@ -112,6 +112,9 @@ namespace MicroCy
       _stateMach.Action();
     }
 
+    /// <summary>
+    /// Starts a sequence of commands to finalize well measurement. The sequence is in a form of state machine that takes several timer ticks
+    /// </summary>
     public void StartStateMachine()
     {
       _stateMach.Start();

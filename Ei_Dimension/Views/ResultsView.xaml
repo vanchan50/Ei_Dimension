@@ -49,7 +49,7 @@
               </Grid>
             </Border>
             <ScrollViewer HorizontalScrollBarVisibility="Disabled"
-                    VerticalScrollBarVisibility="Visible" Height="803">
+                    VerticalScrollBarVisibility="Visible" Height="773">
               <ListBox Name="Table" Background="{StaticResource RibbonBackgroundActive}">
                 <ListBox.ItemsPanel>
                   <ItemsPanelTemplate>
