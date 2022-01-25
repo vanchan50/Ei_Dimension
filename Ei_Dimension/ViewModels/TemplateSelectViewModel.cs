@@ -144,16 +144,16 @@ namespace Ei_Dimension.ViewModels
                   FileSaveViewModel.Instance.UncheckedBox(i);
               }
 
-              for (var i = 0; i < App.MapRegions.ActiveRegions.Count; i++)
+              for (var i = 0; i < App.MapRegions.ActiveRegions.Count - 1; i++)
               {
                 if (newTemplate.ActiveRegions[i])
                 {
-                  App.MapRegions.AddActiveRegion(i);
+                  App.MapRegions.AddActiveRegion(i + 1);
                 }
-                App.MapRegions.RegionsNamesList[i] = newTemplate.RegionsNamesList[i];
+                App.MapRegions.RegionsNamesList[i + 1] = newTemplate.RegionsNamesList[i];
               }
 
-              if (newTemplate.TableSize !=0)
+              if (newTemplate.TableSize != 0)
                 WellsSelectViewModel.Instance.ChangeWellTableSize(newTemplate.TableSize);
               if (newTemplate.TableSize == 96)
                 Views.ExperimentView.Instance.DbWell96.IsChecked = true;
@@ -254,7 +254,9 @@ namespace Ei_Dimension.ViewModels
           }
           temp.FileSaveCheckboxes = checkboxes;
           temp.ActiveRegions.AddRange(App.MapRegions.ActiveRegions);
+          temp.ActiveRegions.RemoveAt(0);
           temp.RegionsNamesList.AddRange(App.MapRegions.RegionsNamesList);
+          temp.RegionsNamesList.RemoveAt(0);
           temp.TableSize = WellsSelectViewModel.Instance.CurrentTableSize;
           if (temp.TableSize != 1)
           {

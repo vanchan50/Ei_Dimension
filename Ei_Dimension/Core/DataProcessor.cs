@@ -223,8 +223,8 @@ namespace Ei_Dimension.Core
         violet = ScatterData.cViolet;
       }
 
-      List<List<float>> activeRegionsStats = new List<List<float>>();  //for mean and count
-      foreach (var region in App.Device.MapCtroller.ActiveMap.regions)
+      List<List<float>> activeRegionsStats = new List<List<float>>(App.MapRegions.RegionsList.Count);  //for mean and count
+      for (var i = 0; i < App.MapRegions.RegionsList.Count; i++)
       {
         activeRegionsStats.Add(new List<float>());
       }

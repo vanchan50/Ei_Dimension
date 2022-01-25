@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -29,8 +30,8 @@ namespace Ei_Dimension.Models
     private StackPanel _regionsNamesBorder;
     private bool _firstLoadflag;
     //Results
-    private static uint _tbCounter = 0;
-    private static uint _nameTbCounter = 0;
+    private static uint _tbCounter = 1;
+    private static uint _nameTbCounter = 1;
     private static readonly Thickness _regionsTbAlignment = new Thickness(10, 10, 0, 0);
     private static readonly Thickness _lastRegionsTbAlignment = new Thickness(10, 10, 0, 10);
     private static readonly Thickness _NameBoxAlignment = new Thickness(0, 10, 0, 0);
@@ -91,7 +92,18 @@ namespace Ei_Dimension.Models
       CurrentActiveRegionsMean.Clear();
       BackingActiveRegionsCount.Clear();
       BackingActiveRegionsMean.Clear();
-      var i = 0;
+
+      
+      RegionsList.Add("0");
+      RegionsNamesList.Add("UNCLSSFD");
+      VerificationReporterList.Add("");
+      ActiveRegions.Add(false);
+      VerificationRegions.Add(false);
+      CurrentActiveRegionsCount.Add("0");
+      CurrentActiveRegionsMean.Add("0");
+      BackingActiveRegionsCount.Add("0");
+      BackingActiveRegionsMean.Add("0");
+      var i = 1;
       foreach (var region in App.Device.MapCtroller.ActiveMap.regions)
       {
         RegionsList.Add(region.Number.ToString());
@@ -139,6 +151,20 @@ namespace Ei_Dimension.Models
       _tbCounter++;
     }
 
+    public void ShowNullTextBoxes()
+    {
+      Binding bind = new Binding();
+      bind.Source = this;
+      bind.Path = new PropertyPath("RegionsNamesList[0]");
+      bind.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
+      AddRegionToTable("__0", bind);
+    }
+
+    public void RemoveNullTextBoxes()
+    {
+      RemoveRegionFromTable("__0");
+    }
+
     private void ClearTextBoxes()
     {
       foreach (UIElement UIEl in _regionsBorder.Children)
@@ -147,7 +173,7 @@ namespace Ei_Dimension.Models
         ((TextBox)UIEl).GotFocus -= RegionsTbGotFocus;
       }
       _regionsBorder.Children.Clear();
-      _tbCounter = 0;
+      _tbCounter = 1;
       _lastRegionsBox = null;
       foreach (UIElement UIEl in _regionsNamesBorder.Children)
       {
@@ -155,7 +181,7 @@ namespace Ei_Dimension.Models
         ((TextBox)UIEl).GotFocus -= RegionsNamesTbGotFocus;
       }
       _regionsNamesBorder.Children.Clear();
-      _nameTbCounter = 0;
+      _nameTbCounter = 1;
       _lastRegionsNameBox = null;
     }
 
@@ -220,6 +246,7 @@ namespace Ei_Dimension.Models
         RemoveDbNameBox(NameTb.Name);
         ActiveRegionNums.Remove(int.Parse(tb.Text.Trim('_')));
       }
+      RemoveNullTextBoxes();
     }
 
     private void AddRegionsTextBox(string propertyPath)
@@ -297,7 +324,13 @@ namespace Ei_Dimension.Models
 
     private void RemoveRegionFromTable(string name)
     {
-      var sp = (StackPanel)_resultsTable.Items[GetSPIndexByName(name, _resultsTable)];
+      var index = GetSPIndexByName(name, _resultsTable);
+      if (index < 0)
+      {
+        Console.Error.WriteLine("Tried to remove inexistent region from table");
+        return;
+      }
+      var sp = (StackPanel)_resultsTable.Items[index];
       for (var i = sp.Children.Count - 1; i > -1; i--)
       {
         BindingOperations.ClearAllBindings(sp.Children[i]);

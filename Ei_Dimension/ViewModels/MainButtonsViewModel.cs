@@ -68,10 +68,12 @@ namespace Ei_Dimension.ViewModels
           startArg = App.MapRegions.ActiveRegionNums;
           break;
         case OperationMode.Calibration:
+          App.MapRegions.RemoveNullTextBoxes();
           CalibrationViewModel.Instance.CalJustFailed = true;
           ResultsViewModel.Instance.ShowSinglePlexResults();
           break;
         case OperationMode.Verification:
+          App.MapRegions.RemoveNullTextBoxes();
           MakeNewValidator();
           break;
       }
@@ -112,7 +114,7 @@ namespace Ei_Dimension.ViewModels
     private static void MakeNewValidator()
     {
       var regions = new List<int>();
-      for (var i = 0; i < App.MapRegions.RegionsList.Count; i++)
+      for (var i = 1; i < App.MapRegions.RegionsList.Count; i++)
       {
         if (App.MapRegions.VerificationRegions[i])
         {
@@ -125,7 +127,7 @@ namespace Ei_Dimension.ViewModels
 
     private static void DefaultRegionNaming()
     {
-      for (var i = 0; i < App.MapRegions.RegionsList.Count; i++)
+      for (var i = 1; i < App.MapRegions.RegionsList.Count; i++)
       {
         if (App.MapRegions.ActiveRegions[i] && App.MapRegions.RegionsNamesList[i] == "")
         {
@@ -137,10 +139,7 @@ namespace Ei_Dimension.ViewModels
     private static void SelectNullRegion()
     {
       Notification.Show("No Active regions selected");
-      for (var i = 0; i < App.MapRegions.ActiveRegions.Count; i++)
-      {
-        App.MapRegions.AddActiveRegion(i, callFromCode: true);
-      }
+      App.MapRegions.ShowNullTextBoxes();
     }
   }
 }

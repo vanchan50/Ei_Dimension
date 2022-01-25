@@ -67,7 +67,7 @@ namespace Ei_Dimension.ViewModels
       UserInputHandler.InputSanityCheck();
       var idx = App.Device.MapCtroller.MapList.FindIndex(x => x.mapName == App.Device.MapCtroller.ActiveMap.mapName);
       var map = App.Device.MapCtroller.MapList[idx];
-      for (var i = 0; i < App.MapRegions.RegionsList.Count; i++)
+      for (var i = 1; i < App.MapRegions.RegionsList.Count; i++)
       {
         var index = map.regions.FindIndex(x => x.Number == int.Parse(App.MapRegions.RegionsList[i]));
         if(index != -1)
@@ -172,7 +172,7 @@ namespace Ei_Dimension.ViewModels
         return false;
       }
 
-      for (var i = 0; i < App.MapRegions.RegionsList.Count; i++)
+      for (var i = 1; i < App.MapRegions.RegionsList.Count; i++)
       {
         if (App.MapRegions.VerificationRegions[i])
         {
@@ -196,7 +196,7 @@ namespace Ei_Dimension.ViewModels
       }
 
       double reporterErrorMargin = 0.2;
-      for (var i = 0; i < App.MapRegions.RegionsList.Count; i++)
+      for (var i = 1; i < App.MapRegions.RegionsList.Count; i++)
       {
         if (App.MapRegions.VerificationRegions[i])
         {
