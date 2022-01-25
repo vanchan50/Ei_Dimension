@@ -94,7 +94,7 @@ namespace Ei_Dimension.ViewModels
       WellColumnButtonItems.Clear();
       SelectedWellRow = "A";
       SelectedWellColumn = "1";
-      RowColIndex = (1, 1);
+      RowColIndex = (0, 0);
       //switch only changes dropdown contents
       WellSelectionButtonsChecked[0] = false;
       WellSelectionButtonsChecked[1] = false;

@@ -62,7 +62,7 @@ namespace Ei_Dimension.ViewModels
         case OperationMode.Normal:
           if (App.MapRegions.ActiveRegionNums.Count == 0)
           {
-            SelectAllMapRegions();
+            SelectNullRegion();
           }
           //DefaultRegionNaming();
           startArg = App.MapRegions.ActiveRegionNums;
@@ -134,7 +134,7 @@ namespace Ei_Dimension.ViewModels
       }
     }
 
-    private static void SelectAllMapRegions()
+    private static void SelectNullRegion()
     {
       Notification.Show("No Active regions selected");
       for (var i = 0; i < App.MapRegions.ActiveRegions.Count; i++)
