@@ -51,6 +51,8 @@ namespace Ei_Dimension.Models
     private StackPanel _validationNum;
     private StackPanel _validationReporterBorder;
 
+    private bool _nullTextboxActive;
+
     protected MapRegions(StackPanel RegionsBorder, StackPanel RegionsNamesBorder, ListBox Table, StackPanel Db_Num, StackPanel Db_Name, StackPanel Validat_Num,
       StackPanel Validat_Reporter)
     {
@@ -153,16 +155,24 @@ namespace Ei_Dimension.Models
 
     public void ShowNullTextBoxes()
     {
-      Binding bind = new Binding();
-      bind.Source = this;
-      bind.Path = new PropertyPath("RegionsNamesList[0]");
-      bind.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
-      AddRegionToTable("__0", bind);
+      if (!_nullTextboxActive)
+      {
+        Binding bind = new Binding();
+        bind.Source = this;
+        bind.Path = new PropertyPath("RegionsNamesList[0]");
+        bind.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
+        AddRegionToTable("__0", bind);
+        _nullTextboxActive = true;
+      }
     }
 
     public void RemoveNullTextBoxes()
     {
-      RemoveRegionFromTable("__0");
+      if (_nullTextboxActive)
+      {
+        RemoveRegionFromTable("__0");
+        _nullTextboxActive = false;
+      }
     }
 
     private void ClearTextBoxes()

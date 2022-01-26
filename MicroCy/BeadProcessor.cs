@@ -67,10 +67,10 @@ namespace MicroCy
         _bgValues[0, MicroCyDevice.BeadCount] = outbead.gssc_bg;
         _bgValues[1, MicroCyDevice.BeadCount] = outbead.greenB_bg;
         _bgValues[2, MicroCyDevice.BeadCount] = outbead.greenC_bg;
-        _bgValues[3, MicroCyDevice.BeadCount] = outbead.rssc_bg;
-        _bgValues[4, MicroCyDevice.BeadCount] = outbead.cl1_bg;
-        _bgValues[5, MicroCyDevice.BeadCount] = outbead.cl2_bg;
-        _bgValues[6, MicroCyDevice.BeadCount] = outbead.cl3_bg;
+        _bgValues[3, MicroCyDevice.BeadCount] = outbead.cl3_bg;
+        _bgValues[4, MicroCyDevice.BeadCount] = outbead.rssc_bg;
+        _bgValues[5, MicroCyDevice.BeadCount] = outbead.cl1_bg;
+        _bgValues[6, MicroCyDevice.BeadCount] = outbead.cl2_bg;
         _bgValues[7, MicroCyDevice.BeadCount] = outbead.vssc_bg;
         _bgValues[8, MicroCyDevice.BeadCount] = outbead.cl0_bg;
         _bgValues[9, MicroCyDevice.BeadCount] = outbead.fsc_bg;

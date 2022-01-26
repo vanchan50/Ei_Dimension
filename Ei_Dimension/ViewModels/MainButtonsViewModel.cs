@@ -138,7 +138,6 @@ namespace Ei_Dimension.ViewModels
 
     private static void SelectNullRegion()
     {
-      Notification.Show("No Active regions selected");
       App.MapRegions.ShowNullTextBoxes();
     }
   }

@@ -206,6 +206,7 @@ namespace Ei_Dimension.Core
       var ScatterDataCount = ScatterData.CurrentReporter.Count;
       var MaxValue = ScatterData.CurrentReporter[ScatterDataCount - 1].Argument;
       int[] reporter, fsc, red, green, violet;
+      List<List<float>> activeRegionsStats = new List<List<float>>(App.MapRegions.RegionsList.Count);  //for mean and count
       if (fromFile)
       {
         reporter = ScatterData.bReporter;
@@ -213,6 +214,11 @@ namespace Ei_Dimension.Core
         red = ScatterData.bRed;
         green = ScatterData.bGreen;
         violet = ScatterData.bViolet;
+
+        for (var i = 0; i < App.MapRegions.RegionsList.Count; i++)
+        {
+          activeRegionsStats.Add(new List<float>());
+        }
       }
       else
       {
@@ -223,11 +229,6 @@ namespace Ei_Dimension.Core
         violet = ScatterData.cViolet;
       }
 
-      List<List<float>> activeRegionsStats = new List<List<float>>(App.MapRegions.RegionsList.Count);  //for mean and count
-      for (var i = 0; i < App.MapRegions.RegionsList.Count; i++)
-      {
-        activeRegionsStats.Add(new List<float>());
-      }
       //bool failed = false;
       foreach (var beadD in list)
       {
@@ -261,13 +262,17 @@ namespace Ei_Dimension.Core
         violet[o]++;
         reporter[l]++;
 
-        var index = App.MapRegions.RegionsList.IndexOf(bead.region.ToString());
-        if (index != -1)
-          activeRegionsStats[index].Add(bead.reporter);
-        //else if (bead.region == 0)
-        //  continue;
-        //else
-        //  failed = true;
+
+        if (fromFile)
+        {
+          var index = App.MapRegions.RegionsList.IndexOf(bead.region.ToString());
+          if (index != -1)
+            activeRegionsStats[index].Add(bead.reporter);
+          //else if (bead.region == 0)
+          //  continue;
+          //else
+          //  failed = true;
+        }
       }
       //if (failed)
       //  System.Windows.MessageBox.Show("An error occured during Well File Read");

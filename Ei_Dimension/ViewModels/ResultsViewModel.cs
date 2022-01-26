@@ -151,9 +151,9 @@ namespace Ei_Dimension.ViewModels
       XYCutOffString = new ObservableCollection<string> { XYCutoff.ToString() };
       HiSensitivityChannelName = new ObservableCollection<string>
       {
-        Language.Resources.ResourceManager.GetString(nameof(Language.Resources.DataAn_Green_Min),
+        Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Channels_Green_B),
           Language.TranslationSource.Instance.CurrentCulture),
-        Language.Resources.ResourceManager.GetString(nameof(Language.Resources.DataAn_Green_Maj),
+        Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Channels_Green_C),
           Language.TranslationSource.Instance.CurrentCulture)
       };
       if (!Settings.Default.SensitivityChannelB)

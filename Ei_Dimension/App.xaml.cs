@@ -358,16 +358,16 @@ namespace Ei_Dimension
       {
         if (Settings.Default.SensitivityChannelB)
         {
-          ResVM.HiSensitivityChannelName[0] = RM.GetString(nameof(Language.Resources.DataAn_Green_Min),
+          ResVM.HiSensitivityChannelName[0] = RM.GetString(nameof(Language.Resources.Channels_Green_B),
             curCulture);
-          ResVM.HiSensitivityChannelName[1] = RM.GetString(nameof(Language.Resources.DataAn_Green_Maj),
+          ResVM.HiSensitivityChannelName[1] = RM.GetString(nameof(Language.Resources.Channels_Green_C),
             curCulture);
         }
         else
         {
-          ResVM.HiSensitivityChannelName[0] = RM.GetString(nameof(Language.Resources.DataAn_Green_Maj),
+          ResVM.HiSensitivityChannelName[0] = RM.GetString(nameof(Language.Resources.Channels_Green_C),
             curCulture);
-          ResVM.HiSensitivityChannelName[1] = RM.GetString(nameof(Language.Resources.DataAn_Green_Min),
+          ResVM.HiSensitivityChannelName[1] = RM.GetString(nameof(Language.Resources.Channels_Green_B),
             curCulture);
         }
       }
