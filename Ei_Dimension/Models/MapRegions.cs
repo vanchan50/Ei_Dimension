@@ -26,6 +26,8 @@ namespace Ei_Dimension.Models
     public virtual ObservableCollection<string> DisplayedActiveRegionsMean { get; set; }
     public List<bool> ActiveRegions { get; } = new List<bool>();
     public List<bool> VerificationRegions { get; } = new List<bool>();
+    public bool IsNullRegionActive { get { return _nullTextboxActive; } }
+
     private StackPanel _regionsBorder;
     private StackPanel _regionsNamesBorder;
     private bool _firstLoadflag;
@@ -126,7 +128,7 @@ namespace Ei_Dimension.Models
     {
       if (!ActiveRegions[index])
       {
-        ShiftTextBox(index, true);
+        ShiftTextBox(index - 1, true);  // -1 accounts for inexistent region 0 box
         ActiveRegions[index] = true;
         if (RegionsNamesList[index] == "")
         {
@@ -136,7 +138,7 @@ namespace Ei_Dimension.Models
       else
       {
         ActiveRegions[index] = false;
-        ShiftTextBox(index, false);
+        ShiftTextBox(index - 1, false);
       }
 
       if (callFromCode)
@@ -541,13 +543,13 @@ namespace Ei_Dimension.Models
     {
       if (!VerificationRegions[index])
       {
-        ShiftValidationTextBox(index, true);
+        ShiftValidationTextBox(index - 1, true);
         VerificationRegions[index] = true;
       }
       else
       {
         VerificationRegions[index] = false;
-        ShiftValidationTextBox(index, false);
+        ShiftValidationTextBox(index - 1, false);
       }
       App.UnfocusUIElement();
     }

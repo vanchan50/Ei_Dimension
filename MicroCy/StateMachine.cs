@@ -20,10 +20,6 @@ namespace MicroCy
     {
       if(_state == State.Reset)
         _state = State.Start;
-      else
-      {
-        Console.Error.WriteLine("State machine Start was called during the State machine operation");
-      }
     }
 
     public void Action()

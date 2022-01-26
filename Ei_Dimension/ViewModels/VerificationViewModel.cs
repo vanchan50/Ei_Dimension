@@ -47,15 +47,15 @@ namespace Ei_Dimension.ViewModels
       for (var i = 0; i < map.regions.Count; i++)
       {
         //Reset all Verification Regions
-        App.MapRegions.VerificationRegions[i] = true;
-        App.MapRegions.AddValidationRegion(i);
-        App.MapRegions.VerificationReporterList[i] = "";
+        App.MapRegions.VerificationRegions[i + 1] = true;
+        App.MapRegions.AddValidationRegion(i + 1);
+        App.MapRegions.VerificationReporterList[i + 1] = "";
 
         if (map.regions[i].isValidator)
         {
-          App.MapRegions.AddValidationRegion(i);
+          App.MapRegions.AddValidationRegion(i + 1);
           if(map.regions[i].VerificationTargetReporter > -0.1)
-            App.MapRegions.VerificationReporterList[i] = map.regions[i].VerificationTargetReporter.ToString();
+            App.MapRegions.VerificationReporterList[i + 1] = map.regions[i].VerificationTargetReporter.ToString();
         }
       }
       if(!fromCode)

@@ -10,7 +10,8 @@ namespace Ei_Dimension
   internal class ActiveRegionsStatsHandler
   {
     private static bool _activeRegionsUpdateGoing;
-    private static readonly List<(ushort region, float[] vals)> TempWellResults = new List<(ushort region, float[] vals)>(100);
+    private static readonly List<(ushort region, float[] vals)> TempWellResults = new List<(ushort region, float[] vals)>(101);
+    private static readonly List<float> NullWellResults = new List<float>(100000);
 
     public static void Update()
     {
@@ -23,32 +24,68 @@ namespace Ei_Dimension
           MicroCyDevice.WellResults[i].RP1vals.CopyTo(0, rp1, 0, rp1.Length);
           TempWellResults.Add((MicroCyDevice.WellResults[i].regionNumber, rp1));
         }
-        _ = App.Current.Dispatcher.BeginInvoke((Action)(() =>
+        Action action;
+        if (App.MapRegions.IsNullRegionActive)
         {
-          ViewModels.ResultsViewModel.Instance.CurrentAnalysis12Map.Clear();
           foreach (var result in TempWellResults)
           {
-            var index = App.MapRegions.RegionsList.IndexOf(result.region.ToString());
-            if (index == -1)
-              continue;
-            float avg = 0;
-            if (result.vals.Length == 0)
+            if (result.vals.Length > 0)
             {
-              App.MapRegions.CurrentActiveRegionsCount[index] = "0";
-              App.MapRegions.CurrentActiveRegionsMean[index] = "0";
+              NullWellResults.InsertRange(NullWellResults.Count, result.vals);
+              Array.Clear(result.vals, 0, result.vals.Length); //Crutch. Explicit clear needed for some reason
+            }
+          }
+          TempWellResults.Clear();
+
+          action = () =>
+          {
+            ViewModels.ResultsViewModel.Instance.CurrentAnalysis12Map.Clear();
+            if (NullWellResults.Count == 0)
+            {
+              App.MapRegions.CurrentActiveRegionsCount[0] = "0";
+              App.MapRegions.CurrentActiveRegionsMean[0] = "0";
             }
             else
             {
-              avg = result.vals.Average();
-              App.MapRegions.CurrentActiveRegionsCount[index] = result.vals.Length.ToString();
-              App.MapRegions.CurrentActiveRegionsMean[index] = avg.ToString("0,0");
-              Array.Clear(result.vals, 0, result.vals.Length);  //Crutch. Explicit clear needed for some reason
+              App.MapRegions.CurrentActiveRegionsCount[0] = NullWellResults.Count.ToString();
+              App.MapRegions.CurrentActiveRegionsMean[0] = NullWellResults.Average().ToString("0,0");
             }
-            Reporter3DGraphHandler(index, avg);
-          }
-          TempWellResults.Clear();
-          _activeRegionsUpdateGoing = false;
-        }));
+            NullWellResults.Clear();
+            _activeRegionsUpdateGoing = false;
+          };
+        }
+        else
+        {
+          action = () =>
+          {
+            ViewModels.ResultsViewModel.Instance.CurrentAnalysis12Map.Clear();
+            foreach (var result in TempWellResults)
+            {
+              var index = App.MapRegions.RegionsList.IndexOf(result.region.ToString());
+              if (index < 0)
+                continue;
+              float avg = 0;
+              if (result.vals.Length == 0)
+              {
+                App.MapRegions.CurrentActiveRegionsCount[index] = "0";
+                App.MapRegions.CurrentActiveRegionsMean[index] = "0";
+              }
+              else
+              {
+                avg = result.vals.Average();
+                App.MapRegions.CurrentActiveRegionsCount[index] = result.vals.Length.ToString();
+                App.MapRegions.CurrentActiveRegionsMean[index] = avg.ToString("0,0");
+                Array.Clear(result.vals, 0, result.vals.Length); //Crutch. Explicit clear needed for some reason
+              }
+              if (index != 0)
+                Reporter3DGraphHandler(index - 1, avg); // -1 accounts for region = 0
+            }
+
+            TempWellResults.Clear();
+            _activeRegionsUpdateGoing = false;
+          };
+        }
+        _ = App.Current.Dispatcher.BeginInvoke(action);
       }
     }
     private static void Reporter3DGraphHandler(int regionIndex, double reporterAvg)

@@ -40,7 +40,7 @@ namespace Ei_Dimension.ViewModels
           (() =>
           {
             UserInputHandler.InputSanityCheck();
-            for (var i = 0; i < App.MapRegions.ActiveRegions.Count; i++)
+            for (var i = 1; i < App.MapRegions.ActiveRegions.Count; i++)
             {
               if (!App.MapRegions.ActiveRegions[i])
                 App.MapRegions.AddActiveRegion(i);
