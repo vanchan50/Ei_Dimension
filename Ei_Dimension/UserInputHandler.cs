@@ -98,14 +98,14 @@ namespace Ei_Dimension
             {
               if (float.TryParse(_tempNewString, out fRes))
               {
-                if (fRes >= 1 && fRes <= 30000)
+                if (fRes >= 1 && fRes <= 40000)
                 {
                   MicroCy.InstrumentParameters.Calibration.HdnrTrans = fRes;
                   break;
                 }
               }
               failed = true;
-              ErrorMessage = "[1-30000]";
+              ErrorMessage = "[1-40000]";
             }
             break;
           case "EndRead":
