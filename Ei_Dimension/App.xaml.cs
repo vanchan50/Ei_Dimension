@@ -93,10 +93,13 @@ namespace Ei_Dimension
       MicroCyDevice.BeadsToCapture = Settings.Default.BeadsToCapture;
       MicroCyDevice.OnlyClassified = Settings.Default.OnlyClassifed;
       MicroCyDevice.ChannelBIsHiSensitivity = Settings.Default.SensitivityChannelB;
+      var param = MicroCyDevice.ChannelBIsHiSensitivity ? 0 : 1;
+      Device.MainCommand("Set Property", code: 0x1e, parameter: (ushort)param);
       Device.MainCommand("Set Property", code: 0xbf, parameter: (ushort)Device.MapCtroller.ActiveMap.calParams.att);
       if (!System.Windows.Input.Keyboard.IsKeyDown(System.Windows.Input.Key.LeftCtrl))
         Device.MainCommand("Startup");
       MicroCy.InstrumentParameters.Calibration.HdnrTrans = Device.MapCtroller.ActiveMap.calParams.DNRTrans;
+      Device.MainCommand("Set FProperty", code: 0x0a, fparameter: MicroCy.InstrumentParameters.Calibration.HdnrTrans);
       MicroCy.InstrumentParameters.Calibration.Compensation = Device.MapCtroller.ActiveMap.calParams.compensation;
       Device.MainCommand("Set Property", code: 0x97, parameter: 1170);  //set current limit of aligner motors if leds are off
       Device.MainCommand("Get Property", code: 0xca);
@@ -150,6 +153,7 @@ namespace Ei_Dimension
         Device.MainCommand("Set FProperty", code: 0x20, fparameter: Device.MapCtroller.ActiveMap.calParams.DNRCoef);
         CaliVM.DNRContents[1] = Device.MapCtroller.ActiveMap.calParams.DNRTrans.ToString();
         MicroCy.InstrumentParameters.Calibration.HdnrTrans = Device.MapCtroller.ActiveMap.calParams.DNRTrans;
+        Device.MainCommand("Set FProperty", code: 0x0a, fparameter: MicroCy.InstrumentParameters.Calibration.HdnrTrans);
         CaliVM.ClassificationTargetsContents[0] = Device.MapCtroller.ActiveMap.calParams.CL0.ToString();
         Device.MainCommand("Set Property", code: 0x8b, parameter: (ushort)Device.MapCtroller.ActiveMap.calParams.CL0);
         CaliVM.ClassificationTargetsContents[1] = Device.MapCtroller.ActiveMap.calParams.CL1.ToString();

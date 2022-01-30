@@ -19,6 +19,8 @@ namespace Ei_Dimension.ViewModels
     public virtual object SliderValue3 { get; set; }
     public bool OverrideSliderChange { get; set; }
     public virtual ObservableCollection<string> SiPMTempCoeff { get; set; }
+    public virtual ObservableCollection<string> CalibrationMargin { get; set; }
+    public virtual ObservableCollection<bool> Checkbox { get; set; }
     public virtual string SelectedSensitivityContent { get; set; }
     public virtual ObservableCollection<DropDownButtonContents> SensitivityItems { get; set; }
     public byte SelectedSensitivityIndex { get; set; }
@@ -32,12 +34,17 @@ namespace Ei_Dimension.ViewModels
       AverageBg = new ObservableCollection<string>();
       OldBoardOffsetsVisible = System.Windows.Visibility.Visible;
       SiPMTempCoeff = new ObservableCollection<string> { "" };
+      CalibrationMargin = new ObservableCollection<string> { "" };
       for (var i = 0; i < 10; i++)
       {
         ChannelsOffsetParameters.Add("");
         ChannelsBaseline.Add("");
         AverageBg.Add("");
       }
+
+      Checkbox = new ObservableCollection<bool> { Settings.Default.SubtractBaseline };
+      var param = Settings.Default.SubtractBaseline ? 1 : 0;
+      App.Device.MainCommand("Set Property", code: 0x1d, parameter: (ushort)param);
       var RM = Language.Resources.ResourceManager;
       var curCulture = Language.TranslationSource.Instance.CurrentCulture;
       SensitivityItems = new ObservableCollection<DropDownButtonContents>
@@ -188,7 +195,27 @@ namespace Ei_Dimension.ViewModels
           UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsBaseline)), this, 9, (TextBox)BaselineStackpanel[9]);
           MainViewModel.Instance.NumpadToggleButton((TextBox)BaselineStackpanel[9]);
           break;
+        case 21:
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(CalibrationMargin)), this, 0, Views.ChannelOffsetView.Instance.CalMarginTB);
+          MainViewModel.Instance.NumpadToggleButton(Views.ChannelOffsetView.Instance.CalMarginTB);
+          break;
       }
+    }
+
+    public void CheckedBox(int num)
+    {
+      if (num == 0)
+      {
+        App.Device.MainCommand("Set Property", code: 0x1d, parameter: (ushort)0);
+        Checkbox[0] = false;
+        Settings.Default.SubtractBaseline = false;
+        Settings.Default.Save();
+        return;
+      }
+      Checkbox[0] = true;
+      Settings.Default.SubtractBaseline = true;
+      Settings.Default.Save();
+      App.Device.MainCommand("Set Property", code: 0x1d, parameter: (ushort)1);
     }
 
     public void TextChanged(TextChangedEventArgs e)
@@ -203,7 +230,8 @@ namespace Ei_Dimension.ViewModels
 
     private static void SetSensitivityChannel(byte num)
     {
-      MicroCy.MicroCyDevice.ChannelBIsHiSensitivity = num == 0;
+      MicroCyDevice.ChannelBIsHiSensitivity = num == 0;
+      App.Device.MainCommand("Set Property", code: 0x1e, parameter: (ushort)num);
       Settings.Default.SensitivityChannelB = num == 0;
       Settings.Default.Save();
       ResultsViewModel.Instance.SwapHiSensChannelsStats();

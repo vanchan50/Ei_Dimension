@@ -229,6 +229,9 @@ To Current Map</value>
   <data name="Channels_Bias" xml:space="preserve">
     <value>Bias @ 30ᴼC</value>
   </data>
+  <data name="Channels_Calibration_Margin" xml:space="preserve">
+    <value>Calibration Margin</value>
+  </data>
   <data name="Channels_Forward_Scatter" xml:space="preserve">
     <value>Forward Scatter</value>
   </data>
@@ -274,6 +277,9 @@ To Current
   <data name="Channels_SiPM_Temp_Coefficient" xml:space="preserve">
     <value>SiPM Temp
 Coefficient</value>
+  </data>
+  <data name="Channels_Subtract_Baseline" xml:space="preserve">
+    <value>Subtract Baseline</value>
   </data>
   <data name="Channels_Tcomp_Bias" xml:space="preserve">
     <value>Tcomp Bias</value>

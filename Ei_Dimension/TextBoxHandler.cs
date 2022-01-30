@@ -38,6 +38,9 @@ namespace Ei_Dimension
             update = () => MainViewModel.Instance.TotalBeadsInFirmware[0] = exe.FParameter.ToString();
             break;
           #endif
+          case 0x08:
+            update = () => ChannelOffsetViewModel.Instance.CalibrationMargin[0] = exe.FParameter.ToString();
+            break;
           case 0x10:  //cuvet drain cb
             update = () => ComponentsViewModel.Instance.ValvesStates[2] = exe.Parameter == 1;
             break;

@@ -234,7 +234,7 @@
     <value>Tcomp偏置</value>
   </data>
   <data name="Channels_Update_Bias" xml:space="preserve">
-    <value>更新偏置</value>
+    <value>更新 DAC</value>
   </data>
   <data name="Channels_Violet_A" xml:space="preserve">
     <value>紫光 A (SSC)</value>

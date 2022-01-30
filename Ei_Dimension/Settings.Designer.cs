@@ -322,5 +322,17 @@ namespace Ei_Dimension {
                 this["LastOutFolder"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool SubtractBaseline {
+            get {
+                return ((bool)(this["SubtractBaseline"]));
+            }
+            set {
+                this["SubtractBaseline"] = value;
+            }
+        }
     }
 }

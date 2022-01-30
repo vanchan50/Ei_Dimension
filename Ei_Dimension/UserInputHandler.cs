@@ -101,6 +101,7 @@ namespace Ei_Dimension
                 if (fRes >= 1 && fRes <= 40000)
                 {
                   MicroCy.InstrumentParameters.Calibration.HdnrTrans = fRes;
+                  App.Device.MainCommand("Set FProperty", code: 0x0a, fparameter: fRes);
                   break;
                 }
               }
@@ -470,6 +471,18 @@ namespace Ei_Dimension
             }
             failed = true;
             ErrorMessage = "[-10.0 - 10.0]";
+            break;
+          case "CalibrationMargin":
+            if (float.TryParse(_tempNewString, out fRes))
+            {
+              if (fRes >= 0 && fRes < 0.1)
+              {
+                App.Device.MainCommand("Set FProperty", code: 0x08, fparameter: fRes);
+                break;
+              }
+            }
+            failed = true;
+            ErrorMessage = "[0.0 - 0.1]";
             break;
           case "Bias30Parameters":
             if (SelectedTextBox.index == 0)

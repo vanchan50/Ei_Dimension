@@ -87,6 +87,26 @@
               <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
             </dxmvvm:Interaction.Behaviors>
           </TextBox>
+          <TextBlock Text="{lang:Loc Channels_Calibration_Margin}"
+                     FontFamily="{StaticResource AppTextFont}"
+                     FontSize="36"
+                     Height="100"
+                     TextWrapping="Wrap"
+                     TextAlignment="Center"
+                     FontWeight="UltraBold"
+                     Foreground="{StaticResource AppTextColor}"
+                     HorizontalAlignment="Center"
+                     VerticalAlignment="Top"
+                     Margin="0,5,0,0"/>
+          <TextBox HorizontalAlignment="Stretch"
+                   Margin="30,0,30,13" Name="CalMarginTB"
+                   Style="{StaticResource InputFieldStyle}"
+                   Text="{Binding CalibrationMargin[0]}">
+            <dxmvvm:Interaction.Behaviors>
+              <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="21"/>
+              <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+            </dxmvvm:Interaction.Behaviors>
+          </TextBox>
           <Button Content="{lang:Loc Channels_Update_Bias}"
                   Command="{Binding UpdateBiasButtonClickCommand}"
                   Style="{StaticResource ButtonStyle}"
@@ -548,6 +568,27 @@
                                      Command="{Binding SliderValueChangedCommand}" CommandParameter="2"/>
             </dxmvvm:Interaction.Behaviors>
           </dxe:TrackBarEdit>
+          <StackPanel Orientation="Horizontal"
+                      Margin="15,10,0,0">
+            <CheckBox FontFamily="{StaticResource AppTextFont}"
+                      FontSize="30"
+                      FontWeight="UltraBold"
+                      Foreground="{StaticResource AppTextColor}"
+                      Margin="0,4,0,0"
+                      Style="{StaticResource CheckboxStyle}"
+                      IsChecked="{Binding Checkbox[0],Mode=OneWay}">
+              <dxmvvm:Interaction.Behaviors>
+                <dxmvvm:EventToCommand EventName="Checked" Command="{Binding CheckedBoxCommand}" CommandParameter="1"/>
+                <dxmvvm:EventToCommand EventName="Unchecked" Command="{Binding CheckedBoxCommand}" CommandParameter="0"/>
+              </dxmvvm:Interaction.Behaviors>
+            </CheckBox>
+            <TextBlock Text="{lang:Loc Channels_Subtract_Baseline}"
+                       FontFamily="{StaticResource AppTextFont}"
+                       FontSize="30"
+                       FontWeight="UltraBold"
+                       Foreground="{StaticResource AppTextColor}"
+                       Margin="10,0,0,0"/>
+          </StackPanel>
         </StackPanel>
       </StackPanel>
     </Border>

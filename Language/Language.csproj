@@ -55,11 +55,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.en.resx</DependentUpon>
     </Compile>
-    <Compile Include="Properties\Resources.he.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.he.resx</DependentUpon>
-    </Compile>
     <Compile Include="Supported.cs" />
     <Compile Include="TranslationSource.cs" />
   </ItemGroup>
@@ -68,11 +63,6 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.en.Designer.cs</LastGenOutput>
       <CustomToolNamespace>Ei_Dimension.Language</CustomToolNamespace>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.he.resx">
-      <CustomToolNamespace>Ei_Dimension.Language</CustomToolNamespace>
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.he.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

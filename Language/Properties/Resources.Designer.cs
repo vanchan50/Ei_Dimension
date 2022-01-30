@@ -396,6 +396,15 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Calibration Margin.
+        /// </summary>
+        public static string Channels_Calibration_Margin {
+            get {
+                return ResourceManager.GetString("Channels_Calibration_Margin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Forward Scatter.
         /// </summary>
         public static string Channels_Forward_Scatter {
@@ -522,6 +531,15 @@ namespace Ei_Dimension.Language {
         public static string Channels_SiPM_Temp_Coefficient {
             get {
                 return ResourceManager.GetString("Channels_SiPM_Temp_Coefficient", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Subtract Baseline.
+        /// </summary>
+        public static string Channels_Subtract_Baseline {
+            get {
+                return ResourceManager.GetString("Channels_Subtract_Baseline", resourceCulture);
             }
         }
         
