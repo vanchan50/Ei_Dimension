@@ -487,7 +487,7 @@ namespace Ei_Dimension
           case "ReporterScale":
             if (float.TryParse(_tempNewString, out fRes))
             {
-              if (fRes >= 0 && fRes <= 1)
+              if (fRes > 0.01 && fRes <= 1)
               {
                 App.Device.ReporterScaling = fRes;
                 Settings.Default.ReporterScaling = fRes;
@@ -495,7 +495,7 @@ namespace Ei_Dimension
               }
             }
             failed = true;
-            ErrorMessage = "[0.0 - 1.0]";
+            ErrorMessage = "[0.01 - 1.0]";
             break;
           case "Bias30Parameters":
             if (SelectedTextBox.index == 0)
