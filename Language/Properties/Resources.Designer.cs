@@ -487,6 +487,15 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Reporter Scaling.
+        /// </summary>
+        public static string Channels_Reporter_scaling {
+            get {
+                return ResourceManager.GetString("Channels_Reporter_scaling", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to  Save Bias
         ///To Current
         ///     Map.

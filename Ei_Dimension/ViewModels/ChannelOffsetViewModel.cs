@@ -2,6 +2,7 @@
 using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Windows.Controls;
 using MicroCy;
 
@@ -20,6 +21,7 @@ namespace Ei_Dimension.ViewModels
     public bool OverrideSliderChange { get; set; }
     public virtual ObservableCollection<string> SiPMTempCoeff { get; set; }
     public virtual ObservableCollection<string> CalibrationMargin { get; set; }
+    public virtual ObservableCollection<string> ReporterScale { get; set; }
     public virtual ObservableCollection<bool> Checkbox { get; set; }
     public virtual string SelectedSensitivityContent { get; set; }
     public virtual ObservableCollection<DropDownButtonContents> SensitivityItems { get; set; }
@@ -35,6 +37,7 @@ namespace Ei_Dimension.ViewModels
       OldBoardOffsetsVisible = System.Windows.Visibility.Visible;
       SiPMTempCoeff = new ObservableCollection<string> { "" };
       CalibrationMargin = new ObservableCollection<string> { "" };
+      ReporterScale = new ObservableCollection<string> { Settings.Default.ReporterScaling.ToString(CultureInfo.InvariantCulture) };
       for (var i = 0; i < 10; i++)
       {
         ChannelsOffsetParameters.Add("");
@@ -198,6 +201,10 @@ namespace Ei_Dimension.ViewModels
         case 21:
           UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(CalibrationMargin)), this, 0, Views.ChannelOffsetView.Instance.CalMarginTB);
           MainViewModel.Instance.NumpadToggleButton(Views.ChannelOffsetView.Instance.CalMarginTB);
+          break;
+        case 22:
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ReporterScale)), this, 0, Views.ChannelOffsetView.Instance.RepScalingTB);
+          MainViewModel.Instance.NumpadToggleButton(Views.ChannelOffsetView.Instance.RepScalingTB);
           break;
       }
     }

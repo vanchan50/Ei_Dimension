@@ -260,6 +260,9 @@ To Current Map</value>
   <data name="Channels_Red_D" xml:space="preserve">
     <value>Red D (CL2)</value>
   </data>
+  <data name="Channels_Reporter_scaling" xml:space="preserve">
+    <value>Reporter Scaling</value>
+  </data>
   <data name="Channels_Save_Bias_To_Map" xml:space="preserve">
     <value> Save Bias
 To Current

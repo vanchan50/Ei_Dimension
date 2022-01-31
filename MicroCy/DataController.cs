@@ -49,7 +49,7 @@ namespace MicroCy
               BeadInfoStruct outbead;
               if (!GetBeadFromBuffer(_serialConnection.InputBuffer, i, out outbead))
                 break;
-              BeadProcessor.CalculateBeadParams(ref outbead);
+              BeadProcessor.CalculateBeadParams(ref outbead, _device.ReporterScaling);
 
               MicroCyDevice.FillActiveWellResults(in outbead);
               if (outbead.region == 0 && MicroCyDevice.OnlyClassified)

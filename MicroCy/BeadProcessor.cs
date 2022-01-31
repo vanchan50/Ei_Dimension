@@ -23,7 +23,7 @@ namespace MicroCy
       ClassificationBins = GenerateLogSpace(1, 60000, 256);
     }
 
-    public static void CalculateBeadParams(ref BeadInfoStruct outbead)
+    public static void CalculateBeadParams(ref BeadInfoStruct outbead, in double RepScale)
     {
       //greenMaj is the hi dyn range channel, greenMin is the high sensitivity channel(depends on filter placement)
       if (MicroCyDevice.ChannelBIsHiSensitivity)
@@ -42,7 +42,8 @@ namespace MicroCy
       outbead.cl2 = cl.cl2;
       outbead.region = (ushort)ClassifyBeadToRegion(cl);
       //handle HI dnr channel
-      outbead.reporter = _greenMin > Calibration.HdnrTrans ? _greenMaj * Calibration.HDnrCoef : _greenMin;
+      var reporter = _greenMin > Calibration.HdnrTrans ? _greenMaj * Calibration.HDnrCoef : _greenMin;
+      outbead.reporter = (float)(reporter / RepScale);
     }
 
     private static int ClassifyBeadToRegion((float cl0, float cl1, float cl2, float cl3) cl)

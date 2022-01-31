@@ -93,6 +93,7 @@ namespace Ei_Dimension
       MicroCyDevice.BeadsToCapture = Settings.Default.BeadsToCapture;
       MicroCyDevice.OnlyClassified = Settings.Default.OnlyClassifed;
       MicroCyDevice.ChannelBIsHiSensitivity = Settings.Default.SensitivityChannelB;
+      Device.ReporterScaling = Settings.Default.ReporterScaling;
       var param = MicroCyDevice.ChannelBIsHiSensitivity ? 0 : 1;
       Device.MainCommand("Set Property", code: 0x1e, parameter: (ushort)param);
       Device.MainCommand("Set Property", code: 0xbf, parameter: (ushort)Device.MapCtroller.ActiveMap.calParams.att);

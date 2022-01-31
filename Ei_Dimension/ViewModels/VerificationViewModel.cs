@@ -202,6 +202,7 @@ namespace Ei_Dimension.ViewModels
         {
           int regionNum = int.Parse(App.MapRegions.RegionsList[i]);
           double inputReporter = double.Parse(App.MapRegions.VerificationReporterList[i]);
+          inputReporter /= App.Device.ReporterScaling;  //adjust for scaling factor
           int validatorIndex = Validator.RegionalStats.FindIndex(x => x.Region == regionNum);
 
           if (Validator.RegionalStats[validatorIndex].Stats[0].mfi <= inputReporter * (1 - reporterErrorMargin) &&

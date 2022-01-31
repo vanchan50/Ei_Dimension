@@ -113,10 +113,30 @@
                   Height="85" Cursor="Hand"
                   Margin="0,0,0,8"/>
           <Button Content="{lang:Loc Ch_Offset_Set_Offset}"
-                  Visibility="Hidden"
+                  Visibility="Collapsed"
                   Command="{Binding SetOffsetClickCommand}"
                   Style="{StaticResource ButtonStyle}"
                   Height="85"/>
+          <TextBlock Text="{lang:Loc Channels_Reporter_scaling}"
+                     FontFamily="{StaticResource AppTextFont}"
+                     FontSize="36"
+                     Height="100"
+                     TextWrapping="Wrap"
+                     TextAlignment="Center"
+                     FontWeight="UltraBold"
+                     Foreground="{StaticResource AppTextColor}"
+                     HorizontalAlignment="Center"
+                     VerticalAlignment="Top"
+                     Margin="0,40,0,0"/>
+          <TextBox HorizontalAlignment="Stretch"
+                   Margin="30,0,30,13" Name="RepScalingTB"
+                   Style="{StaticResource InputFieldStyle}"
+                   Text="{Binding ReporterScale[0]}">
+            <dxmvvm:Interaction.Behaviors>
+              <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="22"/>
+              <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+            </dxmvvm:Interaction.Behaviors>
+          </TextBox>
         </StackPanel>
         <!--Names-->
         <StackPanel VerticalAlignment="Stretch"
