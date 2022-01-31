@@ -38,9 +38,7 @@
 
     public override string ToString()   //setup for csv output
     {
-      return string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16},{17},{18},{19},{20},{21},{22},{23},{24},{25}\r",
-        Header, EventTime, fsc_bg, vssc_bg, cl0_bg, cl1_bg, cl2_bg, cl3_bg, rssc_bg, gssc_bg, greenB_bg, greenC_bg, greenB, greenC,
-        l_offset_rg, l_offset_gv, region, fsc, violetssc, cl0, redssc, cl1, cl2, cl3, greenssc, reporter);
+      return $"{Header.ToString()},{EventTime.ToString()},{fsc_bg.ToString()},{vssc_bg.ToString()},{cl0_bg.ToString()},{cl1_bg.ToString()},{cl2_bg.ToString()},{cl3_bg.ToString()},{rssc_bg.ToString()},{gssc_bg.ToString()},{greenB_bg.ToString()},{greenC_bg.ToString()},{greenB.ToString()},{greenC.ToString()},{l_offset_rg.ToString()},{l_offset_gv.ToString()},{region.ToString()},{fsc.ToString()},{violetssc.ToString()},{cl0.ToString()},{redssc.ToString()},{cl1.ToString()},{cl2.ToString()},{cl3.ToString()},{greenssc.ToString()},{reporter.ToString($"{0:0.000}")}";
     }
   }
 }
