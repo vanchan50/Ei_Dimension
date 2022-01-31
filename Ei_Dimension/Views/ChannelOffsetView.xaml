@@ -533,7 +533,7 @@
                             Minimum="21000" Maximum="24000"
                             Width="360" EditValue="{Binding SliderValue1}"
                             CornerRadius="4" TickPlacement="None"
-                            EditValuePostMode="Delayed" EditValuePostDelay="5"
+                            EditValuePostMode="Immediate"
                             NearTrackStyle="{StaticResource nearTrackStyle}"
                             FarTrackStyle="{StaticResource farTrackStyle}"
                             ThumbStyle="{StaticResource trackBarEditThumbStyle}">
@@ -546,7 +546,7 @@
                             Minimum="21000" Maximum="24000"
                             Width="360" EditValue="{Binding SliderValue2}"
                             CornerRadius="4" TickPlacement="None"
-                            EditValuePostMode="Delayed" EditValuePostDelay="5"
+                            EditValuePostMode="Immediate"
                             NearTrackStyle="{StaticResource nearTrackStyle}"
                             FarTrackStyle="{StaticResource farTrackStyle}"
                             ThumbStyle="{StaticResource trackBarEditThumbStyle}">
@@ -559,7 +559,7 @@
                             Minimum="21000" Maximum="24000"
                             Width="360" EditValue="{Binding SliderValue3}"
                             CornerRadius="4" TickPlacement="None"
-                            EditValuePostMode="Delayed" EditValuePostDelay="5"
+                            EditValuePostMode="Immediate"
                             NearTrackStyle="{StaticResource nearTrackStyle}"
                             FarTrackStyle="{StaticResource farTrackStyle}"
                             ThumbStyle="{StaticResource trackBarEditThumbStyle}">

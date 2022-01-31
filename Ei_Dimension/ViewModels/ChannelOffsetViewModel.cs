@@ -77,7 +77,7 @@ namespace Ei_Dimension.ViewModels
 
     public void SliderValueChanged(int param)
     {
-      if (App.Device.BoardVersion <= 1)
+      if (App.Device.BoardVersion < 1)
         return;
 
       if (OverrideSliderChange)
