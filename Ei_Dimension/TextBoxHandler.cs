@@ -112,8 +112,11 @@ namespace Ei_Dimension
             }
             break;
           case 0x20:
-            update = () => CalibrationViewModel.Instance.DNRContents[0] = exe.FParameter.ToString();
-            MicroCy.InstrumentParameters.Calibration.HDnrCoef = exe.FParameter;
+            update = () =>
+            {
+              CalibrationViewModel.Instance.DNRContents[0] = exe.FParameter.ToString();
+              MicroCy.InstrumentParameters.Calibration.HDnrCoef = exe.FParameter;
+            };
             break;
           case 0x22:  //pressure
             update = () =>
@@ -386,15 +389,16 @@ namespace Ei_Dimension
           case 0xa7:
             update = () => ChannelsViewModel.Instance.TcompBiasParameters[5] = exe.Parameter.ToString();
             break;
-          case 0xa8:
-            update = () => DashboardViewModel.Instance.OrderItems[exe.Parameter].ForAppUpdater(4);
-            break;
-          case 0xa9:
-            update = () => DashboardViewModel.Instance.ClassiMapItems[exe.Parameter].ForAppUpdater(2);
-            break;
-          case 0xaa:  //read speed
-            update = () => DashboardViewModel.Instance.SpeedItems[exe.Parameter].ForAppUpdater(1);
-            break;
+          //TODO: LEGACY
+          //case 0xa8:
+          //  update = () => DashboardViewModel.Instance.OrderItems[exe.Parameter].ForAppUpdater(4);
+          //  break;
+          //case 0xa9:
+          //  update = () => DashboardViewModel.Instance.ClassiMapItems[exe.Parameter].ForAppUpdater(2);
+          //  break;
+          //case 0xaa:  //read speed
+          //  update = () => DashboardViewModel.Instance.SpeedItems[exe.Parameter].ForAppUpdater(1);
+          //  break;
           case 0xac:
             update = () => DashboardViewModel.Instance.Volumes[1] = exe.Parameter.ToString();
             break;
