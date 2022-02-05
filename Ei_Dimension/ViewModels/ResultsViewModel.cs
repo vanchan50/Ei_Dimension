@@ -342,7 +342,7 @@ namespace Ei_Dimension.ViewModels
           _fillDataActive = false;
           return;
         }
-        FillBackingWellResults();
+        InitBackingWellResults();
         var beadStructsList = new List<MicroCy.BeadInfoStruct>(100000);
         if(!ParseBeadInfo(path, beadStructsList))
         {
@@ -376,7 +376,7 @@ namespace Ei_Dimension.ViewModels
       });
     }
 
-    private void FillBackingWellResults()
+    private void InitBackingWellResults()
     {
       BackingWResults.Clear();
       if (App.MapRegions.ActiveRegionNums.Count > 0)

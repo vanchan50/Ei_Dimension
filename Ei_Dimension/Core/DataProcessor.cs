@@ -206,7 +206,7 @@ namespace Ei_Dimension.Core
       var ScatterDataCount = ScatterData.CurrentReporter.Count;
       var MaxValue = ScatterData.CurrentReporter[ScatterDataCount - 1].Argument;
       int[] reporter, fsc, red, green, violet;
-      List<List<float>> activeRegionsStats = new List<List<float>>(App.MapRegions.RegionsList.Count);  //for mean and count
+      List<List<float>> activeRegionsStats = new List<List<float>>(App.MapRegions.RegionsList.Count);  //for mean and count //TODO: NULLregionActive
       if (fromFile)
       {
         reporter = ScatterData.bReporter;
@@ -287,8 +287,29 @@ namespace Ei_Dimension.Core
           {
             if (lst.Count > 0)
             {
-              App.MapRegions.BackingActiveRegionsCount[j] = lst.Count.ToString();
-              App.MapRegions.BackingActiveRegionsMean[j] = lst.Average().ToString("0,0");
+              float avg = 0;
+              float mean = 0;
+              var count = lst.Count;
+              if (count > 0)
+              {
+                avg = lst.Average();
+                if (count >= 20)
+                {
+                  lst.Sort();
+                  int quarterIndex = count / 4;
+
+                  float sum = 0;
+                  for (var i = quarterIndex; i < count - quarterIndex; i++)
+                  {
+                    sum += lst[i];
+                  }
+                  mean = sum / (count - 2 * quarterIndex);
+                }
+                else
+                  mean = avg;
+              }
+              App.MapRegions.BackingActiveRegionsCount[j] = count.ToString();
+              App.MapRegions.BackingActiveRegionsMean[j] = mean.ToString("0,0");
             }
             j++;
           }
