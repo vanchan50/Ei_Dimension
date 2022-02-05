@@ -578,5 +578,10 @@ namespace Ei_Dimension.Models
       }
     }
 
+    public void InjectTrimmedMeanToCurrentActiveRegions()
+    {
+
+    }
+
   }
 }

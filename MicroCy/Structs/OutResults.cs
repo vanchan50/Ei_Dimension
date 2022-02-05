@@ -14,8 +14,7 @@ namespace MicroCy
     public float cv;
     public override string ToString()
     {
-      return string.Format("{0},{1},{2},{3},{4},{5:F3},{6:F1}\r",
-        row, col, region, count, medfi, meanfi, cv);
+      return $"{row},{col.ToString()},{region.ToString()},{count.ToString()},{medfi.ToString()},{meanfi.ToString("5:F3")},{cv.ToString("6:F1")}\r";
     }
   }
 }

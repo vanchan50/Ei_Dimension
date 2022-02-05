@@ -238,8 +238,6 @@ namespace MicroCy
       rout.count = regionNumber.RP1vals.Count;
       rout.region = regionNumber.regionNumber;
       var rp1Temp = regionNumber.RP1vals;
-      if (rout.count > 2)
-        rout.meanfi = rp1Temp.Average();
       if (rout.count >= 20)
       {
         rp1Temp.Sort();
@@ -256,6 +254,8 @@ namespace MicroCy
         rout.medfi = (float)Math.Round(rp1Temp[quarter]);// - rpbg);
         //rout.meanfi -= rpbg;
       }
+      else if (rout.count > 2)
+        rout.meanfi = rp1Temp.Average();
       return rout;
     }
   }

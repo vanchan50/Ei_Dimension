@@ -47,8 +47,25 @@ namespace Ei_Dimension
             }
             else
             {
-              App.MapRegions.CurrentActiveRegionsCount[0] = NullWellResults.Count.ToString();
-              App.MapRegions.CurrentActiveRegionsMean[0] = NullWellResults.Average().ToString("0,0");
+              float avg = NullWellResults.Average();
+              float mean = 0;
+              var count = NullWellResults.Count;
+              if (count >= 20)
+              {
+                NullWellResults.Sort();
+                int quarterIndex = count / 4;
+
+                float sum = 0;
+                for (var i = quarterIndex; i < count - quarterIndex; i++)
+                {
+                  sum += NullWellResults[i];
+                }
+                mean = sum / (count - 2 * quarterIndex);
+              }
+              else
+                mean = avg;
+              App.MapRegions.CurrentActiveRegionsCount[0] = count.ToString();
+              App.MapRegions.CurrentActiveRegionsMean[0] = mean.ToString("0,0");
             }
             NullWellResults.Clear();
             _activeRegionsUpdateGoing = false;
@@ -65,6 +82,7 @@ namespace Ei_Dimension
               if (index < 0)
                 continue;
               float avg = 0;
+              float mean = 0;
               if (result.vals.Length == 0)
               {
                 App.MapRegions.CurrentActiveRegionsCount[index] = "0";
@@ -73,12 +91,28 @@ namespace Ei_Dimension
               else
               {
                 avg = result.vals.Average();
-                App.MapRegions.CurrentActiveRegionsCount[index] = result.vals.Length.ToString();
-                App.MapRegions.CurrentActiveRegionsMean[index] = avg.ToString("0,0");
+                var count = result.vals.Length;
+                if (count >= 20)
+                {
+                  Array.Sort(result.vals);
+                  int quarterIndex = count / 4;
+
+                  float sum = 0;
+                  for (var i = quarterIndex; i < count - quarterIndex; i++)
+                  {
+                    sum += result.vals[i];
+                  }
+                  mean = sum / (count - 2 * quarterIndex);
+                }
+                else
+                  mean = avg;
+
+                App.MapRegions.CurrentActiveRegionsCount[index] = count.ToString();
+                App.MapRegions.CurrentActiveRegionsMean[index] = mean.ToString("0,0");
                 Array.Clear(result.vals, 0, result.vals.Length); //Crutch. Explicit clear needed for some reason
               }
               if (index != 0)
-                Reporter3DGraphHandler(index - 1, avg); // -1 accounts for region = 0
+                Reporter3DGraphHandler(index - 1, mean); // -1 accounts for region = 0
             }
 
             TempWellResults.Clear();
