@@ -206,7 +206,8 @@ namespace Ei_Dimension.Core
       var ScatterDataCount = ScatterData.CurrentReporter.Count;
       var MaxValue = ScatterData.CurrentReporter[ScatterDataCount - 1].Argument;
       int[] reporter, fsc, red, green, violet;
-      List<List<float>> activeRegionsStats = new List<List<float>>(App.MapRegions.RegionsList.Count);  //for mean and count //TODO: NULLregionActive
+      //NULL Region is included in RegionsList
+      List<List<float>> activeRegionsStats = new List<List<float>>(App.MapRegions.RegionsList.Count);  //for mean and count 
       if (fromFile)
       {
         reporter = ScatterData.bReporter;
