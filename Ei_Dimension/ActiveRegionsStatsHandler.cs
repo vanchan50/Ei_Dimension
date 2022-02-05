@@ -36,34 +36,38 @@ namespace Ei_Dimension
             }
           }
           TempWellResults.Clear();
+          
+          var count = NullWellResults.Count;
+          float mean = 0;
+          if (count > 0)
+          {
+            float avg = NullWellResults.Average();
+            if (count >= 20)
+            {
+              NullWellResults.Sort();
+              int quarterIndex = count / 4;
+
+              float sum = 0;
+              for (var i = quarterIndex; i < count - quarterIndex; i++)
+              {
+                sum += NullWellResults[i];
+              }
+              mean = sum / (count - 2 * quarterIndex);
+            }
+            else
+              mean = avg;
+          }
 
           action = () =>
           {
             ViewModels.ResultsViewModel.Instance.CurrentAnalysis12Map.Clear();
-            if (NullWellResults.Count == 0)
+            if (count == 0)
             {
               App.MapRegions.CurrentActiveRegionsCount[0] = "0";
               App.MapRegions.CurrentActiveRegionsMean[0] = "0";
             }
             else
             {
-              float avg = NullWellResults.Average();
-              float mean = 0;
-              var count = NullWellResults.Count;
-              if (count >= 20)
-              {
-                NullWellResults.Sort();
-                int quarterIndex = count / 4;
-
-                float sum = 0;
-                for (var i = quarterIndex; i < count - quarterIndex; i++)
-                {
-                  sum += NullWellResults[i];
-                }
-                mean = sum / (count - 2 * quarterIndex);
-              }
-              else
-                mean = avg;
               App.MapRegions.CurrentActiveRegionsCount[0] = count.ToString();
               App.MapRegions.CurrentActiveRegionsMean[0] = mean.ToString("0,0");
             }
