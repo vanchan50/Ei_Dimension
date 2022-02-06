@@ -487,7 +487,7 @@ namespace Ei_Dimension
           case "ReporterScale":
             if (float.TryParse(_tempNewString, out fRes))
             {
-              if (fRes > 0.01 && fRes <= 1)
+              if (fRes > 0)
               {
                 App.Device.ReporterScaling = fRes;
                 Settings.Default.ReporterScaling = fRes;
@@ -495,7 +495,7 @@ namespace Ei_Dimension
               }
             }
             failed = true;
-            ErrorMessage = "[0.01 - 1.0]";
+            ErrorMessage = "[>0]";
             break;
           case "Bias30Parameters":
             if (SelectedTextBox.index == 0)
@@ -1427,7 +1427,12 @@ namespace Ei_Dimension
         {
           MainViewModel.Instance.HideHint();
           if (_tempNewString.TrimStart('0') != "")
-            ((ObservableCollection<string>)SelectedTextBox.prop.GetValue(SelectedTextBox.VM))[SelectedTextBox.index] = _tempNewString.TrimStart('0');
+          {
+            var trimmed =_tempNewString.TrimStart('0');
+            ((ObservableCollection<string>)SelectedTextBox.prop.GetValue(SelectedTextBox.VM))[SelectedTextBox.index] = trimmed;
+            if (trimmed[0] == '.')
+              ((ObservableCollection<string>)SelectedTextBox.prop.GetValue(SelectedTextBox.VM))[SelectedTextBox.index] = $"0{trimmed}";
+          }
           else
             ((ObservableCollection<string>)SelectedTextBox.prop.GetValue(SelectedTextBox.VM))[SelectedTextBox.index] = "0";
           SelectedTextBox.tb.Background = (System.Windows.Media.Brush)App.Current.Resources["AppBackground"];

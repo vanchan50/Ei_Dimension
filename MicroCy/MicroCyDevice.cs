@@ -55,7 +55,7 @@ namespace MicroCy
     public event EventHandler<StatsEventArgs> NewStatsAvailable;
     public static OperationMode Mode { get; set; }
     public int BoardVersion { get; internal set; }
-    public double ReporterScaling { get; set; }
+    public float ReporterScaling { get; set; }
     public static int WellsToRead { get; set; }
     public static int BeadsToCapture { get; set; }
     public static int BeadCount { get; internal set; }

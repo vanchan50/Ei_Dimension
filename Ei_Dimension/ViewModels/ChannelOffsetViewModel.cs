@@ -37,7 +37,7 @@ namespace Ei_Dimension.ViewModels
       OldBoardOffsetsVisible = System.Windows.Visibility.Visible;
       SiPMTempCoeff = new ObservableCollection<string> { "" };
       CalibrationMargin = new ObservableCollection<string> { "" };
-      ReporterScale = new ObservableCollection<string> { Settings.Default.ReporterScaling.ToString(CultureInfo.InvariantCulture) };
+      ReporterScale = new ObservableCollection<string> { Settings.Default.ReporterScaling.ToString($"{0:0.000}") };
       for (var i = 0; i < 10; i++)
       {
         ChannelsOffsetParameters.Add("");

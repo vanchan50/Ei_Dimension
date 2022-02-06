@@ -338,9 +338,9 @@ namespace Ei_Dimension {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("1")]
-        public double ReporterScaling {
+        public float ReporterScaling {
             get {
-                return ((double)(this["ReporterScaling"]));
+                return ((float)(this["ReporterScaling"]));
             }
             set {
                 this["ReporterScaling"] = value;
