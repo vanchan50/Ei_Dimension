@@ -188,32 +188,15 @@ namespace Ei_Dimension.ViewModels
 
     public static bool AnalyzeVerificationResults()
     {
-      bool passed = true;
-      if (Validator.TotalClassifiedBeads < MicroCyDevice.TotalBeads * 0.8)
-      {
-        Console.WriteLine("Verification Fail: Less than 80% of beads hit the regions");
-        passed = false;
-      }
-
-      double reporterErrorMargin = 0.2;
-      for (var i = 1; i < App.MapRegions.RegionsList.Count; i++)
-      {
-        if (App.MapRegions.VerificationRegions[i])
-        {
-          int regionNum = int.Parse(App.MapRegions.RegionsList[i]);
-          double inputReporter = double.Parse(App.MapRegions.VerificationReporterList[i]);
-          inputReporter /= App.Device.ReporterScaling;  //adjust for scaling factor
-          int validatorIndex = Validator.RegionalStats.FindIndex(x => x.Region == regionNum);
-
-          if (Validator.RegionalStats[validatorIndex].Stats[0].mfi <= inputReporter * (1 - reporterErrorMargin) &&
-              Validator.RegionalStats[validatorIndex].Stats[0].mfi >= inputReporter * (1 + reporterErrorMargin))
-          {
-            Console.WriteLine($"Verification Fail: Reporter value ({Validator.RegionalStats[validatorIndex].Stats[0].mfi.ToString()}) deviation is more than 20% from the target ({App.MapRegions.VerificationReporterList[i]})");
-            passed = false;
-          }
-        }
-      }
-      return passed;
+      double reporterErrorMargin = 20;
+      bool passed1 = Validator.ReporterToleranceTest(reporterErrorMargin);
+      //todo: input margins from ui
+      double ErrorMargin2 = 20;
+      var passed2 = Validator.ClassificationToleranceTest(ErrorMargin2);
+      
+      double ErrorMargin3 = 20;
+      bool passed3 = Validator.MisclassificationToleranceTest(ErrorMargin3);
+      return passed1 && passed2 && passed3;
     }
 
     public void DropPress()

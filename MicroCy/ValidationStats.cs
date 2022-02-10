@@ -6,13 +6,15 @@ namespace MicroCy
   public class ValidationStats
   {
     public int Region { get; }
+    internal double InputReporter { get; }
     public List<Gstats> Stats { get; } = new List<Gstats>(3);
     public int Count { get; private set; }
     private readonly float[,] _sfi = new float[100000, 3];
 
-    public ValidationStats(int reg)
+    public ValidationStats(int regionNum, double inputReporter)
     {
-      Region = reg;
+      Region = regionNum;
+      InputReporter = inputReporter;
     }
 
     public void FillCalibrationStatsRow(in BeadInfoStruct outbead)

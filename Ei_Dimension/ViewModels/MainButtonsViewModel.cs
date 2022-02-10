@@ -113,13 +113,15 @@ namespace Ei_Dimension.ViewModels
 
     private static void MakeNewValidator()
     {
-      var regions = new List<int>();
+      var regions = new List<(int regionNum, double InputReporter)>();
       for (var i = 1; i < App.MapRegions.RegionsList.Count; i++)
       {
         if (App.MapRegions.VerificationRegions[i])
         {
           int reg = int.Parse(App.MapRegions.RegionsList[i]);
-          regions.Add(reg);
+          var inputReporter = double.Parse(App.MapRegions.VerificationReporterList[i]);
+          inputReporter /= App.Device.ReporterScaling;  //adjust for scaling factor
+          regions.Add((reg, inputReporter));
         }
       }
       Validator.Reset(regions);
