@@ -61,6 +61,7 @@ namespace Ei_Dimension
       if (SelectedTextBox.prop != null && _tempNewString != null)
       {
         float fRes;
+        double dRes;
         int iRes;
         ushort usRes;
         byte bRes;
@@ -1366,6 +1367,47 @@ namespace Ei_Dimension
               }
               failed = true;
               ErrorMessage = "[0-65535]";
+            }
+            break;
+          case "ValidationTolerances":
+            if (SelectedTextBox.index == 0)
+            {
+              if (double.TryParse(_tempNewString, out dRes))
+              {
+                if (dRes >= 0)
+                {
+                  Settings.Default.ValidatorToleranceReporter = dRes;
+                  break;
+                }
+              }
+              failed = true;
+              ErrorMessage = "Non-Negative";
+            }
+            if (SelectedTextBox.index == 1)
+            {
+              if (double.TryParse(_tempNewString, out dRes))
+              {
+                if (dRes >= 0)
+                {
+                  Settings.Default.ValidatorToleranceClassification = dRes;
+                  break;
+                }
+              }
+              failed = true;
+              ErrorMessage = "Non-Negative";
+            }
+            if (SelectedTextBox.index == 2)
+            {
+              if (double.TryParse(_tempNewString, out dRes))
+              {
+                if (dRes >= 0)
+                {
+                  Settings.Default.ValidatorToleranceMisclassification = dRes;
+                  break;
+                }
+              }
+              failed = true;
+              ErrorMessage = "Non-Negative";
             }
             break;
           case "BaseFileName":

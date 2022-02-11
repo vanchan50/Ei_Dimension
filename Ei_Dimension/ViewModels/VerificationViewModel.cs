@@ -188,14 +188,9 @@ namespace Ei_Dimension.ViewModels
 
     public static bool AnalyzeVerificationResults()
     {
-      double reporterErrorMargin = 20;
-      bool passed1 = Validator.ReporterToleranceTest(reporterErrorMargin);
-      //todo: input margins from ui
-      double ErrorMargin2 = 20;
-      var passed2 = Validator.ClassificationToleranceTest(ErrorMargin2);
-      
-      double ErrorMargin3 = 20;
-      bool passed3 = Validator.MisclassificationToleranceTest(ErrorMargin3);
+      bool passed1 = Validator.ReporterToleranceTest(Settings.Default.ValidatorToleranceReporter);
+      var passed2 = Validator.ClassificationToleranceTest(Settings.Default.ValidatorToleranceClassification);
+      bool passed3 = Validator.MisclassificationToleranceTest(Settings.Default.ValidatorToleranceMisclassification);
       return passed1 && passed2 && passed3;
     }
 

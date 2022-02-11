@@ -60,10 +60,10 @@ namespace MicroCy
 
     public static bool ReporterToleranceTest(double errorThresholdPercent)
     {
-      if (errorThresholdPercent < 0 || errorThresholdPercent > 100)
-        throw new ArgumentException("Error threshold must be in range [0,100]");
+      if (errorThresholdPercent < 0)
+        throw new ArgumentException("Error threshold must not be negative");
       bool passed = true;
-      var thresholdMultiplier = 1 - (errorThresholdPercent / 100);  //reverse percentage
+      var thresholdMultiplier = errorThresholdPercent <= 100 ? 1 - (errorThresholdPercent / 100) : (errorThresholdPercent / 100);  //reverse percentage
       foreach (var reg in RegionalStats)
       {
         var ReporterMedian = GetMedianReporterForRegion(reg.Region);
@@ -104,9 +104,9 @@ namespace MicroCy
 
     public static bool MisclassificationToleranceTest(double errorThresholdPercent)
     {
-      if (errorThresholdPercent < 0 || errorThresholdPercent > 100)
-        throw new ArgumentException("Error threshold must be in range [0,100]");
-      var thresholdMultiplier = 1 - (errorThresholdPercent / 100);  //reverse percentage
+      if (errorThresholdPercent < 0)
+        throw new ArgumentException("Error threshold must not be negative");
+      var thresholdMultiplier = errorThresholdPercent <= 100 ? 1 - (errorThresholdPercent / 100) : (errorThresholdPercent / 100);  //reverse percentage
       bool passed = true;
 
 

@@ -346,5 +346,41 @@ namespace Ei_Dimension {
                 this["ReporterScaling"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("10")]
+        public double ValidatorToleranceReporter {
+            get {
+                return ((double)(this["ValidatorToleranceReporter"]));
+            }
+            set {
+                this["ValidatorToleranceReporter"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("10")]
+        public double ValidatorToleranceClassification {
+            get {
+                return ((double)(this["ValidatorToleranceClassification"]));
+            }
+            set {
+                this["ValidatorToleranceClassification"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("10")]
+        public double ValidatorToleranceMisclassification {
+            get {
+                return ((double)(this["ValidatorToleranceMisclassification"]));
+            }
+            set {
+                this["ValidatorToleranceMisclassification"] = value;
+            }
+        }
     }
 }

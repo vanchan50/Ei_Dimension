@@ -1806,7 +1806,7 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Verification.
+        ///   Looks up a localized string similar to Validation.
         /// </summary>
         public static string Maintenance_Validation {
             get {
@@ -2467,6 +2467,15 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Classification Tolerance %.
+        /// </summary>
+        public static string Validation_Classification_Tolerance {
+            get {
+                return ResourceManager.GetString("Validation_Classification_Tolerance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Verification Failed!.
         /// </summary>
         public static string Validation_Fail {
@@ -2486,6 +2495,15 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Misclassification Tolerance %.
+        /// </summary>
+        public static string Validation_Misclassification_Tolerance {
+            get {
+                return ResourceManager.GetString("Validation_Misclassification_Tolerance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Verification
         ///    Mode.
         /// </summary>
@@ -2501,6 +2519,15 @@ namespace Ei_Dimension.Language {
         public static string Validation_Prev_Validation_Date {
             get {
                 return ResourceManager.GetString("Validation_Prev_Validation_Date", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reporter Tolerance %.
+        /// </summary>
+        public static string Validation_Reporter_Tolerance {
+            get {
+                return ResourceManager.GetString("Validation_Reporter_Tolerance", resourceCulture);
             }
         }
         

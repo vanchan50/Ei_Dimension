@@ -729,7 +729,7 @@ Order</value>
     <value>Touch Mode</value>
   </data>
   <data name="Maintenance_Validation" xml:space="preserve">
-    <value>Verification</value>
+    <value>Validation</value>
   </data>
   <data name="Mean" xml:space="preserve">
     <value> Mean</value>
@@ -951,6 +951,9 @@ Speeds</value>
   <data name="Tube" xml:space="preserve">
     <value>Tube</value>
   </data>
+  <data name="Validation_Classification_Tolerance" xml:space="preserve">
+    <value>Classification Tolerance %</value>
+  </data>
   <data name="Validation_Fail" xml:space="preserve">
     <value>Verification Failed!</value>
   </data>
@@ -958,12 +961,18 @@ Speeds</value>
     <value> Load
 Target</value>
   </data>
+  <data name="Validation_Misclassification_Tolerance" xml:space="preserve">
+    <value>Misclassification Tolerance %</value>
+  </data>
   <data name="Validation_Mode" xml:space="preserve">
     <value>Verification
     Mode</value>
   </data>
   <data name="Validation_Prev_Validation_Date" xml:space="preserve">
     <value>Previous Verification Date</value>
+  </data>
+  <data name="Validation_Reporter_Tolerance" xml:space="preserve">
+    <value>Reporter Tolerance %</value>
   </data>
   <data name="Validation_Save" xml:space="preserve">
     <value> Save

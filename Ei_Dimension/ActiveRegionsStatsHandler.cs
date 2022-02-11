@@ -112,7 +112,7 @@ namespace Ei_Dimension
                   mean = avg;
 
                 App.MapRegions.CurrentActiveRegionsCount[index] = count.ToString();
-                App.MapRegions.CurrentActiveRegionsMean[index] = mean.ToString("0,0");
+                App.MapRegions.CurrentActiveRegionsMean[index] = mean.ToString("0.0");
                 Array.Clear(result.vals, 0, result.vals.Length); //Crutch. Explicit clear needed for some reason
               }
               if (index != 0)
