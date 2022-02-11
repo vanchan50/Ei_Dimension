@@ -9,7 +9,7 @@ namespace Ei_Dimension
 {
   public class Program
   {
-    internal static CompanyID SpecializedVer = CompanyID.China;
+    internal static CompanyID SpecializedVer = CompanyID.US;
     public static SplashScreen SplashScreen { get; private set; }
     [STAThread]
     public static void Main(string[] args)

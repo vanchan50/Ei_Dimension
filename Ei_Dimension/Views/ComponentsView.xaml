@@ -35,7 +35,7 @@
                        HorizontalAlignment="Center"/>
         <TextBox Width="140" Name="TB2"
                  Style="{StaticResource InputFieldStyle}"
-                 Text="{Binding MaxPressureBox}">
+                 Text="{Binding MaxPressureBox[0]}">
           <dxmvvm:Interaction.Behaviors>
             <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="2"/>
             <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>

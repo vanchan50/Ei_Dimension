@@ -36,7 +36,7 @@ namespace Ei_Dimension.ViewModels
     public virtual ObservableCollection<string> IdexTextBoxInputs { get; set; }
     public virtual bool CWDirectionActive { get; set; }
 
-    public virtual string MaxPressureBox { get; set; }
+    public virtual ObservableCollection<string> MaxPressureBox { get; set; }
 
     public static ComponentsViewModel Instance { get; private set; }
     public virtual bool SuppressWarnings { get; set; }
@@ -95,7 +95,7 @@ namespace Ei_Dimension.ViewModels
 
       IdexTextBoxInputs = new ObservableCollection<string> { "", "" };
       CWDirectionActive = false;
-      MaxPressureBox = Settings.Default.MaxPressure.ToString();
+      MaxPressureBox = new ObservableCollection<string> { Settings.Default.MaxPressure.ToString() };
       SuppressWarnings = Settings.Default.SuppressWarnings;
 
       Instance = this;
