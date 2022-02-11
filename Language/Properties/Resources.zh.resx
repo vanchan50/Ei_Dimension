@@ -197,10 +197,10 @@
     <value>绿光 A (SSC)</value>
   </data>
   <data name="Channels_Green_B" xml:space="preserve">
-    <value>绿光 B (PE)</value>
+    <value>绿光 B</value>
   </data>
   <data name="Channels_Green_C" xml:space="preserve">
-    <value>绿光 C PE</value>
+    <value>绿光 C</value>
   </data>
   <data name="Channels_Red_A" xml:space="preserve">
     <value>红光 A (CL3)</value>

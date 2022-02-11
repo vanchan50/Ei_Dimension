@@ -158,7 +158,7 @@ namespace Ei_Dimension.ViewModels
       public void Click()
       {
         _vm.SelectedLanguage = Content;
-        App.SetLanguage(Locale);
+        LanguageSwap.SetLanguage(Locale);
         Settings.Default.Language = Index;
         Settings.Default.Save();
       }

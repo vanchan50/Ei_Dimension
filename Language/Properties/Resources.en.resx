@@ -239,10 +239,10 @@ To Current Map</value>
     <value>Green A (SSC)</value>
   </data>
   <data name="Channels_Green_B" xml:space="preserve">
-    <value>Green B (PE)</value>
+    <value>Green B</value>
   </data>
   <data name="Channels_Green_C" xml:space="preserve">
-    <value>Green C PE</value>
+    <value>Green C</value>
   </data>
   <data name="Channels_Hi_Sens_Chan" xml:space="preserve">
     <value>Hi Sensitivity

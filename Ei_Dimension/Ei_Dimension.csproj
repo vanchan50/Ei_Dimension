@@ -208,6 +208,7 @@
     <Compile Include="Core\DataProcessor.cs" />
     <Compile Include="Core\ObservableObject.cs" />
     <Compile Include="GraphsHandler.cs" />
+    <Compile Include="LanguageSwap.cs" />
     <Compile Include="Models\AcquisitionTemplate.cs" />
     <Compile Include="Models\DoubleHeatMapData.cs" />
     <Compile Include="Models\DrawingPlate.cs" />

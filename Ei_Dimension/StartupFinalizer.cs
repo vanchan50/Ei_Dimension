@@ -52,7 +52,7 @@ namespace Ei_Dimension
       }
 
       ResultsViewModel.Instance.FillWorldMaps();
-      App.SetLanguage(MaintenanceViewModel.Instance.LanguageItems[Settings.Default.Language].Locale);
+      LanguageSwap.SetLanguage(MaintenanceViewModel.Instance.LanguageItems[Settings.Default.Language].Locale);
       Views.ExperimentView.Instance.DbButton.IsChecked = true;
       App.Device.MainCommand("Get Property", code: 0x01);
       App.Device.MainCommand("Get FProperty", code: 0x08);

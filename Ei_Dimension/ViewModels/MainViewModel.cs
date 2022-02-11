@@ -1,5 +1,4 @@
 ﻿using DevExpress.Mvvm;
-using System;
 using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
 using System.Collections.ObjectModel;
@@ -9,7 +8,7 @@ namespace Ei_Dimension.ViewModels
   [POCOViewModel]
   public class MainViewModel
   {
-    public static string AppVersion { get; } = "Application Version: 1.0.1";
+    public static string AppVersion { get; } = "Application Version: 1.0.3";
 #if DEBUG
     public ObservableCollection<string> TotalBeadsInFirmware { get; set; } = new ObservableCollection<string> { "0" };
 #endif

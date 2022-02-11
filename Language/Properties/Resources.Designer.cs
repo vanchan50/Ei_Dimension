@@ -423,7 +423,7 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Green B (PE).
+        ///   Looks up a localized string similar to Green B.
         /// </summary>
         public static string Channels_Green_B {
             get {
@@ -432,7 +432,7 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Green C PE.
+        ///   Looks up a localized string similar to Green C.
         /// </summary>
         public static string Channels_Green_C {
             get {

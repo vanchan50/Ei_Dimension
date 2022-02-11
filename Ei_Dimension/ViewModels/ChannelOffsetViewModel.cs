@@ -241,7 +241,6 @@ namespace Ei_Dimension.ViewModels
       App.Device.MainCommand("Set Property", code: 0x1e, parameter: (ushort)num);
       Settings.Default.SensitivityChannelB = num == 0;
       Settings.Default.Save();
-      ResultsViewModel.Instance.SwapHiSensChannelsStats();
     }
 
     public class DropDownButtonContents : Core.ObservableObject
