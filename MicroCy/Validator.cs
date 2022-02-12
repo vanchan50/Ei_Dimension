@@ -69,7 +69,7 @@ namespace MicroCy
         var ReporterMedian = GetMedianReporterForRegion(reg.Region);
         if (ReporterMedian <= reg.InputReporter * thresholdMultiplier)
         {
-          Console.WriteLine($"Validation Fail. Test 1 Reporter tolerance\nReporter value ({ReporterMedian.ToString()}) deviation is more than Threshold is {errorThresholdPercent.ToString($"{0:0.00}")}% from the target ({reg.InputReporter})");
+          Console.WriteLine($"Verification Fail. Test 1 Reporter tolerance\nReporter value ({ReporterMedian.ToString()}) deviation is more than Threshold is {errorThresholdPercent.ToString($"{0:0.00}")}% from the target ({reg.InputReporter})");
           passed = false;
         }
       }
@@ -97,7 +97,7 @@ namespace MicroCy
       if (difPercent > errorThresholdPercent)
       {
         passed = false;
-        Console.WriteLine($"Validation Fail. Test 2 Classification tolerance\nMax difference between region counts is {difPercent.ToString()}%, Threshold is {errorThresholdPercent.ToString($"{0:0.00}")}");
+        Console.WriteLine($"Verification Fail. Test 2 Classification tolerance\nMax difference between region counts is {difPercent.ToString()}%, Threshold is {errorThresholdPercent.ToString($"{0:0.00}")}");
       }
       return passed;
     }
@@ -117,7 +117,7 @@ namespace MicroCy
         if (UnclassifiedRegionCount > _highestCount * thresholdMultiplier)
         {
           passed = false;
-          Console.WriteLine($"Validation Fail. Test 3 Misclassification tolerance\nRegion #{reg} Count is higher than the threshold {errorThresholdPercent.ToString($"{0:0.00}")}%");
+          Console.WriteLine($"Verification Fail. Test 3 Misclassification tolerance\nRegion #{reg} Count is higher than the threshold {errorThresholdPercent.ToString($"{0:0.00}")}%");
         }
       }
       return passed;

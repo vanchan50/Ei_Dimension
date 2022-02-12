@@ -1806,7 +1806,7 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Validation.
+        ///   Looks up a localized string similar to Verification.
         /// </summary>
         public static string Maintenance_Validation {
             get {

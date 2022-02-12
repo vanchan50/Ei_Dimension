@@ -729,7 +729,7 @@ Order</value>
     <value>Touch Mode</value>
   </data>
   <data name="Maintenance_Validation" xml:space="preserve">
-    <value>Validation</value>
+    <value>Verification</value>
   </data>
   <data name="Mean" xml:space="preserve">
     <value> Mean</value>

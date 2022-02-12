@@ -37,7 +37,7 @@
                    Style="{DynamicResource SubRibbonButtonStyle}"
                    Command="{Binding NavigateComponentsCommand}">
       </RadioButton>
-      <RadioButton Content="Alignment&#x0a;and Validation"
+      <RadioButton Content="Alignment&#x0a;and Verification"
                    Height="84"
                    img:EmbeddedImg.Image="/Icons/alignment icon.png"
                    Style="{DynamicResource SubRibbonButtonStyle}"
