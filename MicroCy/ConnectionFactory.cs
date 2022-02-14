@@ -2,7 +2,7 @@
 
 namespace MicroCy
 {
-  internal class ConnectionFactory
+  internal static class ConnectionFactory
   {
     public static ISerial MakeNewConnection(Type t)
     {

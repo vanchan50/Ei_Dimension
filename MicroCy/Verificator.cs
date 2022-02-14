@@ -3,10 +3,10 @@ using System.Collections.Generic;
 
 namespace MicroCy
 {
-  public static class Validator
+  public static class Verificator
   {
-    public static readonly List<ValidationStats> RegionalStats = new List<ValidationStats>(50);
     public static int TotalClassifiedBeads;
+    private static readonly List<ValidationStats> RegionalStats = new List<ValidationStats>(50);
     private static Dictionary<int, int> _dict = new Dictionary<int, int>();
     private static Dictionary<int, int> _unclassifiedRegionsDict = new Dictionary<int, int>();
     private static int _highestCount = 0;
@@ -24,37 +24,6 @@ namespace MicroCy
       {
         _dict.Add(reg.regionNum, RegionalStats.Count);
         RegionalStats.Add(new ValidationStats(reg.regionNum, reg.InputReporter));
-      }
-    }
-
-    public static double GetMedianReporterForRegion(int regionNum)
-    {
-      var index = RegionalStats.FindIndex(x => x.Region == regionNum);
-      return RegionalStats[index].Stats[0].mfi;
-    }
-
-    public static void FillStats(in BeadInfoStruct outbead)
-    {
-      if (_dict.TryGetValue(outbead.region, out var index))
-      {
-        RegionalStats[index].FillCalibrationStatsRow(in outbead);
-        return;
-      }
-
-      if (_unclassifiedRegionsDict.ContainsKey(outbead.region))
-      {
-        _unclassifiedRegionsDict[outbead.region]++;
-        return;
-      }
-      _unclassifiedRegionsDict.Add(outbead.region, 1);
-    }
-
-    public static void CalculateResults()
-    {
-      foreach (var s in RegionalStats)
-      {
-        s.CalculateResults();
-        TotalClassifiedBeads += s.Count;
       }
     }
 
@@ -121,6 +90,37 @@ namespace MicroCy
         }
       }
       return passed;
+    }
+
+
+    internal static void FillStats(in BeadInfoStruct outbead)
+    {
+      if (_dict.TryGetValue(outbead.region, out var index))
+      {
+        RegionalStats[index].FillCalibrationStatsRow(in outbead);
+        return;
+      }
+
+      if (_unclassifiedRegionsDict.ContainsKey(outbead.region))
+      {
+        _unclassifiedRegionsDict[outbead.region]++;
+        return;
+      }
+      _unclassifiedRegionsDict.Add(outbead.region, 1);
+    }
+
+    internal static void CalculateResults()
+    {
+      foreach (var s in RegionalStats)
+      {
+        s.CalculateResults();
+        TotalClassifiedBeads += s.Count;
+      }
+    }
+    private static double GetMedianReporterForRegion(int regionNum)
+    {
+      var index = RegionalStats.FindIndex(x => x.Region == regionNum);
+      return RegionalStats[index].Stats[0].mfi;
     }
   }
 }

@@ -401,6 +401,8 @@ namespace MicroCy
       ReadActive = false;
       MainCommand("Set Property", code: 0x19);  //bubble detect off
       ResultReporter.StartNewSummaryReport();
+      if (Mode ==  OperationMode.Verification)
+        Verificator.CalculateResults();
       FinishedMeasurement?.Invoke(this, EventArgs.Empty);
     }
 

@@ -406,7 +406,6 @@ namespace Ei_Dimension
             Notification.ShowLocalized(nameof(Language.Resources.Calibration_in_Progress), System.Windows.Media.Brushes.Green);
           break;
         case OperationMode.Verification:
-          Validator.CalculateResults();
           if (VerificationViewModel.AnalyzeVerificationResults())
           {
             _ = Current.Dispatcher.BeginInvoke((Action)VerificationViewModel.VerificationSuccess);

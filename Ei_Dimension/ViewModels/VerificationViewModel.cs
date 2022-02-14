@@ -188,9 +188,9 @@ namespace Ei_Dimension.ViewModels
 
     public static bool AnalyzeVerificationResults()
     {
-      bool passed1 = Validator.ReporterToleranceTest(Settings.Default.ValidatorToleranceReporter);
-      var passed2 = Validator.ClassificationToleranceTest(Settings.Default.ValidatorToleranceClassification);
-      bool passed3 = Validator.MisclassificationToleranceTest(Settings.Default.ValidatorToleranceMisclassification);
+      bool passed1 = Verificator.ReporterToleranceTest(Settings.Default.ValidatorToleranceReporter);
+      var passed2 = Verificator.ClassificationToleranceTest(Settings.Default.ValidatorToleranceClassification);
+      bool passed3 = Verificator.MisclassificationToleranceTest(Settings.Default.ValidatorToleranceMisclassification);
       return passed1 && passed2 && passed3;
     }
 

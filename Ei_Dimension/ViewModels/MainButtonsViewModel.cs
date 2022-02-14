@@ -124,7 +124,7 @@ namespace Ei_Dimension.ViewModels
           regions.Add((reg, inputReporter));
         }
       }
-      Validator.Reset(regions);
+      Verificator.Reset(regions);
     }
 
     private static void DefaultRegionNaming()

@@ -13,7 +13,12 @@ namespace MicroCy
     public USBConnection()
     {
       InputBuffer = new byte[512];
-      _ = Init();
+      if (Init())
+      {
+        Console.Error.WriteLine("OutPipe Address:");
+        Console.Error.WriteLine($"\t\t\t0x{Convert.ToString(USBDevice.Interfaces[0].OutPipe.Address, 2).PadLeft(8, '0')}");
+        TransmitToSecondPipe();
+      }
     }
 
     public bool Init()
@@ -75,6 +80,19 @@ namespace MicroCy
     public void EndRead(IAsyncResult result)
     {
       _ = USBDevice.Interfaces[0].Pipes[0x81].EndRead(result);
+    }
+
+    public void TransmitToSecondPipe()
+    {
+      Console.Error.WriteLine();
+      Console.Error.WriteLine("##################################");
+      Console.Error.WriteLine("List of Available Pipes:");
+      foreach (var pipe in USBDevice.Interfaces[0].Pipes)
+      {
+        Console.Error.WriteLine($"\t\t\t0x{Convert.ToString(pipe.Address, 2).PadLeft(8, '0')}");
+      }
+      Console.Error.WriteLine("##################################");
+      Console.Error.WriteLine();
     }
   }
 }

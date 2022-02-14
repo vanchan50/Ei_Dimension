@@ -64,7 +64,7 @@ namespace MicroCy
                 case OperationMode.Calibration:
                   break;
                 case OperationMode.Verification:
-                  Validator.FillStats(in outbead);
+                  Verificator.FillStats(in outbead);
                   break;
               }
               //accum stats for run as a whole, used during aligment and QC
