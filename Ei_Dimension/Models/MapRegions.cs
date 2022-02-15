@@ -4,28 +4,32 @@ using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using DevExpress.Mvvm.DataAnnotations;
-using DevExpress.Mvvm.POCO;
 using Ei_Dimension.ViewModels;
 
 namespace Ei_Dimension.Models
 {
-  [POCOViewModel]
   public class MapRegions
   {
+    //all existing region numbers in a string format
     public ObservableCollection<string> RegionsList { get; } = new ObservableCollection<string>();
+    //All the selected Active regions. Passed to the MicroCy.StartingProcedure()
     public HashSet<int> ActiveRegionNums { get; } = new HashSet<int>();
     public HashSet<int> VerificationRegionNums { get; } = new HashSet<int>();
+    //Names of all existing regions
     public ObservableCollection<string> RegionsNamesList { get; } = new ObservableCollection<string>();
     public ObservableCollection<string> VerificationReporterList { get; } = new ObservableCollection<string>();
+    //storage for mean and count of all existing regions. For current reading and backing file select
     public ObservableCollection<string> CurrentActiveRegionsCount { get; } = new ObservableCollection<string>();
     public ObservableCollection<string> CurrentActiveRegionsMean { get; } = new ObservableCollection<string>();
     public ObservableCollection<string> BackingActiveRegionsCount { get; } = new ObservableCollection<string>();
     public ObservableCollection<string> BackingActiveRegionsMean { get; } = new ObservableCollection<string>();
+    //pointers to storages of mean and count
     public virtual ObservableCollection<string> DisplayedActiveRegionsCount { get; set; }
     public virtual ObservableCollection<string> DisplayedActiveRegionsMean { get; set; }
+    //keeps track of all existing regions state (active/inActive)
     public List<bool> ActiveRegions { get; } = new List<bool>();
     public List<bool> VerificationRegions { get; } = new List<bool>();
+    //exceptional NUllregion-case
     public bool IsNullRegionActive { get { return _nullTextboxActive; } }
 
     private StackPanel _regionsBorder;
@@ -55,7 +59,7 @@ namespace Ei_Dimension.Models
 
     private bool _nullTextboxActive;
 
-    protected MapRegions(StackPanel RegionsBorder, StackPanel RegionsNamesBorder, ListBox Table, StackPanel Db_Num, StackPanel Db_Name, StackPanel Validat_Num,
+    public MapRegions(StackPanel RegionsBorder, StackPanel RegionsNamesBorder, ListBox Table, StackPanel Db_Num, StackPanel Db_Name, StackPanel Validat_Num,
       StackPanel Validat_Reporter)
     {
       _regionsBorder = RegionsBorder;
@@ -68,12 +72,6 @@ namespace Ei_Dimension.Models
       DisplayedActiveRegionsCount = CurrentActiveRegionsCount;
       DisplayedActiveRegionsMean = CurrentActiveRegionsMean;
       FillRegions();
-    }
-
-    public static MapRegions Create(StackPanel RegionsBorder, StackPanel RegionsNamesBorder, ListBox Table, StackPanel Db_Num, StackPanel Db_Name, StackPanel Validat_Num,
-      StackPanel Validat_Reporter)
-    {
-      return ViewModelSource.Create(() => new MapRegions(RegionsBorder, RegionsNamesBorder, Table, Db_Num, Db_Name, Validat_Num, Validat_Reporter));
     }
 
     public void FillRegions(bool loadByPage = false)
@@ -146,15 +144,6 @@ namespace Ei_Dimension.Models
       App.UnfocusUIElement();
     }
 
-    private void AddTextboxes(string RegionsNums, string RegionsNames, string ValidationReporter)
-    {
-      AddRegionsTextBox(RegionsNums);
-      AddRegionsNamesTextBox(RegionsNames);
-      AddValidationRegionsTextBox(RegionsNums);
-      AddValidationReporterTextBox(ValidationReporter);
-      _tbCounter++;
-    }
-
     public void ShowNullTextBoxes()
     {
       if (!_nullTextboxActive)
@@ -175,6 +164,39 @@ namespace Ei_Dimension.Models
         RemoveRegionFromTable("__0");
         _nullTextboxActive = false;
       }
+    }
+
+    public void AddValidationRegion(int index)
+    {
+      if (!VerificationRegions[index])
+      {
+        ShiftValidationTextBox(index - 1, true);
+        VerificationRegions[index] = true;
+      }
+      else
+      {
+        VerificationRegions[index] = false;
+        ShiftValidationTextBox(index - 1, false);
+      }
+      App.UnfocusUIElement();
+    }
+
+    public void ResetCurrentActiveRegionsDisplayedStats()
+    {
+      for (var i = 0; i < CurrentActiveRegionsCount.Count; i++)
+      {
+        CurrentActiveRegionsCount[i] = "0";
+        CurrentActiveRegionsMean[i] = "0";
+      }
+    }
+
+    private void AddTextboxes(string RegionsNums, string RegionsNames, string ValidationReporter)
+    {
+      AddRegionsTextBox(RegionsNums);
+      AddRegionsNamesTextBox(RegionsNames);
+      AddValidationRegionsTextBox(RegionsNums);
+      AddValidationReporterTextBox(ValidationReporter);
+      _tbCounter++;
     }
 
     private void ClearTextBoxes()
@@ -539,21 +561,6 @@ namespace Ei_Dimension.Models
       UserInputHandler.InjectToFocusedTextbox(((TextBox)e.Source).Text, true);
     }
 
-    public void AddValidationRegion(int index)
-    {
-      if (!VerificationRegions[index])
-      {
-        ShiftValidationTextBox(index - 1, true);
-        VerificationRegions[index] = true;
-      }
-      else
-      {
-        VerificationRegions[index] = false;
-        ShiftValidationTextBox(index - 1, false);
-      }
-      App.UnfocusUIElement();
-    }
-
     private void ShiftValidationTextBox(int index, bool right)
     {
       var tb = (TextBox)_validationNum.Children[index];
@@ -568,20 +575,5 @@ namespace Ei_Dimension.Models
       else
         VerificationRegionNums.Remove(int.Parse(tb.Text.Trim('_')));
     }
-
-    public void ResetCurrentActiveRegionsDisplayedStats()
-    {
-      for (var i = 0; i < CurrentActiveRegionsCount.Count; i++)
-      {
-        CurrentActiveRegionsCount[i] = "0";
-        CurrentActiveRegionsMean[i] = "0";
-      }
-    }
-
-    public void InjectTrimmedMeanToCurrentActiveRegions()
-    {
-
-    }
-
   }
 }

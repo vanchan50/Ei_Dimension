@@ -27,7 +27,7 @@ namespace Ei_Dimension
         Views.ResultsView.Instance.InstrumentLogo.Source = new BitmapImage(new Uri(@"/Ei_Dimension;component/Icons/dimension flow analyzer logoCh.png", UriKind.Relative));
       }
 
-      App.MapRegions = MapRegions.Create(
+      App.MapRegions = new MapRegions(
         Views.SelRegionsView.Instance.RegionsBorder,
         Views.SelRegionsView.Instance.RegionsNamesBorder,
         Views.ResultsView.Instance.Table,

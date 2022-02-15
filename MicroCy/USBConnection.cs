@@ -7,7 +7,7 @@ namespace MicroCy
   {
     public byte[] InputBuffer { get; }
     public bool IsActive { get; private set; }
-    private USBDevice USBDevice;
+    private USBDevice _usbDevice;
     private const string InterfaceGuid = "F70242C7-FB25-443B-9E7E-A4260F373982"; // interface GUID, not device guid
 
     public USBConnection()
@@ -16,7 +16,7 @@ namespace MicroCy
       if (Init())
       {
         Console.Error.WriteLine("OutPipe Address:");
-        Console.Error.WriteLine($"\t\t\t0x{Convert.ToString(USBDevice.Interfaces[0].OutPipe.Address, 2).PadLeft(8, '0')}");
+        Console.Error.WriteLine($"\t\t\t0x{Convert.ToString(_usbDevice.Interfaces[0].OutPipe.Address, 2).PadLeft(8, '0')}");
         TransmitToSecondPipe();
       }
     }
@@ -28,12 +28,12 @@ namespace MicroCy
       {
         try
         {
-          USBDevice = new USBDevice(di[0].DevicePath);     // just grab the first one for now, but should support multiples
-          Console.WriteLine(string.Format("{0}:{1}", USBDevice.Descriptor.FullName, USBDevice.Descriptor.SerialNumber));
-          USBDevice.Interfaces[0].OutPipe.Policy.PipeTransferTimeout = 400;
+          _usbDevice = new USBDevice(di[0].DevicePath);     // just grab the first one for now, but should support multiples
+          Console.WriteLine(string.Format("{0}:{1}", _usbDevice.Descriptor.FullName, _usbDevice.Descriptor.SerialNumber));
+          _usbDevice.Interfaces[0].OutPipe.Policy.PipeTransferTimeout = 400;
           //USBDevice.Interfaces[0].InPipe.Policy.PipeTransferTimeout = 600;
-          USBDevice.Interfaces[0].InPipe.Policy.AutoClearStall = true;
-          USBDevice.Interfaces[0].OutPipe.Policy.AutoClearStall = true;
+          _usbDevice.Interfaces[0].InPipe.Policy.AutoClearStall = true;
+          _usbDevice.Interfaces[0].OutPipe.Policy.AutoClearStall = true;
           IsActive = true;
         }
         catch { return false; }
@@ -47,7 +47,7 @@ namespace MicroCy
     {
       try
       {
-        USBDevice.Interfaces[0].OutPipe.Write(buffer, 0, buffer.Length);
+        _usbDevice.Interfaces[0].OutPipe.Write(buffer, 0, buffer.Length);
       }
       catch (USBException e)
       {
@@ -60,7 +60,7 @@ namespace MicroCy
     public void BeginRead(AsyncCallback func)
     {
       if (IsActive)
-        _ = USBDevice.Interfaces[0].Pipes[0x81].BeginRead(InputBuffer, 0, InputBuffer.Length, new AsyncCallback(func), null);
+        _ = _usbDevice.Interfaces[0].Pipes[0x81].BeginRead(InputBuffer, 0, InputBuffer.Length, new AsyncCallback(func), null);
     }
 
     public void Read()
@@ -68,7 +68,7 @@ namespace MicroCy
       if (IsActive)
         try
         {
-          USBDevice.Interfaces[0].Pipes[0x81].Read(InputBuffer, 0, InputBuffer.Length);
+          _usbDevice.Interfaces[0].Pipes[0x81].Read(InputBuffer, 0, InputBuffer.Length);
         }
         catch (USBException e)
         {
@@ -79,7 +79,7 @@ namespace MicroCy
 
     public void EndRead(IAsyncResult result)
     {
-      _ = USBDevice.Interfaces[0].Pipes[0x81].EndRead(result);
+      _ = _usbDevice.Interfaces[0].Pipes[0x81].EndRead(result);
     }
 
     public void TransmitToSecondPipe()
@@ -87,7 +87,7 @@ namespace MicroCy
       Console.Error.WriteLine();
       Console.Error.WriteLine("##################################");
       Console.Error.WriteLine("List of Available Pipes:");
-      foreach (var pipe in USBDevice.Interfaces[0].Pipes)
+      foreach (var pipe in _usbDevice.Interfaces[0].Pipes)
       {
         Console.Error.WriteLine($"\t\t\t0x{Convert.ToString(pipe.Address, 2).PadLeft(8, '0')}");
       }

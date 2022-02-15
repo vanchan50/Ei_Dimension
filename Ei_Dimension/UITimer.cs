@@ -35,7 +35,6 @@ namespace Ei_Dimension
         App.Device.UpdateStateMachine();
       }
       ServiceMenuEnabler.Update();
-
       _uiUpdateIsActive = 0;
     }
   }

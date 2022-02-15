@@ -236,7 +236,7 @@ namespace Ei_Dimension.ViewModels
       _ = short.TryParse(Volumes[1], out var washRes);
       _ = short.TryParse(Volumes[2], out var agitRes);
       
-      return new MicroCy.Wells
+      return new Wells
       {
         rowIdx = row,
         colIdx = col,
