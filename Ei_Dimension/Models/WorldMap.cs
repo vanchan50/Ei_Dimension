@@ -75,7 +75,7 @@ namespace Ei_Dimension.Models
           BuildWmap = () => {
             foreach (var point in Map)
             {
-              if (App.MapRegions.ActiveRegionNums.Contains(point.Region))
+              if (MapRegions.ActiveRegionNums.Contains(point.Region))
               {
                 if (Flipped)
                   DisplayedWorldMap.Add(new HeatMapData(point.Y, point.X));
@@ -97,7 +97,7 @@ namespace Ei_Dimension.Models
           BuildWmap = () => {
             foreach (var point in Map)
             {
-              if (App.MapRegions.VerificationRegionNums.Contains(point.Region))
+              if (MapRegions.VerificationRegionNums.Contains(point.Region))
               {
                 if (Flipped)
                   DisplayedWorldMap.Add(new HeatMapData(point.Y, point.X));

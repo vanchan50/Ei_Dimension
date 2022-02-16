@@ -80,7 +80,7 @@ namespace Ei_Dimension
             ViewModels.ResultsViewModel.Instance.CurrentAnalysis12Map.Clear();
             foreach (var result in TempWellResults)
             {
-              var index = App.MapRegions.GetMapRegionIndex(result.region);
+              var index = MapRegions.GetMapRegionIndex(result.region);
               if (index < 0)
                 continue;
               float avg = 0;

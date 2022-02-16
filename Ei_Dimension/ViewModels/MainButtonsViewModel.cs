@@ -43,7 +43,7 @@ namespace Ei_Dimension.ViewModels
     public void StartButtonClick()
     {
       UserInputHandler.InputSanityCheck();
-      if (MicroCyDevice.TerminationType == 0 && App.MapRegions.ActiveRegionNums.Count == 0)
+      if (MicroCyDevice.TerminationType == 0 && MapRegions.ActiveRegionNums.Count == 0)
       {
         Notification.Show("\"Min Per Region\" End of Read requires at least 1 active region");
         return;
@@ -60,12 +60,12 @@ namespace Ei_Dimension.ViewModels
       switch (MicroCyDevice.Mode)
       {
         case OperationMode.Normal:
-          if (App.MapRegions.ActiveRegionNums.Count == 0)
+          if (MapRegions.ActiveRegionNums.Count == 0)
           {
             SelectNullRegion();
           }
           //DefaultRegionNaming();
-          startArg = App.MapRegions.ActiveRegionNums;
+          startArg = MapRegions.ActiveRegionNums;
           break;
         case OperationMode.Calibration:
           App.MapRegions.RemoveNullTextBoxes();
@@ -114,12 +114,12 @@ namespace Ei_Dimension.ViewModels
     private static void MakeNewValidator()
     {
       var regions = new List<(int regionNum, double InputReporter)>();
-      for (var i = 1; i < App.MapRegions.RegionsList.Count; i++)
+      for (var i = 1; i < MapRegions.RegionsList.Count; i++)
       {
-        if (App.MapRegions.VerificationRegionNums.Contains(App.MapRegions.RegionsList[i].Number))
+        if (MapRegions.VerificationRegionNums.Contains(MapRegions.RegionsList[i].Number))
         {
-          int reg = App.MapRegions.RegionsList[i].Number;
-          var inputReporter = double.Parse(App.MapRegions.RegionsList[i].TargetReporterValue[0]);
+          int reg = MapRegions.RegionsList[i].Number;
+          var inputReporter = double.Parse(MapRegions.RegionsList[i].TargetReporterValue[0]);
           inputReporter /= App.Device.ReporterScaling;  //adjust for scaling factor
           regions.Add((reg, inputReporter));
         }
@@ -129,11 +129,11 @@ namespace Ei_Dimension.ViewModels
 
     private static void DefaultRegionNaming()
     {
-      for (var i = 1; i < App.MapRegions.RegionsList.Count; i++)
+      for (var i = 1; i < MapRegions.RegionsList.Count; i++)
       {
-        if (App.MapRegions.ActiveRegionNums.Contains(App.MapRegions.RegionsList[i].Number) && App.MapRegions.RegionsList[i].Name[0] == "")
+        if (MapRegions.ActiveRegionNums.Contains(MapRegions.RegionsList[i].Number) && MapRegions.RegionsList[i].Name[0] == "")
         {
-          App.MapRegions.RegionsList[i].Name[0] = App.MapRegions.RegionsList[i].NumberString;
+          MapRegions.RegionsList[i].Name[0] = MapRegions.RegionsList[i].NumberString;
         }
       }
     }

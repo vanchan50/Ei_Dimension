@@ -369,9 +369,9 @@ namespace Ei_Dimension.ViewModels
     private void InitBackingWellResults()
     {
       BackingWResults.Clear();
-      if (App.MapRegions.ActiveRegionNums.Count > 0)
+      if (MapRegions.ActiveRegionNums.Count > 0)
       {
-        foreach (var reg in App.MapRegions.ActiveRegionNums)
+        foreach (var reg in MapRegions.ActiveRegionNums)
         {
           BackingWResults.Add(new MicroCy.WellResults { regionNumber = (ushort)reg });
         }

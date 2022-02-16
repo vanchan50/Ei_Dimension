@@ -8,7 +8,7 @@ namespace MicroCy
     public byte[] InputBuffer { get; }
     public bool IsActive { get; private set; }
     private USBDevice _usbDevice;
-    private const string InterfaceGuid = "F70242C7-FB25-443B-9E7E-A4260F373982"; // interface GUID, not device guid
+    private readonly Guid _interfaceGuid = Guid.ParseExact("F70242C7-FB25-443B-9E7E-A4260F373982", "D");  // interface GUID, not device guid
 
     public USBConnection()
     {
@@ -23,7 +23,7 @@ namespace MicroCy
 
     public bool Init()
     {
-      USBDeviceInfo[] di = USBDevice.GetDevices(InterfaceGuid);   // Get all the MicroCy devices connected
+      USBDeviceInfo[] di = USBDevice.GetDevices(_interfaceGuid);   // Get all the MicroCy devices connected
       if (di.Length > 0)
       {
         try

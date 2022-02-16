@@ -12,19 +12,15 @@ namespace Ei_Dimension
   public class MapRegions
   {
     //all existing region numbers in a string format
-    public ObservableCollection<MapRegionData> RegionsList { get; } = new ObservableCollection<MapRegionData>();
+    public static ObservableCollection<MapRegionData> RegionsList { get; } = new ObservableCollection<MapRegionData>();
     //All the selected Active regions. Passed to the MicroCy.StartingProcedure()
-    public HashSet<int> ActiveRegionNums { get; } = new HashSet<int>();
-    public HashSet<int> VerificationRegionNums { get; } = new HashSet<int>();
+    public static HashSet<int> ActiveRegionNums { get; } = new HashSet<int>();
+    public static HashSet<int> VerificationRegionNums { get; } = new HashSet<int>();
     //storage for mean and count of all existing regions. For current reading and backing file select
     public ObservableCollection<string> CurrentActiveRegionsCount { get; } = new ObservableCollection<string>();
     public ObservableCollection<string> CurrentActiveRegionsMean { get; } = new ObservableCollection<string>();
     public ObservableCollection<string> BackingActiveRegionsCount { get; } = new ObservableCollection<string>();
     public ObservableCollection<string> BackingActiveRegionsMean { get; } = new ObservableCollection<string>();
-    //pointers to storages of mean and count
-    //public only for binding purpose
-    public ObservableCollection<string> DisplayedActiveRegionsCount { get; private set; }
-    public ObservableCollection<string> DisplayedActiveRegionsMean { get; private set; }
     //exceptional NUllregion-case
     public bool IsNullRegionActive { get { return _nullTextboxActive; } }
 
@@ -44,42 +40,33 @@ namespace Ei_Dimension
     private static TextBox _lastRegionsNameBox;
     private static TextBox _lastValidationRegionsBox;
     private static TextBox _lastValidationReporterBox;
-    private ListBox _resultsTable;
     private static readonly Thickness _TbAlignment = new Thickness(5, 5, 5, 0);
     //DB
     private StackPanel _dashboardNum;
     private StackPanel _dashboardName;
-    //Validation
-    private StackPanel _validationNum;
-    private StackPanel _validationReporterBorder;
+
+    private ResultsTableController _resultsTableController;
+    private ValidationTableController _validationTableController;
 
     private bool _nullTextboxActive;
-    private readonly SortedDictionary<int, int> _mapRegionNumberIndexDictionary = new SortedDictionary<int, int>();
+    private static readonly SortedDictionary<int, int> _mapRegionNumberIndexDictionary = new SortedDictionary<int, int>();
 
-    public MapRegions(StackPanel RegionsBorder, StackPanel RegionsNamesBorder, ListBox Table, StackPanel Db_Num, StackPanel Db_Name, StackPanel Validat_Num,
+    public MapRegions(StackPanel RegionsBorder, StackPanel RegionsNamesBorder, ListBox resultsTable, StackPanel Db_Num, StackPanel Db_Name, StackPanel Validat_Num,
       StackPanel Validat_Reporter)
     {
       _regionsBorder = RegionsBorder;
       _regionsNamesBorder = RegionsNamesBorder;
-      _resultsTable = Table;
+      _resultsTableController = new ResultsTableController(this, resultsTable);
       _dashboardNum = Db_Num;
       _dashboardName = Db_Name;
-      _validationNum = Validat_Num;
-      _validationReporterBorder = Validat_Reporter;
+      _validationTableController = new ValidationTableController(this, Validat_Num, Validat_Reporter);
       DisplayCurrentActiveRegionsBeadStats();
       FillRegions();
     }
 
     public void DisplayCurrentActiveRegionsBeadStats(bool current = true)
     {
-      if (current)
-      {
-        DisplayedActiveRegionsCount = CurrentActiveRegionsCount;
-        DisplayedActiveRegionsMean = CurrentActiveRegionsMean;
-        return;
-      }
-      DisplayedActiveRegionsCount = BackingActiveRegionsCount;
-      DisplayedActiveRegionsMean = BackingActiveRegionsMean;
+      _resultsTableController.DisplayCurrentActiveRegionsBeadStats(current);
     }
 
     public void FillRegions(bool loadByPage = false)
@@ -87,10 +74,8 @@ namespace Ei_Dimension
       if (_firstLoadflag && loadByPage)
         return;
       _firstLoadflag = true;
-      ClearResultsTextBoxes();
-      ClearTextBoxes();
-      ClearDashboardTextBoxes();
-      ClearValidationTextBoxes();
+
+      ClearAllTextboxes();
       RegionsList.Clear();
       ActiveRegionNums.Clear();
       VerificationRegionNums.Clear();
@@ -121,7 +106,7 @@ namespace Ei_Dimension
       }
     }
 
-    public int GetMapRegionIndex(int regionNum)
+    public static int GetMapRegionIndex(int regionNum)
     {
       if (_mapRegionNumberIndexDictionary.TryGetValue(regionNum, out var ret))
         return ret;
@@ -149,18 +134,7 @@ namespace Ei_Dimension
 
     public void AddValidationRegion(int regionNum)
     {
-      var index = GetMapRegionIndex(regionNum);
-      if (!VerificationRegionNums.Contains(regionNum))
-      {
-        VerificationRegionNums.Add(regionNum);
-        ShiftValidationTextBox(index - 1, true);
-      }
-      else
-      {
-        ShiftValidationTextBox(index - 1, false);
-        VerificationRegionNums.Remove(regionNum);
-      }
-      App.UnfocusUIElement();
+      _validationTableController.AddValidationRegion(regionNum);
     }
 
     public void ShowNullTextBoxes()
@@ -171,7 +145,7 @@ namespace Ei_Dimension
         bind.Source = this;
         bind.Path = new PropertyPath("RegionsList[0].Name[0]");
         bind.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
-        AddRegionToTable("__0", bind);
+        _resultsTableController.AddRegion("__0", bind);
         _nullTextboxActive = true;
       }
     }
@@ -180,7 +154,7 @@ namespace Ei_Dimension
     {
       if (_nullTextboxActive)
       {
-        RemoveRegionFromTable("__0");
+        _resultsTableController.RemoveRegion("__0");
         _nullTextboxActive = false;
       }
     }
@@ -199,8 +173,8 @@ namespace Ei_Dimension
       var i = regionNum.ToString();
       AddRegionsTextBox($"RegionsList[{i}].NumberString");
       AddRegionsNamesTextBox($"RegionsList[{i}].Name[0]");
-      AddValidationRegionsTextBox($"RegionsList[{i}].NumberString");
-      AddValidationReporterTextBox($"RegionsList[{i}].TargetReporterValue[0]");
+      _validationTableController.AddRegionsTextBox($"RegionsList[{i}].NumberString");
+      _validationTableController.AddReporterTextBox($"RegionsList[{i}].TargetReporterValue[0]");
       _tbCounter++;
     }
 
@@ -239,26 +213,6 @@ namespace Ei_Dimension
       _dashboardName.Children.Clear();
     }
 
-    private void ClearValidationTextBoxes()
-    {
-      foreach (UIElement UIEl in _validationNum.Children)
-      {
-        BindingOperations.ClearAllBindings(UIEl);
-        ((TextBox)UIEl).GotFocus -= ValidationRegionsTbGotFocus;
-      }
-      _validationNum.Children.Clear();
-      _lastValidationRegionsBox = null;
-
-      foreach (UIElement UIEl in _validationReporterBorder.Children)
-      {
-        BindingOperations.ClearAllBindings(UIEl);
-        ((TextBox)UIEl).GotFocus -= ValidationReporterTbGotFocus;
-        ((TextBox)UIEl).TextChanged -= ValidationReporterTextChanged;
-      }
-      _validationReporterBorder.Children.Clear();
-      _lastValidationReporterBox = null;
-    }
-
     private void ShiftTextBox(int index, bool right)
     {
       var tb = (TextBox)_regionsBorder.Children[index];
@@ -273,13 +227,13 @@ namespace Ei_Dimension
       {
         var numBindToCopy = BindingOperations.GetBindingBase(tb, TextBox.TextProperty);
         var nameBindToCopy = BindingOperations.GetBindingBase(NameTb, TextBox.TextProperty);
-        AddRegionToTable(NameTb.Name, nameBindToCopy);
+        _resultsTableController.AddRegion(NameTb.Name, nameBindToCopy);
         AddDbNumBox(tb.Name, numBindToCopy);
         AddDbNameBox(NameTb.Name, nameBindToCopy);
       }
       else
       {
-        RemoveRegionFromTable(NameTb.Name);
+        _resultsTableController.RemoveRegion(NameTb.Name);
         RemoveDbNumBox(tb.Name);
         RemoveDbNameBox(NameTb.Name);
       }
@@ -329,104 +283,15 @@ namespace Ei_Dimension
       SetUserInputTextBox(property, tb);
     }
 
-    //Resultsview functionality
-    private void AddRegionToTable(string name, BindingBase bind)
+    private void ClearAllTextboxes()
     {
-      StackPanel sp = new StackPanel
-      {
-        Name = name,
-        VerticalAlignment = VerticalAlignment.Top,
-        HorizontalAlignment = HorizontalAlignment.Left,
-        Orientation = Orientation.Horizontal,
-        Width = 430,
-        Height = 53,
-        Margin = new Thickness(0, 0, 0, 0)
-      };
-
-      int index = int.Parse(name.Trim('_'));
-      sp.Children.Add(MakeNameTextBox(bind));
-      sp.Children.Add(MakeCounterTextBox(index));
-      sp.Children.Add(MakeMeanTextBox(index));
-      _resultsTable.Items.Add(sp);
+      _resultsTableController.Clear();
+      ClearTextBoxes();
+      ClearDashboardTextBoxes();
+      _validationTableController.ClearValidationTextBoxes();
     }
 
-    private void RemoveRegionFromTable(string name)
-    {
-      var index = GetSPIndexByName(name, _resultsTable);
-      if (index < 0)
-      {
-        Console.Error.WriteLine("Tried to remove inexistent region from table");
-        return;
-      }
-      var sp = (StackPanel)_resultsTable.Items[index];
-      for (var i = sp.Children.Count - 1; i > -1; i--)
-      {
-        BindingOperations.ClearAllBindings(sp.Children[i]);
-        sp.Children.RemoveAt(i);
-      }
-      _resultsTable.Items.Remove(sp);
-    }
-
-    private void ClearResultsTextBoxes()
-    {
-      for (var i = _resultsTable.Items.Count - 1; i > -1; i--)
-      {
-        var sp = (StackPanel)_resultsTable.Items[i];
-        for (var j = sp.Children.Count - 1; j > -1; j--)
-        {
-          BindingOperations.ClearAllBindings(sp.Children[j]);
-          sp.Children.RemoveAt(j);
-        }
-        _resultsTable.Items.RemoveAt(i);
-      }
-    }
-
-    private TextBox MakeNameTextBox(BindingBase bind)
-    {
-      var tb = new TextBox
-      {
-        VerticalAlignment = VerticalAlignment.Top,
-        HorizontalAlignment = HorizontalAlignment.Left,
-        Width = 160,
-        Style = _regionsNamesStyle,
-        IsReadOnly = true,
-        Margin = _TbAlignment
-      };
-      BindingOperations.SetBinding(tb, TextBox.TextProperty, bind);
-      return tb;
-    }
-
-    private TextBox MakeCounterTextBox(int index)
-    {
-      var tb = new TextBox
-      {
-        VerticalAlignment = VerticalAlignment.Top,
-        HorizontalAlignment = HorizontalAlignment.Left,
-        Style = _regionsNamesStyle,
-        Width = 100,
-        IsReadOnly = true,
-        Margin = _TbAlignment
-      };
-      SetupBinding(tb, this, $"DisplayedActiveRegionsCount[{index}]", BindingMode.TwoWay);
-      return tb;
-    }
-
-    private TextBox MakeMeanTextBox(int index)
-    {
-      var tb = new TextBox
-      {
-        VerticalAlignment = VerticalAlignment.Top,
-        HorizontalAlignment = HorizontalAlignment.Left,
-        Style = _regionsNamesStyle,
-        Width = 140,
-        IsReadOnly = true,
-        Margin = _TbAlignment
-      };
-      SetupBinding(tb, this, $"DisplayedActiveRegionsMean[{index}]", BindingMode.TwoWay);
-      return tb;
-    }
-
-    private int GetSPIndexByName(string name, ListBox UIEl)
+    private static int GetSPIndexByName(string name, ListBox UIEl)
     {
       for (var i = 0; i < UIEl.Items.Count; i++)
       {
@@ -435,6 +300,7 @@ namespace Ei_Dimension
       }
       return -1;
     }
+
     //Dashboard functionality
     private void AddDbNumBox(string name, BindingBase bind)
     {
@@ -470,6 +336,7 @@ namespace Ei_Dimension
       BindingOperations.ClearAllBindings(tb);
       _dashboardNum.Children.Remove(tb);
     }
+
     private void RemoveDbNameBox(string name)
     {
       var tb = (TextBox)_dashboardName.Children[GetTBIndexByName(name, _dashboardName)];
@@ -477,7 +344,7 @@ namespace Ei_Dimension
       _dashboardName.Children.Remove(tb);
     }
 
-    private int GetTBIndexByName(string name, StackPanel UIEl)
+    private static int GetTBIndexByName(string name, StackPanel UIEl)
     {
       for (var i = 0; i < UIEl.Children.Count; i++)
       {
@@ -487,70 +354,7 @@ namespace Ei_Dimension
       return -1;
     }
 
-    //ValidationView functionality
-
-    private void AddValidationRegionsTextBox(string propertyPath)
-    {
-      var tb = new TextBox();
-      tb.Style = _regionsStyle;
-      if (_lastValidationRegionsBox != null)
-        _lastValidationRegionsBox.Margin = _regionsTbAlignment;
-      _lastValidationRegionsBox = tb;
-      tb.Margin = _lastRegionsTbAlignment;
-      tb.Name = $"_{_tbCounter}";
-      tb.IsReadOnly = true;
-      SetupBinding(tb, this, propertyPath, BindingMode.OneTime);
-      tb.GotFocus += ValidationRegionsTbGotFocus;
-      _validationNum.Children.Add(tb);
-    }
-
-    private void AddValidationReporterTextBox(string propertyPath)
-    {
-      var tb = new TextBox();
-      tb.Style = _regionsNamesStyle;
-      if (_lastValidationReporterBox != null)
-        _lastValidationReporterBox.Margin = _NameBoxAlignment;
-      _lastValidationReporterBox = tb;
-      tb.Margin = _lastNameBoxAlignment;
-      tb.Name = $"__{_tbCounter}";
-      tb.Visibility = Visibility.Hidden;
-      SetupBinding(tb, this, propertyPath, BindingMode.TwoWay);
-      tb.GotFocus += ValidationReporterTbGotFocus;
-      tb.TextChanged += ValidationReporterTextChanged;
-      _validationReporterBorder.Children.Add(tb);
-    }
-
-    private void ValidationRegionsTbGotFocus(object sender, RoutedEventArgs e)
-    {
-      var regionNumber = int.Parse(((TextBox)e.Source).Text);
-      int Index = int.Parse(((TextBox)e.Source).Name.Trim('_'));
-      AddValidationRegion(regionNumber);
-    }
-
-    private void ValidationReporterTbGotFocus(object sender, RoutedEventArgs e)
-    {
-      var tb = (TextBox)sender;
-      var property = typeof(MapRegionData).GetProperty(nameof(MapRegionData.TargetReporterValue));
-      SetUserInputTextBox(property, tb);
-    }
-      
-    private void ValidationReporterTextChanged(object sender, TextChangedEventArgs e)
-    {
-      UserInputHandler.InjectToFocusedTextbox(((TextBox)e.Source).Text, true);
-    }
-
-    private void ShiftValidationTextBox(int index, bool right)
-    {
-      var tb = (TextBox)_validationNum.Children[index];
-      var shift = tb.Margin;
-      shift.Left = right ? 140 : 10;
-      tb.Margin = shift;
-
-      var ReporterTb = (TextBox)_validationReporterBorder.Children[index];
-      ReporterTb.Visibility = right ? Visibility.Visible : Visibility.Hidden;
-    }
-
-    private void SetUserInputTextBox(System.Reflection.PropertyInfo property, TextBox tb)
+    private static void SetUserInputTextBox(System.Reflection.PropertyInfo property, TextBox tb)
     {
       var index = int.Parse(tb.Name.Trim('_'));
       UserInputHandler.SelectedTextBox = (property,
@@ -558,7 +362,7 @@ namespace Ei_Dimension
       MainViewModel.Instance.KeyboardToggle(tb);
     }
 
-    private void SetupBinding(TextBox tb, object source, string propertyPath, BindingMode mode)
+    private static void SetupBinding(TextBox tb, object source, string propertyPath, BindingMode mode)
     {
       Binding bind = new Binding();
       bind.Source = source;
@@ -566,6 +370,243 @@ namespace Ei_Dimension
       bind.Path = new PropertyPath(propertyPath);
       bind.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
       BindingOperations.SetBinding(tb, TextBox.TextProperty, bind);
+    }
+
+    private class ResultsTableController
+    {
+      //pointers to storages of mean and count
+      public ObservableCollection<string> DisplayedActiveRegionsCount { get; private set; }
+      public ObservableCollection<string> DisplayedActiveRegionsMean { get; private set; }
+
+      private MapRegions _parent;
+      private ListBox _table;
+
+      public ResultsTableController(MapRegions parent, ListBox resultsTable)
+      {
+        _parent = parent;
+        _table = resultsTable;
+      }
+
+      public void DisplayCurrentActiveRegionsBeadStats(bool current)
+      {
+        if (current)
+        {
+          DisplayedActiveRegionsCount = _parent.CurrentActiveRegionsCount;
+          DisplayedActiveRegionsMean = _parent.CurrentActiveRegionsMean;
+          return;
+        }
+        DisplayedActiveRegionsCount = _parent.BackingActiveRegionsCount;
+        DisplayedActiveRegionsMean = _parent.BackingActiveRegionsMean;
+      }
+      
+      public void AddRegion(string name, BindingBase bind)
+      {
+        StackPanel sp = new StackPanel
+        {
+          Name = name,
+          VerticalAlignment = VerticalAlignment.Top,
+          HorizontalAlignment = HorizontalAlignment.Left,
+          Orientation = Orientation.Horizontal,
+          Width = 430,
+          Height = 53,
+          Margin = new Thickness(0, 0, 0, 0)
+        };
+
+        int index = int.Parse(name.Trim('_'));
+        sp.Children.Add(MakeNameTextBox(bind));
+        sp.Children.Add(MakeCounterTextBox(index));
+        sp.Children.Add(MakeMeanTextBox(index));
+        _table.Items.Add(sp);
+      }
+
+      public void RemoveRegion(string name)
+      {
+        var index = GetSPIndexByName(name, _table);
+        if (index < 0)
+        {
+          Console.Error.WriteLine("Tried to remove inexistent region from table");
+          return;
+        }
+        var sp = (StackPanel)_table.Items[index];
+        for (var i = sp.Children.Count - 1; i > -1; i--)
+        {
+          BindingOperations.ClearAllBindings(sp.Children[i]);
+          sp.Children.RemoveAt(i);
+        }
+        _table.Items.Remove(sp);
+      }
+
+      public void Clear()
+      {
+        for (var i = _table.Items.Count - 1; i > -1; i--)
+        {
+          var sp = (StackPanel)_table.Items[i];
+          for (var j = sp.Children.Count - 1; j > -1; j--)
+          {
+            BindingOperations.ClearAllBindings(sp.Children[j]);
+            sp.Children.RemoveAt(j);
+          }
+          _table.Items.RemoveAt(i);
+        }
+      }
+
+      private TextBox MakeNameTextBox(BindingBase bind)
+      {
+        var tb = new TextBox
+        {
+          VerticalAlignment = VerticalAlignment.Top,
+          HorizontalAlignment = HorizontalAlignment.Left,
+          Width = 160,
+          Style = _regionsNamesStyle,
+          IsReadOnly = true,
+          Margin = _TbAlignment
+        };
+        BindingOperations.SetBinding(tb, TextBox.TextProperty, bind);
+        return tb;
+      }
+
+      private TextBox MakeCounterTextBox(int index)
+      {
+        var tb = new TextBox
+        {
+          VerticalAlignment = VerticalAlignment.Top,
+          HorizontalAlignment = HorizontalAlignment.Left,
+          Style = _regionsNamesStyle,
+          Width = 100,
+          IsReadOnly = true,
+          Margin = _TbAlignment
+        };
+        SetupBinding(tb, this, $"DisplayedActiveRegionsCount[{index}]", BindingMode.OneWay);
+        return tb;
+      }
+
+      private TextBox MakeMeanTextBox(int index)
+      {
+        var tb = new TextBox
+        {
+          VerticalAlignment = VerticalAlignment.Top,
+          HorizontalAlignment = HorizontalAlignment.Left,
+          Style = _regionsNamesStyle,
+          Width = 140,
+          IsReadOnly = true,
+          Margin = _TbAlignment
+        };
+        SetupBinding(tb, this, $"DisplayedActiveRegionsMean[{index}]", BindingMode.OneWay);
+        return tb;
+      }
+    }
+
+    private class ValidationTableController
+    {
+
+      private MapRegions _parent;
+      private StackPanel _validationNum;
+      private StackPanel _validationReporterBorder;
+
+      public ValidationTableController(MapRegions parent, StackPanel Validat_Num, StackPanel Validat_Reporter)
+      {
+        _parent = parent;
+        _validationNum = Validat_Num;
+        _validationReporterBorder = Validat_Reporter;
+      }
+
+      public void AddValidationRegion(int regionNum)
+      {
+        var index = GetMapRegionIndex(regionNum);
+        if (!VerificationRegionNums.Contains(regionNum))
+        {
+          VerificationRegionNums.Add(regionNum);
+          ShiftValidationTextBox(index - 1, true);
+        }
+        else
+        {
+          ShiftValidationTextBox(index - 1, false);
+          VerificationRegionNums.Remove(regionNum);
+        }
+        App.UnfocusUIElement();
+      }
+
+      public void ClearValidationTextBoxes()
+      {
+        foreach (UIElement UIEl in _validationNum.Children)
+        {
+          BindingOperations.ClearAllBindings(UIEl);
+          ((TextBox)UIEl).GotFocus -= ValidationRegionsTbGotFocus;
+        }
+        _validationNum.Children.Clear();
+        _lastValidationRegionsBox = null;
+
+        foreach (UIElement UIEl in _validationReporterBorder.Children)
+        {
+          BindingOperations.ClearAllBindings(UIEl);
+          ((TextBox)UIEl).GotFocus -= ValidationReporterTbGotFocus;
+          ((TextBox)UIEl).TextChanged -= ValidationReporterTextChanged;
+        }
+        _validationReporterBorder.Children.Clear();
+        _lastValidationReporterBox = null;
+      }
+
+      public void AddRegionsTextBox(string propertyPath)
+      {
+        var tb = new TextBox();
+        tb.Style = _regionsStyle;
+        if (_lastValidationRegionsBox != null)
+          _lastValidationRegionsBox.Margin = _regionsTbAlignment;
+        _lastValidationRegionsBox = tb;
+        tb.Margin = _lastRegionsTbAlignment;
+        tb.Name = $"_{_tbCounter}";
+        tb.IsReadOnly = true;
+        SetupBinding(tb, _parent, propertyPath, BindingMode.OneTime);
+        tb.GotFocus += ValidationRegionsTbGotFocus;
+        _validationNum.Children.Add(tb);
+      }
+
+      public void AddReporterTextBox(string propertyPath)
+      {
+        var tb = new TextBox();
+        tb.Style = _regionsNamesStyle;
+        if (_lastValidationReporterBox != null)
+          _lastValidationReporterBox.Margin = _NameBoxAlignment;
+        _lastValidationReporterBox = tb;
+        tb.Margin = _lastNameBoxAlignment;
+        tb.Name = $"__{_tbCounter}";
+        tb.Visibility = Visibility.Hidden;
+        SetupBinding(tb, _parent, propertyPath, BindingMode.TwoWay);
+        tb.GotFocus += ValidationReporterTbGotFocus;
+        tb.TextChanged += ValidationReporterTextChanged;
+        _validationReporterBorder.Children.Add(tb);
+      }
+
+      private void ValidationRegionsTbGotFocus(object sender, RoutedEventArgs e)
+      {
+        var regionNumber = int.Parse(((TextBox)e.Source).Text);
+        int Index = int.Parse(((TextBox)e.Source).Name.Trim('_'));
+        AddValidationRegion(regionNumber);
+      }
+
+      private void ValidationReporterTbGotFocus(object sender, RoutedEventArgs e)
+      {
+        var tb = (TextBox)sender;
+        var property = typeof(MapRegionData).GetProperty(nameof(MapRegionData.TargetReporterValue));
+        SetUserInputTextBox(property, tb);
+      }
+        
+      private static void ValidationReporterTextChanged(object sender, TextChangedEventArgs e)
+      {
+        //Allows SanityCheck when input is from keyboard
+        UserInputHandler.InjectToFocusedTextbox(((TextBox)e.Source).Text, true);
+      }
+
+      private void ShiftValidationTextBox(int index, bool right)
+      {
+        var tb = (TextBox)_validationNum.Children[index];
+        var shift = tb.Margin;
+        shift.Left = right ? 140 : 10;
+        tb.Margin = shift;
+
+        var ReporterTb = (TextBox)_validationReporterBorder.Children[index];
+        ReporterTb.Visibility = right ? Visibility.Visible : Visibility.Hidden;
+      }
     }
   }
 }
