@@ -116,10 +116,10 @@ namespace Ei_Dimension.ViewModels
       var regions = new List<(int regionNum, double InputReporter)>();
       for (var i = 1; i < App.MapRegions.RegionsList.Count; i++)
       {
-        if (App.MapRegions.VerificationRegions[i])
+        if (App.MapRegions.VerificationRegionNums.Contains(App.MapRegions.RegionsList[i].Number))
         {
-          int reg = int.Parse(App.MapRegions.RegionsList[i]);
-          var inputReporter = double.Parse(App.MapRegions.VerificationReporterList[i]);
+          int reg = App.MapRegions.RegionsList[i].Number;
+          var inputReporter = double.Parse(App.MapRegions.RegionsList[i].TargetReporterValue[0]);
           inputReporter /= App.Device.ReporterScaling;  //adjust for scaling factor
           regions.Add((reg, inputReporter));
         }
@@ -131,9 +131,9 @@ namespace Ei_Dimension.ViewModels
     {
       for (var i = 1; i < App.MapRegions.RegionsList.Count; i++)
       {
-        if (App.MapRegions.ActiveRegions[i] && App.MapRegions.RegionsNamesList[i] == "")
+        if (App.MapRegions.ActiveRegionNums.Contains(App.MapRegions.RegionsList[i].Number) && App.MapRegions.RegionsList[i].Name[0] == "")
         {
-          App.MapRegions.RegionsNamesList[i] = App.MapRegions.RegionsList[i];
+          App.MapRegions.RegionsList[i].Name[0] = App.MapRegions.RegionsList[i].NumberString;
         }
       }
     }

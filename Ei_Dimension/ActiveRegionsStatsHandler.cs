@@ -67,7 +67,7 @@ namespace Ei_Dimension
             else
             {
               App.MapRegions.CurrentActiveRegionsCount[0] = count.ToString();
-              App.MapRegions.CurrentActiveRegionsMean[0] = mean.ToString("0,0");
+              App.MapRegions.CurrentActiveRegionsMean[0] = mean.ToString("0.0");
             }
             NullWellResults.Clear();
             _activeRegionsUpdateGoing = false;
@@ -80,7 +80,7 @@ namespace Ei_Dimension
             ViewModels.ResultsViewModel.Instance.CurrentAnalysis12Map.Clear();
             foreach (var result in TempWellResults)
             {
-              var index = App.MapRegions.RegionsList.IndexOf(result.region.ToString());
+              var index = App.MapRegions.GetMapRegionIndex(result.region);
               if (index < 0)
                 continue;
               float avg = 0;

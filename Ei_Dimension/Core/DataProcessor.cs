@@ -266,7 +266,7 @@ namespace Ei_Dimension.Core
 
         if (fromFile)
         {
-          var index = App.MapRegions.RegionsList.IndexOf(bead.region.ToString());
+          var index = App.MapRegions.GetMapRegionIndex(bead.region);
           if (index != -1)
             activeRegionsStats[index].Add(bead.reporter);
           //else if (bead.region == 0)

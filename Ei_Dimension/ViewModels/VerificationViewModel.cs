@@ -47,15 +47,16 @@ namespace Ei_Dimension.ViewModels
       for (var i = 0; i < map.regions.Count; i++)
       {
         //Reset all Verification Regions
-        App.MapRegions.VerificationRegions[i + 1] = true;
-        App.MapRegions.AddValidationRegion(i + 1);
-        App.MapRegions.VerificationReporterList[i + 1] = "";
+        App.MapRegions.VerificationRegionNums.Add(map.regions[i].Number);
+        App.MapRegions.AddValidationRegion(map.regions[i].Number);
+        App.MapRegions.VerificationRegionNums.Remove(map.regions[i].Number);
+        App.MapRegions.RegionsList[i + 1].TargetReporterValue[0] = "";
 
         if (map.regions[i].isValidator)
         {
-          App.MapRegions.AddValidationRegion(i + 1);
+          App.MapRegions.AddValidationRegion(map.regions[i].Number);
           if(map.regions[i].VerificationTargetReporter > -0.1)
-            App.MapRegions.VerificationReporterList[i + 1] = map.regions[i].VerificationTargetReporter.ToString();
+            App.MapRegions.RegionsList[i + 1].TargetReporterValue[0] = map.regions[i].VerificationTargetReporter.ToString();
         }
       }
       if(!fromCode)
@@ -69,14 +70,14 @@ namespace Ei_Dimension.ViewModels
       var map = App.Device.MapCtroller.MapList[idx];
       for (var i = 1; i < App.MapRegions.RegionsList.Count; i++)
       {
-        var index = map.regions.FindIndex(x => x.Number == int.Parse(App.MapRegions.RegionsList[i]));
+        var index = map.regions.FindIndex(x => x.Number == App.MapRegions.RegionsList[i].Number);
         if(index != -1)
         {
           double temp = -1;
-          if (App.MapRegions.VerificationRegions[i])
+          if (App.MapRegions.VerificationRegionNums.Contains(App.MapRegions.RegionsList[i].Number))
           {
             map.regions[index].isValidator = true;
-            if (App.MapRegions.VerificationReporterList[i] != "" && double.TryParse(App.MapRegions.VerificationReporterList[i], out temp))
+            if (App.MapRegions.RegionsList[i].TargetReporterValue[0] != "" && double.TryParse(App.MapRegions.RegionsList[i].TargetReporterValue[0], out temp))
             {
               if(temp < 0)
                 map.regions[index].VerificationTargetReporter = -1;
@@ -174,13 +175,11 @@ namespace Ei_Dimension.ViewModels
 
       for (var i = 1; i < App.MapRegions.RegionsList.Count; i++)
       {
-        if (App.MapRegions.VerificationRegions[i])
+        if (App.MapRegions.VerificationRegionNums.Contains(App.MapRegions.RegionsList[i].Number)
+            && App.MapRegions.RegionsList[i].TargetReporterValue[0] == "")
         {
-          if (App.MapRegions.VerificationReporterList[i] == "")
-          {
-            Notification.Show($"Verification region {App.MapRegions.RegionsList[i]} Reporter is not specified");
-            return false;
-          }
+          Notification.Show($"Verification region {App.MapRegions.RegionsList[i]} Reporter is not specified");
+          return false;
         }
       }
       return true;

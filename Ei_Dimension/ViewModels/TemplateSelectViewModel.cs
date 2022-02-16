@@ -144,13 +144,13 @@ namespace Ei_Dimension.ViewModels
                   FileSaveViewModel.Instance.UncheckedBox(i);
               }
 
-              for (var i = 0; i < App.MapRegions.ActiveRegions.Count - 1; i++)
+              for (var i = 0; i < App.MapRegions.RegionsList.Count - 1; i++)
               {
                 if (newTemplate.ActiveRegions[i])
                 {
-                  App.MapRegions.AddActiveRegion(i + 1);
+                  App.MapRegions.AddActiveRegion(App.MapRegions.RegionsList[i+1].Number);
                 }
-                App.MapRegions.RegionsNamesList[i + 1] = newTemplate.RegionsNamesList[i];
+                App.MapRegions.RegionsList[i + 1].Name[0] = newTemplate.RegionsNamesList[i];
               }
 
               if (newTemplate.TableSize != 0)
@@ -253,10 +253,14 @@ namespace Ei_Dimension.ViewModels
             checkboxes += (uint)currVal;
           }
           temp.FileSaveCheckboxes = checkboxes;
-          temp.ActiveRegions.AddRange(App.MapRegions.ActiveRegions);
-          temp.ActiveRegions.RemoveAt(0);
-          temp.RegionsNamesList.AddRange(App.MapRegions.RegionsNamesList);
-          temp.RegionsNamesList.RemoveAt(0);
+
+          for (var i = 1; i < App.MapRegions.RegionsList.Count; i++) // -1 for NUll Region
+          {
+            var isActive = App.MapRegions.ActiveRegionNums.Contains(App.MapRegions.RegionsList[i].Number);
+            temp.ActiveRegions.Add(isActive);
+            temp.RegionsNamesList.Add(App.MapRegions.RegionsList[i].Name[0]);
+          }
+
           temp.TableSize = WellsSelectViewModel.Instance.CurrentTableSize;
           if (temp.TableSize != 1)
           {

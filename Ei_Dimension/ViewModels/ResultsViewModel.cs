@@ -407,8 +407,7 @@ namespace Ei_Dimension.ViewModels
       {
         if (App.MapRegions != null)
         {
-          App.MapRegions.DisplayedActiveRegionsCount = App.MapRegions.CurrentActiveRegionsCount;
-          App.MapRegions.DisplayedActiveRegionsMean = App.MapRegions.CurrentActiveRegionsMean;
+          App.MapRegions.DisplayCurrentActiveRegionsBeadStats();
         }
 
         _ = App.Current.Dispatcher.BeginInvoke((Action)(() =>
@@ -425,8 +424,7 @@ namespace Ei_Dimension.ViewModels
         {
           ResultsWaitIndicatorVisibility = true;
           ChartWaitIndicatorVisibility = true;
-          App.MapRegions.DisplayedActiveRegionsCount = App.MapRegions.BackingActiveRegionsCount;
-          App.MapRegions.DisplayedActiveRegionsMean = App.MapRegions.BackingActiveRegionsMean;
+          App.MapRegions.DisplayCurrentActiveRegionsBeadStats(current: false);
         }
         MainViewModel.Instance.EventCountField = MainViewModel.Instance.EventCountLocal;
         DisplayedMfiItems = BackingMfiItems;

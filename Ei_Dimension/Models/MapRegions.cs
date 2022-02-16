@@ -11,24 +11,19 @@ namespace Ei_Dimension.Models
   public class MapRegions
   {
     //all existing region numbers in a string format
-    public ObservableCollection<string> RegionsList { get; } = new ObservableCollection<string>();
+    public ObservableCollection<MapRegionData> RegionsList { get; } = new ObservableCollection<MapRegionData>();
     //All the selected Active regions. Passed to the MicroCy.StartingProcedure()
     public HashSet<int> ActiveRegionNums { get; } = new HashSet<int>();
     public HashSet<int> VerificationRegionNums { get; } = new HashSet<int>();
-    //Names of all existing regions
-    public ObservableCollection<string> RegionsNamesList { get; } = new ObservableCollection<string>();
-    public ObservableCollection<string> VerificationReporterList { get; } = new ObservableCollection<string>();
     //storage for mean and count of all existing regions. For current reading and backing file select
     public ObservableCollection<string> CurrentActiveRegionsCount { get; } = new ObservableCollection<string>();
     public ObservableCollection<string> CurrentActiveRegionsMean { get; } = new ObservableCollection<string>();
     public ObservableCollection<string> BackingActiveRegionsCount { get; } = new ObservableCollection<string>();
     public ObservableCollection<string> BackingActiveRegionsMean { get; } = new ObservableCollection<string>();
     //pointers to storages of mean and count
-    public virtual ObservableCollection<string> DisplayedActiveRegionsCount { get; set; }
-    public virtual ObservableCollection<string> DisplayedActiveRegionsMean { get; set; }
-    //keeps track of all existing regions state (active/inActive)
-    public List<bool> ActiveRegions { get; } = new List<bool>();
-    public List<bool> VerificationRegions { get; } = new List<bool>();
+    //public only for binding purpose
+    public ObservableCollection<string> DisplayedActiveRegionsCount { get; private set; }
+    public ObservableCollection<string> DisplayedActiveRegionsMean { get; private set; }
     //exceptional NUllregion-case
     public bool IsNullRegionActive { get { return _nullTextboxActive; } }
 
@@ -58,6 +53,7 @@ namespace Ei_Dimension.Models
     private StackPanel _validationReporterBorder;
 
     private bool _nullTextboxActive;
+    private readonly SortedDictionary<int, int> _mapRegionNumberIndexDictionary = new SortedDictionary<int, int>();
 
     public MapRegions(StackPanel RegionsBorder, StackPanel RegionsNamesBorder, ListBox Table, StackPanel Db_Num, StackPanel Db_Name, StackPanel Validat_Num,
       StackPanel Validat_Reporter)
@@ -69,9 +65,20 @@ namespace Ei_Dimension.Models
       _dashboardName = Db_Name;
       _validationNum = Validat_Num;
       _validationReporterBorder = Validat_Reporter;
-      DisplayedActiveRegionsCount = CurrentActiveRegionsCount;
-      DisplayedActiveRegionsMean = CurrentActiveRegionsMean;
+      DisplayCurrentActiveRegionsBeadStats();
       FillRegions();
+    }
+
+    public void DisplayCurrentActiveRegionsBeadStats(bool current = true)
+    {
+      if (current)
+      {
+        DisplayedActiveRegionsCount = CurrentActiveRegionsCount;
+        DisplayedActiveRegionsMean = CurrentActiveRegionsMean;
+        return;
+      }
+      DisplayedActiveRegionsCount = BackingActiveRegionsCount;
+      DisplayedActiveRegionsMean = BackingActiveRegionsMean;
     }
 
     public void FillRegions(bool loadByPage = false)
@@ -86,21 +93,15 @@ namespace Ei_Dimension.Models
       RegionsList.Clear();
       ActiveRegionNums.Clear();
       VerificationRegionNums.Clear();
-      RegionsNamesList.Clear();
-      ActiveRegions.Clear();
-      VerificationRegions.Clear();
-      VerificationReporterList.Clear();
       CurrentActiveRegionsCount.Clear();
       CurrentActiveRegionsMean.Clear();
       BackingActiveRegionsCount.Clear();
       BackingActiveRegionsMean.Clear();
-
+      _mapRegionNumberIndexDictionary.Clear();
       
-      RegionsList.Add("0");
-      RegionsNamesList.Add("UNCLSSFD");
-      VerificationReporterList.Add("");
-      ActiveRegions.Add(false);
-      VerificationRegions.Add(false);
+      RegionsList.Add(new MapRegionData(0));
+      _mapRegionNumberIndexDictionary.Add(0,0);
+      RegionsList[0].Name[0] = "UNCLSSFD";
       CurrentActiveRegionsCount.Add("0");
       CurrentActiveRegionsMean.Add("0");
       BackingActiveRegionsCount.Add("0");
@@ -108,39 +109,58 @@ namespace Ei_Dimension.Models
       var i = 1;
       foreach (var region in App.Device.MapCtroller.ActiveMap.regions)
       {
-        RegionsList.Add(region.Number.ToString());
-        RegionsNamesList.Add("");
-        VerificationReporterList.Add("");
-        ActiveRegions.Add(false);
-        VerificationRegions.Add(false);
+        RegionsList.Add(new MapRegionData(region.Number));
+        _mapRegionNumberIndexDictionary.Add(region.Number, i);
         CurrentActiveRegionsCount.Add("0");
         CurrentActiveRegionsMean.Add("0");
         BackingActiveRegionsCount.Add("0");
         BackingActiveRegionsMean.Add("0");
-        AddTextboxes($"RegionsList[{i}]", $"RegionsNamesList[{i}]", $"VerificationReporterList[{i}]");
+        AddTextboxes(i);
         i++;
       }
     }
 
-    public void AddActiveRegion(int index, bool callFromCode = false)
+    public int GetMapRegionIndex(int regionNum)
     {
-      if (!ActiveRegions[index])
+      if (_mapRegionNumberIndexDictionary.TryGetValue(regionNum, out var ret))
+        return ret;
+      return -1;
+    }
+
+    public void AddActiveRegion(int regionNum, bool callFromCode = false)
+    {
+      if (!ActiveRegionNums.Contains(regionNum))
       {
+        ActiveRegionNums.Add(regionNum);
+        var index = GetMapRegionIndex(regionNum);
         ShiftTextBox(index - 1, true);  // -1 accounts for inexistent region 0 box
-        ActiveRegions[index] = true;
-        if (RegionsNamesList[index] == "")
-        {
-          RegionsNamesList[index] = RegionsList[index].ToString();
-        }
       }
       else
       {
-        ActiveRegions[index] = false;
+        var index = GetMapRegionIndex(regionNum);
         ShiftTextBox(index - 1, false);
+        ActiveRegionNums.Remove(regionNum);
       }
 
       if (callFromCode)
         return;
+      App.UnfocusUIElement();
+    }
+
+    public void AddValidationRegion(int regionNum)
+    {
+      if (!VerificationRegionNums.Contains(regionNum))
+      {
+        VerificationRegionNums.Add(regionNum);
+        var index = GetMapRegionIndex(regionNum);
+        ShiftValidationTextBox(index - 1, true);
+      }
+      else
+      {
+        var index = GetMapRegionIndex(regionNum);
+        ShiftValidationTextBox(index - 1, false);
+        VerificationRegionNums.Remove(regionNum);
+      }
       App.UnfocusUIElement();
     }
 
@@ -150,7 +170,7 @@ namespace Ei_Dimension.Models
       {
         Binding bind = new Binding();
         bind.Source = this;
-        bind.Path = new PropertyPath("RegionsNamesList[0]");
+        bind.Path = new PropertyPath("RegionsList[0].Name[0]");
         bind.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
         AddRegionToTable("__0", bind);
         _nullTextboxActive = true;
@@ -166,21 +186,6 @@ namespace Ei_Dimension.Models
       }
     }
 
-    public void AddValidationRegion(int index)
-    {
-      if (!VerificationRegions[index])
-      {
-        ShiftValidationTextBox(index - 1, true);
-        VerificationRegions[index] = true;
-      }
-      else
-      {
-        VerificationRegions[index] = false;
-        ShiftValidationTextBox(index - 1, false);
-      }
-      App.UnfocusUIElement();
-    }
-
     public void ResetCurrentActiveRegionsDisplayedStats()
     {
       for (var i = 0; i < CurrentActiveRegionsCount.Count; i++)
@@ -190,12 +195,13 @@ namespace Ei_Dimension.Models
       }
     }
 
-    private void AddTextboxes(string RegionsNums, string RegionsNames, string ValidationReporter)
+    private void AddTextboxes(int regionNum)
     {
-      AddRegionsTextBox(RegionsNums);
-      AddRegionsNamesTextBox(RegionsNames);
-      AddValidationRegionsTextBox(RegionsNums);
-      AddValidationReporterTextBox(ValidationReporter);
+      var i = regionNum.ToString();
+      AddRegionsTextBox($"RegionsList[{i}].NumberString");
+      AddRegionsNamesTextBox($"RegionsList[{i}].Name[0]");
+      AddValidationRegionsTextBox($"RegionsList[{i}].NumberString");
+      AddValidationReporterTextBox($"RegionsList[{i}].TargetReporterValue[0]");
       _tbCounter++;
     }
 
@@ -271,14 +277,12 @@ namespace Ei_Dimension.Models
         AddRegionToTable(NameTb.Name, nameBindToCopy);
         AddDbNumBox(tb.Name, numBindToCopy);
         AddDbNameBox(NameTb.Name, nameBindToCopy);
-        ActiveRegionNums.Add(int.Parse(tb.Text.Trim('_')));
       }
       else
       {
         RemoveRegionFromTable(NameTb.Name);
         RemoveDbNumBox(tb.Name);
         RemoveDbNameBox(NameTb.Name);
-        ActiveRegionNums.Remove(int.Parse(tb.Text.Trim('_')));
       }
       RemoveNullTextBoxes();
     }
@@ -295,6 +299,7 @@ namespace Ei_Dimension.Models
       tb.IsReadOnly = true;
       Binding bind = new Binding();
       bind.Source = this;
+      bind.Mode = BindingMode.OneTime;
       bind.Path = new PropertyPath(propertyPath);
       bind.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
       BindingOperations.SetBinding(tb, TextBox.TextProperty, bind);
@@ -323,16 +328,15 @@ namespace Ei_Dimension.Models
 
     private void RegionsTbGotFocus(object sender, RoutedEventArgs e)
     {
-      var Index = int.Parse(((TextBox)e.Source).Name.Trim('_'));
-      AddActiveRegion(Index);
+      var regionNumber = int.Parse(((TextBox) e.Source).Text);
+      AddActiveRegion(regionNumber);
     }
 
     private void RegionsNamesTbGotFocus(object sender, RoutedEventArgs e)
     {
-      UserInputHandler.SelectedTextBox = (this.GetType()
-        .GetProperty(nameof(RegionsNamesList)),
-        this, int.Parse(((TextBox)e.Source).Name.Trim('_')), (TextBox)sender);
-      MainViewModel.Instance.KeyboardToggle((TextBox)e.Source);
+      var tb = (TextBox)sender;
+      var property = typeof(MapRegionData).GetProperty(nameof(MapRegionData.Name));
+      SetUserInputTextBox(property, tb);
     }
 
     //Resultsview functionality
@@ -515,6 +519,7 @@ namespace Ei_Dimension.Models
       tb.IsReadOnly = true;
       Binding bind = new Binding();
       bind.Source = this;
+      bind.Mode = BindingMode.OneTime;
       bind.Path = new PropertyPath(propertyPath);
       bind.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
       BindingOperations.SetBinding(tb, TextBox.TextProperty, bind);
@@ -544,16 +549,16 @@ namespace Ei_Dimension.Models
 
     private void ValidationRegionsTbGotFocus(object sender, RoutedEventArgs e)
     {
+      var regionNumber = int.Parse(((TextBox)e.Source).Text);
       int Index = int.Parse(((TextBox)e.Source).Name.Trim('_'));
-      AddValidationRegion(Index);
+      AddValidationRegion(regionNumber);
     }
 
     private void ValidationReporterTbGotFocus(object sender, RoutedEventArgs e)
     {
-      UserInputHandler.SelectedTextBox = (this.GetType()
-        .GetProperty(nameof(VerificationReporterList)),
-        this, int.Parse(((TextBox)e.Source).Name.Trim('_')), (TextBox)sender);
-      MainViewModel.Instance.NumpadToggleButton((TextBox)e.Source);
+      var tb = (TextBox)sender;
+      var property = typeof(MapRegionData).GetProperty(nameof(MapRegionData.TargetReporterValue));
+      SetUserInputTextBox(property, tb);
     }
       
     private void ValidationReporterTextChanged(object sender, TextChangedEventArgs e)
@@ -570,10 +575,14 @@ namespace Ei_Dimension.Models
 
       var ReporterTb = (TextBox)_validationReporterBorder.Children[index];
       ReporterTb.Visibility = right ? Visibility.Visible : Visibility.Hidden;
-      if(right)
-        VerificationRegionNums.Add(int.Parse(tb.Text.Trim('_')));
-      else
-        VerificationRegionNums.Remove(int.Parse(tb.Text.Trim('_')));
+    }
+
+    private void SetUserInputTextBox(System.Reflection.PropertyInfo property, TextBox tb)
+    {
+      var index = int.Parse(tb.Name.Trim('_'));
+      UserInputHandler.SelectedTextBox = (property,
+        RegionsList[index], 0, tb);
+      MainViewModel.Instance.KeyboardToggle(tb);
     }
   }
 }

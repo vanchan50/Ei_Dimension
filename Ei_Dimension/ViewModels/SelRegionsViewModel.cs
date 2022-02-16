@@ -40,10 +40,11 @@ namespace Ei_Dimension.ViewModels
           (() =>
           {
             UserInputHandler.InputSanityCheck();
-            for (var i = 1; i < App.MapRegions.ActiveRegions.Count; i++)
+            for (var i = 1; i < App.MapRegions.RegionsList.Count; i++)
             {
-              if (!App.MapRegions.ActiveRegions[i])
-                App.MapRegions.AddActiveRegion(i);
+              var reg = App.MapRegions.RegionsList[i].Number;
+              if (!App.MapRegions.ActiveRegionNums.Contains(reg))
+                App.MapRegions.AddActiveRegion(reg);
             }
 
             HideWaitIndicator();
