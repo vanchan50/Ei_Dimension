@@ -15,7 +15,7 @@ namespace Ei_Dimension
     public static (PropertyInfo prop, object VM) NumpadShow { get; set; }
     public static (PropertyInfo prop, object VM) KeyboardShow { get; set; }
     public static MicroCyDevice Device { get; private set; }
-    public static Models.MapRegions MapRegions { get; set; }
+    public static MapRegions MapRegions { get; set; }
     public static bool _nextWellWarning;
 
     private static bool _workOrderPending;

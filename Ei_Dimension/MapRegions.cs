@@ -4,9 +4,10 @@ using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using Ei_Dimension.Models;
 using Ei_Dimension.ViewModels;
 
-namespace Ei_Dimension.Models
+namespace Ei_Dimension
 {
   public class MapRegions
   {
@@ -129,15 +130,14 @@ namespace Ei_Dimension.Models
 
     public void AddActiveRegion(int regionNum, bool callFromCode = false)
     {
+      var index = GetMapRegionIndex(regionNum);
       if (!ActiveRegionNums.Contains(regionNum))
       {
         ActiveRegionNums.Add(regionNum);
-        var index = GetMapRegionIndex(regionNum);
         ShiftTextBox(index - 1, true);  // -1 accounts for inexistent region 0 box
       }
       else
       {
-        var index = GetMapRegionIndex(regionNum);
         ShiftTextBox(index - 1, false);
         ActiveRegionNums.Remove(regionNum);
       }
@@ -149,15 +149,14 @@ namespace Ei_Dimension.Models
 
     public void AddValidationRegion(int regionNum)
     {
+      var index = GetMapRegionIndex(regionNum);
       if (!VerificationRegionNums.Contains(regionNum))
       {
         VerificationRegionNums.Add(regionNum);
-        var index = GetMapRegionIndex(regionNum);
         ShiftValidationTextBox(index - 1, true);
       }
       else
       {
-        var index = GetMapRegionIndex(regionNum);
         ShiftValidationTextBox(index - 1, false);
         VerificationRegionNums.Remove(regionNum);
       }
@@ -297,12 +296,7 @@ namespace Ei_Dimension.Models
       tb.Margin = _lastRegionsTbAlignment;
       tb.Name = $"_{_tbCounter}";
       tb.IsReadOnly = true;
-      Binding bind = new Binding();
-      bind.Source = this;
-      bind.Mode = BindingMode.OneTime;
-      bind.Path = new PropertyPath(propertyPath);
-      bind.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
-      BindingOperations.SetBinding(tb, TextBox.TextProperty, bind);
+      SetupBinding(tb, this, propertyPath, BindingMode.OneTime);
       tb.GotFocus += RegionsTbGotFocus;
       _regionsBorder.Children.Add(tb);
     }
@@ -317,11 +311,7 @@ namespace Ei_Dimension.Models
       tb.Margin = _lastNameBoxAlignment;
       tb.Name = $"__{_nameTbCounter++}";
       tb.Visibility = Visibility.Hidden;
-      Binding bind = new Binding();
-      bind.Source = this;
-      bind.Path = new PropertyPath(propertyPath);
-      bind.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
-      BindingOperations.SetBinding(tb, TextBox.TextProperty, bind);
+      SetupBinding(tb, this, propertyPath, BindingMode.TwoWay);
       tb.GotFocus += RegionsNamesTbGotFocus;
       _regionsNamesBorder.Children.Add(tb);
     }
@@ -417,11 +407,7 @@ namespace Ei_Dimension.Models
         IsReadOnly = true,
         Margin = _TbAlignment
       };
-      Binding bind = new Binding();
-      bind.Source = this;
-      bind.Path = new PropertyPath($"DisplayedActiveRegionsCount[{index}]");
-      bind.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
-      BindingOperations.SetBinding(tb, TextBox.TextProperty, bind);
+      SetupBinding(tb, this, $"DisplayedActiveRegionsCount[{index}]", BindingMode.TwoWay);
       return tb;
     }
 
@@ -436,11 +422,7 @@ namespace Ei_Dimension.Models
         IsReadOnly = true,
         Margin = _TbAlignment
       };
-      Binding bind = new Binding();
-      bind.Source = this;
-      bind.Path = new PropertyPath($"DisplayedActiveRegionsMean[{index}]");
-      bind.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
-      BindingOperations.SetBinding(tb, TextBox.TextProperty, bind);
+      SetupBinding(tb, this, $"DisplayedActiveRegionsMean[{index}]", BindingMode.TwoWay);
       return tb;
     }
 
@@ -517,12 +499,7 @@ namespace Ei_Dimension.Models
       tb.Margin = _lastRegionsTbAlignment;
       tb.Name = $"_{_tbCounter}";
       tb.IsReadOnly = true;
-      Binding bind = new Binding();
-      bind.Source = this;
-      bind.Mode = BindingMode.OneTime;
-      bind.Path = new PropertyPath(propertyPath);
-      bind.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
-      BindingOperations.SetBinding(tb, TextBox.TextProperty, bind);
+      SetupBinding(tb, this, propertyPath, BindingMode.OneTime);
       tb.GotFocus += ValidationRegionsTbGotFocus;
       _validationNum.Children.Add(tb);
     }
@@ -537,11 +514,7 @@ namespace Ei_Dimension.Models
       tb.Margin = _lastNameBoxAlignment;
       tb.Name = $"__{_tbCounter}";
       tb.Visibility = Visibility.Hidden;
-      Binding bind = new Binding();
-      bind.Source = this;
-      bind.Path = new PropertyPath(propertyPath);
-      bind.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
-      BindingOperations.SetBinding(tb, TextBox.TextProperty, bind);
+      SetupBinding(tb, this, propertyPath, BindingMode.TwoWay);
       tb.GotFocus += ValidationReporterTbGotFocus;
       tb.TextChanged += ValidationReporterTextChanged;
       _validationReporterBorder.Children.Add(tb);
@@ -583,6 +556,16 @@ namespace Ei_Dimension.Models
       UserInputHandler.SelectedTextBox = (property,
         RegionsList[index], 0, tb);
       MainViewModel.Instance.KeyboardToggle(tb);
+    }
+
+    private void SetupBinding(TextBox tb, object source, string propertyPath, BindingMode mode)
+    {
+      Binding bind = new Binding();
+      bind.Source = source;
+      bind.Mode = mode;
+      bind.Path = new PropertyPath(propertyPath);
+      bind.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
+      BindingOperations.SetBinding(tb, TextBox.TextProperty, bind);
     }
   }
 }

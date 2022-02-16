@@ -217,7 +217,7 @@
     <Compile Include="Models\HistogramData.cs" />
     <Compile Include="Models\MapIndex.cs" />
     <Compile Include="Models\MapRegionData.cs" />
-    <Compile Include="Models\MapRegions.cs" />
+    <Compile Include="MapRegions.cs" />
     <Compile Include="Models\ResultFile.cs" />
     <Compile Include="Models\ScatterData.cs" />
     <Compile Include="Models\WellTableRow.cs" />
