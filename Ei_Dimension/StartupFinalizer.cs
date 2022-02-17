@@ -3,6 +3,7 @@ using Ei_Dimension.ViewModels;
 using System;
 using System.Windows;
 using System.Windows.Media.Imaging;
+using Ei_Dimension.Controllers;
 
 namespace Ei_Dimension
 {
@@ -27,7 +28,7 @@ namespace Ei_Dimension
         Views.ResultsView.Instance.InstrumentLogo.Source = new BitmapImage(new Uri(@"/Ei_Dimension;component/Icons/dimension flow analyzer logoCh.png", UriKind.Relative));
       }
 
-      App.MapRegions = new MapRegions(
+      App.MapRegions = new MapRegionsController(
         Views.SelRegionsView.Instance.RegionsBorder,
         Views.SelRegionsView.Instance.RegionsNamesBorder,
         Views.ResultsView.Instance.Table,

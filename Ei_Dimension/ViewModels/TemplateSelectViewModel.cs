@@ -10,6 +10,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using Ei_Dimension.Controllers;
 using MicroCy;
 
 namespace Ei_Dimension.ViewModels
@@ -21,7 +22,6 @@ namespace Ei_Dimension.ViewModels
     public string SelectedItem;
     public virtual ObservableCollection<string> TemplateSaveName { get; set; }
     public virtual Visibility WaitIndicatorBorderVisibility { get; set; }
-    public virtual bool WaitIndicatorVisibility { get; set; }
     public string _templateName;
     public static TemplateSelectViewModel Instance { get; private set; }
     public virtual Visibility DeleteVisible { get; set; }
@@ -40,7 +40,6 @@ namespace Ei_Dimension.ViewModels
       _invalidChars.AddRange(Path.GetInvalidPathChars());
       _invalidChars.AddRange(Path.GetInvalidFileNameChars());
       WaitIndicatorBorderVisibility = Visibility.Hidden;
-      WaitIndicatorVisibility = false;
       Instance = this;
     }
 
@@ -144,13 +143,13 @@ namespace Ei_Dimension.ViewModels
                   FileSaveViewModel.Instance.UncheckedBox(i);
               }
 
-              for (var i = 0; i < MapRegions.RegionsList.Count - 1; i++)
+              for (var i = 0; i < MapRegionsController.RegionsList.Count - 1; i++)
               {
+                MapRegionsController.RegionsList[i + 1].Name[0] = newTemplate.RegionsNamesList[i];
                 if (newTemplate.ActiveRegions[i])
                 {
-                  App.MapRegions.AddActiveRegion(MapRegions.RegionsList[i+1].Number);
+                  App.MapRegions.AddActiveRegion(MapRegionsController.RegionsList[i+1].Number);
                 }
-                MapRegions.RegionsList[i + 1].Name[0] = newTemplate.RegionsNamesList[i];
               }
 
               if (newTemplate.TableSize != 0)
@@ -254,11 +253,11 @@ namespace Ei_Dimension.ViewModels
           }
           temp.FileSaveCheckboxes = checkboxes;
 
-          for (var i = 1; i < MapRegions.RegionsList.Count; i++) // -1 for NUll Region
+          for (var i = 1; i < MapRegionsController.RegionsList.Count; i++) // -1 for NUll Region
           {
-            var isActive = MapRegions.ActiveRegionNums.Contains(MapRegions.RegionsList[i].Number);
+            var isActive = MapRegionsController.ActiveRegionNums.Contains(MapRegionsController.RegionsList[i].Number);
             temp.ActiveRegions.Add(isActive);
-            temp.RegionsNamesList.Add(MapRegions.RegionsList[i].Name[0]);
+            temp.RegionsNamesList.Add(MapRegionsController.RegionsList[i].Name[0]);
           }
 
           temp.TableSize = WellsSelectViewModel.Instance.CurrentTableSize;
@@ -334,13 +333,11 @@ namespace Ei_Dimension.ViewModels
     private void ShowWaitIndicator()
     {
       WaitIndicatorBorderVisibility = Visibility.Visible;
-      WaitIndicatorVisibility = true;
     }
 
     private void HideWaitIndicator()
     {
       WaitIndicatorBorderVisibility = Visibility.Hidden;
-      WaitIndicatorVisibility = false;
     }
   }
 }

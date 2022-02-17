@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Media;
+using Ei_Dimension.Controllers;
 using Ei_Dimension.ViewModels;
 
 namespace Ei_Dimension.Core
@@ -207,7 +208,7 @@ namespace Ei_Dimension.Core
       var MaxValue = ScatterData.CurrentReporter[ScatterDataCount - 1].Argument;
       int[] reporter, fsc, red, green, violet;
       //NULL Region is included in RegionsList
-      List<List<float>> activeRegionsStats = new List<List<float>>(MapRegions.RegionsList.Count);  //for mean and count 
+      List<List<float>> activeRegionsStats = new List<List<float>>(MapRegionsController.RegionsList.Count);  //for mean and count 
       if (fromFile)
       {
         reporter = ScatterData.bReporter;
@@ -216,7 +217,7 @@ namespace Ei_Dimension.Core
         green = ScatterData.bGreen;
         violet = ScatterData.bViolet;
 
-        for (var i = 0; i < MapRegions.RegionsList.Count; i++)
+        for (var i = 0; i < MapRegionsController.RegionsList.Count; i++)
         {
           activeRegionsStats.Add(new List<float>());
         }
@@ -266,7 +267,7 @@ namespace Ei_Dimension.Core
 
         if (fromFile)
         {
-          var index = MapRegions.GetMapRegionIndex(bead.region);
+          var index = MapRegionsController.GetMapRegionIndex(bead.region);
           if (index != -1)
             activeRegionsStats[index].Add(bead.reporter);
           //else if (bead.region == 0)

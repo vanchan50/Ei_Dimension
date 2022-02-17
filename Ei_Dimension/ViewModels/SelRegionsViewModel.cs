@@ -2,8 +2,11 @@
 using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
 using System;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows;
+using Ei_Dimension.Controllers;
+using Ei_Dimension.Core;
 
 namespace Ei_Dimension.ViewModels
 {
@@ -12,12 +15,10 @@ namespace Ei_Dimension.ViewModels
   {
     public static SelRegionsViewModel Instance { get; private set; }
     public virtual Visibility WaitIndicatorBorderVisibility { get; set; }
-    public virtual bool WaitIndicatorVisibility { get; set; }
 
     protected SelRegionsViewModel()
     {
       WaitIndicatorBorderVisibility = Visibility.Hidden;
-      WaitIndicatorVisibility = false;
       Instance = this;
     }
 
@@ -40,10 +41,10 @@ namespace Ei_Dimension.ViewModels
           (() =>
           {
             UserInputHandler.InputSanityCheck();
-            for (var i = 1; i < MapRegions.RegionsList.Count; i++)
+            for (var i = 1; i < MapRegionsController.RegionsList.Count; i++)
             {
-              var reg = MapRegions.RegionsList[i].Number;
-              if (!MapRegions.ActiveRegionNums.Contains(reg))
+              var reg = MapRegionsController.RegionsList[i].Number;
+              if (!MapRegionsController.ActiveRegionNums.Contains(reg))
                 App.MapRegions.AddActiveRegion(reg);
             }
 
@@ -70,13 +71,11 @@ namespace Ei_Dimension.ViewModels
     private void ShowWaitIndicator()
     {
       WaitIndicatorBorderVisibility = Visibility.Visible;
-      WaitIndicatorVisibility = true;
     }
 
     private void HideWaitIndicator()
     {
       WaitIndicatorBorderVisibility = Visibility.Hidden;
-      WaitIndicatorVisibility = false;
     }
   }
 }

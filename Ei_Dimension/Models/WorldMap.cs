@@ -5,6 +5,7 @@ using MicroCy;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Ei_Dimension.Controllers;
 
 namespace Ei_Dimension.Models
 {
@@ -75,7 +76,7 @@ namespace Ei_Dimension.Models
           BuildWmap = () => {
             foreach (var point in Map)
             {
-              if (MapRegions.ActiveRegionNums.Contains(point.Region))
+              if (MapRegionsController.ActiveRegionNums.Contains(point.Region))
               {
                 if (Flipped)
                   DisplayedWorldMap.Add(new HeatMapData(point.Y, point.X));
@@ -97,7 +98,7 @@ namespace Ei_Dimension.Models
           BuildWmap = () => {
             foreach (var point in Map)
             {
-              if (MapRegions.VerificationRegionNums.Contains(point.Region))
+              if (MapRegionsController.ActiveVerificationRegionNums.Contains(point.Region))
               {
                 if (Flipped)
                   DisplayedWorldMap.Add(new HeatMapData(point.Y, point.X));

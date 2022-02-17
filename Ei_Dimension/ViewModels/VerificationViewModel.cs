@@ -3,6 +3,7 @@ using DevExpress.Mvvm.POCO;
 using MicroCy;
 using System;
 using System.Collections.ObjectModel;
+using Ei_Dimension.Controllers;
 
 namespace Ei_Dimension.ViewModels
 {
@@ -47,16 +48,16 @@ namespace Ei_Dimension.ViewModels
       for (var i = 0; i < map.regions.Count; i++)
       {
         //Reset all Verification Regions
-        MapRegions.VerificationRegionNums.Add(map.regions[i].Number);
+        MapRegionsController.ActiveVerificationRegionNums.Add(map.regions[i].Number);
         App.MapRegions.AddValidationRegion(map.regions[i].Number);
-        MapRegions.VerificationRegionNums.Remove(map.regions[i].Number);
-        MapRegions.RegionsList[i + 1].TargetReporterValue[0] = "";
+        MapRegionsController.ActiveVerificationRegionNums.Remove(map.regions[i].Number);
+        MapRegionsController.RegionsList[i + 1].TargetReporterValue[0] = "";
 
         if (map.regions[i].isValidator)
         {
           App.MapRegions.AddValidationRegion(map.regions[i].Number);
           if(map.regions[i].VerificationTargetReporter > -0.1)
-            MapRegions.RegionsList[i + 1].TargetReporterValue[0] = map.regions[i].VerificationTargetReporter.ToString();
+            MapRegionsController.RegionsList[i + 1].TargetReporterValue[0] = map.regions[i].VerificationTargetReporter.ToString();
         }
       }
       if(!fromCode)
@@ -68,16 +69,16 @@ namespace Ei_Dimension.ViewModels
       UserInputHandler.InputSanityCheck();
       var idx = App.Device.MapCtroller.MapList.FindIndex(x => x.mapName == App.Device.MapCtroller.ActiveMap.mapName);
       var map = App.Device.MapCtroller.MapList[idx];
-      for (var i = 1; i < MapRegions.RegionsList.Count; i++)
+      for (var i = 1; i < MapRegionsController.RegionsList.Count; i++)
       {
-        var index = map.regions.FindIndex(x => x.Number == MapRegions.RegionsList[i].Number);
+        var index = map.regions.FindIndex(x => x.Number == MapRegionsController.RegionsList[i].Number);
         if(index != -1)
         {
           double temp = -1;
-          if (MapRegions.VerificationRegionNums.Contains(MapRegions.RegionsList[i].Number))
+          if (MapRegionsController.ActiveVerificationRegionNums.Contains(MapRegionsController.RegionsList[i].Number))
           {
             map.regions[index].isValidator = true;
-            if (MapRegions.RegionsList[i].TargetReporterValue[0] != "" && double.TryParse(MapRegions.RegionsList[i].TargetReporterValue[0], out temp))
+            if (MapRegionsController.RegionsList[i].TargetReporterValue[0] != "" && double.TryParse(MapRegionsController.RegionsList[i].TargetReporterValue[0], out temp))
             {
               if(temp < 0)
                 map.regions[index].VerificationTargetReporter = -1;
@@ -167,18 +168,18 @@ namespace Ei_Dimension.ViewModels
 
     public bool ValMapInfoReady()
     {
-      if (MapRegions.VerificationRegionNums.Count == 0)
+      if (MapRegionsController.ActiveVerificationRegionNums.Count == 0)
       {
         Notification.Show("No Verification regions selected");
         return false;
       }
 
-      for (var i = 1; i < MapRegions.RegionsList.Count; i++)
+      for (var i = 1; i < MapRegionsController.RegionsList.Count; i++)
       {
-        if (MapRegions.VerificationRegionNums.Contains(MapRegions.RegionsList[i].Number)
-            && MapRegions.RegionsList[i].TargetReporterValue[0] == "")
+        if (MapRegionsController.ActiveVerificationRegionNums.Contains(MapRegionsController.RegionsList[i].Number)
+            && MapRegionsController.RegionsList[i].TargetReporterValue[0] == "")
         {
-          Notification.Show($"Verification region {MapRegions.RegionsList[i]} Reporter is not specified");
+          Notification.Show($"Verification region {MapRegionsController.RegionsList[i]} Reporter is not specified");
           return false;
         }
       }

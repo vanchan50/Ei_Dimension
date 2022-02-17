@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using Ei_Dimension.Controllers;
 
 namespace Ei_Dimension.ViewModels
 {
@@ -319,14 +320,14 @@ namespace Ei_Dimension.ViewModels
         Notification.Show("Results loading failed:\nPlease wait for the previous well to load");
         return;
       }
-      _fillDataActive = true;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+      _fillDataActive = true;
       var hiRez = AnalysisVisible == System.Windows.Visibility.Visible;
       _ = Task.Run(() =>
       {
         var path = PlatePictogram.GetSelectedFilePath();  //@"C:\Emissioninc\KEIZ0R-LEGION\AcquisitionData\val speed test 2E7_0.csv"; //
         if (!System.IO.File.Exists(path))
         {
-          Notification.Show($"File does not exist.\nPlease report this issue to the manufacturer");
+          Notification.Show("File does not exist");
           ResultsWaitIndicatorVisibility = false;
           ChartWaitIndicatorVisibility = false;
           _fillDataActive = false;
@@ -369,9 +370,9 @@ namespace Ei_Dimension.ViewModels
     private void InitBackingWellResults()
     {
       BackingWResults.Clear();
-      if (MapRegions.ActiveRegionNums.Count > 0)
+      if (MapRegionsController.ActiveRegionNums.Count > 0)
       {
-        foreach (var reg in MapRegions.ActiveRegionNums)
+        foreach (var reg in MapRegionsController.ActiveRegionNums)
         {
           BackingWResults.Add(new MicroCy.WellResults { regionNumber = (ushort)reg });
         }

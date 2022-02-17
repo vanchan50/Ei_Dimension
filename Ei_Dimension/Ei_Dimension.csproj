@@ -205,6 +205,9 @@
     </ApplicationDefinition>
     <Compile Include="ActiveRegionsStatsHandler.cs" />
     <Compile Include="CompanyID.cs" />
+    <Compile Include="Controllers\MapRegionsSubControlllers\DashboardTableController.cs" />
+    <Compile Include="Controllers\MapRegionsSubControlllers\ResultsTableController.cs" />
+    <Compile Include="Controllers\MapRegionsSubControlllers\ValidationTableController.cs" />
     <Compile Include="Core\DataProcessor.cs" />
     <Compile Include="Core\ObservableObject.cs" />
     <Compile Include="GraphsHandler.cs" />
@@ -217,7 +220,7 @@
     <Compile Include="Models\HistogramData.cs" />
     <Compile Include="Models\MapIndex.cs" />
     <Compile Include="Models\MapRegionData.cs" />
-    <Compile Include="MapRegions.cs" />
+    <Compile Include="Controllers\MapRegionsController.cs" />
     <Compile Include="Models\ResultFile.cs" />
     <Compile Include="Models\ScatterData.cs" />
     <Compile Include="Models\WellTableRow.cs" />
@@ -594,6 +597,7 @@
     <Resource Include="Icons\Emission_LogoCh.png" />
     <Resource Include="Icons\SplashCh.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

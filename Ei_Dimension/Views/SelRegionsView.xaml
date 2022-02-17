@@ -87,7 +87,7 @@
                 Width="730" Height="720"
                 Opacity="0.3"
                 Background="Black"/>
-        <dx:WaitIndicator DeferedVisibility="{Binding WaitIndicatorVisibility}" Content="Loading..."
+        <dx:WaitIndicator DeferedVisibility="True"  Content="Loading..."
                           HorizontalAlignment="Left"
                           VerticalAlignment="Top"
                           Margin="270,280,0,0">

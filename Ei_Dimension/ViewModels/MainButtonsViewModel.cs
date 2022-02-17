@@ -5,6 +5,7 @@ using MicroCy;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Ei_Dimension.Controllers;
 
 namespace Ei_Dimension.ViewModels
 {
@@ -43,7 +44,7 @@ namespace Ei_Dimension.ViewModels
     public void StartButtonClick()
     {
       UserInputHandler.InputSanityCheck();
-      if (MicroCyDevice.TerminationType == 0 && MapRegions.ActiveRegionNums.Count == 0)
+      if (MicroCyDevice.TerminationType == 0 && MapRegionsController.ActiveRegionNums.Count == 0)
       {
         Notification.Show("\"Min Per Region\" End of Read requires at least 1 active region");
         return;
@@ -60,12 +61,12 @@ namespace Ei_Dimension.ViewModels
       switch (MicroCyDevice.Mode)
       {
         case OperationMode.Normal:
-          if (MapRegions.ActiveRegionNums.Count == 0)
+          if (MapRegionsController.ActiveRegionNums.Count == 0)
           {
             SelectNullRegion();
           }
           //DefaultRegionNaming();
-          startArg = MapRegions.ActiveRegionNums;
+          startArg = MapRegionsController.ActiveRegionNums;
           break;
         case OperationMode.Calibration:
           App.MapRegions.RemoveNullTextBoxes();
@@ -114,12 +115,12 @@ namespace Ei_Dimension.ViewModels
     private static void MakeNewValidator()
     {
       var regions = new List<(int regionNum, double InputReporter)>();
-      for (var i = 1; i < MapRegions.RegionsList.Count; i++)
+      for (var i = 1; i < MapRegionsController.RegionsList.Count; i++)
       {
-        if (MapRegions.VerificationRegionNums.Contains(MapRegions.RegionsList[i].Number))
+        if (MapRegionsController.ActiveVerificationRegionNums.Contains(MapRegionsController.RegionsList[i].Number))
         {
-          int reg = MapRegions.RegionsList[i].Number;
-          var inputReporter = double.Parse(MapRegions.RegionsList[i].TargetReporterValue[0]);
+          int reg = MapRegionsController.RegionsList[i].Number;
+          var inputReporter = double.Parse(MapRegionsController.RegionsList[i].TargetReporterValue[0]);
           inputReporter /= App.Device.ReporterScaling;  //adjust for scaling factor
           regions.Add((reg, inputReporter));
         }
@@ -129,11 +130,11 @@ namespace Ei_Dimension.ViewModels
 
     private static void DefaultRegionNaming()
     {
-      for (var i = 1; i < MapRegions.RegionsList.Count; i++)
+      for (var i = 1; i < MapRegionsController.RegionsList.Count; i++)
       {
-        if (MapRegions.ActiveRegionNums.Contains(MapRegions.RegionsList[i].Number) && MapRegions.RegionsList[i].Name[0] == "")
+        if (MapRegionsController.ActiveRegionNums.Contains(MapRegionsController.RegionsList[i].Number) && MapRegionsController.RegionsList[i].Name[0] == "")
         {
-          MapRegions.RegionsList[i].Name[0] = MapRegions.RegionsList[i].NumberString;
+          MapRegionsController.RegionsList[i].Name[0] = MapRegionsController.RegionsList[i].NumberString;
         }
       }
     }

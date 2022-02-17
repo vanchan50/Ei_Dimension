@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Ei_Dimension.Controllers;
 
 namespace Ei_Dimension
 {
@@ -80,7 +81,7 @@ namespace Ei_Dimension
             ViewModels.ResultsViewModel.Instance.CurrentAnalysis12Map.Clear();
             foreach (var result in TempWellResults)
             {
-              var index = MapRegions.GetMapRegionIndex(result.region);
+              var index = MapRegionsController.GetMapRegionIndex(result.region);
               if (index < 0)
                 continue;
               float avg = 0;
