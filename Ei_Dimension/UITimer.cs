@@ -30,7 +30,7 @@ namespace Ei_Dimension
       TextBoxHandler.Update();
       if (MicroCyDevice.IsMeasurementGoing)
       {
-        GraphsHandler.Update();
+        GraphsController.Instance.Update();
         ActiveRegionsStatsController.Instance.UpdateCurrentStats();
         TextBoxHandler.UpdateEventCounter();
         App.Device.UpdateStateMachine();

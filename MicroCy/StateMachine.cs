@@ -53,9 +53,16 @@ namespace MicroCy
     
     private void Action1()
     {
-      _device.StopWellMeasurement();
+      StopWellMeasurement();
     }
-    
+
+    private void StopWellMeasurement()
+    {
+      BeadProcessor.SavBeadCount = MicroCyDevice.BeadCount;   //save for stats
+      ResultReporter.SavingWellIdx = MicroCyDevice.CurrentWellIdx; //save the index of the currrent well for background file save
+      _device.MainCommand("End Sampling");    //sends message to instrument to stop sampling
+    }
+
     private void Action2()
     {
       var tempres = new List<WellResults>(MicroCyDevice.WellResults.Count);

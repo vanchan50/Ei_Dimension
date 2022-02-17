@@ -210,7 +210,7 @@
     <Compile Include="Controllers\MapRegionsSubControlllers\ValidationTableController.cs" />
     <Compile Include="Core\DataProcessor.cs" />
     <Compile Include="Core\ObservableObject.cs" />
-    <Compile Include="GraphsHandler.cs" />
+    <Compile Include="GraphsController.cs" />
     <Compile Include="LanguageSwap.cs" />
     <Compile Include="Models\AcquisitionTemplate.cs" />
     <Compile Include="Models\DoubleHeatMapData.cs" />

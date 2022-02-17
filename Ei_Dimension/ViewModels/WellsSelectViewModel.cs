@@ -84,57 +84,54 @@ namespace Ei_Dimension.ViewModels
 
     public void ChangeWellTableSize(int num)
     {
-      if (!App.Device.ReadActive)
+      switch (num)
       {
-        switch (num)
-        {
-          case 1:
-            App.Device.MainCommand("Set Property", code: 0xab, parameter: 2);
-            Table384Visible = Visibility.Hidden;
-            Table96Visible = Visibility.Hidden;
-            break;
-          case 96:
-            Table384Visible = Visibility.Hidden;
-            Table96Visible = Visibility.Visible;
-            if (CurrentTableSize != num)
+        case 1:
+          App.Device.MainCommand("Set Property", code: 0xab, parameter: 2);
+          Table384Visible = Visibility.Hidden;
+          Table96Visible = Visibility.Hidden;
+          break;
+        case 96:
+          Table384Visible = Visibility.Hidden;
+          Table96Visible = Visibility.Visible;
+          if (CurrentTableSize != num)
+          {
+            foreach (var row in Table384Wells)
             {
-              foreach (var row in Table384Wells)
+              for (var i = 0; i < 24; i++)
               {
-                for (var i = 0; i < 24; i++)
-                {
-                  row.SetType(i, WellType.Empty);
-                }
+                row.SetType(i, WellType.Empty);
               }
             }
-            App.Device.MainCommand("Set Property", code: 0xab, parameter: 0);
-            break;
-          case 384:
-            Table384Visible = Visibility.Visible;
-            Table96Visible = Visibility.Hidden;
-            if (CurrentTableSize != num)
+          }
+          App.Device.MainCommand("Set Property", code: 0xab, parameter: 0);
+          break;
+        case 384:
+          Table384Visible = Visibility.Visible;
+          Table96Visible = Visibility.Hidden;
+          if (CurrentTableSize != num)
+          {
+            foreach (var row in Table96Wells)
             {
-              foreach (var row in Table96Wells)
+              for (var i = 0; i < 12; i++)
               {
-                for (var i = 0; i < 12; i++)
-                {
-                  row.SetType(i, WellType.Empty);
-                }
+                row.SetType(i, WellType.Empty);
               }
             }
-            App.Device.MainCommand("Set Property", code: 0xab, parameter: 1);
-            break;
-        }
-        CurrentTableSize = num;
-        ResultsViewModel.Instance.PlatePictogram.ChangeMode(num);
-        ResultsViewModel.Instance.CornerButtonClick(1);
-        MotorsViewModel.Instance.ChangeAmountOfWells(num);
-        Views.WellsSelectView.Instance.grd96.UnselectAllCells();
-        Views.WellsSelectView.Instance.grd384.UnselectAllCells();
-        Views.WellsSelectView.Instance.grd96.SelectedCells.Clear();
-        Views.WellsSelectView.Instance.grd384.SelectedCells.Clear();
-        _selectedWell384Indices.Clear();
-        _selectedWell96Indices.Clear();
+          }
+          App.Device.MainCommand("Set Property", code: 0xab, parameter: 1);
+          break;
       }
+      CurrentTableSize = num;
+      ResultsViewModel.Instance.PlatePictogram.ChangeMode(num);
+      ResultsViewModel.Instance.CornerButtonClick(1);
+      MotorsViewModel.Instance.ChangeAmountOfWells(num);
+      Views.WellsSelectView.Instance.grd96.UnselectAllCells();
+      Views.WellsSelectView.Instance.grd384.UnselectAllCells();
+      Views.WellsSelectView.Instance.grd96.SelectedCells.Clear();
+      Views.WellsSelectView.Instance.grd384.SelectedCells.Clear();
+      _selectedWell384Indices.Clear();
+      _selectedWell96Indices.Clear();
     }
 
     private void InitTables()

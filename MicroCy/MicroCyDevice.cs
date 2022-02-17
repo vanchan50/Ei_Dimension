@@ -44,7 +44,6 @@ namespace MicroCy
     public MapController MapCtroller { get; private set; }
     public static WorkOrder WorkOrder { get; set; }
     public static ConcurrentQueue<CommandStruct> Commands { get; } = new ConcurrentQueue<CommandStruct>();
-    //TODO: doesn't have to be a queue. order is irreelevant
     public static ConcurrentQueue<BeadInfoStruct> DataOut { get; } = new ConcurrentQueue<BeadInfoStruct>();
     public static List<Wells> WellsInOrder { get; set; } = new List<Wells>();
     public static ICollection<int> RegionsToOutput { get; set; }
@@ -65,7 +64,6 @@ namespace MicroCy
     public int ScatterGate { get; set; }
     public static int MinPerRegion { get; set; }
     public static bool IsMeasurementGoing { get; private set; }
-    public bool ReadActive { get; set; }
     public static bool Everyevent { get; set; }
     public static bool RMeans { get; set; }
     public static bool PlateReportActive { get; set; }
@@ -81,7 +79,7 @@ namespace MicroCy
     public static DirectoryInfo RootDirectory { get; private set; }
     private static bool _chkRegionCount;
     private static bool _readingA;
-    private static DataController _dataController;
+    private DataController _dataController;
     private readonly StateMachine _stateMach;
 
     public MicroCyDevice(Type connectionType = null)
@@ -96,7 +94,6 @@ namespace MicroCy
       MapCtroller.MoveMaps();
       MapCtroller.LoadMaps();
       Reg0stats = false;
-      ReadActive = false;
       IsMeasurementGoing = false;
       ReporterScaling = 1;
     }
@@ -188,13 +185,6 @@ namespace MicroCy
       _dataController.NotifyCommandReceived();
 
       //RunCmd(command, cs);
-    }
-
-    public void StopWellMeasurement()
-    {
-      BeadProcessor.SavBeadCount = BeadCount;   //save for stats
-      ResultReporter.SavingWellIdx = CurrentWellIdx; //save the index of the currrent well for background file save
-      MainCommand("End Sampling");    //sends message to instrument to stop sampling
     }
 
     public void InitSTab(string tabname)
@@ -325,10 +315,9 @@ namespace MicroCy
           }
           break;
         case 1: //total beads captured
-          if ((BeadCount >= BeadsToCapture) && ReadActive)
+          if (BeadCount >= BeadsToCapture)
           {
             StartStateMachine();
-            ReadActive = false;
           }
           break;
         case 2: //end of sample 
@@ -361,7 +350,6 @@ namespace MicroCy
       MainCommand("Get FProperty", code: 0x68);
       ResultReporter.StartNewPlateReport();
       MainCommand("Get FProperty", code: 0x20); //get high dnr property
-      ReadActive = true;
       SetAspirateParamsForWell(0);  //setup for first read
       RegionsToOutput = regionsToOutput;
       SetReadingParamsForWell(0);
@@ -399,7 +387,6 @@ namespace MicroCy
     internal void OnFinishedMeasurement()
     {
       IsMeasurementGoing = false;
-      ReadActive = false;
       MainCommand("Set Property", code: 0x19);  //bubble detect off
       ResultReporter.StartNewSummaryReport();
       if (Mode ==  OperationMode.Verification)

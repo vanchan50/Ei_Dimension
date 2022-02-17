@@ -95,7 +95,7 @@ namespace Ei_Dimension.ViewModels
     public void EndButtonClick()
     {
       UserInputHandler.InputSanityCheck();
-      if (!App.Device.ReadActive)  //end button press before start, cancel work order
+      if (!MicroCyDevice.IsMeasurementGoing)  //end button press before start, cancel work order
       {
         App.Device.MainCommand("Set Property", code: 0x17); //leds off
         if (DashboardViewModel.Instance.SelectedSystemControlIndex == 1)
@@ -105,7 +105,6 @@ namespace Ei_Dimension.ViewModels
       }
       else
       {
-        App.Device.ReadActive = false;
         App.Device.StartStateMachine();
         if (MicroCyDevice.WellsToRead > 0) //if end read on tube or single well, nothing else is aspirated otherwise
           MicroCyDevice.WellsToRead = MicroCyDevice.CurrentWellIdx + 1; //just read the next well in order since it is already aspirated
