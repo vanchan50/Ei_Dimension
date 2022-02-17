@@ -11,9 +11,6 @@ namespace Ei_Dimension.Controllers
   {
     private class ResultsTableController
     {
-      //pointers to storages of mean and count
-      public ObservableCollection<string> DisplayedActiveRegionsCount { get; private set; }
-      public ObservableCollection<string> DisplayedActiveRegionsMean { get; private set; }
       
       public bool NullTextboxActive;
       private MapRegionsController _parent;
@@ -24,18 +21,6 @@ namespace Ei_Dimension.Controllers
       {
         _parent = parent;
         _table = resultsTable;
-      }
-
-      public void DisplayCurrentActiveRegionsBeadStats(bool current)
-      {
-        if (current)
-        {
-          DisplayedActiveRegionsCount = _parent.CurrentActiveRegionsCount;
-          DisplayedActiveRegionsMean = _parent.CurrentActiveRegionsMean;
-          return;
-        }
-        DisplayedActiveRegionsCount = _parent.BackingActiveRegionsCount;
-        DisplayedActiveRegionsMean = _parent.BackingActiveRegionsMean;
       }
       
       public void AddRegion(string name, BindingBase bind)
@@ -149,7 +134,7 @@ namespace Ei_Dimension.Controllers
           IsReadOnly = true,
           Margin = _TbAlignment
         };
-        SetupBinding(tb, this, $"DisplayedActiveRegionsCount[{index}]", BindingMode.OneWay);
+        SetupBinding(tb, ActiveRegionsStatsController.Instance, $"DisplayedActiveRegionsCount[{index}]", BindingMode.OneWay);
         return tb;
       }
 
@@ -164,7 +149,7 @@ namespace Ei_Dimension.Controllers
           IsReadOnly = true,
           Margin = _TbAlignment
         };
-        SetupBinding(tb, this, $"DisplayedActiveRegionsMean[{index}]", BindingMode.OneWay);
+        SetupBinding(tb, ActiveRegionsStatsController.Instance, $"DisplayedActiveRegionsMean[{index}]", BindingMode.OneWay);
         return tb;
       }
     }

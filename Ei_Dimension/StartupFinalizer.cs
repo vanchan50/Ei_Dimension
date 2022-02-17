@@ -36,6 +36,7 @@ namespace Ei_Dimension
         Views.DashboardView.Instance.DbActiveRegionName,
         Views.VerificationView.Instance.VerificationNums,
         Views.VerificationView.Instance.VerificationReporterValues);
+      ActiveRegionsStatsController.Instance.DisplayCurrentBeadStats();
       ResultsViewModel.Instance.PlatePictogram.SetGrid(Views.ResultsView.Instance.DrawingPlate);
       ResultsViewModel.Instance.PlatePictogram.SetWarningGrid(Views.ResultsView.Instance.WarningGrid);
       Views.CalibrationView.Instance.clmap.DataContext = DashboardViewModel.Instance;

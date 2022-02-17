@@ -257,11 +257,7 @@ namespace Ei_Dimension.ViewModels
         }
         BackingAnalysis13Map.Clear();
         BackingAnalysis23Map.Clear();
-        for (var i = 0; i < App.MapRegions.BackingActiveRegionsCount.Count; i++)
-        {
-          App.MapRegions.BackingActiveRegionsCount[i] = "0";
-          App.MapRegions.BackingActiveRegionsMean[i] = "0";
-        }
+        ActiveRegionsStatsController.Instance.ResetBackingDisplayedStats();
       }
       Views.ResultsView.Instance.ClearPoints();
     }
@@ -408,7 +404,7 @@ namespace Ei_Dimension.ViewModels
       {
         if (App.MapRegions != null)
         {
-          App.MapRegions.DisplayCurrentActiveRegionsBeadStats();
+          ActiveRegionsStatsController.Instance.DisplayCurrentBeadStats();
         }
 
         _ = App.Current.Dispatcher.BeginInvoke((Action)(() =>
@@ -425,7 +421,7 @@ namespace Ei_Dimension.ViewModels
         {
           ResultsWaitIndicatorVisibility = true;
           ChartWaitIndicatorVisibility = true;
-          App.MapRegions.DisplayCurrentActiveRegionsBeadStats(current: false);
+          ActiveRegionsStatsController.Instance.DisplayCurrentBeadStats(current: false);
         }
         MainViewModel.Instance.EventCountField = MainViewModel.Instance.EventCountLocal;
         DisplayedMfiItems = BackingMfiItems;

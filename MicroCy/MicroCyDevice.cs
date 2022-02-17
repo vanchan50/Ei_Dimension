@@ -44,6 +44,7 @@ namespace MicroCy
     public MapController MapCtroller { get; private set; }
     public static WorkOrder WorkOrder { get; set; }
     public static ConcurrentQueue<CommandStruct> Commands { get; } = new ConcurrentQueue<CommandStruct>();
+    //TODO: doesn't have to be a queue. order is irreelevant
     public static ConcurrentQueue<BeadInfoStruct> DataOut { get; } = new ConcurrentQueue<BeadInfoStruct>();
     public static List<Wells> WellsInOrder { get; set; } = new List<Wells>();
     public static ICollection<int> RegionsToOutput { get; set; }

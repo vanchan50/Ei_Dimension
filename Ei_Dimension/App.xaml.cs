@@ -327,7 +327,7 @@ namespace Ei_Dimension
         ResultsViewModel.Instance.CornerButtonClick(Models.DrawingPlate.CalculateCorner(row, col));
         ResultsViewModel.Instance.ClearGraphs();
       });
-      MapRegions.ResetCurrentActiveRegionsDisplayedStats();
+      ActiveRegionsStatsController.Instance.ResetCurrentActiveRegionsDisplayedStats();
       #if DEBUG
       Device.MainCommand("Set FProperty", code: 0x06);
       #endif

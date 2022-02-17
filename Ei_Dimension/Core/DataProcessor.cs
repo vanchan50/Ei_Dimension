@@ -310,8 +310,8 @@ namespace Ei_Dimension.Core
                 else
                   mean = avg;
               }
-              App.MapRegions.BackingActiveRegionsCount[j] = count.ToString();
-              App.MapRegions.BackingActiveRegionsMean[j] = mean.ToString("0,0");
+              ActiveRegionsStatsController.Instance.BackingCount[j] = count.ToString();
+              ActiveRegionsStatsController.Instance.BackingMean[j] = mean.ToString("0,0");
             }
             j++;
           }

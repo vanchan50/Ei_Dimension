@@ -1,6 +1,7 @@
 ﻿using MicroCy;
 using System;
 using System.Threading;
+using Ei_Dimension.Controllers;
 
 namespace Ei_Dimension
 {
@@ -30,7 +31,7 @@ namespace Ei_Dimension
       if (MicroCyDevice.IsMeasurementGoing)
       {
         GraphsHandler.Update();
-        ActiveRegionsStatsHandler.Update();
+        ActiveRegionsStatsController.Instance.UpdateCurrentStats();
         TextBoxHandler.UpdateEventCounter();
         App.Device.UpdateStateMachine();
       }

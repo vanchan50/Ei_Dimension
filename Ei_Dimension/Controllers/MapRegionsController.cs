@@ -16,11 +16,6 @@ namespace Ei_Dimension.Controllers
     //All the selected Active regions. Passed to the MicroCy.StartingProcedure()
     public static HashSet<int> ActiveRegionNums { get; } = new HashSet<int>();
     public static HashSet<int> ActiveVerificationRegionNums { get; } = new HashSet<int>();
-    //storage for mean and count of all existing regions. For current reading and backing file select
-    public ObservableCollection<string> CurrentActiveRegionsCount { get; } = new ObservableCollection<string>();
-    public ObservableCollection<string> CurrentActiveRegionsMean { get; } = new ObservableCollection<string>();
-    public ObservableCollection<string> BackingActiveRegionsCount { get; } = new ObservableCollection<string>();
-    public ObservableCollection<string> BackingActiveRegionsMean { get; } = new ObservableCollection<string>();
     //exceptional NUllregion-case
     public bool IsNullRegionActive { get { return _resultsTableController.NullTextboxActive; } }
 
@@ -56,13 +51,7 @@ namespace Ei_Dimension.Controllers
       _resultsTableController = new ResultsTableController(this, resultsTable);
       _dashboardTableController = new DashboardTableController(Db_Num, Db_Name);
       _validationTableController = new ValidationTableController(this, Validat_Num, Validat_Reporter);
-      DisplayCurrentActiveRegionsBeadStats();
       FillRegions();
-    }
-
-    public void DisplayCurrentActiveRegionsBeadStats(bool current = true)
-    {
-      _resultsTableController.DisplayCurrentActiveRegionsBeadStats(current);
     }
 
     public void FillRegions(bool loadByPage = false)
@@ -75,28 +64,19 @@ namespace Ei_Dimension.Controllers
       RegionsList.Clear();
       ActiveRegionNums.Clear();
       ActiveVerificationRegionNums.Clear();
-      CurrentActiveRegionsCount.Clear();
-      CurrentActiveRegionsMean.Clear();
-      BackingActiveRegionsCount.Clear();
-      BackingActiveRegionsMean.Clear();
+      ActiveRegionsStatsController.Instance.Clear();
       _mapRegionNumberIndexDictionary.Clear();
       
       RegionsList.Add(new MapRegionData(0));
       _mapRegionNumberIndexDictionary.Add(0,0);
       RegionsList[0].Name[0] = "UNCLSSFD";
-      CurrentActiveRegionsCount.Add("0");
-      CurrentActiveRegionsMean.Add("0");
-      BackingActiveRegionsCount.Add("0");
-      BackingActiveRegionsMean.Add("0");
+      ActiveRegionsStatsController.Instance.AddNewEntry();
       var i = 1;
       foreach (var region in App.Device.MapCtroller.ActiveMap.regions)
       {
         RegionsList.Add(new MapRegionData(region.Number));
         _mapRegionNumberIndexDictionary.Add(region.Number, i);
-        CurrentActiveRegionsCount.Add("0");
-        CurrentActiveRegionsMean.Add("0");
-        BackingActiveRegionsCount.Add("0");
-        BackingActiveRegionsMean.Add("0");
+        ActiveRegionsStatsController.Instance.AddNewEntry();
         AddTextboxes(i);
         i++;
       }
@@ -141,15 +121,6 @@ namespace Ei_Dimension.Controllers
     public void RemoveNullTextBoxes()
     {
       _resultsTableController.RemoveNullTb();
-    }
-
-    public void ResetCurrentActiveRegionsDisplayedStats()
-    {
-      for (var i = 0; i < CurrentActiveRegionsCount.Count; i++)
-      {
-        CurrentActiveRegionsCount[i] = "0";
-        CurrentActiveRegionsMean[i] = "0";
-      }
     }
 
     private void AddTextboxes(int regionNum)
