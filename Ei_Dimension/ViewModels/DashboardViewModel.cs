@@ -1,10 +1,10 @@
-﻿using DevExpress.Mvvm.DataAnnotations;
+﻿using System.Collections.Generic;
+using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
 using Ei_Dimension.Models;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
-using System.Linq;
 using MicroCy;
 
 namespace Ei_Dimension.ViewModels
@@ -228,62 +228,6 @@ namespace Ei_Dimension.ViewModels
     public void TextChanged(TextChangedEventArgs e)
     {
       UserInputHandler.InjectToFocusedTextbox(((TextBox)e.Source).Text, true);
-    }
-
-    private Wells MakeWell(byte row, byte col)
-    {
-      _ = short.TryParse(Volumes[0], out var volRes);
-      _ = short.TryParse(Volumes[1], out var washRes);
-      _ = short.TryParse(Volumes[2], out var agitRes);
-      
-      return new Wells
-      {
-        rowIdx = row,
-        colIdx = col,
-        runSpeed = SelectedSpeedIndex,
-        sampVol = volRes,
-        washVol = washRes,
-        agitateVol = agitRes,
-        termType = MicroCyDevice.TerminationType,
-        chanConfig = SelectedChConfigIndex,
-        regTermCnt = MicroCyDevice.MinPerRegion,
-        termCnt = MicroCyDevice.BeadsToCapture
-      };
-    }
-
-    public void SetWellsInOrder()
-    {
-      MicroCyDevice.WellsInOrder.Clear();
-      if (WellsSelectViewModel.Instance.CurrentTableSize > 1)
-      {
-        ObservableCollection<WellTableRow> plate = WellsSelectViewModel.Instance.CurrentTableSize == 96 ?
-          WellsSelectViewModel.Instance.Table96Wells : WellsSelectViewModel.Instance.Table384Wells;
-        if (SelectedSystemControlIndex == 0)  //manual control of plate //TODO: SystemControl can be removed from device fields maybe?
-        {
-          for (byte r = 0; r < plate.Count; r++)
-          {
-            for (byte c = 0; c < plate[r].Types.Count; c++)
-            {
-              if (plate[r].Types[c] != WellType.Empty)
-                MicroCyDevice.WellsInOrder.Add(MakeWell(r, c));
-            }
-          }
-          if (SelectedOrderIndex == 0)
-          {
-            //sort list by col/row
-            MicroCyDevice.WellsInOrder = MicroCyDevice.WellsInOrder.OrderBy(x => x.colIdx).ThenBy(x => x.rowIdx).ToList();
-          }
-        }
-        else  //Work Order control of plate
-        {
-          //fill wells from work order
-          MicroCyDevice.WellsInOrder = MicroCyDevice.WorkOrder.woWells;
-        }
-      }
-      else if (WellsSelectViewModel.Instance.CurrentTableSize == 1)  //tube
-        MicroCyDevice.WellsInOrder.Add(MakeWell(0, 0));  //  a 1 record work order
-
-      MicroCyDevice.WellsToRead = MicroCyDevice.WellsInOrder.Count - 1;  //make zero based like well index is
     }
 
     private void EndReadVisibilitySwitch()

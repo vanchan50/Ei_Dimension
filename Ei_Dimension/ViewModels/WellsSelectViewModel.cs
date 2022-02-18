@@ -1,9 +1,8 @@
-﻿using DevExpress.Mvvm;
-using DevExpress.Mvvm.DataAnnotations;
+﻿using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
 using Ei_Dimension.Models;
 using MicroCy;
-using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
@@ -203,6 +202,61 @@ namespace Ei_Dimension.ViewModels
           }
         }
       }
+    }
+
+    public List<Well> OutputWells()
+    {
+      var wells = new List<Well>();
+      if (WellsSelectViewModel.Instance.CurrentTableSize > 1)
+      {
+        ObservableCollection<WellTableRow> plate = CurrentTableSize == 96 ? Table96Wells : Table384Wells;
+        if (DashboardViewModel.Instance.SelectedSystemControlIndex == 0)  //manual control of plate
+        {
+          for (byte r = 0; r < plate.Count; r++)
+          {
+            for (byte c = 0; c < plate[r].Types.Count; c++)
+            {
+              if (plate[r].Types[c] != WellType.Empty)
+                wells.Add(MakeWell(r, c));
+            }
+          }
+          if (DashboardViewModel.Instance.SelectedOrderIndex == 0)
+          {
+            //sort list by col/row
+            wells = wells.OrderBy(x => x.colIdx).ThenBy(x => x.rowIdx).ToList();
+          }
+        }
+        else  //Work Order control of plate
+        {
+          //fill wells from work order
+          wells = MicroCyDevice.WorkOrder.woWells;
+        }
+      }
+      else if (CurrentTableSize == 1)  //tube
+        wells.Add(MakeWell(0, 0));  //  a 1 record work order
+
+      return wells;
+    }
+
+    private Well MakeWell(byte row, byte col)
+    {
+      _ = short.TryParse(DashboardViewModel.Instance.Volumes[0], out var volRes);
+      _ = short.TryParse(DashboardViewModel.Instance.Volumes[1], out var washRes);
+      _ = short.TryParse(DashboardViewModel.Instance.Volumes[2], out var agitRes);
+
+      return new Well
+      {
+        rowIdx = row,
+        colIdx = col,
+        runSpeed = DashboardViewModel.Instance.SelectedSpeedIndex,
+        sampVol = volRes,
+        washVol = washRes,
+        agitateVol = agitRes,
+        termType = MicroCyDevice.TerminationType,
+        chanConfig = DashboardViewModel.Instance.SelectedChConfigIndex,
+        regTermCnt = MicroCyDevice.MinPerRegion,
+        termCnt = MicroCyDevice.BeadsToCapture
+      };
     }
   }
 }

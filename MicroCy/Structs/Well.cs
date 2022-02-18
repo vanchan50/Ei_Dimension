@@ -3,7 +3,7 @@
 namespace MicroCy
 {
   [Serializable]
-  public struct Wells
+  public class Well
   {
     public byte rowIdx;
     public byte colIdx;

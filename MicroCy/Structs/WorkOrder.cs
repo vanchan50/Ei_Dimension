@@ -13,6 +13,6 @@ namespace MicroCy
     public short wellDepth;
     public DateTime createDateTime;        //date and time per ISO8601
     public DateTime scheduleDateTime;
-    public List<Wells> woWells;
+    public List<Well> woWells;
   }
 }

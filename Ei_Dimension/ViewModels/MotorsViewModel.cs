@@ -18,6 +18,7 @@ namespace Ei_Dimension.ViewModels
     public virtual ObservableCollection<DropDownButtonContents> WellColumnButtonItems { get; set; }
     public virtual string SelectedWellRow { get; set; }
     public virtual string SelectedWellColumn { get; set; }
+    //TODO: Get Rid of. save index of selected row and col in Click() method, use those indexes in GoToWell method
     public (byte rowIndex, byte colIndex) RowColIndex { get; set; }
     public virtual ObservableCollection<string> ParametersX { get; set; }
     public virtual ObservableCollection<string> ParametersY { get; set; }
@@ -193,9 +194,7 @@ namespace Ei_Dimension.ViewModels
     {
       UserInputHandler.InputSanityCheck();
       App.Device.MainCommand("Set Property", code: 0xad, parameter: (ushort)RowColIndex.rowIndex);
-      MicroCyDevice.ReadingRow = RowColIndex.rowIndex;
       App.Device.MainCommand("Set Property", code: 0xae, parameter: (ushort)RowColIndex.colIndex);
-      MicroCyDevice.ReadingCol = RowColIndex.colIndex;
       App.Device.MainCommand("Position Well Plate");
     }
 
@@ -405,13 +404,11 @@ namespace Ei_Dimension.ViewModels
           case 1:
             _vm.SelectedWellRow = Content;
             App.Device.MainCommand("Set Property", code: 0xad, parameter: (ushort)Index);
-            MicroCyDevice.ReadingRow = Index;
             _vm.RowColIndex = (Index, _vm.RowColIndex.colIndex);
             break;
           case 2:
             _vm.SelectedWellColumn = Content;
             App.Device.MainCommand("Set Property", code: 0xae, parameter: (ushort)Index);
-            MicroCyDevice.ReadingCol = Index;
             _vm.RowColIndex = (_vm.RowColIndex.rowIndex, Index);
             break;
         }

@@ -593,8 +593,12 @@ namespace Ei_Dimension
                   r.regionNumber = MicroCyDevice.WellResults[i].regionNumber;
                   tempres.Add(r);
                 }
-                MicroCyDevice.WellsToRead = MicroCyDevice.CurrentWellIdx;
                 ResultReporter.SaveBeadFile(tempres);
+
+                if (MicroCyDevice.RMeans
+                    && MicroCyDevice.PlateReportActive)    //end of read and json results requested)
+                  ResultReporter.OutputPlateReport();
+
                 Environment.Exit(0);
                 lock (ConditionVar)
                 {
@@ -629,9 +633,10 @@ namespace Ei_Dimension
             {
               update = () =>
               {
-                ResultsViewModel.Instance.PlatePictogram.ChangeState(MicroCyDevice.ReadingRow, MicroCyDevice.ReadingCol,
+                var currentWell = App.Device.WellController.CurrentWell;
+                ResultsViewModel.Instance.PlatePictogram.ChangeState(currentWell.rowIdx, currentWell.colIdx,
                   warning: Models.WellWarningState.YellowWarning);
-                if (MicroCyDevice.CurrentWellIdx < MicroCyDevice.WellsToRead) //aspirating next
+                if (!App.Device.WellController.IsLastWell) //aspirating next
                   App._nextWellWarning = true;
               };
             }

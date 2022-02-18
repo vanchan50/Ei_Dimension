@@ -294,13 +294,6 @@ namespace Ei_Dimension.ViewModels
         App.Device.ScatterGate = Index;
       }
 
-      public void ForAppUpdater()
-      {
-        _vm.SelectedGatingContent = Content;
-        App.Device.ScatterGate = Index;
-        _vm.SelectedGatingIndex = Index;
-      }
-
       public static void ResetIndex()
       {
         _nextIndex = 0;

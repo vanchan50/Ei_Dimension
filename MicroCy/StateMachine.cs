@@ -39,9 +39,6 @@ namespace MicroCy
           if (!Action3())
             return;
           break;
-        case State.State4:
-          Action4();
-          break;
         case State.End:
           Action5();
           break;
@@ -54,12 +51,13 @@ namespace MicroCy
     private void Action1()
     {
       StopWellMeasurement();
+      _device.OnFinishedReadingWell();
     }
 
     private void StopWellMeasurement()
     {
       BeadProcessor.SavBeadCount = MicroCyDevice.BeadCount;   //save for stats
-      ResultReporter.SavingWellIdx = MicroCyDevice.CurrentWellIdx; //save the index of the currrent well for background file save
+      ResultReporter.SavingWell = _device.WellController.CurrentWell; //save the index of the currrent well for background file save
       _device.MainCommand("End Sampling");    //sends message to instrument to stop sampling
     }
 
@@ -74,7 +72,15 @@ namespace MicroCy
         r.regionNumber = MicroCyDevice.WellResults[i].regionNumber;
         tempres.Add(r);
       }
-      _ = Task.Run(() => ResultReporter.SaveBeadFile(tempres));
+      _ = Task.Run(() =>
+      {
+        ResultReporter.SaveBeadFile(tempres);
+
+        if (MicroCyDevice.RMeans
+            && _device.WellController.IsLastWell
+            && MicroCyDevice.PlateReportActive)    //end of read and json results requested)
+          ResultReporter.OutputPlateReport();
+      });
       GetRunStatistics();
     }
     
@@ -86,11 +92,6 @@ namespace MicroCy
       }
       _device.MainCommand("Get Property", code: 0xcc);
       return false;
-    }
-    
-    private void Action4()
-    {
-      _device.WellNext();  //saves current well address for filename in state 5
     }
     
     private void Action5()
@@ -134,9 +135,6 @@ namespace MicroCy
         case State.State3:
           str = $"{DateTime.Now.ToString()} Reporting Washing Complete";
           break;
-        case State.State4:
-          str = $"{DateTime.Now.ToString()} Reporting Setting up next well";
-          break;
         case State.End:
           str = $"{DateTime.Now.ToString()} Reporting End of current well";
           break;
@@ -157,7 +155,6 @@ namespace MicroCy
       Start,
       State2,
       State3,
-      State4,
       End
     }
   }

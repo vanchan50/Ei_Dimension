@@ -50,12 +50,14 @@ namespace Ei_Dimension.ViewModels
         return;
       }
 
-      DashboardViewModel.Instance.SetWellsInOrder();
-      if (MicroCyDevice.WellsInOrder.Count < 1)
+      var wells = WellsSelectViewModel.Instance.OutputWells();
+      if (wells.Count == 0)
       {
         Notification.Show("No wells or Tube selected");
         return;
       }
+      App.Device.WellController.Init(wells);
+
       App.Device.MainCommand("Set FProperty", code: 0x06);
       HashSet<int> startArg = null;
       switch (MicroCyDevice.Mode)
@@ -82,7 +84,7 @@ namespace Ei_Dimension.ViewModels
       ResultsViewModel.Instance.ClearGraphs();
       ResultsViewModel.Instance.PlatePictogram.Clear();
       ResultsViewModel.Instance.PlotCurrent();
-      ResultsViewModel.Instance.PlatePictogram.SetWellsForReading(MicroCyDevice.WellsInOrder);
+      ResultsViewModel.Instance.PlatePictogram.SetWellsForReading(wells);
       for(var i = 0; i < 10; i++)
       {
         ResultsViewModel.Instance.CurrentMfiItems[i] = "";
@@ -105,9 +107,7 @@ namespace Ei_Dimension.ViewModels
       }
       else
       {
-        App.Device.StartStateMachine();
-        if (MicroCyDevice.WellsToRead > 0) //if end read on tube or single well, nothing else is aspirated otherwise
-          MicroCyDevice.WellsToRead = MicroCyDevice.CurrentWellIdx + 1; //just read the next well in order since it is already aspirated
+        App.Device.EmergencyStop();
       }
     }
 

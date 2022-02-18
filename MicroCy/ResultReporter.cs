@@ -7,21 +7,27 @@ using System.Text;
 
 namespace MicroCy
 {
-  public static class ResultReporter
+  public class ResultReporter
   {
     public static string Outdir { get; set; }  //  user selectable
     public static string Outfilename { get; set; } = "ResultFile";
     public static string WorkOrderPath { get; set; }
-    internal static int SavingWellIdx { get; set; }
+    internal static Well SavingWell { get; set; }
     internal static string FullFileName { get; private set; }
     private static string _thisRunResultsFileName = null;
     private static readonly StringBuilder DataOut = new StringBuilder();
     private static readonly StringBuilder SummaryOut = new StringBuilder();
     private static PlateReport _plateReport;
+    private MicroCyDevice _device;
     private const string BHEADER = "Preamble,Time(1 us Tick),FSC bg,Viol SSC bg,CL0 bg,CL1 bg,CL2 bg,CL3 bg,Red SSC bg,Green SSC bg," +
                                    "Green B bg,Green C bg,Green B,Green C,Red-Grn Offset,Grn-Viol Offset,Region,Forward Scatter,Violet SSC,CL0," +
                                    "Red SSC,CL1,CL2,CL3,Green SSC,Reporter\r";
     private const string SHEADER = "Row,Col,Region,Bead Count,Median FI,Trimmed Mean FI,CV%\r";
+
+    public ResultReporter(MicroCyDevice device)
+    {
+      _device = device;
+    }
 
     static ResultReporter()
     {
@@ -53,7 +59,7 @@ namespace MicroCy
       _thisRunResultsFileName = null;
     }
 
-    internal static void GetNewFileName()
+    internal void GetNewFileName()
     {
       OutDirCheck();
       try
@@ -69,9 +75,9 @@ namespace MicroCy
       //open file
       //first create unique filename
 
-      char rowletter = (char)(0x41 + MicroCyDevice.ReadingRow);
+      char rowletter = (char)(0x41 + _device.WellController.CurrentWell.rowIdx);
       //if(!isTube)
-      string colLetter = (MicroCyDevice.ReadingCol + 1).ToString();  //use 0 for tubes and true column for plates
+      string colLetter = (_device.WellController.CurrentWell.colIdx + 1).ToString();  //use 0 for tubes and true column for plates
       for (var differ = 0; differ < int.MaxValue; differ++)
       {
         FullFileName = $"{Outdir}\\AcquisitionData\\{Outfilename}{rowletter}{colLetter}_{differ.ToString()}.csv";
@@ -97,28 +103,29 @@ namespace MicroCy
 
     private static void OutputSummaryFile()
     {
-      if (SummaryOut.Length > 0)  //end of read session (plate, plate section or tube) write summary stat file
+      //end of read session (plate, plate section or tube) write summary stat file
+      if (SummaryOut.Length == 0)
+        return;
+
+      try
       {
-        try
-        {
-          OutDirCheck();
-          if (!Directory.Exists($"{Outdir}\\AcquisitionData"))
-            Directory.CreateDirectory($"{Outdir}\\AcquisitionData");
-        }
-        catch
-        {
-          Console.WriteLine($"Failed to create {Outdir}\\AcquisitionData");
-          return;
-        }
-        GetThisRunFileName();
-        try
-        {
-          File.AppendAllText(_thisRunResultsFileName, SummaryOut.ToString());
-        }
-        catch
-        {
-          Console.WriteLine($"Failed to append data to {_thisRunResultsFileName}");
-        }
+        OutDirCheck();
+        if (!Directory.Exists($"{Outdir}\\AcquisitionData"))
+          Directory.CreateDirectory($"{Outdir}\\AcquisitionData");
+      }
+      catch
+      {
+        Console.WriteLine($"Failed to create {Outdir}\\AcquisitionData");
+        return;
+      }
+      GetThisRunFileName();
+      try
+      {
+        File.AppendAllText(_thisRunResultsFileName, SummaryOut.ToString());
+      }
+      catch
+      {
+        Console.WriteLine($"Failed to append data to {_thisRunResultsFileName}");
       }
     }
 
@@ -144,41 +151,41 @@ namespace MicroCy
       }
     }
 
-    private static void OutputPlateReport()
+    public static void OutputPlateReport()
     {
-      if ((SavingWellIdx == MicroCyDevice.WellsToRead) && (SummaryOut.Length > 0) && MicroCyDevice.PlateReportActive)    //end of read and json results requested
-      {
-        string rfilename = MicroCyDevice.SystemControl == 0 ? Outfilename : MicroCyDevice.WorkOrder.plateID.ToString();
-        try
-        {
-          if (!Directory.Exists($"{MicroCyDevice.RootDirectory.FullName}\\Result\\Summary"))
-            _ = Directory.CreateDirectory($"{MicroCyDevice.RootDirectory.FullName}\\Result\\Summary");
-        }
-        catch
-        {
-          Console.WriteLine($"Failed to create {MicroCyDevice.RootDirectory.FullName}\\Result\\Summary");
-          return;
-        }
+      if (SummaryOut.Length == 0)
+        return;
 
-        try
+      string rfilename = MicroCyDevice.SystemControl == 0 ? Outfilename : MicroCyDevice.WorkOrder.plateID.ToString();
+      try
+      {
+        if (!Directory.Exists($"{MicroCyDevice.RootDirectory.FullName}\\Result\\Summary"))
+          _ = Directory.CreateDirectory($"{MicroCyDevice.RootDirectory.FullName}\\Result\\Summary");
+      }
+      catch
+      {
+        Console.WriteLine($"Failed to create {MicroCyDevice.RootDirectory.FullName}\\Result\\Summary");
+        return;
+      }
+
+      try
+      {
+        using (TextWriter jwriter = new StreamWriter($"{MicroCyDevice.RootDirectory.FullName}\\Result\\Summary\\" +
+                                                     "Summary_" + rfilename + ".json"))
         {
-          using (TextWriter jwriter = new StreamWriter($"{MicroCyDevice.RootDirectory.FullName}\\Result\\Summary\\" +
-                                                       "Summary_" + rfilename + ".json"))
-          {
-            var jcontents = JsonConvert.SerializeObject(_plateReport);
-            jwriter.Write(jcontents);
-          }
+          var jcontents = JsonConvert.SerializeObject(_plateReport);
+          jwriter.Write(jcontents);
         }
-        catch
-        {
-          Console.WriteLine($"Failed to create Plate Report");
-        }
+      }
+      catch
+      {
+        Console.WriteLine($"Failed to create Plate Report");
       }
     }
 
     private static void AddToPlateReport(in OutResults outRes)
     {
-      _plateReport.rpWells[SavingWellIdx].rpReg.Add(new RegionReport
+      _plateReport.rpWells[_plateReport.rpWells.Count - 1].rpReg.Add(new RegionReport
       {
         region = outRes.region,
         count = (uint)outRes.count,
@@ -206,22 +213,20 @@ namespace MicroCy
       if (MicroCyDevice.RMeans)
       {
         ClearSummary();
-        if (_plateReport != null && MicroCyDevice.WellsInOrder.Count != 0)
+        if (_plateReport != null)
           _plateReport.rpWells.Add(new WellReport {
-            prow = MicroCyDevice.WellsInOrder[SavingWellIdx].rowIdx,
-            pcol = MicroCyDevice.WellsInOrder[SavingWellIdx].colIdx
+            prow = SavingWell.rowIdx,
+            pcol = SavingWell.colIdx
           });
         char[] alphabet = Enumerable.Range('A', 16).Select(x => (char)x).ToArray();
         for (var i = 0; i < wellres.Count; i++)
         {
           WellResults regionNumber = wellres[i];
-          SavingWellIdx = SavingWellIdx > MicroCyDevice.WellsInOrder.Count - 1 ? MicroCyDevice.WellsInOrder.Count - 1 : SavingWellIdx;
           OutResults rout = FillOutResults(regionNumber, in alphabet);
           AddOutResults(in rout);
           AddToPlateReport(in rout);
         }
         OutputSummaryFile();
-        OutputPlateReport();
         wellres = null;
       }
       Console.WriteLine($"{DateTime.Now.ToString()} Reporting Background File Save Complete");
@@ -233,8 +238,8 @@ namespace MicroCy
     private static OutResults FillOutResults(WellResults regionNumber, in char[] alphabet)
     {
       OutResults rout = new OutResults();
-      rout.row = alphabet[MicroCyDevice.WellsInOrder[SavingWellIdx].rowIdx].ToString();
-      rout.col = MicroCyDevice.WellsInOrder[SavingWellIdx].colIdx + 1;  //columns are 1 based
+      rout.row = alphabet[SavingWell.rowIdx].ToString();
+      rout.col = SavingWell.colIdx + 1;  //columns are 1 based
       rout.count = regionNumber.RP1vals.Count;
       rout.region = regionNumber.regionNumber;
       var rp1Temp = regionNumber.RP1vals;

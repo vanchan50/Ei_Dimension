@@ -87,9 +87,10 @@
     <Compile Include="USBConnection.cs" />
     <Compile Include="ValidationStats.cs" />
     <Compile Include="Verificator.cs" />
+    <Compile Include="WellController.cs" />
     <Compile Include="WellReport.cs" />
     <Compile Include="WellResults.cs" />
-    <Compile Include="Structs\Wells.cs" />
+    <Compile Include="Structs\Well.cs" />
     <Compile Include="Structs\WorkOrder.cs" />
   </ItemGroup>
   <ItemGroup>
