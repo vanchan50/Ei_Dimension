@@ -83,10 +83,10 @@ namespace Ei_Dimension.Views
       string date = DateTime.Now.ToString("dd.MM.yyyy.hhtt-mm-ss", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"));
       try
       {
-        ResultReporter.OutDirCheck();
-        if (!Directory.Exists(ResultReporter.Outdir + "\\SavedImages"))
-          Directory.CreateDirectory(ResultReporter.Outdir + "\\SavedImages");
-        chart.ExportToImage(ResultReporter.Outdir + @"\SavedImages\" + date + ".png", options);
+        App.Device.Publisher.OutDirCheck();
+        if (!Directory.Exists(App.Device.Publisher.Outdir + "\\SavedImages"))
+          Directory.CreateDirectory(App.Device.Publisher.Outdir + "\\SavedImages");
+        chart.ExportToImage(App.Device.Publisher.Outdir + @"\SavedImages\" + date + ".png", options);
       }
       catch
       {

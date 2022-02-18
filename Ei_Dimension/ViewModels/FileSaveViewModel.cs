@@ -57,14 +57,14 @@ namespace Ei_Dimension.ViewModels
       UserInputHandler.InputSanityCheck();
       if (defaultDir)
       {
-        ResultReporter.Outdir = Settings.Default.LastOutFolder = MicroCyDevice.RootDirectory.FullName;
+        App.Device.Publisher.Outdir = Settings.Default.LastOutFolder = App.Device.RootDirectory.FullName;
         Settings.Default.Save();
         return;
       }
-      FolderBrowserDialogService.StartPath = ResultReporter.Outdir;
+      FolderBrowserDialogService.StartPath = App.Device.Publisher.Outdir;
       if (FolderBrowserDialogService.ShowDialog())
       {
-        ResultReporter.Outdir = Settings.Default.LastOutFolder = FolderBrowserDialogService.ResultPath;
+        App.Device.Publisher.Outdir = Settings.Default.LastOutFolder = FolderBrowserDialogService.ResultPath;
         Settings.Default.Save();
       }
     }

@@ -34,6 +34,7 @@ namespace MicroCy
 
   public class MicroCyDevice
   {
+    public ResultsPublisher Publisher { get; }
     public MapController MapCtroller { get; }
     public static WorkOrder WorkOrder { get; set; }
     public static ConcurrentQueue<CommandStruct> Commands { get; } = new ConcurrentQueue<CommandStruct>();
@@ -64,23 +65,22 @@ namespace MicroCy
     public static bool ChannelBIsHiSensitivity { get; set; }
     public static byte TerminationType { get; set; }
 
-    public static DirectoryInfo RootDirectory { get; private set; }
+    public DirectoryInfo RootDirectory { get; private set; }
     private static bool _chkRegionCount;
     private static bool _readingA;
     private readonly DataController _dataController;
     private readonly StateMachine _stateMach;
-    private readonly ResultReporter _resultReporter;
 
     public MicroCyDevice(Type connectionType = null)
     {
+      SetSystemDirectories();
       _dataController = new DataController(this, connectionType);
       _stateMach = new StateMachine(this, true);
-      _resultReporter = new ResultReporter(this);
-      MapCtroller = new MapController();
+      Publisher = new ResultsPublisher(this);
+      MapCtroller = new MapController(this);
       MainCommand("Sync");
       TotalBeads = 0;
       Mode = OperationMode.Normal;
-      SetSystemDirectories();
       MapCtroller.MoveMaps();
       MapCtroller.LoadMaps();
       Reg0stats = false;
@@ -90,8 +90,8 @@ namespace MicroCy
 
     public void InitBeadRead()
     {
-      _resultReporter.GetNewFileName();
-      ResultReporter.StartNewWellReport();
+      Publisher.GetNewFileName();
+      ResultsPublisher.StartNewWellReport();
       _chkRegionCount = false;
       BeadCount = 0;
       OnStartingToReadWell();
@@ -120,10 +120,16 @@ namespace MicroCy
     {
       MainCommand("Set Property", code: 0xaa, parameter: (ushort)WellController.NextWell.runSpeed);
       MainCommand("Set Property", code: 0xc2, parameter: (ushort)WellController.NextWell.chanConfig);
-      BeadsToCapture = WellController.NextWell.termCnt;
-      MinPerRegion = WellController.NextWell.regTermCnt;
-      TerminationType = WellController.NextWell.termType;
       MakeNewWellResults();
+    }
+
+    public void SetAspirateParamsForWell()
+    {
+      MainCommand("Set Property", code: 0xad, parameter: (ushort)WellController.NextWell.rowIdx);
+      MainCommand("Set Property", code: 0xae, parameter: (ushort)WellController.NextWell.colIdx);
+      MainCommand("Set Property", code: 0xaf, parameter: (ushort)WellController.NextWell.sampVol);
+      MainCommand("Set Property", code: 0xac, parameter: (ushort)WellController.NextWell.washVol);
+      MainCommand("Set Property", code: 0xc4, parameter: (ushort)WellController.NextWell.agitateVol);
     }
 
     private void MakeNewWellResults()
@@ -245,15 +251,6 @@ namespace MicroCy
       }
     }
 
-    public void SetAspirateParamsForWell()
-    {
-      MainCommand("Set Property", code: 0xad, parameter: (ushort)WellController.NextWell.rowIdx);
-      MainCommand("Set Property", code: 0xae, parameter: (ushort)WellController.NextWell.colIdx);
-      MainCommand("Set Property", code: 0xaf, parameter: (ushort)WellController.NextWell.sampVol);
-      MainCommand("Set Property", code: 0xac, parameter: (ushort)WellController.NextWell.washVol);
-      MainCommand("Set Property", code: 0xc4, parameter: (ushort)WellController.NextWell.agitateVol);
-    }
-
     private void SetSystemDirectories()
     {
       RootDirectory = new DirectoryInfo(Path.Combine(@"C:\Emissioninc", Environment.MachineName));
@@ -329,7 +326,7 @@ namespace MicroCy
       //read section of plate
       MainCommand("Get FProperty", code: 0x58);
       MainCommand("Get FProperty", code: 0x68);
-      ResultReporter.StartNewPlateReport();
+      ResultsPublisher.StartNewPlateReport();
       MainCommand("Get FProperty", code: 0x20); //get high dnr property
       SetAspirateParamsForWell();  //setup for first read
       RegionsToOutput = regionsToOutput;
@@ -339,7 +336,7 @@ namespace MicroCy
       MainCommand("Aspirate Syringe A"); //handles down and pickup sample
       WellController.Advance();//TODO: need WEllnext() now?
       InitBeadRead();   //gets output file ready
-      ResultReporter.ClearSummary();
+      ResultsPublisher.ClearSummary();
       TotalBeads = 0;
 
       if (WellController.IsLastWell)
@@ -357,7 +354,7 @@ namespace MicroCy
     private void OnStartingToReadWell()
     {
       IsMeasurementGoing = true;
-      StartingToReadWell?.Invoke(this, new ReadingWellEventArgs(WellController.CurrentWell.rowIdx, WellController.CurrentWell.colIdx, ResultReporter.FullFileName));
+      StartingToReadWell?.Invoke(this, new ReadingWellEventArgs(WellController.CurrentWell.rowIdx, WellController.CurrentWell.colIdx, ResultsPublisher.FullFileName));
     }
 
     internal void OnFinishedReadingWell()
@@ -369,7 +366,7 @@ namespace MicroCy
     {
       IsMeasurementGoing = false;
       MainCommand("Set Property", code: 0x19);  //bubble detect off
-      ResultReporter.StartNewSummaryReport();
+      ResultsPublisher.StartNewSummaryReport();
       if (Mode ==  OperationMode.Verification)
         Verificator.CalculateResults();
       FinishedMeasurement?.Invoke(this, EventArgs.Empty);

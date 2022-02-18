@@ -24,10 +24,10 @@ namespace Ei_Dimension
       CorruptSettingsChecker();
       Device = new MicroCyDevice();
       if(Directory.Exists(Settings.Default.LastOutFolder))
-        ResultReporter.Outdir = Settings.Default.LastOutFolder;
+        Device.Publisher.Outdir = Settings.Default.LastOutFolder;
       else
       {
-        Settings.Default.LastOutFolder = ResultReporter.Outdir;
+        Settings.Default.LastOutFolder = Device.Publisher.Outdir;
         Settings.Default.Save();
       }
       SetLogOutput();
@@ -36,10 +36,10 @@ namespace Ei_Dimension
       Device.FinishedReadingWell += FinishedReadingWellEventHandler;
       Device.FinishedMeasurement += FinishedMeasurementEventHandler;
       Device.NewStatsAvailable += NewStatsAvailableEventHandler;
-      ResultReporter.Outfilename = Settings.Default.SaveFileName;
+      ResultsPublisher.Outfilename = Settings.Default.SaveFileName;
       _workOrderPending = false;
       _nextWellWarning = false;
-      var watcher = new FileSystemWatcher($"{MicroCyDevice.RootDirectory.FullName}\\WorkOrder");
+      var watcher = new FileSystemWatcher($"{Device.RootDirectory.FullName}\\WorkOrder");
       watcher.NotifyFilter = NotifyFilters.FileName;
       watcher.Filter = "*.txt";
       watcher.EnableRaisingEvents = true;
@@ -76,7 +76,7 @@ namespace Ei_Dimension
         }
         catch
         {
-          throw new Exception($"Could not find Maps in {MicroCyDevice.RootDirectory.FullName + @"\Config" } folder");
+          throw new Exception($"Could not find Maps in {Device.RootDirectory.FullName + @"\Config" } folder");
         }
       }
       else
@@ -430,9 +430,9 @@ namespace Ei_Dimension
 
     public static void SetLogOutput()
     {
-      ResultReporter.OutDirCheck();
-      if (!Directory.Exists(ResultReporter.Outdir + "\\SystemLogs"))
-        Directory.CreateDirectory(ResultReporter.Outdir + "\\SystemLogs");
+      Device.Publisher.OutDirCheck();
+      if (!Directory.Exists(Device.Publisher.Outdir + "\\SystemLogs"))
+        Directory.CreateDirectory(Device.Publisher.Outdir + "\\SystemLogs");
       string logPath = Path.Combine(Path.Combine(@"C:\Emissioninc", Environment.MachineName), "SystemLogs", "EventLog");
       string logFilePath = logPath + ".txt";
     
@@ -460,7 +460,7 @@ namespace Ei_Dimension
       try
       {
         string contents = ResultsViewModel.Instance.PlatePictogram.GetSerializedPlate();
-        File.WriteAllText($"{MicroCyDevice.RootDirectory.FullName}\\Status\\StatusFile.json", contents);
+        File.WriteAllText($"{Device.RootDirectory.FullName}\\Status\\StatusFile.json", contents);
       }
       catch(Exception e)
       {
@@ -471,7 +471,7 @@ namespace Ei_Dimension
     public void OnNewWorkOrder(object sender, FileSystemEventArgs e)
     {
       var name = Path.GetFileNameWithoutExtension(e.Name);
-      ResultReporter.WorkOrderPath = e.FullPath;
+      ResultsPublisher.WorkOrderPath = e.FullPath;
       if (!ParseWorkOrder())
         return;
       
@@ -487,17 +487,17 @@ namespace Ei_Dimension
 
     public static void CheckAvailableWorkOrders()
     {
-      string[] fileEntries = Directory.GetFiles($"{MicroCyDevice.RootDirectory.FullName}\\WorkOrder", "*.txt");
+      string[] fileEntries = Directory.GetFiles($"{Device.RootDirectory.FullName}\\WorkOrder", "*.txt");
       if (fileEntries.Length == 0)
         return;
       var name = Path.GetFileNameWithoutExtension(fileEntries[0]);
-      ResultReporter.WorkOrderPath = fileEntries[0];
+      ResultsPublisher.WorkOrderPath = fileEntries[0];
       int i = 1;
       while (!ParseWorkOrder())
       {
         if (i < fileEntries.Length)
         {
-          ResultReporter.WorkOrderPath = fileEntries[i];
+          ResultsPublisher.WorkOrderPath = fileEntries[i];
           name = Path.GetFileNameWithoutExtension(fileEntries[i]);
           i++;
         }
@@ -519,7 +519,7 @@ namespace Ei_Dimension
     {
       try
       {
-        using (TextReader reader = new StreamReader(ResultReporter.WorkOrderPath))
+        using (TextReader reader = new StreamReader(ResultsPublisher.WorkOrderPath))
         {
           var contents = reader.ReadToEnd();
           MicroCyDevice.WorkOrder = Newtonsoft.Json.JsonConvert.DeserializeObject<WorkOrder>(contents);

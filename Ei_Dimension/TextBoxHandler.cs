@@ -593,11 +593,11 @@ namespace Ei_Dimension
                   r.regionNumber = MicroCyDevice.WellResults[i].regionNumber;
                   tempres.Add(r);
                 }
-                ResultReporter.SaveBeadFile(tempres);
+                App.Device.Publisher.SaveBeadFile(tempres);
 
                 if (MicroCyDevice.RMeans
                     && MicroCyDevice.PlateReportActive)    //end of read and json results requested)
-                  ResultReporter.OutputPlateReport();
+                  App.Device.Publisher.OutputPlateReport();
 
                 Environment.Exit(0);
                 lock (ConditionVar)

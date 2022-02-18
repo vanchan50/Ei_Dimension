@@ -252,10 +252,7 @@ namespace Ei_Dimension.ViewModels
         sampVol = volRes,
         washVol = washRes,
         agitateVol = agitRes,
-        termType = MicroCyDevice.TerminationType,
-        chanConfig = DashboardViewModel.Instance.SelectedChConfigIndex,
-        regTermCnt = MicroCyDevice.MinPerRegion,
-        termCnt = MicroCyDevice.BeadsToCapture
+        chanConfig = DashboardViewModel.Instance.SelectedChConfigIndex
       };
     }
   }

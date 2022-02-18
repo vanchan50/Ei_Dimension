@@ -56,7 +56,7 @@ namespace MicroCy
                 continue;
               MicroCyDevice.DataOut.Enqueue(outbead);
               if (MicroCyDevice.Everyevent)
-                ResultReporter.AddBeadStats(in outbead);
+                ResultsPublisher.AddBeadStats(in outbead);
               switch (MicroCyDevice.Mode)
               {
                 case OperationMode.Normal:

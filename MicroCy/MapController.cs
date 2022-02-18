@@ -12,7 +12,12 @@ namespace MicroCy
   {
     public CustomMap ActiveMap { get; set; }
     public List<CustomMap> MapList { get; } = new List<CustomMap>();
-    
+    private MicroCyDevice _device;
+
+    public MapController(MicroCyDevice device)
+    {
+      _device = device;
+    }
 
     public bool SaveCalVals(MapCalParameters param)
     {
@@ -76,7 +81,7 @@ namespace MicroCy
       try
       {
         using (var stream =
-               new StreamWriter(MicroCyDevice.RootDirectory.FullName + @"/Config/" + map.mapName + @".dmap"))
+               new StreamWriter(_device.RootDirectory.FullName + @"/Config/" + map.mapName + @".dmap"))
         {
           stream.Write(contents);
         }
@@ -91,7 +96,7 @@ namespace MicroCy
 
     public void LoadMaps()
     {
-      string path = Path.Combine(MicroCyDevice.RootDirectory.FullName, "Config");
+      string path = Path.Combine(_device.RootDirectory.FullName, "Config");
       var files = Directory.GetFiles(path, "*.dmap");
       foreach(var mp in files)
       {
@@ -120,7 +125,7 @@ namespace MicroCy
       foreach (var mp in files)
       {
         string name = mp.Substring(mp.LastIndexOf("\\") + 1);
-        string destination = $"{MicroCyDevice.RootDirectory.FullName}\\Config\\{name}";
+        string destination = $"{_device.RootDirectory.FullName}\\Config\\{name}";
         if (!File.Exists(destination))
         {
           File.Copy(mp, destination);

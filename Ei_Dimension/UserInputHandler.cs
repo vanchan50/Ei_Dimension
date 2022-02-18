@@ -1411,7 +1411,7 @@ namespace Ei_Dimension
             }
             break;
           case "BaseFileName":
-            ResultReporter.Outfilename = _tempNewString;
+            ResultsPublisher.Outfilename = _tempNewString;
             Settings.Default.SaveFileName = _tempNewString;
             break;
           case "MaxPressureBox":

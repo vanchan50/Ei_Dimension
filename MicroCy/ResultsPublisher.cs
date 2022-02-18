@@ -7,9 +7,9 @@ using System.Text;
 
 namespace MicroCy
 {
-  public class ResultReporter
+  public class ResultsPublisher
   {
-    public static string Outdir { get; set; }  //  user selectable
+    public string Outdir { get; set; }  //  user selectable
     public static string Outfilename { get; set; } = "ResultFile";
     public static string WorkOrderPath { get; set; }
     internal static Well SavingWell { get; set; }
@@ -24,14 +24,10 @@ namespace MicroCy
                                    "Red SSC,CL1,CL2,CL3,Green SSC,Reporter\r";
     private const string SHEADER = "Row,Col,Region,Bead Count,Median FI,Trimmed Mean FI,CV%\r";
 
-    public ResultReporter(MicroCyDevice device)
+    public ResultsPublisher(MicroCyDevice device)
     {
       _device = device;
-    }
-
-    static ResultReporter()
-    {
-      Outdir = MicroCyDevice.RootDirectory.FullName;
+      Outdir = device.RootDirectory.FullName;
     }
 
     internal static void StartNewWellReport()
@@ -40,12 +36,12 @@ namespace MicroCy
       _ = DataOut.Append(BHEADER);
     }
 
-    public static void OutDirCheck()
+    public void OutDirCheck()
     {
       var root = Path.GetPathRoot(Outdir);
       if (!Directory.Exists(root))
       {
-        Outdir = MicroCyDevice.RootDirectory.FullName;
+        Outdir = _device.RootDirectory.FullName;
       }
     }
 
@@ -101,7 +97,7 @@ namespace MicroCy
       return DataOut.ToString();
     }
 
-    private static void OutputSummaryFile()
+    private void OutputSummaryFile()
     {
       //end of read session (plate, plate section or tube) write summary stat file
       if (SummaryOut.Length == 0)
@@ -135,7 +131,7 @@ namespace MicroCy
       _ = SummaryOut.Append(SHEADER);
     }
 
-    private static void GetThisRunFileName()
+    private void GetThisRunFileName()
     {
       if (_thisRunResultsFileName != null)
         return;
@@ -151,7 +147,7 @@ namespace MicroCy
       }
     }
 
-    public static void OutputPlateReport()
+    public void OutputPlateReport()
     {
       if (SummaryOut.Length == 0)
         return;
@@ -159,18 +155,18 @@ namespace MicroCy
       string rfilename = MicroCyDevice.SystemControl == 0 ? Outfilename : MicroCyDevice.WorkOrder.plateID.ToString();
       try
       {
-        if (!Directory.Exists($"{MicroCyDevice.RootDirectory.FullName}\\Result\\Summary"))
-          _ = Directory.CreateDirectory($"{MicroCyDevice.RootDirectory.FullName}\\Result\\Summary");
+        if (!Directory.Exists($"{_device.RootDirectory.FullName}\\Result\\Summary"))
+          _ = Directory.CreateDirectory($"{_device.RootDirectory.FullName}\\Result\\Summary");
       }
       catch
       {
-        Console.WriteLine($"Failed to create {MicroCyDevice.RootDirectory.FullName}\\Result\\Summary");
+        Console.WriteLine($"Failed to create {_device.RootDirectory.FullName}\\Result\\Summary");
         return;
       }
 
       try
       {
-        using (TextWriter jwriter = new StreamWriter($"{MicroCyDevice.RootDirectory.FullName}\\Result\\Summary\\" +
+        using (TextWriter jwriter = new StreamWriter($"{_device.RootDirectory.FullName}\\Result\\Summary\\" +
                                                      "Summary_" + rfilename + ".json"))
         {
           var jcontents = JsonConvert.SerializeObject(_plateReport);
@@ -195,7 +191,7 @@ namespace MicroCy
       });
     }
 
-    public static void SaveBeadFile(List<WellResults> wellres) //cancels the begin read from endpoint 2
+    public void SaveBeadFile(List<WellResults> wellres) //cancels the begin read from endpoint 2
     {
       //write file
       Console.WriteLine($"{DateTime.Now.ToString()} Reporting Background results cloned for save");

@@ -57,7 +57,7 @@ namespace MicroCy
     private void StopWellMeasurement()
     {
       BeadProcessor.SavBeadCount = MicroCyDevice.BeadCount;   //save for stats
-      ResultReporter.SavingWell = _device.WellController.CurrentWell; //save the index of the currrent well for background file save
+      ResultsPublisher.SavingWell = _device.WellController.CurrentWell; //save the index of the currrent well for background file save
       _device.MainCommand("End Sampling");    //sends message to instrument to stop sampling
     }
 
@@ -74,12 +74,12 @@ namespace MicroCy
       }
       _ = Task.Run(() =>
       {
-        ResultReporter.SaveBeadFile(tempres);
+        _device.Publisher.SaveBeadFile(tempres);
 
         if (MicroCyDevice.RMeans
             && _device.WellController.IsLastWell
             && MicroCyDevice.PlateReportActive)    //end of read and json results requested)
-          ResultReporter.OutputPlateReport();
+          _device.Publisher.OutputPlateReport();
       });
       GetRunStatistics();
     }
