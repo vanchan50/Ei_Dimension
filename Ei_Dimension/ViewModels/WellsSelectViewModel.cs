@@ -207,7 +207,7 @@ namespace Ei_Dimension.ViewModels
     public List<Well> OutputWells()
     {
       var wells = new List<Well>();
-      if (WellsSelectViewModel.Instance.CurrentTableSize > 1)
+      if (CurrentTableSize > 1)
       {
         ObservableCollection<WellTableRow> plate = CurrentTableSize == 96 ? Table96Wells : Table384Wells;
         if (DashboardViewModel.Instance.SelectedSystemControlIndex == 0)  //manual control of plate

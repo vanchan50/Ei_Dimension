@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MicroCy
 {
@@ -27,7 +23,7 @@ namespace MicroCy
       }
 
       if (WellsToRead.Count == 0)
-        throw new Exception();
+        throw new Exception("Init failed");
       NextWell = WellsToRead.Peek();
 
       if (WellsToRead.Count > 1)
@@ -36,6 +32,8 @@ namespace MicroCy
 
     internal void Advance()
     {
+      if (WellsToRead.Count == 0)
+        throw new Exception("Can not Advance past the last element");
       CurrentWell = WellsToRead.Dequeue();
       IsLastWell = WellsToRead.Count == 0;
       if (IsLastWell)
@@ -44,7 +42,7 @@ namespace MicroCy
         NextWell = WellsToRead.Peek();
     }
 
-    internal void PrepareEmergencyStop()
+    internal void PreparePrematureStop()
     {
       if (WellsToRead.Count <= 1)
         //if end read on tube or single well, nothing else is aspirated otherwise

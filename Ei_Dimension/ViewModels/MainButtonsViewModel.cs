@@ -107,7 +107,7 @@ namespace Ei_Dimension.ViewModels
       }
       else
       {
-        App.Device.EmergencyStop();
+        App.Device.PrematureStop();
       }
     }
 

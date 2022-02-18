@@ -18,8 +18,8 @@ namespace Ei_Dimension.ViewModels
     public virtual ObservableCollection<DropDownButtonContents> WellColumnButtonItems { get; set; }
     public virtual string SelectedWellRow { get; set; }
     public virtual string SelectedWellColumn { get; set; }
-    //TODO: Get Rid of. save index of selected row and col in Click() method, use those indexes in GoToWell method
-    public (byte rowIndex, byte colIndex) RowColIndex { get; set; }
+    public byte SelectedWellRowIndex { get; set; }
+    public byte SelectedWellColumnIndex { get; set; }
     public virtual ObservableCollection<string> ParametersX { get; set; }
     public virtual ObservableCollection<string> ParametersY { get; set; }
     public virtual ObservableCollection<string> ParametersZ { get; set; }
@@ -76,7 +76,8 @@ namespace Ei_Dimension.ViewModels
         WellColumnButtonItems.Add(new DropDownButtonContents(i.ToString()));
       }
       DropDownButtonContents.ResetIndex();
-      RowColIndex = (0, 0);
+      SelectedWellRowIndex = 0;
+      SelectedWellColumnIndex = 0;
       Instance = this;
     }
 
@@ -95,7 +96,8 @@ namespace Ei_Dimension.ViewModels
       WellColumnButtonItems.Clear();
       SelectedWellRow = "A";
       SelectedWellColumn = "1";
-      RowColIndex = (0, 0);
+      SelectedWellRowIndex = 0;
+      SelectedWellColumnIndex = 0;
       //switch only changes dropdown contents
       WellSelectionButtonsChecked[0] = false;
       WellSelectionButtonsChecked[1] = false;
@@ -193,8 +195,8 @@ namespace Ei_Dimension.ViewModels
     public void GoToWellButtonClick()
     {
       UserInputHandler.InputSanityCheck();
-      App.Device.MainCommand("Set Property", code: 0xad, parameter: (ushort)RowColIndex.rowIndex);
-      App.Device.MainCommand("Set Property", code: 0xae, parameter: (ushort)RowColIndex.colIndex);
+      App.Device.MainCommand("Set Property", code: 0xad, parameter: (ushort)SelectedWellRowIndex);
+      App.Device.MainCommand("Set Property", code: 0xae, parameter: (ushort)SelectedWellColumnIndex);
       App.Device.MainCommand("Position Well Plate");
     }
 
@@ -404,27 +406,12 @@ namespace Ei_Dimension.ViewModels
           case 1:
             _vm.SelectedWellRow = Content;
             App.Device.MainCommand("Set Property", code: 0xad, parameter: (ushort)Index);
-            _vm.RowColIndex = (Index, _vm.RowColIndex.colIndex);
+            _vm.SelectedWellRowIndex = Index;
             break;
           case 2:
             _vm.SelectedWellColumn = Content;
             App.Device.MainCommand("Set Property", code: 0xae, parameter: (ushort)Index);
-            _vm.RowColIndex = (_vm.RowColIndex.rowIndex, Index);
-            break;
-        }
-      }
-
-      public void ForAppUpdater(int num)
-      {
-        switch (num)
-        {
-          case 1:
-            _vm.SelectedWellRow = Content;
-            _vm.RowColIndex = (Index, _vm.RowColIndex.colIndex);
-            break;
-          case 2:
-            _vm.SelectedWellColumn = Content;
-            _vm.RowColIndex = (_vm.RowColIndex.rowIndex, Index);
+            _vm.SelectedWellColumnIndex = Index;
             break;
         }
       }

@@ -1,16 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections;
-using System.Linq;
-using System.Text;
 using System.IO;
-using Newtonsoft.Json;
-using IronBarCode;
-using System.Runtime.InteropServices;
-using System.Threading.Tasks;
 using System.Collections.Concurrent;
 using MicroCy.InstrumentParameters;
-using System.Threading;
 
 /*
  * Most commands on the host side parallel the Properties and Methods document fo QB-1000
@@ -109,9 +102,9 @@ namespace MicroCy
       _stateMach.Action();
     }
 
-    public void EmergencyStop()
+    public void PrematureStop()
     {
-      WellController.PrepareEmergencyStop();
+      WellController.PreparePrematureStop();
       _stateMach.Start();
     }
 
