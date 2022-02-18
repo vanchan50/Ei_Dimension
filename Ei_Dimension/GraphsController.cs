@@ -52,7 +52,7 @@ namespace Ei_Dimension
     private void UpdateBinfoList()
     {
       TempBeadInfoList.Clear();
-      while (MicroCyDevice.DataOut.TryDequeue(out BeadInfoStruct bead))
+      while (App.Device.DataOut.TryDequeue(out BeadInfoStruct bead))
       {
         TempBeadInfoList.Add(bead);
       }

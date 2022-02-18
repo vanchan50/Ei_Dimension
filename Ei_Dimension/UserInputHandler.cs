@@ -117,7 +117,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 1)
                 {
-                  MicroCyDevice.MinPerRegion = iRes;
+                  App.Device.MinPerRegion = iRes;
                   Settings.Default.MinPerRegion = iRes;
                   break;
                 }
@@ -131,7 +131,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 1)
                 {
-                  MicroCyDevice.BeadsToCapture = iRes;
+                  App.Device.BeadsToCapture = iRes;
                   Settings.Default.BeadsToCapture = iRes;
                   break;
                 }

@@ -152,7 +152,7 @@ namespace MicroCy
       if (SummaryOut.Length == 0)
         return;
 
-      string rfilename = MicroCyDevice.SystemControl == 0 ? Outfilename : MicroCyDevice.WorkOrder.plateID.ToString();
+      string rfilename = _device.SystemControl == 0 ? Outfilename : _device.WorkOrder.plateID.ToString();
       try
       {
         if (!Directory.Exists($"{_device.RootDirectory.FullName}\\Result\\Summary"))
@@ -191,11 +191,11 @@ namespace MicroCy
       });
     }
 
-    public void SaveBeadFile(List<WellResults> wellres) //cancels the begin read from endpoint 2
+    public void SaveBeadFile(List<WellResult> wellres) //cancels the begin read from endpoint 2
     {
       //write file
       Console.WriteLine($"{DateTime.Now.ToString()} Reporting Background results cloned for save");
-      if ((FullFileName != null) && MicroCyDevice.Everyevent)
+      if ((FullFileName != null) && _device.Everyevent)
       {
         try
         {
@@ -206,7 +206,7 @@ namespace MicroCy
           Console.WriteLine($"Failed to write to {FullFileName}");
         }
       }
-      if (MicroCyDevice.RMeans)
+      if (_device.RMeans)
       {
         ClearSummary();
         if (_plateReport != null)
@@ -217,7 +217,7 @@ namespace MicroCy
         char[] alphabet = Enumerable.Range('A', 16).Select(x => (char)x).ToArray();
         for (var i = 0; i < wellres.Count; i++)
         {
-          WellResults regionNumber = wellres[i];
+          WellResult regionNumber = wellres[i];
           OutResults rout = FillOutResults(regionNumber, in alphabet);
           AddOutResults(in rout);
           AddToPlateReport(in rout);
@@ -231,7 +231,7 @@ namespace MicroCy
       //need to clear textbox in UI. this has to be an event
     }
 
-    private static OutResults FillOutResults(WellResults regionNumber, in char[] alphabet)
+    private static OutResults FillOutResults(WellResult regionNumber, in char[] alphabet)
     {
       OutResults rout = new OutResults();
       rout.row = alphabet[SavingWell.rowIdx].ToString();

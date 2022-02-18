@@ -86,7 +86,7 @@
     <Compile Include="Verificator.cs" />
     <Compile Include="WellController.cs" />
     <Compile Include="WellReport.cs" />
-    <Compile Include="WellResults.cs" />
+    <Compile Include="WellResult.cs" />
     <Compile Include="Structs\Well.cs" />
     <Compile Include="Structs\WorkOrder.cs" />
   </ItemGroup>

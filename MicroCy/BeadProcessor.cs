@@ -6,27 +6,33 @@ namespace MicroCy
 {
   internal class BeadProcessor
   {
-    public static List<Gstats> Stats { get; } = new List<Gstats>(10);
-    public static List<double> AvgBg { get; } = new List<double>(10);
-    internal static int SavBeadCount { get; set; }
-    private static byte _actPrimaryIndex;
-    private static byte _actSecondaryIndex;
-    private static float _greenMin;
-    private static float _greenMaj;
+    public List<Gstats> Stats { get; } = new List<Gstats>(10);
+    public List<double> AvgBg { get; } = new List<double>(10);
+    internal int SavBeadCount { get; set; }
+    private byte _actPrimaryIndex;
+    private byte _actSecondaryIndex;
+    private float _greenMin;
+    private float _greenMaj;
     private static readonly double[] ClassificationBins;
-    private static readonly float[,] Sfi = new float[80000, 10];
-    private static int[,] _classificationMap;
-    private static ushort[,] _bgValues = new ushort[10, 80000];
+    private readonly float[,] Sfi = new float[80000, 10];
+    private int[,] _classificationMap;
+    private ushort[,] _bgValues = new ushort[10, 80000];
+    private MicroCyDevice _device;
+
+    public BeadProcessor(MicroCyDevice device)
+    {
+      _device = device;
+    }
 
     static BeadProcessor()
     {
       ClassificationBins = GenerateLogSpace(1, 60000, 256);
     }
 
-    public static void CalculateBeadParams(ref BeadInfoStruct outbead, in float RepScale)
+    public void CalculateBeadParams(ref BeadInfoStruct outbead, in float RepScale)
     {
       //greenMaj is the hi dyn range channel, greenMin is the high sensitivity channel(depends on filter placement)
-      if (MicroCyDevice.ChannelBIsHiSensitivity)
+      if (_device.ChannelBIsHiSensitivity)
       {
         _greenMaj = outbead.greenC;
         _greenMin = outbead.greenB;
@@ -46,7 +52,7 @@ namespace MicroCy
       outbead.reporter = reporter / RepScale;
     }
 
-    private static int ClassifyBeadToRegion((float cl0, float cl1, float cl2, float cl3) cl)
+    private int ClassifyBeadToRegion((float cl0, float cl1, float cl2, float cl3) cl)
     {
       //_actPrimaryIndex and _actSecondaryIndex should define _classimap index in a previous call,
       //and produce an index for the selection of classiMap. For cl0 and cl3 map compatibility
@@ -61,24 +67,24 @@ namespace MicroCy
       return _classificationMap[x, y];
     }
 
-    public static void FillBackgroundAverages(in BeadInfoStruct outbead)
+    public void FillBackgroundAverages(in BeadInfoStruct outbead)
     {
-      if (MicroCyDevice.BeadCount < 80000)
+      if (_device.BeadCount < 80000)
       {
-        _bgValues[0, MicroCyDevice.BeadCount] = outbead.gssc_bg;
-        _bgValues[1, MicroCyDevice.BeadCount] = outbead.greenB_bg;
-        _bgValues[2, MicroCyDevice.BeadCount] = outbead.greenC_bg;
-        _bgValues[3, MicroCyDevice.BeadCount] = outbead.cl3_bg;
-        _bgValues[4, MicroCyDevice.BeadCount] = outbead.rssc_bg;
-        _bgValues[5, MicroCyDevice.BeadCount] = outbead.cl1_bg;
-        _bgValues[6, MicroCyDevice.BeadCount] = outbead.cl2_bg;
-        _bgValues[7, MicroCyDevice.BeadCount] = outbead.vssc_bg;
-        _bgValues[8, MicroCyDevice.BeadCount] = outbead.cl0_bg;
-        _bgValues[9, MicroCyDevice.BeadCount] = outbead.fsc_bg;
+        _bgValues[0, _device.BeadCount] = outbead.gssc_bg;
+        _bgValues[1, _device.BeadCount] = outbead.greenB_bg;
+        _bgValues[2, _device.BeadCount] = outbead.greenC_bg;
+        _bgValues[3, _device.BeadCount] = outbead.cl3_bg;
+        _bgValues[4, _device.BeadCount] = outbead.rssc_bg;
+        _bgValues[5, _device.BeadCount] = outbead.cl1_bg;
+        _bgValues[6, _device.BeadCount] = outbead.cl2_bg;
+        _bgValues[7, _device.BeadCount] = outbead.vssc_bg;
+        _bgValues[8, _device.BeadCount] = outbead.cl0_bg;
+        _bgValues[9, _device.BeadCount] = outbead.fsc_bg;
       }
     }
 
-    public static void CalculateBackgroundAverages()
+    public void CalculateBackgroundAverages()
     {
       AvgBg.Clear();
       var Count = SavBeadCount > 80000 ? 80000 : SavBeadCount;
@@ -95,24 +101,24 @@ namespace MicroCy
       }
     }
 
-    public static void FillCalibrationStatsRow(in BeadInfoStruct outbead)
+    public void FillCalibrationStatsRow(in BeadInfoStruct outbead)
     {
-      if (MicroCyDevice.BeadCount < 80000)
+      if (_device.BeadCount < 80000)
       {
-        Sfi[MicroCyDevice.BeadCount, 0] = outbead.greenssc;
-        Sfi[MicroCyDevice.BeadCount, 1] = outbead.greenB;
-        Sfi[MicroCyDevice.BeadCount, 2] = outbead.greenC;
-        Sfi[MicroCyDevice.BeadCount, 3] = outbead.redssc;
-        Sfi[MicroCyDevice.BeadCount, 4] = outbead.cl1;
-        Sfi[MicroCyDevice.BeadCount, 5] = outbead.cl2;
-        Sfi[MicroCyDevice.BeadCount, 6] = outbead.cl3;
-        Sfi[MicroCyDevice.BeadCount, 7] = outbead.violetssc;
-        Sfi[MicroCyDevice.BeadCount, 8] = outbead.cl0;
-        Sfi[MicroCyDevice.BeadCount, 9] = outbead.fsc;
+        Sfi[_device.BeadCount, 0] = outbead.greenssc;
+        Sfi[_device.BeadCount, 1] = outbead.greenB;
+        Sfi[_device.BeadCount, 2] = outbead.greenC;
+        Sfi[_device.BeadCount, 3] = outbead.redssc;
+        Sfi[_device.BeadCount, 4] = outbead.cl1;
+        Sfi[_device.BeadCount, 5] = outbead.cl2;
+        Sfi[_device.BeadCount, 6] = outbead.cl3;
+        Sfi[_device.BeadCount, 7] = outbead.violetssc;
+        Sfi[_device.BeadCount, 8] = outbead.cl0;
+        Sfi[_device.BeadCount, 9] = outbead.fsc;
       }
     }
 
-    public static void CalculateGStats()
+    public void CalculateGStats()
     {
       Stats.Clear();
       var Count = SavBeadCount > 80000 ? 80000 : SavBeadCount;
@@ -160,7 +166,7 @@ namespace MicroCy
       }
     }
 
-    private static (float cl0, float cl1, float cl2, float cl3) MakeClArr(in BeadInfoStruct outbead)
+    private (float cl0, float cl1, float cl2, float cl3) MakeClArr(in BeadInfoStruct outbead)
     {
       var cl1comp = _greenMaj * Calibration.Compensation / 100;
       var cl2comp = cl1comp * 0.26f;
@@ -194,7 +200,7 @@ namespace MicroCy
       return Result;
     }
 
-    public static void ConstructClassificationMap(CustomMap cMap)
+    public void ConstructClassificationMap(CustomMap cMap)
     {
       _actPrimaryIndex = (byte)cMap.midorderidx; //what channel cl0 - cl3?
       _actSecondaryIndex = (byte)cMap.loworderidx;

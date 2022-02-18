@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace MicroCy
 {
   [Serializable]
-  public class WellResults
+  public class WellResult
   {
     public ushort regionNumber;
     public List<float> RP1vals = new List<float>(40000);

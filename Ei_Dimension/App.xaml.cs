@@ -83,17 +83,17 @@ namespace Ei_Dimension
       {
         Device.MapCtroller.ActiveMap = Device.MapCtroller.MapList[Settings.Default.DefaultMap];
       }
-      MicroCyDevice.SystemControl = Settings.Default.SystemControl;
-      MicroCyDevice.Everyevent = Settings.Default.Everyevent;
-      MicroCyDevice.RMeans = Settings.Default.RMeans;
-      MicroCyDevice.PlateReportActive = Settings.Default.PlateReport;
-      MicroCyDevice.TerminationType = Settings.Default.EndRead;
-      MicroCyDevice.MinPerRegion = Settings.Default.MinPerRegion;
-      MicroCyDevice.BeadsToCapture = Settings.Default.BeadsToCapture;
-      MicroCyDevice.OnlyClassified = Settings.Default.OnlyClassifed;
-      MicroCyDevice.ChannelBIsHiSensitivity = Settings.Default.SensitivityChannelB;
+      Device.SystemControl = Settings.Default.SystemControl;
+      Device.Everyevent = Settings.Default.Everyevent;
+      Device.RMeans = Settings.Default.RMeans;
+      Device.PlateReportActive = Settings.Default.PlateReport;
+      Device.TerminationType = Settings.Default.EndRead;
+      Device.MinPerRegion = Settings.Default.MinPerRegion;
+      Device.BeadsToCapture = Settings.Default.BeadsToCapture;
+      Device.OnlyClassified = Settings.Default.OnlyClassifed;
+      Device.ChannelBIsHiSensitivity = Settings.Default.SensitivityChannelB;
       Device.ReporterScaling = Settings.Default.ReporterScaling;
-      var param = MicroCyDevice.ChannelBIsHiSensitivity ? 0 : 1;
+      var param = Device.ChannelBIsHiSensitivity ? 0 : 1;
       Device.MainCommand("Set Property", code: 0x1e, parameter: (ushort)param);
       Device.MainCommand("Set Property", code: 0xbf, parameter: (ushort)Device.MapCtroller.ActiveMap.calParams.att);
       if (!System.Windows.Input.Keyboard.IsKeyDown(System.Windows.Input.Key.LeftCtrl))
@@ -364,18 +364,18 @@ namespace Ei_Dimension
     private static Models.WellType GetWellStateForPictogram()
     {
       var type = Models.WellType.Success;
-      if (MicroCyDevice.Mode == OperationMode.Normal)
+      if (Device.Mode == OperationMode.Normal)
       {
-        if (MicroCyDevice.TerminationType == 0 && MicroCyDevice.WellResults.Count > 0)
+        if (Device.TerminationType == 0 && Device.WellResults.Count > 0)
         {
-          foreach (var wr in MicroCyDevice.WellResults)
+          foreach (var wr in Device.WellResults)
           {
-            if (wr.RP1vals.Count < MicroCyDevice.MinPerRegion * 0.75)
+            if (wr.RP1vals.Count < Device.MinPerRegion * 0.75)
             {
               type = Models.WellType.Fail;
               break;
             }
-            if (wr.RP1vals.Count < MicroCyDevice.MinPerRegion)
+            if (wr.RP1vals.Count < Device.MinPerRegion)
             {
               type = Models.WellType.LightFail;
               break;
@@ -390,7 +390,7 @@ namespace Ei_Dimension
     {
       MainButtonsViewModel.Instance.StartButtonEnabled = true;
       ResultsViewModel.Instance.PlatePictogram.CurrentlyReadCell = (-1, -1);
-      switch (MicroCyDevice.Mode)
+      switch (Device.Mode)
       {
         case OperationMode.Normal:
           break;
@@ -522,7 +522,7 @@ namespace Ei_Dimension
         using (TextReader reader = new StreamReader(ResultsPublisher.WorkOrderPath))
         {
           var contents = reader.ReadToEnd();
-          MicroCyDevice.WorkOrder = Newtonsoft.Json.JsonConvert.DeserializeObject<WorkOrder>(contents);
+          Device.WorkOrder = Newtonsoft.Json.JsonConvert.DeserializeObject<WorkOrder>(contents);
         }
       }
       catch

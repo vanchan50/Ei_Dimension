@@ -57,11 +57,11 @@ namespace Ei_Dimension.Controllers
       if (!_activeRegionsUpdateGoing)
       {
         _activeRegionsUpdateGoing = true;
-        for (var i = 0; i < MicroCyDevice.WellResults.Count; i++)
+        for (var i = 0; i < App.Device.WellResults.Count; i++)
         {
-          var rp1 = new float[MicroCyDevice.WellResults[i].RP1vals.Count];
-          MicroCyDevice.WellResults[i].RP1vals.CopyTo(0, rp1, 0, rp1.Length);
-          TempWellResults.Add((MicroCyDevice.WellResults[i].regionNumber, rp1));
+          var rp1 = new float[App.Device.WellResults[i].RP1vals.Count];
+          App.Device.WellResults[i].RP1vals.CopyTo(0, rp1, 0, rp1.Length);
+          TempWellResults.Add((App.Device.WellResults[i].regionNumber, rp1));
         }
 
         var action = App.MapRegions.IsNullRegionActive ? UpdateNullRegionProcedure() : UpdateRegionsProcedure();

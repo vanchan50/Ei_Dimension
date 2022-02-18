@@ -15,7 +15,7 @@ namespace Ei_Dimension
     private static readonly object ConditionVar = new object();
     public static void Update()
     {
-      while (MicroCyDevice.Commands.TryDequeue(out var exe))
+      while (App.Device.Commands.TryDequeue(out var exe))
       {
         Action update = null;
         switch (exe.Code)
@@ -584,19 +584,18 @@ namespace Ei_Dimension
               
               void Act()
               {
-                var tempres = new List<WellResults>(MicroCyDevice.WellResults.Count);
-                for (var i = 0; i < MicroCyDevice.WellResults.Count; i++)
+                var tempres = new List<WellResult>(App.Device.WellResults.Count);
+                for (var i = 0; i < App.Device.WellResults.Count; i++)
                 {
-                  var r = new WellResults();
-                  r.RP1vals = new List<float>(MicroCyDevice.WellResults[i].RP1vals);
-                  r.RP1bgnd = new List<float>(MicroCyDevice.WellResults[i].RP1bgnd);
-                  r.regionNumber = MicroCyDevice.WellResults[i].regionNumber;
+                  var r = new WellResult();
+                  r.RP1vals = new List<float>(App.Device.WellResults[i].RP1vals);
+                  r.RP1bgnd = new List<float>(App.Device.WellResults[i].RP1bgnd);
+                  r.regionNumber = App.Device.WellResults[i].regionNumber;
                   tempres.Add(r);
                 }
                 App.Device.Publisher.SaveBeadFile(tempres);
 
-                if (MicroCyDevice.RMeans
-                    && MicroCyDevice.PlateReportActive)    //end of read and json results requested)
+                if (App.Device.RMeans && App.Device.PlateReportActive)    //end of read and json results requested)
                   App.Device.Publisher.OutputPlateReport();
 
                 Environment.Exit(0);
@@ -650,7 +649,7 @@ namespace Ei_Dimension
 
     public static void UpdateEventCounter()
     {
-      App.Current.Dispatcher.Invoke(() => MainViewModel.Instance.EventCountCurrent[0] = MicroCyDevice.BeadCount.ToString());
+      App.Current.Dispatcher.Invoke(() => MainViewModel.Instance.EventCountCurrent[0] = App.Device.BeadCount.ToString());
     }
 
     private static void UpdatePressureMonitor()

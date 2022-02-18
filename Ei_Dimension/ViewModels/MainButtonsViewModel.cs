@@ -44,7 +44,7 @@ namespace Ei_Dimension.ViewModels
     public void StartButtonClick()
     {
       UserInputHandler.InputSanityCheck();
-      if (MicroCyDevice.TerminationType == 0 && MapRegionsController.ActiveRegionNums.Count == 0)
+      if (App.Device.TerminationType == 0 && MapRegionsController.ActiveRegionNums.Count == 0)
       {
         Notification.Show("\"Min Per Region\" End of Read requires at least 1 active region");
         return;
@@ -60,7 +60,7 @@ namespace Ei_Dimension.ViewModels
 
       App.Device.MainCommand("Set FProperty", code: 0x06);
       HashSet<int> startArg = null;
-      switch (MicroCyDevice.Mode)
+      switch (App.Device.Mode)
       {
         case OperationMode.Normal:
           if (MapRegionsController.ActiveRegionNums.Count == 0)
@@ -97,7 +97,7 @@ namespace Ei_Dimension.ViewModels
     public void EndButtonClick()
     {
       UserInputHandler.InputSanityCheck();
-      if (!MicroCyDevice.IsMeasurementGoing)  //end button press before start, cancel work order
+      if (!App.Device.IsMeasurementGoing)  //end button press before start, cancel work order
       {
         App.Device.MainCommand("Set Property", code: 0x17); //leds off
         if (DashboardViewModel.Instance.SelectedSystemControlIndex == 1)

@@ -124,7 +124,7 @@ namespace Ei_Dimension.ViewModels
         new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Experiment_Total_Events), curCulture), this),
         new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Experiment_End_of_Sample), curCulture), this),
       };
-      SelectedEndReadIndex = MicroCyDevice.TerminationType;
+      SelectedEndReadIndex = App.Device.TerminationType;
       SelectedEndReadContent = EndReadItems[SelectedEndReadIndex].Content;
       EndReadVisibility = new ObservableCollection<Visibility>
       {
@@ -253,7 +253,7 @@ namespace Ei_Dimension.ViewModels
     {
       void ReturnToNormal()
       {
-        MicroCyDevice.Mode = OperationMode.Normal;
+        App.Device.Mode = OperationMode.Normal;
         EndReadItems[_dbEndReadIndexTempHolder].Click(6);
         Volumes[0] = _dbsampleVolumeTempHolder;
         App.Device.MainCommand("Set Property", code: 0xaf, parameter: ushort.Parse(_dbsampleVolumeTempHolder));
@@ -266,11 +266,11 @@ namespace Ei_Dimension.ViewModels
       UserInputHandler.InputSanityCheck();
       if (CalModeOn)
       {
-        if (MicroCyDevice.Mode == OperationMode.Normal)
+        if (App.Device.Mode == OperationMode.Normal)
         {
           _dbsampleVolumeTempHolder = Volumes[0];
           SetFixedVolumeButtonClick(100);
-          MicroCyDevice.Mode = OperationMode.Calibration;
+          App.Device.Mode = OperationMode.Calibration;
           CalibrationViewModel.Instance.CalFailsInARow = 0;
           CalibrationViewModel.Instance.MakeCalMap();
           _dbEndReadIndexTempHolder = SelectedEndReadIndex;
@@ -283,7 +283,7 @@ namespace Ei_Dimension.ViewModels
           return;
         }
         CalModeOn = false;
-        if (MicroCyDevice.Mode == OperationMode.Verification)
+        if (App.Device.Mode == OperationMode.Verification)
         {
           Notification.Show("The instrument is in Verificationtion mode");
           return;
@@ -300,7 +300,7 @@ namespace Ei_Dimension.ViewModels
     {
       void ReturnToNormal()
       {
-        MicroCyDevice.Mode = OperationMode.Normal;
+        App.Device.Mode = OperationMode.Normal;
         Volumes[0] = _dbsampleVolumeTempHolder;
         App.Device.MainCommand("Set Property", code: 0xaf, parameter: ushort.Parse(_dbsampleVolumeTempHolder));
         MainButtonsViewModel.Instance.Flavor[0] = null;
@@ -312,11 +312,11 @@ namespace Ei_Dimension.ViewModels
       UserInputHandler.InputSanityCheck();
       if (ValModeOn)
       {
-        if (MicroCyDevice.Mode == OperationMode.Normal && VerificationViewModel.Instance.ValMapInfoReady())
+        if (App.Device.Mode == OperationMode.Normal && VerificationViewModel.Instance.ValMapInfoReady())
         {
           _dbsampleVolumeTempHolder = Volumes[0];
           SetFixedVolumeButtonClick(25);
-          MicroCyDevice.Mode = OperationMode.Verification;
+          App.Device.Mode = OperationMode.Verification;
           MainButtonsViewModel.Instance.Flavor[0] = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Maintenance_Validation),
             Language.TranslationSource.Instance.CurrentCulture);
           MainWindow.Instance.wndw.Background = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(97, 162, 135));
@@ -325,7 +325,7 @@ namespace Ei_Dimension.ViewModels
           return;
         }
         ValModeOn = false;
-        if (MicroCyDevice.Mode == OperationMode.Calibration)
+        if (App.Device.Mode == OperationMode.Calibration)
         {
           Notification.Show("The instrument is in Calibration mode");
           return;
@@ -345,14 +345,14 @@ namespace Ei_Dimension.ViewModels
 
     private static void SetSystemControl(byte num)
     {
-      MicroCyDevice.SystemControl = num;
+      App.Device.SystemControl = num;
       Settings.Default.SystemControl = num;
       Settings.Default.Save();
     }
 
     private static void SetTerminationType(byte num)
     {
-      MicroCyDevice.TerminationType = num;
+      App.Device.TerminationType = num;
       Settings.Default.EndRead = num;
       Settings.Default.Save();
     }
@@ -433,52 +433,7 @@ namespace Ei_Dimension.ViewModels
             break;
         }
       }
-
-      public void ForAppUpdater(int num)
-      {
-        switch (num)
-        {
-          case 1:
-            _vm.SelectedSpeedContent = Content;
-            _vm.SelectedSpeedIndex = Index;
-            break;
-          case 2:
-            _vm.SelectedClassiMapContent = Content;
-            break;
-          case 3:
-            _vm.SelectedChConfigContent = Content;
-            _vm.SelectedChConfigIndex = Index;
-            break;
-          case 4:
-            _vm.SelectedOrderContent = Content;
-            _vm.SelectedOrderIndex = Index;
-            break;
-          case 5:
-            _vm.SelectedSysControlContent = Content;
-            _vm.SelectedSystemControlIndex = Index;
-            SetSystemControl(Index);
-            if (Index != 0)
-            {
-              ExperimentViewModel.Instance.WellSelectVisible = Visibility.Hidden;
-              MainButtonsViewModel.Instance.StartButtonEnabled = false;
-              _vm.WorkOrderVisibility = Visibility.Visible;
-            }
-            else
-            {
-              ExperimentViewModel.Instance.WellSelectVisible = Visibility.Visible;
-              MainButtonsViewModel.Instance.StartButtonEnabled = true;
-              _vm.WorkOrderVisibility = Visibility.Hidden;
-            }
-            break;
-          case 6:
-            _vm.SelectedEndReadContent = Content;
-            _vm.SelectedEndReadIndex = Index;
-            SetTerminationType(Index);
-            _vm.EndReadVisibilitySwitch();
-            break;
-        }
-      }
-
+      
       public static void ResetIndex()
       {
         _nextIndex = 0;

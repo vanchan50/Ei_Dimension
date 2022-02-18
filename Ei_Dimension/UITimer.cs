@@ -28,7 +28,7 @@ namespace Ei_Dimension
         return;
 
       TextBoxHandler.Update();
-      if (MicroCyDevice.IsMeasurementGoing)
+      if (App.Device.IsMeasurementGoing)
       {
         GraphsController.Instance.Update();
         ActiveRegionsStatsController.Instance.UpdateCurrentStats();

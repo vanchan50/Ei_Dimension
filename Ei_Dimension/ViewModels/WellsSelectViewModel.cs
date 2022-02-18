@@ -229,7 +229,7 @@ namespace Ei_Dimension.ViewModels
         else  //Work Order control of plate
         {
           //fill wells from work order
-          wells = MicroCyDevice.WorkOrder.woWells;
+          wells = App.Device.WorkOrder.woWells;
         }
       }
       else if (CurrentTableSize == 1)  //tube

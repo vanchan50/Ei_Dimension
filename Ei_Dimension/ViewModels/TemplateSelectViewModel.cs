@@ -85,7 +85,7 @@ namespace Ei_Dimension.ViewModels
               var temp = newTemplate.MinPerRegion.ToString();
               if (int.TryParse(temp, out iRes))
               {
-                MicroCyDevice.MinPerRegion = iRes;
+                App.Device.MinPerRegion = iRes;
                 Settings.Default.MinPerRegion = iRes;
                 DashVM.EndRead[0] = temp;
               }
@@ -95,7 +95,7 @@ namespace Ei_Dimension.ViewModels
               temp = newTemplate.TotalEvents.ToString();
               if (int.TryParse(temp, out iRes))
               {
-                MicroCyDevice.BeadsToCapture = iRes;
+                App.Device.BeadsToCapture = iRes;
                 Settings.Default.BeadsToCapture = iRes;
                 DashVM.EndRead[1] = temp;
               }

@@ -102,7 +102,7 @@ namespace Ei_Dimension
       {
         ChannelsVM.SensitivityItems[0].Content = RM.GetString(nameof(Language.Resources.Channels_Sens_B), curCulture);
         ChannelsVM.SensitivityItems[1].Content = RM.GetString(nameof(Language.Resources.Channels_Sens_C), curCulture);
-        int i = MicroCyDevice.ChannelBIsHiSensitivity ? 0 : 1;
+        int i = App.Device.ChannelBIsHiSensitivity ? 0 : 1;
         ChannelsVM.SelectedSensitivityContent = ChannelsVM.SensitivityItems[i].Content;
       }
       var VerVM = VerificationViewModel.Instance;

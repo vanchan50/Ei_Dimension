@@ -56,29 +56,29 @@ namespace MicroCy
 
     private void StopWellMeasurement()
     {
-      BeadProcessor.SavBeadCount = MicroCyDevice.BeadCount;   //save for stats
+      _device._beadProcessor.SavBeadCount = _device.BeadCount;   //save for stats
       ResultsPublisher.SavingWell = _device.WellController.CurrentWell; //save the index of the currrent well for background file save
       _device.MainCommand("End Sampling");    //sends message to instrument to stop sampling
     }
 
     private void Action2()
     {
-      var tempres = new List<WellResults>(MicroCyDevice.WellResults.Count);
-      for(var i = 0; i < MicroCyDevice.WellResults.Count; i++)
+      var tempres = new List<WellResult>(_device.WellResults.Count);
+      for(var i = 0; i < _device.WellResults.Count; i++)
       {
-        var r = new WellResults();
-        r.RP1vals = new List<float>(MicroCyDevice.WellResults[i].RP1vals);
-        r.RP1bgnd = new List<float>(MicroCyDevice.WellResults[i].RP1bgnd);
-        r.regionNumber = MicroCyDevice.WellResults[i].regionNumber;
+        var r = new WellResult();
+        r.RP1vals = new List<float>(_device.WellResults[i].RP1vals);
+        r.RP1bgnd = new List<float>(_device.WellResults[i].RP1bgnd);
+        r.regionNumber = _device.WellResults[i].regionNumber;
         tempres.Add(r);
       }
       _ = Task.Run(() =>
       {
         _device.Publisher.SaveBeadFile(tempres);
 
-        if (MicroCyDevice.RMeans
+        if (_device.RMeans
             && _device.WellController.IsLastWell
-            && MicroCyDevice.PlateReportActive)    //end of read and json results requested)
+            && _device.PlateReportActive)    //end of read and json results requested)
           _device.Publisher.OutputPlateReport();
       });
       GetRunStatistics();
@@ -144,8 +144,8 @@ namespace MicroCy
 
     private void GetRunStatistics()
     {
-      BeadProcessor.CalculateGStats();
-      BeadProcessor.CalculateBackgroundAverages();
+      _device._beadProcessor.CalculateGStats();
+      _device._beadProcessor.CalculateBackgroundAverages();
       _device.OnNewStatsAvailable();
     }
 

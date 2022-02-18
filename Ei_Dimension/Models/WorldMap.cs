@@ -70,7 +70,7 @@ namespace Ei_Dimension.Models
     {
       Action BuildWmap = null;
       List<HeatMapData> Map = GetCurrentMap();
-      switch (MicroCyDevice.Mode)
+      switch (App.Device.Mode)
       {
         case OperationMode.Normal:
           BuildWmap = () => {

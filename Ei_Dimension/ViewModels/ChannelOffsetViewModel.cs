@@ -237,7 +237,7 @@ namespace Ei_Dimension.ViewModels
 
     private static void SetSensitivityChannel(byte num)
     {
-      MicroCyDevice.ChannelBIsHiSensitivity = num == 0;
+      App.Device.ChannelBIsHiSensitivity = num == 0;
       App.Device.MainCommand("Set Property", code: 0x1e, parameter: (ushort)num);
       Settings.Default.SensitivityChannelB = num == 0;
       Settings.Default.Save();

@@ -90,23 +90,23 @@ namespace Ei_Dimension.ViewModels
       switch (num)
       {
         case 0:
-          MicroCyDevice.Everyevent = Checkboxes[num];
+          App.Device.Everyevent = Checkboxes[num];
           Settings.Default.Everyevent = Checkboxes[num];
           break;
         case 1:
-          MicroCyDevice.RMeans = Checkboxes[num];
+          App.Device.RMeans = Checkboxes[num];
           Settings.Default.RMeans = Checkboxes[num];
           break;
         case 2:
-          MicroCyDevice.PlateReportActive = Checkboxes[num];
+          App.Device.PlateReportActive = Checkboxes[num];
           Settings.Default.PlateReport = Checkboxes[num];
           break;
         case 3:
-          MicroCyDevice.OnlyClassified = Checkboxes[num];
+          App.Device.OnlyClassified = Checkboxes[num];
           Settings.Default.OnlyClassifed = Checkboxes[num];
           break;
         case 4:
-          MicroCyDevice.Reg0stats = Checkboxes[num];
+          App.Device.Reg0stats = Checkboxes[num];
           break;
         case 5:
           break;

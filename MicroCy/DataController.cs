@@ -42,22 +42,22 @@ namespace MicroCy
 
         if ((_serialConnection.InputBuffer[0] == 0xbe) && (_serialConnection.InputBuffer[1] == 0xad))
         {
-          if (MicroCyDevice.IsMeasurementGoing) //  this condition avoids the necessity of cleaning up leftover data in the system USB interface. That could happen after operation abortion and program restart
+          if (_device.IsMeasurementGoing) //  this condition avoids the necessity of cleaning up leftover data in the system USB interface. That could happen after operation abortion and program restart
           {
             for (byte i = 0; i < 8; i++)
             {
               BeadInfoStruct outbead;
               if (!GetBeadFromBuffer(_serialConnection.InputBuffer, i, out outbead))
                 break;
-              BeadProcessor.CalculateBeadParams(ref outbead, _device.ReporterScaling);
+              _device._beadProcessor.CalculateBeadParams(ref outbead, _device.ReporterScaling);
 
-              MicroCyDevice.FillActiveWellResults(in outbead);
-              if (outbead.region == 0 && MicroCyDevice.OnlyClassified)
+              _device.FillActiveWellResults(in outbead);
+              if (outbead.region == 0 && _device.OnlyClassified)
                 continue;
-              MicroCyDevice.DataOut.Enqueue(outbead);
-              if (MicroCyDevice.Everyevent)
+              _device.DataOut.Enqueue(outbead);
+              if (_device.Everyevent)
                 ResultsPublisher.AddBeadStats(in outbead);
-              switch (MicroCyDevice.Mode)
+              switch (_device.Mode)
               {
                 case OperationMode.Normal:
                   break;
@@ -68,10 +68,10 @@ namespace MicroCy
                   break;
               }
               //accum stats for run as a whole, used during aligment and QC
-              BeadProcessor.FillCalibrationStatsRow(in outbead);
-              BeadProcessor.FillBackgroundAverages(in outbead);
-              MicroCyDevice.BeadCount++;
-              MicroCyDevice.TotalBeads++;
+              _device._beadProcessor.FillCalibrationStatsRow(in outbead);
+              _device._beadProcessor.FillBackgroundAverages(in outbead);
+              _device.BeadCount++;
+              _device.TotalBeads++;
             }
           }
           Array.Clear(_serialConnection.InputBuffer, 0, _serialConnection.InputBuffer.Length);
@@ -166,7 +166,7 @@ namespace MicroCy
     {
       var newcmd = ByteArrayToStruct(_serialConnection.InputBuffer);
       InnerCommandProcessing(in newcmd);
-      MicroCyDevice.Commands.Enqueue(newcmd);
+      _device.Commands.Enqueue(newcmd);
     }
 
     private static bool GetBeadFromBuffer(byte[] buffer,byte shift, out BeadInfoStruct outbead)
