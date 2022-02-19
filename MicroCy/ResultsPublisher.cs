@@ -152,7 +152,7 @@ namespace MicroCy
       if (SummaryOut.Length == 0)
         return;
 
-      string rfilename = _device.SystemControl == 0 ? Outfilename : _device.WorkOrder.plateID.ToString();
+      string rfilename = _device.Control == SystemControl.Manual ? Outfilename : _device.WorkOrder.plateID.ToString();
       try
       {
         if (!Directory.Exists($"{_device.RootDirectory.FullName}\\Result\\Summary"))

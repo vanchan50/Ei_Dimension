@@ -40,8 +40,6 @@ namespace MicroCy
     public ConcurrentQueue<CommandStruct> Commands { get; } = new ConcurrentQueue<CommandStruct>();
     public ConcurrentQueue<BeadInfoStruct> DataOut { get; } = new ConcurrentQueue<BeadInfoStruct>();
     public WellController WellController { get; } = new WellController();
-    public byte SystemControl { get; set; }
-    public ICollection<int> RegionsToOutput { get; set; }
     public BitArray SystemActivity { get; } = new BitArray(16, false);
     public List<WellResult> WellResults { get; } = new List<WellResult>();
     public event EventHandler<ReadingWellEventArgs> StartingToReadWell;
@@ -49,12 +47,14 @@ namespace MicroCy
     public event EventHandler FinishedMeasurement;
     public event EventHandler<StatsEventArgs> NewStatsAvailable;
     public OperationMode Mode { get; set; }
+    public SystemControl Control { get; set; }
+    public Gate ScatterGate { get; set; }
+    public Termination TerminationType { get; set; }
     public int BoardVersion { get; internal set; }
     public float ReporterScaling { get; set; }
     public int BeadsToCapture { get; set; }
     public int BeadCount { get; internal set; }
     public int TotalBeads { get; internal set; }
-    public int ScatterGate { get; set; }
     public int MinPerRegion { get; set; }
     public bool IsMeasurementGoing { get; private set; }
     public bool Everyevent { get; set; }
@@ -63,7 +63,6 @@ namespace MicroCy
     public bool OnlyClassified { get; set; }
     public bool Reg0stats { get; set; }
     public bool ChannelBIsHiSensitivity { get; set; }
-    public byte TerminationType { get; set; }
     public DirectoryInfo RootDirectory { get; private set; }
 
     private bool _chkRegionCount;
@@ -71,6 +70,7 @@ namespace MicroCy
     private readonly DataController _dataController;
     private readonly StateMachine _stateMach;
     internal readonly BeadProcessor _beadProcessor;
+    private ICollection<int> _regionsToOutput;
 
     public MicroCyDevice(Type connectionType = null)
     {
@@ -140,7 +140,7 @@ namespace MicroCy
       }
     }
 
-    public void StartOperation(HashSet<int> regionsToOutput = null)
+    public void StartOperation(ICollection<int> regionsToOutput = null)
     {
       MainCommand("Set Property", code: 0xce, parameter: MapCtroller.ActiveMap.calParams.minmapssc);  //set ssc gates for this map
       MainCommand("Set Property", code: 0xcf, parameter: MapCtroller.ActiveMap.calParams.maxmapssc);
@@ -151,7 +151,7 @@ namespace MicroCy
       ResultsPublisher.StartNewPlateReport();
       MainCommand("Get FProperty", code: 0x20); //get high dnr property
       SetAspirateParamsForWell();  //setup for first read
-      RegionsToOutput = regionsToOutput;
+      _regionsToOutput = regionsToOutput;
       SetReadingParamsForWell();
       MainCommand("Set Property", code: 0x19, parameter: 1); //bubble detect on
       MainCommand("Position Well Plate"); //move motors. next position is set in properties 0xad and 0xae
@@ -169,7 +169,7 @@ namespace MicroCy
         MainCommand("Read A Aspirate B");
       }
 
-      if (TerminationType != 1) //set some limit for running to eos or if regions are wrong
+      if (TerminationType != Termination.TotalBeadsCaptured) //set some limit for running to eos or if regions are wrong
         BeadsToCapture = 100000;
     }
 
@@ -201,11 +201,11 @@ namespace MicroCy
     private void MakeNewWellResults()
     {
       WellResults.Clear();
-      if (RegionsToOutput != null && RegionsToOutput.Count != 0)
+      if (_regionsToOutput != null && _regionsToOutput.Count != 0)
       {
         foreach (var region in MapCtroller.ActiveMap.regions)
         {
-          if (RegionsToOutput.Contains(region.Number))
+          if (_regionsToOutput.Contains(region.Number))
             WellResults.Add(new WellResult { regionNumber = (ushort)region.Number });
         }
       }
@@ -309,7 +309,7 @@ namespace MicroCy
     {
       switch (TerminationType)
       {
-        case 0: //min beads in each region
+        case Termination.MinPerRegion:
                 //do statistical magic
           if (_chkRegionCount)  //a region made it, are there more that haven't
           {
@@ -327,13 +327,13 @@ namespace MicroCy
             _chkRegionCount = false;
           }
           break;
-        case 1: //total beads captured
+        case Termination.TotalBeadsCaptured:
           if (BeadCount >= BeadsToCapture)
           {
             StartStateMachine();
           }
           break;
-        case 2: //end of sample 
+        case Termination.EndOfSample:
           break;
       }
     }

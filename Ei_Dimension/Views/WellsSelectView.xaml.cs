@@ -46,6 +46,22 @@ namespace Ei_Dimension.Views
 #endif
     }
 
+    public void SelectAllCells(int tablesize)
+    {
+      if (tablesize == 96)
+        grd96.SelectAllCells();
+      else if (tablesize == 384)
+        grd384.SelectAllCells();
+    }
+
+    public void ClearAllCells()
+    {
+      grd96.UnselectAllCells();
+      grd384.UnselectAllCells();
+      grd96.SelectedCells.Clear();
+      grd384.SelectedCells.Clear();
+    }
+
     private void grd384_TouchMove(object sender, TouchEventArgs e)
     {
       var tp = e.GetTouchPoint(grd384);

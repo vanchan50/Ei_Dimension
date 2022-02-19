@@ -58,7 +58,10 @@
   <ItemGroup>
     <Compile Include="BeadProcessor.cs" />
     <Compile Include="DataController.cs" />
+    <Compile Include="Enums\Gate.cs" />
     <Compile Include="Enums\OperationMode.cs" />
+    <Compile Include="Enums\SystemControl.cs" />
+    <Compile Include="Enums\Termination.cs" />
     <Compile Include="MapController.cs" />
     <Compile Include="ResultsPublisher.cs" />
     <Compile Include="StateMachine.cs" />

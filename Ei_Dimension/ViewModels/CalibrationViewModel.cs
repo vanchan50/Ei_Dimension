@@ -290,8 +290,7 @@ namespace Ei_Dimension.ViewModels
       {
         _vm.SelectedGatingContent = Content;
         _vm.SelectedGatingIndex = Index;
-        App.Device.MainCommand("Set Property", code: 0xca, parameter: (ushort)Index);
-        App.Device.ScatterGate = Index;
+        App.SetGating(Index);
       }
 
       public static void ResetIndex()

@@ -83,11 +83,11 @@ namespace Ei_Dimension
       {
         Device.MapCtroller.ActiveMap = Device.MapCtroller.MapList[Settings.Default.DefaultMap];
       }
-      Device.SystemControl = Settings.Default.SystemControl;
+      Device.Control = (SystemControl)Settings.Default.SystemControl;
       Device.Everyevent = Settings.Default.Everyevent;
       Device.RMeans = Settings.Default.RMeans;
       Device.PlateReportActive = Settings.Default.PlateReport;
-      Device.TerminationType = Settings.Default.EndRead;
+      Device.TerminationType = (Termination)Settings.Default.EndRead;
       Device.MinPerRegion = Settings.Default.MinPerRegion;
       Device.BeadsToCapture = Settings.Default.BeadsToCapture;
       Device.OnlyClassified = Settings.Default.OnlyClassifed;
@@ -102,7 +102,6 @@ namespace Ei_Dimension
       Device.MainCommand("Set FProperty", code: 0x0a, fparameter: MicroCy.InstrumentParameters.Calibration.HdnrTrans);
       MicroCy.InstrumentParameters.Calibration.Compensation = Device.MapCtroller.ActiveMap.calParams.compensation;
       Device.MainCommand("Set Property", code: 0x97, parameter: 1170);  //set current limit of aligner motors if leds are off
-      Device.MainCommand("Get Property", code: 0xca);
     }
 
     public static int GetMapIndex(string MapName)
@@ -234,6 +233,26 @@ namespace Ei_Dimension
       }
       DashVM.VerificationWarningVisible = Warning? Visibility.Visible : Visibility.Hidden;
 
+    }
+
+    public static void SetSystemControl(byte num)
+    {
+      Device.Control = (SystemControl)num;
+      Settings.Default.SystemControl = num;
+      Settings.Default.Save();
+    }
+
+    public static void SetTerminationType(byte num)
+    {
+      Device.TerminationType = (Termination)num;
+      Settings.Default.EndRead = num;
+      Settings.Default.Save();
+    }
+
+    public static void SetGating(byte num)
+    {
+      Device.MainCommand("Set Property", code: 0xca, parameter: (ushort)num);
+      Device.ScatterGate = (Gate)num;
     }
 
     public static void LockMapSelection()

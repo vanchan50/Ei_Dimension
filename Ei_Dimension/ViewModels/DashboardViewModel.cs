@@ -124,7 +124,7 @@ namespace Ei_Dimension.ViewModels
         new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Experiment_Total_Events), curCulture), this),
         new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Experiment_End_of_Sample), curCulture), this),
       };
-      SelectedEndReadIndex = App.Device.TerminationType;
+      SelectedEndReadIndex = (byte)App.Device.TerminationType;
       SelectedEndReadContent = EndReadItems[SelectedEndReadIndex].Content;
       EndReadVisibility = new ObservableCollection<Visibility>
       {
@@ -343,20 +343,6 @@ namespace Ei_Dimension.ViewModels
       UserInputHandler.InputSanityCheck();
     }
 
-    private static void SetSystemControl(byte num)
-    {
-      App.Device.SystemControl = num;
-      Settings.Default.SystemControl = num;
-      Settings.Default.Save();
-    }
-
-    private static void SetTerminationType(byte num)
-    {
-      App.Device.TerminationType = num;
-      Settings.Default.EndRead = num;
-      Settings.Default.Save();
-    }
-
     public class DropDownButtonContents : Core.ObservableObject
     {
       public string Content
@@ -411,7 +397,7 @@ namespace Ei_Dimension.ViewModels
           case 5:
             _vm.SelectedSysControlContent = Content;
             _vm.SelectedSystemControlIndex = Index;
-            SetSystemControl(Index);
+            App.SetSystemControl(Index);
             if (Index != 0)
             {
               ExperimentViewModel.Instance.WellSelectVisible = Visibility.Hidden;
@@ -428,7 +414,7 @@ namespace Ei_Dimension.ViewModels
           case 6:
             _vm.SelectedEndReadContent = Content;
             _vm.SelectedEndReadIndex = Index;
-            SetTerminationType(Index);
+            App.SetTerminationType(Index);
             _vm.EndReadVisibilitySwitch();
             break;
         }

@@ -11,12 +11,14 @@ namespace Ei_Dimension.Models
     public ObservableCollection<string> Images { get; set; }
     public List<WellType> Types { get; set; }
 
+    private int _size;
     public WellTableRow(int rowIndex, int size)
     {
       Index = rowIndex;
       Header = Convert.ToChar('A' + Index).ToString();
       Images = new ObservableCollection<string>();
       Types = new List<WellType>(size);
+      _size = size;
       for (var i = 0; i < size; i++)
       {
         Images.Add(Image(WellType.Empty));
@@ -28,6 +30,14 @@ namespace Ei_Dimension.Models
     {
       Types[index] = type;
       Images[index] = Image(type);
+    }
+
+    public void Reset()
+    {
+      for (var i = 0; i < _size; i++)
+      {
+        SetType(i, WellType.Empty);
+      }
     }
     
     private static string Image(WellType type)
