@@ -71,9 +71,9 @@ namespace MicroCy
       //open file
       //first create unique filename
 
-      char rowletter = (char)(0x41 + _device.WellController.CurrentWell.rowIdx);
+      char rowletter = (char)(0x41 + _device.WellController.CurrentWell.RowIdx);
       //if(!isTube)
-      string colLetter = (_device.WellController.CurrentWell.colIdx + 1).ToString();  //use 0 for tubes and true column for plates
+      string colLetter = (_device.WellController.CurrentWell.ColIdx + 1).ToString();  //use 0 for tubes and true column for plates
       for (var differ = 0; differ < int.MaxValue; differ++)
       {
         FullFileName = $"{Outdir}\\AcquisitionData\\{Outfilename}{rowletter}{colLetter}_{differ.ToString()}.csv";
@@ -211,8 +211,8 @@ namespace MicroCy
         ClearSummary();
         if (_plateReport != null)
           _plateReport.rpWells.Add(new WellReport {
-            prow = SavingWell.rowIdx,
-            pcol = SavingWell.colIdx
+            prow = SavingWell.RowIdx,
+            pcol = SavingWell.ColIdx
           });
         char[] alphabet = Enumerable.Range('A', 16).Select(x => (char)x).ToArray();
         for (var i = 0; i < wellres.Count; i++)
@@ -234,8 +234,8 @@ namespace MicroCy
     private static OutResults FillOutResults(WellResult regionNumber, in char[] alphabet)
     {
       OutResults rout = new OutResults();
-      rout.row = alphabet[SavingWell.rowIdx].ToString();
-      rout.col = SavingWell.colIdx + 1;  //columns are 1 based
+      rout.row = alphabet[SavingWell.RowIdx].ToString();
+      rout.col = SavingWell.ColIdx + 1;  //columns are 1 based
       rout.count = regionNumber.RP1vals.Count;
       rout.region = regionNumber.regionNumber;
       var rp1Temp = regionNumber.RP1vals;

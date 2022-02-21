@@ -160,13 +160,16 @@ namespace Ei_Dimension.ViewModels
 
       return new Well
       {
-        rowIdx = row,
-        colIdx = col,
-        runSpeed = DashboardViewModel.Instance.SelectedSpeedIndex,
-        sampVol = volRes,
-        washVol = washRes,
-        agitateVol = agitRes,
-        chanConfig = DashboardViewModel.Instance.SelectedChConfigIndex
+        RowIdx = row,
+        ColIdx = col,
+        RunSpeed = DashboardViewModel.Instance.SelectedSpeedIndex,
+        SampVol = volRes,
+        WashVol = washRes,
+        AgitateVol = agitRes,
+        ChanConfig = DashboardViewModel.Instance.SelectedChConfigIndex,
+        MinPerRegion = int.Parse(DashboardViewModel.Instance.EndRead[0]),
+        BeadsToCapture = int.Parse(DashboardViewModel.Instance.EndRead[1]),
+        TermType = (Termination)DashboardViewModel.Instance.SelectedEndReadIndex
       };
     }
     /// <summary>
@@ -177,7 +180,7 @@ namespace Ei_Dimension.ViewModels
     private List<Well> SortWells(List<Well> wells)
     {
       if (DashboardViewModel.Instance.SelectedOrderIndex == 0)
-        wells = wells.OrderBy(x => x.colIdx).ThenBy(x => x.rowIdx).ToList();
+        wells = wells.OrderBy(x => x.ColIdx).ThenBy(x => x.RowIdx).ToList();
       return wells;
     }
 

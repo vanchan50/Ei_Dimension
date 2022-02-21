@@ -44,7 +44,7 @@ namespace Ei_Dimension.ViewModels
     public void StartButtonClick()
     {
       UserInputHandler.InputSanityCheck();
-      if (App.Device.TerminationType == 0 && MapRegionsController.ActiveRegionNums.Count == 0)
+      if (App.Device.TerminationType == Termination.MinPerRegion && MapRegionsController.ActiveRegionNums.Count == 0)
       {
         Notification.Show("\"Min Per Region\" End of Read requires at least 1 active region");
         return;

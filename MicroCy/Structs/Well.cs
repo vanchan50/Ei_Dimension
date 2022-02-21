@@ -5,12 +5,15 @@ namespace MicroCy
   [Serializable]
   public class Well
   {
-    public byte rowIdx;
-    public byte colIdx;
-    public byte runSpeed;
-    public byte chanConfig;
-    public short sampVol;
-    public short washVol;
-    public short agitateVol;
+    public byte RowIdx;
+    public byte ColIdx;
+    public byte RunSpeed;
+    public byte ChanConfig;
+    public short SampVol;
+    public short WashVol;
+    public short AgitateVol;
+    public Termination TermType;
+    public int BeadsToCapture;
+    public int MinPerRegion;
   }
 }

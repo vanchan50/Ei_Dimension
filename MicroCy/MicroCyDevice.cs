@@ -31,7 +31,6 @@ using MicroCy.InstrumentParameters;
 
 namespace MicroCy
 {
-
   public class MicroCyDevice
   {
     public ResultsPublisher Publisher { get; }
@@ -175,18 +174,21 @@ namespace MicroCy
 
     private void SetReadingParamsForWell()
     {
-      MainCommand("Set Property", code: 0xaa, parameter: (ushort)WellController.NextWell.runSpeed);
-      MainCommand("Set Property", code: 0xc2, parameter: (ushort)WellController.NextWell.chanConfig);
+      MainCommand("Set Property", code: 0xaa, parameter: (ushort)WellController.NextWell.RunSpeed);
+      MainCommand("Set Property", code: 0xc2, parameter: (ushort)WellController.NextWell.ChanConfig);
+      BeadsToCapture = WellController.NextWell.BeadsToCapture;
+      MinPerRegion = WellController.NextWell.MinPerRegion;
+      TerminationType = WellController.NextWell.TermType;
       MakeNewWellResults();
     }
 
     private void SetAspirateParamsForWell()
     {
-      MainCommand("Set Property", code: 0xad, parameter: (ushort)WellController.NextWell.rowIdx);
-      MainCommand("Set Property", code: 0xae, parameter: (ushort)WellController.NextWell.colIdx);
-      MainCommand("Set Property", code: 0xaf, parameter: (ushort)WellController.NextWell.sampVol);
-      MainCommand("Set Property", code: 0xac, parameter: (ushort)WellController.NextWell.washVol);
-      MainCommand("Set Property", code: 0xc4, parameter: (ushort)WellController.NextWell.agitateVol);
+      MainCommand("Set Property", code: 0xad, parameter: (ushort)WellController.NextWell.RowIdx);
+      MainCommand("Set Property", code: 0xae, parameter: (ushort)WellController.NextWell.ColIdx);
+      MainCommand("Set Property", code: 0xaf, parameter: (ushort)WellController.NextWell.SampVol);
+      MainCommand("Set Property", code: 0xac, parameter: (ushort)WellController.NextWell.WashVol);
+      MainCommand("Set Property", code: 0xc4, parameter: (ushort)WellController.NextWell.AgitateVol);
     }
 
     internal bool EndBeadRead()
@@ -356,13 +358,13 @@ namespace MicroCy
     private void OnStartingToReadWell()
     {
       IsMeasurementGoing = true;
-      StartingToReadWell?.Invoke(this, new ReadingWellEventArgs(WellController.CurrentWell.rowIdx, WellController.CurrentWell.colIdx,
+      StartingToReadWell?.Invoke(this, new ReadingWellEventArgs(WellController.CurrentWell.RowIdx, WellController.CurrentWell.ColIdx,
         ResultsPublisher.FullFileName));
     }
 
     internal void OnFinishedReadingWell()
     {
-      FinishedReadingWell?.Invoke(this, new ReadingWellEventArgs(WellController.CurrentWell.rowIdx, WellController.CurrentWell.colIdx));
+      FinishedReadingWell?.Invoke(this, new ReadingWellEventArgs(WellController.CurrentWell.RowIdx, WellController.CurrentWell.ColIdx));
     }
 
     internal void OnFinishedMeasurement()

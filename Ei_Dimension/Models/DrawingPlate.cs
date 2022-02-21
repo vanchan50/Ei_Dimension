@@ -159,7 +159,7 @@ namespace Ei_Dimension.Models
         return;
       foreach(var well in wells)
       {
-        ChangeState(well.rowIdx, well.colIdx, WellType.ReadyForReading);
+        ChangeState(well.RowIdx, well.ColIdx, WellType.ReadyForReading);
       }
     }
 

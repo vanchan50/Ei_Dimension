@@ -371,7 +371,7 @@ namespace Ei_Dimension
 
       ResultsViewModel.Instance.PlatePictogram.ChangeState(row, col, type);
       SavePlateState();
-      if (DashboardViewModel.Instance.SelectedSystemControlIndex == 1)
+      if (Device.Control == SystemControl.WorkOrder)
       {
         App.Current.Dispatcher.Invoke(() => DashboardViewModel.Instance.WorkOrder[0] = ""); //actually questionable if not in workorder operation
       }
@@ -383,9 +383,9 @@ namespace Ei_Dimension
     private static Models.WellType GetWellStateForPictogram()
     {
       var type = Models.WellType.Success;
-      if (Device.Mode == OperationMode.Normal)
+      if (Device.Mode == OperationMode.Normal && Device.TerminationType == Termination.MinPerRegion)
       {
-        if (Device.TerminationType == 0 && Device.WellResults.Count > 0)
+        if (Device.WellResults.Count > 0)
         {
           foreach (var wr in Device.WellResults)
           {

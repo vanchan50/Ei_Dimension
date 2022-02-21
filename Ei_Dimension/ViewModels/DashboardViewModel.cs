@@ -142,7 +142,7 @@ namespace Ei_Dimension.ViewModels
       PressureMonToggleButtonState = false;
       PressureMon = new ObservableCollection<string> {"","",""};
 
-      CalValModeEnabled = App.Device.MapCtroller.ActiveMap.validation ? true : false;
+      CalValModeEnabled = App.Device.MapCtroller.ActiveMap.validation;
       CalModeOn = false;
       ValModeOn = false;
       CaliDateBox = new ObservableCollection<string> { App.Device.MapCtroller.ActiveMap.caltime };

@@ -14,8 +14,8 @@ namespace Ei_Dimension.Controllers
     //all existing region numbers in a string format
     public static ObservableCollection<MapRegionData> RegionsList { get; } = new ObservableCollection<MapRegionData>();
     //All the selected Active regions. Passed to the MicroCy.StartingProcedure()
-    public static HashSet<int> ActiveRegionNums { get; } = new HashSet<int>();
-    public static HashSet<int> ActiveVerificationRegionNums { get; } = new HashSet<int>();
+    public static HashSet<int> ActiveRegionNums { get; } = new HashSet<int>(101);
+    public static HashSet<int> ActiveVerificationRegionNums { get; } = new HashSet<int>(101);
     //exceptional NUllregion-case
     public bool IsNullRegionActive { get { return _resultsTableController.NullTextboxActive; } }
 
