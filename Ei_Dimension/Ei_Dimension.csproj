@@ -533,9 +533,9 @@
       <Name>Language</Name>
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </ProjectReference>
-    <ProjectReference Include="..\MicroCy\MicroCy.csproj">
+    <ProjectReference Include="..\MicroCy\DIOS.Core.csproj">
       <Project>{a4b56fcd-95dd-44cd-8f5b-6ee456bbd095}</Project>
-      <Name>MicroCy</Name>
+      <Name>DIOS.Core</Name>
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </ProjectReference>
   </ItemGroup>

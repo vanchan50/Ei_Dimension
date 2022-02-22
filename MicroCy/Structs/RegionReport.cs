@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MicroCy
+namespace DIOS.Core
 {
   [Serializable]
   public struct RegionReport

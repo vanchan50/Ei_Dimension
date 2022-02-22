@@ -290,7 +290,7 @@ namespace Ei_Dimension.ViewModels
     {
       UserInputHandler.InputSanityCheck();
       CWDirectionActive = !CWDirectionActive;
-      MicroCy.InstrumentParameters.Idex.Dir = CWDirectionActive ? 1 : 0;
+      DIOS.Core.InstrumentParameters.Idex.Dir = CWDirectionActive ? 1 : 0;
     }
 
     public void IdexPositionButtonClick()

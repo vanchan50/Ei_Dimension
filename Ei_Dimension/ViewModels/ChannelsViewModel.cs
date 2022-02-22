@@ -1,5 +1,4 @@
-﻿using DevExpress.Mvvm;
-using DevExpress.Mvvm.DataAnnotations;
+﻿using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
 using System.Collections.ObjectModel;
 using System.Windows.Controls;
@@ -47,13 +46,13 @@ namespace Ei_Dimension.ViewModels
     {
       UserInputHandler.InputSanityCheck();
       App.Device.MainCommand("RefreshDac");
-      App.Device.InitSTab("channeltab");
+      App.InitSTab("channeltab");
     }
 
     public void SaveBiasButtonClick()
     {
       UserInputHandler.InputSanityCheck();
-      var res = App.Device.MapCtroller.SaveCalVals(new MicroCy.MapCalParameters
+      var res = App.Device.MapCtroller.SaveCalVals(new DIOS.Core.MapCalParameters
       {
         TempCl0 = int.Parse(Bias30Parameters[8]),
         TempCl1 = int.Parse(Bias30Parameters[5]),

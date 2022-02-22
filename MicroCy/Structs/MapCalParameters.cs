@@ -1,5 +1,5 @@
 ﻿
-namespace MicroCy
+namespace DIOS.Core
 {
   public struct MapCalParameters
   {

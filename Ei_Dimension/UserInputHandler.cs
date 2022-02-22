@@ -1,5 +1,5 @@
 ﻿using Ei_Dimension.ViewModels;
-using MicroCy;
+using DIOS.Core;
 using System.Collections.ObjectModel;
 using System.Reflection;
 using System.Windows.Controls;
@@ -73,7 +73,7 @@ namespace Ei_Dimension
             {
               if (fRes >= 0 && fRes <= 10)
               {
-                MicroCy.InstrumentParameters.Calibration.Compensation = fRes;
+                DIOS.Core.InstrumentParameters.Calibration.Compensation = fRes;
                 break;
               }
             }
@@ -87,8 +87,7 @@ namespace Ei_Dimension
               {
                 if (fRes >= 1 && fRes <= 300)
                 {
-                  MicroCy.InstrumentParameters.Calibration.HDnrCoef = fRes;
-                  App.Device.MainCommand("Set FProperty", code: 0x20, fparameter: fRes);
+                  App.Device.HDnrCoef = fRes;
                   break;
                 }
               }
@@ -101,8 +100,7 @@ namespace Ei_Dimension
               {
                 if (fRes >= 1 && fRes <= 40000)
                 {
-                  MicroCy.InstrumentParameters.Calibration.HdnrTrans = fRes;
-                  App.Device.MainCommand("Set FProperty", code: 0x0a, fparameter: fRes);
+                  App.Device.HdnrTrans = fRes;
                   break;
                 }
               }
@@ -1348,7 +1346,7 @@ namespace Ei_Dimension
               {
                 if (bRes >= 0 && bRes <= 255)
                 {
-                  MicroCy.InstrumentParameters.Idex.Pos = bRes;
+                  DIOS.Core.InstrumentParameters.Idex.Pos = bRes;
                   break;
                 }
               }
@@ -1361,7 +1359,7 @@ namespace Ei_Dimension
               {
                 if (usRes >= 0 && usRes <= 65535)
                 {
-                  MicroCy.InstrumentParameters.Idex.Steps = usRes;
+                  DIOS.Core.InstrumentParameters.Idex.Steps = usRes;
                   break;
                 }
               }

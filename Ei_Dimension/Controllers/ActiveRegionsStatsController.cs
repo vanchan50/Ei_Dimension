@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using MicroCy;
+using DIOS.Core;
 
 namespace Ei_Dimension.Controllers
 {
@@ -32,7 +32,6 @@ namespace Ei_Dimension.Controllers
 
     private static ActiveRegionsStatsController _instance;
     private static bool _activeRegionsUpdateGoing;
-    private static readonly List<(ushort region, float[] vals)> TempWellResults = new List<(ushort region, float[] vals)>(101);
     private static readonly List<float> NullWellResults = new List<float>(100000);
 
     private ActiveRegionsStatsController()
@@ -57,48 +56,42 @@ namespace Ei_Dimension.Controllers
       if (!_activeRegionsUpdateGoing)
       {
         _activeRegionsUpdateGoing = true;
-        for (var i = 0; i < App.Device.WellResults.Count; i++)
-        {
-          var rp1 = new float[App.Device.WellResults[i].RP1vals.Count];
-          App.Device.WellResults[i].RP1vals.CopyTo(0, rp1, 0, rp1.Length);
-          TempWellResults.Add((App.Device.WellResults[i].regionNumber, rp1));
-        }
-
-        var action = App.MapRegions.IsNullRegionActive ? UpdateNullRegionProcedure() : UpdateRegionsProcedure();
+        var copy = App.Device.Results.MakeDeepCopy();
+        var action = App.MapRegions.IsNullRegionActive ? UpdateNullRegionProcedure(copy) : UpdateRegionsProcedure(copy);
         _ = App.Current.Dispatcher.BeginInvoke(action);
       }
     }
 
-    private Action UpdateRegionsProcedure()
+    private Action UpdateRegionsProcedure(List<WellResult> wellresults)
     {
       return () =>
       {
         ViewModels.ResultsViewModel.Instance.CurrentAnalysis12Map.Clear();
-        foreach (var result in TempWellResults)
+        foreach (var result in wellresults)
         {
-          var index = MapRegionsController.GetMapRegionIndex(result.region);
+          var index = MapRegionsController.GetMapRegionIndex(result.regionNumber);
           if (index < 0)
             continue;
           float avg = 0;
           float mean = 0;
-          if (result.vals.Length == 0)
+          if (result.RP1vals.Count == 0)
           {
             CurrentCount[index] = "0";
             CurrentMean[index] = "0";
           }
           else
           {
-            avg = result.vals.Average();
-            var count = result.vals.Length;
+            avg = result.RP1vals.Average();
+            var count = result.RP1vals.Count;
             if (count >= 20)
             {
-              Array.Sort(result.vals);
+              result.RP1vals.Sort();
               int quarterIndex = count / 4;
 
               float sum = 0;
               for (var i = quarterIndex; i < count - quarterIndex; i++)
               {
-                sum += result.vals[i];
+                sum += result.RP1vals[i];
               }
 
               mean = sum / (count - 2 * quarterIndex);
@@ -108,29 +101,25 @@ namespace Ei_Dimension.Controllers
 
             CurrentCount[index] = count.ToString();
             CurrentMean[index] = mean.ToString("0.0");
-            Array.Clear(result.vals, 0, result.vals.Length); //Crutch. Explicit clear needed for some reason
           }
 
           if (index != 0)
             Reporter3DGraphHandler(index - 1, mean); // -1 accounts for region = 0
         }
 
-        TempWellResults.Clear();
         _activeRegionsUpdateGoing = false;
       };
     }
 
-    private Action UpdateNullRegionProcedure()
+    private Action UpdateNullRegionProcedure(List<WellResult> wellresults)
     {
-      foreach (var result in TempWellResults)
+      foreach (var result in wellresults)
       {
-        if (result.vals.Length > 0)
+        if (result.RP1vals.Count > 0)
         {
-          NullWellResults.InsertRange(NullWellResults.Count, result.vals);
-          Array.Clear(result.vals, 0, result.vals.Length); //Crutch. Explicit clear needed for some reason
+          NullWellResults.InsertRange(NullWellResults.Count, result.RP1vals);
         }
       }
-      TempWellResults.Clear();
 
       var count = NullWellResults.Count;
       float mean = 0;

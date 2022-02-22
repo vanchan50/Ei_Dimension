@@ -1,8 +1,9 @@
 ﻿using System.Reflection;
 using System;
+using System.Collections.Generic;
 using System.Windows;
 using Ei_Dimension.ViewModels;
-using MicroCy;
+using DIOS.Core;
 using System.IO;
 using System.Configuration;
 using Ei_Dimension.Controllers;
@@ -13,7 +14,7 @@ namespace Ei_Dimension
   {
     public static (PropertyInfo prop, object VM) NumpadShow { get; set; }
     public static (PropertyInfo prop, object VM) KeyboardShow { get; set; }
-    public static MicroCyDevice Device { get; private set; }
+    public static Device Device { get; private set; }
     public static MapRegionsController MapRegions { get; set; }
     public static bool _nextWellWarning;
 
@@ -22,7 +23,7 @@ namespace Ei_Dimension
     public App()
     {
       CorruptSettingsChecker();
-      Device = new MicroCyDevice();
+      Device = new Device();
       if(Directory.Exists(Settings.Default.LastOutFolder))
         Device.Publisher.Outdir = Settings.Default.LastOutFolder;
       else
@@ -91,16 +92,13 @@ namespace Ei_Dimension
       Device.MinPerRegion = Settings.Default.MinPerRegion;
       Device.BeadsToCapture = Settings.Default.BeadsToCapture;
       Device.OnlyClassified = Settings.Default.OnlyClassifed;
-      Device.ChannelBIsHiSensitivity = Settings.Default.SensitivityChannelB;
+      Device.SensitivityChannel = Settings.Default.SensitivityChannelB? HiSensitivityChannel.B: HiSensitivityChannel.C;
       Device.ReporterScaling = Settings.Default.ReporterScaling;
-      var param = Device.ChannelBIsHiSensitivity ? 0 : 1;
-      Device.MainCommand("Set Property", code: 0x1e, parameter: (ushort)param);
       Device.MainCommand("Set Property", code: 0xbf, parameter: (ushort)Device.MapCtroller.ActiveMap.calParams.att);
       if (!System.Windows.Input.Keyboard.IsKeyDown(System.Windows.Input.Key.LeftCtrl))
         Device.MainCommand("Startup");
-      MicroCy.InstrumentParameters.Calibration.HdnrTrans = Device.MapCtroller.ActiveMap.calParams.DNRTrans;
-      Device.MainCommand("Set FProperty", code: 0x0a, fparameter: MicroCy.InstrumentParameters.Calibration.HdnrTrans);
-      MicroCy.InstrumentParameters.Calibration.Compensation = Device.MapCtroller.ActiveMap.calParams.compensation;
+      Device.HdnrTrans = Device.MapCtroller.ActiveMap.calParams.DNRTrans;
+      DIOS.Core.InstrumentParameters.Calibration.Compensation = Device.MapCtroller.ActiveMap.calParams.compensation;
       Device.MainCommand("Set Property", code: 0x97, parameter: 1170);  //set current limit of aligner motors if leds are off
     }
 
@@ -146,13 +144,11 @@ namespace Ei_Dimension
         CaliVM.EventTriggerContents[0] = Device.MapCtroller.ActiveMap.calParams.height.ToString();
         Device.MainCommand("Set Property", code: 0xcd, parameter: Device.MapCtroller.ActiveMap.calParams.height);
         CaliVM.CompensationPercentageContent[0] = Device.MapCtroller.ActiveMap.calParams.compensation.ToString();
-        MicroCy.InstrumentParameters.Calibration.Compensation = Device.MapCtroller.ActiveMap.calParams.compensation;
+        DIOS.Core.InstrumentParameters.Calibration.Compensation = Device.MapCtroller.ActiveMap.calParams.compensation;
         CaliVM.DNRContents[0] = Device.MapCtroller.ActiveMap.calParams.DNRCoef.ToString();
-        MicroCy.InstrumentParameters.Calibration.HDnrCoef = Device.MapCtroller.ActiveMap.calParams.DNRCoef;
-        Device.MainCommand("Set FProperty", code: 0x20, fparameter: Device.MapCtroller.ActiveMap.calParams.DNRCoef);
+        Device.HDnrCoef = Device.MapCtroller.ActiveMap.calParams.DNRCoef;
         CaliVM.DNRContents[1] = Device.MapCtroller.ActiveMap.calParams.DNRTrans.ToString();
-        MicroCy.InstrumentParameters.Calibration.HdnrTrans = Device.MapCtroller.ActiveMap.calParams.DNRTrans;
-        Device.MainCommand("Set FProperty", code: 0x0a, fparameter: MicroCy.InstrumentParameters.Calibration.HdnrTrans);
+        Device.HdnrTrans = Device.MapCtroller.ActiveMap.calParams.DNRTrans;
         CaliVM.ClassificationTargetsContents[0] = Device.MapCtroller.ActiveMap.calParams.CL0.ToString();
         Device.MainCommand("Set Property", code: 0x8b, parameter: (ushort)Device.MapCtroller.ActiveMap.calParams.CL0);
         CaliVM.ClassificationTargetsContents[1] = Device.MapCtroller.ActiveMap.calParams.CL1.ToString();
@@ -249,12 +245,6 @@ namespace Ei_Dimension
       Settings.Default.Save();
     }
 
-    public static void SetGating(byte num)
-    {
-      Device.MainCommand("Set Property", code: 0xca, parameter: (ushort)num);
-      Device.ScatterGate = (Gate)num;
-    }
-
     public static void LockMapSelection()
     {
       Views.DashboardView.Instance.MapSelectr.IsEnabled = false;
@@ -347,9 +337,6 @@ namespace Ei_Dimension
         ResultsViewModel.Instance.ClearGraphs();
       });
       ActiveRegionsStatsController.Instance.ResetCurrentActiveRegionsDisplayedStats();
-      #if DEBUG
-      Device.MainCommand("Set FProperty", code: 0x06);
-      #endif
     }
 
     private static Models.WellWarningState GetWarningState()
@@ -375,9 +362,6 @@ namespace Ei_Dimension
       {
         App.Current.Dispatcher.Invoke(() => DashboardViewModel.Instance.WorkOrder[0] = ""); //actually questionable if not in workorder operation
       }
-      #if DEBUG
-      Device.MainCommand("Get FProperty", code: 0x06);
-      #endif
     }
 
     private static Models.WellType GetWellStateForPictogram()
@@ -385,20 +369,18 @@ namespace Ei_Dimension
       var type = Models.WellType.Success;
       if (Device.Mode == OperationMode.Normal && Device.TerminationType == Termination.MinPerRegion)
       {
-        if (Device.WellResults.Count > 0)
+        var lacking = Device.Results.MinPerRegionAchieved();
+        //not achieved
+        if (lacking < 0)
         {
-          foreach (var wr in Device.WellResults)
+          //if lacking more then 25% of minperregion beads 
+          if (-lacking > Device.MinPerRegion * 0.25)
           {
-            if (wr.RP1vals.Count < Device.MinPerRegion * 0.75)
-            {
-              type = Models.WellType.Fail;
-              break;
-            }
-            if (wr.RP1vals.Count < Device.MinPerRegion)
-            {
-              type = Models.WellType.LightFail;
-              break;
-            }
+            type = Models.WellType.Fail;
+          }
+          else
+          {
+            type = Models.WellType.LightFail;
           }
         }
       }
@@ -484,6 +466,40 @@ namespace Ei_Dimension
       catch(Exception e)
       {
         Notification.Show($"Problem with status file save, Please report this issue to the Manufacturer {e.Message}");
+      }
+    }
+
+    public static void InitSTab(string tabname)
+    {
+      //Removing this can lead to unforseen crucial bugs in instrument operation. If so - do with extra care
+      //one example is a check in CommandLists.Readertab for changed plate parameter,which could happen in manual well selection in motors tab
+      List<byte> list;
+      switch (tabname)
+      {
+        case "readertab":
+          list = CommandLists.Readertab;
+          break;
+        case "reportingtab":
+          list = CommandLists.Reportingtab;
+          break;
+        case "calibtab":
+          list = CommandLists.Calibtab;
+          break;
+        case "channeltab":
+          list = CommandLists.Channeltab;
+          break;
+        case "motorstab":
+          list = CommandLists.Motorstab;
+          break;
+        case "componentstab":
+          list = CommandLists.Componentstab;
+          break;
+        default:
+          return;
+      }
+      foreach (byte Code in list)
+      {
+        Device.MainCommand("Get Property", code: Code);
       }
     }
 

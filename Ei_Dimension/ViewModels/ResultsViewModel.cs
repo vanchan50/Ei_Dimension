@@ -35,7 +35,7 @@ namespace Ei_Dimension.ViewModels
     public virtual ObservableCollection<DoubleHeatMapData> BackingAnalysis12Map { get; set; }
     public virtual ObservableCollection<DoubleHeatMapData> BackingAnalysis13Map { get; set; }
     public virtual ObservableCollection<DoubleHeatMapData> BackingAnalysis23Map { get; set; }
-    public List<MicroCy.WellResult> BackingWResults { get; set; }
+    public List<DIOS.Core.WellResult> BackingWResults { get; set; }
     public virtual DrawingPlate PlatePictogram { get; set; }
     public virtual System.Windows.Visibility Buttons384Visible { get; set; }
     public virtual System.Windows.Visibility LeftLabel384Visible { get; set; }
@@ -114,7 +114,7 @@ namespace Ei_Dimension.ViewModels
       BackingAnalysis12Map = new ObservableCollection<DoubleHeatMapData>();
       BackingAnalysis13Map = new ObservableCollection<DoubleHeatMapData>();
       BackingAnalysis23Map = new ObservableCollection<DoubleHeatMapData>();
-      BackingWResults = new List<MicroCy.WellResult>();
+      BackingWResults = new List<DIOS.Core.WellResult>();
 
       DisplayedAnalysisMap = CurrentAnalysis12Map;
 
@@ -291,7 +291,7 @@ namespace Ei_Dimension.ViewModels
       Settings.Default.Save();
     }
 
-    private bool ParseBeadInfo(string path, List<MicroCy.BeadInfoStruct> beadStructs)
+    private bool ParseBeadInfo(string path, List<DIOS.Core.BeadInfoStruct> beadStructs)
     {
       List<string> linesInFile = Core.DataProcessor.GetDataFromFile(path);
       if (linesInFile.Count == 1 && linesInFile[0] == " ")
@@ -330,7 +330,7 @@ namespace Ei_Dimension.ViewModels
           return;
         }
         InitBackingWellResults();
-        var beadStructsList = new List<MicroCy.BeadInfoStruct>(100000);
+        var beadStructsList = new List<DIOS.Core.BeadInfoStruct>(100000);
         if(!ParseBeadInfo(path, beadStructsList))
         {
           ResultsWaitIndicatorVisibility = false;
@@ -370,7 +370,7 @@ namespace Ei_Dimension.ViewModels
       {
         foreach (var reg in MapRegionsController.ActiveRegionNums)
         {
-          BackingWResults.Add(new MicroCy.WellResult { regionNumber = (ushort)reg });
+          BackingWResults.Add(new DIOS.Core.WellResult { regionNumber = (ushort)reg });
         }
       }
     }

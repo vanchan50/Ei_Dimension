@@ -1,4 +1,4 @@
-﻿namespace MicroCy
+﻿namespace DIOS.Core
 {
   public enum SystemControl
   {

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31515.178
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32210.238
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ei_Dimension", "Ei_Dimension\Ei_Dimension.csproj", "{144670CB-6396-488C-A76D-2E03A3B69E78}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ei_Dimension", "Ei_Dimensio
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinUSBNet", "winusbnet-1.0.3\WinUSBNet\WinUSBNet.csproj", "{CE06C329-287D-4F1E-B62D-B8353F2BAA4A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroCy", "MicroCy\MicroCy.csproj", "{A4B56FCD-95DD-44CD-8F5B-6EE456BBD095}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DIOS.Core", "MicroCy\DIOS.Core.csproj", "{A4B56FCD-95DD-44CD-8F5B-6EE456BBD095}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Language", "Language\Language.csproj", "{AE6FFECA-703A-49A8-8979-7381FB4DBAE9}"
 EndProject

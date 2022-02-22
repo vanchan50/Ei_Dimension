@@ -1,7 +1,7 @@
 ﻿using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
 using Ei_Dimension.Models;
-using MicroCy;
+using DIOS.Core;
 using System.Linq;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

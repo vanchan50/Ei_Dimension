@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using Ei_Dimension.Controllers;
-using MicroCy;
+using DIOS.Core;
 
 namespace Ei_Dimension.ViewModels
 {

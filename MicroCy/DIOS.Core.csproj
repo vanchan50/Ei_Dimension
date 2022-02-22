@@ -59,11 +59,13 @@
     <Compile Include="BeadProcessor.cs" />
     <Compile Include="DataController.cs" />
     <Compile Include="Enums\Gate.cs" />
+    <Compile Include="Enums\HiSensitivityChannel.cs" />
     <Compile Include="Enums\OperationMode.cs" />
     <Compile Include="Enums\SystemControl.cs" />
     <Compile Include="Enums\Termination.cs" />
     <Compile Include="MapController.cs" />
     <Compile Include="ResultsPublisher.cs" />
+    <Compile Include="RunResults.cs" />
     <Compile Include="StateMachine.cs" />
     <Compile Include="Structs\CalParams.cs" />
     <Compile Include="Structs\CustomMap.cs" />
@@ -76,7 +78,7 @@
     <Compile Include="Structs\Gstats.cs" />
     <Compile Include="InstrumentParameters\Idex.cs" />
     <Compile Include="ISerial.cs" />
-    <Compile Include="MicroCyDevice.cs" />
+    <Compile Include="Device.cs" />
     <Compile Include="Structs\StatsEventArgs.cs" />
     <Compile Include="Structs\MapRegion.cs" />
     <Compile Include="Structs\OutResults.cs" />

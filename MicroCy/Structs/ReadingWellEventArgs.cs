@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MicroCy
+namespace DIOS.Core
 {
   public class ReadingWellEventArgs : EventArgs
   {

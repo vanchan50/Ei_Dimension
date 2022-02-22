@@ -4,7 +4,7 @@ using DevExpress.Mvvm.POCO;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Windows.Controls;
-using MicroCy;
+using DIOS.Core;
 
 namespace Ei_Dimension.ViewModels
 {
@@ -69,7 +69,7 @@ namespace Ei_Dimension.ViewModels
     {
       UserInputHandler.InputSanityCheck();
       App.Device.MainCommand("RefreshDac");
-      App.Device.InitSTab("channeltab");
+      App.InitSTab("channeltab");
     }
 
     public void SetOffsetClick()
@@ -237,8 +237,7 @@ namespace Ei_Dimension.ViewModels
 
     private static void SetSensitivityChannel(byte num)
     {
-      App.Device.ChannelBIsHiSensitivity = num == 0;
-      App.Device.MainCommand("Set Property", code: 0x1e, parameter: (ushort)num);
+      App.Device.SensitivityChannel = (HiSensitivityChannel)num;
       Settings.Default.SensitivityChannelB = num == 0;
       Settings.Default.Save();
     }

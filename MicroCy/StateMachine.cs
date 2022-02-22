@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace MicroCy
+namespace DIOS.Core
 {
   internal class StateMachine
   {
-    private readonly MicroCyDevice _device;
+    private readonly Device _device;
     private State _state;
     public bool Report { get; set; }
 
-    public StateMachine(MicroCyDevice device, bool report)
+    public StateMachine(Device device, bool report)
     {
       _device = device;
       Report = report;
@@ -24,6 +24,7 @@ namespace MicroCy
 
     public void Action()
     {
+      //TODO: allow only one instance
       switch (_state)
       {
         case State.Reset:
@@ -63,15 +64,7 @@ namespace MicroCy
 
     private void Action2()
     {
-      var tempres = new List<WellResult>(_device.WellResults.Count);
-      for(var i = 0; i < _device.WellResults.Count; i++)
-      {
-        var r = new WellResult();
-        r.RP1vals = new List<float>(_device.WellResults[i].RP1vals);
-        r.RP1bgnd = new List<float>(_device.WellResults[i].RP1bgnd);
-        r.regionNumber = _device.WellResults[i].regionNumber;
-        tempres.Add(r);
-      }
+      var tempres = _device.Results.MakeDeepCopy();
       _ = Task.Run(() =>
       {
         _device.Publisher.SaveBeadFile(tempres);
@@ -104,7 +97,6 @@ namespace MicroCy
       else
       {
         _device.SetupRead();
-        _device.InitBeadRead();
       }
       Task.Run(()=>
       {

@@ -6,6 +6,7 @@ using Ei_Dimension.Models;
 using System.Collections.Generic;
 using System.Windows.Media;
 using System;
+using DIOS.Core;
 
 namespace Ei_Dimension.ViewModels
 {
@@ -47,8 +48,8 @@ namespace Ei_Dimension.ViewModels
 
       ClassificationTargetsContents = new ObservableCollection<string> { "1", "1", "1", "1", "3500"};
 
-      CompensationPercentageContent = new ObservableCollection<string> { MicroCy.InstrumentParameters.Calibration.Compensation.ToString() };
-      DNRContents = new ObservableCollection<string> { "", MicroCy.InstrumentParameters.Calibration.HdnrTrans.ToString() };
+      CompensationPercentageContent = new ObservableCollection<string> { DIOS.Core.InstrumentParameters.Calibration.Compensation.ToString() };
+      DNRContents = new ObservableCollection<string> { "", App.Device.HdnrTrans.ToString() };
 
       AttenuationBox = new ObservableCollection<string> { App.Device.MapCtroller.ActiveMap.calParams.att.ToString() };
 
@@ -83,7 +84,7 @@ namespace Ei_Dimension.ViewModels
       };
       Action Save = () =>
       {
-        var res = App.Device.MapCtroller.SaveCalVals(new MicroCy.MapCalParameters
+        var res = App.Device.MapCtroller.SaveCalVals(new DIOS.Core.MapCalParameters
         {
           TempCl0 = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[8]),
           TempCl1 = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[5]),
@@ -159,7 +160,7 @@ namespace Ei_Dimension.ViewModels
       App.Device.MainCommand("Get Property", code: 0x2e);
       App.Device.MainCommand("Get Property", code: 0x2f);
       System.Threading.Thread.Sleep(1000);
-      var res = App.Device.MapCtroller.SaveCalVals(new MicroCy.MapCalParameters
+      var res = App.Device.MapCtroller.SaveCalVals(new DIOS.Core.MapCalParameters
       {
         TempCl0 = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[8]),
         TempCl1 = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[5]),
@@ -290,7 +291,7 @@ namespace Ei_Dimension.ViewModels
       {
         _vm.SelectedGatingContent = Content;
         _vm.SelectedGatingIndex = Index;
-        App.SetGating(Index);
+        App.Device.ScatterGate = (Gate)Index;
       }
 
       public static void ResetIndex()

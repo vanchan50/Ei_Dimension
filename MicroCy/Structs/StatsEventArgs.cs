@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace MicroCy
+namespace DIOS.Core
 {
   public class StatsEventArgs
   {

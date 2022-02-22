@@ -6,15 +6,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MicroCy
+namespace DIOS.Core
 {
   public class MapController
   {
     public CustomMap ActiveMap { get; set; }
     public List<CustomMap> MapList { get; } = new List<CustomMap>();
-    private MicroCyDevice _device;
+    private Device _device;
 
-    public MapController(MicroCyDevice device)
+    public MapController(Device device)
     {
       _device = device;
     }

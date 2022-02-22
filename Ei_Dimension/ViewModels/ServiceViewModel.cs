@@ -27,7 +27,7 @@ namespace Ei_Dimension.ViewModels
       App.HideNumpad();
       MainViewModel.Instance.HideHint();
       NavigationService.Navigate("MotorsView", null, this);
-      App.Device.InitSTab("motorstab");
+      App.InitSTab("motorstab");
     }
 
     public void NavigateComponents()
@@ -35,7 +35,7 @@ namespace Ei_Dimension.ViewModels
       App.HideNumpad();
       MainViewModel.Instance.HideHint();
       NavigationService.Navigate("ComponentsView", null, this);
-      App.Device.InitSTab("componentstab");
+      App.InitSTab("componentstab");
     }
 
     public void NavigateAlignment()
@@ -50,7 +50,7 @@ namespace Ei_Dimension.ViewModels
       App.HideNumpad();
       MainViewModel.Instance.HideHint();
       NavigationService.Navigate("ChannelOffsetView", null, this);
-      App.Device.InitSTab("channeltab");
+      App.InitSTab("channeltab");
     }
 
     public void NavigateSyringeSpeeds()
@@ -58,7 +58,7 @@ namespace Ei_Dimension.ViewModels
       App.HideNumpad();
       MainViewModel.Instance.HideHint();
       NavigationService.Navigate("SyringeSpeedsView", null, this);
-      App.Device.InitSTab("calibtab");
+      App.InitSTab("calibtab");
     }
 
     public void InitChildren()

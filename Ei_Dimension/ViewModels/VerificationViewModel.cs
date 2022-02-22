@@ -1,6 +1,6 @@
 ﻿using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
-using MicroCy;
+using DIOS.Core;
 using System;
 using System.Collections.ObjectModel;
 using Ei_Dimension.Controllers;
@@ -134,7 +134,7 @@ namespace Ei_Dimension.ViewModels
 
     public static void VerificationSuccess()
     {
-      App.Device.MapCtroller.SaveCalVals(new MicroCy.MapCalParameters
+      App.Device.MapCtroller.SaveCalVals(new DIOS.Core.MapCalParameters
       {
         TempCl0 = -1,
         TempCl1 = -1,

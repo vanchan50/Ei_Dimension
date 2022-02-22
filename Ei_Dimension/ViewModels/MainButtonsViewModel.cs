@@ -1,7 +1,7 @@
 ﻿using DevExpress.Mvvm;
 using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
-using MicroCy;
+using DIOS.Core;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -58,8 +58,6 @@ namespace Ei_Dimension.ViewModels
       }
       App.Device.WellController.Init(wells);
 
-      App.Device.MainCommand("Set FProperty", code: 0x06);
-      HashSet<int> startArg = null;
       switch (App.Device.Mode)
       {
         case OperationMode.Normal:
@@ -68,7 +66,7 @@ namespace Ei_Dimension.ViewModels
             SelectNullRegion();
           }
           //DefaultRegionNaming();
-          startArg = MapRegionsController.ActiveRegionNums;
+          App.Device.Results.SetupRunRegions(MapRegionsController.ActiveRegionNums);
           break;
         case OperationMode.Calibration:
           App.MapRegions.RemoveNullTextBoxes();
@@ -90,7 +88,7 @@ namespace Ei_Dimension.ViewModels
         ResultsViewModel.Instance.CurrentMfiItems[i] = "";
         ResultsViewModel.Instance.CurrentCvItems[i] = "";
       }
-      App.Device.StartOperation(startArg);
+      App.Device.StartOperation();
       MainViewModel.Instance.NavigationSelector(1);
     }
 

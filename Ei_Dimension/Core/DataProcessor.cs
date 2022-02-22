@@ -45,10 +45,10 @@ namespace Ei_Dimension.Core
       return str;
     }
 
-    public static MicroCy.BeadInfoStruct ParseRow(string data)
+    public static DIOS.Core.BeadInfoStruct ParseRow(string data)
     {
       var numFormat = System.Globalization.CultureInfo.InvariantCulture.NumberFormat;
-      MicroCy.BeadInfoStruct binfo;
+      DIOS.Core.BeadInfoStruct binfo;
       string[] words = data.Split(_separator);
       binfo.Header = uint.Parse(words[0]);
       binfo.EventTime = uint.Parse(words[1]);
@@ -132,7 +132,7 @@ namespace Ei_Dimension.Core
       return Result;
     }
 
-    public static void CalculateStatistics(List<MicroCy.BeadInfoStruct> list)
+    public static void CalculateStatistics(List<DIOS.Core.BeadInfoStruct> list)
     {
       var maxBeads = list.Count > 5000 ? 5000 : list.Count;
       for (var i = 0; i < maxBeads; i++)
@@ -202,7 +202,7 @@ namespace Ei_Dimension.Core
       }));
     }
 
-    public static void BinScatterData(List<MicroCy.BeadInfoStruct> list, bool fromFile = false)
+    public static void BinScatterData(List<DIOS.Core.BeadInfoStruct> list, bool fromFile = false)
     {
       var ScatterDataCount = ScatterData.CurrentReporter.Count;
       var MaxValue = ScatterData.CurrentReporter[ScatterDataCount - 1].Argument;
@@ -353,7 +353,7 @@ namespace Ei_Dimension.Core
       }
     }
 
-    public static void BinMapData(List<MicroCy.BeadInfoStruct> beadInfoList, bool current = true, bool hiRez = false)
+    public static void BinMapData(List<DIOS.Core.BeadInfoStruct> beadInfoList, bool current = true, bool hiRez = false)
     {
       //Puts points to Lists instead of filling 256x256 arrays.
       //traversing [,] array would be a downside, and condition check would also be included for every step.

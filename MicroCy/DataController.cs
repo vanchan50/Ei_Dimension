@@ -2,7 +2,7 @@
 using System.Collections.Concurrent;
 using System.Threading;
 
-namespace MicroCy
+namespace DIOS.Core
 {
   internal class DataController
   {
@@ -12,9 +12,9 @@ namespace MicroCy
     private readonly ISerial _serialConnection;
     private readonly Thread _prioUsbInThread;
     private readonly Thread _prioUsbOutThread;
-    private readonly MicroCyDevice _device;
+    private readonly Device _device;
 
-    public DataController(MicroCyDevice device, Type connectionType)
+    public DataController(Device device, Type connectionType)
     {
       _device = device;
       _serialConnection = ConnectionFactory.MakeNewConnection(connectionType);
@@ -51,7 +51,7 @@ namespace MicroCy
                 break;
               _device._beadProcessor.CalculateBeadParams(ref outbead, _device.ReporterScaling);
 
-              _device.FillActiveWellResults(in outbead);
+              _device.Results.FillActiveWellResults(in outbead);
               if (outbead.region == 0 && _device.OnlyClassified)
                 continue;
               _device.DataOut.Enqueue(outbead);
@@ -75,7 +75,7 @@ namespace MicroCy
             }
           }
           Array.Clear(_serialConnection.InputBuffer, 0, _serialConnection.InputBuffer.Length);
-          _device.TerminationReadyCheck();
+          _device.Results.TerminationReadyCheck();
         }
         else
           GetCommandFromBuffer();

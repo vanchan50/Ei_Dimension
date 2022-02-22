@@ -1,8 +1,8 @@
-﻿using MicroCy.InstrumentParameters;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using DIOS.Core.InstrumentParameters;
 
-namespace MicroCy
+namespace DIOS.Core
 {
   internal class BeadProcessor
   {
@@ -17,9 +17,9 @@ namespace MicroCy
     private readonly float[,] Sfi = new float[80000, 10];
     private int[,] _classificationMap;
     private ushort[,] _bgValues = new ushort[10, 80000];
-    private MicroCyDevice _device;
+    private Device _device;
 
-    public BeadProcessor(MicroCyDevice device)
+    public BeadProcessor(Device device)
     {
       _device = device;
     }
@@ -32,7 +32,7 @@ namespace MicroCy
     public void CalculateBeadParams(ref BeadInfoStruct outbead, in float RepScale)
     {
       //greenMaj is the hi dyn range channel, greenMin is the high sensitivity channel(depends on filter placement)
-      if (_device.ChannelBIsHiSensitivity)
+      if (_device.SensitivityChannel == HiSensitivityChannel.B)
       {
         _greenMaj = outbead.greenC;
         _greenMin = outbead.greenB;
@@ -48,7 +48,7 @@ namespace MicroCy
       outbead.cl2 = cl.cl2;
       outbead.region = (ushort)ClassifyBeadToRegion(cl);
       //handle HI dnr channel
-      var reporter = _greenMin > Calibration.HdnrTrans ? _greenMaj * Calibration.HDnrCoef : _greenMin;
+      var reporter = _greenMin > _device.HdnrTrans ? _greenMaj * _device.HDnrCoef : _greenMin;
       outbead.reporter = reporter / RepScale;
     }
 

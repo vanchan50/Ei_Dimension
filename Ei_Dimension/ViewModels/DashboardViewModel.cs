@@ -5,7 +5,7 @@ using Ei_Dimension.Models;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
-using MicroCy;
+using DIOS.Core;
 
 namespace Ei_Dimension.ViewModels
 {

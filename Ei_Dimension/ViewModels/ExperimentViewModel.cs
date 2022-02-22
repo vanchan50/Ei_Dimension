@@ -48,7 +48,7 @@ namespace Ei_Dimension.ViewModels
       App.HideNumpad();
       App.HideKeyboard();
       MainViewModel.Instance.HideHint();
-      App.Device.InitSTab("reportingtab");
+      App.InitSTab("reportingtab");
       MainViewModel.Instance.StartButtonsVisible = Visibility.Hidden;
       NavigationService.Navigate("FileSaveView", null, this);
     }

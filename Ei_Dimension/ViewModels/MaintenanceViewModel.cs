@@ -1,9 +1,7 @@
 ﻿using DevExpress.Mvvm;
 using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
-using System;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Windows.Controls;
 
 namespace Ei_Dimension.ViewModels
@@ -92,7 +90,7 @@ namespace Ei_Dimension.ViewModels
       if (VerificationViewModel.Instance != null)
         VerificationViewModel.Instance.isActivePage = false;
       NavigationService.Navigate("CalibrationView", null, this);
-      App.Device.InitSTab("calibtab");
+      App.InitSTab("calibtab");
     }
 
     public void NavigateVerification()
@@ -111,7 +109,7 @@ namespace Ei_Dimension.ViewModels
       if (VerificationViewModel.Instance != null)
         VerificationViewModel.Instance.isActivePage = false;
       NavigationService.Navigate("ChannelsView", null, this);
-      App.Device.InitSTab("channeltab");
+      App.InitSTab("channeltab");
     }
 
     public void FocusedBox(int num)

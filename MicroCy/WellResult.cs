@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace MicroCy
+namespace DIOS.Core
 {
   [Serializable]
   public class WellResult

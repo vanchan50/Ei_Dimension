@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading;
-using System.Windows;
 using Ei_Dimension.ViewModels;
-using MicroCy;
 
 namespace Ei_Dimension
 {
@@ -20,13 +17,6 @@ namespace Ei_Dimension
         Action update = null;
         switch (exe.Code)
         {
-          case 0x01:
-            #if DEBUG
-            Console.Error.WriteLine($"Detected Board Rev v{App.Device.BoardVersion}");
-            #endif
-            if (App.Device.BoardVersion > 0)
-              update = HideChannels;
-            break;
           case 0x02:
             update = () => ChannelOffsetViewModel.Instance.SiPMTempCoeff[0] = exe.FParameter.ToString();
             break;
@@ -115,7 +105,6 @@ namespace Ei_Dimension
             update = () =>
             {
               CalibrationViewModel.Instance.DNRContents[0] = exe.FParameter.ToString();
-              MicroCy.InstrumentParameters.Calibration.HDnrCoef = exe.FParameter;
             };
             break;
           case 0x22:  //pressure
@@ -581,15 +570,7 @@ namespace Ei_Dimension
               
               void Act()
               {
-                var tempres = new List<WellResult>(App.Device.WellResults.Count);
-                for (var i = 0; i < App.Device.WellResults.Count; i++)
-                {
-                  var r = new WellResult();
-                  r.RP1vals = new List<float>(App.Device.WellResults[i].RP1vals);
-                  r.RP1bgnd = new List<float>(App.Device.WellResults[i].RP1bgnd);
-                  r.regionNumber = App.Device.WellResults[i].regionNumber;
-                  tempres.Add(r);
-                }
+                var tempres = App.Device.Results.MakeDeepCopy();
                 App.Device.Publisher.SaveBeadFile(tempres);
 
                 if (App.Device.RMeans && App.Device.PlateReportActive)    //end of read and json results requested)
@@ -610,7 +591,7 @@ namespace Ei_Dimension
             break;
           //  case 0xf8:
           //    string tabnam = tabControl1.SelectedTab.Name;
-          //    App.Device.InitSTab(tabnam);
+          //    App.InitSTab(tabnam);
           //    break;
           // these are processed in GetCommandFromBuffer
           case 0xfd:
@@ -653,14 +634,6 @@ namespace Ei_Dimension
     {
       if (DashboardViewModel.Instance.PressureMonToggleButtonState)
         App.Device.MainCommand("Get FProperty", code: 0x22);
-    }
-
-    private static void HideChannels()
-    {
-      ChannelOffsetViewModel.Instance.OldBoardOffsetsVisible = Visibility.Hidden;
-      Views.ChannelOffsetView.Instance.SlidersSP.Visibility = Visibility.Visible;
-      Views.ChannelOffsetView.Instance.BaselineSP.Width = 180;
-      Views.ChannelOffsetView.Instance.AvgBgSP.Width = 180;
     }
   }
 }

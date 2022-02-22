@@ -2,7 +2,7 @@
 using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
 using DevExpress.Mvvm.UI;
-using MicroCy;
+using DIOS.Core;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

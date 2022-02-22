@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MicroCy
+namespace DIOS.Core
 {
   internal static class ConnectionFactory
   {

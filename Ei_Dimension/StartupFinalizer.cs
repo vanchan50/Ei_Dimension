@@ -36,6 +36,7 @@ namespace Ei_Dimension
         Views.DashboardView.Instance.DbActiveRegionName,
         Views.VerificationView.Instance.VerificationNums,
         Views.VerificationView.Instance.VerificationReporterValues);
+
       ActiveRegionsStatsController.Instance.DisplayCurrentBeadStats();
       ResultsViewModel.Instance.PlatePictogram.SetGrid(Views.ResultsView.Instance.DrawingPlate);
       ResultsViewModel.Instance.PlatePictogram.SetWarningGrid(Views.ResultsView.Instance.WarningGrid);
@@ -56,7 +57,6 @@ namespace Ei_Dimension
       ResultsViewModel.Instance.FillWorldMaps();
       LanguageSwap.SetLanguage(MaintenanceViewModel.Instance.LanguageItems[Settings.Default.Language].Locale);
       Views.ExperimentView.Instance.DbButton.IsChecked = true;
-      App.Device.MainCommand("Get Property", code: 0x01);
       App.Device.MainCommand("Get FProperty", code: 0x08);
       //3D plot TRS transforms
       var matrix = Views.ResultsView.Instance.AnalysisPlot.ContentTransform.Value;
@@ -74,11 +74,25 @@ namespace Ei_Dimension
 
       if(SettingsWiped)
         WipedSettingsMessage();
+
+      #if DEBUG
+      Console.Error.WriteLine($"Detected Board Rev v{App.Device.BoardVersion}");
+      #endif
+      if (App.Device.BoardVersion > 0)
+        HideChannels();
     }
 
     private static void WipedSettingsMessage()
     {
       Notification.Show("User data was Corrupted.\nDefault Values Restored.\nPlease check the Instrument Settings");
+    }
+
+    private static void HideChannels()
+    {
+      ChannelOffsetViewModel.Instance.OldBoardOffsetsVisible = Visibility.Hidden;
+      Views.ChannelOffsetView.Instance.SlidersSP.Visibility = Visibility.Visible;
+      Views.ChannelOffsetView.Instance.BaselineSP.Width = 180;
+      Views.ChannelOffsetView.Instance.AvgBgSP.Width = 180;
     }
   }
 }

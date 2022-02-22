@@ -92,7 +92,7 @@ namespace Ei_Dimension.ViewModels
       EventCountVisible = System.Windows.Visibility.Visible;
       StartButtonsVisible = System.Windows.Visibility.Visible;
       NavigationService.Navigate("ExperimentView", null, this);
-      App.Device.InitSTab("readertab");
+      App.InitSTab("readertab");
     }
 
     private void NavigateResults()

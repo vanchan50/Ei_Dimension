@@ -152,7 +152,7 @@ namespace Ei_Dimension.Models
       _CurrentCorner = corner;
     }
 
-    public void SetWellsForReading(List<MicroCy.Well> wells)
+    public void SetWellsForReading(List<DIOS.Core.Well> wells)
     {
       //Multitube case Override
       if (ViewModels.WellsSelectViewModel.Instance.CurrentTableSize == 1)
