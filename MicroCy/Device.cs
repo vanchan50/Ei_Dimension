@@ -109,6 +109,7 @@ namespace DIOS.Core
         MainCommand("Set FProperty", code: 0x20, fparameter: _hdnrCoef);
       }
     }
+    public float Compensation { get; set; }
     public DirectoryInfo RootDirectory { get; private set; }
 
     private bool _readingA;

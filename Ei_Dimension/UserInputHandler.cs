@@ -73,7 +73,7 @@ namespace Ei_Dimension
             {
               if (fRes >= 0 && fRes <= 10)
               {
-                DIOS.Core.InstrumentParameters.Calibration.Compensation = fRes;
+                App.Device.Compensation = fRes;
                 break;
               }
             }

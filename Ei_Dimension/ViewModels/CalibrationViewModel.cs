@@ -48,7 +48,7 @@ namespace Ei_Dimension.ViewModels
 
       ClassificationTargetsContents = new ObservableCollection<string> { "1", "1", "1", "1", "3500"};
 
-      CompensationPercentageContent = new ObservableCollection<string> { DIOS.Core.InstrumentParameters.Calibration.Compensation.ToString() };
+      CompensationPercentageContent = new ObservableCollection<string> { App.Device.Compensation.ToString() };
       DNRContents = new ObservableCollection<string> { "", App.Device.HdnrTrans.ToString() };
 
       AttenuationBox = new ObservableCollection<string> { App.Device.MapCtroller.ActiveMap.calParams.att.ToString() };

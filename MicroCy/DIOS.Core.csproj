@@ -72,7 +72,6 @@
     <Compile Include="Structs\BeadInfoStruct.cs" />
     <Compile Include="CommandLists.cs" />
     <Compile Include="Structs\MapCalParameters.cs" />
-    <Compile Include="InstrumentParameters\CalibrationParameters.cs" />
     <Compile Include="Structs\CommandStruct.cs" />
     <Compile Include="ConnectionFactory.cs" />
     <Compile Include="Structs\Gstats.cs" />

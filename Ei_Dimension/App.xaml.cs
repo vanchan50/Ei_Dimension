@@ -98,7 +98,7 @@ namespace Ei_Dimension
       if (!System.Windows.Input.Keyboard.IsKeyDown(System.Windows.Input.Key.LeftCtrl))
         Device.MainCommand("Startup");
       Device.HdnrTrans = Device.MapCtroller.ActiveMap.calParams.DNRTrans;
-      DIOS.Core.InstrumentParameters.Calibration.Compensation = Device.MapCtroller.ActiveMap.calParams.compensation;
+      Device.Compensation = Device.MapCtroller.ActiveMap.calParams.compensation;
       Device.MainCommand("Set Property", code: 0x97, parameter: 1170);  //set current limit of aligner motors if leds are off
     }
 
@@ -124,7 +124,6 @@ namespace Ei_Dimension
           Device.MapCtroller.ActiveMap = Device.MapCtroller.MapList[i];
           Settings.Default.DefaultMap = i;
           Settings.Default.Save();
-          Device.MainCommand("Set Property", code: 0xbf, parameter: (ushort)Device.MapCtroller.ActiveMap.calParams.att);
           break;
         }
       }
@@ -144,7 +143,7 @@ namespace Ei_Dimension
         CaliVM.EventTriggerContents[0] = Device.MapCtroller.ActiveMap.calParams.height.ToString();
         Device.MainCommand("Set Property", code: 0xcd, parameter: Device.MapCtroller.ActiveMap.calParams.height);
         CaliVM.CompensationPercentageContent[0] = Device.MapCtroller.ActiveMap.calParams.compensation.ToString();
-        DIOS.Core.InstrumentParameters.Calibration.Compensation = Device.MapCtroller.ActiveMap.calParams.compensation;
+        Device.Compensation = Device.MapCtroller.ActiveMap.calParams.compensation;
         CaliVM.DNRContents[0] = Device.MapCtroller.ActiveMap.calParams.DNRCoef.ToString();
         Device.HDnrCoef = Device.MapCtroller.ActiveMap.calParams.DNRCoef;
         CaliVM.DNRContents[1] = Device.MapCtroller.ActiveMap.calParams.DNRTrans.ToString();
@@ -399,8 +398,7 @@ namespace Ei_Dimension
           if (++CalibrationViewModel.Instance.CalFailsInARow >= 3 && CalibrationViewModel.Instance.CalJustFailed)
           {
             Notification.ShowLocalized(nameof(Language.Resources.Calibration_Fail), System.Windows.Media.Brushes.Red);
-            App.Current.Dispatcher.Invoke(
-              DashboardViewModel.Instance.CalModeToggle);
+            App.Current.Dispatcher.Invoke(DashboardViewModel.Instance.CalModeToggle);
           }
           else if (CalibrationViewModel.Instance.CalJustFailed)
             Notification.ShowLocalized(nameof(Language.Resources.Calibration_in_Progress), System.Windows.Media.Brushes.Green);

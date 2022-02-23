@@ -168,7 +168,7 @@ namespace DIOS.Core
 
     private (float cl0, float cl1, float cl2, float cl3) MakeClArr(in BeadInfoStruct outbead)
     {
-      var cl1comp = _greenMaj * Calibration.Compensation / 100;
+      var cl1comp = _greenMaj * _device.Compensation / 100;
       var cl2comp = cl1comp * 0.26f;
       return (
         outbead.cl0,
