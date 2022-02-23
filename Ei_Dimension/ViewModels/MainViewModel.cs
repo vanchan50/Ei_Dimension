@@ -2,6 +2,7 @@
 using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
 using System.Collections.ObjectModel;
+using System.Windows;
 
 namespace Ei_Dimension.ViewModels
 {
@@ -13,14 +14,14 @@ namespace Ei_Dimension.ViewModels
     public ObservableCollection<string> TotalBeadsInFirmware { get; set; } = new ObservableCollection<string> { "0" };
 #endif
     public virtual ObservableCollection<bool> MainSelectorState { get; set; }
-    public virtual System.Windows.Visibility NumpadVisible { get; set; }
-    public virtual System.Windows.Visibility KeyboardVisible { get; set; }
+    public virtual Visibility NumpadVisible { get; set; }
+    public virtual Visibility KeyboardVisible { get; set; }
     public virtual ObservableCollection<string> EventCountField { get; set; }
     public virtual ObservableCollection<string> EventCountCurrent { get; set; }
     public virtual ObservableCollection<string> EventCountLocal { get; set; }
-    public virtual System.Windows.Visibility EventCountVisible { get; set; }
-    public virtual System.Windows.Visibility StartButtonsVisible { get; set; }
-    public virtual System.Windows.Visibility ServiceVisibility { get; set; }
+    public virtual Visibility EventCountVisible { get; set; }
+    public virtual Visibility StartButtonsVisible { get; set; }
+    public virtual Visibility ServiceVisibility { get; set; }
     public int ServiceVisibilityCheck { get; set; }
     public bool TouchControlsEnabled { get; set; }
 
@@ -32,11 +33,11 @@ namespace Ei_Dimension.ViewModels
       MainSelectorState = new ObservableCollection<bool> { false, false, false, false, false };
       App.NumpadShow = (this.GetType().GetProperty(nameof(NumpadVisible)), this);
       App.KeyboardShow = (this.GetType().GetProperty(nameof(KeyboardVisible)), this);
-      NumpadVisible = System.Windows.Visibility.Hidden;
-      KeyboardVisible = System.Windows.Visibility.Hidden;
-      EventCountVisible = System.Windows.Visibility.Visible;
-      StartButtonsVisible = System.Windows.Visibility.Visible;
-      ServiceVisibility = System.Windows.Visibility.Hidden;
+      NumpadVisible = Visibility.Hidden;
+      KeyboardVisible = Visibility.Hidden;
+      EventCountVisible = Visibility.Visible;
+      StartButtonsVisible = Visibility.Visible;
+      ServiceVisibility = Visibility.Hidden;
       EventCountCurrent = new ObservableCollection<string> { "0" };
       EventCountLocal = new ObservableCollection<string> { "0" };
       EventCountField = EventCountCurrent;
@@ -89,30 +90,30 @@ namespace Ei_Dimension.ViewModels
 
     private void NavigateExperiment()
     {
-      EventCountVisible = System.Windows.Visibility.Visible;
-      StartButtonsVisible = System.Windows.Visibility.Visible;
+      EventCountVisible = Visibility.Visible;
+      StartButtonsVisible = Visibility.Visible;
       NavigationService.Navigate("ExperimentView", null, this);
       App.InitSTab("readertab");
     }
 
     private void NavigateResults()
     {
-      EventCountVisible = System.Windows.Visibility.Visible;
-      StartButtonsVisible = System.Windows.Visibility.Visible;
+      EventCountVisible = Visibility.Visible;
+      StartButtonsVisible = Visibility.Visible;
       NavigationService.Navigate("ResultsView", null, this);
     }
 
     private void NavigateMaintenance()
     {
-      StartButtonsVisible = System.Windows.Visibility.Hidden;
-      EventCountVisible = System.Windows.Visibility.Hidden;
+      StartButtonsVisible = Visibility.Hidden;
+      EventCountVisible = Visibility.Hidden;
       NavigationService.Navigate("MaintenanceView", null, this);
     }
 
     private void NavigateSettings()
     {
-      StartButtonsVisible = System.Windows.Visibility.Hidden;
-      EventCountVisible = System.Windows.Visibility.Hidden;
+      StartButtonsVisible = Visibility.Hidden;
+      EventCountVisible = Visibility.Hidden;
       NavigationService.Navigate("ServiceView", null, this);
     }
 
@@ -122,7 +123,7 @@ namespace Ei_Dimension.ViewModels
       if (TouchControlsEnabled)
       {
         tb.CaretBrush = System.Windows.Media.Brushes.Transparent;
-        var p = tb.PointToScreen(MainWindow.Instance.wndw.PointFromScreen(new System.Windows.Point(0, 0)));
+        var p = tb.PointToScreen(MainWindow.Instance.wndw.PointFromScreen(new Point(0, 0)));
         double shiftX;
         double shiftY;
         double NpdHeight = 390;
@@ -138,8 +139,8 @@ namespace Ei_Dimension.ViewModels
         else
           shiftY = -NpdHeight - 5;
 
-        MainWindow.Instance.Npd.Margin = new System.Windows.Thickness(p.X - shiftX, p.Y + shiftY, 0, 0);
-        NumpadVisible = System.Windows.Visibility.Visible;
+        MainWindow.Instance.Npd.Margin = new Thickness(p.X - shiftX, p.Y + shiftY, 0, 0);
+        NumpadVisible = Visibility.Visible;
       }
       else
       {
@@ -154,7 +155,7 @@ namespace Ei_Dimension.ViewModels
       if (TouchControlsEnabled)
       {
         tb.CaretBrush = System.Windows.Media.Brushes.Transparent;
-        var p = tb.PointToScreen(MainWindow.Instance.wndw.PointFromScreen(new System.Windows.Point(0, 0)));
+        var p = tb.PointToScreen(MainWindow.Instance.wndw.PointFromScreen(new Point(0, 0)));
         double shiftX;
         double shiftY;
         double KbdHeight = 460;
@@ -178,8 +179,8 @@ namespace Ei_Dimension.ViewModels
         else
           shiftY = -KbdHeight - 5;
 
-        MainWindow.Instance.Kbd.Margin = new System.Windows.Thickness(p.X - shiftX, p.Y + shiftY, 0, 0);
-        KeyboardVisible = System.Windows.Visibility.Visible;
+        MainWindow.Instance.Kbd.Margin = new Thickness(p.X - shiftX, p.Y + shiftY, 0, 0);
+        KeyboardVisible = Visibility.Visible;
       }
       else
       {
@@ -195,15 +196,15 @@ namespace Ei_Dimension.ViewModels
       double shiftY = -30;
 
       HintViewModel.Instance.Width = tb.ActualWidth;
-      MainWindow.Instance.Hint.Margin = new System.Windows.Thickness(p.X - shiftX, p.Y + shiftY, 0, 0);
+      MainWindow.Instance.Hint.Margin = new Thickness(p.X - shiftX, p.Y + shiftY, 0, 0);
       HintViewModel.Instance.Text[0] = text;
-      HintViewModel.Instance.HintVisible = System.Windows.Visibility.Visible;
+      HintViewModel.Instance.HintVisible = Visibility.Visible;
     }
 
     public void HideHint()
     {
       HintViewModel.Instance.Text[0] = null;
-      HintViewModel.Instance.HintVisible = System.Windows.Visibility.Hidden;
+      HintViewModel.Instance.HintVisible = Visibility.Hidden;
     }
 
     public void InitChildren()
@@ -217,14 +218,14 @@ namespace Ei_Dimension.ViewModels
     public void LogoClick()
     {
       ServiceVisibilityCheck++;
-      if (ServiceVisibility == System.Windows.Visibility.Hidden && ServiceVisibilityCheck > 2)
+      if (ServiceVisibility == Visibility.Hidden && ServiceVisibilityCheck > 2)
       {
-        ServiceVisibility = System.Windows.Visibility.Visible;
+        ServiceVisibility = Visibility.Visible;
         ServiceVisibilityCheck = 0;
       }
-      else if (ServiceVisibility == System.Windows.Visibility.Visible && ServiceVisibilityCheck > 2)
+      else if (ServiceVisibility == Visibility.Visible && ServiceVisibilityCheck > 2)
       {
-        ServiceVisibility = System.Windows.Visibility.Hidden;
+        ServiceVisibility = Visibility.Hidden;
         ServiceVisibilityCheck = 0;
       }
     }
@@ -235,6 +236,11 @@ namespace Ei_Dimension.ViewModels
       {
         App.HideNumpad();
       }
+    }
+
+    public void Minimize()
+    {
+      App.Current.MainWindow.WindowState = WindowState.Minimized;
     }
   }
 }
