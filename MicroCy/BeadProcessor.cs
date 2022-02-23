@@ -29,7 +29,7 @@ namespace DIOS.Core
       ClassificationBins = GenerateLogSpace(1, 60000, 256);
     }
 
-    public void CalculateBeadParams(ref BeadInfoStruct outbead, in float RepScale)
+    public void CalculateBeadParams(ref BeadInfoStruct outbead)
     {
       //greenMaj is the hi dyn range channel, greenMin is the high sensitivity channel(depends on filter placement)
       if (_device.SensitivityChannel == HiSensitivityChannel.B)
@@ -49,7 +49,7 @@ namespace DIOS.Core
       outbead.region = (ushort)ClassifyBeadToRegion(cl);
       //handle HI dnr channel
       var reporter = _greenMin > _device.HdnrTrans ? _greenMaj * _device.HDnrCoef : _greenMin;
-      outbead.reporter = reporter / RepScale;
+      outbead.reporter = reporter / _device.ReporterScaling;
     }
 
     private int ClassifyBeadToRegion((float cl0, float cl1, float cl2, float cl3) cl)

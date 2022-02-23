@@ -49,7 +49,7 @@ namespace DIOS.Core
               BeadInfoStruct outbead;
               if (!GetBeadFromBuffer(_serialConnection.InputBuffer, i, out outbead))
                 break;
-              _device._beadProcessor.CalculateBeadParams(ref outbead, _device.ReporterScaling);
+              _device._beadProcessor.CalculateBeadParams(ref outbead);
 
               _device.Results.FillActiveWellResults(in outbead);
               if (outbead.region == 0 && _device.OnlyClassified)
