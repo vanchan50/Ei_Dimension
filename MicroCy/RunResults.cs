@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace DIOS.Core
 {
@@ -55,6 +57,46 @@ namespace DIOS.Core
         copy.Add(r);
       }
       return copy;
+    }
+
+    public List<OutResults> GetOutResults()
+    {
+      var copy = MakeDeepCopy();
+      var list = new List<OutResults>();
+      foreach (var wellResult in copy)
+      {
+        OutResults rout = new OutResults
+        {
+          count = wellResult.RP1vals.Count,
+          region = wellResult.regionNumber
+        };
+        float avg = wellResult.RP1vals.Average();
+        if (rout.count >= 20)
+        {
+          wellResult.RP1vals.Sort();
+          int quarterIndex = rout.count / 4;
+          float sum = 0;
+          for (var i = quarterIndex; i < rout.count - quarterIndex; i++)
+          {
+            sum += wellResult.RP1vals[i];
+          }
+
+          float mean = sum / (rout.count - 2 * quarterIndex);
+          rout.meanfi = mean;
+
+          rout.medfi = (float)Math.Round(wellResult.RP1vals[rout.count / 2]);
+
+          double sumsq = wellResult.RP1vals.Sum(dataout => Math.Pow(dataout - rout.meanfi, 2));
+          double stddev = Math.Sqrt(sumsq / wellResult.RP1vals.Count() - 1);
+          rout.cv = (float) stddev / rout.meanfi * 100;
+          if (double.IsNaN(rout.cv))
+            rout.cv = 0;
+        }
+        else
+          rout.meanfi = avg;
+        list.Add(rout);
+      }
+      return list;
     }
 
     /// <summary>

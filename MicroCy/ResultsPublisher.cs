@@ -23,6 +23,7 @@ namespace DIOS.Core
                                    "Green B bg,Green C bg,Green B,Green C,Red-Grn Offset,Grn-Viol Offset,Region,Forward Scatter,Violet SSC,CL0," +
                                    "Red SSC,CL1,CL2,CL3,Green SSC,Reporter\r";
     private const string SHEADER = "Row,Col,Region,Bead Count,Median FI,Trimmed Mean FI,CV%\r";
+    private static readonly char[] Alphabet = Enumerable.Range('A', 16).Select(x => (char)x).ToArray();
 
     public ResultsPublisher(Device device)
     {
@@ -181,7 +182,7 @@ namespace DIOS.Core
 
     private static void AddToPlateReport(in OutResults outRes)
     {
-      _plateReport.rpWells[_plateReport.rpWells.Count - 1].rpReg.Add(new RegionReport
+      _plateReport.Wells[_plateReport.Wells.Count - 1].rpReg.Add(new RegionReport
       {
         region = outRes.region,
         count = (uint)outRes.count,
@@ -210,15 +211,16 @@ namespace DIOS.Core
       {
         ClearSummary();
         if (_plateReport != null)
-          _plateReport.rpWells.Add(new WellReport {
-            prow = SavingWell.RowIdx,
-            pcol = SavingWell.ColIdx
+          _plateReport.Wells.Add(new WellReport
+          {
+            // OutResults grouped by row and col
+            row = SavingWell.RowIdx,
+            col = SavingWell.ColIdx
           });
-        char[] alphabet = Enumerable.Range('A', 16).Select(x => (char)x).ToArray();
         for (var i = 0; i < wellres.Count; i++)
         {
           WellResult regionNumber = wellres[i];
-          OutResults rout = FillOutResults(regionNumber, in alphabet);
+          OutResults rout = FillOutResults(regionNumber);
           AddOutResults(in rout);
           AddToPlateReport(in rout);
         }
@@ -231,10 +233,10 @@ namespace DIOS.Core
       //need to clear textbox in UI. this has to be an event
     }
 
-    private static OutResults FillOutResults(WellResult regionNumber, in char[] alphabet)
+    private static OutResults FillOutResults(WellResult regionNumber)
     {
       OutResults rout = new OutResults();
-      rout.row = alphabet[SavingWell.RowIdx].ToString();
+      rout.row = Alphabet[SavingWell.RowIdx].ToString();
       rout.col = SavingWell.ColIdx + 1;  //columns are 1 based
       rout.count = regionNumber.RP1vals.Count;
       rout.region = regionNumber.regionNumber;

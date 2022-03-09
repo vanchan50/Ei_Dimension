@@ -196,7 +196,6 @@ namespace DIOS.Core
       MainCommand("Get FProperty", code: 0x58);
       MainCommand("Get FProperty", code: 0x68);
       ResultsPublisher.StartNewPlateReport();
-      MainCommand("Get FProperty", code: 0x20); //get high dnr property
       SetAspirateParamsForWell();  //setup for first read
       SetReadingParamsForWell();
       WellController.Advance();

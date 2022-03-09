@@ -6,8 +6,8 @@ namespace DIOS.Core
   [Serializable]
   public class WellReport
   {
-    public ushort prow;
-    public ushort pcol;
+    public int row;
+    public int col;
     public List<RegionReport> rpReg = new List<RegionReport>();
   }
 }

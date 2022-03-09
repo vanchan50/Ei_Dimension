@@ -88,9 +88,6 @@ namespace Ei_Dimension
               }
             };
             break;
-          //case 0x1a:
-          //  ProxOncb.Checked = (exe.Parameter == 1);
-          //  break;
           case 0x1b:
             if (exe.Parameter == 0)
             {
@@ -100,12 +97,6 @@ namespace Ei_Dimension
                 CalibrationViewModel.Instance.CalibrationSuccess();
               }));
             }
-            break;
-          case 0x20:
-            update = () =>
-            {
-              CalibrationViewModel.Instance.DNRContents[0] = exe.FParameter.ToString();
-            };
             break;
           case 0x22:  //pressure
             update = () =>
@@ -378,16 +369,6 @@ namespace Ei_Dimension
           case 0xa7:
             update = () => ChannelsViewModel.Instance.TcompBiasParameters[5] = exe.Parameter.ToString();
             break;
-          //TODO: LEGACY
-          //case 0xa8:
-          //  update = () => DashboardViewModel.Instance.OrderItems[exe.Parameter].ForAppUpdater(4);
-          //  break;
-          //case 0xa9:
-          //  update = () => DashboardViewModel.Instance.ClassiMapItems[exe.Parameter].ForAppUpdater(2);
-          //  break;
-          //case 0xaa:  //read speed
-          //  update = () => DashboardViewModel.Instance.SpeedItems[exe.Parameter].ForAppUpdater(1);
-          //  break;
           case 0xac:
             update = () => DashboardViewModel.Instance.Volumes[1] = exe.Parameter.ToString();
             break;
@@ -505,15 +486,6 @@ namespace Ei_Dimension
               }
             };
             break;
-          case 0xcd:
-            //update = () => CalibrationViewModel.Instance.EventTriggerContents[0] = exe.Parameter.ToString();
-            break;
-          case 0xce:
-            //update = () => CalibrationViewModel.Instance.EventTriggerContents[1] = exe.Parameter.ToString();
-            break;
-          case 0xcf:
-            //update = () => CalibrationViewModel.Instance.EventTriggerContents[2] = exe.Parameter.ToString();
-            break;
           case 0xf1:
             if (exe.Command == 1)  //sheath empty
             {
@@ -588,19 +560,6 @@ namespace Ei_Dimension
                 Monitor.Wait(ConditionVar);
               }
             }
-            break;
-          //  case 0xf8:
-          //    string tabnam = tabControl1.SelectedTab.Name;
-          //    App.InitSTab(tabnam);
-          //    break;
-          // these are processed in GetCommandFromBuffer
-          case 0xfd:
-          //  if (MicroCyDevice.EndState == 0)
-          //    MicroCyDevice.EndState = 1; //start the end of well state machine
-            break;
-          case 0xfe:
-          //  if (MicroCyDevice.EndState == 0)
-          //    MicroCyDevice.EndState = 1;
             break;
           case 0xbf:
             //CalibrationViewModel.Instance.AttenuationBox[0] = exe.Parameter.ToString();

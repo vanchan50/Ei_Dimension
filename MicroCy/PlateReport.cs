@@ -9,6 +9,6 @@ namespace DIOS.Core
     public Guid plateID;
     public Guid beadMapId;
     public DateTime completedDateTime;
-    public List<WellReport> rpWells = new List<WellReport>();
+    public List<WellReport> Wells = new List<WellReport>();
   }
 }
