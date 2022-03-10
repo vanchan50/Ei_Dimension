@@ -88,7 +88,7 @@ namespace DIOS.Core
       _ = DataOut.Append(beadInfo.ToString());
     }
 
-    internal static void AddOutResults(in OutResults oResults)
+    private static void AddOutResults(in OutResults oResults)
     {
       _ = SummaryOut.Append(oResults.ToString());
     }

@@ -207,7 +207,6 @@ namespace DIOS.Core
       MainCommand("Set Property", code: 0x19, parameter: 1); //bubble detect on
       MainCommand("Position Well Plate"); //move motors. next position is set in properties 0xad and 0xae
       MainCommand("Aspirate Syringe A"); //handles down and pickup sample
-      ResultsPublisher.ClearSummary();
       TotalBeads = 0;
 
       if (WellController.IsLastWell)

@@ -181,6 +181,9 @@
   <data name="Calibration_Min_SSC" xml:space="preserve">
     <value>最小SSC</value>
   </data>
+  <data name="Calibration_Mode" xml:space="preserve">
+    <value>系统校准</value>
+  </data>
   <data name="Calibration_Save_Calibration_To_Map" xml:space="preserve">
     <value>保存校准到当前珠图</value>
   </data>
@@ -291,7 +294,7 @@
     <value>位置</value>
   </data>
   <data name="Components_Prime" xml:space="preserve">
-    <value>灌注</value>
+    <value>灌注除气泡</value>
   </data>
   <data name="Components_Sampling_ON" xml:space="preserve">
     <value>采样开启</value>
@@ -329,8 +332,14 @@
   <data name="Components_Wash_B" xml:space="preserve">
     <value>清洗 B</value>
   </data>
+  <data name="Dashboard_Active_Region" xml:space="preserve">
+    <value>   激活</value>
+  </data>
+  <data name="Dashboard_Inactive_Region" xml:space="preserve">
+    <value>   未激活</value>
+  </data>
   <data name="Dashboard_Pressure_Mon" xml:space="preserve">
-    <value>压力监测器</value>
+    <value>液压监测</value>
   </data>
   <data name="Dashboard_Pressure_Mon_Max" xml:space="preserve">
     <value>最大压力</value>
@@ -381,7 +390,7 @@
     <value>停止</value>
   </data>
   <data name="Dropdown_Hi_Sens" xml:space="preserve">
-    <value>高灵敏度</value>
+    <value>慢速</value>
   </data>
   <data name="Dropdown_Hi_Speed" xml:space="preserve">
     <value>高速</value>
@@ -431,14 +440,20 @@
   <data name="Dropdown_Valve_Right" xml:space="preserve">
     <value>阀门 右</value>
   </data>
+  <data name="Experiment_Active_Regions" xml:space="preserve">
+    <value>激活区域</value>
+  </data>
   <data name="Experiment_Agitate_Vol" xml:space="preserve">
-    <value>搅动量</value>
+    <value>吹打体积</value>
+  </data>
+  <data name="Experiment_Available_Regions" xml:space="preserve">
+    <value>可选区域</value>
   </data>
   <data name="Experiment_Ch_Config" xml:space="preserve">
     <value>通道配置</value>
   </data>
   <data name="Experiment_Classific_Map" xml:space="preserve">
-    <value>分类珠图</value>
+    <value>微球编码图</value>
   </data>
   <data name="Experiment_Dashboard" xml:space="preserve">
     <value>控制面板</value>
@@ -456,7 +471,7 @@
     <value>结束读取</value>
   </data>
   <data name="Experiment_Event_Count" xml:space="preserve">
-    <value>事件计数</value>
+    <value>粒子计数</value>
   </data>
   <data name="Experiment_FileSave" xml:space="preserve">
     <value>选 择 文件
@@ -466,11 +481,11 @@
     <value>加载孔板</value>
   </data>
   <data name="Experiment_Load_Save_Template" xml:space="preserve">
-    <value>保存/加载
+    <value>加载/保存
 模板</value>
   </data>
   <data name="Experiment_Load_Save_Template_1" xml:space="preserve">
-    <value>保存 / 加载 模板</value>
+    <value>加载/保存模板</value>
   </data>
   <data name="Experiment_Load_Template" xml:space="preserve">
     <value>加载模板</value>
@@ -479,10 +494,13 @@
     <value>加载模板</value>
   </data>
   <data name="Experiment_Manual" xml:space="preserve">
-    <value>手册</value>
+    <value>手动</value>
   </data>
   <data name="Experiment_Min_Per_Reg" xml:space="preserve">
-    <value>每个区域最小</value>
+    <value>单区最小计数</value>
+  </data>
+  <data name="Experiment_Order" xml:space="preserve">
+    <value>上样顺序</value>
   </data>
   <data name="Experiment_Samp_Vol" xml:space="preserve">
     <value>样本体积</value>
@@ -496,8 +514,11 @@
   <data name="Experiment_Select_Wells" xml:space="preserve">
     <value>选井</value>
   </data>
+  <data name="Experiment_Sel_Active_Region" xml:space="preserve">
+    <value>选择激活区</value>
+  </data>
   <data name="Experiment_Speed" xml:space="preserve">
-    <value>速度</value>
+    <value>上样速度</value>
   </data>
   <data name="Experiment_Start" xml:space="preserve">
     <value>开始</value>
@@ -506,10 +527,10 @@
     <value>系统控制</value>
   </data>
   <data name="Experiment_System_Monitor" xml:space="preserve">
-    <value>系统监视</value>
+    <value>系统监视窗</value>
   </data>
   <data name="Experiment_Total_Events" xml:space="preserve">
-    <value>总事件</value>
+    <value>已选区总计数</value>
   </data>
   <data name="Experiment_Tube" xml:space="preserve">
     <value>试管</value>
@@ -641,11 +662,14 @@
   <data name="Motors_Up" xml:space="preserve">
     <value>向上</value>
   </data>
+  <data name="Name" xml:space="preserve">
+    <value>检测项目</value>
+  </data>
+  <data name="Num" xml:space="preserve">
+    <value>编号</value>
+  </data>
   <data name="OFF" xml:space="preserve">
     <value>关闭</value>
-  </data>
-  <data name="OK" xml:space="preserve">
-    <value>好的</value>
   </data>
   <data name="ON" xml:space="preserve">
     <value>开启</value>
@@ -658,6 +682,9 @@
   </data>
   <data name="Reporter" xml:space="preserve">
     <value>报告分子</value>
+  </data>
+  <data name="Reset" xml:space="preserve">
+    <value>重置</value>
   </data>
   <data name="Ribbon_Acquire" xml:space="preserve">
     <value>采集样本</value>
@@ -740,10 +767,16 @@
   <data name="Tube" xml:space="preserve">
     <value>管子</value>
   </data>
+  <data name="Validation_Mode" xml:space="preserve">
+    <value>系统验证</value>
+  </data>
   <data name="Value" xml:space="preserve">
     <value>值</value>
   </data>
   <data name="Violet" xml:space="preserve">
     <value>紫光</value>
+  </data>
+  <data name="WellSel_Select_ALL" xml:space="preserve">
+    <value>全选</value>
   </data>
 </root>

@@ -821,6 +821,9 @@ Order</value>
   <data name="Name" xml:space="preserve">
     <value>Name</value>
   </data>
+  <data name="Num" xml:space="preserve">
+    <value>№</value>
+  </data>
   <data name="OFF" xml:space="preserve">
     <value>OFF</value>
   </data>
