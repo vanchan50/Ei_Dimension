@@ -85,7 +85,7 @@ namespace MicroCy
       _ = DataOut.Append(beadInfo.ToString());
     }
 
-    internal static void AddOutResults(in OutResults oResults)
+    private static void AddOutResults(in OutResults oResults)
     {
       _ = SummaryOut.Append(oResults.ToString());
     }
@@ -97,32 +97,30 @@ namespace MicroCy
 
     private static void OutputSummaryFile()
     {
-      if (SummaryOut.Length > 0)  //end of read session (plate, plate section or tube) write summary stat file
+      //end of read session (plate, plate section or tube) write summary stat file
+      try
       {
-        try
-        {
-          OutDirCheck();
-          if (!Directory.Exists($"{Outdir}\\AcquisitionData"))
-            Directory.CreateDirectory($"{Outdir}\\AcquisitionData");
-        }
-        catch
-        {
-          Console.WriteLine($"Failed to create {Outdir}\\AcquisitionData");
-          return;
-        }
-        GetThisRunFileName();
-        try
-        {
-          File.AppendAllText(_thisRunResultsFileName, SummaryOut.ToString());
-        }
-        catch
-        {
-          Console.WriteLine($"Failed to append data to {_thisRunResultsFileName}");
-        }
+        OutDirCheck();
+        if (!Directory.Exists($"{Outdir}\\AcquisitionData"))
+          Directory.CreateDirectory($"{Outdir}\\AcquisitionData");
+      }
+      catch
+      {
+        Console.WriteLine($"Failed to create {Outdir}\\AcquisitionData");
+        return;
+      }
+      GetThisRunFileName();
+      try
+      {
+        File.AppendAllText(_thisRunResultsFileName, SummaryOut.ToString());
+      }
+      catch
+      {
+        Console.WriteLine($"Failed to append data to {_thisRunResultsFileName}");
       }
     }
 
-    internal static void ClearSummary()
+    private static void ClearSummary()
     {
       _ = SummaryOut.Clear();
       _ = SummaryOut.Append(SHEADER);
@@ -146,7 +144,7 @@ namespace MicroCy
 
     private static void OutputPlateReport()
     {
-      if ((SavingWellIdx == MicroCyDevice.WellsToRead) && (SummaryOut.Length > 0) && MicroCyDevice.PlateReportActive)    //end of read and json results requested
+      if ((SavingWellIdx == MicroCyDevice.WellsToRead) && MicroCyDevice.PlateReportActive)    //end of read and json results requested
       {
         string rfilename = MicroCyDevice.SystemControl == 0 ? Outfilename : MicroCyDevice.WorkOrder.plateID.ToString();
         try
@@ -232,11 +230,13 @@ namespace MicroCy
 
     private static OutResults FillOutResults(WellResults regionNumber, in char[] alphabet)
     {
-      OutResults rout = new OutResults();
-      rout.row = alphabet[MicroCyDevice.WellsInOrder[SavingWellIdx].rowIdx].ToString();
-      rout.col = MicroCyDevice.WellsInOrder[SavingWellIdx].colIdx + 1;  //columns are 1 based
-      rout.count = regionNumber.RP1vals.Count;
-      rout.region = regionNumber.regionNumber;
+      OutResults rout = new OutResults
+      {
+        row = alphabet[MicroCyDevice.WellsInOrder[SavingWellIdx].rowIdx].ToString(),
+        col = MicroCyDevice.WellsInOrder[SavingWellIdx].colIdx + 1,  //columns are 1 based
+        count = regionNumber.RP1vals.Count,
+        region = regionNumber.regionNumber
+      };
       var rp1Temp = regionNumber.RP1vals;
       if (rout.count >= 20)
       {

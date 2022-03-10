@@ -136,7 +136,7 @@
         <Border Height="45" Width="367"
                 HorizontalAlignment="Left">
           <Grid>
-            <TextBlock Text="№"
+            <TextBlock Text="{lang:Loc Num}"
                        TextAlignment="Center"
                        FontSize="30"
                        Width="140"

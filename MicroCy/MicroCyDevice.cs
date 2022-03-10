@@ -369,7 +369,6 @@ namespace MicroCy
       MainCommand("Aspirate Syringe A"); //handles down and pickup sample
       WellNext();   //save well numbers for file name
       InitBeadRead();   //gets output file ready
-      ResultReporter.ClearSummary();
       TotalBeads = 0;
 
       if (WellsToRead == 0)    //only one well in region
