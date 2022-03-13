@@ -37,7 +37,7 @@
                    Style="{DynamicResource SubRibbonButtonStyle}"
                    Command="{Binding NavigateComponentsCommand}">
       </RadioButton>
-      <RadioButton Content="Alignment&#x0a;and Verification"
+      <RadioButton Content="{lang:Loc Service_Alignment_Verification}"
                    Height="84"
                    img:EmbeddedImg.Image="/Icons/alignment icon.png"
                    Style="{DynamicResource SubRibbonButtonStyle}"
@@ -62,6 +62,7 @@
           <TextBlock Text="{lang:Loc Service_Memory_Control}"
                      FontFamily="{StaticResource AppTextFont}"
                      FontSize="30"
+                     Height="80"
                      HorizontalAlignment="Center"/>
           <StackPanel>
             <Button Content="{lang:Loc Service_Memory_Save_All}"

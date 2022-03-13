@@ -34,7 +34,7 @@
                          FontSize="30"
                          TextAlignment="Center"
                          HorizontalAlignment="Left"/>
-                <TextBlock Text="{lang:Loc Count}"
+                <TextBlock Text="{lang:Loc Results_Count_Table}"
                          FontSize="30"
                          Width="119"
                          Margin="178,0,0,0"
@@ -354,7 +354,7 @@
                 <dxc:AxisLabel FontSize="24"/>
               </dxc:AxisY2D.Label>
               <dxc:AxisY2D.Title>
-                <dxc:AxisTitle Content="{lang:Loc Count}"
+                <dxc:AxisTitle Content="{lang:Loc Results_Count_Graph}"
                                FontSize="30"
                                Foreground="{StaticResource AppTextColor}"
                                FontWeight="UltraBold"
@@ -374,7 +374,7 @@
                 <dxc:AxisLabel FontSize="24"/>
               </dxc:AxisX2D.Label>
               <dxc:AxisX2D.Title>
-                <dxc:AxisTitle Content="{lang:Loc Value}"
+                <dxc:AxisTitle Content="{lang:Loc Results_Value_Graph}"
                                FontSize="30"
                                Foreground="{StaticResource AppTextColor}"
                                FontWeight="UltraBold"
@@ -502,7 +502,7 @@
                 <dxc:AxisLabel Visible="False"/>
               </dxc:ZAxis3D.Label>
               <dxc:ZAxis3D.Title>
-                <dxc:AxisTitle Content="{lang:Loc Reporter}"
+                <dxc:AxisTitle Content=""
                                FontSize="40" Visible="False"
                                Foreground="{StaticResource AppTextColor}"/>
               </dxc:ZAxis3D.Title>
@@ -1416,7 +1416,7 @@
                   Margin="10,0,0,0" Cursor="Hand"
                   HorizontalAlignment="Left"
                   VerticalAlignment="Top"
-                  Content="To Current"
+                  Content="{lang:Loc Results_To_Current}"
                   Style="{StaticResource ButtonStyle}"
                   Command="{Binding ToCurrentButtonClickCommand}"/>
         </StackPanel>

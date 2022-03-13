@@ -513,7 +513,7 @@
                  Foreground="{StaticResource AppTextColor}"
                  HorizontalAlignment="Right"
                  Margin="0,6,10,0"/>
-            <TextBlock Text="{lang:Loc Tube}"
+            <TextBlock Text="{lang:Loc Experiment_Tube}"
                  FontFamily="{StaticResource AppTextFont}"
                  FontSize="36"
                  FontWeight="UltraBold"
@@ -613,7 +613,7 @@
                        Foreground="{StaticResource AppTextColor}"
                        HorizontalAlignment="Right"
                        Margin="0,6,10,0"/>
-            <TextBlock Text="{lang:Loc Tube}"
+            <TextBlock Text="{lang:Loc Experiment_Tube}"
                        FontFamily="{StaticResource AppTextFont}"
                        FontSize="36"
                        FontWeight="UltraBold"
@@ -713,7 +713,7 @@
                        Foreground="{StaticResource AppTextColor}"
                        HorizontalAlignment="Right"
                        Margin="0,6,10,0"/>
-            <TextBlock Text="{lang:Loc Tube}"
+            <TextBlock Text="{lang:Loc Experiment_Tube}"
                        FontFamily="{StaticResource AppTextFont}"
                        FontSize="36"
                        FontWeight="UltraBold"

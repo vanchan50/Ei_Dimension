@@ -118,10 +118,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Alignment_Align_Seq" xml:space="preserve">
-    <value>对准顺序</value>
+    <value>校准顺序</value>
   </data>
   <data name="Alignment_Auto_Align" xml:space="preserve">
-    <value>自动对准</value>
+    <value>自动校准</value>
   </data>
   <data name="Alignment_Find_Peak" xml:space="preserve">
     <value>查找峰值</value>
@@ -147,33 +147,42 @@
   <data name="All Files" xml:space="preserve">
     <value>所有文件</value>
   </data>
+  <data name="Analysis_Plot2D" xml:space="preserve">
+    <value>2D 三维图表</value>
+  </data>
+  <data name="Analysis_Plot3D" xml:space="preserve">
+    <value>3D 三维图表</value>
+  </data>
+  <data name="Calibration_Attenuation" xml:space="preserve">
+    <value>红光衰减率 %</value>
+  </data>
   <data name="Calibration_Calibration" xml:space="preserve">
     <value>校准</value>
   </data>
   <data name="Calibration_Classification_targets" xml:space="preserve">
-    <value>分类目标</value>
+    <value>校准目标值</value>
   </data>
   <data name="Calibration_Classification_To_map" xml:space="preserve">
     <value>分类到当前珠图</value>
   </data>
   <data name="Calibration_Compensation_Percent" xml:space="preserve">
-    <value>RP1 至 CL1
-补偿百分比</value>
+    <value>    RP1对CL1
+的补偿百分比</value>
   </data>
   <data name="Calibration_Event_Trigger" xml:space="preserve">
-    <value>事件触发</value>
+    <value>粒子触发</value>
   </data>
   <data name="Calibration_Gating" xml:space="preserve">
     <value>设门</value>
   </data>
   <data name="Calibration_Height" xml:space="preserve">
-    <value>高度</value>
+    <value>阈值</value>
   </data>
   <data name="Calibration_High_DNR_Coeff" xml:space="preserve">
     <value>高动态范围系数</value>
   </data>
   <data name="Calibration_High_DNR_Trans" xml:space="preserve">
-    <value>高动态范围转换</value>
+    <value>高动态范围过渡点</value>
   </data>
   <data name="Calibration_Max_SSC" xml:space="preserve">
     <value>最大SSC</value>
@@ -191,7 +200,10 @@
     <value>背景</value>
   </data>
   <data name="Channels_Bias" xml:space="preserve">
-    <value>偏置 @ 30ᴼC</value>
+    <value>偏压 @ 30ᴼC</value>
+  </data>
+  <data name="Channels_Calibration_Margin" xml:space="preserve">
+    <value>校准裕度</value>
   </data>
   <data name="Channels_Forward_Scatter" xml:space="preserve">
     <value>前向散射</value>
@@ -205,6 +217,12 @@
   <data name="Channels_Green_C" xml:space="preserve">
     <value>绿光 C</value>
   </data>
+  <data name="Channels_Hi_Sens_Chan" xml:space="preserve">
+    <value>高灵敏通道</value>
+  </data>
+  <data name="Channels_Offset_Header" xml:space="preserve">
+    <value>基线偏移</value>
+  </data>
   <data name="Channels_Red_A" xml:space="preserve">
     <value>红光 A (CL3)</value>
   </data>
@@ -217,8 +235,12 @@
   <data name="Channels_Red_D" xml:space="preserve">
     <value>红光 D (CL2)</value>
   </data>
+  <data name="Channels_Reporter_scaling" xml:space="preserve">
+    <value>报告荧光信号缩放系数</value>
+  </data>
   <data name="Channels_Save_Bias_To_Map" xml:space="preserve">
-    <value>保存偏置到当前珠图</value>
+    <value>保存偏压到
+  当前珠图</value>
   </data>
   <data name="Channels_Sens_B" xml:space="preserve">
     <value>绿光 B</value>
@@ -234,7 +256,7 @@
 温度系数</value>
   </data>
   <data name="Channels_Tcomp_Bias" xml:space="preserve">
-    <value>Tcomp偏置</value>
+    <value>Tcomp 偏压</value>
   </data>
   <data name="Channels_Update_Bias" xml:space="preserve">
     <value>更新 DAC</value>
@@ -260,11 +282,17 @@
   <data name="CL3" xml:space="preserve">
     <value>CL3</value>
   </data>
+  <data name="Clear" xml:space="preserve">
+    <value>清除</value>
+  </data>
   <data name="Column" xml:space="preserve">
     <value>列</value>
   </data>
   <data name="Components_Cuvet_Drain_Open" xml:space="preserve">
-    <value>流通池排水阀 开</value>
+    <value>打开泄压阀</value>
+  </data>
+  <data name="Components_CW_Dir" xml:space="preserve">
+    <value>顺时方向</value>
   </data>
   <data name="Components_Fan" xml:space="preserve">
     <value>风扇 1</value>
@@ -308,6 +336,9 @@
   <data name="Components_Startup" xml:space="preserve">
     <value>启动</value>
   </data>
+  <data name="Components_Suppress_Warnings" xml:space="preserve">
+    <value>解除警告</value>
+  </data>
   <data name="Components_Syringe_Ctrl" xml:space="preserve">
     <value>注射泵控制</value>
   </data>
@@ -315,7 +346,7 @@
     <value>到流通池</value>
   </data>
   <data name="Components_To_Pickup" xml:space="preserve">
-    <value>到拾取</value>
+    <value>到样本池</value>
   </data>
   <data name="Components_Valve1" xml:space="preserve">
     <value>风扇 2</value>
@@ -334,6 +365,9 @@
   </data>
   <data name="Dashboard_Active_Region" xml:space="preserve">
     <value>   激活</value>
+  </data>
+  <data name="Dashboard_Current_Template" xml:space="preserve">
+    <value>当前模板</value>
   </data>
   <data name="Dashboard_Inactive_Region" xml:space="preserve">
     <value>   未激活</value>
@@ -458,6 +492,9 @@
   <data name="Experiment_Dashboard" xml:space="preserve">
     <value>控制面板</value>
   </data>
+  <data name="Experiment_Delete_Template" xml:space="preserve">
+    <value>删除模板</value>
+  </data>
   <data name="Experiment_Eject" xml:space="preserve">
     <value>弹出孔板</value>
   </data>
@@ -512,7 +549,7 @@
     <value>保存模板</value>
   </data>
   <data name="Experiment_Select_Wells" xml:space="preserve">
-    <value>选井</value>
+    <value>孔板选择</value>
   </data>
   <data name="Experiment_Sel_Active_Region" xml:space="preserve">
     <value>选择激活区</value>
@@ -533,7 +570,7 @@
     <value>已选区总计数</value>
   </data>
   <data name="Experiment_Tube" xml:space="preserve">
-    <value>试管</value>
+    <value>单管</value>
   </data>
   <data name="Experiment_Validate_Bcode" xml:space="preserve">
     <value>验证条形码</value>
@@ -552,19 +589,19 @@
     <value>基础文件名</value>
   </data>
   <data name="FileSave_Discard_Unclassified_Beads" xml:space="preserve">
-    <value>从珠子事件文件中丢弃未分类的珠子</value>
+    <value>从原始数据文件中舍弃未分类的粒子</value>
   </data>
   <data name="FileSave_Filters" xml:space="preserve">
     <value>过滤器</value>
   </data>
   <data name="FileSave_Include_Doublet_Events" xml:space="preserve">
-    <value>在珠子事件文件中包含双峰事件</value>
+    <value>原始数据文件包含双峰粒子</value>
   </data>
   <data name="FileSave_Include_Unclassified_Beads" xml:space="preserve">
-    <value>在孔板汇总文件中包含未分类的珠子</value>
+    <value>孔板统计结果文件包含未分类粒子</value>
   </data>
   <data name="FileSave_Ind_Bead_Events" xml:space="preserve">
-    <value>个体珠子事件</value>
+    <value>单个粒子数据</value>
   </data>
   <data name="FileSave_JSON_To_Results" xml:space="preserve">
     <value>JSON 结果文件</value>
@@ -573,7 +610,18 @@
     <value>输出文件</value>
   </data>
   <data name="FileSave_Plate_Summary" xml:space="preserve">
-    <value>所有区域MFI的孔板汇总</value>
+    <value>孔板所有区域的MFI结果</value>
+  </data>
+  <data name="FileSave_Select_Custom_Folder" xml:space="preserve">
+    <value>选择自定义输
+出文件夹</value>
+  </data>
+  <data name="FileSave_Select_Default_Folder" xml:space="preserve">
+    <value>选择默认输
+出文件夹</value>
+  </data>
+  <data name="FileSave_Sys_Log" xml:space="preserve">
+    <value>记录到文件中</value>
   </data>
   <data name="Green" xml:space="preserve">
     <value>绿光</value>
@@ -588,25 +636,34 @@
     <value>校准</value>
   </data>
   <data name="Maintenance_Channels" xml:space="preserve">
-    <value>通道</value>
+    <value>探测器</value>
   </data>
   <data name="Maintenance_LEDs" xml:space="preserve">
-    <value>LED 开</value>
+    <value>LED 开启</value>
   </data>
   <data name="Maintenance_Sanitize" xml:space="preserve">
     <value>UVC 紫外消毒</value>
   </data>
+  <data name="Maintenance_Touch" xml:space="preserve">
+    <value>触控模式</value>
+  </data>
+  <data name="Maintenance_Validation" xml:space="preserve">
+    <value>验证</value>
+  </data>
+  <data name="Mean" xml:space="preserve">
+    <value>平均值</value>
+  </data>
   <data name="Motors_384W_C1" xml:space="preserve">
-    <value>384孔 C1</value>
+    <value>384孔 1列</value>
   </data>
   <data name="Motors_384W_C24" xml:space="preserve">
-    <value>384孔 C24</value>
+    <value>384孔 24列</value>
   </data>
   <data name="Motors_96W_C1" xml:space="preserve">
-    <value>96孔 C1</value>
+    <value>96孔 1列</value>
   </data>
   <data name="Motors_96W_C12" xml:space="preserve">
-    <value>96孔 C12</value>
+    <value>96孔 12列</value>
   </data>
   <data name="Motors_Back" xml:space="preserve">
     <value>后退</value>
@@ -618,25 +675,28 @@
     <value>当前步数</value>
   </data>
   <data name="Motors_Down" xml:space="preserve">
-    <value>下</value>
+    <value>向下</value>
   </data>
   <data name="Motors_Enc_Steps" xml:space="preserve">
-    <value>编码器步数</value>
+    <value>编码器步频</value>
   </data>
   <data name="Motors_Front" xml:space="preserve">
-    <value>正面</value>
+    <value>向前</value>
   </data>
   <data name="Motors_GoTo_Well" xml:space="preserve">
-    <value>到井</value>
+    <value>移至该孔</value>
   </data>
   <data name="Motors_Left" xml:space="preserve">
-    <value>左</value>
+    <value>向左</value>
   </data>
   <data name="Motors_Man_Well_Sel" xml:space="preserve">
-    <value>手动选井</value>
+    <value>手动选孔</value>
+  </data>
+  <data name="Motors_Poll_Step" xml:space="preserve">
+    <value>显示步进</value>
   </data>
   <data name="Motors_Right" xml:space="preserve">
-    <value>右</value>
+    <value>向右</value>
   </data>
   <data name="Motors_Row_A" xml:space="preserve">
     <value>A行</value>
@@ -675,22 +735,31 @@
     <value>开启</value>
   </data>
   <data name="Power" xml:space="preserve">
-    <value>电源</value>
+    <value>功率</value>
   </data>
   <data name="Red" xml:space="preserve">
     <value>红光</value>
   </data>
-  <data name="Reporter" xml:space="preserve">
-    <value>报告分子</value>
-  </data>
   <data name="Reset" xml:space="preserve">
     <value>重置</value>
+  </data>
+  <data name="Results_Count_Graph" xml:space="preserve">
+    <value>粒子计数</value>
+  </data>
+  <data name="Results_Count_Table" xml:space="preserve">
+    <value>计数</value>
+  </data>
+  <data name="Results_To_Current" xml:space="preserve">
+    <value>返回当前</value>
+  </data>
+  <data name="Results_Value_Graph" xml:space="preserve">
+    <value>信号强度，MFI</value>
   </data>
   <data name="Ribbon_Acquire" xml:space="preserve">
     <value>采集样本</value>
   </data>
   <data name="Ribbon_Analysis" xml:space="preserve">
-    <value>数据分析</value>
+    <value>图表</value>
   </data>
   <data name="Ribbon_Maintenance" xml:space="preserve">
     <value>维护</value>
@@ -717,13 +786,28 @@
     <value>秒</value>
   </data>
   <data name="Service_Alignment" xml:space="preserve">
-    <value>对准</value>
+    <value>光路校准</value>
+  </data>
+  <data name="Service_Alignment_Verification" xml:space="preserve">
+    <value>光路校准及验证</value>
   </data>
   <data name="Service_Ch_Offset" xml:space="preserve">
-    <value>通道偏移</value>
+    <value>基线偏移</value>
   </data>
   <data name="Service_Components" xml:space="preserve">
     <value>组件</value>
+  </data>
+  <data name="Service_Memory_Control" xml:space="preserve">
+    <value>闪存控制</value>
+  </data>
+  <data name="Service_Memory_Restore" xml:space="preserve">
+    <value>恢复原状</value>
+  </data>
+  <data name="Service_Memory_Restore_Defaults" xml:space="preserve">
+    <value>恢复出厂设置</value>
+  </data>
+  <data name="Service_Memory_Save_All" xml:space="preserve">
+    <value>保存全部</value>
   </data>
   <data name="Service_Motors" xml:space="preserve">
     <value>马达</value>
@@ -750,7 +834,7 @@
     <value>正常</value>
   </data>
   <data name="SyringeSpeeds_Pickup" xml:space="preserve">
-    <value>拾取</value>
+    <value>吸样</value>
   </data>
   <data name="SyringeSpeeds_Samples" xml:space="preserve">
     <value>样本</value>
@@ -764,17 +848,38 @@
   <data name="Text_Files" xml:space="preserve">
     <value>文本文件</value>
   </data>
-  <data name="Tube" xml:space="preserve">
-    <value>管子</value>
+  <data name="Validation_Classification_Tolerance" xml:space="preserve">
+    <value>分类容差 %</value>
+  </data>
+  <data name="Validation_Load" xml:space="preserve">
+    <value>加载目标值</value>
+  </data>
+  <data name="Validation_Misclassification_Tolerance" xml:space="preserve">
+    <value>错误分类容差 %</value>
   </data>
   <data name="Validation_Mode" xml:space="preserve">
     <value>系统验证</value>
   </data>
+  <data name="Validation_Reporter_Tolerance" xml:space="preserve">
+    <value>报告荧光信号容差 %</value>
+  </data>
+  <data name="Validation_Save" xml:space="preserve">
+    <value>存储目标值</value>
+  </data>
   <data name="Value" xml:space="preserve">
     <value>值</value>
   </data>
+  <data name="Verification_Table_Reporter" xml:space="preserve">
+    <value>报告荧光信号</value>
+  </data>
+  <data name="Verification_Warning_Schedule" xml:space="preserve">
+    <value>验证警告时间表</value>
+  </data>
   <data name="Violet" xml:space="preserve">
     <value>紫光</value>
+  </data>
+  <data name="WellSel_Reset_Plate" xml:space="preserve">
+    <value>重置</value>
   </data>
   <data name="WellSel_Select_ALL" xml:space="preserve">
     <value>全选</value>

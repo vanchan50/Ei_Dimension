@@ -154,7 +154,7 @@
                        Width="120"
                        Margin="140,0,0,0"
                        HorizontalAlignment="Left"/>
-            <TextBlock Text="{lang:Loc Reporter}"
+            <TextBlock Text="{lang:Loc Verification_Table_Reporter}"
                        Width="200"
                        FontSize="30"
                        Margin="270,0,0,0"

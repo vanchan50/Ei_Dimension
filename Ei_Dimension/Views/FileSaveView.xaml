@@ -180,13 +180,13 @@
         </StackPanel>
       </StackPanel>
     </StackPanel>
-    <Button Content="Select Custom&#x0a;output folder"
+    <Button Content="{lang:Loc FileSave_Select_Custom_Folder}"
             Width="180" Height="100"
             HorizontalAlignment="Left" VerticalAlignment="Top"
             Margin="80,600,0,0" Cursor="Hand"
             Style="{StaticResource ButtonStyle}"
             Command="{Binding SelectOutFolderCommand}"/>
-    <Button Content="Select Default&#x0a;output folder"
+    <Button Content="{lang:Loc FileSave_Select_Default_Folder}"
             Width="180" Height="100"
             HorizontalAlignment="Left" VerticalAlignment="Top"
             Margin="280,600,0,0" Cursor="Hand"

@@ -397,7 +397,7 @@
         </StackPanel>
         <!--Offset-->
         <StackPanel>
-          <TextBlock Text="Offset"
+          <TextBlock Text="{lang:Loc Channels_Offset_Header}"
                      FontFamily="{StaticResource AppTextFont}"
                      FontSize="36"
                      Width="180"
