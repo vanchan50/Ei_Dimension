@@ -363,6 +363,9 @@
   <data name="Components_Wash_B" xml:space="preserve">
     <value>清洗 B</value>
   </data>
+  <data name="Daily" xml:space="preserve">
+    <value>每天</value>
+  </data>
   <data name="Dashboard_Active_Region" xml:space="preserve">
     <value>   激活</value>
   </data>
@@ -445,7 +448,7 @@
     <value>正常</value>
   </data>
   <data name="Dropdown_Pickup" xml:space="preserve">
-    <value>拾取</value>
+    <value>吸样</value>
   </data>
   <data name="Dropdown_Pos" xml:space="preserve">
     <value>位置</value>
@@ -653,6 +656,9 @@
   <data name="Mean" xml:space="preserve">
     <value>平均值</value>
   </data>
+  <data name="Monthly" xml:space="preserve">
+    <value>每月</value>
+  </data>
   <data name="Motors_384W_C1" xml:space="preserve">
     <value>384孔 1列</value>
   </data>
@@ -736,6 +742,9 @@
   </data>
   <data name="Power" xml:space="preserve">
     <value>功率</value>
+  </data>
+  <data name="Quarterly" xml:space="preserve">
+    <value>每季</value>
   </data>
   <data name="Red" xml:space="preserve">
     <value>红光</value>
@@ -878,10 +887,16 @@
   <data name="Violet" xml:space="preserve">
     <value>紫光</value>
   </data>
+  <data name="Weekly" xml:space="preserve">
+    <value>每周</value>
+  </data>
   <data name="WellSel_Reset_Plate" xml:space="preserve">
     <value>重置</value>
   </data>
   <data name="WellSel_Select_ALL" xml:space="preserve">
     <value>全选</value>
+  </data>
+  <data name="Yearly" xml:space="preserve">
+    <value>每年</value>
   </data>
 </root>
