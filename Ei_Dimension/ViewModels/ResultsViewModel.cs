@@ -296,7 +296,7 @@ namespace Ei_Dimension.ViewModels
       List<string> linesInFile = Core.DataProcessor.GetDataFromFile(path);
       if (linesInFile.Count == 1 && linesInFile[0] == " ")
       {
-        Notification.Show("File is empty");
+        Notification.ShowLocalized(nameof(Language.Resources.Notification_Empty_File));
         return false;
       }
       for (var i = 0; i < linesInFile.Count; i++)
@@ -323,7 +323,7 @@ namespace Ei_Dimension.ViewModels
         var path = PlatePictogram.GetSelectedFilePath();  //@"C:\Emissioninc\KEIZ0R-LEGION\AcquisitionData\val speed test 2E7_0.csv"; //
         if (!System.IO.File.Exists(path))
         {
-          Notification.Show("File does not exist");
+          Notification.ShowLocalized(  nameof(Language.Resources.Notification_File_Inexistent));
           ResultsWaitIndicatorVisibility = false;
           ChartWaitIndicatorVisibility = false;
           _fillDataActive = false;
@@ -351,7 +351,14 @@ namespace Ei_Dimension.ViewModels
           }
           catch (Exception e)
           {
-            Notification.Show($"Something went wrong during File loading.\nPlease report this issue to the manufacturer\n {e.Message}");
+            if (Language.TranslationSource.Instance.CurrentCulture.TextInfo.CultureName == "zh-CN")
+            {
+              Notification.Show($"请将此问题报告给制造商\n {e.Message}");
+            }
+            else
+            {
+              Notification.Show($"Something went wrong during File loading.\nPlease report this issue to the manufacturer\n {e.Message}");
+            }
           }
           finally
           {

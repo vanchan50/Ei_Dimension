@@ -466,6 +466,9 @@ Pressure</value>
   <data name="DataAn_Violet_SSC" xml:space="preserve">
     <value>Violet SSC</value>
   </data>
+  <data name="DefaultTemplateName" xml:space="preserve">
+    <value>TemplateName</value>
+  </data>
   <data name="Dropdown_Boot" xml:space="preserve">
     <value>Boot</value>
   </data>
@@ -833,6 +836,24 @@ output folder</value>
   <data name="Name" xml:space="preserve">
     <value>Name</value>
   </data>
+  <data name="Notification_Empty_File" xml:space="preserve">
+    <value>File is empty</value>
+  </data>
+  <data name="Notification_Error_Loading_template" xml:space="preserve">
+    <value>Error loading Template</value>
+  </data>
+  <data name="Notification_File_Inexistent" xml:space="preserve">
+    <value>File does not exist</value>
+  </data>
+  <data name="Notification_Invalid_File_Name" xml:space="preserve">
+    <value>Invalid File name</value>
+  </data>
+  <data name="Notification_No_Template_Selected" xml:space="preserve">
+    <value>No Template selected</value>
+  </data>
+  <data name="Notification_Template_Save_Problem" xml:space="preserve">
+    <value>There was a problem saving the Template</value>
+  </data>
   <data name="Num" xml:space="preserve">
     <value>№</value>
   </data>
@@ -972,6 +993,9 @@ Speeds</value>
   </data>
   <data name="Temp" xml:space="preserve">
     <value>Temp</value>
+  </data>
+  <data name="TemplateName_None" xml:space="preserve">
+    <value>None</value>
   </data>
   <data name="Text_Files" xml:space="preserve">
     <value>Text Files</value>

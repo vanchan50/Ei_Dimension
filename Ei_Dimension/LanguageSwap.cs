@@ -114,6 +114,26 @@ namespace Ei_Dimension
         VerVM.VerificationWarningItems[4].Content = RM.GetString(nameof(Language.Resources.Yearly), curCulture);
         VerVM.SelectedVerificationWarningContent = VerVM.VerificationWarningItems[Settings.Default.VerificationWarningIndex].Content;
       }
+      var TemplVM = TemplateSelectViewModel.Instance;
+      if (TemplVM != null)
+      {
+        if (TemplVM.TemplateSaveName[0] == RM.GetString(nameof(Language.Resources.DefaultTemplateName), exCulture))
+          TemplVM.TemplateSaveName[0] = RM.GetString(nameof(Language.Resources.DefaultTemplateName), curCulture);
+      }
+      var ExpVM = ExperimentViewModel.Instance;
+      if (ExpVM != null)
+      {
+        if (ExpVM.CurrentTemplateName == RM.GetString(nameof(Language.Resources.TemplateName_None), exCulture))
+          ExpVM.CurrentTemplateName = RM.GetString(nameof(Language.Resources.TemplateName_None), curCulture);
+      }
+      var ResVM = ResultsViewModel.Instance;
+      if (ResVM != null)
+      {
+        if (ResVM.PlexButtonString == RM.GetString(nameof(Language.Resources.Experiment_Active_Regions), exCulture))
+        ResVM.PlexButtonString = RM.GetString(nameof(Language.Resources.Experiment_Active_Regions), curCulture);
+        else if (ResVM.PlexButtonString == RM.GetString(nameof(Language.Resources.Experiment_Stats), exCulture))
+          ResVM.PlexButtonString = RM.GetString(nameof(Language.Resources.Experiment_Stats), curCulture);
+      }
       #endregion
     }
   }

@@ -28,7 +28,9 @@ namespace Ei_Dimension.ViewModels
     private static List<char> _invalidChars;
     protected TemplateSelectViewModel()
     {
-      TemplateSaveName = new ObservableCollection<string> { "TemplateName" };
+      var defTemplateName = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.DefaultTemplateName),
+        Language.TranslationSource.Instance.CurrentCulture);
+      TemplateSaveName = new ObservableCollection<string> { defTemplateName };
       var TemplateList = Directory.GetFiles(App.Device.RootDirectory + @"\Config", "*.dtml");
       NameList = new ObservableCollection<string>();
       foreach (var template in TemplateList)
@@ -62,7 +64,7 @@ namespace Ei_Dimension.ViewModels
       }
       catch
       {
-        Notification.Show("No Template selected");
+        Notification.ShowLocalized(nameof(Language.Resources.Notification_No_Template_Selected));
       }
       if (newTemplate != null)
       {
@@ -180,7 +182,7 @@ namespace Ei_Dimension.ViewModels
             }
             catch
             {
-              Notification.Show("Error loading Template");
+              Notification.ShowLocalized(nameof(Language.Resources.Notification_Error_Loading_template));
               return;
             }
             finally
@@ -208,7 +210,7 @@ namespace Ei_Dimension.ViewModels
       {
         if (TemplateSaveName[0].Contains(c.ToString()))
         {
-          Notification.Show("Invalid File name");
+          Notification.ShowLocalized(nameof(Language.Resources.Notification_Invalid_File_Name));
           return;
         }
       }
@@ -218,8 +220,17 @@ namespace Ei_Dimension.ViewModels
         {
           SavingProcedure(path);
         }
-        Notification.Show($"A template with name \"{TemplateSaveName[0]}\" already exists.",
-          Overwrite, "Overwrite", null, "Cancel");
+
+        if (Language.TranslationSource.Instance.CurrentCulture.TextInfo.CultureName == "zh-CN")
+        {
+          Notification.Show($"名为 \"{TemplateSaveName[0]}\" 的模板已存在",
+            Overwrite, "覆盖", null, "取消");
+        }
+        else
+        {
+          Notification.Show($"A template with name \"{TemplateSaveName[0]}\" already exists.",
+            Overwrite, "Overwrite", null, "Cancel");
+        }
         return;
       }
       SavingProcedure(path);
@@ -281,7 +292,7 @@ namespace Ei_Dimension.ViewModels
       }
       catch
       {
-        Notification.Show("There was a problem saving the Template");
+        Notification.ShowLocalized(nameof(Language.Resources.Notification_Template_Save_Problem));
       }
       if (!NameList.Contains(TemplateSaveName[0]))
       {
@@ -304,8 +315,17 @@ namespace Ei_Dimension.ViewModels
             ExperimentViewModel.Instance.CurrentTemplateName = "None";
           DeleteVisible = Visibility.Hidden;
         }
-        Notification.Show($"Do you want to delete \"{Path.GetFileNameWithoutExtension(SelectedItem)}\" template?",
-          Delete, "Delete", null, "Cancel");
+
+        if (Language.TranslationSource.Instance.CurrentCulture.TextInfo.CultureName == "zh-CN")
+        {
+          Notification.Show($"您要删除 \"{Path.GetFileNameWithoutExtension(SelectedItem)}\" 模板吗？",
+            Delete, "删除", null, "取消");
+        }
+        else
+        {
+          Notification.Show($"Do you want to delete \"{Path.GetFileNameWithoutExtension(SelectedItem)}\" template?",
+            Delete, "Delete", null, "Cancel");
+        }
       }
     }
 

@@ -19,7 +19,7 @@ namespace Ei_Dimension.Language {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Resources {
@@ -208,8 +208,8 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Classification
-        ///    Targets.
+        ///   Looks up a localized string similar to Calibration
+        ///   Targets.
         /// </summary>
         public static string Calibration_Classification_targets {
             get {
@@ -451,6 +451,15 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Offset.
+        /// </summary>
+        public static string Channels_Offset_Header {
+            get {
+                return ResourceManager.GetString("Channels_Offset_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Red A (CL3).
         /// </summary>
         public static string Channels_Red_A {
@@ -563,7 +572,7 @@ namespace Ei_Dimension.Language {
         
         /// <summary>
         ///   Looks up a localized string similar to Update
-        ///   Bias.
+        ///   DAC.
         /// </summary>
         public static string Channels_Update_Bias {
             get {
@@ -792,6 +801,16 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Suppress
+        ///Warnings.
+        /// </summary>
+        public static string Components_Suppress_Warnings {
+            get {
+                return ResourceManager.GetString("Components_Suppress_Warnings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Syringe Control.
         /// </summary>
         public static string Components_Syringe_Ctrl {
@@ -860,15 +879,6 @@ namespace Ei_Dimension.Language {
         public static string Components_Wash_B {
             get {
                 return ResourceManager.GetString("Components_Wash_B", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Count.
-        /// </summary>
-        public static string Count {
-            get {
-                return ResourceManager.GetString("Count", resourceCulture);
             }
         }
         
@@ -1044,6 +1054,15 @@ namespace Ei_Dimension.Language {
         public static string DataAn_Violet_SSC {
             get {
                 return ResourceManager.GetString("DataAn_Violet_SSC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TemplateName.
+        /// </summary>
+        public static string DefaultTemplateName {
+            get {
+                return ResourceManager.GetString("DefaultTemplateName", resourceCulture);
             }
         }
         
@@ -1716,6 +1735,26 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select Custom
+        ///output folder.
+        /// </summary>
+        public static string FileSave_Select_Custom_Folder {
+            get {
+                return ResourceManager.GetString("FileSave_Select_Custom_Folder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select Default
+        ///output folder.
+        /// </summary>
+        public static string FileSave_Select_Default_Folder {
+            get {
+                return ResourceManager.GetString("FileSave_Select_Default_Folder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Log to File.
         /// </summary>
         public static string FileSave_Sys_Log {
@@ -2085,6 +2124,69 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to File is empty.
+        /// </summary>
+        public static string Notification_Empty_File {
+            get {
+                return ResourceManager.GetString("Notification_Empty_File", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error loading Template.
+        /// </summary>
+        public static string Notification_Error_Loading_template {
+            get {
+                return ResourceManager.GetString("Notification_Error_Loading_template", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File does not exist.
+        /// </summary>
+        public static string Notification_File_Inexistent {
+            get {
+                return ResourceManager.GetString("Notification_File_Inexistent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid File name.
+        /// </summary>
+        public static string Notification_Invalid_File_Name {
+            get {
+                return ResourceManager.GetString("Notification_Invalid_File_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No Template selected.
+        /// </summary>
+        public static string Notification_No_Template_Selected {
+            get {
+                return ResourceManager.GetString("Notification_No_Template_Selected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There was a problem saving the Template.
+        /// </summary>
+        public static string Notification_Template_Save_Problem {
+            get {
+                return ResourceManager.GetString("Notification_Template_Save_Problem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to №.
+        /// </summary>
+        public static string Num {
+            get {
+                return ResourceManager.GetString("Num", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to OFF.
         /// </summary>
         public static string OFF {
@@ -2148,15 +2250,6 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Reporter.
-        /// </summary>
-        public static string Reporter {
-            get {
-                return ResourceManager.GetString("Reporter", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Reset.
         /// </summary>
         public static string Reset {
@@ -2166,11 +2259,47 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Count.
+        /// </summary>
+        public static string Results_Count_Graph {
+            get {
+                return ResourceManager.GetString("Results_Count_Graph", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Count.
+        /// </summary>
+        public static string Results_Count_Table {
+            get {
+                return ResourceManager.GetString("Results_Count_Table", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cutoff value.
         /// </summary>
         public static string Results_CutOff {
             get {
                 return ResourceManager.GetString("Results_CutOff", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To Current.
+        /// </summary>
+        public static string Results_To_Current {
+            get {
+                return ResourceManager.GetString("Results_To_Current", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value.
+        /// </summary>
+        public static string Results_Value_Graph {
+            get {
+                return ResourceManager.GetString("Results_Value_Graph", resourceCulture);
             }
         }
         
@@ -2279,6 +2408,16 @@ namespace Ei_Dimension.Language {
         public static string Service_Alignment {
             get {
                 return ResourceManager.GetString("Service_Alignment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Alignment
+        ///and Verification.
+        /// </summary>
+        public static string Service_Alignment_Verification {
+            get {
+                return ResourceManager.GetString("Service_Alignment_Verification", resourceCulture);
             }
         }
         
@@ -2449,20 +2588,20 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to None.
+        /// </summary>
+        public static string TemplateName_None {
+            get {
+                return ResourceManager.GetString("TemplateName_None", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Text Files.
         /// </summary>
         public static string Text_Files {
             get {
                 return ResourceManager.GetString("Text_Files", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Tube.
-        /// </summary>
-        public static string Tube {
-            get {
-                return ResourceManager.GetString("Tube", resourceCulture);
             }
         }
         
@@ -2566,6 +2705,15 @@ namespace Ei_Dimension.Language {
         public static string Value {
             get {
                 return ResourceManager.GetString("Value", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reporter.
+        /// </summary>
+        public static string Verification_Table_Reporter {
+            get {
+                return ResourceManager.GetString("Verification_Table_Reporter", resourceCulture);
             }
         }
         
