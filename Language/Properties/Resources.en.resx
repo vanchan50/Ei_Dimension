@@ -248,6 +248,9 @@ To Current Map</value>
     <value>Hi Sensitivity
     Channel</value>
   </data>
+  <data name="Channels_Offset_Header" xml:space="preserve">
+    <value>Offset</value>
+  </data>
   <data name="Channels_Red_A" xml:space="preserve">
     <value>Red A (CL3)</value>
   </data>
@@ -374,6 +377,10 @@ Direction</value>
   <data name="Components_Startup" xml:space="preserve">
     <value>Startup</value>
   </data>
+  <data name="Components_Suppress_Warnings" xml:space="preserve">
+    <value>Suppress
+Warnings</value>
+  </data>
   <data name="Components_Syringe_Ctrl" xml:space="preserve">
     <value>Syringe Control</value>
   </data>
@@ -397,9 +404,6 @@ Direction</value>
   </data>
   <data name="Components_Wash_B" xml:space="preserve">
     <value>Wash B</value>
-  </data>
-  <data name="Count" xml:space="preserve">
-    <value>Count</value>
   </data>
   <data name="Counter" xml:space="preserve">
     <value>Counter</value>
@@ -461,6 +465,9 @@ Pressure</value>
   </data>
   <data name="DataAn_Violet_SSC" xml:space="preserve">
     <value>Violet SSC</value>
+  </data>
+  <data name="DefaultTemplateName" xml:space="preserve">
+    <value>TemplateName</value>
   </data>
   <data name="Dropdown_Boot" xml:space="preserve">
     <value>Boot</value>
@@ -698,6 +705,14 @@ Order</value>
   <data name="FileSave_Plate_Summary" xml:space="preserve">
     <value>Plate Summary of MFI for All Regions</value>
   </data>
+  <data name="FileSave_Select_Custom_Folder" xml:space="preserve">
+    <value>Select Custom
+output folder</value>
+  </data>
+  <data name="FileSave_Select_Default_Folder" xml:space="preserve">
+    <value>Select Default
+output folder</value>
+  </data>
   <data name="FileSave_Sys_Log" xml:space="preserve">
     <value>Log to File</value>
   </data>
@@ -821,6 +836,24 @@ Order</value>
   <data name="Name" xml:space="preserve">
     <value>Name</value>
   </data>
+  <data name="Notification_Empty_File" xml:space="preserve">
+    <value>File is empty</value>
+  </data>
+  <data name="Notification_Error_Loading_template" xml:space="preserve">
+    <value>Error loading Template</value>
+  </data>
+  <data name="Notification_File_Inexistent" xml:space="preserve">
+    <value>File does not exist</value>
+  </data>
+  <data name="Notification_Invalid_File_Name" xml:space="preserve">
+    <value>Invalid File name</value>
+  </data>
+  <data name="Notification_No_Template_Selected" xml:space="preserve">
+    <value>No Template selected</value>
+  </data>
+  <data name="Notification_Template_Save_Problem" xml:space="preserve">
+    <value>There was a problem saving the Template</value>
+  </data>
   <data name="Num" xml:space="preserve">
     <value>№</value>
   </data>
@@ -845,14 +878,23 @@ Order</value>
   <data name="Red" xml:space="preserve">
     <value>Red</value>
   </data>
-  <data name="Reporter" xml:space="preserve">
-    <value>Reporter</value>
-  </data>
   <data name="Reset" xml:space="preserve">
     <value>Reset</value>
   </data>
+  <data name="Results_Count_Graph" xml:space="preserve">
+    <value>Count</value>
+  </data>
+  <data name="Results_Count_Table" xml:space="preserve">
+    <value>Count</value>
+  </data>
   <data name="Results_CutOff" xml:space="preserve">
     <value>Cutoff value</value>
+  </data>
+  <data name="Results_To_Current" xml:space="preserve">
+    <value>To Current</value>
+  </data>
+  <data name="Results_Value_Graph" xml:space="preserve">
+    <value>Value</value>
   </data>
   <data name="Ribbon_Acquire" xml:space="preserve">
     <value>Acquire Sample</value>
@@ -889,6 +931,10 @@ Order</value>
   </data>
   <data name="Service_Alignment" xml:space="preserve">
     <value>Alignment</value>
+  </data>
+  <data name="Service_Alignment_Verification" xml:space="preserve">
+    <value>Alignment
+and Verification</value>
   </data>
   <data name="Service_Ch_Offset" xml:space="preserve">
     <value>Channel
@@ -948,11 +994,11 @@ Speeds</value>
   <data name="Temp" xml:space="preserve">
     <value>Temp</value>
   </data>
+  <data name="TemplateName_None" xml:space="preserve">
+    <value>None</value>
+  </data>
   <data name="Text_Files" xml:space="preserve">
     <value>Text Files</value>
-  </data>
-  <data name="Tube" xml:space="preserve">
-    <value>Tube</value>
   </data>
   <data name="Validation_Classification_Tolerance" xml:space="preserve">
     <value>Classification Tolerance %</value>
@@ -990,6 +1036,9 @@ Verification</value>
   </data>
   <data name="Value" xml:space="preserve">
     <value>Value</value>
+  </data>
+  <data name="Verification_Table_Reporter" xml:space="preserve">
+    <value>Reporter</value>
   </data>
   <data name="Verification_Warning_Schedule" xml:space="preserve">
     <value>Verification warning schedule</value>

@@ -21,7 +21,7 @@
                  HorizontalAlignment="Left"
                  VerticalAlignment="Top"
                  Margin="500,20,250,0"/>
-    
+
     <!--Max Pressure-->
     <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"
@@ -43,7 +43,7 @@
         </TextBox>
       </StackPanel>
     </Border>
-    
+
     <!--Input Selector-->
     <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"
@@ -128,7 +128,7 @@
                      Margin="20,2,0,6"/>
 
             </StackPanel>
-            
+
             <StackPanel HorizontalAlignment="Left"
                           VerticalAlignment="Top"
                           Margin="150,20,0,0">
@@ -604,7 +604,7 @@
         <StackPanel HorizontalAlignment="Left"
                     Margin="0,-10,0,0"
                     Width="120">
-          
+
           <ToggleButton Style="{StaticResource ToggleButtonThemeStyle}"
                         Height="60" Cursor="Hand"
                         Content="{Binding GetPositionToggleButtonState}"
@@ -675,7 +675,7 @@
         </StackPanel>
       </Grid>
     </Border>
-    
+
     <!--Sampling-->
     <Border HorizontalAlignment="Left"
             Margin="300,535,0,0"
@@ -717,7 +717,7 @@
                   Height="80" Width="200" HorizontalAlignment="Left"
                   VerticalAlignment="Top"
                   Margin="600,800,0,0"
-                  Content="Suppress&#x0a;Warnings"
+                  Content="{lang:Loc Components_Suppress_Warnings}"
                   IsChecked="{Binding SuppressWarnings, Mode=OneWay}"
                   Command="{Binding SuppressWarningsClickCommand}"/>
   </Grid>

@@ -126,7 +126,7 @@
                   BorderBrush="{StaticResource HaltButtonBackgroundHighlighted}"
                   Margin="4,0,4,6">
             <StackPanel>
-            <RadioButton Content="{lang:Loc Motors_Left}"
+              <RadioButton Content="{lang:Loc Motors_Left}"
                          Style="{StaticResource RadioButtonVerticalThemeStyle}"
                          IsChecked="True"
                          Height="60"
@@ -135,7 +135,7 @@
                   <System:String>Left</System:String>
                 </RadioButton.CommandParameter>
               </RadioButton>
-            <RadioButton Content="{lang:Loc Motors_Right}"
+              <RadioButton Content="{lang:Loc Motors_Right}"
                          Style="{StaticResource RadioButtonVerticalThemeStyle}"
                          Height="60"
                          Command="{Binding PollStepSelectorCommand}">
@@ -151,19 +151,19 @@
                   Style="{StaticResource ButtonStyle}"
                   Height="60"
                   Margin="4,0,4,3">
-              <Button.CommandParameter>
-                <System:String>x</System:String>
-              </Button.CommandParameter>
-            </Button>
+            <Button.CommandParameter>
+              <System:String>x</System:String>
+            </Button.CommandParameter>
+          </Button>
           <Button Content="{lang:Loc Halt}"
                   Command="{Binding HaltMotorButtonClickCommand}"
                   Style="{StaticResource HaltButtonStyle}"
                   Height="60"
                   Margin="4,0,4,6">
-              <Button.CommandParameter>
-                <System:String>x</System:String>
-              </Button.CommandParameter>
-            </Button>
+            <Button.CommandParameter>
+              <System:String>x</System:String>
+            </Button.CommandParameter>
+          </Button>
           <Border Background="{StaticResource RibbonBackgroundActive}">
             <StackPanel Name="xStepsSP">
               <TextBox HorizontalAlignment="Stretch"
@@ -246,45 +246,45 @@
                   BorderBrush="{StaticResource HaltButtonBackgroundHighlighted}"
                   Margin="4,0,4,6">
 
-              <StackPanel>
+            <StackPanel>
               <RadioButton Content="{lang:Loc Motors_Back}"
                            Style="{StaticResource RadioButtonVerticalThemeStyle}"
                            Height="60"
                            Command="{Binding PollStepSelectorCommand}">
-                  <RadioButton.CommandParameter>
-                    <System:String>Back</System:String>
-                  </RadioButton.CommandParameter>
-                </RadioButton>
+                <RadioButton.CommandParameter>
+                  <System:String>Back</System:String>
+                </RadioButton.CommandParameter>
+              </RadioButton>
               <RadioButton Content="{lang:Loc Motors_Front}"
                            Style="{StaticResource RadioButtonVerticalThemeStyle}"
                            Height="60"
                            IsChecked="True"
                            Command="{Binding PollStepSelectorCommand}">
-                  <RadioButton.CommandParameter>
-                    <System:String>Front</System:String>
-                  </RadioButton.CommandParameter>
-                </RadioButton>
-              </StackPanel>
-            </Border>
+                <RadioButton.CommandParameter>
+                  <System:String>Front</System:String>
+                </RadioButton.CommandParameter>
+              </RadioButton>
+            </StackPanel>
+          </Border>
 
           <Button Content="{lang:Loc Run}"
                   Command="{Binding RunMotorButtonClickCommand}"
                   Style="{StaticResource ButtonStyle}"
                   Height="60"
                   Margin="4,0,4,3">
-              <Button.CommandParameter>
-                <System:String>y</System:String>
-              </Button.CommandParameter>
-            </Button>
+            <Button.CommandParameter>
+              <System:String>y</System:String>
+            </Button.CommandParameter>
+          </Button>
           <Button Content="{lang:Loc Halt}"
                   Command="{Binding HaltMotorButtonClickCommand}"
                   Style="{StaticResource HaltButtonStyle}"
                   Height="60"
                   Margin="4,0,4,6">
-              <Button.CommandParameter>
-                <System:String>y</System:String>
-              </Button.CommandParameter>
-            </Button>
+            <Button.CommandParameter>
+              <System:String>y</System:String>
+            </Button.CommandParameter>
+          </Button>
           <Border Background="{StaticResource RibbonBackgroundActive}">
             <StackPanel Name="yStepsSP">
               <TextBox HorizontalAlignment="Stretch"
@@ -366,26 +366,26 @@
           <Border BorderThickness="1"
                   BorderBrush="{StaticResource HaltButtonBackgroundHighlighted}"
                   Margin="4,0,4,6">
-              <StackPanel>
-                <RadioButton Content="{lang:Loc Motors_Up}"
+            <StackPanel>
+              <RadioButton Content="{lang:Loc Motors_Up}"
                              Style="{StaticResource RadioButtonVerticalThemeStyle}"
                              Height="60"
                              IsChecked="True"
                              Command="{Binding PollStepSelectorCommand}">
-                  <RadioButton.CommandParameter>
-                    <System:String>Up</System:String>
-                  </RadioButton.CommandParameter>
-                </RadioButton>
-                <RadioButton Content="{lang:Loc Motors_Down}"
+                <RadioButton.CommandParameter>
+                  <System:String>Up</System:String>
+                </RadioButton.CommandParameter>
+              </RadioButton>
+              <RadioButton Content="{lang:Loc Motors_Down}"
                              Style="{StaticResource RadioButtonVerticalThemeStyle}"
                              Height="60"
                              Command="{Binding PollStepSelectorCommand}">
-                  <RadioButton.CommandParameter>
-                    <System:String>Down</System:String>
-                  </RadioButton.CommandParameter>
-                </RadioButton>
-              </StackPanel>
-            </Border>
+                <RadioButton.CommandParameter>
+                  <System:String>Down</System:String>
+                </RadioButton.CommandParameter>
+              </RadioButton>
+            </StackPanel>
+          </Border>
 
           <Button Content="{lang:Loc Run}"
                   Command="{Binding RunMotorButtonClickCommand}"
@@ -463,7 +463,7 @@
         </StackPanel>
       </StackPanel>
     </Border>
-    
+
     <!--Steps-->
     <Border VerticalAlignment="Top"
             HorizontalAlignment="Left"
@@ -513,7 +513,7 @@
                  Foreground="{StaticResource AppTextColor}"
                  HorizontalAlignment="Right"
                  Margin="0,6,10,0"/>
-            <TextBlock Text="{lang:Loc Tube}"
+            <TextBlock Text="{lang:Loc Experiment_Tube}"
                  FontFamily="{StaticResource AppTextFont}"
                  FontSize="36"
                  FontWeight="UltraBold"
@@ -613,7 +613,7 @@
                        Foreground="{StaticResource AppTextColor}"
                        HorizontalAlignment="Right"
                        Margin="0,6,10,0"/>
-            <TextBlock Text="{lang:Loc Tube}"
+            <TextBlock Text="{lang:Loc Experiment_Tube}"
                        FontFamily="{StaticResource AppTextFont}"
                        FontSize="36"
                        FontWeight="UltraBold"
@@ -713,7 +713,7 @@
                        Foreground="{StaticResource AppTextColor}"
                        HorizontalAlignment="Right"
                        Margin="0,6,10,0"/>
-            <TextBlock Text="{lang:Loc Tube}"
+            <TextBlock Text="{lang:Loc Experiment_Tube}"
                        FontFamily="{StaticResource AppTextFont}"
                        FontSize="36"
                        FontWeight="UltraBold"
@@ -785,7 +785,7 @@
         </StackPanel>
       </StackPanel>
     </Border>
-    
+
     <!--Well Selection-->
     <Border VerticalAlignment="top"
             HorizontalAlignment="Left"
@@ -905,7 +905,7 @@
                 </dxb:MenuBarControl>
               </ScrollViewer>
             </dxb:PopupControlContainer>
-            
+
 
           </dx:DropDownButton>
         </StackPanel>
@@ -917,6 +917,6 @@
                 Margin="0,6,0,0"/>
       </StackPanel>
     </Border>
-    
+
   </Grid>
 </UserControl>

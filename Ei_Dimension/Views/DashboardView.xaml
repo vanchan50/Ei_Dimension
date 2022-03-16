@@ -94,7 +94,7 @@
                    Foreground="{StaticResource AppTextColor}"
                    Margin="0,16,0,4"
                    Visibility="Hidden"/>
-        
+
         <TextBox IsReadOnly="True" Width="160"
                  Margin="0,100,0,0"
                  HorizontalAlignment="Left"
@@ -110,7 +110,7 @@
                    Foreground="{StaticResource AppTextColor}"
                    Margin="0,16,0,4"
                    Visibility="Hidden"/>
-        
+
         <TextBox HorizontalAlignment="Left"
                  VerticalAlignment="Top"
                  IsReadOnly="True" Width="160"
@@ -119,7 +119,7 @@
                  Text="{Binding ValidDateBox[0]}"/>
       </Grid>
     </Border>
-    
+
     <!--Active Regions-->
     <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"
@@ -174,6 +174,7 @@
         <TextBlock Text="{lang:Loc Experiment_Samp_Vol}"
                    FontFamily="{StaticResource AppTextFont}"
                    FontSize="30"
+                   Height="80"
                    FontWeight="UltraBold"
                    HorizontalAlignment="Center"
                    Foreground="{StaticResource AppTextColor}"/>
@@ -226,6 +227,7 @@
         <TextBlock Text="{lang:Loc Experiment_Wash_Vol}"
                    FontFamily="{StaticResource AppTextFont}"
                    FontSize="30"
+                   Height="80"
                    FontWeight="UltraBold"
                    HorizontalAlignment="Center"
                    Foreground="{StaticResource AppTextColor}"/>
@@ -241,6 +243,7 @@
         <TextBlock Text="{lang:Loc Experiment_Agitate_Vol}"
                    FontFamily="{StaticResource AppTextFont}"
                    FontSize="30"
+                   Height="80"
                    FontWeight="UltraBold"
                    HorizontalAlignment="Center"
                    Foreground="{StaticResource AppTextColor}"
@@ -307,7 +310,7 @@
                  HorizontalAlignment="Center"
                  VerticalAlignment="Top"
                  Margin="0,0,0,3"/>
-        <dx:DropDownButton Width="170"
+        <dx:DropDownButton Width="200"
                            Height="80" Cursor="Hand"
                            FontSize="25" Command="{Binding DropPressCommand}"
                            HorizontalAlignment="Center"
@@ -357,7 +360,7 @@
                  HorizontalAlignment="Center"
                  VerticalAlignment="Top"
                  Margin="0,6,0,3"/>
-        <dx:DropDownButton Width="170"
+        <dx:DropDownButton Width="200"
                            Height="80" Cursor="Hand"
                            FontSize="25" Command="{Binding DropPressCommand}"
                            HorizontalAlignment="Center"
@@ -395,7 +398,7 @@
                    HorizontalAlignment="Center"
                    VerticalAlignment="Top"
                    Margin="0,16,0,3"/>
-        <dx:DropDownButton Width="170" Name="MapSelectr"
+        <dx:DropDownButton Width="200" Name="MapSelectr"
                            Height="80" Cursor="Hand"
                            FontSize="25" Command="{Binding DropPressCommand}"
                            HorizontalAlignment="Center"
@@ -441,7 +444,7 @@
                    HorizontalAlignment="Center"
                    VerticalAlignment="Top"
                    Margin="0,16,0,3"/>
-        <dx:DropDownButton Width="170"
+        <dx:DropDownButton Width="200"
                            Height="80" Cursor="Hand"
                            FontSize="25" Command="{Binding DropPressCommand}"
                            HorizontalAlignment="Center"
@@ -479,7 +482,7 @@
                    HorizontalAlignment="Center"
                    VerticalAlignment="Top"
                    Margin="0,16,0,3"/>
-        <dx:DropDownButton Width="170"
+        <dx:DropDownButton Width="200"
                            Height="80" Cursor="Hand"
                            FontSize="25" Command="{Binding DropPressCommand}"
                            HorizontalAlignment="Center"
@@ -517,7 +520,7 @@
                    HorizontalAlignment="Center"
                    VerticalAlignment="Top"
                    Margin="0,19,0,3"/>
-        <dx:DropDownButton Width="170"
+        <dx:DropDownButton Width="200"
                            Height="80" Cursor="Hand"
                            FontSize="25" Command="{Binding DropPressCommand}"
                            HorizontalAlignment="Center"
@@ -533,7 +536,7 @@
                                  ItemClick="{DXEvent Click((int)6)}">
                     <dxb:BarButtonItem.ContentTemplate>
                       <DataTemplate>
-                        <Grid Width="130">
+                        <Grid Width="150">
                           <TextBlock Text="{Binding}" HorizontalAlignment="Center"
                                    FontFamily="{StaticResource AppTextFont}"
                                    Foreground="{StaticResource AppTextColor}"
@@ -573,9 +576,9 @@
     </Border>
     <Rectangle HorizontalAlignment="Left"
                VerticalAlignment="Top"
-               Width="168"
+               Width="202"
                Height="80"
-               Margin="82,354,0,0"
+               Margin="65,354,0,0"
                Opacity="0.4"
                Fill="Orange"
                IsHitTestVisible="False"

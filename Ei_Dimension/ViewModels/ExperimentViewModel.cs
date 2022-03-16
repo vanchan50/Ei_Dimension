@@ -16,6 +16,9 @@ namespace Ei_Dimension.ViewModels
     protected ExperimentViewModel()
     {
       WellSelectVisible = Settings.Default.SystemControl == 0 ? Visibility.Visible : Visibility.Hidden;
+      var noneTemplateName = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.TemplateName_None),
+        Language.TranslationSource.Instance.CurrentCulture);
+      CurrentTemplateName = noneTemplateName;
       CurrentTemplateName = "None";
       Instance = this;
     }

@@ -61,7 +61,7 @@
                       IsEnabled="{Binding LEDsEnabled}"
                       Command="{Binding LEDsButtonClickCommand}"/>
         <!--Slider-->
-        <StackPanel>
+        <StackPanel Visibility="Hidden">
           <StackPanel.Resources>
             <Style x:Key="trackBarEditThumbStyle"
                    TargetType="Thumb">
