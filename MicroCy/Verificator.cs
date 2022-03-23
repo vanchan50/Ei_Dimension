@@ -34,15 +34,26 @@ namespace DIOS.Core
         throw new ArgumentException("Error threshold must not be negative");
       bool passed = true;
       var thresholdMultiplier = errorThresholdPercent <= 100 ? 1 - (errorThresholdPercent / 100) : (errorThresholdPercent / 100);  //reverse percentage
+      var problematicRegions = new List<int>();
       foreach (var reg in RegionalStats)
       {
         var ReporterMedian = GetMedianReporterForRegion(reg.Region);
         if (ReporterMedian <= reg.InputReporter * thresholdMultiplier)
         {
-          msg = $"Verification Fail. Test 1 Reporter tolerance\nReporter value ({ReporterMedian.ToString()}) deviation is more than Threshold is {errorThresholdPercent.ToString($"{0:0.00}")}% from the target ({reg.InputReporter})";
-          Console.WriteLine(msg);
+          Console.WriteLine($"Verification Fail. Test 1 Reporter tolerance\nReporter value ({ReporterMedian.ToString()}) deviation is more than Threshold is {errorThresholdPercent.ToString($"{0:0.00}")}% from the target ({reg.InputReporter})");
+          problematicRegions.Add(reg.Region);
           passed = false;
         }
+      }
+
+      if (problematicRegions.Count != 0)
+      {
+        msg = "Test1 Failed Regions: ";
+        foreach (var region in problematicRegions)
+        {
+          msg = msg + region.ToString() + ",";
+        }
+        msg = msg.Remove(msg.Length - 1);
       }
       return passed;
     }
@@ -69,8 +80,8 @@ namespace DIOS.Core
       if (difPercent > errorThresholdPercent)
       {
         passed = false;
-        msg = $"Verification Fail. Test 2 Classification tolerance\nMax difference between region counts is {difPercent.ToString()}%, Threshold is {errorThresholdPercent.ToString($"{0:0.00}")}";
-        Console.WriteLine(msg);
+        Console.WriteLine($"Verification Fail. Test 2 Classification tolerance\nMax difference between region counts is {difPercent.ToString()}%, Threshold is {errorThresholdPercent.ToString($"{0:0.00}")}");
+        msg = $"Test2 Max difference is {difPercent.ToString()}%";
       }
       return passed;
     }
@@ -83,6 +94,7 @@ namespace DIOS.Core
       var thresholdMultiplier = errorThresholdPercent <= 100 ? 1 - (errorThresholdPercent / 100) : (errorThresholdPercent / 100);  //reverse percentage
       bool passed = true;
 
+      var problematicRegions = new List<int>();
 
       foreach (var reg in _unclassifiedRegionsDict.Keys)
       {
@@ -91,9 +103,20 @@ namespace DIOS.Core
         if (UnclassifiedRegionCount > _highestCount * thresholdMultiplier)
         {
           passed = false;
-          msg = $"Verification Fail. Test 3 Misclassification tolerance\nRegion #{reg} Count is higher than the threshold {errorThresholdPercent.ToString($"{0:0.00}")}%";
-          Console.WriteLine(msg);
+          Console.WriteLine($"Verification Fail. Test 3 Misclassification tolerance\nRegion #{reg} Count is higher than the threshold {errorThresholdPercent.ToString($"{0:0.00}")}%");
+          problematicRegions.Add(reg);
         }
+      }
+
+
+      if (problematicRegions.Count != 0)
+      {
+        msg = "Test3 Failed Regions: ";
+        foreach (var region in problematicRegions)
+        {
+          msg = msg + region.ToString() + ",";
+        }
+        msg = msg.Remove(msg.Length - 1);
       }
       return passed;
     }
