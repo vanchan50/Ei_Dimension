@@ -597,7 +597,13 @@
     <Resource Include="Icons\Emission_LogoCh.png" />
     <Resource Include="Icons\SplashCh.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Icons\Actions_CheckCircled.svg" />
+    <Resource Include="Icons\BindingEditorHelpIcon.svg" />
+    <Resource Include="Icons\GettingStarted.svg" />
+    <Resource Include="Icons\Security_WarningCircled2.svg" />
+    <Resource Include="Icons\State_Validation_Invalid.svg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

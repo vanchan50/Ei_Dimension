@@ -58,20 +58,15 @@ namespace Ei_Dimension.Models
           ret = @"pack://application:,,,/DevExpress.Images.v21.1;component/SvgImages/Icon Builder/Actions_Question.svg";
           break;
         case WellType.ReadyForReading:
-          ret = @"pack://application:,,,/DevExpress.Images.v21.1;component/SvgImages/DiagramIcons/BindingEditorHelpIcon.svg";
-          break;
+          return "pack://application:,,,/Ei_Dimension;component/Icons/BindingEditorHelpIcon.svg";
         case WellType.NowReading:
-          ret = @"pack://application:,,,/DevExpress.Images.v21.1;component/SvgImages/Outlook Inspired/GettingStarted.svg";
-          break;
+          return "pack://application:,,,/Ei_Dimension;component/Icons/GettingStarted.svg";
         case WellType.Success:
-          ret = @"pack://application:,,,/DevExpress.Images.v21.1;component/SvgImages/Icon Builder/Actions_CheckCircled.svg";
-          break;
+          return "pack://application:,,,/Ei_Dimension;component/Icons/Actions_CheckCircled.svg";
         case WellType.LightFail:
-          ret = @"pack://application:,,,/DevExpress.Images.v21.1;component/SvgImages/Icon Builder/Security_WarningCircled2.svg";
-          break;
+          return "pack://application:,,,/Ei_Dimension;component/Icons/Security_WarningCircled2.svg";
         case WellType.Fail:
-          ret = @"pack://application:,,,/DevExpress.Images.v21.1;component/SvgImages/XAF/State_Validation_Invalid.svg";
-          break;
+          return "pack://application:,,,/Ei_Dimension;component/Icons/State_Validation_Invalid.svg";
       }
       return ret;
     }
