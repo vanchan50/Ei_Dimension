@@ -52,8 +52,13 @@ namespace DIOS.Core
       for (var i = 0; i < _wellResults.Count; i++)
       {
         var r = new WellResult();
-        r.RP1vals = new List<float>(_wellResults[i].RP1vals);
         r.regionNumber = _wellResults[i].regionNumber;
+        var count = _wellResults[i].RP1vals.Count;
+        r.RP1vals = new List<float>(count);
+        for (var j = 0; j < count; j++)
+        {
+          r.RP1vals.Add(_wellResults[i].RP1vals[j]);
+        }
         copy.Add(r);
       }
       return copy;

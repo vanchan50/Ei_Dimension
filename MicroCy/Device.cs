@@ -323,7 +323,6 @@ namespace DIOS.Core
       IsMeasurementGoing = false;
       Results.EndOfOperationReset();
       MainCommand("Set Property", code: 0x19);  //bubble detect off
-      ResultsPublisher.StartNewSummaryReport();
       if (Mode ==  OperationMode.Verification)
         Verificator.CalculateResults();
       FinishedMeasurement?.Invoke(this, EventArgs.Empty);

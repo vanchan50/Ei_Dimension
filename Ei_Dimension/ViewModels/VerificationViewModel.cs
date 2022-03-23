@@ -3,6 +3,7 @@ using DevExpress.Mvvm.POCO;
 using DIOS.Core;
 using System;
 using System.Collections.ObjectModel;
+using System.Text;
 using Ei_Dimension.Controllers;
 
 namespace Ei_Dimension.ViewModels
@@ -186,11 +187,18 @@ namespace Ei_Dimension.ViewModels
       return true;
     }
 
-    public static bool AnalyzeVerificationResults()
+    public static bool AnalyzeVerificationResults(out string errorMsg)
     {
-      bool passed1 = Verificator.ReporterToleranceTest(Settings.Default.ValidatorToleranceReporter);
-      var passed2 = Verificator.ClassificationToleranceTest(Settings.Default.ValidatorToleranceClassification);
-      bool passed3 = Verificator.MisclassificationToleranceTest(Settings.Default.ValidatorToleranceMisclassification);
+      errorMsg = null;
+      var passed1 = Verificator.ReporterToleranceTest(Settings.Default.ValidatorToleranceReporter, out var msg1);
+      var passed2 = Verificator.ClassificationToleranceTest(Settings.Default.ValidatorToleranceClassification, out var msg2);
+      var passed3 = Verificator.MisclassificationToleranceTest(Settings.Default.ValidatorToleranceMisclassification, out var msg3);
+      if (msg1 != null)
+        errorMsg = msg1;
+      if (msg2 != null)
+        errorMsg = errorMsg + Environment.NewLine + msg2;
+      if (msg3 != null)
+        errorMsg = errorMsg + Environment.NewLine + msg3;
       return passed1 && passed2 && passed3;
     }
 

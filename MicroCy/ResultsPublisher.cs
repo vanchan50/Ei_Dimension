@@ -14,7 +14,6 @@ namespace DIOS.Core
     public static string WorkOrderPath { get; set; }
     internal static Well SavingWell { get; set; }
     internal static string FullFileName { get; private set; }
-    private static string _thisRunResultsFileName = null;
     private static readonly StringBuilder DataOut = new StringBuilder();
     private static readonly StringBuilder SummaryOut = new StringBuilder();
     private static PlateReport _plateReport;
@@ -51,11 +50,6 @@ namespace DIOS.Core
       _plateReport = new PlateReport();
     }
 
-    internal static void StartNewSummaryReport()
-    {
-      _thisRunResultsFileName = null;
-    }
-
     internal void GetNewFileName()
     {
       OutDirCheck();
@@ -88,7 +82,7 @@ namespace DIOS.Core
       _ = DataOut.Append(beadInfo.ToString());
     }
 
-    private static void AddOutResults(in OutResults oResults)
+    private static void AddOutResultsToSummary(in OutResults oResults)
     {
       _ = SummaryOut.Append(oResults.ToString());
     }
@@ -115,14 +109,14 @@ namespace DIOS.Core
         Console.WriteLine($"Failed to create {Outdir}\\AcquisitionData");
         return;
       }
-      GetThisRunFileName();
+      var filename = GetThisRunFileName();
       try
       {
-        File.AppendAllText(_thisRunResultsFileName, SummaryOut.ToString());
+        File.AppendAllText(filename, SummaryOut.ToString());
       }
       catch
       {
-        Console.WriteLine($"Failed to append data to {_thisRunResultsFileName}");
+        Console.WriteLine($"Failed to append data to {filename}");
       }
     }
 
@@ -132,20 +126,18 @@ namespace DIOS.Core
       _ = SummaryOut.Append(SHEADER);
     }
 
-    private void GetThisRunFileName()
+    private string GetThisRunFileName()
     {
-      if (_thisRunResultsFileName != null)
-        return;
       OutDirCheck();
       for (var i = 0; i < int.MaxValue; i++)
       {
         string summaryFileName = $"{Outdir}\\AcquisitionData\\Results_{Outfilename}_{i.ToString()}.csv";
         if (!File.Exists(summaryFileName))
         {
-          _thisRunResultsFileName = summaryFileName;
-          break;
+          return summaryFileName;
         }
       }
+      return null;
     }
 
     public void OutputPlateReport()
@@ -221,7 +213,7 @@ namespace DIOS.Core
         {
           WellResult regionNumber = wellres[i];
           OutResults rout = FillOutResults(regionNumber);
-          AddOutResults(in rout);
+          AddOutResultsToSummary(in rout);
           AddToPlateReport(in rout);
         }
         OutputSummaryFile();

@@ -404,12 +404,15 @@ namespace Ei_Dimension
             Notification.ShowLocalized(nameof(Language.Resources.Calibration_in_Progress), System.Windows.Media.Brushes.Green);
           break;
         case OperationMode.Verification:
-          if (VerificationViewModel.AnalyzeVerificationResults())
+          if (VerificationViewModel.AnalyzeVerificationResults(out var errorMsg))
           {
             _ = Current.Dispatcher.BeginInvoke((Action)VerificationViewModel.VerificationSuccess);
           }
           else
-            Notification.ShowLocalized(nameof(Language.Resources.Validation_Fail), System.Windows.Media.Brushes.Red);
+          {
+            Notification.Show(errorMsg, System.Windows.Media.Brushes.Red);
+            //Notification.ShowLocalized(nameof(Language.Resources.Validation_Fail), System.Windows.Media.Brushes.Red);
+          }
           break;
       }
     }

@@ -27,8 +27,9 @@ namespace DIOS.Core
       }
     }
 
-    public static bool ReporterToleranceTest(double errorThresholdPercent)
+    public static bool ReporterToleranceTest(double errorThresholdPercent, out string msg)
     {
+      msg = null;
       if (errorThresholdPercent < 0)
         throw new ArgumentException("Error threshold must not be negative");
       bool passed = true;
@@ -38,15 +39,17 @@ namespace DIOS.Core
         var ReporterMedian = GetMedianReporterForRegion(reg.Region);
         if (ReporterMedian <= reg.InputReporter * thresholdMultiplier)
         {
-          Console.WriteLine($"Verification Fail. Test 1 Reporter tolerance\nReporter value ({ReporterMedian.ToString()}) deviation is more than Threshold is {errorThresholdPercent.ToString($"{0:0.00}")}% from the target ({reg.InputReporter})");
+          msg = $"Verification Fail. Test 1 Reporter tolerance\nReporter value ({ReporterMedian.ToString()}) deviation is more than Threshold is {errorThresholdPercent.ToString($"{0:0.00}")}% from the target ({reg.InputReporter})";
+          Console.WriteLine(msg);
           passed = false;
         }
       }
       return passed;
     }
 
-    public static bool ClassificationToleranceTest(double errorThresholdPercent)
+    public static bool ClassificationToleranceTest(double errorThresholdPercent, out string msg)
     {
+      msg = null;
       if (errorThresholdPercent < 0)
         throw new ArgumentException("Error threshold must not be negative");
       bool passed = true;
@@ -66,13 +69,15 @@ namespace DIOS.Core
       if (difPercent > errorThresholdPercent)
       {
         passed = false;
-        Console.WriteLine($"Verification Fail. Test 2 Classification tolerance\nMax difference between region counts is {difPercent.ToString()}%, Threshold is {errorThresholdPercent.ToString($"{0:0.00}")}");
+        msg = $"Verification Fail. Test 2 Classification tolerance\nMax difference between region counts is {difPercent.ToString()}%, Threshold is {errorThresholdPercent.ToString($"{0:0.00}")}";
+        Console.WriteLine(msg);
       }
       return passed;
     }
 
-    public static bool MisclassificationToleranceTest(double errorThresholdPercent)
+    public static bool MisclassificationToleranceTest(double errorThresholdPercent, out string msg)
     {
+      msg = null;
       if (errorThresholdPercent < 0)
         throw new ArgumentException("Error threshold must not be negative");
       var thresholdMultiplier = errorThresholdPercent <= 100 ? 1 - (errorThresholdPercent / 100) : (errorThresholdPercent / 100);  //reverse percentage
@@ -86,12 +91,12 @@ namespace DIOS.Core
         if (UnclassifiedRegionCount > _highestCount * thresholdMultiplier)
         {
           passed = false;
-          Console.WriteLine($"Verification Fail. Test 3 Misclassification tolerance\nRegion #{reg} Count is higher than the threshold {errorThresholdPercent.ToString($"{0:0.00}")}%");
+          msg = $"Verification Fail. Test 3 Misclassification tolerance\nRegion #{reg} Count is higher than the threshold {errorThresholdPercent.ToString($"{0:0.00}")}%";
+          Console.WriteLine(msg);
         }
       }
       return passed;
     }
-
 
     internal static void FillStats(in BeadInfoStruct outbead)
     {
