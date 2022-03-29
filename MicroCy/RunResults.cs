@@ -46,7 +46,7 @@ namespace DIOS.Core
     }
 
     //TODO:bad design to have it public. get rid somehow
-    public List<WellResult> MakeDeepCopy()
+    internal List<WellResult> MakeDeepCopy()
     {
       var copy = new List<WellResult>(_wellResults.Count);
       for (var i = 0; i < _wellResults.Count; i++)

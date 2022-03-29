@@ -565,11 +565,13 @@ namespace Ei_Dimension
             //CalibrationViewModel.Instance.AttenuationBox[0] = exe.Parameter.ToString();
             break;
           case 0xf3:
-            if (!ComponentsViewModel.Instance.SuppressWarnings)
+            if (!ComponentsViewModel.Instance.SuppressWarnings && App.Device.IsMeasurementGoing)
             {
               update = () =>
               {
                 var currentWell = App.Device.WellController.CurrentWell;
+                if (currentWell == null)
+                  return;
                 ResultsViewModel.Instance.PlatePictogram.ChangeState(currentWell.RowIdx, currentWell.ColIdx,
                   warning: Models.WellWarningState.YellowWarning);
                 if (!App.Device.WellController.IsLastWell) //aspirating next

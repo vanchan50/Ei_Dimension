@@ -21,7 +21,7 @@ namespace DIOS.Core
       }
     }
 
-    public bool Init()
+    private bool Init()
     {
       USBDeviceInfo[] di = USBDevice.GetDevices(_interfaceGuid);   // Get all the MicroCy devices connected
       if (di.Length > 0)

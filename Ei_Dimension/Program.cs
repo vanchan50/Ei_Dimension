@@ -16,10 +16,22 @@ namespace Ei_Dimension
         SplashScreen = new SplashScreen(@"/Icons/SplashCh.png");
 #if !DEBUG
       SplashScreen.Show(false, true);
-#endif
       var app = new App();
       app.InitializeComponent();
       _ = app.Run();
+#endif
+#if DEBUG
+      try
+      {
+        var app = new App();
+        app.InitializeComponent();
+        _ = app.Run();
+      }
+      catch (Exception e)
+      {
+        Console.WriteLine(e.StackTrace);
+      }
+#endif
     }
   }
 }

@@ -50,6 +50,7 @@ namespace DIOS.Core
       //handle HI dnr channel
       var reporter = _greenMin > _device.HdnrTrans ? _greenMaj * _device.HDnrCoef : _greenMin;
       outbead.reporter = reporter / _device.ReporterScaling;
+      outbead.fsc = (float)Math.Pow(10, outbead.fsc);
     }
 
     private int ClassifyBeadToRegion((float cl0, float cl1, float cl2, float cl3) cl)

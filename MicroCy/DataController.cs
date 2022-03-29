@@ -46,8 +46,7 @@ namespace DIOS.Core
           {
             for (byte i = 0; i < 8; i++)
             {
-              BeadInfoStruct outbead;
-              if (!GetBeadFromBuffer(_serialConnection.InputBuffer, i, out outbead))
+              if (!GetBeadFromBuffer(_serialConnection.InputBuffer, i, out var outbead))
                 break;
               _device._beadProcessor.CalculateBeadParams(ref outbead);
 
