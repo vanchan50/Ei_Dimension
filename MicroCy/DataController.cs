@@ -14,10 +14,10 @@ namespace DIOS.Core
     private readonly Thread _prioUsbOutThread;
     private readonly Device _device;
 
-    public DataController(Device device, Type connectionType)
+    public DataController(Device device, ISerial connection)
     {
       _device = device;
-      _serialConnection = ConnectionFactory.MakeNewConnection(connectionType);
+      _serialConnection = connection;
       if (_serialConnection.IsActive)
       {
         _prioUsbInThread = new Thread(ReplyFromMC);

@@ -121,10 +121,10 @@ namespace DIOS.Core
     private readonly StateMachine _stateMach;
     internal readonly BeadProcessor _beadProcessor;
 
-    public Device(Type connectionType = null)
+    public Device(ISerial connection)
     {
       SetSystemDirectories();
-      _dataController = new DataController(this, connectionType);
+      _dataController = new DataController(this, connection);
       _stateMach = new StateMachine(this, true);
       Publisher = new ResultsPublisher(this);
       MapCtroller = new MapController(this);

@@ -23,7 +23,7 @@ namespace Ei_Dimension
     public App()
     {
       CorruptSettingsChecker();
-      Device = new Device();
+      Device = new Device(new USBConnection());
       if(Directory.Exists(Settings.Default.LastOutFolder))
         Device.Publisher.Outdir = Settings.Default.LastOutFolder;
       else

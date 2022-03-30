@@ -15,6 +15,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DIOS.Core", "MicroCy\DIOS.C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Language", "Language\Language.csproj", "{AE6FFECA-703A-49A8-8979-7381FB4DBAE9}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{22FD0680-0B04-454B-A417-430343B3685A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DIOS.Core.Tests", "Tests\DIOS.Core.Tests\DIOS.Core.Tests.csproj", "{9820248A-CD97-4E68-B702-60D43FDF3C62}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A4B56FCD-95DD-44CD-8F5B-6EE456BBD095} = {A4B56FCD-95DD-44CD-8F5B-6EE456BBD095}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -109,9 +116,32 @@ Global
 		{AE6FFECA-703A-49A8-8979-7381FB4DBAE9}.Release|x64.Build.0 = Release|Any CPU
 		{AE6FFECA-703A-49A8-8979-7381FB4DBAE9}.Release|x86.ActiveCfg = Release|Any CPU
 		{AE6FFECA-703A-49A8-8979-7381FB4DBAE9}.Release|x86.Build.0 = Release|Any CPU
+		{9820248A-CD97-4E68-B702-60D43FDF3C62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9820248A-CD97-4E68-B702-60D43FDF3C62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9820248A-CD97-4E68-B702-60D43FDF3C62}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{9820248A-CD97-4E68-B702-60D43FDF3C62}.Debug|ARM.Build.0 = Debug|Any CPU
+		{9820248A-CD97-4E68-B702-60D43FDF3C62}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{9820248A-CD97-4E68-B702-60D43FDF3C62}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{9820248A-CD97-4E68-B702-60D43FDF3C62}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{9820248A-CD97-4E68-B702-60D43FDF3C62}.Debug|x64.Build.0 = Debug|Any CPU
+		{9820248A-CD97-4E68-B702-60D43FDF3C62}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9820248A-CD97-4E68-B702-60D43FDF3C62}.Debug|x86.Build.0 = Debug|Any CPU
+		{9820248A-CD97-4E68-B702-60D43FDF3C62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9820248A-CD97-4E68-B702-60D43FDF3C62}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9820248A-CD97-4E68-B702-60D43FDF3C62}.Release|ARM.ActiveCfg = Release|Any CPU
+		{9820248A-CD97-4E68-B702-60D43FDF3C62}.Release|ARM.Build.0 = Release|Any CPU
+		{9820248A-CD97-4E68-B702-60D43FDF3C62}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{9820248A-CD97-4E68-B702-60D43FDF3C62}.Release|ARM64.Build.0 = Release|Any CPU
+		{9820248A-CD97-4E68-B702-60D43FDF3C62}.Release|x64.ActiveCfg = Release|Any CPU
+		{9820248A-CD97-4E68-B702-60D43FDF3C62}.Release|x64.Build.0 = Release|Any CPU
+		{9820248A-CD97-4E68-B702-60D43FDF3C62}.Release|x86.ActiveCfg = Release|Any CPU
+		{9820248A-CD97-4E68-B702-60D43FDF3C62}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9820248A-CD97-4E68-B702-60D43FDF3C62} = {22FD0680-0B04-454B-A417-430343B3685A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {30E195A8-5F73-44FA-A681-8E5BA9DF6C58}

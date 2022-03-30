@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using DIOS.Core.InstrumentParameters;
 
 namespace DIOS.Core
 {

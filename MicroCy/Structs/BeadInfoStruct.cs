@@ -1,5 +1,4 @@
-﻿
-namespace DIOS.Core
+﻿namespace DIOS.Core
 {
   public struct BeadInfoStruct
   {

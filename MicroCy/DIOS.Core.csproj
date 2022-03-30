@@ -73,7 +73,6 @@
     <Compile Include="CommandLists.cs" />
     <Compile Include="Structs\MapCalParameters.cs" />
     <Compile Include="Structs\CommandStruct.cs" />
-    <Compile Include="ConnectionFactory.cs" />
     <Compile Include="Structs\Gstats.cs" />
     <Compile Include="InstrumentParameters\Idex.cs" />
     <Compile Include="ISerial.cs" />
