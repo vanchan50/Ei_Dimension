@@ -14,8 +14,7 @@
              xmlns:img="clr-namespace:Ei_Dimension.Styles"
              mc:Ignorable="d"
              DataContext="{dxmvvm:ViewModelSource Type={x:Type ViewModels:MaintenanceViewModel}}"
-             d:DesignHeight="944" d:DesignWidth="1920"
-             Loaded="UserControl_Loaded">
+             d:DesignHeight="944" d:DesignWidth="1920">
   <dxmvvm:Interaction.Triggers>
     <dxmvvm:EventToCommand EventName="Initialized" Command="{Binding InitChildrenCommand}"/>
   </dxmvvm:Interaction.Triggers>
@@ -195,7 +194,7 @@
                            NavigationCacheMode="Required"
                            Margin="288,0,0,0">
       <dxmvvm:Interaction.Triggers>
-        <dxmvvm:EventToCommand EventName="Loaded" Command="{Binding NavigateCalibrationCommand}" />
+        <dxmvvm:EventToCommand EventName="Loaded" Command="{Binding NavigateTabCommand}" />
       </dxmvvm:Interaction.Triggers>
       <dxmvvm:Interaction.Behaviors>
         <dxwuin:FrameNavigationService />

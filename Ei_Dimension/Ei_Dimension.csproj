@@ -203,6 +203,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Controllers\ActiveRegionsStatsController.cs" />
     <Compile Include="CompanyID.cs" />
     <Compile Include="Controllers\MapRegionsSubControlllers\DashboardTableController.cs" />

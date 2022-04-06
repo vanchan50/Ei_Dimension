@@ -376,7 +376,7 @@
                                  ItemClick="{DXEvent Click((int)3)}">
                     <dxb:BarButtonItem.ContentTemplate>
                       <DataTemplate>
-                        <Grid Width="130">
+                        <Grid Width="150">
                           <TextBlock Text="{Binding}" HorizontalAlignment="Center"
                                    FontFamily="{StaticResource AppTextFont}"
                                    Foreground="{StaticResource AppTextColor}"

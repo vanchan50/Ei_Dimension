@@ -36,16 +36,16 @@ namespace Ei_Dimension
         UpdateBinfoList();
         _ = Task.Run(() => { Core.DataProcessor.BinScatterData(TempBeadInfoList); });
         Core.DataProcessor.BinMapData(TempBeadInfoList, current: true);
-        if (ViewModels.ResultsViewModel.Instance.DisplaysCurrentmap)
+        if (!ViewModels.ResultsViewModel.Instance.DisplaysCurrentmap)
         {
-          _ = App.Current.Dispatcher.BeginInvoke((Action)(() =>
-          {
-            Core.DataProcessor.AnalyzeHeatMap();
-            _uiUpdateIsActive = 0;
-          }));
-        }
-        else
           _uiUpdateIsActive = 0;
+          return;
+        }
+        _ = App.Current.Dispatcher.BeginInvoke((Action)(() =>
+        {
+          Core.DataProcessor.AnalyzeHeatMap();
+          _uiUpdateIsActive = 0;
+        }));
       });
     }
 

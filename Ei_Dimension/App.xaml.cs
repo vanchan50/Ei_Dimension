@@ -47,6 +47,33 @@ namespace Ei_Dimension
       watcher.Created += OnNewWorkOrder;
     }
 
+    public App(Device device)
+    {
+      CorruptSettingsChecker();
+      Device = device;
+      if (Directory.Exists(Settings.Default.LastOutFolder))
+        Device.Publisher.Outdir = Settings.Default.LastOutFolder;
+      else
+      {
+        Settings.Default.LastOutFolder = Device.Publisher.Outdir;
+        Settings.Default.Save();
+      }
+      SetLogOutput();
+      SetupDevice();
+      Device.StartingToReadWell += StartingToReadWellEventHandler;
+      Device.FinishedReadingWell += FinishedReadingWellEventHandler;
+      Device.FinishedMeasurement += FinishedMeasurementEventHandler;
+      Device.NewStatsAvailable += NewStatsAvailableEventHandler;
+      ResultsPublisher.Outfilename = Settings.Default.SaveFileName;
+      _workOrderPending = false;
+      _nextWellWarning = false;
+      var watcher = new FileSystemWatcher($"{Device.RootDirectory.FullName}\\WorkOrder");
+      watcher.NotifyFilter = NotifyFilters.FileName;
+      watcher.Filter = "*.txt";
+      watcher.EnableRaisingEvents = true;
+      watcher.Created += OnNewWorkOrder;
+    }
+
     private static void CorruptSettingsChecker()
     {
       try
@@ -274,6 +301,8 @@ namespace Ei_Dimension
 
     public static void UnfocusUIElement()
     {
+      if (Ei_Dimension.MainWindow.Instance == null)
+        return;
       System.Windows.Input.FocusManager.SetFocusedElement(System.Windows.Input.FocusManager.GetFocusScope(Ei_Dimension.MainWindow.Instance), null);
       System.Windows.Input.Keyboard.ClearFocus();
     }

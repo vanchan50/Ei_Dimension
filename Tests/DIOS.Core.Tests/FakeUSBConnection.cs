@@ -1,18 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace DIOS.Core.Tests
 {
-  public class FakeUSBConenction : ISerial
+  public class FakeUSBConnection : ISerial
   {
     public byte[] InputBuffer { get; }
     public bool IsActive { get; }
     private readonly object _readReady = new object();
-    public FakeUSBConenction()
+    public FakeUSBConnection()
     {
       InputBuffer = new byte[512];
       IsActive = true;
@@ -37,7 +33,7 @@ namespace DIOS.Core.Tests
 
     public void Write(byte[] buffer)
     {
-      Console.WriteLine($"FakeUSB: write {buffer}");
+
     }
 
     public void ReadBead(in BeadInfoStruct bead)

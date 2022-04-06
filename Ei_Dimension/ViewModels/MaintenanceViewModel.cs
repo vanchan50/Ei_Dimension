@@ -19,6 +19,7 @@ namespace Ei_Dimension.ViewModels
     public virtual string SelectedLanguage { get; set; }
 
     private INavigationService NavigationService => this.GetService<INavigationService>();
+    private int _lastActiveTab = 0;
 
     public static MaintenanceViewModel Instance { get; private set; }
 
@@ -83,6 +84,22 @@ namespace Ei_Dimension.ViewModels
         App.Device.MainCommand("Set Property", code: 0x1f, parameter: (ushort)res);
     }
 
+    public void NavigateTab()
+    {
+      switch (_lastActiveTab)
+      {
+        case 0:
+          NavigateCalibration();
+          break;
+        case 1:
+          NavigateVerification();
+          break;
+        case 2:
+          NavigateChannels();
+          break;
+      }
+    }
+
     public void NavigateCalibration()
     {
       App.HideNumpad();
@@ -91,6 +108,7 @@ namespace Ei_Dimension.ViewModels
         VerificationViewModel.Instance.isActivePage = false;
       NavigationService.Navigate("CalibrationView", null, this);
       App.InitSTab("calibtab");
+      _lastActiveTab = 0;
     }
 
     public void NavigateVerification()
@@ -100,6 +118,7 @@ namespace Ei_Dimension.ViewModels
       if (VerificationViewModel.Instance != null)
         VerificationViewModel.Instance.isActivePage = true;
       NavigationService.Navigate("VerificationView", null, this);
+      _lastActiveTab = 1;
     }
 
     public void NavigateChannels()
@@ -110,6 +129,7 @@ namespace Ei_Dimension.ViewModels
         VerificationViewModel.Instance.isActivePage = false;
       NavigationService.Navigate("ChannelsView", null, this);
       App.InitSTab("channeltab");
+      _lastActiveTab = 2;
     }
 
     public void FocusedBox(int num)
@@ -133,6 +153,7 @@ namespace Ei_Dimension.ViewModels
       NavigateCalibration();
       NavigateVerification();
       NavigateChannels();
+      _lastActiveTab = 0;
     }
 
     public class DropDownButtonContents

@@ -6,7 +6,7 @@ namespace DIOS.Core
 {
   internal class DataController
   {
-    public static ConcurrentQueue<(string name, CommandStruct cs)> OutCommands { get; } = new ConcurrentQueue<(string name, CommandStruct cs)>();
+    internal static ConcurrentQueue<(string name, CommandStruct cs)> OutCommands { get; } = new ConcurrentQueue<(string name, CommandStruct cs)>();
 
     private readonly object _usbOutCV = new object();
     private readonly ISerial _serialConnection;

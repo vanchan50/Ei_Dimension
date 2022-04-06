@@ -18,14 +18,20 @@ namespace Ei_Dimension.Core
     private static readonly double[] CvStats = new double[10];
     static  DataProcessor()
     {
-      _heatColors = new SolidColorBrush[7];
+      _heatColors = new SolidColorBrush[13];
       _heatColors[0] = Brushes.Black;
-      _heatColors[1] = Brushes.DarkViolet;
-      _heatColors[2] = new SolidColorBrush(Color.FromRgb(0x0a, 0x6d, 0xaa));
-      _heatColors[3] = new SolidColorBrush(Color.FromRgb(0x00, 0xcc, 0x49));
-      _heatColors[4] = Brushes.Orange;
-      _heatColors[5] = Brushes.OrangeRed;
-      _heatColors[6] = Brushes.Red;
+      _heatColors[1] = new SolidColorBrush(Color.FromRgb(0x4a, 0x00, 0x6a));
+      _heatColors[2] = Brushes.DarkViolet;
+      _heatColors[3] = new SolidColorBrush(Color.FromRgb(0x4f, 0x37, 0xbf));
+      _heatColors[4] = new SolidColorBrush(Color.FromRgb(0x0a, 0x6d, 0xaa));
+      _heatColors[5] = new SolidColorBrush(Color.FromRgb(0x05, 0x9d, 0x7a));
+      _heatColors[6] = new SolidColorBrush(Color.FromRgb(0x00, 0xcc, 0x49));
+      _heatColors[7] = new SolidColorBrush(Color.FromRgb(0x80, 0xb9, 0x25));
+      _heatColors[8] = Brushes.Orange;
+      _heatColors[9] = new SolidColorBrush(Color.FromRgb(0xff, 0x75, 0x00));
+      _heatColors[10] = Brushes.OrangeRed;
+      _heatColors[11] = new SolidColorBrush(Color.FromRgb(0xff, 0x23, 0x00));
+      _heatColors[12] = Brushes.Red;
     }
 
     public static List<string> GetDataFromFile(string path)
@@ -331,13 +337,17 @@ namespace Ei_Dimension.Core
         Views.ResultsView.Instance.ClearPoints();
         for (var i = 0; i < heatMap.Count; i++)
         {
+          if (heatMap[i].A <= 1) //transparent single member beads == 1
+            continue;
           for (var j = 0; j < _heatColors.Length; j++)
           {
             //int cutoff = (heatMap[i].X > 100 && heatMap[i].Y > 100) ? ViewModels.ResultsViewModel.Instance.XYCutoff : 2;
             if (heatMap[i].A <= bins[j])
             {
-              if (!hiRez && j == 0)
+              if (!hiRez && j == 0) //Cutoff for smallXY
                 break;
+              //if (j == 0) //Cutoff for smallXY
+              //  break;
               if (ResultsViewModel.Instance.WrldMap.Flipped)
                 Views.ResultsView.Instance.AddXYPoint(heatMap[i].Y, heatMap[i].X, _heatColors[j], hiRez);
               else
@@ -349,7 +359,8 @@ namespace Ei_Dimension.Core
       }
       else if (heatMap != null && heatMap.Count == 0)
       {
-        Views.ResultsView.Instance.ClearPoints();
+        if (Views.ResultsView.Instance != null)
+          Views.ResultsView.Instance.ClearPoints();
       }
     }
 

@@ -672,7 +672,7 @@
               <dxc:BorderlessSimpleMarker2DModel/>
             </dxc:PointSeries2D.MarkerModel>
           </dxc:PointSeries2D>
-          <dxc:PointSeries2D Name="LargeHeatMap" DisplayName="LHeatMap" MarkerSize="2">
+          <dxc:PointSeries2D Name="LargeHeatMap" DisplayName="LHeatMap" MarkerSize="3">
             <dxc:PointSeries2D.MarkerModel>
               <dxc:BorderlessSimpleMarker2DModel/>
             </dxc:PointSeries2D.MarkerModel>
@@ -709,21 +709,19 @@
                   Width="240"
                   HorizontalAlignment="Left"
                   VerticalAlignment="Top">
+        <RadioButton Content="{lang:Loc Analysis_Plot2D}"
+                     Height="84" Name="Plot2DButton"
+                     img:EmbeddedImg.Image="{dx:DXImage 'SvgImages/XAF/Action_Debug_Stop.svg'}"
+                     Style="{DynamicResource SubRibbonButtonStyle}"
+                     Command="{Binding Show2DCommand}"
+                     Opacity="0.6"/>
         <RadioButton Content="{lang:Loc Analysis_Plot3D}"
                      Height="84" Name="Plot3DButton"
                      IsChecked="True"
                      img:EmbeddedImg.Image="{dx:DXImage 'SvgImages/XAF/ModelEditor_Class_Object.svg'}"
                      Style="{DynamicResource SubRibbonButtonStyle}"
                      Command="{Binding Show3DCommand}"
-                     Opacity="0.6">
-        </RadioButton>
-        <RadioButton Content="{lang:Loc Analysis_Plot2D}"
-                     Height="84"
-                     img:EmbeddedImg.Image="{dx:DXImage 'SvgImages/XAF/Action_Debug_Stop.svg'}"
-                     Style="{DynamicResource SubRibbonButtonStyle}"
-                     Command="{Binding Show2DCommand}"
-                     Opacity="0.6">
-        </RadioButton>
+                     Opacity="0.6"/>
       </StackPanel>
     </Grid>
 

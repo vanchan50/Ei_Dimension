@@ -12,6 +12,7 @@ namespace Ei_Dimension.ViewModels
   public class ServiceViewModel
   {
     private INavigationService NavigationService => this.GetService<INavigationService>();
+    private int _lastActiveTab = 0;
 
     protected ServiceViewModel()
     {
@@ -22,12 +23,35 @@ namespace Ei_Dimension.ViewModels
       return ViewModelSource.Create(() => new ServiceViewModel());
     }
 
+    public void NavigateTab()
+    {
+      switch (_lastActiveTab)
+      {
+        case 0:
+          NavigateMotors();
+          break;
+        case 1:
+          NavigateComponents();
+          break;
+        case 2:
+          NavigateAlignment();
+          break;
+        case 3:
+          NavigateChannelOffset();
+          break;
+        case 4:
+          NavigateSyringeSpeeds();
+          break;
+      }
+    }
+
     public void NavigateMotors()
     {
       App.HideNumpad();
       MainViewModel.Instance.HideHint();
       NavigationService.Navigate("MotorsView", null, this);
       App.InitSTab("motorstab");
+      _lastActiveTab = 0;
     }
 
     public void NavigateComponents()
@@ -36,6 +60,7 @@ namespace Ei_Dimension.ViewModels
       MainViewModel.Instance.HideHint();
       NavigationService.Navigate("ComponentsView", null, this);
       App.InitSTab("componentstab");
+      _lastActiveTab = 1;
     }
 
     public void NavigateAlignment()
@@ -43,6 +68,7 @@ namespace Ei_Dimension.ViewModels
       App.HideNumpad();
       MainViewModel.Instance.HideHint();
       NavigationService.Navigate("AlignmentView", null, this);
+      _lastActiveTab = 2;
     }
 
     public void NavigateChannelOffset()
@@ -51,6 +77,7 @@ namespace Ei_Dimension.ViewModels
       MainViewModel.Instance.HideHint();
       NavigationService.Navigate("ChannelOffsetView", null, this);
       App.InitSTab("channeltab");
+      _lastActiveTab = 3;
     }
 
     public void NavigateSyringeSpeeds()
@@ -59,6 +86,7 @@ namespace Ei_Dimension.ViewModels
       MainViewModel.Instance.HideHint();
       NavigationService.Navigate("SyringeSpeedsView", null, this);
       App.InitSTab("calibtab");
+      _lastActiveTab = 4;
     }
 
     public void InitChildren()
@@ -68,6 +96,7 @@ namespace Ei_Dimension.ViewModels
       NavigateAlignment();
       NavigateChannelOffset();
       NavigateSyringeSpeeds();
+      _lastActiveTab = 0;
     }
 
     public void SaveAllClick()

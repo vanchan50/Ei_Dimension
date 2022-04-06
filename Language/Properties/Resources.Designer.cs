@@ -1285,6 +1285,15 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Standard + FSC.
+        /// </summary>
+        public static string Dropdown_StandardPlusFSC {
+            get {
+                return ResourceManager.GetString("Dropdown_StandardPlusFSC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Valve Left.
         /// </summary>
         public static string Dropdown_Valve_Left {

@@ -28,10 +28,5 @@ namespace Ei_Dimension.Views
       Console.Error.WriteLine("#7 MaintenanceView Loaded");
 #endif
     }
-
-    private void UserControl_Loaded(object sender, RoutedEventArgs e)
-    {
-      CalButton.IsChecked = true;
-    }
   }
 }

@@ -87,7 +87,8 @@ namespace Ei_Dimension.ViewModels
       {
         new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_Standard), curCulture), this),
         new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_Cells), curCulture), this),
-        new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_FM3D), curCulture), this)
+        new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_FM3D), curCulture), this),
+        new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_StandardPlusFSC), curCulture), this)
       };
       SelectedChConfigIndex = 0;
       SelectedChConfigContent = ChConfigItems[SelectedChConfigIndex].Content;

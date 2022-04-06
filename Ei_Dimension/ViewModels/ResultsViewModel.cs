@@ -59,7 +59,7 @@ namespace Ei_Dimension.ViewModels
     public int XYCutoff { get; set; }
     public static ResultsViewModel Instance { get; private set; }
     private bool _fillDataActive;
-    public const int HIREZDEFINITION = 1024;
+    public const int HIREZDEFINITION = 512;
 
     protected ResultsViewModel()
     {
@@ -320,7 +320,7 @@ namespace Ei_Dimension.ViewModels
       var hiRez = AnalysisVisible == System.Windows.Visibility.Visible;
       _ = Task.Run(() =>
       {
-        var path = PlatePictogram.GetSelectedFilePath();  //@"C:\Emissioninc\KEIZ0R-LEGION\AcquisitionData\val speed test 2E7_0.csv"; //
+        var path = PlatePictogram.GetSelectedFilePath();  //@"C:\Emissioninc\KEIZ0R-LEGION\AcquisitionData\BeadAssayA1_19.csv"; //val speed test 2E7_0
         if (!System.IO.File.Exists(path))
         {
           Notification.ShowLocalized(  nameof(Language.Resources.Notification_File_Inexistent));
@@ -689,9 +689,9 @@ namespace Ei_Dimension.ViewModels
 
     public void ShowAnalysis()
     {
-      Views.ResultsView.Instance.Plot3DButton.IsChecked = true;
+      Views.ResultsView.Instance.Plot2DButton.IsChecked = true;
       AnalysisVisible = System.Windows.Visibility.Visible;
-      Show3D();
+      Show2D();
     }
 
     public void ShowResults()
