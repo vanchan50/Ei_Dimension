@@ -320,8 +320,8 @@ namespace Ei_Dimension.ViewModels
       var hiRez = AnalysisVisible == System.Windows.Visibility.Visible;
       _ = Task.Run(() =>
       {
-        var path = PlatePictogram.GetSelectedFilePath();  //@"C:\Emissioninc\KEIZ0R-LEGION\AcquisitionData\BeadAssayA1_19.csv"; //val speed test 2E7_0
-        if (!System.IO.File.Exists(path))
+        var path = PlatePictogram.GetSelectedFilePath();  //@"C:\Emissioninc\KEIZ0R-LEGION\AcquisitionData\rowtest1A1_0.csv";
+        if (!System.IO.File.Exists(path)) //rowtest1A1_0  //BeadAssayA1_19 //val speed test 2E7_0
         {
           Notification.ShowLocalized(  nameof(Language.Resources.Notification_File_Inexistent));
           ResultsWaitIndicatorVisibility = false;

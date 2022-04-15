@@ -509,16 +509,13 @@
     </EmbeddedResource>
     <None Include="App.config" />
     <AppDesigner Include="Properties\" />
-    <None Include="Maps\100Plex.dmap">
+    <None Include="Maps\D100plex.dmap">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Maps\BioRad.dmap">
+    <None Include="Maps\ULBG50B.dmap">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Maps\Ei100_plex.dmap">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Maps\ULBG50.dmap">
+    <None Include="Maps\ULBG50D.dmap">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
@@ -605,6 +602,7 @@
     <Resource Include="Icons\Security_WarningCircled2.svg" />
     <Resource Include="Icons\State_Validation_Invalid.svg" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

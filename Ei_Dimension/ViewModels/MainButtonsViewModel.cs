@@ -88,8 +88,8 @@ namespace Ei_Dimension.ViewModels
         ResultsViewModel.Instance.CurrentMfiItems[i] = "";
         ResultsViewModel.Instance.CurrentCvItems[i] = "";
       }
-      App.Device.StartOperation();
       MainViewModel.Instance.NavigationSelector(1);
+      App.Device.StartOperation();
     }
 
     public void EndButtonClick()

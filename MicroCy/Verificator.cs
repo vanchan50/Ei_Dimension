@@ -5,24 +5,30 @@ namespace DIOS.Core
 {
   public static class Verificator
   {
-    public static int TotalClassifiedBeads;
     private static readonly List<ValidationStats> RegionalStats = new List<ValidationStats>(50);
-    private static Dictionary<int, int> _dict = new Dictionary<int, int>();
-    private static Dictionary<int, int> _unclassifiedRegionsDict = new Dictionary<int, int>();
+    private static Dictionary<int, int> _classifiedRegionsDict = new Dictionary<int, int>();
+    private static Dictionary<int, int> _unclassifiedRegionsDict = new Dictionary<int, int>();  //region,count
     private static int _highestCount = 0;
     private static int _lowestCount = int.MaxValue;
+    private static int _lowestCountRegion = -1;
+    private static int _highestCountRegion = -1;
+    private static int _totalClassifiedBeads;
+    private static int _totalUnclassifiedBeads;
 
     public static void Reset(List<(int regionNum, double InputReporter)> regions)
     {
       RegionalStats.Clear();
-      TotalClassifiedBeads = 0;
+      _totalClassifiedBeads = 0;
+      _totalUnclassifiedBeads = 0;
       _highestCount = 0;
       _lowestCount = int.MaxValue;
-      _dict.Clear();
+      _lowestCountRegion = -1;
+      _highestCountRegion = -1;
+      _classifiedRegionsDict.Clear();
       _unclassifiedRegionsDict.Clear();
       foreach (var reg in regions)
       {
-        _dict.Add(reg.regionNum, RegionalStats.Count);
+        _classifiedRegionsDict.Add(reg.regionNum, RegionalStats.Count);
         RegionalStats.Add(new ValidationStats(reg.regionNum, reg.InputReporter));
       }
     }
@@ -40,7 +46,7 @@ namespace DIOS.Core
         var ReporterMedian = GetMedianReporterForRegion(reg.Region);
         if (ReporterMedian <= reg.InputReporter * thresholdMultiplier)
         {
-          Console.WriteLine($"Verification Fail. Test 1 Reporter tolerance\nReporter value ({ReporterMedian.ToString()}) deviation is more than Threshold is {errorThresholdPercent.ToString($"{0:0.00}")}% from the target ({reg.InputReporter})");
+          //Console.WriteLine($"Verification Fail. Test 1 Reporter tolerance\nReporter value ({ReporterMedian.ToString()}) deviation is more than Threshold is {errorThresholdPercent.ToString($"{0:0.00}")}% from the target ({reg.InputReporter})");
           problematicRegions.Add(reg.Region);
           passed = false;
         }
@@ -48,12 +54,13 @@ namespace DIOS.Core
 
       if (problematicRegions.Count != 0)
       {
-        msg = "Test1 Failed Regions: ";
+        msg = "Test1 Regions: ";
         foreach (var region in problematicRegions)
         {
           msg = msg + region.ToString() + ",";
         }
         msg = msg.Remove(msg.Length - 1);
+        msg = msg += $" measured {thresholdMultiplier}% below target reporter value";
       }
       return passed;
     }
@@ -64,24 +71,15 @@ namespace DIOS.Core
       if (errorThresholdPercent < 0)
         throw new ArgumentException("Error threshold must not be negative");
       bool passed = true;
-      foreach (var region in RegionalStats)
-      {
-        if (region.Count > _highestCount)
-        {
-          _highestCount = region.Count;
-          continue;
-        }
-        if (region.Count < _lowestCount)
-          _lowestCount = region.Count;
-      }
 
-      var difference = (_highestCount - _lowestCount) / (double)_lowestCount;
+      //var difference = (_highestCount - _lowestCount) / (double)_lowestCount;
+      var difference = _totalUnclassifiedBeads / _totalClassifiedBeads;
       var difPercent = difference * 100;
       if (difPercent > errorThresholdPercent)
       {
         passed = false;
-        Console.WriteLine($"Verification Fail. Test 2 Classification tolerance\nMax difference between region counts is {difPercent.ToString()}%, Threshold is {errorThresholdPercent.ToString($"{0:0.00}")}");
-        msg = $"Test2 Max difference is {difPercent.ToString()}%";
+        //Console.WriteLine($"Verification Fail. Test 2 Classification tolerance\nMax difference between region counts is {difPercent.ToString()}%, Threshold is {errorThresholdPercent.ToString($"{0:0.00}")}");
+        msg = $"Test2 {difPercent.ToString()}% of verification events outside target regions";
       }
       return passed;
     }
@@ -91,27 +89,25 @@ namespace DIOS.Core
       msg = null;
       if (errorThresholdPercent < 0)
         throw new ArgumentException("Error threshold must not be negative");
-      var thresholdMultiplier = errorThresholdPercent <= 100 ? 1 - (errorThresholdPercent / 100) : (errorThresholdPercent / 100);  //reverse percentage
+      //var thresholdMultiplier = errorThresholdPercent <= 100 ? 1 - (errorThresholdPercent / 100) : (errorThresholdPercent / 100);  //reverse percentage
       bool passed = true;
 
       var problematicRegions = new List<int>();
 
-      foreach (var reg in _unclassifiedRegionsDict.Keys)
+      foreach (var reg in _unclassifiedRegionsDict)
       {
-        var UnclassifiedRegionCount = _unclassifiedRegionsDict[reg];
-        
-        if (UnclassifiedRegionCount > _highestCount * thresholdMultiplier)
+        if ( ((reg.Value / (double)_lowestCount) * 100 ) > errorThresholdPercent)
         {
           passed = false;
-          Console.WriteLine($"Verification Fail. Test 3 Misclassification tolerance\nRegion #{reg} Count is higher than the threshold {errorThresholdPercent.ToString($"{0:0.00}")}%");
-          problematicRegions.Add(reg);
+          //Console.WriteLine($"Verification Fail. Test 3 Misclassification tolerance\nRegion #{reg.Key} Count is higher than the threshold {errorThresholdPercent.ToString($"{0:0.00}")}%");
+          problematicRegions.Add(reg.Key);
         }
       }
 
 
       if (problematicRegions.Count != 0)
       {
-        msg = "Test3 Failed Regions: ";
+        msg = $"Test3 {errorThresholdPercent}% of region {_lowestCountRegion} events misclassified into regions : ";
         foreach (var region in problematicRegions)
         {
           msg = msg + region.ToString() + ",";
@@ -121,14 +117,20 @@ namespace DIOS.Core
       return passed;
     }
 
+    /// <summary>
+    /// Called on every Read from USB, in Verification mode. Not used in other modes
+    /// </summary>
+    /// <param name="outbead"></param>
     internal static void FillStats(in BeadInfoStruct outbead)
     {
-      if (_dict.TryGetValue(outbead.region, out var index))
+      //if region is classified
+      if (_classifiedRegionsDict.TryGetValue(outbead.region, out var index))
       {
         RegionalStats[index].FillCalibrationStatsRow(in outbead);
         return;
       }
 
+      //if region is UNclassified
       if (_unclassifiedRegionsDict.ContainsKey(outbead.region))
       {
         _unclassifiedRegionsDict[outbead.region]++;
@@ -139,10 +141,30 @@ namespace DIOS.Core
 
     internal static void CalculateResults()
     {
-      foreach (var s in RegionalStats)
+      //RegionalStats holds regions with defined Reporter target
+      foreach (var region in RegionalStats)
       {
-        s.CalculateResults();
-        TotalClassifiedBeads += s.Count;
+        region.CalculateResults();
+        _totalClassifiedBeads += region.Count;
+
+        //calculate highest and lowest count for classified regions
+        if (region.Count > _highestCount)
+        {
+          _highestCount = region.Count;
+          _highestCountRegion = region.Region;
+          continue;
+        }
+
+        if (region.Count < _lowestCount)
+        {
+          _lowestCount = region.Count;
+          _lowestCountRegion = region.Region;
+        }
+      }
+
+      foreach (var entry in _unclassifiedRegionsDict)
+      {
+        _totalUnclassifiedBeads += entry.Value;
       }
     }
     private static double GetMedianReporterForRegion(int regionNum)
