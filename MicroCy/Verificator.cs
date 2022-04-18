@@ -54,7 +54,7 @@ namespace DIOS.Core
 
       if (problematicRegions.Count != 0)
       {
-        msg = "Test1 Regions: ";
+        msg = "Test1: Regions: ";
         foreach (var region in problematicRegions)
         {
           msg = msg + region.ToString() + ",";
@@ -73,13 +73,18 @@ namespace DIOS.Core
       bool passed = true;
 
       //var difference = (_highestCount - _lowestCount) / (double)_lowestCount;
+      if (_totalClassifiedBeads == 0)
+      {
+        msg = "Test2: no beads were classified";
+        return false;
+      }
       var difference = _totalUnclassifiedBeads / _totalClassifiedBeads;
       var difPercent = difference * 100;
       if (difPercent > errorThresholdPercent)
       {
         passed = false;
         //Console.WriteLine($"Verification Fail. Test 2 Classification tolerance\nMax difference between region counts is {difPercent.ToString()}%, Threshold is {errorThresholdPercent.ToString($"{0:0.00}")}");
-        msg = $"Test2 {difPercent.ToString()}% of verification events outside target regions";
+        msg = $"Test2: {difPercent.ToString()}% of verification events outside target regions";
       }
       return passed;
     }
@@ -104,10 +109,9 @@ namespace DIOS.Core
         }
       }
 
-
       if (problematicRegions.Count != 0)
       {
-        msg = $"Test3 {errorThresholdPercent}% of region {_lowestCountRegion} events misclassified into regions : ";
+        msg = $"Test3: {errorThresholdPercent}% of region {_lowestCountRegion} events misclassified into regions : ";
         foreach (var region in problematicRegions)
         {
           msg = msg + region.ToString() + ",";
@@ -131,6 +135,9 @@ namespace DIOS.Core
       }
 
       //if region is UNclassified
+      if (outbead.region == 0)
+        return;
+      //region 0 should not be counted here
       if (_unclassifiedRegionsDict.ContainsKey(outbead.region))
       {
         _unclassifiedRegionsDict[outbead.region]++;
@@ -170,6 +177,8 @@ namespace DIOS.Core
     private static double GetMedianReporterForRegion(int regionNum)
     {
       var index = RegionalStats.FindIndex(x => x.Region == regionNum);
+      if (double.IsNaN(RegionalStats[index].Stats[0].mfi))
+        return 0;
       return RegionalStats[index].Stats[0].mfi;
     }
   }

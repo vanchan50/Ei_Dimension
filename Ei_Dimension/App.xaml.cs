@@ -439,7 +439,7 @@ namespace Ei_Dimension
           }
           else
           {
-            Notification.Show(errorMsg, System.Windows.Media.Brushes.Red);
+            Notification.Show(errorMsg, System.Windows.Media.Brushes.Red, 26);
             //Notification.ShowLocalized(nameof(Language.Resources.Validation_Fail), System.Windows.Media.Brushes.Red);
           }
           break;

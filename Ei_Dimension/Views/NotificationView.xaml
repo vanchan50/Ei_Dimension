@@ -24,15 +24,21 @@
             Margin="610,390,0,0" 
             Width="700" Height="300">
       <Grid>
-        <TextBlock Text="{Binding Text[0]}"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Top"
-                   FontFamily="{StaticResource AppTextFont}"
-                   FontWeight="UltraBold"
-                   TextWrapping="Wrap"
-                   Height="180" Width="639" TextAlignment="Center"
-                   Margin="30,20,0,0"
-                   FontSize="40"/>
+        <ScrollViewer HorizontalAlignment="Left"
+                      VerticalAlignment="Top"
+                      Height="180" Width="629"
+                      Margin="30,20,0,0"
+                      VerticalScrollBarVisibility="Auto"
+                      HorizontalScrollBarVisibility="Hidden">
+          <TextBlock Text="{Binding Text[0]}"
+                     HorizontalAlignment="Left"
+                     VerticalAlignment="Top"
+                     FontFamily="{StaticResource AppTextFont}"
+                     FontWeight="UltraBold"
+                     TextWrapping="Wrap" Width="600"
+                     TextAlignment="Justify"
+                     FontSize="{Binding FontSize}"/>
+        </ScrollViewer>
         <Button Content="{lang:Loc OK}"
                 Command="{Binding CloseCommand}"
                 Style="{StaticResource ButtonStyle}"

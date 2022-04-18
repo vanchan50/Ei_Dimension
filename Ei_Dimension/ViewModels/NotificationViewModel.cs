@@ -15,6 +15,7 @@ namespace Ei_Dimension.ViewModels
     public virtual System.Windows.Visibility NotificationVisible { get; set; }
     public virtual ObservableCollection<System.Windows.Visibility> ButtonVisible { get; set; }
     public virtual System.Windows.Media.Brush Background { get; set; }
+    public virtual double FontSize { get; set; }
     public Action Action1 { set { _action1 = value; } }
     public Action Action2 { set { _action2 = value; } }
     public static System.Windows.Media.Brush DefaultBackground { get; } = (System.Windows.Media.Brush)App.Current.Resources["RibbonBackgroundActive"];
