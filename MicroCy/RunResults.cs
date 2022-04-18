@@ -11,6 +11,7 @@ namespace DIOS.Core
     private List<WellResult> _wellResults = new List<WellResult>();
     private SortedDictionary<ushort, int> _regionIndexDictionary = new SortedDictionary<ushort, int>();
     private bool _chkRegionCount;
+    private int _minPerRegCount;  //discard region 0 from calculation
 
     public RunResults(Device device)
     {
@@ -37,12 +38,21 @@ namespace DIOS.Core
           }
         }
       }
-      if (_device.Reg0stats)
+      //region 0 has to be the last in _wellResults
+      if (_device.Reg0stats)  //TODO: remove the IF from here and don't damage the rest of reg0stats logic
       {
         _regionIndexDictionary.Add(0, _wellResults.Count);
         _wellResults.Add(new WellResult { regionNumber = 0 });
       }
       _chkRegionCount = false;
+
+      //MinPerRegion logic does not apply to region 0.
+      if (_device.TerminationType == Termination.MinPerRegion)
+      {
+        _minPerRegCount = _wellResults.Count;
+        if (_minPerRegCount != 0 && _wellResults[_wellResults.Count - 1].regionNumber == 0)
+          _minPerRegCount -= 1;
+      }
     }
 
     //TODO:bad design to have it public. get rid somehow
@@ -111,13 +121,10 @@ namespace DIOS.Core
     public int MinPerRegionAchieved()
     {
       int res = int.MaxValue;
-      if (_wellResults.Count > 0)
+      for (var i = 0; i < _minPerRegCount; i++)
       {
-        foreach (var wr in _wellResults)
-        {
-          var diff = wr.RP1vals.Count - _device.MinPerRegion;
-          res = diff < res? diff : res;
-        }
+        var diff = _wellResults[i].RP1vals.Count - _device.MinPerRegion;
+        res = diff < res ? diff : res;
       }
       return res;
     }
