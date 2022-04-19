@@ -91,7 +91,7 @@ namespace Ei_Dimension
     {
       ChannelOffsetViewModel.Instance.OldBoardOffsetsVisible = Visibility.Hidden;
       Views.ChannelOffsetView.Instance.SlidersSP.Visibility = Visibility.Visible;
-      Views.ChannelOffsetView.Instance.BaselineSP.Width = 180;
+      //Views.ChannelOffsetView.Instance.BaselineSP.Width = 180;
       Views.ChannelOffsetView.Instance.AvgBgSP.Width = 180;
     }
   }

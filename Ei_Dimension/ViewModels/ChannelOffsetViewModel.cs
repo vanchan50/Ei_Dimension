@@ -12,7 +12,7 @@ namespace Ei_Dimension.ViewModels
   public class ChannelOffsetViewModel
   {
     public virtual ObservableCollection<string> ChannelsOffsetParameters { get; set; }
-    public virtual ObservableCollection<string> ChannelsBaseline { get; set; }
+    //public virtual ObservableCollection<string> ChannelsBaseline { get; set; }
     public virtual ObservableCollection<string> AverageBg { get; set; }
     public virtual System.Windows.Visibility OldBoardOffsetsVisible { get; set; }
     public virtual object SliderValue1 { get; set; }
@@ -22,7 +22,7 @@ namespace Ei_Dimension.ViewModels
     public virtual ObservableCollection<string> SiPMTempCoeff { get; set; }
     public virtual ObservableCollection<string> CalibrationMargin { get; set; }
     public virtual ObservableCollection<string> ReporterScale { get; set; }
-    public virtual ObservableCollection<bool> Checkbox { get; set; }
+    //public virtual ObservableCollection<bool> Checkbox { get; set; }
     public virtual string SelectedSensitivityContent { get; set; }
     public virtual ObservableCollection<DropDownButtonContents> SensitivityItems { get; set; }
     public byte SelectedSensitivityIndex { get; set; }
@@ -32,7 +32,7 @@ namespace Ei_Dimension.ViewModels
     protected ChannelOffsetViewModel()
     {
       ChannelsOffsetParameters = new ObservableCollection<string>();
-      ChannelsBaseline = new ObservableCollection<string>();
+      //ChannelsBaseline = new ObservableCollection<string>();
       AverageBg = new ObservableCollection<string>();
       OldBoardOffsetsVisible = System.Windows.Visibility.Visible;
       SiPMTempCoeff = new ObservableCollection<string> { "" };
@@ -41,13 +41,13 @@ namespace Ei_Dimension.ViewModels
       for (var i = 0; i < 10; i++)
       {
         ChannelsOffsetParameters.Add("");
-        ChannelsBaseline.Add("");
+        //ChannelsBaseline.Add("");
         AverageBg.Add("");
       }
 
-      Checkbox = new ObservableCollection<bool> { Settings.Default.SubtractBaseline };
-      var param = Settings.Default.SubtractBaseline ? 1 : 0;
-      App.Device.MainCommand("Set Property", code: 0x1d, parameter: (ushort)param);
+      //Checkbox = new ObservableCollection<bool> { Settings.Default.SubtractBaseline };
+      //var param = Settings.Default.SubtractBaseline ? 1 : 0;
+      //App.Device.MainCommand("Set Property", code: 0x1d, parameter: (ushort)param);
       var RM = Language.Resources.ResourceManager;
       var curCulture = Language.TranslationSource.Instance.CurrentCulture;
       SensitivityItems = new ObservableCollection<DropDownButtonContents>
@@ -110,7 +110,7 @@ namespace Ei_Dimension.ViewModels
     public void FocusedBox(int num)
     {
       var Stackpanel = Views.ChannelOffsetView.Instance.SP.Children;
-      var BaselineStackpanel = Views.ChannelOffsetView.Instance.SP2.Children;
+      //var BaselineStackpanel = Views.ChannelOffsetView.Instance.SP2.Children;
       var InnerStackpanel = ((StackPanel)Stackpanel[3]).Children;
       switch (num)
       {
@@ -158,6 +158,7 @@ namespace Ei_Dimension.ViewModels
           UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(SiPMTempCoeff)), this, 0, Views.ChannelOffsetView.Instance.CoefTB);
           MainViewModel.Instance.NumpadToggleButton(Views.ChannelOffsetView.Instance.CoefTB);
           break;
+        /*
         case 11:
           UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsBaseline)), this, 0, (TextBox)BaselineStackpanel[0]);
           MainViewModel.Instance.NumpadToggleButton((TextBox)BaselineStackpanel[0]);
@@ -198,6 +199,7 @@ namespace Ei_Dimension.ViewModels
           UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsBaseline)), this, 9, (TextBox)BaselineStackpanel[9]);
           MainViewModel.Instance.NumpadToggleButton((TextBox)BaselineStackpanel[9]);
           break;
+        */
         case 21:
           UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(CalibrationMargin)), this, 0, Views.ChannelOffsetView.Instance.CalMarginTB);
           MainViewModel.Instance.NumpadToggleButton(Views.ChannelOffsetView.Instance.CalMarginTB);
@@ -209,6 +211,7 @@ namespace Ei_Dimension.ViewModels
       }
     }
 
+    /*
     public void CheckedBox(int num)
     {
       if (num == 0)
@@ -224,6 +227,7 @@ namespace Ei_Dimension.ViewModels
       Settings.Default.Save();
       App.Device.MainCommand("Set Property", code: 0x1d, parameter: (ushort)1);
     }
+    */
 
     public void TextChanged(TextChangedEventArgs e)
     {

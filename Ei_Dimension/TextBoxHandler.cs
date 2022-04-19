@@ -23,11 +23,9 @@ namespace Ei_Dimension
           case 0x04:
             update = () => ComponentsViewModel.Instance.IdexTextBoxInputs[0] = exe.Parameter.ToString("X2");
             break;
-          #if DEBUG
           case 0x06:
             update = () => MainViewModel.Instance.TotalBeadsInFirmware[0] = exe.FParameter.ToString();
             break;
-          #endif
           case 0x08:
             update = () => ChannelOffsetViewModel.Instance.CalibrationMargin[0] = exe.FParameter.ToString();
             break;
@@ -264,18 +262,18 @@ namespace Ei_Dimension
           case 0x81:
             update = () => ChannelsViewModel.Instance.TempParameters[8] = (exe.Parameter / 10.0).ToString("N1");
             break;
-          case 0x82:
-            update = () => ChannelOffsetViewModel.Instance.ChannelsBaseline[7] = exe.Parameter.ToString();
-            break;
-          case 0x83:
-            update = () => ChannelOffsetViewModel.Instance.ChannelsBaseline[8] = exe.Parameter.ToString();
-            break;
+          //case 0x82:
+          //  update = () => ChannelOffsetViewModel.Instance.ChannelsBaseline[7] = exe.Parameter.ToString();
+          //  break;
+          //case 0x83:
+          //  update = () => ChannelOffsetViewModel.Instance.ChannelsBaseline[8] = exe.Parameter.ToString();
+          //  break;
           case 0x84:
             update = () => ChannelsViewModel.Instance.TempParameters[9] = (exe.Parameter / 10.0).ToString("N1");
             break;
-          case 0x85:
-            update = () => ChannelOffsetViewModel.Instance.ChannelsBaseline[9] = exe.Parameter.ToString();
-            break;
+          //case 0x85:
+          //  update = () => ChannelOffsetViewModel.Instance.ChannelsBaseline[9] = exe.Parameter.ToString();
+          //  break;
           case 0x8b:
             //update = () => CalibrationViewModel.Instance.ClassificationTargetsContents[0] = exe.Parameter.ToString();
             break;
@@ -396,6 +394,7 @@ namespace Ei_Dimension
           case 0xb6:
             update = () => ChannelsViewModel.Instance.TempParameters[6] = (exe.Parameter / 10.0).ToString("N1");
             break;
+          /*
           case 0xb8:
             update = () =>
             {
@@ -438,6 +437,7 @@ namespace Ei_Dimension
               ChannelOffsetViewModel.Instance.ChannelsBaseline[6] = exe.Parameter.ToString();
             };
             break;
+          */
           case 0xc0:
             update = () =>
             {

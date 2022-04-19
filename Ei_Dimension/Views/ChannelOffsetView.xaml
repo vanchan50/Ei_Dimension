@@ -290,6 +290,7 @@
         </Border>
         </StackPanel>
         <!--Baseline-->
+        <!--
         <StackPanel Name="BaselineSP" Width="0">
           <TextBlock Text="Baseline"
                      FontFamily="{StaticResource AppTextFont}"
@@ -395,6 +396,7 @@
           </StackPanel>
         </Border>
         </StackPanel>
+        -->
         <!--Offset-->
         <StackPanel>
           <TextBlock Text="{lang:Loc Channels_Offset_Header}"
@@ -588,6 +590,7 @@
                                      Command="{Binding SliderValueChangedCommand}" CommandParameter="2"/>
             </dxmvvm:Interaction.Behaviors>
           </dxe:TrackBarEdit>
+          <!-->
           <StackPanel Orientation="Horizontal"
                       Margin="15,10,0,0">
             <CheckBox FontFamily="{StaticResource AppTextFont}"
@@ -609,6 +612,7 @@
                        Foreground="{StaticResource AppTextColor}"
                        Margin="10,0,0,0"/>
           </StackPanel>
+          <-->
         </StackPanel>
       </StackPanel>
     </Border>

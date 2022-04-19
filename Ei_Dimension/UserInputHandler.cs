@@ -766,6 +766,7 @@ namespace Ei_Dimension
               ErrorMessage = App.Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
             }
             break;
+          /*
           case "ChannelsBaseline":
             if (SelectedTextBox.index == 0)
             {
@@ -898,6 +899,7 @@ namespace Ei_Dimension
               ErrorMessage = App.Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
             }
             break;
+          */
           case "ParametersX":
             if (SelectedTextBox.index == 0)
             {

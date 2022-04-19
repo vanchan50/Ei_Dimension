@@ -170,7 +170,7 @@
                    Margin="0,0,0,0">
           <ToolTipService.ToolTip>
             <TextBlock FontSize="32"
-                       FontFamily="{StaticResource AppTextFont}" Name="EventCounter"/>
+                       FontFamily="{StaticResource AppTextFont}" Name="EventCounterTooltip"/>
           </ToolTipService.ToolTip>
         </TextBlock>
         <TextBox HorizontalAlignment="Stretch"

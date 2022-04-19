@@ -9,10 +9,8 @@ namespace Ei_Dimension.ViewModels
   [POCOViewModel]
   public class MainViewModel
   {
-    public static string AppVersion { get; } = "Application Version: 1.0.3";
-#if DEBUG
+    public static string AppVersion { get; } = "Application Version: 1.1.1";
     public ObservableCollection<string> TotalBeadsInFirmware { get; set; } = new ObservableCollection<string> { "0" };
-#endif
     public virtual ObservableCollection<bool> MainSelectorState { get; set; }
     public virtual Visibility NumpadVisible { get; set; }
     public virtual Visibility KeyboardVisible { get; set; }

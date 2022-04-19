@@ -31,7 +31,7 @@ namespace Ei_Dimension
       bind.Source = ViewModels.MainViewModel.Instance;
       bind.Path = new PropertyPath("TotalBeadsInFirmware[0]");
       bind.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
-      _ = BindingOperations.SetBinding(EventCounter, TextBlock.TextProperty, bind);
+      _ = BindingOperations.SetBinding(EventCounterTooltip, TextBlock.TextProperty, bind);
 
       TextBlock BoardV = new TextBlock();
       BoardV.HorizontalAlignment = HorizontalAlignment.Left;
@@ -63,7 +63,7 @@ namespace Ei_Dimension
       {
         ViewModels.ChannelOffsetViewModel.Instance.OldBoardOffsetsVisible = Visibility.Hidden;
         Views.ChannelOffsetView.Instance.SlidersSP.Visibility = Visibility.Visible;
-        Views.ChannelOffsetView.Instance.BaselineSP.Width = 180;
+        //Views.ChannelOffsetView.Instance.BaselineSP.Width = 180;
         Views.ChannelOffsetView.Instance.AvgBgSP.Width = 180;
         ((TextBlock) sender).Text = "TEST BoardVersion = 3";
         App.Device.SetBoardVersion(3);
@@ -72,7 +72,7 @@ namespace Ei_Dimension
       {
         ViewModels.ChannelOffsetViewModel.Instance.OldBoardOffsetsVisible = Visibility.Visible;
         Views.ChannelOffsetView.Instance.SlidersSP.Visibility = Visibility.Hidden;
-        Views.ChannelOffsetView.Instance.BaselineSP.Width = 0;
+        //Views.ChannelOffsetView.Instance.BaselineSP.Width = 0;
         Views.ChannelOffsetView.Instance.AvgBgSP.Width = 0;
         ((TextBlock) sender).Text = "TEST BoardVersion = 1";
         App.Device.SetBoardVersion(1);
