@@ -97,26 +97,27 @@ namespace DIOS.Core
       //end of read session (plate, plate section or tube) write summary stat file
       if (SummaryOut.Length == 0)
         return;
-
+      var directoryName = $"{Outdir}\\AcquisitionData";
       try
       {
         OutDirCheck();
-        if (!Directory.Exists($"{Outdir}\\AcquisitionData"))
-          Directory.CreateDirectory($"{Outdir}\\AcquisitionData");
+        if (!Directory.Exists(directoryName))
+          Directory.CreateDirectory(directoryName);
       }
       catch
       {
-        Console.WriteLine($"Failed to create {Outdir}\\AcquisitionData");
+        Console.WriteLine($"Failed to create {directoryName}");
         return;
       }
-      var filename = GetThisRunFileName();
+      var fileName = GetThisRunFileName();
       try
       {
-        File.AppendAllText(filename, SummaryOut.ToString());
+        File.AppendAllText(fileName, SummaryOut.ToString());
+        Console.WriteLine($"Results summary saved as {fileName}");
       }
       catch
       {
-        Console.WriteLine($"Failed to append data to {filename}");
+        Console.WriteLine($"Failed to append data to {fileName}");
       }
     }
 
@@ -146,24 +147,27 @@ namespace DIOS.Core
         return;
 
       string rfilename = _device.Control == SystemControl.Manual ? Outfilename : _device.WorkOrder.plateID.ToString();
+      var directoryName = $"{_device.RootDirectory.FullName}\\Result\\Summary";
       try
       {
-        if (!Directory.Exists($"{_device.RootDirectory.FullName}\\Result\\Summary"))
-          _ = Directory.CreateDirectory($"{_device.RootDirectory.FullName}\\Result\\Summary");
+        if (!Directory.Exists(directoryName))
+          _ = Directory.CreateDirectory(directoryName);
       }
       catch
       {
-        Console.WriteLine($"Failed to create {_device.RootDirectory.FullName}\\Result\\Summary");
+        Console.WriteLine($"Failed to create {directoryName}");
         return;
       }
 
       try
       {
-        using (TextWriter jwriter = new StreamWriter($"{_device.RootDirectory.FullName}\\Result\\Summary\\" +
-                                                     "Summary_" + rfilename + ".json"))
+        var fileName = $"{directoryName}" +
+                       "\\Summary_" + rfilename + ".json";
+        using (TextWriter jwriter = new StreamWriter(fileName))
         {
           var jcontents = JsonConvert.SerializeObject(_plateReport);
           jwriter.Write(jcontents);
+          Console.WriteLine($"Plate Report saved as {fileName}");
         }
       }
       catch
@@ -186,19 +190,7 @@ namespace DIOS.Core
 
     public void SaveBeadFile(List<WellResult> wellres) //cancels the begin read from endpoint 2
     {
-      //write file
-      Console.WriteLine($"{DateTime.Now.ToString()} Reporting Background results cloned for save");
-      if ((FullFileName != null) && _device.Everyevent)
-      {
-        try
-        {
-          File.WriteAllText(FullFileName, GetWellReport());
-        }
-        catch
-        {
-          Console.WriteLine($"Failed to write to {FullFileName}");
-        }
-      }
+      SaveBeadEventFile();
       if (_device.RMeans)
       {
         ClearSummary();
@@ -214,7 +206,7 @@ namespace DIOS.Core
           WellResult regionNumber = wellres[i];
           OutResults rout = FillOutResults(regionNumber);
           AddOutResultsToSummary(in rout);
-          AddToPlateReport(in rout);
+          AddToPlateReport(in rout);//TODO: done not in the right place
         }
         OutputSummaryFile();
         wellres = null;
@@ -252,6 +244,22 @@ namespace DIOS.Core
       else if (rout.count > 2)
         rout.meanfi = rp1Temp.Average();
       return rout;
+    }
+
+    private void SaveBeadEventFile()
+    {
+      if ((FullFileName != null) && _device.Everyevent)
+      {
+        try
+        {
+          File.WriteAllText(FullFileName, GetWellReport());
+          Console.WriteLine($"Bead event saved as {FullFileName}");
+        }
+        catch
+        {
+          Console.WriteLine($"Failed to write Bead event to {FullFileName}");
+        }
+      }
     }
   }
 }

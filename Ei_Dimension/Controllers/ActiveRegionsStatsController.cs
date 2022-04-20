@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using DevExpress.Mvvm.DataAnnotations;
+using DevExpress.Mvvm.POCO;
 using DIOS.Core;
 
 namespace Ei_Dimension.Controllers
@@ -10,11 +12,12 @@ namespace Ei_Dimension.Controllers
   /// This class Holds the statistical data for every map region.
   /// The data is split between the Current measurement and Backing (for selected file)
   /// </summary>
-  internal sealed class ActiveRegionsStatsController
+  [POCOViewModel]
+  public class ActiveRegionsStatsController
   {
     //pointers to storages of mean and count
-    public ObservableCollection<string> DisplayedActiveRegionsCount { get; private set; }
-    public ObservableCollection<string> DisplayedActiveRegionsMean { get; private set; }
+    public virtual ObservableCollection<string> DisplayedActiveRegionsCount { get; protected set; }
+    public virtual ObservableCollection<string> DisplayedActiveRegionsMean { get; protected set; }
     //storage for mean and count of all existing regions. For current reading and backing file select
     public ObservableCollection<string> CurrentCount { get; } = new ObservableCollection<string>();
     public ObservableCollection<string> CurrentMean { get; } = new ObservableCollection<string>();
@@ -26,7 +29,7 @@ namespace Ei_Dimension.Controllers
       {
         if (_instance != null)
           return _instance;
-        return _instance = new ActiveRegionsStatsController();
+        return _instance = ViewModelSource.Create(() => new ActiveRegionsStatsController());
       }
     }
 
@@ -34,7 +37,7 @@ namespace Ei_Dimension.Controllers
     private static bool _activeRegionsUpdateGoing;
     private static readonly List<float> NullWellResults = new List<float>(100000);
 
-    private ActiveRegionsStatsController()
+    protected ActiveRegionsStatsController()
     {
 
     }
