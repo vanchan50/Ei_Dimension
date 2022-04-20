@@ -1,7 +1,4 @@
-﻿
-using System;
-
-namespace Ei_Dimension
+﻿namespace Ei_Dimension
 {
   internal class ServiceMenuEnabler
   {
