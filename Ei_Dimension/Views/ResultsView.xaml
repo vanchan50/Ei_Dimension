@@ -846,7 +846,7 @@
            Source="/Icons/dimension flow analyzer logo.png"
            RenderOptions.BitmapScalingMode="HighQuality"/>
 
-    <!--Plate pictogram-->
+      <!--Plate pictogram-->
     <Border Width="780" Height="524"
             Margin="1230,372,0,0"
             HorizontalAlignment="Left"
@@ -1419,6 +1419,15 @@
                   Command="{Binding ToCurrentButtonClickCommand}"/>
         </StackPanel>
       </Grid>
+    </Border>
+    <!--Temporary Cover plate-->
+    <Border Width="602" Height="402"
+            Margin="1264,410,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Visibility="{Binding PlatePictogramIsCovered}"
+            Background="Black"
+            Opacity="0.15">
     </Border>
 
   </Grid>

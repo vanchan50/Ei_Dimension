@@ -45,6 +45,7 @@ namespace Ei_Dimension.ViewModels
     public virtual System.Windows.Visibility AnalysisVisible { get; set; }
     public virtual System.Windows.Visibility Analysis2DVisible { get; set; }
     public virtual System.Windows.Visibility Analysis3DVisible { get; set; }
+    public virtual System.Windows.Visibility PlatePictogramIsCovered { get; set; }
     public virtual ObservableCollection<string> DisplayedMfiItems { get; set; }
     public virtual ObservableCollection<string> DisplayedCvItems { get; set; }
     public virtual ObservableCollection<string> CurrentMfiItems { get; set; }
@@ -130,6 +131,7 @@ namespace Ei_Dimension.ViewModels
       AnalysisVisible = System.Windows.Visibility.Hidden;
       Analysis2DVisible = System.Windows.Visibility.Visible;
       Analysis3DVisible = System.Windows.Visibility.Hidden;
+      PlatePictogramIsCovered = System.Windows.Visibility.Hidden;
 
       CurrentMfiItems = new ObservableCollection<string>();
       CurrentCvItems = new ObservableCollection<string>();

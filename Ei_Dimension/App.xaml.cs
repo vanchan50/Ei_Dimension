@@ -356,6 +356,7 @@ namespace Ei_Dimension
     {
       MultiTube.GetModifiedWellIndexes(e, out var row, out var col);
 
+      ResultsViewModel.Instance.PlatePictogramIsCovered = Visibility.Visible; //TODO: temporary solution
       ResultsViewModel.Instance.PlatePictogram.CurrentlyReadCell = (row, col);
       ResultsViewModel.Instance.PlatePictogram.ChangeState(row, col, Models.WellType.NowReading, GetWarningState(), FilePath: e.FilePath);
       
@@ -384,6 +385,7 @@ namespace Ei_Dimension
       MultiTube.GetModifiedWellIndexes(e, out var row, out var col);
       MultiTube.Proceed();
 
+      ResultsViewModel.Instance.PlatePictogramIsCovered = Visibility.Hidden; //TODO: temporary solution
       ResultsViewModel.Instance.PlatePictogram.ChangeState(row, col, type);
       SavePlateState();
       if (Device.Control == SystemControl.WorkOrder)
