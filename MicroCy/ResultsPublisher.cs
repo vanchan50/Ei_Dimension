@@ -14,6 +14,7 @@ namespace DIOS.Core
     public static string WorkOrderPath { get; set; }
     internal static Well SavingWell { get; set; }
     internal static string FullFileName { get; private set; }
+    private string _thisRunResultsFileName;
     private static readonly StringBuilder DataOut = new StringBuilder();
     private static readonly StringBuilder SummaryOut = new StringBuilder();
     private static PlateReport _plateReport;
@@ -109,25 +110,26 @@ namespace DIOS.Core
         Console.WriteLine($"Failed to create {directoryName}");
         return;
       }
-      var fileName = GetThisRunFileName();
+
       try
       {
-        File.AppendAllText(fileName, SummaryOut.ToString());
-        Console.WriteLine($"Results summary saved as {fileName}");
+        File.AppendAllText(_thisRunResultsFileName, SummaryOut.ToString());
+        Console.WriteLine($"Results summary saved as {_thisRunResultsFileName}");
       }
       catch
       {
-        Console.WriteLine($"Failed to append data to {fileName}");
+        Console.WriteLine($"Failed to append data to {_thisRunResultsFileName}");
       }
     }
 
-    internal static void ClearSummary()
+    internal void ResetSummary()
     {
       _ = SummaryOut.Clear();
       _ = SummaryOut.Append(SHEADER);
+      GetThisRunFileName();
     }
 
-    private string GetThisRunFileName()
+    private void GetThisRunFileName()
     {
       OutDirCheck();
       for (var i = 0; i < int.MaxValue; i++)
@@ -135,17 +137,15 @@ namespace DIOS.Core
         string summaryFileName = $"{Outdir}\\AcquisitionData\\Results_{Outfilename}_{i.ToString()}.csv";
         if (!File.Exists(summaryFileName))
         {
-          return summaryFileName;
+          _thisRunResultsFileName =  summaryFileName;
+          return;
         }
       }
-      return null;
+      throw new Exception("Failed to find a name for Results file");
     }
 
     public void OutputPlateReport()
     {
-      if (SummaryOut.Length == 0)
-        return;
-
       string rfilename = _device.Control == SystemControl.Manual ? Outfilename : _device.WorkOrder.plateID.ToString();
       var directoryName = $"{_device.RootDirectory.FullName}\\Result\\Summary";
       try
@@ -193,7 +193,7 @@ namespace DIOS.Core
       SaveBeadEventFile();
       if (_device.RMeans)
       {
-        ClearSummary();
+        SummaryOut.Clear();
         if (_plateReport != null)
           _plateReport.Wells.Add(new WellReport
           {
