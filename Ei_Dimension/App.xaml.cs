@@ -23,55 +23,13 @@ namespace Ei_Dimension
     public App()
     {
       CorruptSettingsChecker();
-      Device = new Device(new USBConnection());
-      if(Directory.Exists(Settings.Default.LastOutFolder))
-        Device.Publisher.Outdir = Settings.Default.LastOutFolder;
-      else
-      {
-        Settings.Default.LastOutFolder = Device.Publisher.Outdir;
-        Settings.Default.Save();
-      }
-      SetLogOutput();
-      SetupDevice();
-      Device.StartingToReadWell += StartingToReadWellEventHandler;
-      Device.FinishedReadingWell += FinishedReadingWellEventHandler;
-      Device.FinishedMeasurement += FinishedMeasurementEventHandler;
-      Device.NewStatsAvailable += NewStatsAvailableEventHandler;
-      ResultsPublisher.Outfilename = Settings.Default.SaveFileName;
-      _workOrderPending = false;
-      _nextWellWarning = false;
-      var watcher = new FileSystemWatcher($"{Device.RootDirectory.FullName}\\WorkOrder");
-      watcher.NotifyFilter = NotifyFilters.FileName;
-      watcher.Filter = "*.txt";
-      watcher.EnableRaisingEvents = true;
-      watcher.Created += OnNewWorkOrder;
+      InitApp(null);
     }
 
     public App(Device device)
     {
       CorruptSettingsChecker();
-      Device = device;
-      if (Directory.Exists(Settings.Default.LastOutFolder))
-        Device.Publisher.Outdir = Settings.Default.LastOutFolder;
-      else
-      {
-        Settings.Default.LastOutFolder = Device.Publisher.Outdir;
-        Settings.Default.Save();
-      }
-      SetLogOutput();
-      SetupDevice();
-      Device.StartingToReadWell += StartingToReadWellEventHandler;
-      Device.FinishedReadingWell += FinishedReadingWellEventHandler;
-      Device.FinishedMeasurement += FinishedMeasurementEventHandler;
-      Device.NewStatsAvailable += NewStatsAvailableEventHandler;
-      ResultsPublisher.Outfilename = Settings.Default.SaveFileName;
-      _workOrderPending = false;
-      _nextWellWarning = false;
-      var watcher = new FileSystemWatcher($"{Device.RootDirectory.FullName}\\WorkOrder");
-      watcher.NotifyFilter = NotifyFilters.FileName;
-      watcher.Filter = "*.txt";
-      watcher.EnableRaisingEvents = true;
-      watcher.Created += OnNewWorkOrder;
+      InitApp(device);
     }
 
     private static void CorruptSettingsChecker()
@@ -357,6 +315,7 @@ namespace Ei_Dimension
       MultiTube.GetModifiedWellIndexes(e, out var row, out var col);
 
       ResultsViewModel.Instance.PlatePictogramIsCovered = Visibility.Visible; //TODO: temporary solution
+
       ResultsViewModel.Instance.PlatePictogram.CurrentlyReadCell = (row, col);
       ResultsViewModel.Instance.PlatePictogram.ChangeState(row, col, Models.WellType.NowReading, GetWarningState(), FilePath: e.FilePath);
       
@@ -386,6 +345,7 @@ namespace Ei_Dimension
       MultiTube.Proceed();
 
       ResultsViewModel.Instance.PlatePictogramIsCovered = Visibility.Hidden; //TODO: temporary solution
+
       ResultsViewModel.Instance.PlatePictogram.ChangeState(row, col, type);
       SavePlateState();
       if (Device.Control == SystemControl.WorkOrder)
@@ -605,6 +565,33 @@ namespace Ei_Dimension
     {
       Device.MainCommand("Get FProperty", code: 0x06);  //get totalbeads from firmware
       Console.WriteLine($"[Report] FW:SW {MainViewModel.Instance.TotalBeadsInFirmware} : {MainViewModel.Instance.EventCountCurrent}");
+    }
+
+    private void InitApp(Device device)
+    {
+      Device = device ?? new Device(new USBConnection());
+
+      if (Directory.Exists(Settings.Default.LastOutFolder))
+        Device.Publisher.Outdir = Settings.Default.LastOutFolder;
+      else
+      {
+        Settings.Default.LastOutFolder = Device.Publisher.Outdir;
+        Settings.Default.Save();
+      }
+      SetLogOutput();
+      SetupDevice();
+      Device.StartingToReadWell += StartingToReadWellEventHandler;
+      Device.FinishedReadingWell += FinishedReadingWellEventHandler;
+      Device.FinishedMeasurement += FinishedMeasurementEventHandler;
+      Device.NewStatsAvailable += NewStatsAvailableEventHandler;
+      ResultsPublisher.Outfilename = Settings.Default.SaveFileName;
+      _workOrderPending = false;
+      _nextWellWarning = false;
+      var watcher = new FileSystemWatcher($"{Device.RootDirectory.FullName}\\WorkOrder");
+      watcher.NotifyFilter = NotifyFilters.FileName;
+      watcher.Filter = "*.txt";
+      watcher.EnableRaisingEvents = true;
+      watcher.Created += OnNewWorkOrder;
     }
   }
 }

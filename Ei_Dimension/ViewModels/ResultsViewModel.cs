@@ -187,6 +187,10 @@ namespace Ei_Dimension.ViewModels
 
     public void CornerButtonClick(int corner)
     {
+      var changed = PlatePictogram.ChangeCorner(corner);
+      if (!changed)
+        return;
+      //adjust labels
       switch (corner)
       {
         case 1:
@@ -220,7 +224,6 @@ namespace Ei_Dimension.ViewModels
       CornerButtonsChecked[2] = false;
       CornerButtonsChecked[3] = false;
       CornerButtonsChecked[corner - 1] = true;
-      PlatePictogram.ChangeCorner(corner);
     }
 
     public void ToCurrentButtonClick()
@@ -411,6 +414,7 @@ namespace Ei_Dimension.ViewModels
       ScttrData.DisplayCurrent(current);
       if (current)
       {
+        Views.ResultsView.Instance.DrawingPlate.UnselectAllCells();
         if (App.MapRegions != null)
         {
           ActiveRegionsStatsController.Instance.DisplayCurrentBeadStats();

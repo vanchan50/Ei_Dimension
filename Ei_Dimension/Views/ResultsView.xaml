@@ -1242,7 +1242,10 @@
               <Setter Property="Template">
                 <Setter.Value>
                   <ControlTemplate TargetType="DataGridCell">
-                    <Border x:Name="border" Width="50" BorderThickness="3" CornerRadius="22,0,22,0">
+                    <Border x:Name="border"
+                            Width="50"
+                            BorderThickness="3"
+                            CornerRadius="22,0,22,0">
                       <ContentPresenter />
                     </Border>
                     <ControlTemplate.Triggers>

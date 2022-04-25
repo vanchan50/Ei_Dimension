@@ -134,10 +134,10 @@ namespace Ei_Dimension.Models
       }
     }
 
-    public void ChangeCorner(int corner)
+    public bool ChangeCorner(int corner)
     {
       if (_mode != 384 || _CurrentCorner == corner)
-        return;
+        return false;
       byte shiftX = 0;
       byte shiftY = 0;
       CorrectionForCorner(corner, ref shiftX, ref shiftY);
@@ -150,6 +150,7 @@ namespace Ei_Dimension.Models
         }
       }
       _CurrentCorner = corner;
+      return true;
     }
 
     public void SetWellsForReading(List<DIOS.Core.Well> wells)
