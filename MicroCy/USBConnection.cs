@@ -5,19 +5,18 @@ namespace DIOS.Core
 {
   public class USBConnection : ISerial
   {
-    public byte[] InputBuffer { get; }
+    public byte[] InputBuffer { get; } = new byte[512];
     public bool IsActive { get; private set; }
     private USBDevice _usbDevice;
     private readonly Guid _interfaceGuid = Guid.ParseExact("F70242C7-FB25-443B-9E7E-A4260F373982", "D");  // interface GUID, not device guid
 
     public USBConnection()
     {
-      InputBuffer = new byte[512];
       if (Init())
       {
         Console.Error.WriteLine("OutPipe Address:");
         Console.Error.WriteLine($"\t\t\t0x{Convert.ToString(_usbDevice.Interfaces[0].OutPipe.Address, 2).PadLeft(8, '0')}");
-        TransmitToSecondPipe();
+        ListAvailablePipes();
       }
     }
 
@@ -82,7 +81,7 @@ namespace DIOS.Core
       _ = _usbDevice.Interfaces[0].Pipes[0x81].EndRead(result);
     }
 
-    public void TransmitToSecondPipe()
+    private void ListAvailablePipes()
     {
       Console.Error.WriteLine();
       Console.Error.WriteLine("##################################");

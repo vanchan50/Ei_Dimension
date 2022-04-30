@@ -181,6 +181,21 @@ namespace DIOS.Core
         case 0:
           //Skip Error
           return;
+        case 0x0C:
+          _device.SelfTester.Data.SetPressure(cs.FParameter);
+          break;
+        case 0xF9:
+          _device.SelfTester.ScriptFinishedSignal(cs.Code);
+          break;
+        case 0x44:
+          _device.SelfTester.Data.MotorZ = cs.FParameter;
+          break;
+        case 0x54:
+          _device.SelfTester.Data.MotorX = cs.FParameter;
+          break;
+        case 0x64:
+          _device.SelfTester.Data.MotorY = cs.FParameter;
+          break;
         case 0x01:
           _device.BoardVersion = cs.Parameter;
           break;

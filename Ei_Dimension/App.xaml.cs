@@ -346,6 +346,7 @@ namespace Ei_Dimension
 
       ResultsViewModel.Instance.PlatePictogramIsCovered = Visibility.Hidden; //TODO: temporary solution
 
+      ResultsViewModel.Instance.PlatePictogram.CurrentlyReadCell = (-1, -1);
       ResultsViewModel.Instance.PlatePictogram.ChangeState(row, col, type);
       SavePlateState();
       if (Device.Control == SystemControl.WorkOrder)
@@ -564,10 +565,10 @@ namespace Ei_Dimension
     private static void LogBeadsFromFirmware()
     {
       Device.MainCommand("Get FProperty", code: 0x06);  //get totalbeads from firmware
-      Console.WriteLine($"[Report] FW:SW {MainViewModel.Instance.TotalBeadsInFirmware} : {MainViewModel.Instance.EventCountCurrent}");
+      Console.WriteLine($"[Report] FW:SW {MainViewModel.Instance.TotalBeadsInFirmware[0]} : {MainViewModel.Instance.EventCountCurrent[0]}");
     }
 
-    private void InitApp(Device device)
+    private async void InitApp(Device device)
     {
       Device = device ?? new Device(new USBConnection());
 
@@ -592,6 +593,10 @@ namespace Ei_Dimension
       watcher.Filter = "*.txt";
       watcher.EnableRaisingEvents = true;
       watcher.Created += OnNewWorkOrder;
+
+      Device.StartSelfTest();
+      string selfTestResult = await Device.GetSelfTestResultAsync();
+      Notification.Show(selfTestResult);
     }
   }
 }

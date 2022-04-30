@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Collections;
 using System.IO;
 using System.Collections.Concurrent;
+using System.Threading.Tasks;
 using DIOS.Core.InstrumentParameters;
+using DIOS.Core.SelfTests;
 
 /*
  * Most commands on the host side parallel the Properties and Methods document fo QB-1000
@@ -119,6 +121,7 @@ namespace DIOS.Core
     private float _hdnrCoef;
     private readonly DataController _dataController;
     private readonly StateMachine _stateMach;
+    internal SelfTester SelfTester { get; }
     internal readonly BeadProcessor _beadProcessor;
 
     public Device(ISerial connection)
@@ -128,6 +131,7 @@ namespace DIOS.Core
       _stateMach = new StateMachine(this, true);
       Publisher = new ResultsPublisher(this);
       MapCtroller = new MapController(this);
+      SelfTester = new SelfTester(this);
       Results = new RunResults(this);
       _beadProcessor = new BeadProcessor(this);
       MainCommand("Sync");
@@ -158,6 +162,30 @@ namespace DIOS.Core
     public void StartStateMachine()
     {
       _stateMach.Start();
+    }
+
+    public void StartSelfTest()
+    {
+      SelfTester.FluidicsTest();
+    }
+
+    /// <summary>
+    /// Polls the device once per 100 ms until the test result is ready
+    /// </summary>
+    /// <returns></returns>
+    public async Task<string> GetSelfTestResultAsync()
+    {
+      var t = new Task<string>(() =>
+      {
+        string msg;
+        while (!SelfTester.GetResult(out msg))
+        {
+          System.Threading.Thread.Sleep(100);
+        }
+        return msg;
+      });
+      t.Start();
+      return await t;
     }
 
     internal void SetupRead()

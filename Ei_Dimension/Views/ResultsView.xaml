@@ -338,7 +338,7 @@
                          FontFamily="{StaticResource AppTextFont}"
                          GridLinesMinorVisible="True"
                          GridLinesVisible="True"
-                         MinorCount="9">
+                         MinorCount="8">
               <dxc:AxisY2D.WholeRange>
                 <dxc:Range MinValue="1"
                            MaxValue="100000"
@@ -369,7 +369,7 @@
                          FontFamily="{StaticResource AppTextFont}"
                          GridLinesMinorVisible="True"
                          GridLinesVisible="True"
-                         MinorCount="9">
+                         MinorCount="8">
               <dxc:AxisX2D.Label>
                 <dxc:AxisLabel FontSize="24"/>
               </dxc:AxisX2D.Label>
@@ -471,8 +471,9 @@
             </dxc:Legend>
           </dxc:Chart3DControl.Legends>
           <dxc:Chart3DControl.XAxis>
-            <dxc:XAxis3D Logarithmic="True" GridLinesMinorVisible="True" MinorCount="9"
-                         GridLinesMinorBrush="Gray" GridLinesBrush="Gray">
+            <dxc:XAxis3D Logarithmic="True" GridLinesMinorVisible="True"
+                         MinorCount="8" GridLinesMinorBrush="Gray"
+                         GridLinesBrush="Gray">
               <dxc:XAxis3D.WholeRange>
                 <dxc:Range MinValue="10" MaxValue="35000"/>
               </dxc:XAxis3D.WholeRange>
@@ -484,7 +485,7 @@
             </dxc:XAxis3D>
           </dxc:Chart3DControl.XAxis>
           <dxc:Chart3DControl.YAxis>
-            <dxc:YAxis3D Logarithmic="True" GridLinesMinorVisible="True" MinorCount="9"
+            <dxc:YAxis3D Logarithmic="True" GridLinesMinorVisible="True" MinorCount="8"
                          GridLinesMinorBrush="Gray" GridLinesBrush="Gray">
               <dxc:YAxis3D.WholeRange>
                 <dxc:Range MinValue="10" MaxValue="35000"/>
@@ -600,7 +601,7 @@
           <dxc:XYDiagram2D.AxisY>
             <dxc:AxisY2D Logarithmic="True"
                        GridLinesMinorVisible="True"
-                       MinorCount="9"
+                       MinorCount="8"
                        Interlaced="False"
                        TickmarksMinorVisible="False"
                        FontFamily="{StaticResource AppTextFont}"
@@ -630,7 +631,7 @@
           <dxc:XYDiagram2D.AxisX>
             <dxc:AxisX2D Logarithmic="True"
                        GridLinesMinorVisible="True"
-                       MinorCount="9"
+                       MinorCount="8"
                        FontFamily="{StaticResource AppTextFont}"
                        GridLinesVisible="True"
                        TickmarksMinorVisible="False"

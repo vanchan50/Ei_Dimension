@@ -228,6 +228,10 @@ namespace Ei_Dimension.ViewModels
 
     public void ToCurrentButtonClick()
     {
+      #if DEBUG
+      Console.WriteLine(new System.Diagnostics.StackTrace());
+      #endif
+
       PlotCurrent();
 
       int tempCorner = 1;
@@ -250,6 +254,8 @@ namespace Ei_Dimension.ViewModels
         CurrentAnalysis12Map.Clear();
         CurrentAnalysis13Map.Clear();
         CurrentAnalysis23Map.Clear();
+        //do not ResetCurrentActiveRegionsDisplayedStats() here. This function can be called during runtime -> can loose data
+        //ResetCurrentActiveRegionsDisplayedStats() is called in the App.StartingToReadWellEventHandler()
       }
       else
       {
