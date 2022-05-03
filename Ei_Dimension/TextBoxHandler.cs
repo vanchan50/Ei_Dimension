@@ -581,7 +581,10 @@ namespace Ei_Dimension
             break;
           case 0xf4:
             if (exe.Command == 0x00)
+            {
               Notification.Show("Bubble Detector Fault\nPress OK to continue");
+              Console.WriteLine("Bubble Detector Fault");
+            }
             break;
         }
         if (update != null)

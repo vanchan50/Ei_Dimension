@@ -58,6 +58,7 @@ namespace DIOS.Core
     //TODO:bad design to have it public. get rid somehow
     public List<WellResult> MakeDeepCopy()
     {
+      //TODO: cache previous copy per well somehow, dont make new allocation all the time
       var copy = new List<WellResult>(_wellResults.Count);
       for (var i = 0; i < _wellResults.Count; i++)
       {

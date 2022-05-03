@@ -183,18 +183,31 @@ namespace DIOS.Core
           return;
         case 0x0C:
           _device.SelfTester.Data.SetPressure(cs.FParameter);
+          _device.MainCommand("Set FProperty", code: 0x0C); //Reset Pressure, since firmware forgets to do that
           break;
         case 0xF9:
-          _device.SelfTester.ScriptFinishedSignal(cs.Code);
+          _device.SelfTester.ScriptFinishedSignal(cs.Command);
           break;
         case 0x44:
-          _device.SelfTester.Data.MotorZ = cs.FParameter;
+          if (!_device.SelfTester.Motorsinit[2])
+          {
+            _device.SelfTester.Data.MotorZ = cs.FParameter;
+            _device.SelfTester.Motorsinit[2] = true;
+          }
           break;
         case 0x54:
-          _device.SelfTester.Data.MotorX = cs.FParameter;
+          if (!_device.SelfTester.Motorsinit[0])
+          {
+            _device.SelfTester.Data.MotorX = cs.FParameter;
+            _device.SelfTester.Motorsinit[0] = true;
+          }
           break;
         case 0x64:
-          _device.SelfTester.Data.MotorY = cs.FParameter;
+          if (!_device.SelfTester.Motorsinit[1])
+          {
+            _device.SelfTester.Data.MotorY = cs.FParameter;
+            _device.SelfTester.Motorsinit[1] = true;
+          }
           break;
         case 0x01:
           _device.BoardVersion = cs.Parameter;

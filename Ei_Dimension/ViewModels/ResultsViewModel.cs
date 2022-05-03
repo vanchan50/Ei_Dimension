@@ -324,7 +324,7 @@ namespace Ei_Dimension.ViewModels
     {
       if (_fillDataActive)
       {
-        Notification.Show("Results loading failed:\nPlease wait for the previous well to load");
+        Notification.Show("Please wait for the previous well to load");
         return;
       }
       _fillDataActive = true;
@@ -665,11 +665,9 @@ namespace Ei_Dimension.ViewModels
       if (MultiPlexVisible == System.Windows.Visibility.Visible)
       {
         ShowSinglePlexResults();
+        return;
       }
-      else
-      {
-        ShowMultiPlexResults();
-      }
+      ShowMultiPlexResults();
     }
 
     public void ShowSinglePlexResults()

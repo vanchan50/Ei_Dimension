@@ -24,7 +24,7 @@ namespace Ei_Dimension
 
     private static GraphsController _instance;
     private static int _uiUpdateIsActive;
-    private readonly List<BeadInfoStruct> TempBeadInfoList = new List<BeadInfoStruct>(100);
+    private readonly List<BeadInfoStruct> TempBeadInfoList = new List<BeadInfoStruct>(300);
 
     public void Update()
     {

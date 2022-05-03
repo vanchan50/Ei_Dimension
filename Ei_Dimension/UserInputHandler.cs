@@ -1463,11 +1463,11 @@ namespace Ei_Dimension
           ((ObservableCollection<string>)SelectedTextBox.prop.GetValue(SelectedTextBox.VM))[SelectedTextBox.index] = _tempOldString;
           //Notification.Show(ErrorMessage);
           SelectedTextBox.tb.Background = System.Windows.Media.Brushes.Red;
-          MainViewModel.Instance.HintToggle(ErrorMessage, SelectedTextBox.tb);
+          MainViewModel.Instance.HintShow(ErrorMessage, SelectedTextBox.tb);
         }
         else
         {
-          MainViewModel.Instance.HideHint();
+          MainViewModel.Instance.HintHide();
           if (_tempNewString.TrimStart('0') != "")
           {
             var trimmed =_tempNewString.TrimStart('0');

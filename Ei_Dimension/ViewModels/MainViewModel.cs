@@ -9,7 +9,7 @@ namespace Ei_Dimension.ViewModels
   [POCOViewModel]
   public class MainViewModel
   {
-    public static string AppVersion { get; } = "Application Version: 1.1.2";
+    public static string AppVersion { get; } = "Application Version: 1.1.3";
     public ObservableCollection<string> TotalBeadsInFirmware { get; set; } = new ObservableCollection<string> { "0" };
     public virtual ObservableCollection<bool> MainSelectorState { get; set; }
     public virtual Visibility NumpadVisible { get; set; }
@@ -61,7 +61,7 @@ namespace Ei_Dimension.ViewModels
       MainSelectorState[num] = true;
       App.HideNumpad();
       App.HideKeyboard();
-      HideHint();
+      HintHide();
       if(VerificationViewModel.Instance != null)
         VerificationViewModel.Instance.isActivePage = false;
       switch (num)
@@ -117,7 +117,7 @@ namespace Ei_Dimension.ViewModels
 
     public void NumpadToggleButton(System.Windows.Controls.TextBox tb)
     {
-      HideHint();
+      HintHide();
       if (TouchControlsEnabled)
       {
         tb.CaretBrush = System.Windows.Media.Brushes.Transparent;
@@ -149,7 +149,7 @@ namespace Ei_Dimension.ViewModels
 
     public void KeyboardToggle(System.Windows.Controls.TextBox tb)
     {
-      HideHint();
+      HintHide();
       if (TouchControlsEnabled)
       {
         tb.CaretBrush = System.Windows.Media.Brushes.Transparent;
@@ -187,7 +187,7 @@ namespace Ei_Dimension.ViewModels
       }
     }
 
-    public void HintToggle(string text, System.Windows.Controls.TextBox tb)
+    public void HintShow(string text, System.Windows.Controls.TextBox tb)
     {
       var p = tb.PointToScreen(MainWindow.Instance.wndw.PointFromScreen(new System.Windows.Point(0, 0)));
       double shiftX = 0;
@@ -199,7 +199,7 @@ namespace Ei_Dimension.ViewModels
       HintViewModel.Instance.HintVisible = Visibility.Visible;
     }
 
-    public void HideHint()
+    public void HintHide()
     {
       HintViewModel.Instance.Text[0] = null;
       HintViewModel.Instance.HintVisible = Visibility.Hidden;

@@ -30,7 +30,8 @@ namespace DIOS.Core.SelfTests
       {
         _startupPressure = value;
         if (_startupPressure > 1.0)
-          ResultMessage += $"Startup OverPressure {_startupPressure}\n";
+          ResultMessage += $"Startup OverPressure [{_startupPressure}]\n";
+        Console.WriteLine($"Startup pressure: {value}");
       }
     }
 
@@ -42,6 +43,7 @@ namespace DIOS.Core.SelfTests
         _pressure = value;
         if (_pressure > 2.0)
           ResultMessage += $"OverPressure {_pressure}\n";
+        Console.WriteLine($"Pressure: {value}");
       }
     }
 
@@ -54,6 +56,7 @@ namespace DIOS.Core.SelfTests
         {
           ResultMessage += "Out Of Position: Motor X\n";
         }
+        Console.WriteLine($"Motor X: {value}");
       }
     }
 
@@ -67,6 +70,7 @@ namespace DIOS.Core.SelfTests
         {
           ResultMessage += "Out Of Position: Motor Y\n";
         }
+        Console.WriteLine($"Motor Y: {value}");
       }
     }
 
@@ -80,6 +84,7 @@ namespace DIOS.Core.SelfTests
         {
           ResultMessage += "Out Of Position: Motor Z\n";
         }
+        Console.WriteLine($"Motor Z: {value}");
       }
     }
 

@@ -16,6 +16,7 @@ namespace Ei_Dimension.Core
     private static readonly float[,] Sfi = new float[5000, 10];
     private static readonly double[] MfiStats = new double[10];
     private static readonly double[] CvStats = new double[10];
+    private static readonly double[] _bins;
     static  DataProcessor()
     {
       _heatColors = new SolidColorBrush[13];
@@ -32,6 +33,8 @@ namespace Ei_Dimension.Core
       _heatColors[10] = Brushes.OrangeRed;
       _heatColors[11] = new SolidColorBrush(Color.FromRgb(0xff, 0x23, 0x00));
       _heatColors[12] = Brushes.Red;
+
+      _bins = new double[_heatColors.Length];
     }
 
     public static List<string> GetDataFromFile(string path)
@@ -116,7 +119,8 @@ namespace Ei_Dimension.Core
       }
       return result;
     }
-    public static double[] GenerateLogSpaceD(int min, int max, int logBins, bool baseE = false)
+
+    public static void GenerateLogSpaceD(int min, int max, int logBins, double[] results, bool baseE = false)
     {
       double logarithmicBase = 10;
       double logMin = Math.Log10(min);
@@ -129,13 +133,13 @@ namespace Ei_Dimension.Core
       }
       double delta = (logMax - logMin) / logBins;
       double accDelta = delta;
-      double[] Result = new double[logBins];
+      if (results == null || results.Length != logBins)
+        throw new Exception("results array is wrong size or null");
       for (int i = 1; i <= logBins; ++i)
       {
-        Result[i - 1] = Math.Pow(logarithmicBase, logMin + accDelta);
+        results[i - 1] = Math.Pow(logarithmicBase, logMin + accDelta);
         accDelta += delta;
       }
-      return Result;
     }
 
     public static void CalculateStatistics(List<DIOS.Core.BeadInfoStruct> list)
@@ -328,36 +332,29 @@ namespace Ei_Dimension.Core
 
     public static void AnalyzeHeatMap(bool hiRez = false)
     {
-      var heatMap = HeatMap.DisplayedMap;
-      if (heatMap != null && heatMap.Count > 0)
+      var heatMapList = HeatMap.DisplayedMap;
+      if (heatMapList != null && heatMapList.Count > 0)
       {
-        int max = heatMap.Select(p => p.A).Max();
+        int max = heatMapList.Select(p => p.A).Max();
 
-        var bins = GenerateLogSpaceD(1, max + 1, _heatColors.Length, true);
+        GenerateLogSpaceD(1, max + 1, _heatColors.Length, _bins,true);
         Views.ResultsView.Instance.ClearPoints();
-        for (var i = 0; i < heatMap.Count; i++)
+        for (var i = 0; i < heatMapList.Count; i++)
         {
-          if (heatMap[i].A <= 1) //transparent single member beads == 1
+          var heatMap = heatMapList[i];
+          if (heatMap.A <= 1) //transparent single member beads == 1
             continue;
-          for (var j = 0; j < _heatColors.Length; j++)
+          var X = heatMap.X;
+          var Y = heatMap.Y;
+          if (ResultsViewModel.Instance.WrldMap.Flipped)
           {
-            //int cutoff = (heatMap[i].X > 100 && heatMap[i].Y > 100) ? ViewModels.ResultsViewModel.Instance.XYCutoff : 2;
-            if (heatMap[i].A <= bins[j])
-            {
-              if (!hiRez && j == 0) //Cutoff for smallXY
-                break;
-              //if (j == 0) //Cutoff for smallXY
-              //  break;
-              if (ResultsViewModel.Instance.WrldMap.Flipped)
-                Views.ResultsView.Instance.AddXYPoint(heatMap[i].Y, heatMap[i].X, _heatColors[j], hiRez);
-              else
-                Views.ResultsView.Instance.AddXYPoint(heatMap[i].X, heatMap[i].Y, _heatColors[j], hiRez);
-              break;
-            }
+            X = heatMap.Y;
+            Y = heatMap.X;
           }
+          PutColorizedPointOnHeatMapGraph(heatMap.A, X, Y, hiRez);
         }
       }
-      else if (heatMap != null && heatMap.Count == 0)
+      else if (heatMapList != null && heatMapList.Count == 0)
       {
         if (Views.ResultsView.Instance != null)
           Views.ResultsView.Instance.ClearPoints();
@@ -412,6 +409,23 @@ namespace Ei_Dimension.Core
           }
         }
         i++;
+      }
+    }
+
+    private static void PutColorizedPointOnHeatMapGraph(int Amplitude, int X, int Y, bool hiRez)
+    {
+      for (var j = 0; j < _heatColors.Length; j++)
+      {
+        //int cutoff = (heatMap[i].X > 100 && heatMap[i].Y > 100) ? ViewModels.ResultsViewModel.Instance.XYCutoff : 2;
+        if (Amplitude <= _bins[j])
+        {
+          if (!hiRez && j == 0) //Cutoff for smallXY
+            break;
+          //if (j == 0) //Cutoff for smallXY
+          //  break;
+          Views.ResultsView.Instance.AddXYPoint(X, Y, _heatColors[j], hiRez);
+          break;
+        }
       }
     }
   }

@@ -46,8 +46,10 @@ namespace Ei_Dimension.Models
     }
     static HeatMapData()
     {
-      bins = DataProcessor.GenerateLogSpaceD(1, 60000, 256);
-      HiRezBins = DataProcessor.GenerateLogSpaceD(1, 60000, ViewModels.ResultsViewModel.HIREZDEFINITION);
+      bins = new double[256];
+      HiRezBins = new double[ViewModels.ResultsViewModel.HIREZDEFINITION];
+      DataProcessor.GenerateLogSpaceD(1, 60000, 256, bins);
+      DataProcessor.GenerateLogSpaceD(1, 60000, ViewModels.ResultsViewModel.HIREZDEFINITION, HiRezBins);
     }
   }
 }

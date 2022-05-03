@@ -47,11 +47,13 @@ namespace Ei_Dimension.ViewModels
     protected ComponentsViewModel()
     {
       ValvesStates = new ObservableCollection<bool> { false, false, false, false };
-      InputSelectorState = new ObservableCollection<string>();
-      InputSelectorState.Add(Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Components_To_Pickup),
-        Language.TranslationSource.Instance.CurrentCulture));
-      InputSelectorState.Add(Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Components_To_Cuvet),
-        Language.TranslationSource.Instance.CurrentCulture));
+      InputSelectorState = new ObservableCollection<string>
+      {
+        Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Components_To_Cuvet),
+          Language.TranslationSource.Instance.CurrentCulture),
+        Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Components_To_Pickup),
+          Language.TranslationSource.Instance.CurrentCulture)
+      };
       IInputSelectorState = 0;
 
       LasersActive = new ObservableCollection<bool> { true, true, true };

@@ -102,3 +102,8 @@ Move that processing to the other project?
 
 0xAD, 0xAE -candidates for no response. no GET is anywhere. are they ever sent?
 PlateRow, PlateCol ever needed?
+
+
+----
+Device core should have a warningEmitter event. catch all the warnings itself, don't let UI do that. UI should only subscribe for the notifications
+RunResults MakeDeepCopy() should cache itself per well. Massive allocations are on the hot path

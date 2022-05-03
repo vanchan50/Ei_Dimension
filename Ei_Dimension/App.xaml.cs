@@ -6,6 +6,7 @@ using Ei_Dimension.ViewModels;
 using DIOS.Core;
 using System.IO;
 using System.Configuration;
+using Ei_Dimension.Cache;
 using Ei_Dimension.Controllers;
 
 namespace Ei_Dimension
@@ -15,6 +16,7 @@ namespace Ei_Dimension
     public static (PropertyInfo prop, object VM) NumpadShow { get; set; }
     public static (PropertyInfo prop, object VM) KeyboardShow { get; set; }
     public static Device Device { get; private set; }
+    public static ResultsCache Cache { get; } = new ResultsCache();
     public static MapRegionsController MapRegions { get; set; }
     public static bool _nextWellWarning;
 
@@ -80,8 +82,6 @@ namespace Ei_Dimension
       Device.SensitivityChannel = Settings.Default.SensitivityChannelB? HiSensitivityChannel.B: HiSensitivityChannel.C;
       Device.ReporterScaling = Settings.Default.ReporterScaling;
       Device.MainCommand("Set Property", code: 0xbf, parameter: (ushort)Device.MapCtroller.ActiveMap.calParams.att);
-      if (!System.Windows.Input.Keyboard.IsKeyDown(System.Windows.Input.Key.LeftCtrl))
-        Device.MainCommand("Startup");
       Device.HdnrTrans = Device.MapCtroller.ActiveMap.calParams.DNRTrans;
       Device.Compensation = Device.MapCtroller.ActiveMap.calParams.compensation;
       Device.MainCommand("Set Property", code: 0x97, parameter: 1170);  //set current limit of aligner motors if leds are off
@@ -341,9 +341,9 @@ namespace Ei_Dimension
     {
       var type = GetWellStateForPictogram();
       
-      MultiTube.GetModifiedWellIndexes(e, out var row, out var col);
-      MultiTube.Proceed();
+      MultiTube.GetModifiedWellIndexes(e, out var row, out var col, proceed:true);
 
+      //Cache.Store(row, col);
       ResultsViewModel.Instance.PlatePictogramIsCovered = Visibility.Hidden; //TODO: temporary solution
 
       ResultsViewModel.Instance.PlatePictogram.CurrentlyReadCell = (-1, -1);
@@ -568,7 +568,7 @@ namespace Ei_Dimension
       Console.WriteLine($"[Report] FW:SW {MainViewModel.Instance.TotalBeadsInFirmware[0]} : {MainViewModel.Instance.EventCountCurrent[0]}");
     }
 
-    private async void InitApp(Device device)
+    private void InitApp(Device device)
     {
       Device = device ?? new Device(new USBConnection());
 
@@ -594,9 +594,8 @@ namespace Ei_Dimension
       watcher.EnableRaisingEvents = true;
       watcher.Created += OnNewWorkOrder;
 
-      Device.StartSelfTest();
-      string selfTestResult = await Device.GetSelfTestResultAsync();
-      Notification.Show(selfTestResult);
+      if (!System.Windows.Input.Keyboard.IsKeyDown(System.Windows.Input.Key.LeftCtrl))
+        Device.StartSelfTest();
     }
   }
 }

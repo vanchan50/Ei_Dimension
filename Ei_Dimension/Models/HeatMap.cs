@@ -239,5 +239,35 @@ namespace Ei_Dimension.Models
         }
       }
     }
+
+    public static List<HeatMapData> GetCache(MapIndex mapIndex)
+    {
+      List<HeatMapData> ret;
+      switch (mapIndex)
+      {
+        case MapIndex.CL01:
+          ret = CurrentCL01Map;
+          break;
+        case MapIndex.CL02:
+          ret = CurrentCL02Map;
+          break;
+        case MapIndex.CL03:
+          ret = CurrentCL03Map;
+          break;
+        case MapIndex.CL12:
+          ret = CurrentCL12Map;
+          break;
+        case MapIndex.CL13:
+          ret = CurrentCL13Map;
+          break;
+        case MapIndex.CL23:
+          ret = CurrentCL23Map;
+          break;
+        default:
+          ret = null;
+          break;
+      }
+      return ret;
+    }
   }
 }

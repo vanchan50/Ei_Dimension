@@ -1,5 +1,4 @@
-﻿using Ei_Dimension.Models;
-using Ei_Dimension.ViewModels;
+﻿using Ei_Dimension.ViewModels;
 using System;
 using System.Windows;
 using System.Windows.Media.Imaging;
@@ -15,7 +14,7 @@ namespace Ei_Dimension
     /// Finish loading the UI. Should be called only once, after all the views have been loaded.
     /// Constructs the UI update timer
     /// </summary>
-    public static void Run()
+    public static async void Run()
     {
       if (_done)
         throw new Exception("StartupFinalizer can only be called once");
@@ -80,6 +79,10 @@ namespace Ei_Dimension
       #endif
       if (App.Device.BoardVersion > 0)
         HideChannels();
+
+      string selfTestResult = await App.Device.GetSelfTestResultAsync();
+      if (selfTestResult != null)
+        Notification.Show(selfTestResult);
     }
 
     private static void WipedSettingsMessage()

@@ -12,12 +12,14 @@ namespace Ei_Dimension
   {
     private static byte _multiTubeRow;
     private static byte _multiTubeCol;
-    public static void GetModifiedWellIndexes(ReadingWellEventArgs e, out byte row, out byte col)
+    public static void GetModifiedWellIndexes(ReadingWellEventArgs e, out byte row, out byte col, bool proceed = false)
     {
       if (WellsSelectViewModel.Instance.CurrentTableSize == 1)
       {
         row = _multiTubeRow;
         col = _multiTubeCol;  //calc for case 96 to reset position
+        if (proceed)
+          Proceed();
         return;
       }
       //clear drawingboard if just switched to multitube!!! //DrawingPlate.MultitubeOverrideReset switchflip jsut for that
@@ -25,7 +27,7 @@ namespace Ei_Dimension
       col = e.Column;
     }
 
-    public static void Proceed()
+    private static void Proceed()
     {
       if (WellsSelectViewModel.Instance.CurrentTableSize != 1)
         return;

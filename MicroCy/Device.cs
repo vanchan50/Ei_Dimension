@@ -182,6 +182,9 @@ namespace DIOS.Core
         {
           System.Threading.Thread.Sleep(100);
         }
+#if DEBUG
+        Console.WriteLine($"\nSelfTest Finished\n\n{msg}\n");
+#endif
         return msg;
       });
       t.Start();

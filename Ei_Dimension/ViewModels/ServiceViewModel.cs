@@ -48,7 +48,7 @@ namespace Ei_Dimension.ViewModels
     public void NavigateMotors()
     {
       App.HideNumpad();
-      MainViewModel.Instance.HideHint();
+      MainViewModel.Instance.HintHide();
       NavigationService.Navigate("MotorsView", null, this);
       App.InitSTab("motorstab");
       _lastActiveTab = 0;
@@ -57,7 +57,7 @@ namespace Ei_Dimension.ViewModels
     public void NavigateComponents()
     {
       App.HideNumpad();
-      MainViewModel.Instance.HideHint();
+      MainViewModel.Instance.HintHide();
       NavigationService.Navigate("ComponentsView", null, this);
       App.InitSTab("componentstab");
       _lastActiveTab = 1;
@@ -66,7 +66,7 @@ namespace Ei_Dimension.ViewModels
     public void NavigateAlignment()
     {
       App.HideNumpad();
-      MainViewModel.Instance.HideHint();
+      MainViewModel.Instance.HintHide();
       NavigationService.Navigate("AlignmentView", null, this);
       _lastActiveTab = 2;
     }
@@ -74,7 +74,7 @@ namespace Ei_Dimension.ViewModels
     public void NavigateChannelOffset()
     {
       App.HideNumpad();
-      MainViewModel.Instance.HideHint();
+      MainViewModel.Instance.HintHide();
       NavigationService.Navigate("ChannelOffsetView", null, this);
       App.InitSTab("channeltab");
       _lastActiveTab = 3;
@@ -83,7 +83,7 @@ namespace Ei_Dimension.ViewModels
     public void NavigateSyringeSpeeds()
     {
       App.HideNumpad();
-      MainViewModel.Instance.HideHint();
+      MainViewModel.Instance.HintHide();
       NavigationService.Navigate("SyringeSpeedsView", null, this);
       App.InitSTab("calibtab");
       _lastActiveTab = 4;

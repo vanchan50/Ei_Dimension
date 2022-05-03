@@ -9,6 +9,7 @@ namespace DIOS.Core.SelfTests
   internal class SelfTester
   {
     internal SelfTestData Data { get; } = new SelfTestData();
+    internal bool[] Motorsinit { get; set; } = {true, true, true};
 
     private Device _device;
 
@@ -37,14 +38,17 @@ namespace DIOS.Core.SelfTests
       return true;
     }
 
-    internal void ScriptFinishedSignal(byte code)
+    internal void ScriptFinishedSignal(byte command)
     {
-      switch (code)
+      switch (command)
       {
         case 0xE0:
           _device.MainCommand("Get FProperty", code: 0x0C); //Pressure
+          Motorsinit[2] = false;
           _device.MainCommand("Get FProperty", code: 0x44); //Z Motor
+          Motorsinit[0] = false;
           _device.MainCommand("Get FProperty", code: 0x54); //X Motor
+          Motorsinit[1] = false;
           _device.MainCommand("Get FProperty", code: 0x64); //Y Motor
           break;
       }
