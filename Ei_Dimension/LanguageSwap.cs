@@ -49,9 +49,9 @@ namespace Ei_Dimension
         ComponentsVM.SyringeControlItems[9].Content = RM.GetString(nameof(Language.Resources.Dropdown_Micro_step), curCulture);
         ComponentsVM.SyringeControlItems[10].Content = RM.GetString(nameof(Language.Resources.Dropdown_Speed_Preset), curCulture);
         ComponentsVM.SyringeControlItems[11].Content = RM.GetString(nameof(Language.Resources.Dropdown_Pos), curCulture);
-        ComponentsVM.SelectedSheathContent = ComponentsVM.SyringeControlItems[0].Content;
-        ComponentsVM.SelectedSampleAContent = ComponentsVM.SyringeControlItems[0].Content;
-        ComponentsVM.SelectedSampleBContent = ComponentsVM.SyringeControlItems[0].Content;
+        ComponentsVM.SelectedSheathContent = ComponentsVM.SyringeControlItems[ComponentsVM.SyringeControlStates[0]].Content;
+        ComponentsVM.SelectedSampleAContent = ComponentsVM.SyringeControlItems[ComponentsVM.SyringeControlStates[1]].Content;
+        ComponentsVM.SelectedSampleBContent = ComponentsVM.SyringeControlItems[ComponentsVM.SyringeControlStates[2]].Content;
 
         ComponentsVM.GetPositionToggleButtonState = ComponentsVM.GetPositionToggleButtonState ==
           RM.GetString(nameof(Language.Resources.OFF), exCulture) ? RM.GetString(nameof(Language.Resources.OFF), curCulture)
@@ -68,7 +68,7 @@ namespace Ei_Dimension
         CaliVM.GatingItems[5].Content = RM.GetString(nameof(Language.Resources.Dropdown_Green_Rp_bg), curCulture);
         CaliVM.GatingItems[6].Content = RM.GetString(nameof(Language.Resources.Dropdown_Red_Rp_bg), curCulture);
         CaliVM.GatingItems[7].Content = RM.GetString(nameof(Language.Resources.Dropdown_Green_Red_Rp_bg), curCulture);
-        CaliVM.SelectedGatingContent = CaliVM.GatingItems[0].Content;
+        CaliVM.SelectedGatingContent = CaliVM.GatingItems[CaliVM.SelectedGatingIndex].Content;
       }
       var DashVM = DashboardViewModel.Instance;
       if (DashVM != null)
@@ -76,26 +76,26 @@ namespace Ei_Dimension
         DashVM.SpeedItems[0].Content = RM.GetString(nameof(Language.Resources.Dropdown_Normal), curCulture);
         DashVM.SpeedItems[1].Content = RM.GetString(nameof(Language.Resources.Dropdown_Hi_Speed), curCulture);
         DashVM.SpeedItems[2].Content = RM.GetString(nameof(Language.Resources.Dropdown_Hi_Sens), curCulture);
-        DashVM.SelectedSpeedContent = DashVM.SpeedItems[0].Content;
+        DashVM.SelectedSpeedContent = DashVM.SpeedItems[DashVM.SelectedSpeedIndex].Content;
 
         DashVM.ChConfigItems[0].Content = RM.GetString(nameof(Language.Resources.Dropdown_Standard), curCulture);
         DashVM.ChConfigItems[1].Content = RM.GetString(nameof(Language.Resources.Dropdown_Cells), curCulture);
         DashVM.ChConfigItems[2].Content = RM.GetString(nameof(Language.Resources.Dropdown_FM3D), curCulture);
-        DashVM.SelectedChConfigContent = DashVM.ChConfigItems[0].Content;
+        DashVM.SelectedChConfigContent = DashVM.ChConfigItems[DashVM.SelectedChConfigIndex].Content;
 
         DashVM.OrderItems[0].Content = RM.GetString(nameof(Language.Resources.Column), curCulture);
         DashVM.OrderItems[1].Content = RM.GetString(nameof(Language.Resources.Row), curCulture);
-        DashVM.SelectedOrderContent = DashVM.OrderItems[0].Content;
+        DashVM.SelectedOrderContent = DashVM.OrderItems[DashVM.SelectedOrderIndex].Content;
 
         DashVM.SysControlItems[0].Content = RM.GetString(nameof(Language.Resources.Experiment_Manual), curCulture);
         DashVM.SysControlItems[1].Content = RM.GetString(nameof(Language.Resources.Experiment_Work_Order), curCulture);
         //DashVM.SysControlItems[2].Content = RM.GetString(nameof(Language.Resources.Experiment_Work_Order_Plus_Bcode), curCulture);
-        DashVM.SelectedSysControlContent = DashVM.SysControlItems[0].Content;
+        DashVM.SelectedSysControlContent = DashVM.SysControlItems[DashVM.SelectedSystemControlIndex].Content;
 
         DashVM.EndReadItems[0].Content = RM.GetString(nameof(Language.Resources.Experiment_Min_Per_Reg), curCulture);
         DashVM.EndReadItems[1].Content = RM.GetString(nameof(Language.Resources.Experiment_Total_Events), curCulture);
         DashVM.EndReadItems[2].Content = RM.GetString(nameof(Language.Resources.Experiment_End_of_Sample), curCulture);
-        DashVM.SelectedEndReadContent = DashVM.EndReadItems[0].Content;
+        DashVM.SelectedEndReadContent = DashVM.EndReadItems[DashVM.SelectedEndReadIndex].Content;
       }
       var ChannelsVM = ChannelOffsetViewModel.Instance;
       if (ChannelsVM != null)

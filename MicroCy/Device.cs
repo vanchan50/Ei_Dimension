@@ -347,7 +347,7 @@ namespace DIOS.Core
     internal void OnFinishedReadingWell()
     {
       FinishedReadingWell?.Invoke(this, new ReadingWellEventArgs(WellController.CurrentWell.RowIdx, WellController.CurrentWell.ColIdx));
-      MainCommand("Set FProperty", code: 0x06);  //reset totalbeads in firmware
+      MainCommand("Get FProperty", code: 0x06);  //get totalbeads from firmware
     }
 
     internal void OnFinishedMeasurement()

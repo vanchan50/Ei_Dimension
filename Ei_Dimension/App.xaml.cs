@@ -314,7 +314,7 @@ namespace Ei_Dimension
     {
       MultiTube.GetModifiedWellIndexes(e, out var row, out var col);
 
-      ResultsViewModel.Instance.PlatePictogramIsCovered = Visibility.Visible; //TODO: temporary solution
+      //ResultsViewModel.Instance.PlatePictogramIsCovered = Visibility.Visible; //TODO: temporary solution
 
       ResultsViewModel.Instance.PlatePictogram.CurrentlyReadCell = (row, col);
       ResultsViewModel.Instance.PlatePictogram.ChangeState(row, col, Models.WellType.NowReading, GetWarningState(), FilePath: e.FilePath);
@@ -344,7 +344,7 @@ namespace Ei_Dimension
       MultiTube.GetModifiedWellIndexes(e, out var row, out var col, proceed:true);
 
       //Cache.Store(row, col);
-      ResultsViewModel.Instance.PlatePictogramIsCovered = Visibility.Hidden; //TODO: temporary solution
+      //ResultsViewModel.Instance.PlatePictogramIsCovered = Visibility.Hidden; //TODO: temporary solution
 
       ResultsViewModel.Instance.PlatePictogram.CurrentlyReadCell = (-1, -1);
       ResultsViewModel.Instance.PlatePictogram.ChangeState(row, col, type);
@@ -353,7 +353,6 @@ namespace Ei_Dimension
       {
         App.Current.Dispatcher.Invoke(() => DashboardViewModel.Instance.WorkOrder[0] = ""); //actually questionable if not in workorder operation
       }
-      LogBeadsFromFirmware();
     }
 
     private static Models.WellType GetWellStateForPictogram()
@@ -559,13 +558,6 @@ namespace Ei_Dimension
         return false;
       }
       return true;
-    }
-
-    //TODO:make it a property of Device that calls maincommand on GET
-    private static void LogBeadsFromFirmware()
-    {
-      Device.MainCommand("Get FProperty", code: 0x06);  //get totalbeads from firmware
-      Console.WriteLine($"[Report] FW:SW {MainViewModel.Instance.TotalBeadsInFirmware[0]} : {MainViewModel.Instance.EventCountCurrent[0]}");
     }
 
     private void InitApp(Device device)

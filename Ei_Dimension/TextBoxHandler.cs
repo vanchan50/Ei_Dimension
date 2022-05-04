@@ -24,7 +24,11 @@ namespace Ei_Dimension
             update = () => ComponentsViewModel.Instance.IdexTextBoxInputs[0] = exe.Parameter.ToString("X2");
             break;
           case 0x06:
-            update = () => MainViewModel.Instance.TotalBeadsInFirmware[0] = exe.FParameter.ToString();
+            update = () =>
+            {
+              MainViewModel.Instance.TotalBeadsInFirmware[0] = exe.FParameter.ToString();
+              Console.WriteLine($"[Report] FW:SW {MainViewModel.Instance.TotalBeadsInFirmware[0]} : {MainViewModel.Instance.EventCountCurrent[0]}");
+            };
             break;
           case 0x08:
             update = () => ChannelOffsetViewModel.Instance.CalibrationMargin[0] = exe.FParameter.ToString();

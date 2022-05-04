@@ -228,6 +228,8 @@ namespace Ei_Dimension.ViewModels
 
     public void ToCurrentButtonClick()
     {
+      if (App.Device.IsMeasurementGoing)
+        return;
       #if DEBUG
       Console.WriteLine(new System.Diagnostics.StackTrace());
       #endif
@@ -275,6 +277,8 @@ namespace Ei_Dimension.ViewModels
 
     public void SelectedCellChanged()
     {
+      if (App.Device.IsMeasurementGoing)
+        return;
       var temp = PlatePictogram.GetSelectedCell();
       if (temp.row == -1)
         return;
