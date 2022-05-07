@@ -113,6 +113,7 @@ namespace DIOS.Core
     }
     public float Compensation { get; set; }
     public DirectoryInfo RootDirectory { get; private set; }
+    public float MaxPressure { get; set; }
 
     private bool _readingA;
     private Gate _scatterGate;

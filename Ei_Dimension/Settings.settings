@@ -50,7 +50,7 @@
     <Setting Name="SensitivityChannelB" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="MaxPressure" Type="System.Int32" Scope="User">
+    <Setting Name="MaxPressure" Type="System.Single" Scope="User">
       <Value Profile="(Default)">5</Value>
     </Setting>
     <Setting Name="LastTemplate" Type="System.String" Scope="User">

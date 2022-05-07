@@ -1415,16 +1415,17 @@ namespace Ei_Dimension
             Settings.Default.SaveFileName = _tempNewString;
             break;
           case "MaxPressureBox":
-            if (int.TryParse(_tempNewString, out iRes))
+            if (float.TryParse(_tempNewString, out fRes))
             {
-              if (iRes >= 5 && iRes <= 40)
+              if (fRes >= 2 && fRes <= 40)
               {
-                Settings.Default.MaxPressure = iRes;
+                Settings.Default.MaxPressure = fRes;
+                App.Device.MaxPressure = fRes;
                 break;
               }
             }
             failed = true;
-            ErrorMessage = "[5-40]";
+            ErrorMessage = "[2-40]";
             break;
           case "TemplateSaveName":
             TemplateSelectViewModel.Instance.TemplateSaveName[0] = _tempNewString;

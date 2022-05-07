@@ -8,7 +8,7 @@ namespace DIOS.Core.SelfTests
 {
   internal class SelfTester
   {
-    internal SelfTestData Data { get; } = new SelfTestData();
+    internal SelfTestData Data { get; }
     internal bool[] Motorsinit { get; set; } = {true, true, true};
 
     private Device _device;
@@ -16,6 +16,7 @@ namespace DIOS.Core.SelfTests
     internal SelfTester(Device device)
     {
       _device = device;
+      Data = new SelfTestData(device);
     }
 
     internal void FluidicsTest()

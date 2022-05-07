@@ -13,6 +13,7 @@ namespace Ei_Dimension.ViewModels
   public class FileSaveViewModel
   {
     public virtual ObservableCollection<string> BaseFileName { get; set; }
+    public virtual ObservableCollection<string> OutFolder { get; set; }
     public virtual ObservableCollection<bool> Checkboxes { get; set; }
     public static FileSaveViewModel Instance { get; private set; }
     private IFolderBrowserDialogService FolderBrowserDialogService => this.GetService<IFolderBrowserDialogService>();
@@ -20,6 +21,7 @@ namespace Ei_Dimension.ViewModels
     protected FileSaveViewModel()
     {
       BaseFileName = new ObservableCollection<string> { Settings.Default.SaveFileName };
+      OutFolder = new ObservableCollection<string> { Settings.Default.LastOutFolder };
       Checkboxes = new ObservableCollection<bool>
       {
         Settings.Default.Everyevent,
@@ -59,6 +61,7 @@ namespace Ei_Dimension.ViewModels
       {
         App.Device.Publisher.Outdir = Settings.Default.LastOutFolder = App.Device.RootDirectory.FullName;
         Settings.Default.Save();
+        OutFolder[0] = Settings.Default.LastOutFolder;
         return;
       }
       FolderBrowserDialogService.StartPath = App.Device.Publisher.Outdir;
@@ -66,6 +69,7 @@ namespace Ei_Dimension.ViewModels
       {
         App.Device.Publisher.Outdir = Settings.Default.LastOutFolder = FolderBrowserDialogService.ResultPath;
         Settings.Default.Save();
+        OutFolder[0] = Settings.Default.LastOutFolder;
       }
     }
 

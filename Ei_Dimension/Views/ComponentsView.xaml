@@ -707,6 +707,12 @@
       </StackPanel>
     </Border>
 
+    <Button Content="{lang:Loc Update_FW}"
+            Height="80" Width="200" HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Margin="600,600,0,0"
+            Style="{StaticResource ButtonStyle}"
+            Command="{Binding UpdateFirmwareButtonClickCommand}"/>
     <Button Content="{lang:Loc Clear}"
             Height="80" Width="200" HorizontalAlignment="Left"
             VerticalAlignment="Top"

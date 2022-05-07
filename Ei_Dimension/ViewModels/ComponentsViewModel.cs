@@ -1,7 +1,9 @@
-﻿using DevExpress.Mvvm;
+﻿using System;
+using DevExpress.Mvvm;
 using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Windows.Controls;
 
 namespace Ei_Dimension.ViewModels
@@ -276,6 +278,20 @@ namespace Ei_Dimension.ViewModels
       App.Device.MainCommand("Set Property", code: 0xcc);
     }
 
+    public void UpdateFirmwareButtonClick()
+    {
+      Action Save = () =>
+      {
+        App.Device.MainCommand("Set Property", code: 0xF5); //Send UPDATE FIRMWARE
+        System.Threading.Thread.Sleep(1500);
+        App.Current.Shutdown();
+        Process.Start("DIOS_FW_Loader.exe");
+      };
+        Notification.Show("Would you like to\nUpdate the Firmware?",
+          Save, "Update",
+          null, "Cancel", fontSize:38);
+    }
+    
     public void StartupButtonClick()
     {
       UserInputHandler.InputSanityCheck();

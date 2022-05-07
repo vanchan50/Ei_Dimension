@@ -85,6 +85,7 @@ namespace Ei_Dimension
       Device.HdnrTrans = Device.MapCtroller.ActiveMap.calParams.DNRTrans;
       Device.Compensation = Device.MapCtroller.ActiveMap.calParams.compensation;
       Device.MainCommand("Set Property", code: 0x97, parameter: 1170);  //set current limit of aligner motors if leds are off
+      Device.MaxPressure = Settings.Default.MaxPressure;
     }
 
     public static int GetMapIndex(string MapName)

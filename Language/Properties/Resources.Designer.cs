@@ -2615,6 +2615,16 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to  Update
+        ///Firmware.
+        /// </summary>
+        public static string Update_FW {
+            get {
+                return ResourceManager.GetString("Update_FW", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Classification Tolerance %.
         /// </summary>
         public static string Validation_Classification_Tolerance {

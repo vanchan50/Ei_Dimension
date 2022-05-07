@@ -6,7 +6,7 @@
              xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
              xmlns:ViewModels="clr-namespace:Ei_Dimension.ViewModels"
              xmlns:lang="clr-namespace:Ei_Dimension.Language;assembly=Language"
-             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors" x:Class="Ei_Dimension.Views.FileSaveView"
+             x:Class="Ei_Dimension.Views.FileSaveView"
              mc:Ignorable="d"
              DataContext="{dxmvvm:ViewModelSource Type={x:Type ViewModels:FileSaveViewModel}}"
              d:DesignHeight="960" d:DesignWidth="1664">
@@ -193,6 +193,25 @@
             Style="{StaticResource ButtonStyle}"
             Command="{Binding SelectOutFolderCommand}"
             CommandParameter="True"/>
+
+
+    <StackPanel Orientation="Horizontal"
+                Height="50"
+                Margin="100,720,4,0"
+                VerticalAlignment="Top" HorizontalAlignment="Left">
+      <TextBlock Text="Output Folder:"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="30"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 Margin="0,0,10,0"/>
+      <TextBox Width="900"
+               IsReadOnly="True"
+               Style="{StaticResource InputFieldStyle}"
+               Text="{Binding OutFolder[0]}">
+      </TextBox>
+    </StackPanel>
+
     <StackPanel Orientation="Horizontal" 
                 Height="40"
                 Margin="750,800,0,0"

@@ -515,7 +515,7 @@ namespace Ei_Dimension
             }
             else if (exe.Command == 2) //pressure overload
             {
-              if (exe.FParameter > int.Parse(ComponentsViewModel.Instance.MaxPressureBox[0]))
+              if (exe.FParameter > float.Parse(ComponentsViewModel.Instance.MaxPressureBox[0]))
               {
                 void Act()
                 {

@@ -1,6 +1,7 @@
 ﻿using Ei_Dimension.ViewModels;
 using System;
 using System.Windows;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Ei_Dimension.Controllers;
 
@@ -82,7 +83,7 @@ namespace Ei_Dimension
 
       string selfTestResult = await App.Device.GetSelfTestResultAsync();
       if (selfTestResult != null)
-        Notification.Show(selfTestResult);
+        Notification.Show(selfTestResult,Brushes.DarkRed);
     }
 
     private static void WipedSettingsMessage()

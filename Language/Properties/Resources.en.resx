@@ -1004,6 +1004,10 @@ Speeds</value>
   <data name="Text_Files" xml:space="preserve">
     <value>Text Files</value>
   </data>
+  <data name="Update_FW" xml:space="preserve">
+    <value> Update
+Firmware</value>
+  </data>
   <data name="Validation_Classification_Tolerance" xml:space="preserve">
     <value>Classification Tolerance %</value>
   </data>

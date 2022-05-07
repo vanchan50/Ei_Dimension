@@ -41,7 +41,7 @@ namespace DIOS.Core.SelfTests
       private set
       {
         _pressure = value;
-        if (_pressure > 2.0)
+        if (_pressure > _device.MaxPressure)
           ResultMessage += $"OverPressure {_pressure}\n";
         Console.WriteLine($"Pressure: {value}");
       }
@@ -96,6 +96,12 @@ namespace DIOS.Core.SelfTests
     private float? _pressure;
     private float? _startupPressure;
     private bool _startup = true;
+    private Device _device;
+
+    internal SelfTestData(Device device)
+    {
+      _device = device;
+    }
 
     internal void SetPressure(float pressure)
     {
