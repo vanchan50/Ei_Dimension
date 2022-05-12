@@ -81,7 +81,7 @@ namespace DIOS.Core
       try
       {
         using (var stream =
-               new StreamWriter(_device.RootDirectory.FullName + @"/Config/" + map.mapName + @".dmap"))
+               new StreamWriter(Device.RootDirectory.FullName + @"/Config/" + map.mapName + @".dmap"))
         {
           stream.Write(contents);
         }
@@ -96,7 +96,7 @@ namespace DIOS.Core
 
     public void LoadMaps()
     {
-      string path = Path.Combine(_device.RootDirectory.FullName, "Config");
+      string path = Path.Combine(Device.RootDirectory.FullName, "Config");
       var files = Directory.GetFiles(path, "*.dmap");
       foreach(var mp in files)
       {
@@ -125,7 +125,7 @@ namespace DIOS.Core
       foreach (var mp in files)
       {
         string name = mp.Substring(mp.LastIndexOf("\\") + 1);
-        string destination = $"{_device.RootDirectory.FullName}\\Config\\{name}";
+        string destination = $"{Device.RootDirectory.FullName}\\Config\\{name}";
         if (!File.Exists(destination))
         {
           File.Copy(mp, destination);

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using DIOS.Core.FileIO;
 
 namespace DIOS.Core
 {
@@ -14,6 +15,7 @@ namespace DIOS.Core
     private static int _highestCountRegion = -1;
     private static int _totalClassifiedBeads;
     private static int _totalUnclassifiedBeads;
+    private static readonly VerificationReportPublisher _publisher = new VerificationReportPublisher();
 
     public static void Reset(List<(int regionNum, double InputReporter)> regions)
     {
@@ -31,6 +33,13 @@ namespace DIOS.Core
         _classifiedRegionsDict.Add(reg.regionNum, RegionalStats.Count);
         RegionalStats.Add(new ValidationStats(reg.regionNum, reg.InputReporter));
       }
+
+      _publisher.Reset();
+    }
+
+    public static void PublishReport()
+    {
+      _publisher.PublishReport();
     }
 
     public static bool ReporterToleranceTest(double errorThresholdPercent, out string msg)
@@ -40,14 +49,15 @@ namespace DIOS.Core
         throw new ArgumentException("Error threshold must not be negative");
       bool passed = true;
       var thresholdMultiplier = errorThresholdPercent <= 100 ? 1 - (errorThresholdPercent / 100) : (errorThresholdPercent / 100);  //reverse percentage
-      var problematicRegions = new List<int>();
+      var problematicRegions = new List<(int region, double errorPercentage)>();
       foreach (var reg in RegionalStats)
       {
-        var ReporterMedian = GetMedianReporterForRegion(reg.Region);
-        if (ReporterMedian <= reg.InputReporter * thresholdMultiplier)
+        var ActualReporterMedian = GetMedianReporterForRegion(reg.Region);
+        if (ActualReporterMedian <= reg.InputReporter * thresholdMultiplier)
         {
           //Console.WriteLine($"Verification Fail. Test 1 Reporter tolerance\nReporter value ({ReporterMedian.ToString()}) deviation is more than Threshold is {errorThresholdPercent.ToString($"{0:0.00}")}% from the target ({reg.InputReporter})");
-          problematicRegions.Add(reg.Region);
+          var errorPercentage =  100 * (reg.InputReporter - ActualReporterMedian) / reg.InputReporter;  //how much Actual is less than InputReporter
+          problematicRegions.Add((reg.Region, errorPercentage));
           passed = false;
         }
       }
@@ -55,12 +65,15 @@ namespace DIOS.Core
       if (problematicRegions.Count != 0)
       {
         msg = "Test1: Regions: ";
+        _publisher.AddData("Reporter Tolerance Test Failed Regions:\n");
         foreach (var region in problematicRegions)
         {
-          msg = msg + region.ToString() + ",";
+          msg = msg + region.region.ToString() + ",";
+          _publisher.AddData($"Region #{region.region}\t\t{region.errorPercentage}%\n");
         }
-        msg = msg.Remove(msg.Length - 1);
-        msg = msg += $" measured {thresholdMultiplier}% below target reporter value";
+        msg = msg.Remove(msg.Length - 1); //remove last ","
+        msg = msg += " measured below target reporter value";
+        _publisher.AddData("\n");
       }
       return passed;
     }
@@ -76,6 +89,8 @@ namespace DIOS.Core
       if (_totalClassifiedBeads == 0)
       {
         msg = "Test2: no beads were classified";
+        _publisher.AddData("\nClassification Tolerance Test:\n");
+        _publisher.AddData("no beads were classified\n");
         return false;
       }
       var difference = _totalUnclassifiedBeads / _totalClassifiedBeads;
@@ -85,6 +100,8 @@ namespace DIOS.Core
         passed = false;
         //Console.WriteLine($"Verification Fail. Test 2 Classification tolerance\nMax difference between region counts is {difPercent.ToString()}%, Threshold is {errorThresholdPercent.ToString($"{0:0.00}")}");
         msg = $"Test2: {difPercent.ToString()}% of verification events outside target regions";
+        _publisher.AddData("\nClassification Tolerance Test:\n");
+        _publisher.AddData($"{difPercent.ToString()}% of verification events outside target regions\n");
       }
       return passed;
     }
@@ -112,9 +129,11 @@ namespace DIOS.Core
       if (problematicRegions.Count != 0)
       {
         msg = $"Test3: {errorThresholdPercent}% of region {_lowestCountRegion} events misclassified into regions : ";
+        _publisher.AddData("\nMisclassification Tolerance Test:\n");
         foreach (var region in problematicRegions)
         {
           msg = msg + region.ToString() + ",";
+          _publisher.AddData($"{region.ToString()}, ");
         }
         msg = msg.Remove(msg.Length - 1);
       }

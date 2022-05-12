@@ -390,22 +390,21 @@ namespace Ei_Dimension
         case OperationMode.Calibration:
           if (++CalibrationViewModel.Instance.CalFailsInARow >= 3 && CalibrationViewModel.Instance.CalJustFailed)
           {
-            Notification.ShowLocalized(nameof(Language.Resources.Calibration_Fail), System.Windows.Media.Brushes.Red);
+            Notification.ShowLocalizedError(nameof(Language.Resources.Calibration_Fail));
             App.Current.Dispatcher.Invoke(DashboardViewModel.Instance.CalModeToggle);
           }
           else if (CalibrationViewModel.Instance.CalJustFailed)
-            Notification.ShowLocalized(nameof(Language.Resources.Calibration_in_Progress), System.Windows.Media.Brushes.Green);
+            Notification.ShowLocalizedSuccess(nameof(Language.Resources.Calibration_in_Progress));
           break;
         case OperationMode.Verification:
           if (VerificationViewModel.AnalyzeVerificationResults(out var errorMsg))
           {
             _ = Current.Dispatcher.BeginInvoke((Action)VerificationViewModel.VerificationSuccess);
+            return;
           }
-          else
-          {
-            Notification.Show(errorMsg, System.Windows.Media.Brushes.Red, 26);
-            //Notification.ShowLocalized(nameof(Language.Resources.Validation_Fail), System.Windows.Media.Brushes.Red);
-          }
+          Notification.ShowError(errorMsg, 26);
+          Verificator.PublishReport();
+          //Notification.ShowLocalizedError(nameof(Language.Resources.Validation_Fail));
           break;
       }
     }

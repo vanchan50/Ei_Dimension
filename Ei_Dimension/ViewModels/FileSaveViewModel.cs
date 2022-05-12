@@ -59,7 +59,7 @@ namespace Ei_Dimension.ViewModels
       UserInputHandler.InputSanityCheck();
       if (defaultDir)
       {
-        App.Device.Publisher.Outdir = Settings.Default.LastOutFolder = App.Device.RootDirectory.FullName;
+        App.Device.Publisher.Outdir = Settings.Default.LastOutFolder = Device.RootDirectory.FullName;
         Settings.Default.Save();
         OutFolder[0] = Settings.Default.LastOutFolder;
         return;

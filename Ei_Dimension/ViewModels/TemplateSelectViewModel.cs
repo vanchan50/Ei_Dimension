@@ -31,7 +31,7 @@ namespace Ei_Dimension.ViewModels
       var defTemplateName = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.DefaultTemplateName),
         Language.TranslationSource.Instance.CurrentCulture);
       TemplateSaveName = new ObservableCollection<string> { defTemplateName };
-      var TemplateList = Directory.GetFiles(App.Device.RootDirectory + @"\Config", "*.dtml");
+      var TemplateList = Directory.GetFiles(Device.RootDirectory + @"\Config", "*.dtml");
       NameList = new ObservableCollection<string>();
       foreach (var template in TemplateList)
       {
@@ -205,7 +205,7 @@ namespace Ei_Dimension.ViewModels
     public void SaveTemplate()
     {
       UserInputHandler.InputSanityCheck();
-      var path = App.Device.RootDirectory + @"\Config\" + TemplateSaveName[0] + ".dtml";
+      var path = Device.RootDirectory + @"\Config\" + TemplateSaveName[0] + ".dtml";
       foreach (var c in _invalidChars)
       {
         if (TemplateSaveName[0].Contains(c.ToString()))
@@ -334,7 +334,7 @@ namespace Ei_Dimension.ViewModels
       if (e.AddedItems.Count == 0)
         return;
       _templateName = e.AddedItems[0].ToString();
-      SelectedItem = App.Device.RootDirectory + @"\Config\" + e.AddedItems[0].ToString() + ".dtml";
+      SelectedItem = Device.RootDirectory + @"\Config\" + e.AddedItems[0].ToString() + ".dtml";
       TemplateSaveName[0] = _templateName;
       DeleteVisible = Visibility.Visible;
     }

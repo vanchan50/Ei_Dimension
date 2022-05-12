@@ -28,7 +28,7 @@ namespace DIOS.Core
     public ResultsPublisher(Device device)
     {
       _device = device;
-      Outdir = device.RootDirectory.FullName;
+      Outdir = Device.RootDirectory.FullName;
     }
 
     internal static void StartNewWellReport()
@@ -42,7 +42,7 @@ namespace DIOS.Core
       var root = Path.GetPathRoot(Outdir);
       if (!Directory.Exists(root))
       {
-        Outdir = _device.RootDirectory.FullName;
+        Outdir = Device.RootDirectory.FullName;
       }
     }
 
@@ -127,6 +127,7 @@ namespace DIOS.Core
       _ = SummaryOut.Clear();
       _ = SummaryOut.Append(SHEADER);
       GetThisRunFileName();
+      OutputSummaryFile();
     }
 
     private void GetThisRunFileName()
@@ -147,7 +148,7 @@ namespace DIOS.Core
     public void OutputPlateReport()
     {
       string rfilename = _device.Control == SystemControl.Manual ? Outfilename : _device.WorkOrder.plateID.ToString();
-      var directoryName = $"{_device.RootDirectory.FullName}\\Result\\Summary";
+      var directoryName = $"{Device.RootDirectory.FullName}\\Result\\Summary";
       try
       {
         if (!Directory.Exists(directoryName))

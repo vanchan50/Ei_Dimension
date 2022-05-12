@@ -112,7 +112,7 @@ namespace DIOS.Core
       }
     }
     public float Compensation { get; set; }
-    public DirectoryInfo RootDirectory { get; private set; }
+    public static DirectoryInfo RootDirectory { get; private set; }
     public float MaxPressure { get; set; }
 
     private bool _readingA;
@@ -321,7 +321,7 @@ namespace DIOS.Core
     private void SetSystemDirectories()
     {
       RootDirectory = new DirectoryInfo(Path.Combine(@"C:\Emissioninc", Environment.MachineName));
-      List<string> subDirectories = new List<string>(7) { "Config", "WorkOrder", "SavedImages", "Archive", "Result", "Status", "AcquisitionData", "SystemLogs" };
+      List<string> subDirectories = new List<string>(7) { "Config", "WorkOrder", "SavedImages", "Archive", "Result", "Status", "AcquisitionData", "SystemLogs", "VerificationReports" };
       try
       {
         foreach (var d in subDirectories)

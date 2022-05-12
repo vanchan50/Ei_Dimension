@@ -157,7 +157,7 @@
                        Foreground="{StaticResource AppTextColor}"
                        Margin="4,0,0,0"/>
           </StackPanel>
-          <StackPanel Orientation="Horizontal">
+          <StackPanel Orientation="Horizontal" Visibility="Hidden">
             <CheckBox FontFamily="{StaticResource AppTextFont}"
                     FontSize="30"
                     FontWeight="UltraBold"

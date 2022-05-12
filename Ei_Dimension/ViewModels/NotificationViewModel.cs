@@ -18,7 +18,7 @@ namespace Ei_Dimension.ViewModels
     public virtual double FontSize { get; set; }
     public Action Action1 { set { _action1 = value; } }
     public Action Action2 { set { _action2 = value; } }
-    public static System.Windows.Media.Brush DefaultBackground { get; } = (System.Windows.Media.Brush)App.Current.Resources["RibbonBackgroundActive"];
+    private static System.Windows.Media.Brush DefaultBackground { get; } = (System.Windows.Media.Brush)App.Current.Resources["RibbonBackgroundActive"];
     private Action _action1;
     private Action _action2;
     protected NotificationViewModel()

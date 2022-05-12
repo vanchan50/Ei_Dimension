@@ -83,7 +83,7 @@ namespace Ei_Dimension
 
       string selfTestResult = await App.Device.GetSelfTestResultAsync();
       if (selfTestResult != null)
-        Notification.Show(selfTestResult,Brushes.DarkRed);
+        Notification.ShowError(selfTestResult);
     }
 
     private static void WipedSettingsMessage()

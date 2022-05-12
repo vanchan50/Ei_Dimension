@@ -52,7 +52,7 @@ namespace DIOS.Core.SelfTests
       set
       {
         _motorX = value;
-        if (_motorX < 485 || _motorX > 505)
+        if (_motorX < 450 || _motorX > 505)
         {
           ResultMessage += "Out Of Position: Motor X\n";
         }
@@ -66,7 +66,7 @@ namespace DIOS.Core.SelfTests
       set
       {
         _motorY = value;
-        if (_motorY < 485 || _motorY > 505)
+        if (_motorY < 450 || _motorY > 505)
         {
           ResultMessage += "Out Of Position: Motor Y\n";
         }
@@ -80,7 +80,7 @@ namespace DIOS.Core.SelfTests
       set
       {
         _motorZ = value;
-        if (_motorZ < 17 || _motorZ > 21)
+        if (_motorZ < 16 || _motorZ > 21)
         {
           ResultMessage += "Out Of Position: Motor Z\n";
         }
