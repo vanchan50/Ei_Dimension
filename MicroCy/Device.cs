@@ -63,6 +63,7 @@ namespace DIOS.Core
     }
     public Termination TerminationType { get; set; }
     public int BoardVersion { get; internal set; }
+    public string FirmwareVersion { get; internal set; }
     public float ReporterScaling { get; set; }
     public int BeadsToCapture { get; set; }
     public int BeadCount { get; internal set; }
@@ -139,6 +140,7 @@ namespace DIOS.Core
       TotalBeads = 0;
       Mode = OperationMode.Normal;
       MapCtroller.MoveMaps();
+      MapCtroller.UpdateMaps();
       MapCtroller.LoadMaps();
       Reg0stats = false;
       IsMeasurementGoing = false;
@@ -321,7 +323,7 @@ namespace DIOS.Core
     private void SetSystemDirectories()
     {
       RootDirectory = new DirectoryInfo(Path.Combine(@"C:\Emissioninc", Environment.MachineName));
-      List<string> subDirectories = new List<string>(7) { "Config", "WorkOrder", "SavedImages", "Archive", "Result", "Status", "AcquisitionData", "SystemLogs", "VerificationReports" };
+      List<string> subDirectories = new List<string>(7) { "Config", "WorkOrder", "SavedImages", "Archive", "Result", "Status", "AcquisitionData", "SystemLogs" };
       try
       {
         foreach (var d in subDirectories)

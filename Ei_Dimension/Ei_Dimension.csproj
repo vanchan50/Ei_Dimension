@@ -511,7 +511,7 @@
     </EmbeddedResource>
     <None Include="App.config" />
     <AppDesigner Include="Properties\" />
-    <None Include="Maps\D100plex.dmap">
+    <None Include="Maps\D100Aplex.dmap">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Maps\ULBG50B.dmap">

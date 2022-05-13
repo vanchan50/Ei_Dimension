@@ -78,6 +78,8 @@ namespace Ei_Dimension
       #if DEBUG
       Console.Error.WriteLine($"Detected Board Rev v{App.Device.BoardVersion}");
       #endif
+      if(App.Device.FirmwareVersion != null)
+        MainViewModel.AppVersion += App.Device.FirmwareVersion;
       if (App.Device.BoardVersion > 0)
         HideChannels();
 

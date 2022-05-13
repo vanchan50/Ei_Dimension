@@ -130,18 +130,93 @@ namespace DIOS.Core
         {
           File.Copy(mp, destination);
         }
-        else
+        File.Delete(mp);
+      }
+    }
+
+    public void UpdateMaps()
+    {
+      string path = $"{Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName)}\\Maps";
+      string[] files = null;
+      try
+      {
+        files = Directory.GetFiles(path, "*.dmapu");
+      }
+      catch { return; }
+
+      foreach (var mp in files)
+      {
+        string name = mp.Substring(mp.LastIndexOf("\\") + 1);
+        string destination = $"{Device.RootDirectory.FullName}\\Config\\{name}";
+        destination = destination.Substring(0, destination.Length - 1);
+        if (!File.Exists(destination))
         {
-          var badDate = new DateTime(2021, 12, 1);  // File.GetCreationTime(mp);
-          var date = File.GetCreationTime(destination);
-          date = date.Date;
-          if(date < badDate)
+          File.Copy(mp, destination);
+          continue;
+        }
+
+        //load
+        CustomMap originalMap = null;
+        CustomMap updateMap = null;
+        using (TextReader reader = new StreamReader(destination))
+        {
+          var fileContents = reader.ReadToEnd();
+          try
           {
-            File.Delete(destination);
-            File.Copy(mp, destination);
-            File.SetCreationTime(destination, DateTime.Now);
+            originalMap = JsonConvert.DeserializeObject<CustomMap>(fileContents);
+          }
+          catch
+          {
           }
         }
+
+        using (TextReader reader = new StreamReader(mp))
+        {
+          var fileContents = reader.ReadToEnd();
+          try
+          {
+            updateMap = JsonConvert.DeserializeObject<CustomMap>(fileContents);
+          }
+          catch
+          {
+          }
+        }
+        //backup
+        var backupPath = $"{Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName)}"
+                         + "\\Backups";
+          Directory.CreateDirectory(backupPath);
+        var contents = JsonConvert.SerializeObject(originalMap);
+        try
+        {
+          using (var stream =
+                 new StreamWriter($"{Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName)}"
+                                  + $"\\Backups\\{DateTime.Now.ToString("dd.MM.yyyy.hh-mm-ss", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))}"
+                                  + originalMap.mapName + @".dmap"))
+          {
+            stream.Write(contents);
+          }
+        }
+        catch
+        {
+          Console.WriteLine($"Failed to backup {originalMap.mapName}");
+        }
+        //swap
+        originalMap.regions = updateMap.regions;
+        //save
+        contents = JsonConvert.SerializeObject(originalMap);
+        try
+        {
+          using (var stream =
+                 new StreamWriter(Device.RootDirectory.FullName + @"/Config/" + originalMap.mapName + @".dmap"))
+          {
+            stream.Write(contents);
+          }
+        }
+        catch
+        {
+          Console.WriteLine($"Failed to update {originalMap.mapName}");
+        }
+        File.Delete(mp);
       }
     }
   }

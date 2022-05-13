@@ -159,6 +159,28 @@ namespace DIOS.Core
     }
 
     /// <summary>
+    /// Represents 4bytes of a float as a 0.0.0.0 version number
+    /// </summary>
+    /// <param name="param"></param>
+    /// <returns></returns>
+    private static string FloatToVersion(in float param)
+    {
+      string version = "";
+      unsafe
+      {
+        fixed (float* str = &param)
+        {
+          for (var i = 0; i < 4; i++)
+          {
+            version += ((byte*)str + i)->ToString() + ".";
+          }
+          version = version.TrimEnd('.');
+        }
+      }
+      return version;
+    }
+
+    /// <summary>
     /// Move the received command to Commands Queue
     /// </summary>
     private void GetCommandFromBuffer()
@@ -211,6 +233,7 @@ namespace DIOS.Core
           break;
         case 0x01:
           _device.BoardVersion = cs.Parameter;
+          _device.FirmwareVersion = FloatToVersion(cs.FParameter);
           break;
         case 0x1B:
           if (cs.Parameter == 0)
