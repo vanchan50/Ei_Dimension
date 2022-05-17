@@ -3,6 +3,7 @@ using DevExpress.Mvvm.POCO;
 using DIOS.Core;
 using System;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Text;
 using Ei_Dimension.Controllers;
 
@@ -61,8 +62,13 @@ namespace Ei_Dimension.ViewModels
             MapRegionsController.RegionsList[i + 1].TargetReporterValue[0] = map.regions[i].VerificationTargetReporter.ToString();
         }
       }
-      if(!fromCode)
-        Notification.Show("Verification Regions Loaded");
+
+      if (!fromCode)
+      {
+        var msg = Language.Resources.ResourceManager.GetString(Language.Resources.Messages_Ver_Regions_Loaded,
+          Language.TranslationSource.Instance.CurrentCulture);
+        Notification.Show(msg);
+      }
     }
 
     public void SaveClick()
@@ -130,7 +136,9 @@ namespace Ei_Dimension.ViewModels
           Notification.Show("Save failed"));
         return;
       }
-      Notification.Show("Verification Regions Saved");
+      var msg = Language.Resources.ResourceManager.GetString(Language.Resources.Messages_Ver_Regions_Saved,
+        Language.TranslationSource.Instance.CurrentCulture);
+      Notification.Show(msg);
     }
 
     public static void VerificationSuccess()
@@ -171,7 +179,9 @@ namespace Ei_Dimension.ViewModels
     {
       if (MapRegionsController.ActiveVerificationRegionNums.Count == 0)
       {
-        Notification.Show("No Verification regions selected");
+        var msg = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Messages_VerRegions_NotSelected),
+          Language.TranslationSource.Instance.CurrentCulture);
+        Notification.Show(msg);
         return false;
       }
 
@@ -180,7 +190,11 @@ namespace Ei_Dimension.ViewModels
         if (MapRegionsController.ActiveVerificationRegionNums.Contains(MapRegionsController.RegionsList[i].Number)
             && MapRegionsController.RegionsList[i].TargetReporterValue[0] == "")
         {
-          Notification.Show($"Verification region {MapRegionsController.RegionsList[i]} Reporter is not specified");
+          var msg1 = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Ver_Region),
+            Language.TranslationSource.Instance.CurrentCulture);
+          var msg2 = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Messages_Reporter_Not_Specified),
+            Language.TranslationSource.Instance.CurrentCulture);
+          Notification.Show($"{msg1} {MapRegionsController.RegionsList[i]} {msg2}");
           return false;
         }
       }
@@ -190,6 +204,7 @@ namespace Ei_Dimension.ViewModels
     public static bool AnalyzeVerificationResults(out string errorMsg)
     {
       errorMsg = null;
+      Verificator.SetCulture(Language.TranslationSource.Instance.CurrentCulture);
       var passed1 = Verificator.ReporterToleranceTest(Settings.Default.ValidatorToleranceReporter, out var msg1);
       var passed2 = Verificator.ClassificationToleranceTest(Settings.Default.ValidatorToleranceClassification, out var msg2);
       var passed3 = Verificator.MisclassificationToleranceTest(Settings.Default.ValidatorToleranceMisclassification, out var msg3);

@@ -45,6 +45,7 @@ namespace Ei_Dimension.ViewModels
 
     public byte[] SyringeControlStates { get; private set; }
     private ushort _activeLasers;
+    private readonly string _loaderPath = "DIOS_FW_Loader.exe";
 
     protected ComponentsViewModel()
     {
@@ -285,11 +286,17 @@ namespace Ei_Dimension.ViewModels
         App.Device.MainCommand("Set Property", code: 0xF5); //Send UPDATE FIRMWARE
         System.Threading.Thread.Sleep(1500);
         App.Current.Shutdown();
-        Process.Start("DIOS_FW_Loader.exe");
+        Process.Start(_loaderPath);
       };
-        Notification.Show("Would you like to\nUpdate the Firmware?",
-          Save, "Update",
-          null, "Cancel", fontSize:38);
+      var msg1 = Language.Resources.ResourceManager.GetString(Language.Resources.Messages_Pressure_Overload,
+        Language.TranslationSource.Instance.CurrentCulture);
+      var update = Language.Resources.ResourceManager.GetString(Language.Resources.Button_Update,
+        Language.TranslationSource.Instance.CurrentCulture);
+      var cancel = Language.Resources.ResourceManager.GetString(Language.Resources.Cancel,
+        Language.TranslationSource.Instance.CurrentCulture);
+      Notification.Show($"{msg1}",
+          Save, update,
+          null, cancel, fontSize:38);
     }
     
     public void StartupButtonClick()

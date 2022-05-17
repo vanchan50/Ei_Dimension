@@ -1,8 +1,8 @@
 ﻿using Ei_Dimension.ViewModels;
 using System;
 using System.Windows;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using DIOS.Core.SelfTests;
 using Ei_Dimension.Controllers;
 
 namespace Ei_Dimension
@@ -83,9 +83,10 @@ namespace Ei_Dimension
       if (App.Device.BoardVersion > 0)
         HideChannels();
 
-      string selfTestResult = await App.Device.GetSelfTestResultAsync();
-      if (selfTestResult != null)
-        Notification.ShowError(selfTestResult);
+      var selfTestResult = await App.Device.GetSelfTestResultAsync();
+      string selfTestErrorMessage = SelfTestErrorDecoder(selfTestResult);
+      if (selfTestErrorMessage != null)
+        Notification.ShowError(selfTestErrorMessage);
     }
 
     private static void WipedSettingsMessage()
@@ -99,6 +100,58 @@ namespace Ei_Dimension
       Views.ChannelOffsetView.Instance.SlidersSP.Visibility = Visibility.Visible;
       //Views.ChannelOffsetView.Instance.BaselineSP.Width = 180;
       Views.ChannelOffsetView.Instance.AvgBgSP.Width = 180;
+    }
+
+    private static string SelfTestErrorDecoder(SelfTestData result)
+    {
+      string errorMessage = null;
+      //decode error here
+      if (result.StartupPressure != null)
+      {
+        var msg = Language.Resources.ResourceManager.GetString(Language.Resources.Messages_Startup_Overpressure,
+          Language.TranslationSource.Instance.CurrentCulture);
+        if (errorMessage == null)
+          errorMessage = "";
+        errorMessage += $"{msg} [{result.StartupPressure}]\n";
+      }
+
+      if (result.Pressure != null)
+      {
+        var msg = Language.Resources.ResourceManager.GetString(Language.Resources.Messages_Overpressure,
+          Language.TranslationSource.Instance.CurrentCulture);
+        if (errorMessage == null)
+          errorMessage = "";
+        errorMessage += $"{msg} [{result.Pressure}]\n";
+      }
+
+      if (result.MotorX != null)
+      {
+        var msg = Language.Resources.ResourceManager.GetString(Language.Resources.Messages_MotorX_OutOfPos,
+          Language.TranslationSource.Instance.CurrentCulture);
+        if (errorMessage == null)
+          errorMessage = "";
+        errorMessage += $"{msg}\n";
+      }
+
+      if (result.MotorY != null)
+      {
+        var msg = Language.Resources.ResourceManager.GetString(Language.Resources.Messages_MotorY_OutOfPos,
+          Language.TranslationSource.Instance.CurrentCulture);
+        if (errorMessage == null)
+          errorMessage = "";
+        errorMessage += $"{msg}\n";
+      }
+
+      if (result.MotorZ != null)
+      {
+        var msg = Language.Resources.ResourceManager.GetString(Language.Resources.Messages_MotorZ_OutOfPos,
+          Language.TranslationSource.Instance.CurrentCulture);
+        if (errorMessage == null)
+          errorMessage = "";
+        errorMessage += $"{msg}\n";
+      }
+
+      return errorMessage;
     }
   }
 }

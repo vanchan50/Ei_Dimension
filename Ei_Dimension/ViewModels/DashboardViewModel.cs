@@ -286,7 +286,9 @@ namespace Ei_Dimension.ViewModels
         CalModeOn = false;
         if (App.Device.Mode == OperationMode.Verification)
         {
-          Notification.Show("The instrument is in Verificationtion mode");
+          var msg = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Messages_Instrument_IsIn_ValMode),
+            Language.TranslationSource.Instance.CurrentCulture);
+          Notification.Show(msg);
           return;
         }
         ReturnToNormal();
@@ -328,7 +330,9 @@ namespace Ei_Dimension.ViewModels
         ValModeOn = false;
         if (App.Device.Mode == OperationMode.Calibration)
         {
-          Notification.Show("The instrument is in Calibration mode");
+          var msg = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Messages_Instrument_IsIn_CalMode),
+            Language.TranslationSource.Instance.CurrentCulture);
+          Notification.Show(msg);
           return;
         }
         ReturnToNormal();

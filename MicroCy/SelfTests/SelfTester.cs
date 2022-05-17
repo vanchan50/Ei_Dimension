@@ -9,7 +9,7 @@ namespace DIOS.Core.SelfTests
   internal class SelfTester
   {
     internal SelfTestData Data { get; }
-    internal bool[] Motorsinit { get; set; } = {true, true, true};
+    internal bool[] Motorsinit { get; set; } = { true, true, true };
 
     private Device _device;
 
@@ -27,15 +27,15 @@ namespace DIOS.Core.SelfTests
       //SelfTestError should be a property of this class
     }
 
-    internal bool GetResult(out string message)
+    internal bool GetResult(out SelfTestData data)
     {
       if (!Data.ResultReady)
       {
-        message = null;
+        data = null;
         return false;
       }
 
-      message = Data.ResultMessage;
+      data = Data;
       return true;
     }
 

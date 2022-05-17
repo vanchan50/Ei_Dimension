@@ -2,89 +2,93 @@
 
 namespace DIOS.Core.SelfTests
 {
-  internal class SelfTestData
+  public class SelfTestData
   {
     internal bool ResultReady
     {
       get
       {
-        return Pressure != null
-               && StartupPressure != null
-               && MotorX != null
-               && MotorY != null
-               && MotorZ != null;
+        return _pressure != null
+               && _startupPressure != null
+               && _motorX != null
+               && _motorY != null
+               && _motorZ != null;
       }
     }
 
-    internal float? StartupPressure
+    public float? StartupPressure
     {
       get
       {
-        return _startupPressure;
+        if (_startupPressure > 1.0)
+          return _startupPressure;
+        return null;
       }
       private set
       {
         _startupPressure = value;
-        if (_startupPressure > 1.0)
-          ResultMessage += $"Startup OverPressure [{_startupPressure}]\n";
         Console.WriteLine($"Startup pressure: {value}");
       }
     }
 
-    internal float? Pressure
+    public float? Pressure
     {
-      get { return _pressure; }
+      get
+      {
+        if (_pressure > _device.MaxPressure) 
+          return _pressure;
+        return null;
+      }
       private set
       {
         _pressure = value;
-        if (_pressure > _device.MaxPressure)
-          ResultMessage += $"OverPressure {_pressure}\n";
         Console.WriteLine($"Pressure: {value}");
       }
     }
 
-    internal float? MotorX {
-      get { return _motorX; }
+    public float? MotorX {
+      get
+      {
+        if (_motorX < 450 || _motorX > 505)
+          return _motorX;
+        return null;
+      }
       set
       {
         _motorX = value;
-        if (_motorX < 450 || _motorX > 505)
-        {
-          ResultMessage += "Out Of Position: Motor X\n";
-        }
         Console.WriteLine($"Motor X: {value}");
       }
     }
 
-    internal float? MotorY
+    public float? MotorY
     {
-      get { return _motorY; }
+      get
+      {
+        if (_motorY < 450 || _motorY > 505)
+          return _motorY;
+        return null;
+      }
       set
       {
         _motorY = value;
-        if (_motorY < 450 || _motorY > 505)
-        {
-          ResultMessage += "Out Of Position: Motor Y\n";
-        }
         Console.WriteLine($"Motor Y: {value}");
       }
     }
 
-    internal float? MotorZ
+    public float? MotorZ
     {
-      get { return _motorZ; }
+      get
+      {
+        if (_motorZ < 16 || _motorZ > 21)
+          return _motorZ;
+        return null;
+      }
       set
       {
         _motorZ = value;
-        if (_motorZ < 16 || _motorZ > 21)
-        {
-          ResultMessage += "Out Of Position: Motor Z\n";
-        }
         Console.WriteLine($"Motor Z: {value}");
       }
     }
-
-    internal string ResultMessage { get; private set; }
 
     private float? _motorX;
     private float? _motorY;

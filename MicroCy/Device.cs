@@ -176,19 +176,19 @@ namespace DIOS.Core
     /// Polls the device once per 100 ms until the test result is ready
     /// </summary>
     /// <returns></returns>
-    public async Task<string> GetSelfTestResultAsync()
+    public async Task<SelfTestData> GetSelfTestResultAsync()
     {
-      var t = new Task<string>(() =>
+      var t = new Task<SelfTestData>(() =>
       {
-        string msg;
-        while (!SelfTester.GetResult(out msg))
+        SelfTestData data;
+        while (!SelfTester.GetResult(out data))
         {
           System.Threading.Thread.Sleep(100);
         }
-#if DEBUG
-        Console.WriteLine($"\nSelfTest Finished\n\n{msg}\n");
-#endif
-        return msg;
+        #if DEBUG
+        Console.WriteLine("\nSelfTest Finished\n\n");
+        #endif
+        return data;
       });
       t.Start();
       return await t;

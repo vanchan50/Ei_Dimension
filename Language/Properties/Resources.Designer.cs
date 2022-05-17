@@ -180,6 +180,25 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Power Off
+        ///  System.
+        /// </summary>
+        public static string Button_Power_Off_Sys {
+            get {
+                return ResourceManager.GetString("Button_Power_Off_Sys", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update.
+        /// </summary>
+        public static string Button_Update {
+            get {
+                return ResourceManager.GetString("Button_Update", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Attenuation %.
         /// </summary>
         public static string Calibration_Attenuation {
@@ -355,6 +374,15 @@ namespace Ei_Dimension.Language {
         public static string Calibration_Success {
             get {
                 return ResourceManager.GetString("Calibration_Success", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string Cancel {
+            get {
+                return ResourceManager.GetString("Cancel", resourceCulture);
             }
         }
         
@@ -1890,11 +1918,201 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bubble Detector Fault.
+        /// </summary>
+        public static string Messages_Bubble_Detector_Fault {
+            get {
+                return ResourceManager.GetString("Messages_Bubble_Detector_Fault", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Calibration Parameters Saved to map.
+        /// </summary>
+        public static string Messages_CalParameters_Saved {
+            get {
+                return ResourceManager.GetString("Messages_CalParameters_Saved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Check for waste line obstructions.
+        /// </summary>
+        public static string Messages_CheckForWasteLineObstructions {
+            get {
+                return ResourceManager.GetString("Messages_CheckForWasteLineObstructions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Would you like to
+        ///Update the Firmware?.
+        /// </summary>
+        public static string Messages_Firmware_Update_Request {
+            get {
+                return ResourceManager.GetString("Messages_Firmware_Update_Request", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The instrument is in Calibration mode.
+        /// </summary>
+        public static string Messages_Instrument_IsIn_CalMode {
+            get {
+                return ResourceManager.GetString("Messages_Instrument_IsIn_CalMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The instrument is in Verification mode.
+        /// </summary>
+        public static string Messages_Instrument_IsIn_ValMode {
+            get {
+                return ResourceManager.GetString("Messages_Instrument_IsIn_ValMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &quot;Min Per Region&quot; End of Read requires at least 1 active region.
+        /// </summary>
+        public static string Messages_MinPerReg_RequiresAtLeast1 {
+            get {
+                return ResourceManager.GetString("Messages_MinPerReg_RequiresAtLeast1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Out Of Position: Motor X.
+        /// </summary>
+        public static string Messages_MotorX_OutOfPos {
+            get {
+                return ResourceManager.GetString("Messages_MotorX_OutOfPos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Out Of Position: Motor Y.
+        /// </summary>
+        public static string Messages_MotorY_OutOfPos {
+            get {
+                return ResourceManager.GetString("Messages_MotorY_OutOfPos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Out Of Position: Motor Z.
+        /// </summary>
+        public static string Messages_MotorZ_OutOfPos {
+            get {
+                return ResourceManager.GetString("Messages_MotorZ_OutOfPos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No wells or Tube selected.
+        /// </summary>
+        public static string Messages_NoWellsOrTube_Selected {
+            get {
+                return ResourceManager.GetString("Messages_NoWellsOrTube_Selected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OverPressure.
+        /// </summary>
+        public static string Messages_Overpressure {
+            get {
+                return ResourceManager.GetString("Messages_Overpressure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Power Off System.
+        /// </summary>
+        public static string Messages_Power_Off_Sys {
+            get {
+                return ResourceManager.GetString("Messages_Power_Off_Sys", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Press OK to continue.
+        /// </summary>
+        public static string Messages_Press_OK_ToContinue {
+            get {
+                return ResourceManager.GetString("Messages_Press_OK_ToContinue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pressure overload.
+        /// </summary>
+        public static string Messages_Pressure_Overload {
+            get {
+                return ResourceManager.GetString("Messages_Pressure_Overload", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Refill and press OK.
+        /// </summary>
+        public static string Messages_Refill_Sheath_ToContinue {
+            get {
+                return ResourceManager.GetString("Messages_Refill_Sheath_ToContinue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to reporter is not specified.
+        /// </summary>
+        public static string Messages_Reporter_Not_Specified {
+            get {
+                return ResourceManager.GetString("Messages_Reporter_Not_Specified", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sheath Empty.
+        /// </summary>
+        public static string Messages_Sheath_Empty {
+            get {
+                return ResourceManager.GetString("Messages_Sheath_Empty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Startup OverPressure.
         /// </summary>
         public static string Messages_Startup_Overpressure {
             get {
                 return ResourceManager.GetString("Messages_Startup_Overpressure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Verification Regions Loaded.
+        /// </summary>
+        public static string Messages_Ver_Regions_Loaded {
+            get {
+                return ResourceManager.GetString("Messages_Ver_Regions_Loaded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Verification Regions Saved.
+        /// </summary>
+        public static string Messages_Ver_Regions_Saved {
+            get {
+                return ResourceManager.GetString("Messages_Ver_Regions_Saved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No Verification regions selected.
+        /// </summary>
+        public static string Messages_VerRegions_NotSelected {
+            get {
+                return ResourceManager.GetString("Messages_VerRegions_NotSelected", resourceCulture);
             }
         }
         
@@ -2751,6 +2969,15 @@ namespace Ei_Dimension.Language {
         public static string Value {
             get {
                 return ResourceManager.GetString("Value", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Verification region.
+        /// </summary>
+        public static string Ver_Region {
+            get {
+                return ResourceManager.GetString("Ver_Region", resourceCulture);
             }
         }
         

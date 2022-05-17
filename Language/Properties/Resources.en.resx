@@ -158,6 +158,13 @@ Align Motor</value>
   <data name="Analysis_Plot3D" xml:space="preserve">
     <value>3D Chart</value>
   </data>
+  <data name="Button_Power_Off_Sys" xml:space="preserve">
+    <value>Power Off
+  System</value>
+  </data>
+  <data name="Button_Update" xml:space="preserve">
+    <value>Update</value>
+  </data>
   <data name="Calibration_Attenuation" xml:space="preserve">
     <value>Attenuation %</value>
   </data>
@@ -222,6 +229,9 @@ To Current Map</value>
   </data>
   <data name="Calibration_Success" xml:space="preserve">
     <value>Calibration Succesful!</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
   </data>
   <data name="Channels_Average_BG" xml:space="preserve">
     <value>Average BG</value>
@@ -759,8 +769,72 @@ output folder</value>
   <data name="Mean" xml:space="preserve">
     <value> Mean</value>
   </data>
+  <data name="Messages_Bubble_Detector_Fault" xml:space="preserve">
+    <value>Bubble Detector Fault</value>
+  </data>
+  <data name="Messages_CalParameters_Saved" xml:space="preserve">
+    <value>Calibration Parameters Saved to map</value>
+  </data>
+  <data name="Messages_CheckForWasteLineObstructions" xml:space="preserve">
+    <value>Check for waste line obstructions</value>
+  </data>
+  <data name="Messages_Firmware_Update_Request" xml:space="preserve">
+    <value>Would you like to
+Update the Firmware?</value>
+  </data>
+  <data name="Messages_Instrument_IsIn_CalMode" xml:space="preserve">
+    <value>The instrument is in Calibration mode</value>
+  </data>
+  <data name="Messages_Instrument_IsIn_ValMode" xml:space="preserve">
+    <value>The instrument is in Verification mode</value>
+  </data>
+  <data name="Messages_MinPerReg_RequiresAtLeast1" xml:space="preserve">
+    <value>"Min Per Region" End of Read requires at least 1 active region</value>
+  </data>
+  <data name="Messages_MotorX_OutOfPos" xml:space="preserve">
+    <value>Out Of Position: Motor X</value>
+  </data>
+  <data name="Messages_MotorY_OutOfPos" xml:space="preserve">
+    <value>Out Of Position: Motor Y</value>
+  </data>
+  <data name="Messages_MotorZ_OutOfPos" xml:space="preserve">
+    <value>Out Of Position: Motor Z</value>
+  </data>
+  <data name="Messages_NoWellsOrTube_Selected" xml:space="preserve">
+    <value>No wells or Tube selected</value>
+  </data>
+  <data name="Messages_Overpressure" xml:space="preserve">
+    <value>OverPressure</value>
+  </data>
+  <data name="Messages_Power_Off_Sys" xml:space="preserve">
+    <value>Power Off System</value>
+  </data>
+  <data name="Messages_Pressure_Overload" xml:space="preserve">
+    <value>Pressure overload</value>
+  </data>
+  <data name="Messages_Press_OK_ToContinue" xml:space="preserve">
+    <value>Press OK to continue</value>
+  </data>
+  <data name="Messages_Refill_Sheath_ToContinue" xml:space="preserve">
+    <value>Refill and press OK</value>
+  </data>
+  <data name="Messages_Reporter_Not_Specified" xml:space="preserve">
+    <value>reporter is not specified</value>
+  </data>
+  <data name="Messages_Sheath_Empty" xml:space="preserve">
+    <value>Sheath Empty</value>
+  </data>
   <data name="Messages_Startup_Overpressure" xml:space="preserve">
     <value>Startup OverPressure</value>
+  </data>
+  <data name="Messages_VerRegions_NotSelected" xml:space="preserve">
+    <value>No Verification regions selected</value>
+  </data>
+  <data name="Messages_Ver_Regions_Loaded" xml:space="preserve">
+    <value>Verification Regions Loaded</value>
+  </data>
+  <data name="Messages_Ver_Regions_Saved" xml:space="preserve">
+    <value>Verification Regions Saved</value>
   </data>
   <data name="Monthly" xml:space="preserve">
     <value>Monthly</value>
@@ -1059,6 +1133,9 @@ Verification</value>
   </data>
   <data name="Verification_Warning_Schedule" xml:space="preserve">
     <value>Verification warning schedule</value>
+  </data>
+  <data name="Ver_Region" xml:space="preserve">
+    <value>Verification region</value>
   </data>
   <data name="Violet" xml:space="preserve">
     <value>Violet</value>

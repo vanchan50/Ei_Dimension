@@ -153,6 +153,12 @@
   <data name="Analysis_Plot3D" xml:space="preserve">
     <value>三维图表</value>
   </data>
+  <data name="Button_Power_Off_Sys" xml:space="preserve">
+    <value>关机</value>
+  </data>
+  <data name="Button_Update" xml:space="preserve">
+    <value>更新</value>
+  </data>
   <data name="Calibration_Attenuation" xml:space="preserve">
     <value>红光衰减率 %</value>
   </data>
@@ -195,6 +201,9 @@
   </data>
   <data name="Calibration_Save_Calibration_To_Map" xml:space="preserve">
     <value>保存校准到当前珠图</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>取消</value>
   </data>
   <data name="Channels_Average_BG" xml:space="preserve">
     <value>平均本底</value>
@@ -668,8 +677,71 @@
   <data name="Mean" xml:space="preserve">
     <value>平均值</value>
   </data>
+  <data name="Messages_Bubble_Detector_Fault" xml:space="preserve">
+    <value>气泡传感器报错</value>
+  </data>
+  <data name="Messages_CalParameters_Saved" xml:space="preserve">
+    <value>校准参数保存至 珠图</value>
+  </data>
+  <data name="Messages_CheckForWasteLineObstructions" xml:space="preserve">
+    <value>请检查废液管是否堵塞</value>
+  </data>
+  <data name="Messages_Firmware_Update_Request" xml:space="preserve">
+    <value>是否需要更新固件?</value>
+  </data>
+  <data name="Messages_Instrument_IsIn_CalMode" xml:space="preserve">
+    <value>仪器处于校准模式</value>
+  </data>
+  <data name="Messages_Instrument_IsIn_ValMode" xml:space="preserve">
+    <value>仪器处于验证/确认模式</value>
+  </data>
+  <data name="Messages_MinPerReg_RequiresAtLeast1" xml:space="preserve">
+    <value>‘单区最小计数'需要至少一个激活区域</value>
+  </data>
+  <data name="Messages_MotorX_OutOfPos" xml:space="preserve">
+    <value>X马达 初始位置错误</value>
+  </data>
+  <data name="Messages_MotorY_OutOfPos" xml:space="preserve">
+    <value>Y马达 初始位置错误</value>
+  </data>
+  <data name="Messages_MotorZ_OutOfPos" xml:space="preserve">
+    <value>Z马达 初始位置错误</value>
+  </data>
+  <data name="Messages_NoWellsOrTube_Selected" xml:space="preserve">
+    <value>未选择孔板位置或单管</value>
+  </data>
+  <data name="Messages_Overpressure" xml:space="preserve">
+    <value>液压过大</value>
+  </data>
+  <data name="Messages_Power_Off_Sys" xml:space="preserve">
+    <value>关机</value>
+  </data>
+  <data name="Messages_Pressure_Overload" xml:space="preserve">
+    <value>压力过载</value>
+  </data>
+  <data name="Messages_Press_OK_ToContinue" xml:space="preserve">
+    <value>请点击OK继续</value>
+  </data>
+  <data name="Messages_Refill_Sheath_ToContinue" xml:space="preserve">
+    <value>请添加鞘液后点击OK继续</value>
+  </data>
+  <data name="Messages_Reporter_Not_Specified" xml:space="preserve">
+    <value>的报告分子MFI值</value>
+  </data>
+  <data name="Messages_Sheath_Empty" xml:space="preserve">
+    <value>鞘液已用完</value>
+  </data>
   <data name="Messages_Startup_Overpressure" xml:space="preserve">
     <value>开机液压过大</value>
+  </data>
+  <data name="Messages_VerRegions_NotSelected" xml:space="preserve">
+    <value>未选择验证区域</value>
+  </data>
+  <data name="Messages_Ver_Regions_Loaded" xml:space="preserve">
+    <value>验证区域已加载</value>
+  </data>
+  <data name="Messages_Ver_Regions_Saved" xml:space="preserve">
+    <value>验证区域已保存</value>
   </data>
   <data name="Monthly" xml:space="preserve">
     <value>每月</value>
@@ -907,6 +979,9 @@
   </data>
   <data name="Verification_Warning_Schedule" xml:space="preserve">
     <value>验证警告时间表</value>
+  </data>
+  <data name="Ver_Region" xml:space="preserve">
+    <value>未设定验证区域</value>
   </data>
   <data name="Violet" xml:space="preserve">
     <value>紫光</value>

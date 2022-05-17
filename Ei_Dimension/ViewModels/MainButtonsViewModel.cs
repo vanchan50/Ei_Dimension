@@ -46,14 +46,18 @@ namespace Ei_Dimension.ViewModels
       UserInputHandler.InputSanityCheck();
       if (App.Device.TerminationType == Termination.MinPerRegion && MapRegionsController.ActiveRegionNums.Count == 0)
       {
-        Notification.Show("\"Min Per Region\" End of Read requires at least 1 active region");
+        var msg = Language.Resources.ResourceManager.GetString(Language.Resources.Messages_MinPerReg_RequiresAtLeast1,
+          Language.TranslationSource.Instance.CurrentCulture);
+        Notification.Show(msg);
         return;
       }
 
       var wells = WellsSelectViewModel.Instance.OutputWells();
       if (wells.Count == 0)
       {
-        Notification.Show("No wells or Tube selected");
+        var msg = Language.Resources.ResourceManager.GetString(Language.Resources.Messages_NoWellsOrTube_Selected,
+          Language.TranslationSource.Instance.CurrentCulture);
+        Notification.Show(msg);
         return;
       }
       App.Device.WellController.Init(wells);

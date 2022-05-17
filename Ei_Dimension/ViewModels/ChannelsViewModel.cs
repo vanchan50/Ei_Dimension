@@ -86,7 +86,9 @@ namespace Ei_Dimension.ViewModels
           Notification.Show("Save failed"));
         return;
       }
-      Notification.Show($"Calibration Parameters Saved to map {App.Device.MapCtroller.ActiveMap.mapName}");
+      var msg = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Messages_CalParameters_Saved),
+        Language.TranslationSource.Instance.CurrentCulture);
+      Notification.Show($"{msg} {App.Device.MapCtroller.ActiveMap.mapName}");
     }
 
     public void FocusedBox(int num)
