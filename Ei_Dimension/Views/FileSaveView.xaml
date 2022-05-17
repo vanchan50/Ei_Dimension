@@ -199,7 +199,7 @@
                 Height="50"
                 Margin="100,720,4,0"
                 VerticalAlignment="Top" HorizontalAlignment="Left">
-      <TextBlock Text="Output Folder:"
+      <TextBlock Text="{lang:Loc FileSave_Output_Folder}"
                  FontFamily="{StaticResource AppTextFont}"
                  FontSize="30"
                  FontWeight="UltraBold"

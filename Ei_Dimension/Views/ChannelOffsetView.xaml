@@ -225,7 +225,7 @@
         </StackPanel>
         <!--Avg BG-->
         <StackPanel Name="AvgBgSP" Width="0">
-          <TextBlock Text="Average BG"
+          <TextBlock Text="{lang:Loc Channels_Average_BG}"
                      FontFamily="{StaticResource AppTextFont}"
                      FontSize="36"
                      Width="180"

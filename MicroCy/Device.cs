@@ -313,11 +313,7 @@ namespace DIOS.Core
           cs.FParameter = Idex.Dir;
           break;
       }
-      DataController.OutCommands.Enqueue((command, cs));
-      #if DEBUG
-      Console.Error.WriteLine($"{DateTime.Now.ToString()} Enqueued [{command}]: {cs.ToString()}");
-      #endif
-      _dataController.NotifyCommandReceived();
+      _dataController.AddCommand(command, cs);
     }
 
     private void SetSystemDirectories()

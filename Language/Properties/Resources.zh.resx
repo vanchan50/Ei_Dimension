@@ -148,10 +148,10 @@
     <value>所有文件</value>
   </data>
   <data name="Analysis_Plot2D" xml:space="preserve">
-    <value>2D 三维图表</value>
+    <value>二维图表</value>
   </data>
   <data name="Analysis_Plot3D" xml:space="preserve">
-    <value>3D 三维图表</value>
+    <value>三维图表</value>
   </data>
   <data name="Calibration_Attenuation" xml:space="preserve">
     <value>红光衰减率 %</value>
@@ -195,6 +195,9 @@
   </data>
   <data name="Calibration_Save_Calibration_To_Map" xml:space="preserve">
     <value>保存校准到当前珠图</value>
+  </data>
+  <data name="Channels_Average_BG" xml:space="preserve">
+    <value>平均本底</value>
   </data>
   <data name="Channels_Background" xml:space="preserve">
     <value>背景</value>
@@ -268,7 +271,7 @@
     <value>紫光 B (CL0)</value>
   </data>
   <data name="Ch_Offset_Ch_Offset" xml:space="preserve">
-    <value>通道偏移</value>
+    <value>基线偏移</value>
   </data>
   <data name="CL0" xml:space="preserve">
     <value>CL0</value>
@@ -566,6 +569,9 @@
   <data name="Experiment_Start" xml:space="preserve">
     <value>开始</value>
   </data>
+  <data name="Experiment_Stats" xml:space="preserve">
+    <value>统计数据</value>
+  </data>
   <data name="Experiment_System_Control" xml:space="preserve">
     <value>系统控制</value>
   </data>
@@ -615,6 +621,9 @@
   <data name="FileSave_Output_Files" xml:space="preserve">
     <value>输出文件</value>
   </data>
+  <data name="FileSave_Output_Folder" xml:space="preserve">
+    <value>输出文件夹 :</value>
+  </data>
   <data name="FileSave_Plate_Summary" xml:space="preserve">
     <value>孔板所有区域的MFI结果</value>
   </data>
@@ -658,6 +667,9 @@
   </data>
   <data name="Mean" xml:space="preserve">
     <value>平均值</value>
+  </data>
+  <data name="Messages_Startup_Overpressure" xml:space="preserve">
+    <value>开机液压过大</value>
   </data>
   <data name="Monthly" xml:space="preserve">
     <value>每月</value>

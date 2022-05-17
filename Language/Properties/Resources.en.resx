@@ -223,6 +223,9 @@ To Current Map</value>
   <data name="Calibration_Success" xml:space="preserve">
     <value>Calibration Succesful!</value>
   </data>
+  <data name="Channels_Average_BG" xml:space="preserve">
+    <value>Average BG</value>
+  </data>
   <data name="Channels_Background" xml:space="preserve">
     <value>Background</value>
   </data>
@@ -706,6 +709,9 @@ Order</value>
   <data name="FileSave_Output_Files" xml:space="preserve">
     <value>Output Files</value>
   </data>
+  <data name="FileSave_Output_Folder" xml:space="preserve">
+    <value>Output Folder :</value>
+  </data>
   <data name="FileSave_Plate_Summary" xml:space="preserve">
     <value>Plate Summary of MFI for All Regions</value>
   </data>
@@ -752,6 +758,9 @@ output folder</value>
   </data>
   <data name="Mean" xml:space="preserve">
     <value> Mean</value>
+  </data>
+  <data name="Messages_Startup_Overpressure" xml:space="preserve">
+    <value>Startup OverPressure</value>
   </data>
   <data name="Monthly" xml:space="preserve">
     <value>Monthly</value>

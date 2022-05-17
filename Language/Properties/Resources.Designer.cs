@@ -378,6 +378,15 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Average BG.
+        /// </summary>
+        public static string Channels_Average_BG {
+            get {
+                return ResourceManager.GetString("Channels_Average_BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Background.
         /// </summary>
         public static string Channels_Background {
@@ -1735,6 +1744,15 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Output Folder :.
+        /// </summary>
+        public static string FileSave_Output_Folder {
+            get {
+                return ResourceManager.GetString("FileSave_Output_Folder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Plate Summary of MFI for All Regions.
         /// </summary>
         public static string FileSave_Plate_Summary {
@@ -1868,6 +1886,15 @@ namespace Ei_Dimension.Language {
         public static string Mean {
             get {
                 return ResourceManager.GetString("Mean", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Startup OverPressure.
+        /// </summary>
+        public static string Messages_Startup_Overpressure {
+            get {
+                return ResourceManager.GetString("Messages_Startup_Overpressure", resourceCulture);
             }
         }
         

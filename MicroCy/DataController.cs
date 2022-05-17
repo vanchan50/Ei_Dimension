@@ -6,7 +6,7 @@ namespace DIOS.Core
 {
   internal class DataController
   {
-    internal static ConcurrentQueue<(string name, CommandStruct cs)> OutCommands { get; } = new ConcurrentQueue<(string name, CommandStruct cs)>();
+    private ConcurrentQueue<(string name, CommandStruct cs)> OutCommands { get; } = new ConcurrentQueue<(string name, CommandStruct cs)>();
 
     private readonly object _usbOutCV = new object();
     private readonly ISerial _serialConnection;
@@ -97,12 +97,21 @@ namespace DIOS.Core
       }
     }
 
-    public void NotifyCommandReceived()
+    private void NotifyCommandReceived()
     {
       lock (_usbOutCV)
       {
         Monitor.Pulse(_usbOutCV);
       }
+    }
+
+    public void AddCommand(string command, CommandStruct cs)
+    {
+      OutCommands.Enqueue((command, cs));
+      #if DEBUG
+      Console.Error.WriteLine($"{DateTime.Now.ToString()} Enqueued [{command}]: {cs.ToString()}");
+      #endif
+      NotifyCommandReceived();
     }
 
     /// <summary>

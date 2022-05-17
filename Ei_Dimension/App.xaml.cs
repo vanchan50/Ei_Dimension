@@ -261,7 +261,7 @@ namespace Ei_Dimension
     public static void UnfocusUIElement()
     {
       if (Ei_Dimension.MainWindow.Instance == null)
-        return;
+        return; 
       System.Windows.Input.FocusManager.SetFocusedElement(System.Windows.Input.FocusManager.GetFocusScope(Ei_Dimension.MainWindow.Instance), null);
       System.Windows.Input.Keyboard.ClearFocus();
     }

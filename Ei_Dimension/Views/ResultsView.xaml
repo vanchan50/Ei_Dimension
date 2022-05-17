@@ -317,13 +317,13 @@
           <dxc:Legend HorizontalPosition="Left"
                     MarkerMode="CheckBox"
                     Orientation="Horizontal"
-                    Margin="30,-28,0,0"
+                    Margin="200,-28,0,0"
                     FontSize="24"
                     Background="Transparent"
                     BorderBrush="Transparent"
                     VerticalPosition="Top"
                     Focusable="False"
-                    Width="525" Visible="True"/>
+                    Width="350" Visible="True"/>
         </dxc:ChartControl.Legends>
         <dxc:XYDiagram2D Focusable="False"
                          Width="690" Height="460"
@@ -396,31 +396,31 @@
           <dxc:LineSeries2D DataSource="{Binding ScttrData.DisplayedRedSsc}"
                           ValueDataMember="Value"
                           ArgumentDataMember="Argument"
-                          DisplayName="Red"
+                          DisplayName="{lang:Loc Red}"
                           Brush="Red"
                           CheckedInLegend="{Binding ScatterSelectorState[0]}"/>
           <dxc:LineSeries2D DataSource="{Binding ScttrData.DisplayedGreenSsc}"
                           ValueDataMember="Value"
                           ArgumentDataMember="Argument"
-                          DisplayName="Green"
+                          DisplayName="{lang:Loc Green}"
                           Brush="Green"
                           CheckedInLegend="{Binding ScatterSelectorState[1]}"/>
           <dxc:LineSeries2D DataSource="{Binding ScttrData.DisplayedVioletSsc}"
                           ValueDataMember="Value"
                           ArgumentDataMember="Argument"
-                          DisplayName="Violet"
+                          DisplayName="{lang:Loc Violet}"
                           Brush="DarkViolet"
                           CheckedInLegend="{Binding ScatterSelectorState[2]}"/>
           <dxc:LineSeries2D DataSource="{Binding ScttrData.DisplayedForwardSsc}"
                           ValueDataMember="Value"
                           ArgumentDataMember="Argument"
-                          DisplayName="Forward"
+                          DisplayName="{lang:Loc Channels_Forward_Scatter}"
                           Brush="Chocolate"
                           CheckedInLegend="{Binding ScatterSelectorState[3]}"/>
           <dxc:LineSeries2D DataSource="{Binding ScttrData.DisplayedReporter}"
                           ValueDataMember="Value"
                           ArgumentDataMember="Argument"
-                          DisplayName="Reporter"
+                          DisplayName="{lang:Loc Verification_Table_Reporter}"
                           Brush="Black"
                           CheckedInLegend="{Binding ScatterSelectorState[4]}"/>
         </dxc:XYDiagram2D>
@@ -847,7 +847,7 @@
            Source="/Icons/dimension flow analyzer logo.png"
            RenderOptions.BitmapScalingMode="HighQuality"/>
 
-      <!--Plate pictogram-->
+    <!--Plate pictogram-->
     <Border Width="780" Height="524"
             Margin="1230,372,0,0"
             HorizontalAlignment="Left"
