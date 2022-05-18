@@ -37,6 +37,7 @@ namespace Ei_Dimension.Models
     private int _a;
     public static double[] bins { get; }
     public static double[] HiRezBins { get; }
+    public static double[] HalfPrecisionBins { get; }
     public HeatMapData(int x, int y, int r = -1)
     {
       X = x;
@@ -47,9 +48,11 @@ namespace Ei_Dimension.Models
     static HeatMapData()
     {
       bins = new double[256];
-      HiRezBins = new double[ViewModels.ResultsViewModel.HIREZDEFINITION];
       DataProcessor.GenerateLogSpaceD(1, 60000, 256, bins);
+      HiRezBins = new double[ViewModels.ResultsViewModel.HIREZDEFINITION];
       DataProcessor.GenerateLogSpaceD(1, 60000, ViewModels.ResultsViewModel.HIREZDEFINITION, HiRezBins);
+      HalfPrecisionBins = new double[256 / 2];
+      DataProcessor.GenerateLogSpaceD(1, 60000, 256/2, HalfPrecisionBins);
     }
   }
 }

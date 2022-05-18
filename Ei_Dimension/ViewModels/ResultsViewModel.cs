@@ -316,7 +316,12 @@ namespace Ei_Dimension.ViewModels
       }
       for (var i = 0; i < linesInFile.Count; i++)
       {
-        beadStructs.Add(Core.DataProcessor.ParseRow(linesInFile[i]));
+        try
+        {
+          var bs = Core.DataProcessor.ParseRow(linesInFile[i]);
+          beadStructs.Add(bs);
+        }
+        catch(FormatException){}
       }
       return true;
     }

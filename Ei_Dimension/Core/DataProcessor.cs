@@ -342,7 +342,7 @@ namespace Ei_Dimension.Core
         for (var i = 0; i < heatMapList.Count; i++)
         {
           var heatMap = heatMapList[i];
-          if (heatMap.A <= 1) //transparent single member beads == 1
+          if (heatMap.A <= 1) //transparent single member beads == 1  //Actual amplitude starts from 0
             continue;
           var X = heatMap.X;
           var Y = heatMap.Y;
@@ -370,8 +370,10 @@ namespace Ei_Dimension.Core
       var bins = hiRez ? HeatMapData.HiRezBins : HeatMapData.bins;
       var boundary = hiRez ? HeatMapData.HiRezBins.Length - 1 : HeatMapData.bins.Length - 1;
       var i = 0;
+
       while (i < beadInfoList.Count)
       {
+        var region = beadInfoList[i].region;
         /*
         int cl0 = Array.BinarySearch(bins, bead.cl0);
         if (cl0 < 0)
@@ -398,6 +400,13 @@ namespace Ei_Dimension.Core
         //  HeatMap.AddPoint((cl1, cl2), bins, mapIndex, current);
         //}
         HeatMap.AddPoint((cl1, cl2), bins, MapIndex.CL12, current);
+
+        //More weight to points on 100Plex lowerleft regions
+        if (AddWeightToRegions(region))
+        {
+          HeatMap.AddPoint((cl1, cl2), bins, MapIndex.CL12, current);
+          HeatMap.AddPoint((cl1, cl2), bins, MapIndex.CL12, current);
+        }
 
         //3DReporterPlot
         if (!current)
@@ -427,6 +436,15 @@ namespace Ei_Dimension.Core
           break;
         }
       }
+    }
+
+    private static bool AddWeightToRegions(ushort region)
+    {
+      if (App.Device.MapCtroller.ActiveMap.mapName != "D100Aplex")
+        return false;
+      if ((region > 0 && region <= 8) || region == 10 || region == 11 || region == 16 || region == 23 || region == 31 || region == 40)
+        return true;
+      return false;
     }
   }
 }
