@@ -45,7 +45,8 @@ namespace Ei_Dimension.ViewModels
 
     public byte[] SyringeControlStates { get; private set; }
     private ushort _activeLasers;
-    private readonly string _loaderPath = "DIOS_FW_Loader.exe";
+    private readonly string _loaderPath;
+    private const string BOOTLOADER = "DIOS_FW_Loader.exe";
 
     protected ComponentsViewModel()
     {
@@ -104,6 +105,8 @@ namespace Ei_Dimension.ViewModels
       SuppressWarnings = Settings.Default.SuppressWarnings;
 
       Instance = this;
+
+      _loaderPath = $"{AppDomain.CurrentDomain.BaseDirectory}{BOOTLOADER}";
     }
 
     public static ComponentsViewModel Create()
@@ -286,6 +289,7 @@ namespace Ei_Dimension.ViewModels
         App.Device.MainCommand("Set Property", code: 0xF5); //Send UPDATE FIRMWARE
         System.Threading.Thread.Sleep(1500);
         App.Current.Shutdown();
+
         Process.Start(_loaderPath);
       };
       var msg1 = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Messages_Firmware_Update_Request),
