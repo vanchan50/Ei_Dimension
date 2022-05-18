@@ -288,13 +288,13 @@ namespace Ei_Dimension.ViewModels
         App.Current.Shutdown();
         Process.Start(_loaderPath);
       };
-      var msg1 = Language.Resources.ResourceManager.GetString(Language.Resources.Messages_Pressure_Overload,
+      var msg1 = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Messages_Firmware_Update_Request),
         Language.TranslationSource.Instance.CurrentCulture);
-      var update = Language.Resources.ResourceManager.GetString(Language.Resources.Button_Update,
+      var update = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Button_Update),
         Language.TranslationSource.Instance.CurrentCulture);
-      var cancel = Language.Resources.ResourceManager.GetString(Language.Resources.Cancel,
+      var cancel = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Cancel),
         Language.TranslationSource.Instance.CurrentCulture);
-      Notification.Show($"{msg1}",
+      Notification.Show(msg1,
           Save, update,
           null, cancel, fontSize:38);
     }

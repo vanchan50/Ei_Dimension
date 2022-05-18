@@ -65,7 +65,7 @@ namespace Ei_Dimension.ViewModels
 
       if (!fromCode)
       {
-        var msg = Language.Resources.ResourceManager.GetString(Language.Resources.Messages_Ver_Regions_Loaded,
+        var msg = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Messages_Ver_Regions_Loaded),
           Language.TranslationSource.Instance.CurrentCulture);
         Notification.Show(msg);
       }
@@ -136,7 +136,7 @@ namespace Ei_Dimension.ViewModels
           Notification.Show("Save failed"));
         return;
       }
-      var msg = Language.Resources.ResourceManager.GetString(Language.Resources.Messages_Ver_Regions_Saved,
+      var msg = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Messages_Ver_Regions_Saved),
         Language.TranslationSource.Instance.CurrentCulture);
       Notification.Show(msg);
     }

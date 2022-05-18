@@ -46,7 +46,7 @@ namespace Ei_Dimension.ViewModels
       UserInputHandler.InputSanityCheck();
       if (App.Device.TerminationType == Termination.MinPerRegion && MapRegionsController.ActiveRegionNums.Count == 0)
       {
-        var msg = Language.Resources.ResourceManager.GetString(Language.Resources.Messages_MinPerReg_RequiresAtLeast1,
+        var msg = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Messages_MinPerReg_RequiresAtLeast1),
           Language.TranslationSource.Instance.CurrentCulture);
         Notification.Show(msg);
         return;
@@ -55,7 +55,7 @@ namespace Ei_Dimension.ViewModels
       var wells = WellsSelectViewModel.Instance.OutputWells();
       if (wells.Count == 0)
       {
-        var msg = Language.Resources.ResourceManager.GetString(Language.Resources.Messages_NoWellsOrTube_Selected,
+        var msg = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Messages_NoWellsOrTube_Selected),
           Language.TranslationSource.Instance.CurrentCulture);
         Notification.Show(msg);
         return;

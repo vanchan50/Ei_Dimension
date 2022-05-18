@@ -108,7 +108,7 @@ namespace Ei_Dimension
       //decode error here
       if (result.StartupPressure != null)
       {
-        var msg = Language.Resources.ResourceManager.GetString(Language.Resources.Messages_Startup_Overpressure,
+        var msg = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Messages_Startup_Overpressure),
           Language.TranslationSource.Instance.CurrentCulture);
         if (errorMessage == null)
           errorMessage = "";
@@ -117,7 +117,7 @@ namespace Ei_Dimension
 
       if (result.Pressure != null)
       {
-        var msg = Language.Resources.ResourceManager.GetString(Language.Resources.Messages_Overpressure,
+        var msg = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Messages_Overpressure),
           Language.TranslationSource.Instance.CurrentCulture);
         if (errorMessage == null)
           errorMessage = "";
@@ -126,7 +126,7 @@ namespace Ei_Dimension
 
       if (result.MotorX != null)
       {
-        var msg = Language.Resources.ResourceManager.GetString(Language.Resources.Messages_MotorX_OutOfPos,
+        var msg = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Messages_MotorX_OutOfPos),
           Language.TranslationSource.Instance.CurrentCulture);
         if (errorMessage == null)
           errorMessage = "";
@@ -135,7 +135,7 @@ namespace Ei_Dimension
 
       if (result.MotorY != null)
       {
-        var msg = Language.Resources.ResourceManager.GetString(Language.Resources.Messages_MotorY_OutOfPos,
+        var msg = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Messages_MotorY_OutOfPos),
           Language.TranslationSource.Instance.CurrentCulture);
         if (errorMessage == null)
           errorMessage = "";
@@ -144,7 +144,7 @@ namespace Ei_Dimension
 
       if (result.MotorZ != null)
       {
-        var msg = Language.Resources.ResourceManager.GetString(Language.Resources.Messages_MotorZ_OutOfPos,
+        var msg = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Messages_MotorZ_OutOfPos),
           Language.TranslationSource.Instance.CurrentCulture);
         if (errorMessage == null)
           errorMessage = "";

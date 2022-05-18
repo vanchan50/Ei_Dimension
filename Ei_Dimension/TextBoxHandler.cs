@@ -508,9 +508,9 @@ namespace Ei_Dimension
               }
               App.Current.Dispatcher.Invoke(() =>
               {
-                var msg1 = Language.Resources.ResourceManager.GetString(Language.Resources.Messages_Sheath_Empty,
+                var msg1 = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Messages_Sheath_Empty),
                   Language.TranslationSource.Instance.CurrentCulture);
-                var msg2 = Language.Resources.ResourceManager.GetString(Language.Resources.Messages_Refill_Sheath_ToContinue,
+                var msg2 = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Messages_Refill_Sheath_ToContinue),
                   Language.TranslationSource.Instance.CurrentCulture);
                 Notification.Show($"{msg1}\n{msg2}", Act, "OK");
               });
@@ -533,11 +533,11 @@ namespace Ei_Dimension
                 }
                 App.Current.Dispatcher.Invoke(() =>
                 {
-                  var msg1 = Language.Resources.ResourceManager.GetString(Language.Resources.Messages_Pressure_Overload,
+                  var msg1 = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Messages_Pressure_Overload),
                     Language.TranslationSource.Instance.CurrentCulture);
-                  var msg2 = Language.Resources.ResourceManager.GetString(Language.Resources.Messages_CheckForWasteLineObstructions,
+                  var msg2 = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Messages_CheckForWasteLineObstructions),
                     Language.TranslationSource.Instance.CurrentCulture);
-                  var msg3 = Language.Resources.ResourceManager.GetString(Language.Resources.Button_Power_Off_Sys,
+                  var msg3 = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Button_Power_Off_Sys),
                     Language.TranslationSource.Instance.CurrentCulture);
                   Notification.Show($"{msg1}\n{msg2}", Act,
                       msg3);
@@ -575,7 +575,7 @@ namespace Ei_Dimension
               }
               App.Current.Dispatcher.Invoke(() =>
               {
-                var msg = Language.Resources.ResourceManager.GetString(Language.Resources.Messages_Power_Off_Sys,
+                var msg = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Messages_Power_Off_Sys),
                   Language.TranslationSource.Instance.CurrentCulture);
                 Notification.Show(ws + $"\n{msg}", Act, "OK");
               });
@@ -606,9 +606,9 @@ namespace Ei_Dimension
           case 0xf4:
             if (exe.Command == 0x00)
             {
-              var msg1 = Language.Resources.ResourceManager.GetString(Language.Resources.Messages_Bubble_Detector_Fault,
+              var msg1 = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Messages_Bubble_Detector_Fault),
                 Language.TranslationSource.Instance.CurrentCulture);
-              var msg2 = Language.Resources.ResourceManager.GetString(Language.Resources.Messages_Press_OK_ToContinue,
+              var msg2 = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Messages_Press_OK_ToContinue),
                 Language.TranslationSource.Instance.CurrentCulture);
               Notification.Show($"{msg1}\n{msg2}");
               Console.WriteLine("Bubble Detector Fault");
