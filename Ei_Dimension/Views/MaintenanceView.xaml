@@ -37,6 +37,12 @@
                    Style="{DynamicResource SubRibbonButtonStyle}"
                    Command="{Binding NavigateVerificationCommand}">
       </RadioButton>
+      <RadioButton Content="{lang:Loc Maintenance_Normalization}"
+                   Height="84"
+                   img:EmbeddedImg.Image="{dx:DXImage 'SvgImages/Dashboards/WeightedPies.svg'}"
+                   Style="{DynamicResource SubRibbonButtonStyle}"
+                   Command="{Binding NavigateNormalizationCommand}">
+      </RadioButton>
       <RadioButton Content="{lang:Loc Maintenance_Channels}"
                    Height="84"
                    img:EmbeddedImg.Image="/Icons/channels icon.png"
@@ -46,79 +52,10 @@
     </StackPanel>
 
     <Border Grid.Column="0"
-            Margin="30,420,0,0"
+            Margin="30,550,0,0"
             HorizontalAlignment="Left"
             Width="240">
       <StackPanel>
-        <ToggleButton Style="{StaticResource ToggleButtonThemeStyle}"
-                      Height="70" Width="220"
-                      Margin="0,0,0,10"
-                      Content="{lang:Loc Maintenance_LEDs}"
-                      IsChecked="{Binding LEDsToggleButtonState, Mode=OneWay}"
-                      VerticalAlignment="Top"
-                      HorizontalAlignment="Center"
-                      IsEnabled="{Binding LEDsEnabled}"
-                      Command="{Binding LEDsButtonClickCommand}"/>
-        <!--Slider-->
-        <StackPanel Visibility="Hidden">
-          <StackPanel.Resources>
-            <Style x:Key="trackBarEditThumbStyle"
-                   TargetType="Thumb">
-              <Setter Property="Template">
-                <Setter.Value>
-                  <ControlTemplate>
-                    <Ellipse Width="48" Height="48"
-                             Cursor="Hand"
-                             Fill="{StaticResource ButtonBackground}"
-                             Stroke="{StaticResource AppBackground}"
-                             StrokeThickness="2"/>
-                  </ControlTemplate>
-                </Setter.Value>
-              </Setter>
-            </Style>
-            <Style x:Key="nearTrackStyle"
-                   TargetType="RepeatButton">
-              <Setter Property="Template">
-                <Setter.Value>
-                  <ControlTemplate>
-                    <Border Background="{StaticResource ButtonBackground}"
-                            Height="24"
-                            VerticalAlignment="Center"
-                            Margin="5,0,-5,0"
-                            CornerRadius="4"/>
-                  </ControlTemplate>
-                </Setter.Value>
-              </Setter>
-            </Style>
-            <Style x:Key="farTrackStyle"
-                   TargetType="RepeatButton">
-              <Setter Property="Template">
-                <Setter.Value>
-                  <ControlTemplate>
-                    <Border Background="{DynamicResource RibbonBackgroundActive}"
-                            Height="24"
-                            VerticalAlignment="Center"
-                            Margin="-5,0,5,0"
-                            CornerRadius="4" />
-                  </ControlTemplate>
-                </Setter.Value>
-              </Setter>
-            </Style>
-          </StackPanel.Resources>
-          <dxe:TrackBarEdit Margin="0,0,0,20" 
-                            Minimum="0" Maximum="4095"
-                            Width="220" EditValue="{Binding LEDSliderValue}"
-                            CornerRadius="4" TickPlacement="None"
-                            NearTrackStyle="{StaticResource nearTrackStyle}"
-                            FarTrackStyle="{StaticResource farTrackStyle}"
-                            ThumbStyle="{StaticResource trackBarEditThumbStyle}">
-            <dxmvvm:Interaction.Behaviors>
-              <dxmvvm:EventToCommand EventName="EditValueChanged"
-                                     Command="{Binding LEDSliderValueChangedCommand}"/>
-            </dxmvvm:Interaction.Behaviors>
-          </dxe:TrackBarEdit>
-        </StackPanel>
-
         <Button Content="{lang:Loc Maintenance_Sanitize}"
                 Command="{Binding UVCSanitizeClickCommand}"
                 Style="{StaticResource ButtonStyle}"

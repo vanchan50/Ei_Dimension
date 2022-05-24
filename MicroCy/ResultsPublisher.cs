@@ -46,6 +46,24 @@ namespace DIOS.Core
       }
     }
 
+    public List<(int region, int mfi)> GetRegionalReporterMFI()
+    {
+      if (_plateReport == null || _plateReport.Wells == null || _plateReport.Wells[0].rpReg == null)
+        return null;
+
+      List<(int region, int mfi)> list = new List<(int region, int mfi)>();
+
+      foreach (var regionReport in _plateReport.Wells[0].rpReg)
+      {
+        if (regionReport.region == 0)
+        {
+          continue;
+        }
+        list.Add((regionReport.region, (int)regionReport.meanfi));
+      }
+      return list;
+    }
+
     internal static void StartNewPlateReport()
     {
       _plateReport = new PlateReport();

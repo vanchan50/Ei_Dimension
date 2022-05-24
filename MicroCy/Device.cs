@@ -113,6 +113,7 @@ namespace DIOS.Core
       }
     }
     public float Compensation { get; set; }
+    public bool Normalization { get; set; } = true;
     public static DirectoryInfo RootDirectory { get; private set; }
     public float MaxPressure { get; set; }
 
@@ -125,6 +126,7 @@ namespace DIOS.Core
     private readonly StateMachine _stateMach;
     internal SelfTester SelfTester { get; }
     internal readonly BeadProcessor _beadProcessor;
+    private bool _normalizationCache;
 
     public Device(ISerial connection)
     {
@@ -223,6 +225,11 @@ namespace DIOS.Core
 
     public void StartOperation()
     {
+      if (Mode != OperationMode.Normal)
+      {
+        _normalizationCache = Normalization;
+        Normalization = false;
+      }
       MainCommand("Set Property", code: 0xce, parameter: MapCtroller.ActiveMap.calParams.minmapssc);  //set ssc gates for this map
       MainCommand("Set Property", code: 0xcf, parameter: MapCtroller.ActiveMap.calParams.maxmapssc);
       _beadProcessor.ConstructClassificationMap(MapCtroller.ActiveMap);
@@ -319,7 +326,7 @@ namespace DIOS.Core
     private void SetSystemDirectories()
     {
       RootDirectory = new DirectoryInfo(Path.Combine(@"C:\Emissioninc", Environment.MachineName));
-      List<string> subDirectories = new List<string>(7) { "Config", "WorkOrder", "SavedImages", "Archive", "Result", "Status", "AcquisitionData", "SystemLogs" };
+      List<string> subDirectories = new List<string>(8) { "Config", "WorkOrder", "SavedImages", "Archive", "Result", "Status", "AcquisitionData", "SystemLogs" };
       try
       {
         foreach (var d in subDirectories)
@@ -356,6 +363,10 @@ namespace DIOS.Core
       MainCommand("Set Property", code: 0x19);  //bubble detect off
       if (Mode ==  OperationMode.Verification)
         Verificator.CalculateResults();
+
+      if (Mode != OperationMode.Normal)
+        Normalization = _normalizationCache;
+
       FinishedMeasurement?.Invoke(this, EventArgs.Empty);
     }
 

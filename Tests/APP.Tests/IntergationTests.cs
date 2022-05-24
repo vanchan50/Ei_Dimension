@@ -35,12 +35,14 @@ namespace APP.Tests
       var dbname = new StackPanel();
       var valnum = new StackPanel();
       var varrep = new StackPanel();
+      var normnum = new StackPanel();
+      var normrep = new StackPanel();
       for (var i = 0; i < 13; i++)
       {
         App.Current.Resources.MergedDictionaries.Add(new ResourceDictionary());
       }
       App.MapRegions = new MapRegionsController(rb, rnb, rt,
-        dbnum, dbname, valnum, varrep);
+        dbnum, dbname, valnum, varrep, normnum, normrep);
       ActiveRegionsStatsController.Instance.DisplayCurrentBeadStats();
       //ResultsViewModel.Instance.PlatePictogram.SetGrid(Views.ResultsView.Instance.DrawingPlate);
       //ResultsViewModel.Instance.PlatePictogram.SetWarningGrid(Views.ResultsView.Instance.WarningGrid);

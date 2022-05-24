@@ -18,6 +18,7 @@ namespace Ei_Dimension.Models
         OnPropertyChanged();
       }
     }
+
     public ObservableCollection<string> TargetReporterValue
     {
       get { return _targetReporterValue; }
@@ -28,15 +29,27 @@ namespace Ei_Dimension.Models
       }
     }
 
+    public ObservableCollection<string> MFIValue
+    {
+      get { return _mfiValue; }
+      set
+      {
+        _mfiValue = value;
+        OnPropertyChanged();
+      }
+    }
+
     private ObservableCollection<string> _name;
 
     private ObservableCollection<string> _targetReporterValue;
+    private ObservableCollection<string> _mfiValue;
     public MapRegionData(int number)
     {
       Number = number;
       NumberString = number.ToString();
       _name = new ObservableCollection<string> { NumberString };
       _targetReporterValue = new ObservableCollection<string> { "" };
+      _mfiValue = new ObservableCollection<string> { "" };
     }
   }
 }

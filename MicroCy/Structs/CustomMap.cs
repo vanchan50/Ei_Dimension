@@ -24,6 +24,7 @@ namespace DIOS.Core
     public string caltime;
     public string valtime;
     public bool validation;
+    public double factor;
     public CalParams calParams;
     public List<MapRegion> regions;
     //public List<(int x, int y, int r)> classificationMap; //contains coords in 256x256 space for region numbers

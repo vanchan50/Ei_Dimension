@@ -9,9 +9,6 @@ namespace Ei_Dimension.ViewModels
   [POCOViewModel]
   public class MaintenanceViewModel
   {
-    public virtual bool LEDsToggleButtonState { get; set; }
-    public virtual bool LEDsEnabled { get; set; }
-    public virtual object LEDSliderValue { get; set; }
     public virtual ObservableCollection<string> SanitizeSecondsContent { get; set; }
     public virtual ObservableCollection<bool> TouchModeEnabled { get; set; }
 
@@ -25,9 +22,6 @@ namespace Ei_Dimension.ViewModels
 
     protected MaintenanceViewModel()
     {
-      LEDSliderValue = 1170;
-      LEDsEnabled = true;
-      LEDsToggleButtonState = false;
       SanitizeSecondsContent = new ObservableCollection<string> { "" };
       TouchModeEnabled = new ObservableCollection<bool> { Settings.Default.TouchMode };
       LanguageItems = new ObservableCollection<DropDownButtonContents>();
@@ -42,31 +36,6 @@ namespace Ei_Dimension.ViewModels
     public static MaintenanceViewModel Create()
     {
       return ViewModelSource.Create(() => new MaintenanceViewModel());
-    }
-
-    public void LEDsButtonClick()
-    {
-      UserInputHandler.InputSanityCheck();
-      if (LEDsEnabled)
-      {
-        LEDsToggleButtonState = !LEDsToggleButtonState;
-        var param = LEDsToggleButtonState ? 1 : 0;
-        App.Device.MainCommand("Set Property", code: 0x17, parameter: (ushort)param);
-        if (!LEDsToggleButtonState)
-        {
-          LEDSliderValue = 1170.0;
-          App.Device.MainCommand("Set Property", code: 0x97, parameter: 1170);
-        }
-      }
-    }
-
-    public void LEDSliderValueChanged()
-    {
-      if (LEDsEnabled)
-      {
-        App.Device.MainCommand("Set Property", code: 0x97, parameter: (ushort)(double)LEDSliderValue);
-        App.Device.MainCommand("RefreshDac");
-      }
     }
 
     public void TouchModeToggle()
@@ -95,6 +64,9 @@ namespace Ei_Dimension.ViewModels
           NavigateVerification();
           break;
         case 2:
+          NavigateNormalization();
+          break;
+        case 3:
           NavigateChannels();
           break;
       }
@@ -121,6 +93,16 @@ namespace Ei_Dimension.ViewModels
       _lastActiveTab = 1;
     }
 
+    public void NavigateNormalization()
+    {
+      App.HideNumpad();
+      MainViewModel.Instance.HintHide();
+      if (VerificationViewModel.Instance != null)
+        VerificationViewModel.Instance.isActivePage = false;
+      NavigationService.Navigate("NormalizationView", null, this);
+      _lastActiveTab = 2;
+    }
+
     public void NavigateChannels()
     {
       App.HideNumpad();
@@ -129,7 +111,7 @@ namespace Ei_Dimension.ViewModels
         VerificationViewModel.Instance.isActivePage = false;
       NavigationService.Navigate("ChannelsView", null, this);
       App.InitSTab("channeltab");
-      _lastActiveTab = 2;
+      _lastActiveTab = 3;
     }
 
     public void FocusedBox(int num)
@@ -152,6 +134,7 @@ namespace Ei_Dimension.ViewModels
     {
       NavigateCalibration();
       NavigateVerification();
+      NavigateNormalization();
       NavigateChannels();
       _lastActiveTab = 0;
     }

@@ -662,9 +662,6 @@
   <data name="Maintenance_Channels" xml:space="preserve">
     <value>探测器</value>
   </data>
-  <data name="Maintenance_LEDs" xml:space="preserve">
-    <value>LED 开启</value>
-  </data>
   <data name="Maintenance_Sanitize" xml:space="preserve">
     <value>UVC 紫外消毒</value>
   </data>

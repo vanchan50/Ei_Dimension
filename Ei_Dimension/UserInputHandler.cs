@@ -3,6 +3,7 @@ using DIOS.Core;
 using System.Collections.ObjectModel;
 using System.Reflection;
 using System.Windows.Controls;
+using Ei_Dimension.Models;
 
 namespace Ei_Dimension
 {
@@ -1440,6 +1441,28 @@ namespace Ei_Dimension
             }
             failed = true;
             ErrorMessage = "[1-100]";
+            break; 
+          case nameof(NormalizationViewModel.Instance.NormalizationFactor):
+            if (float.TryParse(_tempNewString, out fRes))
+            {
+              if (fRes >= 0.9 && fRes <= 0.99)
+              {
+                break;
+              }
+            }
+            failed = true;
+            ErrorMessage = "[0.9-0.99]";
+            break;
+          case nameof(MapRegionData.MFIValue):
+            if (int.TryParse(_tempNewString, out iRes))
+            {
+              if (iRes >= 0)// && iRes <= 100)
+              {
+                break;
+              }
+            }
+            failed = true;
+            ErrorMessage = ">=0";// "[1-100]";
             break;
         }
         if(VerificationViewModel.Instance.isActivePage)

@@ -388,6 +388,7 @@ namespace Ei_Dimension.ViewModels
             App.Device.MainCommand("Set Property", code: 0xa9, parameter: (ushort)Index);
             App.MapRegions.FillRegions();
             VerificationViewModel.Instance.LoadClick(fromCode: true);
+            NormalizationViewModel.Instance.Load();
             break;
           case 3:
             _vm.SelectedChConfigContent = Content;

@@ -1873,11 +1873,11 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to LEDs ON.
+        ///   Looks up a localized string similar to Normalization.
         /// </summary>
-        public static string Maintenance_LEDs {
+        public static string Maintenance_Normalization {
             get {
-                return ResourceManager.GetString("Maintenance_LEDs", resourceCulture);
+                return ResourceManager.GetString("Maintenance_Normalization", resourceCulture);
             }
         }
         
@@ -2374,6 +2374,52 @@ namespace Ei_Dimension.Language {
         public static string Name {
             get {
                 return ResourceManager.GetString("Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Normalize.
+        /// </summary>
+        public static string Normalilzation_Normalize {
+            get {
+                return ResourceManager.GetString("Normalilzation_Normalize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear.
+        /// </summary>
+        public static string Normalization_Clear {
+            get {
+                return ResourceManager.GetString("Normalization_Clear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Factor.
+        /// </summary>
+        public static string Normalization_Factor {
+            get {
+                return ResourceManager.GetString("Normalization_Factor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to POST.
+        /// </summary>
+        public static string Normalization_Post {
+            get {
+                return ResourceManager.GetString("Normalization_Post", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save Normalization
+        ///Parameters To Map.
+        /// </summary>
+        public static string Normalization_Save {
+            get {
+                return ResourceManager.GetString("Normalization_Save", resourceCulture);
             }
         }
         

@@ -45,11 +45,16 @@ namespace DIOS.Core
       //each well can have a different  classification map
       outbead.cl1 = cl.cl1;
       outbead.cl2 = cl.cl2;
-      outbead.region = (ushort)ClassifyBeadToRegion(cl);
+      outbead.fsc = (float)Math.Pow(10, outbead.fsc);
+      var reg = (ushort)ClassifyBeadToRegion(cl);
+      outbead.region = reg;
       //handle HI dnr channel
       var reporter = _greenMin > _device.HdnrTrans ? _greenMaj * _device.HDnrCoef : _greenMin;
-      outbead.reporter = reporter / _device.ReporterScaling;
-      outbead.fsc = (float)Math.Pow(10, outbead.fsc);
+      outbead.reporter = (reporter / _device.ReporterScaling);
+      if (_device.Normalization)
+      {
+        NormalizeReporter(ref outbead, reg);
+      }
     }
 
     private int ClassifyBeadToRegion((float cl0, float cl1, float cl2, float cl3) cl)
@@ -65,6 +70,14 @@ namespace DIOS.Core
       x = x < byte.MaxValue ? x : byte.MaxValue;
       y = y < byte.MaxValue ? y : byte.MaxValue;
       return _classificationMap[x, y];
+    }
+
+    private void NormalizeReporter(ref BeadInfoStruct outbead, int region)
+    {
+      var idx = _device.MapCtroller.GetMapRegionIndex(region);
+      var rep = (float)(_device.MapCtroller.ActiveMap.factor * _device.MapCtroller.ActiveMap.regions[idx].NormalizationMFI);
+      outbead.reporter -= rep;
+      outbead.reporter = outbead.reporter >= 0 ? outbead.reporter : 0;
     }
 
     public void FillBackgroundAverages(in BeadInfoStruct outbead)

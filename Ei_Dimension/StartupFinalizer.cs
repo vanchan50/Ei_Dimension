@@ -35,7 +35,9 @@ namespace Ei_Dimension
         Views.DashboardView.Instance.DbActiveRegionNo,
         Views.DashboardView.Instance.DbActiveRegionName,
         Views.VerificationView.Instance.VerificationNums,
-        Views.VerificationView.Instance.VerificationReporterValues);
+        Views.VerificationView.Instance.VerificationReporterValues,
+        Views.NormalizationView.Instance.NormalizationNums,
+        Views.NormalizationView.Instance.NormalizationMFIValues);
 
       ActiveRegionsStatsController.Instance.DisplayCurrentBeadStats();
       ResultsViewModel.Instance.PlatePictogram.SetGrid(Views.ResultsView.Instance.DrawingPlate);
@@ -43,6 +45,7 @@ namespace Ei_Dimension
       Views.CalibrationView.Instance.clmap.DataContext = DashboardViewModel.Instance;
       Views.VerificationView.Instance.clmap.DataContext = DashboardViewModel.Instance;
       Views.ChannelsView.Instance.clmap.DataContext = DashboardViewModel.Instance;
+      Views.NormalizationView.Instance.clmap.DataContext = DashboardViewModel.Instance;
       //load map parameters
       if (Settings.Default.LastTemplate != "None")
       {
@@ -80,6 +83,7 @@ namespace Ei_Dimension
       #endif
       if(App.Device.FirmwareVersion != null)
         MainViewModel.AppVersion += App.Device.FirmwareVersion;
+      Console.WriteLine(MainViewModel.AppVersion);
       if (App.Device.BoardVersion > 0)
         HideChannels();
 

@@ -2,21 +2,45 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DIOS.Core
 {
   public class MapController
   {
-    public CustomMap ActiveMap { get; set; }
+    public CustomMap ActiveMap
+    {
+      get
+      {
+        return _activeMap;
+      }
+      set
+      {
+        _activeMap = value;
+        _mapRegionNumberIndexDictionary.Clear();
+        int i = 0;
+        foreach (var region in _activeMap.regions)
+        {
+          _mapRegionNumberIndexDictionary.Add(region.Number, i);
+          i++;
+        }
+      }
+    }
+
     public List<CustomMap> MapList { get; } = new List<CustomMap>();
     private Device _device;
+    private readonly SortedDictionary<int, int> _mapRegionNumberIndexDictionary = new SortedDictionary<int, int>();
+    private CustomMap _activeMap;
 
     public MapController(Device device)
     {
       _device = device;
+    }
+
+    public int GetMapRegionIndex(int regionNum)
+    {
+      if (_mapRegionNumberIndexDictionary.TryGetValue(regionNum, out var ret))
+        return ret;
+      return -1;
     }
 
     public bool SaveCalVals(MapCalParameters param)
@@ -77,21 +101,38 @@ namespace DIOS.Core
       MapList[idx] = map;
       ActiveMap = MapList[idx];
 
-      var contents = JsonConvert.SerializeObject(map);
-      try
-      {
-        using (var stream =
-               new StreamWriter(Device.RootDirectory.FullName + @"/Config/" + map.mapName + @".dmap"))
-        {
-          stream.Write(contents);
-        }
-      }
-      catch
-      {
-        return false;
-      }
+      return WriteToMap(map);
+    }
 
-      return true;
+    public void SaveNormVals(double factor)
+    {
+      var idx = MapList.FindIndex(x => x.mapName == ActiveMap.mapName);
+      var map = MapList[idx];
+      if(factor >= 0.9 && factor <= 0.99)
+        map.factor = factor;
+      else
+        throw new Exception("Unacceptable factor value");
+
+      MapList[idx] = map;
+      ActiveMap = MapList[idx];
+
+      _ = WriteToMap(map);
+    }
+
+    public bool SaveRegions(List<MapRegion> newRegions)
+    {
+      if (newRegions == null || newRegions.Count == 0)
+        return false;
+
+      var idx = MapList.FindIndex(x => x.mapName == ActiveMap.mapName);
+      var map = MapList[idx];
+
+      map.regions = newRegions;
+
+      MapList[idx] = map;
+      ActiveMap = MapList[idx];
+
+      return WriteToMap(map);
     }
 
     public void LoadMaps()
@@ -203,21 +244,28 @@ namespace DIOS.Core
         //swap
         originalMap.regions = updateMap.regions;
         //save
-        contents = JsonConvert.SerializeObject(originalMap);
-        try
-        {
-          using (var stream =
-                 new StreamWriter(Device.RootDirectory.FullName + @"/Config/" + originalMap.mapName + @".dmap"))
-          {
-            stream.Write(contents);
-          }
-        }
-        catch
-        {
+        if (!WriteToMap(originalMap))
           Console.WriteLine($"Failed to update {originalMap.mapName}");
-        }
         File.Delete(mp);
       }
+    }
+
+    private bool WriteToMap(CustomMap map)
+    {
+      var contents = JsonConvert.SerializeObject(map);
+      try
+      {
+        using (var stream = new StreamWriter(Device.RootDirectory.FullName + @"/Config/" + map.mapName + @".dmap"))
+        {
+          stream.Write(contents);
+        }
+      }
+      catch
+      {
+        return false;
+      }
+
+      return true;
     }
   }
 }

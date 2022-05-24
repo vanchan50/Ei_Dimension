@@ -754,8 +754,8 @@ output folder</value>
   <data name="Maintenance_Channels" xml:space="preserve">
     <value>Channels</value>
   </data>
-  <data name="Maintenance_LEDs" xml:space="preserve">
-    <value>LEDs ON</value>
+  <data name="Maintenance_Normalization" xml:space="preserve">
+    <value>Normalization</value>
   </data>
   <data name="Maintenance_Sanitize" xml:space="preserve">
     <value>UVC Sanitize</value>
@@ -922,6 +922,22 @@ Update the Firmware?</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>Name</value>
+  </data>
+  <data name="Normalilzation_Normalize" xml:space="preserve">
+    <value>Normalize</value>
+  </data>
+  <data name="Normalization_Clear" xml:space="preserve">
+    <value>Clear</value>
+  </data>
+  <data name="Normalization_Factor" xml:space="preserve">
+    <value>Factor</value>
+  </data>
+  <data name="Normalization_Post" xml:space="preserve">
+    <value>POST</value>
+  </data>
+  <data name="Normalization_Save" xml:space="preserve">
+    <value>Save Normalization
+Parameters To Map</value>
   </data>
   <data name="Notification_Empty_File" xml:space="preserve">
     <value>File is empty</value>

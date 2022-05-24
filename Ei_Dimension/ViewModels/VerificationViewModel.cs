@@ -3,8 +3,6 @@ using DevExpress.Mvvm.POCO;
 using DIOS.Core;
 using System;
 using System.Collections.ObjectModel;
-using System.Globalization;
-using System.Text;
 using Ei_Dimension.Controllers;
 
 namespace Ei_Dimension.ViewModels
@@ -52,7 +50,6 @@ namespace Ei_Dimension.ViewModels
         //Reset all Verification Regions
         MapRegionsController.ActiveVerificationRegionNums.Add(map.regions[i].Number);
         App.MapRegions.AddValidationRegion(map.regions[i].Number);
-        MapRegionsController.ActiveVerificationRegionNums.Remove(map.regions[i].Number);
         MapRegionsController.RegionsList[i + 1].TargetReporterValue[0] = "";
 
         if (map.regions[i].isValidator)

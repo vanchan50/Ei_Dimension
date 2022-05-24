@@ -41,7 +41,6 @@ namespace Ei_Dimension.ViewModels
       bool state = false;
       if(num == 0)
         state = true;
-      LedsOn(state);
       App.Device.MainCommand("Set Property", code: 0xc5, parameter: (ushort)num);
       AutoAlignSelectorState = num;
     }
@@ -59,24 +58,6 @@ namespace Ei_Dimension.ViewModels
     public void GoToAlignSequenceClick()
     {
       App.Device.MainCommand("AlignMotor", cmd: 5);
-    }
-
-    private void LedsOn(bool on)
-    {
-      if (_maintVM == null && MaintenanceViewModel.Instance != null)
-        _maintVM = MaintenanceViewModel.Instance;
-
-      if (_maintVM != null)
-      {
-        if (on)
-          _maintVM.LEDsEnabled = true;
-        else
-        {
-          _maintVM.LEDsToggleButtonState = true;
-          _maintVM.LEDsButtonClick();
-          _maintVM.LEDsEnabled = false;
-        }
-      }
     }
 
     public void TextChanged(TextChangedEventArgs e)

@@ -208,6 +208,7 @@
     <Compile Include="Controllers\ActiveRegionsStatsController.cs" />
     <Compile Include="CompanyID.cs" />
     <Compile Include="Controllers\MapRegionsSubControlllers\DashboardTableController.cs" />
+    <Compile Include="Controllers\MapRegionsSubControlllers\NormalizationTableController.cs" />
     <Compile Include="Controllers\MapRegionsSubControlllers\ResultsTableController.cs" />
     <Compile Include="Controllers\MapRegionsSubControlllers\ValidationTableController.cs" />
     <Compile Include="Core\DataProcessor.cs" />
@@ -257,6 +258,7 @@
     <Compile Include="ViewModels\MainButtonsViewModel.cs" />
     <Compile Include="ViewModels\MaintenanceViewModel.cs" />
     <Compile Include="ViewModels\MotorsViewModel.cs" />
+    <Compile Include="ViewModels\NormalizationViewModel.cs" />
     <Compile Include="ViewModels\NotificationViewModel.cs" />
     <Compile Include="ViewModels\NumpadViewModel.cs" />
     <Compile Include="ViewModels\ResultsViewModel.cs" />
@@ -269,6 +271,9 @@
     </Compile>
     <Compile Include="Views\MainButtonsView.xaml.cs">
       <DependentUpon>MainButtonsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\NormalizationView.xaml.cs">
+      <DependentUpon>NormalizationView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\NotificationView.xaml.cs">
       <DependentUpon>NotificationView.xaml</DependentUpon>
@@ -407,6 +412,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MainButtonsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\NormalizationView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

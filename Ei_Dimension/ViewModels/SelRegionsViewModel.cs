@@ -62,7 +62,7 @@ namespace Ei_Dimension.ViewModels
           (() =>
           {
             UserInputHandler.InputSanityCheck();
-            App.MapRegions.FillRegions();
+            App.MapRegions.ResetRegions();
             HideWaitIndicator();
           }));
       });

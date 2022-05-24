@@ -1,5 +1,4 @@
-﻿using DevExpress.Mvvm;
-using DevExpress.Mvvm.DataAnnotations;
+﻿using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
 using DIOS.Core;
 using System;
@@ -93,6 +92,10 @@ namespace Ei_Dimension.ViewModels
         ResultsViewModel.Instance.CurrentCvItems[i] = "";
       }
       MainViewModel.Instance.NavigationSelector(1);
+      if (App.Device.Normalization)
+        Console.WriteLine("Normalization Enabled");
+      else
+        Console.WriteLine("Normalization Disabled");
       App.Device.StartOperation();
     }
 

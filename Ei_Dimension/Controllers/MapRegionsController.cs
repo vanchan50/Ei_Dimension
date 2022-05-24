@@ -1,6 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -39,18 +39,21 @@ namespace Ei_Dimension.Controllers
 
     private ResultsTableController _resultsTableController;
     private ValidationTableController _validationTableController;
+    private NormalizationTableController _normalizationTableController;
     private DashboardTableController _dashboardTableController;
 
     private static readonly SortedDictionary<int, int> _mapRegionNumberIndexDictionary = new SortedDictionary<int, int>();
 
     public MapRegionsController(StackPanel RegionsBorder, StackPanel RegionsNamesBorder, ListBox resultsTable,
-      StackPanel Db_Num, StackPanel Db_Name, StackPanel Validat_Num, StackPanel Validat_Reporter)
+      StackPanel Db_Num, StackPanel Db_Name, StackPanel Validat_Num, StackPanel Validat_Reporter,
+      StackPanel Normaliz_Num, StackPanel Normaliz_MFI)
     {
       _regionsBorder = RegionsBorder;
       _regionsNamesBorder = RegionsNamesBorder;
       _resultsTableController = new ResultsTableController(this, resultsTable);
       _dashboardTableController = new DashboardTableController(Db_Num, Db_Name);
       _validationTableController = new ValidationTableController(this, Validat_Num, Validat_Reporter);
+      _normalizationTableController = new NormalizationTableController(this, Normaliz_Num, Normaliz_MFI);
       FillRegions();
     }
 
@@ -87,6 +90,14 @@ namespace Ei_Dimension.Controllers
       if (_mapRegionNumberIndexDictionary.TryGetValue(regionNum, out var ret))
         return ret;
       return -1;
+    }
+
+    public void ResetRegions()
+    {
+      while (ActiveRegionNums.Count > 0)
+      {
+        AddActiveRegion(ActiveRegionNums.First(), callFromCode: true);
+      }
     }
 
     public void AddActiveRegion(int regionNum, bool callFromCode = false)
@@ -126,10 +137,12 @@ namespace Ei_Dimension.Controllers
     private void AddTextboxes(int regionNum)
     {
       var i = regionNum.ToString();
-      AddRegionsTextBox($"RegionsList[{i}].NumberString");
-      AddRegionsNamesTextBox($"RegionsList[{i}].Name[0]");
-      _validationTableController.AddRegionsTextBox($"RegionsList[{i}].NumberString");
-      _validationTableController.AddReporterTextBox($"RegionsList[{i}].TargetReporterValue[0]");
+      AddRegionsTextBox($"{nameof(RegionsList)}[{i}].{nameof(MapRegionData.NumberString)}");
+      AddRegionsNamesTextBox($"{nameof(RegionsList)}[{i}].{nameof(MapRegionData.Name)}[0]");
+      _validationTableController.AddRegionsTextBox($"{nameof(RegionsList)}[{i}].{nameof(MapRegionData.NumberString)}");
+      _validationTableController.AddReporterTextBox($"{nameof(RegionsList)}[{i}].{nameof(MapRegionData.TargetReporterValue)}[0]");
+      _normalizationTableController.AddRegionsTextBox($"{nameof(RegionsList)}[{i}].{nameof(MapRegionData.NumberString)}");
+      _normalizationTableController.AddMFITextBox($"{nameof(RegionsList)}[{i}].{nameof(MapRegionData.MFIValue)}[0]");
       _tbCounter++;
     }
 
@@ -233,6 +246,7 @@ namespace Ei_Dimension.Controllers
       ClearTextBoxes();
       _dashboardTableController.Clear();
       _validationTableController.Clear();
+      _normalizationTableController.Clear();
     }
 
     private static void SetUserInputTextBox(System.Reflection.PropertyInfo property, TextBox tb)

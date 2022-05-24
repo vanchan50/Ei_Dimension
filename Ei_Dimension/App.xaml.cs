@@ -189,6 +189,12 @@ namespace Ei_Dimension
         }
       }
 
+      var NormVM = NormalizationViewModel.Instance;
+      if (NormVM != null)
+      {
+        NormVM.NormalizationFactor[0] = Device.MapCtroller.ActiveMap.factor.ToString();
+      }
+
       bool Warning = false;
       if (Device.MapCtroller.ActiveMap.validation)
       {
