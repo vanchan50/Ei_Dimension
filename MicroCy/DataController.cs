@@ -13,10 +13,14 @@ namespace DIOS.Core
     private readonly Thread _prioUsbInThread;
     private readonly Thread _prioUsbOutThread;
     private readonly Device _device;
+    private readonly BeadProcessor _beadProcessor;
+    private readonly RunResults _results;
 
-    public DataController(Device device, ISerial connection)
+    public DataController(Device device, BeadProcessor beadProcessor, RunResults runResults, ISerial connection)
     {
       _device = device;
+      _beadProcessor = beadProcessor;
+      _results = runResults;
       _serialConnection = connection;
       if (_serialConnection.IsActive)
       {
@@ -48,14 +52,13 @@ namespace DIOS.Core
             {
               if (!GetBeadFromBuffer(_serialConnection.InputBuffer, i, out var outbead))
                 break;
-              _device._beadProcessor.CalculateBeadParams(ref outbead);
+              _beadProcessor.CalculateBeadParams(ref outbead);
 
-              _device.Results.FillActiveWellResults(in outbead);
+              _results.FillActiveWellResults(in outbead);
               if (outbead.region == 0 && _device.OnlyClassified)
                 continue;
               _device.DataOut.Enqueue(outbead);
-              if (_device.Everyevent)
-                ResultsPublisher.AddBeadStats(in outbead);
+              _device.Publisher.AddBeadEvent(in outbead);
               switch (_device.Mode)
               {
                 case OperationMode.Normal:
@@ -67,14 +70,14 @@ namespace DIOS.Core
                   break;
               }
               //accum stats for run as a whole, used during aligment and QC
-              _device._beadProcessor.FillCalibrationStatsRow(in outbead);
-              _device._beadProcessor.FillBackgroundAverages(in outbead);
+              _beadProcessor.FillCalibrationStatsRow(in outbead);
+              _beadProcessor.FillBackgroundAverages(in outbead);
               _device.BeadCount++;
               _device.TotalBeads++;
             }
           }
           Array.Clear(_serialConnection.InputBuffer, 0, _serialConnection.InputBuffer.Length);
-          _device.Results.TerminationReadyCheck();
+          _results.TerminationReadyCheck();
         }
         else
           GetCommandFromBuffer();
@@ -199,7 +202,7 @@ namespace DIOS.Core
       _device.Commands.Enqueue(newcmd);
     }
 
-    private static bool GetBeadFromBuffer(byte[] buffer,byte shift, out BeadInfoStruct outbead)
+    private static bool GetBeadFromBuffer(byte[] buffer, byte shift, out BeadInfoStruct outbead)
     {
       outbead = BeadArrayToStruct(buffer, shift);
       return outbead.Header == 0xadbeadbe;

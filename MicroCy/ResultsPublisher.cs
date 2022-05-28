@@ -10,14 +10,14 @@ namespace DIOS.Core
   public class ResultsPublisher
   {
     public string Outdir { get; set; }  //  user selectable
-    public static string Outfilename { get; set; } = "ResultFile";
+    public string Outfilename { get; set; } = "ResultFile";
     public static string WorkOrderPath { get; set; }
-    internal static Well SavingWell { get; set; }
-    internal static string FullFileName { get; private set; }
+    internal Well SavingWell { get; set; }
+    internal string FullBeadEventFileName { get; private set; }
     private string _thisRunResultsFileName;
-    private static readonly StringBuilder DataOut = new StringBuilder();
-    private static readonly StringBuilder SummaryOut = new StringBuilder();
-    private static PlateReport _plateReport;
+    private readonly StringBuilder BeadEventDataOut = new StringBuilder();
+    private readonly StringBuilder SummaryOut = new StringBuilder();
+    private PlateReport _plateReport;
     private Device _device;
     private const string BHEADER = "Preamble,Time(1 us Tick),FSC bg,Viol SSC bg,CL0 bg,CL1 bg,CL2 bg,CL3 bg,Red SSC bg,Green SSC bg," +
                                    "Green B bg,Green C bg,Green B,Green C,Red-Grn Offset,Grn-Viol Offset,Region,Forward Scatter,Violet SSC,CL0," +
@@ -31,10 +31,11 @@ namespace DIOS.Core
       Outdir = Device.RootDirectory.FullName;
     }
 
-    internal static void StartNewWellReport()
+    internal void StartNewBeadEventReport()
     {
-      _ = DataOut.Clear();
-      _ = DataOut.Append(BHEADER);
+      GetNewBeadEventFileName();
+      _ = BeadEventDataOut.Clear();
+      _ = BeadEventDataOut.Append(BHEADER);
     }
 
     public void OutDirCheck()
@@ -64,12 +65,12 @@ namespace DIOS.Core
       return list;
     }
 
-    internal static void StartNewPlateReport()
+    internal void StartNewPlateReport()
     {
       _plateReport = new PlateReport();
     }
 
-    internal void GetNewFileName()
+    private void GetNewBeadEventFileName()
     {
       OutDirCheck();
       try
@@ -82,33 +83,27 @@ namespace DIOS.Core
         Console.WriteLine($"Failed to create {Outdir}\\AcquisitionData");
         return;
       }
-      //open file
-      //first create unique filename
 
       char rowletter = (char)(0x41 + _device.WellController.CurrentWell.RowIdx);
-      //if(!isTube)
-      string colLetter = (_device.WellController.CurrentWell.ColIdx + 1).ToString();  //use 0 for tubes and true column for plates
-      for (var differ = 0; differ < int.MaxValue; differ++)
-      {
-        FullFileName = $"{Outdir}\\AcquisitionData\\{Outfilename}{rowletter}{colLetter}_{differ.ToString()}.csv";
-        if (!File.Exists(FullFileName))
-          break;
-      }
+      string colLetter = (_device.WellController.CurrentWell.ColIdx + 1).ToString();
+      string date = DateTime.Now.ToString("dd.MM.yyyy.hh-mm-ss", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"));
+      FullBeadEventFileName = $"{Outdir}\\AcquisitionData\\{Outfilename}{rowletter}{colLetter}_{date}.csv";
     }
 
-    internal static void AddBeadStats(in BeadInfoStruct beadInfo)
+    internal void AddBeadEvent(in BeadInfoStruct beadInfo)
     {
-      _ = DataOut.Append(beadInfo.ToString());
+      if (_device.SaveIndividualBeadEvents)
+        _ = BeadEventDataOut.Append(beadInfo.ToString());
     }
 
-    private static void AddOutResultsToSummary(in OutResults oResults)
+    private void AddOutResultsToSummary(in OutResults oResults)
     {
       _ = SummaryOut.Append(oResults.ToString());
     }
 
-    internal static string GetWellReport()
+    private string GetWellReport()
     {
-      return DataOut.ToString();
+      return BeadEventDataOut.ToString();
     }
 
     private void OutputSummaryFile()
@@ -151,16 +146,8 @@ namespace DIOS.Core
     private void GetThisRunFileName()
     {
       OutDirCheck();
-      for (var i = 0; i < int.MaxValue; i++)
-      {
-        string summaryFileName = $"{Outdir}\\AcquisitionData\\Results_{Outfilename}_{i.ToString()}.csv";
-        if (!File.Exists(summaryFileName))
-        {
-          _thisRunResultsFileName =  summaryFileName;
-          return;
-        }
-      }
-      throw new Exception("Failed to find a name for Results file");
+      string date = DateTime.Now.ToString("dd.MM.yyyy.hh-mm-ss", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"));
+      _thisRunResultsFileName = $"{Outdir}\\AcquisitionData\\Results_{Outfilename}_{date}.csv";
     }
 
     public void OutputPlateReport()
@@ -195,7 +182,7 @@ namespace DIOS.Core
       }
     }
 
-    private static void AddToPlateReport(in OutResults outRes)
+    private void AddToPlateReport(in OutResults outRes)
     {
       _plateReport.Wells[_plateReport.Wells.Count - 1].rpReg.Add(new RegionReport
       {
@@ -207,7 +194,7 @@ namespace DIOS.Core
       });
     }
 
-    public void SaveBeadFile(List<WellResult> wellres) //cancels the begin read from endpoint 2
+    public void SaveBeadFile(List<RegionResult> wellres) //cancels the begin read from endpoint 2
     {
       SaveBeadEventFile();
       if (_device.RMeans)
@@ -222,7 +209,7 @@ namespace DIOS.Core
           });
         for (var i = 0; i < wellres.Count; i++)
         {
-          WellResult regionNumber = wellres[i];
+          RegionResult regionNumber = wellres[i];
           OutResults rout = FillOutResults(regionNumber);
           AddOutResultsToSummary(in rout);
           AddToPlateReport(in rout);//TODO: done not in the right place
@@ -236,7 +223,7 @@ namespace DIOS.Core
       //need to clear textbox in UI. this has to be an event
     }
 
-    private static OutResults FillOutResults(WellResult regionNumber)
+    private OutResults FillOutResults(RegionResult regionNumber)
     {
       OutResults rout = new OutResults();
       rout.row = Alphabet[SavingWell.RowIdx].ToString();
@@ -267,16 +254,16 @@ namespace DIOS.Core
 
     private void SaveBeadEventFile()
     {
-      if ((FullFileName != null) && _device.Everyevent)
+      if ((FullBeadEventFileName != null) && _device.SaveIndividualBeadEvents)
       {
         try
         {
-          File.WriteAllText(FullFileName, GetWellReport());
-          Console.WriteLine($"Bead event saved as {FullFileName}");
+          File.WriteAllText(FullBeadEventFileName, GetWellReport());
+          Console.WriteLine($"Bead event saved as {FullBeadEventFileName}");
         }
         catch
         {
-          Console.WriteLine($"Failed to write Bead event to {FullFileName}");
+          Console.WriteLine($"Failed to write Bead event to {FullBeadEventFileName}");
         }
       }
     }

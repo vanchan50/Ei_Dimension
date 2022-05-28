@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace DIOS.Core
 {
   [Serializable]
-  public class WellResult
+  public class RegionResult
   {
     public ushort regionNumber;
     public List<float> RP1vals = new List<float>(40000);

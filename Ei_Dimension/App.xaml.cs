@@ -72,7 +72,7 @@ namespace Ei_Dimension
         Device.MapCtroller.ActiveMap = Device.MapCtroller.MapList[Settings.Default.DefaultMap];
       }
       Device.Control = (SystemControl)Settings.Default.SystemControl;
-      Device.Everyevent = Settings.Default.Everyevent;
+      Device.SaveIndividualBeadEvents = Settings.Default.Everyevent;
       Device.RMeans = Settings.Default.RMeans;
       Device.PlateReportActive = Settings.Default.PlateReport;
       Device.TerminationType = (Termination)Settings.Default.EndRead;
@@ -583,7 +583,7 @@ namespace Ei_Dimension
       Device.FinishedReadingWell += FinishedReadingWellEventHandler;
       Device.FinishedMeasurement += FinishedMeasurementEventHandler;
       Device.NewStatsAvailable += NewStatsAvailableEventHandler;
-      ResultsPublisher.Outfilename = Settings.Default.SaveFileName;
+      Device.Publisher.Outfilename = Settings.Default.SaveFileName;
       _workOrderPending = false;
       _nextWellWarning = false;
       var watcher = new FileSystemWatcher($"{Device.RootDirectory.FullName}\\WorkOrder");

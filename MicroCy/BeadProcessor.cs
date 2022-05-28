@@ -5,8 +5,8 @@ namespace DIOS.Core
 {
   internal class BeadProcessor
   {
-    public List<Gstats> Stats { get; } = new List<Gstats>(10);
-    public List<double> AvgBg { get; } = new List<double>(10);
+    internal List<Gstats> Stats { get; } = new List<Gstats>(10);
+    internal List<double> AvgBg { get; } = new List<double>(10);
     internal int SavBeadCount { get; set; }
     private byte _actPrimaryIndex;
     private byte _actSecondaryIndex;
@@ -14,9 +14,10 @@ namespace DIOS.Core
     private float _greenMaj;
     private static readonly double[] ClassificationBins;
     private readonly float[,] Sfi = new float[80000, 10];
-    private int[,] _classificationMap;
+    private int[,] _classificationMap = new int[CLASSIFICATIONMAPSIZE, CLASSIFICATIONMAPSIZE];
     private ushort[,] _bgValues = new ushort[10, 80000];
     private Device _device;
+    private const int CLASSIFICATIONMAPSIZE = 256;
 
     public BeadProcessor(Device device)
     {
@@ -25,7 +26,7 @@ namespace DIOS.Core
 
     static BeadProcessor()
     {
-      ClassificationBins = GenerateLogSpace(1, 60000, 256);
+      ClassificationBins = GenerateLogSpace(1, 60000, CLASSIFICATIONMAPSIZE);
     }
 
     public void CalculateBeadParams(ref BeadInfoStruct outbead)
@@ -55,29 +56,6 @@ namespace DIOS.Core
       {
         NormalizeReporter(ref outbead, reg);
       }
-    }
-
-    private int ClassifyBeadToRegion((float cl0, float cl1, float cl2, float cl3) cl)
-    {
-      //_actPrimaryIndex and _actSecondaryIndex should define _classimap index in a previous call,
-      //and produce an index for the selection of classiMap. For cl0 and cl3 map compatibility
-      int x = Array.BinarySearch(ClassificationBins, cl.cl1);
-      if (x < 0)
-        x = ~x;
-      int y = Array.BinarySearch(ClassificationBins, cl.cl2);
-      if (y < 0)
-        y = ~y;
-      x = x < byte.MaxValue ? x : byte.MaxValue;
-      y = y < byte.MaxValue ? y : byte.MaxValue;
-      return _classificationMap[x, y];
-    }
-
-    private void NormalizeReporter(ref BeadInfoStruct outbead, int region)
-    {
-      var idx = _device.MapCtroller.GetMapRegionIndex(region);
-      var rep = (float)(_device.MapCtroller.ActiveMap.factor * _device.MapCtroller.ActiveMap.regions[idx].NormalizationMFI);
-      outbead.reporter -= rep;
-      outbead.reporter = outbead.reporter >= 0 ? outbead.reporter : 0;
     }
 
     public void FillBackgroundAverages(in BeadInfoStruct outbead)
@@ -179,6 +157,44 @@ namespace DIOS.Core
       }
     }
 
+    public void ConstructClassificationMap(CustomMap cMap)
+    {
+      _actPrimaryIndex = (byte)cMap.midorderidx; //what channel cl0 - cl3?
+      _actSecondaryIndex = (byte)cMap.loworderidx;
+      Array.Clear(_classificationMap, 0, _classificationMap.Length);
+      
+      foreach (var region in cMap.regions)
+      {
+        foreach (var point in region.Points)
+        {
+          _classificationMap[point.x, point.y] = region.Number;
+        }
+      }
+    }
+
+    private int ClassifyBeadToRegion((float cl0, float cl1, float cl2, float cl3) cl)
+    {
+      //_actPrimaryIndex and _actSecondaryIndex should define _classimap index in a previous call,
+      //and produce an index for the selection of classiMap. For cl0 and cl3 map compatibility
+      int x = Array.BinarySearch(ClassificationBins, cl.cl1);
+      if (x < 0)
+        x = ~x;
+      int y = Array.BinarySearch(ClassificationBins, cl.cl2);
+      if (y < 0)
+        y = ~y;
+      x = x < byte.MaxValue ? x : byte.MaxValue;
+      y = y < byte.MaxValue ? y : byte.MaxValue;
+      return _classificationMap[x, y];
+    }
+
+    private void NormalizeReporter(ref BeadInfoStruct outbead, int region)
+    {
+      var idx = _device.MapCtroller.GetMapRegionIndex(region);
+      var rep = (float)(_device.MapCtroller.ActiveMap.factor * _device.MapCtroller.ActiveMap.regions[idx].NormalizationMFI);
+      outbead.reporter -= rep;
+      outbead.reporter = outbead.reporter >= 0 ? outbead.reporter : 0;
+    }
+
     private (float cl0, float cl1, float cl2, float cl3) MakeClArr(in BeadInfoStruct outbead)
     {
       var cl1comp = _greenMaj * _device.Compensation / 100;
@@ -211,21 +227,6 @@ namespace DIOS.Core
         accDelta += delta;
       }
       return Result;
-    }
-
-    public void ConstructClassificationMap(CustomMap cMap)
-    {
-      _actPrimaryIndex = (byte)cMap.midorderidx; //what channel cl0 - cl3?
-      _actSecondaryIndex = (byte)cMap.loworderidx;
-
-      _classificationMap = new int[256, 256];
-      foreach (var region in cMap.regions)
-      {
-        foreach(var point in region.Points)
-        {
-          _classificationMap[point.x, point.y] = region.Number;
-        }
-      }
     }
   }
 }

@@ -70,11 +70,10 @@ namespace DIOS.Core
     public int TotalBeads { get; internal set; }
     public int MinPerRegion { get; set; }
     public bool IsMeasurementGoing { get; private set; }
-    public bool Everyevent { get; set; }
+    public bool SaveIndividualBeadEvents { get; set; }
     public bool RMeans { get; set; }
     public bool PlateReportActive { get; set; }
     public bool OnlyClassified { get; set; }
-    public bool Reg0stats { get; set; }
     public HiSensitivityChannel SensitivityChannel
     {
       get
@@ -99,7 +98,6 @@ namespace DIOS.Core
         MainCommand("Set FProperty", code: 0x0A, fparameter: _hdnrTrans);
       }
     }
-
     public float HDnrCoef
     {
       get
@@ -117,7 +115,7 @@ namespace DIOS.Core
     public static DirectoryInfo RootDirectory { get; private set; }
     public float MaxPressure { get; set; }
 
-    private bool _readingA;
+    private bool _isReadingA;
     private Gate _scatterGate;
     private HiSensitivityChannel _sensitivityChannel;
     private float _hdnrTrans;
@@ -131,20 +129,19 @@ namespace DIOS.Core
     public Device(ISerial connection)
     {
       SetSystemDirectories();
-      _dataController = new DataController(this, connection);
+      Results = new RunResults(this);
+      _beadProcessor = new BeadProcessor(this);
+      _dataController = new DataController(this, _beadProcessor, Results, connection);
       _stateMach = new StateMachine(this, true);
       Publisher = new ResultsPublisher(this);
       MapCtroller = new MapController(this);
       SelfTester = new SelfTester(this);
-      Results = new RunResults(this);
-      _beadProcessor = new BeadProcessor(this);
       MainCommand("Sync");
       TotalBeads = 0;
       Mode = OperationMode.Normal;
       MapCtroller.MoveMaps();
       MapCtroller.UpdateMaps();
       MapCtroller.LoadMaps();
-      Reg0stats = false;
       IsMeasurementGoing = false;
       ReporterScaling = 1;
       MainCommand("Get Property", code: 0x01);  //get board version
@@ -201,26 +198,11 @@ namespace DIOS.Core
       SetReadingParamsForWell();
       WellController.Advance();
       Results.Reset();
-      Publisher.GetNewFileName();
-      ResultsPublisher.StartNewWellReport();
+      Publisher.StartNewBeadEventReport();
       BeadCount = 0;
 
       OnStartingToReadWell();
-      if (WellController.IsLastWell)
-      {
-        if (_readingA)
-          MainCommand("Read B");
-        else
-          MainCommand("Read A");
-      }
-      else
-      {
-        SetAspirateParamsForWell();
-        if (_readingA)
-          MainCommand("Read B Aspirate A");
-        else
-          MainCommand("Read A Aspirate B");
-      }
+      StartBeadRead();
     }
 
     public void StartOperation()
@@ -236,14 +218,13 @@ namespace DIOS.Core
       //read section of plate
       MainCommand("Get FProperty", code: 0x58);
       MainCommand("Get FProperty", code: 0x68);
-      ResultsPublisher.StartNewPlateReport();
+      Publisher.StartNewPlateReport();
       Publisher.ResetSummary();
       SetAspirateParamsForWell();  //setup for first read
       SetReadingParamsForWell();
       WellController.Advance();
       Results.Reset();
-      Publisher.GetNewFileName();
-      ResultsPublisher.StartNewWellReport();
+      Publisher.StartNewBeadEventReport();
       BeadCount = 0;
       OnStartingToReadWell();
       MainCommand("Set Property", code: 0x19, parameter: 1); //bubble detect on
@@ -251,13 +232,8 @@ namespace DIOS.Core
       MainCommand("Aspirate Syringe A"); //handles down and pickup sample
       TotalBeads = 0;
 
-      if (WellController.IsLastWell)
-        MainCommand("Read A");
-      else
-      {
-        SetAspirateParamsForWell();
-        MainCommand("Read A Aspirate B");
-      }
+      _isReadingA = false;
+      StartBeadRead();
 
       if (TerminationType != Termination.TotalBeadsCaptured) //set some limit for running to eos or if regions are wrong
         BeadsToCapture = 100000;
@@ -283,11 +259,30 @@ namespace DIOS.Core
 
     internal bool EndBeadRead()
     {
-      if (_readingA)
+      if (_isReadingA)
         MainCommand("End Bead Read A");
       else
         MainCommand("End Bead Read B");
       return WellController.IsLastWell;
+    }
+
+    private void StartBeadRead()
+    {
+      if (WellController.IsLastWell)
+      {
+        if (_isReadingA)
+          MainCommand("Read B");
+        else
+          MainCommand("Read A");
+      }
+      else
+      {
+        SetAspirateParamsForWell();
+        if (_isReadingA)
+          MainCommand("Read B Aspirate A");
+        else
+          MainCommand("Read A Aspirate B");
+      }
     }
 
     public void MainCommand(string command, byte? cmd = null, byte? code = null, ushort? parameter = null, float? fparameter = null)
@@ -300,16 +295,16 @@ namespace DIOS.Core
       switch (command)
       {
         case "Read A":
-          _readingA = true;
+          _isReadingA = true;
           break;
         case "Read A Aspirate B":
-          _readingA = true;
+          _isReadingA = true;
           break;
         case "Read B":
-          _readingA = false;
+          _isReadingA = false;
           break;
         case "Read B Aspirate A":
-          _readingA = false;
+          _isReadingA = false;
           break;
         case "FlushCmdQueue":
           cs.Command = 0x02;
@@ -346,7 +341,7 @@ namespace DIOS.Core
     {
       IsMeasurementGoing = true;
       StartingToReadWell?.Invoke(this, new ReadingWellEventArgs(WellController.CurrentWell.RowIdx, WellController.CurrentWell.ColIdx,
-        ResultsPublisher.FullFileName));
+        Publisher.FullBeadEventFileName));
       MainCommand("Set FProperty", code: 0x06);  //reset totalbeads in firmware
     }
 
@@ -372,7 +367,7 @@ namespace DIOS.Core
 
     internal void OnNewStatsAvailable()
     {
-      NewStatsAvailable?.Invoke(this, new StatsEventArgs(_beadProcessor.Stats, _beadProcessor.AvgBg));
+      NewStatsAvailable?.Invoke(this, new StatsEventArgs(_beadProcessor));
     }
 
     #if DEBUG

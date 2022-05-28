@@ -94,7 +94,7 @@ namespace Ei_Dimension.ViewModels
       switch (num)
       {
         case 0:
-          App.Device.Everyevent = Checkboxes[num];
+          App.Device.SaveIndividualBeadEvents = Checkboxes[num];
           Settings.Default.Everyevent = Checkboxes[num];
           break;
         case 1:
@@ -110,7 +110,7 @@ namespace Ei_Dimension.ViewModels
           Settings.Default.OnlyClassifed = Checkboxes[num];
           break;
         case 4:
-          App.Device.Reg0stats = Checkboxes[num];
+          App.Device.Results.Reg0stats = Checkboxes[num];
           break;
         case 5:
           break;

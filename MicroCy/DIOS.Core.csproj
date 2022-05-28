@@ -63,6 +63,7 @@
     <Compile Include="Enums\OperationMode.cs" />
     <Compile Include="Enums\SystemControl.cs" />
     <Compile Include="Enums\Termination.cs" />
+    <Compile Include="FileIO\BeadEventsPublisher.cs" />
     <Compile Include="FileIO\VerificationReportPublisher.cs" />
     <Compile Include="MapController.cs" />
     <Compile Include="ResultsPublisher.cs" />
@@ -92,7 +93,7 @@
     <Compile Include="Verificator.cs" />
     <Compile Include="WellController.cs" />
     <Compile Include="WellReport.cs" />
-    <Compile Include="WellResult.cs" />
+    <Compile Include="RegionResult.cs" />
     <Compile Include="Structs\Well.cs" />
     <Compile Include="Structs\WorkOrder.cs" />
   </ItemGroup>

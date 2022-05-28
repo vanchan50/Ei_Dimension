@@ -65,7 +65,7 @@ namespace Ei_Dimension.Controllers
       }
     }
 
-    private Action UpdateRegionsProcedure(List<WellResult> wellresults)
+    private Action UpdateRegionsProcedure(List<RegionResult> wellresults)
     {
       return () =>
       {
@@ -114,7 +114,7 @@ namespace Ei_Dimension.Controllers
       };
     }
 
-    private Action UpdateNullRegionProcedure(List<WellResult> wellresults)
+    private Action UpdateNullRegionProcedure(List<RegionResult> wellresults)
     {
       foreach (var result in wellresults)
       {

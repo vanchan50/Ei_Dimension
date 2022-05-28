@@ -6,10 +6,11 @@ namespace DIOS.Core
   {
     public List<Gstats> GStats { get; }
     public List<double> AvgBg { get; }
-    public StatsEventArgs(List<Gstats> stats = null, List<double> averageBackgrounds = null)
+
+    internal StatsEventArgs(BeadProcessor beadProcessor)
     {
-      GStats = stats;
-      AvgBg = averageBackgrounds;
+      GStats = beadProcessor.Stats;
+      AvgBg = beadProcessor.AvgBg;
     }
   }
 }

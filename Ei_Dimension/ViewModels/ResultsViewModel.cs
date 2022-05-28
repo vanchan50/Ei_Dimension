@@ -35,7 +35,7 @@ namespace Ei_Dimension.ViewModels
     public virtual ObservableCollection<DoubleHeatMapData> BackingAnalysis12Map { get; set; }
     public virtual ObservableCollection<DoubleHeatMapData> BackingAnalysis13Map { get; set; }
     public virtual ObservableCollection<DoubleHeatMapData> BackingAnalysis23Map { get; set; }
-    public List<DIOS.Core.WellResult> BackingWResults { get; set; }
+    public List<DIOS.Core.RegionResult> BackingWResults { get; set; }
     public virtual DrawingPlate PlatePictogram { get; set; }
     public virtual System.Windows.Visibility Buttons384Visible { get; set; }
     public virtual System.Windows.Visibility LeftLabel384Visible { get; set; }
@@ -115,7 +115,7 @@ namespace Ei_Dimension.ViewModels
       BackingAnalysis12Map = new ObservableCollection<DoubleHeatMapData>();
       BackingAnalysis13Map = new ObservableCollection<DoubleHeatMapData>();
       BackingAnalysis23Map = new ObservableCollection<DoubleHeatMapData>();
-      BackingWResults = new List<DIOS.Core.WellResult>();
+      BackingWResults = new List<DIOS.Core.RegionResult>();
 
       DisplayedAnalysisMap = CurrentAnalysis12Map;
 
@@ -397,7 +397,7 @@ namespace Ei_Dimension.ViewModels
       {
         foreach (var reg in MapRegionsController.ActiveRegionNums)
         {
-          BackingWResults.Add(new DIOS.Core.WellResult { regionNumber = (ushort)reg });
+          BackingWResults.Add(new DIOS.Core.RegionResult { regionNumber = (ushort)reg });
         }
       }
     }

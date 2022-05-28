@@ -58,7 +58,7 @@ namespace DIOS.Core
     private void StopWellMeasurement()
     {
       _device._beadProcessor.SavBeadCount = _device.BeadCount;   //save for stats
-      ResultsPublisher.SavingWell = _device.WellController.CurrentWell; //save the index of the currrent well for background file save
+      _device.Publisher.SavingWell = _device.WellController.CurrentWell; //save the index of the currrent well for background file save
       _device.MainCommand("End Sampling");    //sends message to instrument to stop sampling
     }
 

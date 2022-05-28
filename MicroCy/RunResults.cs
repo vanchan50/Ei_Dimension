@@ -6,9 +6,10 @@ namespace DIOS.Core
 {
   public class RunResults
   {
+    public bool Reg0stats { get; set; }
     private Device _device;
     private ICollection<int> _regionsToOutput;
-    private List<WellResult> _wellResults = new List<WellResult>();
+    private List<RegionResult> _wellResults = new List<RegionResult>();
     private SortedDictionary<ushort, int> _regionIndexDictionary = new SortedDictionary<ushort, int>();
     private bool _chkRegionCount;
     private int _minPerRegCount;  //discard region 0 from calculation
@@ -20,6 +21,7 @@ namespace DIOS.Core
 
     public void SetupRunRegions(ICollection<int> regions)
     {
+      //TODO: validate data
       _regionsToOutput = regions;
     }
 
@@ -34,15 +36,15 @@ namespace DIOS.Core
           if (_regionsToOutput.Contains(region.Number))
           {
             _regionIndexDictionary.Add((ushort)region.Number, _wellResults.Count);
-            _wellResults.Add(new WellResult { regionNumber = (ushort)region.Number });
+            _wellResults.Add(new RegionResult { regionNumber = (ushort)region.Number });
           }
         }
       }
       //region 0 has to be the last in _wellResults
-      if (_device.Reg0stats)  //TODO: remove the IF from here and don't damage the rest of reg0stats logic
+      if (Reg0stats)  //TODO: remove the IF from here and don't damage the rest of reg0stats logic
       {
         _regionIndexDictionary.Add(0, _wellResults.Count);
-        _wellResults.Add(new WellResult { regionNumber = 0 });
+        _wellResults.Add(new RegionResult { regionNumber = 0 });
       }
       _chkRegionCount = false;
 
@@ -56,13 +58,13 @@ namespace DIOS.Core
     }
 
     //TODO:bad design to have it public. get rid somehow
-    public List<WellResult> MakeDeepCopy()
+    public List<RegionResult> MakeDeepCopy()
     {
       //TODO: cache previous copy per well somehow, dont make new allocation all the time
-      var copy = new List<WellResult>(_wellResults.Count);
+      var copy = new List<RegionResult>(_wellResults.Count);
       for (var i = 0; i < _wellResults.Count; i++)
       {
-        var r = new WellResult();
+        var r = new RegionResult();
         r.regionNumber = _wellResults[i].regionNumber;
         var count = _wellResults[i].RP1vals.Count;
         r.RP1vals = new List<float>(count);
