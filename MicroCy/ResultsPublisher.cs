@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 
 namespace DIOS.Core
@@ -11,19 +10,18 @@ namespace DIOS.Core
   {
     public string Outdir { get; set; }  //  user selectable
     public string Outfilename { get; set; } = "ResultFile";
+    public bool MakePlateReport { get; set; }
     public static string WorkOrderPath { get; set; }
-    internal Well SavingWell { get; set; }
     internal string FullBeadEventFileName { get; private set; }
     private string _thisRunResultsFileName;
     private readonly StringBuilder BeadEventDataOut = new StringBuilder();
-    private readonly StringBuilder SummaryOut = new StringBuilder();
+    private readonly StringBuilder ResultData = new StringBuilder();
     private PlateReport _plateReport;
     private Device _device;
     private const string BHEADER = "Preamble,Time(1 us Tick),FSC bg,Viol SSC bg,CL0 bg,CL1 bg,CL2 bg,CL3 bg,Red SSC bg,Green SSC bg," +
                                    "Green B bg,Green C bg,Green B,Green C,Red-Grn Offset,Grn-Viol Offset,Region,Forward Scatter,Violet SSC,CL0," +
                                    "Red SSC,CL1,CL2,CL3,Green SSC,Reporter\r";
     private const string SHEADER = "Row,Col,Region,Bead Count,Median FI,Trimmed Mean FI,CV%\r";
-    private static readonly char[] Alphabet = Enumerable.Range('A', 16).Select(x => (char)x).ToArray();
 
     public ResultsPublisher(Device device)
     {
@@ -96,9 +94,9 @@ namespace DIOS.Core
         _ = BeadEventDataOut.Append(beadInfo.ToString());
     }
 
-    private void AddOutResultsToSummary(in OutResults oResults)
+    private void AddToResultData(OutResults oResults)
     {
-      _ = SummaryOut.Append(oResults.ToString());
+      _ = ResultData.Append(oResults);
     }
 
     private string GetWellReport()
@@ -106,10 +104,9 @@ namespace DIOS.Core
       return BeadEventDataOut.ToString();
     }
 
-    private void OutputSummaryFile()
+    private void WriteResultDataToFile()
     {
-      //end of read session (plate, plate section or tube) write summary stat file
-      if (SummaryOut.Length == 0)
+      if (ResultData.Length == 0)
         return;
       var directoryName = $"{Outdir}\\AcquisitionData";
       try
@@ -126,7 +123,7 @@ namespace DIOS.Core
 
       try
       {
-        File.AppendAllText(_thisRunResultsFileName, SummaryOut.ToString());
+        File.AppendAllText(_thisRunResultsFileName, ResultData.ToString());
         Console.WriteLine($"Results summary saved as {_thisRunResultsFileName}");
       }
       catch
@@ -135,15 +132,15 @@ namespace DIOS.Core
       }
     }
 
-    internal void ResetSummary()
+    internal void ResetResultData()
     {
-      _ = SummaryOut.Clear();
-      _ = SummaryOut.Append(SHEADER);
-      GetThisRunFileName();
-      OutputSummaryFile();
+      _ = ResultData.Clear();
+      _ = ResultData.Append(SHEADER);
+      GetThisRunResultsFileName();
+      WriteResultDataToFile();
     }
 
-    private void GetThisRunFileName()
+    private void GetThisRunResultsFileName()
     {
       OutDirCheck();
       string date = DateTime.Now.ToString("dd.MM.yyyy.hh-mm-ss", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"));
@@ -152,6 +149,12 @@ namespace DIOS.Core
 
     public void OutputPlateReport()
     {
+      if (!MakePlateReport)
+      {
+        Console.WriteLine("Plate Report Inactive");
+        return;
+      }
+
       string rfilename = _device.Control == SystemControl.Manual ? Outfilename : _device.WorkOrder.plateID.ToString();
       var directoryName = $"{Device.RootDirectory.FullName}\\Result\\Summary";
       try
@@ -178,78 +181,48 @@ namespace DIOS.Core
       }
       catch
       {
-        Console.WriteLine($"Failed to create Plate Report");
+        Console.WriteLine("Failed to create Plate Report");
       }
     }
 
-    private void AddToPlateReport(in OutResults outRes)
+    private void AddToPlateReport(OutResults outRes)
     {
       _plateReport.Wells[_plateReport.Wells.Count - 1].rpReg.Add(new RegionReport
       {
-        region = outRes.region,
-        count = (uint)outRes.count,
-        medfi = outRes.medfi,
-        meanfi = outRes.meanfi,
-        coefVar = outRes.cv
+        region = outRes.Region,
+        count = (uint)outRes.Count,
+        medfi = outRes.MedFi,
+        meanfi = outRes.MeanFi,
+        coefVar = outRes.CV
       });
     }
 
-    public void SaveBeadFile(List<RegionResult> wellres) //cancels the begin read from endpoint 2
+    public void SaveBeadFile(List<RegionResult> wellres, Well savingWell) //cancels the begin read from endpoint 2
     {
       SaveBeadEventFile();
       if (_device.RMeans)
       {
-        SummaryOut.Clear();
+        ResultData.Clear();
         if (_plateReport != null)
           _plateReport.Wells.Add(new WellReport
           {
             // OutResults grouped by row and col
-            row = SavingWell.RowIdx,
-            col = SavingWell.ColIdx
+            row = savingWell.RowIdx,
+            col = savingWell.ColIdx
           });
         for (var i = 0; i < wellres.Count; i++)
         {
-          RegionResult regionNumber = wellres[i];
-          OutResults rout = FillOutResults(regionNumber);
-          AddOutResultsToSummary(in rout);
-          AddToPlateReport(in rout);//TODO: done not in the right place
+          OutResults rout = new OutResults(wellres[i], savingWell);
+          AddToResultData(rout);
+          AddToPlateReport(rout);//TODO: done not in the right place
         }
-        OutputSummaryFile();
+        WriteResultDataToFile();
         wellres = null;
       }
       Console.WriteLine($"{DateTime.Now.ToString()} Reporting Background File Save Complete");
       if (File.Exists(WorkOrderPath))
         File.Delete(WorkOrderPath);   //result is posted, delete work order
       //need to clear textbox in UI. this has to be an event
-    }
-
-    private OutResults FillOutResults(RegionResult regionNumber)
-    {
-      OutResults rout = new OutResults();
-      rout.row = Alphabet[SavingWell.RowIdx].ToString();
-      rout.col = SavingWell.ColIdx + 1;  //columns are 1 based
-      rout.count = regionNumber.RP1vals.Count;
-      rout.region = regionNumber.regionNumber;
-      var rp1Temp = regionNumber.RP1vals;
-      if (rout.count >= 20)
-      {
-        rp1Temp.Sort();
-        //float rpbg = regionNumber.RP1bgnd.Average() * 16;
-        int quarter = rout.count / 4;
-        rp1Temp.RemoveRange(rout.count - quarter, quarter);
-        rp1Temp.RemoveRange(0, quarter);
-        rout.meanfi = rp1Temp.Average();
-        double sumsq = rp1Temp.Sum(dataout => Math.Pow(dataout - rout.meanfi, 2));
-        double stddev = Math.Sqrt(sumsq / rp1Temp.Count() - 1);
-        rout.cv = (float)stddev / rout.meanfi * 100;
-        if (double.IsNaN(rout.cv))
-          rout.cv = 0;
-        rout.medfi = (float)Math.Round(rp1Temp[quarter]);// - rpbg);
-        //rout.meanfi -= rpbg;
-      }
-      else if (rout.count > 2)
-        rout.meanfi = rp1Temp.Average();
-      return rout;
     }
 
     private void SaveBeadEventFile()

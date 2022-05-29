@@ -8,6 +8,7 @@ namespace DIOS.Core
   {
     private readonly Device _device;
     private State _state;
+    private Well _savingWell = new Well();
     public bool Report { get; set; }
 
     public StateMachine(Device device, bool report)
@@ -57,21 +58,20 @@ namespace DIOS.Core
 
     private void StopWellMeasurement()
     {
-      _device._beadProcessor.SavBeadCount = _device.BeadCount;   //save for stats
-      _device.Publisher.SavingWell = _device.WellController.CurrentWell; //save the index of the currrent well for background file save
       _device.MainCommand("End Sampling");    //sends message to instrument to stop sampling
+      _device._beadProcessor.SavBeadCount = _device.BeadCount;   //save for stats
     }
 
     private void Action2()
     {
+      _savingWell.RowIdx = _device.WellController.CurrentWell.RowIdx;
+      _savingWell.ColIdx = _device.WellController.CurrentWell.ColIdx; //save the index of the currrent well for background file save
       var tempres = _device.Results.MakeDeepCopy();
       _ = Task.Run(() =>
       {
-        _device.Publisher.SaveBeadFile(tempres);
+        _device.Publisher.SaveBeadFile(tempres, _savingWell);
 
-        if (_device.RMeans
-            && _device.WellController.IsLastWell
-            && _device.PlateReportActive)    //end of read and json results requested)
+        if (_device.RMeans && _device.WellController.IsLastWell)    //end of read and json results requested)
           _device.Publisher.OutputPlateReport();
       });
       GetRunStatistics();

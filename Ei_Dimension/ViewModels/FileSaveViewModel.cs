@@ -102,7 +102,7 @@ namespace Ei_Dimension.ViewModels
           Settings.Default.RMeans = Checkboxes[num];
           break;
         case 2:
-          App.Device.PlateReportActive = Checkboxes[num];
+          App.Device.Publisher.MakePlateReport = Checkboxes[num];
           Settings.Default.PlateReport = Checkboxes[num];
           break;
         case 3:

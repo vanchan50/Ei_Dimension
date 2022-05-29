@@ -713,7 +713,7 @@ Order</value>
     <value>Individual Bead Events</value>
   </data>
   <data name="FileSave_JSON_To_Results" xml:space="preserve">
-    <value>JSON Resuts File</value>
+    <value>JSON Results File</value>
   </data>
   <data name="FileSave_Output_Files" xml:space="preserve">
     <value>Output Files</value>

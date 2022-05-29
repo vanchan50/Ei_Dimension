@@ -562,9 +562,14 @@ namespace Ei_Dimension
               void Act()
               {
                 var tempres = App.Device.Results.MakeDeepCopy();
-                App.Device.Publisher.SaveBeadFile(tempres);
+                var savingWell = new DIOS.Core.Well
+                {
+                  RowIdx = App.Device.WellController.CurrentWell.RowIdx,
+                  ColIdx = App.Device.WellController.CurrentWell.ColIdx
+                };
+                App.Device.Publisher.SaveBeadFile(tempres, savingWell);
 
-                if (App.Device.RMeans && App.Device.PlateReportActive)    //end of read and json results requested)
+                if (App.Device.RMeans)    //end of read and json results requested)
                   App.Device.Publisher.OutputPlateReport();
 
                 Environment.Exit(0);

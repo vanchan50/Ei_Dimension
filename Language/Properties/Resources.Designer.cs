@@ -1754,7 +1754,7 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to JSON Resuts File.
+        ///   Looks up a localized string similar to JSON Results File.
         /// </summary>
         public static string FileSave_JSON_To_Results {
             get {

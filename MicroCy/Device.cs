@@ -72,7 +72,6 @@ namespace DIOS.Core
     public bool IsMeasurementGoing { get; private set; }
     public bool SaveIndividualBeadEvents { get; set; }
     public bool RMeans { get; set; }
-    public bool PlateReportActive { get; set; }
     public bool OnlyClassified { get; set; }
     public HiSensitivityChannel SensitivityChannel
     {
@@ -219,7 +218,7 @@ namespace DIOS.Core
       MainCommand("Get FProperty", code: 0x58);
       MainCommand("Get FProperty", code: 0x68);
       Publisher.StartNewPlateReport();
-      Publisher.ResetSummary();
+      Publisher.ResetResultData();
       SetAspirateParamsForWell();  //setup for first read
       SetReadingParamsForWell();
       WellController.Advance();

@@ -11,7 +11,7 @@ namespace DIOS.Core.FileIO
                                    "Green B bg,Green C bg,Green B,Green C,Red-Grn Offset,Grn-Viol Offset,Region,Forward Scatter,Violet SSC,CL0," +
                                    "Red SSC,CL1,CL2,CL3,Green SSC,Reporter\r";
 
-
+    /*
     internal void StartNewBeadEventReport()
     {
       GetNewBeadEventFileName();
@@ -60,5 +60,6 @@ namespace DIOS.Core.FileIO
       string date = DateTime.Now.ToString("dd.MM.yyyy.hh-mm-ss", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"));
       FullBeadEventFileName = $"{Outdir}\\AcquisitionData\\{Outfilename}{rowletter}{colLetter}_{date}.csv";
     }
+    */
   }
 }

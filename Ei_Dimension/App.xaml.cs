@@ -74,7 +74,7 @@ namespace Ei_Dimension
       Device.Control = (SystemControl)Settings.Default.SystemControl;
       Device.SaveIndividualBeadEvents = Settings.Default.Everyevent;
       Device.RMeans = Settings.Default.RMeans;
-      Device.PlateReportActive = Settings.Default.PlateReport;
+      Device.Publisher.MakePlateReport = Settings.Default.PlateReport;
       Device.TerminationType = (Termination)Settings.Default.EndRead;
       Device.MinPerRegion = Settings.Default.MinPerRegion;
       Device.BeadsToCapture = Settings.Default.BeadsToCapture;
