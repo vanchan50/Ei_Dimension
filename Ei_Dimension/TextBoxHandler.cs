@@ -568,9 +568,7 @@ namespace Ei_Dimension
                   ColIdx = App.Device.WellController.CurrentWell.ColIdx
                 };
                 App.Device.Publisher.SaveBeadFile(tempres, savingWell);
-
-                if (App.Device.RMeans)    //end of read and json results requested)
-                  App.Device.Publisher.OutputPlateReport();
+                App.Device.Publisher.OutputPlateReport();
 
                 Environment.Exit(0);
                 lock (ConditionVar)

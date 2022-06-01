@@ -414,7 +414,7 @@ namespace Ei_Dimension.Core
           var index = resVm.BackingWResults.FindIndex(x => x.regionNumber == beadInfoList[i].region);
           if (index != -1)
           {
-            resVm.BackingWResults[index].RP1vals.Add(beadInfoList[i].reporter);
+            resVm.BackingWResults[index].ReporterValues.Add(beadInfoList[i].reporter);
           }
         }
         i++;

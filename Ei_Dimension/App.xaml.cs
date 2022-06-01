@@ -236,22 +236,6 @@ namespace Ei_Dimension
       Settings.Default.Save();
     }
 
-    public static void LockMapSelection()
-    {
-      Views.DashboardView.Instance.MapSelectr.IsEnabled = false;
-      Views.CalibrationView.Instance.MapSelectr.IsEnabled = false;
-      Views.VerificationView.Instance.MapSelectr.IsEnabled = false;
-      Views.ChannelsView.Instance.MapSelectr.IsEnabled = false;
-    }
-
-    public static void UnlockMapSelection()
-    {
-      Views.DashboardView.Instance.MapSelectr.IsEnabled = true;
-      Views.CalibrationView.Instance.MapSelectr.IsEnabled = true;
-      Views.VerificationView.Instance.MapSelectr.IsEnabled = true;
-      Views.ChannelsView.Instance.MapSelectr.IsEnabled = true;
-    }
-
     public static void HideNumpad()
     {
       UserInputHandler.InputSanityCheck();
@@ -505,7 +489,7 @@ namespace Ei_Dimension
     public void OnNewWorkOrder(object sender, FileSystemEventArgs e)
     {
       var name = Path.GetFileNameWithoutExtension(e.Name);
-      ResultsPublisher.WorkOrderPath = e.FullPath;
+      Device.Publisher.WorkOrderPath = e.FullPath;
       if (!ParseWorkOrder())
         return;
       
@@ -525,13 +509,13 @@ namespace Ei_Dimension
       if (fileEntries.Length == 0)
         return;
       var name = Path.GetFileNameWithoutExtension(fileEntries[0]);
-      ResultsPublisher.WorkOrderPath = fileEntries[0];
+      Device.Publisher.WorkOrderPath = fileEntries[0];
       int i = 1;
       while (!ParseWorkOrder())
       {
         if (i < fileEntries.Length)
         {
-          ResultsPublisher.WorkOrderPath = fileEntries[i];
+          Device.Publisher.WorkOrderPath = fileEntries[i];
           name = Path.GetFileNameWithoutExtension(fileEntries[i]);
           i++;
         }
@@ -553,7 +537,7 @@ namespace Ei_Dimension
     {
       try
       {
-        using (TextReader reader = new StreamReader(ResultsPublisher.WorkOrderPath))
+        using (TextReader reader = new StreamReader(Device.Publisher.WorkOrderPath))
         {
           var contents = reader.ReadToEnd();
           Device.WorkOrder = Newtonsoft.Json.JsonConvert.DeserializeObject<WorkOrder>(contents);

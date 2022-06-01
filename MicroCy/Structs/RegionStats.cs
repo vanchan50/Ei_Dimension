@@ -4,7 +4,7 @@ using System.Linq;
 namespace DIOS.Core
 {
   [Serializable]
-  public class OutResults
+  public class RegionStats
   {
     public string Row;
     public int Col;
@@ -12,22 +12,22 @@ namespace DIOS.Core
     public int Count;
     public float MedFi;
     public float MeanFi;
-    public float CV;
+    public float CoeffVar;
     [NonSerialized]
     private static readonly char[] Alphabet = Enumerable.Range('A', 16).Select(x => (char)x).ToArray();
 
-    public OutResults()
+    public RegionStats()
     {
       
     }
 
-    public OutResults(RegionResult regionNumber, Well well)
+    public RegionStats(RegionResult regionNumber, Well well)
     {
       Row = Alphabet[well.RowIdx].ToString();
       Col = well.ColIdx + 1;  //columns are 1 based
-      Count = regionNumber.RP1vals.Count;
+      Count = regionNumber.ReporterValues.Count;
       Region = regionNumber.regionNumber;
-      var rp1Temp = regionNumber.RP1vals;
+      var rp1Temp = regionNumber.ReporterValues;
       if (Count >= 20)
       {
         rp1Temp.Sort();
@@ -38,9 +38,9 @@ namespace DIOS.Core
         MeanFi = rp1Temp.Average();
         double sumsq = rp1Temp.Sum(dataout => Math.Pow(dataout - MeanFi, 2));
         double stddev = Math.Sqrt(sumsq / rp1Temp.Count() - 1);
-        CV = (float)stddev / MeanFi * 100;
-        if (double.IsNaN(CV))
-          CV = 0;
+        CoeffVar = (float)stddev / MeanFi * 100;
+        if (double.IsNaN(CoeffVar))
+          CoeffVar = 0;
         MedFi = (float)Math.Round(rp1Temp[quarter]);// - rpbg);
         //rout.meanfi -= rpbg;
       }
@@ -50,7 +50,7 @@ namespace DIOS.Core
 
     public override string ToString()
     {
-      return $"{Row},{Col.ToString()},{Region.ToString()},{Count.ToString()},{MedFi.ToString()},{MeanFi.ToString("F3")},{CV.ToString("F3")}\r";
+      return $"{Row},{Col.ToString()},{Region.ToString()},{Count.ToString()},{MedFi.ToString()},{MeanFi.ToString("F3")},{CoeffVar.ToString("F3")}\r";
     }
   }
 }

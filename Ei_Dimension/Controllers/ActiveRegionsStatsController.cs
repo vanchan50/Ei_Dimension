@@ -77,24 +77,24 @@ namespace Ei_Dimension.Controllers
             continue;
           float avg = 0;
           float mean = 0;
-          if (result.RP1vals.Count == 0)
+          if (result.ReporterValues.Count == 0)
           {
             CurrentCount[index] = "0";
             CurrentMean[index] = "0";
           }
           else
           {
-            avg = result.RP1vals.Average();
-            var count = result.RP1vals.Count;
+            avg = result.ReporterValues.Average();
+            var count = result.ReporterValues.Count;
             if (count >= 20)
             {
-              result.RP1vals.Sort();
+              result.ReporterValues.Sort();
               int quarterIndex = count / 4;
 
               float sum = 0;
               for (var i = quarterIndex; i < count - quarterIndex; i++)
               {
-                sum += result.RP1vals[i];
+                sum += result.ReporterValues[i];
               }
 
               mean = sum / (count - 2 * quarterIndex);
@@ -118,9 +118,9 @@ namespace Ei_Dimension.Controllers
     {
       foreach (var result in wellresults)
       {
-        if (result.RP1vals.Count > 0)
+        if (result.ReporterValues.Count > 0)
         {
-          NullWellResults.InsertRange(NullWellResults.Count, result.RP1vals);
+          NullWellResults.InsertRange(NullWellResults.Count, result.ReporterValues);
         }
       }
 

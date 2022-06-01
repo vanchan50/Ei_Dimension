@@ -44,7 +44,7 @@ namespace DIOS.Core
       {
         _serialConnection.Read();
 
-        if ((_serialConnection.InputBuffer[0] == 0xbe) && (_serialConnection.InputBuffer[1] == 0xad))
+        if (IsBead())
         {
           if (_device.IsMeasurementGoing) //  this condition avoids the necessity of cleaning up leftover data in the system USB interface. That could happen after operation abortion and program restart
           {
@@ -52,13 +52,17 @@ namespace DIOS.Core
             {
               if (!GetBeadFromBuffer(_serialConnection.InputBuffer, i, out var outbead))
                 break;
+              _device.BeadCount++;
+              _device.TotalBeads++;
               _beadProcessor.CalculateBeadParams(ref outbead);
 
               _results.FillActiveWellResults(in outbead);
               if (outbead.region == 0 && _device.OnlyClassified)
                 continue;
-              _device.DataOut.Enqueue(outbead);
               _device.Publisher.AddBeadEvent(in outbead);
+              //accum stats for run as a whole, used during aligment and QC
+              _beadProcessor.FillCalibrationStatsRow(in outbead);
+              _beadProcessor.FillBackgroundAverages(in outbead);
               switch (_device.Mode)
               {
                 case OperationMode.Normal:
@@ -69,11 +73,6 @@ namespace DIOS.Core
                   Verificator.FillStats(in outbead);
                   break;
               }
-              //accum stats for run as a whole, used during aligment and QC
-              _beadProcessor.FillCalibrationStatsRow(in outbead);
-              _beadProcessor.FillBackgroundAverages(in outbead);
-              _device.BeadCount++;
-              _device.TotalBeads++;
             }
           }
           Array.Clear(_serialConnection.InputBuffer, 0, _serialConnection.InputBuffer.Length);
@@ -287,6 +286,11 @@ namespace DIOS.Core
           break;
       }
       Console.WriteLine($"{DateTime.Now.ToString()} Received [{cs.ToString()}]");
+    }
+
+    private bool IsBead()
+    {
+      return _serialConnection.InputBuffer[0] == 0xbe && _serialConnection.InputBuffer[1] == 0xad;
     }
   }
 }

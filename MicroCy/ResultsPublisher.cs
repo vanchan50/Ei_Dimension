@@ -8,15 +8,15 @@ namespace DIOS.Core
 {
   public class ResultsPublisher
   {
+    //TODO:these should all be independent objects in results, with a function Publish()
     public string Outdir { get; set; }  //  user selectable
     public string Outfilename { get; set; } = "ResultFile";
     public bool MakePlateReport { get; set; }
-    public static string WorkOrderPath { get; set; }
+    public string WorkOrderPath { get; set; }
     internal string FullBeadEventFileName { get; private set; }
-    private string _thisRunResultsFileName;
+    private string _thisRunStatsFileName;
     private readonly StringBuilder BeadEventDataOut = new StringBuilder();
-    private readonly StringBuilder ResultData = new StringBuilder();
-    private PlateReport _plateReport;
+    private readonly StringBuilder StatsData = new StringBuilder();
     private Device _device;
     private const string BHEADER = "Preamble,Time(1 us Tick),FSC bg,Viol SSC bg,CL0 bg,CL1 bg,CL2 bg,CL3 bg,Red SSC bg,Green SSC bg," +
                                    "Green B bg,Green C bg,Green B,Green C,Red-Grn Offset,Grn-Viol Offset,Region,Forward Scatter,Violet SSC,CL0," +
@@ -36,6 +36,9 @@ namespace DIOS.Core
       _ = BeadEventDataOut.Append(BHEADER);
     }
 
+    /// <summary>
+    /// Perform the check for the case of a removed drive
+    /// </summary>
     public void OutDirCheck()
     {
       var root = Path.GetPathRoot(Outdir);
@@ -43,29 +46,6 @@ namespace DIOS.Core
       {
         Outdir = Device.RootDirectory.FullName;
       }
-    }
-
-    public List<(int region, int mfi)> GetRegionalReporterMFI()
-    {
-      if (_plateReport == null || _plateReport.Wells == null || _plateReport.Wells[0].rpReg == null)
-        return null;
-
-      List<(int region, int mfi)> list = new List<(int region, int mfi)>();
-
-      foreach (var regionReport in _plateReport.Wells[0].rpReg)
-      {
-        if (regionReport.region == 0)
-        {
-          continue;
-        }
-        list.Add((regionReport.region, (int)regionReport.meanfi));
-      }
-      return list;
-    }
-
-    internal void StartNewPlateReport()
-    {
-      _plateReport = new PlateReport();
     }
 
     private void GetNewBeadEventFileName()
@@ -90,23 +70,19 @@ namespace DIOS.Core
 
     internal void AddBeadEvent(in BeadInfoStruct beadInfo)
     {
+      _device.DataOut.Enqueue(beadInfo);
       if (_device.SaveIndividualBeadEvents)
         _ = BeadEventDataOut.Append(beadInfo.ToString());
     }
 
-    private void AddToResultData(OutResults oResults)
+    private void AddToStatsData(RegionStats oResult)
     {
-      _ = ResultData.Append(oResults);
-    }
-
-    private string GetWellReport()
-    {
-      return BeadEventDataOut.ToString();
+      _ = StatsData.Append(oResult);
     }
 
     private void WriteResultDataToFile()
     {
-      if (ResultData.Length == 0)
+      if (!_device.RMeans || StatsData.Length == 0)
         return;
       var directoryName = $"{Outdir}\\AcquisitionData";
       try
@@ -123,19 +99,20 @@ namespace DIOS.Core
 
       try
       {
-        File.AppendAllText(_thisRunResultsFileName, ResultData.ToString());
-        Console.WriteLine($"Results summary saved as {_thisRunResultsFileName}");
+        var contents = StatsData.ToString();
+        File.AppendAllText(_thisRunStatsFileName, contents);
+        Console.WriteLine($"Results summary saved as {_thisRunStatsFileName}");
       }
       catch
       {
-        Console.WriteLine($"Failed to append data to {_thisRunResultsFileName}");
+        Console.WriteLine($"Failed to append data to {_thisRunStatsFileName}");
       }
     }
 
     internal void ResetResultData()
     {
-      _ = ResultData.Clear();
-      _ = ResultData.Append(SHEADER);
+      _ = StatsData.Clear();
+      _ = StatsData.Append(SHEADER);
       GetThisRunResultsFileName();
       WriteResultDataToFile();
     }
@@ -144,7 +121,7 @@ namespace DIOS.Core
     {
       OutDirCheck();
       string date = DateTime.Now.ToString("dd.MM.yyyy.hh-mm-ss", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"));
-      _thisRunResultsFileName = $"{Outdir}\\AcquisitionData\\Results_{Outfilename}_{date}.csv";
+      _thisRunStatsFileName = $"{Outdir}\\AcquisitionData\\Results_{Outfilename}_{date}.csv";
     }
 
     public void OutputPlateReport()
@@ -174,7 +151,7 @@ namespace DIOS.Core
                        "\\Summary_" + rfilename + ".json";
         using (TextWriter jwriter = new StreamWriter(fileName))
         {
-          var jcontents = JsonConvert.SerializeObject(_plateReport);
+          var jcontents = JsonConvert.SerializeObject(_device.Results.PlateReport);
           jwriter.Write(jcontents);
           Console.WriteLine($"Plate Report saved as {fileName}");
         }
@@ -185,40 +162,20 @@ namespace DIOS.Core
       }
     }
 
-    private void AddToPlateReport(OutResults outRes)
-    {
-      _plateReport.Wells[_plateReport.Wells.Count - 1].rpReg.Add(new RegionReport
-      {
-        region = outRes.Region,
-        count = (uint)outRes.Count,
-        medfi = outRes.MedFi,
-        meanfi = outRes.MeanFi,
-        coefVar = outRes.CV
-      });
-    }
-
     public void SaveBeadFile(List<RegionResult> wellres, Well savingWell) //cancels the begin read from endpoint 2
     {
       SaveBeadEventFile();
-      if (_device.RMeans)
+
+      StatsData.Clear();
+      for (var i = 0; i < wellres.Count; i++)
       {
-        ResultData.Clear();
-        if (_plateReport != null)
-          _plateReport.Wells.Add(new WellReport
-          {
-            // OutResults grouped by row and col
-            row = savingWell.RowIdx,
-            col = savingWell.ColIdx
-          });
-        for (var i = 0; i < wellres.Count; i++)
-        {
-          OutResults rout = new OutResults(wellres[i], savingWell);
-          AddToResultData(rout);
-          AddToPlateReport(rout);//TODO: done not in the right place
-        }
-        WriteResultDataToFile();
-        wellres = null;
+        RegionStats rout = new RegionStats(wellres[i], savingWell);
+        AddToStatsData(rout);
+        _device.Results.PlateReport.AddResultsToLastWell(rout);//TODO: done not in the right place
       }
+      WriteResultDataToFile();
+      wellres = null;
+
       Console.WriteLine($"{DateTime.Now.ToString()} Reporting Background File Save Complete");
       if (File.Exists(WorkOrderPath))
         File.Delete(WorkOrderPath);   //result is posted, delete work order
@@ -227,17 +184,18 @@ namespace DIOS.Core
 
     private void SaveBeadEventFile()
     {
-      if ((FullBeadEventFileName != null) && _device.SaveIndividualBeadEvents)
+      if (!_device.SaveIndividualBeadEvents)
+        Console.WriteLine("Bead event Saving inactive");
+
+      try
       {
-        try
-        {
-          File.WriteAllText(FullBeadEventFileName, GetWellReport());
-          Console.WriteLine($"Bead event saved as {FullBeadEventFileName}");
-        }
-        catch
-        {
-          Console.WriteLine($"Failed to write Bead event to {FullBeadEventFileName}");
-        }
+        var contents = BeadEventDataOut.ToString();
+        File.WriteAllText(FullBeadEventFileName, contents);
+        Console.WriteLine($"Bead event saved as {FullBeadEventFileName}");
+      }
+      catch
+      {
+        Console.WriteLine($"Failed to write Bead event to {FullBeadEventFileName}");
       }
     }
   }

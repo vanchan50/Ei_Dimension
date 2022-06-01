@@ -38,9 +38,6 @@ namespace Ei_Dimension.ViewModels
 
     public void AutoAlignSelector(byte num)
     {
-      bool state = false;
-      if(num == 0)
-        state = true;
       App.Device.MainCommand("Set Property", code: 0xc5, parameter: (ushort)num);
       AutoAlignSelectorState = num;
     }

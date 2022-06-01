@@ -92,7 +92,7 @@ namespace Ei_Dimension.ViewModels
         ResultsViewModel.Instance.CurrentCvItems[i] = "";
       }
       MainViewModel.Instance.NavigationSelector(1);
-      if (App.Device.Normalization)
+      if (App.Device.IsNormalizationEnabled)
         Console.WriteLine("Normalization Enabled");
       else
         Console.WriteLine("Normalization Disabled");

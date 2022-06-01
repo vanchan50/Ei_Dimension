@@ -7,7 +7,8 @@ namespace DIOS.Core
   public class RegionResult
   {
     public ushort regionNumber;
-    public List<float> RP1vals = new List<float>(40000);
-    public List<float> RP1bgnd = new List<float>(40000);
+    public List<float> ReporterValues = new List<float>(CAPACITY);
+    //public List<float> RP1bgnd = new List<float>(CAPACITY);
+    public const int CAPACITY = 40000;
   }
 }

@@ -110,7 +110,7 @@ namespace DIOS.Core
       }
     }
     public float Compensation { get; set; }
-    public bool Normalization { get; set; } = true;
+    public bool IsNormalizationEnabled { get; set; } = true;
     public static DirectoryInfo RootDirectory { get; private set; }
     public float MaxPressure { get; set; }
 
@@ -208,8 +208,8 @@ namespace DIOS.Core
     {
       if (Mode != OperationMode.Normal)
       {
-        _normalizationCache = Normalization;
-        Normalization = false;
+        _normalizationCache = IsNormalizationEnabled;
+        IsNormalizationEnabled = false;
       }
       MainCommand("Set Property", code: 0xce, parameter: MapCtroller.ActiveMap.calParams.minmapssc);  //set ssc gates for this map
       MainCommand("Set Property", code: 0xcf, parameter: MapCtroller.ActiveMap.calParams.maxmapssc);
@@ -217,7 +217,7 @@ namespace DIOS.Core
       //read section of plate
       MainCommand("Get FProperty", code: 0x58);
       MainCommand("Get FProperty", code: 0x68);
-      Publisher.StartNewPlateReport();
+      Results.StartNewPlateReport();
       Publisher.ResetResultData();
       SetAspirateParamsForWell();  //setup for first read
       SetReadingParamsForWell();
@@ -346,7 +346,10 @@ namespace DIOS.Core
 
     internal void OnFinishedReadingWell()
     {
-      FinishedReadingWell?.Invoke(this, new ReadingWellEventArgs(WellController.CurrentWell.RowIdx, WellController.CurrentWell.ColIdx));
+      MainCommand("End Sampling");    //sends message to instrument to stop sampling
+      _beadProcessor.SavBeadCount = BeadCount;   //save for stats
+      FinishedReadingWell?.Invoke(this, new ReadingWellEventArgs(WellController.CurrentWell.RowIdx, WellController.CurrentWell.ColIdx,
+        Publisher.FullBeadEventFileName));
       MainCommand("Get FProperty", code: 0x06);  //get totalbeads from firmware
     }
 
@@ -359,7 +362,7 @@ namespace DIOS.Core
         Verificator.CalculateResults();
 
       if (Mode != OperationMode.Normal)
-        Normalization = _normalizationCache;
+        IsNormalizationEnabled = _normalizationCache;
 
       FinishedMeasurement?.Invoke(this, EventArgs.Empty);
     }

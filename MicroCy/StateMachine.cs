@@ -42,7 +42,7 @@ namespace DIOS.Core
             return;
           break;
         case State.End:
-          Action5();
+          Action4();
           break;
       }
       if (Report)
@@ -52,26 +52,20 @@ namespace DIOS.Core
     
     private void Action1()
     {
-      StopWellMeasurement();
       _device.OnFinishedReadingWell();
-    }
-
-    private void StopWellMeasurement()
-    {
-      _device.MainCommand("End Sampling");    //sends message to instrument to stop sampling
-      _device._beadProcessor.SavBeadCount = _device.BeadCount;   //save for stats
     }
 
     private void Action2()
     {
       _savingWell.RowIdx = _device.WellController.CurrentWell.RowIdx;
       _savingWell.ColIdx = _device.WellController.CurrentWell.ColIdx; //save the index of the currrent well for background file save
+      _device.Results.PlateReport.AddWell(_savingWell);
       var tempres = _device.Results.MakeDeepCopy();
       _ = Task.Run(() =>
       {
         _device.Publisher.SaveBeadFile(tempres, _savingWell);
 
-        if (_device.RMeans && _device.WellController.IsLastWell)    //end of read and json results requested)
+        if (_device.WellController.IsLastWell)    //end of read and json results requested)
           _device.Publisher.OutputPlateReport();
       });
       GetRunStatistics();
@@ -87,7 +81,7 @@ namespace DIOS.Core
       return false;
     }
     
-    private void Action5()
+    private void Action4()
     {
       _device.MainCommand("FlushCmdQueue");
       _device.MainCommand("Set Property", code: 0xc3); //clear empty syringe token

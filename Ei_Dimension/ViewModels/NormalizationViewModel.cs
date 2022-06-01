@@ -17,7 +17,7 @@ namespace Ei_Dimension.ViewModels
     protected NormalizationViewModel()
     {
       NormalizationFactor = new ObservableCollection<string> {""};
-      NormalizationEnabled = new ObservableCollection<bool> { App.Device.Normalization };
+      NormalizationEnabled = new ObservableCollection<bool> { App.Device.IsNormalizationEnabled };
       Instance = this;
     }
 
@@ -44,7 +44,7 @@ namespace Ei_Dimension.ViewModels
         return;
       }
 
-      var list = App.Device.Publisher.GetRegionalReporterMFI();
+      var list = App.Device.Results.PlateReport.GetRegionalReporterMFI();
 
       if (list == null)
       {
@@ -102,7 +102,7 @@ namespace Ei_Dimension.ViewModels
     public void CheckedBox(bool state)
     {
       UserInputHandler.InputSanityCheck();
-      App.Device.Normalization = state;
+      App.Device.IsNormalizationEnabled = state;
       NormalizationEnabled[0] = state;
     }
 

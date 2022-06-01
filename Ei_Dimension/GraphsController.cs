@@ -24,7 +24,7 @@ namespace Ei_Dimension
 
     private static GraphsController _instance;
     private static int _uiUpdateIsActive;
-    private readonly List<BeadInfoStruct> TempBeadInfoList = new List<BeadInfoStruct>(300);
+    private readonly List<BeadInfoStruct> _tempBeadInfoList = new List<BeadInfoStruct>(1000);
 
     public void Update()
     {
@@ -34,8 +34,8 @@ namespace Ei_Dimension
       _ = Task.Run(()=>
       {
         UpdateBinfoList();
-        _ = Task.Run(() => { Core.DataProcessor.BinScatterData(TempBeadInfoList); });
-        Core.DataProcessor.BinMapData(TempBeadInfoList, current: true);
+        _ = Task.Run(() => { Core.DataProcessor.BinScatterData(_tempBeadInfoList); });
+        Core.DataProcessor.BinMapData(_tempBeadInfoList, current: true);
         if (!ViewModels.ResultsViewModel.Instance.DisplaysCurrentmap)
         {
           _uiUpdateIsActive = 0;
@@ -51,10 +51,10 @@ namespace Ei_Dimension
 
     private void UpdateBinfoList()
     {
-      TempBeadInfoList.Clear();
+      _tempBeadInfoList.Clear();
       while (App.Device.DataOut.TryDequeue(out BeadInfoStruct bead))
       {
-        TempBeadInfoList.Add(bead);
+        _tempBeadInfoList.Add(bead);
       }
     }
   }

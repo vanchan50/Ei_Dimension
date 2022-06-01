@@ -52,9 +52,9 @@ namespace DIOS.Core
       //handle HI dnr channel
       var reporter = _greenMin > _device.HdnrTrans ? _greenMaj * _device.HDnrCoef : _greenMin;
       outbead.reporter = (reporter / _device.ReporterScaling);
-      if (_device.Normalization)
+      if (_device.IsNormalizationEnabled)
       {
-        NormalizeReporter(ref outbead, reg);
+        NormalizeReporter(ref outbead);
       }
     }
 
@@ -187,9 +187,11 @@ namespace DIOS.Core
       return _classificationMap[x, y];
     }
 
-    private void NormalizeReporter(ref BeadInfoStruct outbead, int region)
+    private void NormalizeReporter(ref BeadInfoStruct outbead)
     {
-      var idx = _device.MapCtroller.GetMapRegionIndex(region);
+      if (outbead.region == 0)
+        return;
+      var idx = _device.MapCtroller.GetMapRegionIndex(outbead.region);
       var rep = (float)(_device.MapCtroller.ActiveMap.factor * _device.MapCtroller.ActiveMap.regions[idx].NormalizationMFI);
       outbead.reporter -= rep;
       outbead.reporter = outbead.reporter >= 0 ? outbead.reporter : 0;

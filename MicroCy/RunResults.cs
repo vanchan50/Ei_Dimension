@@ -13,6 +13,7 @@ namespace DIOS.Core
     private SortedDictionary<ushort, int> _regionIndexDictionary = new SortedDictionary<ushort, int>();
     private bool _chkRegionCount;
     private int _minPerRegCount;  //discard region 0 from calculation
+    public PlateReport PlateReport { get; private set; }
 
     public RunResults(Device device)
     {
@@ -23,6 +24,11 @@ namespace DIOS.Core
     {
       //TODO: validate data
       _regionsToOutput = regions;
+    }
+
+    internal void StartNewPlateReport()
+    {
+      PlateReport = new PlateReport();
     }
 
     public void Reset()
@@ -66,49 +72,48 @@ namespace DIOS.Core
       {
         var r = new RegionResult();
         r.regionNumber = _wellResults[i].regionNumber;
-        var count = _wellResults[i].RP1vals.Count;
-        r.RP1vals = new List<float>(count);
+        var count = _wellResults[i].ReporterValues.Count < RegionResult.CAPACITY ? _wellResults[i].ReporterValues.Count : RegionResult.CAPACITY;
         for (var j = 0; j < count; j++)
         {
-          r.RP1vals.Add(_wellResults[i].RP1vals[j]);
+          r.ReporterValues.Add(_wellResults[i].ReporterValues[j]);
         }
         copy.Add(r);
       }
       return copy;
     }
 
-    public List<OutResults> GetOutResults()
+    public List<RegionStats> GetOutResults()
     {
       var copy = MakeDeepCopy();
-      var list = new List<OutResults>();
+      var list = new List<RegionStats>();
       foreach (var wellResult in copy)
       {
-        OutResults rout = new OutResults
+        RegionStats rout = new RegionStats
         {
-          Count = wellResult.RP1vals.Count,
+          Count = wellResult.ReporterValues.Count,
           Region = wellResult.regionNumber
         };
-        float avg = wellResult.RP1vals.Average();
+        float avg = wellResult.ReporterValues.Average();
         if (rout.Count >= 20)
         {
-          wellResult.RP1vals.Sort();
+          wellResult.ReporterValues.Sort();
           int quarterIndex = rout.Count / 4;
           float sum = 0;
           for (var i = quarterIndex; i < rout.Count - quarterIndex; i++)
           {
-            sum += wellResult.RP1vals[i];
+            sum += wellResult.ReporterValues[i];
           }
 
           float mean = sum / (rout.Count - 2 * quarterIndex);
           rout.MeanFi = mean;
 
-          rout.MedFi = (float)Math.Round(wellResult.RP1vals[rout.Count / 2]);
+          rout.MedFi = (float)Math.Round(wellResult.ReporterValues[rout.Count / 2]);
 
-          double sumsq = wellResult.RP1vals.Sum(dataout => Math.Pow(dataout - rout.MeanFi, 2));
-          double stddev = Math.Sqrt(sumsq / wellResult.RP1vals.Count() - 1);
-          rout.CV = (float) stddev / rout.MeanFi * 100;
-          if (double.IsNaN(rout.CV))
-            rout.CV = 0;
+          double sumsq = wellResult.ReporterValues.Sum(dataout => Math.Pow(dataout - rout.MeanFi, 2));
+          double stddev = Math.Sqrt(sumsq / wellResult.ReporterValues.Count() - 1);
+          rout.CoeffVar = (float) stddev / rout.MeanFi * 100;
+          if (double.IsNaN(rout.CoeffVar))
+            rout.CoeffVar = 0;
         }
         else
           rout.MeanFi = avg;
@@ -126,7 +131,7 @@ namespace DIOS.Core
       int res = int.MaxValue;
       for (var i = 0; i < _minPerRegCount; i++)
       {
-        var diff = _wellResults[i].RP1vals.Count - _device.MinPerRegion;
+        var diff = _wellResults[i].ReporterValues.Count - _device.MinPerRegion;
         res = diff < res ? diff : res;
       }
       return res;
@@ -143,10 +148,10 @@ namespace DIOS.Core
       //each entry has a list of rp1 values from each bead in that region
       if (_regionIndexDictionary.TryGetValue(outBead.region, out var index))
       {
-        _wellResults[index].RP1vals.Add(outBead.reporter);
-        _wellResults[index].RP1bgnd.Add(outBead.greenC_bg);
+        _wellResults[index].ReporterValues.Add(outBead.reporter);
+        //_wellResults[index].RP1bgnd.Add(outBead.greenC_bg);
         if (!_chkRegionCount)
-          _chkRegionCount = _wellResults[index].RP1vals.Count == _device.MinPerRegion;  //see if assay is done via sufficient beads in each region
+          _chkRegionCount = _wellResults[index].ReporterValues.Count == _device.MinPerRegion;  //see if assay is done via sufficient beads in each region
       }
     }
 

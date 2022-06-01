@@ -15,6 +15,7 @@ namespace DIOS.Core.Tests
       Device device = new Device(fakeUSB);
       device.MapCtroller.ActiveMap = device.MapCtroller.MapList[1];
       device.WellController.Init(new List<Well>{new Well{ RowIdx = 1, ColIdx = 1 }});
+      device.IsNormalizationEnabled = true;
       device.StartOperation();
       fakeUSB.ReadBead(new BeadInfoStruct
       {

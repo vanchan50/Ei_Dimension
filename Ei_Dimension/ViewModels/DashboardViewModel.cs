@@ -260,7 +260,8 @@ namespace Ei_Dimension.ViewModels
         App.Device.MainCommand("Set Property", code: 0xaf, parameter: ushort.Parse(_dbsampleVolumeTempHolder));
         MainButtonsViewModel.Instance.Flavor[0] = null;
         MainWindow.Instance.wndw.Background = (System.Windows.Media.SolidColorBrush)App.Current.Resources["AppBackground"];
-        App.UnlockMapSelection();
+        UnlockMapSelection();
+        UnLockEndReadSelection();
         App.Device.MainCommand("Set Property", code: 0x1b, parameter: 0);
       }
 
@@ -279,7 +280,8 @@ namespace Ei_Dimension.ViewModels
           MainButtonsViewModel.Instance.Flavor[0] = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Maintenance_Calibration),
             Language.TranslationSource.Instance.CurrentCulture);
           MainWindow.Instance.wndw.Background = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(255, 255, 191));
-          App.LockMapSelection();
+          LockMapSelection();
+          LockEndReadSelection();
           App.Device.MainCommand("Set Property", code: 0x1b, parameter: 1);
           return;
         }
@@ -309,7 +311,7 @@ namespace Ei_Dimension.ViewModels
         MainButtonsViewModel.Instance.Flavor[0] = null;
         MainWindow.Instance.wndw.Background = (System.Windows.Media.SolidColorBrush)App.Current.Resources["AppBackground"];
         ResultsViewModel.Instance.ValidationCoverVisible = Visibility.Hidden;
-        App.UnlockMapSelection();
+        UnlockMapSelection();
       }
 
       UserInputHandler.InputSanityCheck();
@@ -324,7 +326,7 @@ namespace Ei_Dimension.ViewModels
             Language.TranslationSource.Instance.CurrentCulture);
           MainWindow.Instance.wndw.Background = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(97, 162, 135));
           ResultsViewModel.Instance.ValidationCoverVisible = Visibility.Visible;
-          App.LockMapSelection();
+          LockMapSelection();
           return;
         }
         ValModeOn = false;
@@ -341,6 +343,32 @@ namespace Ei_Dimension.ViewModels
       {
         ReturnToNormal();
       }
+    }
+
+    private static void LockMapSelection()
+    {
+      Views.DashboardView.Instance.MapSelectr.IsEnabled = false;
+      Views.CalibrationView.Instance.MapSelectr.IsEnabled = false;
+      Views.VerificationView.Instance.MapSelectr.IsEnabled = false;
+      Views.ChannelsView.Instance.MapSelectr.IsEnabled = false;
+    }
+
+    private static void UnlockMapSelection()
+    {
+      Views.DashboardView.Instance.MapSelectr.IsEnabled = true;
+      Views.CalibrationView.Instance.MapSelectr.IsEnabled = true;
+      Views.VerificationView.Instance.MapSelectr.IsEnabled = true;
+      Views.ChannelsView.Instance.MapSelectr.IsEnabled = true;
+    }
+
+    private static void LockEndReadSelection()
+    {
+      Views.DashboardView.Instance.EndReadSelectr.IsEnabled = false;
+    }
+
+    private static void UnLockEndReadSelection()
+    {
+      Views.DashboardView.Instance.EndReadSelectr.IsEnabled = true;
     }
 
     public void DropPress()

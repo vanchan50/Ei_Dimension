@@ -413,9 +413,9 @@ namespace Ei_Dimension.ViewModels
           var y = HeatMapData.bins[App.Device.MapCtroller.ActiveMap.regions[RegionIndex].Center.y];
           lock (BackingAnalysis12Map)
           {
-            if (result.RP1vals.Count > 0)
+            if (result.ReporterValues.Count > 0)
             {
-              BackingAnalysis12Map.Add(new DoubleHeatMapData(x, y, result.RP1vals.Average()));
+              BackingAnalysis12Map.Add(new DoubleHeatMapData(x, y, result.ReporterValues.Average()));
             }
           }
         }
