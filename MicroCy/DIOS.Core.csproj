@@ -81,6 +81,7 @@
     <Compile Include="InstrumentParameters\Idex.cs" />
     <Compile Include="ISerial.cs" />
     <Compile Include="Device.cs" />
+    <Compile Include="Structs\WellResults.cs" />
     <Compile Include="Structs\WellStats.cs" />
     <Compile Include="Structs\StatsEventArgs.cs" />
     <Compile Include="Structs\MapRegion.cs" />

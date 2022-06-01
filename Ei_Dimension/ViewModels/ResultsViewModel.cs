@@ -666,7 +666,7 @@ namespace Ei_Dimension.ViewModels
       }
       HeatMap.Display(mapIndex, DisplaysCurrentmap);
       WrldMap.DisplayedWmap = mapIndex;
-      WrldMap.FillDisplayedMap();
+      WrldMap.FillDisplayedWorldMap();
     }
 
     public void PlexButtonClick()

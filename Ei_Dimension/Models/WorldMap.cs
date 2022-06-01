@@ -66,7 +66,7 @@ namespace Ei_Dimension.Models
       }
     }
 
-    public void FillDisplayedMap()
+    public void FillDisplayedWorldMap()
     {
       Action BuildWmap = null;
       List<HeatMapData> Map = GetCurrentMap();

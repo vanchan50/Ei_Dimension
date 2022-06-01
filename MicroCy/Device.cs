@@ -196,7 +196,7 @@ namespace DIOS.Core
     {
       SetReadingParamsForWell();
       WellController.Advance();
-      Results.Reset();
+      Results.StartNewWell(WellController.CurrentWell);
       Publisher.StartNewBeadEventReport();
       BeadCount = 0;
 
@@ -222,7 +222,7 @@ namespace DIOS.Core
       SetAspirateParamsForWell();  //setup for first read
       SetReadingParamsForWell();
       WellController.Advance();
-      Results.Reset();
+      Results.StartNewWell(WellController.CurrentWell);
       Publisher.StartNewBeadEventReport();
       BeadCount = 0;
       OnStartingToReadWell();

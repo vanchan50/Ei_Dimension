@@ -69,7 +69,10 @@ namespace Ei_Dimension.ViewModels
             SelectNullRegion();
           }
           //DefaultRegionNaming();
-          App.Device.Results.SetupRunRegions(MapRegionsController.ActiveRegionNums);
+          if (!App.Device.Results.SetupRunRegions(MapRegionsController.ActiveRegionNums))
+          {
+
+          }
           break;
         case OperationMode.Calibration:
           App.MapRegions.RemoveNullTextBoxes();
