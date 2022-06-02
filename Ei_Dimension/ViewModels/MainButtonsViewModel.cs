@@ -43,7 +43,10 @@ namespace Ei_Dimension.ViewModels
     public void StartButtonClick()
     {
       UserInputHandler.InputSanityCheck();
-      if (App.Device.TerminationType == Termination.MinPerRegion && MapRegionsController.ActiveRegionNums.Count == 0)
+      //TODO: bad design, contains 0 can never happen here
+      if (App.Device.TerminationType == Termination.MinPerRegion
+          && (MapRegionsController.ActiveRegionNums.Count == 0
+              || (MapRegionsController.ActiveRegionNums.Count == 1 && MapRegionsController.ActiveRegionNums.Contains(0)))) 
       {
         var msg = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Messages_MinPerReg_RequiresAtLeast1),
           Language.TranslationSource.Instance.CurrentCulture);
@@ -66,13 +69,11 @@ namespace Ei_Dimension.ViewModels
         case OperationMode.Normal:
           if (MapRegionsController.ActiveRegionNums.Count == 0)
           {
+            //this adds region0 to ActiveRegionNums
             SelectNullRegion();
           }
           //DefaultRegionNaming();
-          if (!App.Device.Results.SetupRunRegions(MapRegionsController.ActiveRegionNums))
-          {
-
-          }
+          App.Device.Results.SetupRunRegions(MapRegionsController.ActiveRegionNums);
           break;
         case OperationMode.Calibration:
           App.MapRegions.RemoveNullTextBoxes();

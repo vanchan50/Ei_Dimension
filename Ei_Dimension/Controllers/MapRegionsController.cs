@@ -96,7 +96,13 @@ namespace Ei_Dimension.Controllers
     {
       while (ActiveRegionNums.Count > 0)
       {
-        AddActiveRegion(ActiveRegionNums.First(), callFromCode: true);
+        var regionNum = ActiveRegionNums.First();
+        if (regionNum == 0)
+        {
+          ActiveRegionNums.Remove(0);
+          continue;
+        }
+        AddActiveRegion(regionNum, callFromCode: true);
       }
     }
 
@@ -127,16 +133,19 @@ namespace Ei_Dimension.Controllers
     public void ShowNullTextBoxes()
     {
       _resultsTableController.ShowNullTb();
+      if(FileSaveViewModel.Instance.Checkboxes[4])
+        ActiveRegionNums.Add(0);
     }
 
     public void RemoveNullTextBoxes()
     {
       _resultsTableController.RemoveNullTb();
+      ActiveRegionNums.Remove(0);
     }
 
-    private void AddTextboxes(int regionNum)
+    private void AddTextboxes(int regionIndex)
     {
-      var i = regionNum.ToString();
+      var i = regionIndex.ToString();
       AddRegionsTextBox($"{nameof(RegionsList)}[{i}].{nameof(MapRegionData.NumberString)}");
       AddRegionsNamesTextBox($"{nameof(RegionsList)}[{i}].{nameof(MapRegionData.Name)}[0]");
       _validationTableController.AddRegionsTextBox($"{nameof(RegionsList)}[{i}].{nameof(MapRegionData.NumberString)}");

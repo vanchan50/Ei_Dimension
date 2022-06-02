@@ -41,9 +41,11 @@ namespace Ei_Dimension.ViewModels
           (() =>
           {
             UserInputHandler.InputSanityCheck();
-            for (var i = 1; i < MapRegionsController.RegionsList.Count; i++)
+            for (var i = 0; i < MapRegionsController.RegionsList.Count; i++)
             {
               var reg = MapRegionsController.RegionsList[i].Number;
+              if(reg == 0)
+                continue;
               if (!MapRegionsController.ActiveRegionNums.Contains(reg))
                 App.MapRegions.AddActiveRegion(reg);
             }

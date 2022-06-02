@@ -110,7 +110,8 @@ namespace Ei_Dimension.ViewModels
           Settings.Default.OnlyClassifed = Checkboxes[num];
           break;
         case 4:
-          App.Device.Results.Reg0stats = Checkboxes[num];
+          //Reg0 is part of UI now
+          //App.Device.Results.Reg0stats = Checkboxes[num];
           break;
         case 5:
           break;

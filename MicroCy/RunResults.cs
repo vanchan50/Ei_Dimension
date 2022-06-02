@@ -7,7 +7,6 @@ namespace DIOS.Core
 {
   public class RunResults
   {
-    public bool Reg0stats { get; set; }
     private Device _device;
     private ICollection<int> _regionsToOutput;
     private WellResults _wellResults;
@@ -17,18 +16,19 @@ namespace DIOS.Core
     public RunResults(Device device)
     {
       _device = device;
+      _wellResults = new WellResults();
     }
 
-    public bool SetupRunRegions(ICollection<int> regions)
+    /// <summary>
+    /// Setup and Validate the Output Regions
+    /// </summary>
+    /// <param name="regions"> the region numbers to output</param>
+    /// <returns></returns>
+    public void SetupRunRegions(ICollection<int> regions)
     {
-      //validate data
-      //TODO: reg0stats can stay a UI thing, _regionsToOutput should have 0 in itself if necessary. that has to be done in the UI
-      if (regions == null)//count !=0
-        return false;
-      if (regions.Count == 0 && !Reg0stats)
-        return false;
       _regionsToOutput = regions;
-      return true;
+      if (regions == null)
+        _regionsToOutput = new List<int>();
     }
 
     internal void StartNewPlateReport()
@@ -36,9 +36,9 @@ namespace DIOS.Core
       PlateReport = new PlateReport();
     }
 
-    public void StartNewWell(Well well)
+    internal void StartNewWell(Well well)
     {
-       _wellResults.Reset(well, _regionsToOutput, Reg0stats);
+       _wellResults.Reset(well, _regionsToOutput);
        _minPerRegCheckTrigger = false;
     }
 

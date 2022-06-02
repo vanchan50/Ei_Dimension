@@ -264,11 +264,13 @@ namespace Ei_Dimension.ViewModels
           }
           temp.FileSaveCheckboxes = checkboxes;
 
-          for (var i = 1; i < MapRegionsController.RegionsList.Count; i++) // -1 for NUll Region
+          foreach (var region in MapRegionsController.RegionsList)
           {
-            var isActive = MapRegionsController.ActiveRegionNums.Contains(MapRegionsController.RegionsList[i].Number);
+            if(region.Number == 0)
+              continue;
+            var isActive = MapRegionsController.ActiveRegionNums.Contains(region.Number);
             temp.ActiveRegions.Add(isActive);
-            temp.RegionsNamesList.Add(MapRegionsController.RegionsList[i].Name[0]);
+            temp.RegionsNamesList.Add(region.Name[0]);
           }
 
           temp.TableSize = WellsSelectViewModel.Instance.CurrentTableSize;

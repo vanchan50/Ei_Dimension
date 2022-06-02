@@ -397,6 +397,8 @@ namespace Ei_Dimension.ViewModels
       {
         foreach (var reg in MapRegionsController.ActiveRegionNums)
         {
+          if(reg == 0)
+            continue;
           BackingWResults.Add(new DIOS.Core.RegionResult { regionNumber = (ushort)reg });
         }
       }

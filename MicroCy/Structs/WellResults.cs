@@ -10,27 +10,30 @@ namespace DIOS.Core.Structs
     private Well _well;
     private List<RegionResult> _wellResults = new List<RegionResult>();
     private SortedDictionary<ushort, int> _regionIndexDictionary = new SortedDictionary<ushort, int>();
-    private int _minPerRegCount;  //discard region 0 from calculation
+    private int _non0RegionsCount;  //cached data for optimization. discard region 0 from calculation. only for minPerReg case
 
-    internal void Reset(Well well, ICollection<int> regions, bool includeRegion0)
+    internal void Reset(Well well, ICollection<int> regions)
     {
       _well = new Well(well);
       _wellResults.Clear();
       _regionIndexDictionary.Clear();
       foreach (var region in regions)
       {
+        //skip region0 to make it the last one. if it is there at all
+        if(region == 0)
+          continue;
         _regionIndexDictionary.Add((ushort)region, _wellResults.Count);
         _wellResults.Add(new RegionResult { regionNumber = (ushort)region });
       }
       //region 0 has to be the last in _wellResults
-      if (includeRegion0)  //TODO: remove the IF from here and don't damage the rest of reg0stats logic
+      if (regions.Contains(0))
       {
         _regionIndexDictionary.Add(0, _wellResults.Count);
         _wellResults.Add(new RegionResult { regionNumber = 0 });
       }
-      _minPerRegCount = regions.Count;
-      if (_minPerRegCount != 0 && includeRegion0)
-        _minPerRegCount -= 1;
+      _non0RegionsCount = _wellResults.Count;
+      if (_non0RegionsCount != 0 && regions.Contains(0))
+        _non0RegionsCount -= 1;
     }
 
     internal int Add(in BeadInfoStruct outBead)
@@ -67,7 +70,7 @@ namespace DIOS.Core.Structs
     internal int MinPerAllRegionsAchieved(int minPerRegion)
     {
       int res = int.MaxValue;
-      for (var i = 0; i < _minPerRegCount; i++)
+      for (var i = 0; i < _non0RegionsCount; i++)
       {
         var diff = _wellResults[i].ReporterValues.Count - minPerRegion;
         res = diff < res ? diff : res;
