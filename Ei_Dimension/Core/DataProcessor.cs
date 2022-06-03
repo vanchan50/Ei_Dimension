@@ -18,6 +18,7 @@ namespace Ei_Dimension.Core
     private static readonly double[] CvStats = new double[10];
     private static readonly double[] _bins;
     private const string _100plexMapName = "D100Aplex";
+    private static readonly HashSet<int> WeightedRegions = new HashSet<int> {1,2,3,4,5,6,7,8,10,11,16,17,23,24,31,32,40,41,50,60,71};
     static  DataProcessor()
     {
       _heatColors = new SolidColorBrush[13];
@@ -444,7 +445,7 @@ namespace Ei_Dimension.Core
     {
       if (App.Device.MapCtroller.ActiveMap.mapName != _100plexMapName)
         return false;
-      if ((region > 0 && region <= 8) || region == 10 || region == 11 || region == 16 || region == 23 || region == 31 || region == 40)
+      if(WeightedRegions.Contains(region))
         return true;
       return false;
     }
