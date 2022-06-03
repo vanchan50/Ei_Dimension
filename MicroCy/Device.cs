@@ -356,6 +356,7 @@ namespace DIOS.Core
     internal void OnFinishedMeasurement()
     {
       IsMeasurementGoing = false;
+      _ = Task.Run(() => { Publisher.OutputPlateReport(); });
       Results.EndOfOperationReset();
       MainCommand("Set Property", code: 0x19);  //bubble detect off
       if (Mode ==  OperationMode.Verification)

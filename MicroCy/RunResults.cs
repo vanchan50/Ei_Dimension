@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using DIOS.Core.Structs;
 
@@ -9,14 +10,15 @@ namespace DIOS.Core
   {
     private Device _device;
     private ICollection<int> _regionsToOutput;
-    private WellResults _wellResults;
+    private readonly WellResults _wellResults = new WellResults();
     private bool _minPerRegCheckTrigger;
-    public PlateReport PlateReport { get; private set; }
+    public PlateReport PlateReport { get; } = new PlateReport();
+    private readonly BeadEventsData _beadEventsData = new BeadEventsData();
+    private readonly WellStatsData _wellstatsData = new WellStatsData();
 
     public RunResults(Device device)
     {
       _device = device;
-      _wellResults = new WellResults();
     }
 
     /// <summary>
@@ -33,16 +35,61 @@ namespace DIOS.Core
 
     internal void StartNewPlateReport()
     {
-      PlateReport = new PlateReport();
+      PlateReport.Reset();
+    }
+
+    internal void MakeStats()
+    {
+      var stats = new WellStats(_wellResults.Well, MakeDeepCopy());
+      PlateReport.Add(stats);
+      _wellstatsData.Add(stats.ToString());
     }
 
     internal void StartNewWell(Well well)
     {
-       _wellResults.Reset(well, _regionsToOutput);
-       _minPerRegCheckTrigger = false;
+      if (_regionsToOutput == null)
+        throw new Exception("SetupRunRegions() must be called before the run");
+      _wellResults.Reset(well, _regionsToOutput);
+      _beadEventsData.Reset();
+      _wellstatsData.Reset();
+      _minPerRegCheckTrigger = false;
     }
 
-    internal void FillActiveWellResults(in BeadInfoStruct outBead)
+    internal void AddBeadEvent(ref BeadInfoStruct beadInfo)
+    {
+      _device.BeadCount++;
+      _device.TotalBeads++;
+      _device._beadProcessor.CalculateBeadParams(ref beadInfo);
+      _device.DataOut.Enqueue(beadInfo);
+      if (_device.SaveIndividualBeadEvents)
+        _beadEventsData.Add(in beadInfo);
+      FillWellResults(in beadInfo);
+      //accum stats for run as a whole, used during aligment and QC
+      _device._beadProcessor.FillCalibrationStatsRow(in beadInfo);
+      _device._beadProcessor.FillBackgroundAverages(in beadInfo);
+      switch (_device.Mode)
+      {
+        case OperationMode.Normal:
+          break;
+        case OperationMode.Calibration:
+          break;
+        case OperationMode.Verification:
+          Verificator.FillStats(in beadInfo);
+          break;
+      }
+    }
+
+    public string PublishBeadEvents()
+    {
+      return _beadEventsData.Publish(_device.OnlyClassified);
+    }
+
+    public string PublishWellStats()
+    {
+      return _wellstatsData.Publish();
+    }
+
+    private void FillWellResults(in BeadInfoStruct outBead)
     {
       var count = _wellResults.Add(in outBead);
       //it also checks region 0, but it is only a trigger, the real check is done in MinPerRegionAchieved()
@@ -53,7 +100,7 @@ namespace DIOS.Core
     //TODO:bad design to have it public. get rid somehow
     public List<RegionResult> MakeDeepCopy()
     {
-      return _wellResults.MakeDeepCopy();
+      return _wellResults.GetResults();
     }
 
     /// <summary>

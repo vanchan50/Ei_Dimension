@@ -6,25 +6,14 @@ namespace DIOS.Core
   [Serializable]
   public class RegionStats
   {
-    public string Row;
-    public int Col;
     public ushort Region;
     public int Count;
     public float MedFi;
     public float MeanFi;
     public float CoeffVar;
-    [NonSerialized]
-    private static readonly char[] Alphabet = Enumerable.Range('A', 16).Select(x => (char)x).ToArray();
-
-    public RegionStats()
-    {
-      
-    }
 
     public RegionStats(RegionResult regionNumber, Well well)
     {
-      Row = Alphabet[well.RowIdx].ToString();
-      Col = well.ColIdx + 1;  //columns are 1 based
       Count = regionNumber.ReporterValues.Count;
       Region = regionNumber.regionNumber;
       var rp1Temp = regionNumber.ReporterValues;
@@ -50,7 +39,7 @@ namespace DIOS.Core
 
     public override string ToString()
     {
-      return $"{Row},{Col.ToString()},{Region.ToString()},{Count.ToString()},{MedFi.ToString()},{MeanFi.ToString("F3")},{CoeffVar.ToString("F3")}\r";
+      return $"{Region.ToString()},{Count.ToString()},{MedFi.ToString()},{MeanFi.ToString("F3")},{CoeffVar.ToString("F3")}";
     }
   }
 }

@@ -34,9 +34,43 @@ namespace Ei_Dimension
         ActiveRegionsStatsController.Instance.UpdateCurrentStats();
         TextBoxHandler.UpdateEventCounter();
         App.Device.UpdateStateMachine();
+
+        #if DEBUG
+        JKBeadADD();
+        #endif
       }
       ServiceMenuEnabler.Update();
       _uiUpdateIsActive = 0;
     }
+
+    #if DEBUG
+    private static void JKBeadADD()
+    {
+      App.Current.Dispatcher.Invoke(() => {
+        var kek = new BeadInfoStruct
+        {
+          Header = 0xadbeadbe,
+          fsc = 2.36f,
+          cl1 = 13400.1632f,
+          region = 4
+        };
+        var pek = new BeadInfoStruct
+        {
+          Header = 0xadbeadbe,
+          fsc = 15.82f,
+          cl1 = 1000f,
+          region = 5
+        };
+        if (System.Windows.Input.Keyboard.IsKeyDown(System.Windows.Input.Key.J))
+        {
+        //  App.Device.Results.AddBeadEvent(ref kek);
+        }
+        if (System.Windows.Input.Keyboard.IsKeyDown(System.Windows.Input.Key.K))
+        {
+        //  App.Device.Results.AddBeadEvent(ref pek);
+        }
+      });
+    }
+    #endif
   }
 }

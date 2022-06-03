@@ -1,57 +1,44 @@
 ﻿using System;
 using System.Collections.Generic;
+using DIOS.Core.Structs;
+using Newtonsoft.Json;
 
 namespace DIOS.Core
 {
-  [Serializable]
+  [JsonObject(MemberSerialization.Fields)]
   public class PlateReport
   {
     public Guid plateID;
     public Guid beadMapId;
     public DateTime completedDateTime;
-    private List<WellReport> Wells = new List<WellReport>();
+    private List<WellStats> _wells = new List<WellStats>(384);
+    [JsonIgnore]
     private int _size;
 
-    public List<(int region, int mfi)> GetRegionalReporterMFI() //TODO:will be taken from ResultData after refactoring
+    /// <summary>
+    /// Get the reporter Mean values. Works only for the first well (tube)
+    /// </summary>
+    /// <returns>a list of reporter means for the respective regions</returns>
+    public List<(int region, int mfi)> GetRegionalReporterMFI()
     {
-      if (Wells[0].rpReg == null)
+      if (_wells[0] == null)
         return null;
-
-      List<(int region, int mfi)> list = new List<(int region, int mfi)>(100);
-
-      foreach (var regionReport in Wells[0].rpReg)
-      {
-        if (regionReport.region == 0)
-        {
-          continue;
-        }
-        list.Add((regionReport.region, (int)regionReport.meanfi));
-      }
-      return list;
+      return _wells[0].GetReporterMFI();
     }
 
-    public void AddResultsToLastWell(RegionStats outRes)
+    internal void Add(WellStats stats)
     {
-      var lastWell = Wells[_size - 1];
-      lastWell.rpReg.Add(new RegionReport
-      {
-        region = outRes.Region,
-        count = (uint)outRes.Count,
-        medfi = outRes.MedFi,
-        meanfi = outRes.MeanFi,
-        coefVar = outRes.CoeffVar
-      });
-    }
-
-    public void AddWell(Well well)
-    {
-      Wells.Add(new WellReport
-      {
-        // OutResults grouped by row and col
-        row = well.RowIdx,
-        col = well.ColIdx
-      });
+      _wells.Add(stats);
       _size++;
+    }
+
+    public void Reset()
+    {
+      plateID = Guid.Empty;
+      beadMapId = Guid.Empty;
+      completedDateTime = DateTime.MinValue;
+      _wells.Clear();
+      _size = 0;
     }
   }
 }

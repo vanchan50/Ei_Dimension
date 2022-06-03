@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Media;
+using DIOS.Core;
 using Ei_Dimension.Controllers;
 using Ei_Dimension.ViewModels;
 
@@ -54,37 +55,38 @@ namespace Ei_Dimension.Core
       return str;
     }
 
-    public static DIOS.Core.BeadInfoStruct ParseRow(string data)
+    public static BeadInfoStruct ParseRow(string data)
     {
       var numFormat = System.Globalization.CultureInfo.InvariantCulture.NumberFormat;
-      DIOS.Core.BeadInfoStruct binfo;
       string[] words = data.Split(_separator);
-      binfo.Header = uint.Parse(words[0]);
-      binfo.EventTime = uint.Parse(words[1]);
-      binfo.fsc_bg = byte.Parse(words[2]);
-      binfo.vssc_bg = byte.Parse(words[3]);
-      binfo.cl0_bg = byte.Parse(words[4]);
-      binfo.cl1_bg = byte.Parse(words[5]);
-      binfo.cl2_bg = byte.Parse(words[6]);
-      binfo.cl3_bg = byte.Parse(words[7]);
-      binfo.rssc_bg = byte.Parse(words[8]);
-      binfo.gssc_bg = byte.Parse(words[9]);
-      binfo.greenB_bg = ushort.Parse(words[10]);
-      binfo.greenC_bg = ushort.Parse(words[11]);
-      binfo.greenB = ushort.Parse(words[12]);
-      binfo.greenC = ushort.Parse(words[13]);
-      binfo.l_offset_rg = byte.Parse(words[14]);
-      binfo.l_offset_gv = byte.Parse(words[15]);
-      binfo.region = ushort.Parse(words[16]);
-      binfo.fsc = float.Parse(words[17], numFormat);
-      binfo.violetssc = float.Parse(words[18], numFormat);
-      binfo.cl0 = float.Parse(words[19], numFormat);
-      binfo.redssc = float.Parse(words[20], numFormat);
-      binfo.cl1 = float.Parse(words[21], numFormat);
-      binfo.cl2 = float.Parse(words[22], numFormat);
-      binfo.cl3 = float.Parse(words[23], numFormat);
-      binfo.greenssc = float.Parse(words[24], numFormat);
-      binfo.reporter = float.Parse(words[25], numFormat);
+      BeadInfoStruct binfo = new BeadInfoStruct
+      {
+        EventTime = uint.Parse(words[0]),
+        fsc_bg = byte.Parse(words[1]),
+        vssc_bg = byte.Parse(words[2]),
+        cl0_bg = byte.Parse(words[3]),
+        cl1_bg = byte.Parse(words[4]),
+        cl2_bg = byte.Parse(words[5]),
+        cl3_bg = byte.Parse(words[6]),
+        rssc_bg = byte.Parse(words[7]),
+        gssc_bg = byte.Parse(words[8]),
+        greenB_bg = ushort.Parse(words[9]),
+        greenC_bg = ushort.Parse(words[10]),
+        greenB = ushort.Parse(words[11]),
+        greenC = ushort.Parse(words[12]),
+        l_offset_rg = byte.Parse(words[13]),
+        l_offset_gv = byte.Parse(words[14]),
+        region = ushort.Parse(words[15]),
+        fsc = float.Parse(words[16], numFormat),
+        violetssc = float.Parse(words[17], numFormat),
+        cl0 = float.Parse(words[18], numFormat),
+        redssc = float.Parse(words[19], numFormat),
+        cl1 = float.Parse(words[20], numFormat),
+        cl2 = float.Parse(words[21], numFormat),
+        cl3 = float.Parse(words[22], numFormat),
+        greenssc = float.Parse(words[23], numFormat),
+        reporter = float.Parse(words[24], numFormat)
+      };
       return binfo;
     }
 

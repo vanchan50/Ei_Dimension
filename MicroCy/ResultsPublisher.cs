@@ -8,20 +8,13 @@ namespace DIOS.Core
 {
   public class ResultsPublisher
   {
-    //TODO:these should all be independent objects in results, with a function Publish()
     public string Outdir { get; set; }  //  user selectable
     public string Outfilename { get; set; } = "ResultFile";
     public bool MakePlateReport { get; set; }
     public string WorkOrderPath { get; set; }
     internal string FullBeadEventFileName { get; private set; }
     private string _thisRunStatsFileName;
-    private readonly StringBuilder BeadEventDataOut = new StringBuilder();
-    private readonly StringBuilder StatsData = new StringBuilder();
     private Device _device;
-    private const string BHEADER = "Preamble,Time(1 us Tick),FSC bg,Viol SSC bg,CL0 bg,CL1 bg,CL2 bg,CL3 bg,Red SSC bg,Green SSC bg," +
-                                   "Green B bg,Green C bg,Green B,Green C,Red-Grn Offset,Grn-Viol Offset,Region,Forward Scatter,Violet SSC,CL0," +
-                                   "Red SSC,CL1,CL2,CL3,Green SSC,Reporter\r";
-    private const string SHEADER = "Row,Col,Region,Bead Count,Median FI,Trimmed Mean FI,CV%\r";
 
     public ResultsPublisher(Device device)
     {
@@ -32,8 +25,6 @@ namespace DIOS.Core
     internal void StartNewBeadEventReport()
     {
       GetNewBeadEventFileName();
-      _ = BeadEventDataOut.Clear();
-      _ = BeadEventDataOut.Append(BHEADER);
     }
 
     /// <summary>
@@ -68,21 +59,10 @@ namespace DIOS.Core
       FullBeadEventFileName = $"{Outdir}\\AcquisitionData\\{Outfilename}{rowletter}{colLetter}_{date}.csv";
     }
 
-    internal void AddBeadEvent(in BeadInfoStruct beadInfo)
-    {
-      _device.DataOut.Enqueue(beadInfo);
-      if (_device.SaveIndividualBeadEvents)
-        _ = BeadEventDataOut.Append(beadInfo.ToString());
-    }
-
-    private void AddToStatsData(RegionStats oResult)
-    {
-      _ = StatsData.Append(oResult);
-    }
-
     private void WriteResultDataToFile()
     {
-      if (!_device.RMeans || StatsData.Length == 0)
+      var contents = _device.Results.PublishWellStats();
+      if (!_device.RMeans || contents.Length == 0)
         return;
       var directoryName = $"{Outdir}\\AcquisitionData";
       try
@@ -99,7 +79,6 @@ namespace DIOS.Core
 
       try
       {
-        var contents = StatsData.ToString();
         File.AppendAllText(_thisRunStatsFileName, contents);
         Console.WriteLine($"Results summary saved as {_thisRunStatsFileName}");
       }
@@ -111,10 +90,31 @@ namespace DIOS.Core
 
     internal void ResetResultData()
     {
-      _ = StatsData.Clear();
-      _ = StatsData.Append(SHEADER);
       GetThisRunResultsFileName();
-      WriteResultDataToFile();
+      if (!_device.RMeans)
+        return;
+      var directoryName = $"{Outdir}\\AcquisitionData";
+      try
+      {
+        OutDirCheck();
+        if (!Directory.Exists(directoryName))
+          Directory.CreateDirectory(directoryName);
+      }
+      catch
+      {
+        Console.WriteLine($"Failed to create {directoryName}");
+        return;
+      }
+
+      try
+      {
+        File.AppendAllText(_thisRunStatsFileName, WellStatsData.HEADER);
+        Console.WriteLine($"Results summary file created {_thisRunStatsFileName}");
+      }
+      catch
+      {
+        Console.WriteLine($"Failed to create file {_thisRunStatsFileName}");
+      }
     }
 
     private void GetThisRunResultsFileName()
@@ -162,21 +162,17 @@ namespace DIOS.Core
       }
     }
 
-    public void SaveBeadFile(List<RegionResult> wellres, Well savingWell) //cancels the begin read from endpoint 2
+    public void PublishEverything()
     {
-      SaveBeadEventFile();
-
-      StatsData.Clear();
-      for (var i = 0; i < wellres.Count; i++)
-      {
-        RegionStats rout = new RegionStats(wellres[i], savingWell);
-        AddToStatsData(rout);
-        _device.Results.PlateReport.AddResultsToLastWell(rout);//TODO: done not in the right place
-      }
+      _device.Results.MakeStats();  //TODO: need to check if the well is finished reading before call
       WriteResultDataToFile();
-      wellres = null;
-
+      SaveBeadEventFile();
+      DoSomethingWithWorkOrder();
       Console.WriteLine($"{DateTime.Now.ToString()} Reporting Background File Save Complete");
+    }
+
+    private void DoSomethingWithWorkOrder()
+    {
       if (File.Exists(WorkOrderPath))
         File.Delete(WorkOrderPath);   //result is posted, delete work order
       //need to clear textbox in UI. this has to be an event
@@ -189,7 +185,7 @@ namespace DIOS.Core
 
       try
       {
-        var contents = BeadEventDataOut.ToString();
+        var contents = _device.Results.PublishBeadEvents();
         File.WriteAllText(FullBeadEventFileName, contents);
         Console.WriteLine($"Bead event saved as {FullBeadEventFileName}");
       }

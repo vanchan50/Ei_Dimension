@@ -1,20 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace DIOS.Core.Structs
 {
-  public class WellResults
+  internal class WellResults
   {
-    private Well _well;
-    private List<RegionResult> _wellResults = new List<RegionResult>();
-    private SortedDictionary<ushort, int> _regionIndexDictionary = new SortedDictionary<ushort, int>();
+    public Well Well { get; private set; }
+    private readonly List<RegionResult> _wellResults = new List<RegionResult>();
+    private readonly SortedDictionary<ushort, int> _regionIndexDictionary = new SortedDictionary<ushort, int>();
     private int _non0RegionsCount;  //cached data for optimization. discard region 0 from calculation. only for minPerReg case
 
     internal void Reset(Well well, ICollection<int> regions)
     {
-      _well = new Well(well);
+      Well = new Well(well);
       _wellResults.Clear();
       _regionIndexDictionary.Clear();
       foreach (var region in regions)
@@ -45,11 +43,11 @@ namespace DIOS.Core.Structs
         _wellResults[index].ReporterValues.Add(outBead.reporter);
         return _wellResults[index].ReporterValues.Count;
       }
-      throw new Exception($"WellResults.Add() could not find region {outBead.region}");
+      //return negative count, so the check is passed
+      return -1;
     }
-
-    //TODO:bad design to have it public. get rid somehow
-    internal List<RegionResult> MakeDeepCopy()
+    
+    internal List<RegionResult> GetResults()
     {
       //TODO: cache previous copy per well somehow, dont make new allocation all the time
       var copy = new List<RegionResult>(_wellResults.Count);

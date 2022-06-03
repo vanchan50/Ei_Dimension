@@ -52,27 +52,7 @@ namespace DIOS.Core
             {
               if (!GetBeadFromBuffer(_serialConnection.InputBuffer, i, out var outbead))
                 break;
-              _device.BeadCount++;
-              _device.TotalBeads++;
-              _beadProcessor.CalculateBeadParams(ref outbead);
-
-              _results.FillActiveWellResults(in outbead);
-              if (outbead.region == 0 && _device.OnlyClassified)
-                continue;
-              _device.Publisher.AddBeadEvent(in outbead);
-              //accum stats for run as a whole, used during aligment and QC
-              _beadProcessor.FillCalibrationStatsRow(in outbead);
-              _beadProcessor.FillBackgroundAverages(in outbead);
-              switch (_device.Mode)
-              {
-                case OperationMode.Normal:
-                  break;
-                case OperationMode.Calibration:
-                  break;
-                case OperationMode.Verification:
-                  Verificator.FillStats(in outbead);
-                  break;
-              }
+              _device.Results.AddBeadEvent(ref outbead);
             }
           }
           Array.Clear(_serialConnection.InputBuffer, 0, _serialConnection.InputBuffer.Length);
