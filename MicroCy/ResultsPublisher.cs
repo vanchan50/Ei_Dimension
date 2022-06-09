@@ -13,6 +13,15 @@ namespace DIOS.Core
     public bool MakePlateReport { get; set; }
     public string WorkOrderPath { get; set; }
     internal string FullBeadEventFileName { get; private set; }
+
+    private string Date
+    {
+      get
+      {
+        return DateTime.Now.ToString("dd.MM.yyyy.hh-mm-ss", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"));
+      }
+    }
+
     private string _thisRunStatsFileName;
     private Device _device;
 
@@ -55,8 +64,7 @@ namespace DIOS.Core
 
       char rowletter = (char)(0x41 + _device.WellController.CurrentWell.RowIdx);
       string colLetter = (_device.WellController.CurrentWell.ColIdx + 1).ToString();
-      string date = DateTime.Now.ToString("dd.MM.yyyy.hh-mm-ss", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"));
-      FullBeadEventFileName = $"{Outdir}\\AcquisitionData\\{Outfilename}{rowletter}{colLetter}_{date}.csv";
+      FullBeadEventFileName = $"{Outdir}\\AcquisitionData\\{Outfilename}{rowletter}{colLetter}_{Date}.csv";
     }
 
     private void WriteResultDataToFile()
@@ -120,8 +128,7 @@ namespace DIOS.Core
     private void GetThisRunResultsFileName()
     {
       OutDirCheck();
-      string date = DateTime.Now.ToString("dd.MM.yyyy.hh-mm-ss", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"));
-      _thisRunStatsFileName = $"{Outdir}\\AcquisitionData\\Results_{Outfilename}_{date}.csv";
+      _thisRunStatsFileName = $"{Outdir}\\AcquisitionData\\Results_{Outfilename}_{Date}.csv";
     }
 
     public void OutputPlateReport()
@@ -148,7 +155,7 @@ namespace DIOS.Core
       try
       {
         var fileName = $"{directoryName}" +
-                       "\\Summary_" + rfilename + ".json";
+                       "\\Summary_" + rfilename + "_" + Date + ".json";
         using (TextWriter jwriter = new StreamWriter(fileName))
         {
           var jcontents = JsonConvert.SerializeObject(_device.Results.PlateReport);

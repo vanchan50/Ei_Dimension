@@ -29,5 +29,6 @@ namespace DIOS.Core
     public List<MapRegion> regions;
     //public List<(int x, int y, int r)> classificationMap; //contains coords in 256x256 space for region numbers
     //can contain up to 6 classimaps (01,02,03,12,13,23) if necessary. possibility left for the future
+
   }
 }

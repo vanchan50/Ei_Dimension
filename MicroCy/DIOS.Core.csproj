@@ -63,6 +63,7 @@
     <Compile Include="Enums\OperationMode.cs" />
     <Compile Include="Enums\SystemControl.cs" />
     <Compile Include="Enums\Termination.cs" />
+    <Compile Include="FileIO\VerificationReport.cs" />
     <Compile Include="Structs\BeadEventsData.cs" />
     <Compile Include="FileIO\VerificationReportPublisher.cs" />
     <Compile Include="MapController.cs" />

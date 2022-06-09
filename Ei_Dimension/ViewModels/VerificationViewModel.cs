@@ -205,6 +205,7 @@ namespace Ei_Dimension.ViewModels
       var passed1 = Verificator.ReporterToleranceTest(Settings.Default.ValidatorToleranceReporter, out var msg1);
       var passed2 = Verificator.ClassificationToleranceTest(Settings.Default.ValidatorToleranceClassification, out var msg2);
       var passed3 = Verificator.MisclassificationToleranceTest(Settings.Default.ValidatorToleranceMisclassification, out var msg3);
+      Verificator.PublishResult();
       if (msg1 != null)
         errorMsg = msg1;
       if (msg2 != null)

@@ -16,8 +16,11 @@ namespace DIOS.Core
     private static int _highestCountRegion = -1;
     private static int _totalClassifiedBeads;
     private static int _totalUnclassifiedBeads;
+    private static int _highestUnclassifiedCount; 
+    private static int _highestUnclassifiedCountRegion = -1;
     private static readonly VerificationReportPublisher _publisher = new VerificationReportPublisher();
     private static CultureInfo _culture;
+    private static VerificationReport _report;
     private static readonly Dictionary<string, (string en, string zh)> _culturedText = new Dictionary<string, (string en, string zh)>
     {
       ["Test1_1"] = ("Test1: Regions", "测试1：区域"),
@@ -35,10 +38,12 @@ namespace DIOS.Core
       RegionalStats.Clear();
       _totalClassifiedBeads = 0;
       _totalUnclassifiedBeads = 0;
+      _highestUnclassifiedCount = 0;
       _highestCount = 0;
       _lowestCount = int.MaxValue;
       _lowestCountRegion = -1;
       _highestCountRegion = -1;
+      _highestUnclassifiedCountRegion = -1;
       _classifiedRegionsDict.Clear();
       _unclassifiedRegionsDict.Clear();
       foreach (var reg in regions)
@@ -49,6 +54,7 @@ namespace DIOS.Core
 
       _culture = new CultureInfo("en-US");
       _publisher.Reset();
+      _report = new VerificationReport();
     }
 
     public static void PublishReport()
@@ -61,19 +67,21 @@ namespace DIOS.Core
       msg = null;
       if (errorThresholdPercent < 0)
         throw new ArgumentException("Error threshold must not be negative");
+      _report.Tolerance1 = errorThresholdPercent;
       bool passed = true;
       var thresholdMultiplier = errorThresholdPercent <= 100 ? 1 - (errorThresholdPercent / 100) : (errorThresholdPercent / 100);  //reverse percentage
       var problematicRegions = new List<(int region, double errorPercentage)>();
       foreach (var reg in RegionalStats)
       {
         var ActualReporterMedian = GetMedianReporterForRegion(reg.Region);
+        //Console.WriteLine($"Verification Fail. Test 1 Reporter tolerance\nReporter value ({ReporterMedian.ToString()}) deviation is more than Threshold is {errorThresholdPercent.ToString($"{0:0.00}")}% from the target ({reg.InputReporter})");
+        var errorPercentage = 100 * (reg.InputReporter - ActualReporterMedian) / reg.InputReporter;  //how much Actual is less than InputReporter
         if (ActualReporterMedian <= reg.InputReporter * thresholdMultiplier)
         {
-          //Console.WriteLine($"Verification Fail. Test 1 Reporter tolerance\nReporter value ({ReporterMedian.ToString()}) deviation is more than Threshold is {errorThresholdPercent.ToString($"{0:0.00}")}% from the target ({reg.InputReporter})");
-          var errorPercentage =  100 * (reg.InputReporter - ActualReporterMedian) / reg.InputReporter;  //how much Actual is less than InputReporter
           problematicRegions.Add((reg.Region, errorPercentage));
           passed = false;
         }
+        _report.Test1regions.Add((reg.Region, -1 * errorPercentage));
       }
 
       if (problematicRegions.Count != 0)
@@ -89,6 +97,7 @@ namespace DIOS.Core
         msg = msg += $" {GetCulturedMsg("Test1_2")}";
         _publisher.AddData("\n");
       }
+      _report.Passed = passed;
       return passed;
     }
 
@@ -97,6 +106,7 @@ namespace DIOS.Core
       msg = null;
       if (errorThresholdPercent < 0)
         throw new ArgumentException("Error threshold must not be negative");
+      _report.Tolerance2 = errorThresholdPercent;
       bool passed = true;
 
       //var difference = (_highestCount - _lowestCount) / (double)_lowestCount;
@@ -105,6 +115,8 @@ namespace DIOS.Core
         msg = GetCulturedMsg("Test2_Fail");
         _publisher.AddData("\nClassification Tolerance Test:\n");
         _publisher.AddData("no beads were classified\n");
+        _report.UnclassifiedBeadsPercentage = 100;
+        _report.Passed = false;
         return false;
       }
       var difference = _totalUnclassifiedBeads / _totalClassifiedBeads;
@@ -117,6 +129,8 @@ namespace DIOS.Core
         _publisher.AddData("\nClassification Tolerance Test:\n");
         _publisher.AddData($"{difPercent.ToString()}% of verification events outside target regions\n");
       }
+      _report.UnclassifiedBeadsPercentage = difPercent;
+      _report.Passed = passed && _report.Passed;
       return passed;
     }
 
@@ -125,6 +139,7 @@ namespace DIOS.Core
       msg = null;
       if (errorThresholdPercent < 0)
         throw new ArgumentException("Error threshold must not be negative");
+      _report.Tolerance3 = errorThresholdPercent;
       //var thresholdMultiplier = errorThresholdPercent <= 100 ? 1 - (errorThresholdPercent / 100) : (errorThresholdPercent / 100);  //reverse percentage
       bool passed = true;
 
@@ -155,6 +170,7 @@ namespace DIOS.Core
         }
         msg = msg.Remove(msg.Length - 1);
       }
+      _report.Passed = passed && _report.Passed;
       return passed;
     }
 
@@ -165,6 +181,11 @@ namespace DIOS.Core
     public static void SetCulture(CultureInfo culture)
     {
       _culture = culture;
+    }
+
+    public static void PublishResult()
+    {
+      _report.Publish();
     }
 
     /// <summary>
@@ -218,7 +239,15 @@ namespace DIOS.Core
       foreach (var entry in _unclassifiedRegionsDict)
       {
         _totalUnclassifiedBeads += entry.Value;
+        if (entry.Value > _highestUnclassifiedCount)
+        {
+          _highestUnclassifiedCount = entry.Value;
+          _highestUnclassifiedCountRegion = entry.Key;
+        }
       }
+      _report.Test3HighestUnclassifiedCountRegion = _highestUnclassifiedCountRegion;
+      _report.Test3HighestUnclassifiedCount = _highestUnclassifiedCount;
+      _report.TotalBeads = _totalClassifiedBeads + _totalUnclassifiedBeads;
     }
 
     private static double GetMedianReporterForRegion(int regionNum)
