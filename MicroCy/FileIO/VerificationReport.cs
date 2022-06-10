@@ -18,12 +18,13 @@ namespace DIOS.Core.FileIO
     public int Test3HighestUnclassifiedCount;
     public int Test3HighestUnclassifiedCountRegion;
 
-    public int Test3HighestClassifiedCount;
-    public int Test3HighestClassifiedCountRegion;
+    public int Test3NearestClassifiedCount;
+    public int Test3NearestClassifiedCountRegion;
+    public double Test3MisclassificationsPercentage;
     private const string HEADER = "Date,Time,Total Beads,Test1 tolerance%,Test2 tolerance%,Test3 tolerance%,Passed,Test1 region #A, %over/under target," +
                                   "Test1 region #B, %over/under target,Test1 region #C, %over/under target,Test1 region #D, %over/under target," +
                                   "Test2 Unclassified beads%, Test3 non-Validation region with highest count" +
-                                  "Test3 highest count, Test3 highest Validation region#,Test3 count of highest Validation Region";
+                                  "Test3 highest count, Test3 nearest Validation region#,Test3 count of nearest Validation Region";
 
     public override string ToString()
     {
@@ -34,7 +35,7 @@ namespace DIOS.Core.FileIO
              $"{TotalBeads},{Tolerance1},{Tolerance2},{Tolerance3},{Passed},{Test1regions[0].region},{Test1regions[0].errror}," +
              $"{Test1regions[1].region},{Test1regions[1].errror},{Test1regions[2].region},{Test1regions[2].errror}," +
              $"{Test1regions[3].region},{Test1regions[3].errror},{UnclassifiedBeadsPercentage}," +
-             $"{Test3HighestUnclassifiedCountRegion},{Test3HighestUnclassifiedCount},{Test3HighestClassifiedCountRegion},{Test3HighestClassifiedCount}";
+             $"{Test3HighestUnclassifiedCountRegion},{Test3HighestUnclassifiedCount},{Test3NearestClassifiedCountRegion},{Test3NearestClassifiedCount}";
     }
 
     public void Publish()

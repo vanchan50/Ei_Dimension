@@ -360,7 +360,7 @@ namespace DIOS.Core
       Results.EndOfOperationReset();
       MainCommand("Set Property", code: 0x19);  //bubble detect off
       if (Mode ==  OperationMode.Verification)
-        Verificator.CalculateResults();
+        Verificator.CalculateResults(MapCtroller);
 
       if (Mode != OperationMode.Normal)
         IsNormalizationEnabled = _normalizationCache;

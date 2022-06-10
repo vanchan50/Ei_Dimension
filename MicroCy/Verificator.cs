@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using DIOS.Core.FileIO;
 
 namespace DIOS.Core
@@ -213,7 +214,7 @@ namespace DIOS.Core
       _unclassifiedRegionsDict.Add(outbead.region, 1);
     }
 
-    internal static void CalculateResults()
+    internal static void CalculateResults(MapController mapctroller)
     {
       //RegionalStats holds regions with defined Reporter target
       foreach (var region in RegionalStats)
@@ -248,6 +249,24 @@ namespace DIOS.Core
       _report.Test3HighestUnclassifiedCountRegion = _highestUnclassifiedCountRegion;
       _report.Test3HighestUnclassifiedCount = _highestUnclassifiedCount;
       _report.TotalBeads = _totalClassifiedBeads + _totalUnclassifiedBeads;
+
+      //TODO: botched like crazy
+      var list = new List<MapRegion>(4);
+      foreach (var p in _classifiedRegionsDict)
+      {
+        list.Add(mapctroller.ActiveMap.regions[p.Key]);
+      }
+
+      var idx = mapctroller.GetMapRegionIndex(_highestUnclassifiedCountRegion);
+      var r = mapctroller.ActiveMap.regions[idx];
+      var nearestVerifRegion = r.FindNearestRegionFrom(list);
+      _report.Test3NearestClassifiedCountRegion = nearestVerifRegion.Number;
+      _report.Test3NearestClassifiedCount = _classifiedRegionsDict[nearestVerifRegion.Number];
+      if (_report.Test3NearestClassifiedCount != 0)
+        _report.Test3MisclassificationsPercentage = 100 * (double) _report.Test3HighestUnclassifiedCount / _report.Test3NearestClassifiedCount;
+      else
+        _report.Test3MisclassificationsPercentage = 100;
+
     }
 
     private static double GetMedianReporterForRegion(int regionNum)

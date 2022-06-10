@@ -18,7 +18,7 @@ namespace DIOS.Core
     /// </summary>
     /// <param name="regionsToCompare">A collection of regions to get the result from</param>
     /// <returns></returns>
-    public MapRegion FindNearestRegion(ICollection<MapRegion> regionsToCompare)
+    public MapRegion FindNearestRegionFrom(ICollection<MapRegion> regionsToCompare)
     {
       if (regionsToCompare.Count < 1)
         return null;
