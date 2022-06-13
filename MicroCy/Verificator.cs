@@ -115,7 +115,7 @@ namespace DIOS.Core
       {
         msg = GetCulturedMsg("Test2_Fail");
         _publisher.AddData("\nClassification Tolerance Test:\n");
-        _publisher.AddData("no beads were classified\n");
+        _publisher.AddData("No beads were classified\n");
         _report.UnclassifiedBeadsPercentage = 100;
         _report.Passed = false;
         return false;
@@ -171,6 +171,12 @@ namespace DIOS.Core
         }
         msg = msg.Remove(msg.Length - 1);
       }
+
+      if (problematicRegions.Count == 0)
+      {
+        msg = "Test3: No beads outside of Verification regions";
+      }
+
       _report.Passed = passed && _report.Passed;
       return passed;
     }
@@ -258,11 +264,19 @@ namespace DIOS.Core
       }
 
       var idx = mapctroller.GetMapRegionIndex(_highestUnclassifiedCountRegion);
-      var r = mapctroller.ActiveMap.regions[idx];
-      var nearestVerifRegion = r.FindNearestRegionFrom(list);
-      _report.Test3NearestClassifiedCountRegion = nearestVerifRegion.Number;
-      _report.Test3NearestClassifiedCount = _classifiedRegionsDict[nearestVerifRegion.Number];
-      if (_report.Test3NearestClassifiedCount != 0)
+      if (idx >= 0)
+      {
+        var r = mapctroller.ActiveMap.regions[idx];
+        var nearestVerifRegion = r.FindNearestRegionFrom(list);
+        _report.Test3NearestClassifiedCountRegion = nearestVerifRegion.Number;
+        _report.Test3NearestClassifiedCount = _classifiedRegionsDict[nearestVerifRegion.Number];
+      }
+      else
+      {
+        _report.Test3NearestClassifiedCountRegion = -1;
+        _report.Test3NearestClassifiedCount = -1;
+      }
+      if (_report.Test3NearestClassifiedCount > 0)
         _report.Test3MisclassificationsPercentage = 100 * (double) _report.Test3HighestUnclassifiedCount / _report.Test3NearestClassifiedCount;
       else
         _report.Test3MisclassificationsPercentage = 100;

@@ -79,10 +79,17 @@ namespace Ei_Dimension.ViewModels
           App.MapRegions.RemoveNullTextBoxes();
           CalibrationViewModel.Instance.CalJustFailed = true;
           ResultsViewModel.Instance.ShowSinglePlexResults();
+          App.Device.Results.SetupRunRegions(null);
           break;
         case OperationMode.Verification:
+          if (MapRegionsController.ActiveVerificationRegionNums.Count != 4)
+          {
+            Notification.ShowError($"{MapRegionsController.ActiveVerificationRegionNums.Count} out of 4 Verification Regions selected\nPlease select 4 Verification Regions");
+            return;
+          }
           App.MapRegions.RemoveNullTextBoxes();
           MakeNewValidator();
+          App.Device.Results.SetupRunRegions(null);
           break;
       }
       StartButtonEnabled = false;
