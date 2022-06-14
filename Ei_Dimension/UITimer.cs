@@ -63,11 +63,11 @@ namespace Ei_Dimension
         };
         if (System.Windows.Input.Keyboard.IsKeyDown(System.Windows.Input.Key.J))
         {
-        //  App.Device.Results.AddBeadEvent(ref kek);
+          //App.Device.Results.AddBeadEvent(ref kek);
         }
         if (System.Windows.Input.Keyboard.IsKeyDown(System.Windows.Input.Key.K))
         {
-        //  App.Device.Results.AddBeadEvent(ref pek);
+          //App.Device.Results.AddBeadEvent(ref pek);
         }
       });
     }

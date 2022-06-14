@@ -27,8 +27,11 @@ namespace DIOS.Core
       foreach (var region in regionsToCompare)
       {
         var distSq = Math.Pow(region.Center.x - Center.x, 2) + Math.Pow(region.Center.y - Center.y, 2);
-        if (distanceSquared < distSq)
+        if (distSq < distanceSquared)
+        {
           nearest = region;
+          distanceSquared = distSq;
+        }
       }
       return nearest;
     }

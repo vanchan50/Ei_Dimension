@@ -9,7 +9,7 @@ namespace DIOS.Core
   public static class Verificator
   {
     private static readonly List<ValidationStats> RegionalStats = new List<ValidationStats>(50);
-    private static Dictionary<int, int> _classifiedRegionsDict = new Dictionary<int, int>();
+    private static Dictionary<int, int> _classifiedRegionsDict = new Dictionary<int, int>();  //region,index
     private static Dictionary<int, int> _unclassifiedRegionsDict = new Dictionary<int, int>();  //region,count
     private static int _highestCount = 0;
     private static int _lowestCount = int.MaxValue;
@@ -246,7 +246,7 @@ namespace DIOS.Core
       foreach (var entry in _unclassifiedRegionsDict)
       {
         _totalUnclassifiedBeads += entry.Value;
-        if (entry.Value > _highestUnclassifiedCount)
+        if (entry.Value > _highestUnclassifiedCount && entry.Key != 0)
         {
           _highestUnclassifiedCount = entry.Value;
           _highestUnclassifiedCountRegion = entry.Key;
@@ -260,7 +260,7 @@ namespace DIOS.Core
       var list = new List<MapRegion>(4);
       foreach (var p in _classifiedRegionsDict)
       {
-        list.Add(mapctroller.ActiveMap.regions[p.Key]);
+        list.Add(mapctroller.ActiveMap.regions[p.Key - 1]);
       }
 
       var idx = mapctroller.GetMapRegionIndex(_highestUnclassifiedCountRegion);
@@ -269,7 +269,7 @@ namespace DIOS.Core
         var r = mapctroller.ActiveMap.regions[idx];
         var nearestVerifRegion = r.FindNearestRegionFrom(list);
         _report.Test3NearestClassifiedCountRegion = nearestVerifRegion.Number;
-        _report.Test3NearestClassifiedCount = _classifiedRegionsDict[nearestVerifRegion.Number];
+        _report.Test3NearestClassifiedCount = RegionalStats[_classifiedRegionsDict[nearestVerifRegion.Number]].Count;
       }
       else
       {
