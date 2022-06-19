@@ -390,9 +390,11 @@ namespace Ei_Dimension
           if (VerificationViewModel.AnalyzeVerificationResults(out var errorMsg))
           {
             _ = Current.Dispatcher.BeginInvoke((Action)VerificationViewModel.VerificationSuccess);
-            return;
           }
-          Current.Dispatcher.Invoke(()=>Notification.ShowError(errorMsg, 26));
+          else
+          {
+            Current.Dispatcher.Invoke(()=>Notification.ShowError(errorMsg, 26));
+          }
           Verificator.PublishReport();
           //Notification.ShowLocalizedError(nameof(Language.Resources.Validation_Fail));
           break;

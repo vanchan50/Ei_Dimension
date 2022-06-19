@@ -64,6 +64,7 @@
     <Compile Include="Enums\SystemControl.cs" />
     <Compile Include="Enums\Termination.cs" />
     <Compile Include="FileIO\VerificationReport.cs" />
+    <Compile Include="RegionResultVolatile.cs" />
     <Compile Include="Structs\BeadEventsData.cs" />
     <Compile Include="FileIO\VerificationReportPublisher.cs" />
     <Compile Include="MapController.cs" />
@@ -82,7 +83,7 @@
     <Compile Include="InstrumentParameters\Idex.cs" />
     <Compile Include="ISerial.cs" />
     <Compile Include="Device.cs" />
-    <Compile Include="Structs\WellResults.cs" />
+    <Compile Include="Structs\MeasurementResults.cs" />
     <Compile Include="Structs\WellStats.cs" />
     <Compile Include="Structs\StatsEventArgs.cs" />
     <Compile Include="Structs\MapRegion.cs" />

@@ -13,13 +13,11 @@ namespace DIOS.Core
     private readonly Thread _prioUsbInThread;
     private readonly Thread _prioUsbOutThread;
     private readonly Device _device;
-    private readonly BeadProcessor _beadProcessor;
     private readonly RunResults _results;
 
-    public DataController(Device device, BeadProcessor beadProcessor, RunResults runResults, ISerial connection)
+    public DataController(Device device, RunResults runResults, ISerial connection)
     {
       _device = device;
-      _beadProcessor = beadProcessor;
       _results = runResults;
       _serialConnection = connection;
       if (_serialConnection.IsActive)

@@ -8,7 +8,7 @@ namespace DIOS.Core
   {
     private Device _device;
     private ICollection<int> _regionsToOutput;
-    private readonly WellResults _wellResults = new WellResults();
+    private readonly MeasurementResults _measurementResults = new MeasurementResults();
     private bool _minPerRegCheckTrigger;
     public PlateReport PlateReport { get; } = new PlateReport();
     private readonly BeadEventsData _beadEventsData = new BeadEventsData();
@@ -38,7 +38,7 @@ namespace DIOS.Core
 
     internal void MakeStats()
     {
-      var stats = new WellStats(_wellResults.Well, MakeDeepCopy());
+      var stats = new WellStats(_measurementResults.Well, MakeDeepCopy());
       PlateReport.Add(stats);
       _wellstatsData.Add(stats.ToString());
     }
@@ -47,7 +47,7 @@ namespace DIOS.Core
     {
       if (_regionsToOutput == null)
         throw new Exception("SetupRunRegions() must be called before the run");
-      _wellResults.Reset(well, _regionsToOutput);
+      _measurementResults.Reset(well, _regionsToOutput);
       _beadEventsData.Reset();
       _wellstatsData.Reset();
       _minPerRegCheckTrigger = false;
@@ -89,16 +89,16 @@ namespace DIOS.Core
 
     private void FillWellResults(in BeadInfoStruct outBead)
     {
-      var count = _wellResults.Add(in outBead);
+      var count = _measurementResults.Add(in outBead);
       //it also checks region 0, but it is only a trigger, the real check is done in MinPerRegionAchieved()
       if (!_minPerRegCheckTrigger)
         _minPerRegCheckTrigger = count == _device.MinPerRegion;  //see if assay is done via sufficient beads in each region
     }
 
-    //TODO:bad design to have it public. get rid somehow
-    public List<RegionResult> MakeDeepCopy()
+
+    public List<RegionResultVolatile> MakeDeepCopy()
     {
-      return _wellResults.GetResults();
+      return _measurementResults.GetResults();
     }
 
     /// <summary>
@@ -107,7 +107,7 @@ namespace DIOS.Core
     /// <returns>A positive number or 0, if MinPerRegions is met; otherwise returns a negative number of lacking beads</returns>
     public int MinPerRegionAchieved()
     {
-      return _wellResults.MinPerAllRegionsAchieved(_device.MinPerRegion);
+      return _measurementResults.MinPerAllRegionsAchieved(_device.MinPerRegion);
     }
 
     internal void EndOfOperationReset()

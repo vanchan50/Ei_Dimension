@@ -2,7 +2,7 @@
 
 namespace DIOS.Core.Structs
 {
-  internal class WellResults
+  internal class MeasurementResults
   {
     public Well Well { get; private set; }
     private readonly List<RegionResult> _wellResults = new List<RegionResult>();
@@ -46,19 +46,13 @@ namespace DIOS.Core.Structs
       return -1;
     }
     
-    internal List<RegionResult> GetResults()
+    internal List<RegionResultVolatile> GetResults()
     {
-      //TODO: cache previous copy per well somehow, dont make new allocation all the time
-      var copy = new List<RegionResult>(_wellResults.Count);
-      for (var i = 0; i < _wellResults.Count; i++)
+      var resultsCount = _wellResults.Count;
+      var copy = new List<RegionResultVolatile>(resultsCount);
+      for (var i = 0; i < resultsCount; i++)
       {
-        var r = new RegionResult();
-        r.regionNumber = _wellResults[i].regionNumber;
-        var count = _wellResults[i].ReporterValues.Count < RegionResult.CAPACITY ? _wellResults[i].ReporterValues.Count : RegionResult.CAPACITY;
-        for (var j = 0; j < count; j++)
-        {
-          r.ReporterValues.Add(_wellResults[i].ReporterValues[j]);
-        }
+        var r = new RegionResultVolatile(_wellResults[i]);
         copy.Add(r);
       }
       return copy;

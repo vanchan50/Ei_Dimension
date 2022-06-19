@@ -35,11 +35,11 @@ namespace Ei_Dimension.Controllers
 
     private static ActiveRegionsStatsController _instance;
     private static bool _activeRegionsUpdateGoing;
-    private static readonly List<float> NullWellResults = new List<float>(100000);
+    private static readonly RegionResultVolatile _nullWellRegionResult = new RegionResultVolatile();
 
     protected ActiveRegionsStatsController()
     {
-
+      _nullWellRegionResult.ReporterValues.Capacity = 100000;
     }
 
     public void DisplayCurrentBeadStats(bool current = true)
@@ -65,46 +65,20 @@ namespace Ei_Dimension.Controllers
       }
     }
 
-    private Action UpdateRegionsProcedure(List<RegionResult> wellresults)
+    private Action UpdateRegionsProcedure(List<RegionResultVolatile> wellResults)
     {
       return () =>
       {
         ViewModels.ResultsViewModel.Instance.CurrentAnalysis12Map.Clear();
-        foreach (var result in wellresults)
+        foreach (var result in wellResults)
         {
           var index = MapRegionsController.GetMapRegionIndex(result.regionNumber);
           if (index < 0)
             continue;
-          float avg = 0;
-          float mean = 0;
-          if (result.ReporterValues.Count == 0)
-          {
-            CurrentCount[index] = "0";
-            CurrentMean[index] = "0";
-          }
-          else
-          {
-            avg = result.ReporterValues.Average();
-            var count = result.ReporterValues.Count;
-            if (count >= 20)
-            {
-              result.ReporterValues.Sort();
-              int quarterIndex = count / 4;
+          result.MakeStats(out var count, out var mean);
 
-              float sum = 0;
-              for (var i = quarterIndex; i < count - quarterIndex; i++)
-              {
-                sum += result.ReporterValues[i];
-              }
-
-              mean = sum / (count - 2 * quarterIndex);
-            }
-            else
-              mean = avg;
-
-            CurrentCount[index] = count.ToString();
-            CurrentMean[index] = mean.ToString("0.0");
-          }
+          CurrentCount[index] = count.ToString();
+          CurrentMean[index] = mean.ToString("0.0");
 
           if (index != 0)
             Reporter3DGraphHandler(index - 1, mean); // -1 accounts for region = 0
@@ -114,51 +88,26 @@ namespace Ei_Dimension.Controllers
       };
     }
 
-    private Action UpdateNullRegionProcedure(List<RegionResult> wellresults)
+    private Action UpdateNullRegionProcedure(List<RegionResultVolatile> wellresults)
     {
       foreach (var result in wellresults)
       {
         if (result.ReporterValues.Count > 0)
         {
-          NullWellResults.InsertRange(NullWellResults.Count, result.ReporterValues);
+          _nullWellRegionResult.ReporterValues.InsertRange(_nullWellRegionResult.ReporterValues.Count, result.ReporterValues);
         }
       }
 
-      var count = NullWellResults.Count;
-      float mean = 0;
-      if (count > 0)
-      {
-        float avg = NullWellResults.Average();
-        if (count >= 20)
-        {
-          NullWellResults.Sort();
-          int quarterIndex = count / 4;
-
-          float sum = 0;
-          for (var i = quarterIndex; i < count - quarterIndex; i++)
-          {
-            sum += NullWellResults[i];
-          }
-          mean = sum / (count - 2 * quarterIndex);
-        }
-        else
-          mean = avg;
-      }
+      _nullWellRegionResult.MakeStats(out var count, out var mean);
+      _nullWellRegionResult.ReporterValues.Clear();
 
       return () =>
       {
         ViewModels.ResultsViewModel.Instance.CurrentAnalysis12Map.Clear();
-        if (count == 0)
-        {
-          CurrentCount[0] = "0";
-          CurrentMean[0] = "0";
-        }
-        else
-        {
-          CurrentCount[0] = count.ToString();
-          CurrentMean[0] = mean.ToString("0.0");
-        }
-        NullWellResults.Clear();
+
+        CurrentCount[0] = count.ToString();
+        CurrentMean[0] = mean.ToString("0.0");
+
         _activeRegionsUpdateGoing = false;
       };
     }

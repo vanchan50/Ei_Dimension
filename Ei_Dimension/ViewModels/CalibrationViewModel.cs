@@ -44,7 +44,12 @@ namespace Ei_Dimension.ViewModels
       };
       SelectedGatingIndex = 0;
       SelectedGatingContent = GatingItems[SelectedGatingIndex].Content;
-      EventTriggerContents = new ObservableCollection<string> {"", App.Device.MapCtroller.ActiveMap.calParams.minmapssc.ToString(), App.Device.MapCtroller.ActiveMap.calParams.maxmapssc.ToString()};
+      EventTriggerContents = new ObservableCollection<string>
+      {
+        "",
+        App.Device.MapCtroller.ActiveMap.calParams.minmapssc.ToString(),
+        App.Device.MapCtroller.ActiveMap.calParams.maxmapssc.ToString()
+      };
 
       ClassificationTargetsContents = new ObservableCollection<string> { "1", "1", "1", "1", "3500"};
 

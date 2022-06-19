@@ -16,6 +16,7 @@ namespace DIOS.Core
     private static int _lowestCountRegion = -1;
     private static int _highestCountRegion = -1;
     private static int _totalClassifiedBeads;
+    private static int _totalBeads;
     private static int _totalUnclassifiedBeads;
     private static int _highestUnclassifiedCount; 
     private static int _highestUnclassifiedCountRegion = -1;
@@ -40,6 +41,7 @@ namespace DIOS.Core
       _totalClassifiedBeads = 0;
       _totalUnclassifiedBeads = 0;
       _highestUnclassifiedCount = 0;
+      _totalBeads = 0;
       _highestCount = 0;
       _lowestCount = int.MaxValue;
       _lowestCountRegion = -1;
@@ -120,7 +122,8 @@ namespace DIOS.Core
         _report.Passed = false;
         return false;
       }
-      var difference = _totalUnclassifiedBeads / _totalClassifiedBeads;
+      //var difference = (double)_totalUnclassifiedBeads / _totalClassifiedBeads;     //Old technique
+      var difference = (_totalBeads - _totalClassifiedBeads) / (double)_totalBeads;
       var difPercent = difference * 100;
       if (difPercent > errorThresholdPercent)
       {
@@ -172,11 +175,6 @@ namespace DIOS.Core
         msg = msg.Remove(msg.Length - 1);
       }
 
-      if (problematicRegions.Count == 0)
-      {
-        msg = "Test3: No beads outside of Verification regions";
-      }
-
       _report.Passed = passed && _report.Passed;
       return passed;
     }
@@ -201,6 +199,7 @@ namespace DIOS.Core
     /// <param name="outbead"></param>
     internal static void FillStats(in BeadInfoStruct outbead)
     {
+      _totalBeads++;
       //if region is classified
       if (_classifiedRegionsDict.TryGetValue(outbead.region, out var index))
       {
@@ -254,7 +253,7 @@ namespace DIOS.Core
       }
       _report.Test3HighestUnclassifiedCountRegion = _highestUnclassifiedCountRegion;
       _report.Test3HighestUnclassifiedCount = _highestUnclassifiedCount;
-      _report.TotalBeads = _totalClassifiedBeads + _totalUnclassifiedBeads;
+      _report.TotalBeads = _totalBeads;
 
       //TODO: botched like crazy
       var list = new List<MapRegion>(4);

@@ -18,6 +18,7 @@ namespace Ei_Dimension.ViewModels
     {
       NormalizationFactor = new ObservableCollection<string> {""};
       NormalizationEnabled = new ObservableCollection<bool> { App.Device.IsNormalizationEnabled };
+      MainViewModel.Instance.SetNormalizationMarker(App.Device.IsNormalizationEnabled);
       Instance = this;
     }
 
@@ -104,6 +105,7 @@ namespace Ei_Dimension.ViewModels
       UserInputHandler.InputSanityCheck();
       App.Device.IsNormalizationEnabled = state;
       NormalizationEnabled[0] = state;
+      MainViewModel.Instance.SetNormalizationMarker(state);
     }
 
     public void FocusedBox(int num)

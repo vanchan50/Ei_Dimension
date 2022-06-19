@@ -491,6 +491,7 @@ namespace Ei_Dimension
               {
                 App.Device.ReporterScaling = fRes;
                 Settings.Default.ReporterScaling = fRes;
+                MainViewModel.Instance.SetScalingMarker(fRes);
                 break;
               }
             }

@@ -131,11 +131,11 @@ namespace DIOS.Core
 
       MapList[idx] = map;
       ActiveMap = MapList[idx];
-
+       
       return WriteToMap(map);
     }
 
-    public void LoadMaps()
+    public void LoadMaps()  //TODO: MapLoader class that returns specific map by it's name. no need to keep all of them in memory. that's another lib between gui and core
     {
       string path = Path.Combine(Device.RootDirectory.FullName, "Config");
       var files = Directory.GetFiles(path, "*.dmap");

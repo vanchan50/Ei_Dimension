@@ -14,7 +14,7 @@ namespace DIOS.Core.Structs
     [NonSerialized]
     private static readonly char[] Alphabet = Enumerable.Range('A', 16).Select(x => (char)x).ToArray();
 
-    public WellStats(Well well, List<RegionResult> results)
+    public WellStats(Well well, List<RegionResultVolatile> results)
     {
       _well = new Well(well);
       foreach (var regionResult in results)

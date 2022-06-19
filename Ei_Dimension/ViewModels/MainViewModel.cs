@@ -3,6 +3,7 @@ using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
 using System.Collections.ObjectModel;
 using System.Windows;
+using System.Windows.Media;
 
 namespace Ei_Dimension.ViewModels
 {
@@ -17,11 +18,18 @@ namespace Ei_Dimension.ViewModels
     public virtual ObservableCollection<string> EventCountField { get; set; }
     public virtual ObservableCollection<string> EventCountCurrent { get; set; }
     public virtual ObservableCollection<string> EventCountLocal { get; set; }
+    public virtual ObservableCollection<string> NormalizationMarkerText { get; set; }
+    public virtual ObservableCollection<string> ScalingMarkerText { get; set; }
+    public virtual Brush NormalizationMarkerColor { get; set; }
+    public virtual Brush ScalingMarkerColor { get; set; }
     public virtual Visibility EventCountVisible { get; set; }
     public virtual Visibility StartButtonsVisible { get; set; }
     public virtual Visibility ServiceVisibility { get; set; }
     public int ServiceVisibilityCheck { get; set; }
     public bool TouchControlsEnabled { get; set; }
+
+    private static Brush _activeBrush = Brushes.Green;
+    private static Brush _inactiveBrush = Brushes.Gray;
 
     public static MainViewModel Instance { get; private set; }
     private INavigationService NavigationService => this.GetService<INavigationService>();
@@ -38,6 +46,10 @@ namespace Ei_Dimension.ViewModels
       ServiceVisibility = Visibility.Hidden;
       EventCountCurrent = new ObservableCollection<string> { "0" };
       EventCountLocal = new ObservableCollection<string> { "0" };
+      NormalizationMarkerText = new ObservableCollection<string> {"Normalization is ON"};
+      ScalingMarkerText = new ObservableCollection<string> {"Scaling is 1.0"};
+      NormalizationMarkerColor = _activeBrush;
+      ScalingMarkerColor = _inactiveBrush;
       EventCountField = EventCountCurrent;
       Instance = this;
       ServiceVisibilityCheck = 0;
@@ -113,6 +125,30 @@ namespace Ei_Dimension.ViewModels
       StartButtonsVisible = Visibility.Hidden;
       EventCountVisible = Visibility.Hidden;
       NavigationService.Navigate("ServiceView", null, this);
+    }
+
+    public void SetScalingMarker(float scale)
+    {
+      if (scale >= 0.99999 && scale <= 1.00001)
+      {
+        ScalingMarkerText[0] = "Scaling is 1.0";
+        ScalingMarkerColor = _inactiveBrush;
+        return;
+      }
+      ScalingMarkerText[0] = $"Scaling is {scale:F2}";
+      ScalingMarkerColor = _activeBrush;
+    }
+
+    public void SetNormalizationMarker(bool state)
+    {
+      if (state)
+      {
+        NormalizationMarkerText[0] = "Normalization ON";
+        NormalizationMarkerColor = _activeBrush;
+        return;
+      }
+      NormalizationMarkerText[0] = "Normalization OFF";
+      NormalizationMarkerColor = _inactiveBrush;
     }
 
     public void NumpadToggleButton(System.Windows.Controls.TextBox tb)

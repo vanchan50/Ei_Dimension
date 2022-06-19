@@ -16,17 +16,19 @@ namespace Ei_Dimension.ViewModels
 
     protected ChannelsViewModel()
     {
-      Bias30Parameters = new ObservableCollection<string>();
-      Bias30Parameters.Add(App.Device.MapCtroller.ActiveMap.calgssc.ToString());
-      Bias30Parameters.Add(App.Device.MapCtroller.ActiveMap.calrpmaj.ToString());
-      Bias30Parameters.Add(App.Device.MapCtroller.ActiveMap.calrpmin.ToString());
-      Bias30Parameters.Add(App.Device.MapCtroller.ActiveMap.calcl3.ToString());
-      Bias30Parameters.Add(App.Device.MapCtroller.ActiveMap.calrssc.ToString());
-      Bias30Parameters.Add(App.Device.MapCtroller.ActiveMap.calcl1.ToString());
-      Bias30Parameters.Add(App.Device.MapCtroller.ActiveMap.calcl2.ToString());
-      Bias30Parameters.Add(App.Device.MapCtroller.ActiveMap.calvssc.ToString());
-      Bias30Parameters.Add(App.Device.MapCtroller.ActiveMap.calcl0.ToString());
-      Bias30Parameters.Add(App.Device.MapCtroller.ActiveMap.calfsc.ToString());
+      Bias30Parameters = new ObservableCollection<string>
+      {
+        App.Device.MapCtroller.ActiveMap.calgssc.ToString(),
+        App.Device.MapCtroller.ActiveMap.calrpmaj.ToString(),
+        App.Device.MapCtroller.ActiveMap.calrpmin.ToString(),
+        App.Device.MapCtroller.ActiveMap.calcl3.ToString(),
+        App.Device.MapCtroller.ActiveMap.calrssc.ToString(),
+        App.Device.MapCtroller.ActiveMap.calcl1.ToString(),
+        App.Device.MapCtroller.ActiveMap.calcl2.ToString(),
+        App.Device.MapCtroller.ActiveMap.calvssc.ToString(),
+        App.Device.MapCtroller.ActiveMap.calcl0.ToString(),
+        App.Device.MapCtroller.ActiveMap.calfsc.ToString()
+      };
       TcompBiasParameters = new ObservableCollection<string>();
       TempParameters = new ObservableCollection<string>();
       for(var i = 0; i < 10; i++)

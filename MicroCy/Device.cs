@@ -130,7 +130,7 @@ namespace DIOS.Core
       SetSystemDirectories();
       Results = new RunResults(this);
       _beadProcessor = new BeadProcessor(this);
-      _dataController = new DataController(this, _beadProcessor, Results, connection);
+      _dataController = new DataController(this, Results, connection);
       _stateMach = new StateMachine(this, true);
       Publisher = new ResultsPublisher(this);
       MapCtroller = new MapController(this);

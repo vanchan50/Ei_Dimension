@@ -140,7 +140,7 @@ namespace Ei_Dimension.ViewModels
 
     public static void VerificationSuccess()
     {
-      App.Device.MapCtroller.SaveCalVals(new DIOS.Core.MapCalParameters
+      App.Device.MapCtroller.SaveCalVals(new MapCalParameters
       {
         TempCl0 = -1,
         TempCl1 = -1,
