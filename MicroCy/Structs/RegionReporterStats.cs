@@ -4,7 +4,7 @@ using System.Linq;
 namespace DIOS.Core
 {
   [Serializable]
-  public class RegionStats
+  public class RegionReporterStats
   {
     public ushort Region;
     public int Count;
@@ -12,7 +12,7 @@ namespace DIOS.Core
     public float MeanFi;
     public float CoeffVar;
 
-    public RegionStats(RegionResult regionNumber, Well well)
+    public RegionReporterStats(RegionResult regionNumber, Well well)
     {
       Count = regionNumber.ReporterValues.Count;
       Region = regionNumber.regionNumber;

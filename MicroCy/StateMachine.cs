@@ -119,8 +119,6 @@ namespace DIOS.Core
 
     private void GetRunStatistics()
     {
-      _device._beadProcessor.CalculateGStats();
-      _device._beadProcessor.CalculateBackgroundAverages();
       _device.OnNewStatsAvailable();
     }
 

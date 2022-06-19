@@ -370,7 +370,9 @@ namespace DIOS.Core
 
     internal void OnNewStatsAvailable()
     {
-      NewStatsAvailable?.Invoke(this, new StatsEventArgs(_beadProcessor));
+      var stats = _beadProcessor.CalculateGStats();
+      var averageBackgrounds = _beadProcessor.CalculateBackgroundAverages();
+      NewStatsAvailable?.Invoke(this, new StatsEventArgs(stats, averageBackgrounds));
     }
 
     #if DEBUG

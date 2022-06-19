@@ -10,7 +10,7 @@ namespace DIOS.Core.Structs
   internal class WellStats
   {
     private readonly Well _well;
-    private readonly List<RegionStats> _results = new List<RegionStats>(101);
+    private readonly List<RegionReporterStats> _results = new List<RegionReporterStats>(101);
     [NonSerialized]
     private static readonly char[] Alphabet = Enumerable.Range('A', 16).Select(x => (char)x).ToArray();
 
@@ -19,7 +19,7 @@ namespace DIOS.Core.Structs
       _well = new Well(well);
       foreach (var regionResult in results)
       {
-        _results.Add(new RegionStats(regionResult, _well));
+        _results.Add(new RegionReporterStats(regionResult, _well));
       }
     }
 

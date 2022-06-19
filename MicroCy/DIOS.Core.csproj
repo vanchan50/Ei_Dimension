@@ -87,7 +87,7 @@
     <Compile Include="Structs\WellStats.cs" />
     <Compile Include="Structs\StatsEventArgs.cs" />
     <Compile Include="Structs\MapRegion.cs" />
-    <Compile Include="Structs\RegionStats.cs" />
+    <Compile Include="Structs\RegionReporterStats.cs" />
     <Compile Include="PlateReport.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Structs\ReadingWellEventArgs.cs" />

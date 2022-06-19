@@ -5,8 +5,6 @@ namespace DIOS.Core
 {
   internal class BeadProcessor
   {
-    internal List<Gstats> Stats { get; } = new List<Gstats>(10);
-    internal List<double> AvgBg { get; } = new List<double>(10);
     internal int SavBeadCount { get; set; }
     private byte _actPrimaryIndex;
     private byte _actSecondaryIndex;
@@ -75,9 +73,10 @@ namespace DIOS.Core
       }
     }
 
-    public void CalculateBackgroundAverages()
+    public List<double> CalculateBackgroundAverages()
     {
-      AvgBg.Clear();
+      var AvgBg  = new List<double>(10);
+
       var Count = SavBeadCount > 80000 ? 80000 : SavBeadCount;
       for (int i = 0; i < 10; i++)
       {
@@ -90,6 +89,8 @@ namespace DIOS.Core
         var avg = sum / Count;
         AvgBg.Add(avg);
       }
+
+      return AvgBg;
     }
 
     public void FillCalibrationStatsRow(in BeadInfoStruct outbead)
@@ -109,34 +110,35 @@ namespace DIOS.Core
       }
     }
 
-    public void CalculateGStats()
+    public List<Gstats> CalculateGStats()
     {
-      Stats.Clear();
+      var Stats  = new List<Gstats>(10);
+
       var Count = SavBeadCount > 80000 ? 80000 : SavBeadCount;
       for (int i = 0; i < 10; i++)
       {
-        double sumit = 0;
+        double avgSum = 0;
         for (int beads = 0; beads < Count; beads++)
         {
-          sumit += Sfi[beads, i];
+          avgSum += Sfi[beads, i];
         }
-        double robustcnt = Count; //start with total bead count
-        double mean = sumit / robustcnt;
+        double avg = avgSum / Count;
         //find high and low bounds
-        double min = mean * 0.5;
-        double max = mean * 2;
-        sumit = 0;
+        double min = avg * 0.5;
+        double max = avg * 2;
+        var boundCount = Count; //start with total bead count
+        double meanSum = 0;
         for (int beads = 0; beads < Count; beads++)
         {
           if ((Sfi[beads, i] > min) && (Sfi[beads, i] < max))
-            sumit += Sfi[beads, i];
+            meanSum += Sfi[beads, i];
           else
           {
             Sfi[beads, i] = 0;
-            robustcnt--;
+            boundCount--;
           }
         }
-        mean = sumit / robustcnt;
+        var mean = meanSum / boundCount;
         double sumsq = 0;
         for (int beads = 0; beads < Count; beads++)
         {
@@ -144,7 +146,7 @@ namespace DIOS.Core
             continue;
           sumsq += Math.Pow(mean - Sfi[beads, i], 2);
         }
-        double stdDev = Math.Sqrt(sumsq / (robustcnt - 1));
+        double stdDev = Math.Sqrt(sumsq / (boundCount - 1));
 
         double gcv = (stdDev / mean) * 100;
         if (double.IsNaN(gcv))
@@ -155,6 +157,8 @@ namespace DIOS.Core
           cv = gcv
         });
       }
+
+      return Stats;
     }
 
     public void ConstructClassificationMap(CustomMap cMap)
