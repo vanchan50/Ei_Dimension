@@ -51,5 +51,10 @@ namespace Ei_Dimension.Models
       _targetReporterValue = new ObservableCollection<string> { "" };
       _mfiValue = new ObservableCollection<string> { "" };
     }
+
+    public string GetLegacyHeader()
+    {
+      return $"{Name[0]} ({NumberString})";
+    }
   }
 }

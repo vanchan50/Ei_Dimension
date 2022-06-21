@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -55,6 +56,21 @@ namespace Ei_Dimension.Controllers
       _validationTableController = new ValidationTableController(this, Validat_Num, Validat_Reporter);
       _normalizationTableController = new NormalizationTableController(this, Normaliz_Num, Normaliz_MFI);
       FillRegions();
+    }
+
+    public static string GetLegacyReportHeader()
+    {
+      var bldr = new StringBuilder();
+      bldr.Append("\"Location\",");
+      bldr.Append("\"Sample\",");
+      foreach (var region in RegionsList)
+      {
+        if(ActiveRegionNums.Contains(region.Number))
+          bldr.Append($"\"{region.GetLegacyHeader()}\",");
+      }
+      bldr.Append("\"Total Events\",");
+      bldr.Append("\"Notes\"");
+      return bldr.ToString();
     }
 
     public void FillRegions(bool loadByPage = false)

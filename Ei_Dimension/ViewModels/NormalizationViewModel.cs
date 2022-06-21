@@ -31,9 +31,12 @@ namespace Ei_Dimension.ViewModels
     {
       var idx = App.Device.MapCtroller.MapList.FindIndex(x => x.mapName == App.Device.MapCtroller.ActiveMap.mapName);
       var map = App.Device.MapCtroller.MapList[idx];
-      for (var i = 0; i < map.regions.Count; i++)
+      foreach (var regionData in MapRegionsController.RegionsList)
       {
-        MapRegionsController.RegionsList[i + 1].MFIValue[0] = map.regions[i].NormalizationMFI.ToString();
+        if (map.Regions.TryGetValue(regionData.Number, out var region))
+        {
+          regionData.MFIValue[0] = region.NormalizationMFI.ToString();
+        }
       }
     }
 
@@ -67,9 +70,10 @@ namespace Ei_Dimension.ViewModels
     {
       var idx = App.Device.MapCtroller.MapList.FindIndex(x => x.mapName == App.Device.MapCtroller.ActiveMap.mapName);
       var map = App.Device.MapCtroller.MapList[idx];
-      for (var i = 0; i < map.regions.Count; i++)
+
+      foreach (var regionData in MapRegionsController.RegionsList)
       {
-        MapRegionsController.RegionsList[i + 1].MFIValue[0] = 0.ToString();
+        regionData.MFIValue[0] = 0.ToString();
       }
     }
 
@@ -97,7 +101,15 @@ namespace Ei_Dimension.ViewModels
         return;
       }
       Notification.Show("Normalization Data is Saved To Map");
-      App.Device.MapCtroller.SaveNormVals(double.Parse(NormalizationFactor[0]));
+
+      try
+      {
+        App.Device.MapCtroller.SaveNormVals(double.Parse(NormalizationFactor[0]));
+      }
+      catch (ArgumentException e)
+      {
+        Notification.ShowError(e.Message);
+      }
     }
 
     public void CheckedBox(bool state)

@@ -195,8 +195,7 @@ namespace DIOS.Core
     {
       if (outbead.region == 0)
         return;
-      var idx = _device.MapCtroller.GetMapRegionIndex(outbead.region);
-      var rep = (float)(_device.MapCtroller.ActiveMap.factor * _device.MapCtroller.ActiveMap.regions[idx].NormalizationMFI);
+      var rep = (float)(_device.MapCtroller.ActiveMap.factor * _device.MapCtroller.ActiveMap.Regions[outbead.region].NormalizationMFI);
       outbead.reporter -= rep;
       outbead.reporter = outbead.reporter >= 0 ? outbead.reporter : 0;
     }

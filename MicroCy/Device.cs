@@ -133,7 +133,7 @@ namespace DIOS.Core
       _dataController = new DataController(this, Results, connection);
       _stateMach = new StateMachine(this, true);
       Publisher = new ResultsPublisher(this);
-      MapCtroller = new MapController(this);
+      MapCtroller = new MapController();
       SelfTester = new SelfTester(this);
       MainCommand("Sync");
       TotalBeads = 0;
@@ -356,6 +356,7 @@ namespace DIOS.Core
     internal void OnFinishedMeasurement()
     {
       IsMeasurementGoing = false;
+      Results.PlateReport.completedDateTime = DateTime.Now;
       _ = Task.Run(() => { Publisher.OutputPlateReport(); });
       Results.EndOfOperationReset();
       MainCommand("Set Property", code: 0x19);  //bubble detect off

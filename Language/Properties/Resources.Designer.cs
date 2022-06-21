@@ -1763,6 +1763,15 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Output Legacy plate report (csv).
+        /// </summary>
+        public static string FileSave_Legacy_Report {
+            get {
+                return ResourceManager.GetString("FileSave_Legacy_Report", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Output Files.
         /// </summary>
         public static string FileSave_Output_Files {

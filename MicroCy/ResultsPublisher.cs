@@ -14,11 +14,11 @@ namespace DIOS.Core
     public string WorkOrderPath { get; set; }
     internal string FullBeadEventFileName { get; private set; }
 
-    private string Date
+    public string Date
     {
       get
       {
-        return DateTime.Now.ToString("dd.MM.yyyy.hh-mm-ss", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"));
+        return DateTime.Now.ToString("dd.MM.yyyy.HH-mm-ss", System.Globalization.CultureInfo.CreateSpecificCulture("en-GB"));
       }
     }
 

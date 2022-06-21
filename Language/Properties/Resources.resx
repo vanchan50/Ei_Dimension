@@ -715,6 +715,9 @@ Order</value>
   <data name="FileSave_JSON_To_Results" xml:space="preserve">
     <value>JSON Results File</value>
   </data>
+  <data name="FileSave_Legacy_Report" xml:space="preserve">
+    <value>Output Legacy plate report (csv)</value>
+  </data>
   <data name="FileSave_Output_Files" xml:space="preserve">
     <value>Output Files</value>
   </data>

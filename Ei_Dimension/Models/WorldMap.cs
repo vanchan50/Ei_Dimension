@@ -57,11 +57,11 @@ namespace Ei_Dimension.Models
     public void InitMaps()
     {
       ClearMaps();
-      foreach (var region in App.Device.MapCtroller.ActiveMap.regions)
+      foreach (var region in App.Device.MapCtroller.ActiveMap.Regions)
       {
-        foreach (var point in region.Points)
+        foreach (var point in region.Value.Points)
         {
-          Map12.Add(new HeatMapData((int)HeatMapData.bins[point.x], (int)HeatMapData.bins[point.y], region.Number));
+          Map12.Add(new HeatMapData((int)HeatMapData.bins[point.x], (int)HeatMapData.bins[point.y], region.Key));
         }
       }
     }

@@ -382,5 +382,17 @@ namespace Ei_Dimension {
                 this["ValidatorToleranceMisclassification"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool LegacyPlateReport {
+            get {
+                return ((bool)(this["LegacyPlateReport"]));
+            }
+            set {
+                this["LegacyPlateReport"] = value;
+            }
+        }
     }
 }

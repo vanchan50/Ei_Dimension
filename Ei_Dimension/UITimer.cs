@@ -46,28 +46,31 @@ namespace Ei_Dimension
     #if DEBUG
     private static void JKBeadADD()
     {
-      App.Current.Dispatcher.Invoke(() => {
+      var r = new Random();
+      App.Current.Dispatcher.Invoke(() => { 
         var kek = new BeadInfoStruct
         {
           Header = 0xadbeadbe,
           fsc = 2.36f,
-          cl1 = 13400.1632f,
-          region = 4
+          cl1 = r.Next(1450,1700),
+          cl2 = r.Next(1500, 1650),
+          reporter = 48950.936f,
         };
         var pek = new BeadInfoStruct
         {
           Header = 0xadbeadbe,
           fsc = 15.82f,
-          cl1 = 1000f,
-          region = 5
+          cl1 = 500f,
+          cl2 = 500f,
+          reporter = 98212.1456f,
         };
         if (System.Windows.Input.Keyboard.IsKeyDown(System.Windows.Input.Key.J))
         {
-          //App.Device.Results.AddBeadEvent(ref kek);
+          App.Device.Results.AddBeadEvent(ref kek);
         }
         if (System.Windows.Input.Keyboard.IsKeyDown(System.Windows.Input.Key.K))
         {
-          //App.Device.Results.AddBeadEvent(ref pek);
+          App.Device.Results.AddBeadEvent(ref pek);
         }
       });
     }

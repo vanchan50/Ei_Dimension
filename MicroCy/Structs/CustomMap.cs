@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace DIOS.Core
 {
-  [Serializable]
+  [JsonObject(MemberSerialization.Fields)]
   public class CustomMap
   {
     public string mapName;
@@ -26,9 +26,20 @@ namespace DIOS.Core
     public bool validation;
     public double factor;
     public CalParams calParams;
+
     public List<MapRegion> regions;
     //public List<(int x, int y, int r)> classificationMap; //contains coords in 256x256 space for region numbers
     //can contain up to 6 classimaps (01,02,03,12,13,23) if necessary. possibility left for the future
+    [JsonIgnore]
+    public SortedDictionary<int,MapRegion> Regions { get; private set; }
 
+    public void Init()
+    {
+      Regions = new SortedDictionary<int, MapRegion>();
+      foreach (var region in regions)
+      {
+        Regions.Add(region.Number, region);
+      }
+    }
   }
 }

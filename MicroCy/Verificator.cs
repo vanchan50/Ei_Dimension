@@ -262,11 +262,9 @@ namespace DIOS.Core
         list.Add(mapctroller.ActiveMap.regions[p.Key - 1]);
       }
 
-      var idx = mapctroller.GetMapRegionIndex(_highestUnclassifiedCountRegion);
-      if (idx >= 0)
+      if (mapctroller.ActiveMap.Regions.TryGetValue(_highestUnclassifiedCountRegion, out var mapRegion))
       {
-        var r = mapctroller.ActiveMap.regions[idx];
-        var nearestVerifRegion = r.FindNearestRegionFrom(list);
+        var nearestVerifRegion = mapRegion.FindNearestRegionFrom(list);
         _report.Test3NearestClassifiedCountRegion = nearestVerifRegion.Number;
         _report.Test3NearestClassifiedCount = RegionalStats[_classifiedRegionsDict[nearestVerifRegion.Number]].Count;
       }

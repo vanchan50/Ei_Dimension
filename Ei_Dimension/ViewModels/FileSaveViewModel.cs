@@ -30,6 +30,7 @@ namespace Ei_Dimension.ViewModels
         Settings.Default.OnlyClassifed,
         false,
         false,
+        Settings.Default.LegacyPlateReport,
         true
       };
       Instance = this;
@@ -116,6 +117,10 @@ namespace Ei_Dimension.ViewModels
         case 5:
           break;
         case 6:
+          App.MakeLegacyPlateReport = Checkboxes[num];
+          Settings.Default.LegacyPlateReport = Checkboxes[num];
+          break;
+        case 7:
           if (Checkboxes[num])
             App.SetLogOutput();
           else
