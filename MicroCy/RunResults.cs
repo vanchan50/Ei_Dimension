@@ -53,7 +53,7 @@ namespace DIOS.Core
       _minPerRegCheckTrigger = false;
     }
 
-    public void AddBeadEvent(ref BeadInfoStruct beadInfo)
+    internal void AddBeadEvent(ref BeadInfoStruct beadInfo)
     {
       _device.BeadCount++;
       _device.TotalBeads++;

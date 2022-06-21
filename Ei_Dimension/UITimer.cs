@@ -54,7 +54,8 @@ namespace Ei_Dimension
           fsc = 2.36f,
           cl1 = r.Next(1450,1700),
           cl2 = r.Next(1500, 1650),
-          reporter = 48950.936f,
+          greenB = (ushort)r.Next(9, 12),
+          greenC = 48950
         };
         var pek = new BeadInfoStruct
         {
@@ -62,15 +63,16 @@ namespace Ei_Dimension
           fsc = 15.82f,
           cl1 = 500f,
           cl2 = 500f,
-          reporter = 98212.1456f,
+          greenB = (ushort)r.Next(80,150),
+          greenC = 65212
         };
         if (System.Windows.Input.Keyboard.IsKeyDown(System.Windows.Input.Key.J))
         {
-          App.Device.Results.AddBeadEvent(ref kek);
+          //App.Device.Results.AddBeadEvent(ref kek);
         }
         if (System.Windows.Input.Keyboard.IsKeyDown(System.Windows.Input.Key.K))
         {
-          App.Device.Results.AddBeadEvent(ref pek);
+          //App.Device.Results.AddBeadEvent(ref pek);
         }
       });
     }

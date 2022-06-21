@@ -408,11 +408,10 @@ namespace Ei_Dimension.ViewModels
     {
       foreach (var result in BackingWResults)
       {
-        var RegionIndex = App.Device.MapCtroller.ActiveMap.regions.FindIndex(r => r.Number == result.regionNumber);
-        if (RegionIndex != -1)
+        if (App.Device.MapCtroller.ActiveMap.Regions.TryGetValue(result.regionNumber, out var region))
         {
-          var x = HeatMapData.bins[App.Device.MapCtroller.ActiveMap.regions[RegionIndex].Center.x];
-          var y = HeatMapData.bins[App.Device.MapCtroller.ActiveMap.regions[RegionIndex].Center.y];
+          var x = HeatMapData.bins[region.Center.x];
+          var y = HeatMapData.bins[region.Center.y];
           lock (BackingAnalysis12Map)
           {
             if (result.ReporterValues.Count > 0)

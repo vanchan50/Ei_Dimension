@@ -259,7 +259,7 @@ namespace DIOS.Core
       var list = new List<MapRegion>(4);
       foreach (var p in _classifiedRegionsDict)
       {
-        list.Add(mapctroller.ActiveMap.regions[p.Key - 1]);
+        list.Add(mapctroller.ActiveMap.Regions[p.Key]);
       }
 
       if (mapctroller.ActiveMap.Regions.TryGetValue(_highestUnclassifiedCountRegion, out var mapRegion))

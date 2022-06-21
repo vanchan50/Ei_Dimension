@@ -167,11 +167,11 @@ namespace DIOS.Core
       _actSecondaryIndex = (byte)cMap.loworderidx;
       Array.Clear(_classificationMap, 0, _classificationMap.Length);
       
-      foreach (var region in cMap.regions)
+      foreach (var region in cMap.Regions)
       {
-        foreach (var point in region.Points)
+        foreach (var point in region.Value.Points)
         {
-          _classificationMap[point.x, point.y] = region.Number;
+          _classificationMap[point.x, point.y] = region.Key;
         }
       }
     }
