@@ -56,7 +56,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BackgroundStats.cs" />
     <Compile Include="BeadProcessor.cs" />
+    <Compile Include="CalibrationStats.cs" />
     <Compile Include="DataController.cs" />
     <Compile Include="Enums\Gate.cs" />
     <Compile Include="Enums\HiSensitivityChannel.cs" />
@@ -64,7 +66,9 @@
     <Compile Include="Enums\SystemControl.cs" />
     <Compile Include="Enums\Termination.cs" />
     <Compile Include="FileIO\VerificationReport.cs" />
-    <Compile Include="RegionResultVolatile.cs" />
+    <Compile Include="RegionReporterResultVolatile.cs" />
+    <Compile Include="StatisticsExtension.cs" />
+    <Compile Include="StatsAccumulator.cs" />
     <Compile Include="Structs\BeadEventsData.cs" />
     <Compile Include="FileIO\VerificationReportPublisher.cs" />
     <Compile Include="MapController.cs" />
@@ -77,9 +81,9 @@
     <Compile Include="Structs\CustomMap.cs" />
     <Compile Include="Structs\BeadInfoStruct.cs" />
     <Compile Include="CommandLists.cs" />
+    <Compile Include="Structs\DistributionStats.cs" />
     <Compile Include="Structs\MapCalParameters.cs" />
     <Compile Include="Structs\CommandStruct.cs" />
-    <Compile Include="Structs\Gstats.cs" />
     <Compile Include="InstrumentParameters\Idex.cs" />
     <Compile Include="ISerial.cs" />
     <Compile Include="Device.cs" />
@@ -96,7 +100,7 @@
     <Compile Include="ValidationStats.cs" />
     <Compile Include="Verificator.cs" />
     <Compile Include="WellController.cs" />
-    <Compile Include="RegionResult.cs" />
+    <Compile Include="RegionReporterResult.cs" />
     <Compile Include="Structs\Well.cs" />
     <Compile Include="Structs\WorkOrder.cs" />
   </ItemGroup>

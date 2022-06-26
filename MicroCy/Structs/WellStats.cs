@@ -18,7 +18,7 @@ namespace DIOS.Core.Structs
     [JsonIgnore]
     private static readonly char[] Alphabet = Enumerable.Range('A', 16).Select(x => (char)x).ToArray();
 
-    public WellStats(Well well, List<RegionResultVolatile> results, int totalBeadCount)
+    public WellStats(Well well, List<RegionReporterResultVolatile> results, int totalBeadCount)
     {
       _well = new Well(well);
       foreach (var regionResult in results)
@@ -50,7 +50,7 @@ namespace DIOS.Core.Structs
       var bldr = new StringBuilder();
       var row = Alphabet[_well.RowIdx].ToString();
       var col = _well.ColIdx + 1; //columns are 1 based
-      bldr.AppendLine($"Well {row}{col}:"); 
+      bldr.AppendLine($"Well {row}{col}:");
       foreach (var result in _results)
       {
         bldr.AppendLine(result.ToString());

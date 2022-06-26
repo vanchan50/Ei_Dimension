@@ -3,7 +3,7 @@ using System.Text;
 
 namespace DIOS.Core
 {
-  internal class BeadEventsData
+  public class BeadEventsData
   {
     private readonly List<BeadInfoStruct> _list = new List<BeadInfoStruct>(500000);
     private readonly StringBuilder _dataOut = new StringBuilder();

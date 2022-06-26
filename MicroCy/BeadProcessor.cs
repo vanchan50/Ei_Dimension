@@ -11,9 +11,7 @@ namespace DIOS.Core
     private float _greenMin;
     private float _greenMaj;
     private static readonly double[] ClassificationBins;
-    private readonly float[,] Sfi = new float[80000, 10];
     private int[,] _classificationMap = new int[CLASSIFICATIONMAPSIZE, CLASSIFICATIONMAPSIZE];
-    private ushort[,] _bgValues = new ushort[10, 80000];
     private Device _device;
     private const int CLASSIFICATIONMAPSIZE = 256;
 
@@ -44,7 +42,7 @@ namespace DIOS.Core
       //each well can have a different  classification map
       outbead.cl1 = cl.cl1;
       outbead.cl2 = cl.cl2;
-      outbead.fsc = (float)Math.Pow(10, outbead.fsc);
+      //outbead.fsc = (float)Math.Pow(10, outbead.fsc);
       var reg = (ushort)ClassifyBeadToRegion(cl);
       outbead.region = reg;
       //handle HI dnr channel
@@ -54,111 +52,6 @@ namespace DIOS.Core
       {
         NormalizeReporter(ref outbead);
       }
-    }
-
-    public void FillBackgroundAverages(in BeadInfoStruct outbead)
-    {
-      if (_device.BeadCount < 80000)
-      {
-        _bgValues[0, _device.BeadCount] = outbead.gssc_bg;
-        _bgValues[1, _device.BeadCount] = outbead.greenB_bg;
-        _bgValues[2, _device.BeadCount] = outbead.greenC_bg;
-        _bgValues[3, _device.BeadCount] = outbead.cl3_bg;
-        _bgValues[4, _device.BeadCount] = outbead.rssc_bg;
-        _bgValues[5, _device.BeadCount] = outbead.cl1_bg;
-        _bgValues[6, _device.BeadCount] = outbead.cl2_bg;
-        _bgValues[7, _device.BeadCount] = outbead.vssc_bg;
-        _bgValues[8, _device.BeadCount] = outbead.cl0_bg;
-        _bgValues[9, _device.BeadCount] = outbead.fsc_bg;
-      }
-    }
-
-    public List<double> CalculateBackgroundAverages()
-    {
-      var AvgBg  = new List<double>(10);
-
-      var Count = SavBeadCount > 80000 ? 80000 : SavBeadCount;
-      for (int i = 0; i < 10; i++)
-      {
-        double sum = 0;
-
-        for (int j = 0; j < Count; j++)
-        {
-          sum += _bgValues[i, j];
-        }
-        var avg = sum / Count;
-        AvgBg.Add(avg);
-      }
-
-      return AvgBg;
-    }
-
-    public void FillCalibrationStatsRow(in BeadInfoStruct outbead)
-    {
-      if (_device.BeadCount < 80000)
-      {
-        Sfi[_device.BeadCount, 0] = outbead.greenssc;
-        Sfi[_device.BeadCount, 1] = outbead.greenB;
-        Sfi[_device.BeadCount, 2] = outbead.greenC;
-        Sfi[_device.BeadCount, 3] = outbead.redssc;
-        Sfi[_device.BeadCount, 4] = outbead.cl1;
-        Sfi[_device.BeadCount, 5] = outbead.cl2;
-        Sfi[_device.BeadCount, 6] = outbead.cl3;
-        Sfi[_device.BeadCount, 7] = outbead.violetssc;
-        Sfi[_device.BeadCount, 8] = outbead.cl0;
-        Sfi[_device.BeadCount, 9] = outbead.fsc;
-      }
-    }
-
-    public List<Gstats> CalculateGStats()
-    {
-      var Stats  = new List<Gstats>(10);
-
-      var Count = SavBeadCount > 80000 ? 80000 : SavBeadCount;
-      for (int i = 0; i < 10; i++)
-      {
-        double avgSum = 0;
-        for (int beads = 0; beads < Count; beads++)
-        {
-          avgSum += Sfi[beads, i];
-        }
-        double avg = avgSum / Count;
-        //find high and low bounds
-        double min = avg * 0.5;
-        double max = avg * 2;
-        var boundCount = Count; //start with total bead count
-        double meanSum = 0;
-        for (int beads = 0; beads < Count; beads++)
-        {
-          if ((Sfi[beads, i] > min) && (Sfi[beads, i] < max))
-            meanSum += Sfi[beads, i];
-          else
-          {
-            Sfi[beads, i] = 0;
-            boundCount--;
-          }
-        }
-        var mean = meanSum / boundCount;
-        double sumsq = 0;
-        for (int beads = 0; beads < Count; beads++)
-        {
-          if (Sfi[beads, i] == 0)
-            continue;
-          sumsq += Math.Pow(mean - Sfi[beads, i], 2);
-        }
-        double stdDev = Math.Sqrt(sumsq / (boundCount - 1));
-
-        double gcv = (stdDev / mean) * 100;
-        if (double.IsNaN(gcv))
-          gcv = 0;
-        Stats.Add(new Gstats
-        {
-          mfi = mean,
-          cv = gcv
-        });
-      }
-
-      return Stats;
     }
 
     public void ConstructClassificationMap(CustomMap cMap)

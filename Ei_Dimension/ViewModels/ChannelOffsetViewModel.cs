@@ -108,6 +108,20 @@ namespace Ei_Dimension.ViewModels
       App.Device.MainCommand("RefreshDac");
     }
 
+    public void DecodeBackgroundStats(BackgroundStats Stats)
+    {
+      AverageBg[0] = Stats.Greenssc.ToString($"{0:0.00}");
+      AverageBg[1] = Stats.GreenB.ToString($"{0:0.00}");
+      AverageBg[2] = Stats.GreenC.ToString($"{0:0.00}");
+      AverageBg[3] = Stats.Cl3.ToString($"{0:0.00}");
+      AverageBg[4] = Stats.Redssc.ToString($"{0:0.00}");
+      AverageBg[5] = Stats.Cl1.ToString($"{0:0.00}");
+      AverageBg[6] = Stats.Cl2.ToString($"{0:0.00}");
+      AverageBg[7] = Stats.Violetssc.ToString($"{0:0.00}");
+      AverageBg[8] = Stats.Cl0.ToString($"{0:0.00}");
+      AverageBg[9] = Stats.Fsc.ToString($"{0:0.00}");
+    }
+
     public void FocusedBox(int num)
     {
       var Stackpanel = Views.ChannelOffsetView.Instance.SP.Children;

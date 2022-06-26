@@ -89,7 +89,7 @@ namespace Ei_Dimension.ViewModels
       };
       Action Save = () =>
       {
-        var res = App.Device.MapCtroller.SaveCalVals(new DIOS.Core.MapCalParameters
+        var res = App.Device.MapCtroller.SaveCalVals(new MapCalParameters
         {
           TempCl0 = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[8]),
           TempCl1 = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[5]),

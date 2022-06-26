@@ -7,7 +7,7 @@ namespace DIOS.Core
   {
     public int Region { get; }
     internal double InputReporter { get; }
-    public List<Gstats> Stats { get; } = new List<Gstats>(3);
+    public List<DistributionStats> Stats { get; } = new List<DistributionStats>(3);
     public int Count { get; private set; }
     private readonly float[,] _sfi = new float[100000, 3];
 
@@ -63,10 +63,10 @@ namespace DIOS.Core
         double gcv = (stddev / mean) * 100;
         if (double.IsNaN(gcv))
           gcv = 0;
-        Stats.Add(new Gstats
+        Stats.Add(new DistributionStats()
         {
-          mfi = mean,
-          cv = gcv
+          Mean = (float)mean,
+          CoeffVar = (float)gcv
         });
       }
     }

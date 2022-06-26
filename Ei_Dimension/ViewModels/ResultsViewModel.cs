@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using DIOS.Core;
 using Ei_Dimension.Controllers;
 
 namespace Ei_Dimension.ViewModels
@@ -35,7 +36,7 @@ namespace Ei_Dimension.ViewModels
     public virtual ObservableCollection<DoubleHeatMapData> BackingAnalysis12Map { get; set; }
     public virtual ObservableCollection<DoubleHeatMapData> BackingAnalysis13Map { get; set; }
     public virtual ObservableCollection<DoubleHeatMapData> BackingAnalysis23Map { get; set; }
-    public List<DIOS.Core.RegionResult> BackingWResults { get; set; }
+    public List<DIOS.Core.RegionReporterResult> BackingWResults { get; set; }
     public virtual DrawingPlate PlatePictogram { get; set; }
     public virtual System.Windows.Visibility Buttons384Visible { get; set; }
     public virtual System.Windows.Visibility LeftLabel384Visible { get; set; }
@@ -115,7 +116,7 @@ namespace Ei_Dimension.ViewModels
       BackingAnalysis12Map = new ObservableCollection<DoubleHeatMapData>();
       BackingAnalysis13Map = new ObservableCollection<DoubleHeatMapData>();
       BackingAnalysis23Map = new ObservableCollection<DoubleHeatMapData>();
-      BackingWResults = new List<DIOS.Core.RegionResult>();
+      BackingWResults = new List<DIOS.Core.RegionReporterResult>();
 
       DisplayedAnalysisMap = CurrentAnalysis12Map;
 
@@ -390,6 +391,39 @@ namespace Ei_Dimension.ViewModels
       });
     }
 
+    public void DecodeCalibrationStats(CalibrationStats stats)
+    {
+      CurrentMfiItems[0] = stats.Greenssc.Mean.ToString($"{0:0.0}");
+      CurrentCvItems[0] = stats.Greenssc.CoeffVar.ToString($"{0:0.00}");
+
+      CurrentMfiItems[1] = stats.GreenB.Mean.ToString($"{0:0.0}");
+      CurrentCvItems[1] = stats.GreenB.CoeffVar.ToString($"{0:0.00}");
+
+      CurrentMfiItems[2] = stats.GreenC.Mean.ToString($"{0:0.0}");
+      CurrentCvItems[2] = stats.GreenC.CoeffVar.ToString($"{0:0.00}");
+
+      CurrentMfiItems[3] = stats.Redssc.Mean.ToString($"{0:0.0}");
+      CurrentCvItems[3] = stats.Redssc.CoeffVar.ToString($"{0:0.00}");
+
+      CurrentMfiItems[4] = stats.Cl1.Mean.ToString($"{0:0.0}");
+      CurrentCvItems[4] = stats.Cl1.CoeffVar.ToString($"{0:0.00}");
+
+      CurrentMfiItems[5] = stats.Cl2.Mean.ToString($"{0:0.0}");
+      CurrentCvItems[5] = stats.Cl2.CoeffVar.ToString($"{0:0.00}");
+
+      CurrentMfiItems[6] = stats.Cl3.Mean.ToString($"{0:0.0}");
+      CurrentCvItems[6] = stats.Cl3.CoeffVar.ToString($"{0:0.00}");
+
+      CurrentMfiItems[7] = stats.Violetssc.Mean.ToString($"{0:0.0}");
+      CurrentCvItems[7] = stats.Violetssc.CoeffVar.ToString($"{0:0.00}");
+
+      CurrentMfiItems[8] = stats.Cl0.Mean.ToString($"{0:0.0}");
+      CurrentCvItems[8] = stats.Cl0.CoeffVar.ToString($"{0:0.00}");
+
+      CurrentMfiItems[9] = stats.Fsc.Mean.ToString($"{0:0.0}");
+      CurrentCvItems[9] = stats.Fsc.CoeffVar.ToString($"{0:0.00}");
+    }
+
     private void InitBackingWellResults()
     {
       BackingWResults.Clear();
@@ -399,7 +433,7 @@ namespace Ei_Dimension.ViewModels
         {
           if(reg == 0)
             continue;
-          BackingWResults.Add(new DIOS.Core.RegionResult { regionNumber = (ushort)reg });
+          BackingWResults.Add(new DIOS.Core.RegionReporterResult { regionNumber = (ushort)reg });
         }
       }
     }

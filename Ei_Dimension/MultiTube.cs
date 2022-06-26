@@ -1,10 +1,5 @@
 ﻿using Ei_Dimension.ViewModels;
 using DIOS.Core;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Ei_Dimension
 {
@@ -14,7 +9,7 @@ namespace Ei_Dimension
     private static byte _multiTubeCol;
     public static void GetModifiedWellIndexes(ReadingWellEventArgs e, out byte row, out byte col, bool proceed = false)
     {
-      if (WellsSelectViewModel.Instance.CurrentTableSize == 1)
+      if (isATube())
       {
         row = _multiTubeRow;
         col = _multiTubeCol;  //calc for case 96 to reset position
@@ -22,30 +17,66 @@ namespace Ei_Dimension
           Proceed();
         return;
       }
-      //clear drawingboard if just switched to multitube!!! //DrawingPlate.MultitubeOverrideReset switchflip jsut for that
+      //clear drawingboard if just switched to multitube!!! //DrawingPlate._multitubeOverrideReset switchflip jsut for that
       row = e.Row;
       col = e.Column;
+      Reset();
     }
 
     private static void Proceed()
     {
-      if (WellsSelectViewModel.Instance.CurrentTableSize != 1)
+      if (!isATube())
         return;
 
-      if (_multiTubeCol == 11 && _multiTubeRow == 7)
+      if (isLastWellFilled())
       {
-        _multiTubeCol = 0;
-        _multiTubeRow = 0;
+        Reset();
         return;
       }
 
-      if (_multiTubeCol < 11)
-        _multiTubeCol++;
+      GoToNext();
+    }
+
+    private static void GoToNext()
+    {
+      if (!isLastColumn())
+        GoToNextColumn();
       else
       {
-        _multiTubeCol = 0;
-        _multiTubeRow++;
+        GoToNextRow();
       }
+    }
+
+    private static void GoToNextColumn()
+    {
+      _multiTubeCol++;
+    }
+
+    private static void GoToNextRow()
+    {
+      _multiTubeCol = 0;
+      _multiTubeRow++;
+    }
+
+    private static bool isATube()
+    {
+      return WellsSelectViewModel.Instance.CurrentTableSize == 1;
+    }
+
+    private static void Reset()
+    {
+      _multiTubeCol = 0;
+      _multiTubeRow = 0;
+    }
+
+    private static bool isLastWellFilled()
+    {
+      return _multiTubeCol == 11 && _multiTubeRow == 7;
+    }
+
+    private static bool isLastColumn()
+    {
+      return _multiTubeCol >= 11;
     }
   }
 }

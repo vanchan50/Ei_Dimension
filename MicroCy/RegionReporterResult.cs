@@ -5,7 +5,7 @@ using System.Linq;
 namespace DIOS.Core
 {
   [Serializable]
-  public class RegionResult
+  public class RegionReporterResult
   {
     public ushort regionNumber;
     public List<float> ReporterValues = new List<float>(CAPACITY);

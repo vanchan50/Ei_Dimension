@@ -371,8 +371,8 @@ namespace DIOS.Core
 
     internal void OnNewStatsAvailable()
     {
-      var stats = _beadProcessor.CalculateGStats();
-      var averageBackgrounds = _beadProcessor.CalculateBackgroundAverages();
+      var stats = Results.MeasurementResults.GetStats();
+      var averageBackgrounds = Results.MeasurementResults.GetBackgroundAverages();
       NewStatsAvailable?.Invoke(this, new StatsEventArgs(stats, averageBackgrounds));
     }
 

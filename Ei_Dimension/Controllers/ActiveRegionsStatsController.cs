@@ -35,7 +35,7 @@ namespace Ei_Dimension.Controllers
 
     private static ActiveRegionsStatsController _instance;
     private static bool _activeRegionsUpdateGoing;
-    private static readonly RegionResultVolatile _nullWellRegionResult = new RegionResultVolatile();
+    private static readonly RegionReporterResultVolatile _nullWellRegionResult = new RegionReporterResultVolatile();
 
     protected ActiveRegionsStatsController()
     {
@@ -65,7 +65,7 @@ namespace Ei_Dimension.Controllers
       }
     }
 
-    private Action UpdateRegionsProcedure(List<RegionResultVolatile> wellResults)
+    private Action UpdateRegionsProcedure(List<RegionReporterResultVolatile> wellResults)
     {
       return () =>
       {
@@ -88,7 +88,7 @@ namespace Ei_Dimension.Controllers
       };
     }
 
-    private Action UpdateNullRegionProcedure(List<RegionResultVolatile> wellresults)
+    private Action UpdateNullRegionProcedure(List<RegionReporterResultVolatile> wellresults)
     {
       foreach (var result in wellresults)
       {

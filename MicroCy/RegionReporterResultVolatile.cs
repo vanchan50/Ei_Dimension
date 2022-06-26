@@ -2,14 +2,14 @@
 
 namespace DIOS.Core
 {
-  public class RegionResultVolatile : RegionResult
+  public class RegionReporterResultVolatile : RegionReporterResult
   {
-    public RegionResultVolatile()
+    public RegionReporterResultVolatile()
     {
         
     }
 
-    public RegionResultVolatile(RegionResult copy)
+    public RegionReporterResultVolatile(RegionReporterResult copy)
     {
       regionNumber = copy.regionNumber;
       var count = copy.ReporterValues.Count < CAPACITY ? copy.ReporterValues.Count : CAPACITY;

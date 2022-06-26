@@ -6,6 +6,7 @@ using Ei_Dimension.ViewModels;
 using DIOS.Core;
 using System.IO;
 using System.Configuration;
+using System.Linq;
 using System.Text;
 using Ei_Dimension.Cache;
 using Ei_Dimension.Controllers;
@@ -373,6 +374,7 @@ namespace Ei_Dimension
 
     public void FinishedMeasurementEventHandler(object sender, EventArgs e)
     {
+      MainButtonsViewModel.Instance.StartButtonEnabled = true;
       ResultsViewModel.Instance.PlatePictogram.CurrentlyReadCell = (-1, -1);
       switch (Device.Mode)
       {
@@ -408,12 +410,8 @@ namespace Ei_Dimension
     {
       _ = Current.Dispatcher.BeginInvoke((Action)(() =>
       {
-        for (var i = 0; i < 10; i++)
-        {
-          ResultsViewModel.Instance.CurrentMfiItems[i] = e.GStats[i].mfi.ToString($"{0:0.0}");
-          ResultsViewModel.Instance.CurrentCvItems[i] = e.GStats[i].cv.ToString($"{0:0.00}");
-          ChannelOffsetViewModel.Instance.AverageBg[i] = e.AvgBg[i].ToString($"{0:0.00}");
-        }
+        ResultsViewModel.Instance.DecodeCalibrationStats(e.Stats);
+        ChannelOffsetViewModel.Instance.DecodeBackgroundStats(e.BgStats);
       }));
     }
 
@@ -438,7 +436,7 @@ namespace Ei_Dimension
       bldr.Append(Device.Results.PlateReport.LegacyReport(header));
 
       string rfilename = Device.Control == SystemControl.Manual ? Device.Publisher.Outfilename : Device.WorkOrder.plateID.ToString();
-      var directoryName = $"{Device.RootDirectory.FullName}\\Result\\Summary";
+      var directoryName = $"{Device.RootDirectory.FullName}\\AcquisitionData";
       try
       {
         if (!Directory.Exists(directoryName))

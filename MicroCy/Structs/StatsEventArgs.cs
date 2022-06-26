@@ -4,13 +4,13 @@ namespace DIOS.Core
 {
   public class StatsEventArgs
   {
-    public List<Gstats> GStats { get; }
-    public List<double> AvgBg { get; }
+    public CalibrationStats Stats { get; }
+    public BackgroundStats BgStats { get; }
 
-    internal StatsEventArgs(List<Gstats> stats, List<double> avg)
+    internal StatsEventArgs(CalibrationStats stats, BackgroundStats avg)
     {
-      GStats = stats;
-      AvgBg = avg;
+      Stats = stats;
+      BgStats = avg;
     }
   }
 }

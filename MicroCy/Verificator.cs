@@ -283,9 +283,9 @@ namespace DIOS.Core
     private static double GetMedianReporterForRegion(int regionNum)
     {
       var index = RegionalStats.FindIndex(x => x.Region == regionNum);
-      if (double.IsNaN(RegionalStats[index].Stats[0].mfi))
+      if (double.IsNaN(RegionalStats[index].Stats[0].Median))
         return 0;
-      return RegionalStats[index].Stats[0].mfi;
+      return RegionalStats[index].Stats[0].Median;
     }
 
     private static string GetCulturedMsg(string str)
