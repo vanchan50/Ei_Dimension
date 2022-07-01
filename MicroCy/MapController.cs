@@ -7,9 +7,22 @@ namespace DIOS.Core
 {
   public class MapController
   {
-    public CustomMap ActiveMap { get; set; }
-
+    public CustomMap ActiveMap { get; private set; }
     public List<CustomMap> MapList { get; } = new List<CustomMap>();
+    public event EventHandler<CustomMap> ChangedActiveMap;
+
+    public MapController()
+    {
+      MoveMaps();
+      UpdateMaps();
+      LoadMaps();
+    }
+
+    public void SetMap(CustomMap map)
+    {
+      ActiveMap = map;
+      OnMapChanged();
+    }
 
     public bool SaveCalVals(MapCalParameters param)
     {
@@ -253,6 +266,11 @@ namespace DIOS.Core
       }
 
       return true;
+    }
+
+    private void OnMapChanged()
+    {
+      ChangedActiveMap?.Invoke(this, ActiveMap);
     }
   }
 }

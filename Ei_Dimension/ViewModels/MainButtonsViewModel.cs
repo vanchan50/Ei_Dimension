@@ -64,6 +64,7 @@ namespace Ei_Dimension.ViewModels
       }
       App.Device.WellController.Init(wells);
 
+      HashSet<int> regions = null;
       switch (App.Device.Mode)
       {
         case OperationMode.Normal:
@@ -73,13 +74,12 @@ namespace Ei_Dimension.ViewModels
             SelectNullRegion();
           }
           //DefaultRegionNaming();
-          App.Device.Results.SetupRunRegions(MapRegionsController.ActiveRegionNums);
+          regions = MapRegionsController.ActiveRegionNums;
           break;
         case OperationMode.Calibration:
           App.MapRegions.RemoveNullTextBoxes();
           CalibrationViewModel.Instance.CalJustFailed = true;
           ResultsViewModel.Instance.ShowSinglePlexResults();
-          App.Device.Results.SetupRunRegions(null);
           break;
         case OperationMode.Verification:
           if (MapRegionsController.ActiveVerificationRegionNums.Count != 4)
@@ -89,9 +89,10 @@ namespace Ei_Dimension.ViewModels
           }
           App.MapRegions.RemoveNullTextBoxes();
           MakeNewValidator();
-          App.Device.Results.SetupRunRegions(null);
           break;
       }
+
+      App.Device.Results.SetupRunRegions(regions);
       StartButtonEnabled = false;
       ResultsViewModel.Instance.ClearGraphs();
       ResultsViewModel.Instance.PlatePictogram.Clear();
@@ -103,7 +104,7 @@ namespace Ei_Dimension.ViewModels
         ResultsViewModel.Instance.CurrentCvItems[i] = "";
       }
       MainViewModel.Instance.NavigationSelector(1);
-      if (App.Device.IsNormalizationEnabled)
+      if (App.Device.Normalization.IsEnabled)
         Console.WriteLine("Normalization Enabled");
       else
         Console.WriteLine("Normalization Disabled");

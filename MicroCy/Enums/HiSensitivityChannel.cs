@@ -2,7 +2,7 @@
 {
   public enum HiSensitivityChannel
   {
-    B,
-    C
+    GreenB,
+    GreenC
   }
 }

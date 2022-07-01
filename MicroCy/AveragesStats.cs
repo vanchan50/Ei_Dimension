@@ -1,6 +1,6 @@
 ﻿namespace DIOS.Core
 {
-  public class BackgroundStats
+  public class AveragesStats
   {
     public double Greenssc { get; }
     public double GreenB { get; }
@@ -13,7 +13,7 @@
     public double Cl0 { get; }
     public double Fsc { get; }
 
-    public BackgroundStats(double greenssc, double greenb, double greenc, double redssc,
+    public AveragesStats(double greenssc, double greenb, double greenc, double redssc,
       double cl1, double cl2, double cl3, double violetssc,
       double cl0, double fsc)
     {
@@ -27,10 +27,6 @@
       Violetssc = violetssc;
       Cl0 = cl0;
       Fsc = fsc;
-    }
-    public BackgroundStats()
-    {
-      
     }
   }
 }

@@ -47,7 +47,7 @@ namespace DIOS.Core
     public event EventHandler<ReadingWellEventArgs> FinishedReadingWell;
     public event EventHandler FinishedMeasurement;
     public event EventHandler<StatsEventArgs> NewStatsAvailable;
-    public OperationMode Mode { get; set; }
+    public OperationMode Mode { get; set; } = OperationMode.Normal;
     public SystemControl Control { get; set; }
     public Gate ScatterGate
     {
@@ -110,7 +110,10 @@ namespace DIOS.Core
       }
     }
     public float Compensation { get; set; }
-    public bool IsNormalizationEnabled { get; set; } = true;
+    public NormalizationSettings Normalization
+    {
+      get { return _beadProcessor.Normalization; }
+    }
     public static DirectoryInfo RootDirectory { get; private set; }
     public float MaxPressure { get; set; }
 
@@ -123,7 +126,6 @@ namespace DIOS.Core
     private readonly StateMachine _stateMach;
     internal SelfTester SelfTester { get; }
     internal readonly BeadProcessor _beadProcessor;
-    private bool _normalizationCache;
 
     public Device(ISerial connection)
     {
@@ -134,13 +136,10 @@ namespace DIOS.Core
       _stateMach = new StateMachine(this, true);
       Publisher = new ResultsPublisher(this);
       MapCtroller = new MapController();
+      MapCtroller.ChangedActiveMap += MapChangedEventHandler;
       SelfTester = new SelfTester(this);
       MainCommand("Sync");
       TotalBeads = 0;
-      Mode = OperationMode.Normal;
-      MapCtroller.MoveMaps();
-      MapCtroller.UpdateMaps();
-      MapCtroller.LoadMaps();
       IsMeasurementGoing = false;
       ReporterScaling = 1;
       MainCommand("Get Property", code: 0x01);  //get board version
@@ -208,12 +207,10 @@ namespace DIOS.Core
     {
       if (Mode != OperationMode.Normal)
       {
-        _normalizationCache = IsNormalizationEnabled;
-        IsNormalizationEnabled = false;
+        Normalization.SuspendForTheRun();
       }
       MainCommand("Set Property", code: 0xce, parameter: MapCtroller.ActiveMap.calParams.minmapssc);  //set ssc gates for this map
       MainCommand("Set Property", code: 0xcf, parameter: MapCtroller.ActiveMap.calParams.maxmapssc);
-      _beadProcessor.ConstructClassificationMap(MapCtroller.ActiveMap);
       //read section of plate
       MainCommand("Get FProperty", code: 0x58);
       MainCommand("Get FProperty", code: 0x68);
@@ -347,7 +344,6 @@ namespace DIOS.Core
     internal void OnFinishedReadingWell()
     {
       MainCommand("End Sampling");    //sends message to instrument to stop sampling
-      _beadProcessor.SavBeadCount = BeadCount;   //save for stats
       FinishedReadingWell?.Invoke(this, new ReadingWellEventArgs(WellController.CurrentWell.RowIdx, WellController.CurrentWell.ColIdx,
         Publisher.FullBeadEventFileName));
       MainCommand("Get FProperty", code: 0x06);  //get totalbeads from firmware
@@ -364,7 +360,7 @@ namespace DIOS.Core
         Verificator.CalculateResults(MapCtroller);
 
       if (Mode != OperationMode.Normal)
-        IsNormalizationEnabled = _normalizationCache;
+        Normalization.Restore();
 
       FinishedMeasurement?.Invoke(this, EventArgs.Empty);
     }
@@ -374,6 +370,11 @@ namespace DIOS.Core
       var stats = Results.MeasurementResults.GetStats();
       var averageBackgrounds = Results.MeasurementResults.GetBackgroundAverages();
       NewStatsAvailable?.Invoke(this, new StatsEventArgs(stats, averageBackgrounds));
+    }
+
+    public void MapChangedEventHandler(object sender, CustomMap map)
+    {
+      _beadProcessor.SetMap(map);
     }
 
     #if DEBUG

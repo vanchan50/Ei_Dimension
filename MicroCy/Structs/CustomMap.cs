@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System;
 using Newtonsoft.Json;
 
 namespace DIOS.Core
@@ -40,6 +41,39 @@ namespace DIOS.Core
       {
         Regions.Add(region.Number, region);
       }
+    }
+
+    public float GetFactorizedNormalizationForRegion(int region)
+    {
+      return (float)(factor * Regions[region].NormalizationMFI);
+    }
+
+    public bool IsVerificationExpired(VerificationExpirationTime expiration)
+    {
+      bool expired = false;
+      if (validation)
+      {
+        var valDate = DateTime.Parse(valtime, new System.Globalization.CultureInfo("en-GB"));
+        switch (expiration)
+        {
+          case VerificationExpirationTime.Day:
+            expired = valDate.AddDays(1) < DateTime.Today;
+            break;
+          case VerificationExpirationTime.Week:
+            expired = valDate.AddDays(7) < DateTime.Today;
+            break;
+          case VerificationExpirationTime.Month:
+            expired = valDate.AddMonths(1) < DateTime.Today;
+            break;
+          case VerificationExpirationTime.Quarter:
+            expired = valDate.AddMonths(3) < DateTime.Today;
+            break;
+          case VerificationExpirationTime.Year:
+            expired = valDate.AddYears(1) < DateTime.Today;
+            break;
+        }
+      }
+      return expired;
     }
   }
 }

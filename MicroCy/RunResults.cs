@@ -6,11 +6,11 @@ namespace DIOS.Core
 {
   public class RunResults
   {
+    public PlateReport PlateReport { get; } = new PlateReport();
+    internal MeasurementResults MeasurementResults { get; } = new MeasurementResults();
     private Device _device;
     private ICollection<int> _regionsToOutput;
-    internal MeasurementResults MeasurementResults { get; } = new MeasurementResults();
     private bool _minPerRegCheckTrigger;
-    public PlateReport PlateReport { get; } = new PlateReport();
     private readonly WellStatsData _wellstatsData = new WellStatsData();
 
     public RunResults(Device device)
@@ -28,6 +28,20 @@ namespace DIOS.Core
       _regionsToOutput = regions;
       if (regions == null)
         _regionsToOutput = new List<int>();
+    }
+
+    public List<RegionReporterResultVolatile> MakeDeepCopy()
+    {
+      return MeasurementResults.GetResults();
+    }
+
+    /// <summary>
+    /// Checks if MinPerRegion Condition is met. Not thread safe. Supposed to be called after the well is read or in the measurement sequence thread
+    /// </summary>
+    /// <returns>A positive number or 0, if MinPerRegions is met; otherwise returns a negative number of lacking beads</returns>
+    public int MinPerRegionAchieved()
+    {
+      return MeasurementResults.MinPerAllRegionsAchieved(_device.MinPerRegion);
     }
 
     internal void StartNewPlateReport()
@@ -70,12 +84,12 @@ namespace DIOS.Core
       }
     }
 
-    public string PublishBeadEvents()
+    internal string PublishBeadEvents()
     {
       return MeasurementResults.BeadEventsData.Publish(_device.OnlyClassified);
     }
 
-    public string PublishWellStats()
+    internal string PublishWellStats()
     {
       return _wellstatsData.Publish();
     }
@@ -86,21 +100,6 @@ namespace DIOS.Core
       //it also checks region 0, but it is only a trigger, the real check is done in MinPerRegionAchieved()
       if (!_minPerRegCheckTrigger)
         _minPerRegCheckTrigger = count == _device.MinPerRegion;  //see if assay is done via sufficient beads in each region
-    }
-
-
-    public List<RegionReporterResultVolatile> MakeDeepCopy()
-    {
-      return MeasurementResults.GetResults();
-    }
-
-    /// <summary>
-    /// Checks if MinPerRegion Condition is met. Not thread safe. Supposed to be called after the well is read or in the measurement sequence thread
-    /// </summary>
-    /// <returns>A positive number or 0, if MinPerRegions is met; otherwise returns a negative number of lacking beads</returns>
-    public int MinPerRegionAchieved()
-    {
-      return MeasurementResults.MinPerAllRegionsAchieved(_device.MinPerRegion);
     }
 
     internal void EndOfOperationReset()

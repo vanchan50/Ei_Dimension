@@ -8,7 +8,8 @@ namespace DIOS.Core.Structs
     public BeadEventsData BeadEventsData { get; } = new BeadEventsData();
     private readonly List<RegionReporterResult> _wellResults = new List<RegionReporterResult>();
     private readonly SortedDictionary<ushort, int> _regionIndexDictionary = new SortedDictionary<ushort, int>();
-    private readonly StatsAccumulator _statsAccumulator = new StatsAccumulator();
+    private readonly StatsAccumulator _calibrationStatsAccumulator = new StatsAccumulator();
+    private readonly BackgroundStatsAccumulator _backgroundStatsAccumulator = new BackgroundStatsAccumulator();
     private int _non0RegionsCount;  //cached data for optimization. discard region 0 from calculation. only for minPerReg case
 
     internal void Reset(Well well, ICollection<int> regions)
@@ -16,7 +17,8 @@ namespace DIOS.Core.Structs
       Well = new Well(well);
       _wellResults.Clear();
       BeadEventsData.Reset();
-      _statsAccumulator.Reset();
+      _calibrationStatsAccumulator.Reset();
+      _backgroundStatsAccumulator.Reset();
       _regionIndexDictionary.Clear();
       foreach (var region in regions)
       {
@@ -41,7 +43,8 @@ namespace DIOS.Core.Structs
     {
       BeadEventsData.Add(in outBead);
       //accum stats for run as a whole, used during aligment and QC
-      _statsAccumulator.Add(in outBead);
+      _calibrationStatsAccumulator.Add(in outBead);
+      _backgroundStatsAccumulator.Add(in outBead);
       //WellResults is a list of region numbers that are active
       //each entry has a list of rp1 values from each bead in that region
       if (_regionIndexDictionary.TryGetValue(outBead.region, out var index))
@@ -67,12 +70,12 @@ namespace DIOS.Core.Structs
 
     internal CalibrationStats GetStats()
     {
-      return _statsAccumulator.CalculateStats();
+      return _calibrationStatsAccumulator.CalculateStats();
     }
 
-    internal BackgroundStats GetBackgroundAverages()
+    internal AveragesStats GetBackgroundAverages()
     {
-      return _statsAccumulator.CalculateBackgroundAverages();
+      return _backgroundStatsAccumulator.CalculateAverages();
     }
     
     internal int MinPerAllRegionsAchieved(int minPerRegion)

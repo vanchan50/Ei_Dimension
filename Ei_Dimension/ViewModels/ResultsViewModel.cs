@@ -391,37 +391,50 @@ namespace Ei_Dimension.ViewModels
       });
     }
 
-    public void DecodeCalibrationStats(CalibrationStats stats)
+    public void DecodeCalibrationStats(CalibrationStats stats, bool current)
     {
-      CurrentMfiItems[0] = stats.Greenssc.Mean.ToString($"{0:0.0}");
-      CurrentCvItems[0] = stats.Greenssc.CoeffVar.ToString($"{0:0.00}");
+      ObservableCollection<string> mfiItems;
+      ObservableCollection<string> cvItems;
+      if (current)
+      {
+        mfiItems = CurrentMfiItems;
+        cvItems = CurrentCvItems;
+      }
+      else
+      {
+        mfiItems = BackingMfiItems;
+        cvItems = BackingCvItems;
+      }
 
-      CurrentMfiItems[1] = stats.GreenB.Mean.ToString($"{0:0.0}");
-      CurrentCvItems[1] = stats.GreenB.CoeffVar.ToString($"{0:0.00}");
+      mfiItems[0] = stats.Greenssc.Mean.ToString($"{0:0.0}");
+      cvItems[0] = stats.Greenssc.CoeffVar.ToString($"{0:0.00}");
 
-      CurrentMfiItems[2] = stats.GreenC.Mean.ToString($"{0:0.0}");
-      CurrentCvItems[2] = stats.GreenC.CoeffVar.ToString($"{0:0.00}");
+      mfiItems[1] = stats.GreenB.Mean.ToString($"{0:0.0}");
+      cvItems[1] = stats.GreenB.CoeffVar.ToString($"{0:0.00}");
 
-      CurrentMfiItems[3] = stats.Redssc.Mean.ToString($"{0:0.0}");
-      CurrentCvItems[3] = stats.Redssc.CoeffVar.ToString($"{0:0.00}");
+      mfiItems[2] = stats.GreenC.Mean.ToString($"{0:0.0}");
+      cvItems[2] = stats.GreenC.CoeffVar.ToString($"{0:0.00}");
 
-      CurrentMfiItems[4] = stats.Cl1.Mean.ToString($"{0:0.0}");
-      CurrentCvItems[4] = stats.Cl1.CoeffVar.ToString($"{0:0.00}");
+      mfiItems[3] = stats.Redssc.Mean.ToString($"{0:0.0}");
+      cvItems[3] = stats.Redssc.CoeffVar.ToString($"{0:0.00}");
 
-      CurrentMfiItems[5] = stats.Cl2.Mean.ToString($"{0:0.0}");
-      CurrentCvItems[5] = stats.Cl2.CoeffVar.ToString($"{0:0.00}");
+      mfiItems[4] = stats.Cl1.Mean.ToString($"{0:0.0}");
+      cvItems[4] = stats.Cl1.CoeffVar.ToString($"{0:0.00}");
 
-      CurrentMfiItems[6] = stats.Cl3.Mean.ToString($"{0:0.0}");
-      CurrentCvItems[6] = stats.Cl3.CoeffVar.ToString($"{0:0.00}");
+      mfiItems[5] = stats.Cl2.Mean.ToString($"{0:0.0}");
+      cvItems[5] = stats.Cl2.CoeffVar.ToString($"{0:0.00}");
 
-      CurrentMfiItems[7] = stats.Violetssc.Mean.ToString($"{0:0.0}");
-      CurrentCvItems[7] = stats.Violetssc.CoeffVar.ToString($"{0:0.00}");
+      mfiItems[6] = stats.Cl3.Mean.ToString($"{0:0.0}");
+      cvItems[6] = stats.Cl3.CoeffVar.ToString($"{0:0.00}");
 
-      CurrentMfiItems[8] = stats.Cl0.Mean.ToString($"{0:0.0}");
-      CurrentCvItems[8] = stats.Cl0.CoeffVar.ToString($"{0:0.00}");
+      mfiItems[7] = stats.Violetssc.Mean.ToString($"{0:0.0}");
+      cvItems[7] = stats.Violetssc.CoeffVar.ToString($"{0:0.00}");
 
-      CurrentMfiItems[9] = stats.Fsc.Mean.ToString($"{0:0.0}");
-      CurrentCvItems[9] = stats.Fsc.CoeffVar.ToString($"{0:0.00}");
+      mfiItems[8] = stats.Cl0.Mean.ToString($"{0:0.0}");
+      cvItems[8] = stats.Cl0.CoeffVar.ToString($"{0:0.00}");
+
+      mfiItems[9] = stats.Fsc.Mean.ToString($"{0:0.0}");
+      cvItems[9] = stats.Fsc.CoeffVar.ToString($"{0:0.00}");
     }
 
     private void InitBackingWellResults()

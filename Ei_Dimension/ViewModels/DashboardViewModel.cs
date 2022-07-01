@@ -376,6 +376,24 @@ namespace Ei_Dimension.ViewModels
       UserInputHandler.InputSanityCheck();
     }
 
+    public void OnMapChanged(CustomMap map)
+    {
+      if (map.validation)
+      {
+        CalValModeEnabled = true;
+        CaliDateBox[0] = map.caltime;
+        ValidDateBox[0] = map.valtime;
+      }
+      else
+      {
+        CalValModeEnabled = false;
+        CaliDateBox[0] = null;
+        ValidDateBox[0] = null;
+      }
+      bool Warning = map.IsVerificationExpired((VerificationExpirationTime)Settings.Default.VerificationWarningIndex);
+      VerificationWarningVisible = Warning ? Visibility.Visible : Visibility.Hidden;
+    }
+
     public class DropDownButtonContents : Core.ObservableObject
     {
       public string Content

@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Windows.Controls;
 using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
+using DIOS.Core;
 using Ei_Dimension.Controllers;
 
 namespace Ei_Dimension.ViewModels
@@ -17,8 +18,8 @@ namespace Ei_Dimension.ViewModels
     protected NormalizationViewModel()
     {
       NormalizationFactor = new ObservableCollection<string> {""};
-      NormalizationEnabled = new ObservableCollection<bool> { App.Device.IsNormalizationEnabled };
-      MainViewModel.Instance.SetNormalizationMarker(App.Device.IsNormalizationEnabled);
+      NormalizationEnabled = new ObservableCollection<bool> { App.Device.Normalization.IsEnabled };
+      MainViewModel.Instance.SetNormalizationMarker(App.Device.Normalization.IsEnabled);
       Instance = this;
     }
 
@@ -115,7 +116,10 @@ namespace Ei_Dimension.ViewModels
     public void CheckedBox(bool state)
     {
       UserInputHandler.InputSanityCheck();
-      App.Device.IsNormalizationEnabled = state;
+      if(state)
+        App.Device.Normalization.Enable();
+      else
+        App.Device.Normalization.Disable();
       NormalizationEnabled[0] = state;
       MainViewModel.Instance.SetNormalizationMarker(state);
     }
@@ -134,6 +138,11 @@ namespace Ei_Dimension.ViewModels
     public void TextChanged(TextChangedEventArgs e)
     {
       UserInputHandler.InjectToFocusedTextbox(((TextBox)e.Source).Text, true);
+    }
+
+    public void OnMapChanged(CustomMap map)
+    {
+      NormalizationFactor[0] = map.factor.ToString();
     }
   }
 }

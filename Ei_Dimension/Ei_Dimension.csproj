@@ -234,6 +234,7 @@
     <Compile Include="Notification.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Cache\ResultsCache.cs" />
+    <Compile Include="SelfTestErrorDecoder.cs" />
     <Compile Include="ServiceMenuEnabler.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Settings.Designer.cs">

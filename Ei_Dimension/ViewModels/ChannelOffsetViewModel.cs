@@ -108,7 +108,7 @@ namespace Ei_Dimension.ViewModels
       App.Device.MainCommand("RefreshDac");
     }
 
-    public void DecodeBackgroundStats(BackgroundStats Stats)
+    public void DecodeBackgroundStats(AveragesStats Stats)
     {
       AverageBg[0] = Stats.Greenssc.ToString($"{0:0.00}");
       AverageBg[1] = Stats.GreenB.ToString($"{0:0.00}");

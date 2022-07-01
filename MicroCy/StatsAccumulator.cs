@@ -4,32 +4,21 @@ using System.Linq;
 
 namespace DIOS.Core
 {
-  internal class StatsAccumulator
+  public class StatsAccumulator
   {
-    private readonly List<float> greenssc = new List<float>(MAXSIZE);
-    private readonly List<float> greenB = new List<float>(MAXSIZE);
-    private readonly List<float> greenC = new List<float>(MAXSIZE);
-    private readonly List<float> redssc = new List<float>(MAXSIZE);
-    private readonly List<float> cl1 = new List<float>(MAXSIZE);
-    private readonly List<float> cl2 = new List<float>(MAXSIZE);
-    private readonly List<float> cl3 = new List<float>(MAXSIZE);
-    private readonly List<float> violetssc = new List<float>(MAXSIZE);
-    private readonly List<float> cl0 = new List<float>(MAXSIZE);
-    private readonly List<float> fsc = new List<float>(MAXSIZE);
-
-    private readonly List<float> greensscBg = new List<float>(MAXSIZE);
-    private readonly List<float> greenBBg = new List<float>(MAXSIZE);
-    private readonly List<float> greenCBg = new List<float>(MAXSIZE);
-    private readonly List<float> redsscBg = new List<float>(MAXSIZE);
-    private readonly List<float> cl1Bg = new List<float>(MAXSIZE);
-    private readonly List<float> cl2Bg = new List<float>(MAXSIZE);
-    private readonly List<float> cl3Bg = new List<float>(MAXSIZE);
-    private readonly List<float> violetsscBg = new List<float>(MAXSIZE);
-    private readonly List<float> cl0Bg = new List<float>(MAXSIZE);
-    private readonly List<float> fscBg = new List<float>(MAXSIZE);
+    protected readonly List<float> greenssc = new List<float>(MAXSIZE);
+    protected readonly List<float> greenB = new List<float>(MAXSIZE);
+    protected readonly List<float> greenC = new List<float>(MAXSIZE);
+    protected readonly List<float> redssc = new List<float>(MAXSIZE);
+    protected readonly List<float> cl1 = new List<float>(MAXSIZE);
+    protected readonly List<float> cl2 = new List<float>(MAXSIZE);
+    protected readonly List<float> cl3 = new List<float>(MAXSIZE);
+    protected readonly List<float> violetssc = new List<float>(MAXSIZE);
+    protected readonly List<float> cl0 = new List<float>(MAXSIZE);
+    protected readonly List<float> fsc = new List<float>(MAXSIZE);
     private const int MAXSIZE = 80000;
 
-    public void Add(in BeadInfoStruct bead)
+    public virtual void Add(in BeadInfoStruct bead)
     {
       greenssc.Add(bead.greenssc);
       greenB.Add(bead.greenB);
@@ -41,17 +30,6 @@ namespace DIOS.Core
       violetssc.Add(bead.violetssc);
       cl0.Add(bead.cl0);
       fsc.Add(bead.fsc);
-
-      greensscBg.Add(bead.gssc_bg);
-      greenBBg.Add(bead.greenB_bg);
-      greenCBg.Add(bead.greenC_bg);
-      redsscBg.Add(bead.rssc_bg);
-      cl1Bg.Add(bead.cl1_bg);
-      cl2Bg.Add(bead.cl2_bg);
-      cl3Bg.Add(bead.cl3_bg);
-      violetsscBg.Add(bead.vssc_bg);
-      cl0Bg.Add(bead.cl0_bg);
-      fscBg.Add(bead.fsc_bg);
     }
 
     public void Reset()
@@ -66,17 +44,6 @@ namespace DIOS.Core
       violetssc.Clear();
       cl0.Clear();
       fsc.Clear();
-
-      greensscBg.Clear();
-      greenBBg.Clear();
-      greenCBg.Clear();
-      redsscBg.Clear();
-      cl1Bg.Clear();
-      cl2Bg.Clear();
-      cl3Bg.Clear();
-      violetsscBg.Clear();
-      cl0Bg.Clear();
-      fscBg.Clear();
     }
 
     public CalibrationStats CalculateStats()
@@ -96,28 +63,40 @@ namespace DIOS.Core
       );
     }
 
-    public BackgroundStats CalculateBackgroundAverages()
+    public AveragesStats CalculateAverages()
     {
-      BackgroundStats ret;
+      AveragesStats ret;
       try
       {
-        ret = new BackgroundStats
+        ret = new AveragesStats
         (
-          greensscBg.Average(),
-          greenBBg.Average(),
-          greenCBg.Average(),
-          redsscBg.Average(),
-          cl1Bg.Average(),
-          cl2Bg.Average(),
-          cl3Bg.Average(),
-          violetsscBg.Average(),
-          cl0Bg.Average(),
-          fscBg.Average()
+          greenssc.Average(),
+          greenB.Average(),
+          greenC.Average(),
+          redssc.Average(),
+          cl1.Average(),
+          cl2.Average(),
+          cl3.Average(),
+          violetssc.Average(),
+          cl0.Average(),
+          fsc.Average()
         );
       }
-      catch(InvalidOperationException)
+      catch (InvalidOperationException)
       {
-        ret = new BackgroundStats();
+        ret = new AveragesStats
+        (
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        );
       }
 
       return ret;

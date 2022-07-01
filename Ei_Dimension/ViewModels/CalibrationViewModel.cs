@@ -269,6 +269,37 @@ namespace Ei_Dimension.ViewModels
       UserInputHandler.InputSanityCheck();
     }
 
+    public void OnMapChanged(CustomMap map)
+    {
+        EventTriggerContents[1] = map.calParams.minmapssc.ToString();
+        App.Device.MainCommand("Set Property", code: 0xce, parameter: (ushort)map.calParams.minmapssc);
+        EventTriggerContents[2] = map.calParams.maxmapssc.ToString();
+        App.Device.MainCommand("Set Property", code: 0xcf, parameter: (ushort)map.calParams.maxmapssc);
+        AttenuationBox[0] = map.calParams.att.ToString();
+        App.Device.MainCommand("Set Property", code: 0xbf, parameter: (ushort)map.calParams.att);
+
+
+        EventTriggerContents[0] = map.calParams.height.ToString();
+        App.Device.MainCommand("Set Property", code: 0xcd, parameter: map.calParams.height);
+        CompensationPercentageContent[0] = map.calParams.compensation.ToString();
+        App.Device.Compensation = map.calParams.compensation;
+        DNRContents[0] = map.calParams.DNRCoef.ToString();
+        App.Device.HDnrCoef = map.calParams.DNRCoef;
+        DNRContents[1] = map.calParams.DNRTrans.ToString();
+        App.Device.HdnrTrans = map.calParams.DNRTrans;
+        ClassificationTargetsContents[0] = map.calParams.CL0.ToString();
+        App.Device.MainCommand("Set Property", code: 0x8b, parameter: (ushort)map.calParams.CL0);
+        ClassificationTargetsContents[1] = map.calParams.CL1.ToString();
+        App.Device.MainCommand("Set Property", code: 0x8c, parameter: (ushort)map.calParams.CL1);
+        ClassificationTargetsContents[2] = map.calParams.CL2.ToString();
+        App.Device.MainCommand("Set Property", code: 0x8d, parameter: (ushort)map.calParams.CL2);
+        ClassificationTargetsContents[3] = map.calParams.CL3.ToString();
+        App.Device.MainCommand("Set Property", code: 0x8e, parameter: (ushort)map.calParams.CL3);
+        ClassificationTargetsContents[4] = map.calParams.RP1.ToString();
+        App.Device.MainCommand("Set Property", code: 0x8f, parameter: (ushort)map.calParams.RP1);
+        GatingItems[map.calParams.gate].Click();
+    }
+
     public class DropDownButtonContents : Core.ObservableObject
     {
       public string Content
