@@ -12,13 +12,13 @@ namespace Ei_Dimension.Models
   [POCOViewModel]
   public class WorldMap
   {
-    public virtual ObservableCollection<HeatMapData> DisplayedWorldMap { get; set; }
-    public List<HeatMapData> Map01 { get; }
-    public List<HeatMapData> Map02 { get; }
-    public List<HeatMapData> Map03 { get; }
-    public List<HeatMapData> Map12 { get; }
-    public List<HeatMapData> Map13 { get; }
-    public List<HeatMapData> Map23 { get; }
+    public virtual ObservableCollection<HeatMapData> DisplayedWorldMap { get; set; } = new ObservableCollection<HeatMapData>();
+    public List<HeatMapData> Map01 { get; } = new List<HeatMapData>(WORLDMAPCAPACITY);
+    public List<HeatMapData> Map02 { get; } = new List<HeatMapData>(WORLDMAPCAPACITY);
+    public List<HeatMapData> Map03 { get; } = new List<HeatMapData>(WORLDMAPCAPACITY);
+    public List<HeatMapData> Map12 { get; } = new List<HeatMapData>(WORLDMAPCAPACITY);
+    public List<HeatMapData> Map13 { get; } = new List<HeatMapData>(WORLDMAPCAPACITY);
+    public List<HeatMapData> Map23 { get; } = new List<HeatMapData>(WORLDMAPCAPACITY);
     public List<HeatMapData> CalibrationMap { get; set; }
     public MapIndex DisplayedWmap { get; set; }
     public bool Flipped { get; set; }
@@ -26,16 +26,7 @@ namespace Ei_Dimension.Models
 
     protected WorldMap()
     {
-      Flipped = false;
       DisplayedWmap = MapIndex.CL12;
-      Map01 = new List<HeatMapData>(WORLDMAPCAPACITY);
-      Map02 = new List<HeatMapData>(WORLDMAPCAPACITY);
-      Map03 = new List<HeatMapData>(WORLDMAPCAPACITY);
-      Map12 = new List<HeatMapData>(WORLDMAPCAPACITY);
-      Map13 = new List<HeatMapData>(WORLDMAPCAPACITY);
-      Map23 = new List<HeatMapData>(WORLDMAPCAPACITY);
-
-      DisplayedWorldMap = new ObservableCollection<HeatMapData>();
     }
 
     public static WorldMap Create()

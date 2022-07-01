@@ -22,7 +22,7 @@ namespace Ei_Dimension.ViewModels
     public virtual bool ChartWaitIndicatorVisibility { get; set; }
     public virtual ObservableCollection<bool> ScatterSelectorState { get; set; }
     public ScatterData ScttrData { get; set; }
-    public WorldMap WrldMap { get; set;}
+    public WorldMap WrldMap { get; set; }
     public virtual ObservableCollection<DoubleHeatMapData> DisplayedAnalysisMap { get; set; }
     public virtual ObservableCollection<DoubleHeatMapData> CurrentAnalysis01Map { get; set; }
     public virtual ObservableCollection<DoubleHeatMapData> CurrentAnalysis02Map { get; set; }
@@ -36,7 +36,7 @@ namespace Ei_Dimension.ViewModels
     public virtual ObservableCollection<DoubleHeatMapData> BackingAnalysis12Map { get; set; }
     public virtual ObservableCollection<DoubleHeatMapData> BackingAnalysis13Map { get; set; }
     public virtual ObservableCollection<DoubleHeatMapData> BackingAnalysis23Map { get; set; }
-    public List<DIOS.Core.RegionReporterResult> BackingWResults { get; set; }
+    public List<RegionReporterResult> BackingWResults { get; set; }
     public virtual DrawingPlate PlatePictogram { get; set; }
     public virtual System.Windows.Visibility Buttons384Visible { get; set; }
     public virtual System.Windows.Visibility LeftLabel384Visible { get; set; }
@@ -116,7 +116,7 @@ namespace Ei_Dimension.ViewModels
       BackingAnalysis12Map = new ObservableCollection<DoubleHeatMapData>();
       BackingAnalysis13Map = new ObservableCollection<DoubleHeatMapData>();
       BackingAnalysis23Map = new ObservableCollection<DoubleHeatMapData>();
-      BackingWResults = new List<DIOS.Core.RegionReporterResult>();
+      BackingWResults = new List<RegionReporterResult>();
 
       DisplayedAnalysisMap = CurrentAnalysis12Map;
 
@@ -297,17 +297,17 @@ namespace Ei_Dimension.ViewModels
     public void ChangeScatterLegend(int num)  //TODO: For buttons
     {
       ScatterSelectorState[num] = !ScatterSelectorState[num];
-      byte res = 0;
-      res += ScatterSelectorState[0] ? (byte)1 : (byte)0;
-      res += ScatterSelectorState[1] ? (byte)2 : (byte)0;
-      res += ScatterSelectorState[2] ? (byte)4 : (byte)0;
-      res += ScatterSelectorState[3] ? (byte)8 : (byte)0;
-      res += ScatterSelectorState[4] ? (byte)16 : (byte)0;
-      Settings.Default.ScatterGraphSelector = res;
+      var res = 0;
+      res += ScatterSelectorState[0] ? 1 : 0;
+      res += ScatterSelectorState[1] ? 2 : 0;
+      res += ScatterSelectorState[2] ? 4 : 0;
+      res += ScatterSelectorState[3] ? 8 : 0;
+      res += ScatterSelectorState[4] ? 16 : 0;
+      Settings.Default.ScatterGraphSelector = (byte)res;
       Settings.Default.Save();
     }
 
-    private bool ParseBeadInfo(string path, List<DIOS.Core.BeadInfoStruct> beadStructs)
+    private bool ParseBeadInfo(string path, List<BeadInfoStruct> beadStructs)
     {
       List<string> linesInFile = Core.DataProcessor.GetDataFromFile(path);
       if (linesInFile.Count == 1 && linesInFile[0] == " ")
@@ -351,7 +351,7 @@ namespace Ei_Dimension.ViewModels
           return;
         }
         InitBackingWellResults();
-        var beadStructsList = new List<DIOS.Core.BeadInfoStruct>(100000);
+        var beadStructsList = new List<BeadInfoStruct>(100000);
         if(!ParseBeadInfo(path, beadStructsList))
         {
           ResultsWaitIndicatorVisibility = false;
@@ -391,7 +391,7 @@ namespace Ei_Dimension.ViewModels
       });
     }
 
-    public void DecodeCalibrationStats(CalibrationStats stats, bool current)
+    public void DecodeCalibrationStats(ChannelsCalibrationStats stats, bool current)
     {
       ObservableCollection<string> mfiItems;
       ObservableCollection<string> cvItems;

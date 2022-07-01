@@ -1,6 +1,6 @@
 ﻿namespace DIOS.Core
 {
-  public class CalibrationStats
+  public class ChannelsCalibrationStats
   {
     public DistributionStats Greenssc { get; }
     public DistributionStats GreenB { get; }
@@ -13,7 +13,7 @@
     public DistributionStats Cl0 { get; }
     public DistributionStats Fsc { get; }
 
-    public CalibrationStats(DistributionStats greenssc, DistributionStats greenb, DistributionStats greenc, DistributionStats redssc,
+    public ChannelsCalibrationStats(DistributionStats greenssc, DistributionStats greenb, DistributionStats greenc, DistributionStats redssc,
       DistributionStats cl1, DistributionStats cl2, DistributionStats cl3, DistributionStats violetssc,
       DistributionStats cl0, DistributionStats fsc)
     {

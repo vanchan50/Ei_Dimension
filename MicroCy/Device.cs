@@ -367,8 +367,8 @@ namespace DIOS.Core
 
     internal void OnNewStatsAvailable()
     {
-      var stats = Results.MeasurementResults.GetStats();
-      var averageBackgrounds = Results.MeasurementResults.GetBackgroundAverages();
+      var stats = Results.WellResults.GetStats();
+      var averageBackgrounds = Results.WellResults.GetBackgroundAverages();
       NewStatsAvailable?.Invoke(this, new StatsEventArgs(stats, averageBackgrounds));
     }
 

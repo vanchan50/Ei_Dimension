@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace DIOS.Core
 {
@@ -16,20 +15,16 @@ namespace DIOS.Core
       {
         values.Sort();
         int quarter = count / 4;
-        values.RemoveDistributionTails(quarter);
-        median = values[quarter];
-        mean = values.Average();
+        int half = count / 2;
+        int countWithoutDistributionTails = count - 2*quarter;
 
-        double sumsq = values.Sum(dataout => Math.Pow(dataout - mean, 2));
-        double stddev = Math.Sqrt(sumsq / values.Count() - 1);
-
-        coeffVar = (float)stddev / mean * 100;
-        if (double.IsNaN(coeffVar))
-          coeffVar = 0;
+        median = values[half];
+        mean = values.Mean(quarter, countWithoutDistributionTails);
+        coeffVar = values.CalculateCoefficientVariable(mean, quarter, countWithoutDistributionTails);
       }
       else if (count > 0)
       {
-        mean = values.Average();
+        mean = values.Mean(0, count);
       }
 
       return new DistributionStats
@@ -49,6 +44,44 @@ namespace DIOS.Core
     {
       values.RemoveRange(values.Count - length, length);
       values.RemoveRange(0, length);
+    }
+
+    private static float Mean(this List<float> values, int startingIndex, int endIndex)
+    {
+      float avgSum = 0;
+      var count = endIndex - startingIndex;
+      for (var i = startingIndex; i < endIndex; i++)
+      {
+        avgSum += values[i];
+      }
+      return avgSum / count;
+    }
+
+    private static double SquaredSum(this List<float> values, float mean, int startingIndex, int endIndex)
+    {
+      double Sum = 0;
+      for (var i = startingIndex; i < endIndex; i++)
+      {
+        Sum += Math.Pow(values[i] - mean, 2);
+      }
+      return Sum;
+    }
+
+    private static double StdDeviation(this List<float> values, float mean, int startingIndex, int endIndex)
+    {
+      var count = endIndex - startingIndex;
+      var sqSum = values.SquaredSum(mean, startingIndex, endIndex);
+      double stdDev = Math.Sqrt(sqSum / count - 1);
+      return stdDev;
+    }
+
+    private static float CalculateCoefficientVariable(this List<float> values, float mean, int startingIndex, int endIndex)
+    {
+      var stdDev = values.StdDeviation(mean, startingIndex, endIndex);
+      double coeffVar = stdDev / mean * 100;
+      if (double.IsNaN(coeffVar))
+        coeffVar = 0;
+      return (float)coeffVar;
     }
   }
 }

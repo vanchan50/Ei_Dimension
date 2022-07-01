@@ -46,9 +46,9 @@ namespace DIOS.Core
       fsc.Clear();
     }
 
-    public CalibrationStats CalculateStats()
+    public ChannelsCalibrationStats CalculateStats()
     {
-      return new CalibrationStats
+      return new ChannelsCalibrationStats
       (
         greenssc.GetDistributionStatistics(),
         greenB.GetDistributionStatistics(),
@@ -63,12 +63,12 @@ namespace DIOS.Core
       );
     }
 
-    public AveragesStats CalculateAverages()
+    public ChannelsAveragesStats CalculateAverages()
     {
-      AveragesStats ret;
+      ChannelsAveragesStats ret;
       try
       {
-        ret = new AveragesStats
+        ret = new ChannelsAveragesStats
         (
           greenssc.Average(),
           greenB.Average(),
@@ -84,7 +84,7 @@ namespace DIOS.Core
       }
       catch (InvalidOperationException)
       {
-        ret = new AveragesStats
+        ret = new ChannelsAveragesStats
         (
           0,
           0,

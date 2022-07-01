@@ -7,7 +7,7 @@ namespace DIOS.Core
   public class RunResults
   {
     public PlateReport PlateReport { get; } = new PlateReport();
-    internal MeasurementResults MeasurementResults { get; } = new MeasurementResults();
+    internal WellResults WellResults { get; } = new WellResults();
     private Device _device;
     private ICollection<int> _regionsToOutput;
     private bool _minPerRegCheckTrigger;
@@ -32,7 +32,7 @@ namespace DIOS.Core
 
     public List<RegionReporterResultVolatile> MakeDeepCopy()
     {
-      return MeasurementResults.GetResults();
+      return WellResults.GetResults();
     }
 
     /// <summary>
@@ -41,7 +41,7 @@ namespace DIOS.Core
     /// <returns>A positive number or 0, if MinPerRegions is met; otherwise returns a negative number of lacking beads</returns>
     public int MinPerRegionAchieved()
     {
-      return MeasurementResults.MinPerAllRegionsAchieved(_device.MinPerRegion);
+      return WellResults.MinPerAllRegionsAchieved(_device.MinPerRegion);
     }
 
     internal void StartNewPlateReport()
@@ -51,7 +51,7 @@ namespace DIOS.Core
 
     internal void MakeStats()
     {
-      var stats = new WellStats(MeasurementResults.Well, MakeDeepCopy(), _device.BeadCount);
+      var stats = new WellStats(WellResults.Well, MakeDeepCopy(), _device.BeadCount);
       PlateReport.Add(stats);
       _wellstatsData.Add(stats.ToString());
     }
@@ -60,7 +60,7 @@ namespace DIOS.Core
     {
       if (_regionsToOutput == null)
         throw new Exception("SetupRunRegions() must be called before the run");
-      MeasurementResults.Reset(well, _regionsToOutput);
+      WellResults.Reset(well, _regionsToOutput);
       _wellstatsData.Reset();
       _minPerRegCheckTrigger = false;
     }
@@ -86,7 +86,7 @@ namespace DIOS.Core
 
     internal string PublishBeadEvents()
     {
-      return MeasurementResults.BeadEventsData.Publish(_device.OnlyClassified);
+      return WellResults.BeadEventsData.Publish(_device.OnlyClassified);
     }
 
     internal string PublishWellStats()
@@ -96,7 +96,7 @@ namespace DIOS.Core
 
     private void FillWellResults(in BeadInfoStruct outBead)
     {
-      var count = MeasurementResults.Add(in outBead);
+      var count = WellResults.Add(in outBead);
       //it also checks region 0, but it is only a trigger, the real check is done in MinPerRegionAchieved()
       if (!_minPerRegCheckTrigger)
         _minPerRegCheckTrigger = count == _device.MinPerRegion;  //see if assay is done via sufficient beads in each region

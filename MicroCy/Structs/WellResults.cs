@@ -2,11 +2,11 @@
 
 namespace DIOS.Core.Structs
 {
-  internal class MeasurementResults
+  internal class WellResults
   {
     public Well Well { get; private set; }
     public BeadEventsData BeadEventsData { get; } = new BeadEventsData();
-    private readonly List<RegionReporterResult> _wellResults = new List<RegionReporterResult>();
+    private readonly List<RegionReporterResult> _reporterPerRegion = new List<RegionReporterResult>();
     private readonly SortedDictionary<ushort, int> _regionIndexDictionary = new SortedDictionary<ushort, int>();
     private readonly StatsAccumulator _calibrationStatsAccumulator = new StatsAccumulator();
     private readonly BackgroundStatsAccumulator _backgroundStatsAccumulator = new BackgroundStatsAccumulator();
@@ -15,7 +15,7 @@ namespace DIOS.Core.Structs
     internal void Reset(Well well, ICollection<int> regions)
     {
       Well = new Well(well);
-      _wellResults.Clear();
+      _reporterPerRegion.Clear();
       BeadEventsData.Reset();
       _calibrationStatsAccumulator.Reset();
       _backgroundStatsAccumulator.Reset();
@@ -25,16 +25,16 @@ namespace DIOS.Core.Structs
         //skip region0 to make it the last one. if it is there at all
         if(region == 0)
           continue;
-        _regionIndexDictionary.Add((ushort)region, _wellResults.Count);
-        _wellResults.Add(new RegionReporterResult { regionNumber = (ushort)region });
+        _regionIndexDictionary.Add((ushort)region, _reporterPerRegion.Count);
+        _reporterPerRegion.Add(new RegionReporterResult { regionNumber = (ushort)region });
       }
       //region 0 has to be the last in _wellResults
       if (regions.Contains(0))
       {
-        _regionIndexDictionary.Add(0, _wellResults.Count);
-        _wellResults.Add(new RegionReporterResult { regionNumber = 0 });
+        _regionIndexDictionary.Add(0, _reporterPerRegion.Count);
+        _reporterPerRegion.Add(new RegionReporterResult { regionNumber = 0 });
       }
-      _non0RegionsCount = _wellResults.Count;
+      _non0RegionsCount = _reporterPerRegion.Count;
       if (_non0RegionsCount != 0 && regions.Contains(0))
         _non0RegionsCount -= 1;
     }
@@ -49,8 +49,8 @@ namespace DIOS.Core.Structs
       //each entry has a list of rp1 values from each bead in that region
       if (_regionIndexDictionary.TryGetValue(outBead.region, out var index))
       {
-        _wellResults[index].ReporterValues.Add(outBead.reporter);
-        return _wellResults[index].ReporterValues.Count;
+        _reporterPerRegion[index].ReporterValues.Add(outBead.reporter);
+        return _reporterPerRegion[index].ReporterValues.Count;
       }
       //return negative count, so the check is passed
       return -1;
@@ -58,22 +58,22 @@ namespace DIOS.Core.Structs
     
     internal List<RegionReporterResultVolatile> GetResults()
     {
-      var resultsCount = _wellResults.Count;
+      var resultsCount = _reporterPerRegion.Count;
       var copy = new List<RegionReporterResultVolatile>(resultsCount);
       for (var i = 0; i < resultsCount; i++)
       {
-        var r = new RegionReporterResultVolatile(_wellResults[i]);
+        var r = new RegionReporterResultVolatile(_reporterPerRegion[i]);
         copy.Add(r);
       }
       return copy;
     }
 
-    internal CalibrationStats GetStats()
+    internal ChannelsCalibrationStats GetStats()
     {
       return _calibrationStatsAccumulator.CalculateStats();
     }
 
-    internal AveragesStats GetBackgroundAverages()
+    internal ChannelsAveragesStats GetBackgroundAverages()
     {
       return _backgroundStatsAccumulator.CalculateAverages();
     }
@@ -83,7 +83,7 @@ namespace DIOS.Core.Structs
       int res = int.MaxValue;
       for (var i = 0; i < _non0RegionsCount; i++)
       {
-        var diff = _wellResults[i].ReporterValues.Count - minPerRegion;
+        var diff = _reporterPerRegion[i].ReporterValues.Count - minPerRegion;
         res = diff < res ? diff : res;
       }
       return res;

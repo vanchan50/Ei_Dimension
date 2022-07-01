@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using DIOS.Core.FileIO;
 
 namespace DIOS.Core
@@ -224,7 +223,7 @@ namespace DIOS.Core
       //RegionalStats holds regions with defined Reporter target
       foreach (var region in RegionalStats)
       {
-        region.CalculateResults();
+        region.CalculateResultingStats();
         _totalClassifiedBeads += region.Count;
 
         //calculate highest and lowest count for classified regions

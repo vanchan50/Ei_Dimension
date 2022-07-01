@@ -156,7 +156,7 @@ namespace Ei_Dimension.Core
       }));
     }
 
-    public static void BinScatterData(List<DIOS.Core.BeadInfoStruct> list, bool fromFile = false)
+    public static void BinScatterData(List<BeadInfoStruct> list, bool fromFile = false)
     {
       var ScatterDataCount = ScatterData.CurrentReporter.Count;
       var MaxValue = ScatterData.CurrentReporter[ScatterDataCount - 1].Argument;

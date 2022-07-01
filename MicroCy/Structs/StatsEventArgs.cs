@@ -4,10 +4,10 @@ namespace DIOS.Core
 {
   public class StatsEventArgs
   {
-    public CalibrationStats Stats { get; }
-    public AveragesStats BgStats { get; }
+    public ChannelsCalibrationStats Stats { get; }
+    public ChannelsAveragesStats BgStats { get; }
 
-    internal StatsEventArgs(CalibrationStats stats, AveragesStats avg)
+    internal StatsEventArgs(ChannelsCalibrationStats stats, ChannelsAveragesStats avg)
     {
       Stats = stats;
       BgStats = avg;

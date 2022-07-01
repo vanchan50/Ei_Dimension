@@ -56,10 +56,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AveragesStats.cs" />
+    <Compile Include="ChannelsAveragesStats.cs" />
     <Compile Include="BackgroundStatsAccumulator.cs" />
     <Compile Include="BeadProcessor.cs" />
-    <Compile Include="CalibrationStats.cs" />
+    <Compile Include="ChannelsCalibrationStats.cs" />
     <Compile Include="ClassificationMap.cs" />
     <Compile Include="DataController.cs" />
     <Compile Include="Enums\Gate.cs" />
@@ -90,7 +90,7 @@
     <Compile Include="InstrumentParameters\Idex.cs" />
     <Compile Include="ISerial.cs" />
     <Compile Include="Device.cs" />
-    <Compile Include="Structs\MeasurementResults.cs" />
+    <Compile Include="Structs\WellResults.cs" />
     <Compile Include="Structs\VerificationExpirationTime.cs" />
     <Compile Include="Structs\WellStats.cs" />
     <Compile Include="Structs\StatsEventArgs.cs" />

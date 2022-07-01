@@ -9,13 +9,13 @@ namespace DIOS.Core
         
     }
 
-    public RegionReporterResultVolatile(RegionReporterResult copy)
+    public RegionReporterResultVolatile(RegionReporterResult copySource)
     {
-      regionNumber = copy.regionNumber;
-      var count = copy.ReporterValues.Count < CAPACITY ? copy.ReporterValues.Count : CAPACITY;
+      regionNumber = copySource.regionNumber;
+      var count = copySource.ReporterValues.Count < CAPACITY ? copySource.ReporterValues.Count : CAPACITY;
       for (var j = 0; j < count; j++)
       {
-        ReporterValues.Add(copy.ReporterValues[j]);
+        ReporterValues.Add(copySource.ReporterValues[j]);
       }
     }
 
