@@ -5,13 +5,14 @@ namespace DIOS.Core
   [Serializable]
   public class RegionReporterStats
   {
-    public ushort Region;
+    public int Region;
     public int Count;
     public float MedFi;
     public float MeanFi;
     public float CoeffVar;
 
-    public RegionReporterStats(RegionReporterResult regionNumber, Well well)
+    //  TODO: duplicates RegionReporterResultVolatile.MakeStats() behavior
+    public RegionReporterStats(RegionReporterResult regionNumber)
     {
       Count = regionNumber.ReporterValues.Count;
       Region = regionNumber.regionNumber;

@@ -20,6 +20,7 @@ namespace DIOS.Core
     }
 
     //  TODO: WARNING modifies (sorts) the instance
+    //  TODO: duplicates RegionReporterStats.MakeStats() behavior
     public void MakeStats(out int count, out float mean)
     {
       if (ReporterValues.Count == 0)

@@ -162,7 +162,7 @@ namespace Ei_Dimension.Core
       var MaxValue = ScatterData.CurrentReporter[ScatterDataCount - 1].Argument;
       int[] reporter, fsc, red, green, violet;
       //NULL Region is included in RegionsList
-      List<List<float>> activeRegionsStats = new List<List<float>>(MapRegionsController.RegionsList.Count);  //for mean and count 
+      var RegionsReporter = new List<RegionReporterResult>(MapRegionsController.RegionsList.Count);  //for mean and count 
       if (fromFile)
       {
         reporter = ScatterData.bReporter;
@@ -173,7 +173,10 @@ namespace Ei_Dimension.Core
 
         for (var i = 0; i < MapRegionsController.RegionsList.Count; i++)
         {
-          activeRegionsStats.Add(new List<float>());
+          RegionsReporter.Add(new RegionReporterResult
+          {
+            regionNumber = MapRegionsController.RegionsList[i].Number
+          });
         }
       }
       else
@@ -223,7 +226,7 @@ namespace Ei_Dimension.Core
         {
           var index = MapRegionsController.GetMapRegionIndex(bead.region);
           if (index != -1)
-            activeRegionsStats[index].Add(bead.reporter);
+            RegionsReporter[index].ReporterValues.Add(bead.reporter);
           //else if (bead.region == 0)
           //  continue;
           //else
@@ -233,40 +236,25 @@ namespace Ei_Dimension.Core
       //if (failed)
       //  System.Windows.MessageBox.Show("An error occured during Well File Read");
 
+      var Stats = new List<RegionReporterStats>(RegionsReporter.Count);
+      if (fromFile)
+      {
+        foreach (var reporterValues in RegionsReporter)
+        {
+          Stats.Add(new RegionReporterStats(reporterValues));
+        }
+      }
+
       _ = App.Current.Dispatcher.BeginInvoke((Action)(() =>
       {
         ResultsViewModel.Instance.ScttrData.FillCurrentData(fromFile);
         if (fromFile)
         {
           var j = 0;
-          foreach (var lst in activeRegionsStats)
+          foreach (var stat in Stats)
           {
-            if (lst.Count > 0)
-            {
-              float avg = 0;
-              float mean = 0;
-              var count = lst.Count;
-              if (count > 0)
-              {
-                avg = lst.Average();
-                if (count >= 20)
-                {
-                  lst.Sort();
-                  int quarterIndex = count / 4;
-
-                  float sum = 0;
-                  for (var i = quarterIndex; i < count - quarterIndex; i++)
-                  {
-                    sum += lst[i];
-                  }
-                  mean = sum / (count - 2 * quarterIndex);
-                }
-                else
-                  mean = avg;
-              }
-              ActiveRegionsStatsController.Instance.BackingCount[j] = count.ToString();
-              ActiveRegionsStatsController.Instance.BackingMean[j] = mean.ToString("0,0");
-            }
+            ActiveRegionsStatsController.Instance.BackingCount[j] = stat.Count.ToString();
+            ActiveRegionsStatsController.Instance.BackingMean[j] = stat.MeanFi.ToString("0.0");
             j++;
           }
           ResultsViewModel.Instance.ResultsWaitIndicatorVisibility = false;

@@ -26,7 +26,7 @@ namespace DIOS.Core.Structs
         if(region == 0)
           continue;
         _regionIndexDictionary.Add((ushort)region, _reporterPerRegion.Count);
-        _reporterPerRegion.Add(new RegionReporterResult { regionNumber = (ushort)region });
+        _reporterPerRegion.Add(new RegionReporterResult { regionNumber = region });
       }
       //region 0 has to be the last in _wellResults
       if (regions.Contains(0))

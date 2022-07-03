@@ -16,11 +16,11 @@ namespace DIOS.Core
         values.Sort();
         int quarter = count / 4;
         int half = count / 2;
-        int countWithoutDistributionTails = count - 2*quarter;
+        int endIndex = count - quarter;
 
         median = values[half];
-        mean = values.Mean(quarter, countWithoutDistributionTails);
-        coeffVar = values.CalculateCoefficientVariable(mean, quarter, countWithoutDistributionTails);
+        mean = values.Mean(quarter, endIndex);
+        coeffVar = values.CalculateCoefficientVariable(mean, quarter, endIndex);
       }
       else if (count > 0)
       {
@@ -46,7 +46,7 @@ namespace DIOS.Core
       values.RemoveRange(0, length);
     }
 
-    private static float Mean(this List<float> values, int startingIndex, int endIndex)
+    public static float Mean(this List<float> values, int startingIndex, int endIndex)
     {
       float avgSum = 0;
       var count = endIndex - startingIndex;

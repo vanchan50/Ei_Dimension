@@ -23,7 +23,7 @@ namespace DIOS.Core.Structs
       _well = new Well(well);
       foreach (var regionResult in results)
       {
-        var stats = new RegionReporterStats(regionResult, _well);
+        var stats = new RegionReporterStats(regionResult);
         _results.Add(stats);
       }
       _results.Sort((x, y) => x.Region.CompareTo(y.Region));
