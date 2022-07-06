@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace DIOS.Core
+﻿namespace DIOS.Core
 {
   public class StatsEventArgs
   {

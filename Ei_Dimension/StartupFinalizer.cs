@@ -2,8 +2,8 @@
 using System;
 using System.Windows;
 using System.Windows.Media.Imaging;
-using DIOS.Core.SelfTests;
 using Ei_Dimension.Controllers;
+using MadWizard.WinUSBNet;
 
 namespace Ei_Dimension
 {
@@ -11,6 +11,7 @@ namespace Ei_Dimension
   {
     public static bool SettingsWiped;
     private static bool _done;
+    private static USBNotifier usbnotif;
     /// <summary>
     /// Finish loading the UI. Should be called only once, after all the views have been loaded.
     /// Constructs the UI update timer
@@ -87,10 +88,26 @@ namespace Ei_Dimension
       if (App.Device.BoardVersion > 0)
         HideChannels();
 
+
+      IntPtr windowHandle = new System.Windows.Interop.WindowInteropHelper(App.Current.MainWindow).Handle;
+      
+      usbnotif = new USBNotifier(windowHandle, Guid.ParseExact("F70242C7-FB25-443B-9E7E-A4260F373982", "D"));
+      usbnotif.Arrival += Usbnotif_Arrival;
+      usbnotif.Removal += Usbnotif_Removal;
       var selfTestResult = await App.Device.GetSelfTestResultAsync();
       string selfTestErrorMessage = SelfTestErrorDecoder.Decode(selfTestResult);
       if (selfTestErrorMessage != null)
         Notification.ShowError(selfTestErrorMessage);
+    }
+
+    private static void Usbnotif_Removal(object sender, USBEvent e)
+    {
+      Notification.Show($"USB Device Disconnected!");
+    }
+
+    private static void Usbnotif_Arrival(object sender, USBEvent e)
+    {
+      Notification.Show($"USB Device connected!");
     }
 
     private static void WipedSettingsMessage()

@@ -548,6 +548,10 @@
       <Name>DIOS.Core</Name>
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </ProjectReference>
+    <ProjectReference Include="..\winusbnet-2.1.0\WinUSBNet\WinUSBNet.csproj">
+      <Project>{bf8c5514-4aaa-46bb-a35d-341e5743ee13}</Project>
+      <Name>WinUSBNet</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">

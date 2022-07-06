@@ -13,7 +13,7 @@ namespace APP.Tests
 {
   public class UnitTests
   {
-    [Fact]
+    [WpfFact]
     public void StartButtonIsEnabledAfterRun()
     {
       var app = new App();

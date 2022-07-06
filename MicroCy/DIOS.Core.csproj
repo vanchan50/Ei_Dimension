@@ -109,14 +109,13 @@
     <Compile Include="Structs\WorkOrder.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\winusbnet-1.0.3\WinUSBNet\WinUSBNet.csproj">
-      <Project>{ce06c329-287d-4f1e-b62d-b8353f2baa4a}</Project>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\winusbnet-2.1.0\WinUSBNet\WinUSBNet.csproj">
+      <Project>{bf8c5514-4aaa-46bb-a35d-341e5743ee13}</Project>
       <Name>WinUSBNet</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

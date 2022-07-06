@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -11,7 +10,6 @@ namespace Ei_Dimension.Controllers
   {
     private class ResultsTableController
     {
-      
       public bool NullTextboxActive;
       private MapRegionsController _parent;
       private ListBox _table;

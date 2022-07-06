@@ -63,6 +63,8 @@ namespace Ei_Dimension.ViewModels
     private bool _fillDataActive;
     public const int HIREZDEFINITION = 512;
 
+    private List<BeadInfoStruct> _cachedBeadStructsForLoadedData = new List<BeadInfoStruct>(100000);
+
     protected ResultsViewModel()
     {
       DisplaysCurrentmap = true;
@@ -351,17 +353,17 @@ namespace Ei_Dimension.ViewModels
           return;
         }
         InitBackingWellResults();
-        var beadStructsList = new List<BeadInfoStruct>(100000);
-        if(!ParseBeadInfo(path, beadStructsList))
+        _cachedBeadStructsForLoadedData.Clear();
+        if (!ParseBeadInfo(path, _cachedBeadStructsForLoadedData))
         {
           ResultsWaitIndicatorVisibility = false;
           ChartWaitIndicatorVisibility = false;
           _fillDataActive = false;
           return;
         }
-        _ = Task.Run(() => Core.DataProcessor.BinScatterData(beadStructsList, fromFile: true));
-        _ = Task.Run(() => Core.DataProcessor.CalculateStatistics(beadStructsList));
-        Core.DataProcessor.BinMapData(beadStructsList, current: false, hiRez);
+        _ = Task.Run(() => Core.DataProcessor.BinScatterData(_cachedBeadStructsForLoadedData, fromFile: true));
+        _ = Task.Run(() => Core.DataProcessor.CalculateStatistics(_cachedBeadStructsForLoadedData));
+        Core.DataProcessor.BinMapData(_cachedBeadStructsForLoadedData, current: false, hiRez);
         //DisplayedMap.Sort((x, y) => x.A.CompareTo(y.A));
         _ = App.Current.Dispatcher.BeginInvoke((Action)(() =>
         {
@@ -387,7 +389,7 @@ namespace Ei_Dimension.ViewModels
             _fillDataActive = false;
           }
         }));
-        MainViewModel.Instance.EventCountLocal[0] = beadStructsList.Count.ToString();
+        MainViewModel.Instance.EventCountLocal[0] = _cachedBeadStructsForLoadedData.Count.ToString();
       });
     }
 

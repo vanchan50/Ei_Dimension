@@ -35,17 +35,6 @@ namespace DIOS.Core
       };
     }
 
-    /// <summary>
-    /// Removes a range of elements from both sides of the list
-    /// </summary>
-    /// <param name="values"></param>
-    /// <param name="length">length of tails to remove</param>
-    private static void RemoveDistributionTails(this List<float> values, int length)
-    {
-      values.RemoveRange(values.Count - length, length);
-      values.RemoveRange(0, length);
-    }
-
     public static float Mean(this List<float> values, int startingIndex, int endIndex)
     {
       float avgSum = 0;
@@ -55,6 +44,17 @@ namespace DIOS.Core
         avgSum += values[i];
       }
       return avgSum / count;
+    }
+
+    /// <summary>
+    /// Removes a range of elements from both sides of the list
+    /// </summary>
+    /// <param name="values"></param>
+    /// <param name="length">length of tails to remove</param>
+    private static void RemoveDistributionTails(this List<float> values, int length)
+    {
+      values.RemoveRange(values.Count - length, length);
+      values.RemoveRange(0, length);
     }
 
     private static double SquaredSum(this List<float> values, float mean, int startingIndex, int endIndex)
