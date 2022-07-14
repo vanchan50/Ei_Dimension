@@ -196,6 +196,9 @@ namespace DIOS.Core
           _device.SelfTester.Data.SetPressure(cs.FParameter);
           _device.MainCommand("Set FProperty", code: 0x0C); //Reset Pressure, since firmware forgets to do that
           break;
+        case 0x1D:
+          _device.OnBeadConcentrationStatusUpdate(cs.Parameter);
+          break;
         case 0xF9:
           _device.SelfTester.ScriptFinishedSignal(cs.Command);
           break;

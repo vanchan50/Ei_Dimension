@@ -71,7 +71,8 @@ namespace DIOS.Core
     {
       var count = endIndex - startingIndex;
       var sqSum = values.SquaredSum(mean, startingIndex, endIndex);
-      double stdDev = Math.Sqrt(sqSum / count - 1);
+      double stdDev = Math.Sqrt(sqSum / (count - 1));
+
       return stdDev;
     }
 

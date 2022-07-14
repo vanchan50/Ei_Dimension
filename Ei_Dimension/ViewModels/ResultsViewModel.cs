@@ -448,7 +448,7 @@ namespace Ei_Dimension.ViewModels
         {
           if(reg == 0)
             continue;
-          BackingWResults.Add(new DIOS.Core.RegionReporterResult { regionNumber = (ushort)reg });
+          BackingWResults.Add(new RegionReporterResult { regionNumber = (ushort)reg });
         }
       }
     }
@@ -492,19 +492,18 @@ namespace Ei_Dimension.ViewModels
         MainViewModel.Instance.EventCountField = MainViewModel.Instance.EventCountCurrent;
         DisplayedMfiItems = CurrentMfiItems;
         DisplayedCvItems = CurrentCvItems;
+        return;
       }
-      else
+
+      if (App.MapRegions != null)
       {
-        if (App.MapRegions != null)
-        {
-          ResultsWaitIndicatorVisibility = true;
-          ChartWaitIndicatorVisibility = true;
-          ActiveRegionsStatsController.Instance.DisplayCurrentBeadStats(current: false);
-        }
-        MainViewModel.Instance.EventCountField = MainViewModel.Instance.EventCountLocal;
-        DisplayedMfiItems = BackingMfiItems;
-        DisplayedCvItems = BackingCvItems;
+        ResultsWaitIndicatorVisibility = true;
+        ChartWaitIndicatorVisibility = true;
+        ActiveRegionsStatsController.Instance.DisplayCurrentBeadStats(current: false);
       }
+      MainViewModel.Instance.EventCountField = MainViewModel.Instance.EventCountLocal;
+      DisplayedMfiItems = BackingMfiItems;
+      DisplayedCvItems = BackingCvItems;
     }
 
     /// <summary>

@@ -27,6 +27,7 @@ namespace DIOS.Core
       switch (_state)
       {
         case State.Reset:
+          _device.MainCommand("Get Property", code: 0x1D);
           //Skip the tick
           return;
         case State.Start:

@@ -524,6 +524,9 @@
     <None Include="Maps\D100Aplex.dmap">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Maps\D100Bplex.dmap">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Maps\ULBG50B.dmap">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

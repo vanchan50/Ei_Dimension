@@ -14,7 +14,8 @@ namespace Ei_Dimension.Core
     private static SolidColorBrush[] _heatColors;
     private static readonly char[] _separator = {','};
     private static readonly double[] _bins;
-    private const string _100plexMapName = "D100Aplex";
+    private const string _100plexAMapName = "D100Aplex";
+    private const string _100plexBMapName = "D100Bplex";
     private static readonly HashSet<int> WeightedRegions = new HashSet<int> {1,2,3,4,5,6,7,8,10,11,16,17,23,24,31,32,40,41,50,60,71};
     static  DataProcessor()
     {
@@ -293,7 +294,7 @@ namespace Ei_Dimension.Core
       }
     }
 
-    public static void BinMapData(List<DIOS.Core.BeadInfoStruct> beadInfoList, bool current = true, bool hiRez = false)
+    public static void BinMapData(List<BeadInfoStruct> beadInfoList, bool current = true, bool hiRez = false)
     {
       //Puts points to Lists instead of filling 256x256 arrays.
       //traversing [,] array would be a downside, and condition check would also be included for every step.
@@ -372,7 +373,8 @@ namespace Ei_Dimension.Core
 
     private static bool AddWeightToRegions(ushort region)
     {
-      if (App.Device.MapCtroller.ActiveMap.mapName != _100plexMapName)
+      if (App.Device.MapCtroller.ActiveMap.mapName != _100plexAMapName
+          && App.Device.MapCtroller.ActiveMap.mapName != _100plexBMapName)
         return false;
       if(WeightedRegions.Contains(region))
         return true;

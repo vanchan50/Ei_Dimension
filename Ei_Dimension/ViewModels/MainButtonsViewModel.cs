@@ -73,6 +73,8 @@ namespace Ei_Dimension.ViewModels
             //this adds region0 to ActiveRegionNums
             SelectNullRegion();
           }
+          if (FileSaveViewModel.Instance.Checkboxes[4])
+            MapRegionsController.ActiveRegionNums.Add(0);
           //DefaultRegionNaming();
           regions = MapRegionsController.ActiveRegionNums;
           break;
@@ -91,6 +93,7 @@ namespace Ei_Dimension.ViewModels
           MakeNewValidator();
           break;
       }
+      MainViewModel.Instance.NavigationSelector(1);
 
       App.Device.Results.SetupRunRegions(regions);
       StartButtonEnabled = false;
@@ -103,7 +106,6 @@ namespace Ei_Dimension.ViewModels
         ResultsViewModel.Instance.CurrentMfiItems[i] = "";
         ResultsViewModel.Instance.CurrentCvItems[i] = "";
       }
-      MainViewModel.Instance.NavigationSelector(1);
       if (App.Device.Normalization.IsEnabled)
         Console.WriteLine("Normalization Enabled");
       else

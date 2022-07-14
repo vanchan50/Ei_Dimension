@@ -2,6 +2,7 @@
 using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Media;
 
@@ -27,10 +28,14 @@ namespace Ei_Dimension.ViewModels
     public virtual Visibility ServiceVisibility { get; set; }
     public int ServiceVisibilityCheck { get; set; }
     public bool TouchControlsEnabled { get; set; }
+    public virtual int BeadConcentrationMonitorValue { get; protected set; } = 130;
+    public virtual Brush BeadConcentrationMonitorColor { get; protected set; } = _RegularBrush;
 
     private static Brush _activeBrush = Brushes.Green;
     private static Brush _inactiveBrush = Brushes.Gray;
-    public const string BUILD = "1.3.1";
+    private static Brush _RegularBrush = (Brush)App.Current.Resources["MenuButtonBackgroundActive"];
+    private static Brush _WarningBrush = Brushes.DarkRed;
+    public const string BUILD = "1.3.2";
 
     public static MainViewModel Instance { get; private set; }
     private INavigationService NavigationService => this.GetService<INavigationService>();
@@ -152,12 +157,25 @@ namespace Ei_Dimension.ViewModels
       NormalizationMarkerColor = _inactiveBrush;
     }
 
+    public void SetBeadConcentrationMonitorValue(int value)
+    {
+      Debug.Assert(value >= 0 && value <= 255);
+
+      BeadConcentrationMonitorValue = value;
+      if (value >= 250)
+      {
+        BeadConcentrationMonitorColor = _WarningBrush;
+        return;
+      }
+      BeadConcentrationMonitorColor = _RegularBrush;
+    }
+
     public void NumpadToggleButton(System.Windows.Controls.TextBox tb)
     {
       HintHide();
       if (TouchControlsEnabled)
       {
-        tb.CaretBrush = System.Windows.Media.Brushes.Transparent;
+        tb.CaretBrush = Brushes.Transparent;
         var p = tb.PointToScreen(MainWindow.Instance.wndw.PointFromScreen(new Point(0, 0)));
         double shiftX;
         double shiftY;
@@ -179,7 +197,7 @@ namespace Ei_Dimension.ViewModels
       }
       else
       {
-        tb.CaretBrush = (System.Windows.Media.Brush)App.Current.Resources["AppTextColor"];
+        tb.CaretBrush = (Brush)App.Current.Resources["AppTextColor"];
         tb.SelectAll();
       }
     }
@@ -189,7 +207,7 @@ namespace Ei_Dimension.ViewModels
       HintHide();
       if (TouchControlsEnabled)
       {
-        tb.CaretBrush = System.Windows.Media.Brushes.Transparent;
+        tb.CaretBrush = Brushes.Transparent;
         var p = tb.PointToScreen(MainWindow.Instance.wndw.PointFromScreen(new Point(0, 0)));
         double shiftX;
         double shiftY;
@@ -219,14 +237,14 @@ namespace Ei_Dimension.ViewModels
       }
       else
       {
-        tb.CaretBrush = (System.Windows.Media.Brush)App.Current.Resources["AppTextColor"];
+        tb.CaretBrush = (Brush)App.Current.Resources["AppTextColor"];
         tb.SelectAll();
       }
     }
 
     public void HintShow(string text, System.Windows.Controls.TextBox tb)
     {
-      var p = tb.PointToScreen(MainWindow.Instance.wndw.PointFromScreen(new System.Windows.Point(0, 0)));
+      var p = tb.PointToScreen(MainWindow.Instance.wndw.PointFromScreen(new Point(0, 0)));
       double shiftX = 0;
       double shiftY = -30;
 

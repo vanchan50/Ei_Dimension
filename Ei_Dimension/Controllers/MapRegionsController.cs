@@ -65,6 +65,8 @@ namespace Ei_Dimension.Controllers
       bldr.Append("\"Sample\",");
       foreach (var region in RegionsList)
       {
+        if (region.Number == 0)
+          continue;
         if(ActiveRegionNums.Contains(region.Number))
           bldr.Append($"\"{region.GetLegacyHeader()}\",");
       }
