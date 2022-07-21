@@ -307,12 +307,12 @@ namespace Ei_Dimension.Core
       while (i < beadInfoList.Count)
       {
         var region = beadInfoList[i].region;
-        /*
-        int cl0 = Array.BinarySearch(bins, bead.cl0);
+
+        int cl0 = Array.BinarySearch(bins, beadInfoList[i].cl0);
         if (cl0 < 0)
           cl0 = ~cl0;
         cl0 = cl0 > boundary ? boundary : cl0;
-        */
+
         int cl1 = Array.BinarySearch(bins, beadInfoList[i].cl1);
         if (cl1 < 0)
           cl1 = ~cl1;
@@ -332,6 +332,8 @@ namespace Ei_Dimension.Core
         //{
         //  HeatMap.AddPoint((cl1, cl2), bins, mapIndex, current);
         //}
+        HeatMap.AddPoint((cl0, cl1), bins, MapIndex.CL01, current);
+        HeatMap.AddPoint((cl0, cl2), bins, MapIndex.CL02, current);
         HeatMap.AddPoint((cl1, cl2), bins, MapIndex.CL12, current);
 
         //More weight to points on 100Plex lowerleft regions

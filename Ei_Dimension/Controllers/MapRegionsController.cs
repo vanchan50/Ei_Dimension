@@ -58,6 +58,12 @@ namespace Ei_Dimension.Controllers
       FillRegions();
     }
 
+    public static bool AreThereActiveRegions()
+    {
+      return !(ActiveRegionNums.Count == 0
+        || (ActiveRegionNums.Count == 1 && ActiveRegionNums.Contains(0)));
+    }
+
     public static string GetLegacyReportHeader()
     {
       var bldr = new StringBuilder();

@@ -1,8 +1,5 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.IO;
-using System.Text;
 
 namespace DIOS.Core
 {
@@ -154,12 +151,12 @@ namespace DIOS.Core
 
       try
       {
+        var contents = _device.Results.PlateReport.JSONify();
         var fileName = $"{directoryName}" +
                        "\\Summary_" + rfilename + "_" + Date + ".json";
         using (TextWriter jwriter = new StreamWriter(fileName))
         {
-          var jcontents = JsonConvert.SerializeObject(_device.Results.PlateReport);
-          jwriter.Write(jcontents);
+          jwriter.Write(contents);
           Console.WriteLine($"Plate Report saved as {fileName}");
         }
       }

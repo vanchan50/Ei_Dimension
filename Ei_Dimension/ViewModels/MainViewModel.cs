@@ -35,7 +35,7 @@ namespace Ei_Dimension.ViewModels
     private static Brush _inactiveBrush = Brushes.Gray;
     private static Brush _RegularBrush = (Brush)App.Current.Resources["MenuButtonBackgroundActive"];
     private static Brush _WarningBrush = Brushes.DarkRed;
-    public const string BUILD = "1.3.2";
+    public const string BUILD = "1.3.2.3";
 
     public static MainViewModel Instance { get; private set; }
     private INavigationService NavigationService => this.GetService<INavigationService>();

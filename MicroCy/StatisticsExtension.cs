@@ -20,11 +20,13 @@ namespace DIOS.Core
 
         median = values[half];
         mean = values.Mean(quarter, endIndex);
-        coeffVar = values.CalculateCoefficientVariable(mean, quarter, endIndex);
+        var average = values.Mean();
+        //CV is properly calculated via mean, but to comply to Lmnx, it is calculated via the average
+        coeffVar = values.CalculateCoefficientVariable(average, 0, count);
       }
       else if (count > 0)
       {
-        mean = values.Mean(0, count);
+        mean = values.Mean();
       }
 
       return new DistributionStats
@@ -44,6 +46,11 @@ namespace DIOS.Core
         avgSum += values[i];
       }
       return avgSum / count;
+    }
+
+    public static float Mean(this List<float> values)
+    {
+      return values.Mean(0, values.Count);
     }
 
     /// <summary>

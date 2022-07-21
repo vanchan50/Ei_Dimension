@@ -244,21 +244,23 @@ namespace Ei_Dimension
     private static Models.WellType GetWellStateForPictogram()
     {
       var type = Models.WellType.Success;
-      if (Device.Mode == OperationMode.Normal && Device.TerminationType == Termination.MinPerRegion)
+
+      if (Device.Mode != OperationMode.Normal
+          || Device.TerminationType != Termination.MinPerRegion)
+        return type;
+
+      var lacking = Device.Results.MinPerRegionAchieved();
+      //not achieved
+      if (lacking < 0)
       {
-        var lacking = Device.Results.MinPerRegionAchieved();
-        //not achieved
-        if (lacking < 0)
+        //if lacking more then 25% of minperregion beads 
+        if (-lacking > Device.MinPerRegion * 0.25)
         {
-          //if lacking more then 25% of minperregion beads 
-          if (-lacking > Device.MinPerRegion * 0.25)
-          {
-            type = Models.WellType.Fail;
-          }
-          else
-          {
-            type = Models.WellType.LightFail;
-          }
+          type = Models.WellType.Fail;
+        }
+        else
+        {
+          type = Models.WellType.LightFail;
         }
       }
       return type;

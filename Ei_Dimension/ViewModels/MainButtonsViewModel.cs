@@ -45,8 +45,7 @@ namespace Ei_Dimension.ViewModels
       UserInputHandler.InputSanityCheck();
       //TODO: bad design, contains 0 can never happen here
       if (App.Device.TerminationType == Termination.MinPerRegion
-          && (MapRegionsController.ActiveRegionNums.Count == 0
-              || (MapRegionsController.ActiveRegionNums.Count == 1 && MapRegionsController.ActiveRegionNums.Contains(0)))) 
+          && !MapRegionsController.AreThereActiveRegions()) 
       {
         var msg = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Messages_MinPerReg_RequiresAtLeast1),
           Language.TranslationSource.Instance.CurrentCulture);
@@ -68,12 +67,12 @@ namespace Ei_Dimension.ViewModels
       switch (App.Device.Mode)
       {
         case OperationMode.Normal:
-          if (MapRegionsController.ActiveRegionNums.Count == 0)
+          if (!MapRegionsController.AreThereActiveRegions())
           {
             //this adds region0 to ActiveRegionNums
             SelectNullRegion();
           }
-          if (FileSaveViewModel.Instance.Checkboxes[4])
+          if (FileSaveViewModel.Instance.Checkboxes[4]) //TODO: reg0 should always be in the active list; the flag should control only the output
             MapRegionsController.ActiveRegionNums.Add(0);
           //DefaultRegionNaming();
           regions = MapRegionsController.ActiveRegionNums;
@@ -86,7 +85,8 @@ namespace Ei_Dimension.ViewModels
         case OperationMode.Verification:
           if (MapRegionsController.ActiveVerificationRegionNums.Count != 4)
           {
-            Notification.ShowError($"{MapRegionsController.ActiveVerificationRegionNums.Count} out of 4 Verification Regions selected\nPlease select 4 Verification Regions");
+            Notification.ShowError($"{MapRegionsController.ActiveVerificationRegionNums.Count} " +
+                                   "out of 4 Verification Regions selected\nPlease select 4 Verification Regions");
             return;
           }
           App.MapRegions.RemoveNullTextBoxes();

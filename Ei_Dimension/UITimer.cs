@@ -52,7 +52,8 @@ namespace Ei_Dimension
         {
           Header = 0xadbeadbe,
           fsc = 2.36f,
-          cl1 = r.Next(1450,1700),
+          cl0 = r.Next(1050, 1300),
+          cl1 = r.Next(1450, 1700),
           cl2 = r.Next(1500, 1650),
           greenB = (ushort)r.Next(9, 12),
           greenC = 48950
@@ -61,6 +62,7 @@ namespace Ei_Dimension
         {
           Header = 0xadbeadbe,
           fsc = 15.82f,
+          cl0 = 250f,
           cl1 = 500f,
           cl2 = 500f,
           greenB = (ushort)r.Next(80,150),

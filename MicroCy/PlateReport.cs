@@ -70,5 +70,10 @@ namespace DIOS.Core
       }
       return bldr.ToString();
     }
+
+    public string JSONify()
+    {
+      return JsonConvert.SerializeObject(this);
+    }
   }
 }
