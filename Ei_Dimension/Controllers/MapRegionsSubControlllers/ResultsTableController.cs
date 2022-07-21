@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using Ei_Dimension.Models;
 
 namespace Ei_Dimension.Controllers
 {
@@ -82,7 +83,7 @@ namespace Ei_Dimension.Controllers
           Binding bind = new Binding
           {
             Source = _parent,
-            Path = new PropertyPath("RegionsList[0].Name[0]"),
+            Path = new PropertyPath($"{nameof(RegionsList)}[0].{nameof(MapRegionData.Name)}[0]"),
             UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
           };
           AddRegion("__0", bind);
@@ -132,7 +133,8 @@ namespace Ei_Dimension.Controllers
           IsReadOnly = true,
           Margin = _TbAlignment
         };
-        SetupBinding(tb, ActiveRegionsStatsController.Instance, $"DisplayedActiveRegionsCount[{index}]", BindingMode.OneWay);
+        var source = ActiveRegionsStatsController.Instance;
+        SetupBinding(tb, source, $"{nameof(source.DisplayedActiveRegionsCount)}[{index}]", BindingMode.OneWay);
         return tb;
       }
 
@@ -147,7 +149,8 @@ namespace Ei_Dimension.Controllers
           IsReadOnly = true,
           Margin = _TbAlignment
         };
-        SetupBinding(tb, ActiveRegionsStatsController.Instance, $"DisplayedActiveRegionsMean[{index}]", BindingMode.OneWay);
+        var source = ActiveRegionsStatsController.Instance;
+        SetupBinding(tb, source, $"{nameof(source.DisplayedActiveRegionsMean)}[{index}]", BindingMode.OneWay);
         return tb;
       }
     }
