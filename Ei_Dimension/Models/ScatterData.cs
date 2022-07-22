@@ -72,8 +72,8 @@ namespace Ei_Dimension.Models
 
     public static ScatterData Create()
     {
-      ViewModels.ResultsViewModel.Instance.ScttrData = ViewModelSource.Create(() => new ScatterData());
-      return ViewModels.ResultsViewModel.Instance.ScttrData;
+      ViewModels.ScatterChartViewModel.Instance.ScttrData = ViewModelSource.Create(() => new ScatterData());
+      return ViewModels.ScatterChartViewModel.Instance.ScttrData;
     }
 
     public void DisplayCurrent(bool current = true)

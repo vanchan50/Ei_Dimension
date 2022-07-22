@@ -46,45 +46,16 @@ namespace Ei_Dimension.Views
     {
       ChC.AxisX.Title.Visible = true;
       ChC.AxisY.Title.Visible = true;
-      Export(XYPlot, resoultionDpi);
+      App.Export(XYPlot, resoultionDpi);
       ChC.AxisX.Title.Visible = false;
       ChC.AxisY.Title.Visible = false;
       printXY.Visibility = Visibility.Hidden;
     }
 
-    public void PrintScatter(int resoultionDpi = 800)
-    {
-      Export(ScatterPlot, resoultionDpi);
-      printSC.Visibility = Visibility.Hidden;
-    }
-
     public void Print3D(int resoultionDpi = 800)
     {
-      Export(AnalysisPlot, resoultionDpi);
+      App.Export(AnalysisPlot, resoultionDpi);
       printAnalysis.Visibility = Visibility.Hidden;
-    }
-
-    private void Export(ChartControlBase chart, in int dpi)
-    {
-      var options = new DevExpress.XtraPrinting.ImageExportOptions
-      {
-        TextRenderingMode = DevExpress.XtraPrinting.TextRenderingMode.SingleBitPerPixelGridFit,
-        Resolution = dpi,
-        Format = new System.Drawing.Imaging.ImageFormat(System.Drawing.Imaging.ImageFormat.Png.Guid)
-      };
-      string date = DateTime.Now.ToString("dd.MM.yyyy.hh-mm-ss", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"));
-      try
-      {
-        App.Device.Publisher.OutDirCheck();
-        if (!Directory.Exists(App.Device.Publisher.Outdir + "\\SavedImages"))
-          Directory.CreateDirectory(App.Device.Publisher.Outdir + "\\SavedImages");
-        chart.ExportToImage(App.Device.Publisher.Outdir + @"\SavedImages\" + date + ".png", options);
-      }
-      catch
-      {
-        App.Current.Dispatcher.Invoke(() =>
-          Notification.Show("Save failed"));
-      }
     }
 
     public void ShowSmallXYPlot()
@@ -117,16 +88,6 @@ namespace Ei_Dimension.Views
     private void XYPlot_MouseLeave(object sender, MouseEventArgs e)
     {
       printXY.Visibility = Visibility.Hidden;
-    }
-
-    private void Grid_MouseEnter(object sender, MouseEventArgs e)
-    {
-      printSC.Visibility = Visibility.Visible;
-    }
-
-    private void Grid_MouseLeave(object sender, MouseEventArgs e)
-    {
-      printSC.Visibility = Visibility.Hidden;
     }
 
     private void Plot3D_MouseEnter(object sender, MouseEventArgs e)

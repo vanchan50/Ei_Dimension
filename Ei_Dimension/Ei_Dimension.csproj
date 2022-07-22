@@ -263,6 +263,7 @@
     <Compile Include="ViewModels\NotificationViewModel.cs" />
     <Compile Include="ViewModels\NumpadViewModel.cs" />
     <Compile Include="ViewModels\ResultsViewModel.cs" />
+    <Compile Include="ViewModels\ScatterChartViewModel.cs" />
     <Compile Include="ViewModels\ScreenKeyboardViewModel.cs" />
     <Compile Include="ViewModels\SelRegionsViewModel.cs" />
     <Compile Include="ViewModels\TemplateSelectViewModel.cs" />
@@ -317,6 +318,9 @@
     </Compile>
     <Compile Include="Views\NumpadView.xaml.cs">
       <DependentUpon>NumpadView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ScatterChartView.xaml.cs">
+      <DependentUpon>ScatterChartView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ScreenKeyboardView.xaml.cs">
       <DependentUpon>ScreenKeyboardView.xaml</DependentUpon>
@@ -473,6 +477,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\NumpadView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ScatterChartView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

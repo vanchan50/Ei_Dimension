@@ -248,7 +248,7 @@ namespace Ei_Dimension.Core
 
       _ = App.Current.Dispatcher.BeginInvoke((Action)(() =>
       {
-        ResultsViewModel.Instance.ScttrData.FillCurrentData(fromFile);
+        ScatterChartViewModel.Instance.ScttrData.FillCurrentData(fromFile);
         if (fromFile)
         {
           var j = 0;

@@ -20,8 +20,6 @@ namespace Ei_Dimension.ViewModels
     public virtual System.Windows.Visibility ValidationCoverVisible { get; set; }
     public virtual bool ResultsWaitIndicatorVisibility { get; set; }
     public virtual bool ChartWaitIndicatorVisibility { get; set; }
-    public virtual ObservableCollection<bool> ScatterSelectorState { get; set; }
-    public ScatterData ScttrData { get; set; }
     public WorldMap WrldMap { get; set; }
     public virtual ObservableCollection<DoubleHeatMapData> DisplayedAnalysisMap { get; set; }
     public virtual ObservableCollection<DoubleHeatMapData> CurrentAnalysis01Map { get; set; }
@@ -68,43 +66,16 @@ namespace Ei_Dimension.ViewModels
     protected ResultsViewModel()
     {
       DisplaysCurrentmap = true;
-      ScatterSelectorState = new ObservableCollection<bool> { false, false, false, false, false };
       ResultsWaitIndicatorVisibility = false;
       ChartWaitIndicatorVisibility = false;
       MultiPlexVisible = System.Windows.Visibility.Visible;
       SinglePlexVisible = System.Windows.Visibility.Hidden;
       ValidationCoverVisible = System.Windows.Visibility.Hidden;
       PlexButtonString = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Experiment_Active_Regions), Language.TranslationSource.Instance.CurrentCulture);
-      byte temp = Settings.Default.ScatterGraphSelector;
-      if (temp >= 16)
-      {
-        ScatterSelectorState[4] = true;
-        temp -= 16;
-      }
-      if (temp >= 8)
-      {
-        ScatterSelectorState[3] = true;
-        temp -= 8;
-      }
-      if (temp >= 4)
-      {
-        ScatterSelectorState[2] = true;
-        temp -= 4;
-      }
-      if (temp >= 2)
-      {
-        ScatterSelectorState[1] = true;
-        temp -= 2;
-      }
-      if (temp >= 1)
-      {
-        ScatterSelectorState[0] = true;
-      }
 
       Instance = this;
 
       WorldMap.Create();
-      ScatterData.Create();
 
       CurrentAnalysis01Map = new ObservableCollection<DoubleHeatMapData>();
       CurrentAnalysis02Map = new ObservableCollection<DoubleHeatMapData>();
@@ -249,7 +220,7 @@ namespace Ei_Dimension.ViewModels
 
     public void ClearGraphs(bool current = true)
     {
-      ScttrData.ClearData(current);
+      ScatterChartViewModel.Instance.ScttrData.ClearData(current);
       HeatMap.Clear(current);
       if (current)
       {
@@ -294,19 +265,6 @@ namespace Ei_Dimension.ViewModels
       PlotCurrent(false);
       ClearGraphs(false);
       FillAllData();
-    }
-
-    public void ChangeScatterLegend(int num)  //TODO: For buttons
-    {
-      ScatterSelectorState[num] = !ScatterSelectorState[num];
-      var res = 0;
-      res += ScatterSelectorState[0] ? 1 : 0;
-      res += ScatterSelectorState[1] ? 2 : 0;
-      res += ScatterSelectorState[2] ? 4 : 0;
-      res += ScatterSelectorState[3] ? 8 : 0;
-      res += ScatterSelectorState[4] ? 16 : 0;
-      Settings.Default.ScatterGraphSelector = (byte)res;
-      Settings.Default.Save();
     }
 
     private bool ParseBeadInfo(string path, List<BeadInfoStruct> beadStructs)
@@ -476,7 +434,7 @@ namespace Ei_Dimension.ViewModels
     {
       DisplaysCurrentmap = current;
       SetDisplayedMap();
-      ScttrData.DisplayCurrent(current);
+      ScatterChartViewModel.Instance.ScttrData.DisplayCurrent(current);
       if (current)
       {
         Views.ResultsView.Instance.DrawingPlate.UnselectAllCells();
@@ -773,11 +731,6 @@ namespace Ei_Dimension.ViewModels
     public void XYprint()
     {
       Views.ResultsView.Instance.PrintXY();
-    }
-
-    public void Scatterprint()
-    {
-      Views.ResultsView.Instance.PrintScatter();
     }
 
     public void AnalysisPrint()

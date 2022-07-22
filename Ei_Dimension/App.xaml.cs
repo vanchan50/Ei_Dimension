@@ -131,6 +131,29 @@ namespace Ei_Dimension
       Settings.Default.Save();
     }
 
+    public static void Export(DevExpress.Xpf.Charts.ChartControlBase chart, in int dpi)
+    {
+      var options = new DevExpress.XtraPrinting.ImageExportOptions
+      {
+        TextRenderingMode = DevExpress.XtraPrinting.TextRenderingMode.SingleBitPerPixelGridFit,
+        Resolution = dpi,
+        Format = new System.Drawing.Imaging.ImageFormat(System.Drawing.Imaging.ImageFormat.Png.Guid)
+      };
+      string date = DateTime.Now.ToString("dd.MM.yyyy.hh-mm-ss", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"));
+      try
+      {
+        App.Device.Publisher.OutDirCheck();
+        if (!Directory.Exists(App.Device.Publisher.Outdir + "\\SavedImages"))
+          Directory.CreateDirectory(App.Device.Publisher.Outdir + "\\SavedImages");
+        chart.ExportToImage(App.Device.Publisher.Outdir + @"\SavedImages\" + date + ".png", options);
+      }
+      catch
+      {
+        App.Current.Dispatcher.Invoke(() =>
+          Notification.Show("Save failed"));
+      }
+    }
+
     public static void HideNumpad()
     {
       UserInputHandler.InputSanityCheck();

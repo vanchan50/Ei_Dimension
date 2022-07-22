@@ -1,0 +1,144 @@
+﻿<UserControl x:Class="Ei_Dimension.Views.ScatterChartView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+             xmlns:ViewModels="clr-namespace:Ei_Dimension.ViewModels"
+             xmlns:lang="clr-namespace:Ei_Dimension.Language;assembly=Language"
+             xmlns:dxc="http://schemas.devexpress.com/winfx/2008/xaml/charts"
+             xmlns:styles="clr-namespace:Ei_Dimension.Styles"
+             xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+             mc:Ignorable="d"
+             DataContext="{dxmvvm:ViewModelSource Type=ViewModels:ScatterChartViewModel}"
+             d:DesignHeight="472" d:DesignWidth="740">
+
+  <Grid MouseEnter="Grid_MouseEnter"
+        MouseLeave="Grid_MouseLeave">
+    <dxc:ChartControl Width="740" Height="472"
+                      HorizontalAlignment="Left"
+                      VerticalAlignment="Top"
+                      Focusable="False" Name="ScatterPlot"
+                      BorderThickness="0">
+      <dxc:ChartControl.Legends>
+        <dxc:Legend HorizontalPosition="Left"
+                    MarkerMode="CheckBox"
+                    Orientation="Horizontal"
+                    Margin="200,-28,0,0"
+                    FontSize="24"
+                    Background="Transparent"
+                    BorderBrush="Transparent"
+                    VerticalPosition="Top"
+                    Focusable="False"
+                    Width="350" Visible="True"/>
+      </dxc:ChartControl.Legends>
+      <dxc:XYDiagram2D Focusable="False"
+                         Width="690" Height="460"
+                         HorizontalAlignment="Left"
+                         VerticalAlignment="Top"
+                         Margin="18,-20,0,0">
+        <dxc:XYDiagram2D.AxisY>
+          <dxc:AxisY2D Interlaced="False"
+                         TickmarksMinorVisible="False"
+                         Logarithmic="True"
+                         TickmarksVisible="False"
+                         FontFamily="{StaticResource AppTextFont}"
+                         GridLinesMinorVisible="True"
+                         GridLinesVisible="True"
+                         MinorCount="8">
+            <dxc:AxisY2D.WholeRange>
+              <dxc:Range MinValue="1"
+                           MaxValue="100000"
+                           AutoSideMargins="False"
+                           dxc:AxisY2D.AlwaysShowZeroLevel="False"/>
+            </dxc:AxisY2D.WholeRange>
+            <dxc:AxisY2D.VisualRange>
+              <dxc:Range MinValue="1"
+                           MaxValue="100000"
+                           AutoSideMargins="False"/>
+            </dxc:AxisY2D.VisualRange>
+            <dxc:AxisY2D.Label>
+              <dxc:AxisLabel FontSize="24"/>
+            </dxc:AxisY2D.Label>
+            <dxc:AxisY2D.Title>
+              <dxc:AxisTitle Content="{lang:Loc Results_Count_Graph}"
+                             FontSize="30"
+                             Foreground="{StaticResource AppTextColor}"
+                             FontWeight="UltraBold"
+                             Visible="True"/>
+            </dxc:AxisY2D.Title>
+          </dxc:AxisY2D>
+        </dxc:XYDiagram2D.AxisY>
+        <dxc:XYDiagram2D.AxisX>
+          <dxc:AxisX2D TickmarksMinorVisible="False"
+                         TickmarksVisible="False"
+                         Logarithmic="True" Width="640"
+                         FontFamily="{StaticResource AppTextFont}"
+                         GridLinesMinorVisible="True"
+                         GridLinesVisible="True"
+                         MinorCount="8">
+            <dxc:AxisX2D.Label>
+              <dxc:AxisLabel FontSize="24"/>
+            </dxc:AxisX2D.Label>
+            <dxc:AxisX2D.Title>
+              <dxc:AxisTitle Content="{lang:Loc Results_Value_Graph}"
+                             FontSize="30"
+                             Foreground="{StaticResource AppTextColor}"
+                             FontWeight="UltraBold"
+                             Visible="True"/>
+            </dxc:AxisX2D.Title>
+            <dxc:AxisX2D.WholeRange>
+              <dxc:Range MinValue="1"
+                           MaxValue="1000000"
+                           AutoSideMargins="False"
+                           dxc:AxisY2D.AlwaysShowZeroLevel="False"/>
+            </dxc:AxisX2D.WholeRange>
+            <dxc:AxisX2D.VisualRange>
+              <dxc:Range MinValue="1"
+                           MaxValue="1000000"
+                           AutoSideMargins="False"/>
+            </dxc:AxisX2D.VisualRange>
+          </dxc:AxisX2D>
+        </dxc:XYDiagram2D.AxisX>
+        <dxc:LineSeries2D DataSource="{Binding ScttrData.DisplayedRedSsc}"
+                          ValueDataMember="Value"
+                          ArgumentDataMember="Argument"
+                          DisplayName="{lang:Loc Red}"
+                          Brush="Red"
+                          CheckedInLegend="{Binding ScatterSelectorState[0]}"/>
+        <dxc:LineSeries2D DataSource="{Binding ScttrData.DisplayedGreenSsc}"
+                          ValueDataMember="Value"
+                          ArgumentDataMember="Argument"
+                          DisplayName="{lang:Loc Green}"
+                          Brush="Green"
+                          CheckedInLegend="{Binding ScatterSelectorState[1]}"/>
+        <dxc:LineSeries2D DataSource="{Binding ScttrData.DisplayedVioletSsc}"
+                          ValueDataMember="Value"
+                          ArgumentDataMember="Argument"
+                          DisplayName="{lang:Loc Violet}"
+                          Brush="DarkViolet"
+                          CheckedInLegend="{Binding ScatterSelectorState[2]}"/>
+        <dxc:LineSeries2D DataSource="{Binding ScttrData.DisplayedForwardSsc}"
+                          ValueDataMember="Value"
+                          ArgumentDataMember="Argument"
+                          DisplayName="{lang:Loc Channels_Forward_Scatter}"
+                          Brush="Chocolate"
+                          CheckedInLegend="{Binding ScatterSelectorState[3]}"/>
+        <dxc:LineSeries2D DataSource="{Binding ScttrData.DisplayedReporter}"
+                          ValueDataMember="Value"
+                          ArgumentDataMember="Argument"
+                          DisplayName="{lang:Loc Verification_Table_Reporter}"
+                          Brush="Black"
+                          CheckedInLegend="{Binding ScatterSelectorState[4]}"/>
+      </dxc:XYDiagram2D>
+    </dxc:ChartControl>
+    <Button Width="50" Height="50"
+              HorizontalAlignment="Left"
+              VerticalAlignment="Top" Visibility="Hidden"
+              Margin="171,23,0,0" Name="printSC"
+              Command="{Binding ScatterprintCommand}"
+              Style="{StaticResource PrintButtonStyle}"
+              styles:EmbeddedImg.Image="{dx:DXImage 'SvgImages/XAF/Action_Export_ToImage.svg'}">
+    </Button>
+  </Grid>
+</UserControl>
