@@ -98,9 +98,9 @@ namespace Ei_Dimension.ViewModels
       App.Device.Results.SetupRunRegions(regions);
       StartButtonEnabled = false;
       ResultsViewModel.Instance.ClearGraphs();
-      ResultsViewModel.Instance.PlatePictogram.Clear();
+      PlatePictogramViewModel.Instance.PlatePictogram.Clear();
       ResultsViewModel.Instance.PlotCurrent();
-      ResultsViewModel.Instance.PlatePictogram.SetWellsForReading(wells);
+      PlatePictogramViewModel.Instance.PlatePictogram.SetWellsForReading(wells);
       for(var i = 0; i < 10; i++)
       {
         ResultsViewModel.Instance.CurrentMfiItems[i] = "";

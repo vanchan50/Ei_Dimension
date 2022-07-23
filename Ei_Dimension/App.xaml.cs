@@ -225,12 +225,12 @@ namespace Ei_Dimension
 
       //ResultsViewModel.Instance.PlatePictogramIsCovered = Visibility.Visible; //TODO: temporary solution
 
-      ResultsViewModel.Instance.PlatePictogram.CurrentlyReadCell = (row, col);
-      ResultsViewModel.Instance.PlatePictogram.ChangeState(row, col, Models.WellType.NowReading, GetWarningState(), FilePath: e.FilePath);
+      PlatePictogramViewModel.Instance.PlatePictogram.CurrentlyReadCell = (row, col);
+      PlatePictogramViewModel.Instance.PlatePictogram.ChangeState(row, col, Models.WellType.NowReading, GetWarningState(), FilePath: e.FilePath);
       
       App.Current.Dispatcher.Invoke(() =>
       {
-        ResultsViewModel.Instance.CornerButtonClick(Models.DrawingPlate.CalculateCorner(row, col));
+        PlatePictogramViewModel.Instance.CornerButtonClick(Models.DrawingPlate.CalculateCorner(row, col));
         ResultsViewModel.Instance.ClearGraphs();
       });
       ActiveRegionsStatsController.Instance.ResetCurrentActiveRegionsDisplayedStats();
@@ -255,8 +255,8 @@ namespace Ei_Dimension
       //Cache.Store(row, col);
       //ResultsViewModel.Instance.PlatePictogramIsCovered = Visibility.Hidden; //TODO: temporary solution
 
-      ResultsViewModel.Instance.PlatePictogram.CurrentlyReadCell = (-1, -1);
-      ResultsViewModel.Instance.PlatePictogram.ChangeState(row, col, type);
+      PlatePictogramViewModel.Instance.PlatePictogram.CurrentlyReadCell = (-1, -1);
+      PlatePictogramViewModel.Instance.PlatePictogram.ChangeState(row, col, type);
       SavePlateState();
       if (Device.Control == SystemControl.WorkOrder)
       {
@@ -292,7 +292,7 @@ namespace Ei_Dimension
     public void FinishedMeasurementEventHandler(object sender, EventArgs e)
     {
       MainButtonsViewModel.Instance.StartButtonEnabled = true;
-      ResultsViewModel.Instance.PlatePictogram.CurrentlyReadCell = (-1, -1);
+      PlatePictogramViewModel.Instance.PlatePictogram.CurrentlyReadCell = (-1, -1);
       switch (Device.Mode)
       {
         case OperationMode.Normal:
@@ -440,7 +440,7 @@ namespace Ei_Dimension
       //overwrite the whole thing
       try
       {
-        string contents = ResultsViewModel.Instance.PlatePictogram.GetSerializedPlate();
+        string contents = PlatePictogramViewModel.Instance.PlatePictogram.GetSerializedPlate();
         File.WriteAllText($"{Device.RootDirectory.FullName}\\Status\\StatusFile.json", contents);
       }
       catch(Exception e)

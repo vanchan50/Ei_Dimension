@@ -592,7 +592,7 @@ namespace Ei_Dimension
                 var currentWell = App.Device.WellController.CurrentWell;
                 if (currentWell == null)
                   return;
-                ResultsViewModel.Instance.PlatePictogram.ChangeState(currentWell.RowIdx, currentWell.ColIdx,
+                PlatePictogramViewModel.Instance.PlatePictogram.ChangeState(currentWell.RowIdx, currentWell.ColIdx,
                   warning: Models.WellWarningState.YellowWarning);
                 if (!App.Device.WellController.IsLastWell) //aspirating next
                   App._nextWellWarning = true;

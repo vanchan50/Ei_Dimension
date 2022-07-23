@@ -41,8 +41,8 @@ namespace Ei_Dimension
         Views.NormalizationView.Instance.NormalizationMFIValues);
 
       ActiveRegionsStatsController.Instance.DisplayCurrentBeadStats();
-      ResultsViewModel.Instance.PlatePictogram.SetGrid(Views.ResultsView.Instance.DrawingPlate);
-      ResultsViewModel.Instance.PlatePictogram.SetWarningGrid(Views.ResultsView.Instance.WarningGrid);
+      PlatePictogramViewModel.Instance.PlatePictogram.SetGrid(Views.PlatePictogramView.Instance.DrawingPlate);
+      PlatePictogramViewModel.Instance.PlatePictogram.SetWarningGrid(Views.PlatePictogramView.Instance.WarningGrid);
       Views.CalibrationView.Instance.clmap.DataContext = DashboardViewModel.Instance;
       Views.VerificationView.Instance.clmap.DataContext = DashboardViewModel.Instance;
       Views.ChannelsView.Instance.clmap.DataContext = DashboardViewModel.Instance;

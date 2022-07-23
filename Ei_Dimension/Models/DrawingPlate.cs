@@ -62,15 +62,15 @@ namespace Ei_Dimension.Models
       {
         case 1:
           _mode = 1;
-          ViewModels.ResultsViewModel.Instance.Buttons384Visible = Visibility.Hidden;
+          ViewModels.PlatePictogramViewModel.Instance.Buttons384Visible = Visibility.Hidden;
           break;
         case 96:
           _mode = 96;
-          ViewModels.ResultsViewModel.Instance.Buttons384Visible = Visibility.Hidden;
+          ViewModels.PlatePictogramViewModel.Instance.Buttons384Visible = Visibility.Hidden;
           break;
         case 384:
           _mode = 384;
-          ViewModels.ResultsViewModel.Instance.Buttons384Visible = Visibility.Visible;
+          ViewModels.PlatePictogramViewModel.Instance.Buttons384Visible = Visibility.Visible;
           break;
         default:
           throw new Exception("Only modes 1, 96 or 384 supported");

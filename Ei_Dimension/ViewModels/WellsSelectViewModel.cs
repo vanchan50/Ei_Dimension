@@ -104,8 +104,8 @@ namespace Ei_Dimension.ViewModels
           break;
       }
       CurrentTableSize = num;
-      ResultsViewModel.Instance.PlatePictogram.ChangeMode(num);
-      ResultsViewModel.Instance.CornerButtonClick(1);
+      PlatePictogramViewModel.Instance.PlatePictogram.ChangeMode(num);
+      PlatePictogramViewModel.Instance.CornerButtonClick(1);
       MotorsViewModel.Instance.ChangeAmountOfWells(num);
       Views.WellsSelectView.Instance.ClearAllCells();
       _selectedWellIndices.Clear();

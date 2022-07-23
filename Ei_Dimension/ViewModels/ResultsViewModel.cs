@@ -35,16 +35,9 @@ namespace Ei_Dimension.ViewModels
     public virtual ObservableCollection<DoubleHeatMapData> BackingAnalysis13Map { get; set; }
     public virtual ObservableCollection<DoubleHeatMapData> BackingAnalysis23Map { get; set; }
     public List<RegionReporterResult> BackingWResults { get; set; }
-    public virtual DrawingPlate PlatePictogram { get; set; }
-    public virtual System.Windows.Visibility Buttons384Visible { get; set; }
-    public virtual System.Windows.Visibility LeftLabel384Visible { get; set; }
-    public virtual System.Windows.Visibility RightLabel384Visible { get; set; }
-    public virtual System.Windows.Visibility TopLabel384Visible { get; set; }
-    public virtual System.Windows.Visibility BottomLabel384Visible { get; set; }
     public virtual System.Windows.Visibility AnalysisVisible { get; set; }
     public virtual System.Windows.Visibility Analysis2DVisible { get; set; }
     public virtual System.Windows.Visibility Analysis3DVisible { get; set; }
-    public virtual System.Windows.Visibility PlatePictogramIsCovered { get; set; }
     public virtual ObservableCollection<string> DisplayedMfiItems { get; set; }
     public virtual ObservableCollection<string> DisplayedCvItems { get; set; }
     public virtual ObservableCollection<string> CurrentMfiItems { get; set; }
@@ -52,7 +45,6 @@ namespace Ei_Dimension.ViewModels
     public virtual ObservableCollection<string> BackingMfiItems { get; set; }
     public virtual ObservableCollection<string> BackingCvItems { get; set; }
     public virtual string PlexButtonString { get; set; }
-    public virtual ObservableCollection<bool> CornerButtonsChecked { get; set; }
     public virtual ObservableCollection<bool> CLButtonsChecked { get; set; }
     public virtual ObservableCollection<string> CLAxis { get; set; }
     public virtual ObservableCollection<string> XYCutOffString { get; set; }
@@ -93,19 +85,11 @@ namespace Ei_Dimension.ViewModels
 
       DisplayedAnalysisMap = CurrentAnalysis12Map;
 
-      PlatePictogram = DrawingPlate.Create();
-      Buttons384Visible = System.Windows.Visibility.Hidden;
-      CornerButtonsChecked = new ObservableCollection<bool> { true, false, false, false };
       CLButtonsChecked = new ObservableCollection<bool> { false, false, true, false, false, true, false, false };
       CLAxis = new ObservableCollection<string> { "CL1", "CL2" };
-      LeftLabel384Visible = System.Windows.Visibility.Visible;
-      RightLabel384Visible = System.Windows.Visibility.Hidden;
-      TopLabel384Visible = System.Windows.Visibility.Visible;
-      BottomLabel384Visible = System.Windows.Visibility.Hidden;
       AnalysisVisible = System.Windows.Visibility.Hidden;
       Analysis2DVisible = System.Windows.Visibility.Visible;
       Analysis3DVisible = System.Windows.Visibility.Hidden;
-      PlatePictogramIsCovered = System.Windows.Visibility.Hidden;
 
       CurrentMfiItems = new ObservableCollection<string>();
       CurrentCvItems = new ObservableCollection<string>();
@@ -159,65 +143,6 @@ namespace Ei_Dimension.ViewModels
         }));
     }
 
-    public void CornerButtonClick(int corner)
-    {
-      var changed = PlatePictogram.ChangeCorner(corner);
-      if (!changed)
-        return;
-      //adjust labels
-      switch (corner)
-      {
-        case 1:
-          LeftLabel384Visible = System.Windows.Visibility.Visible;
-          RightLabel384Visible = System.Windows.Visibility.Hidden;
-          TopLabel384Visible = System.Windows.Visibility.Visible;
-          BottomLabel384Visible = System.Windows.Visibility.Hidden;
-          break;
-        case 2:
-          LeftLabel384Visible = System.Windows.Visibility.Hidden;
-          RightLabel384Visible = System.Windows.Visibility.Visible;
-          TopLabel384Visible = System.Windows.Visibility.Visible;
-          BottomLabel384Visible = System.Windows.Visibility.Hidden;
-          break;
-        case 3:
-          LeftLabel384Visible = System.Windows.Visibility.Visible;
-          RightLabel384Visible = System.Windows.Visibility.Hidden;
-          TopLabel384Visible = System.Windows.Visibility.Hidden;
-          BottomLabel384Visible = System.Windows.Visibility.Visible;
-          break;
-        case 4:
-          LeftLabel384Visible = System.Windows.Visibility.Hidden;
-          RightLabel384Visible = System.Windows.Visibility.Visible;
-          TopLabel384Visible = System.Windows.Visibility.Hidden;
-          BottomLabel384Visible = System.Windows.Visibility.Visible;
-          break;
-      }
-      Views.ResultsView.Instance.DrawingPlate.UnselectAllCells();
-      CornerButtonsChecked[0] = false;
-      CornerButtonsChecked[1] = false;
-      CornerButtonsChecked[2] = false;
-      CornerButtonsChecked[3] = false;
-      CornerButtonsChecked[corner - 1] = true;
-    }
-
-    public void ToCurrentButtonClick()
-    {
-      if (App.Device.IsMeasurementGoing)
-        return;
-      #if DEBUG
-      Console.WriteLine(new System.Diagnostics.StackTrace());
-      #endif
-
-      PlotCurrent();
-
-      int tempCorner = 1;
-      if (PlatePictogram.CurrentlyReadCell.row < 8)
-        tempCorner = PlatePictogram.CurrentlyReadCell.col < 12 ? 1 : 2;
-      else
-        tempCorner = PlatePictogram.CurrentlyReadCell.col < 12 ? 3 : 4;
-      CornerButtonClick(tempCorner);
-    }
-
     public void ClearGraphs(bool current = true)
     {
       ScatterChartViewModel.Instance.ScttrData.ClearData(current);
@@ -247,24 +172,6 @@ namespace Ei_Dimension.ViewModels
         ActiveRegionsStatsController.Instance.ResetBackingDisplayedStats();
       }
       Views.ResultsView.Instance.ClearPoints();
-    }
-
-    public void SelectedCellChanged()
-    {
-      if (App.Device.IsMeasurementGoing)
-        return;
-      var temp = PlatePictogram.GetSelectedCell();
-      if (temp.row == -1)
-        return;
-      PlatePictogram.SelectedCell = temp;
-      if (temp == PlatePictogram.CurrentlyReadCell)
-      {
-        ToCurrentButtonClick();
-        return;
-      }
-      PlotCurrent(false);
-      ClearGraphs(false);
-      FillAllData();
     }
 
     private bool ParseBeadInfo(string path, List<BeadInfoStruct> beadStructs)
@@ -301,7 +208,7 @@ namespace Ei_Dimension.ViewModels
       var hiRez = AnalysisVisible == System.Windows.Visibility.Visible;
       _ = Task.Run(() =>
       {
-        var path = PlatePictogram.GetSelectedFilePath();  //@"C:\Emissioninc\KEIZ0R-LEGION\AcquisitionData\rowtest1A1_0.csv";//
+        var path = PlatePictogramViewModel.Instance.PlatePictogram.GetSelectedFilePath();  //@"C:\Emissioninc\KEIZ0R-LEGION\AcquisitionData\rowtest1A1_0.csv";//
         if (!System.IO.File.Exists(path)) //rowtest1A1_0  //BeadAssayA1_19 //val speed test 2E7_0
         {
           Notification.ShowLocalized(  nameof(Language.Resources.Notification_File_Inexistent));
@@ -437,7 +344,7 @@ namespace Ei_Dimension.ViewModels
       ScatterChartViewModel.Instance.ScttrData.DisplayCurrent(current);
       if (current)
       {
-        Views.ResultsView.Instance.DrawingPlate.UnselectAllCells();
+        Views.PlatePictogramView.Instance.DrawingPlate.UnselectAllCells();
         if (App.MapRegions != null)
         {
           ActiveRegionsStatsController.Instance.DisplayCurrentBeadStats();
