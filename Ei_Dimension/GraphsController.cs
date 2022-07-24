@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using DIOS.Core;
+using Ei_Dimension.HeatMap;
 
 namespace Ei_Dimension
 {
@@ -43,7 +44,7 @@ namespace Ei_Dimension
         }
         _ = App.Current.Dispatcher.BeginInvoke((Action)(() =>
         {
-          Core.DataProcessor.AnalyzeHeatMap();
+          HeatMapAPI.API.AnalyzeHeatMap();
           _uiUpdateIsActive = 0;
         }));
       });

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Ei_Dimension.Models;
+﻿using Ei_Dimension.HeatMap;
 
 namespace Ei_Dimension.Cache
 {
@@ -18,7 +13,7 @@ namespace Ei_Dimension.Cache
       //Maybe store heatmapData and run that on click? resource heavy-ish though
       //initial idea was to switch pointers.
       //Points have no setter -> can't just switch pointers that would be the whole Heatmap, which is dum
-      _cache[row, col].CL12 = HeatMap.GetCache(MapIndex.CL12);
+      _cache[row, col].CL12 = HeatMapAPI.API.GetCache(MapIndex.CL12);
     }
   }
 }

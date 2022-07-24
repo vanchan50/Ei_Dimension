@@ -1,9 +1,8 @@
 ﻿using Ei_Dimension.Core;
-using System.Collections.Generic;
 
-namespace Ei_Dimension.Models
+namespace Ei_Dimension.HeatMap
 {
-  public class HeatMapData : ObservableObject
+  public class HeatMapPoint : ObservableObject
   {
     public int X {
       get => _x;
@@ -22,30 +21,36 @@ namespace Ei_Dimension.Models
         OnPropertyChanged();
       }
     }
-    public int A
+    public int Amplitude
     {
-      get => _a;
+      get => _amplitude;
       set
       {
-        _a = value;
+        _amplitude = value;
         OnPropertyChanged();
       }
     }
-    public int Region { get; }
+
+    public int Region { get; } = -1;
     private int _x;
     private int _y;
-    private int _a;
+    private int _amplitude;
     public static double[] bins { get; }
     public static double[] HiRezBins { get; }
     public static double[] HalfPrecisionBins { get; }
-    public HeatMapData(int x, int y, int r = -1)
+    public HeatMapPoint(int x, int y)
     {
       X = x;
       Y = y;
-      _a = 0;
-      Region = r;
+      _amplitude = 0;
     }
-    static HeatMapData()
+
+    public HeatMapPoint(int x, int y, int region) : this(x,y)
+    {
+      Region = region;
+    }
+
+    static HeatMapPoint()
     {
       bins = new double[256];
       DataProcessor.GenerateLogSpaceD(1, 60000, 256, bins);

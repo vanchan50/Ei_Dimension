@@ -1,25 +1,26 @@
-﻿using DevExpress.Mvvm;
-using DevExpress.Mvvm.DataAnnotations;
+﻿using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
 using DIOS.Core;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Ei_Dimension.Controllers;
+using Ei_Dimension.HeatMap;
 
 namespace Ei_Dimension.Models
 {
   [POCOViewModel]
   public class WorldMap
   {
-    public virtual ObservableCollection<HeatMapData> DisplayedWorldMap { get; set; } = new ObservableCollection<HeatMapData>();
-    public List<HeatMapData> Map01 { get; } = new List<HeatMapData>(WORLDMAPCAPACITY);
-    public List<HeatMapData> Map02 { get; } = new List<HeatMapData>(WORLDMAPCAPACITY);
-    public List<HeatMapData> Map03 { get; } = new List<HeatMapData>(WORLDMAPCAPACITY);
-    public List<HeatMapData> Map12 { get; } = new List<HeatMapData>(WORLDMAPCAPACITY);
-    public List<HeatMapData> Map13 { get; } = new List<HeatMapData>(WORLDMAPCAPACITY);
-    public List<HeatMapData> Map23 { get; } = new List<HeatMapData>(WORLDMAPCAPACITY);
-    public List<HeatMapData> CalibrationMap { get; set; }
+    public virtual ObservableCollection<HeatMapPoint> DisplayedWorldMap { get; protected set; } = new ObservableCollection<HeatMapPoint>();
+    public List<HeatMapPoint> Map01 { get; } = new List<HeatMapPoint>(WORLDMAPCAPACITY);
+    public List<HeatMapPoint> Map02 { get; } = new List<HeatMapPoint>(WORLDMAPCAPACITY);
+    public List<HeatMapPoint> Map03 { get; } = new List<HeatMapPoint>(WORLDMAPCAPACITY);
+    public List<HeatMapPoint> Map12 { get; } = new List<HeatMapPoint>(WORLDMAPCAPACITY);
+    public List<HeatMapPoint> Map12Flipped { get; } = new List<HeatMapPoint>(WORLDMAPCAPACITY);
+    public List<HeatMapPoint> Map13 { get; } = new List<HeatMapPoint>(WORLDMAPCAPACITY);
+    public List<HeatMapPoint> Map23 { get; } = new List<HeatMapPoint>(WORLDMAPCAPACITY);
+    public List<HeatMapPoint> CalibrationMap { get; set; }
     public MapIndex DisplayedWmap { get; set; }
     public bool Flipped { get; set; }
     public const int WORLDMAPCAPACITY = 15000;
@@ -43,6 +44,7 @@ namespace Ei_Dimension.Models
       Map12.Clear();
       Map13.Clear();
       Map23.Clear();
+      Map12Flipped.Clear();
     }
 
     public void InitMaps()
@@ -52,7 +54,8 @@ namespace Ei_Dimension.Models
       {
         foreach (var point in region.Value.Points)
         {
-          Map12.Add(new HeatMapData((int)HeatMapData.bins[point.x], (int)HeatMapData.bins[point.y], region.Key));
+          Map12.Add(new HeatMapPoint((int)HeatMapPoint.bins[point.x], (int)HeatMapPoint.bins[point.y], region.Key));
+          Map12Flipped.Add(new HeatMapPoint((int)HeatMapPoint.bins[point.y], (int)HeatMapPoint.bins[point.x], region.Key));
         }
       }
     }
@@ -60,7 +63,7 @@ namespace Ei_Dimension.Models
     public void FillDisplayedWorldMap()
     {
       Action BuildWmap = null;
-      List<HeatMapData> Map = GetCurrentMap();
+      List<HeatMapPoint> Map = GetCurrentMap();
       switch (App.Device.Mode)
       {
         case OperationMode.Normal:
@@ -69,10 +72,7 @@ namespace Ei_Dimension.Models
             {
               if (MapRegionsController.ActiveRegionNums.Contains(point.Region))
               {
-                if (Flipped)
-                  DisplayedWorldMap.Add(new HeatMapData(point.Y, point.X));
-                else
-                  DisplayedWorldMap.Add(new HeatMapData(point.X, point.Y));
+                DisplayedWorldMap.Add(point);
               }
             }
           };
@@ -81,7 +81,7 @@ namespace Ei_Dimension.Models
           BuildWmap = () => {
             foreach (var point in CalibrationMap)
             {
-              DisplayedWorldMap.Add(new HeatMapData(point.X, point.Y));
+              DisplayedWorldMap.Add(point);
             }
           };
           break;
@@ -91,10 +91,7 @@ namespace Ei_Dimension.Models
             {
               if (MapRegionsController.ActiveVerificationRegionNums.Contains(point.Region))
               {
-                if (Flipped)
-                  DisplayedWorldMap.Add(new HeatMapData(point.Y, point.X));
-                else
-                  DisplayedWorldMap.Add(new HeatMapData(point.X, point.Y));
+                DisplayedWorldMap.Add(point);
               }
             }
           };
@@ -109,32 +106,62 @@ namespace Ei_Dimension.Models
       }
     }
 
-    private List<HeatMapData> GetCurrentMap()
+    private List<HeatMapPoint> GetCurrentMap()
     {
-      List<HeatMapData> map = null;
-      switch (DisplayedWmap)
+      List<HeatMapPoint> map = null;
+      if (!Flipped)
       {
-        case MapIndex.CL01:
-          map = Map01;
-          break;
-        case MapIndex.CL02:
-          map = Map02;
-          break;
-        case MapIndex.CL03:
-          map = Map03;
-          break;
-        case MapIndex.CL12:
-          map = Map12;
-          break;
-        case MapIndex.CL13:
-          map = Map13;
-          break;
-        case MapIndex.CL23:
-          map = Map23;
-          break;
-        case MapIndex.Empty:
-          map = null;
-          break;
+        switch (DisplayedWmap)
+        {
+          case MapIndex.CL01:
+            map = Map01;
+            break;
+          case MapIndex.CL02:
+            map = Map02;
+            break;
+          case MapIndex.CL03:
+            map = Map03;
+            break;
+          case MapIndex.CL12:
+            map = Map12;
+            break;
+          case MapIndex.CL13:
+            map = Map13;
+            break;
+          case MapIndex.CL23:
+            map = Map23;
+            break;
+          case MapIndex.Empty:
+            map = null;
+            break;
+        }
+      }
+      else  //TODO: Only map12Flipped implemented for now
+      {
+        switch (DisplayedWmap)
+        {
+          case MapIndex.CL01:
+            map = Map01;
+            break;
+          case MapIndex.CL02:
+            map = Map02;
+            break;
+          case MapIndex.CL03:
+            map = Map03;
+            break;
+          case MapIndex.CL12:
+            map = Map12Flipped;
+            break;
+          case MapIndex.CL13:
+            map = Map13;
+            break;
+          case MapIndex.CL23:
+            map = Map23;
+            break;
+          case MapIndex.Empty:
+            map = null;
+            break;
+        }
       }
       return map;
     }

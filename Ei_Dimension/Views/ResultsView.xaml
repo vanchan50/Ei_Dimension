@@ -546,12 +546,16 @@
               <dxc:BorderlessSimpleMarker2DModel/>
             </dxc:PointSeries2D.MarkerModel>
           </dxc:PointSeries2D>
-          <dxc:PointSeries2D Name="HeatMap" DisplayName="HeatMap" MarkerSize="3">
+          <dxc:PointSeries2D Name="HeatMap"
+                             DisplayName="HeatMap"
+                             MarkerSize="3">
             <dxc:PointSeries2D.MarkerModel>
               <dxc:BorderlessSimpleMarker2DModel/>
             </dxc:PointSeries2D.MarkerModel>
           </dxc:PointSeries2D>
-          <dxc:PointSeries2D Name="LargeHeatMap" DisplayName="LHeatMap" MarkerSize="3">
+          <dxc:PointSeries2D Name="LargeHeatMap"
+                             DisplayName="LHeatMap"
+                             MarkerSize="3">
             <dxc:PointSeries2D.MarkerModel>
               <dxc:BorderlessSimpleMarker2DModel/>
             </dxc:PointSeries2D.MarkerModel>

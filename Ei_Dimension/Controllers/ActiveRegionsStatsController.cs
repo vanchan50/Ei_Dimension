@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
 using DIOS.Core;
+using Ei_Dimension.HeatMap;
 
 namespace Ei_Dimension.Controllers
 {
@@ -147,8 +148,8 @@ namespace Ei_Dimension.Controllers
 
     private static void Reporter3DGraphHandler(int regionIndex, double reporterAvg)
     {
-      var x = Models.HeatMapData.bins[App.Device.MapCtroller.ActiveMap.regions[regionIndex].Center.x];
-      var y = Models.HeatMapData.bins[App.Device.MapCtroller.ActiveMap.regions[regionIndex].Center.y];
+      var x = HeatMapPoint.bins[App.Device.MapCtroller.ActiveMap.regions[regionIndex].Center.x];
+      var y = HeatMapPoint.bins[App.Device.MapCtroller.ActiveMap.regions[regionIndex].Center.y];
       ViewModels.ResultsViewModel.Instance.CurrentAnalysis12Map.Add(new Models.DoubleHeatMapData(x, y, reporterAvg));
     }
 

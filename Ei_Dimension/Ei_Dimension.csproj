@@ -214,14 +214,15 @@
     <Compile Include="Core\DataProcessor.cs" />
     <Compile Include="Core\ObservableObject.cs" />
     <Compile Include="GraphsController.cs" />
+    <Compile Include="HeatMap\IHeatMapChart.cs" />
     <Compile Include="LanguageSwap.cs" />
     <Compile Include="Models\AcquisitionTemplate.cs" />
     <Compile Include="Models\DoubleHeatMapData.cs" />
     <Compile Include="Models\DrawingPlate.cs" />
-    <Compile Include="Models\HeatMap.cs" />
-    <Compile Include="Models\HeatMapData.cs" />
+    <Compile Include="HeatMap\HeatMapAPI.cs" />
+    <Compile Include="HeatMap\HeatMapPoint.cs" />
     <Compile Include="Models\HistogramData.cs" />
-    <Compile Include="Models\MapIndex.cs" />
+    <Compile Include="HeatMap\MapIndex.cs" />
     <Compile Include="Models\MapRegionData.cs" />
     <Compile Include="Controllers\MapRegionsController.cs" />
     <Compile Include="Models\ResultFile.cs" />
@@ -642,6 +643,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

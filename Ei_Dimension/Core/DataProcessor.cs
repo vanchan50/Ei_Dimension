@@ -1,41 +1,19 @@
 ﻿using Ei_Dimension.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Windows.Media;
 using DIOS.Core;
 using Ei_Dimension.Controllers;
 using Ei_Dimension.ViewModels;
+using Ei_Dimension.HeatMap;
 
 namespace Ei_Dimension.Core
 {
   public static class DataProcessor
   {
-    private static SolidColorBrush[] _heatColors;
     private static readonly char[] _separator = {','};
-    private static readonly double[] _bins;
     private const string _100plexAMapName = "D100Aplex";
     private const string _100plexBMapName = "D100Bplex";
     private static readonly HashSet<int> WeightedRegions = new HashSet<int> {1,2,3,4,5,6,7,8,10,11,16,17,23,24,31,32,40,41,50,60,71};
-    static  DataProcessor()
-    {
-      _heatColors = new SolidColorBrush[13];
-      _heatColors[0] = Brushes.Black;
-      _heatColors[1] = new SolidColorBrush(Color.FromRgb(0x4a, 0x00, 0x6a));
-      _heatColors[2] = Brushes.DarkViolet;
-      _heatColors[3] = new SolidColorBrush(Color.FromRgb(0x4f, 0x37, 0xbf));
-      _heatColors[4] = new SolidColorBrush(Color.FromRgb(0x0a, 0x6d, 0xaa));
-      _heatColors[5] = new SolidColorBrush(Color.FromRgb(0x05, 0x9d, 0x7a));
-      _heatColors[6] = new SolidColorBrush(Color.FromRgb(0x00, 0xcc, 0x49));
-      _heatColors[7] = new SolidColorBrush(Color.FromRgb(0x80, 0xb9, 0x25));
-      _heatColors[8] = Brushes.Orange;
-      _heatColors[9] = new SolidColorBrush(Color.FromRgb(0xff, 0x75, 0x00));
-      _heatColors[10] = Brushes.OrangeRed;
-      _heatColors[11] = new SolidColorBrush(Color.FromRgb(0xff, 0x23, 0x00));
-      _heatColors[12] = Brushes.Red;
-
-      _bins = new double[_heatColors.Length];
-    }
 
     public static List<string> GetDataFromFile(string path)
     {
@@ -263,45 +241,14 @@ namespace Ei_Dimension.Core
       }));
     }
 
-    public static void AnalyzeHeatMap(bool hiRez = false)
-    {
-      var heatMapList = HeatMap.DisplayedMap;
-      if (heatMapList != null && heatMapList.Count > 0)
-      {
-        int max = heatMapList.Select(p => p.A).Max();
-
-        GenerateLogSpaceD(1, max + 1, _heatColors.Length, _bins,true);
-        Views.ResultsView.Instance.ClearPoints();
-        for (var i = 0; i < heatMapList.Count; i++)
-        {
-          var heatMap = heatMapList[i];
-          if (heatMap.A <= 1) //transparent single member beads == 1  //Actual amplitude starts from 0
-            continue;
-          var X = heatMap.X;
-          var Y = heatMap.Y;
-          if (ResultsViewModel.Instance.WrldMap.Flipped)
-          {
-            X = heatMap.Y;
-            Y = heatMap.X;
-          }
-          PutColorizedPointOnHeatMapGraph(heatMap.A, X, Y, hiRez);
-        }
-      }
-      else if (heatMapList != null && heatMapList.Count == 0)
-      {
-        if (Views.ResultsView.Instance != null)
-          Views.ResultsView.Instance.ClearPoints();
-      }
-    }
-
     public static void BinMapData(List<BeadInfoStruct> beadInfoList, bool current = true, bool hiRez = false)
     {
       //Puts points to Lists instead of filling 256x256 arrays.
       //traversing [,] array would be a downside, and condition check would also be included for every step.
       //Traversing a list is better.
       var resVm = ResultsViewModel.Instance;
-      var bins = hiRez ? HeatMapData.HiRezBins : HeatMapData.bins;
-      var boundary = hiRez ? HeatMapData.HiRezBins.Length - 1 : HeatMapData.bins.Length - 1;
+      var bins = hiRez ? HeatMapPoint.HiRezBins : HeatMapPoint.bins;
+      var boundary = hiRez ? HeatMapPoint.HiRezBins.Length - 1 : HeatMapPoint.bins.Length - 1;
       var i = 0;
 
       while (i < beadInfoList.Count)
@@ -332,15 +279,15 @@ namespace Ei_Dimension.Core
         //{
         //  HeatMap.AddPoint((cl1, cl2), bins, mapIndex, current);
         //}
-        HeatMap.AddPoint((cl0, cl1), bins, MapIndex.CL01, current);
-        HeatMap.AddPoint((cl0, cl2), bins, MapIndex.CL02, current);
-        HeatMap.AddPoint((cl1, cl2), bins, MapIndex.CL12, current);
+        HeatMapAPI.API.AddPoint((cl0, cl1), bins, MapIndex.CL01, current);
+        HeatMapAPI.API.AddPoint((cl0, cl2), bins, MapIndex.CL02, current);
+        HeatMapAPI.API.AddPoint((cl1, cl2), bins, MapIndex.CL12, current);
 
         //More weight to points on 100Plex lowerleft regions
         if (AddWeightToRegions(region))
         {
-          HeatMap.AddPoint((cl1, cl2), bins, MapIndex.CL12, current);
-          HeatMap.AddPoint((cl1, cl2), bins, MapIndex.CL12, current);
+          HeatMapAPI.API.AddPoint((cl1, cl2), bins, MapIndex.CL12, current);
+          HeatMapAPI.API.AddPoint((cl1, cl2), bins, MapIndex.CL12, current);
         }
 
         //3DReporterPlot
@@ -353,23 +300,6 @@ namespace Ei_Dimension.Core
           }
         }
         i++;
-      }
-    }
-
-    private static void PutColorizedPointOnHeatMapGraph(int Amplitude, int X, int Y, bool hiRez)
-    {
-      for (var j = 0; j < _heatColors.Length; j++)
-      {
-        //int cutoff = (heatMap[i].X > 100 && heatMap[i].Y > 100) ? ViewModels.ResultsViewModel.Instance.XYCutoff : 2;
-        if (Amplitude <= _bins[j])
-        {
-          if (!hiRez && j == 0) //Cutoff for smallXY
-            break;
-          //if (j == 0) //Cutoff for smallXY
-          //  break;
-          Views.ResultsView.Instance.AddXYPoint(X, Y, _heatColors[j], hiRez);
-          break;
-        }
       }
     }
 

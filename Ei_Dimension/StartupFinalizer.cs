@@ -3,6 +3,7 @@ using System;
 using System.Windows;
 using System.Windows.Media.Imaging;
 using Ei_Dimension.Controllers;
+using Ei_Dimension.HeatMap;
 using MadWizard.WinUSBNet;
 
 namespace Ei_Dimension
@@ -39,6 +40,8 @@ namespace Ei_Dimension
         Views.VerificationView.Instance.VerificationReporterValues,
         Views.NormalizationView.Instance.NormalizationNums,
         Views.NormalizationView.Instance.NormalizationMFIValues);
+
+      HeatMapAPI.API.SetupChart(Views.ResultsView.Instance);
 
       ActiveRegionsStatsController.Instance.DisplayCurrentBeadStats();
       PlatePictogramViewModel.Instance.PlatePictogram.SetGrid(Views.PlatePictogramView.Instance.DrawingPlate);

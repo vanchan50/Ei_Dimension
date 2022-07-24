@@ -2,11 +2,11 @@
 using DevExpress.Mvvm.POCO;
 using System.Collections.ObjectModel;
 using System.Windows.Controls;
-using Ei_Dimension.Models;
 using System.Collections.Generic;
 using System.Windows.Media;
 using System;
 using DIOS.Core;
+using Ei_Dimension.HeatMap;
 
 namespace Ei_Dimension.ViewModels
 {
@@ -132,11 +132,11 @@ namespace Ei_Dimension.ViewModels
 
     public void MakeCalMap()
     {
-      ResultsViewModel.Instance.WrldMap.CalibrationMap = new List<HeatMapData>();
-      int cl1Index = Array.BinarySearch(HeatMapData.bins, int.Parse(ClassificationTargetsContents[1]));
+      ResultsViewModel.Instance.WrldMap.CalibrationMap = new List<HeatMapPoint>();
+      int cl1Index = Array.BinarySearch(HeatMapPoint.bins, int.Parse(ClassificationTargetsContents[1]));
       if (cl1Index < 0)
         cl1Index = ~cl1Index;
-      int cl2Index = Array.BinarySearch(HeatMapData.bins, int.Parse(ClassificationTargetsContents[2]));
+      int cl2Index = Array.BinarySearch(HeatMapPoint.bins, int.Parse(ClassificationTargetsContents[2]));
       if (cl2Index < 0)
         cl2Index = ~cl2Index;
       for (var i = -5; i < 6; i++)
@@ -146,7 +146,7 @@ namespace Ei_Dimension.ViewModels
           if(Math.Pow(i, 2) + Math.Pow(j, 2) <= 16
             && cl1Index + i >= 0 && cl1Index + i < 256 && cl2Index + j >= 0 && cl2Index + j < 256)
             ResultsViewModel.Instance.WrldMap.CalibrationMap.Add(
-              new HeatMapData((int)HeatMapData.bins[cl1Index + i], (int)HeatMapData.bins[cl2Index + j]));
+              new HeatMapPoint((int)HeatMapPoint.bins[cl1Index + i], (int)HeatMapPoint.bins[cl2Index + j]));
         }
       }
     }
@@ -165,7 +165,7 @@ namespace Ei_Dimension.ViewModels
       App.Device.MainCommand("Get Property", code: 0x2e);
       App.Device.MainCommand("Get Property", code: 0x2f);
       System.Threading.Thread.Sleep(1000);
-      var res = App.Device.MapCtroller.SaveCalVals(new DIOS.Core.MapCalParameters
+      var res = App.Device.MapCtroller.SaveCalVals(new MapCalParameters
       {
         TempCl0 = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[8]),
         TempCl1 = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[5]),

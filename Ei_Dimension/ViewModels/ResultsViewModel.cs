@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using DIOS.Core;
 using Ei_Dimension.Controllers;
+using Ei_Dimension.HeatMap;
 
 namespace Ei_Dimension.ViewModels
 {
@@ -47,8 +48,6 @@ namespace Ei_Dimension.ViewModels
     public virtual string PlexButtonString { get; set; }
     public virtual ObservableCollection<bool> CLButtonsChecked { get; set; }
     public virtual ObservableCollection<string> CLAxis { get; set; }
-    public virtual ObservableCollection<string> XYCutOffString { get; set; }
-    public int XYCutoff { get; set; }
     public static ResultsViewModel Instance { get; private set; }
     private bool _fillDataActive;
     public const int HIREZDEFINITION = 512;
@@ -107,8 +106,6 @@ namespace Ei_Dimension.ViewModels
       }
       DisplayedMfiItems = CurrentMfiItems;
       DisplayedCvItems = CurrentCvItems;
-      XYCutoff = Settings.Default.XYCutOff;
-      XYCutOffString = new ObservableCollection<string> { XYCutoff.ToString() };
       _fillDataActive = false;
     }
 
@@ -139,14 +136,14 @@ namespace Ei_Dimension.ViewModels
       SetDisplayedMap();
       _ = App.Current.Dispatcher.BeginInvoke((Action)(() =>
         {
-          Core.DataProcessor.AnalyzeHeatMap();
+          HeatMapAPI.API.AnalyzeHeatMap();
         }));
     }
 
     public void ClearGraphs(bool current = true)
     {
       ScatterChartViewModel.Instance.ScttrData.ClearData(current);
-      HeatMap.Clear(current);
+      HeatMapAPI.API.Clear(current);
       if (current)
       {
         CurrentAnalysis01Map.Clear();
@@ -171,7 +168,7 @@ namespace Ei_Dimension.ViewModels
         BackingAnalysis23Map.Clear();
         ActiveRegionsStatsController.Instance.ResetBackingDisplayedStats();
       }
-      Views.ResultsView.Instance.ClearPoints();
+      Views.ResultsView.Instance.ClearHeatMaps();
     }
 
     private bool ParseBeadInfo(string path, List<BeadInfoStruct> beadStructs)
@@ -234,7 +231,7 @@ namespace Ei_Dimension.ViewModels
         {
           try
           {
-            Core.DataProcessor.AnalyzeHeatMap(hiRez);
+            HeatMapAPI.API.AnalyzeHeatMap(hiRez);
             FillBackingAnalysisMap();
           }
           catch (Exception e)
@@ -324,8 +321,8 @@ namespace Ei_Dimension.ViewModels
       {
         if (App.Device.MapCtroller.ActiveMap.Regions.TryGetValue(result.regionNumber, out var region))
         {
-          var x = HeatMapData.bins[region.Center.x];
-          var y = HeatMapData.bins[region.Center.y];
+          var x = HeatMapPoint.bins[region.Center.x];
+          var y = HeatMapPoint.bins[region.Center.y];
           lock (BackingAnalysis12Map)
           {
             if (result.ReporterValues.Count > 0)
@@ -352,7 +349,7 @@ namespace Ei_Dimension.ViewModels
 
         _ = App.Current.Dispatcher.BeginInvoke((Action)(() =>
         {
-          Core.DataProcessor.AnalyzeHeatMap();
+          HeatMapAPI.API.AnalyzeHeatMap();
         }));
         MainViewModel.Instance.EventCountField = MainViewModel.Instance.EventCountCurrent;
         DisplayedMfiItems = CurrentMfiItems;
@@ -430,7 +427,7 @@ namespace Ei_Dimension.ViewModels
         else
         {
           DisplayedAnalysisMap = null;
-          Views.ResultsView.Instance.ClearPoints();
+          Views.ResultsView.Instance.ClearHeatMaps();
           WrldMap.DisplayedWorldMap.Clear();
           mapIndex = MapIndex.Empty;
         }
@@ -477,7 +474,7 @@ namespace Ei_Dimension.ViewModels
         else
         {
           DisplayedAnalysisMap = null;
-          Views.ResultsView.Instance.ClearPoints();
+          Views.ResultsView.Instance.ClearHeatMaps();
           WrldMap.DisplayedWorldMap.Clear();
         }
       }
@@ -524,7 +521,7 @@ namespace Ei_Dimension.ViewModels
         else
         {
           DisplayedAnalysisMap = null;
-          Views.ResultsView.Instance.ClearPoints();
+          Views.ResultsView.Instance.ClearHeatMaps();
           WrldMap.DisplayedWorldMap.Clear();
           mapIndex = MapIndex.Empty;
         }
@@ -573,12 +570,12 @@ namespace Ei_Dimension.ViewModels
         else
         {
           DisplayedAnalysisMap = null;
-          Views.ResultsView.Instance.ClearPoints();
+          Views.ResultsView.Instance.ClearHeatMaps();
           WrldMap.DisplayedWorldMap.Clear();
           mapIndex = MapIndex.Empty;
         }
       }
-      HeatMap.Display(mapIndex, DisplaysCurrentmap);
+      HeatMapAPI.API.Display(mapIndex, DisplaysCurrentmap);
       WrldMap.DisplayedWmap = mapIndex;
       WrldMap.FillDisplayedWorldMap();
     }

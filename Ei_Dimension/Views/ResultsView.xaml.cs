@@ -1,17 +1,17 @@
 ﻿using DevExpress.Xpf.Charts;
 using System;
-using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using Ei_Dimension.HeatMap;
 
 namespace Ei_Dimension.Views
 {
   /// <summary>
   /// Interaction logic for ResultsView.xaml
   /// </summary>
-  public partial class ResultsView : UserControl
+  public partial class ResultsView : UserControl, IHeatMapChart
   {
     public static ResultsView Instance;
     public ResultsView()
@@ -23,20 +23,18 @@ namespace Ei_Dimension.Views
 #endif
     }
 
-    public void AddXYPoint(double x, double y, SolidColorBrush brush, bool LargeXY = false)
+    public void AddXYPointToHeatMap(SeriesPoint chartPoint, bool LargeXY = false)
     {
-      var point = new SeriesPoint(x, y);
-      point.Brush = brush;
       var heatmap = LargeXY ? LargeHeatMap : HeatMap;
-      heatmap.Points.Add(point);
+      heatmap.Points.Add(chartPoint);
     }
 
-    public void ChangePointColor(int index, SolidColorBrush brush)
+    public void ChangeHeatMapPointColor(int index, SolidColorBrush brush)
     {
       HeatMap.Points[index].Brush = brush;
     }
 
-    public void ClearPoints()
+    public void ClearHeatMaps()
     {
       HeatMap.Points.Clear();
       LargeHeatMap.Points.Clear();
