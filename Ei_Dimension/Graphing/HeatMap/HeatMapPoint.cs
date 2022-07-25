@@ -1,6 +1,6 @@
 ﻿using Ei_Dimension.Core;
 
-namespace Ei_Dimension.HeatMap
+namespace Ei_Dimension.Graphing.HeatMap
 {
   public class HeatMapPoint : ObservableObject
   {

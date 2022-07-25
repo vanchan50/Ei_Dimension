@@ -1,4 +1,4 @@
-﻿namespace Ei_Dimension.HeatMap
+﻿namespace Ei_Dimension.Graphing.HeatMap
 {
   public enum MapIndex
   {

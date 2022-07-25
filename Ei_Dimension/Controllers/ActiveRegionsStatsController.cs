@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
 using DIOS.Core;
-using Ei_Dimension.HeatMap;
+using Ei_Dimension.Graphing.HeatMap;
 
 namespace Ei_Dimension.Controllers
 {

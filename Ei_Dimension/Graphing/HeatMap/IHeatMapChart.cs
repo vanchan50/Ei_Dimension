@@ -1,7 +1,7 @@
 ﻿using System.Windows.Media;
 using DevExpress.Xpf.Charts;
 
-namespace Ei_Dimension.HeatMap
+namespace Ei_Dimension.Graphing.HeatMap
 {
   internal interface IHeatMapChart
   {

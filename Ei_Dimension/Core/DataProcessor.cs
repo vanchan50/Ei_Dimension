@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using DIOS.Core;
 using Ei_Dimension.Controllers;
 using Ei_Dimension.ViewModels;
-using Ei_Dimension.HeatMap;
+using Ei_Dimension.Graphing.HeatMap;
 
 namespace Ei_Dimension.Core
 {
@@ -14,6 +14,11 @@ namespace Ei_Dimension.Core
     private const string _100plexAMapName = "D100Aplex";
     private const string _100plexBMapName = "D100Bplex";
     private static readonly HashSet<int> WeightedRegions = new HashSet<int> {1,2,3,4,5,6,7,8,10,11,16,17,23,24,31,32,40,41,50,60,71};
+
+    public static int FromCLSpaceToReal(int pointInClSpace, double[] bins)
+    {
+      return (int)bins[pointInClSpace];
+    }
 
     public static List<string> GetDataFromFile(string path)
     {
@@ -279,15 +284,15 @@ namespace Ei_Dimension.Core
         //{
         //  HeatMap.AddPoint((cl1, cl2), bins, mapIndex, current);
         //}
-        HeatMapAPI.API.AddPoint((cl0, cl1), bins, MapIndex.CL01, current);
-        HeatMapAPI.API.AddPoint((cl0, cl2), bins, MapIndex.CL02, current);
-        HeatMapAPI.API.AddPoint((cl1, cl2), bins, MapIndex.CL12, current);
+        HeatMapAPI.API.AddDataPoint((cl0, cl1), bins, MapIndex.CL01, current);
+        HeatMapAPI.API.AddDataPoint((cl0, cl2), bins, MapIndex.CL02, current);
+        HeatMapAPI.API.AddDataPoint((cl1, cl2), bins, MapIndex.CL12, current);
 
         //More weight to points on 100Plex lowerleft regions
         if (AddWeightToRegions(region))
         {
-          HeatMapAPI.API.AddPoint((cl1, cl2), bins, MapIndex.CL12, current);
-          HeatMapAPI.API.AddPoint((cl1, cl2), bins, MapIndex.CL12, current);
+          HeatMapAPI.API.AddDataPoint((cl1, cl2), bins, MapIndex.CL12, current);
+          HeatMapAPI.API.AddDataPoint((cl1, cl2), bins, MapIndex.CL12, current);
         }
 
         //3DReporterPlot

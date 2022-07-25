@@ -1,4 +1,4 @@
-﻿using Ei_Dimension.HeatMap;
+﻿using Ei_Dimension.Graphing.HeatMap;
 
 namespace Ei_Dimension.Cache
 {

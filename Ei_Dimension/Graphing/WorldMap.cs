@@ -5,9 +5,10 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Ei_Dimension.Controllers;
-using Ei_Dimension.HeatMap;
+using Ei_Dimension.Core;
+using Ei_Dimension.Graphing.HeatMap;
 
-namespace Ei_Dimension.Models
+namespace Ei_Dimension.Graphing
 {
   [POCOViewModel]
   public class WorldMap
@@ -36,7 +37,7 @@ namespace Ei_Dimension.Models
       return ViewModels.ResultsViewModel.Instance.WrldMap;
     }
 
-    public void ClearMaps()
+    public void ClearData()
     {
       Map01.Clear();
       Map02.Clear();
@@ -50,13 +51,15 @@ namespace Ei_Dimension.Models
 
     public void InitMaps()
     {
-      ClearMaps();
+      ClearData();
       foreach (var region in App.Device.MapCtroller.ActiveMap.Regions)
       {
         foreach (var point in region.Value.Points)
         {
-          Map12.Add(new HeatMapPoint((int)HeatMapPoint.bins[point.x], (int)HeatMapPoint.bins[point.y], region.Key));
-          Map12Flipped.Add(new HeatMapPoint((int)HeatMapPoint.bins[point.y], (int)HeatMapPoint.bins[point.x], region.Key));
+          var x = DataProcessor.FromCLSpaceToReal(point.x, HeatMapPoint.bins);
+          var y = DataProcessor.FromCLSpaceToReal(point.y, HeatMapPoint.bins);
+          Map12.Add(new HeatMapPoint(x, y, region.Key));
+          Map12Flipped.Add(new HeatMapPoint(y, x, region.Key));
         }
       }
     }

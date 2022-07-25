@@ -3,7 +3,7 @@ using System;
 using System.Windows;
 using System.Windows.Media.Imaging;
 using Ei_Dimension.Controllers;
-using Ei_Dimension.HeatMap;
+using Ei_Dimension.Graphing.HeatMap;
 using MadWizard.WinUSBNet;
 
 namespace Ei_Dimension

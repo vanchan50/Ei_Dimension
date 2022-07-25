@@ -8,7 +8,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using DIOS.Core;
 using Ei_Dimension.Controllers;
-using Ei_Dimension.HeatMap;
+using Ei_Dimension.Graphing;
+using Ei_Dimension.Graphing.HeatMap;
 
 namespace Ei_Dimension.ViewModels
 {
