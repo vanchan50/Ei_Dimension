@@ -251,7 +251,7 @@ namespace Ei_Dimension.Core
       //Puts points to Lists instead of filling 256x256 arrays.
       //traversing [,] array would be a downside, and condition check would also be included for every step.
       //Traversing a list is better.
-      var resVm = ResultsViewModel.Instance;
+      var analysisMap = ResultsViewModel.Instance.AnalysisMap;
       var bins = hiRez ? HeatMapPoint.HiRezBins : HeatMapPoint.bins;
       var boundary = hiRez ? HeatMapPoint.HiRezBins.Length - 1 : HeatMapPoint.bins.Length - 1;
       var i = 0;
@@ -298,10 +298,10 @@ namespace Ei_Dimension.Core
         //3DReporterPlot
         if (!current)
         {
-          var index = resVm.BackingWResults.FindIndex(x => x.regionNumber == beadInfoList[i].region);
+          var index = analysisMap.BackingWResults.FindIndex(x => x.regionNumber == beadInfoList[i].region);
           if (index != -1)
           {
-            resVm.BackingWResults[index].ReporterValues.Add(beadInfoList[i].reporter);
+            analysisMap.BackingWResults[index].ReporterValues.Add(beadInfoList[i].reporter);
           }
         }
         i++;

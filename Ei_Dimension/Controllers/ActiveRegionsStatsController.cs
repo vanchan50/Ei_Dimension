@@ -69,7 +69,7 @@ namespace Ei_Dimension.Controllers
     {
       return () =>
       {
-        ViewModels.ResultsViewModel.Instance.CurrentAnalysis12Map.Clear();
+        ViewModels.ResultsViewModel.Instance.AnalysisMap.ClearData(current: true);
         foreach (var result in wellResults)
         {
           var index = MapRegionsController.GetMapRegionIndex(result.regionNumber);
@@ -81,7 +81,7 @@ namespace Ei_Dimension.Controllers
           CurrentMean[index] = mean.ToString("0.0");
 
           if (index != 0)
-            Reporter3DGraphHandler(index - 1, mean); // -1 accounts for region = 0
+            ViewModels.ResultsViewModel.Instance.AnalysisMap.AddDataPoint(index - 1, mean); // -1 accounts for region = 0
         }
 
         _activeRegionsUpdateGoing = false;
@@ -103,7 +103,7 @@ namespace Ei_Dimension.Controllers
 
       return () =>
       {
-        ViewModels.ResultsViewModel.Instance.CurrentAnalysis12Map.Clear();
+        ViewModels.ResultsViewModel.Instance.AnalysisMap.ClearData(current:true);
 
         CurrentCount[0] = count.ToString();
         CurrentMean[0] = mean.ToString("0.0");
@@ -144,13 +144,6 @@ namespace Ei_Dimension.Controllers
       CurrentMean.Clear();
       BackingCount.Clear();
       BackingMean.Clear();
-    }
-
-    private static void Reporter3DGraphHandler(int regionIndex, double reporterAvg)
-    {
-      var x = HeatMapPoint.bins[App.Device.MapCtroller.ActiveMap.regions[regionIndex].Center.x];
-      var y = HeatMapPoint.bins[App.Device.MapCtroller.ActiveMap.regions[regionIndex].Center.y];
-      ViewModels.ResultsViewModel.Instance.CurrentAnalysis12Map.Add(new Models.DoubleHeatMapData(x, y, reporterAvg));
     }
 
   }

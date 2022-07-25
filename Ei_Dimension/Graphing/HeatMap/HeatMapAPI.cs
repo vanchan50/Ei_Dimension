@@ -88,7 +88,7 @@ namespace Ei_Dimension.Graphing.HeatMap
       _data.Add(pointInClSpace, bins, mapIndex, current);
     }
 
-    public void ChangeDisplayedMap(MapIndex mapIndex, bool current = true)
+    public void ChangeDisplayedMap(MapIndex mapIndex, bool current)
     {
       DisplayedMap = _data.GetAccordingDictionary(mapIndex, current);
     }
