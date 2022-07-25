@@ -136,14 +136,14 @@ namespace Ei_Dimension.ViewModels
       SetDisplayedMap();
       _ = App.Current.Dispatcher.BeginInvoke((Action)(() =>
         {
-          HeatMapAPI.API.AnalyzeHeatMap();
+          HeatMapAPI.API.ReDraw();
         }));
     }
 
     public void ClearGraphs(bool current = true)
     {
       ScatterChartViewModel.Instance.ScttrData.ClearData(current);
-      HeatMapAPI.API.Clear(current);
+      HeatMapAPI.API.ClearData(current);
       if (current)
       {
         CurrentAnalysis01Map.Clear();
@@ -231,7 +231,7 @@ namespace Ei_Dimension.ViewModels
         {
           try
           {
-            HeatMapAPI.API.AnalyzeHeatMap(hiRez);
+            HeatMapAPI.API.ReDraw(hiRez);
             FillBackingAnalysisMap();
           }
           catch (Exception e)
@@ -349,7 +349,7 @@ namespace Ei_Dimension.ViewModels
 
         _ = App.Current.Dispatcher.BeginInvoke((Action)(() =>
         {
-          HeatMapAPI.API.AnalyzeHeatMap();
+          HeatMapAPI.API.ReDraw();
         }));
         MainViewModel.Instance.EventCountField = MainViewModel.Instance.EventCountCurrent;
         DisplayedMfiItems = CurrentMfiItems;
@@ -575,7 +575,7 @@ namespace Ei_Dimension.ViewModels
           mapIndex = MapIndex.Empty;
         }
       }
-      HeatMapAPI.API.Display(mapIndex, DisplaysCurrentmap);
+      HeatMapAPI.API.ChangeDisplayedMap(mapIndex, DisplaysCurrentmap);
       WrldMap.DisplayedWmap = mapIndex;
       WrldMap.FillDisplayedWorldMap();
     }

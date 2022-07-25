@@ -35,7 +35,7 @@ namespace Ei_Dimension.HeatMap
     private readonly Dictionary<(int x, int y), HeatMapPoint> _backingCL23Dict = new Dictionary<(int x, int y), HeatMapPoint>(XYMAPCAPACITY);
     public const int XYMAPCAPACITY = 50000;  //max possible capacity is 256x256. Realistic 3/4 is ~49k
 
-    private readonly double[] _bins;
+    private readonly double[] _colorBins;
     private readonly SolidColorBrush[] _heatColors;
     private static HeatMapAPI _instance;
     private IHeatMapChart _heatMapChart;
@@ -60,7 +60,7 @@ namespace Ei_Dimension.HeatMap
       _heatColors[11] = new SolidColorBrush(Color.FromRgb(0xff, 0x23, 0x00));
       _heatColors[12] = Brushes.Red;
 
-      _bins = new double[_heatColors.Length];
+      _colorBins = new double[_heatColors.Length];
       _instance = this;
     }
 
@@ -78,7 +78,7 @@ namespace Ei_Dimension.HeatMap
       _chartAssigned = true;
     }
 
-    public void Clear(bool current = true)
+    public void ClearData(bool current = true)
     {
       if (current)
       {
@@ -102,8 +102,86 @@ namespace Ei_Dimension.HeatMap
 
     public void AddPoint((int x, int y) pointInClSpace, double[] bins, MapIndex mapIndex, bool current = true)
     {
-      Dictionary<(int x, int y), HeatMapPoint> dict;
+      var dict = GetAccordingDictionary(mapIndex, current);
+      if (dict == null)
+        return;
 
+      //TODO: preallocate all the points as (0,0); Mutate them instead of allocating new. (256x256 points max);
+      //TODO: use fill counter, so you don't have to traverse (0,0) points that are left as extra
+      if (!dict.ContainsKey(pointInClSpace))
+      {
+        var newPoint = new HeatMapPoint((int)bins[pointInClSpace.x], (int)bins[pointInClSpace.y]);
+        dict.Add(pointInClSpace, newPoint);
+        return;
+      }
+      dict[pointInClSpace].Amplitude++;
+    }
+
+    public void ChangeDisplayedMap(MapIndex mapIndex, bool current = true)
+    {
+      DisplayedMap = GetAccordingDictionary(mapIndex, current);
+    }
+
+    public void ReDraw(bool hiRez = false)
+    {
+      if (DisplayedMap == null)
+        return;
+
+      var heatMapList = DisplayedMap.Values; //DisplayedMap May change whenever, caching here is necessary
+      if (heatMapList.Count > 0)
+      {
+        int max = heatMapList.Select(point => point.Amplitude).Max();
+
+        DataProcessor.GenerateLogSpaceD(1, max + 1, _heatColors.Length, _colorBins, true);
+        _heatMapChart.ClearHeatMaps();
+        foreach (var heatMapPoint in heatMapList)
+        {
+          if (heatMapPoint.Amplitude <= 1) //transparent single member beads == 1  //Actual amplitude starts from 0
+            continue;
+          var X = heatMapPoint.X;
+          var Y = heatMapPoint.Y;
+          if (ResultsViewModel.Instance.WrldMap.Flipped)
+          {
+            X = heatMapPoint.Y;
+            Y = heatMapPoint.X;
+          }
+          PutColorizedPointOnHeatMapGraph(heatMapPoint.Amplitude, X, Y, hiRez);
+        }
+      }
+      else if (heatMapList.Count == 0)
+      {
+        _heatMapChart.ClearHeatMaps();
+      }
+    }
+
+    public List<HeatMapPoint> GetCache(MapIndex mapIndex)
+    {
+      var ret = GetAccordingDictionary(mapIndex);
+      if (ret == null)
+        return new List<HeatMapPoint>();
+      return ret.Values.ToList();
+    }
+
+    private void PutColorizedPointOnHeatMapGraph(int Amplitude, int X, int Y, bool hiRez)
+    {
+      for (var j = 0; j < _heatColors.Length; j++)
+      {
+        if (Amplitude <= _colorBins[j])
+        {
+          if (!hiRez && j == 0) //Cutoff for smallXY
+            break;
+          var chartPoint = new SeriesPoint(X, Y);
+          chartPoint.Brush = _heatColors[j];
+
+          _heatMapChart.AddXYPointToHeatMap(chartPoint, hiRez);
+          break;
+        }
+      }
+    }
+
+    private Dictionary<(int x, int y), HeatMapPoint> GetAccordingDictionary(MapIndex mapIndex, bool current = true)
+    {
+      Dictionary<(int x, int y), HeatMapPoint> dict = null;
       if (current)
       {
         switch (mapIndex)
@@ -126,8 +204,6 @@ namespace Ei_Dimension.HeatMap
           case MapIndex.CL23:
             dict = _currentCL23Dict;
             break;
-          default:
-            return;
         }
       }
       else
@@ -152,156 +228,9 @@ namespace Ei_Dimension.HeatMap
           case MapIndex.CL23:
             dict = _backingCL23Dict;
             break;
-          default:
-            return;
         }
       }
-      //TODO: preallocate all the points as (0,0); Mutate them instead of allocating new (256x256 points max);
-      //TODO: use fill counter, so you don't have to traverse (0,0) points that are left as extra
-      if (!dict.ContainsKey(pointInClSpace))
-      {
-        var newPoint = new HeatMapPoint((int)bins[pointInClSpace.x], (int)bins[pointInClSpace.y]);
-        dict.Add(pointInClSpace, newPoint);
-        return;
-      }
-      dict[pointInClSpace].Amplitude++;
-    }
-
-    public void Display(MapIndex mapIndex, bool current = true)
-    {
-      if (current)
-      {
-        switch (mapIndex)
-        {
-          case MapIndex.CL01:
-            DisplayedMap = _currentCL01Dict;
-            break;
-          case MapIndex.CL02:
-            DisplayedMap = _currentCL02Dict;
-            break;
-          case MapIndex.CL03:
-            DisplayedMap = _currentCL03Dict;
-            break;
-          case MapIndex.CL12:
-            DisplayedMap = _currentCL12Dict;
-            break;
-          case MapIndex.CL13:
-            DisplayedMap = _currentCL13Dict;
-            break;
-          case MapIndex.CL23:
-            DisplayedMap = _currentCL23Dict;
-            break;
-          default:
-            DisplayedMap = null;
-            break;
-        }
-      }
-      else
-      {
-        switch (mapIndex)
-        {
-          case MapIndex.CL01:
-            DisplayedMap = _backingCL01Dict;
-            break;
-          case MapIndex.CL02:
-            DisplayedMap = _backingCL02Dict;
-            break;
-          case MapIndex.CL03:
-            DisplayedMap = _backingCL03Dict;
-            break;
-          case MapIndex.CL12:
-            DisplayedMap = _backingCL12Dict;
-            break;
-          case MapIndex.CL13:
-            DisplayedMap = _backingCL13Dict;
-            break;
-          case MapIndex.CL23:
-            DisplayedMap = _backingCL23Dict;
-            break;
-          default:
-            DisplayedMap = null;
-            break;
-        }
-      }
-    }
-
-    public void AnalyzeHeatMap(bool hiRez = false)
-    {
-      if (DisplayedMap == null)
-        return;
-
-      var heatMapList = DisplayedMap.Values; //DisplayedMap May change whenever, caching here is necessary
-      if (heatMapList.Count > 0)
-      {
-        int max = heatMapList.Select(point => point.Amplitude).Max();
-
-        DataProcessor.GenerateLogSpaceD(1, max + 1, _heatColors.Length, _bins, true);
-        _heatMapChart.ClearHeatMaps();
-        foreach (var heatMapPoint in heatMapList)
-        {
-          if (heatMapPoint.Amplitude <= 1) //transparent single member beads == 1  //Actual amplitude starts from 0
-            continue;
-          var X = heatMapPoint.X;
-          var Y = heatMapPoint.Y;
-          if (ResultsViewModel.Instance.WrldMap.Flipped)
-          {
-            X = heatMapPoint.Y;
-            Y = heatMapPoint.X;
-          }
-          PutColorizedPointOnHeatMapGraph(heatMapPoint.Amplitude, X, Y, hiRez);
-        }
-      }
-      else if (heatMapList.Count == 0)
-      {
-        _heatMapChart.ClearHeatMaps();
-      }
-    }
-
-    public List<HeatMapPoint> GetCache(MapIndex mapIndex)
-    {
-      Dictionary<(int x, int y), HeatMapPoint> ret;
-      switch (mapIndex)
-      {
-        case MapIndex.CL01:
-          ret = _currentCL01Dict;
-          break;
-        case MapIndex.CL02:
-          ret = _currentCL02Dict;
-          break;
-        case MapIndex.CL03:
-          ret = _currentCL03Dict;
-          break;
-        case MapIndex.CL12:
-          ret = _currentCL12Dict;
-          break;
-        case MapIndex.CL13:
-          ret = _currentCL13Dict;
-          break;
-        case MapIndex.CL23:
-          ret = _currentCL23Dict;
-          break;
-        default:
-          ret = null;
-          break;
-      }
-      return ret.Values.ToList();
-    }
-
-    private void PutColorizedPointOnHeatMapGraph(int Amplitude, int X, int Y, bool hiRez)
-    {
-      for (var j = 0; j < _heatColors.Length; j++)
-      {
-        if (Amplitude <= _bins[j])
-        {
-          if (!hiRez && j == 0) //Cutoff for smallXY
-            break;
-          var chartPoint = new SeriesPoint(X, Y);
-          chartPoint.Brush = _heatColors[j];
-
-          _heatMapChart.AddXYPointToHeatMap(chartPoint, hiRez);
-          break;
-        }
-      }
+      return dict;
     }
   }
 }

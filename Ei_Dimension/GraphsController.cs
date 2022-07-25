@@ -44,7 +44,7 @@ namespace Ei_Dimension
         }
         _ = App.Current.Dispatcher.BeginInvoke((Action)(() =>
         {
-          HeatMapAPI.API.AnalyzeHeatMap();
+          HeatMapAPI.API.ReDraw();
           _uiUpdateIsActive = 0;
         }));
       });
