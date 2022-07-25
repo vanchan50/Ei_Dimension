@@ -44,6 +44,7 @@ namespace Ei_Dimension.Models
       Map12.Clear();
       Map13.Clear();
       Map23.Clear();
+      //TODO: Only map12Flipped implemented for now
       Map12Flipped.Clear();
     }
 

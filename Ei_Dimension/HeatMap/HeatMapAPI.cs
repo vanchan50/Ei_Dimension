@@ -20,31 +20,19 @@ namespace Ei_Dimension.HeatMap
       }
     }
 
-    private List<HeatMapPoint> DisplayedMap { get; set; }
-    private readonly List<HeatMapPoint> _currentCL01Map = new List<HeatMapPoint>(XYMAPCAPACITY);
-    private readonly List<HeatMapPoint> _currentCL02Map = new List<HeatMapPoint>(XYMAPCAPACITY);
-    private readonly List<HeatMapPoint> _currentCL03Map = new List<HeatMapPoint>(XYMAPCAPACITY);
-    private readonly List<HeatMapPoint> _currentCL12Map = new List<HeatMapPoint>(XYMAPCAPACITY);
-    private readonly List<HeatMapPoint> _currentCL13Map = new List<HeatMapPoint>(XYMAPCAPACITY);
-    private readonly List<HeatMapPoint> _currentCL23Map = new List<HeatMapPoint>(XYMAPCAPACITY);
-    private readonly List<HeatMapPoint> _backingCL01Map = new List<HeatMapPoint>(XYMAPCAPACITY);
-    private readonly List<HeatMapPoint> _backingCL02Map = new List<HeatMapPoint>(XYMAPCAPACITY);
-    private readonly List<HeatMapPoint> _backingCL03Map = new List<HeatMapPoint>(XYMAPCAPACITY);
-    private readonly List<HeatMapPoint> _backingCL12Map = new List<HeatMapPoint>(XYMAPCAPACITY);
-    private readonly List<HeatMapPoint> _backingCL13Map = new List<HeatMapPoint>(XYMAPCAPACITY);
-    private readonly List<HeatMapPoint> _backingCL23Map = new List<HeatMapPoint>(XYMAPCAPACITY);
-    private readonly Dictionary<(int x, int y), int> _currentCL01Dict = new Dictionary<(int x, int y), int>(XYMAPCAPACITY);
-    private readonly Dictionary<(int x, int y), int> _currentCL02Dict = new Dictionary<(int x, int y), int>(XYMAPCAPACITY);
-    private readonly Dictionary<(int x, int y), int> _currentCL03Dict = new Dictionary<(int x, int y), int>(XYMAPCAPACITY);
-    private readonly Dictionary<(int x, int y), int> _currentCL12Dict = new Dictionary<(int x, int y), int>(XYMAPCAPACITY);
-    private readonly Dictionary<(int x, int y), int> _currentCL13Dict = new Dictionary<(int x, int y), int>(XYMAPCAPACITY);
-    private readonly Dictionary<(int x, int y), int> _currentCL23Dict = new Dictionary<(int x, int y), int>(XYMAPCAPACITY);
-    private readonly Dictionary<(int x, int y), int> _backingCL01Dict = new Dictionary<(int x, int y), int>(XYMAPCAPACITY);
-    private readonly Dictionary<(int x, int y), int> _backingCL02Dict = new Dictionary<(int x, int y), int>(XYMAPCAPACITY);
-    private readonly Dictionary<(int x, int y), int> _backingCL03Dict = new Dictionary<(int x, int y), int>(XYMAPCAPACITY);
-    private readonly Dictionary<(int x, int y), int> _backingCL12Dict = new Dictionary<(int x, int y), int>(XYMAPCAPACITY);
-    private readonly Dictionary<(int x, int y), int> _backingCL13Dict = new Dictionary<(int x, int y), int>(XYMAPCAPACITY);
-    private readonly Dictionary<(int x, int y), int> _backingCL23Dict = new Dictionary<(int x, int y), int>(XYMAPCAPACITY);
+    private Dictionary<(int x, int y), HeatMapPoint> DisplayedMap { get; set; }
+    private readonly Dictionary<(int x, int y), HeatMapPoint> _currentCL01Dict = new Dictionary<(int x, int y), HeatMapPoint>(XYMAPCAPACITY);
+    private readonly Dictionary<(int x, int y), HeatMapPoint> _currentCL02Dict = new Dictionary<(int x, int y), HeatMapPoint>(XYMAPCAPACITY);
+    private readonly Dictionary<(int x, int y), HeatMapPoint> _currentCL03Dict = new Dictionary<(int x, int y), HeatMapPoint>(XYMAPCAPACITY);
+    private readonly Dictionary<(int x, int y), HeatMapPoint> _currentCL12Dict = new Dictionary<(int x, int y), HeatMapPoint>(XYMAPCAPACITY);
+    private readonly Dictionary<(int x, int y), HeatMapPoint> _currentCL13Dict = new Dictionary<(int x, int y), HeatMapPoint>(XYMAPCAPACITY);
+    private readonly Dictionary<(int x, int y), HeatMapPoint> _currentCL23Dict = new Dictionary<(int x, int y), HeatMapPoint>(XYMAPCAPACITY);
+    private readonly Dictionary<(int x, int y), HeatMapPoint> _backingCL01Dict = new Dictionary<(int x, int y), HeatMapPoint>(XYMAPCAPACITY);
+    private readonly Dictionary<(int x, int y), HeatMapPoint> _backingCL02Dict = new Dictionary<(int x, int y), HeatMapPoint>(XYMAPCAPACITY);
+    private readonly Dictionary<(int x, int y), HeatMapPoint> _backingCL03Dict = new Dictionary<(int x, int y), HeatMapPoint>(XYMAPCAPACITY);
+    private readonly Dictionary<(int x, int y), HeatMapPoint> _backingCL12Dict = new Dictionary<(int x, int y), HeatMapPoint>(XYMAPCAPACITY);
+    private readonly Dictionary<(int x, int y), HeatMapPoint> _backingCL13Dict = new Dictionary<(int x, int y), HeatMapPoint>(XYMAPCAPACITY);
+    private readonly Dictionary<(int x, int y), HeatMapPoint> _backingCL23Dict = new Dictionary<(int x, int y), HeatMapPoint>(XYMAPCAPACITY);
     public const int XYMAPCAPACITY = 50000;  //max possible capacity is 256x256. Realistic 3/4 is ~49k
 
     private readonly double[] _bins;
@@ -55,7 +43,7 @@ namespace Ei_Dimension.HeatMap
 
     private HeatMapAPI()
     {
-      DisplayedMap = _currentCL12Map;
+      DisplayedMap = _currentCL12Dict;
 
       _heatColors = new SolidColorBrush[13];
       _heatColors[0] = Brushes.Black;
@@ -94,12 +82,6 @@ namespace Ei_Dimension.HeatMap
     {
       if (current)
       {
-        _currentCL01Map.Clear();
-        _currentCL02Map.Clear();
-        _currentCL03Map.Clear();
-        _currentCL12Map.Clear();
-        _currentCL13Map.Clear();
-        _currentCL23Map.Clear();
         _currentCL01Dict.Clear();
         _currentCL02Dict.Clear();
         _currentCL03Dict.Clear();
@@ -109,12 +91,6 @@ namespace Ei_Dimension.HeatMap
       }
       else
       {
-        _backingCL01Map.Clear();
-        _backingCL02Map.Clear();
-        _backingCL03Map.Clear();
-        _backingCL12Map.Clear();
-        _backingCL13Map.Clear();
-        _backingCL23Map.Clear();
         _backingCL01Dict.Clear();
         _backingCL02Dict.Clear();
         _backingCL03Dict.Clear();
@@ -126,8 +102,7 @@ namespace Ei_Dimension.HeatMap
 
     public void AddPoint((int x, int y) pointInClSpace, double[] bins, MapIndex mapIndex, bool current = true)
     {
-      Dictionary<(int x, int y), int> dict;
-      List<HeatMapPoint> map;
+      Dictionary<(int x, int y), HeatMapPoint> dict;
 
       if (current)
       {
@@ -135,27 +110,21 @@ namespace Ei_Dimension.HeatMap
         {
           case MapIndex.CL01:
             dict = _currentCL01Dict;
-            map = _currentCL01Map;
             break;
           case MapIndex.CL02:
             dict = _currentCL02Dict;
-            map = _currentCL02Map;
             break;
           case MapIndex.CL03:
             dict = _currentCL03Dict;
-            map = _currentCL03Map;
             break;
           case MapIndex.CL12:
             dict = _currentCL12Dict;
-            map = _currentCL12Map;
             break;
           case MapIndex.CL13:
             dict = _currentCL13Dict;
-            map = _currentCL13Map;
             break;
           case MapIndex.CL23:
             dict = _currentCL23Dict;
-            map = _currentCL23Map;
             break;
           default:
             return;
@@ -167,43 +136,35 @@ namespace Ei_Dimension.HeatMap
         {
           case MapIndex.CL01:
             dict = _backingCL01Dict;
-            map = _backingCL01Map;
             break;
           case MapIndex.CL02:
             dict = _backingCL02Dict;
-            map = _backingCL02Map;
             break;
           case MapIndex.CL03:
             dict = _backingCL03Dict;
-            map = _backingCL03Map;
             break;
           case MapIndex.CL12:
             dict = _backingCL12Dict;
-            map = _backingCL12Map;
             break;
           case MapIndex.CL13:
             dict = _backingCL13Dict;
-            map = _backingCL13Map;
             break;
           case MapIndex.CL23:
             dict = _backingCL23Dict;
-            map = _backingCL23Map;
             break;
           default:
             return;
         }
       }
-      //TODO: preallocate all the points as (0,0); Mutate them instead of allocating new;
+      //TODO: preallocate all the points as (0,0); Mutate them instead of allocating new (256x256 points max);
       //TODO: use fill counter, so you don't have to traverse (0,0) points that are left as extra
       if (!dict.ContainsKey(pointInClSpace))
       {
-        dict.Add(pointInClSpace, map.Count);
-        map.Add(new HeatMapPoint((int)bins[pointInClSpace.x], (int)bins[pointInClSpace.y]));
+        var newPoint = new HeatMapPoint((int)bins[pointInClSpace.x], (int)bins[pointInClSpace.y]);
+        dict.Add(pointInClSpace, newPoint);
+        return;
       }
-      else
-      {
-        map[dict[pointInClSpace]].Amplitude++;
-      }
+      dict[pointInClSpace].Amplitude++;
     }
 
     public void Display(MapIndex mapIndex, bool current = true)
@@ -213,22 +174,22 @@ namespace Ei_Dimension.HeatMap
         switch (mapIndex)
         {
           case MapIndex.CL01:
-            DisplayedMap = _currentCL01Map;
+            DisplayedMap = _currentCL01Dict;
             break;
           case MapIndex.CL02:
-            DisplayedMap = _currentCL02Map;
+            DisplayedMap = _currentCL02Dict;
             break;
           case MapIndex.CL03:
-            DisplayedMap = _currentCL03Map;
+            DisplayedMap = _currentCL03Dict;
             break;
           case MapIndex.CL12:
-            DisplayedMap = _currentCL12Map;
+            DisplayedMap = _currentCL12Dict;
             break;
           case MapIndex.CL13:
-            DisplayedMap = _currentCL13Map;
+            DisplayedMap = _currentCL13Dict;
             break;
           case MapIndex.CL23:
-            DisplayedMap = _currentCL23Map;
+            DisplayedMap = _currentCL23Dict;
             break;
           default:
             DisplayedMap = null;
@@ -240,22 +201,22 @@ namespace Ei_Dimension.HeatMap
         switch (mapIndex)
         {
           case MapIndex.CL01:
-            DisplayedMap = _backingCL01Map;
+            DisplayedMap = _backingCL01Dict;
             break;
           case MapIndex.CL02:
-            DisplayedMap = _backingCL02Map;
+            DisplayedMap = _backingCL02Dict;
             break;
           case MapIndex.CL03:
-            DisplayedMap = _backingCL03Map;
+            DisplayedMap = _backingCL03Dict;
             break;
           case MapIndex.CL12:
-            DisplayedMap = _backingCL12Map;
+            DisplayedMap = _backingCL12Dict;
             break;
           case MapIndex.CL13:
-            DisplayedMap = _backingCL13Map;
+            DisplayedMap = _backingCL13Dict;
             break;
           case MapIndex.CL23:
-            DisplayedMap = _backingCL23Map;
+            DisplayedMap = _backingCL23Dict;
             break;
           default:
             DisplayedMap = null;
@@ -266,29 +227,31 @@ namespace Ei_Dimension.HeatMap
 
     public void AnalyzeHeatMap(bool hiRez = false)
     {
-      var heatMapList = DisplayedMap; //DisplayedMap May change whenever, caching here is necessary
-      if (heatMapList != null && heatMapList.Count > 0)
+      if (DisplayedMap == null)
+        return;
+
+      var heatMapList = DisplayedMap.Values; //DisplayedMap May change whenever, caching here is necessary
+      if (heatMapList.Count > 0)
       {
         int max = heatMapList.Select(point => point.Amplitude).Max();
 
         DataProcessor.GenerateLogSpaceD(1, max + 1, _heatColors.Length, _bins, true);
         _heatMapChart.ClearHeatMaps();
-        for (var i = 0; i < heatMapList.Count; i++)
+        foreach (var heatMapPoint in heatMapList)
         {
-          var heatMap = heatMapList[i];
-          if (heatMap.Amplitude <= 1) //transparent single member beads == 1  //Actual amplitude starts from 0
+          if (heatMapPoint.Amplitude <= 1) //transparent single member beads == 1  //Actual amplitude starts from 0
             continue;
-          var X = heatMap.X;
-          var Y = heatMap.Y;
+          var X = heatMapPoint.X;
+          var Y = heatMapPoint.Y;
           if (ResultsViewModel.Instance.WrldMap.Flipped)
           {
-            X = heatMap.Y;
-            Y = heatMap.X;
+            X = heatMapPoint.Y;
+            Y = heatMapPoint.X;
           }
-          PutColorizedPointOnHeatMapGraph(heatMap.Amplitude, X, Y, hiRez);
+          PutColorizedPointOnHeatMapGraph(heatMapPoint.Amplitude, X, Y, hiRez);
         }
       }
-      else if (heatMapList != null && heatMapList.Count == 0)
+      else if (heatMapList.Count == 0)
       {
         _heatMapChart.ClearHeatMaps();
       }
@@ -296,32 +259,32 @@ namespace Ei_Dimension.HeatMap
 
     public List<HeatMapPoint> GetCache(MapIndex mapIndex)
     {
-      List<HeatMapPoint> ret;
+      Dictionary<(int x, int y), HeatMapPoint> ret;
       switch (mapIndex)
       {
         case MapIndex.CL01:
-          ret = _currentCL01Map;
+          ret = _currentCL01Dict;
           break;
         case MapIndex.CL02:
-          ret = _currentCL02Map;
+          ret = _currentCL02Dict;
           break;
         case MapIndex.CL03:
-          ret = _currentCL03Map;
+          ret = _currentCL03Dict;
           break;
         case MapIndex.CL12:
-          ret = _currentCL12Map;
+          ret = _currentCL12Dict;
           break;
         case MapIndex.CL13:
-          ret = _currentCL13Map;
+          ret = _currentCL13Dict;
           break;
         case MapIndex.CL23:
-          ret = _currentCL23Map;
+          ret = _currentCL23Dict;
           break;
         default:
           ret = null;
           break;
       }
-      return ret;
+      return ret.Values.ToList();
     }
 
     private void PutColorizedPointOnHeatMapGraph(int Amplitude, int X, int Y, bool hiRez)
