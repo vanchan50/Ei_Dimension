@@ -20,10 +20,10 @@
       _classificationMap.ConstructClassificationMap(_map);
     }
 
-    public void CalculateBeadParams(ref BeadInfoStruct rawBead)
+    public void CalculateBeadParams(ref RawBead rawBead)
     {
       //The order of operations matters here
-      AssignChannels(in rawBead);
+      AssignSensitivityChannels(in rawBead);
       var compensated = CalculateCompensatedCoordinates(in rawBead);
       rawBead.cl1 = compensated.cl1;
       rawBead.cl2 = compensated.cl2;
@@ -32,7 +32,7 @@
       rawBead.reporter = CalculateReporter(in rawBead);
     }
 
-    private void AssignChannels(in BeadInfoStruct rawBead)
+    private void AssignSensitivityChannels(in RawBead rawBead)
     {
       //greenMaj is the hi dyn range channel,
       //greenMin is the high sensitivity channel(depends on filter placement)
@@ -46,7 +46,7 @@
       _greenMin = rawBead.greenC;
     }
 
-    private (float cl0, float cl1, float cl2, float cl3) CalculateCompensatedCoordinates(in BeadInfoStruct outbead)
+    private (float cl0, float cl1, float cl2, float cl3) CalculateCompensatedCoordinates(in RawBead outbead)
     {
       var cl1comp = _greenMaj * _device.Compensation / 100;
       var cl2comp = cl1comp * 0.26f;
@@ -58,7 +58,7 @@
       );
     }
 
-    private float CalculateReporter(in BeadInfoStruct rawBead)
+    private float CalculateReporter(in RawBead rawBead)
     {
       var basicReporter = _greenMin > _device.HdnrTrans ? _greenMaj * _device.HDnrCoef : _greenMin;
       var scaledReporter = (basicReporter / _device.ReporterScaling);

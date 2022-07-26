@@ -36,7 +36,7 @@ namespace DIOS.Core.Tests
 
     }
 
-    public void ReadBead(in BeadInfoStruct bead)
+    public void ReadBead(in RawBead bead)
     {
       var bd =  BeadInfoToByteArray(bead);
       Array.Copy(bd, InputBuffer, bd.Length);
@@ -51,12 +51,12 @@ namespace DIOS.Core.Tests
     /// </summary>
     /// <param name="bead"></param>
     /// <returns></returns>
-    private static byte[] BeadInfoToByteArray(in BeadInfoStruct bead)
+    private static byte[] BeadInfoToByteArray(in RawBead bead)
     {
       byte[] arrRet = new byte[64];
       unsafe
       {
-        fixed (BeadInfoStruct* pCS = &bead)
+        fixed (RawBead* pCS = &bead)
         {
           for (var i = 0; i < 64; i++)
           {

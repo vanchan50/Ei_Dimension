@@ -33,8 +33,7 @@ namespace Ei_Dimension.Graphing
 
     public static WorldMap Create()
     {
-      ViewModels.ResultsViewModel.Instance.WrldMap = ViewModelSource.Create(() => new WorldMap());
-      return ViewModels.ResultsViewModel.Instance.WrldMap;
+      return ViewModelSource.Create(() => new WorldMap());
     }
 
     public void ClearData()

@@ -39,7 +39,7 @@ namespace DIOS.Core.Structs
         _non0RegionsCount -= 1;
     }
 
-    internal int Add(in BeadInfoStruct outBead)
+    internal int Add(in RawBead outBead)
     {
       BeadEventsData.Add(in outBead);
       //accum stats for run as a whole, used during aligment and QC

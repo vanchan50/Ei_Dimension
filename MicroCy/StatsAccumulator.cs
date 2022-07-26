@@ -18,7 +18,7 @@ namespace DIOS.Core
     protected readonly List<float> fsc = new List<float>(MAXSIZE);
     private const int MAXSIZE = 80000;
 
-    public virtual void Add(in BeadInfoStruct bead)
+    public virtual void Add(in RawBead bead)
     {
       greenssc.Add(bead.greenssc);
       greenB.Add(bead.greenB);

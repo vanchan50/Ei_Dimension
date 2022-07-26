@@ -17,7 +17,7 @@ namespace DIOS.Core.Tests
       device.WellController.Init(new List<Well>{new Well{ RowIdx = 1, ColIdx = 1 }});
       device.Normalization.Enable();
       device.StartOperation();
-      fakeUSB.ReadBead(new BeadInfoStruct
+      fakeUSB.ReadBead(new RawBead
       {
         Header = 0xadbeadbe,
         fsc = 2.36f,

@@ -65,7 +65,7 @@ namespace DIOS.Core
       _minPerRegCheckTrigger = false;
     }
 
-    public void AddBeadEvent(ref BeadInfoStruct beadInfo)
+    public void AddRawBeadEvent(ref RawBead beadInfo)
     {
       _device.BeadCount++;
       _device.TotalBeads++;
@@ -94,7 +94,7 @@ namespace DIOS.Core
       return _wellstatsData.Publish();
     }
 
-    private void FillWellResults(in BeadInfoStruct outBead)
+    private void FillWellResults(in RawBead outBead)
     {
       var count = WellResults.Add(in outBead);
       //it also checks region 0, but it is only a trigger, the real check is done in MinPerRegionAchieved()

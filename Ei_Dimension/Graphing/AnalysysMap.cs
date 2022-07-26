@@ -14,54 +14,54 @@ namespace Ei_Dimension.Graphing
   public class AnalysysMap
   {
     public List<RegionReporterResult> BackingWResults { get; set; }
-    public virtual ObservableCollection<DoubleHeatMapData> DisplayedAnalysisMap { get; set; }
-    public virtual ObservableCollection<DoubleHeatMapData> CurrentAnalysis01Map { get; protected set; } = new ObservableCollection<DoubleHeatMapData>();
-    public virtual ObservableCollection<DoubleHeatMapData> CurrentAnalysis02Map { get; protected set; } = new ObservableCollection<DoubleHeatMapData>();
-    public virtual ObservableCollection<DoubleHeatMapData> CurrentAnalysis03Map { get; protected set; } = new ObservableCollection<DoubleHeatMapData>();
-    public virtual ObservableCollection<DoubleHeatMapData> CurrentAnalysis12Map { get; protected set; } = new ObservableCollection<DoubleHeatMapData>();
-    public virtual ObservableCollection<DoubleHeatMapData> CurrentAnalysis13Map { get; protected set; } = new ObservableCollection<DoubleHeatMapData>();
-    public virtual ObservableCollection<DoubleHeatMapData> CurrentAnalysis23Map { get; protected set; } = new ObservableCollection<DoubleHeatMapData>();
-    public virtual ObservableCollection<DoubleHeatMapData> BackingAnalysis01Map { get; protected set; } = new ObservableCollection<DoubleHeatMapData>();
-    public virtual ObservableCollection<DoubleHeatMapData> BackingAnalysis02Map { get; protected set; } = new ObservableCollection<DoubleHeatMapData>();
-    public virtual ObservableCollection<DoubleHeatMapData> BackingAnalysis03Map { get; protected set; } = new ObservableCollection<DoubleHeatMapData>();
-    public virtual ObservableCollection<DoubleHeatMapData> BackingAnalysis12Map { get; protected set; } = new ObservableCollection<DoubleHeatMapData>();
-    public virtual ObservableCollection<DoubleHeatMapData> BackingAnalysis13Map { get; protected set; } = new ObservableCollection<DoubleHeatMapData>();
-    public virtual ObservableCollection<DoubleHeatMapData> BackingAnalysis23Map { get; protected set; } = new ObservableCollection<DoubleHeatMapData>();
+    public virtual ObservableCollection<DoubleHeatMapData> DisplayedMap { get; set; }
+    public virtual ObservableCollection<DoubleHeatMapData> Current01Map { get; protected set; } = new ObservableCollection<DoubleHeatMapData>();
+    public virtual ObservableCollection<DoubleHeatMapData> Current02Map { get; protected set; } = new ObservableCollection<DoubleHeatMapData>();
+    public virtual ObservableCollection<DoubleHeatMapData> Current03Map { get; protected set; } = new ObservableCollection<DoubleHeatMapData>();
+    public virtual ObservableCollection<DoubleHeatMapData> Current12Map { get; protected set; } = new ObservableCollection<DoubleHeatMapData>();
+    public virtual ObservableCollection<DoubleHeatMapData> Current13Map { get; protected set; } = new ObservableCollection<DoubleHeatMapData>();
+    public virtual ObservableCollection<DoubleHeatMapData> Current23Map { get; protected set; } = new ObservableCollection<DoubleHeatMapData>();
+    public virtual ObservableCollection<DoubleHeatMapData> Backing01Map { get; protected set; } = new ObservableCollection<DoubleHeatMapData>();
+    public virtual ObservableCollection<DoubleHeatMapData> Backing02Map { get; protected set; } = new ObservableCollection<DoubleHeatMapData>();
+    public virtual ObservableCollection<DoubleHeatMapData> Backing03Map { get; protected set; } = new ObservableCollection<DoubleHeatMapData>();
+    public virtual ObservableCollection<DoubleHeatMapData> Backing12Map { get; protected set; } = new ObservableCollection<DoubleHeatMapData>();
+    public virtual ObservableCollection<DoubleHeatMapData> Backing13Map { get; protected set; } = new ObservableCollection<DoubleHeatMapData>();
+    public virtual ObservableCollection<DoubleHeatMapData> Backing23Map { get; protected set; } = new ObservableCollection<DoubleHeatMapData>();
 
+    private object _lock = new object();
     protected AnalysysMap()
     {
-      DisplayedAnalysisMap = CurrentAnalysis12Map;
+      DisplayedMap = Current12Map;
       BackingWResults = new List<RegionReporterResult>();
     }
 
     public static AnalysysMap Create()
     {
-      ViewModels.ResultsViewModel.Instance.AnalysisMap = ViewModelSource.Create(() => new AnalysysMap());
-      return ViewModels.ResultsViewModel.Instance.AnalysisMap;
+      return ViewModelSource.Create(() => new AnalysysMap());
     }
 
     public void ClearData(bool current)
     {
       if (current)
       {
-        CurrentAnalysis01Map.Clear();
-        CurrentAnalysis02Map.Clear();
-        CurrentAnalysis03Map.Clear();
-        CurrentAnalysis12Map.Clear();
-        CurrentAnalysis13Map.Clear();
-        CurrentAnalysis23Map.Clear();
+        Current01Map.Clear();
+        Current02Map.Clear();
+        Current03Map.Clear();
+        Current12Map.Clear();
+        Current13Map.Clear();
+        Current23Map.Clear();
       }
       else
       {
-        BackingAnalysis01Map.Clear();
-        BackingAnalysis02Map.Clear();
-        BackingAnalysis03Map.Clear();
-        lock (BackingAnalysis12Map)
+        Backing01Map.Clear();
+        Backing02Map.Clear();
+        Backing03Map.Clear();
+        lock (_lock)
         {
-          BackingAnalysis12Map.Clear();
+          Backing12Map.Clear();
         }
-        BackingAnalysis13Map.Clear();
-        BackingAnalysis23Map.Clear();
+        Backing13Map.Clear();
+        Backing23Map.Clear();
       }
     }
 
@@ -79,7 +79,7 @@ namespace Ei_Dimension.Graphing
       }
     }
 
-    public void FillBackingAnalysisMap()
+    public void FillBackingMap()
     {
       foreach (var result in BackingWResults)
       {
@@ -87,11 +87,11 @@ namespace Ei_Dimension.Graphing
         {
           var x = HeatMapPoint.bins[region.Center.x];
           var y = HeatMapPoint.bins[region.Center.y];
-          lock (BackingAnalysis12Map)
+          lock (_lock)
           {
             if (result.ReporterValues.Count > 0)
             {
-              BackingAnalysis12Map.Add(new DoubleHeatMapData(x, y, result.ReporterValues.Average()));
+              Backing12Map.Add(new DoubleHeatMapData(x, y, result.ReporterValues.Average()));
             }
           }
         }
@@ -102,33 +102,33 @@ namespace Ei_Dimension.Graphing
     {
       var x = HeatMapPoint.bins[App.Device.MapCtroller.ActiveMap.regions[regionIndex].Center.x];
       var y = HeatMapPoint.bins[App.Device.MapCtroller.ActiveMap.regions[regionIndex].Center.y];
-      CurrentAnalysis12Map.Add(new Models.DoubleHeatMapData(x, y, reporterAvg));
+      Current12Map.Add(new Models.DoubleHeatMapData(x, y, reporterAvg));
     }
 
     public void ChangeDisplayedMap(MapIndex mapIndex, bool current)
     {
-      DisplayedAnalysisMap = null;
+      DisplayedMap = null;
       if (current)
       {
         switch (mapIndex)
         {
           case MapIndex.CL01:
-            DisplayedAnalysisMap = CurrentAnalysis01Map;
+            DisplayedMap = Current01Map;
             break;
           case MapIndex.CL02:
-            DisplayedAnalysisMap = CurrentAnalysis02Map;
+            DisplayedMap = Current02Map;
             break;
           case MapIndex.CL03:
-            DisplayedAnalysisMap = CurrentAnalysis03Map;
+            DisplayedMap = Current03Map;
             break;
           case MapIndex.CL12:
-            DisplayedAnalysisMap = CurrentAnalysis12Map;
+            DisplayedMap = Current12Map;
             break;
           case MapIndex.CL13:
-            DisplayedAnalysisMap = CurrentAnalysis13Map;
+            DisplayedMap = Current13Map;
             break;
           case MapIndex.CL23:
-            DisplayedAnalysisMap = CurrentAnalysis23Map;
+            DisplayedMap = Current23Map;
             break;
         }
       }
@@ -137,22 +137,22 @@ namespace Ei_Dimension.Graphing
         switch (mapIndex)
         {
           case MapIndex.CL01:
-            DisplayedAnalysisMap = BackingAnalysis01Map;
+            DisplayedMap = Backing01Map;
             break;
           case MapIndex.CL02:
-            DisplayedAnalysisMap = BackingAnalysis02Map;
+            DisplayedMap = Backing02Map;
             break;
           case MapIndex.CL03:
-            DisplayedAnalysisMap = BackingAnalysis03Map;
+            DisplayedMap = Backing03Map;
             break;
           case MapIndex.CL12:
-            DisplayedAnalysisMap = BackingAnalysis12Map;
+            DisplayedMap = Backing12Map;
             break;
           case MapIndex.CL13:
-            DisplayedAnalysisMap = BackingAnalysis13Map;
+            DisplayedMap = Backing13Map;
             break;
           case MapIndex.CL23:
-            DisplayedAnalysisMap = BackingAnalysis23Map;
+            DisplayedMap = Backing23Map;
             break;
         }
       }

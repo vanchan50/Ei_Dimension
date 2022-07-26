@@ -48,7 +48,7 @@ namespace Ei_Dimension
     {
       var r = new Random();
       App.Current.Dispatcher.Invoke(() => { 
-        var kek = new BeadInfoStruct
+        var kek = new RawBead
         {
           Header = 0xadbeadbe,
           fsc = 2.36f,
@@ -58,7 +58,7 @@ namespace Ei_Dimension
           greenB = (ushort)r.Next(9, 12),
           greenC = 48950
         };
-        var pek = new BeadInfoStruct
+        var pek = new RawBead
         {
           Header = 0xadbeadbe,
           fsc = 15.82f,
@@ -70,11 +70,11 @@ namespace Ei_Dimension
         };
         if (System.Windows.Input.Keyboard.IsKeyDown(System.Windows.Input.Key.J))
         {
-          App.Device.Results.AddBeadEvent(ref kek);
+          App.Device.Results.AddRawBeadEvent(ref kek);
         }
         if (System.Windows.Input.Keyboard.IsKeyDown(System.Windows.Input.Key.K))
         {
-          App.Device.Results.AddBeadEvent(ref pek);
+          App.Device.Results.AddRawBeadEvent(ref pek);
         }
       });
     }

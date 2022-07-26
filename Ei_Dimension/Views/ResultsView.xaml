@@ -392,7 +392,7 @@
             <dxc:Series3D CrosshairEnabled="False"
                           LabelsVisibility="False"
                           CrosshairLabelVisibility="False">
-              <dxc:SeriesPoint3DDataSourceAdapter DataSource="{Binding DisplayedAnalysisMap}"
+              <dxc:SeriesPoint3DDataSourceAdapter DataSource="{Binding AnalysisMap.DisplayedMap}"
                                                   XArgumentDataMember="Y"
                                                   YArgumentDataMember="X" 
                                                   ValueDataMember="A"/>

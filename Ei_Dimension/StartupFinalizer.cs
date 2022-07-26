@@ -61,7 +61,6 @@ namespace Ei_Dimension
         DashboardViewModel.Instance.ClassiMapItems[Settings.Default.DefaultMap].Click(2);
       }
 
-      ResultsViewModel.Instance.FillWorldMaps();
       LanguageSwap.SetLanguage(MaintenanceViewModel.Instance.LanguageItems[Settings.Default.Language].Locale);
       Views.ExperimentView.Instance.DbButton.IsChecked = true;
       App.Device.MainCommand("Get FProperty", code: 0x08);

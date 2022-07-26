@@ -37,11 +37,11 @@ namespace Ei_Dimension.Core
       return str;
     }
 
-    public static BeadInfoStruct ParseRow(string data)
+    public static RawBead ParseRow(string data)
     {
       var numFormat = System.Globalization.CultureInfo.InvariantCulture.NumberFormat;
       string[] words = data.Split(_separator);
-      BeadInfoStruct binfo = new BeadInfoStruct
+      RawBead binfo = new RawBead
       {
         EventTime = uint.Parse(words[0]),
         fsc_bg = byte.Parse(words[1]),
@@ -126,7 +126,7 @@ namespace Ei_Dimension.Core
       }
     }
 
-    public static void CalculateStatistics(List<BeadInfoStruct> list)
+    public static void CalculateStatistics(List<RawBead> list)
     {
       var accumulator = new StatsAccumulator();
       foreach (var bead in list)
@@ -140,7 +140,7 @@ namespace Ei_Dimension.Core
       }));
     }
 
-    public static void BinScatterData(List<BeadInfoStruct> list, bool fromFile = false)
+    public static void BinScatterData(List<RawBead> list, bool fromFile = false)
     {
       var ScatterDataCount = ScatterData.CurrentReporter.Count;
       var MaxValue = ScatterData.CurrentReporter[ScatterDataCount - 1].Argument;
@@ -246,7 +246,7 @@ namespace Ei_Dimension.Core
       }));
     }
 
-    public static void BinMapData(List<BeadInfoStruct> beadInfoList, bool current = true, bool hiRez = false)
+    public static void BinMapData(List<RawBead> beadInfoList, bool current = true, bool hiRez = false)
     {
       //Puts points to Lists instead of filling 256x256 arrays.
       //traversing [,] array would be a downside, and condition check would also be included for every step.

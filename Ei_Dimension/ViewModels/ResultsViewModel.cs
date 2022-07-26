@@ -40,7 +40,7 @@ namespace Ei_Dimension.ViewModels
     private bool _fillDataActive;
     public const int HIREZDEFINITION = 512;
 
-    private List<BeadInfoStruct> _cachedBeadStructsForLoadedData = new List<BeadInfoStruct>(100000);
+    private List<RawBead> _cachedBeadStructsForLoadedData = new List<RawBead>(100000);
 
     protected ResultsViewModel()
     {
@@ -55,7 +55,8 @@ namespace Ei_Dimension.ViewModels
 
       Instance = this;
 
-      WorldMap.Create();
+      WrldMap = WorldMap.Create();
+      AnalysisMap = AnalysysMap.Create();
 
       CLButtonsChecked = new ObservableCollection<bool> { false, false, true, false, false, true, false, false };
       CLAxis = new ObservableCollection<string> { "CL1", "CL2" };
@@ -128,7 +129,7 @@ namespace Ei_Dimension.ViewModels
       Views.ResultsView.Instance.ClearHeatMaps();
     }
 
-    private bool ParseBeadInfo(string path, List<BeadInfoStruct> beadStructs)
+    private bool ParseBeadInfo(string path, List<RawBead> beadStructs)
     {
       List<string> linesInFile = Core.DataProcessor.GetDataFromFile(path);
       if (linesInFile.Count == 1 && linesInFile[0] == " ")
@@ -189,7 +190,7 @@ namespace Ei_Dimension.ViewModels
           try
           {
             HeatMapAPI.API.ReDraw(hiRez);
-            AnalysisMap.FillBackingAnalysisMap();
+            AnalysisMap.FillBackingMap();
           }
           catch (Exception e)
           {

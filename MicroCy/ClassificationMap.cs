@@ -30,7 +30,7 @@ namespace DIOS.Core
       }
     }
 
-    public int ClassifyBeadToRegion(in BeadInfoStruct outbead)
+    public int ClassifyBeadToRegion(in RawBead outbead)
     {
       //_actPrimaryIndex and _actSecondaryIndex should define _classimap index in a previous call,
       //and produce an index for the selection of classiMap. For cl0 and cl3 map compatibility

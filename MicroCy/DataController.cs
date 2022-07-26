@@ -50,7 +50,7 @@ namespace DIOS.Core
             {
               if (!GetBeadFromBuffer(_serialConnection.InputBuffer, i, out var outbead))
                 break;
-              _device.Results.AddBeadEvent(ref outbead);
+              _device.Results.AddRawBeadEvent(ref outbead);
             }
           }
           Array.Clear(_serialConnection.InputBuffer, 0, _serialConnection.InputBuffer.Length);
@@ -136,13 +136,13 @@ namespace DIOS.Core
       }
     }
 
-    private static BeadInfoStruct BeadArrayToStruct(byte[] beadmsg, byte shift)
+    private static RawBead BeadArrayToStruct(byte[] beadmsg, byte shift)
     {
       unsafe
       {
         fixed (byte* cs = &beadmsg[shift * 64])
         {
-          return *(BeadInfoStruct*)cs;
+          return *(RawBead*)cs;
         }
       }
     }
@@ -179,7 +179,7 @@ namespace DIOS.Core
       _device.Commands.Enqueue(newcmd);
     }
 
-    private static bool GetBeadFromBuffer(byte[] buffer, byte shift, out BeadInfoStruct outbead)
+    private static bool GetBeadFromBuffer(byte[] buffer, byte shift, out RawBead outbead)
     {
       outbead = BeadArrayToStruct(buffer, shift);
       return outbead.Header == 0xadbeadbe;

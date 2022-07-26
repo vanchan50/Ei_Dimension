@@ -82,7 +82,8 @@
     <Compile Include="StateMachine.cs" />
     <Compile Include="Structs\CalParams.cs" />
     <Compile Include="Structs\CustomMap.cs" />
-    <Compile Include="Structs\BeadInfoStruct.cs" />
+    <Compile Include="Structs\ProcessedBead.cs" />
+    <Compile Include="Structs\RawBead.cs" />
     <Compile Include="CommandLists.cs" />
     <Compile Include="Structs\DistributionStats.cs" />
     <Compile Include="Structs\MapCalParameters.cs" />

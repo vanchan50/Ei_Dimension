@@ -25,7 +25,7 @@ namespace Ei_Dimension
 
     private static GraphsController _instance;
     private static int _uiUpdateIsActive;
-    private readonly List<BeadInfoStruct> _tempBeadInfoList = new List<BeadInfoStruct>(1000);
+    private readonly List<RawBead> _tempBeadInfoList = new List<RawBead>(1000);
 
     public void Update()
     {
@@ -53,7 +53,7 @@ namespace Ei_Dimension
     private void UpdateBinfoList()
     {
       _tempBeadInfoList.Clear();
-      while (App.Device.DataOut.TryDequeue(out BeadInfoStruct bead))
+      while (App.Device.DataOut.TryDequeue(out RawBead bead))
       {
         _tempBeadInfoList.Add(bead);
       }
