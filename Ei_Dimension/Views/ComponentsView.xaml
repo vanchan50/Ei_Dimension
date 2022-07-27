@@ -180,7 +180,7 @@
     <!--Valves-->
     <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Margin="50,480,0,0">
+            Margin="50,420,0,0">
 
       <StackPanel VerticalAlignment="Stretch">
         <TextBlock Text="{lang:Loc Components_Valves}"
@@ -227,6 +227,30 @@
           </StackPanel>
         </Border>
 
+      </StackPanel>
+    </Border>
+
+    <!--Statistics TailDiscard-->
+    <Border HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Margin="70,720,0,0">
+      <StackPanel>
+        <TextBlock Text="{lang:Loc Components_Stats_Cutoff}"
+                   FontFamily="{StaticResource AppTextFont}"
+                   FontSize="36" Height="100"
+                   FontWeight="UltraBold"
+                   TextWrapping="Wrap"
+                   Width="140"
+                   Foreground="{StaticResource AppTextColor}"
+                   HorizontalAlignment="Center"/>
+        <TextBox Width="140" Name="CutoffTB"
+                 Style="{StaticResource InputFieldStyle}"
+                 Text="{Binding StatisticsCutoffBox[0]}">
+          <dxmvvm:Interaction.Behaviors>
+            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="8"/>
+            <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+          </dxmvvm:Interaction.Behaviors>
+        </TextBox>
       </StackPanel>
     </Border>
 

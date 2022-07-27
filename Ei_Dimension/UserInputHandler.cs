@@ -1465,6 +1465,19 @@ namespace Ei_Dimension
             failed = true;
             ErrorMessage = ">=0";// "[1-100]";
             break;
+          case nameof(ComponentsViewModel.Instance.StatisticsCutoffBox):
+            if (double.TryParse(_tempNewString, out dRes))
+            {
+              if (dRes >= 0 && dRes <= 45)
+              {
+                Settings.Default.StatisticsTailDiscardPercentage = dRes / 100;
+                StatisticsExtension.TailDiscardPercentage = dRes / 100;
+                break;
+              }
+            }
+            failed = true;
+            ErrorMessage = "[0-45]";
+            break;
         }
         if(VerificationViewModel.Instance.isActivePage)
         {

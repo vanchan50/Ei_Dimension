@@ -45,7 +45,7 @@ namespace DIOS.Core
         Regions.Add(region.Number, region);
       }
 
-      if (zones != null)
+      if (zones != null && zones.Count > 0)
         CL0ZonesEnabled = true;
     }
 

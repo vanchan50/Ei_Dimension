@@ -549,6 +549,7 @@ namespace Ei_Dimension
 
     private void InitApp(Device device)
     {
+      StatisticsExtension.TailDiscardPercentage = Settings.Default.StatisticsTailDiscardPercentage;
       Device = device ?? new Device(new USBConnection());
 
       if (Directory.Exists(Settings.Default.LastOutFolder))

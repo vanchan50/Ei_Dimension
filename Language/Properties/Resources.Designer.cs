@@ -838,6 +838,15 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Statistics Cutoff %.
+        /// </summary>
+        public static string Components_Stats_Cutoff {
+            get {
+                return ResourceManager.GetString("Components_Stats_Cutoff", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Suppress
         ///Warnings.
         /// </summary>

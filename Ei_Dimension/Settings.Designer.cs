@@ -382,5 +382,17 @@ namespace Ei_Dimension {
                 this["LegacyPlateReport"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.05")]
+        public double StatisticsTailDiscardPercentage {
+            get {
+                return ((double)(this["StatisticsTailDiscardPercentage"]));
+            }
+            set {
+                this["StatisticsTailDiscardPercentage"] = value;
+            }
+        }
     }
 }

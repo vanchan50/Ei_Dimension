@@ -5,6 +5,10 @@ namespace DIOS.Core
 {
   public static class StatisticsExtension
   {
+    public static double TailDiscardPercentage { get; set; } = DEFAULTDISCARDPERCENTAGE;
+
+    private const double DEFAULTDISCARDPERCENTAGE = 0.05;
+
     public static DistributionStats GetDistributionStatistics(this List<float> values)
     {
       float mean = 0;
@@ -20,9 +24,13 @@ namespace DIOS.Core
 
         median = values[half];
         mean = values.Mean(quarter, endIndex);
-        var average = values.Mean();
-        //CV is properly calculated via mean, but to comply to Lmnx, it is calculated via the average
-        coeffVar = values.CalculateCoefficientVariable(average, 0, count);
+
+        //CV is properly calculated via mean, but to comply to Lmnx, it is calculated with low tail discard
+        //
+        var start = (int)Math.Ceiling(count * TailDiscardPercentage);
+        var stop = (int)Math.Floor(count * (1 - TailDiscardPercentage));
+        var meanForCVCalculation = values.Mean(start, stop);
+        coeffVar = values.CalculateCoefficientVariable(meanForCVCalculation, start, stop);
       }
       else if (count > 0)
       {

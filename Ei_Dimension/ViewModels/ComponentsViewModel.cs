@@ -39,6 +39,7 @@ namespace Ei_Dimension.ViewModels
     public virtual bool CWDirectionActive { get; set; }
 
     public virtual ObservableCollection<string> MaxPressureBox { get; set; }
+    public virtual ObservableCollection<string> StatisticsCutoffBox { get; set; }
 
     public static ComponentsViewModel Instance { get; private set; }
     public virtual bool SuppressWarnings { get; set; }
@@ -102,6 +103,7 @@ namespace Ei_Dimension.ViewModels
       IdexTextBoxInputs = new ObservableCollection<string> { "", "" };
       CWDirectionActive = false;
       MaxPressureBox = new ObservableCollection<string> { Settings.Default.MaxPressure.ToString() };
+      StatisticsCutoffBox = new ObservableCollection<string> { (100 * Settings.Default.StatisticsTailDiscardPercentage).ToString() };
       SuppressWarnings = Settings.Default.SuppressWarnings;
 
       Instance = this;
@@ -362,6 +364,10 @@ namespace Ei_Dimension.ViewModels
         case 7:
           UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(SyringeControlSampleBValue)), this, 0, Views.ComponentsView.Instance.TB7);
           MainViewModel.Instance.NumpadToggleButton(Views.ComponentsView.Instance.TB7);
+          break;
+        case 8:
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(StatisticsCutoffBox)), this, 0, Views.ComponentsView.Instance.CutoffTB);
+          MainViewModel.Instance.NumpadToggleButton(Views.ComponentsView.Instance.CutoffTB);
           break;
       }
     }

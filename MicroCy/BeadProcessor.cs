@@ -78,7 +78,7 @@
 
     private int ClassifyBeadToZone(in RawBead bead)
     {
-      if (_map.zones == null)
+      if (!_map.CL0ZonesEnabled)
         return 0;
       //for the sake of robustness. Going from right to left;
       //checks if the value is higher than zone's left boundary.

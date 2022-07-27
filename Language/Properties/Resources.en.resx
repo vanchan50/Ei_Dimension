@@ -390,6 +390,9 @@ Direction</value>
   <data name="Components_Startup" xml:space="preserve">
     <value>Startup</value>
   </data>
+  <data name="Components_Stats_Cutoff" xml:space="preserve">
+    <value>Statistics Cutoff %</value>
+  </data>
   <data name="Components_Suppress_Warnings" xml:space="preserve">
     <value>Suppress
 Warnings</value>
