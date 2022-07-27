@@ -372,6 +372,9 @@
   <data name="Components_Wash_A" xml:space="preserve">
     <value>清洗 A</value>
   </data>
+  <data name="Components_Wash_ALL" xml:space="preserve">
+    <value>清洗 A/B</value>
+  </data>
   <data name="Components_Wash_B" xml:space="preserve">
     <value>清洗 B</value>
   </data>

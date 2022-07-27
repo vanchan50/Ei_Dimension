@@ -418,6 +418,9 @@ Warnings</value>
   <data name="Components_Wash_A" xml:space="preserve">
     <value>Wash A</value>
   </data>
+  <data name="Components_Wash_ALL" xml:space="preserve">
+    <value>Wash All</value>
+  </data>
   <data name="Components_Wash_B" xml:space="preserve">
     <value>Wash B</value>
   </data>

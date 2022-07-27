@@ -177,6 +177,7 @@ namespace Ei_Dimension.ViewModels
     public void FluidicsButtonClick(int i)
     {
       UserInputHandler.InputSanityCheck();
+      App.Device.MainCommand("Set Property", code: 0x19, parameter: 1); //bubble detect on
       string cmd = "";
       switch (i)
       {
@@ -187,10 +188,11 @@ namespace Ei_Dimension.ViewModels
           cmd = "Wash A";
           break;
         case 2:
+          // do both A+B
+          App.Device.MainCommand("Wash A");
           cmd = "Wash B";
           break;
       }
-      App.Device.MainCommand("Set Property", code: 0x19, parameter: 1); //bubble detect on
       App.Device.MainCommand(cmd);
       App.Device.MainCommand("Set Property", code: 0x19, parameter: 0); //bubble detect off
     }

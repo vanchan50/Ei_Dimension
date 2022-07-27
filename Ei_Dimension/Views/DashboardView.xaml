@@ -32,7 +32,7 @@
                 Height="75" Width="335"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                Margin="0,4,0,0" Cursor="Hand">
+                Margin="0,4,0,0">
           <Button.CommandParameter>
             <System:Int32>0</System:Int32>
           </Button.CommandParameter>
@@ -44,18 +44,18 @@
                 Height="75" Width="160"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                Margin="0,5,12,0" Cursor="Hand">
+                Margin="0,5,12,0">
             <Button.CommandParameter>
               <System:Int32>1</System:Int32>
             </Button.CommandParameter>
           </Button>
-          <Button Content="{lang:Loc Components_Wash_B}"
+          <Button Content="{lang:Loc Components_Wash_ALL}"
                   Style="{StaticResource ButtonStyle}"
                   Command="{Binding FluidicsButtonClickCommand}"
                   Height="75" Width="160"
                   HorizontalAlignment="Center"
                   VerticalAlignment="Center"
-                  Margin="0,5,0,0" Cursor="Hand">
+                  Margin="0,5,0,0">
             <Button.CommandParameter>
               <System:Int32>2</System:Int32>
             </Button.CommandParameter>

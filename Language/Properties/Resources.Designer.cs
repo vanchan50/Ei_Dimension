@@ -920,6 +920,15 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Wash All.
+        /// </summary>
+        public static string Components_Wash_ALL {
+            get {
+                return ResourceManager.GetString("Components_Wash_ALL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Wash B.
         /// </summary>
         public static string Components_Wash_B {
