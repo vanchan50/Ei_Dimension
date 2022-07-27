@@ -7,11 +7,11 @@ namespace DIOS.Core
   [JsonObject(MemberSerialization.Fields)]
   public class CustomMap
   {
-    public string mapName;
+    public readonly string mapName;
 
-    public int highorderidx;   //is 0 for cl0, 1 for cl1, etc
-    public int midorderidx; //y
-    public int loworderidx; //x
+    public readonly int highorderidx;   //is 0 for cl0, 1 for cl1, etc
+    public readonly int midorderidx; //y
+    public readonly int loworderidx; //x
     public int calcl0;
     public int calcl1;
     public int calcl2;
@@ -28,11 +28,14 @@ namespace DIOS.Core
     public double factor;
     public CalParams calParams;
 
+    public List<Zone> zones;
     public List<MapRegion> regions;// { get; }
     //public List<(int x, int y, int r)> classificationMap; //contains coords in 256x256 space for region numbers
     //can contain up to 6 classimaps (01,02,03,12,13,23) if necessary. possibility left for the future
     [JsonIgnore]
     public SortedDictionary<int,MapRegion> Regions { get; private set; }
+    [JsonIgnore]
+    public bool CL0ZonesEnabled { get; private set; }
 
     public void Init()
     {
@@ -41,6 +44,9 @@ namespace DIOS.Core
       {
         Regions.Add(region.Number, region);
       }
+
+      if (zones != null)
+        CL0ZonesEnabled = true;
     }
 
     public float GetFactorizedNormalizationForRegion(int region)

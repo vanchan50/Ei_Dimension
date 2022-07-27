@@ -50,7 +50,7 @@ namespace DIOS.Core
             {
               if (!GetBeadFromBuffer(_serialConnection.InputBuffer, i, out var outbead))
                 break;
-              _device.Results.AddRawBeadEvent(ref outbead);
+              _device.Results.AddRawBeadEvent(in outbead);
             }
           }
           Array.Clear(_serialConnection.InputBuffer, 0, _serialConnection.InputBuffer.Length);

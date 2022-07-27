@@ -37,37 +37,39 @@ namespace Ei_Dimension.Core
       return str;
     }
 
-    public static RawBead ParseRow(string data)
+    public static ProcessedBead ParseRow(string data)
     {
       var numFormat = System.Globalization.CultureInfo.InvariantCulture.NumberFormat;
       string[] words = data.Split(_separator);
-      RawBead binfo = new RawBead
+      int i = 0;
+      ProcessedBead binfo = new ProcessedBead
       {
-        EventTime = uint.Parse(words[0]),
-        fsc_bg = byte.Parse(words[1]),
-        vssc_bg = byte.Parse(words[2]),
-        cl0_bg = byte.Parse(words[3]),
-        cl1_bg = byte.Parse(words[4]),
-        cl2_bg = byte.Parse(words[5]),
-        cl3_bg = byte.Parse(words[6]),
-        rssc_bg = byte.Parse(words[7]),
-        gssc_bg = byte.Parse(words[8]),
-        greenB_bg = ushort.Parse(words[9]),
-        greenC_bg = ushort.Parse(words[10]),
-        greenB = ushort.Parse(words[11]),
-        greenC = ushort.Parse(words[12]),
-        l_offset_rg = byte.Parse(words[13]),
-        l_offset_gv = byte.Parse(words[14]),
-        region = ushort.Parse(words[15]),
-        fsc = float.Parse(words[16], numFormat),
-        violetssc = float.Parse(words[17], numFormat),
-        cl0 = float.Parse(words[18], numFormat),
-        redssc = float.Parse(words[19], numFormat),
-        cl1 = float.Parse(words[20], numFormat),
-        cl2 = float.Parse(words[21], numFormat),
-        cl3 = float.Parse(words[22], numFormat),
-        greenssc = float.Parse(words[23], numFormat),
-        reporter = float.Parse(words[24], numFormat)
+        EventTime = uint.Parse(words[i++]),
+        fsc_bg = byte.Parse(words[i++]),
+        vssc_bg = byte.Parse(words[i++]),
+        cl0_bg = byte.Parse(words[i++]),
+        cl1_bg = byte.Parse(words[i++]),
+        cl2_bg = byte.Parse(words[i++]),
+        cl3_bg = byte.Parse(words[i++]),
+        rssc_bg = byte.Parse(words[i++]),
+        gssc_bg = byte.Parse(words[i++]),
+        greenB_bg = ushort.Parse(words[i++]),
+        greenC_bg = ushort.Parse(words[i++]),
+        greenB = ushort.Parse(words[i++]),
+        greenC = ushort.Parse(words[i++]),
+        l_offset_rg = byte.Parse(words[i++]),
+        l_offset_gv = byte.Parse(words[i++]),
+        region = ushort.Parse(words[i++]),
+        fsc = float.Parse(words[i++], numFormat),
+        violetssc = float.Parse(words[i++], numFormat),
+        cl0 = float.Parse(words[i++], numFormat),
+        redssc = float.Parse(words[i++], numFormat),
+        cl1 = float.Parse(words[i++], numFormat),
+        cl2 = float.Parse(words[i++], numFormat),
+        cl3 = float.Parse(words[i++], numFormat),
+        greenssc = float.Parse(words[i++], numFormat),
+        reporter = float.Parse(words[i++], numFormat),
+        zone = ushort.Parse(words[i])
       };
       return binfo;
     }
@@ -126,7 +128,7 @@ namespace Ei_Dimension.Core
       }
     }
 
-    public static void CalculateStatistics(List<RawBead> list)
+    public static void CalculateStatistics(List<ProcessedBead> list)
     {
       var accumulator = new StatsAccumulator();
       foreach (var bead in list)
@@ -140,7 +142,7 @@ namespace Ei_Dimension.Core
       }));
     }
 
-    public static void BinScatterData(List<RawBead> list, bool fromFile = false)
+    public static void BinScatterData(List<ProcessedBead> list, bool fromFile = false)
     {
       var ScatterDataCount = ScatterData.CurrentReporter.Count;
       var MaxValue = ScatterData.CurrentReporter[ScatterDataCount - 1].Argument;
@@ -246,7 +248,7 @@ namespace Ei_Dimension.Core
       }));
     }
 
-    public static void BinMapData(List<RawBead> beadInfoList, bool current = true, bool hiRez = false)
+    public static void BinMapData(List<ProcessedBead> beadInfoList, bool current = true, bool hiRez = false)
     {
       //Puts points to Lists instead of filling 256x256 arrays.
       //traversing [,] array would be a downside, and condition check would also be included for every step.

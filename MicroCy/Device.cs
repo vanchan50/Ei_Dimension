@@ -40,7 +40,7 @@ namespace DIOS.Core
     public RunResults Results { get; }
     public WorkOrder WorkOrder { get; set; }
     public ConcurrentQueue<CommandStruct> Commands { get; } = new ConcurrentQueue<CommandStruct>();
-    public ConcurrentQueue<RawBead> DataOut { get; } = new ConcurrentQueue<RawBead>();
+    public ConcurrentQueue<ProcessedBead> DataOut { get; } = new ConcurrentQueue<ProcessedBead>();
     public WellController WellController { get; } = new WellController();
     public BitArray SystemActivity { get; } = new BitArray(16, false);
     public event EventHandler<ReadingWellEventArgs> StartingToReadWell;

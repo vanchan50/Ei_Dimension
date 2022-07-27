@@ -36,7 +36,7 @@ namespace DIOS.Core.Tests
 
     }
 
-    public void ReadBead(in RawBead bead)
+    internal void ReadBead(in RawBead bead)
     {
       var bd =  BeadInfoToByteArray(bead);
       Array.Copy(bd, InputBuffer, bd.Length);

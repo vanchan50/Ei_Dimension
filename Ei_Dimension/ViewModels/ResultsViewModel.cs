@@ -40,7 +40,7 @@ namespace Ei_Dimension.ViewModels
     private bool _fillDataActive;
     public const int HIREZDEFINITION = 512;
 
-    private List<RawBead> _cachedBeadStructsForLoadedData = new List<RawBead>(100000);
+    private List<ProcessedBead> _cachedBeadStructsForLoadedData = new List<ProcessedBead>(100000);
 
     protected ResultsViewModel()
     {
@@ -129,7 +129,7 @@ namespace Ei_Dimension.ViewModels
       Views.ResultsView.Instance.ClearHeatMaps();
     }
 
-    private bool ParseBeadInfo(string path, List<RawBead> beadStructs)
+    private bool ParseBeadInfo(string path, List<ProcessedBead> beadStructs)
     {
       List<string> linesInFile = Core.DataProcessor.GetDataFromFile(path);
       if (linesInFile.Count == 1 && linesInFile[0] == " ")

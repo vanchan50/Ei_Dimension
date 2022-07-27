@@ -17,12 +17,12 @@ namespace DIOS.Core.Tests
       device.WellController.Init(new List<Well>{new Well{ RowIdx = 1, ColIdx = 1 }});
       device.Normalization.Enable();
       device.StartOperation();
-      fakeUSB.ReadBead(new RawBead
-      {
-        Header = 0xadbeadbe,
-        fsc = 2.36f,
-        cl1 = 13400.1632f
-      });
+      //fakeUSB.ReadBead(new RawBead
+      //{
+      //  Header = 0xadbeadbe,
+      //  fsc = 2.36f,
+      //  cl1 = 13400.1632f
+      //});
 
       Thread.Sleep(1000);
       var t = device.DataOut;

@@ -65,13 +65,13 @@ namespace DIOS.Core
       _minPerRegCheckTrigger = false;
     }
 
-    public void AddRawBeadEvent(ref RawBead beadInfo)
+    internal void AddRawBeadEvent(in RawBead rawBead)
     {
       _device.BeadCount++;
       _device.TotalBeads++;
-      _device._beadProcessor.CalculateBeadParams(ref beadInfo);
-      _device.DataOut.Enqueue(beadInfo);
-      FillWellResults(in beadInfo);
+      var processedBead = _device._beadProcessor.CalculateBeadParams(in rawBead);
+      _device.DataOut.Enqueue(processedBead);
+      FillWellResults(in processedBead);
       switch (_device.Mode)
       {
         case OperationMode.Normal:
@@ -79,7 +79,7 @@ namespace DIOS.Core
         case OperationMode.Calibration:
           break;
         case OperationMode.Verification:
-          Verificator.FillStats(in beadInfo);
+          Verificator.FillStats(in processedBead);
           break;
       }
     }
@@ -94,9 +94,9 @@ namespace DIOS.Core
       return _wellstatsData.Publish();
     }
 
-    private void FillWellResults(in RawBead outBead)
+    private void FillWellResults(in ProcessedBead bead)
     {
-      var count = WellResults.Add(in outBead);
+      var count = WellResults.Add(in bead);
       //it also checks region 0, but it is only a trigger, the real check is done in MinPerRegionAchieved()
       if (!_minPerRegCheckTrigger)
         _minPerRegCheckTrigger = count == _device.MinPerRegion;  //see if assay is done via sufficient beads in each region

@@ -18,7 +18,7 @@ namespace DIOS.Core
       InputReporter = inputReporter;
     }
 
-    public void FillCalibrationStatsRow(in RawBead outbead)
+    public void FillCalibrationStatsRow(in ProcessedBead outbead)
     {
       _reporter.Add(outbead.reporter);
       _cl1.Add(outbead.cl1);

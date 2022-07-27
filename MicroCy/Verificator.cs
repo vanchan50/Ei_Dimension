@@ -196,26 +196,26 @@ namespace DIOS.Core
     /// Called on every Read from USB, in Verification mode. Not used in other modes
     /// </summary>
     /// <param name="outbead"></param>
-    internal static void FillStats(in RawBead outbead)
+    internal static void FillStats(in ProcessedBead bead)
     {
       _totalBeads++;
       //if region is classified
-      if (_classifiedRegionsDict.TryGetValue(outbead.region, out var index))
+      if (_classifiedRegionsDict.TryGetValue(bead.region, out var index))
       {
-        RegionalStats[index].FillCalibrationStatsRow(in outbead);
+        RegionalStats[index].FillCalibrationStatsRow(in bead);
         return;
       }
 
       //if region is UNclassified
-      if (outbead.region == 0)
+      if (bead.region == 0)
         return;
       //region 0 should not be counted here
-      if (_unclassifiedRegionsDict.ContainsKey(outbead.region))
+      if (_unclassifiedRegionsDict.ContainsKey(bead.region))
       {
-        _unclassifiedRegionsDict[outbead.region]++;
+        _unclassifiedRegionsDict[bead.region]++;
         return;
       }
-      _unclassifiedRegionsDict.Add(outbead.region, 1);
+      _unclassifiedRegionsDict.Add(bead.region, 1);
     }
 
     internal static void CalculateResults(MapController mapctroller)

@@ -20,16 +20,21 @@
       _classificationMap.ConstructClassificationMap(_map);
     }
 
-    public void CalculateBeadParams(ref RawBead rawBead)
+    public ProcessedBead CalculateBeadParams(in RawBead rawBead)
     {
       //The order of operations matters here
       AssignSensitivityChannels(in rawBead);
       var compensated = CalculateCompensatedCoordinates(in rawBead);
-      rawBead.cl1 = compensated.cl1;
-      rawBead.cl2 = compensated.cl2;
-      //outbead.fsc = (float)Math.Pow(10, outbead.fsc);
-      rawBead.region = (ushort)_classificationMap.ClassifyBeadToRegion(in rawBead);
-      rawBead.reporter = CalculateReporter(in rawBead);
+      var outBead = new ProcessedBead
+      {
+        cl1 = compensated.cl1,
+        cl2 = compensated.cl2,
+        //fsc = (float)Math.Pow(10, rawBead.fsc),
+        region = (ushort)_classificationMap.ClassifyBeadToRegion(in rawBead),
+        zone = (ushort)ClassifyBeadToZone(in rawBead),
+        reporter = CalculateReporter(in rawBead)
+      };
+      return outBead;
     }
 
     private void AssignSensitivityChannels(in RawBead rawBead)
@@ -69,6 +74,27 @@
       if (scaledReporter < 0)
         return 0;
       return scaledReporter;
+    }
+
+    private int ClassifyBeadToZone(in RawBead bead)
+    {
+      if (_map.zones == null)
+        return 0;
+      //for the sake of robustness. Going from right to left;
+      //checks if the value is higher than zone's left boundary.
+      //if yes, no need to check other zones
+      //check if it falls into the right boundary. else out of any zone
+      for (var i = _map.zones.Count - 1; i < 0; i--)
+      {
+        var zone = _map.zones[i];
+        if (bead.cl0 >= zone.Start)
+        {
+          if (bead.cl0 <= zone.End)
+            return zone.Number;
+          return 0;
+        }
+      }
+      return 0;
     }
   }
 }

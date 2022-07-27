@@ -1,6 +1,6 @@
 ﻿namespace DIOS.Core
 {
-  public struct RawBead
+  internal struct RawBead
   {
     public uint Header;
     public uint EventTime;

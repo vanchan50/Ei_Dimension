@@ -45,7 +45,7 @@ namespace Ei_Dimension
 
     #if DEBUG
     private static void JKBeadADD()
-    {
+    {/*
       var r = new Random();
       App.Current.Dispatcher.Invoke(() => { 
         var kek = new RawBead
@@ -70,13 +70,14 @@ namespace Ei_Dimension
         };
         if (System.Windows.Input.Keyboard.IsKeyDown(System.Windows.Input.Key.J))
         {
-          App.Device.Results.AddRawBeadEvent(ref kek);
+          App.Device.Results.AddRawBeadEvent(in kek);
         }
         if (System.Windows.Input.Keyboard.IsKeyDown(System.Windows.Input.Key.K))
         {
-          App.Device.Results.AddRawBeadEvent(ref pek);
+          App.Device.Results.AddRawBeadEvent(in pek);
         }
       });
+      */
     }
     #endif
   }

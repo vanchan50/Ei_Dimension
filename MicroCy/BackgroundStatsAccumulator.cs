@@ -2,7 +2,7 @@
 {
   public class BackgroundStatsAccumulator : StatsAccumulator
   {
-    public override void Add(in RawBead bead)
+    public override void Add(in ProcessedBead bead)
     {
       greenssc.Add(bead.gssc_bg);
       greenB.Add(bead.greenB_bg);

@@ -30,14 +30,14 @@ namespace DIOS.Core
       }
     }
 
-    public int ClassifyBeadToRegion(in RawBead outbead)
+    public int ClassifyBeadToRegion(in RawBead bead)
     {
       //_actPrimaryIndex and _actSecondaryIndex should define _classimap index in a previous call,
       //and produce an index for the selection of classiMap. For cl0 and cl3 map compatibility
-      int x = Array.BinarySearch(ClassificationBins, outbead.cl1);
+      int x = Array.BinarySearch(ClassificationBins, bead.cl1);
       if (x < 0)
         x = ~x;
-      int y = Array.BinarySearch(ClassificationBins, outbead.cl2);
+      int y = Array.BinarySearch(ClassificationBins, bead.cl2);
       if (y < 0)
         y = ~y;
       x = x < byte.MaxValue ? x : byte.MaxValue;

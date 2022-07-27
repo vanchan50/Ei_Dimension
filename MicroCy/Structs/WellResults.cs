@@ -39,17 +39,17 @@ namespace DIOS.Core.Structs
         _non0RegionsCount -= 1;
     }
 
-    internal int Add(in RawBead outBead)
+    internal int Add(in ProcessedBead bead)
     {
-      BeadEventsData.Add(in outBead);
+      BeadEventsData.Add(in bead);
       //accum stats for run as a whole, used during aligment and QC
-      _calibrationStatsAccumulator.Add(in outBead);
-      _backgroundStatsAccumulator.Add(in outBead);
+      _calibrationStatsAccumulator.Add(in bead);
+      _backgroundStatsAccumulator.Add(in bead);
       //WellResults is a list of region numbers that are active
       //each entry has a list of rp1 values from each bead in that region
-      if (_regionIndexDictionary.TryGetValue(outBead.region, out var index))
+      if (_regionIndexDictionary.TryGetValue(bead.region, out var index))
       {
-        _reporterPerRegion[index].ReporterValues.Add(outBead.reporter);
+        _reporterPerRegion[index].ReporterValues.Add(bead.reporter);
         return _reporterPerRegion[index].ReporterValues.Count;
       }
       //return negative count, so the check is passed

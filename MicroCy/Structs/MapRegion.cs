@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace DIOS.Core
 {
+  /// <summary>
+  /// The CL2/CL1 2-D Domain
+  /// </summary>
   [Serializable]
   public class MapRegion
   {
