@@ -82,6 +82,7 @@ namespace Ei_Dimension.ViewModels
       App.Device.MainCommand("Get Property", code: 0x2d);
       App.Device.MainCommand("Get Property", code: 0x2e);
       App.Device.MainCommand("Get Property", code: 0x2f);
+      App.Device.MainCommand("Get Property", code: 0x20);
       System.Threading.Thread.Sleep(1000);
       Action Cancel = () =>
       {

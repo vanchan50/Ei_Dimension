@@ -113,6 +113,9 @@ namespace Ei_Dimension
               DashboardViewModel.Instance.PressureMon[2] = DashboardViewModel.Instance.MinPressure.ToString("f3");
             };
             break;
+          case 0x20:
+            update = () => CalibrationViewModel.Instance.DNRContents[0] = exe.FParameter.ToString();
+            break;
           case 0x24:
             update = () => ChannelsViewModel.Instance.Bias30Parameters[9] = exe.Parameter.ToString();
             break;

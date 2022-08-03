@@ -21,7 +21,7 @@
     public byte l_offset_rg;    //samples between green and red peak
     public byte l_offset_gv;    //samples between green and violet peak
     public int region;
-    public ushort zone;     //*10K shift and inject into region
+    public ushort zone;     //*1K shift and inject into region
     public float fsc;       //Forward Scatter
 
     public float violetssc; //Violet A
@@ -37,7 +37,7 @@
     public float reporter;  //computed from Green B and Green C
     public override string ToString()   //setup for csv output
     {
-      return $"{EventTime.ToString()},{fsc_bg.ToString()},{vssc_bg.ToString()},{cl0_bg.ToString()},{cl1_bg.ToString()},{cl2_bg.ToString()},{cl3_bg.ToString()},{rssc_bg.ToString()},{gssc_bg.ToString()},{greenB_bg.ToString()},{greenC_bg.ToString()},{greenB.ToString()},{greenC.ToString()},{l_offset_rg.ToString()},{l_offset_gv.ToString()},{(zone * 10000 + region).ToString()},{fsc.ToString()},{violetssc.ToString()},{cl0.ToString()},{redssc.ToString()},{cl1.ToString()},{cl2.ToString()},{cl3.ToString()},{greenssc.ToString()},{reporter.ToString($"{0:0.000}")}";
+      return $"{EventTime.ToString()},{fsc_bg.ToString()},{vssc_bg.ToString()},{cl0_bg.ToString()},{cl1_bg.ToString()},{cl2_bg.ToString()},{cl3_bg.ToString()},{rssc_bg.ToString()},{gssc_bg.ToString()},{greenB_bg.ToString()},{greenC_bg.ToString()},{greenB.ToString()},{greenC.ToString()},{l_offset_rg.ToString()},{l_offset_gv.ToString()},{(zone * 1000 + region).ToString()},{fsc.ToString()},{violetssc.ToString()},{cl0.ToString()},{redssc.ToString()},{cl1.ToString()},{cl2.ToString()},{cl3.ToString()},{greenssc.ToString()},{reporter.ToString($"{0:0.000}")}";
     }
   }
 }
