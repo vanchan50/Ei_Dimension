@@ -7,7 +7,7 @@ namespace DIOS.Core.Structs
     public Well Well { get; private set; }
     public BeadEventsData BeadEventsData { get; } = new BeadEventsData();
     private readonly List<RegionReporterResult> _reporterPerRegion = new List<RegionReporterResult>();
-    private readonly SortedDictionary<ushort, int> _regionIndexDictionary = new SortedDictionary<ushort, int>();
+    private readonly SortedDictionary<int, int> _regionIndexDictionary = new SortedDictionary<int, int>();
     private readonly StatsAccumulator _calibrationStatsAccumulator = new StatsAccumulator();
     private readonly BackgroundStatsAccumulator _backgroundStatsAccumulator = new BackgroundStatsAccumulator();
     private int _non0RegionsCount;  //cached data for optimization. discard region 0 from calculation. only for minPerReg case

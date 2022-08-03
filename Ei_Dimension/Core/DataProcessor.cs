@@ -310,7 +310,7 @@ namespace Ei_Dimension.Core
       }
     }
 
-    private static bool AddWeightToRegions(ushort region)
+    private static bool AddWeightToRegions(int region)
     {
       if (App.Device.MapCtroller.ActiveMap.mapName != _100plexAMapName
           && App.Device.MapCtroller.ActiveMap.mapName != _100plexBMapName)
