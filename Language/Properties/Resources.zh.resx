@@ -630,6 +630,9 @@
   <data name="FileSave_JSON_To_Results" xml:space="preserve">
     <value>JSON 结果文件</value>
   </data>
+  <data name="FileSave_Legacy_Report" xml:space="preserve">
+    <value>输出传统式孔板报告</value>
+  </data>
   <data name="FileSave_Output_Files" xml:space="preserve">
     <value>输出文件</value>
   </data>
@@ -664,6 +667,9 @@
   </data>
   <data name="Maintenance_Channels" xml:space="preserve">
     <value>探测器</value>
+  </data>
+  <data name="Maintenance_Normalization" xml:space="preserve">
+    <value>归一化</value>
   </data>
   <data name="Maintenance_Sanitize" xml:space="preserve">
     <value>UVC 紫外消毒</value>
@@ -818,6 +824,22 @@
   <data name="Name" xml:space="preserve">
     <value>检测项目</value>
   </data>
+  <data name="Normalilzation_Normalize" xml:space="preserve">
+    <value>归一化</value>
+  </data>
+  <data name="Normalization_Clear" xml:space="preserve">
+    <value>清除</value>
+  </data>
+  <data name="Normalization_Factor" xml:space="preserve">
+    <value>因子</value>
+  </data>
+  <data name="Normalization_Post" xml:space="preserve">
+    <value>获取背景值</value>
+  </data>
+  <data name="Normalization_Save" xml:space="preserve">
+    <value>将归一化参数保
+     存到珠图</value>
+  </data>
   <data name="Notification_File_Inexistent" xml:space="preserve">
     <value>文件不存在</value>
   </data>
@@ -952,6 +974,9 @@
   </data>
   <data name="Text_Files" xml:space="preserve">
     <value>文本文件</value>
+  </data>
+  <data name="Update_FW" xml:space="preserve">
+    <value>更新固件</value>
   </data>
   <data name="Validation_Classification_Tolerance" xml:space="preserve">
     <value>分类容差 %</value>

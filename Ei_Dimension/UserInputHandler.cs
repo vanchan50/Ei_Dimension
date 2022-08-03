@@ -157,14 +157,14 @@ namespace Ei_Dimension
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 1 && iRes <= 100)
+                if (iRes >= 1 && iRes <= 150)
                 {
                   App.Device.MainCommand("Set Property", code: 0xac, parameter: (ushort)iRes);
                   break;
                 }
               }
               failed = true;
-              ErrorMessage = "[1-100]";
+              ErrorMessage = "[1-150]";
             }
             if (SelectedTextBox.index == 2)
             {
