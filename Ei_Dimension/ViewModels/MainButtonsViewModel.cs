@@ -31,13 +31,13 @@ namespace Ei_Dimension.ViewModels
     public void LoadButtonClick()
     {
       UserInputHandler.InputSanityCheck();
-      App.Device.MainCommand("Load Plate");
+      App.Device.LoadPlate();
     }
 
     public void EjectButtonClick()
     {
       UserInputHandler.InputSanityCheck();
-      App.Device.MainCommand("Eject Plate");
+      App.Device.EjectPlate();
     }
 
     public void StartButtonClick()

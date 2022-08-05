@@ -39,20 +39,15 @@ namespace DIOS.Core.SelfTests
       return true;
     }
 
-    internal void ScriptFinishedSignal(byte command)
+    internal void ScriptFinishedSignal()
     {
-      switch (command)
-      {
-        case 0xE0:
-          _device.MainCommand("Get FProperty", code: 0x0C); //Pressure
-          Motorsinit[2] = false;
-          _device.MainCommand("Get FProperty", code: 0x44); //Z Motor
-          Motorsinit[0] = false;
-          _device.MainCommand("Get FProperty", code: 0x54); //X Motor
-          Motorsinit[1] = false;
-          _device.MainCommand("Get FProperty", code: 0x64); //Y Motor
-          break;
-      }
+      _device.MainCommand("Get FProperty", code: 0x0C); //Pressure
+      Motorsinit[2] = false;
+      _device.MainCommand("Get FProperty", code: 0x44); //Z Motor
+      Motorsinit[0] = false;
+      _device.MainCommand("Get FProperty", code: 0x54); //X Motor
+      Motorsinit[1] = false;
+      _device.MainCommand("Get FProperty", code: 0x64); //Y Motor
     }
   }
 }

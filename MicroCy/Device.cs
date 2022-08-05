@@ -117,6 +117,7 @@ namespace DIOS.Core
     }
     public static DirectoryInfo RootDirectory { get; private set; }
     public float MaxPressure { get; set; }
+    public bool IsPlateEjected { get; internal set; }
 
     private bool _isReadingA;
     private Gate _scatterGate;
@@ -234,6 +235,18 @@ namespace DIOS.Core
 
       if (TerminationType != Termination.TotalBeadsCaptured) //set some limit for running to eos or if regions are wrong
         BeadsToCapture = 100000;
+    }
+
+    public void EjectPlate()
+    {
+      MainCommand("Eject Plate");
+      IsPlateEjected = true;
+    }
+
+    public void LoadPlate()
+    {
+      MainCommand("Load Plate");
+      IsPlateEjected = false;
     }
 
     private void SetReadingParamsForWell()

@@ -391,7 +391,7 @@ Direction</value>
     <value>Startup</value>
   </data>
   <data name="Components_Stats_Cutoff" xml:space="preserve">
-    <value>Statistics Cutoff %</value>
+    <value>Statistics Trim %</value>
   </data>
   <data name="Components_Suppress_Warnings" xml:space="preserve">
     <value>Suppress
@@ -1167,6 +1167,9 @@ Verification</value>
   </data>
   <data name="Weekly" xml:space="preserve">
     <value>Weekly</value>
+  </data>
+  <data name="WellSel_CustomizePlate" xml:space="preserve">
+    <value>Customize Plate</value>
   </data>
   <data name="WellSel_Reset_Plate" xml:space="preserve">
     <value>Reset Plate</value>

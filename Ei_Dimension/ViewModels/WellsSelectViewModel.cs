@@ -131,6 +131,11 @@ namespace Ei_Dimension.ViewModels
       }
     }
 
+    public void CustomizePlateClick()
+    {
+      PlateCustomizationViewModel.Instance.CustomizationVisible = Visibility.Visible;
+    }
+
     public List<Well> OutputWells()
     {
       List<Well> wells;

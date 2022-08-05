@@ -1069,6 +1069,14 @@
                 Content="{lang:Loc WellSel_Select_ALL}"
                 Style="{StaticResource ButtonStyle}"
                 Command="{Binding AllSelectClickCommand}"/>
+        <Button Width="280" Height="180"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                FontSize="36"
+                Margin="0,126,0,0"
+                Content="{lang:Loc WellSel_CustomizePlate}"
+                Style="{StaticResource ButtonStyle}"
+                Command="{Binding CustomizePlateClickCommand}"/>
         <!--
         <ToggleButton Style="{StaticResource ToggleButtonThemeStyle}"
                       Height="100" Cursor="Hand"

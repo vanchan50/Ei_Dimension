@@ -200,7 +200,18 @@ namespace DIOS.Core
           _device.OnBeadConcentrationStatusUpdate(cs.Parameter);
           break;
         case 0xF9:
-          _device.SelfTester.ScriptFinishedSignal(cs.Command);
+          switch (cs.Command)
+          {
+            case 0xE0:
+              _device.SelfTester.ScriptFinishedSignal();
+              break;
+            case 0xE5:
+              _device.IsPlateEjected = true;
+              break;
+            case 0xE6:
+              _device.IsPlateEjected = false;
+              break;
+          }
           break;
         case 0x44:
           if (!_device.SelfTester.Motorsinit[2])

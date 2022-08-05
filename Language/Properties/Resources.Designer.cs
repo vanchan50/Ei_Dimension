@@ -838,7 +838,7 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Statistics Cutoff %.
+        ///   Looks up a localized string similar to Statistics Trim %.
         /// </summary>
         public static string Components_Stats_Cutoff {
             get {
@@ -3087,6 +3087,15 @@ namespace Ei_Dimension.Language {
         public static string Weekly {
             get {
                 return ResourceManager.GetString("Weekly", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Customize Plate.
+        /// </summary>
+        public static string WellSel_CustomizePlate {
+            get {
+                return ResourceManager.GetString("WellSel_CustomizePlate", resourceCulture);
             }
         }
         

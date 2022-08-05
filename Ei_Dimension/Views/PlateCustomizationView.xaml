@@ -1,0 +1,29 @@
+﻿<UserControl x:Class="Ei_Dimension.Views.PlateCustomizationView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+             xmlns:ViewModels="clr-namespace:Ei_Dimension.ViewModels"
+             xmlns:lang="clr-namespace:Ei_Dimension.Language;assembly=Language"
+             mc:Ignorable="d"
+             DataContext="{dxmvvm:ViewModelSource Type=ViewModels:PlateCustomizationViewModel}"
+             d:DesignHeight="1080" d:DesignWidth="1920">
+  <Grid Background="Transparent" Visibility="{Binding CustomizationVisible}">
+    <Rectangle Width="1920" Height="1080"
+               HorizontalAlignment="Left"
+               VerticalAlignment="Top"
+               Fill="Black"
+               Opacity="0.3"/>
+    <Button Content="❌"
+            Command="{Binding HideViewCommand}"
+            Style="{StaticResource ButtonStyle}"
+            CommandParameter="100"
+            Height="50"
+            Width="50"
+            FontSize="40" FontWeight="ExtraBold"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Margin="1310,200,0,0"/>
+  </Grid>
+</UserControl>

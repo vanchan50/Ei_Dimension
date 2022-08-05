@@ -141,18 +141,6 @@
           Visibility="{Binding KeyboardVisible}">
       <Views:ScreenKeyboardView />
     </Grid>
-    
-    <!--Notification-->
-    <Grid Width="1920" Height="1080"
-          VerticalAlignment="Top" HorizontalAlignment="Left">
-      <Views:NotificationView />
-    </Grid>
-
-    <!--Hint-->
-    <Grid Width="200" Height="28" Name="Hint"
-          VerticalAlignment="Top" HorizontalAlignment="Left">
-      <Views:HintView />
-    </Grid>
 
     <!--Event Count-->
     <Border HorizontalAlignment="Left"
@@ -235,6 +223,24 @@
                              DisplayFormatString="{}{0}%"/>
       </StackPanel>
     </Border>
+
+    <!--Hint-->
+    <Grid Width="200" Height="28" Name="Hint"
+          VerticalAlignment="Top" HorizontalAlignment="Left">
+      <Views:HintView />
+    </Grid>
+
+    <!--Plate Customization-->
+    <Grid Width="1920" Height="1080"
+          VerticalAlignment="Top" HorizontalAlignment="Left">
+      <Views:PlateCustomizationView />
+    </Grid>
+
+    <!--Notification-->
+    <Grid Width="1920" Height="1080"
+          VerticalAlignment="Top" HorizontalAlignment="Left">
+      <Views:NotificationView />
+    </Grid>
 
     <Button Background="Transparent"
             Cursor="Hand"
