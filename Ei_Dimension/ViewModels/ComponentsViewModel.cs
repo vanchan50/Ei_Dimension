@@ -47,7 +47,7 @@ namespace Ei_Dimension.ViewModels
     public byte[] SyringeControlStates { get; private set; }
     private ushort _activeLasers;
     private readonly string _loaderPath;
-    private const string BOOTLOADER = "DIOS_FW_Loader.exe";
+    private const string BOOTLOADEREXEPATH = "DIOS_FW_Loader.exe";
 
     protected ComponentsViewModel()
     {
@@ -108,7 +108,7 @@ namespace Ei_Dimension.ViewModels
 
       Instance = this;
 
-      _loaderPath = $"{AppDomain.CurrentDomain.BaseDirectory}{BOOTLOADER}";
+      _loaderPath = $"{AppDomain.CurrentDomain.BaseDirectory}{BOOTLOADEREXEPATH}";
     }
 
     public static ComponentsViewModel Create()

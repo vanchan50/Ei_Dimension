@@ -6,6 +6,7 @@
              xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
              xmlns:ViewModels="clr-namespace:Ei_Dimension.ViewModels"
              xmlns:lang="clr-namespace:Ei_Dimension.Language;assembly=Language"
+             xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
              mc:Ignorable="d"
              DataContext="{dxmvvm:ViewModelSource Type=ViewModels:PlateCustomizationViewModel}"
              d:DesignHeight="1080" d:DesignWidth="1920">
@@ -15,15 +16,146 @@
                VerticalAlignment="Top"
                Fill="Black"
                Opacity="0.3"/>
-    <Button Content="❌"
-            Command="{Binding HideViewCommand}"
-            Style="{StaticResource ButtonStyle}"
-            CommandParameter="100"
-            Height="50"
-            Width="50"
-            FontSize="40" FontWeight="ExtraBold"
+    <Border Background="{StaticResource AppBackground}"
+            BorderThickness="1"
+            BorderBrush="Black"
+            CornerRadius="8"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Margin="1310,200,0,0"/>
-  </Grid>
+            Margin="410,160,0,0" 
+            Width="1000" Height="800">
+      <Grid>
+        <TextBlock Text="{lang:Loc PlateCustomization_PlateCustomization}"
+                   FontFamily="{StaticResource AppTextFont}"
+                   FontSize="50"
+                   FontWeight="UltraBold"
+                   Foreground="{StaticResource AppTextColor}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="300,20,0,0"/>
+        <Button Content="❌"
+                Command="{Binding HideViewCommand}"
+                Style="{StaticResource ButtonStyle}"
+                CommandParameter="100"
+                Height="50"
+                Width="50"
+                FontSize="40" FontWeight="ExtraBold"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Margin="950,0,0,0"/>
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Margin="350,150,0,0">
+          <StackPanel Margin="-60,4,4,0">
+            <TextBlock Text="{lang:Loc PlateCustomization_DACCurrentLimit}"
+                       FontFamily="{StaticResource AppTextFont}"
+                       FontSize="36"
+                       FontWeight="UltraBold"
+                       Foreground="{StaticResource AppTextColor}"
+                       HorizontalAlignment="Right"
+                       VerticalAlignment="Top"
+                       Margin="0,0,4,0"/>
+            <TextBlock Text="{lang:Loc PlateCustomization_ZStep}"
+                       FontFamily="{StaticResource AppTextFont}"
+                       FontSize="36"
+                       FontWeight="UltraBold"
+                       Foreground="{StaticResource AppTextColor}"
+                       HorizontalAlignment="Right"
+                       VerticalAlignment="Top"
+                       Margin="0,5,4,0"/>
+            <TextBlock Text="{lang:Loc PlateCustomization_InitialZPosition}"
+                       FontFamily="{StaticResource AppTextFont}"
+                       FontSize="36"
+                       FontWeight="UltraBold"
+                       Foreground="{StaticResource AppTextColor}"
+                       HorizontalAlignment="Right"
+                       VerticalAlignment="Top"
+                       Margin="0,6,4,0"/>
+            <TextBlock Text="{lang:Loc PlateCustomization_FinalizedZPosition}"
+                       FontFamily="{StaticResource AppTextFont}"
+                       FontSize="36"
+                       FontWeight="UltraBold"
+                       Foreground="{StaticResource AppTextColor}"
+                       HorizontalAlignment="Right"
+                       VerticalAlignment="Top"
+                       Margin="0,7,4,0"/>
+          </StackPanel>
+          <Border Background="{StaticResource RibbonBackgroundActive}">
+            <StackPanel Width="160" Name="SP">
+              <TextBox HorizontalAlignment="Stretch"
+                      Margin="10,10,10,10"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding DACCurrentLimit[0]}">
+                <dxmvvm:Interaction.Behaviors>
+                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="0"/>
+                  <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+                </dxmvvm:Interaction.Behaviors>
+              </TextBox>
+              <TextBox HorizontalAlignment="Stretch"
+                      Margin="10,0,10,10"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding ZStep[0]}">
+                <dxmvvm:Interaction.Behaviors>
+                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="1"/>
+                  <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+                </dxmvvm:Interaction.Behaviors>
+              </TextBox>
+              <TextBox HorizontalAlignment="Stretch"
+                       Margin="10,0,10,10"
+                       Style="{StaticResource InputFieldStyle}"
+                       Text="{Binding InitZMotorPosition[0]}">
+                <dxmvvm:Interaction.Behaviors>
+                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="2"/>
+                  <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+                </dxmvvm:Interaction.Behaviors>
+              </TextBox>
+              <TextBox HorizontalAlignment="Stretch"
+                      Margin="10,0,10,10"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding FinalZMotorPosition[0]}">
+                <dxmvvm:Interaction.Behaviors>
+                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="3"/>
+                  <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+                </dxmvvm:Interaction.Behaviors>
+              </TextBox>
+            </StackPanel>
+          </Border>
+        </StackPanel>
+      </Grid>
+    </Border>
+
+    <Button Width="300" Height="140"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            FontSize="36"
+            Margin="750,720,0,0"
+            Content="{lang:Loc PlateCustomization_TunePlate}"
+            Style="{StaticResource ButtonStyle}"
+            Command="{Binding TunePlateCommand}"/>
+
+    <Rectangle Width="1000" Height="800"
+               Visibility="{Binding WaitShieldVisibility}"
+               Fill="Black"
+               RadiusX="8" RadiusY="8"
+               HorizontalAlignment="Left"
+               VerticalAlignment="Top"
+               Margin="410,160,0,0" 
+               Opacity="0.3"/>
+    <dx:WaitIndicator DeferedVisibility="{Binding WaitIndicatorVisibility}" Content="The script is running..."
+                      FontSize="25"
+                      HorizontalAlignment="Left"
+                      VerticalAlignment="Top"
+                      Margin="740,500,0,0">
+      <dx:WaitIndicator.ContentTemplate>
+        <DataTemplate>
+          <StackPanel Orientation="Vertical">
+            <TextBlock Text="     Please Wait" FontSize="30"/>
+            <TextBlock Text="{Binding}"/>
+          </StackPanel>
+        </DataTemplate>
+      </dx:WaitIndicator.ContentTemplate>
+    </dx:WaitIndicator>
+
+</Grid>
 </UserControl>

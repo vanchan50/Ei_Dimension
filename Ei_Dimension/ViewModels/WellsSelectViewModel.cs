@@ -17,7 +17,7 @@ namespace Ei_Dimension.ViewModels
     public virtual Visibility Table384Visible { get; set; } = Visibility.Hidden;
     public virtual ObservableCollection<WellTableRow> Table96Wells { get; set; } = new ObservableCollection<WellTableRow>();
     public virtual ObservableCollection<WellTableRow> Table384Wells { get; set; } = new ObservableCollection<WellTableRow>();
-    public int CurrentTableSize { get; set; } = 0;
+    public int CurrentTableSize { get; private set; } = 0;
     private List<(int row, int col)> _selectedWellIndices = new List<(int, int)>();
     public static WellsSelectViewModel Instance { get; private set; }
     public virtual bool SquareSelActive { get; set; }

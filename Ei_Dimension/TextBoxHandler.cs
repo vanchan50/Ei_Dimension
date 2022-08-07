@@ -192,7 +192,14 @@ namespace Ei_Dimension
             update = () => MotorsViewModel.Instance.ParametersZ[2] = exe.Parameter.ToString();
             break;
           case 0x44:
-            update = () => MotorsViewModel.Instance.ParametersZ[5] = exe.FParameter.ToString();
+            update = () =>
+            {
+              MotorsViewModel.Instance.ParametersZ[5] = exe.FParameter.ToString();
+              lock (PlateCustomizationViewModel.Instance.ZStepIsUpdatedLock)
+              {
+                Monitor.PulseAll(PlateCustomizationViewModel.Instance.ZStepIsUpdatedLock);
+              }
+            };
             break;
           case 0x46:
             update = () => MotorsViewModel.Instance.StepsParametersZ[4] = exe.FParameter.ToString();

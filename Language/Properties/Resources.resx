@@ -977,6 +977,24 @@ Parameters To Map</value>
   <data name="ON" xml:space="preserve">
     <value>ON</value>
   </data>
+  <data name="PlateCustomization_DACCurrentLimit" xml:space="preserve">
+    <value>Current Limit</value>
+  </data>
+  <data name="PlateCustomization_FinalizedZPosition" xml:space="preserve">
+    <value>Final Z Position</value>
+  </data>
+  <data name="PlateCustomization_InitialZPosition" xml:space="preserve">
+    <value>Initial Z Position</value>
+  </data>
+  <data name="PlateCustomization_PlateCustomization" xml:space="preserve">
+    <value>Plate Customization</value>
+  </data>
+  <data name="PlateCustomization_TunePlate" xml:space="preserve">
+    <value>Start Plate Tuning</value>
+  </data>
+  <data name="PlateCustomization_ZStep" xml:space="preserve">
+    <value>Motor Step</value>
+  </data>
   <data name="Power" xml:space="preserve">
     <value>Power</value>
   </data>

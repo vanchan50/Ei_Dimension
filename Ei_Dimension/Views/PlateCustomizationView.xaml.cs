@@ -20,9 +20,11 @@ namespace Ei_Dimension.Views
   /// </summary>
   public partial class PlateCustomizationView : UserControl
   {
+    public static PlateCustomizationView Instance { get; private set; }
     public PlateCustomizationView()
     {
       InitializeComponent();
+      Instance = this;
     }
   }
 }

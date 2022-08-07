@@ -2541,6 +2541,60 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Current Limit.
+        /// </summary>
+        public static string PlateCustomization_DACCurrentLimit {
+            get {
+                return ResourceManager.GetString("PlateCustomization_DACCurrentLimit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Final Z Position.
+        /// </summary>
+        public static string PlateCustomization_FinalizedZPosition {
+            get {
+                return ResourceManager.GetString("PlateCustomization_FinalizedZPosition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Initial Z Position.
+        /// </summary>
+        public static string PlateCustomization_InitialZPosition {
+            get {
+                return ResourceManager.GetString("PlateCustomization_InitialZPosition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Plate Customization.
+        /// </summary>
+        public static string PlateCustomization_PlateCustomization {
+            get {
+                return ResourceManager.GetString("PlateCustomization_PlateCustomization", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start Plate Tuning.
+        /// </summary>
+        public static string PlateCustomization_TunePlate {
+            get {
+                return ResourceManager.GetString("PlateCustomization_TunePlate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Motor Step.
+        /// </summary>
+        public static string PlateCustomization_ZStep {
+            get {
+                return ResourceManager.GetString("PlateCustomization_ZStep", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Power.
         /// </summary>
         public static string Power {

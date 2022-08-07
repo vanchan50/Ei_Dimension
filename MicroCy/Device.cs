@@ -43,6 +43,7 @@ namespace DIOS.Core
     public ConcurrentQueue<ProcessedBead> DataOut { get; } = new ConcurrentQueue<ProcessedBead>();
     public WellController WellController { get; } = new WellController();
     public BitArray SystemActivity { get; } = new BitArray(16, false);
+    public object SystemActivityNotBusyNotificationLock { get; } = new object();
     public event EventHandler<ReadingWellEventArgs> StartingToReadWell;
     public event EventHandler<ReadingWellEventArgs> FinishedReadingWell;
     public event EventHandler FinishedMeasurement;

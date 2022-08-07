@@ -203,7 +203,8 @@ namespace DIOS.Core
           switch (cs.Command)
           {
             case 0xE0:
-              _device.SelfTester.ScriptFinishedSignal();
+              if(_device.SelfTester.IsActive)
+                _device.SelfTester.ScriptFinishedSignal();
               break;
             case 0xE5:
               _device.IsPlateEjected = true;
@@ -214,21 +215,21 @@ namespace DIOS.Core
           }
           break;
         case 0x44:
-          if (!_device.SelfTester.Motorsinit[2])
+          if (_device.SelfTester.IsActive && !_device.SelfTester.Motorsinit[2])
           {
             _device.SelfTester.Data.MotorZ = cs.FParameter;
             _device.SelfTester.Motorsinit[2] = true;
           }
           break;
         case 0x54:
-          if (!_device.SelfTester.Motorsinit[0])
+          if (_device.SelfTester.IsActive && !_device.SelfTester.Motorsinit[0])
           {
             _device.SelfTester.Data.MotorX = cs.FParameter;
             _device.SelfTester.Motorsinit[0] = true;
           }
           break;
         case 0x64:
-          if (!_device.SelfTester.Motorsinit[1])
+          if (_device.SelfTester.IsActive && !_device.SelfTester.Motorsinit[1])
           {
             _device.SelfTester.Data.MotorY = cs.FParameter;
             _device.SelfTester.Motorsinit[1] = true;
@@ -251,6 +252,14 @@ namespace DIOS.Core
               _device.SystemActivity[i] = true;
             else
               _device.SystemActivity[i] = false;
+          }
+          //currently used only for probe autoheight feature
+          if (cs.Parameter == 0)
+          {
+            lock (_device.SystemActivityNotBusyNotificationLock)
+            {
+              Monitor.PulseAll(_device.SystemActivityNotBusyNotificationLock);
+            }
           }
           break;
         //FALLTHROUGH

@@ -1478,6 +1478,17 @@ namespace Ei_Dimension
             failed = true;
             ErrorMessage = "[0-45]";
             break;
+          case nameof(PlateCustomizationViewModel.Instance.DACCurrentLimit):
+            if (int.TryParse(_tempNewString, out iRes))
+            {
+              if (iRes >= 0 && ((App.Device.BoardVersion == 0 && iRes <= 4095) || (App.Device.BoardVersion >= 1 && iRes <= 65535)))
+              {
+                break;
+              }
+            }
+            failed = true;
+            ErrorMessage = App.Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
+            break;
         }
         if(VerificationViewModel.Instance.isActivePage)
         {

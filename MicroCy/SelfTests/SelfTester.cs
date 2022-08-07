@@ -10,6 +10,7 @@ namespace DIOS.Core.SelfTests
   {
     internal SelfTestData Data { get; }
     internal bool[] Motorsinit { get; set; } = { true, true, true };
+    internal bool IsActive { get; private set; } = true;
 
     private Device _device;
 
@@ -36,6 +37,7 @@ namespace DIOS.Core.SelfTests
       }
 
       data = Data;
+      IsActive = false;
       return true;
     }
 
