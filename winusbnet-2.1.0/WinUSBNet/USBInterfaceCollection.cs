@@ -132,7 +132,7 @@ namespace MadWizard.WinUSBNet
         /// is not necessarily the same as the interface index.</param>
         /// <exception cref="IndexOutOfRangeException">Thrown when the given interface number does not exist in the collection.</exception>
         /// <returns></returns>
-        public USBInterface this[ int interfaceNumber ]
+        public USBInterface this[int interfaceNumber]
         {
             get
             {

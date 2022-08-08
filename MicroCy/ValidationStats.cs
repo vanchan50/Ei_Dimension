@@ -2,35 +2,35 @@
 
 namespace DIOS.Core
 {
-  public class ValidationStats
-  {
-    public int Region { get; }
-    public double InputReporter { get; }
-    public List<DistributionStats> Stats { get; } = new List<DistributionStats>(3);
-    public int Count { get; private set; }
-    private readonly List<float> _reporter = new List<float>(100000);
-    private readonly List<float> _cl1 = new List<float>(100000);
-    private readonly List<float> _cl2 = new List<float>(100000);
+	public class ValidationStats
+	{
+		public int Region { get; }
+		public double InputReporter { get; }
+		public List<DistributionStats> Stats { get; } = new List<DistributionStats>(3);
+		public int Count { get; private set; }
+		private readonly List<float> _reporter = new List<float>(100000);
+		private readonly List<float> _cl1 = new List<float>(100000);
+		private readonly List<float> _cl2 = new List<float>(100000);
 
-    public ValidationStats(int regionNum, double inputReporter)
-    {
-      Region = regionNum;
-      InputReporter = inputReporter;
-    }
+		public ValidationStats(int regionNum, double inputReporter)
+		{
+			Region = regionNum;
+			InputReporter = inputReporter;
+		}
 
-    public void FillCalibrationStatsRow(in ProcessedBead outbead)
-    {
-      _reporter.Add(outbead.reporter);
-      _cl1.Add(outbead.cl1);
-      _cl2.Add(outbead.cl2);
-      Count++;
-    }
+		public void FillCalibrationStatsRow(in ProcessedBead outbead)
+		{
+			_reporter.Add(outbead.reporter);
+			_cl1.Add(outbead.cl1);
+			_cl2.Add(outbead.cl2);
+			Count++;
+		}
 
-    public void CalculateResultingStats()
-    {
-      Stats.Add(_reporter.GetDistributionStatistics());
-      Stats.Add(_cl1.GetDistributionStatistics());
-      Stats.Add(_cl2.GetDistributionStatistics());
-    }
-  }
+		public void CalculateResultingStats()
+		{
+			Stats.Add(_reporter.GetDistributionStatistics());
+			Stats.Add(_cl1.GetDistributionStatistics());
+			Stats.Add(_cl2.GetDistributionStatistics());
+		}
+	}
 }

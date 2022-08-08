@@ -10,10 +10,10 @@
  */
 
 using System;
-using System.Runtime.InteropServices;
 using System.Collections.Generic;
-using System.Windows.Forms;
+using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
+using System.Windows.Forms;
 
 namespace MadWizard.WinUSBNet.API
 {
@@ -158,7 +158,7 @@ namespace MadWizard.WinUSBNet.API
                 if (deviceInfoSet == FileIO.INVALID_HANDLE_VALUE)
                     throw APIException.Win32("Failed to enumerate devices.");
                 int memberIndex = 0;
-                while(true)
+                while (true)
                 {
                     // Begin with 0 and increment through the device information set until
                     // no more devices are available.

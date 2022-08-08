@@ -10,10 +10,10 @@
  */
 
 using System;
-using Microsoft.Win32.SafeHandles;
-using System.Runtime.InteropServices;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using System.Threading;
+using Microsoft.Win32.SafeHandles;
 
 namespace MadWizard.WinUSBNet.API
 {
@@ -172,7 +172,7 @@ namespace MadWizard.WinUSBNet.API
                 InitializeDevice();
 
             }
-            catch(Exception)
+            catch (Exception)
             {
                 if (_deviceHandle != null)
                 {
@@ -264,7 +264,7 @@ namespace MadWizard.WinUSBNet.API
             // TODO: bind interface handles as well? doesn't seem to be necessary
         }
 
-        public void ReadPipe(int ifaceIndex, byte pipeID, byte[] buffer, int offset, int bytesToRead,  out uint bytesRead)
+        public void ReadPipe(int ifaceIndex, byte pipeID, byte[] buffer, int offset, int bytesToRead, out uint bytesRead)
         {
             bool success;
             unsafe

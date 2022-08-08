@@ -133,7 +133,7 @@ namespace MadWizard.WinUSBNet
             if (_notifyHandle != IntPtr.Zero)
             {
                 API.DeviceManagement.StopDeviceDeviceNotifications(_notifyHandle);
-				_notifyHandle = IntPtr.Zero;
+                _notifyHandle = IntPtr.Zero;
             }
         }
 

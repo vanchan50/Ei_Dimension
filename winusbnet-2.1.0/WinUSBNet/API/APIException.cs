@@ -6,8 +6,8 @@
  */
 
 using System;
-using System.Runtime.InteropServices;
 using System.ComponentModel;
+using System.Runtime.InteropServices;
 
 
 namespace MadWizard.WinUSBNet.API

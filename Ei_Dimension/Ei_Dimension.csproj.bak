@@ -13,7 +13,8 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
-    <PublishUrl>publish\</PublishUrl>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>C:\Users\Admin\Desktop\App\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>false</UpdateEnabled>
@@ -23,10 +24,10 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationVersion>1.1.3.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -57,45 +58,128 @@
   <PropertyGroup>
     <StartupObject>Ei_Dimension.Program</StartupObject>
   </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>0EF6B84CCF57DD84BCEEB5A5B29F4A15FE3F097C</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>Ei_Dimension_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>false</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>false</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetZone>LocalIntranet</TargetZone>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
+  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DevExpress.Charts.v21.1.Core, Version=21.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.DataVisualization.v21.1.Core, Version=21.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.Map.v21.1.Core, Version=21.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Charts.v21.1.Core, Version=21.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="DevExpress.DataVisualization.v21.1.Core, Version=21.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="DevExpress.Map.v21.1.Core, Version=21.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
     <Reference Include="DevExpress.Mvvm.v21.1">
       <Private>True</Private>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
-    <Reference Include="DevExpress.Data.Desktop.v21.1" />
-    <Reference Include="DevExpress.Data.v21.1" />
-    <Reference Include="DevExpress.Office.v21.1.Core, Version=21.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.Printing.v21.1.Core" />
-    <Reference Include="DevExpress.Spreadsheet.v21.1.Core, Version=21.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.Xpf.Charts.v21.1, Version=21.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.Xpf.Controls.v21.1, Version=21.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.Xpf.Core.v21.1" />
-    <Reference Include="DevExpress.Xpf.Docking.v21.1, Version=21.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.Xpf.Grid.v21.1, Version=21.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.Xpf.Grid.v21.1.Core, Version=21.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.Xpf.LayoutControl.v21.1, Version=21.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.Xpf.Map.v21.1, Version=21.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.Xpf.NavBar.v21.1, Version=21.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.Xpf.Office.v21.1, Version=21.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.Xpf.Printing.v21.1, Version=21.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.Xpf.Ribbon.v21.1, Version=21.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.Xpf.Spreadsheet.v21.1, Version=21.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.Xpf.Themes.Office2019Black.v21.1, Version=21.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.Xpf.Themes.Office2019Colorful.v21.1" />
-    <Reference Include="DevExpress.Xpf.Themes.Office2019White.v21.1, Version=21.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.Xpf.Themes.VS2010.v21.1, Version=21.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.Xpf.Themes.VS2019Blue.v21.1, Version=21.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.Xpf.TreeMap.v21.1, Version=21.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="Microsoft.Xaml.Behaviors, Version=1.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Xaml.Behaviors.Wpf.1.1.31\lib\net45\Microsoft.Xaml.Behaviors.dll</HintPath>
+    <Reference Include="DevExpress.Data.Desktop.v21.1">
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="DevExpress.Data.v21.1">
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="DevExpress.Office.v21.1.Core, Version=21.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="DevExpress.Printing.v21.1.Core">
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="DevExpress.Spreadsheet.v21.1.Core, Version=21.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Charts.v21.1, Version=21.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Controls.v21.1, Version=21.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Core.v21.1">
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Dialogs.v21.1, Version=21.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\DevExpress 21.1\Components\Bin\Framework\DevExpress.Xpf.Dialogs.v21.1.dll</HintPath>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Docking.v21.1, Version=21.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Gauges.v21.1, Version=21.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Grid.v21.1, Version=21.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Grid.v21.1.Core, Version=21.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.LayoutControl.v21.1, Version=21.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Map.v21.1, Version=21.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.NavBar.v21.1, Version=21.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Office.v21.1, Version=21.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Printing.v21.1, Version=21.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Ribbon.v21.1, Version=21.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Spreadsheet.v21.1, Version=21.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Themes.Office2019Black.v21.1, Version=21.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Themes.Office2019Colorful.v21.1">
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Themes.Office2019White.v21.1, Version=21.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Themes.VS2010.v21.1, Version=21.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Themes.VS2019Blue.v21.1, Version=21.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.TreeMap.v21.1, Version=21.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Printing" />
@@ -119,39 +203,97 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="Cache\WellResultsCache.cs" />
+    <Compile Include="Controllers\ActiveRegionsStatsController.cs" />
+    <Compile Include="CompanyID.cs" />
+    <Compile Include="Controllers\MapRegionsSubControlllers\DashboardTableController.cs" />
+    <Compile Include="Controllers\MapRegionsSubControlllers\NormalizationTableController.cs" />
+    <Compile Include="Controllers\MapRegionsSubControlllers\ResultsTableController.cs" />
+    <Compile Include="Controllers\MapRegionsSubControlllers\ValidationTableController.cs" />
     <Compile Include="Core\DataProcessor.cs" />
     <Compile Include="Core\ObservableObject.cs" />
+    <Compile Include="Graphing\AnalysysMap.cs" />
+    <Compile Include="Graphing\HeatMap\HeatMapDataContainer.cs" />
+    <Compile Include="GraphsController.cs" />
+    <Compile Include="Graphing\HeatMap\IHeatMapChart.cs" />
+    <Compile Include="LanguageSwap.cs" />
     <Compile Include="Models\AcquisitionTemplate.cs" />
-    <Compile Include="Models\DropdownStrings.cs" />
-    <Compile Include="Models\HeatMapData.cs" />
+    <Compile Include="Models\DoubleHeatMapData.cs" />
+    <Compile Include="Models\DrawingPlate.cs" />
+    <Compile Include="Graphing\HeatMap\HeatMapAPI.cs" />
+    <Compile Include="Graphing\HeatMap\HeatMapPoint.cs" />
     <Compile Include="Models\HistogramData.cs" />
+    <Compile Include="Graphing\HeatMap\MapIndex.cs" />
+    <Compile Include="Models\MapRegionData.cs" />
+    <Compile Include="Controllers\MapRegionsController.cs" />
     <Compile Include="Models\ResultFile.cs" />
+    <Compile Include="Models\ScatterData.cs" />
     <Compile Include="Models\WellTableRow.cs" />
     <Compile Include="Models\WellType.cs" />
+    <Compile Include="Models\WellWarningState.cs" />
+    <Compile Include="Graphing\WorldMap.cs" />
+    <Compile Include="MultiTube.cs" />
+    <Compile Include="Notification.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="Cache\ResultsCache.cs" />
+    <Compile Include="SelfTestErrorDecoder.cs" />
+    <Compile Include="ServiceMenuEnabler.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="StartupFinalizer.cs" />
     <Compile Include="Styles\EmbeddedImg.cs" />
+    <Compile Include="TextBoxHandler.cs" />
+    <Compile Include="UITimer.cs" />
+    <Compile Include="UserInputHandler.cs" />
     <Compile Include="ViewModels\AlignmentViewModel.cs" />
     <Compile Include="ViewModels\CalibrationViewModel.cs" />
     <Compile Include="ViewModels\ChannelOffsetViewModel.cs" />
     <Compile Include="ViewModels\ChannelsViewModel.cs" />
     <Compile Include="ViewModels\ComponentsViewModel.cs" />
     <Compile Include="ViewModels\DashboardViewModel.cs" />
-    <Compile Include="ViewModels\DataAnalysisViewModel.cs" />
     <Compile Include="ViewModels\ExperimentViewModel.cs" />
     <Compile Include="ViewModels\FileSaveViewModel.cs" />
+    <Compile Include="ViewModels\HintViewModel.cs" />
+    <Compile Include="ViewModels\MainButtonsViewModel.cs" />
     <Compile Include="ViewModels\MaintenanceViewModel.cs" />
     <Compile Include="ViewModels\MotorsViewModel.cs" />
+    <Compile Include="ViewModels\NormalizationViewModel.cs" />
+    <Compile Include="ViewModels\NotificationViewModel.cs" />
     <Compile Include="ViewModels\NumpadViewModel.cs" />
+    <Compile Include="ViewModels\PlateCustomizationViewModel.cs" />
+    <Compile Include="ViewModels\PlatePictogramViewModel.cs" />
+    <Compile Include="ViewModels\ResultsViewModel.cs" />
+    <Compile Include="ViewModels\ScatterChartViewModel.cs" />
+    <Compile Include="ViewModels\ScreenKeyboardViewModel.cs" />
+    <Compile Include="ViewModels\SelRegionsViewModel.cs" />
+    <Compile Include="ViewModels\TemplateSelectViewModel.cs" />
+    <Compile Include="ViewModels\VerificationViewModel.cs" />
+    <Compile Include="Views\HintView.xaml.cs">
+      <DependentUpon>HintView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MainButtonsView.xaml.cs">
+      <DependentUpon>MainButtonsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\NormalizationView.xaml.cs">
+      <DependentUpon>NormalizationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\NotificationView.xaml.cs">
+      <DependentUpon>NotificationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PlateCustomizationView.xaml.cs">
+      <DependentUpon>PlateCustomizationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PlatePictogramView.xaml.cs">
+      <DependentUpon>PlatePictogramView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ResultsView.xaml.cs">
       <DependentUpon>ResultsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\ResultsViewModel.cs" />
     <Compile Include="ViewModels\ServiceViewModel.cs" />
     <Compile Include="ViewModels\SyringeSpeedsViewModel.cs" />
     <Compile Include="ViewModels\WellsSelectViewModel.cs" />
@@ -173,9 +315,6 @@
     <Compile Include="Views\DashboardView.xaml.cs">
       <DependentUpon>DashboardView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\DataAnalysisView.xaml.cs">
-      <DependentUpon>DataAnalysisView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\ExperimentView.xaml.cs">
       <DependentUpon>ExperimentView.xaml</DependentUpon>
     </Compile>
@@ -191,17 +330,26 @@
     <Compile Include="Views\NumpadView.xaml.cs">
       <DependentUpon>NumpadView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ResultsView.xaml.cs">
-      <DependentUpon>ResultsView.xaml</DependentUpon>
+    <Compile Include="Views\ScatterChartView.xaml.cs">
+      <DependentUpon>ScatterChartView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ScreenKeyboardView.xaml.cs">
+      <DependentUpon>ScreenKeyboardView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SelRegionsView.xaml.cs">
+      <DependentUpon>SelRegionsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ServiceView.xaml.cs">
       <DependentUpon>ServiceView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\StaticMapView.xaml.cs">
-      <DependentUpon>StaticMapView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\SyringeSpeedsView.xaml.cs">
       <DependentUpon>SyringeSpeedsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TemplateSelectView.xaml.cs">
+      <DependentUpon>TemplateSelectView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\VerificationView.xaml.cs">
+      <DependentUpon>VerificationView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\WellsSelectView.xaml.cs">
       <DependentUpon>WellsSelectView.xaml</DependentUpon>
@@ -219,7 +367,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ViewModels\MainViewModel.cs" />
-    <Compile Include="ViewModels\ResultsViewModel.cs" />
     <Compile Include="Views\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -256,6 +403,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Styles\PrintButtonStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Styles\RadioButtonThemeStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -269,6 +420,30 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Styles\ToggleButtonThemeStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\HintView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MainButtonsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\NormalizationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\NotificationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PlateCustomizationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PlatePictogramView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -300,10 +475,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\DataAnalysisView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\ExperimentView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -328,7 +499,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ResultsView.xaml">
+    <Page Include="Views\ScatterChartView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ScreenKeyboardView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SelRegionsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -336,11 +515,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\StaticMapView.xaml">
+    <Page Include="Views\SyringeSpeedsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\SyringeSpeedsView.xaml">
+    <Page Include="Views\TemplateSelectView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\VerificationView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -365,22 +548,39 @@
     </EmbeddedResource>
     <None Include="App.config" />
     <AppDesigner Include="Properties\" />
+    <None Include="Maps\D100Aplex.dmap">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Maps\D100Bplex.dmap">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Maps\ULBG50B.dmap">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Maps\ULBG50D.dmap">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
+    <None Include="Properties\app.manifest" />
     <None Include="Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <None Include="StaticMaps\QB_Map2019_4.bin" />
-    <None Include="StaticMaps\ULBG50.json" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Language\Language.csproj">
       <Project>{ae6ffeca-703a-49a8-8979-7381fb4dbae9}</Project>
       <Name>Language</Name>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
     </ProjectReference>
-    <ProjectReference Include="..\MicroCy\MicroCy.csproj">
+    <ProjectReference Include="..\MicroCy\DIOS.Core.csproj">
       <Project>{a4b56fcd-95dd-44cd-8f5b-6ee456bbd095}</Project>
-      <Name>MicroCy</Name>
+      <Name>DIOS.Core</Name>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </ProjectReference>
+    <ProjectReference Include="..\winusbnet-2.1.0\WinUSBNet\WinUSBNet.csproj">
+      <Project>{bf8c5514-4aaa-46bb-a35d-341e5743ee13}</Project>
+      <Name>WinUSBNet</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -396,7 +596,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="TODOs.txt" />
+    <None Include="TODOs.txt" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Icons\alignment icon.png" />
@@ -428,8 +628,32 @@
     <Resource Include="Icons\service iconV2.png" />
     <Resource Include="Icons\Emission_Logo.png" />
     <Resource Include="Icons\Splash.png" />
-    <Content Include="StaticMaps\QBlogo.h" />
+    <Resource Include="Icons\BottomLeftPlate.png" />
+    <Resource Include="Icons\BottomRightPlate.png" />
+    <Resource Include="Icons\TopLeftPlate.png" />
+    <Resource Include="Icons\TopRightPlate.png" />
+    <Resource Include="Icons\Tube_icon.png" />
+    <Resource Include="Icons\Plate384_icon.png" />
+    <Resource Include="Icons\Plate96_icon.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\dimension flow analyzer logoCh.png" />
+    <Resource Include="Icons\Emission_LogoCh.png" />
+    <Resource Include="Icons\SplashCh.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\Actions_CheckCircled.svg" />
+    <Resource Include="Icons\BindingEditorHelpIcon.svg" />
+    <Resource Include="Icons\GettingStarted.svg" />
+    <Resource Include="Icons\Security_WarningCircled2.svg" />
+    <Resource Include="Icons\State_Validation_Invalid.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="DIOS_FW_Loader.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

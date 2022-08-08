@@ -36,7 +36,7 @@ namespace MadWizard.WinUSBNet
         /// <returns>The pipe with the given pipe address</returns>
         /// <exception cref="IndexOutOfRangeException">Thrown if no pipe with the specified address
         /// is available in the collection.</exception>
-        public USBPipe this [byte pipeAddress]
+        public USBPipe this[byte pipeAddress]
         {
             get
             {

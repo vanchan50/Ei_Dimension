@@ -57,7 +57,7 @@ namespace MadWizard.WinUSBNet
         {
             this.Guid = guid;
             this.DevicePath = devicePath;
-            this.Type= type;
+            this.Type = type;
         }
     }
 

@@ -10,9 +10,9 @@
  */
 
 using System;
-using Microsoft.Win32.SafeHandles;
 using System.Runtime.InteropServices;
 using System.Threading;
+using Microsoft.Win32.SafeHandles;
 
 namespace MadWizard.WinUSBNet.API
 {

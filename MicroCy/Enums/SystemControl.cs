@@ -1,8 +1,8 @@
 ﻿namespace DIOS.Core
 {
-  public enum SystemControl
-  {
-    Manual,
-    WorkOrder
-  }
+	public enum SystemControl
+	{
+		Manual,
+		WorkOrder
+	}
 }

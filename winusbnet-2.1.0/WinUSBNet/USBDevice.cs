@@ -141,7 +141,7 @@ namespace MadWizard.WinUSBNet
                 API.WINUSB_PIPE_INFORMATION[] pipesInfo;
                 _wuDevice.GetInterfaceInfo(i, out descriptor, out pipesInfo);
                 USBPipe[] interfacePipes = new USBPipe[pipesInfo.Length];
-                for(int k=0;k<pipesInfo.Length;k++)
+                for (int k = 0; k < pipesInfo.Length; k++)
                 {
                     USBPipe pipe = new USBPipe(this, pipesInfo[k]);
                     interfacePipes[k] = pipe;

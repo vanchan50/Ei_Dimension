@@ -4,26 +4,26 @@ using DevExpress.Mvvm.POCO;
 
 namespace Ei_Dimension.ViewModels
 {
-  [POCOViewModel]
-  public class PlateCustomizationViewModel
-  {
-    public virtual Visibility CustomizationVisible { get; set; } = Visibility.Hidden;
-    public static PlateCustomizationViewModel Instance { get; private set; }
+	[POCOViewModel]
+	public class PlateCustomizationViewModel
+	{
+		public virtual Visibility CustomizationVisible { get; set; } = Visibility.Hidden;
+		public static PlateCustomizationViewModel Instance { get; private set; }
 
-    protected PlateCustomizationViewModel()
-    {
-      Instance = this;
-    }
+		protected PlateCustomizationViewModel()
+		{
+			Instance = this;
+		}
 
-    public static PlateCustomizationViewModel Create()
-    {
-      return ViewModelSource.Create(() => new PlateCustomizationViewModel());
-    }
+		public static PlateCustomizationViewModel Create()
+		{
+			return ViewModelSource.Create(() => new PlateCustomizationViewModel());
+		}
 
-    public void HideView()
-    {
-      UserInputHandler.InputSanityCheck();
-      CustomizationVisible = Visibility.Hidden;
-    }
-  }
+		public void HideView()
+		{
+			UserInputHandler.InputSanityCheck();
+			CustomizationVisible = Visibility.Hidden;
+		}
+	}
 }
