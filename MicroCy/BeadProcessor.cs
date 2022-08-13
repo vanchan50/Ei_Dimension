@@ -27,12 +27,33 @@
       var compensated = CalculateCompensatedCoordinates(in rawBead);
       var outBead = new ProcessedBead
       {
+        EventTime = rawBead.EventTime,
+        fsc_bg = rawBead.fsc_bg,
+        vssc_bg = rawBead.vssc_bg,
+        cl0_bg = rawBead.cl0_bg,
+        cl1_bg = rawBead.cl1_bg,
+        cl2_bg = rawBead.cl2_bg,
+        cl3_bg = rawBead.cl3_bg,
+        rssc_bg = rawBead.rssc_bg,
+        gssc_bg = rawBead.gssc_bg,
+        greenB_bg = rawBead.greenB_bg,
+        greenC_bg = rawBead.greenC_bg,
+        greenB = rawBead.greenB,
+        greenC = rawBead.greenC,
+        l_offset_rg = rawBead.l_offset_rg,
+        l_offset_gv = rawBead.l_offset_gv,
+        region = (ushort)_classificationMap.ClassifyBeadToRegion(in rawBead),
+        //fsc = (float)Math.Pow(10, rawBead.fsc),
+        fsc = rawBead.fsc,
+        violetssc = rawBead.violetssc,
+        cl0 = compensated.cl0,
+        redssc = rawBead.redssc,
         cl1 = compensated.cl1,
         cl2 = compensated.cl2,
-        //fsc = (float)Math.Pow(10, rawBead.fsc),
-        region = (ushort)_classificationMap.ClassifyBeadToRegion(in rawBead),
-        zone = (ushort)ClassifyBeadToZone(in rawBead),
-        reporter = CalculateReporter(in rawBead)
+        cl3 = compensated.cl3,
+        greenssc = rawBead.greenssc,
+        reporter = CalculateReporter(in rawBead),
+        zone = (ushort)ClassifyBeadToZone(in rawBead)
       };
       return outBead;
     }
