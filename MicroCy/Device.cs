@@ -74,7 +74,7 @@ namespace DIOS.Core
     public bool IsMeasurementGoing { get; private set; }
     public bool SaveIndividualBeadEvents { get; set; }
     public bool RMeans { get; set; }
-    public bool OnlyClassified { get; set; }
+    public bool OnlyClassifiedInBeadEventFile { get; set; }
     public HiSensitivityChannel SensitivityChannel
     {
       get
@@ -119,6 +119,7 @@ namespace DIOS.Core
     public static DirectoryInfo RootDirectory { get; private set; }
     public float MaxPressure { get; set; }
     public bool IsPlateEjected { get; internal set; }
+    public static bool IncludeReg0InPlateSummary { get; set; }  //TODO: crutch for filesaving
 
     private bool _isReadingA;
     private Gate _scatterGate;
@@ -403,39 +404,55 @@ namespace DIOS.Core
       BoardVersion = v;
     }
 
-    public void JKBeadADD(int p)
+    public void JBeadADD()
     {
       var r = new Random();
-        var kek = new RawBead
-        {
-          Header = 0xadbeadbe,
-          fsc = 2.36f,
-          redssc = r.Next(1000,20000),
-          cl0 = r.Next(1050, 1300),
-          cl1 = r.Next(1450, 1700),
-          cl2 = r.Next(1500, 1650),
-          greenB = (ushort)r.Next(9, 12),
-          greenC = 48950
-        };
-        var pek = new RawBead
-        {
-          Header = 0xadbeadbe,
-          fsc = 15.82f,
-          redssc = r.Next(1000, 20000),
-          cl0 = 250f,
-          cl1 = 500f,
-          cl2 = 500f,
-          greenB = (ushort)r.Next(80,150),
-          greenC = 65212
-        };
-        if (p == 1)
-        {
+      var kek = new RawBead
+      {
+        Header = 0xadbeadbe,
+        fsc = 2.36f,
+        redssc = r.Next(1000,20000),
+        cl0 = r.Next(1050, 1300),
+        cl1 = r.Next(1450, 1700),
+        cl2 = r.Next(1500, 1650),
+        greenB = (ushort)r.Next(9, 12),
+        greenC = 48950
+      };
+      var pek = new RawBead
+      {
+        Header = 0xadbeadbe,
+        fsc = 15.82f,
+        redssc = r.Next(1000, 20000),
+        cl0 = 250f,
+        cl1 = 500f,
+        cl2 = 500f,
+        greenB = (ushort)r.Next(80,150),
+        greenC = 65212
+      };
+      var rek0 = new RawBead
+      {
+        Header = 0xadbeadbe,
+        fsc = 2.36f,
+        redssc = r.Next(1000, 20000),
+        cl0 = r.Next(1050, 1300),
+        cl1 = 35000,
+        cl2 = 200,
+        greenB = (ushort)r.Next(9, 12),
+        greenC = 48950
+      };
+      var choose = r.Next(0, 3);
+      switch (choose)
+      {
+        case 0:
           Results.AddRawBeadEvent(in kek);
-        }
-        if (p == 2)
-        {
+          break;
+        case 1:
           Results.AddRawBeadEvent(in pek);
-        }
+          break;
+        case 2:
+          Results.AddRawBeadEvent(in rek0);
+          break;
+      }
     }
     #endif
   }

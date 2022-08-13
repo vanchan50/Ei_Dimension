@@ -72,8 +72,7 @@ namespace Ei_Dimension.ViewModels
             //this adds region0 to ActiveRegionNums
             SelectNullRegion();
           }
-          if (FileSaveViewModel.Instance.Checkboxes[4]) //TODO: reg0 should always be in the active list; the flag should control only the output
-            MapRegionsController.ActiveRegionNums.Add(0);
+          MapRegionsController.ActiveRegionNums.Add(0);
           //DefaultRegionNaming();
           regions = MapRegionsController.ActiveRegionNums;
           break;

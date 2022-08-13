@@ -69,6 +69,13 @@ namespace DIOS.Core.Structs
       bldr.Append($"\"{Sample}\",");
       foreach (var result in _results)
       {
+        if (result.Region == 0)
+        {
+          if (!Device.IncludeReg0InPlateSummary)
+          {
+            continue;
+          }
+        }
         var value = property.GetValue(result);
         bldr.Append($"\"{value}\",");
       }

@@ -39,11 +39,7 @@ namespace Ei_Dimension
         App.Current.Dispatcher.Invoke(() => {
           if (System.Windows.Input.Keyboard.IsKeyDown(System.Windows.Input.Key.J))
           {
-            App.Device.JKBeadADD(1);
-          }
-          if (System.Windows.Input.Keyboard.IsKeyDown(System.Windows.Input.Key.K))
-          {
-            App.Device.JKBeadADD(2);
+            App.Device.JBeadADD();
           }
         });
 #endif

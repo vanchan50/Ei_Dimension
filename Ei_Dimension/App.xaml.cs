@@ -80,7 +80,7 @@ namespace Ei_Dimension
       Device.TerminationType = (Termination)Settings.Default.EndRead;
       Device.MinPerRegion = Settings.Default.MinPerRegion;
       Device.BeadsToCapture = Settings.Default.BeadsToCapture;
-      Device.OnlyClassified = Settings.Default.OnlyClassifed;
+      Device.OnlyClassifiedInBeadEventFile = Settings.Default.OnlyClassifed;
       Device.SensitivityChannel = Settings.Default.SensitivityChannelB? HiSensitivityChannel.GreenB: HiSensitivityChannel.GreenC;
       Device.ReporterScaling = Settings.Default.ReporterScaling;
       Device.MainCommand("Set Property", code: 0xbf, parameter: (ushort)Device.MapCtroller.ActiveMap.calParams.att);
@@ -379,6 +379,7 @@ namespace Ei_Dimension
       bldr.AppendLine($"Samples,\"{WellsSelectViewModel.Instance.CurrentTableSize}\"\n");
       var header = MapRegionsController.GetLegacyReportHeader();
       bldr.Append(Device.Results.PlateReport.LegacyReport(header));
+
 
       string rfilename = Device.Control == SystemControl.Manual ? Device.Publisher.Outfilename : Device.WorkOrder.plateID.ToString();
       var directoryName = $"{Device.RootDirectory.FullName}\\AcquisitionData";

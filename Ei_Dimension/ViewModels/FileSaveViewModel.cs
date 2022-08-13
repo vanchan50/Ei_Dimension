@@ -107,12 +107,11 @@ namespace Ei_Dimension.ViewModels
           Settings.Default.PlateReport = Checkboxes[num];
           break;
         case 3:
-          App.Device.OnlyClassified = Checkboxes[num];
+          App.Device.OnlyClassifiedInBeadEventFile = Checkboxes[num];
           Settings.Default.OnlyClassifed = Checkboxes[num];
           break;
         case 4:
-          //Reg0 is part of UI now
-          //App.Device.Results.Reg0stats = Checkboxes[num];
+          Device.IncludeReg0InPlateSummary = Checkboxes[num];
           break;
         case 5:
           break;

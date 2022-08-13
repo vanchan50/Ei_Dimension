@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.IO;
+using System.Text;
 
 namespace DIOS.Core
 {
@@ -17,9 +18,28 @@ namespace DIOS.Core
       _ = _dataOut.Clear();
     }
 
-    public string Publish()
+    public string Publish(bool includeReg0)
     {
-      return _dataOut.ToString();
+      var result = _dataOut.ToString();
+      if (!includeReg0)
+        RemoveRegion0(ref result);
+      return result;
+    }
+
+    private void RemoveRegion0(ref string output)
+    {
+      var sb = new StringBuilder();
+      var r = new StringReader(output);
+      string s = r.ReadLine();
+      while (s != null)
+      {
+        if (!s.StartsWith("0"))
+        {
+          sb.AppendLine(s);
+        }
+        s = r.ReadLine();
+      }
+      output = sb.ToString();
     }
   }
 }

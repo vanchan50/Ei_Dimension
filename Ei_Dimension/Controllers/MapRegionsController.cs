@@ -5,6 +5,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using DIOS.Core;
 using Ei_Dimension.Models;
 using Ei_Dimension.ViewModels;
 
@@ -72,7 +73,13 @@ namespace Ei_Dimension.Controllers
       foreach (var region in RegionsList)
       {
         if (region.Number == 0)
+        {
+          if (Device.IncludeReg0InPlateSummary)
+          {
+            bldr.Append($"\"{region.GetLegacyHeader()}\",");
+          }
           continue;
+        }
         if(ActiveRegionNums.Contains(region.Number))
           bldr.Append($"\"{region.GetLegacyHeader()}\",");
       }

@@ -86,12 +86,12 @@ namespace DIOS.Core
 
     internal string PublishBeadEvents()
     {
-      return WellResults.BeadEventsData.Publish(_device.OnlyClassified);
+      return WellResults.BeadEventsData.Publish(_device.OnlyClassifiedInBeadEventFile);
     }
 
     internal string PublishWellStats()
     {
-      return _wellstatsData.Publish();
+      return _wellstatsData.Publish(Device.IncludeReg0InPlateSummary);
     }
 
     private void FillWellResults(in ProcessedBead bead)
