@@ -46,15 +46,23 @@ namespace Ei_Dimension.ViewModels
     {
       if (Interlocked.CompareExchange(ref _tuningIsRunning, 1, 0) == 1)
         return;
+
+      if (App.Device.IsMeasurementGoing)
+      {
+        Notification.Show("Please wait for the measurement to complete");
+        _tuningIsRunning = 0;
+        return;
+      }
+
+      if (!IsTableSize96())
+      {
+        Notification.Show("Valid only for plate size 96");
+        _tuningIsRunning = 0;
+        return;
+      }
+
       Task.Run(() =>
       {
-        if (!IsTableSize96())
-        {
-          Notification.Show("Valid only for plate size 96");
-          _tuningIsRunning = 0;
-          return;
-        }
-
         if (IsPlateEjected())
         {
           _tuningIsRunning = 0;

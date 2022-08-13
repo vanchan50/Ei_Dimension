@@ -59,7 +59,10 @@ namespace Ei_Dimension.Core
         greenC = ushort.Parse(words[i++]),
         l_offset_rg = byte.Parse(words[i++]),
         l_offset_gv = byte.Parse(words[i++]),
-        region = ushort.Parse(words[i++]),
+
+        region = (ushort.Parse(words[i])) % ProcessedBead.ZONEOFFSET, //16123
+        zone = (ushort.Parse(words[i++])) / ProcessedBead.ZONEOFFSET,
+
         fsc = float.Parse(words[i++], numFormat),
         violetssc = float.Parse(words[i++], numFormat),
         cl0 = float.Parse(words[i++], numFormat),
@@ -68,8 +71,7 @@ namespace Ei_Dimension.Core
         cl2 = float.Parse(words[i++], numFormat),
         cl3 = float.Parse(words[i++], numFormat),
         greenssc = float.Parse(words[i++], numFormat),
-        reporter = float.Parse(words[i++], numFormat),
-        zone = ushort.Parse(words[i])
+        reporter = float.Parse(words[i], numFormat),
       };
       return binfo;
     }

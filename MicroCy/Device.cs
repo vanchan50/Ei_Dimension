@@ -402,6 +402,41 @@ namespace DIOS.Core
     {
       BoardVersion = v;
     }
+
+    public void JKBeadADD(int p)
+    {
+      var r = new Random();
+        var kek = new RawBead
+        {
+          Header = 0xadbeadbe,
+          fsc = 2.36f,
+          redssc = r.Next(1000,20000),
+          cl0 = r.Next(1050, 1300),
+          cl1 = r.Next(1450, 1700),
+          cl2 = r.Next(1500, 1650),
+          greenB = (ushort)r.Next(9, 12),
+          greenC = 48950
+        };
+        var pek = new RawBead
+        {
+          Header = 0xadbeadbe,
+          fsc = 15.82f,
+          redssc = r.Next(1000, 20000),
+          cl0 = 250f,
+          cl1 = 500f,
+          cl2 = 500f,
+          greenB = (ushort)r.Next(80,150),
+          greenC = 65212
+        };
+        if (p == 1)
+        {
+          Results.AddRawBeadEvent(in kek);
+        }
+        if (p == 2)
+        {
+          Results.AddRawBeadEvent(in pek);
+        }
+    }
     #endif
   }
 }
