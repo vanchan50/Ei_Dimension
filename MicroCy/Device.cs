@@ -399,12 +399,12 @@ namespace DIOS.Core
     }
 
     #if DEBUG
-    public void SetBoardVersion(int v)
+    public void DEBUGSetBoardVersion(int v)
     {
       BoardVersion = v;
     }
 
-    public void JBeadADD()
+    public void DEBUGJBeadADD()
     {
       var r = new Random();
       var kek = new RawBead

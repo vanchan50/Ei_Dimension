@@ -2550,7 +2550,7 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Final Z Position.
+        ///   Looks up a localized string similar to Upstroke Steps.
         /// </summary>
         public static string PlateCustomization_FinalizedZPosition {
             get {
@@ -2559,7 +2559,7 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Initial Z Position.
+        ///   Looks up a localized string similar to Downstroke Steps.
         /// </summary>
         public static string PlateCustomization_InitialZPosition {
             get {
@@ -2577,7 +2577,7 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Start Plate Tuning.
+        ///   Looks up a localized string similar to Find Plate Depth.
         /// </summary>
         public static string PlateCustomization_TunePlate {
             get {
@@ -2586,7 +2586,7 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Motor Step.
+        ///   Looks up a localized string similar to Gap Steps.
         /// </summary>
         public static string PlateCustomization_ZStep {
             get {

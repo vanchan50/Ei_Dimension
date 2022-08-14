@@ -982,16 +982,19 @@ Parameters To Map</value>
     <value>Current Limit</value>
   </data>
   <data name="PlateCustomization_FinalizedZPosition" xml:space="preserve">
-    <value>Final Z Position</value>
+    <value>Upstroke Steps</value>
   </data>
   <data name="PlateCustomization_InitialZPosition" xml:space="preserve">
-    <value>Initial Z Position</value>
+    <value>Downstroke Steps</value>
   </data>
   <data name="PlateCustomization_PlateCustomization" xml:space="preserve">
     <value>Plate Customization</value>
   </data>
+  <data name="PlateCustomization_TunePlate" xml:space="preserve">
+    <value>Find Plate Depth</value>
+  </data>
   <data name="PlateCustomization_ZStep" xml:space="preserve">
-    <value>Motor Step</value>
+    <value>Gap Steps</value>
   </data>
   <data name="Power" xml:space="preserve">
     <value>Power</value>

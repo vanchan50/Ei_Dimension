@@ -571,9 +571,9 @@ namespace Ei_Dimension
               
               void Act()
               {
-                App.Device.Publisher.PublishEverything();
+                //App.Device.Publisher.PublishEverything();
 
-                Environment.Exit(0);
+                //Environment.Exit(0);
                 lock (ConditionVar)
                 {
                   Monitor.Pulse(ConditionVar);
