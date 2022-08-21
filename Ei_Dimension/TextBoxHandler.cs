@@ -103,14 +103,21 @@ namespace Ei_Dimension
           case 0x22:  //pressure
             update = () =>
             {
+              var source = ComponentsViewModel.Instance;
               double dd = exe.FParameter;
-              DashboardViewModel.Instance.PressureMon[0] = dd.ToString("f3");
-              if (dd < DashboardViewModel.Instance.MinPressure)
-                DashboardViewModel.Instance.MinPressure = dd;
-              if (dd > DashboardViewModel.Instance.MaxPressure)
-                DashboardViewModel.Instance.MaxPressure = dd;
-              DashboardViewModel.Instance.PressureMon[1] = DashboardViewModel.Instance.MaxPressure.ToString("f3");
-              DashboardViewModel.Instance.PressureMon[2] = DashboardViewModel.Instance.MinPressure.ToString("f3");
+              if (dd > source.MaxPressure)
+                source.MaxPressure = dd;
+              var maxPressure = source.MaxPressure;
+              source.ActualPressure = dd;
+
+              if (!Settings.Default.PressureUnitsPSI)
+              {
+                dd *= ComponentsViewModel.TOKILOPASCALCOEFFICIENT;
+                maxPressure *= ComponentsViewModel.TOKILOPASCALCOEFFICIENT;
+              }
+
+              source.PressureMon[0] = dd.ToString("f3");
+              source.PressureMon[1] = maxPressure.ToString("f3");
             };
             break;
           case 0x20:
@@ -531,7 +538,7 @@ namespace Ei_Dimension
             }
             else if (exe.Command == 2) //pressure overload
             {
-              if (exe.FParameter > float.Parse(ComponentsViewModel.Instance.MaxPressureBox[0]))
+              if (exe.FParameter > App.Device.MaxPressure)
               {
                 void Act()
                 {
@@ -634,7 +641,7 @@ namespace Ei_Dimension
 
     private static void UpdatePressureMonitor()
     {
-      if (DashboardViewModel.Instance.PressureMonToggleButtonState)
+      if (ComponentsViewModel.Instance.PressureMonToggleButtonState)
         App.Device.MainCommand("Get FProperty", code: 0x22);
     }
   }

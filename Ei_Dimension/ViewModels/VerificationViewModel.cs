@@ -168,7 +168,7 @@ namespace Ei_Dimension.ViewModels
         Caldate = null,
         Valdate = DateTime.Now.ToString("dd.MM.yyyy", new System.Globalization.CultureInfo("en-GB"))
       });
-      DashboardViewModel.Instance.ValidDateBox[0] = App.Device.MapCtroller.ActiveMap.valtime;
+      DashboardViewModel.Instance.SetValidationDate(App.Device.MapCtroller.ActiveMap.valtime);
       Notification.ShowLocalizedSuccess(nameof(Language.Resources.Validation_Success));
     }
 

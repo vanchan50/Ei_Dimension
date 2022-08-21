@@ -2,6 +2,7 @@
 using System;
 using System.Threading;
 using Ei_Dimension.Controllers;
+using Ei_Dimension.ViewModels;
 
 namespace Ei_Dimension
 {
@@ -35,14 +36,14 @@ namespace Ei_Dimension
         TextBoxHandler.UpdateEventCounter();
         App.Device.UpdateStateMachine();
 
-#if DEBUG
+        #if DEBUG
         App.Current.Dispatcher.Invoke(() => {
           if (System.Windows.Input.Keyboard.IsKeyDown(System.Windows.Input.Key.J))
           {
             App.Device.DEBUGJBeadADD();
           }
         });
-#endif
+        #endif
       }
       ServiceMenuEnabler.Update();
       _uiUpdateIsActive = 0;

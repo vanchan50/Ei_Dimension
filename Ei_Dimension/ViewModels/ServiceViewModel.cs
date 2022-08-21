@@ -101,17 +101,39 @@ namespace Ei_Dimension.ViewModels
 
     public void SaveAllClick()
     {
+      if(!IsSystemIdle())
+        return;
       App.Device.MainCommand("SaveToFlash");
+      Notification.Show("Flash saved");
     }
 
     public void RestoreClick()
     {
+      if (!IsSystemIdle())
+        return;
       App.Device.MainCommand("InitOpVars");
+      Notification.Show("Flash Restored");
     }
 
     public void RestoreDefaultsClick()
     {
+      if (!IsSystemIdle())
+        return;
       App.Device.MainCommand("InitOpVars", cmd: 1);
+      Notification.Show("Flash Restored to Factory Defaults");
+    }
+
+    private bool IsSystemIdle()
+    {
+      for (var i = 0; i < App.Device.SystemActivity.Length; i++)
+      {
+        if (App.Device.SystemActivity[i]) //if any activity is going on - dismiss
+        {
+          Notification.ShowError("Please wait, until the system is Idle\nand try again");
+          return false;
+        }
+      }
+      return true;
     }
   }
 }

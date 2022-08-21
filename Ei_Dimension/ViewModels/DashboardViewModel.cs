@@ -12,9 +12,9 @@ namespace Ei_Dimension.ViewModels
   [POCOViewModel]
   public class DashboardViewModel
   {
-    public virtual ObservableCollection<string> EndRead { get; set; }
-    public virtual ObservableCollection<string> Volumes { get; set; }
-    public virtual ObservableCollection<string> WorkOrder { get; set; }
+    public virtual ObservableCollection<string> EndRead { get; set; } = new ObservableCollection<string> { "100", "500" };
+    public virtual ObservableCollection<string> Volumes { get; set; } = new ObservableCollection<string> { "0", "0", "0" };
+    public virtual ObservableCollection<string> WorkOrder { get; set; } = new ObservableCollection<string> { "" };
     public virtual string SelectedSpeedContent { get; set; }
     public virtual ObservableCollection<DropDownButtonContents> SpeedItems { get; set; }
     public virtual string SelectedClassiMapContent { get; set; }
@@ -27,15 +27,11 @@ namespace Ei_Dimension.ViewModels
     public virtual ObservableCollection<DropDownButtonContents> SysControlItems { get; set; }
     public virtual string SelectedEndReadContent { get; set; }
     public virtual ObservableCollection<DropDownButtonContents> EndReadItems { get; set; }
-    public virtual ObservableCollection<string> PressureMon { get; set; }
-    public virtual bool PressureMonToggleButtonState { get; set; }
-    public double MaxPressure { get; set; }
-    public double MinPressure { get; set; }
     public virtual bool CalValModeEnabled { get; set; }
     public virtual bool CalModeOn { get; set; }
     public virtual bool ValModeOn { get; set; }
-    public virtual ObservableCollection<string> CaliDateBox { get; set; }
-    public virtual ObservableCollection<string> ValidDateBox { get; set; }
+    public virtual ObservableCollection<string> CaliDateBox { get; set; } = new ObservableCollection<string> { "" };
+    public virtual ObservableCollection<string> ValidDateBox { get; set; } = new ObservableCollection<string> { "" };
     public static DashboardViewModel Instance { get; private set; }
 
     public byte SelectedSystemControlIndex { get; set; }
@@ -53,11 +49,6 @@ namespace Ei_Dimension.ViewModels
 
     protected DashboardViewModel()
     {
-      EndRead = new ObservableCollection<string> { "100", "500" };
-
-      Volumes = new ObservableCollection<string> { "0", "0", "0" };
-      WorkOrder = new ObservableCollection<string> { "" };
-
       var RM = Language.Resources.ResourceManager;
       var curCulture = Language.TranslationSource.Instance.CurrentCulture;
       SpeedItems = new ObservableCollection<DropDownButtonContents>
@@ -140,31 +131,19 @@ namespace Ei_Dimension.ViewModels
       else
         MainButtonsViewModel.Instance.StartButtonEnabled = false;
 
-      PressureMonToggleButtonState = false;
-      PressureMon = new ObservableCollection<string> {"","",""};
-
       CalValModeEnabled = App.Device.MapCtroller.ActiveMap.validation;
-      CalModeOn = false;
-      ValModeOn = false;
-      CaliDateBox = new ObservableCollection<string> { App.Device.MapCtroller.ActiveMap.caltime };
-      ValidDateBox = new ObservableCollection<string> { App.Device.MapCtroller.ActiveMap.valtime };
       _dbsampleVolumeTempHolder = null;
       _dbEndReadIndexTempHolder = 0;
 
+      SetCalibrationDate(App.Device.MapCtroller.ActiveMap.caltime);
+      SetValidationDate(App.Device.MapCtroller.ActiveMap.valtime);
+      
       Instance = this;
     }
 
     public static DashboardViewModel Create()
     {
       return ViewModelSource.Create(() => new DashboardViewModel());
-    }
-
-    public void PressureMonToggleButtonClick()
-    {
-      UserInputHandler.InputSanityCheck();
-      PressureMonToggleButtonState = !PressureMonToggleButtonState;
-      MaxPressure = 0;
-      MinPressure = 9999999999;
     }
 
     public void SetFixedVolumeButtonClick(ushort num)
@@ -188,8 +167,6 @@ namespace Ei_Dimension.ViewModels
           cmd = "Wash A";
           break;
         case 2:
-          // do both A+B
-          App.Device.MainCommand("Wash A");
           cmd = "Wash B";
           break;
       }
@@ -378,19 +355,45 @@ namespace Ei_Dimension.ViewModels
       UserInputHandler.InputSanityCheck();
     }
 
+    public void SetCalibrationDate(string date)
+    {
+      if (date == null)
+      {
+        CaliDateBox[0] = null;
+        return;
+      }
+      var year = date.Substring(date.LastIndexOf(".") + 1);
+      var month = date.Substring(date.IndexOf(".") + 1,2);
+      var day = date.Substring(0,2);
+      CaliDateBox[0] = $"{year}.{month}.{day}";
+    }
+
+    public void SetValidationDate(string date)
+    {
+      if (date == null)
+      {
+        ValidDateBox[0] = null;
+        return;
+      }
+      var year = date.Substring(date.LastIndexOf(".") + 1);
+      var month = date.Substring(date.IndexOf(".") + 1, 2);
+      var day = date.Substring(0, 2);
+      ValidDateBox[0] = $"{year}.{month}.{day}";
+    }
+
     public void OnMapChanged(CustomMap map)
     {
       if (map.validation)
       {
         CalValModeEnabled = true;
-        CaliDateBox[0] = map.caltime;
-        ValidDateBox[0] = map.valtime;
+        SetCalibrationDate(map.caltime);
+        SetValidationDate(map.valtime);
       }
       else
       {
         CalValModeEnabled = false;
-        CaliDateBox[0] = null;
-        ValidDateBox[0] = null;
+        SetCalibrationDate(null);
+        SetValidationDate(null);
       }
       bool Warning = map.IsVerificationExpired((VerificationExpirationTime)Settings.Default.VerificationWarningIndex);
       VerificationWarningVisible = Warning ? Visibility.Visible : Visibility.Hidden;

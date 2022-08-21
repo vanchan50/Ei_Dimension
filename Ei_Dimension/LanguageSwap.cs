@@ -31,6 +31,18 @@ namespace Ei_Dimension
             curCulture);
         }
 
+
+        if(Settings.Default.PressureUnitsPSI)
+        {
+          ComponentsVM.PressureUnit[0] = RM.GetString(nameof(Language.Resources.Pressure_Units_PSI),
+            curCulture);
+        }
+        else
+        {
+          ComponentsVM.PressureUnit[0] = RM.GetString(nameof(Language.Resources.Pressure_Units_kPa),
+            curCulture);
+        }
+
         ComponentsVM.SyringeControlItems[0].Content = RM.GetString(nameof(Language.Resources.Dropdown_Halt), curCulture);
         ComponentsVM.SyringeControlItems[1].Content = RM.GetString(nameof(Language.Resources.Dropdown_Move_Absolute), curCulture);
         ComponentsVM.SyringeControlItems[2].Content = RM.GetString(nameof(Language.Resources.Dropdown_Pickup), curCulture);

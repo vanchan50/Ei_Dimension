@@ -133,7 +133,7 @@ namespace Ei_Dimension {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("18")]
+        [global::System.Configuration.DefaultSettingValueAttribute("19")]
         public byte ScatterGraphSelector {
             get {
                 return ((byte)(this["ScatterGraphSelector"]));
@@ -392,6 +392,18 @@ namespace Ei_Dimension {
             }
             set {
                 this["StatisticsTailDiscardPercentage"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool PressureUnitsPSI {
+            get {
+                return ((bool)(this["PressureUnitsPSI"]));
+            }
+            set {
+                this["PressureUnitsPSI"] = value;
             }
         }
     }

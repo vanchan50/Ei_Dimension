@@ -1419,15 +1419,29 @@ namespace Ei_Dimension
           case "MaxPressureBox":
             if (float.TryParse(_tempNewString, out fRes))
             {
-              if (fRes >= 2 && fRes <= 40)
+              if (Settings.Default.PressureUnitsPSI)
               {
-                Settings.Default.MaxPressure = fRes;
-                App.Device.MaxPressure = fRes;
-                break;
+                if (fRes >= 2 && fRes <= 40)
+                {
+                  Settings.Default.MaxPressure = fRes;
+                  App.Device.MaxPressure = fRes;
+                  break;
+                }
+              }
+              else
+              {
+                if (fRes >= 2 * ComponentsViewModel.TOKILOPASCALCOEFFICIENT && fRes <= 40 * ComponentsViewModel.TOKILOPASCALCOEFFICIENT)
+                {
+                  fRes /= (float)ComponentsViewModel.TOKILOPASCALCOEFFICIENT;
+                  Settings.Default.MaxPressure = fRes;
+                  App.Device.MaxPressure = fRes;
+                  break;
+                }
               }
             }
             failed = true;
-            ErrorMessage = "[2-40]";
+            ErrorMessage = Settings.Default.PressureUnitsPSI ? "[2-40]" :
+              $"[{(2 * ComponentsViewModel.TOKILOPASCALCOEFFICIENT).ToString("f3")}-{(40 * ComponentsViewModel.TOKILOPASCALCOEFFICIENT).ToString("f3")}]";
             break;
           case "TemplateSaveName":
             TemplateSelectViewModel.Instance.TemplateSaveName[0] = _tempNewString;

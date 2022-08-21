@@ -124,7 +124,7 @@ namespace Ei_Dimension.ViewModels
             Notification.Show("Save failed"));
           return;
         }
-        DashboardViewModel.Instance.CaliDateBox[0] = App.Device.MapCtroller.ActiveMap.caltime;
+        DashboardViewModel.Instance.SetCalibrationDate(App.Device.MapCtroller.ActiveMap.caltime);
         Cancel.Invoke();
       };
       Notification.ShowLocalized(nameof(Language.Resources.Calibration_Success), Save, nameof(Language.Resources.Calibration_Save_Calibration_To_Map),

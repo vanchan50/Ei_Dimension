@@ -1,5 +1,4 @@
 ﻿using System;
-using DevExpress.Mvvm;
 using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
 using System.Collections.ObjectModel;
@@ -40,6 +39,14 @@ namespace Ei_Dimension.ViewModels
 
     public virtual ObservableCollection<string> MaxPressureBox { get; set; }
     public virtual ObservableCollection<string> StatisticsCutoffBox { get; set; }
+
+    public virtual bool PressureMonToggleButtonState { get; set; }
+    public virtual bool PressureUnitToggleButtonState { get; set; }
+    public virtual ObservableCollection<string> PressureUnit { get; set; } = new ObservableCollection<string> { "" };
+    public virtual ObservableCollection<string> PressureMon { get; set; } = new ObservableCollection<string> { "", "" };
+    public double ActualPressure { get; set; }
+    public double MaxPressure { get; set; } //TextBoxHandler line 114
+    public const double TOKILOPASCALCOEFFICIENT = 6.89476;
 
     public static ComponentsViewModel Instance { get; private set; }
     public virtual bool SuppressWarnings { get; set; }
@@ -102,9 +109,24 @@ namespace Ei_Dimension.ViewModels
 
       IdexTextBoxInputs = new ObservableCollection<string> { "", "" };
       CWDirectionActive = false;
-      MaxPressureBox = new ObservableCollection<string> { Settings.Default.MaxPressure.ToString() };
+      MaxPressureBox = new ObservableCollection<string> { "" };
       StatisticsCutoffBox = new ObservableCollection<string> { (100 * Settings.Default.StatisticsTailDiscardPercentage).ToString() };
       SuppressWarnings = Settings.Default.SuppressWarnings;
+
+      if (Settings.Default.PressureUnitsPSI)
+      {
+        MaxPressureBox[0] = Settings.Default.MaxPressure.ToString();
+        PressureUnit[0] = RM.GetString(nameof(Language.Resources.Pressure_Units_PSI),
+          curCulture);
+      }
+      else
+      {
+        MaxPressureBox[0] = (Settings.Default.MaxPressure * TOKILOPASCALCOEFFICIENT).ToString("f3");
+        PressureUnit[0] = RM.GetString(nameof(Language.Resources.Pressure_Units_kPa),
+          curCulture);
+      }
+
+      PressureUnitToggleButtonState = Settings.Default.PressureUnitsPSI;
 
       Instance = this;
 
@@ -155,6 +177,43 @@ namespace Ei_Dimension.ViewModels
           break;
       }
       App.Device.MainCommand("Set Property", code: Code, parameter: (ushort)param);
+    }
+
+    public void PressureMonToggleButtonClick()
+    {
+      UserInputHandler.InputSanityCheck();
+      PressureMonToggleButtonState = !PressureMonToggleButtonState;
+      MaxPressure = 0;
+    }
+
+    public void PressureUnitButtonClick()
+    {
+      Settings.Default.PressureUnitsPSI = !Settings.Default.PressureUnitsPSI;
+      Settings.Default.Save();
+      PressureUnitToggleButtonState = Settings.Default.PressureUnitsPSI;
+
+      var RM = Language.Resources.ResourceManager;
+      var curCulture = Language.TranslationSource.Instance.CurrentCulture;
+      if (Settings.Default.PressureUnitsPSI)
+      {
+        PressureUnit[0] = RM.GetString(nameof(Language.Resources.Pressure_Units_PSI),
+          curCulture);
+        PressureMon[0] = ActualPressure.ToString("f3");
+        PressureMon[1] = MaxPressure.ToString("f3");
+        MaxPressureBox[0] = Settings.Default.MaxPressure.ToString("f3");
+      }
+      else
+      {
+        PressureUnit[0] = RM.GetString(nameof(Language.Resources.Pressure_Units_kPa),
+          curCulture);
+
+        var actual = ActualPressure * TOKILOPASCALCOEFFICIENT;
+        var maxPressure = MaxPressure * TOKILOPASCALCOEFFICIENT;
+
+        PressureMon[0] = actual.ToString("f3");
+        PressureMon[1] = maxPressure.ToString("f3");
+        MaxPressureBox[0] = (Settings.Default.MaxPressure * TOKILOPASCALCOEFFICIENT).ToString("f3");
+      }
     }
 
     public void LasersButtonClick(int num)

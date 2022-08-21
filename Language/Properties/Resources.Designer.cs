@@ -791,6 +791,15 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Pressure.
+        /// </summary>
+        public static string Components_Pressure {
+            get {
+                return ResourceManager.GetString("Components_Pressure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Prime.
         /// </summary>
         public static string Components_Prime {
@@ -806,6 +815,15 @@ namespace Ei_Dimension.Language {
         public static string Components_Sampling_ON {
             get {
                 return ResourceManager.GetString("Components_Sampling_ON", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set Max Pressure.
+        /// </summary>
+        public static string Components_SetMaxPressure {
+            get {
+                return ResourceManager.GetString("Components_SetMaxPressure", resourceCulture);
             }
         }
         
@@ -992,8 +1010,7 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Pressure
-        ///Monitor.
+        ///   Looks up a localized string similar to Monitor.
         /// </summary>
         public static string Dashboard_Pressure_Mon {
             get {
@@ -1002,8 +1019,16 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to    Max
-        ///Pressure.
+        ///   Looks up a localized string similar to Current.
+        /// </summary>
+        public static string Dashboard_Pressure_Mon_Current {
+            get {
+                return ResourceManager.GetString("Dashboard_Pressure_Mon_Current", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Max.
         /// </summary>
         public static string Dashboard_Pressure_Mon_Max {
             get {
@@ -1012,12 +1037,29 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to    Min
-        ///Pressure.
+        ///   Looks up a localized string similar to Min.
         /// </summary>
         public static string Dashboard_Pressure_Mon_Min {
             get {
                 return ResourceManager.GetString("Dashboard_Pressure_Mon_Min", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Units:.
+        /// </summary>
+        public static string Dashboard_Pressure_Mon_Units {
+            get {
+                return ResourceManager.GetString("Dashboard_Pressure_Mon_Units", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warning.
+        /// </summary>
+        public static string Dashboard_Pressure_Mon_Warning {
+            get {
+                return ResourceManager.GetString("Dashboard_Pressure_Mon_Warning", resourceCulture);
             }
         }
         
@@ -1194,8 +1236,8 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to       Hi
-        ///Sensitivity.
+        ///   Looks up a localized string similar to Hi Sensitivity
+        ///1.5 µL/sec.
         /// </summary>
         public static string Dropdown_Hi_Sens {
             get {
@@ -1204,8 +1246,8 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to    Hi
-        ///Speed.
+        ///   Looks up a localized string similar to Hi Speed
+        ///3.5 µL/sec.
         /// </summary>
         public static string Dropdown_Hi_Speed {
             get {
@@ -1250,7 +1292,8 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Normal.
+        ///   Looks up a localized string similar to Normal
+        ///2.5 µL/sec.
         /// </summary>
         public static string Dropdown_Normal {
             get {
@@ -1377,7 +1420,7 @@ namespace Ei_Dimension.Language {
         
         /// <summary>
         ///   Looks up a localized string similar to Agitate
-        ///Volume.
+        ///Volume, µL.
         /// </summary>
         public static string Experiment_Agitate_Vol {
             get {
@@ -1566,7 +1609,7 @@ namespace Ei_Dimension.Language {
         
         /// <summary>
         ///   Looks up a localized string similar to Sample
-        ///Volume.
+        ///Volume, µL.
         /// </summary>
         public static string Experiment_Samp_Vol {
             get {
@@ -1688,7 +1731,7 @@ namespace Ei_Dimension.Language {
         
         /// <summary>
         ///   Looks up a localized string similar to  Wash
-        ///Volume.
+        ///Volume, µL.
         /// </summary>
         public static string Experiment_Wash_Vol {
             get {
@@ -2600,6 +2643,24 @@ namespace Ei_Dimension.Language {
         public static string Power {
             get {
                 return ResourceManager.GetString("Power", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to kPa.
+        /// </summary>
+        public static string Pressure_Units_kPa {
+            get {
+                return ResourceManager.GetString("Pressure_Units_kPa", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PSI.
+        /// </summary>
+        public static string Pressure_Units_PSI {
+            get {
+                return ResourceManager.GetString("Pressure_Units_PSI", resourceCulture);
             }
         }
         

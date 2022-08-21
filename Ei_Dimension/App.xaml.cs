@@ -316,6 +316,7 @@ namespace Ei_Dimension
             Current.Dispatcher.Invoke(()=>Notification.ShowError(errorMsg, 26));
           }
           Verificator.PublishReport();
+          Current.Dispatcher.Invoke(DashboardViewModel.Instance.ValModeToggle);
           //Notification.ShowLocalizedError(nameof(Language.Resources.Validation_Fail));
           break;
       }
@@ -382,7 +383,7 @@ namespace Ei_Dimension
 
 
       string rfilename = Device.Control == SystemControl.Manual ? Device.Publisher.Outfilename : Device.WorkOrder.plateID.ToString();
-      var directoryName = $"{Device.RootDirectory.FullName}\\AcquisitionData";
+      var directoryName = $"{Device.Publisher.Outdir}\\AcquisitionData";
       try
       {
         if (!Directory.Exists(directoryName))

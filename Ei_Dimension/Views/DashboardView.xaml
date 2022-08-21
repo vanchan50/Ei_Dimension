@@ -49,7 +49,7 @@
               <System:Int32>1</System:Int32>
             </Button.CommandParameter>
           </Button>
-          <Button Content="{lang:Loc Components_Wash_ALL}"
+          <Button Content="{lang:Loc Components_Wash_B}"
                   Style="{StaticResource ButtonStyle}"
                   Command="{Binding FluidicsButtonClickCommand}"
                   Height="75" Width="160"
@@ -168,8 +168,8 @@
 
     <!--Volumes-->
     <Border HorizontalAlignment="Left"
-                VerticalAlignment="Top"
-                Margin="320,30,0,0">
+            VerticalAlignment="Top"
+            Margin="320,30,0,0">
       <StackPanel Width="200">
         <TextBlock Text="{lang:Loc Experiment_Samp_Vol}"
                    FontFamily="{StaticResource AppTextFont}"
@@ -257,41 +257,6 @@
             <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
           </dxmvvm:Interaction.Behaviors>
         </TextBox>
-        <ToggleButton Content="{lang:Loc Dashboard_Pressure_Mon}"
-                      Style="{StaticResource ToggleButtonThemeStyle}"
-                      Height="75" Width="160"
-                      Margin="0,26,0,0" Cursor="Hand"
-                      IsChecked="{Binding PressureMonToggleButtonState, Mode=OneWay}"
-                      Command="{Binding PressureMonToggleButtonClickCommand}"/>
-        <TextBox HorizontalAlignment="Stretch"
-                 IsReadOnly="True"
-                 Margin="0,5,0,0"
-                 Style="{StaticResource InputFieldStyle}"
-                 Text="{Binding PressureMon[0]}"/>
-        <TextBlock Text="{lang:Loc Dashboard_Pressure_Mon_Max}"
-                   FontFamily="{StaticResource AppTextFont}"
-                   FontSize="26" Height="70"
-                   FontWeight="UltraBold"
-                   Foreground="{StaticResource AppTextColor}"
-                   HorizontalAlignment="Center"
-                   Margin="0,5,0,0"/>
-        <TextBox HorizontalAlignment="Stretch"
-                 IsReadOnly="True"
-                 Margin="0,5,0,0"
-                 Style="{StaticResource InputFieldStyle}"
-                 Text="{Binding PressureMon[1]}"/>
-        <TextBlock Text="{lang:Loc Dashboard_Pressure_Mon_Min}"
-                   FontFamily="{StaticResource AppTextFont}"
-                   FontSize="26" Height="70"
-                   FontWeight="UltraBold"
-                   Foreground="{StaticResource AppTextColor}"
-                   HorizontalAlignment="Center"
-                   Margin="0,5,0,0"/>
-        <TextBox HorizontalAlignment="Stretch"
-                 IsReadOnly="True"
-                 Margin="0,5,0,0"
-                 Style="{StaticResource InputFieldStyle}"
-                 Text="{Binding PressureMon[2]}"/>
       </StackPanel>
     </Border>
 
@@ -489,7 +454,7 @@
                            dxb:BarManager.ShowGlyphsInPopupMenus="False"
                            FontFamily="{StaticResource AppTextFont}"
                            Foreground="{StaticResource AppTextColor}"
-                           Content="{Binding SelectedSpeedContent}">
+                           Content="{Binding SelectedSpeedContent}" HorizontalContentAlignment="Left">
           <dxb:PopupMenu ItemLinksSource="{Binding SpeedItems}">
             <dxb:PopupMenu.ItemTemplate>
               <DataTemplate>
@@ -498,8 +463,8 @@
                                  ItemClick="{DXEvent Click((int)1)}">
                     <dxb:BarButtonItem.ContentTemplate>
                       <DataTemplate>
-                        <Grid Width="130">
-                          <TextBlock Text="{Binding}" HorizontalAlignment="Center"
+                        <Grid Width="136">
+                          <TextBlock Text="{Binding}" HorizontalAlignment="Left"
                                    FontFamily="{StaticResource AppTextFont}"
                                    Foreground="{StaticResource AppTextColor}"
                                    FontSize="25"/>
@@ -578,7 +543,7 @@
                VerticalAlignment="Top"
                Width="202"
                Height="80"
-               Margin="65,354,0,0"
+               Margin="65,353,0,0"
                Opacity="0.4"
                Fill="Orange"
                IsHitTestVisible="False"

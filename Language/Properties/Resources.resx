@@ -373,12 +373,18 @@ Direction</value>
   <data name="Components_Position" xml:space="preserve">
     <value>Position</value>
   </data>
+  <data name="Components_Pressure" xml:space="preserve">
+    <value>Pressure</value>
+  </data>
   <data name="Components_Prime" xml:space="preserve">
     <value>Prime</value>
   </data>
   <data name="Components_Sampling_ON" xml:space="preserve">
     <value>Sampling
     ON</value>
+  </data>
+  <data name="Components_SetMaxPressure" xml:space="preserve">
+    <value>Set Max Pressure</value>
   </data>
   <data name="Components_Sheath" xml:space="preserve">
     <value>Sheath</value>
@@ -443,16 +449,22 @@ Warnings</value>
     <value>Name</value>
   </data>
   <data name="Dashboard_Pressure_Mon" xml:space="preserve">
-    <value>Pressure
-Monitor</value>
+    <value>Monitor</value>
+  </data>
+  <data name="Dashboard_Pressure_Mon_Current" xml:space="preserve">
+    <value>Current</value>
   </data>
   <data name="Dashboard_Pressure_Mon_Max" xml:space="preserve">
-    <value>   Max
-Pressure</value>
+    <value>Max</value>
   </data>
   <data name="Dashboard_Pressure_Mon_Min" xml:space="preserve">
-    <value>   Min
-Pressure</value>
+    <value>Min</value>
+  </data>
+  <data name="Dashboard_Pressure_Mon_Units" xml:space="preserve">
+    <value>Units:</value>
+  </data>
+  <data name="Dashboard_Pressure_Mon_Warning" xml:space="preserve">
+    <value>Warning</value>
   </data>
   <data name="Dashboard_Select_Regions" xml:space="preserve">
     <value>Select</value>
@@ -513,12 +525,12 @@ Pressure</value>
     <value>Halt</value>
   </data>
   <data name="Dropdown_Hi_Sens" xml:space="preserve">
-    <value>      Hi
-Sensitivity</value>
+    <value>Hi Sensitivity
+1.5 µL/sec</value>
   </data>
   <data name="Dropdown_Hi_Speed" xml:space="preserve">
-    <value>   Hi
-Speed</value>
+    <value>Hi Speed
+3.5 µL/sec</value>
   </data>
   <data name="Dropdown_Initialize" xml:space="preserve">
     <value>Initialize</value>
@@ -533,7 +545,8 @@ Speed</value>
     <value>None</value>
   </data>
   <data name="Dropdown_Normal" xml:space="preserve">
-    <value>Normal</value>
+    <value>Normal
+2.5 µL/sec</value>
   </data>
   <data name="Dropdown_Pickup" xml:space="preserve">
     <value>Pickup</value>
@@ -576,7 +589,7 @@ Speed</value>
   </data>
   <data name="Experiment_Agitate_Vol" xml:space="preserve">
     <value>Agitate
-Volume</value>
+Volume, µL</value>
   </data>
   <data name="Experiment_Available_Regions" xml:space="preserve">
     <value>Available Regions</value>
@@ -645,7 +658,7 @@ Region</value>
   </data>
   <data name="Experiment_Samp_Vol" xml:space="preserve">
     <value>Sample
-Volume</value>
+Volume, µL</value>
   </data>
   <data name="Experiment_Save_Template" xml:space="preserve">
     <value>   Save
@@ -689,7 +702,7 @@ Barcode</value>
   </data>
   <data name="Experiment_Wash_Vol" xml:space="preserve">
     <value> Wash
-Volume</value>
+Volume, µL</value>
   </data>
   <data name="Experiment_Work_Order" xml:space="preserve">
     <value>Work
@@ -997,6 +1010,12 @@ Parameters To Map</value>
   </data>
   <data name="Power" xml:space="preserve">
     <value>Power</value>
+  </data>
+  <data name="Pressure_Units_kPa" xml:space="preserve">
+    <value>kPa</value>
+  </data>
+  <data name="Pressure_Units_PSI" xml:space="preserve">
+    <value>PSI</value>
   </data>
   <data name="Program_Name" xml:space="preserve">
     <value>Ei Dimension</value>
