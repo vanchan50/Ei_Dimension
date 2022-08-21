@@ -25,21 +25,21 @@
     <!--Input Selector-->
     <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Margin="100,100,0,0">
+            Margin="155,100,0,0">
 
       <StackPanel VerticalAlignment="Stretch">
         <TextBlock Text="{lang:Loc Components_Input_Sel}"
-                 FontFamily="{StaticResource AppTextFont}"
-                 FontSize="36"
-                 FontWeight="UltraBold"
-                 Foreground="{StaticResource AppTextColor}"
-                 HorizontalAlignment="Center"
-                 VerticalAlignment="Top"
-                 Margin="0,0,0,6"/>
+                   FontFamily="{StaticResource AppTextFont}"
+                   FontSize="36"
+                   FontWeight="UltraBold"
+                   Foreground="{StaticResource AppTextColor}"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Top"
+                   Margin="0,0,0,6"/>
 
         <Border BorderThickness="2"
-                  Margin="0,0,0,13"
-                  CornerRadius="5">
+                Margin="0,0,0,13"
+                CornerRadius="5">
           <Grid>
             <TextBlock Text="A"
                  FontFamily="{StaticResource AppTextFont}"
@@ -95,7 +95,7 @@
                   Height="60" Width="120"
                   HorizontalAlignment="Center"
                   VerticalAlignment="Center"
-                  Margin="20,60,0,0" Cursor="Hand"/>
+                  Margin="20,60,0,0"/>
               <TextBlock Text="{lang:Loc Components_Max_Steps}"
                      FontFamily="{StaticResource AppTextFont}"
                      FontSize="26"
@@ -141,7 +141,7 @@
                 </StackPanel>
               </Border>
               <ToggleButton Style="{StaticResource ToggleButtonThemeStyle}"
-                            Height="75" Cursor="Hand"
+                            Height="75"
                             Width="145"
                             Margin="0,6,0,0"
                             Content="{lang:Loc Components_CW_Dir}"
@@ -174,7 +174,7 @@
                 Width="180">
           <StackPanel VerticalAlignment="Stretch">
             <ToggleButton Style="{StaticResource ToggleButtonThemeStyle}"
-                          Height="75" Cursor="Hand"
+                          Height="75"
                           Margin="0,5,0,0"
                           Content="{lang:Loc Components_Cuvet_Drain_Open}"
                           IsChecked="{Binding ValvesStates[2], Mode=OneWay}"
@@ -184,7 +184,7 @@
               </ToggleButton.CommandParameter>
             </ToggleButton>
             <ToggleButton Style="{StaticResource ToggleButtonThemeStyle}"
-                          Height="75" Cursor="Hand"
+                          Height="75"
                           Margin="0,5,0,0"
                           Content="{lang:Loc Components_Fan}"
                           IsChecked="{Binding ValvesStates[3], Mode=OneWay}"
@@ -194,7 +194,7 @@
               </ToggleButton.CommandParameter>
             </ToggleButton>
             <ToggleButton Style="{StaticResource ToggleButtonThemeStyle}"
-                          Height="75" Cursor="Hand"
+                          Height="75"
                           Content="{lang:Loc Components_Valve1}"
                           IsChecked="{Binding ValvesStates[0], Mode=OneWay}"
                           Command="{Binding ValvesButtonClickCommand}">
@@ -712,7 +712,7 @@
     <!--Pressure panel-->
     <StackPanel HorizontalAlignment="Left"
                 VerticalAlignment="Top"
-                Margin="440,100,0,0">
+                Margin="500,100,0,0">
       <TextBlock Text="{lang:Loc Components_Pressure}"
                  FontFamily="{StaticResource AppTextFont}"
                  FontSize="36"
