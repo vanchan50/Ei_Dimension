@@ -6,6 +6,10 @@ using Newtonsoft.Json;
 
 namespace DIOS.Core.Structs
 {
+  /// <summary>
+  /// A class for output.
+  /// <br> Contains the region Reporter stats data per well</br>
+  /// </summary>
   [JsonObject(MemberSerialization.Fields)]
   internal class WellStats
   {
@@ -14,11 +18,11 @@ namespace DIOS.Core.Structs
     [JsonProperty("Results")]
     private readonly List<RegionReporterStats> _results = new List<RegionReporterStats>(101);
     [JsonIgnore]
-    private int _wellCount;
+    private int _totalCountPerWell;
     [JsonIgnore]
     private static readonly char[] Alphabet = Enumerable.Range('A', 16).Select(x => (char)x).ToArray();
 
-    public WellStats(Well well, List<RegionReporterResultVolatile> results, int totalBeadCount)
+    public WellStats(Well well, List<RegionReporterResultVolatile> results, int totalBead)
     {
       _well = new Well(well);
       foreach (var regionResult in results)
@@ -27,7 +31,7 @@ namespace DIOS.Core.Structs
         _results.Add(stats);
       }
       _results.Sort((x, y) => x.Region.CompareTo(y.Region));
-      _wellCount += totalBeadCount;
+      _totalCountPerWell += totalBead;
     }
 
     public List<(int region, int mfi)> GetReporterMFI()
@@ -79,7 +83,7 @@ namespace DIOS.Core.Structs
         var value = property.GetValue(result);
         bldr.Append($"\"{value}\",");
       }
-      bldr.Append($"\"{_wellCount}\",");
+      bldr.Append($"\"{_totalCountPerWell}\",");
       string Notes = "";
       bldr.Append($"\"{Notes}\"");
       return bldr.ToString();

@@ -404,6 +404,16 @@ namespace DIOS.Core
       BoardVersion = v;
     }
 
+    public void ReconnectUSB()
+    {
+      _dataController.ReconnectUSB();
+    }
+
+    public void DisconnectedUSB()
+    {
+      _dataController.DisconnectedUSB();
+    }
+
     public void DEBUGJBeadADD()
     {
       var r = new Random();

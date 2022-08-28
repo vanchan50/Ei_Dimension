@@ -105,10 +105,12 @@ namespace Ei_Dimension
     private static void Usbnotif_Removal(object sender, USBEvent e)
     {
       Notification.Show($"USB Device Disconnected!");
+      App.Device.DisconnectedUSB();
     }
 
     private static void Usbnotif_Arrival(object sender, USBEvent e)
     {
+      App.Device.ReconnectUSB();
       Notification.Show($"USB Device connected!");
     }
 

@@ -185,6 +185,16 @@ namespace DIOS.Core
       return outbead.Header == 0xadbeadbe;
     }
 
+    public void ReconnectUSB()
+    {
+      _serialConnection.Reconnect();
+    }
+
+    public void DisconnectedUSB()
+    {
+      _serialConnection.Disconnect();
+    }
+
     private void InnerCommandProcessing(in CommandStruct cs)
     {
       switch (cs.Code)

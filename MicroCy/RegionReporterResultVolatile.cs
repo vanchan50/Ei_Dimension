@@ -2,6 +2,10 @@
 
 namespace DIOS.Core
 {
+  /// <summary>
+  /// A Deep Copy of RegionReporterResult (List of reporter values for a region)
+  /// <br>Intended to be passed around for stats calculation etc.</br>
+  /// </summary>
   public class RegionReporterResultVolatile : RegionReporterResult
   {
     public RegionReporterResultVolatile()

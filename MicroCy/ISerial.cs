@@ -11,5 +11,7 @@ namespace DIOS.Core
     void Read();
     void EndRead(IAsyncResult result);
     void Write(byte[] buffer);
+    void Reconnect();
+    void Disconnect();
   }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using MadWizard.WinUSBNet;
 
 namespace DIOS.Core
@@ -9,6 +10,7 @@ namespace DIOS.Core
     public bool IsActive { get; private set; }
     private USBDevice _usbDevice;
     private readonly Guid _interfaceGuid = Guid.ParseExact("F70242C7-FB25-443B-9E7E-A4260F373982", "D");  // interface GUID, not device guid
+    private readonly object _disconnectionLock = new object();
 
     public USBConnection()
     {
@@ -52,19 +54,31 @@ namespace DIOS.Core
       {
         Console.WriteLine($"{e.Message} {e.InnerException}");
         Console.Error.WriteLine($"{e.Message} {e.InnerException}");
-        Write(buffer);
+        if (!IsActive)
+        {
+          lock (_disconnectionLock)
+          {
+            Monitor.Wait(_disconnectionLock);
+          }
+          Write(buffer);
+        }
+        else
+        {
+          Write(buffer);
+        }
       }
     }
 
     public void BeginRead(AsyncCallback func)
     {
       if (IsActive)
-        _ = _usbDevice.Interfaces[0].Pipes[0x81].BeginRead(InputBuffer, 0, InputBuffer.Length, new AsyncCallback(func), null);
+        _ = _usbDevice.Interfaces[0].Pipes[0x81].BeginRead(InputBuffer, 0, InputBuffer.Length, func, null);
     }
 
     public void Read()
     {
       if (IsActive)
+      {
         try
         {
           _usbDevice.Interfaces[0].Pipes[0x81].Read(InputBuffer, 0, InputBuffer.Length);
@@ -73,12 +87,36 @@ namespace DIOS.Core
         {
           Console.WriteLine($"{e.Message} {e.InnerException}");
           Console.Error.WriteLine($"{e.Message} {e.InnerException}");
+          Disconnect();
+
+          lock (_disconnectionLock)
+          {
+            Monitor.Wait(_disconnectionLock);
+          }
         }
+      }
     }
 
     public void EndRead(IAsyncResult result)
     {
       _ = _usbDevice.Interfaces[0].Pipes[0x81].EndRead(result);
+    }
+
+    public void Reconnect()
+    {
+      if (Init())
+      {
+        lock (_disconnectionLock)
+        {
+          Monitor.PulseAll(_disconnectionLock);
+        }
+      }
+    }
+
+    public void Disconnect()
+    {
+      IsActive = false;
+      _usbDevice.Dispose();
     }
 
     private void ListAvailablePipes()

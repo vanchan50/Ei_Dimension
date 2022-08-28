@@ -36,6 +36,16 @@ namespace DIOS.Core.Tests
 
     }
 
+    public void Reconnect()
+    {
+
+    }
+
+    public void Disconnect()
+    {
+
+    }
+
     internal void ReadBead(in RawBead bead)
     {
       var bd =  BeadInfoToByteArray(bead);
