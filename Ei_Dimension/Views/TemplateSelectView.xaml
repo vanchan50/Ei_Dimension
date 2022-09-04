@@ -33,7 +33,7 @@
           <ListBox.ItemTemplate>
             <ItemContainerTemplate>
               <Grid Width="680">
-                <Rectangle Name="ToggleButtonRect" VerticalAlignment="Stretch"
+                <Rectangle VerticalAlignment="Stretch"
                          HorizontalAlignment="Stretch"
                          Fill="{StaticResource HaltButtonBackground}"
                          Stroke="{StaticResource ButtonBackgroundHighlighted}"

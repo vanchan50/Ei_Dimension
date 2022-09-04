@@ -316,6 +316,10 @@ Coefficient</value>
   <data name="Ch_Offset_Ch_Offset" xml:space="preserve">
     <value>Channel Offset</value>
   </data>
+  <data name="Ch_Offset_GreenAVoltage" xml:space="preserve">
+    <value>Green A
+Voltage</value>
+  </data>
   <data name="Ch_Offset_Set_Offset" xml:space="preserve">
     <value>  Set
 Offset</value>
@@ -972,8 +976,17 @@ Parameters To Map</value>
   <data name="Notification_Invalid_File_Name" xml:space="preserve">
     <value>Invalid File name</value>
   </data>
+  <data name="Notification_NoPlateMeasured" xml:space="preserve">
+    <value>Please Tune the Plate first</value>
+  </data>
+  <data name="Notification_No_Plate_Selected" xml:space="preserve">
+    <value>No Plate selected</value>
+  </data>
   <data name="Notification_No_Template_Selected" xml:space="preserve">
     <value>No Template selected</value>
+  </data>
+  <data name="Notification_Plate_Save_Problem" xml:space="preserve">
+    <value>There was a problem saving the Plate</value>
   </data>
   <data name="Notification_Template_Save_Problem" xml:space="preserve">
     <value>There was a problem saving the Template</value>
@@ -990,8 +1003,15 @@ Parameters To Map</value>
   <data name="ON" xml:space="preserve">
     <value>ON</value>
   </data>
+  <data name="PlateCustomization_Current" xml:space="preserve">
+    <value>Current</value>
+  </data>
   <data name="PlateCustomization_DACCurrentLimit" xml:space="preserve">
     <value>Current Limit</value>
+  </data>
+  <data name="PlateCustomization_Delete_Plate" xml:space="preserve">
+    <value>Delete
+Plate</value>
   </data>
   <data name="PlateCustomization_FinalizedZPosition" xml:space="preserve">
     <value>Upstroke Steps</value>
@@ -999,8 +1019,22 @@ Parameters To Map</value>
   <data name="PlateCustomization_InitialZPosition" xml:space="preserve">
     <value>Downstroke Steps</value>
   </data>
+  <data name="PlateCustomization_Load_Plate" xml:space="preserve">
+    <value>Load
+Plate</value>
+  </data>
+  <data name="PlateCustomization_Measured" xml:space="preserve">
+    <value>Measured</value>
+  </data>
   <data name="PlateCustomization_PlateCustomization" xml:space="preserve">
     <value>Plate Customization</value>
+  </data>
+  <data name="PlateCustomization_Save_Plate" xml:space="preserve">
+    <value>Save
+Plate</value>
+  </data>
+  <data name="PlateCustomization_Selected" xml:space="preserve">
+    <value>Selected</value>
   </data>
   <data name="PlateCustomization_TunePlate" xml:space="preserve">
     <value>Find Plate Depth</value>

@@ -13,6 +13,7 @@ namespace Ei_Dimension.ViewModels
   {
     public virtual ObservableCollection<string> ChannelsOffsetParameters { get; set; }
     //public virtual ObservableCollection<string> ChannelsBaseline { get; set; }
+    public virtual ObservableCollection<string> GreenAVoltage { get; set; } = new ObservableCollection<string> { "" };
     public virtual ObservableCollection<string> AverageBg { get; set; }
     public virtual System.Windows.Visibility OldBoardOffsetsVisible { get; set; }
     public virtual object SliderValue1 { get; set; }

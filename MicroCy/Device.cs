@@ -398,12 +398,6 @@ namespace DIOS.Core
       BeadConcentrationStatusUpdate?.Invoke(this, value);
     }
 
-    #if DEBUG
-    public void DEBUGSetBoardVersion(int v)
-    {
-      BoardVersion = v;
-    }
-
     public void ReconnectUSB()
     {
       _dataController.ReconnectUSB();
@@ -412,6 +406,12 @@ namespace DIOS.Core
     public void DisconnectedUSB()
     {
       _dataController.DisconnectedUSB();
+    }
+
+#if DEBUG
+    public void DEBUGSetBoardVersion(int v)
+    {
+      BoardVersion = v;
     }
 
     public void DEBUGJBeadADD()

@@ -22,8 +22,8 @@
             CornerRadius="8"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Margin="410,160,0,0" 
-            Width="1000" Height="800">
+            Margin="110,50,0,0"
+            Width="1700" Height="980">
       <Grid>
         <TextBlock Text="{lang:Loc PlateCustomization_PlateCustomization}"
                    FontFamily="{StaticResource AppTextFont}"
@@ -32,21 +32,115 @@
                    Foreground="{StaticResource AppTextColor}"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Top"
-                   Margin="300,20,0,0"/>
+                   Margin="700,20,0,0"/>
         <Button Content="❌"
                 Command="{Binding HideViewCommand}"
                 Style="{StaticResource ButtonStyle}"
                 CommandParameter="100"
-                Height="50"
-                Width="50"
+                Height="50" Width="50"
                 FontSize="40" FontWeight="ExtraBold"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
-                Margin="950,0,0,0"/>
+                Margin="1650,0,0,0"/>
+
+        <!--Selection List-->
+        <ScrollViewer HorizontalScrollBarVisibility="Disabled"
+                    VerticalScrollBarVisibility="Visible"
+                    Height="310"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Margin="40,150,0,0">
+          <ListBox Width="700" BorderThickness="0"
+             FontFamily="{StaticResource AppTextFont}"
+             FontSize="30" Name="list" Background="Transparent"
+             ItemsSource="{Binding NameList}">
+            <ListBox.ItemTemplate>
+              <ItemContainerTemplate>
+                <Grid Width="680">
+                  <Rectangle Name="ToggleButtonRect" VerticalAlignment="Stretch"
+                         HorizontalAlignment="Stretch"
+                         Fill="{StaticResource HaltButtonBackground}"
+                         Stroke="{StaticResource ButtonBackgroundHighlighted}"
+                         StrokeThickness="1"
+                         Margin="5,0,5,0"/>
+                  <TextBlock Text="{Binding}"
+                           Height="43"
+                           Margin="5,0,10,0"
+                           HorizontalAlignment="Center"
+                           Foreground="{StaticResource AppTextColor}"/>
+                </Grid>
+              </ItemContainerTemplate>
+            </ListBox.ItemTemplate>
+            <ListBox.ItemContainerStyle>
+              <Style TargetType="ListBoxItem">
+                <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+                <Setter Property="Template">
+                  <Setter.Value>
+                    <ControlTemplate TargetType="ListBoxItem">
+                      <Border Name="LBorder" BorderThickness="4"
+                            SnapsToDevicePixels="true">
+                        <ContentPresenter />
+                      </Border>
+                      <ControlTemplate.Triggers>
+                        <Trigger Property="IsSelected" Value="true">
+                          <Setter TargetName="LBorder" Property="BorderBrush"
+                                Value="Red"/>
+                          <Setter TargetName="LBorder" Property="Background"
+                                Value="DarkRed"/>
+                        </Trigger>
+                      </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                  </Setter.Value>
+                </Setter>
+              </Style>
+            </ListBox.ItemContainerStyle>
+            <dxmvvm:Interaction.Triggers>
+              <dxmvvm:EventToCommand EventName="SelectionChanged"
+                                     Command="{Binding SelectedCommand}"
+                                     PassEventArgsToCommand="True"/>
+            </dxmvvm:Interaction.Triggers>
+          </ListBox>
+        </ScrollViewer>
+
+        <!--Buttons-->
+        <StackPanel Margin="800,150,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top">
+          <Button Content="{lang:Loc PlateCustomization_Load_Plate}"
+                  Command="{Binding LoadPlateCommand}"
+                  Style="{StaticResource ButtonStyle}"
+                  Height="150" Width="300"
+                  FontSize="40"/>
+          <Button Content="{lang:Loc PlateCustomization_Save_Plate}"
+                  Command="{Binding SavePlateCommand}"
+                  Style="{StaticResource ButtonStyle}"
+                  Height="150" Width="300"
+                  FontSize="40"
+                  Margin="0,30,0,0"/>
+          <TextBox Width="300" Name="nameBox"
+                   Margin="0,10,0,0"
+                   Style="{StaticResource InputFieldStyle}"
+                   Text="{Binding PlateSaveName[0]}">
+            <dxmvvm:Interaction.Behaviors>
+              <dxmvvm:EventToCommand EventName="GotFocus"
+                                     Command="{Binding FocusedBoxCommand}"
+                                     CommandParameter="4"/>
+            </dxmvvm:Interaction.Behaviors>
+          </TextBox>
+          <Button Content="{lang:Loc PlateCustomization_Delete_Plate}"
+                  Command="{Binding DeletePlateCommand}"
+                  Style="{StaticResource ButtonStyle}"
+                  Height="150" Width="300"
+                  FontSize="40"
+                  Visibility="{Binding DeleteVisible}"
+                  Margin="0,100,0,0"/>
+        </StackPanel>
+
+        <!--Parameters input-->
         <StackPanel Orientation="Horizontal"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
-                    Margin="350,150,0,0">
+                    Margin="1300,150,0,0">
           <StackPanel Margin="-60,4,4,0">
             <TextBlock Text="{lang:Loc PlateCustomization_DACCurrentLimit}"
                        FontFamily="{StaticResource AppTextFont}"
@@ -122,25 +216,161 @@
             </StackPanel>
           </Border>
         </StackPanel>
+
+        <Button Width="300" Height="140"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                FontSize="36"
+                Margin="1350,420,0,0"
+                Content="{lang:Loc PlateCustomization_TunePlate}"
+                Style="{StaticResource ButtonStyle}"
+                Command="{Binding TunePlateCommand}"/>
+
+        <StackPanel HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Margin="80,600,0,0">
+          <StackPanel Orientation="Horizontal">
+            <TextBlock Text="{lang:Loc Motors_A1}"
+                       FontFamily="{StaticResource AppTextFont}"
+                       FontSize="30"
+                       FontWeight="UltraBold"
+                       Margin="205,0,0,0"
+                       Foreground="{StaticResource AppTextColor}"/>
+            <TextBlock Text="{lang:Loc Motors_A12}"
+                       FontFamily="{StaticResource AppTextFont}"
+                       FontSize="30"
+                       FontWeight="UltraBold"
+                       Margin="80,0,0,0"
+                       Foreground="{StaticResource AppTextColor}"/>
+            <TextBlock Text="{lang:Loc Motors_H1}"
+                       FontFamily="{StaticResource AppTextFont}"
+                       FontSize="30"
+                       FontWeight="UltraBold"
+                       Margin="70,0,0,0"
+                       Foreground="{StaticResource AppTextColor}"/>
+            <TextBlock Text="{lang:Loc Motors_H12}"
+                       FontFamily="{StaticResource AppTextFont}"
+                       FontSize="30"
+                       FontWeight="UltraBold"
+                       Margin="80,0,0,0"
+                       Foreground="{StaticResource AppTextColor}"/>
+          </StackPanel>
+          <StackPanel Orientation="Horizontal"
+                      Margin="0,10,0,0">
+            <TextBlock Text="{lang:Loc PlateCustomization_Measured}"
+                       FontFamily="{StaticResource AppTextFont}"
+                       FontSize="36"
+                       Width="150"
+                       FontWeight="UltraBold"
+                       TextAlignment="Right"
+                       Foreground="{StaticResource AppTextColor}"
+                       Margin="0,0,8,0"/>
+            <TextBox Margin="10,0,5,0"
+                     Width="100"
+                     IsReadOnly="True"
+                     Style="{StaticResource InputFieldStyle}"
+                     Text="{Binding FreshlyMeasuredValues[0]}">
+            </TextBox>
+            <TextBox Margin="10,0,5,0"
+                     Width="100"
+                     IsReadOnly="True"
+                     Style="{StaticResource InputFieldStyle}"
+                     Text="{Binding FreshlyMeasuredValues[1]}">
+            </TextBox>
+            <TextBox Margin="10,0,5,0"
+                     Width="100"
+                     IsReadOnly="True"
+                     Style="{StaticResource InputFieldStyle}"
+                     Text="{Binding FreshlyMeasuredValues[2]}">
+            </TextBox>
+            <TextBox Margin="10,0,5,0"
+                     Width="100"
+                     IsReadOnly="True"
+                     Style="{StaticResource InputFieldStyle}"
+                     Text="{Binding FreshlyMeasuredValues[3]}">
+            </TextBox>
+          </StackPanel>
+          <StackPanel Orientation="Horizontal"
+                      Margin="0,10,0,0">
+            <TextBlock Text="{lang:Loc PlateCustomization_Current}"
+                       FontFamily="{StaticResource AppTextFont}"
+                       FontSize="36"
+                       Width="150"
+                       FontWeight="UltraBold"
+                       TextAlignment="Right"
+                       Foreground="{StaticResource AppTextColor}"
+                       Margin="0,0,8,0"/>
+            <TextBox Margin="10,0,5,0"
+                     Width="100"
+                     IsReadOnly="True"
+                     Style="{StaticResource InputFieldStyle}"
+                     Text="{Binding CurrentValues[0]}">
+            </TextBox>
+            <TextBox Margin="10,0,5,0"
+                     Width="100"
+                     IsReadOnly="True"
+                     Style="{StaticResource InputFieldStyle}"
+                     Text="{Binding CurrentValues[1]}">
+            </TextBox>
+            <TextBox Margin="10,0,5,0"
+                     Width="100"
+                     IsReadOnly="True"
+                     Style="{StaticResource InputFieldStyle}"
+                     Text="{Binding CurrentValues[2]}">
+            </TextBox>
+            <TextBox Margin="10,0,5,0"
+                     Width="100"
+                     IsReadOnly="True"
+                     Style="{StaticResource InputFieldStyle}"
+                     Text="{Binding CurrentValues[3]}">
+            </TextBox>
+          </StackPanel>
+          <StackPanel Orientation="Horizontal"
+                      Margin="0,10,0,0">
+            <TextBlock Text="{lang:Loc PlateCustomization_Selected}"
+                       FontFamily="{StaticResource AppTextFont}"
+                       FontSize="36"
+                       Width="150"
+                       FontWeight="UltraBold"
+                       TextAlignment="Right"
+                       Foreground="{StaticResource AppTextColor}"
+                       Margin="0,0,8,0"/>
+            <TextBox Margin="10,0,5,0"
+                     Width="100"
+                     IsReadOnly="True"
+                     Style="{StaticResource InputFieldStyle}"
+                     Text="{Binding SelectedValues[0]}">
+            </TextBox>
+            <TextBox Margin="10,0,5,0"
+                     Width="100"
+                     IsReadOnly="True"
+                     Style="{StaticResource InputFieldStyle}"
+                     Text="{Binding SelectedValues[1]}">
+            </TextBox>
+            <TextBox Margin="10,0,5,0"
+                     Width="100"
+                     IsReadOnly="True"
+                     Style="{StaticResource InputFieldStyle}"
+                     Text="{Binding SelectedValues[2]}">
+            </TextBox>
+            <TextBox Margin="10,0,5,0"
+                     Width="100"
+                     IsReadOnly="True"
+                     Style="{StaticResource InputFieldStyle}"
+                     Text="{Binding SelectedValues[3]}">
+            </TextBox>
+          </StackPanel>
+        </StackPanel>
       </Grid>
     </Border>
 
-    <Button Width="300" Height="140"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            FontSize="36"
-            Margin="750,720,0,0"
-            Content="{lang:Loc PlateCustomization_TunePlate}"
-            Style="{StaticResource ButtonStyle}"
-            Command="{Binding TunePlateCommand}"/>
-
-    <Rectangle Width="1000" Height="800"
+    <Rectangle Width="1700" Height="980"
                Visibility="{Binding WaitShieldVisibility}"
                Fill="Black"
                RadiusX="8" RadiusY="8"
                HorizontalAlignment="Left"
                VerticalAlignment="Top"
-               Margin="410,160,0,0" 
+               Margin="110,50,0,0" 
                Opacity="0.3"/>
     <dx:WaitIndicator DeferedVisibility="{Binding WaitIndicatorVisibility}" Content="The script is running..."
                       FontSize="25"

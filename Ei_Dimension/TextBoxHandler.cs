@@ -212,16 +212,36 @@ namespace Ei_Dimension
             update = () => MotorsViewModel.Instance.StepsParametersZ[4] = exe.FParameter.ToString();
             break;
           case 0x48:
-            update = () => MotorsViewModel.Instance.StepsParametersZ[0] = exe.FParameter.ToString();
+            update = () =>
+            {
+              MotorsViewModel.Instance.StepsParametersZ[0] = exe.FParameter.ToString();
+              PlateCustomizationViewModel.Instance.DefaultPlate.A1 = exe.FParameter;
+              PlateCustomizationViewModel.Instance.UpdateDefault();
+            };
             break;
           case 0x4a:
-            update = () => MotorsViewModel.Instance.StepsParametersZ[1] = exe.FParameter.ToString();
+            update = () =>
+            {
+              MotorsViewModel.Instance.StepsParametersZ[1] = exe.FParameter.ToString();
+              PlateCustomizationViewModel.Instance.DefaultPlate.A12 = exe.FParameter;
+              PlateCustomizationViewModel.Instance.UpdateDefault();
+            };
             break;
           case 0x4c:
-            update = () => MotorsViewModel.Instance.StepsParametersZ[2] = exe.FParameter.ToString();
+            update = () =>
+            {
+              MotorsViewModel.Instance.StepsParametersZ[2] = exe.FParameter.ToString();
+              PlateCustomizationViewModel.Instance.DefaultPlate.H1 = exe.FParameter;
+              PlateCustomizationViewModel.Instance.UpdateDefault();
+            };
             break;
           case 0x4e:
-            update = () => MotorsViewModel.Instance.StepsParametersZ[3] = exe.FParameter.ToString();
+            update = () =>
+            {
+              MotorsViewModel.Instance.StepsParametersZ[3] = exe.FParameter.ToString();
+              PlateCustomizationViewModel.Instance.DefaultPlate.H12 = exe.FParameter;
+              PlateCustomizationViewModel.Instance.UpdateDefault();
+            };
             break;
           case 0x51:
             update = () => MotorsViewModel.Instance.ParametersX[3] = exe.Parameter.ToString();
@@ -415,13 +435,13 @@ namespace Ei_Dimension
           case 0xb6:
             update = () => ChannelsViewModel.Instance.TempParameters[6] = (exe.Parameter / 10.0).ToString("N1");
             break;
-          /*
           case 0xb8:
             update = () =>
             {
-              ChannelOffsetViewModel.Instance.ChannelsBaseline[0] = exe.Parameter.ToString();
+              ChannelOffsetViewModel.Instance.GreenAVoltage[0] = (exe.Parameter * 0.0008).ToString();
             };
             break;
+          /*
           case 0xb9:
             update = () =>
             {

@@ -127,21 +127,6 @@
       <Views:MainButtonsView />
     </Grid>
 
-    <!--Numpad-->
-    <Grid Width="360" Height="390" x:Name="Npd"
-          VerticalAlignment="Top" HorizontalAlignment="Left"
-          Margin="1670,740,0,0"
-          Visibility="{Binding NumpadVisible}">
-      <Views:NumpadView />
-    </Grid>
-    
-    <Grid Width="950" Height="460" Name="Kbd"
-          VerticalAlignment="Top" HorizontalAlignment="Left"
-          Margin="370,340,0,0"
-          Visibility="{Binding KeyboardVisible}">
-      <Views:ScreenKeyboardView />
-    </Grid>
-
     <!--Event Count-->
     <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"
@@ -240,6 +225,21 @@
     <Grid Width="1920" Height="1080"
           VerticalAlignment="Top" HorizontalAlignment="Left">
       <Views:NotificationView />
+    </Grid>
+
+    <!--Numpad-->
+    <Grid Width="360" Height="390" x:Name="Npd"
+          VerticalAlignment="Top" HorizontalAlignment="Left"
+          Margin="1670,740,0,0"
+          Visibility="{Binding NumpadVisible}">
+      <Views:NumpadView />
+    </Grid>
+
+    <Grid Width="950" Height="460" Name="Kbd"
+          VerticalAlignment="Top" HorizontalAlignment="Left"
+          Margin="370,340,0,0"
+          Visibility="{Binding KeyboardVisible}">
+      <Views:ScreenKeyboardView />
     </Grid>
 
     <Button Background="Transparent"

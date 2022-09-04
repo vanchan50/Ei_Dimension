@@ -1,5 +1,4 @@
-﻿using DevExpress.Mvvm;
-using DevExpress.Mvvm.DataAnnotations;
+﻿using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
 using System;
 using Newtonsoft.Json;
@@ -18,30 +17,28 @@ namespace Ei_Dimension.ViewModels
   [POCOViewModel]
   public class TemplateSelectViewModel
   {
-    public virtual ObservableCollection<string> NameList { get; set; }
-    public string SelectedItem;
+    public virtual ObservableCollection<string> NameList { get; set; } = new ObservableCollection<string>();
+    public string SelectedItem { get; set; }
     public virtual ObservableCollection<string> TemplateSaveName { get; set; }
-    public virtual Visibility WaitIndicatorBorderVisibility { get; set; }
-    public string _templateName;
+    public virtual Visibility WaitIndicatorBorderVisibility { get; set; } = Visibility.Hidden;
+    private string _templateName;
     public static TemplateSelectViewModel Instance { get; private set; }
-    public virtual Visibility DeleteVisible { get; set; }
-    private static List<char> _invalidChars;
+    public virtual Visibility DeleteVisible { get; set; } = Visibility.Hidden;
+    private static List<char> _invalidChars = new List<char>();
     protected TemplateSelectViewModel()
     {
       var defTemplateName = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.DefaultTemplateName),
         Language.TranslationSource.Instance.CurrentCulture);
       TemplateSaveName = new ObservableCollection<string> { defTemplateName };
+
       var TemplateList = Directory.GetFiles(Device.RootDirectory + @"\Config", "*.dtml");
-      NameList = new ObservableCollection<string>();
       foreach (var template in TemplateList)
       {
         NameList.Add(Path.GetFileNameWithoutExtension(template));
       }
-      DeleteVisible = Visibility.Hidden;
-      _invalidChars = new List<char>();
+
       _invalidChars.AddRange(Path.GetInvalidPathChars());
       _invalidChars.AddRange(Path.GetInvalidFileNameChars());
-      WaitIndicatorBorderVisibility = Visibility.Hidden;
       Instance = this;
     }
 
@@ -179,10 +176,20 @@ namespace Ei_Dimension.ViewModels
                   j++;
                 }
               }
+
+              if (newTemplate.PlateType != null)//case for old templates
+              {
+                var plateFilePath = Device.RootDirectory + @"\Config\" + newTemplate.PlateType + PlateCustomizationViewModel.PLATETYPEFILEEXTENSION;
+                if (File.Exists(plateFilePath))
+                {
+                  PlateCustomizationViewModel.Instance.SelectedItem = plateFilePath;
+                  PlateCustomizationViewModel.Instance.LoadPlate();
+                }
+              }
             }
             catch
             {
-              Notification.ShowLocalized(nameof(Language.Resources.Notification_Error_Loading_template));
+              Notification.ShowLocalizedError(nameof(Language.Resources.Notification_Error_Loading_template));
               return;
             }
             finally
@@ -288,6 +295,7 @@ namespace Ei_Dimension.ViewModels
               temp.SelectedWells.Add(list);
             }
           }
+          temp.PlateType = PlateCustomizationViewModel.Instance.CurrentPlateName;
           var contents = JsonConvert.SerializeObject(temp);
           stream.Write(contents);
         }

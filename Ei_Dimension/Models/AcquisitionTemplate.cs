@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace Ei_Dimension.Models
 {
   [Serializable]
@@ -26,6 +22,7 @@ namespace Ei_Dimension.Models
     public uint FileSaveCheckboxes;
     public int TableSize;
     public List<List<WellType>> SelectedWells;
+    public string PlateType;
 
     public AcquisitionTemplate()
     {

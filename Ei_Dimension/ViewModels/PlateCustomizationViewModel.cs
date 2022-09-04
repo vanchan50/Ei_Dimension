@@ -1,4 +1,6 @@
 ﻿using System;
+using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading;
 using System.Threading.Tasks;
@@ -6,8 +8,9 @@ using System.Windows;
 using System.Windows.Controls;
 using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
-using DevExpress.XtraSpreadsheet.Model;
+using System.IO;
 using DIOS.Core;
+using Ei_Dimension.Models;
 using TextChangedEventArgs = System.Windows.Controls.TextChangedEventArgs;
 
 namespace Ei_Dimension.ViewModels
@@ -23,12 +26,41 @@ namespace Ei_Dimension.ViewModels
     public virtual ObservableCollection<string> InitZMotorPosition { get; set; } = new ObservableCollection<string> { "450" };
     public virtual ObservableCollection<string> FinalZMotorPosition { get; set; } = new ObservableCollection<string> { "600" };
     public object ZStepIsUpdatedLock { get; } = new object();
-    public static PlateCustomizationViewModel Instance { get; private set; }
 
-    private static int _tuningIsRunning;
+    public virtual ObservableCollection<string> NameList { get; set; } = new ObservableCollection<string>();
+    public string SelectedItem { get; set; }
+    private string _plateName;
+    public virtual ObservableCollection<string> PlateSaveName { get; set; } = new ObservableCollection<string> { "DefaultPlateType" };
+    public virtual ObservableCollection<string> FreshlyMeasuredValues { get; set; } = new ObservableCollection<string> { "", "", "", "" };
+    public virtual ObservableCollection<string> CurrentValues { get; set; } = new ObservableCollection<string> { "", "", "", "" };
+    public virtual ObservableCollection<string> SelectedValues { get; set; } = new ObservableCollection<string> { "", "", "", "" };
+    public virtual Visibility DeleteVisible { get; set; } = Visibility.Hidden;
+
+    private static List<char> _invalidChars = new List<char>();
+    public static PlateCustomizationViewModel Instance { get; private set; }
+    public string CurrentPlateName { get; private set; }
+
+    private int _tuningIsRunning;
+    private PlateDepths _freshlyMeasuredPlateDepths;
+    public PlateDepths DefaultPlate { get; } = new PlateDepths{ A1 = 1, A12 = 2, H1 = 3, H12 = 4 };
+    public const string DEFAULTNAME = "Default";
+    public const string PLATETYPEFILEEXTENSION = ".dplt";
     protected PlateCustomizationViewModel()
     {
+      var PlateTypeList = Directory.GetFiles(Device.RootDirectory + @"\Config", $"*{PLATETYPEFILEEXTENSION}");
+      foreach (var plateType in PlateTypeList)
+      {
+        NameList.Add(Path.GetFileNameWithoutExtension(plateType));
+      }
+      NameList.Add(DEFAULTNAME);
+
       Instance = this;
+
+      _invalidChars.AddRange(Path.GetInvalidPathChars());
+      _invalidChars.AddRange(Path.GetInvalidFileNameChars());
+
+      CurrentPlateName = DEFAULTNAME;
+      UpdateDefault();
     }
 
     public static PlateCustomizationViewModel Create()
@@ -36,10 +68,148 @@ namespace Ei_Dimension.ViewModels
       return ViewModelSource.Create(() => new PlateCustomizationViewModel());
     }
 
-    public void HideView()
+    public void Selected(SelectionChangedEventArgs e)
+    {
+      if (e.AddedItems.Count == 0)
+        return;
+
+      _plateName = e.AddedItems[0].ToString();
+      SelectedItem = Device.RootDirectory + @"\Config\" + e.AddedItems[0].ToString() + PLATETYPEFILEEXTENSION;
+      PlateSaveName[0] = _plateName;
+
+      if (_plateName == DEFAULTNAME)
+      {
+        UpdateSelected(DefaultPlate);
+        return;
+      }
+
+      try
+      {
+        using (TextReader reader = new StreamReader(SelectedItem))
+        {
+          var fileContents = reader.ReadToEnd();
+          var newPD = JsonConvert.DeserializeObject<PlateDepths>(fileContents);
+          UpdateSelected(newPD);
+        }
+      }
+      catch
+      {
+      }
+      DeleteVisible = Visibility.Visible;
+    }
+
+    public void SavePlate()
     {
       UserInputHandler.InputSanityCheck();
-      CustomizationVisible = Visibility.Hidden;
+      UpdateFreshMeasurement(new PlateDepths {A1 = 4123, A12 = 51231.512f, H1 = 12313.01232f});
+      if (_freshlyMeasuredPlateDepths == null)
+      {
+        Notification.ShowLocalizedError(nameof(Language.Resources.Notification_NoPlateMeasured));
+        return;
+      }
+
+      var path = Device.RootDirectory + @"\Config\" + PlateSaveName[0] + PLATETYPEFILEEXTENSION;
+      foreach (var c in _invalidChars)
+      {
+        if (PlateSaveName[0].Contains(c.ToString()))
+        {
+          Notification.ShowLocalizedError(nameof(Language.Resources.Notification_Invalid_File_Name));
+          return;
+        }
+      }
+
+      if (PlateSaveName[0] == DEFAULTNAME)
+      {
+        Notification.ShowLocalizedError(nameof(Language.Resources.Notification_Invalid_File_Name));
+        return;
+      }
+
+      if (File.Exists(path))
+      {
+        void Overwrite()
+        {
+          SavingProcedure(path);
+          DeleteVisible = Visibility.Hidden;
+        }
+
+        //if (Language.TranslationSource.Instance.CurrentCulture.TextInfo.CultureName == "zh-CN")
+        //{
+        //  Notification.Show($"名为 \"{PlateSaveName[0]}\" 的模板已存在",
+        //    Overwrite, "覆盖", null, "取消");
+        //}
+        //else
+        //{
+          Notification.Show($"A plate with name \"{PlateSaveName[0]}\" already exists",
+            Overwrite, "Overwrite", null, "Cancel");
+        //}
+        return;
+      }
+      SavingProcedure(path);
+      DeleteVisible = Visibility.Hidden;
+    }
+
+    public void LoadPlate()
+    {
+      UserInputHandler.InputSanityCheck();
+      PlateDepths newPD = null;
+      if (Path.GetFileNameWithoutExtension(SelectedItem) != DEFAULTNAME)
+      {
+        try
+        {
+          using (TextReader reader = new StreamReader(SelectedItem))
+          {
+            var fileContents = reader.ReadToEnd();
+            newPD = JsonConvert.DeserializeObject<PlateDepths>(fileContents);
+          }
+        }
+        catch
+        {
+          Notification.ShowLocalizedError(nameof(Language.Resources.Notification_No_Plate_Selected));
+        }
+      }
+      else
+      {
+        newPD = DefaultPlate;
+      }
+
+      if (newPD != null)
+      {
+        //apply
+        App.Device.MainCommand("Set Temporary", code: 0x48, fparameter: newPD.A1);
+        App.Device.MainCommand("Set Temporary", code: 0x4A, fparameter: newPD.A12);
+        App.Device.MainCommand("Set Temporary", code: 0x4C, fparameter: newPD.H1);
+        App.Device.MainCommand("Set Temporary", code: 0x4E, fparameter: newPD.H12);
+        UpdateCurrent(newPD);
+        CurrentPlateName = Path.GetFileNameWithoutExtension(SelectedItem);
+        UnselectAll();
+      }
+    }
+
+    public void DeletePlate()
+    {
+      UserInputHandler.InputSanityCheck();
+      if (SelectedItem != null && File.Exists(SelectedItem))
+      {
+        void Delete()
+        {
+          File.Delete(SelectedItem);
+          NameList.Remove(_plateName);
+          DeleteVisible = Visibility.Hidden;
+        }
+
+        //if (Language.TranslationSource.Instance.CurrentCulture.TextInfo.CultureName == "zh-CN")
+        //{
+        //  Notification.Show($"您要删除 \"{Path.GetFileNameWithoutExtension(SelectedItem)}\" 模板吗？",
+        //    Delete, "删除", null, "取消");
+        //}
+        //else
+        //{
+          Notification.Show($"Do you want to delete \"{Path.GetFileNameWithoutExtension(SelectedItem)}\" plate?",
+            Delete, "Delete", null, "Cancel");
+        //}
+      }
+      UpdateSelected(null);
+      DeleteVisible = Visibility.Hidden;
     }
 
     public void TunePlate()
@@ -75,57 +245,49 @@ namespace Ei_Dimension.ViewModels
         var h1 = ProbeTuningProcedure(new Well { RowIdx = 7, ColIdx = 0 });
         var h12 = ProbeTuningProcedure(new Well { RowIdx = 7, ColIdx = 11 });
         HideShield();
+
+        var freshPD = new PlateDepths
+        {
+          A1 = a1,
+          A12 = a12,
+          H1 = h1,
+          H12 = h12
+        };
+        UpdateFreshMeasurement(freshPD);
+
         _tuningIsRunning = 0;
-        Notification.Show($"The results are A1:{a1}, A12:{a12}, H1:{h1}, H12:{h12}");
       });
     }
 
-
-    public void FocusedBox(int num)
+    public void HideView()
     {
-      var Stackpanel = Views.PlateCustomizationView.Instance.SP.Children;
-      switch (num)
-      {
-        case 0:
-          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(DACCurrentLimit)), this, 0, (TextBox)Stackpanel[0]);
-          MainViewModel.Instance.NumpadToggleButton((TextBox)Stackpanel[0]);
-          break;
-        case 1:
-          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ZStep)), this, 0, (TextBox)Stackpanel[1]);
-          MainViewModel.Instance.NumpadToggleButton((TextBox)Stackpanel[1]);
-          break;
-        case 2:
-          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(InitZMotorPosition)), this, 0, (TextBox)Stackpanel[2]);
-          MainViewModel.Instance.NumpadToggleButton((TextBox)Stackpanel[2]);
-          break;
-        case 3:
-          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(FinalZMotorPosition)), this, 0, (TextBox)Stackpanel[3]);
-          MainViewModel.Instance.NumpadToggleButton((TextBox)Stackpanel[3]);
-          break;
-      }
+      UserInputHandler.InputSanityCheck();
+      CustomizationVisible = Visibility.Hidden;
+      UnselectAll();
     }
 
-    public void TextChanged(TextChangedEventArgs e)
+    public void ShowView()
     {
-      UserInputHandler.InjectToFocusedTextbox(((TextBox)e.Source).Text, true);
+      CustomizationVisible = Visibility.Visible;
+      DeleteVisible = Visibility.Hidden;
     }
 
     private float ProbeTuningProcedure(Well well)
     {
       var decreaseCurrentTo = ushort.Parse(DACCurrentLimit[0]);
-      ChangeDACCurrent(decreaseCurrentTo);
+      var motorZInitHeight = ushort.Parse(InitZMotorPosition[0]);
+      var motorZFinalHeight = ushort.Parse(FinalZMotorPosition[0]);
 
       MovePlateToWell(well);
 
-      var motorZInitHeight = ushort.Parse(InitZMotorPosition[0]);
-      MoveProbe(motorZInitHeight);
+      ChangeDACCurrent(decreaseCurrentTo);
+      DescendProbe(motorZInitHeight);
 
       var resultingHeight = GetResultingProbeHeight();
-
       ChangeDACCurrent(0);
 
-      var motorZFinalHeight = ushort.Parse(FinalZMotorPosition[0]);
-      MoveProbe(motorZFinalHeight);
+
+      AscendProbe(motorZFinalHeight);
 
       return resultingHeight;
     }
@@ -150,9 +312,20 @@ namespace Ei_Dimension.ViewModels
       }
     }
 
-    private void MoveProbe(ushort height)
+    private void AscendProbe(ushort height)
     {
-      App.Device.MainCommand("MotorZ", parameter: height);
+      MoveProbe(height, up: true);
+    }
+
+    private void DescendProbe(ushort height)
+    {
+      MoveProbe(height, up: false);
+    }
+
+    private void MoveProbe(ushort height, bool up)
+    {
+      var direction = up ? 1 : 2;
+      App.Device.MainCommand("MotorZ", cmd: (byte)direction, fparameter: height);
       lock (App.Device.SystemActivityNotBusyNotificationLock)
       {
         Monitor.Wait(App.Device.SystemActivityNotBusyNotificationLock);
@@ -229,6 +402,129 @@ namespace Ei_Dimension.ViewModels
       }
 
       return false;
+    }
+
+    private void SavingProcedure(string path)
+    {
+      try
+      {
+        using (var stream = new StreamWriter(path, append: false))
+        {
+          var contents = JsonConvert.SerializeObject(_freshlyMeasuredPlateDepths);
+          stream.Write(contents);
+        }
+      }
+      catch
+      {
+        Notification.ShowLocalized(nameof(Language.Resources.Notification_Plate_Save_Problem));
+      }
+
+      if (!NameList.Contains(PlateSaveName[0]))
+      {
+        NameList.Add(PlateSaveName[0]);
+      }
+
+      UnselectAll();
+    }
+
+    private void UpdateFreshMeasurement(PlateDepths pd)
+    {
+      _freshlyMeasuredPlateDepths = pd;
+      if (pd != null)
+      {
+        FreshlyMeasuredValues[0] = _freshlyMeasuredPlateDepths.A1.ToString();
+        FreshlyMeasuredValues[1] = _freshlyMeasuredPlateDepths.A12.ToString();
+        FreshlyMeasuredValues[2] = _freshlyMeasuredPlateDepths.H1.ToString();
+        FreshlyMeasuredValues[3] = _freshlyMeasuredPlateDepths.H12.ToString();
+      }
+      else
+      {
+        FreshlyMeasuredValues[0] = "";
+        FreshlyMeasuredValues[1] = "";
+        FreshlyMeasuredValues[2] = "";
+        FreshlyMeasuredValues[3] = "";
+      }
+    }
+
+    private void UpdateSelected(PlateDepths pd)
+    {
+      if (pd != null)
+      {
+        SelectedValues[0] = pd.A1.ToString();
+        SelectedValues[1] = pd.A12.ToString();
+        SelectedValues[2] = pd.H1.ToString();
+        SelectedValues[3] = pd.H12.ToString();
+      }
+      else
+      {
+        SelectedValues[0] = "";
+        SelectedValues[1] = "";
+        SelectedValues[2] = "";
+        SelectedValues[3] = "";
+      }
+    }
+
+    private void UpdateCurrent(PlateDepths pd)
+    {
+      if (pd != null)
+      {
+        CurrentValues[0] = pd.A1.ToString();
+        CurrentValues[1] = pd.A12.ToString();
+        CurrentValues[2] = pd.H1.ToString();
+        CurrentValues[3] = pd.H12.ToString();
+      }
+      else
+      {
+        CurrentValues[0] = "";
+        CurrentValues[1] = "";
+        CurrentValues[2] = "";
+        CurrentValues[3] = "";
+      }
+    }
+
+    public void UpdateDefault()
+    {
+      if (CurrentPlateName == DEFAULTNAME)
+        UpdateCurrent(DefaultPlate);
+    }
+
+    public void FocusedBox(int num)
+    {
+      var Stackpanel = Views.PlateCustomizationView.Instance.SP.Children;
+      switch (num)
+      {
+        case 0:
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(DACCurrentLimit)), this, 0, (TextBox)Stackpanel[0]);
+          MainViewModel.Instance.NumpadToggleButton((TextBox)Stackpanel[0]);
+          break;
+        case 1:
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ZStep)), this, 0, (TextBox)Stackpanel[1]);
+          MainViewModel.Instance.NumpadToggleButton((TextBox)Stackpanel[1]);
+          break;
+        case 2:
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(InitZMotorPosition)), this, 0, (TextBox)Stackpanel[2]);
+          MainViewModel.Instance.NumpadToggleButton((TextBox)Stackpanel[2]);
+          break;
+        case 3:
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(FinalZMotorPosition)), this, 0, (TextBox)Stackpanel[3]);
+          MainViewModel.Instance.NumpadToggleButton((TextBox)Stackpanel[3]);
+          break;
+        case 4:
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(PlateSaveName)), this, 0, Views.PlateCustomizationView.Instance.nameBox);
+          MainViewModel.Instance.KeyboardToggle(Views.PlateCustomizationView.Instance.nameBox);
+          break;
+      }
+    }
+
+    public void TextChanged(TextChangedEventArgs e)
+    {
+      UserInputHandler.InjectToFocusedTextbox(((TextBox)e.Source).Text, true);
+    }
+
+    private void UnselectAll()
+    {
+      UpdateSelected(null);
+      Views.PlateCustomizationView.Instance.list.UnselectAll();
     }
   }
 }

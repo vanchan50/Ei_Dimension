@@ -133,7 +133,7 @@ namespace Ei_Dimension.ViewModels
 
     public void CustomizePlateClick()
     {
-      PlateCustomizationViewModel.Instance.CustomizationVisible = Visibility.Visible;
+      PlateCustomizationViewModel.Instance.ShowView();
     }
 
     public List<Well> OutputWells()

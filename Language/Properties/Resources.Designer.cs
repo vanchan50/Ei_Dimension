@@ -396,6 +396,16 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Green A
+        ///Voltage.
+        /// </summary>
+        public static string Ch_Offset_GreenAVoltage {
+            get {
+                return ResourceManager.GetString("Ch_Offset_GreenAVoltage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to   Set
         ///Offset.
         /// </summary>
@@ -2530,11 +2540,38 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No Plate selected.
+        /// </summary>
+        public static string Notification_No_Plate_Selected {
+            get {
+                return ResourceManager.GetString("Notification_No_Plate_Selected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No Template selected.
         /// </summary>
         public static string Notification_No_Template_Selected {
             get {
                 return ResourceManager.GetString("Notification_No_Template_Selected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please Tune the Plate first.
+        /// </summary>
+        public static string Notification_NoPlateMeasured {
+            get {
+                return ResourceManager.GetString("Notification_NoPlateMeasured", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There was a problem saving the Plate.
+        /// </summary>
+        public static string Notification_Plate_Save_Problem {
+            get {
+                return ResourceManager.GetString("Notification_Plate_Save_Problem", resourceCulture);
             }
         }
         
@@ -2584,11 +2621,30 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Current.
+        /// </summary>
+        public static string PlateCustomization_Current {
+            get {
+                return ResourceManager.GetString("PlateCustomization_Current", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Current Limit.
         /// </summary>
         public static string PlateCustomization_DACCurrentLimit {
             get {
                 return ResourceManager.GetString("PlateCustomization_DACCurrentLimit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete
+        ///Plate.
+        /// </summary>
+        public static string PlateCustomization_Delete_Plate {
+            get {
+                return ResourceManager.GetString("PlateCustomization_Delete_Plate", resourceCulture);
             }
         }
         
@@ -2611,11 +2667,49 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Load
+        ///Plate.
+        /// </summary>
+        public static string PlateCustomization_Load_Plate {
+            get {
+                return ResourceManager.GetString("PlateCustomization_Load_Plate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Measured.
+        /// </summary>
+        public static string PlateCustomization_Measured {
+            get {
+                return ResourceManager.GetString("PlateCustomization_Measured", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Plate Customization.
         /// </summary>
         public static string PlateCustomization_PlateCustomization {
             get {
                 return ResourceManager.GetString("PlateCustomization_PlateCustomization", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save
+        ///Plate.
+        /// </summary>
+        public static string PlateCustomization_Save_Plate {
+            get {
+                return ResourceManager.GetString("PlateCustomization_Save_Plate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Selected.
+        /// </summary>
+        public static string PlateCustomization_Selected {
+            get {
+                return ResourceManager.GetString("PlateCustomization_Selected", resourceCulture);
             }
         }
         
