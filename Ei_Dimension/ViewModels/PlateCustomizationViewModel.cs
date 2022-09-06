@@ -101,7 +101,7 @@ namespace Ei_Dimension.ViewModels
     public void SavePlate()
     {
       UserInputHandler.InputSanityCheck();
-      UpdateFreshMeasurement(new PlateDepths {A1 = 4123, A12 = 51231.512f, H1 = 12313.01232f});
+
       if (_freshlyMeasuredPlateDepths == null)
       {
         Notification.ShowLocalizedError(nameof(Language.Resources.Notification_NoPlateMeasured));
@@ -152,7 +152,11 @@ namespace Ei_Dimension.ViewModels
     {
       UserInputHandler.InputSanityCheck();
       PlateDepths newPD = null;
-      if (Path.GetFileNameWithoutExtension(SelectedItem) != DEFAULTNAME)
+      if (Path.GetFileNameWithoutExtension(SelectedItem) == DEFAULTNAME)
+      {
+        newPD = DefaultPlate;
+      }
+      else
       {
         try
         {
@@ -166,10 +170,6 @@ namespace Ei_Dimension.ViewModels
         {
           Notification.ShowLocalizedError(nameof(Language.Resources.Notification_No_Plate_Selected));
         }
-      }
-      else
-      {
-        newPD = DefaultPlate;
       }
 
       if (newPD != null)
@@ -246,6 +246,12 @@ namespace Ei_Dimension.ViewModels
         var h12 = ProbeTuningProcedure(new Well { RowIdx = 7, ColIdx = 11 });
         HideShield();
 
+        if (a1 < 0 || a12 < 0 || h1 < 0 || h12 < 0)
+        {
+          Notification.Show("Wrong Parameters set");
+          _tuningIsRunning = 0;
+          return;
+        }
         var freshPD = new PlateDepths
         {
           A1 = a1,
@@ -274,9 +280,12 @@ namespace Ei_Dimension.ViewModels
 
     private float ProbeTuningProcedure(Well well)
     {
-      var decreaseCurrentTo = ushort.Parse(DACCurrentLimit[0]);
-      var motorZInitHeight = ushort.Parse(InitZMotorPosition[0]);
-      var motorZFinalHeight = ushort.Parse(FinalZMotorPosition[0]);
+      if (!ushort.TryParse(DACCurrentLimit[0], out var decreaseCurrentTo))
+        return -1;
+      if (!ushort.TryParse(InitZMotorPosition[0], out var motorZInitHeight))
+        return -1;
+      if (!ushort.TryParse(FinalZMotorPosition[0], out var motorZFinalHeight))
+        return -1;
 
       MovePlateToWell(well);
 
@@ -306,9 +315,9 @@ namespace Ei_Dimension.ViewModels
       App.Device.MainCommand("Set Property", code: 0xad, parameter: well.RowIdx);
       App.Device.MainCommand("Set Property", code: 0xae, parameter: well.ColIdx);
       App.Device.MainCommand("Position Well Plate");
-      lock (App.Device.SystemActivityNotBusyNotificationLock)
+      lock (App.Device.ScriptF9FinishedLock)
       {
-        Monitor.Wait(App.Device.SystemActivityNotBusyNotificationLock);
+        Monitor.Wait(App.Device.ScriptF9FinishedLock);
       }
     }
 
@@ -341,6 +350,9 @@ namespace Ei_Dimension.ViewModels
       }
       var currentStep = float.Parse(MotorsViewModel.Instance.ParametersZ[5]);
       var epsilonZ = float.Parse(ZStep[0]);
+      #if DEBUG
+      Console.WriteLine($"ACTUAL PROBE HEIGHT: {currentStep},\t REPORTED HEIGHT: {currentStep - epsilonZ}");
+      #endif
       return currentStep - epsilonZ;
     }
 

@@ -222,6 +222,12 @@ namespace DIOS.Core
             case 0xE6:
               _device.IsPlateEjected = false;
               break;
+            case 0xE7:
+              lock (_device.ScriptF9FinishedLock)
+              {
+                Monitor.PulseAll(_device.ScriptF9FinishedLock);
+              }
+              break;
           }
           break;
         case 0x44:

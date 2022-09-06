@@ -44,6 +44,7 @@ namespace DIOS.Core
     public WellController WellController { get; } = new WellController();
     public BitArray SystemActivity { get; } = new BitArray(16, false);
     public object SystemActivityNotBusyNotificationLock { get; } = new object();
+    public object ScriptF9FinishedLock { get; } = new object();
     public event EventHandler<ReadingWellEventArgs> StartingToReadWell;
     public event EventHandler<ReadingWellEventArgs> FinishedReadingWell;
     public event EventHandler FinishedMeasurement;

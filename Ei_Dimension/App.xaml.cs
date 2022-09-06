@@ -7,6 +7,7 @@ using DIOS.Core;
 using System.IO;
 using System.Configuration;
 using System.Text;
+using DevExpress.Data.Extensions;
 using Ei_Dimension.Cache;
 using Ei_Dimension.Controllers;
 
@@ -71,7 +72,19 @@ namespace Ei_Dimension
       }
       else
       {
-        Device.MapCtroller.SetMap(Device.MapCtroller.MapList[Settings.Default.DefaultMap]);
+        try
+        {
+          var map = Device.MapCtroller.MapList[Settings.Default.DefaultMap];
+          Device.MapCtroller.SetMap(map);
+        }
+        catch
+        {
+          throw new Exception($"Problem with Maps in {Device.RootDirectory.FullName + @"\Config"} folder");
+        }
+        finally
+        {
+          Device.MapCtroller.SetMap(Device.MapCtroller.MapList[0]);
+        }
       }
       Device.Control = (SystemControl)Settings.Default.SystemControl;
       Device.SaveIndividualBeadEvents = Settings.Default.Everyevent;
@@ -81,7 +94,7 @@ namespace Ei_Dimension
       Device.MinPerRegion = Settings.Default.MinPerRegion;
       Device.BeadsToCapture = Settings.Default.BeadsToCapture;
       Device.OnlyClassifiedInBeadEventFile = Settings.Default.OnlyClassifed;
-      Device.SensitivityChannel = Settings.Default.SensitivityChannelB? HiSensitivityChannel.GreenB: HiSensitivityChannel.GreenC;
+      Device.SensitivityChannel = Settings.Default.SensitivityChannelB ? HiSensitivityChannel.GreenB : HiSensitivityChannel.GreenC;
       Device.ReporterScaling = Settings.Default.ReporterScaling;
       Device.MainCommand("Set Property", code: 0xbf, parameter: (ushort)Device.MapCtroller.ActiveMap.calParams.att);
       Device.HdnrTrans = Device.MapCtroller.ActiveMap.calParams.DNRTrans;

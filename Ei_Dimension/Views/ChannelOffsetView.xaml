@@ -616,7 +616,7 @@
 
     <StackPanel HorizontalAlignment="Left"
                 VerticalAlignment="Top"
-                Margin="1350,150,0,0"
+                Margin="1450,150,0,0"
                 Width="160">
       <TextBlock Text="{lang:Loc Ch_Offset_GreenAVoltage}"
                  FontFamily="{StaticResource AppTextFont}"
