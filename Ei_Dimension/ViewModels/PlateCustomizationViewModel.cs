@@ -343,11 +343,12 @@ namespace Ei_Dimension.ViewModels
 
     private float GetResultingProbeHeight()
     {
-      App.Device.MainCommand("Get Property", code: 0x44);
       lock (ZStepIsUpdatedLock)
       {
+        App.Device.MainCommand("Get Property", code: 0x44);
         Monitor.Wait(ZStepIsUpdatedLock);
       }
+      Thread.Sleep(500);
       var currentStep = float.Parse(MotorsViewModel.Instance.ParametersZ[5]);
       var epsilonZ = float.Parse(ZStep[0]);
       #if DEBUG

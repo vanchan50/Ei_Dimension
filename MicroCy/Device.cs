@@ -402,6 +402,8 @@ namespace DIOS.Core
     public void ReconnectUSB()
     {
       _dataController.ReconnectUSB();
+      MainCommand("Set Property", code: 0xCC);
+      MainCommand("Set Property", code: 0xCB);
     }
 
     public void DisconnectedUSB()

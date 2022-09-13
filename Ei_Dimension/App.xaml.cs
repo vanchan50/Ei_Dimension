@@ -384,7 +384,7 @@ namespace Ei_Dimension
 
       var bldr = new StringBuilder();
       bldr.AppendLine("Program,\"DIOS\"");
-      bldr.AppendLine($"Build,\"{MainViewModel.BUILD}\",Firmware,\"{Device.FirmwareVersion}\"");
+      bldr.AppendLine($"Build,\"{Program.BUILD}\",Firmware,\"{Device.FirmwareVersion}\"");
       bldr.AppendLine($"Date,\"{DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss", System.Globalization.CultureInfo.CreateSpecificCulture("en-GB"))}\"\n");
 
       bldr.AppendLine($"Instrument,\"{Environment.MachineName}\"");

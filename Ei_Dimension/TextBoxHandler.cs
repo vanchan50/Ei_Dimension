@@ -201,9 +201,9 @@ namespace Ei_Dimension
           case 0x44:
             update = () =>
             {
-              MotorsViewModel.Instance.ParametersZ[5] = exe.FParameter.ToString();
               lock (PlateCustomizationViewModel.Instance.ZStepIsUpdatedLock)
               {
+                MotorsViewModel.Instance.ParametersZ[5] = exe.FParameter.ToString();
                 Monitor.PulseAll(PlateCustomizationViewModel.Instance.ZStepIsUpdatedLock);
               }
             };
