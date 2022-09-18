@@ -1,8 +1,6 @@
-﻿using DevExpress.Mvvm;
-using DevExpress.Mvvm.DataAnnotations;
+﻿using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace Ei_Dimension.Models
@@ -15,16 +13,16 @@ namespace Ei_Dimension.Models
     public virtual ObservableCollection<HistogramData> DisplayedRedSsc { get; set; }
     public virtual ObservableCollection<HistogramData> DisplayedGreenSsc { get; set; }
     public virtual ObservableCollection<HistogramData> DisplayedReporter { get; set; }
-    public static ObservableCollection<HistogramData> CurrentForwardSsc { get; set; }
-    public static ObservableCollection<HistogramData> CurrentVioletSsc { get; set; }
-    public static ObservableCollection<HistogramData> CurrentRedSsc { get; set; }
-    public static ObservableCollection<HistogramData> CurrentGreenSsc { get; set; }
-    public static ObservableCollection<HistogramData> CurrentReporter { get; set; }
-    public static ObservableCollection<HistogramData> BackingForwardSsc { get; set; }
-    public static ObservableCollection<HistogramData> BackingVioletSsc { get; set; }
-    public static ObservableCollection<HistogramData> BackingRedSsc { get; set; }
-    public static ObservableCollection<HistogramData> BackingGreenSsc { get; set; }
-    public static ObservableCollection<HistogramData> BackingReporter { get; set; }
+    public static ObservableCollection<HistogramData> CurrentForwardSsc { get; set; } = new ObservableCollection<HistogramData>();
+    public static ObservableCollection<HistogramData> CurrentVioletSsc { get; set; } = new ObservableCollection<HistogramData>();
+    public static ObservableCollection<HistogramData> CurrentRedSsc { get; set; } = new ObservableCollection<HistogramData>();
+    public static ObservableCollection<HistogramData> CurrentGreenSsc { get; set; } = new ObservableCollection<HistogramData>();
+    public static ObservableCollection<HistogramData> CurrentReporter { get; set; } = new ObservableCollection<HistogramData>();
+    public static ObservableCollection<HistogramData> BackingForwardSsc { get; set; } = new ObservableCollection<HistogramData>();
+    public static ObservableCollection<HistogramData> BackingVioletSsc { get; set; } = new ObservableCollection<HistogramData>();
+    public static ObservableCollection<HistogramData> BackingRedSsc { get; set; } = new ObservableCollection<HistogramData>();
+    public static ObservableCollection<HistogramData> BackingGreenSsc { get; set; } = new ObservableCollection<HistogramData>();
+    public static ObservableCollection<HistogramData> BackingReporter { get; set; } = new ObservableCollection<HistogramData>();
     public static int[] bReporter = new int[HistogramData.Bins.Length];
     public static int[] bFsc = new int[HistogramData.Bins.Length];
     public static int[] bRed = new int[HistogramData.Bins.Length];
@@ -37,17 +35,6 @@ namespace Ei_Dimension.Models
     public static int[] cViolet = new int[HistogramData.Bins.Length];
     protected ScatterData()
     {
-      CurrentForwardSsc = new ObservableCollection<HistogramData>();
-      CurrentVioletSsc = new ObservableCollection<HistogramData>();
-      CurrentRedSsc = new ObservableCollection<HistogramData>();
-      CurrentGreenSsc = new ObservableCollection<HistogramData>();
-      CurrentReporter = new ObservableCollection<HistogramData>();
-      BackingForwardSsc = new ObservableCollection<HistogramData>();
-      BackingVioletSsc = new ObservableCollection<HistogramData>();
-      BackingRedSsc = new ObservableCollection<HistogramData>();
-      BackingGreenSsc = new ObservableCollection<HistogramData>();
-      BackingReporter = new ObservableCollection<HistogramData>();
-
       for (var i = 0; i < HistogramData.Bins.Length; i++)
       {
         CurrentForwardSsc.Add(new HistogramData(0, HistogramData.Bins[i]));

@@ -80,6 +80,7 @@ namespace Ei_Dimension.ViewModels
       if (_plateName == DEFAULTNAME)
       {
         UpdateSelected(DefaultPlate);
+        DeleteVisible = Visibility.Hidden;
         return;
       }
 
@@ -132,16 +133,16 @@ namespace Ei_Dimension.ViewModels
           DeleteVisible = Visibility.Hidden;
         }
 
-        //if (Language.TranslationSource.Instance.CurrentCulture.TextInfo.CultureName == "zh-CN")
-        //{
-        //  Notification.Show($"名为 \"{PlateSaveName[0]}\" 的模板已存在",
-        //    Overwrite, "覆盖", null, "取消");
-        //}
-        //else
-        //{
+        if (Language.TranslationSource.Instance.CurrentCulture.TextInfo.CultureName == "zh-CN")
+        {
+          Notification.Show($"名称为 \"{PlateSaveName[0]}\" 的孔板已存在",
+            Overwrite, "覆盖", null, "取消");
+        }
+        else
+        {
           Notification.Show($"A plate with name \"{PlateSaveName[0]}\" already exists",
             Overwrite, "Overwrite", null, "Cancel");
-        //}
+        }
         return;
       }
       SavingProcedure(path);

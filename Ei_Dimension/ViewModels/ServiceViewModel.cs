@@ -1,10 +1,6 @@
 ﻿using DevExpress.Mvvm;
 using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
-using DevExpress.Mvvm.UI;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace Ei_Dimension.ViewModels
 {
@@ -104,7 +100,7 @@ namespace Ei_Dimension.ViewModels
       if(IsSystemBusy() || IsMeasurementGoing())
         return;
       App.Device.MainCommand("SaveToFlash");
-      Notification.Show("Flash saved");
+      Notification.ShowLocalizedError(nameof(Language.Resources.Notification_FlashSaved));
     }
 
     public void RestoreClick()
@@ -112,7 +108,7 @@ namespace Ei_Dimension.ViewModels
       if (IsSystemBusy() || IsMeasurementGoing())
         return;
       App.Device.MainCommand("InitOpVars");
-      Notification.Show("Flash Restored");
+      Notification.ShowLocalizedError(nameof(Language.Resources.Notification_FlashRestored));
     }
 
     public void RestoreDefaultsClick()
@@ -121,6 +117,7 @@ namespace Ei_Dimension.ViewModels
         return;
       App.Device.MainCommand("InitOpVars", cmd: 1);
       Notification.Show("Flash Restored to Factory Defaults");
+      Notification.ShowLocalizedError(nameof(Language.Resources.Notification_FlashRestoredToDefaults));
     }
 
     private bool IsSystemBusy()
@@ -129,7 +126,7 @@ namespace Ei_Dimension.ViewModels
       {
         if (App.Device.SystemActivity[i]) //if any activity is going on - dismiss
         {
-          Notification.ShowError("Please wait, until the system is Idle\nand try again");
+          Notification.ShowLocalizedError(nameof(Language.Resources.Notification_WaitSystemIdle));
           return true;
         }
       }

@@ -7,7 +7,6 @@ using DIOS.Core;
 using System.IO;
 using System.Configuration;
 using System.Text;
-using DevExpress.Data.Extensions;
 using Ei_Dimension.Cache;
 using Ei_Dimension.Controllers;
 

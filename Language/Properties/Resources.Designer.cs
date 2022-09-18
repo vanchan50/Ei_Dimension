@@ -2531,6 +2531,33 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Flash Restored.
+        /// </summary>
+        public static string Notification_FlashRestored {
+            get {
+                return ResourceManager.GetString("Notification_FlashRestored", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Flash Restored to Factory Defaults.
+        /// </summary>
+        public static string Notification_FlashRestoredToDefaults {
+            get {
+                return ResourceManager.GetString("Notification_FlashRestoredToDefaults", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Flash Saved.
+        /// </summary>
+        public static string Notification_FlashSaved {
+            get {
+                return ResourceManager.GetString("Notification_FlashSaved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid File name.
         /// </summary>
         public static string Notification_Invalid_File_Name {
@@ -2581,6 +2608,16 @@ namespace Ei_Dimension.Language {
         public static string Notification_Template_Save_Problem {
             get {
                 return ResourceManager.GetString("Notification_Template_Save_Problem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please wait, until the system is Idle
+        ///and try again.
+        /// </summary>
+        public static string Notification_WaitSystemIdle {
+            get {
+                return ResourceManager.GetString("Notification_WaitSystemIdle", resourceCulture);
             }
         }
         

@@ -973,6 +973,15 @@ Parameters To Map</value>
   <data name="Notification_File_Inexistent" xml:space="preserve">
     <value>File does not exist</value>
   </data>
+  <data name="Notification_FlashRestored" xml:space="preserve">
+    <value>Flash Restored</value>
+  </data>
+  <data name="Notification_FlashRestoredToDefaults" xml:space="preserve">
+    <value>Flash Restored to Factory Defaults</value>
+  </data>
+  <data name="Notification_FlashSaved" xml:space="preserve">
+    <value>Flash Saved</value>
+  </data>
   <data name="Notification_Invalid_File_Name" xml:space="preserve">
     <value>Invalid File name</value>
   </data>
@@ -990,6 +999,10 @@ Parameters To Map</value>
   </data>
   <data name="Notification_Template_Save_Problem" xml:space="preserve">
     <value>There was a problem saving the Template</value>
+  </data>
+  <data name="Notification_WaitSystemIdle" xml:space="preserve">
+    <value>Please wait, until the system is Idle
+and try again</value>
   </data>
   <data name="Num" xml:space="preserve">
     <value>№</value>

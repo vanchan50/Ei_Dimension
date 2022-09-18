@@ -282,6 +282,10 @@
   <data name="Ch_Offset_Ch_Offset" xml:space="preserve">
     <value>基线偏移</value>
   </data>
+  <data name="Ch_Offset_GreenAVoltage" xml:space="preserve">
+    <value>绿光 A 
+电压</value>
+  </data>
   <data name="CL0" xml:space="preserve">
     <value>CL0</value>
   </data>
@@ -404,6 +408,12 @@
   </data>
   <data name="Dashboard_Pressure_Mon_Min" xml:space="preserve">
     <value>最小</value>
+  </data>
+  <data name="Dashboard_Pressure_Mon_Units" xml:space="preserve">
+    <value>单位：</value>
+  </data>
+  <data name="Dashboard_Pressure_Mon_Warning" xml:space="preserve">
+    <value>警告</value>
   </data>
   <data name="DataAn_Calib_stats" xml:space="preserve">
     <value>校准统计</value>
@@ -852,8 +862,30 @@
   <data name="Notification_File_Inexistent" xml:space="preserve">
     <value>文件不存在</value>
   </data>
+  <data name="Notification_FlashRestored" xml:space="preserve">
+    <value>闪存恢复</value>
+  </data>
+  <data name="Notification_FlashRestoredToDefaults" xml:space="preserve">
+    <value>闪存恢复为出厂设置</value>
+  </data>
+  <data name="Notification_FlashSaved" xml:space="preserve">
+    <value>闪存已保存</value>
+  </data>
+  <data name="Notification_NoPlateMeasured" xml:space="preserve">
+    <value>请先调整孔板</value>
+  </data>
+  <data name="Notification_No_Plate_Selected" xml:space="preserve">
+    <value>未选择孔板</value>
+  </data>
   <data name="Notification_No_Template_Selected" xml:space="preserve">
     <value>未选择模板</value>
+  </data>
+  <data name="Notification_Plate_Save_Problem" xml:space="preserve">
+    <value>保存孔板时出现问题</value>
+  </data>
+  <data name="Notification_WaitSystemIdle" xml:space="preserve">
+    <value>请稍候，直到系统空闲，
+然后重试</value>
   </data>
   <data name="Num" xml:space="preserve">
     <value>编号</value>
@@ -863,6 +895,45 @@
   </data>
   <data name="ON" xml:space="preserve">
     <value>开启</value>
+  </data>
+  <data name="PlateCustomization_Current" xml:space="preserve">
+    <value>电流</value>
+  </data>
+  <data name="PlateCustomization_DACCurrentLimit" xml:space="preserve">
+    <value>电流限制</value>
+  </data>
+  <data name="PlateCustomization_Delete_Plate" xml:space="preserve">
+    <value>删除
+孔板</value>
+  </data>
+  <data name="PlateCustomization_FinalizedZPosition" xml:space="preserve">
+    <value>上冲程步伐</value>
+  </data>
+  <data name="PlateCustomization_InitialZPosition" xml:space="preserve">
+    <value>下冲程步伐</value>
+  </data>
+  <data name="PlateCustomization_Load_Plate" xml:space="preserve">
+    <value>加载
+孔板</value>
+  </data>
+  <data name="PlateCustomization_Measured" xml:space="preserve">
+    <value>实测</value>
+  </data>
+  <data name="PlateCustomization_PlateCustomization" xml:space="preserve">
+    <value>孔板定制</value>
+  </data>
+  <data name="PlateCustomization_Save_Plate" xml:space="preserve">
+    <value>保存
+孔板</value>
+  </data>
+  <data name="PlateCustomization_Selected" xml:space="preserve">
+    <value>已选</value>
+  </data>
+  <data name="PlateCustomization_TunePlate" xml:space="preserve">
+    <value>查找孔板深度</value>
+  </data>
+  <data name="PlateCustomization_ZStep" xml:space="preserve">
+    <value>间隙步伐</value>
   </data>
   <data name="Power" xml:space="preserve">
     <value>功率</value>
@@ -1028,6 +1099,9 @@
   </data>
   <data name="Weekly" xml:space="preserve">
     <value>每周</value>
+  </data>
+  <data name="WellSel_CustomizePlate" xml:space="preserve">
+    <value>定制孔板</value>
   </data>
   <data name="WellSel_Reset_Plate" xml:space="preserve">
     <value>重置</value>
