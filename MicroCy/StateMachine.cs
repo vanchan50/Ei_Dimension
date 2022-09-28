@@ -7,6 +7,7 @@ namespace DIOS.Core
   {
     private readonly Device _device;
     private State _state;
+
     public bool Report { get; set; }
 
     public StateMachine(Device device, bool report)
@@ -19,6 +20,7 @@ namespace DIOS.Core
     {
       if(_state == State.Reset)
         _state = State.Start;
+      Console.WriteLine("SM start");
     }
 
     public void Action()
@@ -94,6 +96,7 @@ namespace DIOS.Core
         _state++;
       else
         _state = State.Reset;
+      Console.WriteLine($"SM advance to {_state}");
     }
 
     private void ReportState()

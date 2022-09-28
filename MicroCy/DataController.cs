@@ -48,13 +48,14 @@ namespace DIOS.Core
           {
             for (byte i = 0; i < 8; i++)
             {
-              if (!GetBeadFromBuffer(_serialConnection.InputBuffer, i, out var outbead))
+              //might be less than 8 beads in buffer
+              if (!GetBeadFromBuffer(i, out var outbead))
                 break;
-              _device.Results.AddRawBeadEvent(in outbead);
+              _results.AddRawBeadEvent(in outbead);
             }
+            _results.TerminationReadyCheck();
           }
-          Array.Clear(_serialConnection.InputBuffer, 0, _serialConnection.InputBuffer.Length);
-          _results.TerminationReadyCheck();
+          _serialConnection.ClearBuffer();
         }
         else
           GetCommandFromBuffer();
@@ -105,7 +106,7 @@ namespace DIOS.Core
         return;
       if (_serialConnection.IsActive)
         _serialConnection.Write(StructToByteArray(in cs));
-      Console.WriteLine($"{DateTime.Now.ToString()} Sending [{sCmdName}]: {cs.ToString()}"); //  MARK1 END
+      Console.WriteLine($"{DateTime.Now.TimeOfDay.ToString()} Sending [{sCmdName}]: {cs.ToString()}"); //  MARK1 END
     }
 
     private static byte[] StructToByteArray(in CommandStruct cs)
@@ -179,9 +180,9 @@ namespace DIOS.Core
       _device.Commands.Enqueue(newcmd);
     }
 
-    private static bool GetBeadFromBuffer(byte[] buffer, byte shift, out RawBead outbead)
+    private bool GetBeadFromBuffer(byte shift, out RawBead outbead)
     {
-      outbead = BeadArrayToStruct(buffer, shift);
+      outbead = BeadArrayToStruct(_serialConnection.InputBuffer, shift);
       return outbead.Header == 0xadbeadbe;
     }
 

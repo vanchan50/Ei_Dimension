@@ -45,6 +45,11 @@ namespace DIOS.Core.Tests
     {
 
     }
+    
+    public void ClearBuffer()
+    {
+      Array.Clear(InputBuffer, 0, InputBuffer.Length);
+    }
 
     internal void ReadBead(in RawBead bead)
     {

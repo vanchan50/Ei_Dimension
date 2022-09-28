@@ -240,6 +240,7 @@ namespace DIOS.Core
         BeadsToCapture = 100000;
     }
 
+
     public void EjectPlate()
     {
       MainCommand("Eject Plate");
@@ -356,6 +357,11 @@ namespace DIOS.Core
       StartingToReadWell?.Invoke(this, new ReadingWellEventArgs(WellController.CurrentWell.RowIdx, WellController.CurrentWell.ColIdx,
         Publisher.FullBeadEventFileName));
       MainCommand("Set FProperty", code: 0x06);  //reset totalbeads in firmware
+      Console.WriteLine("Starting to read well with Params:");
+      Console.WriteLine($"Termination: {(int)TerminationType}");
+      Console.WriteLine($"TotalBeads: {TotalBeads}");
+      Console.WriteLine($"BeadCount: {BeadCount}");
+      Console.WriteLine($"BeadsToCapture: {BeadsToCapture}");
     }
 
     internal void OnFinishedReadingWell()
@@ -369,6 +375,7 @@ namespace DIOS.Core
     internal void OnFinishedMeasurement()
     {
       IsMeasurementGoing = false;
+      BeadCount = 0;
       Results.PlateReport.completedDateTime = DateTime.Now;
       _ = Task.Run(() => { Publisher.OutputPlateReport(); });
       Results.EndOfOperationReset();
@@ -466,6 +473,7 @@ namespace DIOS.Core
           Results.AddRawBeadEvent(in rek0);
           break;
       }
+      Results.TerminationReadyCheck();
     }
     #endif
   }

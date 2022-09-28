@@ -51,7 +51,7 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="MaxPressure" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">5</Value>
+      <Value Profile="(Default)">12</Value>
     </Setting>
     <Setting Name="LastTemplate" Type="System.String" Scope="User">
       <Value Profile="(Default)">None</Value>

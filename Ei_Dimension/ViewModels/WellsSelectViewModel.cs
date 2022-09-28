@@ -177,6 +177,7 @@ namespace Ei_Dimension.ViewModels
         TermType = (Termination)DashboardViewModel.Instance.SelectedEndReadIndex
       };
     }
+
     /// <summary>
     /// Sort list of Wells by columns; or keep as is
     /// </summary>

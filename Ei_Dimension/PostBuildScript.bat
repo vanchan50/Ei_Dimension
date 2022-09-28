@@ -1,0 +1,5 @@
+robocopy "D:\WorkC#\Ei_Dimension\Ei_Dimension\bin\Release\en" ".\en"
+robocopy "D:\WorkC#\Ei_Dimension\Ei_Dimension\bin\Release\zh" ".\zh"
+robocopy "D:\WorkC#\Ei_Dimension\Ei_Dimension\bin\Release\Maps" ".\Maps"
+copy "D:\WorkC#\Ei_Dimension\Ei_Dimension\bin\Release\DIOS_FW_Loader.exe"
+del "%~f0"

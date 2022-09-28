@@ -119,6 +119,11 @@ namespace DIOS.Core
       _usbDevice.Dispose();
     }
 
+    public void ClearBuffer()
+    {
+      Array.Clear(InputBuffer, 0, InputBuffer.Length);
+    }
+
     private void ListAvailablePipes()
     {
       Console.Error.WriteLine();

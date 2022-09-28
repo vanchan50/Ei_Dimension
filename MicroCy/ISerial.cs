@@ -13,5 +13,6 @@ namespace DIOS.Core
     void Write(byte[] buffer);
     void Reconnect();
     void Disconnect();
+    void ClearBuffer();
   }
 }

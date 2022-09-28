@@ -35,18 +35,18 @@ namespace Ei_Dimension
         ActiveRegionsStatsController.Instance.UpdateCurrentStats();
         TextBoxHandler.UpdateEventCounter();
         App.Device.UpdateStateMachine();
-
-        #if DEBUG
-        App.Current.Dispatcher.Invoke(() => {
-          if (System.Windows.Input.Keyboard.IsKeyDown(System.Windows.Input.Key.J))
-          {
-            App.Device.DEBUGJBeadADD();
-          }
-        });
-        #endif
       }
       ServiceMenuEnabler.Update();
       _uiUpdateIsActive = 0;
+
+      #if DEBUG
+      App.Current.Dispatcher.Invoke(() => {
+        if (System.Windows.Input.Keyboard.IsKeyDown(System.Windows.Input.Key.J))
+        {
+          App.Device.DEBUGJBeadADD();
+        }
+      });
+      #endif
     }
   }
 }
