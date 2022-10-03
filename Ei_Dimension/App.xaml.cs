@@ -102,15 +102,16 @@ namespace Ei_Dimension
       Device.MaxPressure = Settings.Default.MaxPressure;
     }
 
-    public static int GetMapIndex(string MapName)
+    public static int GetMapIndex(string mapName)
     {
+      var mapList = Device.MapCtroller.MapList;
       int i = 0;
-      for (; i < Device.MapCtroller.MapList.Count; i++)
+      for (; i < mapList.Count; i++)
       {
-        if (Device.MapCtroller.MapList[i].mapName == MapName)
+        if (mapList[i].mapName == mapName)
           break;
       }
-      if (i == Device.MapCtroller.MapList.Count)
+      if (i == mapList.Count)
         i = -1;
       return i;
     }
@@ -181,7 +182,7 @@ namespace Ei_Dimension
     public static void UnfocusUIElement()
     {
       if (Ei_Dimension.MainWindow.Instance == null)
-        return; 
+        return;
       System.Windows.Input.FocusManager.SetFocusedElement(System.Windows.Input.FocusManager.GetFocusScope(Ei_Dimension.MainWindow.Instance), null);
       System.Windows.Input.Keyboard.ClearFocus();
     }

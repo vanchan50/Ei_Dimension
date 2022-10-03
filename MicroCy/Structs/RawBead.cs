@@ -21,7 +21,7 @@
 
     public byte l_offset_rg;    //samples between green and red peak
     public byte l_offset_gv;    //samples between green and violet peak
-    public ushort region;
+    public ushort region; //not used in the app, just a byte spacer
     public float fsc;       //Forward Scatter
 
     public float violetssc; //Violet A

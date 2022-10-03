@@ -25,6 +25,9 @@
       //The order of operations matters here
       AssignSensitivityChannels(in rawBead);
       var compensated = CalculateCompensatedCoordinates(in rawBead);
+      var reg = (ushort) _classificationMap.ClassifyBeadToRegion(in rawBead);
+      var rep = CalculateReporter(reg);
+      var zon = (ushort) ClassifyBeadToZone(compensated.cl0);
       var outBead = new ProcessedBead
       {
         EventTime = rawBead.EventTime,
@@ -42,7 +45,7 @@
         greenC = rawBead.greenC,
         l_offset_rg = rawBead.l_offset_rg,
         l_offset_gv = rawBead.l_offset_gv,
-        region = (ushort)_classificationMap.ClassifyBeadToRegion(in rawBead),
+        region = reg,
         //fsc = (float)Math.Pow(10, rawBead.fsc),
         fsc = rawBead.fsc,
         violetssc = rawBead.violetssc,
@@ -52,8 +55,8 @@
         cl2 = compensated.cl2,
         cl3 = compensated.cl3,
         greenssc = rawBead.greenssc,
-        reporter = CalculateReporter(in rawBead),
-        zone = (ushort)ClassifyBeadToZone(in rawBead)
+        reporter = rep,
+        zone = zon
       };
       return outBead;
     }
@@ -84,20 +87,20 @@
       );
     }
 
-    private float CalculateReporter(in RawBead rawBead)
+    private float CalculateReporter(ushort region)
     {
       var basicReporter = _greenMin > _device.HdnrTrans ? _greenMaj * _device.HDnrCoef : _greenMin;
       var scaledReporter = (basicReporter / _device.ReporterScaling);
-      if (!Normalization.IsEnabled || rawBead.region == 0)
+      if (!Normalization.IsEnabled || region == 0)
         return scaledReporter;
-      var rep = _map.GetFactorizedNormalizationForRegion(rawBead.region);
+      var rep = _map.GetFactorizedNormalizationForRegion(region);
       scaledReporter -= rep;
       if (scaledReporter < 0)
         return 0;
       return scaledReporter;
     }
 
-    private int ClassifyBeadToZone(in RawBead bead)
+    private int ClassifyBeadToZone(float cl0)
     {
       if (!_map.CL0ZonesEnabled)
         return 0;
@@ -108,9 +111,9 @@
       for (var i = _map.zones.Count - 1; i < 0; i--)
       {
         var zone = _map.zones[i];
-        if (bead.cl0 >= zone.Start)
+        if (cl0 >= zone.Start)
         {
-          if (bead.cl0 <= zone.End)
+          if (cl0 <= zone.End)
             return zone.Number;
           return 0;
         }

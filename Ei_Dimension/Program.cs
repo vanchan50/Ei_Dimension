@@ -5,7 +5,7 @@ namespace Ei_Dimension
 {
   public class Program
   {
-    internal static CompanyID SpecializedVer = CompanyID.US;
+    internal static CompanyID SpecializedVer = CompanyID.China;
     public const string BUILD = "1.4.0.4";
     public static SplashScreen SplashScreen { get; private set; }
     [STAThread]
