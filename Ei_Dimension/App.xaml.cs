@@ -23,6 +23,7 @@ namespace Ei_Dimension
     public static bool MakeLegacyPlateReport { get; set; } = Settings.Default.LegacyPlateReport;
 
     private static bool _workOrderPending;
+    private static FileSystemWatcher _workOrderWatcher;
 
     public App()
     {
@@ -309,15 +310,10 @@ namespace Ei_Dimension
       switch (Device.Mode)
       {
         case OperationMode.Normal:
+          OutputLegacyReport();
           break;
         case OperationMode.Calibration:
-          if (++CalibrationViewModel.Instance.CalFailsInARow >= 3 && CalibrationViewModel.Instance.CalJustFailed)
-          {
-            Current.Dispatcher.Invoke(() => Notification.ShowLocalizedError(nameof(Language.Resources.Calibration_Fail)));
-            Current.Dispatcher.Invoke(DashboardViewModel.Instance.CalModeToggle);
-          }
-          else if (CalibrationViewModel.Instance.CalJustFailed)
-            Current.Dispatcher.Invoke(() => Notification.ShowLocalizedSuccess(nameof(Language.Resources.Calibration_in_Progress)));
+          CalibrationViewModel.Instance.CalibrationFailCheck();
           break;
         case OperationMode.Verification:
           if (VerificationViewModel.AnalyzeVerificationResults(out var errorMsg))
@@ -334,7 +330,6 @@ namespace Ei_Dimension
           break;
       }
 
-      OutputLegacyReport();
     }
 
     public void NewStatsAvailableEventHandler(object sender, StatsEventArgs e)
@@ -374,7 +369,7 @@ namespace Ei_Dimension
       }));
     }
 
-    public void OutputLegacyReport()
+    public static void OutputLegacyReport()
     {
       if (!MakeLegacyPlateReport)
       {
@@ -585,11 +580,11 @@ namespace Ei_Dimension
       Device.Publisher.Outfilename = Settings.Default.SaveFileName;
       _workOrderPending = false;
       _nextWellWarning = false;
-      var watcher = new FileSystemWatcher($"{Device.RootDirectory.FullName}\\WorkOrder");
-      watcher.NotifyFilter = NotifyFilters.FileName;
-      watcher.Filter = "*.txt";
-      watcher.EnableRaisingEvents = true;
-      watcher.Created += OnNewWorkOrder;
+      _workOrderWatcher = new FileSystemWatcher($"{Device.RootDirectory.FullName}\\WorkOrder");
+      _workOrderWatcher.NotifyFilter = NotifyFilters.FileName;
+      _workOrderWatcher.Filter = "*.txt";
+      _workOrderWatcher.EnableRaisingEvents = true;
+      _workOrderWatcher.Created += OnNewWorkOrder;
 
       if (!System.Windows.Input.Keyboard.IsKeyDown(System.Windows.Input.Key.LeftCtrl))
         Device.StartSelfTest();

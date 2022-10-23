@@ -131,6 +131,17 @@ namespace Ei_Dimension.ViewModels
         Cancel, nameof(Language.Resources.Calibration_Cancel_Calibration), Brushes.Green);
     }
 
+    public void CalibrationFailCheck()
+    {
+      if (++CalFailsInARow >= 3 && CalJustFailed)
+      {
+        App.Current.Dispatcher.Invoke(() => Notification.ShowLocalizedError(nameof(Language.Resources.Calibration_Fail)));
+        App.Current.Dispatcher.Invoke(DashboardViewModel.Instance.CalModeToggle);
+      }
+      else if (CalJustFailed)
+        App.Current.Dispatcher.Invoke(() => Notification.ShowLocalizedSuccess(nameof(Language.Resources.Calibration_in_Progress)));
+    }
+
     public void MakeCalMap()
     {
       ResultsViewModel.Instance.WrldMap.CalibrationMap = new List<HeatMapPoint>();

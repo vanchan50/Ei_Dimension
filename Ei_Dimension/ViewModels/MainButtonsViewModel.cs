@@ -89,7 +89,7 @@ namespace Ei_Dimension.ViewModels
             return;
           }
           App.MapRegions.RemoveNullTextBoxes();
-          MakeNewValidator();
+          MakeNewVerificator();
           break;
       }
       MainViewModel.Instance.NavigationSelector(1);
@@ -129,7 +129,7 @@ namespace Ei_Dimension.ViewModels
       }
     }
 
-    private static void MakeNewValidator()
+    private static void MakeNewVerificator()
     {
       var regions = new List<(int regionNum, double InputReporter)>();
       for (var i = 1; i < MapRegionsController.RegionsList.Count; i++)
