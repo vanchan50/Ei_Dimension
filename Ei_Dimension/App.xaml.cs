@@ -24,6 +24,7 @@ namespace Ei_Dimension
 
     private static bool _workOrderPending;
     private static FileSystemWatcher _workOrderWatcher;
+    private static readonly TextBoxHandler _textBoxHandler = new TextBoxHandler();
 
     public App()
     {
@@ -577,6 +578,7 @@ namespace Ei_Dimension
       Device.NewStatsAvailable += NewStatsAvailableEventHandler;
       Device.MapCtroller.ChangedActiveMap += MapChangedEventHandler;
       Device.BeadConcentrationStatusUpdate += BeadConcentrationEventHandler;
+      Device.ParameterUpdate += _textBoxHandler.ParameterUpdateEventHandler;
       Device.Publisher.Outfilename = Settings.Default.SaveFileName;
       _workOrderPending = false;
       _nextWellWarning = false;

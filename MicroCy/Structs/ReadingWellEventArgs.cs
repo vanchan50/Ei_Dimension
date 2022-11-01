@@ -2,7 +2,7 @@
 
 namespace DIOS.Core
 {
-  public class ReadingWellEventArgs : EventArgs
+  public class ReadingWellEventArgs
   {
     public byte Row { get; set; }
     public byte Column { get; set; }

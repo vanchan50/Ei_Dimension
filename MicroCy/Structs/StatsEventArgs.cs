@@ -1,4 +1,6 @@
-﻿namespace DIOS.Core
+﻿using System;
+
+namespace DIOS.Core
 {
   public class StatsEventArgs
   {

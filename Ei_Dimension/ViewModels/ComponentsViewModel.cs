@@ -150,6 +150,9 @@ namespace Ei_Dimension.ViewModels
 
     public void ValvesButtonClick(int num)
     {
+      //ValveCuvetDrain,//3
+      //ValveFan1,//4
+      //ValveFan2//1
       UserInputHandler.InputSanityCheck();
       int param = 0;
       byte Code = 0x00;

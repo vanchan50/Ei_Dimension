@@ -57,12 +57,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="Channel.cs" />
     <Compile Include="ChannelsAveragesStats.cs" />
     <Compile Include="BackgroundStatsAccumulator.cs" />
     <Compile Include="BeadProcessor.cs" />
     <Compile Include="ChannelsCalibrationStats.cs" />
     <Compile Include="ClassificationMap.cs" />
     <Compile Include="DataController.cs" />
+    <Compile Include="LaserType.cs" />
+    <Compile Include="MotorParameterType.cs" />
+    <Compile Include="MotorStepsX.cs" />
+    <Compile Include="MotorStepsY.cs" />
+    <Compile Include="MotorStepsZ.cs" />
+    <Compile Include="ParameterUpdateArgs.cs" />
+    <Compile Include="DeviceParameterType.cs" />
     <Compile Include="Enums\Gate.cs" />
     <Compile Include="Enums\HiSensitivityChannel.cs" />
     <Compile Include="Enums\OperationMode.cs" />
@@ -71,6 +79,7 @@
     <Compile Include="FileIO\VerificationReport.cs" />
     <Compile Include="NormalizationSettings.cs" />
     <Compile Include="RegionReporterResultVolatile.cs" />
+    <Compile Include="SheathFlowErrorType.cs" />
     <Compile Include="StatisticsExtension.cs" />
     <Compile Include="StatsAccumulator.cs" />
     <Compile Include="Structs\BeadEventsData.cs" />
@@ -103,9 +112,11 @@
     <Compile Include="Structs\ReadingWellEventArgs.cs" />
     <Compile Include="Structs\WellStatsData.cs" />
     <Compile Include="Structs\Zone.cs" />
+    <Compile Include="SyringeSpeed.cs" />
     <Compile Include="USBConnection.cs" />
     <Compile Include="ValidationStats.cs" />
     <Compile Include="Verificator.cs" />
+    <Compile Include="VolumeType.cs" />
     <Compile Include="WellController.cs" />
     <Compile Include="RegionReporterResult.cs" />
     <Compile Include="Structs\Well.cs" />
