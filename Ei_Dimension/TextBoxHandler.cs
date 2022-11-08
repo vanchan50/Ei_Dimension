@@ -12,7 +12,7 @@ namespace Ei_Dimension
 
     private static readonly object ConditionVar = new object();
 
-    public void ParameterUpdateEventHandler(object sender, ParameterUpdateArgs parameter)
+    public void ParameterUpdateEventHandler(object sender, ParameterUpdateEventArgs parameter)
     {
       Action update = null;
       switch (parameter.Type)
@@ -143,7 +143,7 @@ namespace Ei_Dimension
               pos = 9;
               break;
           }
-          update = () => ChannelsViewModel.Instance.Bias30Parameters[pos] = parameter.FloatParameter.ToString("N0");
+          update = () => ChannelsViewModel.Instance.Bias30Parameters[pos] = Math.Round(parameter.FloatParameter).ToString("N0");
           break;
         case DeviceParameterType.SyringeSpeedSheath:
           var type2 = (SyringeSpeed)parameter.Parameter;
@@ -408,7 +408,7 @@ namespace Ei_Dimension
               pos10 = 9;
               break;
           }
-          update = () => ChannelsViewModel.Instance.TempParameters[pos10] = (parameter.FloatParameter / 10.0).ToString("N1");
+          update = () => ChannelsViewModel.Instance.TempParameters[pos10] = parameter.FloatParameter.ToString("N1");
           break;
         case DeviceParameterType.ChannelCompensationBias:
           var type11 = (Channel)parameter.Parameter;
@@ -520,43 +520,34 @@ namespace Ei_Dimension
           }
           update = () => DashboardViewModel.Instance.Volumes[pos13] = parameter.FloatParameter.ToString("N0");
           break;
-        case DeviceParameterType.GreenAVoltage://put param * 0.0008 to device library. send here the value only
-          update = () => ChannelOffsetViewModel.Instance.GreenAVoltage[0] = (parameter.FloatParameter * 0.0008).ToString("N3");
+        case DeviceParameterType.GreenAVoltage:
+          update = () => ChannelOffsetViewModel.Instance.GreenAVoltage[0] = parameter.FloatParameter.ToString("N3");
           break;
-        case DeviceParameterType.IsLaserActive: //remake a bit. decision should be in the lib. pass param and fparam, which is 0 or 2. compare as "fparam > 1" for true
-          var type14 = (LaserType)parameter.Parameter;
-          var pos14 = 0;
-          switch (type14)
+        case DeviceParameterType.IsLaserActive:
+          //0Red 1Green 2Violet
+          update = () =>
           {
-            case LaserType.Red:
-              pos14 = 0;
-              break;
-            case LaserType.Green:
-              pos14 = 1;
-              break;
-            case LaserType.Violet:
-              pos14 = 2;
-              break;
-          }
-          ComponentsViewModel.Instance.LasersActive[pos14] = parameter.FloatParameter > 1;
+            ComponentsViewModel.Instance.LasersActive[0] = (parameter.Parameter & 0x01) == 1;
+            ComponentsViewModel.Instance.LasersActive[1] = (parameter.Parameter & 0x02) == 2;
+            ComponentsViewModel.Instance.LasersActive[2] = (parameter.Parameter & 0x04) == 4;
+          };
           break;
-        case DeviceParameterType.LaserPower: //remake a bit. calculation should be in the lib. pass param and fparam, which is 0 or 2. compare as "fparam > 1" for true
+        case DeviceParameterType.LaserPower:
           var type15 = (LaserType)parameter.Parameter;
-          var val = (parameter.FloatParameter / 4096.0 / 0.04 * 3.3);
           switch (type15)
           {
             case LaserType.Red:
-              update = () => ComponentsViewModel.Instance.LaserRedPowerValue[0] = val.ToString("N1") + " mw";
+              update = () => ComponentsViewModel.Instance.LaserRedPowerValue[0] = parameter.FloatParameter.ToString("N1") + " mw";
               break;
             case LaserType.Green:
-              update = () => ComponentsViewModel.Instance.LaserGreenPowerValue[0] = val.ToString("N1") + " mw";
+              update = () => ComponentsViewModel.Instance.LaserGreenPowerValue[0] = parameter.FloatParameter.ToString("N1") + " mw";
               break;
             case LaserType.Violet:
-              update = () => ComponentsViewModel.Instance.LaserVioletPowerValue[0] = val.ToString("N1") + " mw";
+              update = () => ComponentsViewModel.Instance.LaserVioletPowerValue[0] = parameter.FloatParameter.ToString("N1") + " mw";
               break;
           }
           break;
-        case DeviceParameterType.IsSynchronizationPending:
+        case DeviceParameterType.IsSynchronizationPending:  //TODO: simplify interaction with lib. here logic should be less complicated
           update = () =>
           {
             var list = MainButtonsViewModel.Instance.ActiveList;
@@ -633,7 +624,7 @@ namespace Ei_Dimension
           break;
         case DeviceParameterType.SampleSyringeStatus: //make command=>parameter in the lib. syringe A if floatparam < 1. check the Parameter thing. reshape to send > 0
           string ws;
-          if (parameter.Parameter > 0)
+          if (parameter.Parameter == 1)
           {
             if (parameter.FloatParameter < 1)  //sample syringe A
             {
@@ -679,7 +670,7 @@ namespace Ei_Dimension
           }
           break;
         case DeviceParameterType.BubbleDetectorFault: //pay attention to swapped ==0 and >0 states
-          if (parameter.Parameter > 0)
+          if (parameter.Parameter == 0)
           {
             var msg1 = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Messages_Bubble_Detector_Fault),
               Language.TranslationSource.Instance.CurrentCulture);

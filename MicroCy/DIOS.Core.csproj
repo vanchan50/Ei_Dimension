@@ -69,7 +69,7 @@
     <Compile Include="MotorStepsX.cs" />
     <Compile Include="MotorStepsY.cs" />
     <Compile Include="MotorStepsZ.cs" />
-    <Compile Include="ParameterUpdateArgs.cs" />
+    <Compile Include="ParameterUpdateEventArgs.cs" />
     <Compile Include="DeviceParameterType.cs" />
     <Compile Include="Enums\Gate.cs" />
     <Compile Include="Enums\HiSensitivityChannel.cs" />

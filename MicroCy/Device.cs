@@ -50,7 +50,7 @@ namespace DIOS.Core
     public event EventHandler FinishedMeasurement;
     public event EventHandler<StatsEventArgs> NewStatsAvailable;
     public event EventHandler<int> BeadConcentrationStatusUpdate;
-    public event EventHandler<ParameterUpdateArgs> ParameterUpdate;
+    public event EventHandler<ParameterUpdateEventArgs> ParameterUpdate;
     public OperationMode Mode { get; set; } = OperationMode.Normal;
     public SystemControl Control { get; set; }
     public Gate ScatterGate
@@ -397,7 +397,7 @@ namespace DIOS.Core
       NewStatsAvailable?.Invoke(this, new StatsEventArgs(stats, averageBackgrounds));
     }
 
-    internal void OnParameterUpdate(ParameterUpdateArgs param)
+    internal void OnParameterUpdate(ParameterUpdateEventArgs param)
     {
       ParameterUpdate?.Invoke(this, param);
     }
