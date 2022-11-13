@@ -1,8 +1,6 @@
-﻿using DIOS.Core;
-using System;
+﻿using System;
 using System.Threading;
 using Ei_Dimension.Controllers;
-using Ei_Dimension.ViewModels;
 
 namespace Ei_Dimension
 {
@@ -27,8 +25,7 @@ namespace Ei_Dimension
     {
       if (Interlocked.CompareExchange(ref _uiUpdateIsActive, 1, 0) == 1)
         return;
-
-      TextBoxHandler.Update();
+      
       if (App.Device.IsMeasurementGoing)
       {
         GraphsController.Instance.Update();

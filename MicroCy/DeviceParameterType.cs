@@ -14,7 +14,7 @@
     IsSyringePositionActive,
     IsPollStepActive,
     IsInputSelectorAtPickup,
-    IsCalibrationFailed,
+    CalibrationSuccess,
     Pressure,
     DNRCoefficient,
     DNRTransition,

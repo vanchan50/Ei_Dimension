@@ -196,122 +196,12 @@ namespace DIOS.Core
       _serialConnection.Disconnect();
     }
 
-    private void InnerCommandProcessing(in CommandStruct cs)
-    {
-      switch (cs.Code)
-      {
-        case 0:
-          //Skip Error
-          return;
-        case 0x0C:
-          _device.SelfTester.Data.SetPressure(cs.FParameter);
-          _device.MainCommand("Set FProperty", code: 0x0C); //Reset Pressure, since firmware forgets to do that
-          break;
-        case 0x1D:
-          _device.OnBeadConcentrationStatusUpdate(cs.Parameter);
-          break;
-        case 0xF9:
-          switch (cs.Command)
-          {
-            case 0xE0:
-              if(_device.SelfTester.IsActive)
-                _device.SelfTester.ScriptFinishedSignal();
-              break;
-            case 0xE5:
-              _device.IsPlateEjected = true;
-              break;
-            case 0xE6:
-              _device.IsPlateEjected = false;
-              break;
-            case 0xE7:
-              lock (_device.ScriptF9FinishedLock)
-              {
-                Monitor.PulseAll(_device.ScriptF9FinishedLock);
-              }
-              break;
-          }
-          break;
-        case 0x44:
-          if (_device.SelfTester.IsActive && !_device.SelfTester.Motorsinit[2])
-          {
-            _device.SelfTester.Data.MotorZ = cs.FParameter;
-            _device.SelfTester.Motorsinit[2] = true;
-          }
-          break;
-        case 0x54:
-          if (_device.SelfTester.IsActive && !_device.SelfTester.Motorsinit[0])
-          {
-            _device.SelfTester.Data.MotorX = cs.FParameter;
-            _device.SelfTester.Motorsinit[0] = true;
-          }
-          break;
-        case 0x64:
-          if (_device.SelfTester.IsActive && !_device.SelfTester.Motorsinit[1])
-          {
-            _device.SelfTester.Data.MotorY = cs.FParameter;
-            _device.SelfTester.Motorsinit[1] = true;
-          }
-          break;
-        case 0x01:
-          _device.BoardVersion = cs.Parameter;
-          _device.FirmwareVersion = FloatToVersion(cs.FParameter);
-          break;
-        case 0x1B:
-          if (cs.Parameter == 0)
-          {
-            _device.StartStateMachine();  //OnCalibrationSuccess
-          }
-          break;
-        case 0xCC:
-          for (var i = 0; i < _device.SystemActivity.Length; i++)
-          {
-            if ((cs.Parameter & (1 << i)) != 0)
-              _device.SystemActivity[i] = true;
-            else
-              _device.SystemActivity[i] = false;
-          }
-          //currently used only for probe autoheight feature
-          if (cs.Parameter == 0)
-          {
-            lock (_device.SystemActivityNotBusyNotificationLock)
-            {
-              Monitor.PulseAll(_device.SystemActivityNotBusyNotificationLock);
-            }
-          }
-          break;
-        //FALLTHROUGH
-        case 0xD0:
-        case 0xD1:
-        case 0xD2:
-        case 0xD3:
-        case 0xD4:
-        case 0xD5:
-        case 0xD6:
-        case 0xD7:
-        case 0xD8:
-        case 0xD9:
-        case 0xDA:
-        case 0xDB:
-        case 0xDC:
-        case 0xDD:
-        case 0xDE:
-        case 0xDF:
-          Console.WriteLine($"{DateTime.Now.ToString()} E-series script [{cs.ToString()}]");
-          return;
-        case 0xFD:
-        case 0xFE:
-          _device.StartStateMachine();
-          break;
-      }
-      Console.WriteLine($"{DateTime.Now.ToString()} Received [{cs.ToString()}]");
-    }
-
     private bool IsBead()
     {
       return _serialConnection.InputBuffer[0] == 0xbe && _serialConnection.InputBuffer[1] == 0xad;
     }
 
-    private void NEWInnerCommandProcessing(in CommandStruct cs)
+    private void InnerCommandProcessing(in CommandStruct cs)
     {
       ParameterUpdateEventArgs outParameters = null;
       switch (cs.Code)
@@ -363,8 +253,8 @@ namespace DIOS.Core
         case 0x1B:
           if (cs.Parameter == 0)
           {
-            _device.StartStateMachine();  //OnCalibrationSuccess
-            outParameters = new ParameterUpdateEventArgs(DeviceParameterType.IsCalibrationFailed, intParameter: cs.Parameter);
+            _device.StartStateMachine();  //Fired only on success (Parameter == 0)
+            outParameters = new ParameterUpdateEventArgs(DeviceParameterType.CalibrationSuccess);
           }
           break;
         case 0x1D:
@@ -491,8 +381,8 @@ namespace DIOS.Core
           {
             _device.SelfTester.Data.MotorX = cs.FParameter;
             _device.SelfTester.Motorsinit[0] = true;
-          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.MotorX, intParameter: (int)MotorParameterType.CurrentStep, floatParameter: cs.FParameter);
           }
+          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.MotorX, intParameter: (int)MotorParameterType.CurrentStep, floatParameter: cs.FParameter);
           break;
         case 0x90:
           outParameters = new ParameterUpdateEventArgs(DeviceParameterType.MotorX, intParameter: (int)MotorParameterType.CurrentLimit, floatParameter: cs.Parameter);
@@ -644,7 +534,7 @@ namespace DIOS.Core
           outParameters = new ParameterUpdateEventArgs(DeviceParameterType.Volume, intParameter: (int)VolumeType.Sample, floatParameter: cs.Parameter);
           break;
         case 0xC4:
-          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.Volume, intParameter: (int)VolumeType.Agitate, floatParameter: cs.Parameter);
+          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.Volume, intParameter: (int)VolumeType.Agitate, floatParameter: cs.FParameter);
           break;
         case 0xB8:
           outParameters = new ParameterUpdateEventArgs(DeviceParameterType.GreenAVoltage, floatParameter: cs.Parameter * 0.0008f);
