@@ -342,14 +342,6 @@ namespace Ei_Dimension
       }));
     }
 
-    public void BeadConcentrationEventHandler(object sender, int value)
-    {
-      _ = Current.Dispatcher.BeginInvoke((Action)(() =>
-      {
-        MainViewModel.Instance.SetBeadConcentrationMonitorValue(value);
-      }));
-    }
-
     public void MapChangedEventHandler(object sender, CustomMap map)
     {
       _ = Current.Dispatcher.BeginInvoke((Action)(() =>
@@ -577,7 +569,6 @@ namespace Ei_Dimension
       Device.FinishedMeasurement += FinishedMeasurementEventHandler;
       Device.NewStatsAvailable += NewStatsAvailableEventHandler;
       Device.MapCtroller.ChangedActiveMap += MapChangedEventHandler;
-      Device.BeadConcentrationStatusUpdate += BeadConcentrationEventHandler;
       Device.ParameterUpdate += _textBoxHandler.ParameterUpdateEventHandler;
       Device.Publisher.Outfilename = Settings.Default.SaveFileName;
       _workOrderPending = false;

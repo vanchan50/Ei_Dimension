@@ -14,5 +14,6 @@ namespace DIOS.Core
     void Reconnect();
     void Disconnect();
     void ClearBuffer();
+    bool IsBeadInBuffer();
   }
 }

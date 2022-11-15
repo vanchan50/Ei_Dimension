@@ -39,7 +39,6 @@ namespace DIOS.Core
     public MapController MapCtroller { get; }
     public RunResults Results { get; }
     public WorkOrder WorkOrder { get; set; }
-    public ConcurrentQueue<CommandStruct> Commands { get; } = new ConcurrentQueue<CommandStruct>();
     public ConcurrentQueue<ProcessedBead> DataOut { get; } = new ConcurrentQueue<ProcessedBead>();
     public WellController WellController { get; } = new WellController();
     public BitArray SystemActivity { get; } = new BitArray(16, false);
@@ -49,7 +48,6 @@ namespace DIOS.Core
     public event EventHandler<ReadingWellEventArgs> FinishedReadingWell;
     public event EventHandler FinishedMeasurement;
     public event EventHandler<StatsEventArgs> NewStatsAvailable;
-    public event EventHandler<int> BeadConcentrationStatusUpdate;
     public event EventHandler<ParameterUpdateEventArgs> ParameterUpdate;
     public OperationMode Mode { get; set; } = OperationMode.Normal;
     public SystemControl Control { get; set; }
@@ -148,7 +146,7 @@ namespace DIOS.Core
       TotalBeads = 0;
       IsMeasurementGoing = false;
       ReporterScaling = 1;
-      MainCommand("Get Property", code: 0x01);  //get board version
+      RequestParameterUpdate(DeviceParameterType.BoardVersion);
     }
 
     public void UpdateStateMachine()
@@ -218,8 +216,8 @@ namespace DIOS.Core
       MainCommand("Set Property", code: 0xce, parameter: MapCtroller.ActiveMap.calParams.minmapssc);  //set ssc gates for this map
       MainCommand("Set Property", code: 0xcf, parameter: MapCtroller.ActiveMap.calParams.maxmapssc);
       //read section of plate
-      MainCommand("Get FProperty", code: 0x58);
-      MainCommand("Get FProperty", code: 0x68);
+      RequestParameterUpdate(DeviceParameterType.MotorStepsX, MotorStepsX.Plate96C1);
+      RequestParameterUpdate(DeviceParameterType.MotorStepsY, MotorStepsY.Plate96RowA);
       Results.StartNewPlateReport();
       Publisher.ResetResultData();
       SetAspirateParamsForWell();  //setup for first read
@@ -333,6 +331,208 @@ namespace DIOS.Core
       _dataController.AddCommand(command, cs);
     }
 
+    public void RequestParameterUpdate(DeviceParameterType parameterToUpdate, Enum subParameter = null, ushort selector = 0)
+    {
+      byte CommandCode = 0;
+      switch (parameterToUpdate)
+      {
+        case DeviceParameterType.BoardVersion:
+          CommandCode = 0x01;
+          break;
+        case DeviceParameterType.IdexPosition:
+          CommandCode = 0x04;
+          break;
+        case DeviceParameterType.SyringePosition: //uses selector
+          CommandCode = 0x14;
+          break;
+        case DeviceParameterType.TotalBeadsInFirmware:
+          CommandCode = 0x06;
+          break;
+        case DeviceParameterType.CalibrationMargin:
+          CommandCode = 0x08;
+          break;
+        case DeviceParameterType.PressureAtStartup:
+          CommandCode = 0x0C;
+          break;
+        case DeviceParameterType.BeadConcentration:
+          CommandCode = 0x1D;
+          break;
+        case DeviceParameterType.DNRCoefficient:
+          CommandCode = 0x20;
+          break;
+        case DeviceParameterType.Pressure:
+          CommandCode = 0x22;
+          break;
+        case DeviceParameterType.ChannelBias30C:
+          switch (subParameter)
+          {
+            case Channel.GreenA:
+              CommandCode = 0x28;
+              break;
+            case Channel.GreenB:
+              CommandCode = 0x29;
+              break;
+            case Channel.GreenC:
+              CommandCode = 0x2A;
+              break;
+            case Channel.RedA:
+              CommandCode = 0x2C;
+              break;
+            case Channel.RedB:
+              CommandCode = 0x2D;
+              break;
+            case Channel.RedC:
+              CommandCode = 0x2E;
+              break;
+            case Channel.RedD:
+              CommandCode = 0x2F;
+              break;
+            case Channel.VioletA:
+              CommandCode = 0x25;
+              break;
+            case Channel.VioletB:
+              CommandCode = 0x26;
+              break;
+            case Channel.ForwardScatter:
+              CommandCode = 0x24;
+              break;
+          }
+          selector = 0;
+          break;
+        case DeviceParameterType.MotorX:
+          switch (subParameter)
+          {
+            case MotorParameterType.Slope:
+              CommandCode = 0x53;
+              break;
+            case MotorParameterType.StartSpeed:
+              CommandCode = 0x51;
+              break;
+            case MotorParameterType.RunSpeed:
+              CommandCode = 0x52;
+              break;
+            case MotorParameterType.CurrentStep:
+              CommandCode = 0x54;
+              break;
+            case MotorParameterType.CurrentLimit:
+              CommandCode = 0x90;
+              break;
+          }
+          selector = 0;
+          break;
+        case DeviceParameterType.MotorY:
+          switch (subParameter)
+          {
+            case MotorParameterType.Slope:
+              CommandCode = 0x63;
+              break;
+            case MotorParameterType.StartSpeed:
+              CommandCode = 0x61;
+              break;
+            case MotorParameterType.RunSpeed:
+              CommandCode = 0x62;
+              break;
+            case MotorParameterType.CurrentStep:
+              CommandCode = 0x64;
+              break;
+            case MotorParameterType.CurrentLimit:
+              CommandCode = 0x91;
+              break;
+          }
+          selector = 0;
+          break;
+        case DeviceParameterType.MotorZ:
+          switch (subParameter)
+          {
+            case MotorParameterType.Slope:
+              CommandCode = 0x43;
+              break;
+            case MotorParameterType.StartSpeed:
+              CommandCode = 0x41;
+              break;
+            case MotorParameterType.RunSpeed:
+              CommandCode = 0x42;
+              break;
+            case MotorParameterType.CurrentStep:
+              CommandCode = 0x44;
+              break;
+            case MotorParameterType.CurrentLimit:
+              CommandCode = 0x92;
+              break;
+          }
+          selector = 0;
+          break;
+        case DeviceParameterType.MotorStepsX:
+          switch (subParameter)
+          {
+            case MotorStepsX.Plate96C1:
+              CommandCode = 0x58;
+              break;
+            case MotorStepsX.Plate96C12:
+              CommandCode = 0x5A;
+              break;
+            case MotorStepsX.Plate384C1:
+              CommandCode = 0x5C;
+              break;
+            case MotorStepsX.Plate384C24:
+              CommandCode = 0x5E;
+              break;
+            case MotorStepsX.Tube:
+              CommandCode = 0x56;
+              break;
+          }
+          selector = 0;
+          break;
+        case DeviceParameterType.MotorStepsY:
+          switch (subParameter)
+          {
+            case MotorStepsY.Plate96RowA:
+              CommandCode = 0x68;
+              break;
+            case MotorStepsY.Plate96RowH:
+              CommandCode = 0x6A;
+              break;
+            case MotorStepsY.Plate384RowA:
+              CommandCode = 0x6C;
+              break;
+            case MotorStepsY.Plate384RowP:
+              CommandCode = 0x6E;
+              break;
+            case MotorStepsY.Tube:
+              CommandCode = 0x66;
+              break;
+          }
+          selector = 0;
+          break;
+        case DeviceParameterType.MotorStepsZ:
+          switch (subParameter)
+          {
+            case MotorStepsZ.A1:
+              CommandCode = 0x48;
+              break;
+            case MotorStepsZ.A12:
+              CommandCode = 0x4A;
+              break;
+            case MotorStepsZ.H1:
+              CommandCode = 0x4C;
+              break;
+            case MotorStepsZ.H12:
+              CommandCode = 0x4E;
+              break;
+            case MotorStepsZ.Tube:
+              CommandCode = 0x46;
+              break;
+          }
+          selector = 0;
+          break;
+        case DeviceParameterType.SystemActivityStatus:
+          CommandCode = 0xCC;
+          break;
+      }
+      if(CommandCode > 0)
+        MainCommand(code: CommandCode, parameter: selector, cmd: 0x01);
+    }
+
     private void SetSystemDirectories()
     {
       RootDirectory = new DirectoryInfo(Path.Combine(@"C:\Emissioninc", Environment.MachineName));
@@ -370,7 +570,7 @@ namespace DIOS.Core
       MainCommand("End Sampling");    //sends message to instrument to stop sampling
       FinishedReadingWell?.Invoke(this, new ReadingWellEventArgs(WellController.CurrentWell.RowIdx, WellController.CurrentWell.ColIdx,
         Publisher.FullBeadEventFileName));
-      MainCommand("Get FProperty", code: 0x06);  //get totalbeads from firmware
+      RequestParameterUpdate(DeviceParameterType.TotalBeadsInFirmware);
     }
 
     internal void OnFinishedMeasurement()
@@ -405,11 +605,6 @@ namespace DIOS.Core
     internal void MapChangedEventHandler(object sender, CustomMap map)
     {
       _beadProcessor.SetMap(map);
-    }
-
-    internal void OnBeadConcentrationStatusUpdate(int value)
-    {
-      BeadConcentrationStatusUpdate?.Invoke(this, value);
     }
 
     public void ReconnectUSB()
@@ -480,6 +675,11 @@ namespace DIOS.Core
           break;
       }
       Results.TerminationReadyCheck();
+    }
+
+    public void DEBUGCommandTest(CommandStruct cs)
+    {
+      _dataController.DEBUGGetCommandFromBuffer(cs);
     }
     #endif
   }

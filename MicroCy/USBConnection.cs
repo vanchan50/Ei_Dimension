@@ -136,5 +136,10 @@ namespace DIOS.Core
       Console.Error.WriteLine("##################################");
       Console.Error.WriteLine();
     }
+
+    public bool IsBeadInBuffer()
+    {
+      return InputBuffer[0] == 0xbe && InputBuffer[1] == 0xad;
+    }
   }
 }

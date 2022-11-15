@@ -22,7 +22,7 @@ namespace DIOS.Core.SelfTests
 
     internal void FluidicsTest()
     {
-      _device.MainCommand("Get FProperty", code: 0x0C);
+      _device.RequestParameterUpdate(DeviceParameterType.PressureAtStartup);
       _device.MainCommand("Set Property", code: 0xE0);
       // result to DataController.InnerCommandProcessing(). Probably should form a SelfTestError class
       //SelfTestError should be a property of this class
@@ -43,13 +43,13 @@ namespace DIOS.Core.SelfTests
 
     internal void ScriptFinishedSignal()
     {
-      _device.MainCommand("Get FProperty", code: 0x0C); //Pressure
+      _device.RequestParameterUpdate(DeviceParameterType.PressureAtStartup);
       Motorsinit[2] = false;
-      _device.MainCommand("Get FProperty", code: 0x44); //Z Motor
+      _device.RequestParameterUpdate(DeviceParameterType.MotorZ, MotorParameterType.CurrentStep);
       Motorsinit[0] = false;
-      _device.MainCommand("Get FProperty", code: 0x54); //X Motor
+      _device.RequestParameterUpdate(DeviceParameterType.MotorX, MotorParameterType.CurrentStep);
       Motorsinit[1] = false;
-      _device.MainCommand("Get FProperty", code: 0x64); //Y Motor
+      _device.RequestParameterUpdate(DeviceParameterType.MotorY, MotorParameterType.CurrentStep);
     }
   }
 }

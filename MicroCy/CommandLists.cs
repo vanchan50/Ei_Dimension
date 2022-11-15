@@ -44,7 +44,6 @@ namespace DIOS.Core
       { "Set Property",         new CommandStruct{ Code=0x00, Command=0x02, Parameter=0, FParameter=0} },
       { "Get Property",         new CommandStruct{ Code=0x00, Command=0x01, Parameter=0, FParameter=0} },
       { "Set FProperty",        new CommandStruct{ Code=0x00, Command=0x02, Parameter=0, FParameter=0} },
-      { "Get FProperty",        new CommandStruct{ Code=0x00, Command=0x01, Parameter=0, FParameter=0} },
       { "Set Temporary",        new CommandStruct{ Code=0x00, Command=0x03, Parameter=0, FParameter=0} }
     };
     public static readonly List<byte> Readertab = new List<byte>{ 0xaa, 0xac, 0xaf, 0xa9, 0xab, 0xa8, 0xc2, 0xc4, 0xcd, 0xce, 0xcf };

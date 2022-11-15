@@ -51,6 +51,11 @@ namespace DIOS.Core.Tests
       Array.Clear(InputBuffer, 0, InputBuffer.Length);
     }
 
+    public bool IsBeadInBuffer()
+    {
+      throw new NotImplementedException();
+    }
+
     internal void ReadBead(in RawBead bead)
     {
       var bd =  BeadInfoToByteArray(bead);

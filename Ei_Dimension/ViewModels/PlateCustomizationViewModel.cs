@@ -346,7 +346,7 @@ namespace Ei_Dimension.ViewModels
     {
       lock (ZStepIsUpdatedLock)
       {
-        App.Device.MainCommand("Get Property", code: 0x44);
+        App.Device.RequestParameterUpdate(DeviceParameterType.MotorZ, MotorParameterType.CurrentStep);
         Monitor.Wait(ZStepIsUpdatedLock);
       }
       Thread.Sleep(500);

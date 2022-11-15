@@ -4,6 +4,7 @@ using DevExpress.Mvvm.POCO;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Windows.Controls;
+using DIOS.Core;
 
 namespace Ei_Dimension.ViewModels
 {
@@ -313,7 +314,7 @@ namespace Ei_Dimension.ViewModels
           param = 2;
           break;
       }
-      App.Device.MainCommand("Get FProperty", code: 0x14, parameter: param);
+      App.Device.RequestParameterUpdate(DeviceParameterType.SyringePosition, selector: param);
     }
 
     public void SamplingToggleButtonClick()
@@ -389,7 +390,7 @@ namespace Ei_Dimension.ViewModels
     public void IdexPositionButtonClick()
     {
       UserInputHandler.InputSanityCheck();
-      App.Device.MainCommand("Get Property", code: 0x04);
+      App.Device.RequestParameterUpdate(DeviceParameterType.IdexPosition);
     }
 
     public void SuppressWarningsClick()

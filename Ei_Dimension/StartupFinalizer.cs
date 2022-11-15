@@ -5,6 +5,7 @@ using System.Windows.Media.Imaging;
 using Ei_Dimension.Controllers;
 using Ei_Dimension.Graphing.HeatMap;
 using MadWizard.WinUSBNet;
+using DIOS.Core;
 
 namespace Ei_Dimension
 {
@@ -63,7 +64,7 @@ namespace Ei_Dimension
 
       LanguageSwap.SetLanguage(MaintenanceViewModel.Instance.LanguageItems[Settings.Default.Language].Locale);
       Views.ExperimentView.Instance.DbButton.IsChecked = true;
-      App.Device.MainCommand("Get FProperty", code: 0x08);
+      App.Device.RequestParameterUpdate(DeviceParameterType.CalibrationMargin);
       //3D plot TRS transforms
       var matrix = Views.ResultsView.Instance.AnalysisPlot.ContentTransform.Value;
       matrix.Rotate(new System.Windows.Media.Media3D.Quaternion(new System.Windows.Media.Media3D.Vector3D(0, 1, 0), 90));

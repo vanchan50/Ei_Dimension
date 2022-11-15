@@ -72,17 +72,17 @@ namespace Ei_Dimension.ViewModels
     public void CalibrationSuccess()
     {
       System.Threading.Thread.Sleep(1000);  //not really needed
-      App.Device.MainCommand("Get Property", code: 0x24);
-      App.Device.MainCommand("Get Property", code: 0x25);
-      App.Device.MainCommand("Get Property", code: 0x26);
-      App.Device.MainCommand("Get Property", code: 0x28);
-      App.Device.MainCommand("Get Property", code: 0x29);
-      App.Device.MainCommand("Get Property", code: 0x2a);
-      App.Device.MainCommand("Get Property", code: 0x2c);
-      App.Device.MainCommand("Get Property", code: 0x2d);
-      App.Device.MainCommand("Get Property", code: 0x2e);
-      App.Device.MainCommand("Get Property", code: 0x2f);
-      App.Device.MainCommand("Get Property", code: 0x20);
+      App.Device.RequestParameterUpdate(DeviceParameterType.ChannelBias30C, Channel.GreenA);
+      App.Device.RequestParameterUpdate(DeviceParameterType.ChannelBias30C, Channel.GreenB);
+      App.Device.RequestParameterUpdate(DeviceParameterType.ChannelBias30C, Channel.GreenC);
+      App.Device.RequestParameterUpdate(DeviceParameterType.ChannelBias30C, Channel.RedA);
+      App.Device.RequestParameterUpdate(DeviceParameterType.ChannelBias30C, Channel.RedB);
+      App.Device.RequestParameterUpdate(DeviceParameterType.ChannelBias30C, Channel.RedC);
+      App.Device.RequestParameterUpdate(DeviceParameterType.ChannelBias30C, Channel.RedD);
+      App.Device.RequestParameterUpdate(DeviceParameterType.ChannelBias30C, Channel.VioletA);
+      App.Device.RequestParameterUpdate(DeviceParameterType.ChannelBias30C, Channel.VioletB);
+      App.Device.RequestParameterUpdate(DeviceParameterType.ChannelBias30C, Channel.ForwardScatter);
+      App.Device.RequestParameterUpdate(DeviceParameterType.DNRCoefficient);
       System.Threading.Thread.Sleep(1000);
       Action Cancel = () =>
       {
@@ -166,16 +166,16 @@ namespace Ei_Dimension.ViewModels
     public void SaveCalButtonClick()
     {
       UserInputHandler.InputSanityCheck();
-      App.Device.MainCommand("Get Property", code: 0x24);
-      App.Device.MainCommand("Get Property", code: 0x25);
-      App.Device.MainCommand("Get Property", code: 0x26);
-      App.Device.MainCommand("Get Property", code: 0x28);
-      App.Device.MainCommand("Get Property", code: 0x29);
-      App.Device.MainCommand("Get Property", code: 0x2a);
-      App.Device.MainCommand("Get Property", code: 0x2c);
-      App.Device.MainCommand("Get Property", code: 0x2d);
-      App.Device.MainCommand("Get Property", code: 0x2e);
-      App.Device.MainCommand("Get Property", code: 0x2f);
+      App.Device.RequestParameterUpdate(DeviceParameterType.ChannelBias30C, Channel.GreenA);
+      App.Device.RequestParameterUpdate(DeviceParameterType.ChannelBias30C, Channel.GreenB);
+      App.Device.RequestParameterUpdate(DeviceParameterType.ChannelBias30C, Channel.GreenC);
+      App.Device.RequestParameterUpdate(DeviceParameterType.ChannelBias30C, Channel.RedA);
+      App.Device.RequestParameterUpdate(DeviceParameterType.ChannelBias30C, Channel.RedB);
+      App.Device.RequestParameterUpdate(DeviceParameterType.ChannelBias30C, Channel.RedC);
+      App.Device.RequestParameterUpdate(DeviceParameterType.ChannelBias30C, Channel.RedD);
+      App.Device.RequestParameterUpdate(DeviceParameterType.ChannelBias30C, Channel.VioletA);
+      App.Device.RequestParameterUpdate(DeviceParameterType.ChannelBias30C, Channel.VioletB);
+      App.Device.RequestParameterUpdate(DeviceParameterType.ChannelBias30C, Channel.ForwardScatter);
       System.Threading.Thread.Sleep(1000);
       var res = App.Device.MapCtroller.SaveCalVals(new MapCalParameters
       {

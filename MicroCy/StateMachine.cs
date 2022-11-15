@@ -29,7 +29,7 @@ namespace DIOS.Core
       switch (_state)
       {
         case State.Reset:
-          _device.MainCommand("Get Property", code: 0x1D);
+          _device.RequestParameterUpdate(DeviceParameterType.BeadConcentration);
           //Skip the tick
           return;
         case State.Start:
@@ -68,7 +68,7 @@ namespace DIOS.Core
       {
         return true;
       }
-      _device.MainCommand("Get Property", code: 0xcc);
+      _device.RequestParameterUpdate(DeviceParameterType.SystemActivityStatus);
       return false;
     }
     

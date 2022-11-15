@@ -16,6 +16,7 @@
     IsInputSelectorAtPickup,
     CalibrationSuccess,
     Pressure,
+    PressureAtStartup,
     DNRCoefficient,
     DNRTransition,
     ChannelBias30C,
@@ -34,10 +35,12 @@
     GreenAVoltage,
     IsLaserActive,
     LaserPower,
-    IsSynchronizationPending,
+    SystemActivityStatus,
     SheathFlow,
     SampleSyringeStatus,
     NextWellWarning,
-    BubbleDetectorFault
+    BubbleDetectorFault,
+    BoardVersion,
+    BeadConcentration
   }
 }

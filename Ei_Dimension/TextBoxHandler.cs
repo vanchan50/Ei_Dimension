@@ -2,6 +2,7 @@
 using System.Threading;
 using DIOS.Core;
 using Ei_Dimension.ViewModels;
+using Newtonsoft.Json.Linq;
 
 namespace Ei_Dimension
 {
@@ -100,6 +101,9 @@ namespace Ei_Dimension
             source.PressureMon[0] = dd.ToString("f3");
             source.PressureMon[1] = maxPressure.ToString("f3");
           };
+          break;
+        case DeviceParameterType.BeadConcentration:
+          update = () => MainViewModel.Instance.SetBeadConcentrationMonitorValue(parameter.Parameter);
           break;
         case DeviceParameterType.DNRCoefficient:
           update = () => CalibrationViewModel.Instance.DNRContents[0] = parameter.FloatParameter.ToString();
@@ -544,7 +548,7 @@ namespace Ei_Dimension
               break;
           }
           break;
-        case DeviceParameterType.IsSynchronizationPending:  //TODO: simplify interaction with lib. here logic should be less complicated
+        case DeviceParameterType.SystemActivityStatus:  //TODO: simplify interaction with lib. here logic should be less complicated
           update = () =>
           {
             var list = MainButtonsViewModel.Instance.ActiveList;
@@ -690,7 +694,7 @@ namespace Ei_Dimension
     private static void UpdatePressureMonitor()
     {
       if (ComponentsViewModel.Instance.PressureMonToggleButtonState)
-        App.Device.MainCommand("Get FProperty", code: 0x22);
+        App.Device.RequestParameterUpdate(DeviceParameterType.Pressure);
     }
   }
 }

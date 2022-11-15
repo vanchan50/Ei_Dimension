@@ -42,23 +42,24 @@ namespace DIOS.Core
       {
         _serialConnection.Read();
 
-        if (IsBead())
+        if (!_serialConnection.IsBeadInBuffer())
         {
-          if (_device.IsMeasurementGoing) //  this condition avoids the necessity of cleaning up leftover data in the system USB interface. That could happen after operation abortion and program restart
-          {
-            for (byte i = 0; i < 8; i++)
-            {
-              //might be less than 8 beads in buffer
-              if (!GetBeadFromBuffer(i, out var outbead))
-                break;
-              _results.AddRawBeadEvent(in outbead);
-            }
-            _results.TerminationReadyCheck();
-          }
-          _serialConnection.ClearBuffer();
-        }
-        else
           GetCommandFromBuffer();
+          continue;
+        }
+
+        if (_device.IsMeasurementGoing) //  this condition avoids the necessity of cleaning up leftover data in the system USB interface. That could happen after operation abortion and program restart
+        {
+          for (byte i = 0; i < 8; i++)
+          {
+            //might be less than 8 beads in buffer
+            if (!GetBeadFromBuffer(i, out var outbead))
+              break;
+            _results.AddRawBeadEvent(in outbead);
+          }
+          _results.TerminationReadyCheck();
+        }
+        _serialConnection.ClearBuffer();
       }
     }
 
@@ -177,8 +178,14 @@ namespace DIOS.Core
     {
       var newcmd = ByteArrayToStruct(_serialConnection.InputBuffer);
       InnerCommandProcessing(in newcmd);
-      _device.Commands.Enqueue(newcmd);
     }
+    
+    #if DEBUG
+    internal void DEBUGGetCommandFromBuffer(CommandStruct cs)
+    {
+      InnerCommandProcessing(in cs);
+    }
+    #endif
 
     private bool GetBeadFromBuffer(byte shift, out RawBead outbead)
     {
@@ -194,11 +201,6 @@ namespace DIOS.Core
     public void DisconnectedUSB()
     {
       _serialConnection.Disconnect();
-    }
-
-    private bool IsBead()
-    {
-      return _serialConnection.InputBuffer[0] == 0xbe && _serialConnection.InputBuffer[1] == 0xad;
     }
 
     private void InnerCommandProcessing(in CommandStruct cs)
@@ -225,7 +227,7 @@ namespace DIOS.Core
         case 0x08:
           outParameters = new ParameterUpdateEventArgs(DeviceParameterType.CalibrationMargin, floatParameter: cs.FParameter);
           break;
-        case 0x0C:
+        case 0x0C:  //pressure at startup
           _device.SelfTester.Data.SetPressure(cs.FParameter);
           _device.MainCommand("Set FProperty", code: 0x0C); //Reset Pressure, since firmware forgets to do that
           break;
@@ -258,7 +260,7 @@ namespace DIOS.Core
           }
           break;
         case 0x1D:
-          _device.OnBeadConcentrationStatusUpdate(cs.Parameter);
+          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.BeadConcentration, intParameter: cs.Parameter);
           break;
         case 0x20:
           outParameters = new ParameterUpdateEventArgs(DeviceParameterType.DNRCoefficient, floatParameter: cs.FParameter);
@@ -567,7 +569,7 @@ namespace DIOS.Core
               Monitor.PulseAll(_device.SystemActivityNotBusyNotificationLock);
             }
           }
-          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.IsSynchronizationPending, intParameter: cs.Parameter);
+          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.SystemActivityStatus, intParameter: cs.Parameter);
           break;
         case 0xF1:
           SheathFlowErrorType errorType = SheathFlowErrorType.Unspecified;
