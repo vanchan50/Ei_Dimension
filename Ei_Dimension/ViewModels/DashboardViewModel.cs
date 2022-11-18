@@ -35,9 +35,9 @@ namespace Ei_Dimension.ViewModels
     public static DashboardViewModel Instance { get; private set; }
 
     public byte SelectedSystemControlIndex { get; set; }
-    public byte SelectedSpeedIndex { get; set; }
-    public byte SelectedChConfigIndex { get; set; }
-    public byte SelectedOrderIndex { get; set; }
+    public WellReadingSpeed SelectedSpeedIndex { get; set; } = WellReadingSpeed.Normal;
+    public ChannelConfiguration SelectedChConfigIndex { get; set; } = ChannelConfiguration.Standard;
+    public WellReadingOrder SelectedOrderIndex { get; set; } = WellReadingOrder.Column;
     public byte SelectedEndReadIndex { get; set; }
     public virtual ObservableCollection<Visibility> EndReadVisibility { get; set; }
     public virtual Visibility WorkOrderVisibility { get; set; }
@@ -57,8 +57,7 @@ namespace Ei_Dimension.ViewModels
         new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_Hi_Speed), curCulture), this),
         new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_Hi_Sens), curCulture), this)
       };
-      SelectedSpeedIndex = 0;
-      SelectedSpeedContent = SpeedItems[SelectedSpeedIndex].Content;
+      SelectedSpeedContent = SpeedItems[(int)SelectedSpeedIndex].Content;
       DropDownButtonContents.ResetIndex();
 
       ClassiMapItems = new ObservableCollection<DropDownButtonContents>();
@@ -81,8 +80,7 @@ namespace Ei_Dimension.ViewModels
         new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_FM3D), curCulture), this),
         new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_StandardPlusFSC), curCulture), this)
       };
-      SelectedChConfigIndex = 0;
-      SelectedChConfigContent = ChConfigItems[SelectedChConfigIndex].Content;
+      SelectedChConfigContent = ChConfigItems[(int)SelectedChConfigIndex].Content;
       DropDownButtonContents.ResetIndex();
 
       OrderItems = new ObservableCollection<DropDownButtonContents>
@@ -90,8 +88,7 @@ namespace Ei_Dimension.ViewModels
         new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Column), curCulture), this),
         new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Row), curCulture), this),
       };
-      SelectedOrderIndex = 0; //Column
-      SelectedOrderContent = OrderItems[SelectedOrderIndex].Content;
+      SelectedOrderContent = OrderItems[(int)SelectedOrderIndex].Content;
       DropDownButtonContents.ResetIndex();
 
       SysControlItems = new ObservableCollection<DropDownButtonContents>
@@ -430,25 +427,24 @@ namespace Ei_Dimension.ViewModels
         {
           case 1:
             _vm.SelectedSpeedContent = Content;
-            _vm.SelectedSpeedIndex = Index;
+            _vm.SelectedSpeedIndex = (WellReadingSpeed)Index;
             App.Device.MainCommand("Set Property", code: 0xaa, parameter: (ushort)Index);
             break;
           case 2:
             _vm.SelectedClassiMapContent = Content;
             App.SetActiveMap(Content);
-            App.Device.MainCommand("Set Property", code: 0xa9, parameter: (ushort)Index);
             App.MapRegions.FillRegions();
             VerificationViewModel.Instance.LoadClick(fromCode: true);
             NormalizationViewModel.Instance.Load();
             break;
           case 3:
             _vm.SelectedChConfigContent = Content;
-            _vm.SelectedChConfigIndex = Index;
+            _vm.SelectedChConfigIndex = (ChannelConfiguration)Index;
             App.Device.MainCommand("Set Property", code: 0xc2, parameter: (ushort)Index);
             break;
           case 4:
             _vm.SelectedOrderContent = Content;
-            _vm.SelectedOrderIndex = Index;
+            _vm.SelectedOrderIndex = (WellReadingOrder)Index;
             App.Device.MainCommand("Set Property", code: 0xa8, parameter: (ushort)Index);
             break;
           case 5:

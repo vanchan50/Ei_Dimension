@@ -82,16 +82,16 @@ namespace Ei_Dimension
         DashVM.SpeedItems[0].Content = RM.GetString(nameof(Language.Resources.Dropdown_Normal), curCulture);
         DashVM.SpeedItems[1].Content = RM.GetString(nameof(Language.Resources.Dropdown_Hi_Speed), curCulture);
         DashVM.SpeedItems[2].Content = RM.GetString(nameof(Language.Resources.Dropdown_Hi_Sens), curCulture);
-        DashVM.SelectedSpeedContent = DashVM.SpeedItems[DashVM.SelectedSpeedIndex].Content;
+        DashVM.SelectedSpeedContent = DashVM.SpeedItems[(int)DashVM.SelectedSpeedIndex].Content;
 
         DashVM.ChConfigItems[0].Content = RM.GetString(nameof(Language.Resources.Dropdown_Standard), curCulture);
         DashVM.ChConfigItems[1].Content = RM.GetString(nameof(Language.Resources.Dropdown_Cells), curCulture);
         DashVM.ChConfigItems[2].Content = RM.GetString(nameof(Language.Resources.Dropdown_FM3D), curCulture);
-        DashVM.SelectedChConfigContent = DashVM.ChConfigItems[DashVM.SelectedChConfigIndex].Content;
+        DashVM.SelectedChConfigContent = DashVM.ChConfigItems[(int)DashVM.SelectedChConfigIndex].Content;
 
         DashVM.OrderItems[0].Content = RM.GetString(nameof(Language.Resources.Column), curCulture);
         DashVM.OrderItems[1].Content = RM.GetString(nameof(Language.Resources.Row), curCulture);
-        DashVM.SelectedOrderContent = DashVM.OrderItems[DashVM.SelectedOrderIndex].Content;
+        DashVM.SelectedOrderContent = DashVM.OrderItems[(int)DashVM.SelectedOrderIndex].Content;
 
         DashVM.SysControlItems[0].Content = RM.GetString(nameof(Language.Resources.Experiment_Manual), curCulture);
         DashVM.SysControlItems[1].Content = RM.GetString(nameof(Language.Resources.Experiment_Work_Order), curCulture);

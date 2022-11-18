@@ -317,22 +317,22 @@ namespace DIOS.Core
           outParameters = new ParameterUpdateEventArgs(DeviceParameterType.SyringeSpeedSheath, intParameter: (int)SyringeSpeed.MaxSpeed, floatParameter: cs.Parameter);
           break;
         case 0x38:
-          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.SyringSpeedSample, intParameter: (int)SyringeSpeed.Normal, floatParameter: cs.Parameter);
+          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.SyringeSpeedSample, intParameter: (int)SyringeSpeed.Normal, floatParameter: cs.Parameter);
           break;
         case 0x39:
-          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.SyringSpeedSample, intParameter: (int)SyringeSpeed.HiSpeed, floatParameter: cs.Parameter);
+          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.SyringeSpeedSample, intParameter: (int)SyringeSpeed.HiSpeed, floatParameter: cs.Parameter);
           break;
         case 0x3A:
-          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.SyringSpeedSample, intParameter: (int)SyringeSpeed.HiSensitivity, floatParameter: cs.Parameter);
+          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.SyringeSpeedSample, intParameter: (int)SyringeSpeed.HiSensitivity, floatParameter: cs.Parameter);
           break;
         case 0x3B:
-          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.SyringSpeedSample, intParameter: (int)SyringeSpeed.Flush, floatParameter: cs.Parameter);
+          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.SyringeSpeedSample, intParameter: (int)SyringeSpeed.Flush, floatParameter: cs.Parameter);
           break;
         case 0x3C:
-          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.SyringSpeedSample, intParameter: (int)SyringeSpeed.Pickup, floatParameter: cs.Parameter);
+          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.SyringeSpeedSample, intParameter: (int)SyringeSpeed.Pickup, floatParameter: cs.Parameter);
           break;
         case 0x3D:
-          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.SyringSpeedSample, intParameter: (int)SyringeSpeed.MaxSpeed, floatParameter: cs.Parameter);
+          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.SyringeSpeedSample, intParameter: (int)SyringeSpeed.MaxSpeed, floatParameter: cs.Parameter);
           break;
         case 0x41:
           outParameters = new ParameterUpdateEventArgs(DeviceParameterType.MotorZ, intParameter: (int)MotorParameterType.StartSpeed, floatParameter: cs.Parameter);
@@ -529,6 +529,15 @@ namespace DIOS.Core
         case 0xA5:
           outParameters = new ParameterUpdateEventArgs(DeviceParameterType.ChannelOffset, intParameter: (int)Channel.GreenC, floatParameter: cs.Parameter);
           break;
+        case 0xA8:
+          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.WellReadingOrder, intParameter: cs.Parameter);
+          break;
+        case 0xAA:
+          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.WellReadingSpeed, intParameter: cs.Parameter);
+          break;
+        case 0xAB:
+          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.PlateType, intParameter: cs.Parameter);
+          break;
         case 0xAC:
           outParameters = new ParameterUpdateEventArgs(DeviceParameterType.Volume, intParameter: (int)VolumeType.Wash, floatParameter: cs.Parameter);
           break;
@@ -543,6 +552,9 @@ namespace DIOS.Core
           break;
         case 0xC0:
           outParameters = new ParameterUpdateEventArgs(DeviceParameterType.IsLaserActive, intParameter: cs.Parameter);  //0Red 1Green 2Violet
+          break;
+        case 0xC2:
+          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.ChannelConfiguration, intParameter: cs.Parameter);
           break;
         case 0xC7:
           outParameters = new ParameterUpdateEventArgs(DeviceParameterType.LaserPower, intParameter: (int)LaserType.Violet, floatParameter: cs.Parameter / 4096.0f / 0.040f * 3.3f);
@@ -589,7 +601,7 @@ namespace DIOS.Core
           outParameters = new ParameterUpdateEventArgs(DeviceParameterType.NextWellWarning);
           break;
         case 0xF4:
-          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.BubbleDetectorFault, intParameter: cs.Command);
+          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.BubbleDetectorStatus, intParameter: cs.Command);
           break;
         case 0xF9:
           switch (cs.Command)
@@ -635,6 +647,8 @@ namespace DIOS.Core
         case 0xFE:
           _device.StartStateMachine();
           break;
+        default:
+          return;
       }
       Console.WriteLine($"{DateTime.Now.ToString()} Received [{cs.ToString()}]");
       if (outParameters != null)

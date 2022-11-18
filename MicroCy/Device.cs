@@ -333,69 +333,255 @@ namespace DIOS.Core
 
     public void RequestParameterUpdate(DeviceParameterType parameterToUpdate, Enum subParameter = null, ushort selector = 0)
     {
-      byte CommandCode = 0;
+      byte commandCode = 0;
       switch (parameterToUpdate)
       {
         case DeviceParameterType.BoardVersion:
-          CommandCode = 0x01;
+          commandCode = 0x01;
+          break;
+        case DeviceParameterType.SiPMTempCoeff:
+          commandCode = 0x02;
           break;
         case DeviceParameterType.IdexPosition:
-          CommandCode = 0x04;
-          break;
-        case DeviceParameterType.SyringePosition: //uses selector
-          CommandCode = 0x14;
+          commandCode = 0x04;
           break;
         case DeviceParameterType.TotalBeadsInFirmware:
-          CommandCode = 0x06;
+          commandCode = 0x06;
           break;
         case DeviceParameterType.CalibrationMargin:
-          CommandCode = 0x08;
+          commandCode = 0x08;
           break;
         case DeviceParameterType.PressureAtStartup:
-          CommandCode = 0x0C;
+          commandCode = 0x0C;
+          break;
+        case DeviceParameterType.ValveCuvetDrain:
+          commandCode = 0x10;
+          break;
+        case DeviceParameterType.ValveFan1:
+          commandCode = 0x11;
+          break;
+        case DeviceParameterType.ValveFan2:
+          commandCode = 0x12;
+          break;
+        case DeviceParameterType.SyringePosition: //uses selector
+          commandCode = 0x14;
+          break;
+        case DeviceParameterType.IsPollStepActive:
+          commandCode = 0x16;
+          break;
+        case DeviceParameterType.IsInputSelectorAtPickup:
+          commandCode = 0x18;
           break;
         case DeviceParameterType.BeadConcentration:
-          CommandCode = 0x1D;
+          commandCode = 0x1D;
           break;
         case DeviceParameterType.DNRCoefficient:
-          CommandCode = 0x20;
+          commandCode = 0x20;
           break;
         case DeviceParameterType.Pressure:
-          CommandCode = 0x22;
+          commandCode = 0x22;
           break;
         case DeviceParameterType.ChannelBias30C:
           switch (subParameter)
           {
             case Channel.GreenA:
-              CommandCode = 0x28;
+              commandCode = 0x28;
               break;
             case Channel.GreenB:
-              CommandCode = 0x29;
+              commandCode = 0x29;
               break;
             case Channel.GreenC:
-              CommandCode = 0x2A;
+              commandCode = 0x2A;
               break;
             case Channel.RedA:
-              CommandCode = 0x2C;
+              commandCode = 0x2C;
               break;
             case Channel.RedB:
-              CommandCode = 0x2D;
+              commandCode = 0x2D;
               break;
             case Channel.RedC:
-              CommandCode = 0x2E;
+              commandCode = 0x2E;
               break;
             case Channel.RedD:
-              CommandCode = 0x2F;
+              commandCode = 0x2F;
               break;
             case Channel.VioletA:
-              CommandCode = 0x25;
+              commandCode = 0x25;
               break;
             case Channel.VioletB:
-              CommandCode = 0x26;
+              commandCode = 0x26;
               break;
             case Channel.ForwardScatter:
-              CommandCode = 0x24;
+              commandCode = 0x24;
               break;
+            default:
+              throw new NotImplementedException();
+          }
+          selector = 0;
+          break;
+        case DeviceParameterType.ChannelCompensationBias:
+          switch (subParameter)
+          {
+            case Channel.GreenA:
+              commandCode = 0xA6;
+              break;
+            case Channel.GreenB:
+              commandCode = 0x9A;
+              break;
+            case Channel.GreenC:
+              commandCode = 0x9B;
+              break;
+            case Channel.RedA:
+              commandCode = 0x99;
+              break;
+            case Channel.RedB:
+              commandCode = 0x98;
+              break;
+            case Channel.RedC:
+              commandCode = 0xA7;
+              break;
+            case Channel.RedD:
+              commandCode = 0x96;
+              break;
+            case Channel.VioletA:
+              commandCode = 0x95;
+              break;
+            case Channel.VioletB:
+              commandCode = 0x94;
+              break;
+            case Channel.ForwardScatter:
+              commandCode = 0x93;
+              break;
+            default:
+              throw new NotImplementedException();
+          }
+          selector = 0;
+          break;
+        case DeviceParameterType.ChannelTemperature:
+          switch (subParameter)
+          {
+            case Channel.GreenA:
+              commandCode = 0xB0;
+              break;
+            case Channel.GreenB:
+              commandCode = 0xB1;
+              break;
+            case Channel.GreenC:
+              commandCode = 0xB2;
+              break;
+            case Channel.RedA:
+              commandCode = 0xB3;
+              break;
+            case Channel.RedB:
+              commandCode = 0xB4;
+              break;
+            case Channel.RedC:
+              commandCode = 0xB5;
+              break;
+            case Channel.RedD:
+              commandCode = 0xB6;
+              break;
+            case Channel.VioletA:
+              commandCode = 0x80;
+              break;
+            case Channel.VioletB:
+              commandCode = 0x81;
+              break;
+            case Channel.ForwardScatter:
+              commandCode = 0x84;
+              break;
+            default:
+              throw new NotImplementedException();
+          }
+          selector = 0;
+          break;
+        case DeviceParameterType.ChannelOffset:
+          switch (subParameter)
+          {
+            case Channel.GreenA:
+              commandCode = 0xA0;
+              break;
+            case Channel.GreenB:
+              commandCode = 0xA4;
+              break;
+            case Channel.GreenC:
+              commandCode = 0xA5;
+              break;
+            case Channel.RedA:
+              commandCode = 0xA3;
+              break;
+            case Channel.RedB:
+              commandCode = 0xA2;
+              break;
+            case Channel.RedC:
+              commandCode = 0xA1;
+              break;
+            case Channel.RedD:
+              commandCode = 0x9F;
+              break;
+            case Channel.VioletA:
+              commandCode = 0x9D;
+              break;
+            case Channel.VioletB:
+              commandCode = 0x9C;
+              break;
+            case Channel.ForwardScatter:
+              commandCode = 0x9E;
+              break;
+            default:
+              throw new NotImplementedException();
+          }
+          selector = 0;
+          break;
+        case DeviceParameterType.SyringeSpeedSheath:
+          switch (subParameter)
+          {
+            case SyringeSpeed.Normal:
+              commandCode = 0x30;
+              break;
+            case SyringeSpeed.HiSpeed:
+              commandCode = 0x31;
+              break;
+            case SyringeSpeed.HiSensitivity:
+              commandCode = 0x32;
+              break;
+            case SyringeSpeed.Flush:
+              commandCode = 0x33;
+              break;
+            case SyringeSpeed.Pickup:
+              commandCode = 0x34;
+              break;
+            case SyringeSpeed.MaxSpeed:
+              commandCode = 0x35;
+              break;
+            default:
+              throw new NotImplementedException();
+          }
+          selector = 0;
+          break;
+        case DeviceParameterType.SyringeSpeedSample:
+          switch (subParameter)
+          {
+            case SyringeSpeed.Normal:
+              commandCode = 0x38;
+              break;
+            case SyringeSpeed.HiSpeed:
+              commandCode = 0x39;
+              break;
+            case SyringeSpeed.HiSensitivity:
+              commandCode = 0x3A;
+              break;
+            case SyringeSpeed.Flush:
+              commandCode = 0x3B;
+              break;
+            case SyringeSpeed.Pickup:
+              commandCode = 0x3C;
+              break;
+            case SyringeSpeed.MaxSpeed:
+              commandCode = 0x3D;
+              break;
+            default:
+              throw new NotImplementedException();
           }
           selector = 0;
           break;
@@ -403,20 +589,22 @@ namespace DIOS.Core
           switch (subParameter)
           {
             case MotorParameterType.Slope:
-              CommandCode = 0x53;
+              commandCode = 0x53;
               break;
             case MotorParameterType.StartSpeed:
-              CommandCode = 0x51;
+              commandCode = 0x51;
               break;
             case MotorParameterType.RunSpeed:
-              CommandCode = 0x52;
+              commandCode = 0x52;
               break;
             case MotorParameterType.CurrentStep:
-              CommandCode = 0x54;
+              commandCode = 0x54;
               break;
             case MotorParameterType.CurrentLimit:
-              CommandCode = 0x90;
+              commandCode = 0x90;
               break;
+            default:
+              throw new NotImplementedException();
           }
           selector = 0;
           break;
@@ -424,20 +612,22 @@ namespace DIOS.Core
           switch (subParameter)
           {
             case MotorParameterType.Slope:
-              CommandCode = 0x63;
+              commandCode = 0x63;
               break;
             case MotorParameterType.StartSpeed:
-              CommandCode = 0x61;
+              commandCode = 0x61;
               break;
             case MotorParameterType.RunSpeed:
-              CommandCode = 0x62;
+              commandCode = 0x62;
               break;
             case MotorParameterType.CurrentStep:
-              CommandCode = 0x64;
+              commandCode = 0x64;
               break;
             case MotorParameterType.CurrentLimit:
-              CommandCode = 0x91;
+              commandCode = 0x91;
               break;
+            default:
+              throw new NotImplementedException();
           }
           selector = 0;
           break;
@@ -445,20 +635,22 @@ namespace DIOS.Core
           switch (subParameter)
           {
             case MotorParameterType.Slope:
-              CommandCode = 0x43;
+              commandCode = 0x43;
               break;
             case MotorParameterType.StartSpeed:
-              CommandCode = 0x41;
+              commandCode = 0x41;
               break;
             case MotorParameterType.RunSpeed:
-              CommandCode = 0x42;
+              commandCode = 0x42;
               break;
             case MotorParameterType.CurrentStep:
-              CommandCode = 0x44;
+              commandCode = 0x44;
               break;
             case MotorParameterType.CurrentLimit:
-              CommandCode = 0x92;
+              commandCode = 0x92;
               break;
+            default:
+              throw new NotImplementedException();
           }
           selector = 0;
           break;
@@ -466,20 +658,22 @@ namespace DIOS.Core
           switch (subParameter)
           {
             case MotorStepsX.Plate96C1:
-              CommandCode = 0x58;
+              commandCode = 0x58;
               break;
             case MotorStepsX.Plate96C12:
-              CommandCode = 0x5A;
+              commandCode = 0x5A;
               break;
             case MotorStepsX.Plate384C1:
-              CommandCode = 0x5C;
+              commandCode = 0x5C;
               break;
             case MotorStepsX.Plate384C24:
-              CommandCode = 0x5E;
+              commandCode = 0x5E;
               break;
             case MotorStepsX.Tube:
-              CommandCode = 0x56;
+              commandCode = 0x56;
               break;
+            default:
+              throw new NotImplementedException();
           }
           selector = 0;
           break;
@@ -487,20 +681,22 @@ namespace DIOS.Core
           switch (subParameter)
           {
             case MotorStepsY.Plate96RowA:
-              CommandCode = 0x68;
+              commandCode = 0x68;
               break;
             case MotorStepsY.Plate96RowH:
-              CommandCode = 0x6A;
+              commandCode = 0x6A;
               break;
             case MotorStepsY.Plate384RowA:
-              CommandCode = 0x6C;
+              commandCode = 0x6C;
               break;
             case MotorStepsY.Plate384RowP:
-              CommandCode = 0x6E;
+              commandCode = 0x6E;
               break;
             case MotorStepsY.Tube:
-              CommandCode = 0x66;
+              commandCode = 0x66;
               break;
+            default:
+              throw new NotImplementedException();
           }
           selector = 0;
           break;
@@ -508,29 +704,82 @@ namespace DIOS.Core
           switch (subParameter)
           {
             case MotorStepsZ.A1:
-              CommandCode = 0x48;
+              commandCode = 0x48;
               break;
             case MotorStepsZ.A12:
-              CommandCode = 0x4A;
+              commandCode = 0x4A;
               break;
             case MotorStepsZ.H1:
-              CommandCode = 0x4C;
+              commandCode = 0x4C;
               break;
             case MotorStepsZ.H12:
-              CommandCode = 0x4E;
+              commandCode = 0x4E;
               break;
             case MotorStepsZ.Tube:
-              CommandCode = 0x46;
+              commandCode = 0x46;
               break;
+            default:
+              throw new NotImplementedException();
+          }
+          selector = 0;
+          break;
+        case DeviceParameterType.WellReadingOrder:
+          commandCode = 0xA8;
+          break;
+        case DeviceParameterType.WellReadingSpeed:
+          commandCode = 0xAA;
+          break;
+        case DeviceParameterType.PlateType:
+          commandCode = 0xAB;
+          break;
+        case DeviceParameterType.Volume:
+          switch (subParameter)
+          {
+            case VolumeType.Wash:
+              commandCode = 0xAC;
+              break;
+            case VolumeType.Sample:
+              commandCode = 0xAF;
+              break;
+            case VolumeType.Agitate:
+              commandCode = 0xC4;
+              break;
+            default:
+              throw new NotImplementedException();
+          }
+          selector = 0;
+          break;
+        case DeviceParameterType.IsLaserActive:
+          commandCode = 0xC0;
+          break;
+        case DeviceParameterType.ChannelConfiguration:
+          commandCode = 0xC2;
+          break;
+        case DeviceParameterType.LaserPower:
+          switch (subParameter)
+          {
+            case LaserType.Violet:
+              commandCode = 0xC7;
+              break;
+            case LaserType.Green:
+              commandCode = 0xC8;
+              break;
+            case LaserType.Red:
+              commandCode = 0xC9;
+              break;
+            default:
+              throw new NotImplementedException();
           }
           selector = 0;
           break;
         case DeviceParameterType.SystemActivityStatus:
-          CommandCode = 0xCC;
+          commandCode = 0xCC;
           break;
+        default:
+          throw new NotImplementedException();
       }
-      if(CommandCode > 0)
-        MainCommand(code: CommandCode, parameter: selector, cmd: 0x01);
+      if(commandCode > 0)
+        MainCommand("Get Property", code: commandCode, parameter: selector, cmd: 0x01);
     }
 
     private void SetSystemDirectories()

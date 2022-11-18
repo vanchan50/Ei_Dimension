@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Channel.cs" />
+    <Compile Include="ChannelConfiguration.cs" />
     <Compile Include="ChannelsAveragesStats.cs" />
     <Compile Include="BackgroundStatsAccumulator.cs" />
     <Compile Include="BeadProcessor.cs" />
@@ -78,6 +79,7 @@
     <Compile Include="Enums\Termination.cs" />
     <Compile Include="FileIO\VerificationReport.cs" />
     <Compile Include="NormalizationSettings.cs" />
+    <Compile Include="PlateType.cs" />
     <Compile Include="RegionReporterResultVolatile.cs" />
     <Compile Include="SheathFlowErrorType.cs" />
     <Compile Include="StatisticsExtension.cs" />
@@ -121,6 +123,8 @@
     <Compile Include="RegionReporterResult.cs" />
     <Compile Include="Structs\Well.cs" />
     <Compile Include="Structs\WorkOrder.cs" />
+    <Compile Include="WellReadingOrder.cs" />
+    <Compile Include="WellReadingSpeed.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -162,12 +162,12 @@ namespace Ei_Dimension.ViewModels
         case 1:
           ValvesStates[0] = !ValvesStates[0];
           param = ValvesStates[0] ? 1 : 0;
-          Code = 0x13;
+          Code = 0x12;
           break;
-        case 2:
+        case 2: //not used
           ValvesStates[1] = !ValvesStates[1];
           param = ValvesStates[1] ? 1 : 0;
-          Code = 0x12;
+          Code = 0x13;
           break;
         case 3:
           ValvesStates[2] = !ValvesStates[2];

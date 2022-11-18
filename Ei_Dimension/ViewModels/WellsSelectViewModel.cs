@@ -74,7 +74,7 @@ namespace Ei_Dimension.ViewModels
       switch (num)
       {
         case 1:
-          App.Device.MainCommand("Set Property", code: 0xab, parameter: 2);
+          App.Device.MainCommand("Set Property", code: 0xab, parameter: (ushort)PlateType.Tube);
           Table384Visible = Visibility.Hidden;
           Table96Visible = Visibility.Hidden;
           break;
@@ -88,7 +88,7 @@ namespace Ei_Dimension.ViewModels
               row.Reset();
             }
           }
-          App.Device.MainCommand("Set Property", code: 0xab, parameter: 0);
+          App.Device.MainCommand("Set Property", code: 0xab, parameter: (ushort)PlateType.Plate96);
           break;
         case 384:
           Table384Visible = Visibility.Visible;
@@ -100,7 +100,7 @@ namespace Ei_Dimension.ViewModels
               row.Reset();
             }
           }
-          App.Device.MainCommand("Set Property", code: 0xab, parameter: 1);
+          App.Device.MainCommand("Set Property", code: 0xab, parameter: (ushort)PlateType.Plate384);
           break;
       }
       CurrentTableSize = num;
@@ -185,7 +185,7 @@ namespace Ei_Dimension.ViewModels
     /// <returns></returns>
     private List<Well> SortWells(List<Well> wells)
     {
-      if (DashboardViewModel.Instance.SelectedOrderIndex == 0)
+      if (DashboardViewModel.Instance.SelectedOrderIndex == WellReadingOrder.Column)
         wells = wells.OrderBy(x => x.ColIdx).ThenBy(x => x.RowIdx).ToList();
       return wells;
     }

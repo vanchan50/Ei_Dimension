@@ -172,7 +172,7 @@ namespace Ei_Dimension
           }
           update = () => SyringeSpeedsViewModel.Instance.SheathSyringeParameters[pos2] = parameter.FloatParameter.ToString("N0");
           break;
-        case DeviceParameterType.SyringSpeedSample:
+        case DeviceParameterType.SyringeSpeedSample:
           var type3 = (SyringeSpeed)parameter.Parameter;
           var pos3 = 0;
           switch (type3)
@@ -670,7 +670,7 @@ namespace Ei_Dimension
             };
           }
           break;
-        case DeviceParameterType.BubbleDetectorFault: //pay attention to swapped ==0 and >0 states
+        case DeviceParameterType.BubbleDetectorStatus:
           if (parameter.Parameter == 0)
           {
             var msg1 = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Messages_Bubble_Detector_Fault),

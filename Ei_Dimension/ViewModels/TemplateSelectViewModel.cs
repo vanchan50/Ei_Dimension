@@ -253,9 +253,9 @@ namespace Ei_Dimension.ViewModels
           var DashVM = DashboardViewModel.Instance;
           temp.Name = TemplateSaveName[0];
           temp.SysControl = DashVM.SelectedSystemControlIndex;
-          temp.ChConfig = DashVM.SelectedChConfigIndex;
-          temp.Order = DashVM.SelectedOrderIndex;
-          temp.Speed = DashVM.SelectedSpeedIndex;
+          temp.ChConfig = (byte)DashVM.SelectedChConfigIndex;
+          temp.Order = (byte)DashVM.SelectedOrderIndex;
+          temp.Speed = (byte)DashVM.SelectedSpeedIndex;
           temp.Map = DashVM.SelectedClassiMapContent;
           temp.EndRead = DashVM.SelectedEndReadIndex;
           temp.SampleVolume = uint.Parse(DashVM.Volumes[0]);

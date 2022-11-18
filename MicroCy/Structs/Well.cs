@@ -7,8 +7,8 @@ namespace DIOS.Core
   {
     public byte RowIdx;
     public byte ColIdx;
-    public byte RunSpeed;
-    public byte ChanConfig;
+    public WellReadingSpeed RunSpeed;
+    public ChannelConfiguration ChanConfig;
     public short SampVol;
     public short WashVol;
     public short AgitateVol;

@@ -51,7 +51,7 @@ namespace Ei_Dimension.ViewModels
         App.Device.MapCtroller.ActiveMap.calParams.maxmapssc.ToString()
       };
 
-      ClassificationTargetsContents = new ObservableCollection<string> { "1", "1", "1", "1", "3500"};
+      ClassificationTargetsContents = new ObservableCollection<string> { "0", "0", "0", "0", "0"};  //init on map changed
 
       CompensationPercentageContent = new ObservableCollection<string> { App.Device.Compensation.ToString() };
       DNRContents = new ObservableCollection<string> { "", App.Device.HdnrTrans.ToString() };

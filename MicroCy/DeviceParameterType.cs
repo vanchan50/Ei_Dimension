@@ -21,7 +21,7 @@
     DNRTransition,
     ChannelBias30C,
     SyringeSpeedSheath,
-    SyringSpeedSample,
+    SyringeSpeedSample,
     MotorX,
     MotorY,
     MotorZ,
@@ -39,8 +39,13 @@
     SheathFlow,
     SampleSyringeStatus,
     NextWellWarning,
-    BubbleDetectorFault,
+    BubbleDetectorStatus,
+    ///<summary>For internal use</summary>
     BoardVersion,
-    BeadConcentration
+    BeadConcentration,
+    WellReadingSpeed,
+    WellReadingOrder,
+    ChannelConfiguration,
+    PlateType
   }
 }
