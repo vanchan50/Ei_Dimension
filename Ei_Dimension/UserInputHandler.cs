@@ -465,7 +465,7 @@ namespace Ei_Dimension
             {
               if (fRes >= -10.0000000001 && fRes <= 10.00000000000001)
               {
-                App.Device.MainCommand("Set FProperty", code: 0x02, fparameter: fRes);
+                App.Device.SetHardwareParameter(DeviceParameterType.SiPMTempCoeff, fRes);
                 break;
               }
             }
@@ -477,7 +477,7 @@ namespace Ei_Dimension
             {
               if (fRes >= 0 && fRes < 0.1)
               {
-                App.Device.MainCommand("Set FProperty", code: 0x08, fparameter: fRes);
+                App.Device.SetHardwareParameter(DeviceParameterType.CalibrationMargin, fRes);
                 break;
               }
             }

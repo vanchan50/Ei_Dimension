@@ -205,7 +205,7 @@ namespace Ei_Dimension.ViewModels
       UserInputHandler.InputSanityCheck();
       PollStepActive[0] = !PollStepActive[0];
       var param = PollStepActive[0] ? 1 : 0;
-      App.Device.MainCommand("Set Property", code: 0x16, parameter: (ushort)param);
+      App.Device.SetHardwareParameter(DeviceParameterType.PollStepActivity, param);
     }
 
     public void PollStepSelector(string s)

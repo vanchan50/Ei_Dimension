@@ -117,7 +117,6 @@ namespace Ei_Dimension.ViewModels
       UserInputHandler.InputSanityCheck();
       if (!App.Device.IsMeasurementGoing)  //end button press before start, cancel work order
       {
-        App.Device.MainCommand("Set Property", code: 0x17); //leds off
         if (DashboardViewModel.Instance.SelectedSystemControlIndex == 1)
         {
           DashboardViewModel.Instance.WorkOrder[0] = ""; //actually questionable if not in workorder operation

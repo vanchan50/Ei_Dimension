@@ -229,7 +229,8 @@ namespace DIOS.Core
           break;
         case 0x0C:  //pressure at startup
           _device.SelfTester.Data.SetPressure(cs.FParameter);
-          _device.MainCommand("Set FProperty", code: 0x0C); //Reset Pressure, since firmware forgets to do that
+          _device.SetHardwareParameter(DeviceParameterType.PressureAtStartup);  //Reset Pressure, since firmware forgets to do that
+          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.PressureAtStartup, floatParameter: cs.FParameter);
           break;
         case 0x10:
           outParameters = new ParameterUpdateEventArgs(DeviceParameterType.ValveCuvetDrain, intParameter: cs.Parameter);
@@ -247,7 +248,7 @@ namespace DIOS.Core
           outParameters = new ParameterUpdateEventArgs(DeviceParameterType.IsSyringePositionActive, intParameter: cs.Parameter);
           break;
         case 0x16:
-          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.IsPollStepActive, intParameter: cs.Parameter);
+          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.PollStepActivity, intParameter: cs.Parameter);
           break;
         case 0x18:
           outParameters = new ParameterUpdateEventArgs(DeviceParameterType.IsInputSelectorAtPickup, intParameter: cs.Parameter);

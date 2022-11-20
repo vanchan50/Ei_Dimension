@@ -146,7 +146,7 @@ namespace Ei_Dimension.ViewModels
       InputSelectorState[0] = InputSelectorState[1];
       InputSelectorState[1] = temp;
       IInputSelectorState = IInputSelectorState == 0 ? 1 : 0;
-      App.Device.MainCommand("Set Property", code: 0x18, parameter: (ushort)IInputSelectorState);
+      App.Device.SetHardwareParameter(DeviceParameterType.IsInputSelectorAtPickup, IInputSelectorState);
     }
 
     public void ValvesButtonClick(int num)
@@ -156,31 +156,30 @@ namespace Ei_Dimension.ViewModels
       //ValveFan2//1
       UserInputHandler.InputSanityCheck();
       int param = 0;
-      byte Code = 0x00;
+      DeviceParameterType parameter = DeviceParameterType.ValveCuvetDrain;
       switch (num)
       {
         case 1:
           ValvesStates[0] = !ValvesStates[0];
           param = ValvesStates[0] ? 1 : 0;
-          Code = 0x12;
+          parameter = DeviceParameterType.ValveFan2;
           break;
         case 2: //not used
           ValvesStates[1] = !ValvesStates[1];
           param = ValvesStates[1] ? 1 : 0;
-          Code = 0x13;
           break;
         case 3:
           ValvesStates[2] = !ValvesStates[2];
           param = ValvesStates[2] ? 1 : 0;
-          Code = 0x10;
+          parameter = DeviceParameterType.ValveCuvetDrain;
           break;
         case 4:
           ValvesStates[3] = !ValvesStates[3];
           param = ValvesStates[3] ? 1 : 0;
-          Code = 0x11;
+          parameter = DeviceParameterType.ValveFan1;
           break;
       }
-      App.Device.MainCommand("Set Property", code: Code, parameter: (ushort)param);
+      App.Device.SetHardwareParameter(parameter, param);
     }
 
     public void PressureMonToggleButtonClick()
@@ -295,26 +294,27 @@ namespace Ei_Dimension.ViewModels
         GetPositionToggleButtonStateBool[0] = false;
         state = 0;
       }
-      App.Device.MainCommand("Set Property", code: 0x15, parameter: state);
+      App.Device.SetHardwareParameter(DeviceParameterType.IsSyringePositionActive, state);
     }
 
     public void GetPositionButtonsClick(int num)
     {
       UserInputHandler.InputSanityCheck();
       ushort param = 0;
+      SyringePosition pos = SyringePosition.Sheath;
       switch (num)
       {
         case 1:
-          param = 0;
+          pos = SyringePosition.Sheath;
           break;
         case 2:
-          param = 1;
+          pos = SyringePosition.SampleA;
           break;
         case 3:
-          param = 2;
+          pos = SyringePosition.SampleB;
           break;
       }
-      App.Device.RequestParameterUpdate(DeviceParameterType.SyringePosition, selector: param);
+      App.Device.RequestHardwareParameter(DeviceParameterType.SyringePosition, pos);
     }
 
     public void SamplingToggleButtonClick()
@@ -390,7 +390,7 @@ namespace Ei_Dimension.ViewModels
     public void IdexPositionButtonClick()
     {
       UserInputHandler.InputSanityCheck();
-      App.Device.RequestParameterUpdate(DeviceParameterType.IdexPosition);
+      App.Device.RequestHardwareParameter(DeviceParameterType.IdexPosition);
     }
 
     public void SuppressWarningsClick()

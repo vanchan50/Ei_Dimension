@@ -114,6 +114,7 @@
     <Compile Include="Structs\ReadingWellEventArgs.cs" />
     <Compile Include="Structs\WellStatsData.cs" />
     <Compile Include="Structs\Zone.cs" />
+    <Compile Include="SyringePosition.cs" />
     <Compile Include="SyringeSpeed.cs" />
     <Compile Include="USBConnection.cs" />
     <Compile Include="ValidationStats.cs" />

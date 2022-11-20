@@ -29,7 +29,7 @@ namespace DIOS.Core
       switch (_state)
       {
         case State.Reset:
-          _device.RequestParameterUpdate(DeviceParameterType.BeadConcentration);
+          _device.RequestHardwareParameter(DeviceParameterType.BeadConcentration);
           //Skip the tick
           return;
         case State.Start:
@@ -68,7 +68,7 @@ namespace DIOS.Core
       {
         return true;
       }
-      _device.RequestParameterUpdate(DeviceParameterType.SystemActivityStatus);
+      _device.RequestHardwareParameter(DeviceParameterType.SystemActivityStatus);
       return false;
     }
     

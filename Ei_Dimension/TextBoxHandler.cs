@@ -44,15 +44,15 @@ namespace Ei_Dimension
           update = () => ComponentsViewModel.Instance.ValvesStates[0] = parameter.Parameter == 1;
           break;
         case DeviceParameterType.SyringePosition:
-          switch (parameter.Parameter)
+          switch ((SyringePosition)parameter.Parameter)
           {
-            case 0:
+            case SyringePosition.Sheath:
               update = () => ComponentsViewModel.Instance.GetPositionTextBoxInputs[0] = parameter.FloatParameter.ToString();
               break;
-            case 1:
+            case SyringePosition.SampleA:
               update = () => ComponentsViewModel.Instance.GetPositionTextBoxInputs[1] = parameter.FloatParameter.ToString();
               break;
-            case 2:
+            case SyringePosition.SampleB:
               update = () => ComponentsViewModel.Instance.GetPositionTextBoxInputs[2] = parameter.FloatParameter.ToString();
               break;
           }
@@ -60,7 +60,7 @@ namespace Ei_Dimension
         case DeviceParameterType.IsSyringePositionActive:
           update = () => ComponentsViewModel.Instance.GetPositionToggleButtonStateBool[0] = parameter.Parameter == 1;
           break;
-        case DeviceParameterType.IsPollStepActive:
+        case DeviceParameterType.PollStepActivity:
           update = () => MotorsViewModel.Instance.PollStepActive[0] = parameter.Parameter == 1;
           break;
         case DeviceParameterType.IsInputSelectorAtPickup:
@@ -694,7 +694,7 @@ namespace Ei_Dimension
     private static void UpdatePressureMonitor()
     {
       if (ComponentsViewModel.Instance.PressureMonToggleButtonState)
-        App.Device.RequestParameterUpdate(DeviceParameterType.Pressure);
+        App.Device.RequestHardwareParameter(DeviceParameterType.Pressure);
     }
   }
 }

@@ -12,7 +12,7 @@
     ValveFan2,
     SyringePosition,
     IsSyringePositionActive,
-    IsPollStepActive,
+    PollStepActivity,
     IsInputSelectorAtPickup,
     CalibrationSuccess,
     Pressure,
