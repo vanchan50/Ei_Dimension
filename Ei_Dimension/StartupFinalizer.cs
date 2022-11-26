@@ -86,14 +86,6 @@ namespace Ei_Dimension
       if(SettingsWiped)
         WipedSettingsMessage();
 
-      #if DEBUG
-      Console.Error.WriteLine($"Detected Board Rev v{App.Device.BoardVersion}");
-      #endif
-      if(App.Device.FirmwareVersion != null)
-        MainViewModel.AppVersion += App.Device.FirmwareVersion;
-      Console.WriteLine(MainViewModel.AppVersion);
-      if (App.Device.BoardVersion > 0)
-        HideChannels();
 
 
       IntPtr windowHandle = new System.Windows.Interop.WindowInteropHelper(App.Current.MainWindow).Handle;
@@ -106,6 +98,15 @@ namespace Ei_Dimension
       string selfTestErrorMessage = SelfTestErrorDecoder.Decode(selfTestResult);
       if (selfTestErrorMessage != null)
         Notification.ShowError(selfTestErrorMessage);
+      
+      #if DEBUG
+      Console.Error.WriteLine($"Detected Board Rev v{App.Device.BoardVersion}");
+      #endif
+      if(App.Device.FirmwareVersion != null)
+        MainViewModel.AppVersion += App.Device.FirmwareVersion;
+      Console.WriteLine(MainViewModel.AppVersion);
+      if (App.Device.BoardVersion > 0)
+        HideChannels();
     }
 
     private static void Usbnotif_Removal(object sender, USBEvent e)
