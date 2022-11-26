@@ -3,6 +3,7 @@ using DevExpress.Mvvm.POCO;
 using DIOS.Core;
 using System;
 using System.Collections.ObjectModel;
+using DIOSApplication;
 using Ei_Dimension.Controllers;
 
 namespace Ei_Dimension.ViewModels
@@ -43,8 +44,8 @@ namespace Ei_Dimension.ViewModels
 
     public void LoadClick(bool fromCode = false)
     {
-      var idx = App.Device.MapCtroller.MapList.FindIndex(x => x.mapName == App.Device.MapCtroller.ActiveMap.mapName);
-      var map = App.Device.MapCtroller.MapList[idx];
+      var idx = App.DiosApp.MapController.MapList.FindIndex(x => x.mapName == App.DiosApp.MapController.ActiveMap.mapName);
+      var map = App.DiosApp.MapController.MapList[idx];
       for (var i = 0; i < map.regions.Count; i++)
       {
         //Reset all Verification Regions
@@ -71,8 +72,8 @@ namespace Ei_Dimension.ViewModels
     public void SaveClick()
     {
       UserInputHandler.InputSanityCheck();
-      var idx = App.Device.MapCtroller.MapList.FindIndex(x => x.mapName == App.Device.MapCtroller.ActiveMap.mapName);
-      var map = App.Device.MapCtroller.MapList[idx];
+      var idx = App.DiosApp.MapController.MapList.FindIndex(x => x.mapName == App.DiosApp.MapController.ActiveMap.mapName);
+      var map = App.DiosApp.MapController.MapList[idx];
       for (var i = 1; i < MapRegionsController.RegionsList.Count; i++)
       {
         var index = map.regions.FindIndex(x => x.Number == MapRegionsController.RegionsList[i].Number);
@@ -99,7 +100,7 @@ namespace Ei_Dimension.ViewModels
           }
         }
       }
-      var res = App.Device.MapCtroller.SaveCalVals(new MapCalParameters
+      var res = App.DiosApp.MapController.SaveCalVals(new MapCalParameters
       {
         TempCl0 = -1,
         TempCl1 = -1,
@@ -140,7 +141,7 @@ namespace Ei_Dimension.ViewModels
 
     public static void VerificationSuccess()
     {
-      App.Device.MapCtroller.SaveCalVals(new MapCalParameters
+      App.DiosApp.MapController.SaveCalVals(new MapCalParameters
       {
         TempCl0 = -1,
         TempCl1 = -1,
@@ -168,7 +169,7 @@ namespace Ei_Dimension.ViewModels
         Caldate = null,
         Valdate = DateTime.Now.ToString("dd.MM.yyyy", new System.Globalization.CultureInfo("en-GB"))
       });
-      DashboardViewModel.Instance.SetValidationDate(App.Device.MapCtroller.ActiveMap.valtime);
+      DashboardViewModel.Instance.SetValidationDate(App.DiosApp.MapController.ActiveMap.valtime);
       Notification.ShowLocalizedSuccess(nameof(Language.Resources.Validation_Success));
     }
 
@@ -205,7 +206,7 @@ namespace Ei_Dimension.ViewModels
       var passed1 = Verificator.ReporterToleranceTest(Settings.Default.ValidatorToleranceReporter, out var msg1);
       var passed2 = Verificator.ClassificationToleranceTest(Settings.Default.ValidatorToleranceClassification, out var msg2);
       var passed3 = Verificator.MisclassificationToleranceTest(Settings.Default.ValidatorToleranceMisclassification, out var msg3);
-      Verificator.PublishResult();
+      Verificator.PublishResult($"{App.DiosApp.RootDirectory.FullName}\\SystemLogs\\VerificationLogs.txt");
       if (msg1 != null)
         errorMsg = msg1;
       if (msg2 != null)

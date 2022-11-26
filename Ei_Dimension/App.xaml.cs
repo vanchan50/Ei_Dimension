@@ -9,11 +9,14 @@ using System.Configuration;
 using System.Text;
 using Ei_Dimension.Cache;
 using Ei_Dimension.Controllers;
+using DIOSApplication;
+using System.Diagnostics;
 
 namespace Ei_Dimension
 {
   public partial class App : Application
   {
+    public static DIOSApp DiosApp { get; } = new DIOSApp();
     public static (PropertyInfo prop, object VM) NumpadShow { get; set; }
     public static (PropertyInfo prop, object VM) KeyboardShow { get; set; }
     public static Device Device { get; private set; }
@@ -57,7 +60,7 @@ namespace Ei_Dimension
 
     public static int GetMapIndex(string mapName)
     {
-      var mapList = Device.MapCtroller.MapList;
+      var mapList = DiosApp.MapController.MapList;
       int i = 0;
       for (; i < mapList.Count; i++)
       {
@@ -71,11 +74,11 @@ namespace Ei_Dimension
 
     public static void SetActiveMap(string mapName)
     {
-      for (var i = 0; i < Device.MapCtroller.MapList.Count; i++)
+      for (var i = 0; i < DiosApp.MapController.MapList.Count; i++)
       {
-        if (Device.MapCtroller.MapList[i].mapName == mapName)
+        if (DiosApp.MapController.MapList[i].mapName == mapName)
         {
-          Device.MapCtroller.SetMap(Device.MapCtroller.MapList[i]);
+          DiosApp.MapController.SetMap(DiosApp.MapController.MapList[i]);
           Settings.Default.DefaultMap = i;
           Settings.Default.Save();
           break;
@@ -295,6 +298,7 @@ namespace Ei_Dimension
 
     public void MapChangedEventHandler(object sender, CustomMap map)
     {
+      Device.SetMap(map);
       _ = Current.Dispatcher.BeginInvoke((Action)(() =>
       {
         ResultsViewModel.Instance.FillWorldMaps();
@@ -365,10 +369,11 @@ namespace Ei_Dimension
 
     public static void SetLogOutput()
     {
-      Device.Publisher.OutDirCheck();
-      if (!Directory.Exists(Device.Publisher.Outdir + "\\SystemLogs"))
-        Directory.CreateDirectory(Device.Publisher.Outdir + "\\SystemLogs");
-      string logPath = Path.Combine(Path.Combine(@"C:\Emissioninc", Environment.MachineName), "SystemLogs", "EventLog");
+      string folder = $"{DiosApp.RootDirectory.FullName}\\SystemLogs";
+      string fileName = "EventLog";
+      if (!Directory.Exists(folder))
+        Directory.CreateDirectory(folder);
+      string logPath = $"{folder}\\{fileName}";
       string logFilePath = logPath + ".txt";
     
       string backFilePath = logPath + ".bak";
@@ -395,7 +400,7 @@ namespace Ei_Dimension
       try
       {
         string contents = PlatePictogramViewModel.Instance.PlatePictogram.GetSerializedPlate();
-        File.WriteAllText($"{Device.RootDirectory.FullName}\\Status\\StatusFile.json", contents);
+        File.WriteAllText($"{DiosApp.RootDirectory.FullName}\\Status\\StatusFile.json", contents);
       }
       catch(Exception e)
       {
@@ -573,7 +578,7 @@ namespace Ei_Dimension
 
     public static void CheckAvailableWorkOrders()
     {
-      string[] fileEntries = Directory.GetFiles($"{Device.RootDirectory.FullName}\\WorkOrder", "*.txt");
+      string[] fileEntries = Directory.GetFiles($"{DiosApp.RootDirectory.FullName}\\WorkOrder", "*.txt");
       if (fileEntries.Length == 0)
         return;
       var name = Path.GetFileNameWithoutExtension(fileEntries[0]);
@@ -621,7 +626,31 @@ namespace Ei_Dimension
     private void InitApp(Device device)
     {
       StatisticsExtension.TailDiscardPercentage = Settings.Default.StatisticsTailDiscardPercentage;
-      Device = device ?? new Device(new USBConnection());
+      Device = device ?? new Device(new USBConnection(), DiosApp.RootDirectory.FullName);
+
+      SetLogOutput();
+      DiosApp.MapController.OnAppLoaded(Settings.Default.DefaultMap);
+      Device.StartingToReadWell += StartingToReadWellEventHandler;
+      Device.FinishedReadingWell += FinishedReadingWellEventHandler;
+      Device.FinishedMeasurement += FinishedMeasurementEventHandler;
+      Device.NewStatsAvailable += NewStatsAvailableEventHandler;
+      DiosApp.MapController.ChangedActiveMap += MapChangedEventHandler;
+      Device.ParameterUpdate += _textBoxHandler.ParameterUpdateEventHandler;
+      _workOrderPending = false;
+      _nextWellWarning = false;
+      _workOrderWatcher = new FileSystemWatcher($"{DiosApp.RootDirectory.FullName}\\WorkOrder");
+      _workOrderWatcher.NotifyFilter = NotifyFilters.FileName;
+      _workOrderWatcher.Filter = "*.txt";
+      _workOrderWatcher.EnableRaisingEvents = true;
+      _workOrderWatcher.Created += OnNewWorkOrder;
+    }
+
+    public static void SetupDevice()
+    {
+      if (Device == null)
+        throw new Exception("Device not initialized");
+
+      Device.Init();
 
       if (Directory.Exists(Settings.Default.LastOutFolder))
         Device.Publisher.Outdir = Settings.Default.LastOutFolder;
@@ -630,72 +659,20 @@ namespace Ei_Dimension
         Settings.Default.LastOutFolder = Device.Publisher.Outdir;
         Settings.Default.Save();
       }
-      SetLogOutput();
-      SetupDevice();
-      Device.StartingToReadWell += StartingToReadWellEventHandler;
-      Device.FinishedReadingWell += FinishedReadingWellEventHandler;
-      Device.FinishedMeasurement += FinishedMeasurementEventHandler;
-      Device.NewStatsAvailable += NewStatsAvailableEventHandler;
-      Device.MapCtroller.ChangedActiveMap += MapChangedEventHandler;
-      Device.ParameterUpdate += _textBoxHandler.ParameterUpdateEventHandler;
       Device.Publisher.Outfilename = Settings.Default.SaveFileName;
-      _workOrderPending = false;
-      _nextWellWarning = false;
-      _workOrderWatcher = new FileSystemWatcher($"{Device.RootDirectory.FullName}\\WorkOrder");
-      _workOrderWatcher.NotifyFilter = NotifyFilters.FileName;
-      _workOrderWatcher.Filter = "*.txt";
-      _workOrderWatcher.EnableRaisingEvents = true;
-      _workOrderWatcher.Created += OnNewWorkOrder;
-
-      if (!System.Windows.Input.Keyboard.IsKeyDown(System.Windows.Input.Key.LeftCtrl))
-        Device.StartSelfTest();
-    }
-
-    private void SetupDevice()
-    {
-      if (Device == null)
-        throw new Exception("Device not initialized");
-
-      if (Settings.Default.DefaultMap > Device.MapCtroller.MapList.Count - 1)
-      {
-        try
-        {
-          Device.MapCtroller.SetMap(Device.MapCtroller.MapList[0]);
-        }
-        catch
-        {
-          throw new Exception($"Could not find Maps in {Device.RootDirectory.FullName + @"\Config"} folder");
-        }
-      }
-      else
-      {
-        try
-        {
-          var map = Device.MapCtroller.MapList[Settings.Default.DefaultMap];
-          Device.MapCtroller.SetMap(map);
-        }
-        catch
-        {
-          throw new Exception($"Problem with Maps in {Device.RootDirectory.FullName + @"\Config"} folder");
-        }
-        finally
-        {
-          Device.MapCtroller.SetMap(Device.MapCtroller.MapList[0]);
-        }
-      }
+      Device.Publisher.MakePlateReport = Settings.Default.PlateReport;
       Device.Control = (SystemControl)Settings.Default.SystemControl;
       Device.SaveIndividualBeadEvents = Settings.Default.Everyevent;
       Device.RMeans = Settings.Default.RMeans;
-      Device.Publisher.MakePlateReport = Settings.Default.PlateReport;
       Device.TerminationType = (Termination)Settings.Default.EndRead;
       Device.MinPerRegion = Settings.Default.MinPerRegion;
       Device.BeadsToCapture = Settings.Default.BeadsToCapture;
       Device.OnlyClassifiedInBeadEventFile = Settings.Default.OnlyClassifed;
       Device.SensitivityChannel = Settings.Default.SensitivityChannelB ? HiSensitivityChannel.GreenB : HiSensitivityChannel.GreenC;
       Device.ReporterScaling = Settings.Default.ReporterScaling;
-      Device.MainCommand("Set Property", code: 0xbf, parameter: (ushort)Device.MapCtroller.ActiveMap.calParams.att);
-      Device.HdnrTrans = Device.MapCtroller.ActiveMap.calParams.DNRTrans;
-      Device.Compensation = Device.MapCtroller.ActiveMap.calParams.compensation;
+      Device.MainCommand("Set Property", code: 0xbf, parameter: (ushort)DiosApp.MapController.ActiveMap.calParams.att);
+      Device.HdnrTrans = DiosApp.MapController.ActiveMap.calParams.DNRTrans;
+      Device.Compensation = DiosApp.MapController.ActiveMap.calParams.compensation;
       Device.MainCommand("Set Property", code: 0x97, parameter: 1170);  //set current limit of aligner motors if leds are off
       Device.MaxPressure = Settings.Default.MaxPressure;
     }

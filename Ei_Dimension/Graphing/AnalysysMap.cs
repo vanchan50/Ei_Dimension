@@ -83,7 +83,7 @@ namespace Ei_Dimension.Graphing
     {
       foreach (var result in BackingWResults)
       {
-        if (App.Device.MapCtroller.ActiveMap.Regions.TryGetValue(result.regionNumber, out var region))
+        if (App.DiosApp.MapController.ActiveMap.Regions.TryGetValue(result.regionNumber, out var region))
         {
           var x = HeatMapPoint.bins[region.Center.x];
           var y = HeatMapPoint.bins[region.Center.y];
@@ -100,8 +100,8 @@ namespace Ei_Dimension.Graphing
 
     public void AddDataPoint(int regionIndex, double reporterAvg)
     {
-      var x = HeatMapPoint.bins[App.Device.MapCtroller.ActiveMap.regions[regionIndex].Center.x];
-      var y = HeatMapPoint.bins[App.Device.MapCtroller.ActiveMap.regions[regionIndex].Center.y];
+      var x = HeatMapPoint.bins[App.DiosApp.MapController.ActiveMap.regions[regionIndex].Center.x];
+      var y = HeatMapPoint.bins[App.DiosApp.MapController.ActiveMap.regions[regionIndex].Center.y];
       Current12Map.Add(new Models.DoubleHeatMapData(x, y, reporterAvg));
     }
 

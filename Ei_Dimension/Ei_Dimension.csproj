@@ -573,6 +573,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Application\Application.csproj">
+      <Project>{7999001c-c595-4f3b-9364-35393ceea43d}</Project>
+      <Name>Application</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Language\Language.csproj">
       <Project>{ae6ffeca-703a-49a8-8979-7381fb4dbae9}</Project>
       <Name>Language</Name>

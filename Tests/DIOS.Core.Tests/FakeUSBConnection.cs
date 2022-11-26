@@ -13,6 +13,12 @@ namespace DIOS.Core.Tests
       InputBuffer = new byte[512];
       IsActive = true;
     }
+
+    public void Start()
+    {
+
+    }
+
     public void BeginRead(AsyncCallback func)
     {
       throw new NotImplementedException();

@@ -36,7 +36,6 @@ namespace DIOS.Core
   public class Device
   {
     public ResultsPublisher Publisher { get; }
-    public MapController MapCtroller { get; }
     public RunResults Results { get; }
     public WorkOrder WorkOrder { get; set; }
     public ConcurrentQueue<ProcessedBead> DataOut { get; } = new ConcurrentQueue<ProcessedBead>();
@@ -117,7 +116,6 @@ namespace DIOS.Core
     {
       get { return _beadProcessor.Normalization; }
     }
-    public static DirectoryInfo RootDirectory { get; private set; }
     public float MaxPressure { get; set; }
     public bool IsPlateEjected { get; internal set; }
     public static bool IncludeReg0InPlateSummary { get; set; }  //TODO: crutch for filesaving
@@ -132,19 +130,23 @@ namespace DIOS.Core
     internal SelfTester SelfTester { get; }
     internal readonly BeadProcessor _beadProcessor;
 
-    public Device(ISerial connection)
+    public Device(ISerial connection, string folderPath)
     {
-      SetSystemDirectories();
       SelfTester = new SelfTester(this);
       Results = new RunResults(this);
       _beadProcessor = new BeadProcessor(this);
       _dataController = new DataController(this, Results, connection);
       _stateMach = new StateMachine(this, true);
-      Publisher = new ResultsPublisher(this);
-      MapCtroller = new MapController();
-      MapCtroller.ChangedActiveMap += MapChangedEventHandler;
-      MainCommand("Sync");
-      RequestHardwareParameter(DeviceParameterType.BoardVersion);
+      Publisher = new ResultsPublisher(this, folderPath);
+    }
+
+    public void Init()
+    {
+      if (_dataController.Run())
+      {
+        MainCommand("Sync");
+        RequestHardwareParameter(DeviceParameterType.BoardVersion);
+      }
     }
 
     public void UpdateStateMachine()
@@ -211,8 +213,8 @@ namespace DIOS.Core
       {
         Normalization.SuspendForTheRun();
       }
-      MainCommand("Set Property", code: 0xce, parameter: MapCtroller.ActiveMap.calParams.minmapssc);  //set ssc gates for this map
-      MainCommand("Set Property", code: 0xcf, parameter: MapCtroller.ActiveMap.calParams.maxmapssc);
+      MainCommand("Set Property", code: 0xce, parameter: _beadProcessor._map.calParams.minmapssc);  //set ssc gates for this map
+      MainCommand("Set Property", code: 0xcf, parameter: _beadProcessor._map.calParams.maxmapssc);
       //read section of plate
       RequestHardwareParameter(DeviceParameterType.MotorStepsX, MotorStepsX.Plate96C1);
       RequestHardwareParameter(DeviceParameterType.MotorStepsY, MotorStepsY.Plate96RowA);
@@ -1255,25 +1257,6 @@ namespace DIOS.Core
       MainCommand("Get Property", code: commandCode, parameter: selector, cmd: 0x01);
     }
 
-    private void SetSystemDirectories()
-    {
-      RootDirectory = new DirectoryInfo(Path.Combine(@"C:\Emissioninc", Environment.MachineName));
-      List<string> subDirectories = new List<string>(8) { "Config", "WorkOrder", "SavedImages", "Archive", "Result", "Status", "AcquisitionData", "SystemLogs" };
-      try
-      {
-        foreach (var d in subDirectories)
-        {
-          RootDirectory.CreateSubdirectory(d);
-        }
-        Directory.CreateDirectory(RootDirectory.FullName + @"\Result" + @"\Summary");
-        Directory.CreateDirectory(RootDirectory.FullName + @"\Result" + @"\Detail");
-      }
-      catch
-      {
-        Console.WriteLine("Directory Creation Failed");
-      }
-    }
-
     private void OnStartingToReadWell()
     {
       IsMeasurementGoing = true;
@@ -1304,7 +1287,7 @@ namespace DIOS.Core
       Results.EndOfOperationReset();
       MainCommand("Set Property", code: 0x19);  //bubble detect off
       if (Mode ==  OperationMode.Verification)
-        Verificator.CalculateResults(MapCtroller);
+        Verificator.CalculateResults(_beadProcessor._map);
 
       if (Mode != OperationMode.Normal)
         Normalization.Restore();
@@ -1324,7 +1307,7 @@ namespace DIOS.Core
       ParameterUpdate?.Invoke(this, param);
     }
 
-    internal void MapChangedEventHandler(object sender, CustomMap map)
+    public void SetMap(CustomMap map)
     {
       _beadProcessor.SetMap(map);
     }

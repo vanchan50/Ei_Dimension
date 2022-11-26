@@ -20,7 +20,7 @@ namespace APP.Tests
     public IntergationTests()
     {
       _usb = new FakeUSBConnection();
-      _device = new Device(_usb);
+      //_device = new Device(_usb);
       _sut = new App(_device);
       MainViewModel.Create();
       ResultsViewModel.Create();

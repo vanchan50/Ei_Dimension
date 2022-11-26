@@ -187,9 +187,9 @@ namespace DIOS.Core
       _culture = culture;
     }
 
-    public static void PublishResult()
+    public static void PublishResult(string path)
     {
-      _report.Publish();
+      _report.Publish(path);
     }
 
     /// <summary>
@@ -218,7 +218,7 @@ namespace DIOS.Core
       _unclassifiedRegionsDict.Add(bead.region, 1);
     }
 
-    internal static void CalculateResults(MapController mapctroller)
+    internal static void CalculateResults(CustomMap activeMap)
     {
       //RegionalStats holds regions with defined Reporter target
       foreach (var region in RegionalStats)
@@ -258,10 +258,10 @@ namespace DIOS.Core
       var list = new List<MapRegion>(4);
       foreach (var p in _classifiedRegionsDict)
       {
-        list.Add(mapctroller.ActiveMap.Regions[p.Key]);
+        list.Add(activeMap.Regions[p.Key]);
       }
 
-      if (mapctroller.ActiveMap.Regions.TryGetValue(_highestUnclassifiedCountRegion, out var mapRegion))
+      if (activeMap.Regions.TryGetValue(_highestUnclassifiedCountRegion, out var mapRegion))
       {
         var nearestVerifRegion = mapRegion.FindNearestRegionFrom(list);
         _report.Test3NearestClassifiedCountRegion = nearestVerifRegion.Number;

@@ -23,6 +23,10 @@ namespace Ei_Dimension
       if (_done)
         throw new Exception("StartupFinalizer can only be called once");
 
+      App.SetupDevice();
+      if (!System.Windows.Input.Keyboard.IsKeyDown(System.Windows.Input.Key.LeftCtrl))
+        App.Device.StartSelfTest();
+
       if (Program.SpecializedVer == CompanyID.China)
       {
         MainWindow.Instance.CompanyLogo.Source = new BitmapImage(new Uri(@"/Ei_Dimension;component/Icons/Emission_LogoCh.png", UriKind.Relative));
@@ -97,6 +101,7 @@ namespace Ei_Dimension
       usbnotif = new USBNotifier(windowHandle, Guid.ParseExact("F70242C7-FB25-443B-9E7E-A4260F373982", "D"));
       usbnotif.Arrival += Usbnotif_Arrival;
       usbnotif.Removal += Usbnotif_Removal;
+
       var selfTestResult = await App.Device.GetSelfTestResultAsync();
       string selfTestErrorMessage = SelfTestErrorDecoder.Decode(selfTestResult);
       if (selfTestErrorMessage != null)

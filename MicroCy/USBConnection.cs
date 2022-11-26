@@ -14,6 +14,10 @@ namespace DIOS.Core
 
     public USBConnection()
     {
+    }
+
+    public void Start()
+    {
       if (Init())
       {
         Console.Error.WriteLine("OutPipe Address:");

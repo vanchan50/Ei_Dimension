@@ -31,7 +31,7 @@ namespace Ei_Dimension.ViewModels
         Language.TranslationSource.Instance.CurrentCulture);
       TemplateSaveName = new ObservableCollection<string> { defTemplateName };
 
-      var TemplateList = Directory.GetFiles(Device.RootDirectory + @"\Config", "*.dtml");
+      var TemplateList = Directory.GetFiles($"{App.DiosApp.RootDirectory}\\Config", "*.dtml");
       foreach (var template in TemplateList)
       {
         NameList.Add(Path.GetFileNameWithoutExtension(template));
@@ -197,7 +197,7 @@ namespace Ei_Dimension.ViewModels
 
               if (newTemplate.PlateType != null)//case for old templates
               {
-                var plateFilePath = Device.RootDirectory + @"\Config\" + newTemplate.PlateType + PlateCustomizationViewModel.PLATETYPEFILEEXTENSION;
+                var plateFilePath = App.DiosApp.RootDirectory + @"\Config\" + newTemplate.PlateType + PlateCustomizationViewModel.PLATETYPEFILEEXTENSION;
                 if (File.Exists(plateFilePath))
                 {
                   PlateCustomizationViewModel.Instance.SelectedItem = plateFilePath;
@@ -230,7 +230,7 @@ namespace Ei_Dimension.ViewModels
     public void SaveTemplate()
     {
       UserInputHandler.InputSanityCheck();
-      var path = Device.RootDirectory + @"\Config\" + TemplateSaveName[0] + ".dtml";
+      var path = App.DiosApp.RootDirectory + @"\Config\" + TemplateSaveName[0] + ".dtml";
       foreach (var c in _invalidChars)
       {
         if (TemplateSaveName[0].Contains(c.ToString()))
@@ -364,7 +364,7 @@ namespace Ei_Dimension.ViewModels
       if (e.AddedItems.Count == 0)
         return;
       _templateName = e.AddedItems[0].ToString();
-      SelectedItem = Device.RootDirectory + @"\Config\" + e.AddedItems[0].ToString() + ".dtml";
+      SelectedItem = App.DiosApp.RootDirectory + @"\Config\" + e.AddedItems[0].ToString() + ".dtml";
       TemplateSaveName[0] = _templateName;
       DeleteVisible = Visibility.Visible;
     }

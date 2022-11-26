@@ -7,7 +7,7 @@
     private float _greenMaj;
     private readonly Device _device;
     private readonly ClassificationMap _classificationMap = new ClassificationMap();
-    private CustomMap _map;
+    internal CustomMap _map;
 
     public BeadProcessor(Device device)
     {

@@ -47,8 +47,8 @@ namespace Ei_Dimension.ViewModels
       EventTriggerContents = new ObservableCollection<string>
       {
         "",
-        App.Device.MapCtroller.ActiveMap.calParams.minmapssc.ToString(),
-        App.Device.MapCtroller.ActiveMap.calParams.maxmapssc.ToString()
+        App.DiosApp.MapController.ActiveMap.calParams.minmapssc.ToString(),
+        App.DiosApp.MapController.ActiveMap.calParams.maxmapssc.ToString()
       };
 
       ClassificationTargetsContents = new ObservableCollection<string> { "0", "0", "0", "0", "0"};  //init on map changed
@@ -56,7 +56,7 @@ namespace Ei_Dimension.ViewModels
       CompensationPercentageContent = new ObservableCollection<string> { App.Device.Compensation.ToString() };
       DNRContents = new ObservableCollection<string> { "", App.Device.HdnrTrans.ToString() };
 
-      AttenuationBox = new ObservableCollection<string> { App.Device.MapCtroller.ActiveMap.calParams.att.ToString() };
+      AttenuationBox = new ObservableCollection<string> { App.DiosApp.MapController.ActiveMap.calParams.att.ToString() };
 
       CalFailsInARow = 0;
       CalJustFailed = true;
@@ -90,7 +90,7 @@ namespace Ei_Dimension.ViewModels
       };
       Action Save = () =>
       {
-        var res = App.Device.MapCtroller.SaveCalVals(new MapCalParameters
+        var res = App.DiosApp.MapController.SaveCalVals(new MapCalParameters
         {
           TempCl0 = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[8]),
           TempCl1 = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[5]),
@@ -124,7 +124,7 @@ namespace Ei_Dimension.ViewModels
             Notification.Show("Save failed"));
           return;
         }
-        DashboardViewModel.Instance.SetCalibrationDate(App.Device.MapCtroller.ActiveMap.caltime);
+        DashboardViewModel.Instance.SetCalibrationDate(App.DiosApp.MapController.ActiveMap.caltime);
         Cancel.Invoke();
       };
       Notification.ShowLocalized(nameof(Language.Resources.Calibration_Success), Save, nameof(Language.Resources.Calibration_Save_Calibration_To_Map),
@@ -177,7 +177,7 @@ namespace Ei_Dimension.ViewModels
       App.Device.RequestHardwareParameter(DeviceParameterType.ChannelBias30C, Channel.VioletB);
       App.Device.RequestHardwareParameter(DeviceParameterType.ChannelBias30C, Channel.ForwardScatter);
       System.Threading.Thread.Sleep(1000);
-      var res = App.Device.MapCtroller.SaveCalVals(new MapCalParameters
+      var res = App.DiosApp.MapController.SaveCalVals(new MapCalParameters
       {
         TempCl0 = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[8]),
         TempCl1 = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[5]),
@@ -213,7 +213,7 @@ namespace Ei_Dimension.ViewModels
       }
       var msg = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Messages_CalParameters_Saved),
         Language.TranslationSource.Instance.CurrentCulture);
-      Notification.Show($"{msg} {App.Device.MapCtroller.ActiveMap.mapName}");
+      Notification.Show($"{msg} {App.DiosApp.MapController.ActiveMap.mapName}");
     }
 
     public void FocusedBox(int num)

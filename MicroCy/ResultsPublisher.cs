@@ -10,6 +10,7 @@ namespace DIOS.Core
     public bool MakePlateReport { get; set; }
     public string WorkOrderPath { get; set; }
     internal string FullBeadEventFileName { get; private set; }
+    private string _folder;
 
     public string Date
     {
@@ -22,10 +23,11 @@ namespace DIOS.Core
     private string _thisRunStatsFileName;
     private Device _device;
 
-    public ResultsPublisher(Device device)
+    public ResultsPublisher(Device device, string folder)
     {
       _device = device;
-      Outdir = Device.RootDirectory.FullName;
+      _folder = folder;
+      Outdir = _folder;
     }
 
     internal void StartNewBeadEventReport()
@@ -41,7 +43,7 @@ namespace DIOS.Core
       var root = Path.GetPathRoot(Outdir);
       if (!Directory.Exists(root))
       {
-        Outdir = Device.RootDirectory.FullName;
+        Outdir = _folder;
       }
     }
 
@@ -137,7 +139,7 @@ namespace DIOS.Core
       }
 
       string rfilename = _device.Control == SystemControl.Manual ? Outfilename : _device.WorkOrder.plateID.ToString();
-      var directoryName = $"{Device.RootDirectory.FullName}\\Result\\Summary";
+      var directoryName = $"{_folder}\\Result\\Summary";
       try
       {
         if (!Directory.Exists(directoryName))

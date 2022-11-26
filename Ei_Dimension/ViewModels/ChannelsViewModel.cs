@@ -19,16 +19,16 @@ namespace Ei_Dimension.ViewModels
     {
       Bias30Parameters = new ObservableCollection<string>
       {
-        App.Device.MapCtroller.ActiveMap.calgssc.ToString(),
-        App.Device.MapCtroller.ActiveMap.calrpmaj.ToString(),
-        App.Device.MapCtroller.ActiveMap.calrpmin.ToString(),
-        App.Device.MapCtroller.ActiveMap.calcl3.ToString(),
-        App.Device.MapCtroller.ActiveMap.calrssc.ToString(),
-        App.Device.MapCtroller.ActiveMap.calcl1.ToString(),
-        App.Device.MapCtroller.ActiveMap.calcl2.ToString(),
-        App.Device.MapCtroller.ActiveMap.calvssc.ToString(),
-        App.Device.MapCtroller.ActiveMap.calcl0.ToString(),
-        App.Device.MapCtroller.ActiveMap.calfsc.ToString()
+        App.DiosApp.MapController.ActiveMap.calgssc.ToString(),
+        App.DiosApp.MapController.ActiveMap.calrpmaj.ToString(),
+        App.DiosApp.MapController.ActiveMap.calrpmin.ToString(),
+        App.DiosApp.MapController.ActiveMap.calcl3.ToString(),
+        App.DiosApp.MapController.ActiveMap.calrssc.ToString(),
+        App.DiosApp.MapController.ActiveMap.calcl1.ToString(),
+        App.DiosApp.MapController.ActiveMap.calcl2.ToString(),
+        App.DiosApp.MapController.ActiveMap.calvssc.ToString(),
+        App.DiosApp.MapController.ActiveMap.calcl0.ToString(),
+        App.DiosApp.MapController.ActiveMap.calfsc.ToString()
       };
       TcompBiasParameters = new ObservableCollection<string>();
       TempParameters = new ObservableCollection<string>();
@@ -55,7 +55,7 @@ namespace Ei_Dimension.ViewModels
     public void SaveBiasButtonClick()
     {
       UserInputHandler.InputSanityCheck();
-      var res = App.Device.MapCtroller.SaveCalVals(new DIOS.Core.MapCalParameters
+      var res = App.DiosApp.MapController.SaveCalVals(new DIOS.Core.MapCalParameters
       {
         TempCl0 = int.Parse(Bias30Parameters[8]),
         TempCl1 = int.Parse(Bias30Parameters[5]),
@@ -91,7 +91,7 @@ namespace Ei_Dimension.ViewModels
       }
       var msg = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Messages_CalParameters_Saved),
         Language.TranslationSource.Instance.CurrentCulture);
-      Notification.Show($"{msg} {App.Device.MapCtroller.ActiveMap.mapName}");
+      Notification.Show($"{msg} {App.DiosApp.MapController.ActiveMap.mapName}");
     }
 
     public void FocusedBox(int num)

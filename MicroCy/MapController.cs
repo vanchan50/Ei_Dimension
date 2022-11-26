@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime;
 
 namespace DIOS.Core
 {
@@ -10,9 +11,11 @@ namespace DIOS.Core
     public CustomMap ActiveMap { get; private set; }
     public List<CustomMap> MapList { get; } = new List<CustomMap>();
     public event EventHandler<CustomMap> ChangedActiveMap;
+    private string _mapFolder;
 
-    public MapController()
+    public MapController(string mapFolder)
     {
+      _mapFolder = mapFolder;
       MoveMaps();
       UpdateMaps();
       LoadMaps();
@@ -22,6 +25,34 @@ namespace DIOS.Core
     {
       ActiveMap = map;
       OnMapChanged();
+    }
+
+    public void OnAppLoaded(int id)
+    {
+      if (id > MapList.Count - 1)
+      {
+        try
+        {
+          SetMap(MapList[0]);
+        }
+        catch
+        {
+          throw new Exception($"Could not find Maps in {_mapFolder} folder");
+        }
+      }
+      else
+      {
+        try
+        {
+          var map = MapList[id];
+          SetMap(map);
+        }
+        catch
+        {
+          Console.WriteLine($"Problem with Maps in {_mapFolder} folder");
+          SetMap(MapList[0]);
+        }
+      }
     }
 
     public bool SaveCalVals(MapCalParameters param)
@@ -125,8 +156,7 @@ namespace DIOS.Core
 
     public void LoadMaps()  //TODO: MapLoader class that returns specific map by it's name. no need to keep all of them in memory. that's another lib between gui and core
     {
-      string path = Path.Combine(Device.RootDirectory.FullName, "Config");
-      var files = Directory.GetFiles(path, "*.dmap");
+      var files = Directory.GetFiles(_mapFolder, "*.dmap");
       foreach(var mp in files)
       {
         using (TextReader reader = new StreamReader(mp))
@@ -156,7 +186,7 @@ namespace DIOS.Core
       foreach (var mp in files)
       {
         string name = mp.Substring(mp.LastIndexOf("\\") + 1);
-        string destination = $"{Device.RootDirectory.FullName}\\Config\\{name}";
+        string destination = $"{_mapFolder}\\{name}";
         if (!File.Exists(destination))
         {
           File.Copy(mp, destination);
@@ -178,7 +208,7 @@ namespace DIOS.Core
       foreach (var mp in files)
       {
         string name = mp.Substring(mp.LastIndexOf("\\") + 1);
-        string destination = $"{Device.RootDirectory.FullName}\\Config\\{name}";
+        string destination = $"{_mapFolder}\\{name}";
         destination = destination.Substring(0, destination.Length - 1);
         if (!File.Exists(destination))
         {
@@ -255,7 +285,7 @@ namespace DIOS.Core
       var contents = JsonConvert.SerializeObject(map);
       try
       {
-        using (var stream = new StreamWriter(Device.RootDirectory.FullName + @"/Config/" + map.mapName + @".dmap"))
+        using (var stream = new StreamWriter($"{_mapFolder}\\{map.mapName}.dmap"))
         {
           stream.Write(contents);
         }

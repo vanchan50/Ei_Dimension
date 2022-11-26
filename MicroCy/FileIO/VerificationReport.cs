@@ -41,9 +41,8 @@ namespace DIOS.Core.FileIO
              $"{Test3MisclassificationsPercentage:F2}\n";
     }
 
-    public void Publish()
+    public void Publish(string path)
     {
-      var path = Device.RootDirectory.FullName + @"\SystemLogs\VerificationLogs.txt";
       if (!File.Exists(path))
       {
         try

@@ -18,8 +18,8 @@ namespace Ei_Dimension.ViewModels
     protected NormalizationViewModel()
     {
       NormalizationFactor = new ObservableCollection<string> {""};
-      NormalizationEnabled = new ObservableCollection<bool> { App.Device.Normalization.IsEnabled };
-      MainViewModel.Instance.SetNormalizationMarker(App.Device.Normalization.IsEnabled);
+      NormalizationEnabled = new ObservableCollection<bool> { true };
+      MainViewModel.Instance.SetNormalizationMarker(true);
       Instance = this;
     }
 
@@ -30,8 +30,8 @@ namespace Ei_Dimension.ViewModels
 
     public void Load()
     {
-      var idx = App.Device.MapCtroller.MapList.FindIndex(x => x.mapName == App.Device.MapCtroller.ActiveMap.mapName);
-      var map = App.Device.MapCtroller.MapList[idx];
+      var idx = App.DiosApp.MapController.MapList.FindIndex(x => x.mapName == App.DiosApp.MapController.ActiveMap.mapName);
+      var map = App.DiosApp.MapController.MapList[idx];
       foreach (var regionData in MapRegionsController.RegionsList)
       {
         if (map.Regions.TryGetValue(regionData.Number, out var region))
@@ -69,8 +69,8 @@ namespace Ei_Dimension.ViewModels
 
     public void ClearClick()
     {
-      var idx = App.Device.MapCtroller.MapList.FindIndex(x => x.mapName == App.Device.MapCtroller.ActiveMap.mapName);
-      var map = App.Device.MapCtroller.MapList[idx];
+      var idx = App.DiosApp.MapController.MapList.FindIndex(x => x.mapName == App.DiosApp.MapController.ActiveMap.mapName);
+      var map = App.DiosApp.MapController.MapList[idx];
 
       foreach (var regionData in MapRegionsController.RegionsList)
       {
@@ -81,8 +81,8 @@ namespace Ei_Dimension.ViewModels
     public void SaveClick()
     {
       UserInputHandler.InputSanityCheck();
-      var idx = App.Device.MapCtroller.MapList.FindIndex(x => x.mapName == App.Device.MapCtroller.ActiveMap.mapName);
-      var map = App.Device.MapCtroller.MapList[idx];
+      var idx = App.DiosApp.MapController.MapList.FindIndex(x => x.mapName == App.DiosApp.MapController.ActiveMap.mapName);
+      var map = App.DiosApp.MapController.MapList[idx];
 
       var newRegions = map.regions;
       for (var i = 0; i < map.regions.Count; i++)
@@ -96,7 +96,7 @@ namespace Ei_Dimension.ViewModels
         return;
       }
 
-      if (!App.Device.MapCtroller.SaveRegions(newRegions))
+      if (!App.DiosApp.MapController.SaveRegions(newRegions))
       {
         Notification.ShowError("Error Saving To Map");
         return;
@@ -105,7 +105,7 @@ namespace Ei_Dimension.ViewModels
 
       try
       {
-        App.Device.MapCtroller.SaveNormVals(double.Parse(NormalizationFactor[0]));
+        App.DiosApp.MapController.SaveNormVals(double.Parse(NormalizationFactor[0]));
       }
       catch (ArgumentException e)
       {

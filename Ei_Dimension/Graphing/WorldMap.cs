@@ -51,7 +51,7 @@ namespace Ei_Dimension.Graphing
     public void InitMaps()
     {
       ClearData();
-      foreach (var region in App.Device.MapCtroller.ActiveMap.Regions)
+      foreach (var region in App.DiosApp.MapController.ActiveMap.Regions)
       {
         foreach (var point in region.Value.Points)
         {

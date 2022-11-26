@@ -6,7 +6,7 @@ namespace DIOS.Core
   {
     byte[] InputBuffer { get; }
     bool IsActive { get; }
-
+    void Start();
     void BeginRead(AsyncCallback func);
     void Read();
     void EndRead(IAsyncResult result);

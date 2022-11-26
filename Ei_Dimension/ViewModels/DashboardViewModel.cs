@@ -62,16 +62,19 @@ namespace Ei_Dimension.ViewModels
       DropDownButtonContents.ResetIndex();
 
       ClassiMapItems = new ObservableCollection<DropDownButtonContents>();
-      if (App.Device.MapCtroller.MapList.Count > 0)
+      if (App.DiosApp.MapController.MapList.Count > 0)
       {
-        foreach (var map in App.Device.MapCtroller.MapList)
+        foreach (var map in App.DiosApp.MapController.MapList)
         {
           ClassiMapItems.Add(new DropDownButtonContents(map.mapName, this));
         }
+        SelectedClassiMapContent = App.DiosApp.MapController.ActiveMap.mapName;
       }
       else
+      {
         ClassiMapItems.Add(new DropDownButtonContents("No map", this));
-      SelectedClassiMapContent = App.Device.MapCtroller.ActiveMap.mapName;
+        SelectedClassiMapContent = "No map";
+      }
       DropDownButtonContents.ResetIndex();
 
       ChConfigItems = new ObservableCollection<DropDownButtonContents>
@@ -101,6 +104,7 @@ namespace Ei_Dimension.ViewModels
       SelectedSystemControlIndex = Settings.Default.SystemControl;
       SelectedSysControlContent = SysControlItems[SelectedSystemControlIndex].Content;
       DropDownButtonContents.ResetIndex();
+
       if(SelectedSystemControlIndex != 0)
         WorkOrderVisibility = Visibility.Visible;
       else
@@ -114,7 +118,7 @@ namespace Ei_Dimension.ViewModels
         new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Experiment_Total_Events), curCulture), this),
         new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Experiment_End_of_Sample), curCulture), this),
       };
-      SelectedEndReadIndex = (byte)App.Device.TerminationType;
+      SelectedEndReadIndex = Settings.Default.EndRead;
       SelectedEndReadContent = EndReadItems[SelectedEndReadIndex].Content;
       EndReadVisibility = new ObservableCollection<Visibility>
       {
@@ -129,12 +133,12 @@ namespace Ei_Dimension.ViewModels
       else
         MainButtonsViewModel.Instance.StartButtonEnabled = false;
 
-      CalValModeEnabled = App.Device.MapCtroller.ActiveMap.validation;
+      CalValModeEnabled = App.DiosApp.MapController.ActiveMap.validation;
       _dbsampleVolumeTempHolder = null;
       _dbEndReadIndexTempHolder = 0;
 
-      SetCalibrationDate(App.Device.MapCtroller.ActiveMap.caltime);
-      SetValidationDate(App.Device.MapCtroller.ActiveMap.valtime);
+      SetCalibrationDate(App.DiosApp.MapController.ActiveMap.caltime);
+      SetValidationDate(App.DiosApp.MapController.ActiveMap.valtime);
       
       Instance = this;
     }

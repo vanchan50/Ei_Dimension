@@ -106,7 +106,7 @@ namespace Ei_Dimension.Controllers
       RegionsList[0].Name[0] = "UNCLSSFD";
       ActiveRegionsStatsController.Instance.AddNewEntry();
       var i = 1;
-      foreach (var region in App.Device.MapCtroller.ActiveMap.regions)
+      foreach (var region in App.DiosApp.MapController.ActiveMap.regions)
       {
         RegionsList.Add(new MapRegionData(region.Number));
         _mapRegionNumberIndexDictionary.Add(region.Number, i);

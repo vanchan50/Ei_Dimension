@@ -47,7 +47,7 @@ namespace Ei_Dimension.ViewModels
     public const string PLATETYPEFILEEXTENSION = ".dplt";
     protected PlateCustomizationViewModel()
     {
-      var PlateTypeList = Directory.GetFiles(Device.RootDirectory + @"\Config", $"*{PLATETYPEFILEEXTENSION}");
+      var PlateTypeList = Directory.GetFiles($"{App.DiosApp.RootDirectory}\\Config", $"*{PLATETYPEFILEEXTENSION}");
       foreach (var plateType in PlateTypeList)
       {
         NameList.Add(Path.GetFileNameWithoutExtension(plateType));
@@ -74,7 +74,7 @@ namespace Ei_Dimension.ViewModels
         return;
 
       _plateName = e.AddedItems[0].ToString();
-      SelectedItem = Device.RootDirectory + @"\Config\" + e.AddedItems[0].ToString() + PLATETYPEFILEEXTENSION;
+      SelectedItem = App.DiosApp.RootDirectory + @"\Config\" + e.AddedItems[0].ToString() + PLATETYPEFILEEXTENSION;
       PlateSaveName[0] = _plateName;
 
       if (_plateName == DEFAULTNAME)
@@ -109,7 +109,7 @@ namespace Ei_Dimension.ViewModels
         return;
       }
 
-      var path = Device.RootDirectory + @"\Config\" + PlateSaveName[0] + PLATETYPEFILEEXTENSION;
+      var path = App.DiosApp.RootDirectory + @"\Config\" + PlateSaveName[0] + PLATETYPEFILEEXTENSION;
       foreach (var c in _invalidChars)
       {
         if (PlateSaveName[0].Contains(c.ToString()))

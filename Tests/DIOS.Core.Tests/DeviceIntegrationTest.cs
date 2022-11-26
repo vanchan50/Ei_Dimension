@@ -12,8 +12,8 @@ namespace DIOS.Core.Tests
     public void Test1()
     {
       var fakeUSB = new FakeUSBConnection();
-      Device device = new Device(fakeUSB);
-      device.MapCtroller.SetMap(device.MapCtroller.MapList[1]);
+      Device device = new Device(fakeUSB, "");
+      //DiosApp.MapController.SetMap(DiosApp.MapController.MapList[1]);
       device.WellController.Init(new List<Well>{new Well{ RowIdx = 1, ColIdx = 1 }});
       device.Normalization.Enable();
       device.StartOperation();

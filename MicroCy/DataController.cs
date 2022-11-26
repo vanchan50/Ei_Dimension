@@ -6,7 +6,7 @@ namespace DIOS.Core
 {
   internal class DataController
   {
-    private ConcurrentQueue<(string name, CommandStruct cs)> OutCommands { get; } = new ConcurrentQueue<(string name, CommandStruct cs)>();
+    private ConcurrentQueue<(string name, CommandStruct cs)> _outCommands = new ConcurrentQueue<(string name, CommandStruct cs)>();
 
     private readonly object _usbOutCV = new object();
     private readonly ISerial _serialConnection;
@@ -20,20 +20,25 @@ namespace DIOS.Core
       _device = device;
       _results = runResults;
       _serialConnection = connection;
-      if (_serialConnection.IsActive)
-      {
-        _prioUsbInThread = new Thread(ReplyFromMC);
-        _prioUsbInThread.Priority = ThreadPriority.Highest;
-        _prioUsbInThread.IsBackground = true;
-        _prioUsbInThread.Name = "USBIN";
-        _prioUsbInThread.Start();
 
-        _prioUsbOutThread = new Thread(WriteToMC);
-        _prioUsbOutThread.Priority = ThreadPriority.AboveNormal;
-        _prioUsbOutThread.IsBackground = true;
-        _prioUsbOutThread.Name = "USBOUT";
-        _prioUsbOutThread.Start();
-      }
+      //setup threads
+      _prioUsbInThread = new Thread(ReplyFromMC);
+      _prioUsbInThread.Priority = ThreadPriority.Highest;
+      _prioUsbInThread.IsBackground = true;
+      _prioUsbInThread.Name = "USBIN";
+
+      _prioUsbOutThread = new Thread(WriteToMC);
+      _prioUsbOutThread.Priority = ThreadPriority.AboveNormal;
+      _prioUsbOutThread.IsBackground = true;
+      _prioUsbOutThread.Name = "USBOUT";
+    }
+
+    public bool Run()
+    {
+      _serialConnection.Start();
+      _prioUsbInThread.Start();
+      _prioUsbOutThread.Start();
+      return _serialConnection.IsActive;
     }
     
     private void ReplyFromMC()
@@ -68,7 +73,7 @@ namespace DIOS.Core
       var timeOut = new TimeSpan(0, 0, seconds: 2);
       while (true)
       {
-        while (OutCommands.TryDequeue(out var cmd))
+        while (_outCommands.TryDequeue(out var cmd))
         {
           RunCmd(cmd.name, cmd.cs);
         }
@@ -89,7 +94,7 @@ namespace DIOS.Core
 
     public void AddCommand(string command, CommandStruct cs)
     {
-      OutCommands.Enqueue((command, cs));
+      _outCommands.Enqueue((command, cs));
       #if DEBUG
       Console.Error.WriteLine($"{DateTime.Now.ToString()} Enqueued [{command}]: {cs.ToString()}");
       #endif
