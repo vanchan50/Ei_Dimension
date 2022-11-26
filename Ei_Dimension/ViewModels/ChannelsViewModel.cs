@@ -149,26 +149,25 @@ namespace Ei_Dimension.ViewModels
     public void OnMapChanged(CustomMap map)
     {
       Bias30Parameters[0] = map.calgssc.ToString();
-      App.Device.MainCommand("Set Property", code: 0x28, parameter: (ushort)map.calgssc);
+      App.Device.SetHardwareParameter(DeviceParameterType.ChannelBias30C, Channel.GreenA, map.calgssc);
       Bias30Parameters[1] = map.calrpmaj.ToString();
-      App.Device.MainCommand("Set Property", code: 0x29, parameter: (ushort)map.calrpmaj);
+      App.Device.SetHardwareParameter(DeviceParameterType.ChannelBias30C, Channel.GreenB, map.calrpmaj);
       Bias30Parameters[2] = map.calrpmin.ToString();
-      App.Device.MainCommand("Set Property", code: 0x2a, parameter: (ushort)map.calrpmin);
+      App.Device.SetHardwareParameter(DeviceParameterType.ChannelBias30C, Channel.GreenC, map.calrpmin);
       Bias30Parameters[3] = map.calcl3.ToString();
-      App.Device.MainCommand("Set Property", code: 0x2c, parameter: (ushort)map.calcl3);
+      App.Device.SetHardwareParameter(DeviceParameterType.ChannelBias30C, Channel.RedA, map.calcl3);
       Bias30Parameters[4] = map.calrssc.ToString();
-      App.Device.MainCommand("Set Property", code: 0x2d, parameter: (ushort)map.calrssc);
+      App.Device.SetHardwareParameter(DeviceParameterType.ChannelBias30C, Channel.RedB, map.calrssc);
       Bias30Parameters[5] = map.calcl1.ToString();
-      App.Device.MainCommand("Set Property", code: 0x2e, parameter: (ushort)map.calcl1);
+      App.Device.SetHardwareParameter(DeviceParameterType.ChannelBias30C, Channel.RedC, map.calcl1);
       Bias30Parameters[6] = map.calcl2.ToString();
-      App.Device.MainCommand("Set Property", code: 0x2f, parameter: (ushort)map.calcl2);
+      App.Device.SetHardwareParameter(DeviceParameterType.ChannelBias30C, Channel.RedD, map.calcl2);
       Bias30Parameters[7] = map.calvssc.ToString();
-      App.Device.MainCommand("Set Property", code: 0x25, parameter: (ushort)map.calvssc);
+      App.Device.SetHardwareParameter(DeviceParameterType.ChannelBias30C, Channel.VioletA, map.calvssc);
       Bias30Parameters[8] = map.calcl0.ToString();
-      App.Device.MainCommand("Set Property", code: 0x26, parameter: (ushort)map.calcl0);
+      App.Device.SetHardwareParameter(DeviceParameterType.ChannelBias30C, Channel.VioletB, map.calcl0);
       Bias30Parameters[9] = map.calfsc.ToString();
-      App.Device.MainCommand("Set Property", code: 0x24, parameter: (ushort)map.calfsc);
+      App.Device.SetHardwareParameter(DeviceParameterType.ChannelBias30C, Channel.ForwardScatter, map.calfsc);
     }
-
   }
 }

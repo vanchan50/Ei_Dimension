@@ -46,6 +46,8 @@
     WellReadingSpeed,
     WellReadingOrder,
     ChannelConfiguration,
-    PlateType
+    PlateType,
+    WashRepeatsAmount,
+    AgitateRepeatsAmount
   }
 }

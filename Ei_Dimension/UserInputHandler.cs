@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Reflection;
 using System.Windows.Controls;
 using Ei_Dimension.Models;
+using DevExpress.XtraPrinting.Native;
 
 namespace Ei_Dimension
 {
@@ -109,7 +110,7 @@ namespace Ei_Dimension
               ErrorMessage = "[1-40000]";
             }
             break;
-          case "EndRead":
+          case nameof(DashboardViewModel.Instance.EndRead):
             if (SelectedTextBox.index == 0)
             {
               if (int.TryParse(_tempNewString, out iRes))
@@ -139,14 +140,14 @@ namespace Ei_Dimension
               ErrorMessage = "[>0]";
             }
             break;
-          case "Volumes":
+          case nameof(DashboardViewModel.Instance.Volumes):
             if (SelectedTextBox.index == 0)
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
                 if (iRes >= 10 && iRes <= 100)
                 {
-                  App.Device.MainCommand("Set Property", code: 0xaf, parameter: (ushort)iRes);
+                  App.Device.SetHardwareParameter(DeviceParameterType.Volume, VolumeType.Sample, (ushort)iRes);
                   break;
                 }
               }
@@ -159,7 +160,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 1 && iRes <= 150)
                 {
-                  App.Device.MainCommand("Set Property", code: 0xac, parameter: (ushort)iRes);
+                  App.Device.SetHardwareParameter(DeviceParameterType.Volume, VolumeType.Wash, (ushort)iRes);
                   break;
                 }
               }
@@ -172,12 +173,40 @@ namespace Ei_Dimension
               {
                 if (iRes >= 1 && iRes <= 500)
                 {
-                  App.Device.MainCommand("Set Property", code: 0xc4, parameter: (ushort)iRes);
+                  App.Device.SetHardwareParameter(DeviceParameterType.Volume, VolumeType.Agitate, (ushort)iRes);
                   break;
                 }
               }
               failed = true;
               ErrorMessage = "[1-500]";
+            }
+            break;
+          case nameof(DashboardViewModel.Instance.Repeats):
+            if (SelectedTextBox.index == 0)
+            {
+              if (int.TryParse(_tempNewString, out iRes))
+              {
+                if (iRes >= 1 && iRes <= 10)
+                {
+                  App.Device.SetHardwareParameter(DeviceParameterType.WashRepeatsAmount, (ushort)iRes);
+                  break;
+                }
+              }
+              failed = true;
+              ErrorMessage = "[1-10]";
+            }
+            if (SelectedTextBox.index == 1)
+            {
+              if (int.TryParse(_tempNewString, out iRes))
+              {
+                if (iRes >= 1 && iRes <= 10)
+                {
+                  App.Device.SetHardwareParameter(DeviceParameterType.AgitateRepeatsAmount, (ushort)iRes);
+                  break;
+                }
+              }
+              failed = true;
+              ErrorMessage = "[1-10]";
             }
             break;
           case "EventTriggerContents":
@@ -498,14 +527,14 @@ namespace Ei_Dimension
             failed = true;
             ErrorMessage = "[>0]";
             break;
-          case "Bias30Parameters":
+          case nameof(ChannelsViewModel.Instance.Bias30Parameters):
             if (SelectedTextBox.index == 0)
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
                 if (iRes >= 0 && ((App.Device.BoardVersion == 0 && iRes <= 3500) || (App.Device.BoardVersion >= 1 && iRes <= 10000)))
                 {
-                  App.Device.MainCommand("Set Property", code: 0x28, parameter: (ushort)iRes);
+                  App.Device.SetHardwareParameter(DeviceParameterType.ChannelBias30C, Channel.GreenA, iRes);
                   break;
                 }
               }
@@ -518,7 +547,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 0 && ((App.Device.BoardVersion == 0 && iRes <= 3500) || (App.Device.BoardVersion >= 1 && iRes <= 10000)))
                 {
-                  App.Device.MainCommand("Set Property", code: 0x29, parameter: (ushort)iRes);
+                  App.Device.SetHardwareParameter(DeviceParameterType.ChannelBias30C, Channel.GreenB, iRes);
                   break;
                 }
               }
@@ -531,7 +560,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 0 && ((App.Device.BoardVersion == 0 && iRes <= 3500) || (App.Device.BoardVersion >= 1 && iRes <= 10000)))
                 {
-                  App.Device.MainCommand("Set Property", code: 0x2a, parameter: (ushort)iRes);
+                  App.Device.SetHardwareParameter(DeviceParameterType.ChannelBias30C, Channel.GreenC, iRes);
                   break;
                 }
               }
@@ -544,7 +573,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 0 && ((App.Device.BoardVersion == 0 && iRes <= 3500) || (App.Device.BoardVersion >= 1 && iRes <= 10000)))
                 {
-                  App.Device.MainCommand("Set Property", code: 0x2c, parameter: (ushort)iRes);
+                  App.Device.SetHardwareParameter(DeviceParameterType.ChannelBias30C, Channel.RedA, iRes);
                   break;
                 }
               }
@@ -557,7 +586,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 0 && ((App.Device.BoardVersion == 0 && iRes <= 3500) || (App.Device.BoardVersion >= 1 && iRes <= 10000)))
                 {
-                  App.Device.MainCommand("Set Property", code: 0x2d, parameter: (ushort)iRes);
+                  App.Device.SetHardwareParameter(DeviceParameterType.ChannelBias30C, Channel.RedB, iRes);
                   break;
                 }
               }
@@ -570,7 +599,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 0 && ((App.Device.BoardVersion == 0 && iRes <= 3500) || (App.Device.BoardVersion >= 1 && iRes <= 10000)))
                 {
-                  App.Device.MainCommand("Set Property", code: 0x2e, parameter: (ushort)iRes);
+                  App.Device.SetHardwareParameter(DeviceParameterType.ChannelBias30C, Channel.RedC, iRes);
                   break;
                 }
               }
@@ -583,7 +612,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 0 && ((App.Device.BoardVersion == 0 && iRes <= 3500) || (App.Device.BoardVersion >= 1 && iRes <= 10000)))
                 {
-                  App.Device.MainCommand("Set Property", code: 0x2f, parameter: (ushort)iRes);
+                  App.Device.SetHardwareParameter(DeviceParameterType.ChannelBias30C, Channel.RedD, iRes);
                   break;
                 }
               }
@@ -596,7 +625,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 0 && ((App.Device.BoardVersion == 0 && iRes <= 3500) || (App.Device.BoardVersion >= 1 && iRes <= 10000)))
                 {
-                  App.Device.MainCommand("Set Property", code: 0x25, parameter: (ushort)iRes);
+                  App.Device.SetHardwareParameter(DeviceParameterType.ChannelBias30C, Channel.VioletA, iRes);
                   break;
                 }
               }
@@ -609,7 +638,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 0 && ((App.Device.BoardVersion == 0 && iRes <= 3500) || (App.Device.BoardVersion >= 1 && iRes <= 10000)))
                 {
-                  App.Device.MainCommand("Set Property", code: 0x26, parameter: (ushort)iRes);
+                  App.Device.SetHardwareParameter(DeviceParameterType.ChannelBias30C, Channel.VioletB, iRes);
                   break;
                 }
               }
@@ -622,7 +651,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 0 && ((App.Device.BoardVersion == 0 && iRes <= 3500) || (App.Device.BoardVersion >= 1 && iRes <= 10000)))
                 {
-                  App.Device.MainCommand("Set Property", code: 0x24, parameter: (ushort)iRes);
+                  App.Device.SetHardwareParameter(DeviceParameterType.ChannelBias30C, Channel.ForwardScatter, iRes);
                   break;
                 }
               }
@@ -1379,7 +1408,7 @@ namespace Ei_Dimension
               ErrorMessage = "[0-65535]";
             }
             break;
-          case "ValidationTolerances":
+          case nameof(AlignmentViewModel.Instance.ValidationTolerances):
             if (SelectedTextBox.index == 0)
             {
               if (double.TryParse(_tempNewString, out dRes))
@@ -1420,11 +1449,11 @@ namespace Ei_Dimension
               ErrorMessage = "Non-Negative";
             }
             break;
-          case "BaseFileName":
+          case nameof(FileSaveViewModel.Instance.BaseFileName):
             App.Device.Publisher.Outfilename = _tempNewString;
             Settings.Default.SaveFileName = _tempNewString;
             break;
-          case "MaxPressureBox":
+          case nameof(ComponentsViewModel.Instance.MaxPressureBox):
             if (float.TryParse(_tempNewString, out fRes))
             {
               if (Settings.Default.PressureUnitsPSI)
@@ -1451,10 +1480,10 @@ namespace Ei_Dimension
             ErrorMessage = Settings.Default.PressureUnitsPSI ? "[2-40]" :
               $"[{(2 * ComponentsViewModel.TOKILOPASCALCOEFFICIENT).ToString("f3")}-{(40 * ComponentsViewModel.TOKILOPASCALCOEFFICIENT).ToString("f3")}]";
             break;
-          case "TemplateSaveName":
+          case nameof(TemplateSelectViewModel.Instance.TemplateSaveName):
             TemplateSelectViewModel.Instance.TemplateSaveName[0] = _tempNewString;
             break;
-          case "SanitizeSecondsContent":
+          case nameof(MaintenanceViewModel.Instance.SanitizeSecondsContent):
             if (int.TryParse(_tempNewString, out iRes))
             {
               if (iRes >= 1 && iRes <= 100)

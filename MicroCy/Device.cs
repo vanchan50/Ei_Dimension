@@ -6,7 +6,6 @@ using System.Collections.Concurrent;
 using System.Threading.Tasks;
 using DIOS.Core.InstrumentParameters;
 using DIOS.Core.SelfTests;
-using Newtonsoft.Json.Linq;
 
 /*
  * Most commands on the host side parallel the Properties and Methods document fo QB-1000
@@ -51,7 +50,7 @@ namespace DIOS.Core
     public event EventHandler<StatsEventArgs> NewStatsAvailable;
     public event EventHandler<ParameterUpdateEventArgs> ParameterUpdate;
     public OperationMode Mode { get; set; } = OperationMode.Normal;
-    public SystemControl Control { get; set; }
+    public SystemControl Control { get; set; } = SystemControl.Manual;
     public Gate ScatterGate
     {
       get
@@ -64,10 +63,11 @@ namespace DIOS.Core
         MainCommand("Set Property", code: 0xCA, parameter: (ushort)_scatterGate);
       }
     }
-    public Termination TerminationType { get; set; }
+
+    public Termination TerminationType { get; set; } = Termination.MinPerRegion;
     public int BoardVersion { get; internal set; }
     public string FirmwareVersion { get; internal set; }
-    public float ReporterScaling { get; set; }
+    public float ReporterScaling { get; set; } = 1;
     public int BeadsToCapture { get; set; }
     public int BeadCount { get; internal set; }
     public int TotalBeads { get; internal set; }
@@ -135,6 +135,7 @@ namespace DIOS.Core
     public Device(ISerial connection)
     {
       SetSystemDirectories();
+      SelfTester = new SelfTester(this);
       Results = new RunResults(this);
       _beadProcessor = new BeadProcessor(this);
       _dataController = new DataController(this, Results, connection);
@@ -142,11 +143,7 @@ namespace DIOS.Core
       Publisher = new ResultsPublisher(this);
       MapCtroller = new MapController();
       MapCtroller.ChangedActiveMap += MapChangedEventHandler;
-      SelfTester = new SelfTester(this);
       MainCommand("Sync");
-      TotalBeads = 0;
-      IsMeasurementGoing = false;
-      ReporterScaling = 1;
       RequestHardwareParameter(DeviceParameterType.BoardVersion);
     }
 
@@ -266,9 +263,9 @@ namespace DIOS.Core
     {
       MainCommand("Set Property", code: 0xad, parameter: (ushort)WellController.NextWell.RowIdx);
       MainCommand("Set Property", code: 0xae, parameter: (ushort)WellController.NextWell.ColIdx);
-      MainCommand("Set Property", code: 0xaf, parameter: (ushort)WellController.NextWell.SampVol);
-      MainCommand("Set Property", code: 0xac, parameter: (ushort)WellController.NextWell.WashVol);
-      MainCommand("Set Property", code: 0xc4, parameter: (ushort)WellController.NextWell.AgitateVol);
+      SetHardwareParameter(DeviceParameterType.Volume, VolumeType.Sample,  (ushort)WellController.NextWell.SampVol);
+      SetHardwareParameter(DeviceParameterType.Volume, VolumeType.Wash,    (ushort)WellController.NextWell.WashVol);
+      SetHardwareParameter(DeviceParameterType.Volume, VolumeType.Agitate, (ushort)WellController.NextWell.AgitateVol);
     }
 
     internal bool EndBeadRead()
@@ -342,13 +339,14 @@ namespace DIOS.Core
       ushort param = 0;
       float fparam = 0;
       byte commandCode = 0;
+      var intValue = (ushort)Math.Round(value);
       switch (primaryParameter)
       {
         case DeviceParameterType.SiPMTempCoeff:
           commandCode = 0x02;
           fparam = value;
           break;
-        case DeviceParameterType.IdexPosition:  //change to 0xd7 for set. get rid of Idex class?
+        case DeviceParameterType.IdexPosition:  //TODO: change to 0xd7 for set. get rid of Idex class?
           commandCode = 0x04;
           break;
         case DeviceParameterType.TotalBeadsInFirmware:  //reset totalbeads in firmware
@@ -365,27 +363,27 @@ namespace DIOS.Core
           break;
         case DeviceParameterType.ValveCuvetDrain:
           commandCode = 0x10;
-          param = (ushort)Math.Round(value);
+          param = intValue;
           break;
         case DeviceParameterType.ValveFan1:
           commandCode = 0x11;
-          param = (ushort)Math.Round(value);
+          param = intValue;
           break;
         case DeviceParameterType.ValveFan2:
           commandCode = 0x12;
-          param = (ushort)Math.Round(value);
+          param = intValue;
           break;
         case DeviceParameterType.IsSyringePositionActive:
           commandCode = 0x15;
-          param = (ushort)Math.Round(value);
+          param = intValue;
           break;
         case DeviceParameterType.PollStepActivity:
           commandCode = 0x16;
-          param = (ushort)Math.Round(value);
+          param = intValue;
           break;
         case DeviceParameterType.IsInputSelectorAtPickup:
           commandCode = 0x18;
-          param = (ushort)Math.Round(value);
+          param = intValue;
           break;
         case DeviceParameterType.BeadConcentration:
           commandCode = 0x1D;
@@ -397,6 +395,7 @@ namespace DIOS.Core
           commandCode = 0x22;
           break;
         case DeviceParameterType.ChannelBias30C:
+          param = intValue;
           switch (subParameter)
           {
             case Channel.GreenA:
@@ -726,6 +725,14 @@ namespace DIOS.Core
               throw new NotImplementedException();
           }
           break;
+        case DeviceParameterType.WashRepeatsAmount:
+          commandCode = 0x86;
+          param = intValue;
+          break;
+        case DeviceParameterType.AgitateRepeatsAmount:
+          commandCode = 0x7F;
+          param = intValue;
+          break;
         case DeviceParameterType.WellReadingOrder:
           commandCode = 0xA8;
           break;
@@ -740,12 +747,15 @@ namespace DIOS.Core
           {
             case VolumeType.Wash:
               commandCode = 0xAC;
+              param = intValue;
               break;
             case VolumeType.Sample:
               commandCode = 0xAF;
+              param = intValue;
               break;
             case VolumeType.Agitate:
               commandCode = 0xC4;
+              param = intValue;
               break;
             default:
               throw new NotImplementedException();
@@ -1182,6 +1192,12 @@ namespace DIOS.Core
             default:
               throw new NotImplementedException();
           }
+          break;
+        case DeviceParameterType.WashRepeatsAmount:
+          commandCode = 0x86;
+          break;
+        case DeviceParameterType.AgitateRepeatsAmount:
+          commandCode = 0x7F;
           break;
         case DeviceParameterType.WellReadingOrder:
           commandCode = 0xA8;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+
 namespace Ei_Dimension.Models
 {
   [Serializable]
@@ -21,6 +22,8 @@ namespace Ei_Dimension.Models
     public uint TotalEvents;
     public uint FileSaveCheckboxes;
     public int TableSize;
+    public uint WashRepeats;
+    public uint AgitateRepeats;
     public List<List<WellType>> SelectedWells;
     public string PlateType;
 

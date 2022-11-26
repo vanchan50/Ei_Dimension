@@ -89,6 +89,7 @@ namespace Ei_Dimension
         TextBoxHandler.UpdateEventCounter();
         App.Device.UpdateStateMachine();
       }
+      TextBoxHandler.UpdatePressureMonitor();
       ServiceMenuEnabler.Update();
       _uiUpdateIsActive = 0;
 

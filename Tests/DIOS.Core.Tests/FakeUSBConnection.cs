@@ -66,6 +66,16 @@ namespace DIOS.Core.Tests
       }
     }
 
+    public void ReadCommand(CommandStruct cmd)
+    {
+      var c = CommandToByteArray(cmd);
+      Array.Copy(c, InputBuffer, c.Length);
+      lock (_readReady)
+      {
+        Monitor.Pulse(_readReady);
+      }
+    }
+
     /// <summary>
     /// Utility to produce byte[] that contains bead data
     /// </summary>
@@ -79,6 +89,28 @@ namespace DIOS.Core.Tests
         fixed (RawBead* pCS = &bead)
         {
           for (var i = 0; i < 64; i++)
+          {
+            arrRet[i] = *((byte*)pCS + i);
+          }
+        }
+      }
+
+      return arrRet;
+    }
+
+    /// <summary>
+    /// Utility to produce byte[] that contains commandstruct data
+    /// </summary>
+    /// <param name="cmd"></param>
+    /// <returns></returns>
+    private static byte[] CommandToByteArray(in CommandStruct cmd)
+    {
+      byte[] arrRet = new byte[8];
+      unsafe
+      {
+        fixed (CommandStruct* pCS = &cmd)
+        {
+          for (var i = 0; i < 8; i++)
           {
             arrRet[i] = *((byte*)pCS + i);
           }

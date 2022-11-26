@@ -59,7 +59,7 @@ namespace DIOS.Core
           }
           _results.TerminationReadyCheck();
         }
-        _serialConnection.ClearBuffer();
+        _serialConnection.ClearBuffer();  //TODO: is it necessary?
       }
     }
 
@@ -170,10 +170,7 @@ namespace DIOS.Core
       }
       return version;
     }
-
-    /// <summary>
-    /// Move the received command to Commands Queue
-    /// </summary>
+    
     private void GetCommandFromBuffer()
     {
       var newcmd = ByteArrayToStruct(_serialConnection.InputBuffer);
@@ -530,6 +527,12 @@ namespace DIOS.Core
         case 0xA5:
           outParameters = new ParameterUpdateEventArgs(DeviceParameterType.ChannelOffset, intParameter: (int)Channel.GreenC, floatParameter: cs.Parameter);
           break;
+        case 0x7F:
+          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.AgitateRepeatsAmount, intParameter: cs.Parameter);
+          break;
+        case 0x86:
+          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.WashRepeatsAmount, intParameter: cs.Parameter);
+          break;
         case 0xA8:
           outParameters = new ParameterUpdateEventArgs(DeviceParameterType.WellReadingOrder, intParameter: cs.Parameter);
           break;
@@ -546,7 +549,7 @@ namespace DIOS.Core
           outParameters = new ParameterUpdateEventArgs(DeviceParameterType.Volume, intParameter: (int)VolumeType.Sample, floatParameter: cs.Parameter);
           break;
         case 0xC4:
-          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.Volume, intParameter: (int)VolumeType.Agitate, floatParameter: cs.FParameter);
+          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.Volume, intParameter: (int)VolumeType.Agitate, floatParameter: cs.Parameter);
           break;
         case 0xB8:
           outParameters = new ParameterUpdateEventArgs(DeviceParameterType.GreenAVoltage, floatParameter: cs.Parameter * 0.0008f);

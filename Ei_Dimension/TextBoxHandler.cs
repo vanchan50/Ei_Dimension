@@ -2,7 +2,6 @@
 using System.Threading;
 using DIOS.Core;
 using Ei_Dimension.ViewModels;
-using Newtonsoft.Json.Linq;
 
 namespace Ei_Dimension
 {
@@ -15,6 +14,9 @@ namespace Ei_Dimension
 
     public void ParameterUpdateEventHandler(object sender, ParameterUpdateEventArgs parameter)
     {
+      #if DEBUG
+      Console.WriteLine(parameter.ToString());
+      #endif
       Action update = null;
       switch (parameter.Type)
       {
@@ -108,7 +110,7 @@ namespace Ei_Dimension
         case DeviceParameterType.DNRCoefficient:
           update = () => CalibrationViewModel.Instance.DNRContents[0] = parameter.FloatParameter.ToString();
           break;
-        case DeviceParameterType.ChannelBias30C:  //make param a channel, and FloatParam an actual value.
+        case DeviceParameterType.ChannelBias30C:
           var type = (Channel)parameter.Parameter;
           var pos = 0;
           switch (type)
@@ -691,7 +693,7 @@ namespace Ei_Dimension
       App.Current.Dispatcher.Invoke(() => MainViewModel.Instance.EventCountCurrent[0] = App.Device.BeadCount.ToString());
     }
 
-    private static void UpdatePressureMonitor()
+    public static void UpdatePressureMonitor()
     {
       if (ComponentsViewModel.Instance.PressureMonToggleButtonState)
         App.Device.RequestHardwareParameter(DeviceParameterType.Pressure);

@@ -1429,6 +1429,15 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Agitate Repeats.
+        /// </summary>
+        public static string Experiment_Agitate_Repeats {
+            get {
+                return ResourceManager.GetString("Experiment_Agitate_Repeats", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Agitate
         ///Volume, µL.
         /// </summary>
@@ -1736,6 +1745,15 @@ namespace Ei_Dimension.Language {
         public static string Experiment_Validate_Bcode {
             get {
                 return ResourceManager.GetString("Experiment_Validate_Bcode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wash Repeats.
+        /// </summary>
+        public static string Experiment_Wash_Repeats {
+            get {
+                return ResourceManager.GetString("Experiment_Wash_Repeats", resourceCulture);
             }
         }
         

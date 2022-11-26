@@ -107,3 +107,11 @@ PlateRow, PlateCol ever needed?
 ----
 Device core should have a warningEmitter event. catch all the warnings itself, don't let UI do that. UI should only subscribe for the notifications
 RunResults MakeDeepCopy() should cache itself per well. Massive allocations are on the hot path
+
+
+
+
+----
+Write thread probably not necessary
+events start firing before app loads - nullpointers
+somehow selftester should be initialized before datacontroller starts replyfromMC thread

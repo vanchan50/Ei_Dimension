@@ -14,6 +14,7 @@ namespace Ei_Dimension.ViewModels
   {
     public virtual ObservableCollection<string> EndRead { get; set; } = new ObservableCollection<string> { "100", "500" };
     public virtual ObservableCollection<string> Volumes { get; set; } = new ObservableCollection<string> { "0", "0", "0" };
+    public virtual ObservableCollection<string> Repeats { get; set; } = new ObservableCollection<string> { "1", "1" };
     public virtual ObservableCollection<string> WorkOrder { get; set; } = new ObservableCollection<string> { "" };
     public virtual string SelectedSpeedContent { get; set; }
     public virtual ObservableCollection<DropDownButtonContents> SpeedItems { get; set; }
@@ -198,6 +199,14 @@ namespace Ei_Dimension.ViewModels
         case 5:
           UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(WorkOrder)), this, 0, Views.DashboardView.Instance.SysCTB);
           MainViewModel.Instance.NumpadToggleButton(Views.DashboardView.Instance.SysCTB);
+          break;
+        case 6:
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(Repeats)), this, 0, Views.DashboardView.Instance.WashRepTB);
+          MainViewModel.Instance.NumpadToggleButton(Views.DashboardView.Instance.WashRepTB);
+          break;
+        case 7:
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(Repeats)), this, 1, Views.DashboardView.Instance.AgitateRepTB);
+          MainViewModel.Instance.NumpadToggleButton(Views.DashboardView.Instance.AgitateRepTB);
           break;
       }
     }

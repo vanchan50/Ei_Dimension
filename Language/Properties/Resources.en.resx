@@ -592,6 +592,9 @@ Warnings</value>
   <data name="Experiment_Active_Regions" xml:space="preserve">
     <value>Active Regions</value>
   </data>
+  <data name="Experiment_Agitate_Repeats" xml:space="preserve">
+    <value>Agitate Repeats</value>
+  </data>
   <data name="Experiment_Agitate_Vol" xml:space="preserve">
     <value>Agitate
 Volume, µL</value>
@@ -704,6 +707,9 @@ Events</value>
   <data name="Experiment_Validate_Bcode" xml:space="preserve">
     <value>Validate
 Barcode</value>
+  </data>
+  <data name="Experiment_Wash_Repeats" xml:space="preserve">
+    <value>Wash Repeats</value>
   </data>
   <data name="Experiment_Wash_Vol" xml:space="preserve">
     <value> Wash

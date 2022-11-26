@@ -55,55 +55,6 @@ namespace Ei_Dimension
       }
     }
 
-    private static void SetupDevice()
-    {
-      if (Device == null)
-        throw new Exception("Device not initialized");
-
-      if (Settings.Default.DefaultMap > Device.MapCtroller.MapList.Count - 1)
-      {
-        try
-        {
-          Device.MapCtroller.SetMap(Device.MapCtroller.MapList[0]);
-        }
-        catch
-        {
-          throw new Exception($"Could not find Maps in {Device.RootDirectory.FullName + @"\Config" } folder");
-        }
-      }
-      else
-      {
-        try
-        {
-          var map = Device.MapCtroller.MapList[Settings.Default.DefaultMap];
-          Device.MapCtroller.SetMap(map);
-        }
-        catch
-        {
-          throw new Exception($"Problem with Maps in {Device.RootDirectory.FullName + @"\Config"} folder");
-        }
-        finally
-        {
-          Device.MapCtroller.SetMap(Device.MapCtroller.MapList[0]);
-        }
-      }
-      Device.Control = (SystemControl)Settings.Default.SystemControl;
-      Device.SaveIndividualBeadEvents = Settings.Default.Everyevent;
-      Device.RMeans = Settings.Default.RMeans;
-      Device.Publisher.MakePlateReport = Settings.Default.PlateReport;
-      Device.TerminationType = (Termination)Settings.Default.EndRead;
-      Device.MinPerRegion = Settings.Default.MinPerRegion;
-      Device.BeadsToCapture = Settings.Default.BeadsToCapture;
-      Device.OnlyClassifiedInBeadEventFile = Settings.Default.OnlyClassifed;
-      Device.SensitivityChannel = Settings.Default.SensitivityChannelB ? HiSensitivityChannel.GreenB : HiSensitivityChannel.GreenC;
-      Device.ReporterScaling = Settings.Default.ReporterScaling;
-      Device.MainCommand("Set Property", code: 0xbf, parameter: (ushort)Device.MapCtroller.ActiveMap.calParams.att);
-      Device.HdnrTrans = Device.MapCtroller.ActiveMap.calParams.DNRTrans;
-      Device.Compensation = Device.MapCtroller.ActiveMap.calParams.compensation;
-      Device.MainCommand("Set Property", code: 0x97, parameter: 1170);  //set current limit of aligner motors if leds are off
-      Device.MaxPressure = Settings.Default.MaxPressure;
-    }
-
     public static int GetMapIndex(string mapName)
     {
       var mapList = Device.MapCtroller.MapList;
@@ -698,6 +649,55 @@ namespace Ei_Dimension
 
       if (!System.Windows.Input.Keyboard.IsKeyDown(System.Windows.Input.Key.LeftCtrl))
         Device.StartSelfTest();
+    }
+
+    private void SetupDevice()
+    {
+      if (Device == null)
+        throw new Exception("Device not initialized");
+
+      if (Settings.Default.DefaultMap > Device.MapCtroller.MapList.Count - 1)
+      {
+        try
+        {
+          Device.MapCtroller.SetMap(Device.MapCtroller.MapList[0]);
+        }
+        catch
+        {
+          throw new Exception($"Could not find Maps in {Device.RootDirectory.FullName + @"\Config"} folder");
+        }
+      }
+      else
+      {
+        try
+        {
+          var map = Device.MapCtroller.MapList[Settings.Default.DefaultMap];
+          Device.MapCtroller.SetMap(map);
+        }
+        catch
+        {
+          throw new Exception($"Problem with Maps in {Device.RootDirectory.FullName + @"\Config"} folder");
+        }
+        finally
+        {
+          Device.MapCtroller.SetMap(Device.MapCtroller.MapList[0]);
+        }
+      }
+      Device.Control = (SystemControl)Settings.Default.SystemControl;
+      Device.SaveIndividualBeadEvents = Settings.Default.Everyevent;
+      Device.RMeans = Settings.Default.RMeans;
+      Device.Publisher.MakePlateReport = Settings.Default.PlateReport;
+      Device.TerminationType = (Termination)Settings.Default.EndRead;
+      Device.MinPerRegion = Settings.Default.MinPerRegion;
+      Device.BeadsToCapture = Settings.Default.BeadsToCapture;
+      Device.OnlyClassifiedInBeadEventFile = Settings.Default.OnlyClassifed;
+      Device.SensitivityChannel = Settings.Default.SensitivityChannelB ? HiSensitivityChannel.GreenB : HiSensitivityChannel.GreenC;
+      Device.ReporterScaling = Settings.Default.ReporterScaling;
+      Device.MainCommand("Set Property", code: 0xbf, parameter: (ushort)Device.MapCtroller.ActiveMap.calParams.att);
+      Device.HdnrTrans = Device.MapCtroller.ActiveMap.calParams.DNRTrans;
+      Device.Compensation = Device.MapCtroller.ActiveMap.calParams.compensation;
+      Device.MainCommand("Set Property", code: 0x97, parameter: 1170);  //set current limit of aligner motors if leds are off
+      Device.MaxPressure = Settings.Default.MaxPressure;
     }
   }
 }

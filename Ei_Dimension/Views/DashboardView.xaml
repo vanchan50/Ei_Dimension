@@ -257,6 +257,40 @@
             <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
           </dxmvvm:Interaction.Behaviors>
         </TextBox>
+        <TextBlock Text="{lang:Loc Experiment_Wash_Repeats}"
+                   FontFamily="{StaticResource AppTextFont}"
+                   FontSize="30"
+                   Height="40"
+                   FontWeight="UltraBold"
+                   HorizontalAlignment="Center"
+                   Foreground="{StaticResource AppTextColor}"
+                   Margin="0,33,0,0"/>
+        <TextBox HorizontalAlignment="Stretch"
+                 Margin="0,4,0,0" Name="WashRepTB"
+                 Style="{StaticResource InputFieldStyle}"
+                 Text="{Binding Repeats[0]}">
+          <dxmvvm:Interaction.Behaviors>
+            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="6"/>
+            <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+          </dxmvvm:Interaction.Behaviors>
+        </TextBox>
+        <TextBlock Text="{lang:Loc Experiment_Agitate_Repeats}"
+                   FontFamily="{StaticResource AppTextFont}"
+                   FontSize="30"
+                   Height="40"
+                   FontWeight="UltraBold"
+                   HorizontalAlignment="Center"
+                   Foreground="{StaticResource AppTextColor}"
+                   Margin="0,13,0,0"/>
+        <TextBox HorizontalAlignment="Stretch"
+                 Margin="0,4,0,0" Name="AgitateRepTB"
+                 Style="{StaticResource InputFieldStyle}"
+                 Text="{Binding Repeats[1]}">
+          <dxmvvm:Interaction.Behaviors>
+            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="7"/>
+            <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+          </dxmvvm:Interaction.Behaviors>
+        </TextBox>
       </StackPanel>
     </Border>
 

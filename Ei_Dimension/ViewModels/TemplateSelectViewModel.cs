@@ -104,7 +104,7 @@ namespace Ei_Dimension.ViewModels
               temp = newTemplate.SampleVolume.ToString();
               if (int.TryParse(temp, out iRes))
               {
-                App.Device.MainCommand("Set Property", code: 0xaf, parameter: (ushort) iRes);
+                App.Device.SetHardwareParameter(DeviceParameterType.Volume, VolumeType.Sample, (ushort)iRes);
                 DashVM.Volumes[0] = temp;
               }
               else
@@ -113,7 +113,7 @@ namespace Ei_Dimension.ViewModels
               temp = newTemplate.WashVolume.ToString();
               if (int.TryParse(temp, out iRes))
               {
-                App.Device.MainCommand("Set Property", code: 0xac, parameter: (ushort) iRes);
+                App.Device.SetHardwareParameter(DeviceParameterType.Volume, VolumeType.Wash, (ushort)iRes);
                 DashVM.Volumes[1] = temp;
               }
               else
@@ -123,8 +123,26 @@ namespace Ei_Dimension.ViewModels
               temp = newTemplate.AgitateVolume.ToString();
               if (int.TryParse(temp, out iRes))
               {
-                App.Device.MainCommand("Set Property", code: 0xc4, parameter: (ushort) iRes);
+                App.Device.SetHardwareParameter(DeviceParameterType.Volume, VolumeType.Agitate, (ushort)iRes);
                 DashVM.Volumes[2] = temp;
+              }
+              else
+                throw new Exception();
+
+              temp = newTemplate.WashRepeats.ToString();
+              if (int.TryParse(temp, out iRes))
+              {
+                App.Device.SetHardwareParameter(DeviceParameterType.WashRepeatsAmount, (ushort)iRes);
+                DashVM.Repeats[0] = temp;
+              }
+              else
+                throw new Exception();
+
+              temp = newTemplate.AgitateRepeats.ToString();
+              if (int.TryParse(temp, out iRes))
+              {
+                App.Device.SetHardwareParameter(DeviceParameterType.AgitateRepeatsAmount, (ushort)iRes);
+                DashVM.Repeats[1] = temp;
               }
               else
                 throw new Exception();
@@ -261,6 +279,8 @@ namespace Ei_Dimension.ViewModels
           temp.SampleVolume = uint.Parse(DashVM.Volumes[0]);
           temp.WashVolume = uint.Parse(DashVM.Volumes[1]);
           temp.AgitateVolume = uint.Parse(DashVM.Volumes[2]);
+          temp.WashRepeats = uint.Parse(DashVM.Repeats[0]);
+          temp.AgitateRepeats = uint.Parse(DashVM.Repeats[1]);
           temp.MinPerRegion = uint.Parse(DashVM.EndRead[0]);
           temp.TotalEvents = uint.Parse(DashVM.EndRead[1]);
           uint checkboxes = 0;

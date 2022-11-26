@@ -1,4 +1,6 @@
-﻿namespace DIOS.Core
+﻿using System;
+
+namespace DIOS.Core
 {
   /// <summary>
   /// Parameters to update the UI information.<br/>
@@ -17,5 +19,12 @@
       Parameter = intParameter;
       FloatParameter = floatParameter;
     }
+
+    #if DEBUG
+    public override string ToString()
+    {
+      return $"Type:{Enum.GetName(typeof(DeviceParameterType), Type)}\tParam:{Parameter}\tFloat:{FloatParameter}";
+    }
+    #endif
   }
 }
