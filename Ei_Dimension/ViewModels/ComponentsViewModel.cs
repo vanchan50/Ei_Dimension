@@ -344,7 +344,7 @@ namespace Ei_Dimension.ViewModels
     public void ClearButtonClick()
     {
       UserInputHandler.InputSanityCheck();
-      App.Device.MainCommand("Set Property", code: 0xcc);
+      App.Device.SetHardwareParameter(DeviceParameterType.SystemActivityStatus);
     }
 
     public void UpdateFirmwareButtonClick()

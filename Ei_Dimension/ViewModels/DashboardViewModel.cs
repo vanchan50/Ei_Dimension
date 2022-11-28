@@ -441,7 +441,7 @@ namespace Ei_Dimension.ViewModels
           case 1:
             _vm.SelectedSpeedContent = Content;
             _vm.SelectedSpeedIndex = (WellReadingSpeed)Index;
-            App.Device.MainCommand("Set Property", code: 0xaa, parameter: (ushort)Index);
+            App.Device.SetHardwareParameter(DeviceParameterType.WellReadingSpeed, Index);
             break;
           case 2:
             _vm.SelectedClassiMapContent = Content;
@@ -453,12 +453,12 @@ namespace Ei_Dimension.ViewModels
           case 3:
             _vm.SelectedChConfigContent = Content;
             _vm.SelectedChConfigIndex = (ChannelConfiguration)Index;
-            App.Device.MainCommand("Set Property", code: 0xc2, parameter: (ushort)Index);
+            App.Device.SetHardwareParameter(DeviceParameterType.ChannelConfiguration, Index);
             break;
           case 4:
             _vm.SelectedOrderContent = Content;
             _vm.SelectedOrderIndex = (WellReadingOrder)Index;
-            App.Device.MainCommand("Set Property", code: 0xa8, parameter: (ushort)Index);
+            App.Device.SetHardwareParameter(DeviceParameterType.WellReadingOrder, Index);
             break;
           case 5:
             _vm.SelectedSysControlContent = Content;

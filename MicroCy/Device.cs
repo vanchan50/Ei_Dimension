@@ -768,12 +768,15 @@ namespace DIOS.Core
           break;
         case DeviceParameterType.WellReadingOrder:
           commandCode = 0xA8;
+          param = intValue;
           break;
         case DeviceParameterType.WellReadingSpeed:
           commandCode = 0xAA;
+          param = intValue;
           break;
         case DeviceParameterType.PlateType:
           commandCode = 0xAB;
+          param = intValue;
           break;
         case DeviceParameterType.Volume:
           switch (subParameter)
@@ -799,6 +802,7 @@ namespace DIOS.Core
           break;
         case DeviceParameterType.ChannelConfiguration:
           commandCode = 0xC2;
+          param = intValue;
           break;
         case DeviceParameterType.LaserPower:
           switch (subParameter)
@@ -818,6 +822,7 @@ namespace DIOS.Core
           break;
         case DeviceParameterType.SystemActivityStatus:
           commandCode = 0xCC;
+          param = intValue;
           break;
         default:
           throw new NotImplementedException();
@@ -1346,7 +1351,7 @@ namespace DIOS.Core
     public void ReconnectUSB()
     {
       _dataController.ReconnectUSB();
-      MainCommand("Set Property", code: 0xCC);
+      SetHardwareParameter(DeviceParameterType.SystemActivityStatus);
       MainCommand("Set Property", code: 0xCB);
     }
 

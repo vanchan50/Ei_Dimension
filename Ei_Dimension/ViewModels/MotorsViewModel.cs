@@ -142,7 +142,7 @@ namespace Ei_Dimension.ViewModels
       var param = num == 96 ? 0 : 1;
       if (num == 1)
         param = 2;
-      App.Device.MainCommand("Set Property", code: 0xab, parameter: (ushort)param);
+      App.Device.SetHardwareParameter(DeviceParameterType.PlateType, param);
     }
 
     public void RunMotorButtonClick(string s)

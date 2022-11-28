@@ -115,3 +115,5 @@ RunResults MakeDeepCopy() should cache itself per well. Massive allocations are 
 Write thread probably not necessary
 events start firing before app loads - nullpointers
 somehow selftester should be initialized before datacontroller starts replyfromMC thread
+
+!!!SetHardwareParameter(DeviceParameterType.PlateType... in MotorsVM can screw up the selected plate!!!!

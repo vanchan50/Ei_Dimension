@@ -1312,7 +1312,7 @@ namespace Ei_Dimension
               {
                 if (fRes >= 0 && fRes <= 1000.0000000001)
                 {
-                  App.Device.MainCommand("Set FProperty", code: 0x48, fparameter: fRes);
+                  App.Device.SetHardwareParameter(DeviceParameterType.MotorStepsZ, MotorStepsZ.A1, fRes);
                   PlateCustomizationViewModel.Instance.DefaultPlate.A1 = fRes;
                   PlateCustomizationViewModel.Instance.UpdateDefault();
                   break;
@@ -1327,7 +1327,7 @@ namespace Ei_Dimension
               {
                 if (fRes >= 0 && fRes <= 1000.0000000001)
                 {
-                  App.Device.MainCommand("Set FProperty", code: 0x4a, fparameter: fRes);
+                  App.Device.SetHardwareParameter(DeviceParameterType.MotorStepsZ, MotorStepsZ.A12, fRes);
                   PlateCustomizationViewModel.Instance.DefaultPlate.A12 = fRes;
                   PlateCustomizationViewModel.Instance.UpdateDefault();
                   break;
@@ -1342,7 +1342,7 @@ namespace Ei_Dimension
               {
                 if (fRes >= 0 && fRes <= 1000.0000000001)
                 {
-                  App.Device.MainCommand("Set FProperty", code: 0x4c, fparameter: fRes);
+                  App.Device.SetHardwareParameter(DeviceParameterType.MotorStepsZ, MotorStepsZ.H1, fRes);
                   PlateCustomizationViewModel.Instance.DefaultPlate.H1 = fRes;
                   PlateCustomizationViewModel.Instance.UpdateDefault();
                   break;
@@ -1357,7 +1357,7 @@ namespace Ei_Dimension
               {
                 if (fRes >= 0 && fRes <= 1000.0000000001)
                 {
-                  App.Device.MainCommand("Set FProperty", code: 0x4e, fparameter: fRes);
+                  App.Device.SetHardwareParameter(DeviceParameterType.MotorStepsZ, MotorStepsZ.H12, fRes);
                   PlateCustomizationViewModel.Instance.DefaultPlate.H12 = fRes;
                   PlateCustomizationViewModel.Instance.UpdateDefault();
                   break;
@@ -1372,7 +1372,7 @@ namespace Ei_Dimension
               {
                 if (fRes >= 0 && fRes <= 1000.0000000001)
                 {
-                  App.Device.MainCommand("Set FProperty", code: 0x46, fparameter: fRes);
+                  App.Device.SetHardwareParameter(DeviceParameterType.MotorStepsZ, MotorStepsZ.Tube, fRes);
                   break;
                 }
               }

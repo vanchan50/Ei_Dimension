@@ -176,10 +176,10 @@ namespace Ei_Dimension.ViewModels
       if (newPD != null)
       {
         //apply
-        App.Device.MainCommand("Set Temporary", code: 0x48, fparameter: newPD.A1);
-        App.Device.MainCommand("Set Temporary", code: 0x4A, fparameter: newPD.A12);
-        App.Device.MainCommand("Set Temporary", code: 0x4C, fparameter: newPD.H1);
-        App.Device.MainCommand("Set Temporary", code: 0x4E, fparameter: newPD.H12);
+        App.Device.SetHardwareParameter(DeviceParameterType.MotorStepsZ, MotorStepsZ.A1,  newPD.A1);
+        App.Device.SetHardwareParameter(DeviceParameterType.MotorStepsZ, MotorStepsZ.A12, newPD.A12);
+        App.Device.SetHardwareParameter(DeviceParameterType.MotorStepsZ, MotorStepsZ.H1,  newPD.H1);
+        App.Device.SetHardwareParameter(DeviceParameterType.MotorStepsZ, MotorStepsZ.H12, newPD.H12);
         UpdateCurrent(newPD);
         CurrentPlateName = Path.GetFileNameWithoutExtension(SelectedItem);
         UnselectAll();
