@@ -108,7 +108,7 @@ namespace DIOS.Core
       set
       {
         _hdnrCoef = value;
-        MainCommand("Set FProperty", code: 0x20, fparameter: _hdnrCoef);
+        SetHardwareParameter(DeviceParameterType.DNRCoefficient, _hdnrCoef);
       }
     }
     public float Compensation { get; set; }
@@ -389,12 +389,15 @@ namespace DIOS.Core
           break;
         case DeviceParameterType.BeadConcentration:
           commandCode = 0x1D;
+          param = intValue;
           break;
         case DeviceParameterType.DNRCoefficient:
           commandCode = 0x20;
+          fparam = value;
           break;
         case DeviceParameterType.Pressure:
           commandCode = 0x22;
+          fparam = value;
           break;
         case DeviceParameterType.ChannelBias30C:
           param = intValue;
@@ -434,6 +437,7 @@ namespace DIOS.Core
               throw new NotImplementedException();
           }
           break;
+        /*  //Not used in SET
         case DeviceParameterType.ChannelCompensationBias:
           switch (subParameter)
           {
@@ -471,6 +475,8 @@ namespace DIOS.Core
               throw new NotImplementedException();
           }
           break;
+        */
+        /*  //Not used in SET
         case DeviceParameterType.ChannelTemperature:
           switch (subParameter)
           {
@@ -508,7 +514,9 @@ namespace DIOS.Core
               throw new NotImplementedException();
           }
           break;
+        */
         case DeviceParameterType.ChannelOffset:
+          param = intValue;
           switch (subParameter)
           {
             case Channel.GreenA:
@@ -546,6 +554,7 @@ namespace DIOS.Core
           }
           break;
         case DeviceParameterType.SyringeSpeedSheath:
+          param = intValue;
           switch (subParameter)
           {
             case SyringeSpeed.Normal:
@@ -571,6 +580,7 @@ namespace DIOS.Core
           }
           break;
         case DeviceParameterType.SyringeSpeedSample:
+          param = intValue;
           switch (subParameter)
           {
             case SyringeSpeed.Normal:
@@ -596,6 +606,7 @@ namespace DIOS.Core
           }
           break;
         case DeviceParameterType.MotorX:
+          param = intValue;
           switch (subParameter)
           {
             case MotorParameterType.Slope:
@@ -607,9 +618,14 @@ namespace DIOS.Core
             case MotorParameterType.RunSpeed:
               commandCode = 0x52;
               break;
+            case MotorParameterType.EncoderSteps:
+              commandCode = 0x50;
+              break;
+            /*
             case MotorParameterType.CurrentStep:
               commandCode = 0x54;
               break;
+            */
             case MotorParameterType.CurrentLimit:
               commandCode = 0x90;
               break;
@@ -618,6 +634,7 @@ namespace DIOS.Core
           }
           break;
         case DeviceParameterType.MotorY:
+          param = intValue;
           switch (subParameter)
           {
             case MotorParameterType.Slope:
@@ -629,9 +646,14 @@ namespace DIOS.Core
             case MotorParameterType.RunSpeed:
               commandCode = 0x62;
               break;
+            case MotorParameterType.EncoderSteps:
+              commandCode = 0x60;
+              break;
+            /*
             case MotorParameterType.CurrentStep:
               commandCode = 0x64;
               break;
+            */
             case MotorParameterType.CurrentLimit:
               commandCode = 0x91;
               break;
@@ -640,6 +662,7 @@ namespace DIOS.Core
           }
           break;
         case DeviceParameterType.MotorZ:
+          param = intValue;
           switch (subParameter)
           {
             case MotorParameterType.Slope:
@@ -651,9 +674,14 @@ namespace DIOS.Core
             case MotorParameterType.RunSpeed:
               commandCode = 0x42;
               break;
+            case MotorParameterType.EncoderSteps:
+              commandCode = 0x40;
+              break;
+            /*
             case MotorParameterType.CurrentStep:
               commandCode = 0x44;
               break;
+            */
             case MotorParameterType.CurrentLimit:
               commandCode = 0x92;
               break;
@@ -662,6 +690,7 @@ namespace DIOS.Core
           }
           break;
         case DeviceParameterType.MotorStepsX:
+          fparam = value;
           switch (subParameter)
           {
             case MotorStepsX.Plate96C1:
@@ -684,6 +713,7 @@ namespace DIOS.Core
           }
           break;
         case DeviceParameterType.MotorStepsY:
+          fparam = value;
           switch (subParameter)
           {
             case MotorStepsY.Plate96RowA:
@@ -706,6 +736,7 @@ namespace DIOS.Core
           }
           break;
         case DeviceParameterType.MotorStepsZ:
+          fparam = value;
           switch (subParameter)
           {
             case MotorStepsZ.A1:

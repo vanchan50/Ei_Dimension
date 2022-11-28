@@ -86,8 +86,6 @@ namespace Ei_Dimension
       if(SettingsWiped)
         WipedSettingsMessage();
 
-
-
       IntPtr windowHandle = new System.Windows.Interop.WindowInteropHelper(App.Current.MainWindow).Handle;
       
       usbnotif = new USBNotifier(windowHandle, Guid.ParseExact("F70242C7-FB25-443B-9E7E-A4260F373982", "D"));

@@ -150,7 +150,7 @@ namespace Ei_Dimension.ViewModels
               uint chkBox = newTemplate.FileSaveCheckboxes;
               for (var i = FileSaveViewModel.Instance.Checkboxes.Count - 1 - 1; i > -1; i--) // -1 to not store system log
               {
-                uint pow = (uint) Math.Pow(2, i);
+                uint pow = (uint)Math.Pow(2, i);
                 if (chkBox >= pow)
                 {
                   FileSaveViewModel.Instance.CheckedBox(i);

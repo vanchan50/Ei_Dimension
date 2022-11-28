@@ -307,7 +307,7 @@ namespace Ei_Dimension.ViewModels
     /// <param name="value">0 means "max current"</param>
     private void ChangeDACCurrent(ushort value)
     {
-      App.Device.MainCommand("Set Property", code: 0x92, parameter: value);
+      App.Device.SetHardwareParameter(DeviceParameterType.MotorZ, MotorParameterType.CurrentLimit, value);
       App.Device.MainCommand("RefreshDac");
     }
 

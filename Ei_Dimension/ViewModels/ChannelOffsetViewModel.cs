@@ -46,10 +46,7 @@ namespace Ei_Dimension.ViewModels
         //ChannelsBaseline.Add("");
         AverageBg.Add("");
       }
-
-      //Checkbox = new ObservableCollection<bool> { Settings.Default.SubtractBaseline };
-      //var param = Settings.Default.SubtractBaseline ? 1 : 0;
-      //App.Device.MainCommand("Set Property", code: 0x1d, parameter: (ushort)param);
+      
       var RM = Language.Resources.ResourceManager;
       var curCulture = Language.TranslationSource.Instance.CurrentCulture;
       SensitivityItems = new ObservableCollection<DropDownButtonContents>
@@ -94,15 +91,15 @@ namespace Ei_Dimension.ViewModels
       switch (param)
       {
         case 0:
-          App.Device.MainCommand("Set Property", code: 0xa0, parameter: (ushort)(double)SliderValue1);
+          App.Device.SetHardwareParameter(DeviceParameterType.ChannelOffset, Channel.GreenA, (ushort)(double)SliderValue1);
           ChannelsOffsetParameters[0] = ((double)SliderValue1).ToString();
           break;
         case 1:
-          App.Device.MainCommand("Set Property", code: 0xa4, parameter: (ushort)(double)SliderValue2);
+          App.Device.SetHardwareParameter(DeviceParameterType.ChannelOffset, Channel.GreenB, (ushort)(double)SliderValue2);
           ChannelsOffsetParameters[1] = ((double)SliderValue2).ToString();
           break;
         case 2:
-          App.Device.MainCommand("Set Property", code: 0xa5, parameter: (ushort)(double)SliderValue3);
+          App.Device.SetHardwareParameter(DeviceParameterType.ChannelOffset, Channel.GreenC, (ushort)(double)SliderValue3);
           ChannelsOffsetParameters[2] = ((double)SliderValue3).ToString();
           break;
       }
@@ -226,24 +223,6 @@ namespace Ei_Dimension.ViewModels
           break;
       }
     }
-
-    /*
-    public void CheckedBox(int num)
-    {
-      if (num == 0)
-      {
-        App.Device.MainCommand("Set Property", code: 0x1d, parameter: (ushort)0);
-        Checkbox[0] = false;
-        Settings.Default.SubtractBaseline = false;
-        Settings.Default.Save();
-        return;
-      }
-      Checkbox[0] = true;
-      Settings.Default.SubtractBaseline = true;
-      Settings.Default.Save();
-      App.Device.MainCommand("Set Property", code: 0x1d, parameter: (ushort)1);
-    }
-    */
 
     public void TextChanged(TextChangedEventArgs e)
     {

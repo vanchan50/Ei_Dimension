@@ -329,14 +329,14 @@ namespace Ei_Dimension
             failed = true;
             ErrorMessage = "[0-100]";
             break;
-          case "SheathSyringeParameters":
+          case nameof(SyringeSpeedsViewModel.Instance.SheathSyringeParameters):
             if (SelectedTextBox.index == 0)
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
                 if (iRes >= 0 && iRes <= 1000)
                 {
-                  App.Device.MainCommand("Set Property", code: 0x30, parameter: (ushort)iRes);
+                  App.Device.SetHardwareParameter(DeviceParameterType.SyringeSpeedSheath, SyringeSpeed.Normal, iRes);
                   break;
                 }
               }
@@ -349,7 +349,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 0 && iRes <= 1000)
                 {
-                  App.Device.MainCommand("Set Property", code: 0x31, parameter: (ushort)iRes);
+                  App.Device.SetHardwareParameter(DeviceParameterType.SyringeSpeedSheath, SyringeSpeed.HiSpeed, iRes);
                   break;
                 }
               }
@@ -362,7 +362,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 0 && iRes <= 1000)
                 {
-                  App.Device.MainCommand("Set Property", code: 0x32, parameter: (ushort)iRes);
+                  App.Device.SetHardwareParameter(DeviceParameterType.SyringeSpeedSheath, SyringeSpeed.HiSensitivity, iRes);
                   break;
                 }
               }
@@ -375,7 +375,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 0 && iRes <= 8000)
                 {
-                  App.Device.MainCommand("Set Property", code: 0x33, parameter: (ushort)iRes);
+                  App.Device.SetHardwareParameter(DeviceParameterType.SyringeSpeedSheath, SyringeSpeed.Flush, iRes);
                   break;
                 }
               }
@@ -388,7 +388,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 0 && iRes <= 8000)
                 {
-                  App.Device.MainCommand("Set Property", code: 0x34, parameter: (ushort)iRes);
+                  App.Device.SetHardwareParameter(DeviceParameterType.SyringeSpeedSheath, SyringeSpeed.Pickup, iRes);
                   break;
                 }
               }
@@ -401,7 +401,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 0 && iRes <= 8000)
                 {
-                  App.Device.MainCommand("Set Property", code: 0x35, parameter: (ushort)iRes);
+                  App.Device.SetHardwareParameter(DeviceParameterType.SyringeSpeedSheath, SyringeSpeed.MaxSpeed, iRes);
                   break;
                 }
               }
@@ -409,14 +409,14 @@ namespace Ei_Dimension
               ErrorMessage = "[1-8000]";
             }
             break;
-          case "SamplesSyringeParameters":
+          case nameof(SyringeSpeedsViewModel.Instance.SamplesSyringeParameters):
             if (SelectedTextBox.index == 0)
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
                 if (iRes >= 0 && iRes <= 1000)
                 {
-                  App.Device.MainCommand("Set Property", code: 0x38, parameter: (ushort)iRes);
+                  App.Device.SetHardwareParameter(DeviceParameterType.SyringeSpeedSample, SyringeSpeed.Normal, iRes);
                   break;
                 }
               }
@@ -429,7 +429,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 0 && iRes <= 1000)
                 {
-                  App.Device.MainCommand("Set Property", code: 0x39, parameter: (ushort)iRes);
+                  App.Device.SetHardwareParameter(DeviceParameterType.SyringeSpeedSample, SyringeSpeed.HiSpeed, iRes);
                   break;
                 }
               }
@@ -442,7 +442,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 0 && iRes <= 1000)
                 {
-                  App.Device.MainCommand("Set Property", code: 0x3a, parameter: (ushort)iRes);
+                  App.Device.SetHardwareParameter(DeviceParameterType.SyringeSpeedSample, SyringeSpeed.HiSensitivity, iRes);
                   break;
                 }
               }
@@ -455,7 +455,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 0 && iRes <= 8000)
                 {
-                  App.Device.MainCommand("Set Property", code: 0x3b, parameter: (ushort)iRes);
+                  App.Device.SetHardwareParameter(DeviceParameterType.SyringeSpeedSample, SyringeSpeed.Flush, iRes);
                   break;
                 }
               }
@@ -468,7 +468,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 0 && iRes <= 8000)
                 {
-                  App.Device.MainCommand("Set Property", code: 0x3c, parameter: (ushort)iRes);
+                  App.Device.SetHardwareParameter(DeviceParameterType.SyringeSpeedSample, SyringeSpeed.Pickup, iRes);
                   break;
                 }
               }
@@ -481,7 +481,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 0 && iRes <= 8000)
                 {
-                  App.Device.MainCommand("Set Property", code: 0x3d, parameter: (ushort)iRes);
+                  App.Device.SetHardwareParameter(DeviceParameterType.SyringeSpeedSample, SyringeSpeed.MaxSpeed, iRes);
                   break;
                 }
               }
@@ -659,14 +659,14 @@ namespace Ei_Dimension
               ErrorMessage = App.Device.BoardVersion >= 1 ? "[0-10000]" : "[0-3500]";
             }
             break;
-          case "ChannelsOffsetParameters":
+          case nameof(ChannelOffsetViewModel.Instance.ChannelsOffsetParameters):
             if (SelectedTextBox.index == 0)
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
                 if (iRes >= 0 && ((App.Device.BoardVersion == 0 && iRes <= 4095) || (App.Device.BoardVersion >= 1 && iRes <= 65535)))
                 {
-                  App.Device.MainCommand("Set Property", code: 0xa0, parameter: (ushort)iRes);
+                  App.Device.SetHardwareParameter(DeviceParameterType.ChannelOffset, Channel.GreenA, iRes);
                   ChannelOffsetViewModel.Instance.OverrideSliderChange = true;
                   ChannelOffsetViewModel.Instance.SliderValue1 = (double) iRes;
                   break;
@@ -681,7 +681,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 0 && ((App.Device.BoardVersion == 0 && iRes <= 4095) || (App.Device.BoardVersion >= 1 && iRes <= 65535)))
                 {
-                  App.Device.MainCommand("Set Property", code: 0xa4, parameter: (ushort)iRes);
+                  App.Device.SetHardwareParameter(DeviceParameterType.ChannelOffset, Channel.GreenB, iRes);
                   ChannelOffsetViewModel.Instance.OverrideSliderChange = true;
                   ChannelOffsetViewModel.Instance.SliderValue2 = (double) iRes;
                   break;
@@ -696,7 +696,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 0 && ((App.Device.BoardVersion == 0 && iRes <= 4095) || (App.Device.BoardVersion >= 1 && iRes <= 65535)))
                 {
-                  App.Device.MainCommand("Set Property", code: 0xa5, parameter: (ushort)iRes);
+                  App.Device.SetHardwareParameter(DeviceParameterType.ChannelOffset, Channel.GreenC, iRes);
                   ChannelOffsetViewModel.Instance.OverrideSliderChange = true;
                   ChannelOffsetViewModel.Instance.SliderValue3 = (double) iRes;
                   break;
@@ -711,7 +711,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 0 && ((App.Device.BoardVersion == 0 && iRes <= 4095) || (App.Device.BoardVersion >= 1 && iRes <= 65535)))
                 {
-                  App.Device.MainCommand("Set Property", code: 0xa3, parameter: (ushort)iRes);
+                  App.Device.SetHardwareParameter(DeviceParameterType.ChannelOffset, Channel.RedA, iRes);
                   break;
                 }
               }
@@ -724,7 +724,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 0 && ((App.Device.BoardVersion == 0 && iRes <= 4095) || (App.Device.BoardVersion >= 1 && iRes <= 65535)))
                 {
-                  App.Device.MainCommand("Set Property", code: 0xa2, parameter: (ushort)iRes);
+                  App.Device.SetHardwareParameter(DeviceParameterType.ChannelOffset, Channel.RedB, iRes);
                   break;
                 }
               }
@@ -737,7 +737,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 0 && ((App.Device.BoardVersion == 0 && iRes <= 4095) || (App.Device.BoardVersion >= 1 && iRes <= 65535)))
                 {
-                  App.Device.MainCommand("Set Property", code: 0xa1, parameter: (ushort)iRes);
+                  App.Device.SetHardwareParameter(DeviceParameterType.ChannelOffset, Channel.RedC, iRes);
                   break;
                 }
               }
@@ -750,7 +750,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 0 && ((App.Device.BoardVersion == 0 && iRes <= 4095) || (App.Device.BoardVersion >= 1 && iRes <= 65535)))
                 {
-                  App.Device.MainCommand("Set Property", code: 0x9f, parameter: (ushort)iRes);
+                  App.Device.SetHardwareParameter(DeviceParameterType.ChannelOffset, Channel.RedD, iRes);
                   break;
                 }
               }
@@ -763,7 +763,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 0 && ((App.Device.BoardVersion == 0 && iRes <= 4095) || (App.Device.BoardVersion >= 1 && iRes <= 65535)))
                 {
-                  App.Device.MainCommand("Set Property", code: 0x9d, parameter: (ushort)iRes);
+                  App.Device.SetHardwareParameter(DeviceParameterType.ChannelOffset, Channel.VioletA, iRes);
                   break;
                 }
               }
@@ -776,7 +776,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 0 && ((App.Device.BoardVersion == 0 && iRes <= 4095) || (App.Device.BoardVersion >= 1 && iRes <= 65535)))
                 {
-                  App.Device.MainCommand("Set Property", code: 0x9c, parameter: (ushort)iRes);
+                  App.Device.SetHardwareParameter(DeviceParameterType.ChannelOffset, Channel.VioletB, iRes);
                   break;
                 }
               }
@@ -789,7 +789,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 0 && ((App.Device.BoardVersion == 0 && iRes <= 4095) || (App.Device.BoardVersion >= 1 && iRes <= 65535)))
                 {
-                  App.Device.MainCommand("Set Property", code: 0x9e, parameter: (ushort)iRes);
+                  App.Device.SetHardwareParameter(DeviceParameterType.ChannelOffset, Channel.ForwardScatter, iRes);
                   break;
                 }
               }
@@ -931,7 +931,7 @@ namespace Ei_Dimension
             }
             break;
           */
-          case "ParametersX":
+          case nameof(MotorsViewModel.Instance.ParametersX):
             if (SelectedTextBox.index == 0)
             {
               if (int.TryParse(_tempNewString, out iRes))
@@ -950,7 +950,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 1000 && iRes <= 3000)
                 {
-                  App.Device.MainCommand("Set Property", code: 0x53, parameter: (ushort)iRes);
+                  App.Device.SetHardwareParameter(DeviceParameterType.MotorX, MotorParameterType.Slope, iRes);
                   break;
                 }
               }
@@ -963,7 +963,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 1000 && iRes <= 5000)
                 {
-                  App.Device.MainCommand("Set Property", code: 0x51, parameter: (ushort)iRes);
+                  App.Device.SetHardwareParameter(DeviceParameterType.MotorX, MotorParameterType.StartSpeed, iRes);
                   break;
                 }
               }
@@ -976,7 +976,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 1000 && iRes <= 10000)
                 {
-                  App.Device.MainCommand("Set Property", code: 0x52, parameter: (ushort)iRes);
+                  App.Device.SetHardwareParameter(DeviceParameterType.MotorX, MotorParameterType.RunSpeed, iRes);
                   break;
                 }
               }
@@ -985,12 +985,12 @@ namespace Ei_Dimension
             }
             if (SelectedTextBox.index == 6)
             {
-              if (ushort.TryParse(_tempNewString, out usRes))
+              if (int.TryParse(_tempNewString, out iRes))
               {
-                if (usRes >= 200 && usRes <= 2000)
+                if (iRes >= 200 && iRes <= 2000)
                 {
-                  App.Device.MainCommand("Set Property", code: 0x50, parameter: (ushort)usRes);
-                  Settings.Default.StepsPerRevX = usRes;
+                  App.Device.SetHardwareParameter(DeviceParameterType.MotorX, MotorParameterType.EncoderSteps, iRes);
+                  Settings.Default.StepsPerRevX = (ushort)iRes;
                   break;
                 }
               }
@@ -1003,7 +1003,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 0 && ((App.Device.BoardVersion == 0 && iRes <= 4095) || (App.Device.BoardVersion >= 1 && iRes <= 65535)))
                 {
-                  App.Device.MainCommand("Set Property", code: 0x90, parameter: (ushort)iRes);
+                  App.Device.SetHardwareParameter(DeviceParameterType.MotorX, MotorParameterType.CurrentLimit, iRes);
                   break;
                 }
               }
@@ -1011,7 +1011,7 @@ namespace Ei_Dimension
               ErrorMessage = App.Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
             }
             break;
-          case "ParametersY":
+          case nameof(MotorsViewModel.Instance.ParametersY):
             if (SelectedTextBox.index == 0)
             {
               if (int.TryParse(_tempNewString, out iRes))
@@ -1030,7 +1030,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 1000 && iRes <= 3000)
                 {
-                  App.Device.MainCommand("Set Property", code: 0x63, parameter: (ushort)iRes);
+                  App.Device.SetHardwareParameter(DeviceParameterType.MotorY, MotorParameterType.Slope, iRes);
                   break;
                 }
               }
@@ -1043,7 +1043,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 1000 && iRes <= 5000)
                 {
-                  App.Device.MainCommand("Set Property", code: 0x61, parameter: (ushort)iRes);
+                  App.Device.SetHardwareParameter(DeviceParameterType.MotorY, MotorParameterType.StartSpeed, iRes);
                   break;
                 }
               }
@@ -1056,7 +1056,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 1000 && iRes <= 10000)
                 {
-                  App.Device.MainCommand("Set Property", code: 0x62, parameter: (ushort)iRes);
+                  App.Device.SetHardwareParameter(DeviceParameterType.MotorY, MotorParameterType.RunSpeed, iRes);
                   break;
                 }
               }
@@ -1065,12 +1065,12 @@ namespace Ei_Dimension
             }
             if (SelectedTextBox.index == 6)
             {
-              if (ushort.TryParse(_tempNewString, out usRes))
+              if (int.TryParse(_tempNewString, out iRes))
               {
-                if (usRes >= 200 && usRes <= 2000)
+                if (iRes >= 200 && iRes <= 2000)
                 {
-                  App.Device.MainCommand("Set Property", code: 0x60, parameter: (ushort)usRes);
-                  Settings.Default.StepsPerRevY = usRes;
+                  App.Device.SetHardwareParameter(DeviceParameterType.MotorY, MotorParameterType.EncoderSteps, iRes);
+                  Settings.Default.StepsPerRevY = (ushort)iRes;
                   break;
                 }
               }
@@ -1083,7 +1083,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 0 && ((App.Device.BoardVersion == 0 && iRes <= 4095) || (App.Device.BoardVersion >= 1 && iRes <= 65535)))
                 {
-                  App.Device.MainCommand("Set Property", code: 0x91, parameter: (ushort)iRes);
+                  App.Device.SetHardwareParameter(DeviceParameterType.MotorY, MotorParameterType.CurrentLimit, iRes);
                   break;
                 }
               }
@@ -1091,7 +1091,7 @@ namespace Ei_Dimension
               ErrorMessage = App.Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
             }
             break;
-          case "ParametersZ":
+          case nameof(MotorsViewModel.Instance.ParametersZ):
             if (SelectedTextBox.index == 0)
             {
               if (int.TryParse(_tempNewString, out iRes))
@@ -1110,7 +1110,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 1000 && iRes <= 3000)
                 {
-                  App.Device.MainCommand("Set Property", code: 0x43, parameter: (ushort)iRes);
+                  App.Device.SetHardwareParameter(DeviceParameterType.MotorZ, MotorParameterType.Slope, iRes);
                   break;
                 }
               }
@@ -1123,7 +1123,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 1000 && iRes <= 5000)
                 {
-                  App.Device.MainCommand("Set Property", code: 0x41, parameter: (ushort)iRes);
+                  App.Device.SetHardwareParameter(DeviceParameterType.MotorZ, MotorParameterType.StartSpeed, iRes);
                   break;
                 }
               }
@@ -1136,7 +1136,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 1000 && iRes <= 10000)
                 {
-                  App.Device.MainCommand("Set Property", code: 0x42, parameter: (ushort)iRes);
+                  App.Device.SetHardwareParameter(DeviceParameterType.MotorZ, MotorParameterType.RunSpeed, iRes);
                   break;
                 }
               }
@@ -1145,12 +1145,12 @@ namespace Ei_Dimension
             }
             if (SelectedTextBox.index == 6)
             {
-              if (ushort.TryParse(_tempNewString, out usRes))
+              if (int.TryParse(_tempNewString, out iRes))
               {
-                if (usRes >= 200 && usRes <= 2000)
+                if (iRes >= 200 && iRes <= 2000)
                 {
-                  App.Device.MainCommand("Set Property", code: 0x40, parameter: (ushort)usRes);
-                  Settings.Default.StepsPerRevZ = usRes;
+                  App.Device.SetHardwareParameter(DeviceParameterType.MotorZ, MotorParameterType.EncoderSteps, iRes);
+                  Settings.Default.StepsPerRevZ = (ushort)iRes;
                   break;
                 }
               }
@@ -1163,7 +1163,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 0 && ((App.Device.BoardVersion == 0 && iRes <= 4095) || (App.Device.BoardVersion >= 1 && iRes <= 65535)))
                 {
-                  App.Device.MainCommand("Set Property", code: 0x92, parameter: (ushort)iRes);
+                  App.Device.SetHardwareParameter(DeviceParameterType.MotorZ, MotorParameterType.CurrentLimit, iRes);
                   break;
                 }
               }
@@ -1171,14 +1171,14 @@ namespace Ei_Dimension
               ErrorMessage = App.Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
             }
             break;
-          case "StepsParametersX":
+          case nameof(MotorsViewModel.Instance.StepsParametersX):
             if (SelectedTextBox.index == 0)
             {
               if (float.TryParse(_tempNewString, out fRes))
               {
                 if (fRes >= 0 && fRes <= 20000.0000000001)
                 {
-                  App.Device.MainCommand("Set FProperty", code: 0x58, fparameter: fRes);
+                  App.Device.SetHardwareParameter(DeviceParameterType.MotorStepsX, MotorStepsX.Plate96C1, fRes);
                   break;
                 }
               }
@@ -1191,7 +1191,7 @@ namespace Ei_Dimension
               {
                 if (fRes >= 0 && fRes <= 20000.0000000001)
                 {
-                  App.Device.MainCommand("Set FProperty", code: 0x5a, fparameter: fRes);
+                  App.Device.SetHardwareParameter(DeviceParameterType.MotorStepsX, MotorStepsX.Plate96C12, fRes);
                   break;
                 }
               }
@@ -1204,7 +1204,7 @@ namespace Ei_Dimension
               {
                 if (fRes >= 0 && fRes <= 20000.0000000001)
                 {
-                  App.Device.MainCommand("Set FProperty", code: 0x5c, fparameter: fRes);
+                  App.Device.SetHardwareParameter(DeviceParameterType.MotorStepsX, MotorStepsX.Plate384C1, fRes);
                   break;
                 }
               }
@@ -1217,7 +1217,7 @@ namespace Ei_Dimension
               {
                 if (fRes >= 0 && fRes <= 20000.0000000001)
                 {
-                  App.Device.MainCommand("Set FProperty", code: 0x5e, fparameter: fRes);
+                  App.Device.SetHardwareParameter(DeviceParameterType.MotorStepsX, MotorStepsX.Plate384C24, fRes);
                   break;
                 }
               }
@@ -1230,7 +1230,7 @@ namespace Ei_Dimension
               {
                 if (fRes >= 0 && fRes <= 20000.0000000001)
                 {
-                  App.Device.MainCommand("Set FProperty", code: 0x56, fparameter: fRes);
+                  App.Device.SetHardwareParameter(DeviceParameterType.MotorStepsX, MotorStepsX.Tube, fRes);
                   break;
                 }
               }
@@ -1238,14 +1238,14 @@ namespace Ei_Dimension
               ErrorMessage = "[0-20000]";
             }
             break;
-          case "StepsParametersY":
+          case nameof(MotorsViewModel.Instance.StepsParametersY):
             if (SelectedTextBox.index == 0)
             {
               if (float.TryParse(_tempNewString, out fRes))
               {
                 if (fRes >= 0 && fRes <= 20000.0000000001)
                 {
-                  App.Device.MainCommand("Set FProperty", code: 0x68, fparameter: fRes);
+                  App.Device.SetHardwareParameter(DeviceParameterType.MotorStepsY, MotorStepsY.Plate96RowA, fRes);
                   break;
                 }
               }
@@ -1258,7 +1258,7 @@ namespace Ei_Dimension
               {
                 if (fRes >= 0 && fRes <= 20000.0000000001)
                 {
-                  App.Device.MainCommand("Set FProperty", code: 0x6a, fparameter: fRes);
+                  App.Device.SetHardwareParameter(DeviceParameterType.MotorStepsY, MotorStepsY.Plate96RowH, fRes);
                   break;
                 }
               }
@@ -1271,7 +1271,7 @@ namespace Ei_Dimension
               {
                 if (fRes >= 0 && fRes <= 20000.0000000001)
                 {
-                  App.Device.MainCommand("Set FProperty", code: 0x6c, fparameter: fRes);
+                  App.Device.SetHardwareParameter(DeviceParameterType.MotorStepsY, MotorStepsY.Plate384RowA, fRes);
                   break;
                 }
               }
@@ -1284,7 +1284,7 @@ namespace Ei_Dimension
               {
                 if (fRes >= 0 && fRes <= 20000.0000000001)
                 {
-                  App.Device.MainCommand("Set FProperty", code: 0x6e, fparameter: fRes);
+                  App.Device.SetHardwareParameter(DeviceParameterType.MotorStepsY, MotorStepsY.Plate384RowP, fRes);
                   break;
                 }
               }
@@ -1297,7 +1297,7 @@ namespace Ei_Dimension
               {
                 if (fRes >= 0 && fRes <= 20000.0000000001)
                 {
-                  App.Device.MainCommand("Set FProperty", code: 0x66, fparameter: fRes);
+                  App.Device.SetHardwareParameter(DeviceParameterType.MotorStepsY, MotorStepsY.Tube, fRes);
                   break;
                 }
               }
@@ -1305,7 +1305,7 @@ namespace Ei_Dimension
               ErrorMessage = "[0-20000]";
             }
             break;
-          case "StepsParametersZ":
+          case nameof(MotorsViewModel.Instance.StepsParametersZ):
             if (SelectedTextBox.index == 0)
             {
               if (float.TryParse(_tempNewString, out fRes))
