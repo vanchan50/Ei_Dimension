@@ -1,8 +1,6 @@
-﻿using DevExpress.Mvvm;
-using DevExpress.Mvvm.DataAnnotations;
+﻿using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
 using System.Collections.ObjectModel;
-using System.Globalization;
 using System.Windows.Controls;
 using DIOS.Core;
 

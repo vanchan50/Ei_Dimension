@@ -59,7 +59,7 @@ namespace DIOS.Core
       set
       {
         _scatterGate = value;
-        MainCommand("Set Property", code: 0xCA, parameter: (ushort)_scatterGate);
+        SetHardwareParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.ScatterGate, (ushort)_scatterGate);
       }
     }
 
@@ -96,7 +96,7 @@ namespace DIOS.Core
       set
       {
         _hdnrTrans = value;
-        MainCommand("Set FProperty", code: 0x0A, fparameter: _hdnrTrans);
+        SetHardwareParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.DNRTransition, _hdnrTrans);
       }
     }
     public float HDnrCoef
@@ -108,7 +108,7 @@ namespace DIOS.Core
       set
       {
         _hdnrCoef = value;
-        SetHardwareParameter(DeviceParameterType.DNRCoefficient, _hdnrCoef);
+        SetHardwareParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.DNRCoefficient, _hdnrCoef);
       }
     }
     public float Compensation { get; set; }
@@ -213,8 +213,8 @@ namespace DIOS.Core
       {
         Normalization.SuspendForTheRun();
       }
-      MainCommand("Set Property", code: 0xce, parameter: _beadProcessor._map.calParams.minmapssc);  //set ssc gates for this map
-      MainCommand("Set Property", code: 0xcf, parameter: _beadProcessor._map.calParams.maxmapssc);
+      SetHardwareParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.MinSSC, _beadProcessor._map.calParams.minmapssc);
+      SetHardwareParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.MaxSSC, _beadProcessor._map.calParams.maxmapssc);
       //read section of plate
       RequestHardwareParameter(DeviceParameterType.MotorStepsX, MotorStepsX.Plate96C1);
       RequestHardwareParameter(DeviceParameterType.MotorStepsY, MotorStepsY.Plate96RowA);
@@ -391,9 +391,40 @@ namespace DIOS.Core
           commandCode = 0x1D;
           param = intValue;
           break;
-        case DeviceParameterType.DNRCoefficient:
-          commandCode = 0x20;
-          fparam = value;
+        case DeviceParameterType.CalibrationParameter:
+          switch (subParameter)
+          {
+            case CalibrationParameter.Height:
+              param = intValue;
+              commandCode = 0xCD;
+              break;
+            case CalibrationParameter.MinSSC:
+              param = intValue;
+              commandCode = 0xCE;
+              break;
+            case CalibrationParameter.MaxSSC:
+              param = intValue;
+              commandCode = 0xCF;
+              break;
+            case CalibrationParameter.Attenuation:
+              param = intValue;
+              commandCode = 0xBF;
+              break;
+            case CalibrationParameter.DNRCoefficient:
+              fparam = value;
+              commandCode = 0x20;
+              break;
+            case CalibrationParameter.DNRTransition:
+              fparam = value;
+              commandCode = 0x0A;
+              break;
+            case CalibrationParameter.ScatterGate:
+              param = intValue;
+              commandCode = 0xCA;
+              break;
+            default:
+              throw new NotImplementedException();
+          }
           break;
         case DeviceParameterType.Pressure:
           commandCode = 0x22;
@@ -758,6 +789,29 @@ namespace DIOS.Core
               throw new NotImplementedException();
           }
           break;
+        case DeviceParameterType.CalibrationTarget:
+          param = intValue;
+          switch (subParameter)
+          {
+            case CalibrationTarget.CL0:
+              commandCode = 0x8B;
+              break;
+            case CalibrationTarget.CL1:
+              commandCode = 0x8C;
+              break;
+            case CalibrationTarget.CL2:
+              commandCode = 0x8D;
+              break;
+            case CalibrationTarget.CL3:
+              commandCode = 0x8E;
+              break;
+            case CalibrationTarget.RP1:
+              commandCode = 0x8F;
+              break;
+            default:
+              throw new NotImplementedException();
+          }
+          break;
         case DeviceParameterType.WashRepeatsAmount:
           commandCode = 0x86;
           param = intValue;
@@ -895,8 +949,55 @@ namespace DIOS.Core
         case DeviceParameterType.BeadConcentration:
           commandCode = 0x1D;
           break;
-        case DeviceParameterType.DNRCoefficient:
-          commandCode = 0x20;
+        case DeviceParameterType.CalibrationTarget:
+          switch (subParameter)
+          {
+            case CalibrationTarget.CL0:
+              commandCode = 0x8B;
+              break;
+            case CalibrationTarget.CL1:
+              commandCode = 0x8C;
+              break;
+            case CalibrationTarget.CL2:
+              commandCode = 0x8D;
+              break;
+            case CalibrationTarget.CL3:
+              commandCode = 0x8E;
+              break;
+            case CalibrationTarget.RP1:
+              commandCode = 0x8F;
+              break;
+            default:
+              throw new NotImplementedException();
+          }
+          break;
+        case DeviceParameterType.CalibrationParameter:
+          switch (subParameter)
+          {
+            case CalibrationParameter.Height:
+              commandCode = 0xCD;
+              break;
+            case CalibrationParameter.MinSSC:
+              commandCode = 0xCE;
+              break;
+            case CalibrationParameter.MaxSSC:
+              commandCode = 0xCF;
+              break;
+            case CalibrationParameter.Attenuation:
+              commandCode = 0xBF;
+              break;
+            case CalibrationParameter.DNRCoefficient:
+              commandCode = 0x20;
+              break;
+            case CalibrationParameter.DNRTransition:
+              commandCode = 0x0A;
+              break;
+            case CalibrationParameter.ScatterGate:
+              commandCode = 0xCA;
+              break;
+            default:
+              throw new NotImplementedException();
+          }
           break;
         case DeviceParameterType.Pressure:
           commandCode = 0x22;

@@ -265,8 +265,26 @@ namespace DIOS.Core
         case 0x1D:
           outParameters = new ParameterUpdateEventArgs(DeviceParameterType.BeadConcentration, intParameter: cs.Parameter);
           break;
+        case 0xCD:
+          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.CalibrationParameter, intParameter: (int)CalibrationParameter.Height, floatParameter: cs.Parameter);
+          break;
+        case 0xCE:
+          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.CalibrationParameter, intParameter: (int)CalibrationParameter.MinSSC, floatParameter: cs.Parameter);
+          break;
+        case 0xCF:
+          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.CalibrationParameter, intParameter: (int)CalibrationParameter.MaxSSC, floatParameter: cs.Parameter);
+          break;
+        case 0xBF:
+          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.CalibrationParameter, intParameter: (int)CalibrationParameter.Attenuation, floatParameter: cs.Parameter);
+          break;
         case 0x20:
-          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.DNRCoefficient, floatParameter: cs.FParameter);
+          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.CalibrationParameter, intParameter: (int)CalibrationParameter.DNRCoefficient, floatParameter: cs.FParameter);
+          break;
+        case 0x0A:
+          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.CalibrationParameter, intParameter: (int)CalibrationParameter.DNRTransition, floatParameter: cs.FParameter);
+          break;
+        case 0xCA:
+          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.CalibrationParameter, intParameter: (int)CalibrationParameter.ScatterGate, floatParameter: cs.Parameter);
           break;
         case 0x22:
           outParameters = new ParameterUpdateEventArgs(DeviceParameterType.Pressure, floatParameter: cs.FParameter);
@@ -534,6 +552,21 @@ namespace DIOS.Core
           break;
         case 0x7F:
           outParameters = new ParameterUpdateEventArgs(DeviceParameterType.AgitateRepeatsAmount, intParameter: cs.Parameter);
+          break;
+        case 0x8B:
+          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.CalibrationTarget, intParameter: (int)CalibrationTarget.CL0, floatParameter: cs.Parameter);
+          break;
+        case 0x8C:
+          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.CalibrationTarget, intParameter: (int)CalibrationTarget.CL1, floatParameter: cs.Parameter);
+          break;
+        case 0x8D:
+          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.CalibrationTarget, intParameter: (int)CalibrationTarget.CL2, floatParameter: cs.Parameter);
+          break;
+        case 0x8E:
+          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.CalibrationTarget, intParameter: (int)CalibrationTarget.CL3, floatParameter: cs.Parameter);
+          break;
+        case 0x8F:
+          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.CalibrationTarget, intParameter: (int)CalibrationTarget.RP1, floatParameter: cs.Parameter);
           break;
         case 0x86:
           outParameters = new ParameterUpdateEventArgs(DeviceParameterType.WashRepeatsAmount, intParameter: cs.Parameter);

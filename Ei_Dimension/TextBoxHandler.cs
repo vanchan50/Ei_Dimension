@@ -100,15 +100,21 @@ namespace Ei_Dimension
               maxPressure *= ComponentsViewModel.TOKILOPASCALCOEFFICIENT;
             }
 
-            source.PressureMon[0] = dd.ToString("f3");
-            source.PressureMon[1] = maxPressure.ToString("f3");
+            source.PressureMon[0] = dd.ToString("F3");
+            source.PressureMon[1] = maxPressure.ToString("F3");
           };
           break;
         case DeviceParameterType.BeadConcentration:
           update = () => MainViewModel.Instance.SetBeadConcentrationMonitorValue(parameter.Parameter);
           break;
-        case DeviceParameterType.DNRCoefficient:
-          update = () => CalibrationViewModel.Instance.DNRContents[0] = parameter.FloatParameter.ToString();
+        case DeviceParameterType.CalibrationParameter:
+          var type16 = (CalibrationParameter)parameter.Parameter;
+          switch (type16)
+          {
+            case CalibrationParameter.DNRCoefficient:
+              update = () => CalibrationViewModel.Instance.DNRContents[0] = parameter.FloatParameter.ToString();
+              break;
+          }
           break;
         case DeviceParameterType.ChannelBias30C:
           var type = (Channel)parameter.Parameter;
@@ -146,7 +152,7 @@ namespace Ei_Dimension
               pos = 9;
               break;
           }
-          update = () => ChannelsViewModel.Instance.Bias30Parameters[pos] = Math.Round(parameter.FloatParameter).ToString("N0");
+          update = () => ChannelsViewModel.Instance.Bias30Parameters[pos] = Math.Round(parameter.FloatParameter).ToString("F0");
           break;
         case DeviceParameterType.SyringeSpeedSheath:
           var type2 = (SyringeSpeed)parameter.Parameter;
@@ -172,7 +178,7 @@ namespace Ei_Dimension
               pos2 = 5;
               break;
           }
-          update = () => SyringeSpeedsViewModel.Instance.SheathSyringeParameters[pos2] = parameter.FloatParameter.ToString("N0");
+          update = () => SyringeSpeedsViewModel.Instance.SheathSyringeParameters[pos2] = parameter.FloatParameter.ToString("F0");
           break;
         case DeviceParameterType.SyringeSpeedSample:
           var type3 = (SyringeSpeed)parameter.Parameter;
@@ -198,7 +204,7 @@ namespace Ei_Dimension
               pos3 = 5;
               break;
           }
-          update = () => SyringeSpeedsViewModel.Instance.SamplesSyringeParameters[pos3] = parameter.FloatParameter.ToString("N0");
+          update = () => SyringeSpeedsViewModel.Instance.SamplesSyringeParameters[pos3] = parameter.FloatParameter.ToString("F0");
           break;
         case DeviceParameterType.MotorX:
           var type4 = (MotorParameterType)parameter.Parameter;
@@ -411,7 +417,7 @@ namespace Ei_Dimension
               pos10 = 9;
               break;
           }
-          update = () => ChannelsViewModel.Instance.TempParameters[pos10] = parameter.FloatParameter.ToString("N1");
+          update = () => ChannelsViewModel.Instance.TempParameters[pos10] = parameter.FloatParameter.ToString("F1");
           break;
         case DeviceParameterType.ChannelCompensationBias:
           var type11 = (Channel)parameter.Parameter;
@@ -449,17 +455,11 @@ namespace Ei_Dimension
               pos11 = 9;
               break;
           }
-          update = () => ChannelsViewModel.Instance.TcompBiasParameters[pos11] = parameter.FloatParameter.ToString("N0");
+          update = () => ChannelsViewModel.Instance.TcompBiasParameters[pos11] = parameter.FloatParameter.ToString("F0");
           break;
         case DeviceParameterType.ChannelOffset:
           var type12 = (Channel)parameter.Parameter;
           var pos12 = 0;
-          object[] sliders =
-          {
-            ChannelOffsetViewModel.Instance.SliderValue1,
-            ChannelOffsetViewModel.Instance.SliderValue2,
-            ChannelOffsetViewModel.Instance.SliderValue3
-          };
           switch (type12)
           {
             case Channel.GreenA:
@@ -493,18 +493,40 @@ namespace Ei_Dimension
               pos12 = 9;
               break;
           }
-
-          if (pos12 < 3)
+          //no-sliders case
+          if (pos12 > 2)
           {
-            update = () =>
-            {
-              ChannelOffsetViewModel.Instance.ChannelsOffsetParameters[pos12] = parameter.FloatParameter.ToString("N0");
-              ChannelOffsetViewModel.Instance.OverrideSliderChange = true;
-              sliders[pos12] = (double)(parameter.FloatParameter);
-            };
+            update = () => ChannelOffsetViewModel.Instance.ChannelsOffsetParameters[pos12] = parameter.FloatParameter.ToString("F0");
             break;
           }
-          update = () => ChannelOffsetViewModel.Instance.ChannelsOffsetParameters[pos12] = parameter.FloatParameter.ToString("N0");
+          //sliders case
+          switch (pos12)
+          {
+            case 0:
+              update = () =>
+              {
+                ChannelOffsetViewModel.Instance.ChannelsOffsetParameters[0] = parameter.FloatParameter.ToString("F0");
+                ChannelOffsetViewModel.Instance.OverrideSliderChange = true;
+                ChannelOffsetViewModel.Instance.SliderValue1 = (double)(parameter.FloatParameter);
+              };
+              break;
+            case 1:
+              update = () =>
+              {
+                ChannelOffsetViewModel.Instance.ChannelsOffsetParameters[1] = parameter.FloatParameter.ToString("F0");
+                ChannelOffsetViewModel.Instance.OverrideSliderChange = true;
+                ChannelOffsetViewModel.Instance.SliderValue2 = (double)(parameter.FloatParameter);
+              };
+              break;
+            case 2:
+              update = () =>
+              {
+                ChannelOffsetViewModel.Instance.ChannelsOffsetParameters[2] = parameter.FloatParameter.ToString("F0");
+                ChannelOffsetViewModel.Instance.OverrideSliderChange = true;
+                ChannelOffsetViewModel.Instance.SliderValue3 = (double)(parameter.FloatParameter);
+              };
+              break;
+          }
           break;
         case DeviceParameterType.Volume:
           var type13 = (VolumeType)parameter.Parameter;
@@ -521,10 +543,10 @@ namespace Ei_Dimension
               pos13 = 2;
               break;
           }
-          update = () => DashboardViewModel.Instance.Volumes[pos13] = parameter.FloatParameter.ToString("N0");
+          update = () => DashboardViewModel.Instance.Volumes[pos13] = parameter.FloatParameter.ToString("F0");
           break;
         case DeviceParameterType.GreenAVoltage:
-          update = () => ChannelOffsetViewModel.Instance.GreenAVoltage[0] = parameter.FloatParameter.ToString("N3");
+          update = () => ChannelOffsetViewModel.Instance.GreenAVoltage[0] = parameter.FloatParameter.ToString("F3");
           break;
         case DeviceParameterType.IsLaserActive:
           //0Red 1Green 2Violet
@@ -540,13 +562,13 @@ namespace Ei_Dimension
           switch (type15)
           {
             case LaserType.Red:
-              update = () => ComponentsViewModel.Instance.LaserRedPowerValue[0] = parameter.FloatParameter.ToString("N1") + " mw";
+              update = () => ComponentsViewModel.Instance.LaserRedPowerValue[0] = parameter.FloatParameter.ToString("F1") + " mw";
               break;
             case LaserType.Green:
-              update = () => ComponentsViewModel.Instance.LaserGreenPowerValue[0] = parameter.FloatParameter.ToString("N1") + " mw";
+              update = () => ComponentsViewModel.Instance.LaserGreenPowerValue[0] = parameter.FloatParameter.ToString("F1") + " mw";
               break;
             case LaserType.Violet:
-              update = () => ComponentsViewModel.Instance.LaserVioletPowerValue[0] = parameter.FloatParameter.ToString("N1") + " mw";
+              update = () => ComponentsViewModel.Instance.LaserVioletPowerValue[0] = parameter.FloatParameter.ToString("F1") + " mw";
               break;
           }
           break;

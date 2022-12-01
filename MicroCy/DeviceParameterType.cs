@@ -17,8 +17,6 @@
     CalibrationSuccess,
     Pressure,
     PressureAtStartup,
-    DNRCoefficient,
-    DNRTransition,
     ChannelBias30C,
     SyringeSpeedSheath,
     SyringeSpeedSample,
@@ -48,6 +46,8 @@
     ChannelConfiguration,
     PlateType,
     WashRepeatsAmount,
-    AgitateRepeatsAmount
+    AgitateRepeatsAmount,
+    CalibrationTarget,
+    CalibrationParameter
   }
 }

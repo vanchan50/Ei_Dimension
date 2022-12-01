@@ -82,7 +82,7 @@ namespace Ei_Dimension.ViewModels
       App.Device.RequestHardwareParameter(DeviceParameterType.ChannelBias30C, Channel.VioletA);
       App.Device.RequestHardwareParameter(DeviceParameterType.ChannelBias30C, Channel.VioletB);
       App.Device.RequestHardwareParameter(DeviceParameterType.ChannelBias30C, Channel.ForwardScatter);
-      App.Device.RequestHardwareParameter(DeviceParameterType.DNRCoefficient);
+      App.Device.RequestHardwareParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.DNRCoefficient);
       System.Threading.Thread.Sleep(1000);
       Action Cancel = () =>
       {
@@ -283,33 +283,31 @@ namespace Ei_Dimension.ViewModels
 
     public void OnMapChanged(CustomMap map)
     {
-        EventTriggerContents[1] = map.calParams.minmapssc.ToString();
-        App.Device.MainCommand("Set Property", code: 0xce, parameter: (ushort)map.calParams.minmapssc);
-        EventTriggerContents[2] = map.calParams.maxmapssc.ToString();
-        App.Device.MainCommand("Set Property", code: 0xcf, parameter: (ushort)map.calParams.maxmapssc);
-        AttenuationBox[0] = map.calParams.att.ToString();
-        App.Device.MainCommand("Set Property", code: 0xbf, parameter: (ushort)map.calParams.att);
-
-
-        EventTriggerContents[0] = map.calParams.height.ToString();
-        App.Device.MainCommand("Set Property", code: 0xcd, parameter: map.calParams.height);
-        CompensationPercentageContent[0] = map.calParams.compensation.ToString();
-        App.Device.Compensation = map.calParams.compensation;
-        DNRContents[0] = map.calParams.DNRCoef.ToString();
-        App.Device.HDnrCoef = map.calParams.DNRCoef;
-        DNRContents[1] = map.calParams.DNRTrans.ToString();
-        App.Device.HdnrTrans = map.calParams.DNRTrans;
-        ClassificationTargetsContents[0] = map.calParams.CL0.ToString();
-        App.Device.MainCommand("Set Property", code: 0x8b, parameter: (ushort)map.calParams.CL0);
-        ClassificationTargetsContents[1] = map.calParams.CL1.ToString();
-        App.Device.MainCommand("Set Property", code: 0x8c, parameter: (ushort)map.calParams.CL1);
-        ClassificationTargetsContents[2] = map.calParams.CL2.ToString();
-        App.Device.MainCommand("Set Property", code: 0x8d, parameter: (ushort)map.calParams.CL2);
-        ClassificationTargetsContents[3] = map.calParams.CL3.ToString();
-        App.Device.MainCommand("Set Property", code: 0x8e, parameter: (ushort)map.calParams.CL3);
-        ClassificationTargetsContents[4] = map.calParams.RP1.ToString();
-        App.Device.MainCommand("Set Property", code: 0x8f, parameter: (ushort)map.calParams.RP1);
-        GatingItems[map.calParams.gate].Click();
+      EventTriggerContents[1] = map.calParams.minmapssc.ToString();
+      EventTriggerContents[2] = map.calParams.maxmapssc.ToString();
+      AttenuationBox[0] = map.calParams.att.ToString();
+      EventTriggerContents[0] = map.calParams.height.ToString();
+      App.Device.SetHardwareParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.MinSSC, map.calParams.minmapssc);
+      App.Device.SetHardwareParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.MaxSSC, map.calParams.maxmapssc);
+      App.Device.SetHardwareParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.Attenuation, map.calParams.att);
+      App.Device.SetHardwareParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.Height, map.calParams.height);
+      GatingItems[map.calParams.gate].Click();
+      CompensationPercentageContent[0] = map.calParams.compensation.ToString();
+      DNRContents[0] = map.calParams.DNRCoef.ToString();
+      DNRContents[1] = map.calParams.DNRTrans.ToString();
+      App.Device.Compensation = map.calParams.compensation;
+      App.Device.HDnrCoef = map.calParams.DNRCoef;
+      App.Device.HdnrTrans = map.calParams.DNRTrans;
+      ClassificationTargetsContents[0] = map.calParams.CL0.ToString();
+      ClassificationTargetsContents[1] = map.calParams.CL1.ToString();
+      ClassificationTargetsContents[2] = map.calParams.CL2.ToString();
+      ClassificationTargetsContents[3] = map.calParams.CL3.ToString();
+      ClassificationTargetsContents[4] = map.calParams.RP1.ToString();
+      App.Device.SetHardwareParameter(DeviceParameterType.CalibrationTarget, CalibrationTarget.CL0, map.calParams.CL0);
+      App.Device.SetHardwareParameter(DeviceParameterType.CalibrationTarget, CalibrationTarget.CL1, map.calParams.CL1);
+      App.Device.SetHardwareParameter(DeviceParameterType.CalibrationTarget, CalibrationTarget.CL2, map.calParams.CL2);
+      App.Device.SetHardwareParameter(DeviceParameterType.CalibrationTarget, CalibrationTarget.CL3, map.calParams.CL3);
+      App.Device.SetHardwareParameter(DeviceParameterType.CalibrationTarget, CalibrationTarget.RP1, map.calParams.RP1);
     }
 
     public class DropDownButtonContents : Core.ObservableObject

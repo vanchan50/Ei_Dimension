@@ -11,6 +11,7 @@ using Ei_Dimension.Cache;
 using Ei_Dimension.Controllers;
 using DIOSApplication;
 using System.Diagnostics;
+using DevExpress.XtraPrinting.Native;
 
 namespace Ei_Dimension
 {
@@ -670,7 +671,7 @@ namespace Ei_Dimension
       Device.OnlyClassifiedInBeadEventFile = Settings.Default.OnlyClassifed;
       Device.SensitivityChannel = Settings.Default.SensitivityChannelB ? HiSensitivityChannel.GreenB : HiSensitivityChannel.GreenC;
       Device.ReporterScaling = Settings.Default.ReporterScaling;
-      Device.MainCommand("Set Property", code: 0xbf, parameter: (ushort)DiosApp.MapController.ActiveMap.calParams.att);
+      Device.SetHardwareParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.Attenuation, DiosApp.MapController.ActiveMap.calParams.att);
       Device.HdnrTrans = DiosApp.MapController.ActiveMap.calParams.DNRTrans;
       Device.Compensation = DiosApp.MapController.ActiveMap.calParams.compensation;
       Device.MainCommand("Set Property", code: 0x97, parameter: 1170);  //set current limit of aligner motors if leds are off

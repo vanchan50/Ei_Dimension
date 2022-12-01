@@ -70,7 +70,7 @@ namespace Ei_Dimension
         string ErrorMessage = null;
         switch (SelectedTextBox.prop.Name)
         {
-          case "CompensationPercentageContent":
+          case nameof(CalibrationViewModel.Instance.CompensationPercentageContent):
             if (float.TryParse(_tempNewString, out fRes))
             {
               if (fRes >= 0 && fRes <= 10)
@@ -82,7 +82,7 @@ namespace Ei_Dimension
             failed = true;
             ErrorMessage = "[0-10]";
             break;
-          case "DNRContents":
+          case nameof(CalibrationViewModel.Instance.DNRContents):
             if (SelectedTextBox.index == 0)
             {
               if (float.TryParse(_tempNewString, out fRes))
@@ -209,14 +209,14 @@ namespace Ei_Dimension
               ErrorMessage = "[1-10]";
             }
             break;
-          case "EventTriggerContents":
+          case nameof(CalibrationViewModel.Instance.EventTriggerContents):
             if (SelectedTextBox.index == 0)
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
                 if (iRes >= 1 && iRes <= 2000)
                 {
-                  App.Device.MainCommand("Set Property", code: 0xcd, parameter: (ushort)iRes);
+                  App.Device.SetHardwareParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.Height, iRes);
                   break;
                 }
               }
@@ -229,7 +229,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 0 && iRes <= 20000)
                 {
-                  App.Device.MainCommand("Set Property", code: 0xce, parameter: (ushort)iRes);
+                  App.Device.SetHardwareParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.MinSSC, iRes);
                   break;
                 }
               }
@@ -242,7 +242,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 0 && iRes <= 30000)
                 {
-                  App.Device.MainCommand("Set Property", code: 0xcf, parameter: (ushort)iRes);
+                  App.Device.SetHardwareParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.MaxSSC, iRes);
                   break;
                 }
               }
@@ -250,14 +250,14 @@ namespace Ei_Dimension
               ErrorMessage = "[0-30000]";
             }
             break;
-          case "ClassificationTargetsContents":
+          case nameof(CalibrationViewModel.Instance.ClassificationTargetsContents):
             if (SelectedTextBox.index == 0)
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
                 if (iRes >= 0 && iRes <= 30000)
                 {
-                  App.Device.MainCommand("Set Property", code: 0x8b, parameter: (ushort)iRes);
+                  App.Device.SetHardwareParameter(DeviceParameterType.CalibrationTarget, CalibrationTarget.CL0, iRes);
                   break;
                 }
               }
@@ -270,7 +270,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 0 && iRes <= 30000)
                 {
-                  App.Device.MainCommand("Set Property", code: 0x8c, parameter: (ushort)iRes);
+                  App.Device.SetHardwareParameter(DeviceParameterType.CalibrationTarget, CalibrationTarget.CL1, iRes);
                   break;
                 }
               }
@@ -283,7 +283,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 0 && iRes <= 30000)
                 {
-                  App.Device.MainCommand("Set Property", code: 0x8d, parameter: (ushort)iRes);
+                  App.Device.SetHardwareParameter(DeviceParameterType.CalibrationTarget, CalibrationTarget.CL2, iRes);
                   break;
                 }
               }
@@ -296,7 +296,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 0 && iRes <= 30000)
                 {
-                  App.Device.MainCommand("Set Property", code: 0x8e, parameter: (ushort)iRes);
+                  App.Device.SetHardwareParameter(DeviceParameterType.CalibrationTarget, CalibrationTarget.CL3, iRes);
                   break;
                 }
               }
@@ -309,7 +309,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 0 && iRes <= 30000)
                 {
-                  App.Device.MainCommand("Set Property", code: 0x8f, parameter: (ushort)iRes);
+                  App.Device.SetHardwareParameter(DeviceParameterType.CalibrationTarget, CalibrationTarget.RP1, iRes);
                   break;
                 }
               }
@@ -317,12 +317,12 @@ namespace Ei_Dimension
               ErrorMessage = "[0-30000]";
             }
             break;
-          case "AttenuationBox":
+          case nameof(CalibrationViewModel.Instance.AttenuationBox):
             if (int.TryParse(_tempNewString, out iRes))
             {
               if (iRes >= 0 && iRes <= 100)
               {
-                App.Device.MainCommand("Set Property", code: 0xbf, parameter: (ushort)iRes);
+                App.Device.SetHardwareParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.Attenuation, iRes);
                 break;
               }
             }
