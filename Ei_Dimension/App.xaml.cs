@@ -1,6 +1,5 @@
 ﻿using System.Reflection;
 using System;
-using System.Collections.Generic;
 using System.Windows;
 using Ei_Dimension.ViewModels;
 using DIOS.Core;
@@ -10,8 +9,6 @@ using System.Text;
 using Ei_Dimension.Cache;
 using Ei_Dimension.Controllers;
 using DIOSApplication;
-using System.Diagnostics;
-using DevExpress.XtraPrinting.Native;
 
 namespace Ei_Dimension
 {
@@ -207,6 +204,7 @@ namespace Ei_Dimension
     }
 
     private static Models.WellWarningState GetWarningState()
+
     {
       if (_nextWellWarning)
       {

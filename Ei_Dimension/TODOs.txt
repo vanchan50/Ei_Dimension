@@ -116,4 +116,6 @@ Write thread probably not necessary
 events start firing before app loads - nullpointers
 somehow selftester should be initialized before datacontroller starts replyfromMC thread
 
-!!!SetHardwareParameter(DeviceParameterType.PlateType... in MotorsVM can screw up the selected plate!!!!
+!!!SetHardwareParameter(DeviceParameterType.PlateType... in MotorsVM can screw up the selected plate!!!! (am I correct?)
+MapController.SaveCalVals(MapCalParameters param) --make a copy of map, and if save is ok - swap it,
+SetHardwareParameter is still not finished!

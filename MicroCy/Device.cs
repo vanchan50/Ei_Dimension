@@ -84,7 +84,7 @@ namespace DIOS.Core
       set
       {
         _sensitivityChannel = value;
-        MainCommand("Set Property", code: 0x1E, parameter: (ushort)_sensitivityChannel);
+        SetHardwareParameter(DeviceParameterType.HiSensitivityChannel, (ushort)_sensitivityChannel);
       }
     }
     public float HdnrTrans
@@ -144,7 +144,7 @@ namespace DIOS.Core
     {
       if (_dataController.Run())
       {
-        MainCommand("Sync");
+        SendHardwareCommand(DeviceCommandType.Synchronize);
         RequestHardwareParameter(DeviceParameterType.BoardVersion);
       }
     }
@@ -227,9 +227,9 @@ namespace DIOS.Core
       Publisher.StartNewBeadEventReport();
       BeadCount = 0;
       OnStartingToReadWell();
-      MainCommand("Set Property", code: 0x19, parameter: 1); //bubble detect on
-      MainCommand("Position Well Plate"); //move motors. next position is set in properties 0xad and 0xae
-      MainCommand("Aspirate Syringe A"); //handles down and pickup sample
+      SetHardwareParameter(DeviceParameterType.IsBubbleDetectionActive, 1);
+      SendHardwareCommand(DeviceCommandType.PositionWellPlate);
+      SendHardwareCommand(DeviceCommandType.AspirateA);
       TotalBeads = 0;
 
       _isReadingA = false;
@@ -242,20 +242,20 @@ namespace DIOS.Core
 
     public void EjectPlate()
     {
-      MainCommand("Eject Plate");
+      SendHardwareCommand(DeviceCommandType.EjectPlate);
       IsPlateEjected = true;
     }
 
     public void LoadPlate()
     {
-      MainCommand("Load Plate");
+      SendHardwareCommand(DeviceCommandType.LoadPlate);
       IsPlateEjected = false;
     }
 
     private void SetReadingParamsForWell()
     {
-      MainCommand("Set Property", code: 0xaa, parameter: (ushort)WellController.NextWell.RunSpeed);
-      MainCommand("Set Property", code: 0xc2, parameter: (ushort)WellController.NextWell.ChanConfig);
+      SetHardwareParameter(DeviceParameterType.WellReadingSpeed,     (ushort)WellController.NextWell.RunSpeed);
+      SetHardwareParameter(DeviceParameterType.ChannelConfiguration, (ushort)WellController.NextWell.ChanConfig);
       BeadsToCapture = WellController.NextWell.BeadsToCapture;
       MinPerRegion = WellController.NextWell.MinPerRegion;
       TerminationType = WellController.NextWell.TermType;
@@ -263,8 +263,8 @@ namespace DIOS.Core
 
     private void SetAspirateParamsForWell()
     {
-      MainCommand("Set Property", code: 0xad, parameter: (ushort)WellController.NextWell.RowIdx);
-      MainCommand("Set Property", code: 0xae, parameter: (ushort)WellController.NextWell.ColIdx);
+      SetHardwareParameter(DeviceParameterType.WellRowIndex,    WellController.NextWell.RowIdx);
+      SetHardwareParameter(DeviceParameterType.WellColumnIndex, WellController.NextWell.ColIdx);
       SetHardwareParameter(DeviceParameterType.Volume, VolumeType.Sample,  (ushort)WellController.NextWell.SampVol);
       SetHardwareParameter(DeviceParameterType.Volume, VolumeType.Wash,    (ushort)WellController.NextWell.WashVol);
       SetHardwareParameter(DeviceParameterType.Volume, VolumeType.Agitate, (ushort)WellController.NextWell.AgitateVol);
@@ -273,9 +273,9 @@ namespace DIOS.Core
     internal bool EndBeadRead()
     {
       if (_isReadingA)
-        MainCommand("End Bead Read A");
+        SendHardwareCommand(DeviceCommandType.EndReadA);
       else
-        MainCommand("End Bead Read B");
+        SendHardwareCommand(DeviceCommandType.EndReadB);
       return WellController.IsLastWell;
     }
 
@@ -284,18 +284,17 @@ namespace DIOS.Core
       if (WellController.IsLastWell)
       {
         if (_isReadingA)
-          MainCommand("Read B");
+          SendHardwareCommand(DeviceCommandType.ReadB);
         else
-          MainCommand("Read A");
+          SendHardwareCommand(DeviceCommandType.ReadA);
+        return;
       }
+
+      SetAspirateParamsForWell();
+      if (_isReadingA)
+        SendHardwareCommand(DeviceCommandType.ReadBAspirateA);
       else
-      {
-        SetAspirateParamsForWell();
-        if (_isReadingA)
-          MainCommand("Read B Aspirate A");
-        else
-          MainCommand("Read A Aspirate B");
-      }
+        SendHardwareCommand(DeviceCommandType.ReadAAspirateB);
     }
 
     public void MainCommand(string command, byte? cmd = null, byte? code = null, ushort? parameter = null, float? fparameter = null)
@@ -307,21 +306,6 @@ namespace DIOS.Core
       cs.FParameter = fparameter ?? cs.FParameter;
       switch (command)
       {
-        case "Read A":
-          _isReadingA = true;
-          break;
-        case "Read A Aspirate B":
-          _isReadingA = true;
-          break;
-        case "Read B":
-          _isReadingA = false;
-          break;
-        case "Read B Aspirate A":
-          _isReadingA = false;
-          break;
-        case "FlushCmdQueue":
-          cs.Command = 0x02;
-          break;
         case "Idex":
           cs.Command = Idex.Pos;
           cs.Parameter = Idex.Steps;
@@ -329,6 +313,107 @@ namespace DIOS.Core
           break;
       }
       _dataController.AddCommand(command, cs);
+    }
+
+    public void SendHardwareCommand(DeviceCommandType command)
+    {
+      ushort param = 0;
+      byte commandCode = 0;
+      byte extraAction = 0;
+      switch (command)
+      {
+        case DeviceCommandType.ActivateCalibrationMode:
+          commandCode = 0x1B;
+          param = 1;
+          break;
+        case DeviceCommandType.DeactivateCalibrationMode:
+          commandCode = 0x1B;
+          break;
+        case DeviceCommandType.RefreshDAC:
+          commandCode = 0xD3;
+          break;
+        case DeviceCommandType.SetBaseLine:
+          commandCode = 0xD5;
+          break;
+        case DeviceCommandType.FlashSave:
+          commandCode = 0xD6;
+          break;
+        case DeviceCommandType.FlashRestore:
+          commandCode = 0xD8;
+          break;
+        case DeviceCommandType.FlashFactoryReset:
+          commandCode = 0xD8;
+          extraAction = 1;
+          break;
+        case DeviceCommandType.FlushCommandQueue:
+          commandCode = 0xD9;
+          extraAction = 0x02;
+          break;
+        case DeviceCommandType.StartSampling:
+          commandCode = 0xDA;
+          break;
+        case DeviceCommandType.EndSampling:
+          commandCode = 0xDB;
+          break;
+        case DeviceCommandType.Startup:
+          commandCode = 0xE0;
+          break;
+        case DeviceCommandType.Prime:
+          commandCode = 0xE1;
+          break;
+        case DeviceCommandType.WashA:
+          commandCode = 0xE3;
+          break;
+        case DeviceCommandType.WashB:
+          commandCode = 0xE4;
+          break;
+        case DeviceCommandType.EjectPlate:
+          commandCode = 0xE5;
+          break;
+        case DeviceCommandType.LoadPlate:
+          commandCode = 0xE6;
+          break;
+        case DeviceCommandType.PositionWellPlate:
+          commandCode = 0xE7;
+          break;
+        case DeviceCommandType.AspirateA:
+          commandCode = 0xE8;
+          break;
+        case DeviceCommandType.AspirateB:
+          commandCode = 0xE9;
+          break;
+        case DeviceCommandType.ReadA:
+          commandCode = 0xEA;
+          _isReadingA = true;
+          break;
+        case DeviceCommandType.ReadB:
+          commandCode = 0xEB;
+          _isReadingA = false;
+          break;
+        case DeviceCommandType.ReadAAspirateB:
+          commandCode = 0xEC;
+          _isReadingA = true;
+          break;
+        case DeviceCommandType.ReadBAspirateA:
+          commandCode = 0xED;
+          _isReadingA = false;
+          break;
+        case DeviceCommandType.EndReadA:
+          commandCode = 0xEE;
+          break;
+        case DeviceCommandType.EndReadB:
+          commandCode = 0xEF;
+          break;
+        case DeviceCommandType.UpdateFirmware:
+          commandCode = 0xF5;
+          break;
+        case DeviceCommandType.Synchronize:
+          commandCode = 0xFA;
+          break;
+        default:
+          throw new NotImplementedException();
+      }
+      MainCommand("Set Property", code: commandCode, parameter: param, cmd:extraAction);
     }
 
     public void SetHardwareParameter(DeviceParameterType primaryParameter, float value = 0f)
@@ -387,8 +472,16 @@ namespace DIOS.Core
           commandCode = 0x18;
           param = intValue;
           break;
+        case DeviceParameterType.IsBubbleDetectionActive:
+          commandCode = 0x19;
+          param = intValue;
+          break;
         case DeviceParameterType.BeadConcentration:
           commandCode = 0x1D;
+          param = intValue;
+          break;
+        case DeviceParameterType.HiSensitivityChannel:
+          commandCode = 0x1E;
           param = intValue;
           break;
         case DeviceParameterType.CalibrationParameter:
@@ -832,6 +925,14 @@ namespace DIOS.Core
           commandCode = 0xAB;
           param = intValue;
           break;
+        case DeviceParameterType.WellRowIndex:
+          commandCode = 0xAD;
+          param = intValue;
+          break;
+        case DeviceParameterType.WellColumnIndex:
+          commandCode = 0xAE;
+          param = intValue;
+          break;
         case DeviceParameterType.Volume:
           switch (subParameter)
           {
@@ -853,11 +954,13 @@ namespace DIOS.Core
           break;
         case DeviceParameterType.IsLaserActive:
           commandCode = 0xC0;
+          param = intValue;
           break;
         case DeviceParameterType.ChannelConfiguration:
           commandCode = 0xC2;
           param = intValue;
           break;
+        /*  //Not used in SET
         case DeviceParameterType.LaserPower:
           switch (subParameter)
           {
@@ -874,8 +977,13 @@ namespace DIOS.Core
               throw new NotImplementedException();
           }
           break;
+        */
         case DeviceParameterType.SystemActivityStatus:
           commandCode = 0xCC;
+          param = intValue;
+          break;
+        case DeviceParameterType.IsSingleStepDebugActive:
+          commandCode = 0xF7;
           param = intValue;
           break;
         default:
@@ -946,8 +1054,14 @@ namespace DIOS.Core
         case DeviceParameterType.IsInputSelectorAtPickup:
           commandCode = 0x18;
           break;
+        case DeviceParameterType.IsBubbleDetectionActive:
+          commandCode = 0x19;
+          break;
         case DeviceParameterType.BeadConcentration:
           commandCode = 0x1D;
+          break;
+        case DeviceParameterType.HiSensitivityChannel:
+          commandCode = 0x1E;
           break;
         case DeviceParameterType.CalibrationTarget:
           switch (subParameter)
@@ -1347,6 +1461,12 @@ namespace DIOS.Core
         case DeviceParameterType.PlateType:
           commandCode = 0xAB;
           break;
+        case DeviceParameterType.WellRowIndex:
+          commandCode = 0xAD;
+          break;
+        case DeviceParameterType.WellColumnIndex:
+          commandCode = 0xAE;
+          break;
         case DeviceParameterType.Volume:
           switch (subParameter)
           {
@@ -1409,7 +1529,7 @@ namespace DIOS.Core
 
     internal void OnFinishedReadingWell()
     {
-      MainCommand("End Sampling");    //sends message to instrument to stop sampling
+      SendHardwareCommand(DeviceCommandType.EndSampling);
       FinishedReadingWell?.Invoke(this, new ReadingWellEventArgs(WellController.CurrentWell.RowIdx, WellController.CurrentWell.ColIdx,
         Publisher.FullBeadEventFileName));
       RequestHardwareParameter(DeviceParameterType.TotalBeadsInFirmware);
@@ -1422,7 +1542,7 @@ namespace DIOS.Core
       Results.PlateReport.completedDateTime = DateTime.Now;
       _ = Task.Run(() => { Publisher.OutputPlateReport(); });
       Results.EndOfOperationReset();
-      MainCommand("Set Property", code: 0x19);  //bubble detect off
+      SetHardwareParameter(DeviceParameterType.IsBubbleDetectionActive, 0);
       if (Mode ==  OperationMode.Verification)
         Verificator.CalculateResults(_beadProcessor._map);
 

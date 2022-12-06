@@ -151,29 +151,27 @@ namespace Ei_Dimension.ViewModels
     public void SetFixedVolumeButtonClick(ushort num)
     {
       UserInputHandler.InputSanityCheck();
-      App.Device.MainCommand("Set Property", code: 0xaf, parameter: num);
+      App.Device.SetHardwareParameter(DeviceParameterType.Volume, VolumeType.Sample, num);
       Volumes[0] = num.ToString();
     }
 
     public void FluidicsButtonClick(int i)
     {
       UserInputHandler.InputSanityCheck();
-      App.Device.MainCommand("Set Property", code: 0x19, parameter: 1); //bubble detect on
-      string cmd = "";
+      App.Device.SetHardwareParameter(DeviceParameterType.IsBubbleDetectionActive, 1);
       switch (i)
       {
         case 0:
-          cmd = "Prime";
+          App.Device.SendHardwareCommand(DeviceCommandType.Prime);
           break;
         case 1:
-          cmd = "Wash A";
+          App.Device.SendHardwareCommand(DeviceCommandType.WashA);
           break;
         case 2:
-          cmd = "Wash B";
+          App.Device.SendHardwareCommand(DeviceCommandType.WashB);
           break;
       }
-      App.Device.MainCommand(cmd);
-      App.Device.MainCommand("Set Property", code: 0x19, parameter: 0); //bubble detect off
+      App.Device.SetHardwareParameter(DeviceParameterType.IsBubbleDetectionActive, 0);
     }
 
     public void FocusedBox(int num)
@@ -246,12 +244,12 @@ namespace Ei_Dimension.ViewModels
         App.Device.Mode = OperationMode.Normal;
         EndReadItems[_dbEndReadIndexTempHolder].Click(6);
         Volumes[0] = _dbsampleVolumeTempHolder;
-        App.Device.MainCommand("Set Property", code: 0xaf, parameter: ushort.Parse(_dbsampleVolumeTempHolder));
+        App.Device.SetHardwareParameter(DeviceParameterType.Volume, VolumeType.Sample, ushort.Parse(_dbsampleVolumeTempHolder));
         MainButtonsViewModel.Instance.Flavor[0] = null;
         MainWindow.Instance.wndw.Background = (System.Windows.Media.SolidColorBrush)App.Current.Resources["AppBackground"];
         UnlockMapSelection();
         UnLockEndReadSelection();
-        App.Device.MainCommand("Set Property", code: 0x1b, parameter: 0);
+        App.Device.SendHardwareCommand(DeviceCommandType.DeactivateCalibrationMode);
       }
 
       UserInputHandler.InputSanityCheck();
@@ -271,7 +269,7 @@ namespace Ei_Dimension.ViewModels
           MainWindow.Instance.wndw.Background = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(255, 255, 191));
           LockMapSelection();
           LockEndReadSelection();
-          App.Device.MainCommand("Set Property", code: 0x1b, parameter: 1);
+          App.Device.SendHardwareCommand(DeviceCommandType.ActivateCalibrationMode);
           return;
         }
         CalModeOn = false;
@@ -296,7 +294,7 @@ namespace Ei_Dimension.ViewModels
       {
         App.Device.Mode = OperationMode.Normal;
         Volumes[0] = _dbsampleVolumeTempHolder;
-        App.Device.MainCommand("Set Property", code: 0xaf, parameter: ushort.Parse(_dbsampleVolumeTempHolder));
+        App.Device.SetHardwareParameter(DeviceParameterType.Volume, VolumeType.Sample, ushort.Parse(_dbsampleVolumeTempHolder));
         MainButtonsViewModel.Instance.Flavor[0] = null;
         MainWindow.Instance.wndw.Background = (System.Windows.Media.SolidColorBrush)App.Current.Resources["AppBackground"];
         ResultsViewModel.Instance.ValidationCoverVisible = Visibility.Hidden;

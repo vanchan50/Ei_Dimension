@@ -1,6 +1,7 @@
 ﻿using DevExpress.Mvvm;
 using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
+using DIOS.Core;
 
 namespace Ei_Dimension.ViewModels
 {
@@ -99,7 +100,7 @@ namespace Ei_Dimension.ViewModels
     {
       if(IsSystemBusy() || IsMeasurementGoing())
         return;
-      App.Device.MainCommand("SaveToFlash");
+      App.Device.SendHardwareCommand(DeviceCommandType.FlashSave);
       Notification.ShowLocalizedError(nameof(Language.Resources.Notification_FlashSaved));
     }
 
@@ -107,7 +108,7 @@ namespace Ei_Dimension.ViewModels
     {
       if (IsSystemBusy() || IsMeasurementGoing())
         return;
-      App.Device.MainCommand("InitOpVars");
+      App.Device.SendHardwareCommand(DeviceCommandType.FlashRestore);
       Notification.ShowLocalizedError(nameof(Language.Resources.Notification_FlashRestored));
     }
 
@@ -115,7 +116,7 @@ namespace Ei_Dimension.ViewModels
     {
       if (IsSystemBusy() || IsMeasurementGoing())
         return;
-      App.Device.MainCommand("InitOpVars", cmd: 1);
+      App.Device.SendHardwareCommand(DeviceCommandType.FlashFactoryReset);
       Notification.Show("Flash Restored to Factory Defaults");
       Notification.ShowLocalizedError(nameof(Language.Resources.Notification_FlashRestoredToDefaults));
     }

@@ -48,7 +48,7 @@ namespace Ei_Dimension.ViewModels
     public void UpdateBiasButtonClick()
     {
       UserInputHandler.InputSanityCheck();
-      App.Device.MainCommand("RefreshDac");
+      App.Device.SendHardwareCommand(DeviceCommandType.RefreshDAC);
       App.InitSTab("channeltab");
     }
 

@@ -195,9 +195,9 @@ namespace Ei_Dimension.ViewModels
     public void GoToWellButtonClick()
     {
       UserInputHandler.InputSanityCheck();
-      App.Device.MainCommand("Set Property", code: 0xad, parameter: (ushort)SelectedWellRowIndex);
-      App.Device.MainCommand("Set Property", code: 0xae, parameter: (ushort)SelectedWellColumnIndex);
-      App.Device.MainCommand("Position Well Plate");
+      App.Device.SetHardwareParameter(DeviceParameterType.WellRowIndex, SelectedWellRowIndex);
+      App.Device.SetHardwareParameter(DeviceParameterType.WellColumnIndex, SelectedWellColumnIndex);
+      App.Device.SendHardwareCommand(DeviceCommandType.PositionWellPlate);
     }
 
     public void PollStepToggleButtonClick()
@@ -405,12 +405,12 @@ namespace Ei_Dimension.ViewModels
         {
           case 1:
             _vm.SelectedWellRow = Content;
-            App.Device.MainCommand("Set Property", code: 0xad, parameter: (ushort)Index);
+            App.Device.SetHardwareParameter(DeviceParameterType.WellRowIndex, Index);
             _vm.SelectedWellRowIndex = Index;
             break;
           case 2:
             _vm.SelectedWellColumn = Content;
-            App.Device.MainCommand("Set Property", code: 0xae, parameter: (ushort)Index);
+            App.Device.SetHardwareParameter(DeviceParameterType.WellColumnIndex, Index);
             _vm.SelectedWellColumnIndex = Index;
             break;
         }

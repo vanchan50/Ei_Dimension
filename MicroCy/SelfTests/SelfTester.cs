@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DIOS.Core.SelfTests
+﻿namespace DIOS.Core.SelfTests
 {
   internal class SelfTester
   {
@@ -23,7 +17,7 @@ namespace DIOS.Core.SelfTests
     internal void FluidicsTest()
     {
       _device.RequestHardwareParameter(DeviceParameterType.PressureAtStartup);
-      _device.MainCommand("Set Property", code: 0xE0);
+      _device.SendHardwareCommand(DeviceCommandType.Startup);
       // result to DataController.InnerCommandProcessing(). Probably should form a SelfTestError class
       //SelfTestError should be a property of this class
     }

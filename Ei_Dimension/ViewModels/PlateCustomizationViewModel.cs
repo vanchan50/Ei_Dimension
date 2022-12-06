@@ -308,14 +308,14 @@ namespace Ei_Dimension.ViewModels
     private void ChangeDACCurrent(ushort value)
     {
       App.Device.SetHardwareParameter(DeviceParameterType.MotorZ, MotorParameterType.CurrentLimit, value);
-      App.Device.MainCommand("RefreshDac");
+      App.Device.SendHardwareCommand(DeviceCommandType.RefreshDAC);
     }
 
     private void MovePlateToWell(Well well)
     {
-      App.Device.MainCommand("Set Property", code: 0xad, parameter: well.RowIdx);
-      App.Device.MainCommand("Set Property", code: 0xae, parameter: well.ColIdx);
-      App.Device.MainCommand("Position Well Plate");
+      App.Device.SetHardwareParameter(DeviceParameterType.WellRowIndex,    well.RowIdx);
+      App.Device.SetHardwareParameter(DeviceParameterType.WellColumnIndex, well.ColIdx);
+      App.Device.SendHardwareCommand(DeviceCommandType.PositionWellPlate);
       lock (App.Device.ScriptF9FinishedLock)
       {
         Monitor.Wait(App.Device.ScriptF9FinishedLock);

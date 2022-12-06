@@ -65,14 +65,14 @@ namespace Ei_Dimension.ViewModels
     public void UpdateBiasButtonClick()
     {
       UserInputHandler.InputSanityCheck();
-      App.Device.MainCommand("RefreshDac");
+      App.Device.SendHardwareCommand(DeviceCommandType.RefreshDAC);
       App.InitSTab("channeltab");
     }
 
     public void SetOffsetClick()
     {
       UserInputHandler.InputSanityCheck();
-      App.Device.MainCommand("SetBaseline");
+      App.Device.SendHardwareCommand(DeviceCommandType.SetBaseLine);
     }
 
     public void SliderValueChanged(int param)
@@ -101,7 +101,7 @@ namespace Ei_Dimension.ViewModels
           ChannelsOffsetParameters[2] = ((double)SliderValue3).ToString();
           break;
       }
-      App.Device.MainCommand("RefreshDac");
+      App.Device.SendHardwareCommand(DeviceCommandType.RefreshDAC);
     }
 
     public void DecodeBackgroundStats(ChannelsAveragesStats Stats)

@@ -255,6 +255,9 @@ namespace DIOS.Core
         case 0x18:
           outParameters = new ParameterUpdateEventArgs(DeviceParameterType.IsInputSelectorAtPickup, intParameter: cs.Parameter);
           break;
+        case 0x19:
+          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.IsBubbleDetectionActive, intParameter: cs.Parameter);
+          break;
         case 0x1B:
           if (cs.Parameter == 0)
           {
@@ -264,6 +267,9 @@ namespace DIOS.Core
           break;
         case 0x1D:
           outParameters = new ParameterUpdateEventArgs(DeviceParameterType.BeadConcentration, intParameter: cs.Parameter);
+          break;
+        case 0x1E:
+          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.HiSensitivityChannel, intParameter: cs.Parameter);
           break;
         case 0xCD:
           outParameters = new ParameterUpdateEventArgs(DeviceParameterType.CalibrationParameter, intParameter: (int)CalibrationParameter.Height, floatParameter: cs.Parameter);
@@ -582,6 +588,12 @@ namespace DIOS.Core
           break;
         case 0xAC:
           outParameters = new ParameterUpdateEventArgs(DeviceParameterType.Volume, intParameter: (int)VolumeType.Wash, floatParameter: cs.Parameter);
+          break;
+        case 0xAD:
+          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.WellRowIndex, intParameter: cs.Parameter);
+          break;
+        case 0xAE:
+          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.WellColumnIndex, intParameter: cs.Parameter);
           break;
         case 0xAF:
           outParameters = new ParameterUpdateEventArgs(DeviceParameterType.Volume, intParameter: (int)VolumeType.Sample, floatParameter: cs.Parameter);

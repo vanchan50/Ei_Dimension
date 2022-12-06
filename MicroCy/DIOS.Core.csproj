@@ -57,6 +57,7 @@
     <Compile Include="ChannelsCalibrationStats.cs" />
     <Compile Include="ClassificationMap.cs" />
     <Compile Include="DataController.cs" />
+    <Compile Include="DeviceCommandType.cs" />
     <Compile Include="LaserType.cs" />
     <Compile Include="MotorParameterType.cs" />
     <Compile Include="MotorStepsX.cs" />

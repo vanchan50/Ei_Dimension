@@ -48,6 +48,13 @@
     WashRepeatsAmount,
     AgitateRepeatsAmount,
     CalibrationTarget,
-    CalibrationParameter
+    CalibrationParameter,
+    IsSingleStepDebugActive,
+    IsBubbleDetectionActive,
+    HiSensitivityChannel,
+    ///<summary>Setup for PositionWellPlate command</summary>
+    WellRowIndex,
+    ///<summary>Setup for PositionWellPlate command</summary>
+    WellColumnIndex
   }
 }

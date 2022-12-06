@@ -246,7 +246,7 @@ namespace Ei_Dimension.ViewModels
             _activeLasers -= 4;
           break;
       }
-      App.Device.MainCommand("Set Property", code: 0xc0, parameter: _activeLasers);
+      App.Device.SetHardwareParameter(DeviceParameterType.IsLaserActive, _activeLasers);
     }
 
     public void SheathRunButtonClick()
@@ -322,9 +322,9 @@ namespace Ei_Dimension.ViewModels
       UserInputHandler.InputSanityCheck();
       SamplingActive = !SamplingActive;
       if(SamplingActive)
-        App.Device.MainCommand("Start Sampling");
+        App.Device.SendHardwareCommand(DeviceCommandType.StartSampling);
       else
-        App.Device.MainCommand("End Sampling");
+        App.Device.SendHardwareCommand(DeviceCommandType.EndSampling);
     }
 
     public void SingleStepDebugToggleButtonClick()
@@ -332,13 +332,13 @@ namespace Ei_Dimension.ViewModels
       UserInputHandler.InputSanityCheck();
       SingleStepDebugActive = !SingleStepDebugActive;
       var param = SingleStepDebugActive ? 1 : 0;
-      App.Device.MainCommand("Set Property", code: 0xf7, parameter: (ushort)param);
+      App.Device.SetHardwareParameter(DeviceParameterType.IsSingleStepDebugActive, param);
     }
 
     public void FlushButtonClick()
     {
       UserInputHandler.InputSanityCheck();
-      App.Device.MainCommand("FlushCmdQueue");
+      App.Device.SendHardwareCommand(DeviceCommandType.FlushCommandQueue);
     }
 
     public void ClearButtonClick()
@@ -351,7 +351,7 @@ namespace Ei_Dimension.ViewModels
     {
       Action Save = () =>
       {
-        App.Device.MainCommand("Set Property", code: 0xF5); //Send UPDATE FIRMWARE
+        App.Device.SendHardwareCommand(DeviceCommandType.UpdateFirmware);
         System.Threading.Thread.Sleep(1500);
         App.Current.Shutdown();
 
@@ -371,7 +371,7 @@ namespace Ei_Dimension.ViewModels
     public void StartupButtonClick()
     {
       UserInputHandler.InputSanityCheck();
-      App.Device.MainCommand("Startup");
+      App.Device.SendHardwareCommand(DeviceCommandType.Startup);
     }
 
     public void MoveIdexButtonClick()
