@@ -322,12 +322,14 @@ namespace DIOS.Core
       byte extraAction = 0;
       switch (command)
       {
-        case DeviceCommandType.ActivateCalibrationMode:
+        case DeviceCommandType.CalibrationModeActivate:
           commandCode = 0x1B;
           param = 1;
+          extraAction = 0x02;
           break;
-        case DeviceCommandType.DeactivateCalibrationMode:
+        case DeviceCommandType.CalibrationModeDeactivate:
           commandCode = 0x1B;
+          extraAction = 0x02;
           break;
         case DeviceCommandType.RefreshDAC:
           commandCode = 0xD3;
@@ -343,7 +345,7 @@ namespace DIOS.Core
           break;
         case DeviceCommandType.FlashFactoryReset:
           commandCode = 0xD8;
-          extraAction = 1;
+          extraAction = 0x01;
           break;
         case DeviceCommandType.FlushCommandQueue:
           commandCode = 0xD9;
@@ -421,11 +423,16 @@ namespace DIOS.Core
       SetHardwareParameter(primaryParameter, null, value);
     }
 
-    public void SetHardwareParameter(DeviceParameterType primaryParameter, Enum subParameter, float value = 0f )
+    public void SetHardwareParameter(DeviceParameterType primaryParameter, Enum subParameter, float value = 0f)
     {
+      #if DEBUG
+      var subparReport = subParameter == null ? "-" : subParameter.ToString();
+      Console.WriteLine( $"SET {primaryParameter.ToString()} {subparReport} {value.ToString()}");
+      #endif
       ushort param = 0;
       float fparam = 0;
-      byte commandCode = 0;
+      byte commandCode = 0x00;
+      byte extraAction = 0x02;
       var intValue = (ushort)Math.Round(value);
       switch (primaryParameter)
       {
@@ -882,6 +889,30 @@ namespace DIOS.Core
               throw new NotImplementedException();
           }
           break;
+        case DeviceParameterType.MotorStepsZTemporary:
+          fparam = value;
+          extraAction = 0x03;
+          switch (subParameter)
+          {
+            case MotorStepsZ.A1:
+              commandCode = 0x48;
+              break;
+            case MotorStepsZ.A12:
+              commandCode = 0x4A;
+              break;
+            case MotorStepsZ.H1:
+              commandCode = 0x4C;
+              break;
+            case MotorStepsZ.H12:
+              commandCode = 0x4E;
+              break;
+            case MotorStepsZ.Tube:
+              commandCode = 0x46;
+              break;
+            default:
+              throw new NotImplementedException();
+          }
+          break;
         case DeviceParameterType.CalibrationTarget:
           param = intValue;
           switch (subParameter)
@@ -990,7 +1021,7 @@ namespace DIOS.Core
           throw new NotImplementedException();
       }
 
-      MainCommand("Set Property", code: commandCode, parameter: param, fparameter: fparam);
+      MainCommand("Set Property", code: commandCode, parameter: param, fparameter: fparam, cmd: extraAction);
     }
 
     public void RequestHardwareParameter(DeviceParameterType primaryParameter)

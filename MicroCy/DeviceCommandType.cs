@@ -28,7 +28,7 @@
     StartSampling,
     EndSampling,
     Startup,
-    ActivateCalibrationMode,
-    DeactivateCalibrationMode
+    CalibrationModeActivate,
+    CalibrationModeDeactivate
   }
 }

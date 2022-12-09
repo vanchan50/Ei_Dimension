@@ -26,6 +26,7 @@
     MotorStepsX,
     MotorStepsY,
     MotorStepsZ,
+    MotorStepsZTemporary,
     ChannelTemperature,
     ChannelCompensationBias,
     ChannelOffset,

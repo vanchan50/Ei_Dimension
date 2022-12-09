@@ -249,7 +249,7 @@ namespace Ei_Dimension.ViewModels
         MainWindow.Instance.wndw.Background = (System.Windows.Media.SolidColorBrush)App.Current.Resources["AppBackground"];
         UnlockMapSelection();
         UnLockEndReadSelection();
-        App.Device.SendHardwareCommand(DeviceCommandType.DeactivateCalibrationMode);
+        App.Device.SendHardwareCommand(DeviceCommandType.CalibrationModeDeactivate);
       }
 
       UserInputHandler.InputSanityCheck();
@@ -269,7 +269,7 @@ namespace Ei_Dimension.ViewModels
           MainWindow.Instance.wndw.Background = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(255, 255, 191));
           LockMapSelection();
           LockEndReadSelection();
-          App.Device.SendHardwareCommand(DeviceCommandType.ActivateCalibrationMode);
+          App.Device.SendHardwareCommand(DeviceCommandType.CalibrationModeActivate);
           return;
         }
         CalModeOn = false;

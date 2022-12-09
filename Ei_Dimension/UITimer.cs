@@ -15,6 +15,21 @@ namespace Ei_Dimension
     #if DEBUG
     private static List<CommandStruct> DEBUGCommandList = new List<CommandStruct>
     {
+      new CommandStruct{ Code = 0x61, Command = 0x00, Parameter = 1, FParameter = 32},
+      new CommandStruct{ Code = 0x62, Command = 0x00, Parameter = 1, FParameter = 32},
+      new CommandStruct{ Code = 0x63, Command = 0x00, Parameter = 1, FParameter = 32},
+      new CommandStruct{ Code = 0x64, Command = 0x00, Parameter = 1, FParameter = 32},
+      new CommandStruct{ Code = 0x91, Command = 0x00, Parameter = 1, FParameter = 32},
+      new CommandStruct{ Code = 0x24, Command = 0x00, Parameter = 1, FParameter = 32},
+      new CommandStruct{ Code = 0x25, Command = 0x00, Parameter = 1, FParameter = 32},
+      new CommandStruct{ Code = 0x26, Command = 0x00, Parameter = 1, FParameter = 32},
+      new CommandStruct{ Code = 0x28, Command = 0x00, Parameter = 1, FParameter = 32},
+      new CommandStruct{ Code = 0x29, Command = 0x00, Parameter = 1, FParameter = 32},
+      new CommandStruct{ Code = 0x2a, Command = 0x00, Parameter = 1, FParameter = 32},
+      new CommandStruct{ Code = 0x2c, Command = 0x00, Parameter = 1, FParameter = 32},
+      new CommandStruct{ Code = 0x2d, Command = 0x00, Parameter = 1, FParameter = 32},
+      new CommandStruct{ Code = 0x2E, Command = 0x00, Parameter = 1, FParameter = 32},
+      new CommandStruct{ Code = 0x2F, Command = 0x00, Parameter = 1, FParameter = 32},
       new CommandStruct{ Code = 0x80, Command = 0x00, Parameter = 1, FParameter = 32},
       new CommandStruct{ Code = 0x81, Command = 0x00, Parameter = 1, FParameter = 32},
       new CommandStruct{ Code = 0x84, Command = 0x00, Parameter = 1, FParameter = 32},
