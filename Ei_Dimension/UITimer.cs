@@ -15,6 +15,7 @@ namespace Ei_Dimension
     #if DEBUG
     private static List<CommandStruct> DEBUGCommandList = new List<CommandStruct>
     {
+      new CommandStruct{ Code = 0x3E, Command = 0x02, Parameter = 0xFFFF, FParameter = 32},
       new CommandStruct{ Code = 0x61, Command = 0x00, Parameter = 1, FParameter = 32},
       new CommandStruct{ Code = 0x62, Command = 0x00, Parameter = 1, FParameter = 32},
       new CommandStruct{ Code = 0x63, Command = 0x00, Parameter = 1, FParameter = 32},

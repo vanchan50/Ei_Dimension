@@ -1169,6 +1169,9 @@ Speeds</value>
   <data name="Sheath" xml:space="preserve">
     <value>Sheath</value>
   </data>
+  <data name="SyringeSpeeds_DualSampleSyringes" xml:space="preserve">
+    <value>Dual Sample Syringes</value>
+  </data>
   <data name="SyringeSpeeds_Flush" xml:space="preserve">
     <value>Flush</value>
   </data>

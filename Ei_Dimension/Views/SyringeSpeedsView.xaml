@@ -218,5 +218,31 @@
 
       </StackPanel>
     </Border>
+
+    <!--SingleSyringle mode checkbox-->
+    <StackPanel Orientation="Horizontal"
+                Width="400"
+                Height="60"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Margin="470,550,0,0">
+      <CheckBox FontFamily="{StaticResource AppTextFont}"
+                FontSize="30"
+                FontWeight="UltraBold"
+                Foreground="{StaticResource AppTextColor}"
+                Style="{StaticResource CheckboxStyle}"
+                IsChecked="{Binding SingleSyringeMode[0],Mode=OneWay}">
+        <dxmvvm:Interaction.Behaviors>
+          <dxmvvm:EventToCommand EventName="Checked" Command="{Binding SingleSyringeModeCheckedCommand}" CommandParameter="True"/>
+          <dxmvvm:EventToCommand EventName="Unchecked" Command="{Binding SingleSyringeModeCheckedCommand}" CommandParameter="False"/>
+        </dxmvvm:Interaction.Behaviors>
+      </CheckBox>
+      <TextBlock Text="{lang:Loc SyringeSpeeds_DualSampleSyringes}"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="36"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 Margin="4,0,0,0"/>
+    </StackPanel>
   </Grid>
 </UserControl>

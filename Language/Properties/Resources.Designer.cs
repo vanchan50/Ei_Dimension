@@ -3098,6 +3098,15 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dual Sample Syringes.
+        /// </summary>
+        public static string SyringeSpeeds_DualSampleSyringes {
+            get {
+                return ResourceManager.GetString("SyringeSpeeds_DualSampleSyringes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Flush.
         /// </summary>
         public static string SyringeSpeeds_Flush {

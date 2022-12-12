@@ -1,18 +1,9 @@
 ﻿using DevExpress.Xpf.Core;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using DIOS.Core;
 
 namespace Ei_Dimension
 {
@@ -28,8 +19,8 @@ namespace Ei_Dimension
       Instance = this;
 #if DEBUG
       Binding bind = new Binding();
-      bind.Source = ViewModels.MainViewModel.Instance;
-      bind.Path = new PropertyPath("TotalBeadsInFirmware[0]");
+      bind.Source = ViewModels.MainViewModel.Instance; 
+      bind.Path = new PropertyPath($"{nameof(ViewModels.MainViewModel.Instance.TotalBeadsInFirmware)}[0]");
       bind.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
       _ = BindingOperations.SetBinding(EventCounterTooltip, TextBlock.TextProperty, bind);
 

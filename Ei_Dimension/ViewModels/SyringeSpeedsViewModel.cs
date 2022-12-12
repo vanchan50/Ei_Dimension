@@ -3,20 +3,20 @@ using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
 using System.Collections.ObjectModel;
 using System.Windows.Controls;
+using DIOS.Core;
 
 namespace Ei_Dimension.ViewModels
 {
   [POCOViewModel]
   public class SyringeSpeedsViewModel
   {
-    public virtual ObservableCollection<string> SheathSyringeParameters { get; set; }
-    public virtual ObservableCollection<string> SamplesSyringeParameters { get; set; }
+    public virtual ObservableCollection<string> SheathSyringeParameters { get; set; } = new ObservableCollection<string>();
+    public virtual ObservableCollection<string> SamplesSyringeParameters { get; set; } = new ObservableCollection<string>();
+    public virtual ObservableCollection<bool> SingleSyringeMode { get; set; } = new ObservableCollection<bool>{ false };
     public static SyringeSpeedsViewModel Instance { get; private set; }
 
     protected SyringeSpeedsViewModel()
     {
-      SheathSyringeParameters = new ObservableCollection<string>();
-      SamplesSyringeParameters = new ObservableCollection<string>();
       for (var i = 0; i < 6; i++)
       {
         SheathSyringeParameters.Add("");
@@ -28,6 +28,16 @@ namespace Ei_Dimension.ViewModels
     public static SyringeSpeedsViewModel Create()
     {
       return ViewModelSource.Create(() => new SyringeSpeedsViewModel());
+    }
+
+    public void SingleSyringeModeChecked(bool state)
+    { 
+      UserInputHandler.InputSanityCheck();
+      if (state)
+        App.Device.SetHardwareParameter(DeviceParameterType.SampleSyringeType, SampleSyringeType.Double);
+      else
+        App.Device.SetHardwareParameter(DeviceParameterType.SampleSyringeType, SampleSyringeType.Single);
+      SingleSyringeMode[0] = state;
     }
 
     public void FocusedBox(int num)

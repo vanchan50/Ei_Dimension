@@ -206,6 +206,24 @@ namespace Ei_Dimension
           }
           update = () => SyringeSpeedsViewModel.Instance.SamplesSyringeParameters[pos3] = parameter.FloatParameter.ToString("F0");
           break;
+        case DeviceParameterType.SampleSyringeType:
+          var type17 = (SampleSyringeType)parameter.Parameter;
+          bool out17 = false;
+          switch (type17)
+          {
+            case SampleSyringeType.Single:
+              out17 = false;
+              break;
+            case SampleSyringeType.Double:
+              out17 = true;
+              break;
+            default:
+              throw new Exception($"{nameof(DeviceParameterType.SampleSyringeType)} TbHandler should never happen");
+          }
+          if (out17 != SyringeSpeedsViewModel.Instance.SingleSyringeMode[0])
+            update = () => SyringeSpeedsViewModel.Instance.SingleSyringeMode[0] = out17;
+          //else do nothing
+          break;
         case DeviceParameterType.MotorX:
           var type4 = (MotorParameterType)parameter.Parameter;
           var pos4 = 0;

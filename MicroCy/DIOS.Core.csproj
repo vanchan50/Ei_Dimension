@@ -74,6 +74,7 @@
     <Compile Include="NormalizationSettings.cs" />
     <Compile Include="PlateType.cs" />
     <Compile Include="RegionReporterResultVolatile.cs" />
+    <Compile Include="SampleSyringeType.cs" />
     <Compile Include="SheathFlowErrorType.cs" />
     <Compile Include="StatisticsExtension.cs" />
     <Compile Include="StatsAccumulator.cs" />

@@ -361,6 +361,20 @@ namespace DIOS.Core
         case 0x3D:
           outParameters = new ParameterUpdateEventArgs(DeviceParameterType.SyringeSpeedSample, intParameter: (int)SyringeSpeed.MaxSpeed, floatParameter: cs.Parameter);
           break;
+        case 0x3E:
+          int outpar = -1;
+          var pr = (SampleSyringeType)cs.Parameter;
+          switch (pr)
+          {
+            case SampleSyringeType.Single:
+              outpar = (int)SampleSyringeType.Single;
+              break;
+            case SampleSyringeType.Double:
+              outpar = (int)SampleSyringeType.Double;
+              break;
+          }
+          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.SampleSyringeType, intParameter: outpar);
+          break;
         case 0x41:
           outParameters = new ParameterUpdateEventArgs(DeviceParameterType.MotorZ, intParameter: (int)MotorParameterType.StartSpeed, floatParameter: cs.Parameter);
           break;

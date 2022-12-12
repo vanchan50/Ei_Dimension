@@ -118,6 +118,7 @@ namespace DIOS.Core
     }
     public float MaxPressure { get; set; }
     public bool IsPlateEjected { get; internal set; }
+    private bool _singleSyringeMode;
     public static bool IncludeReg0InPlateSummary { get; set; }  //TODO: crutch for filesaving
 
     private bool _isReadingA;
@@ -229,7 +230,10 @@ namespace DIOS.Core
       OnStartingToReadWell();
       SetHardwareParameter(DeviceParameterType.IsBubbleDetectionActive, 1);
       SendHardwareCommand(DeviceCommandType.PositionWellPlate);
-      SendHardwareCommand(DeviceCommandType.AspirateA);
+
+      if(!_singleSyringeMode)
+        SendHardwareCommand(DeviceCommandType.AspirateA);
+
       TotalBeads = 0;
 
       _isReadingA = false;
@@ -272,7 +276,7 @@ namespace DIOS.Core
 
     internal bool EndBeadRead()
     {
-      if (_isReadingA)
+      if (_isReadingA || _singleSyringeMode)
         SendHardwareCommand(DeviceCommandType.EndReadA);
       else
         SendHardwareCommand(DeviceCommandType.EndReadB);
@@ -281,6 +285,13 @@ namespace DIOS.Core
 
     private void StartBeadRead()
     {
+      if (_singleSyringeMode)
+      {
+        SendHardwareCommand(DeviceCommandType.AspirateA);
+        SendHardwareCommand(DeviceCommandType.ReadA);
+        return;
+      }
+
       if (WellController.IsLastWell)
       {
         if (_isReadingA)
@@ -563,6 +574,20 @@ namespace DIOS.Core
               break;
             case Channel.ForwardScatter:
               commandCode = 0x24;
+              break;
+            default:
+              throw new NotImplementedException();
+          }
+          break;
+        case DeviceParameterType.SampleSyringeType:
+          commandCode = 0x3E;
+          switch (subParameter)
+          {
+            case SampleSyringeType.Single:
+              param = 0xFFFF;
+              break;
+            case SampleSyringeType.Double:
+              param = 0;
               break;
             default:
               throw new NotImplementedException();
@@ -1183,6 +1208,9 @@ namespace DIOS.Core
             default:
               throw new NotImplementedException();
           }
+          break;
+        case DeviceParameterType.SampleSyringeType:
+          commandCode = 0x3E;
           break;
         case DeviceParameterType.ChannelCompensationBias:
           switch (subParameter)

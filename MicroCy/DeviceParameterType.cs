@@ -56,6 +56,7 @@
     ///<summary>Setup for PositionWellPlate command</summary>
     WellRowIndex,
     ///<summary>Setup for PositionWellPlate command</summary>
-    WellColumnIndex
+    WellColumnIndex,
+    SampleSyringeType
   }
 }
