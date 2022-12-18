@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Windows.Controls;
 using Ei_Dimension.Models;
 using DevExpress.XtraPrinting.Native;
+using DIOS.Core.HardwareIntercom;
 
 namespace Ei_Dimension
 {

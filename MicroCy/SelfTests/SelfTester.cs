@@ -1,4 +1,6 @@
-﻿namespace DIOS.Core.SelfTests
+﻿using DIOS.Core.HardwareIntercom;
+
+namespace DIOS.Core.SelfTests
 {
   internal class SelfTester
   {

@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using Ei_Dimension.Controllers;
 using DIOS.Core;
+using DIOS.Core.HardwareIntercom;
 
 namespace Ei_Dimension.ViewModels
 {

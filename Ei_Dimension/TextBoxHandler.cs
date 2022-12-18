@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using DIOS.Core;
+using DIOS.Core.HardwareIntercom;
 using Ei_Dimension.ViewModels;
 
 namespace Ei_Dimension

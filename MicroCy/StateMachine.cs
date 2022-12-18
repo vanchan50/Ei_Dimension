@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using DIOS.Core.HardwareIntercom;
 
 namespace DIOS.Core
 {

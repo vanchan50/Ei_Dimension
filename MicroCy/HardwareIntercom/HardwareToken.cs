@@ -1,4 +1,4 @@
-﻿namespace DIOS.Core
+﻿namespace DIOS.Core.HardwareIntercom
 {
   internal enum HardwareToken
   {

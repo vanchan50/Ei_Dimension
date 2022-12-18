@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Threading;
+using DIOS.Core.HardwareIntercom;
 
 namespace DIOS.Core
 {

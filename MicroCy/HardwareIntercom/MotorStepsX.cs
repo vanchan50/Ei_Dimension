@@ -1,4 +1,4 @@
-﻿namespace DIOS.Core
+﻿namespace DIOS.Core.HardwareIntercom
 {
   public enum MotorStepsX
   {

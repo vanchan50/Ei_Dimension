@@ -10,6 +10,7 @@ using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
 using System.IO;
 using DIOS.Core;
+using DIOS.Core.HardwareIntercom;
 using Ei_Dimension.Models;
 using TextChangedEventArgs = System.Windows.Controls.TextChangedEventArgs;
 

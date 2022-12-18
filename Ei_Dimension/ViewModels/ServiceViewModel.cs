@@ -2,6 +2,7 @@
 using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
 using DIOS.Core;
+using DIOS.Core.HardwareIntercom;
 
 namespace Ei_Dimension.ViewModels
 {

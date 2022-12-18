@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Windows.Media;
 using System;
 using DIOS.Core;
+using DIOS.Core.HardwareIntercom;
 using Ei_Dimension.Graphing.HeatMap;
 
 namespace Ei_Dimension.ViewModels

@@ -6,6 +6,7 @@ using Ei_Dimension.Controllers;
 using Ei_Dimension.Graphing.HeatMap;
 using MadWizard.WinUSBNet;
 using DIOS.Core;
+using DIOS.Core.HardwareIntercom;
 
 namespace Ei_Dimension
 {

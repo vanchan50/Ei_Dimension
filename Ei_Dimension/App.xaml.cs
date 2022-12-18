@@ -6,6 +6,7 @@ using DIOS.Core;
 using System.IO;
 using System.Configuration;
 using System.Text;
+using DIOS.Core.HardwareIntercom;
 using Ei_Dimension.Cache;
 using Ei_Dimension.Controllers;
 using DIOSApplication;
