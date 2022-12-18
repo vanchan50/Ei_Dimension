@@ -64,19 +64,28 @@
       </StackPanel>
     </Border>
 
-    <!--Cal/Val-->
+    <!--Cal/Val Continuous mode-->
     <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Margin="1250,600,0,0"
+            Margin="1078,600,0,0"
             IsEnabled="{Binding CalValModeEnabled}">
       <Grid>
+        <ToggleButton HorizontalAlignment="Left"
+                      VerticalAlignment="Top"
+                      Content="{lang:Loc MTBF_mode}"
+                      Command="{Binding ContinuousModeToggleCommand}"
+                      IsChecked="{Binding ContinuousModeOn}"
+                      Style="{StaticResource ToggleButtonThemeStyle}"
+                      Height="90" Width="160"
+                      Margin="0,0,0,0"/>
         <ToggleButton HorizontalAlignment="Left"
                       VerticalAlignment="Top"
                       Content="{lang:Loc Calibration_Mode}"
                       Command="{Binding CalModeToggleCommand}"
                       IsChecked="{Binding CalModeOn}"
                       Style="{StaticResource ToggleButtonThemeStyle}"
-                      Height="90" Width="160"/>
+                      Height="90" Width="160"
+                      Margin="172,0,0,0"/>
         <ToggleButton HorizontalAlignment="Left"
                       VerticalAlignment="Top"
                       Content="{lang:Loc Validation_Mode}"
@@ -84,7 +93,7 @@
                       IsChecked="{Binding ValModeOn}"
                       Style="{StaticResource ToggleButtonThemeStyle}"
                       Height="90" Width="160"
-                      Margin="172,0,0,0"/>
+                      Margin="344,0,0,0"/>
 
         <TextBlock Text="{lang:Loc Calibration_Prev_Calibration_Date}"
                    FontFamily="{StaticResource AppTextFont}"
@@ -96,7 +105,7 @@
                    Visibility="Hidden"/>
         
         <TextBox IsReadOnly="True" Width="160"
-                 Margin="0,100,0,0"
+                 Margin="172,100,0,0"
                  HorizontalAlignment="Left"
                  VerticalAlignment="Top"
                  Style="{StaticResource InputFieldStyle}"
@@ -108,13 +117,13 @@
                    FontWeight="UltraBold"
                    TextAlignment="Center" TextWrapping="Wrap"
                    Foreground="{StaticResource AppTextColor}"
-                   Margin="0,16,0,4"
+                   Margin="172,16,0,4"
                    Visibility="Hidden"/>
         
         <TextBox HorizontalAlignment="Left"
                  VerticalAlignment="Top"
                  IsReadOnly="True" Width="160"
-                 Margin="172,100,0,0"
+                 Margin="344,100,0,0"
                  Style="{StaticResource InputFieldStyle}"
                  Text="{Binding ValidDateBox[0]}"/>
       </Grid>

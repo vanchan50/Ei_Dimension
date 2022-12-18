@@ -951,6 +951,10 @@ Update the Firmware?</value>
   <data name="Motors_Up" xml:space="preserve">
     <value>Up</value>
   </data>
+  <data name="MTBF_mode" xml:space="preserve">
+    <value>Continuous
+    Mode</value>
+  </data>
   <data name="Name" xml:space="preserve">
     <value>Name</value>
   </data>

@@ -29,6 +29,7 @@ namespace Ei_Dimension.ViewModels
     public virtual string SelectedEndReadContent { get; set; }
     public virtual ObservableCollection<DropDownButtonContents> EndReadItems { get; set; }
     public virtual bool CalValModeEnabled { get; set; }
+    public virtual bool ContinuousModeOn { get; set; }
     public virtual bool CalModeOn { get; set; }
     public virtual bool ValModeOn { get; set; }
     public virtual ObservableCollection<string> CaliDateBox { get; set; } = new ObservableCollection<string> { "" };
@@ -235,6 +236,11 @@ namespace Ei_Dimension.ViewModels
           EndReadVisibility[1] = Visibility.Hidden;
           break;
       }
+    }
+
+    public void ContinuousModeToggle()
+    {
+      App.DiosApp.RunPlateContinuously = ContinuousModeOn;
     }
 
     public void CalModeToggle()

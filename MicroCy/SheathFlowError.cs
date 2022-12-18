@@ -1,6 +1,6 @@
 ﻿namespace DIOS.Core
 {
-  public enum SheathFlowErrorType
+  public enum SheathFlowError
   {
     SheathEmpty,
     PressureOverload,

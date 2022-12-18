@@ -75,8 +75,8 @@ namespace DIOS.Core
     private void Action4()
     {
       _device.SendHardwareCommand(DeviceCommandType.FlushCommandQueue);
-      _device.MainCommand("Set Property", code: 0xc3); //clear empty syringe token
-      _device.MainCommand("Set Property", code: 0xcb); //clear sync token to allow next sequence to execute
+      _device.SetHardwareToken(HardwareToken.EmptySyringeTrigger); //clear empty syringe token
+      _device.SetHardwareToken(HardwareToken.Synchronization); //clear sync token to allow next sequence to execute
       if(_device.EndBeadRead())
         _device.OnFinishedMeasurement();
       else

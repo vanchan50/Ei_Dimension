@@ -265,6 +265,10 @@ namespace Ei_Dimension
       {
         case OperationMode.Normal:
           OutputLegacyReport();
+          if (DiosApp.RunPlateContinuously)
+          {
+            MainButtonsViewModel.Instance.StartButtonClick();
+          }
           break;
         case OperationMode.Calibration:
           CalibrationViewModel.Instance.CalibrationFailCheck();
@@ -283,7 +287,6 @@ namespace Ei_Dimension
           //Notification.ShowLocalizedError(nameof(Language.Resources.Validation_Fail));
           break;
       }
-
     }
 
     public void NewStatsAvailableEventHandler(object sender, StatsEventArgs e)
@@ -518,10 +521,10 @@ namespace Ei_Dimension
             Device.RequestHardwareParameter(DeviceParameterType.MotorZ, MotorParameterType.CurrentStep);
             Device.RequestHardwareParameter(DeviceParameterType.MotorZ, MotorParameterType.CurrentLimit);
             Device.RequestHardwareParameter(DeviceParameterType.MotorStepsX, MotorStepsX.Tube);
-            Device.RequestHardwareParameter(DeviceParameterType.MotorStepsX, MotorStepsX.Plate96C1);
-            Device.RequestHardwareParameter(DeviceParameterType.MotorStepsX, MotorStepsX.Plate96C12);
-            Device.RequestHardwareParameter(DeviceParameterType.MotorStepsX, MotorStepsX.Plate384C1);
-            Device.RequestHardwareParameter(DeviceParameterType.MotorStepsX, MotorStepsX.Plate384C24);
+            Device.RequestHardwareParameter(DeviceParameterType.MotorStepsX, MotorStepsX.Plate96Column1);
+            Device.RequestHardwareParameter(DeviceParameterType.MotorStepsX, MotorStepsX.Plate96Column12);
+            Device.RequestHardwareParameter(DeviceParameterType.MotorStepsX, MotorStepsX.Plate384Column1);
+            Device.RequestHardwareParameter(DeviceParameterType.MotorStepsX, MotorStepsX.Plate384Column24);
             Device.RequestHardwareParameter(DeviceParameterType.MotorStepsY, MotorStepsY.Tube);
             Device.RequestHardwareParameter(DeviceParameterType.MotorStepsY, MotorStepsY.Plate96RowA);
             Device.RequestHardwareParameter(DeviceParameterType.MotorStepsY, MotorStepsY.Plate96RowH);

@@ -70,7 +70,7 @@ namespace Ei_Dimension
       new CommandStruct{ Code = 0xC8, Command = 0x00, Parameter = 1, FParameter = 32},
       new CommandStruct{ Code = 0xC9, Command = 0x00, Parameter = 1, FParameter = 32},
       new CommandStruct{ Code = 0xCC, Command = 0x00, Parameter = 1, FParameter = 32},
-      new CommandStruct{ Code = 0xF1, Command = 0x00, Parameter = 1, FParameter = 32},
+      new CommandStruct{ Code = 0xF1, Command = 0x01, Parameter = 1, FParameter = 32},
       new CommandStruct{ Code = 0xF2, Command = 0x00, Parameter = 1, FParameter = 32},
       new CommandStruct{ Code = 0xF3, Command = 0x00, Parameter = 1, FParameter = 32},
       new CommandStruct{ Code = 0xF4, Command = 0x00, Parameter = 1, FParameter = 32},

@@ -1178,7 +1178,7 @@ namespace Ei_Dimension
               {
                 if (fRes >= 0 && fRes <= 20000.0000000001)
                 {
-                  App.Device.SetHardwareParameter(DeviceParameterType.MotorStepsX, MotorStepsX.Plate96C1, fRes);
+                  App.Device.SetHardwareParameter(DeviceParameterType.MotorStepsX, MotorStepsX.Plate96Column1, fRes);
                   break;
                 }
               }
@@ -1191,7 +1191,7 @@ namespace Ei_Dimension
               {
                 if (fRes >= 0 && fRes <= 20000.0000000001)
                 {
-                  App.Device.SetHardwareParameter(DeviceParameterType.MotorStepsX, MotorStepsX.Plate96C12, fRes);
+                  App.Device.SetHardwareParameter(DeviceParameterType.MotorStepsX, MotorStepsX.Plate96Column12, fRes);
                   break;
                 }
               }
@@ -1204,7 +1204,7 @@ namespace Ei_Dimension
               {
                 if (fRes >= 0 && fRes <= 20000.0000000001)
                 {
-                  App.Device.SetHardwareParameter(DeviceParameterType.MotorStepsX, MotorStepsX.Plate384C1, fRes);
+                  App.Device.SetHardwareParameter(DeviceParameterType.MotorStepsX, MotorStepsX.Plate384Column1, fRes);
                   break;
                 }
               }
@@ -1217,7 +1217,7 @@ namespace Ei_Dimension
               {
                 if (fRes >= 0 && fRes <= 20000.0000000001)
                 {
-                  App.Device.SetHardwareParameter(DeviceParameterType.MotorStepsX, MotorStepsX.Plate384C24, fRes);
+                  App.Device.SetHardwareParameter(DeviceParameterType.MotorStepsX, MotorStepsX.Plate384Column24, fRes);
                   break;
                 }
               }
@@ -1380,14 +1380,13 @@ namespace Ei_Dimension
               ErrorMessage = "[0-1000]";
             }
             break;
-          case "IdexTextBoxInputs":
+          case nameof(ComponentsViewModel.Instance.IdexTextBoxInputs):
             if (SelectedTextBox.index == 0)
             {
               if (byte.TryParse(_tempNewString, out bRes))
               {
                 if (bRes >= 0 && bRes <= 255)
                 {
-                  DIOS.Core.InstrumentParameters.Idex.Pos = bRes;
                   break;
                 }
               }
@@ -1400,7 +1399,6 @@ namespace Ei_Dimension
               {
                 if (usRes >= 0 && usRes <= 65535)
                 {
-                  DIOS.Core.InstrumentParameters.Idex.Steps = usRes;
                   break;
                 }
               }

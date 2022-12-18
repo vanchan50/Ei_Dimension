@@ -17,25 +17,40 @@
     CalibrationSuccess,
     Pressure,
     PressureAtStartup,
+    ///<summary>Subparamter: Channel</summary>
     ChannelBias30C,
+    ///<summary>Subparamter: SyringeSpeed</summary>
     SyringeSpeedSheath,
+    ///<summary>Subparamter: SyringeSpeed</summary>
     SyringeSpeedSample,
+    ///<summary>Subparamter: MotorParameterType</summary>
     MotorX,
+    ///<summary>Subparamter: MotorParameterType</summary>
     MotorY,
+    ///<summary>Subparamter: MotorParameterType</summary>
     MotorZ,
+    ///<summary>Subparamter: MotorStepsX</summary>
     MotorStepsX,
+    ///<summary>Subparamter: MotorStepsY</summary>
     MotorStepsY,
+    ///<summary>Subparamter: MotorStepsZ</summary>
     MotorStepsZ,
+    ///<summary>Subparamter: MotorStepsZ</summary>
     MotorStepsZTemporary,
+    ///<summary>Subparamter: Channel</summary>
     ChannelTemperature,
+    ///<summary>Subparamter: Channel</summary>
     ChannelCompensationBias,
+    ///<summary>Subparamter: Channel</summary>
     ChannelOffset,
+    ///<summary>Subparamter: VolumeType</summary>
     Volume,
     GreenAVoltage,
     IsLaserActive,
     LaserPower,
     SystemActivityStatus,
-    SheathFlow,
+    ///<summary>Subparamter: SheathFlowErrorType</summary>
+    SheathFlowError,
     SampleSyringeStatus,
     NextWellWarning,
     BubbleDetectorStatus,
@@ -48,7 +63,9 @@
     PlateType,
     WashRepeatsAmount,
     AgitateRepeatsAmount,
+    ///<summary>Subparamter: CalibrationTarget</summary>
     CalibrationTarget,
+    ///<summary>Subparamter: CalibrationParameter</summary>
     CalibrationParameter,
     IsSingleStepDebugActive,
     IsBubbleDetectionActive,
@@ -57,6 +74,24 @@
     WellRowIndex,
     ///<summary>Setup for PositionWellPlate command</summary>
     WellColumnIndex,
-    SampleSyringeType
+    ///<summary>Subparamter: SampleSyringeType</summary>
+    SampleSyringeType,
+    ///<summary>Subparamter: SyringeControlState</summary>
+    PumpSheath,
+    ///<summary>Subparamter: SyringeControlState</summary>
+    PumpSampleA,
+    ///<summary>Subparamter: SyringeControlState</summary>
+    PumpSampleB,
+    ///<summary>Subparamter: MotorDirection</summary>
+    MotorMoveX,
+    ///<summary>Subparamter: MotorDirection</summary>
+    MotorMoveY,
+    ///<summary>Subparamter: MotorDirection</summary>
+    MotorMoveZ,
+    ///<summary>Subparamter: AlignMotorSequence</summary>
+    AlignMotor,
+    UVCSanitize,
+    ///<summary>Subparamter: AutoAlignState</summary>
+    AutoAlignState
   }
 }

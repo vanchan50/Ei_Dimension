@@ -434,16 +434,16 @@ namespace DIOS.Core
           outParameters = new ParameterUpdateEventArgs(DeviceParameterType.MotorStepsX, intParameter: (int)MotorStepsX.Tube, floatParameter: cs.FParameter);
           break;
         case 0x58:
-          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.MotorStepsX, intParameter: (int)MotorStepsX.Plate96C1, floatParameter: cs.FParameter);
+          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.MotorStepsX, intParameter: (int)MotorStepsX.Plate96Column1, floatParameter: cs.FParameter);
           break;
         case 0x5A:
-          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.MotorStepsX, intParameter: (int)MotorStepsX.Plate96C12, floatParameter: cs.FParameter);
+          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.MotorStepsX, intParameter: (int)MotorStepsX.Plate96Column12, floatParameter: cs.FParameter);
           break;
         case 0x5C:
-          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.MotorStepsX, intParameter: (int)MotorStepsX.Plate384C1, floatParameter: cs.FParameter);
+          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.MotorStepsX, intParameter: (int)MotorStepsX.Plate384Column1, floatParameter: cs.FParameter);
           break;
         case 0x5E:
-          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.MotorStepsX, intParameter: (int)MotorStepsX.Plate384C24, floatParameter: cs.FParameter);
+          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.MotorStepsX, intParameter: (int)MotorStepsX.Plate384Column24, floatParameter: cs.FParameter);
           break;
         case 0x61:
           outParameters = new ParameterUpdateEventArgs(DeviceParameterType.MotorY, intParameter: (int)MotorParameterType.StartSpeed, floatParameter: cs.Parameter);
@@ -652,13 +652,18 @@ namespace DIOS.Core
           outParameters = new ParameterUpdateEventArgs(DeviceParameterType.SystemActivityStatus, intParameter: cs.Parameter);
           break;
         case 0xF1:
-          SheathFlowErrorType errorType = SheathFlowErrorType.Unspecified;
+          SheathFlowError errorType = SheathFlowError.Unspecified;
           if (cs.Command == 1)
-            errorType=SheathFlowErrorType.SheathEmpty;
+          {
+            errorType = SheathFlowError.SheathEmpty;
+            _device.SetHardwareToken(HardwareToken.Synchronization, 0x1000);
+            _device.SetHardwareParameter(DeviceParameterType.PumpSheath, SyringeControlState.Halt, 0);
+            _device.SetHardwareToken(HardwareToken.ActiveCommandQueueIndex, 1);
+          }
           else if (cs.Command == 2)
-            errorType = SheathFlowErrorType.PressureOverload;
+            errorType = SheathFlowError.PressureOverload;
 
-          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.SheathFlow, intParameter: (int)errorType, floatParameter: cs.FParameter);
+          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.SheathFlowError, intParameter: (int)errorType, floatParameter: cs.FParameter);
           break;
         case 0xF2:
           int validCommand = cs.Command > 0x63 ? 1 : 0;

@@ -3,6 +3,7 @@ using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
 using System.Collections.ObjectModel;
 using System.Windows.Controls;
+using DIOS.Core;
 
 namespace Ei_Dimension.ViewModels
 {
@@ -50,7 +51,7 @@ namespace Ei_Dimension.ViewModels
     {
       UserInputHandler.InputSanityCheck();
       if (int.TryParse(SanitizeSecondsContent[0], out int res))
-        App.Device.MainCommand("Set Property", code: 0x1f, parameter: (ushort)res);
+        App.Device.SetHardwareParameter(DeviceParameterType.UVCSanitize, res);
     }
 
     public void NavigateTab()

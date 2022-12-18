@@ -119,3 +119,8 @@ somehow selftester should be initialized before datacontroller starts replyfromM
 !!!SetHardwareParameter(DeviceParameterType.PlateType... in MotorsVM can screw up the selected plate!!!! (am I correct?)
 MapController.SaveCalVals(MapCalParameters param) --make a copy of map, and if save is ok - swap it,
 SetHardwareParameter is still not finished!
+
+make test for each command component. test that it outputs correct event on command ID 0xXX;
+test that events are handled correctly (that would be hard, since links to VM's). could make vms's manually in tests
+tests that request/set Hardware command send correct messages
+

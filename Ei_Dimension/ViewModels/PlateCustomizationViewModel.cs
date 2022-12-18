@@ -334,8 +334,8 @@ namespace Ei_Dimension.ViewModels
 
     private void MoveProbe(ushort height, bool up)
     {
-      var direction = up ? 1 : 2;
-      App.Device.MainCommand("MotorZ", cmd: (byte)direction, fparameter: height);
+      var direction = up ? MotorDirection.Up : MotorDirection.Down;
+      App.Device.SetHardwareParameter(DeviceParameterType.MotorMoveZ, direction, height);
       lock (App.Device.SystemActivityNotBusyNotificationLock)
       {
         Monitor.Wait(App.Device.SystemActivityNotBusyNotificationLock);

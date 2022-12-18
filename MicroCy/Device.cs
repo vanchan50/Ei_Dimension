@@ -4,7 +4,6 @@ using System.Collections;
 using System.IO;
 using System.Collections.Concurrent;
 using System.Threading.Tasks;
-using DIOS.Core.InstrumentParameters;
 using DIOS.Core.SelfTests;
 
 /*
@@ -217,7 +216,7 @@ namespace DIOS.Core
       SetHardwareParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.MinSSC, _beadProcessor._map.calParams.minmapssc);
       SetHardwareParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.MaxSSC, _beadProcessor._map.calParams.maxmapssc);
       //read section of plate
-      RequestHardwareParameter(DeviceParameterType.MotorStepsX, MotorStepsX.Plate96C1);
+      RequestHardwareParameter(DeviceParameterType.MotorStepsX, MotorStepsX.Plate96Column1);
       RequestHardwareParameter(DeviceParameterType.MotorStepsY, MotorStepsY.Plate96RowA);
       Results.StartNewPlateReport();
       Publisher.ResetResultData();
@@ -308,21 +307,13 @@ namespace DIOS.Core
         SendHardwareCommand(DeviceCommandType.ReadAAspirateB);
     }
 
-    public void MainCommand(string command, byte? cmd = null, byte? code = null, ushort? parameter = null, float? fparameter = null)
+    private void MainCommand(string command, byte? cmd = null, byte? code = null, ushort? parameter = null, float? fparameter = null)
     {
       CommandStruct cs = CommandLists.MainCmdTemplatesDict[command];
       cs.Command = cmd ?? cs.Command;
       cs.Code = code ?? cs.Code;
       cs.Parameter = parameter ?? cs.Parameter;
       cs.FParameter = fparameter ?? cs.FParameter;
-      switch (command)
-      {
-        case "Idex":
-          cs.Command = Idex.Pos;
-          cs.Parameter = Idex.Steps;
-          cs.FParameter = Idex.Dir;
-          break;
-      }
       _dataController.AddCommand(command, cs);
     }
 
@@ -373,6 +364,9 @@ namespace DIOS.Core
           break;
         case DeviceCommandType.Prime:
           commandCode = 0xE1;
+          break;
+        case DeviceCommandType.RenewSheath:
+          commandCode = 0xE2;
           break;
         case DeviceCommandType.WashA:
           commandCode = 0xE3;
@@ -429,6 +423,17 @@ namespace DIOS.Core
       MainCommand("Set Property", code: commandCode, parameter: param, cmd:extraAction);
     }
 
+    public void MoveIdex(bool isClockwise, byte position, ushort steps)
+    {
+      MainCommand("Set Property", code: 0xD7, cmd: position, parameter: steps, fparameter: Convert.ToByte(isClockwise));
+    }
+
+    public void RenewSheath()
+    {
+      SendHardwareCommand(DeviceCommandType.RenewSheath);
+      SetHardwareToken(HardwareToken.Synchronization); //clear sync token to allow recovery to run
+    }
+
     public void SetHardwareParameter(DeviceParameterType primaryParameter, float value = 0f)
     {
       SetHardwareParameter(primaryParameter, null, value);
@@ -451,9 +456,11 @@ namespace DIOS.Core
           commandCode = 0x02;
           fparam = value;
           break;
-        case DeviceParameterType.IdexPosition:  //TODO: change to 0xd7 for set. get rid of Idex class?
+        /*Not used in SET
+        case DeviceParameterType.IdexPosition:
           commandCode = 0x04;
           break;
+        */
         case DeviceParameterType.TotalBeadsInFirmware:  //reset totalbeads in firmware
           commandCode = 0x06;
           fparam = value;
@@ -500,6 +507,10 @@ namespace DIOS.Core
           break;
         case DeviceParameterType.HiSensitivityChannel:
           commandCode = 0x1E;
+          param = intValue;
+          break;
+        case DeviceParameterType.UVCSanitize:
+          commandCode = 0x1F;
           param = intValue;
           break;
         case DeviceParameterType.CalibrationParameter:
@@ -849,16 +860,16 @@ namespace DIOS.Core
           fparam = value;
           switch (subParameter)
           {
-            case MotorStepsX.Plate96C1:
+            case MotorStepsX.Plate96Column1:
               commandCode = 0x58;
               break;
-            case MotorStepsX.Plate96C12:
+            case MotorStepsX.Plate96Column12:
               commandCode = 0x5A;
               break;
-            case MotorStepsX.Plate384C1:
+            case MotorStepsX.Plate384Column1:
               commandCode = 0x5C;
               break;
-            case MotorStepsX.Plate384C24:
+            case MotorStepsX.Plate384Column24:
               commandCode = 0x5E;
               break;
             case MotorStepsX.Tube:
@@ -1034,9 +1045,236 @@ namespace DIOS.Core
           }
           break;
         */
+        case DeviceParameterType.AutoAlignState:
+          commandCode = 0xC5;
+          switch (subParameter)
+          {
+            case AutoAlignState.Off:
+              param = 0;
+              break;
+            case AutoAlignState.Green:
+              param = 1;
+              break;
+            case AutoAlignState.Red:
+              param = 2;
+              break;
+            case AutoAlignState.Violet:
+              param = 3;
+              break;
+            default:
+              throw new NotImplementedException();
+          }
+          break;
         case DeviceParameterType.SystemActivityStatus:
           commandCode = 0xCC;
           param = intValue;
+          break;
+        case DeviceParameterType.PumpSheath:
+          commandCode = 0xD0;
+          param = intValue;
+          switch (subParameter)
+          {
+            case SyringeControlState.Halt:
+              extraAction = 0;
+              break;
+            case SyringeControlState.MoveAbsolute:
+              extraAction = 1;
+              break;
+            case SyringeControlState.Pickup:
+              extraAction = 2;
+              break;
+            case SyringeControlState.PreInject:
+              extraAction = 3;
+              break;
+            case SyringeControlState.Speed:
+              extraAction = 4;
+              break;
+            case SyringeControlState.Initialize:
+              extraAction = 5;
+              break;
+            case SyringeControlState.Boot:
+              extraAction = 6;
+              break;
+            case SyringeControlState.ValveLeft:
+              extraAction = 7;
+              break;
+            case SyringeControlState.ValveRight:
+              extraAction = 8;
+              break;
+            case SyringeControlState.MicroStep:
+              extraAction = 9;
+              break;
+            case SyringeControlState.SpeedPreset:
+              extraAction = 10;
+              break;
+            case SyringeControlState.Position:
+              extraAction = 11;
+              break;
+            default:
+              throw new NotImplementedException($"{nameof(DeviceParameterType.PumpSheath)} subParameter expected to be {nameof(SyringeControlState)}");
+          }
+          break;
+        case DeviceParameterType.PumpSampleA:
+          commandCode = 0xD1;
+          param = intValue;
+          switch (subParameter)
+          {
+            case SyringeControlState.Halt:
+              extraAction = 0;
+              break;
+            case SyringeControlState.MoveAbsolute:
+              extraAction = 1;
+              break;
+            case SyringeControlState.Pickup:
+              extraAction = 2;
+              break;
+            case SyringeControlState.PreInject:
+              extraAction = 3;
+              break;
+            case SyringeControlState.Speed:
+              extraAction = 4;
+              break;
+            case SyringeControlState.Initialize:
+              extraAction = 5;
+              break;
+            case SyringeControlState.Boot:
+              extraAction = 6;
+              break;
+            case SyringeControlState.ValveLeft:
+              extraAction = 7;
+              break;
+            case SyringeControlState.ValveRight:
+              extraAction = 8;
+              break;
+            case SyringeControlState.MicroStep:
+              extraAction = 9;
+              break;
+            case SyringeControlState.SpeedPreset:
+              extraAction = 10;
+              break;
+            case SyringeControlState.Position:
+              extraAction = 11;
+              break;
+            default:
+              throw new NotImplementedException($"{nameof(DeviceParameterType.PumpSampleA)} subParameter expected to be {nameof(SyringeControlState)}");
+          }
+          break;
+        case DeviceParameterType.PumpSampleB:
+          commandCode = 0xD2;
+          param = intValue;
+          switch (subParameter)
+          {
+            case SyringeControlState.Halt:
+              extraAction = 0;
+              break;
+            case SyringeControlState.MoveAbsolute:
+              extraAction = 1;
+              break;
+            case SyringeControlState.Pickup:
+              extraAction = 2;
+              break;
+            case SyringeControlState.PreInject:
+              extraAction = 3;
+              break;
+            case SyringeControlState.Speed:
+              extraAction = 4;
+              break;
+            case SyringeControlState.Initialize:
+              extraAction = 5;
+              break;
+            case SyringeControlState.Boot:
+              extraAction = 6;
+              break;
+            case SyringeControlState.ValveLeft:
+              extraAction = 7;
+              break;
+            case SyringeControlState.ValveRight:
+              extraAction = 8;
+              break;
+            case SyringeControlState.MicroStep:
+              extraAction = 9;
+              break;
+            case SyringeControlState.SpeedPreset:
+              extraAction = 10;
+              break;
+            case SyringeControlState.Position:
+              extraAction = 11;
+              break;
+            default:
+              throw new NotImplementedException($"{nameof(DeviceParameterType.PumpSampleB)} subParameter expected to be {nameof(SyringeControlState)}");
+          }
+          break;
+        case DeviceParameterType.MotorMoveX:
+          commandCode = 0xDD;
+          fparam = value;
+          switch (subParameter)
+          {
+            case MotorDirection.Halt:
+              extraAction = 0;
+              break;
+            case MotorDirection.Left:
+              extraAction = 1;
+              break;
+            case MotorDirection.Right:
+              extraAction = 2;
+              break;
+            default:
+              throw new NotImplementedException($"{nameof(DeviceParameterType.MotorMoveX)} subParameter expected to be {nameof(MotorDirection.Halt)} / {nameof(MotorDirection.Left)} / {nameof(MotorDirection.Right)}");
+          }
+          break;
+        case DeviceParameterType.MotorMoveY:
+          commandCode = 0xDE;
+          fparam = value;
+          switch (subParameter)
+          {
+            case MotorDirection.Halt:
+              extraAction = 0;
+              break;
+            case MotorDirection.Back:
+              extraAction = 1;
+              break;
+            case MotorDirection.Front:
+              extraAction = 2;
+              break;
+            default:
+              throw new NotImplementedException($"{nameof(DeviceParameterType.MotorMoveY)} subParameter expected to be {nameof(MotorDirection.Halt)} / {nameof(MotorDirection.Back)} / {nameof(MotorDirection.Front)}");
+          }
+          break;
+        case DeviceParameterType.MotorMoveZ:
+          commandCode = 0xDF;
+          fparam = value;
+          switch (subParameter)
+          {
+            case MotorDirection.Halt:
+              extraAction = 0;
+              break;
+            case MotorDirection.Up:
+              extraAction = 1;
+              break;
+            case MotorDirection.Down:
+              extraAction = 2;
+              break;
+            default:
+              throw new NotImplementedException($"{nameof(DeviceParameterType.MotorMoveZ)} subParameter expected to be {nameof(MotorDirection.Halt)} / {nameof(MotorDirection.Up)} / {nameof(MotorDirection.Down)}");
+          }
+          break;
+        case DeviceParameterType.AlignMotor:
+          commandCode = 0xDC;
+          fparam = value;
+          switch (subParameter)
+          {
+            case AlignMotorSequence.Scan:
+              extraAction = 3;
+              break;
+            case AlignMotorSequence.FindPeak:
+              extraAction = 4;
+              break;
+            case AlignMotorSequence.GoTo:
+              extraAction = 5;
+              break;
+            default:
+              throw new NotImplementedException($"{nameof(DeviceParameterType.AlignMotor)} subParameter expected to be {nameof(AlignMotorSequence)}");
+          }
           break;
         case DeviceParameterType.IsSingleStepDebugActive:
           commandCode = 0xF7;
@@ -1442,16 +1680,16 @@ namespace DIOS.Core
         case DeviceParameterType.MotorStepsX:
           switch (subParameter)
           {
-            case MotorStepsX.Plate96C1:
+            case MotorStepsX.Plate96Column1:
               commandCode = 0x58;
               break;
-            case MotorStepsX.Plate96C12:
+            case MotorStepsX.Plate96Column12:
               commandCode = 0x5A;
               break;
-            case MotorStepsX.Plate384C1:
+            case MotorStepsX.Plate384Column1:
               commandCode = 0x5C;
               break;
-            case MotorStepsX.Plate384C24:
+            case MotorStepsX.Plate384Column24:
               commandCode = 0x5E;
               break;
             case MotorStepsX.Tube:
@@ -1573,6 +1811,24 @@ namespace DIOS.Core
       MainCommand("Get Property", code: commandCode, parameter: selector, cmd: 0x01);
     }
 
+    internal void SetHardwareToken(HardwareToken token, ushort value = 0)
+    {
+      byte commandCode = 0x00;
+      switch (token)
+      {
+        case HardwareToken.Synchronization:
+          commandCode = 0xCB;
+          break;
+        case HardwareToken.ActiveCommandQueueIndex:  //switch to recovery command buffer #parameter
+          commandCode = 0xC1;
+          break;
+        case HardwareToken.EmptySyringeTrigger:
+          commandCode = 0xC3;
+          break;
+      }
+      MainCommand("Set Property", code: commandCode, parameter: value, cmd: 0x02);
+    }
+
     private void OnStartingToReadWell()
     {
       IsMeasurementGoing = true;
@@ -1632,7 +1888,7 @@ namespace DIOS.Core
     {
       _dataController.ReconnectUSB();
       SetHardwareParameter(DeviceParameterType.SystemActivityStatus);
-      MainCommand("Set Property", code: 0xCB);
+      SetHardwareToken(HardwareToken.Synchronization);
     }
 
     public void DisconnectedUSB()

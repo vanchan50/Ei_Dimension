@@ -9,6 +9,7 @@ namespace DIOSApplication
   {
     public MapController MapController { get; }
     public DirectoryInfo RootDirectory { get; private set; }
+    public bool RunPlateContinuously { get; set; }
 
     public DIOSApp()
     {

@@ -52,7 +52,7 @@ namespace Ei_Dimension.ViewModels
     public static ComponentsViewModel Instance { get; private set; }
     public virtual bool SuppressWarnings { get; set; }
 
-    public byte[] SyringeControlStates { get; private set; }
+    public byte[] SyringeControlStates { get; } = { 0, 0, 0 };
     private ushort _activeLasers;
     private readonly string _loaderPath;
     private const string BOOTLOADEREXEPATH = "DIOS_FW_Loader.exe";
@@ -95,7 +95,6 @@ namespace Ei_Dimension.ViewModels
       SelectedSheathContent = SyringeControlItems[0].Content;
       SelectedSampleAContent = SyringeControlItems[0].Content;
       SelectedSampleBContent = SyringeControlItems[0].Content;
-      SyringeControlStates = new byte[]{ 0, 0, 0 };
 
       SyringeControlSheathValue = new ObservableCollection<string> {""};
       SyringeControlSampleAValue = new ObservableCollection<string> {""};
@@ -253,27 +252,27 @@ namespace Ei_Dimension.ViewModels
     {
       UserInputHandler.InputSanityCheck();
       if (SyringeControlSheathValue[0] == "")
-        App.Device.MainCommand("Sheath", cmd: SyringeControlStates[0]);
+        App.Device.SetHardwareParameter(DeviceParameterType.PumpSheath, (SyringeControlState)SyringeControlStates[0], 0);
       else if (ushort.TryParse(SyringeControlSheathValue[0], out ushort usRes))
-        App.Device.MainCommand("Sheath", cmd: SyringeControlStates[0], parameter: usRes);
+        App.Device.SetHardwareParameter(DeviceParameterType.PumpSheath, (SyringeControlState)SyringeControlStates[0], usRes);
     }
 
     public void SampleARunButtonClick()
     {
       UserInputHandler.InputSanityCheck();
       if (SyringeControlSampleAValue[0] == "")
-        App.Device.MainCommand("SampleA", cmd: SyringeControlStates[1]);
+        App.Device.SetHardwareParameter(DeviceParameterType.PumpSampleA, (SyringeControlState)SyringeControlStates[1], 0);
       else if (ushort.TryParse(SyringeControlSampleAValue[0], out ushort usRes))
-        App.Device.MainCommand("SampleA", cmd: SyringeControlStates[1], parameter: usRes);
+        App.Device.SetHardwareParameter(DeviceParameterType.PumpSampleA, (SyringeControlState)SyringeControlStates[1], usRes);
     }
 
     public void SampleBRunButtonClick()
     {
       UserInputHandler.InputSanityCheck();
       if (SyringeControlSampleBValue[0] == "")
-        App.Device.MainCommand("SampleB", cmd: SyringeControlStates[2]);
+        App.Device.SetHardwareParameter(DeviceParameterType.PumpSampleB, (SyringeControlState)SyringeControlStates[2], 0);
       else if (ushort.TryParse(SyringeControlSampleBValue[0], out ushort usRes))
-        App.Device.MainCommand("SampleB", cmd: SyringeControlStates[2], parameter: usRes);
+        App.Device.SetHardwareParameter(DeviceParameterType.PumpSampleB, (SyringeControlState)SyringeControlStates[2], usRes);
     }
 
     public void GetPositionToggleButtonClick()
@@ -377,14 +376,13 @@ namespace Ei_Dimension.ViewModels
     public void MoveIdexButtonClick()
     {
       UserInputHandler.InputSanityCheck();
-      App.Device.MainCommand("Idex");
+      App.Device.MoveIdex(CWDirectionActive, byte.Parse(IdexTextBoxInputs[0]), ushort.Parse(IdexTextBoxInputs[1]));
     }
 
     public void CWDirectionToggleButtonClick()
     {
       UserInputHandler.InputSanityCheck();
       CWDirectionActive = !CWDirectionActive;
-      DIOS.Core.InstrumentParameters.Idex.Dir = CWDirectionActive ? 1 : 0;
     }
 
     public void IdexPositionButtonClick()

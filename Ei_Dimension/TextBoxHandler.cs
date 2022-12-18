@@ -10,7 +10,7 @@ namespace Ei_Dimension
     private static readonly string[] SyncElements = { "SHEATH", "SAMPLE_A", "SAMPLE_B", "FLASH", "END_WELL", "VALVES", "X_MOTOR",
       "Y_MOTOR", "Z_MOTOR", "PROXIMITY", "PRESSURE", "WASHING", "FAULT", "ALIGN MOTOR", "MAIN VALVE", "SINGLE STEP" };
 
-    private static readonly object ConditionVar = new object();
+    private readonly object _uiThreadLock = new object();
 
     public void ParameterUpdateEventHandler(object sender, ParameterUpdateEventArgs parameter)
     {
@@ -220,9 +220,7 @@ namespace Ei_Dimension
             default:
               throw new Exception($"{nameof(DeviceParameterType.SampleSyringeType)} TbHandler should never happen");
           }
-          if (out17 != SyringeSpeedsViewModel.Instance.SingleSyringeMode[0])
-            update = () => SyringeSpeedsViewModel.Instance.SingleSyringeMode[0] = out17;
-          //else do nothing
+          update = () => SyringeSpeedsViewModel.Instance.SingleSyringeMode[0] = out17;
           break;
         case DeviceParameterType.MotorX:
           var type4 = (MotorParameterType)parameter.Parameter;
@@ -317,16 +315,16 @@ namespace Ei_Dimension
           var pos7 = 0;
           switch (type7)
           {
-            case MotorStepsX.Plate96C1:
+            case MotorStepsX.Plate96Column1:
               pos7 = 0;
               break;
-            case MotorStepsX.Plate96C12:
+            case MotorStepsX.Plate96Column12:
               pos7 = 1;
               break;
-            case MotorStepsX.Plate384C1:
+            case MotorStepsX.Plate384Column1:
               pos7 = 2;
               break;
-            case MotorStepsX.Plate384C24:
+            case MotorStepsX.Plate384Column24:
               pos7 = 3;
               break;
             case MotorStepsX.Tube:
@@ -606,20 +604,15 @@ namespace Ei_Dimension
             }
           };
           break;
-        case DeviceParameterType.SheathFlow:  //change command to parameter dependency in the lib. send unspecified in case cmd !=1 or !=2, so it doesnt break
-          if (parameter.Parameter == (int)SheathFlowErrorType.SheathEmpty)
+        case DeviceParameterType.SheathFlowError:  //change command to parameter dependency in the lib. send unspecified in case cmd !=1 or !=2, so it doesnt break
+          if (parameter.Parameter == (int)SheathFlowError.SheathEmpty)
           {
-            App.Device.MainCommand("Set Property", code: 0xcb, parameter: 0x1000);
-            App.Device.MainCommand("Sheath"); //halt 
-            App.Device.MainCommand("Set Property", code: 0xc1, parameter: 1);  //switch to recovery command buffer #1
-
             void Act()
             {
-              App.Device.MainCommand("Sheath Empty Prime");
-              App.Device.MainCommand("Set Property", code: 0xcb); //clear sync token to allow recovery to run
-              lock (ConditionVar)
+              App.Device.RenewSheath();
+              lock (_uiThreadLock)
               {
-                Monitor.Pulse(ConditionVar);
+                Monitor.Pulse(_uiThreadLock);
               }
             }
             App.Current.Dispatcher.Invoke(() =>
@@ -630,21 +623,21 @@ namespace Ei_Dimension
                 Language.TranslationSource.Instance.CurrentCulture);
               Notification.Show($"{msg1}\n{msg2}", Act, "OK");
             });
-            lock (ConditionVar)
+            lock (_uiThreadLock)
             {
-              Monitor.Wait(ConditionVar);
+              Monitor.Wait(_uiThreadLock);
             }
           }
-          else if (parameter.Parameter == (int)SheathFlowErrorType.PressureOverload)
+          else if (parameter.Parameter == (int)SheathFlowError.PressureOverload)
           {
             if (parameter.FloatParameter > App.Device.MaxPressure)
             {
               void Act()
               {
                 Environment.Exit(0);
-                lock (ConditionVar)
+                lock (_uiThreadLock)
                 {
-                  Monitor.Pulse(ConditionVar);
+                  Monitor.Pulse(_uiThreadLock);
                 }
               }
               App.Current.Dispatcher.Invoke(() =>
@@ -658,9 +651,9 @@ namespace Ei_Dimension
                 Notification.Show($"{msg1}\n{msg2}", Act,
                     msg3);
               });
-              lock (ConditionVar)
+              lock (_uiThreadLock)
               {
-                Monitor.Wait(ConditionVar);
+                Monitor.Wait(_uiThreadLock);
               }
             }
           }
@@ -681,9 +674,9 @@ namespace Ei_Dimension
             //App.Device.Publisher.PublishEverything();
 
             //Environment.Exit(0);
-            lock (ConditionVar)
+            lock (_uiThreadLock)
             {
-              Monitor.Pulse(ConditionVar);
+              Monitor.Pulse(_uiThreadLock);
             }
           }
           App.Current.Dispatcher.Invoke(() =>
@@ -692,9 +685,9 @@ namespace Ei_Dimension
               Language.TranslationSource.Instance.CurrentCulture);
             Notification.Show(ws + $"\n{msg}", Act1, "OK");
           });
-          lock (ConditionVar)
+          lock (_uiThreadLock)
           {
-            Monitor.Wait(ConditionVar);
+            Monitor.Wait(_uiThreadLock);
           }
           break;
         case DeviceParameterType.NextWellWarning:

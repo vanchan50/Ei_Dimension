@@ -154,22 +154,22 @@ namespace Ei_Dimension.ViewModels
         case "x":
           if (float.TryParse(ParametersX[0], out fRes))
           {
-            var Cmd = ParametersX[1] == "Left" ? 1 : 2;
-            App.Device.MainCommand("MotorX", cmd: (byte)Cmd, fparameter: fRes);
+            var direction = ParametersX[1] == "Left" ? MotorDirection.Left : MotorDirection.Right;
+            App.Device.SetHardwareParameter(DeviceParameterType.MotorMoveX, direction, fRes);
           }
           break;
         case "y":
           if (float.TryParse(ParametersY[0], out fRes))
           {
-            var Cmd = ParametersY[1] == "Back" ? 1 : 2;
-            App.Device.MainCommand("MotorY", cmd: (byte)Cmd, fparameter: fRes);
+            var direction = ParametersY[1] == "Back" ? MotorDirection.Back : MotorDirection.Front;
+            App.Device.SetHardwareParameter(DeviceParameterType.MotorMoveY, direction, fRes);
           }
           break;
         case "z":
           if (float.TryParse(ParametersZ[0], out fRes))
           {
-            var Cmd = ParametersZ[1] == "Up" ? 1 : 2;
-            App.Device.MainCommand("MotorZ", cmd: (byte)Cmd, fparameter: fRes);
+            var direction = ParametersZ[1] == "Up" ? MotorDirection.Up : MotorDirection.Down;
+            App.Device.SetHardwareParameter(DeviceParameterType.MotorMoveZ, direction, fRes);
           }
           break;
       }
@@ -181,13 +181,13 @@ namespace Ei_Dimension.ViewModels
       switch (s)
       {
         case "x":
-          App.Device.MainCommand("MotorX");
+          App.Device.SetHardwareParameter(DeviceParameterType.MotorMoveX, MotorDirection.Halt);
           break;
         case "y":
-          App.Device.MainCommand("MotorY");
+          App.Device.SetHardwareParameter(DeviceParameterType.MotorMoveY, MotorDirection.Halt);
           break;
         case "z":
-          App.Device.MainCommand("MotorZ");
+          App.Device.SetHardwareParameter(DeviceParameterType.MotorMoveZ, MotorDirection.Halt);
           break;
       }
     }

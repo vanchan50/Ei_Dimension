@@ -2,6 +2,7 @@
 using DevExpress.Mvvm.POCO;
 using System.Collections.ObjectModel;
 using System.Windows.Controls;
+using DIOS.Core;
 
 namespace Ei_Dimension.ViewModels
 {
@@ -38,23 +39,23 @@ namespace Ei_Dimension.ViewModels
 
     public void AutoAlignSelector(byte num)
     {
-      App.Device.MainCommand("Set Property", code: 0xc5, parameter: (ushort)num);
+      App.Device.SetHardwareParameter(DeviceParameterType.AutoAlignState, (AutoAlignState)num);
       AutoAlignSelectorState = num;
     }
 
     public void ScanAlignSequenceClick()
     {
-      App.Device.MainCommand("AlignMotor", cmd: 3);
+      App.Device.SetHardwareParameter(DeviceParameterType.AlignMotor, AlignMotorSequence.Scan);
     }
 
     public void FindPeakAlignSequenceClick()
     {
-      App.Device.MainCommand("AlignMotor", cmd: 4);
+      App.Device.SetHardwareParameter(DeviceParameterType.AlignMotor, AlignMotorSequence.FindPeak);
     }
 
     public void GoToAlignSequenceClick()
     {
-      App.Device.MainCommand("AlignMotor", cmd: 5);
+      App.Device.SetHardwareParameter(DeviceParameterType.AlignMotor, AlignMotorSequence.GoTo);
     }
 
     public void TextChanged(TextChangedEventArgs e)

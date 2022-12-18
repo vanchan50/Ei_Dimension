@@ -29,6 +29,7 @@
     EndSampling,
     Startup,
     CalibrationModeActivate,
-    CalibrationModeDeactivate
+    CalibrationModeDeactivate,
+    RenewSheath
   }
 }

@@ -2467,6 +2467,16 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Continuous
+        ///    Mode.
+        /// </summary>
+        public static string MTBF_mode {
+            get {
+                return ResourceManager.GetString("MTBF_mode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Name.
         /// </summary>
         public static string Name {

@@ -46,7 +46,9 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AlignMotorSequence.cs" />
     <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="AutoAlignState.cs" />
     <Compile Include="CalibrationParameter.cs" />
     <Compile Include="CalibrationTarget.cs" />
     <Compile Include="Channel.cs" />
@@ -58,7 +60,9 @@
     <Compile Include="ClassificationMap.cs" />
     <Compile Include="DataController.cs" />
     <Compile Include="DeviceCommandType.cs" />
+    <Compile Include="HardwareToken.cs" />
     <Compile Include="LaserType.cs" />
+    <Compile Include="MotorDirection.cs" />
     <Compile Include="MotorParameterType.cs" />
     <Compile Include="MotorStepsX.cs" />
     <Compile Include="MotorStepsY.cs" />
@@ -75,7 +79,7 @@
     <Compile Include="PlateType.cs" />
     <Compile Include="RegionReporterResultVolatile.cs" />
     <Compile Include="SampleSyringeType.cs" />
-    <Compile Include="SheathFlowErrorType.cs" />
+    <Compile Include="SheathFlowError.cs" />
     <Compile Include="StatisticsExtension.cs" />
     <Compile Include="StatsAccumulator.cs" />
     <Compile Include="Structs\BeadEventsData.cs" />
@@ -94,7 +98,6 @@
     <Compile Include="Structs\DistributionStats.cs" />
     <Compile Include="Structs\MapCalParameters.cs" />
     <Compile Include="Structs\CommandStruct.cs" />
-    <Compile Include="InstrumentParameters\Idex.cs" />
     <Compile Include="ISerial.cs" />
     <Compile Include="Device.cs" />
     <Compile Include="Structs\WellResults.cs" />
@@ -108,6 +111,7 @@
     <Compile Include="Structs\ReadingWellEventArgs.cs" />
     <Compile Include="Structs\WellStatsData.cs" />
     <Compile Include="Structs\Zone.cs" />
+    <Compile Include="SyringeControlState.cs" />
     <Compile Include="SyringePosition.cs" />
     <Compile Include="SyringeSpeed.cs" />
     <Compile Include="USBConnection.cs" />
