@@ -148,7 +148,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 10 && iRes <= 100)
                 {
-                  App.Device.Hardware.SetHardwareParameter(DeviceParameterType.Volume, VolumeType.Sample, (ushort)iRes);
+                  App.Device.Hardware.SetParameter(DeviceParameterType.Volume, VolumeType.Sample, (ushort)iRes);
                   break;
                 }
               }
@@ -161,7 +161,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 1 && iRes <= 150)
                 {
-                  App.Device.Hardware.SetHardwareParameter(DeviceParameterType.Volume, VolumeType.Wash, (ushort)iRes);
+                  App.Device.Hardware.SetParameter(DeviceParameterType.Volume, VolumeType.Wash, (ushort)iRes);
                   break;
                 }
               }
@@ -174,7 +174,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 1 && iRes <= 500)
                 {
-                  App.Device.Hardware.SetHardwareParameter(DeviceParameterType.Volume, VolumeType.Agitate, (ushort)iRes);
+                  App.Device.Hardware.SetParameter(DeviceParameterType.Volume, VolumeType.Agitate, (ushort)iRes);
                   break;
                 }
               }
@@ -189,7 +189,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 1 && iRes <= 10)
                 {
-                  App.Device.Hardware.SetHardwareParameter(DeviceParameterType.WashRepeatsAmount, (ushort)iRes);
+                  App.Device.Hardware.SetParameter(DeviceParameterType.WashRepeatsAmount, (ushort)iRes);
                   break;
                 }
               }
@@ -202,7 +202,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 1 && iRes <= 10)
                 {
-                  App.Device.Hardware.SetHardwareParameter(DeviceParameterType.AgitateRepeatsAmount, (ushort)iRes);
+                  App.Device.Hardware.SetParameter(DeviceParameterType.AgitateRepeatsAmount, (ushort)iRes);
                   break;
                 }
               }
@@ -217,7 +217,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 1 && iRes <= 2000)
                 {
-                  App.Device.Hardware.SetHardwareParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.Height, iRes);
+                  App.Device.Hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.Height, iRes);
                   break;
                 }
               }
@@ -230,7 +230,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 0 && iRes <= 20000)
                 {
-                  App.Device.Hardware.SetHardwareParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.MinSSC, iRes);
+                  App.Device.Hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.MinSSC, iRes);
                   break;
                 }
               }
@@ -243,7 +243,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 0 && iRes <= 30000)
                 {
-                  App.Device.Hardware.SetHardwareParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.MaxSSC, iRes);
+                  App.Device.Hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.MaxSSC, iRes);
                   break;
                 }
               }
@@ -258,7 +258,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 0 && iRes <= 30000)
                 {
-                  App.Device.Hardware.SetHardwareParameter(DeviceParameterType.CalibrationTarget, CalibrationTarget.CL0, iRes);
+                  App.Device.Hardware.SetParameter(DeviceParameterType.CalibrationTarget, CalibrationTarget.CL0, iRes);
                   break;
                 }
               }
@@ -271,7 +271,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 0 && iRes <= 30000)
                 {
-                  App.Device.Hardware.SetHardwareParameter(DeviceParameterType.CalibrationTarget, CalibrationTarget.CL1, iRes);
+                  App.Device.Hardware.SetParameter(DeviceParameterType.CalibrationTarget, CalibrationTarget.CL1, iRes);
                   break;
                 }
               }
@@ -284,7 +284,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 0 && iRes <= 30000)
                 {
-                  App.Device.Hardware.SetHardwareParameter(DeviceParameterType.CalibrationTarget, CalibrationTarget.CL2, iRes);
+                  App.Device.Hardware.SetParameter(DeviceParameterType.CalibrationTarget, CalibrationTarget.CL2, iRes);
                   break;
                 }
               }
@@ -297,7 +297,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 0 && iRes <= 30000)
                 {
-                  App.Device.Hardware.SetHardwareParameter(DeviceParameterType.CalibrationTarget, CalibrationTarget.CL3, iRes);
+                  App.Device.Hardware.SetParameter(DeviceParameterType.CalibrationTarget, CalibrationTarget.CL3, iRes);
                   break;
                 }
               }
@@ -310,7 +310,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 0 && iRes <= 30000)
                 {
-                  App.Device.Hardware.SetHardwareParameter(DeviceParameterType.CalibrationTarget, CalibrationTarget.RP1, iRes);
+                  App.Device.Hardware.SetParameter(DeviceParameterType.CalibrationTarget, CalibrationTarget.RP1, iRes);
                   break;
                 }
               }
@@ -323,7 +323,7 @@ namespace Ei_Dimension
             {
               if (iRes >= 0 && iRes <= 100)
               {
-                App.Device.Hardware.SetHardwareParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.Attenuation, iRes);
+                App.Device.Hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.Attenuation, iRes);
                 break;
               }
             }
@@ -337,7 +337,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 0 && iRes <= 1000)
                 {
-                  App.Device.Hardware.SetHardwareParameter(DeviceParameterType.SyringeSpeedSheath, SyringeSpeed.Normal, iRes);
+                  App.Device.Hardware.SetParameter(DeviceParameterType.SyringeSpeedSheath, SyringeSpeed.Normal, iRes);
                   break;
                 }
               }
@@ -350,7 +350,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 0 && iRes <= 1000)
                 {
-                  App.Device.Hardware.SetHardwareParameter(DeviceParameterType.SyringeSpeedSheath, SyringeSpeed.HiSpeed, iRes);
+                  App.Device.Hardware.SetParameter(DeviceParameterType.SyringeSpeedSheath, SyringeSpeed.HiSpeed, iRes);
                   break;
                 }
               }
@@ -363,7 +363,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 0 && iRes <= 1000)
                 {
-                  App.Device.Hardware.SetHardwareParameter(DeviceParameterType.SyringeSpeedSheath, SyringeSpeed.HiSensitivity, iRes);
+                  App.Device.Hardware.SetParameter(DeviceParameterType.SyringeSpeedSheath, SyringeSpeed.HiSensitivity, iRes);
                   break;
                 }
               }
@@ -376,7 +376,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 0 && iRes <= 8000)
                 {
-                  App.Device.Hardware.SetHardwareParameter(DeviceParameterType.SyringeSpeedSheath, SyringeSpeed.Flush, iRes);
+                  App.Device.Hardware.SetParameter(DeviceParameterType.SyringeSpeedSheath, SyringeSpeed.Flush, iRes);
                   break;
                 }
               }
@@ -389,7 +389,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 0 && iRes <= 8000)
                 {
-                  App.Device.Hardware.SetHardwareParameter(DeviceParameterType.SyringeSpeedSheath, SyringeSpeed.Pickup, iRes);
+                  App.Device.Hardware.SetParameter(DeviceParameterType.SyringeSpeedSheath, SyringeSpeed.Pickup, iRes);
                   break;
                 }
               }
@@ -402,7 +402,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 0 && iRes <= 8000)
                 {
-                  App.Device.Hardware.SetHardwareParameter(DeviceParameterType.SyringeSpeedSheath, SyringeSpeed.MaxSpeed, iRes);
+                  App.Device.Hardware.SetParameter(DeviceParameterType.SyringeSpeedSheath, SyringeSpeed.MaxSpeed, iRes);
                   break;
                 }
               }
@@ -417,7 +417,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 0 && iRes <= 1000)
                 {
-                  App.Device.Hardware.SetHardwareParameter(DeviceParameterType.SyringeSpeedSample, SyringeSpeed.Normal, iRes);
+                  App.Device.Hardware.SetParameter(DeviceParameterType.SyringeSpeedSample, SyringeSpeed.Normal, iRes);
                   break;
                 }
               }
@@ -430,7 +430,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 0 && iRes <= 1000)
                 {
-                  App.Device.Hardware.SetHardwareParameter(DeviceParameterType.SyringeSpeedSample, SyringeSpeed.HiSpeed, iRes);
+                  App.Device.Hardware.SetParameter(DeviceParameterType.SyringeSpeedSample, SyringeSpeed.HiSpeed, iRes);
                   break;
                 }
               }
@@ -443,7 +443,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 0 && iRes <= 1000)
                 {
-                  App.Device.Hardware.SetHardwareParameter(DeviceParameterType.SyringeSpeedSample, SyringeSpeed.HiSensitivity, iRes);
+                  App.Device.Hardware.SetParameter(DeviceParameterType.SyringeSpeedSample, SyringeSpeed.HiSensitivity, iRes);
                   break;
                 }
               }
@@ -456,7 +456,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 0 && iRes <= 8000)
                 {
-                  App.Device.Hardware.SetHardwareParameter(DeviceParameterType.SyringeSpeedSample, SyringeSpeed.Flush, iRes);
+                  App.Device.Hardware.SetParameter(DeviceParameterType.SyringeSpeedSample, SyringeSpeed.Flush, iRes);
                   break;
                 }
               }
@@ -469,7 +469,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 0 && iRes <= 8000)
                 {
-                  App.Device.Hardware.SetHardwareParameter(DeviceParameterType.SyringeSpeedSample, SyringeSpeed.Pickup, iRes);
+                  App.Device.Hardware.SetParameter(DeviceParameterType.SyringeSpeedSample, SyringeSpeed.Pickup, iRes);
                   break;
                 }
               }
@@ -482,7 +482,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 0 && iRes <= 8000)
                 {
-                  App.Device.Hardware.SetHardwareParameter(DeviceParameterType.SyringeSpeedSample, SyringeSpeed.MaxSpeed, iRes);
+                  App.Device.Hardware.SetParameter(DeviceParameterType.SyringeSpeedSample, SyringeSpeed.MaxSpeed, iRes);
                   break;
                 }
               }
@@ -495,7 +495,7 @@ namespace Ei_Dimension
             {
               if (fRes >= -10.0000000001 && fRes <= 10.00000000000001)
               {
-                App.Device.Hardware.SetHardwareParameter(DeviceParameterType.SiPMTempCoeff, fRes);
+                App.Device.Hardware.SetParameter(DeviceParameterType.SiPMTempCoeff, fRes);
                 break;
               }
             }
@@ -507,7 +507,7 @@ namespace Ei_Dimension
             {
               if (fRes >= 0 && fRes < 0.1)
               {
-                App.Device.Hardware.SetHardwareParameter(DeviceParameterType.CalibrationMargin, fRes);
+                App.Device.Hardware.SetParameter(DeviceParameterType.CalibrationMargin, fRes);
                 break;
               }
             }
@@ -535,7 +535,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 0 && ((App.Device.BoardVersion == 0 && iRes <= 3500) || (App.Device.BoardVersion >= 1 && iRes <= 10000)))
                 {
-                  App.Device.Hardware.SetHardwareParameter(DeviceParameterType.ChannelBias30C, Channel.GreenA, iRes);
+                  App.Device.Hardware.SetParameter(DeviceParameterType.ChannelBias30C, Channel.GreenA, iRes);
                   break;
                 }
               }
@@ -548,7 +548,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 0 && ((App.Device.BoardVersion == 0 && iRes <= 3500) || (App.Device.BoardVersion >= 1 && iRes <= 10000)))
                 {
-                  App.Device.Hardware.SetHardwareParameter(DeviceParameterType.ChannelBias30C, Channel.GreenB, iRes);
+                  App.Device.Hardware.SetParameter(DeviceParameterType.ChannelBias30C, Channel.GreenB, iRes);
                   break;
                 }
               }
@@ -561,7 +561,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 0 && ((App.Device.BoardVersion == 0 && iRes <= 3500) || (App.Device.BoardVersion >= 1 && iRes <= 10000)))
                 {
-                  App.Device.Hardware.SetHardwareParameter(DeviceParameterType.ChannelBias30C, Channel.GreenC, iRes);
+                  App.Device.Hardware.SetParameter(DeviceParameterType.ChannelBias30C, Channel.GreenC, iRes);
                   break;
                 }
               }
@@ -574,7 +574,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 0 && ((App.Device.BoardVersion == 0 && iRes <= 3500) || (App.Device.BoardVersion >= 1 && iRes <= 10000)))
                 {
-                  App.Device.Hardware.SetHardwareParameter(DeviceParameterType.ChannelBias30C, Channel.RedA, iRes);
+                  App.Device.Hardware.SetParameter(DeviceParameterType.ChannelBias30C, Channel.RedA, iRes);
                   break;
                 }
               }
@@ -587,7 +587,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 0 && ((App.Device.BoardVersion == 0 && iRes <= 3500) || (App.Device.BoardVersion >= 1 && iRes <= 10000)))
                 {
-                  App.Device.Hardware.SetHardwareParameter(DeviceParameterType.ChannelBias30C, Channel.RedB, iRes);
+                  App.Device.Hardware.SetParameter(DeviceParameterType.ChannelBias30C, Channel.RedB, iRes);
                   break;
                 }
               }
@@ -600,7 +600,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 0 && ((App.Device.BoardVersion == 0 && iRes <= 3500) || (App.Device.BoardVersion >= 1 && iRes <= 10000)))
                 {
-                  App.Device.Hardware.SetHardwareParameter(DeviceParameterType.ChannelBias30C, Channel.RedC, iRes);
+                  App.Device.Hardware.SetParameter(DeviceParameterType.ChannelBias30C, Channel.RedC, iRes);
                   break;
                 }
               }
@@ -613,7 +613,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 0 && ((App.Device.BoardVersion == 0 && iRes <= 3500) || (App.Device.BoardVersion >= 1 && iRes <= 10000)))
                 {
-                  App.Device.Hardware.SetHardwareParameter(DeviceParameterType.ChannelBias30C, Channel.RedD, iRes);
+                  App.Device.Hardware.SetParameter(DeviceParameterType.ChannelBias30C, Channel.RedD, iRes);
                   break;
                 }
               }
@@ -626,7 +626,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 0 && ((App.Device.BoardVersion == 0 && iRes <= 3500) || (App.Device.BoardVersion >= 1 && iRes <= 10000)))
                 {
-                  App.Device.Hardware.SetHardwareParameter(DeviceParameterType.ChannelBias30C, Channel.VioletA, iRes);
+                  App.Device.Hardware.SetParameter(DeviceParameterType.ChannelBias30C, Channel.VioletA, iRes);
                   break;
                 }
               }
@@ -639,7 +639,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 0 && ((App.Device.BoardVersion == 0 && iRes <= 3500) || (App.Device.BoardVersion >= 1 && iRes <= 10000)))
                 {
-                  App.Device.Hardware.SetHardwareParameter(DeviceParameterType.ChannelBias30C, Channel.VioletB, iRes);
+                  App.Device.Hardware.SetParameter(DeviceParameterType.ChannelBias30C, Channel.VioletB, iRes);
                   break;
                 }
               }
@@ -652,7 +652,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 0 && ((App.Device.BoardVersion == 0 && iRes <= 3500) || (App.Device.BoardVersion >= 1 && iRes <= 10000)))
                 {
-                  App.Device.Hardware.SetHardwareParameter(DeviceParameterType.ChannelBias30C, Channel.ForwardScatter, iRes);
+                  App.Device.Hardware.SetParameter(DeviceParameterType.ChannelBias30C, Channel.ForwardScatter, iRes);
                   break;
                 }
               }
@@ -667,7 +667,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 0 && ((App.Device.BoardVersion == 0 && iRes <= 4095) || (App.Device.BoardVersion >= 1 && iRes <= 65535)))
                 {
-                  App.Device.Hardware.SetHardwareParameter(DeviceParameterType.ChannelOffset, Channel.GreenA, iRes);
+                  App.Device.Hardware.SetParameter(DeviceParameterType.ChannelOffset, Channel.GreenA, iRes);
                   ChannelOffsetViewModel.Instance.OverrideSliderChange = true;
                   ChannelOffsetViewModel.Instance.SliderValue1 = (double) iRes;
                   break;
@@ -682,7 +682,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 0 && ((App.Device.BoardVersion == 0 && iRes <= 4095) || (App.Device.BoardVersion >= 1 && iRes <= 65535)))
                 {
-                  App.Device.Hardware.SetHardwareParameter(DeviceParameterType.ChannelOffset, Channel.GreenB, iRes);
+                  App.Device.Hardware.SetParameter(DeviceParameterType.ChannelOffset, Channel.GreenB, iRes);
                   ChannelOffsetViewModel.Instance.OverrideSliderChange = true;
                   ChannelOffsetViewModel.Instance.SliderValue2 = (double) iRes;
                   break;
@@ -697,7 +697,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 0 && ((App.Device.BoardVersion == 0 && iRes <= 4095) || (App.Device.BoardVersion >= 1 && iRes <= 65535)))
                 {
-                  App.Device.Hardware.SetHardwareParameter(DeviceParameterType.ChannelOffset, Channel.GreenC, iRes);
+                  App.Device.Hardware.SetParameter(DeviceParameterType.ChannelOffset, Channel.GreenC, iRes);
                   ChannelOffsetViewModel.Instance.OverrideSliderChange = true;
                   ChannelOffsetViewModel.Instance.SliderValue3 = (double) iRes;
                   break;
@@ -712,7 +712,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 0 && ((App.Device.BoardVersion == 0 && iRes <= 4095) || (App.Device.BoardVersion >= 1 && iRes <= 65535)))
                 {
-                  App.Device.Hardware.SetHardwareParameter(DeviceParameterType.ChannelOffset, Channel.RedA, iRes);
+                  App.Device.Hardware.SetParameter(DeviceParameterType.ChannelOffset, Channel.RedA, iRes);
                   break;
                 }
               }
@@ -725,7 +725,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 0 && ((App.Device.BoardVersion == 0 && iRes <= 4095) || (App.Device.BoardVersion >= 1 && iRes <= 65535)))
                 {
-                  App.Device.Hardware.SetHardwareParameter(DeviceParameterType.ChannelOffset, Channel.RedB, iRes);
+                  App.Device.Hardware.SetParameter(DeviceParameterType.ChannelOffset, Channel.RedB, iRes);
                   break;
                 }
               }
@@ -738,7 +738,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 0 && ((App.Device.BoardVersion == 0 && iRes <= 4095) || (App.Device.BoardVersion >= 1 && iRes <= 65535)))
                 {
-                  App.Device.Hardware.SetHardwareParameter(DeviceParameterType.ChannelOffset, Channel.RedC, iRes);
+                  App.Device.Hardware.SetParameter(DeviceParameterType.ChannelOffset, Channel.RedC, iRes);
                   break;
                 }
               }
@@ -751,7 +751,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 0 && ((App.Device.BoardVersion == 0 && iRes <= 4095) || (App.Device.BoardVersion >= 1 && iRes <= 65535)))
                 {
-                  App.Device.Hardware.SetHardwareParameter(DeviceParameterType.ChannelOffset, Channel.RedD, iRes);
+                  App.Device.Hardware.SetParameter(DeviceParameterType.ChannelOffset, Channel.RedD, iRes);
                   break;
                 }
               }
@@ -764,7 +764,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 0 && ((App.Device.BoardVersion == 0 && iRes <= 4095) || (App.Device.BoardVersion >= 1 && iRes <= 65535)))
                 {
-                  App.Device.Hardware.SetHardwareParameter(DeviceParameterType.ChannelOffset, Channel.VioletA, iRes);
+                  App.Device.Hardware.SetParameter(DeviceParameterType.ChannelOffset, Channel.VioletA, iRes);
                   break;
                 }
               }
@@ -777,7 +777,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 0 && ((App.Device.BoardVersion == 0 && iRes <= 4095) || (App.Device.BoardVersion >= 1 && iRes <= 65535)))
                 {
-                  App.Device.Hardware.SetHardwareParameter(DeviceParameterType.ChannelOffset, Channel.VioletB, iRes);
+                  App.Device.Hardware.SetParameter(DeviceParameterType.ChannelOffset, Channel.VioletB, iRes);
                   break;
                 }
               }
@@ -790,7 +790,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 0 && ((App.Device.BoardVersion == 0 && iRes <= 4095) || (App.Device.BoardVersion >= 1 && iRes <= 65535)))
                 {
-                  App.Device.Hardware.SetHardwareParameter(DeviceParameterType.ChannelOffset, Channel.ForwardScatter, iRes);
+                  App.Device.Hardware.SetParameter(DeviceParameterType.ChannelOffset, Channel.ForwardScatter, iRes);
                   break;
                 }
               }
@@ -951,7 +951,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 1000 && iRes <= 3000)
                 {
-                  App.Device.Hardware.SetHardwareParameter(DeviceParameterType.MotorX, MotorParameterType.Slope, iRes);
+                  App.Device.Hardware.SetParameter(DeviceParameterType.MotorX, MotorParameterType.Slope, iRes);
                   break;
                 }
               }
@@ -964,7 +964,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 1000 && iRes <= 5000)
                 {
-                  App.Device.Hardware.SetHardwareParameter(DeviceParameterType.MotorX, MotorParameterType.StartSpeed, iRes);
+                  App.Device.Hardware.SetParameter(DeviceParameterType.MotorX, MotorParameterType.StartSpeed, iRes);
                   break;
                 }
               }
@@ -977,7 +977,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 1000 && iRes <= 10000)
                 {
-                  App.Device.Hardware.SetHardwareParameter(DeviceParameterType.MotorX, MotorParameterType.RunSpeed, iRes);
+                  App.Device.Hardware.SetParameter(DeviceParameterType.MotorX, MotorParameterType.RunSpeed, iRes);
                   break;
                 }
               }
@@ -990,7 +990,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 200 && iRes <= 2000)
                 {
-                  App.Device.Hardware.SetHardwareParameter(DeviceParameterType.MotorX, MotorParameterType.EncoderSteps, iRes);
+                  App.Device.Hardware.SetParameter(DeviceParameterType.MotorX, MotorParameterType.EncoderSteps, iRes);
                   Settings.Default.StepsPerRevX = (ushort)iRes;
                   break;
                 }
@@ -1004,7 +1004,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 0 && ((App.Device.BoardVersion == 0 && iRes <= 4095) || (App.Device.BoardVersion >= 1 && iRes <= 65535)))
                 {
-                  App.Device.Hardware.SetHardwareParameter(DeviceParameterType.MotorX, MotorParameterType.CurrentLimit, iRes);
+                  App.Device.Hardware.SetParameter(DeviceParameterType.MotorX, MotorParameterType.CurrentLimit, iRes);
                   break;
                 }
               }
@@ -1031,7 +1031,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 1000 && iRes <= 3000)
                 {
-                  App.Device.Hardware.SetHardwareParameter(DeviceParameterType.MotorY, MotorParameterType.Slope, iRes);
+                  App.Device.Hardware.SetParameter(DeviceParameterType.MotorY, MotorParameterType.Slope, iRes);
                   break;
                 }
               }
@@ -1044,7 +1044,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 1000 && iRes <= 5000)
                 {
-                  App.Device.Hardware.SetHardwareParameter(DeviceParameterType.MotorY, MotorParameterType.StartSpeed, iRes);
+                  App.Device.Hardware.SetParameter(DeviceParameterType.MotorY, MotorParameterType.StartSpeed, iRes);
                   break;
                 }
               }
@@ -1057,7 +1057,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 1000 && iRes <= 10000)
                 {
-                  App.Device.Hardware.SetHardwareParameter(DeviceParameterType.MotorY, MotorParameterType.RunSpeed, iRes);
+                  App.Device.Hardware.SetParameter(DeviceParameterType.MotorY, MotorParameterType.RunSpeed, iRes);
                   break;
                 }
               }
@@ -1070,7 +1070,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 200 && iRes <= 2000)
                 {
-                  App.Device.Hardware.SetHardwareParameter(DeviceParameterType.MotorY, MotorParameterType.EncoderSteps, iRes);
+                  App.Device.Hardware.SetParameter(DeviceParameterType.MotorY, MotorParameterType.EncoderSteps, iRes);
                   Settings.Default.StepsPerRevY = (ushort)iRes;
                   break;
                 }
@@ -1084,7 +1084,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 0 && ((App.Device.BoardVersion == 0 && iRes <= 4095) || (App.Device.BoardVersion >= 1 && iRes <= 65535)))
                 {
-                  App.Device.Hardware.SetHardwareParameter(DeviceParameterType.MotorY, MotorParameterType.CurrentLimit, iRes);
+                  App.Device.Hardware.SetParameter(DeviceParameterType.MotorY, MotorParameterType.CurrentLimit, iRes);
                   break;
                 }
               }
@@ -1111,7 +1111,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 1000 && iRes <= 3000)
                 {
-                  App.Device.Hardware.SetHardwareParameter(DeviceParameterType.MotorZ, MotorParameterType.Slope, iRes);
+                  App.Device.Hardware.SetParameter(DeviceParameterType.MotorZ, MotorParameterType.Slope, iRes);
                   break;
                 }
               }
@@ -1124,7 +1124,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 1000 && iRes <= 5000)
                 {
-                  App.Device.Hardware.SetHardwareParameter(DeviceParameterType.MotorZ, MotorParameterType.StartSpeed, iRes);
+                  App.Device.Hardware.SetParameter(DeviceParameterType.MotorZ, MotorParameterType.StartSpeed, iRes);
                   break;
                 }
               }
@@ -1137,7 +1137,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 1000 && iRes <= 10000)
                 {
-                  App.Device.Hardware.SetHardwareParameter(DeviceParameterType.MotorZ, MotorParameterType.RunSpeed, iRes);
+                  App.Device.Hardware.SetParameter(DeviceParameterType.MotorZ, MotorParameterType.RunSpeed, iRes);
                   break;
                 }
               }
@@ -1150,7 +1150,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 200 && iRes <= 2000)
                 {
-                  App.Device.Hardware.SetHardwareParameter(DeviceParameterType.MotorZ, MotorParameterType.EncoderSteps, iRes);
+                  App.Device.Hardware.SetParameter(DeviceParameterType.MotorZ, MotorParameterType.EncoderSteps, iRes);
                   Settings.Default.StepsPerRevZ = (ushort)iRes;
                   break;
                 }
@@ -1164,7 +1164,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 0 && ((App.Device.BoardVersion == 0 && iRes <= 4095) || (App.Device.BoardVersion >= 1 && iRes <= 65535)))
                 {
-                  App.Device.Hardware.SetHardwareParameter(DeviceParameterType.MotorZ, MotorParameterType.CurrentLimit, iRes);
+                  App.Device.Hardware.SetParameter(DeviceParameterType.MotorZ, MotorParameterType.CurrentLimit, iRes);
                   break;
                 }
               }
@@ -1179,7 +1179,7 @@ namespace Ei_Dimension
               {
                 if (fRes >= 0 && fRes <= 20000.0000000001)
                 {
-                  App.Device.Hardware.SetHardwareParameter(DeviceParameterType.MotorStepsX, MotorStepsX.Plate96Column1, fRes);
+                  App.Device.Hardware.SetParameter(DeviceParameterType.MotorStepsX, MotorStepsX.Plate96Column1, fRes);
                   break;
                 }
               }
@@ -1192,7 +1192,7 @@ namespace Ei_Dimension
               {
                 if (fRes >= 0 && fRes <= 20000.0000000001)
                 {
-                  App.Device.Hardware.SetHardwareParameter(DeviceParameterType.MotorStepsX, MotorStepsX.Plate96Column12, fRes);
+                  App.Device.Hardware.SetParameter(DeviceParameterType.MotorStepsX, MotorStepsX.Plate96Column12, fRes);
                   break;
                 }
               }
@@ -1205,7 +1205,7 @@ namespace Ei_Dimension
               {
                 if (fRes >= 0 && fRes <= 20000.0000000001)
                 {
-                  App.Device.Hardware.SetHardwareParameter(DeviceParameterType.MotorStepsX, MotorStepsX.Plate384Column1, fRes);
+                  App.Device.Hardware.SetParameter(DeviceParameterType.MotorStepsX, MotorStepsX.Plate384Column1, fRes);
                   break;
                 }
               }
@@ -1218,7 +1218,7 @@ namespace Ei_Dimension
               {
                 if (fRes >= 0 && fRes <= 20000.0000000001)
                 {
-                  App.Device.Hardware.SetHardwareParameter(DeviceParameterType.MotorStepsX, MotorStepsX.Plate384Column24, fRes);
+                  App.Device.Hardware.SetParameter(DeviceParameterType.MotorStepsX, MotorStepsX.Plate384Column24, fRes);
                   break;
                 }
               }
@@ -1231,7 +1231,7 @@ namespace Ei_Dimension
               {
                 if (fRes >= 0 && fRes <= 20000.0000000001)
                 {
-                  App.Device.Hardware.SetHardwareParameter(DeviceParameterType.MotorStepsX, MotorStepsX.Tube, fRes);
+                  App.Device.Hardware.SetParameter(DeviceParameterType.MotorStepsX, MotorStepsX.Tube, fRes);
                   break;
                 }
               }
@@ -1246,7 +1246,7 @@ namespace Ei_Dimension
               {
                 if (fRes >= 0 && fRes <= 20000.0000000001)
                 {
-                  App.Device.Hardware.SetHardwareParameter(DeviceParameterType.MotorStepsY, MotorStepsY.Plate96RowA, fRes);
+                  App.Device.Hardware.SetParameter(DeviceParameterType.MotorStepsY, MotorStepsY.Plate96RowA, fRes);
                   break;
                 }
               }
@@ -1259,7 +1259,7 @@ namespace Ei_Dimension
               {
                 if (fRes >= 0 && fRes <= 20000.0000000001)
                 {
-                  App.Device.Hardware.SetHardwareParameter(DeviceParameterType.MotorStepsY, MotorStepsY.Plate96RowH, fRes);
+                  App.Device.Hardware.SetParameter(DeviceParameterType.MotorStepsY, MotorStepsY.Plate96RowH, fRes);
                   break;
                 }
               }
@@ -1272,7 +1272,7 @@ namespace Ei_Dimension
               {
                 if (fRes >= 0 && fRes <= 20000.0000000001)
                 {
-                  App.Device.Hardware.SetHardwareParameter(DeviceParameterType.MotorStepsY, MotorStepsY.Plate384RowA, fRes);
+                  App.Device.Hardware.SetParameter(DeviceParameterType.MotorStepsY, MotorStepsY.Plate384RowA, fRes);
                   break;
                 }
               }
@@ -1285,7 +1285,7 @@ namespace Ei_Dimension
               {
                 if (fRes >= 0 && fRes <= 20000.0000000001)
                 {
-                  App.Device.Hardware.SetHardwareParameter(DeviceParameterType.MotorStepsY, MotorStepsY.Plate384RowP, fRes);
+                  App.Device.Hardware.SetParameter(DeviceParameterType.MotorStepsY, MotorStepsY.Plate384RowP, fRes);
                   break;
                 }
               }
@@ -1298,7 +1298,7 @@ namespace Ei_Dimension
               {
                 if (fRes >= 0 && fRes <= 20000.0000000001)
                 {
-                  App.Device.Hardware.SetHardwareParameter(DeviceParameterType.MotorStepsY, MotorStepsY.Tube, fRes);
+                  App.Device.Hardware.SetParameter(DeviceParameterType.MotorStepsY, MotorStepsY.Tube, fRes);
                   break;
                 }
               }
@@ -1313,7 +1313,7 @@ namespace Ei_Dimension
               {
                 if (fRes >= 0 && fRes <= 1000.0000000001)
                 {
-                  App.Device.Hardware.SetHardwareParameter(DeviceParameterType.MotorStepsZ, MotorStepsZ.A1, fRes);
+                  App.Device.Hardware.SetParameter(DeviceParameterType.MotorStepsZ, MotorStepsZ.A1, fRes);
                   PlateCustomizationViewModel.Instance.DefaultPlate.A1 = fRes;
                   PlateCustomizationViewModel.Instance.UpdateDefault();
                   break;
@@ -1328,7 +1328,7 @@ namespace Ei_Dimension
               {
                 if (fRes >= 0 && fRes <= 1000.0000000001)
                 {
-                  App.Device.Hardware.SetHardwareParameter(DeviceParameterType.MotorStepsZ, MotorStepsZ.A12, fRes);
+                  App.Device.Hardware.SetParameter(DeviceParameterType.MotorStepsZ, MotorStepsZ.A12, fRes);
                   PlateCustomizationViewModel.Instance.DefaultPlate.A12 = fRes;
                   PlateCustomizationViewModel.Instance.UpdateDefault();
                   break;
@@ -1343,7 +1343,7 @@ namespace Ei_Dimension
               {
                 if (fRes >= 0 && fRes <= 1000.0000000001)
                 {
-                  App.Device.Hardware.SetHardwareParameter(DeviceParameterType.MotorStepsZ, MotorStepsZ.H1, fRes);
+                  App.Device.Hardware.SetParameter(DeviceParameterType.MotorStepsZ, MotorStepsZ.H1, fRes);
                   PlateCustomizationViewModel.Instance.DefaultPlate.H1 = fRes;
                   PlateCustomizationViewModel.Instance.UpdateDefault();
                   break;
@@ -1358,7 +1358,7 @@ namespace Ei_Dimension
               {
                 if (fRes >= 0 && fRes <= 1000.0000000001)
                 {
-                  App.Device.Hardware.SetHardwareParameter(DeviceParameterType.MotorStepsZ, MotorStepsZ.H12, fRes);
+                  App.Device.Hardware.SetParameter(DeviceParameterType.MotorStepsZ, MotorStepsZ.H12, fRes);
                   PlateCustomizationViewModel.Instance.DefaultPlate.H12 = fRes;
                   PlateCustomizationViewModel.Instance.UpdateDefault();
                   break;
@@ -1373,7 +1373,7 @@ namespace Ei_Dimension
               {
                 if (fRes >= 0 && fRes <= 1000.0000000001)
                 {
-                  App.Device.Hardware.SetHardwareParameter(DeviceParameterType.MotorStepsZ, MotorStepsZ.Tube, fRes);
+                  App.Device.Hardware.SetParameter(DeviceParameterType.MotorStepsZ, MotorStepsZ.Tube, fRes);
                   break;
                 }
               }

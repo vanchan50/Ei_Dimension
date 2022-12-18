@@ -18,8 +18,8 @@ namespace DIOS.Core.SelfTests
 
     internal void FluidicsTest()
     {
-      _device.Hardware.RequestHardwareParameter(DeviceParameterType.PressureAtStartup);
-      _device.Hardware.SendHardwareCommand(DeviceCommandType.Startup);
+      _device.Hardware.RequestParameter(DeviceParameterType.PressureAtStartup);
+      _device.Hardware.SendCommand(DeviceCommandType.Startup);
       // result to DataController.InnerCommandProcessing(). Probably should form a SelfTestError class
       //SelfTestError should be a property of this class
     }
@@ -39,13 +39,13 @@ namespace DIOS.Core.SelfTests
 
     internal void ScriptFinishedSignal()
     {
-      _device.Hardware.RequestHardwareParameter(DeviceParameterType.PressureAtStartup);
+      _device.Hardware.RequestParameter(DeviceParameterType.PressureAtStartup);
       Motorsinit[2] = false;
-      _device.Hardware.RequestHardwareParameter(DeviceParameterType.MotorZ, MotorParameterType.CurrentStep);
+      _device.Hardware.RequestParameter(DeviceParameterType.MotorZ, MotorParameterType.CurrentStep);
       Motorsinit[0] = false;
-      _device.Hardware.RequestHardwareParameter(DeviceParameterType.MotorX, MotorParameterType.CurrentStep);
+      _device.Hardware.RequestParameter(DeviceParameterType.MotorX, MotorParameterType.CurrentStep);
       Motorsinit[1] = false;
-      _device.Hardware.RequestHardwareParameter(DeviceParameterType.MotorY, MotorParameterType.CurrentStep);
+      _device.Hardware.RequestParameter(DeviceParameterType.MotorY, MotorParameterType.CurrentStep);
     }
   }
 }

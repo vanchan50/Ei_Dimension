@@ -75,7 +75,7 @@ namespace Ei_Dimension.ViewModels
       switch (num)
       {
         case 1:
-          App.Device.Hardware.SetHardwareParameter(DeviceParameterType.PlateType, (ushort)PlateType.Tube);
+          App.Device.Hardware.SetParameter(DeviceParameterType.PlateType, (ushort)PlateType.Tube);
           Table384Visible = Visibility.Hidden;
           Table96Visible = Visibility.Hidden;
           break;
@@ -89,7 +89,7 @@ namespace Ei_Dimension.ViewModels
               row.Reset();
             }
           }
-          App.Device.Hardware.SetHardwareParameter(DeviceParameterType.PlateType, (ushort)PlateType.Plate96);
+          App.Device.Hardware.SetParameter(DeviceParameterType.PlateType, (ushort)PlateType.Plate96);
           break;
         case 384:
           Table384Visible = Visibility.Visible;
@@ -101,7 +101,7 @@ namespace Ei_Dimension.ViewModels
               row.Reset();
             }
           }
-          App.Device.Hardware.SetHardwareParameter(DeviceParameterType.PlateType, (ushort)PlateType.Plate384);
+          App.Device.Hardware.SetParameter(DeviceParameterType.PlateType, (ushort)PlateType.Plate384);
           break;
       }
       CurrentTableSize = num;

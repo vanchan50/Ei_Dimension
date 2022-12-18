@@ -730,7 +730,7 @@ namespace Ei_Dimension
     public static void UpdatePressureMonitor()
     {
       if (ComponentsViewModel.Instance.PressureMonToggleButtonState)
-        App.Device.Hardware.RequestHardwareParameter(DeviceParameterType.Pressure);
+        App.Device.Hardware.RequestParameter(DeviceParameterType.Pressure);
     }
   }
 }

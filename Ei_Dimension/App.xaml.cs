@@ -421,137 +421,137 @@ namespace Ei_Dimension
         case "readertab":
           actionList = () =>
           {
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.Volume, VolumeType.Wash);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.Volume, VolumeType.Sample);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.Volume, VolumeType.Agitate);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.PlateType); // plate type needed here?really? same question for the rest, actually
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.WellReadingSpeed);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.WellReadingOrder);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.ChannelConfiguration);
+            Device.Hardware.RequestParameter(DeviceParameterType.Volume, VolumeType.Wash);
+            Device.Hardware.RequestParameter(DeviceParameterType.Volume, VolumeType.Sample);
+            Device.Hardware.RequestParameter(DeviceParameterType.Volume, VolumeType.Agitate);
+            Device.Hardware.RequestParameter(DeviceParameterType.PlateType); // plate type needed here?really? same question for the rest, actually
+            Device.Hardware.RequestParameter(DeviceParameterType.WellReadingSpeed);
+            Device.Hardware.RequestParameter(DeviceParameterType.WellReadingOrder);
+            Device.Hardware.RequestParameter(DeviceParameterType.ChannelConfiguration);
           };
           break;
         case "reportingtab":
           actionList = () =>
           {
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.ValveCuvetDrain); //this all makes no sense. just check the commands. probably
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.ValveFan2);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.ValveFan1);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.Pressure);
+            Device.Hardware.RequestParameter(DeviceParameterType.ValveCuvetDrain); //this all makes no sense. just check the commands. probably
+            Device.Hardware.RequestParameter(DeviceParameterType.ValveFan2);
+            Device.Hardware.RequestParameter(DeviceParameterType.ValveFan1);
+            Device.Hardware.RequestParameter(DeviceParameterType.Pressure);
           };
           break;
         case "calibtab":
           actionList = () =>
           {
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.SyringeSpeedSheath, SyringeSpeed.Normal);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.SyringeSpeedSheath, SyringeSpeed.HiSpeed);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.SyringeSpeedSheath, SyringeSpeed.HiSensitivity);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.SyringeSpeedSheath, SyringeSpeed.Flush);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.SyringeSpeedSheath, SyringeSpeed.Pickup);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.SyringeSpeedSheath, SyringeSpeed.MaxSpeed);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.SyringeSpeedSample, SyringeSpeed.Normal);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.SyringeSpeedSample, SyringeSpeed.HiSpeed);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.SyringeSpeedSample, SyringeSpeed.HiSensitivity);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.SyringeSpeedSample, SyringeSpeed.Flush);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.SyringeSpeedSample, SyringeSpeed.Pickup);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.SyringeSpeedSample, SyringeSpeed.MaxSpeed);
+            Device.Hardware.RequestParameter(DeviceParameterType.SyringeSpeedSheath, SyringeSpeed.Normal);
+            Device.Hardware.RequestParameter(DeviceParameterType.SyringeSpeedSheath, SyringeSpeed.HiSpeed);
+            Device.Hardware.RequestParameter(DeviceParameterType.SyringeSpeedSheath, SyringeSpeed.HiSensitivity);
+            Device.Hardware.RequestParameter(DeviceParameterType.SyringeSpeedSheath, SyringeSpeed.Flush);
+            Device.Hardware.RequestParameter(DeviceParameterType.SyringeSpeedSheath, SyringeSpeed.Pickup);
+            Device.Hardware.RequestParameter(DeviceParameterType.SyringeSpeedSheath, SyringeSpeed.MaxSpeed);
+            Device.Hardware.RequestParameter(DeviceParameterType.SyringeSpeedSample, SyringeSpeed.Normal);
+            Device.Hardware.RequestParameter(DeviceParameterType.SyringeSpeedSample, SyringeSpeed.HiSpeed);
+            Device.Hardware.RequestParameter(DeviceParameterType.SyringeSpeedSample, SyringeSpeed.HiSensitivity);
+            Device.Hardware.RequestParameter(DeviceParameterType.SyringeSpeedSample, SyringeSpeed.Flush);
+            Device.Hardware.RequestParameter(DeviceParameterType.SyringeSpeedSample, SyringeSpeed.Pickup);
+            Device.Hardware.RequestParameter(DeviceParameterType.SyringeSpeedSample, SyringeSpeed.MaxSpeed);
           };
           break;
         case "channeltab":
           actionList = () =>
           {
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.ChannelBias30C, Channel.GreenA);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.ChannelBias30C, Channel.GreenB);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.ChannelBias30C, Channel.GreenC);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.ChannelBias30C, Channel.RedA);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.ChannelBias30C, Channel.RedB);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.ChannelBias30C, Channel.RedC);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.ChannelBias30C, Channel.RedD);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.ChannelBias30C, Channel.VioletA);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.ChannelBias30C, Channel.VioletB);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.ChannelBias30C, Channel.ForwardScatter);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.ChannelCompensationBias, Channel.GreenA);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.ChannelCompensationBias, Channel.GreenB);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.ChannelCompensationBias, Channel.GreenC);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.ChannelCompensationBias, Channel.RedA);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.ChannelCompensationBias, Channel.RedB);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.ChannelCompensationBias, Channel.RedC);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.ChannelCompensationBias, Channel.RedD);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.ChannelCompensationBias, Channel.VioletA);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.ChannelCompensationBias, Channel.VioletB);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.ChannelCompensationBias, Channel.ForwardScatter);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.ChannelTemperature, Channel.GreenA);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.ChannelTemperature, Channel.GreenB);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.ChannelTemperature, Channel.GreenC);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.ChannelTemperature, Channel.RedA);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.ChannelTemperature, Channel.RedB);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.ChannelTemperature, Channel.RedC);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.ChannelTemperature, Channel.RedD);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.ChannelTemperature, Channel.VioletA);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.ChannelTemperature, Channel.VioletB);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.ChannelTemperature, Channel.ForwardScatter);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.ChannelOffset, Channel.GreenA);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.ChannelOffset, Channel.GreenB);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.ChannelOffset, Channel.GreenC);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.ChannelOffset, Channel.RedA);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.ChannelOffset, Channel.RedB);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.ChannelOffset, Channel.RedC);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.ChannelOffset, Channel.RedD);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.ChannelOffset, Channel.VioletA);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.ChannelOffset, Channel.VioletB);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.ChannelOffset, Channel.ForwardScatter);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.CalibrationMargin);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.SiPMTempCoeff);
+            Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.GreenA);
+            Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.GreenB);
+            Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.GreenC);
+            Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.RedA);
+            Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.RedB);
+            Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.RedC);
+            Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.RedD);
+            Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.VioletA);
+            Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.VioletB);
+            Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.ForwardScatter);
+            Device.Hardware.RequestParameter(DeviceParameterType.ChannelCompensationBias, Channel.GreenA);
+            Device.Hardware.RequestParameter(DeviceParameterType.ChannelCompensationBias, Channel.GreenB);
+            Device.Hardware.RequestParameter(DeviceParameterType.ChannelCompensationBias, Channel.GreenC);
+            Device.Hardware.RequestParameter(DeviceParameterType.ChannelCompensationBias, Channel.RedA);
+            Device.Hardware.RequestParameter(DeviceParameterType.ChannelCompensationBias, Channel.RedB);
+            Device.Hardware.RequestParameter(DeviceParameterType.ChannelCompensationBias, Channel.RedC);
+            Device.Hardware.RequestParameter(DeviceParameterType.ChannelCompensationBias, Channel.RedD);
+            Device.Hardware.RequestParameter(DeviceParameterType.ChannelCompensationBias, Channel.VioletA);
+            Device.Hardware.RequestParameter(DeviceParameterType.ChannelCompensationBias, Channel.VioletB);
+            Device.Hardware.RequestParameter(DeviceParameterType.ChannelCompensationBias, Channel.ForwardScatter);
+            Device.Hardware.RequestParameter(DeviceParameterType.ChannelTemperature, Channel.GreenA);
+            Device.Hardware.RequestParameter(DeviceParameterType.ChannelTemperature, Channel.GreenB);
+            Device.Hardware.RequestParameter(DeviceParameterType.ChannelTemperature, Channel.GreenC);
+            Device.Hardware.RequestParameter(DeviceParameterType.ChannelTemperature, Channel.RedA);
+            Device.Hardware.RequestParameter(DeviceParameterType.ChannelTemperature, Channel.RedB);
+            Device.Hardware.RequestParameter(DeviceParameterType.ChannelTemperature, Channel.RedC);
+            Device.Hardware.RequestParameter(DeviceParameterType.ChannelTemperature, Channel.RedD);
+            Device.Hardware.RequestParameter(DeviceParameterType.ChannelTemperature, Channel.VioletA);
+            Device.Hardware.RequestParameter(DeviceParameterType.ChannelTemperature, Channel.VioletB);
+            Device.Hardware.RequestParameter(DeviceParameterType.ChannelTemperature, Channel.ForwardScatter);
+            Device.Hardware.RequestParameter(DeviceParameterType.ChannelOffset, Channel.GreenA);
+            Device.Hardware.RequestParameter(DeviceParameterType.ChannelOffset, Channel.GreenB);
+            Device.Hardware.RequestParameter(DeviceParameterType.ChannelOffset, Channel.GreenC);
+            Device.Hardware.RequestParameter(DeviceParameterType.ChannelOffset, Channel.RedA);
+            Device.Hardware.RequestParameter(DeviceParameterType.ChannelOffset, Channel.RedB);
+            Device.Hardware.RequestParameter(DeviceParameterType.ChannelOffset, Channel.RedC);
+            Device.Hardware.RequestParameter(DeviceParameterType.ChannelOffset, Channel.RedD);
+            Device.Hardware.RequestParameter(DeviceParameterType.ChannelOffset, Channel.VioletA);
+            Device.Hardware.RequestParameter(DeviceParameterType.ChannelOffset, Channel.VioletB);
+            Device.Hardware.RequestParameter(DeviceParameterType.ChannelOffset, Channel.ForwardScatter);
+            Device.Hardware.RequestParameter(DeviceParameterType.CalibrationMargin);
+            Device.Hardware.RequestParameter(DeviceParameterType.SiPMTempCoeff);
           };
           break;
         case "motorstab":
           actionList = () =>
           {
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.MotorX, MotorParameterType.Slope);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.MotorX, MotorParameterType.StartSpeed);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.MotorX, MotorParameterType.RunSpeed);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.MotorX, MotorParameterType.CurrentStep);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.MotorX, MotorParameterType.CurrentLimit);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.MotorY, MotorParameterType.Slope);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.MotorY, MotorParameterType.StartSpeed);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.MotorY, MotorParameterType.RunSpeed);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.MotorY, MotorParameterType.CurrentStep);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.MotorY, MotorParameterType.CurrentLimit);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.MotorZ, MotorParameterType.Slope);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.MotorZ, MotorParameterType.StartSpeed);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.MotorZ, MotorParameterType.RunSpeed);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.MotorZ, MotorParameterType.CurrentStep);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.MotorZ, MotorParameterType.CurrentLimit);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.MotorStepsX, MotorStepsX.Tube);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.MotorStepsX, MotorStepsX.Plate96Column1);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.MotorStepsX, MotorStepsX.Plate96Column12);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.MotorStepsX, MotorStepsX.Plate384Column1);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.MotorStepsX, MotorStepsX.Plate384Column24);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.MotorStepsY, MotorStepsY.Tube);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.MotorStepsY, MotorStepsY.Plate96RowA);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.MotorStepsY, MotorStepsY.Plate96RowH);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.MotorStepsY, MotorStepsY.Plate384RowA);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.MotorStepsY, MotorStepsY.Plate384RowP);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.MotorStepsZ, MotorStepsZ.Tube);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.MotorStepsZ, MotorStepsZ.A1);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.MotorStepsZ, MotorStepsZ.A12);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.MotorStepsZ, MotorStepsZ.H1);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.MotorStepsZ, MotorStepsZ.H12);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.PollStepActivity);
+            Device.Hardware.RequestParameter(DeviceParameterType.MotorX, MotorParameterType.Slope);
+            Device.Hardware.RequestParameter(DeviceParameterType.MotorX, MotorParameterType.StartSpeed);
+            Device.Hardware.RequestParameter(DeviceParameterType.MotorX, MotorParameterType.RunSpeed);
+            Device.Hardware.RequestParameter(DeviceParameterType.MotorX, MotorParameterType.CurrentStep);
+            Device.Hardware.RequestParameter(DeviceParameterType.MotorX, MotorParameterType.CurrentLimit);
+            Device.Hardware.RequestParameter(DeviceParameterType.MotorY, MotorParameterType.Slope);
+            Device.Hardware.RequestParameter(DeviceParameterType.MotorY, MotorParameterType.StartSpeed);
+            Device.Hardware.RequestParameter(DeviceParameterType.MotorY, MotorParameterType.RunSpeed);
+            Device.Hardware.RequestParameter(DeviceParameterType.MotorY, MotorParameterType.CurrentStep);
+            Device.Hardware.RequestParameter(DeviceParameterType.MotorY, MotorParameterType.CurrentLimit);
+            Device.Hardware.RequestParameter(DeviceParameterType.MotorZ, MotorParameterType.Slope);
+            Device.Hardware.RequestParameter(DeviceParameterType.MotorZ, MotorParameterType.StartSpeed);
+            Device.Hardware.RequestParameter(DeviceParameterType.MotorZ, MotorParameterType.RunSpeed);
+            Device.Hardware.RequestParameter(DeviceParameterType.MotorZ, MotorParameterType.CurrentStep);
+            Device.Hardware.RequestParameter(DeviceParameterType.MotorZ, MotorParameterType.CurrentLimit);
+            Device.Hardware.RequestParameter(DeviceParameterType.MotorStepsX, MotorStepsX.Tube);
+            Device.Hardware.RequestParameter(DeviceParameterType.MotorStepsX, MotorStepsX.Plate96Column1);
+            Device.Hardware.RequestParameter(DeviceParameterType.MotorStepsX, MotorStepsX.Plate96Column12);
+            Device.Hardware.RequestParameter(DeviceParameterType.MotorStepsX, MotorStepsX.Plate384Column1);
+            Device.Hardware.RequestParameter(DeviceParameterType.MotorStepsX, MotorStepsX.Plate384Column24);
+            Device.Hardware.RequestParameter(DeviceParameterType.MotorStepsY, MotorStepsY.Tube);
+            Device.Hardware.RequestParameter(DeviceParameterType.MotorStepsY, MotorStepsY.Plate96RowA);
+            Device.Hardware.RequestParameter(DeviceParameterType.MotorStepsY, MotorStepsY.Plate96RowH);
+            Device.Hardware.RequestParameter(DeviceParameterType.MotorStepsY, MotorStepsY.Plate384RowA);
+            Device.Hardware.RequestParameter(DeviceParameterType.MotorStepsY, MotorStepsY.Plate384RowP);
+            Device.Hardware.RequestParameter(DeviceParameterType.MotorStepsZ, MotorStepsZ.Tube);
+            Device.Hardware.RequestParameter(DeviceParameterType.MotorStepsZ, MotorStepsZ.A1);
+            Device.Hardware.RequestParameter(DeviceParameterType.MotorStepsZ, MotorStepsZ.A12);
+            Device.Hardware.RequestParameter(DeviceParameterType.MotorStepsZ, MotorStepsZ.H1);
+            Device.Hardware.RequestParameter(DeviceParameterType.MotorStepsZ, MotorStepsZ.H12);
+            Device.Hardware.RequestParameter(DeviceParameterType.PollStepActivity);
           };
           break;
         case "componentstab":
           actionList = () =>
           {
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.ValveCuvetDrain);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.ValveFan2);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.ValveFan1);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.PollStepActivity);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.IsInputSelectorAtPickup);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.Pressure);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.IsLaserActive);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.LaserPower, LaserType.Violet);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.LaserPower, LaserType.Green);
-            Device.Hardware.RequestHardwareParameter(DeviceParameterType.LaserPower, LaserType.Red);
+            Device.Hardware.RequestParameter(DeviceParameterType.ValveCuvetDrain);
+            Device.Hardware.RequestParameter(DeviceParameterType.ValveFan2);
+            Device.Hardware.RequestParameter(DeviceParameterType.ValveFan1);
+            Device.Hardware.RequestParameter(DeviceParameterType.PollStepActivity);
+            Device.Hardware.RequestParameter(DeviceParameterType.IsInputSelectorAtPickup);
+            Device.Hardware.RequestParameter(DeviceParameterType.Pressure);
+            Device.Hardware.RequestParameter(DeviceParameterType.IsLaserActive);
+            Device.Hardware.RequestParameter(DeviceParameterType.LaserPower, LaserType.Violet);
+            Device.Hardware.RequestParameter(DeviceParameterType.LaserPower, LaserType.Green);
+            Device.Hardware.RequestParameter(DeviceParameterType.LaserPower, LaserType.Red);
           };
           break;
         default:
@@ -673,10 +673,10 @@ namespace Ei_Dimension
       Device.OnlyClassifiedInBeadEventFile = Settings.Default.OnlyClassifed;
       Device.SensitivityChannel = Settings.Default.SensitivityChannelB ? HiSensitivityChannel.GreenB : HiSensitivityChannel.GreenC;
       Device.ReporterScaling = Settings.Default.ReporterScaling;
-      Device.Hardware.SetHardwareParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.Attenuation, DiosApp.MapController.ActiveMap.calParams.att);
+      Device.Hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.Attenuation, DiosApp.MapController.ActiveMap.calParams.att);
       Device.HdnrTrans = DiosApp.MapController.ActiveMap.calParams.DNRTrans;
       Device.Compensation = DiosApp.MapController.ActiveMap.calParams.compensation;
-      Device.Hardware.RequestHardwareParameter(DeviceParameterType.SampleSyringeType);
+      Device.Hardware.RequestParameter(DeviceParameterType.SampleSyringeType);
       //Device.MainCommand("Set Property", code: 0x97, parameter: 1170);  //set current limit of aligner motors if leds are off //0x97 no longer used
       Device.MaxPressure = Settings.Default.MaxPressure;
     }

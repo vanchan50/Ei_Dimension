@@ -153,27 +153,27 @@ namespace Ei_Dimension.ViewModels
     public void SetFixedVolumeButtonClick(ushort num)
     {
       UserInputHandler.InputSanityCheck();
-      App.Device.Hardware.SetHardwareParameter(DeviceParameterType.Volume, VolumeType.Sample, num);
+      App.Device.Hardware.SetParameter(DeviceParameterType.Volume, VolumeType.Sample, num);
       Volumes[0] = num.ToString();
     }
 
     public void FluidicsButtonClick(int i)
     {
       UserInputHandler.InputSanityCheck();
-      App.Device.Hardware.SetHardwareParameter(DeviceParameterType.IsBubbleDetectionActive, 1);
+      App.Device.Hardware.SetParameter(DeviceParameterType.IsBubbleDetectionActive, 1);
       switch (i)
       {
         case 0:
-          App.Device.Hardware.SendHardwareCommand(DeviceCommandType.Prime);
+          App.Device.Hardware.SendCommand(DeviceCommandType.Prime);
           break;
         case 1:
-          App.Device.Hardware.SendHardwareCommand(DeviceCommandType.WashA);
+          App.Device.Hardware.SendCommand(DeviceCommandType.WashA);
           break;
         case 2:
-          App.Device.Hardware.SendHardwareCommand(DeviceCommandType.WashB);
+          App.Device.Hardware.SendCommand(DeviceCommandType.WashB);
           break;
       }
-      App.Device.Hardware.SetHardwareParameter(DeviceParameterType.IsBubbleDetectionActive, 0);
+      App.Device.Hardware.SetParameter(DeviceParameterType.IsBubbleDetectionActive, 0);
     }
 
     public void FocusedBox(int num)
@@ -251,12 +251,12 @@ namespace Ei_Dimension.ViewModels
         App.Device.Mode = OperationMode.Normal;
         EndReadItems[_dbEndReadIndexTempHolder].Click(6);
         Volumes[0] = _dbsampleVolumeTempHolder;
-        App.Device.Hardware.SetHardwareParameter(DeviceParameterType.Volume, VolumeType.Sample, ushort.Parse(_dbsampleVolumeTempHolder));
+        App.Device.Hardware.SetParameter(DeviceParameterType.Volume, VolumeType.Sample, ushort.Parse(_dbsampleVolumeTempHolder));
         MainButtonsViewModel.Instance.Flavor[0] = null;
         MainWindow.Instance.wndw.Background = (System.Windows.Media.SolidColorBrush)App.Current.Resources["AppBackground"];
         UnlockMapSelection();
         UnLockEndReadSelection();
-        App.Device.Hardware.SendHardwareCommand(DeviceCommandType.CalibrationModeDeactivate);
+        App.Device.Hardware.SendCommand(DeviceCommandType.CalibrationModeDeactivate);
       }
 
       UserInputHandler.InputSanityCheck();
@@ -276,7 +276,7 @@ namespace Ei_Dimension.ViewModels
           MainWindow.Instance.wndw.Background = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(255, 255, 191));
           LockMapSelection();
           LockEndReadSelection();
-          App.Device.Hardware.SendHardwareCommand(DeviceCommandType.CalibrationModeActivate);
+          App.Device.Hardware.SendCommand(DeviceCommandType.CalibrationModeActivate);
           return;
         }
         CalModeOn = false;
@@ -301,7 +301,7 @@ namespace Ei_Dimension.ViewModels
       {
         App.Device.Mode = OperationMode.Normal;
         Volumes[0] = _dbsampleVolumeTempHolder;
-        App.Device.Hardware.SetHardwareParameter(DeviceParameterType.Volume, VolumeType.Sample, ushort.Parse(_dbsampleVolumeTempHolder));
+        App.Device.Hardware.SetParameter(DeviceParameterType.Volume, VolumeType.Sample, ushort.Parse(_dbsampleVolumeTempHolder));
         MainButtonsViewModel.Instance.Flavor[0] = null;
         MainWindow.Instance.wndw.Background = (System.Windows.Media.SolidColorBrush)App.Current.Resources["AppBackground"];
         ResultsViewModel.Instance.ValidationCoverVisible = Visibility.Hidden;
@@ -446,7 +446,7 @@ namespace Ei_Dimension.ViewModels
           case 1:
             _vm.SelectedSpeedContent = Content;
             _vm.SelectedSpeedIndex = (WellReadingSpeed)Index;
-            App.Device.Hardware.SetHardwareParameter(DeviceParameterType.WellReadingSpeed, Index);
+            App.Device.Hardware.SetParameter(DeviceParameterType.WellReadingSpeed, Index);
             break;
           case 2:
             _vm.SelectedClassiMapContent = Content;
@@ -458,12 +458,12 @@ namespace Ei_Dimension.ViewModels
           case 3:
             _vm.SelectedChConfigContent = Content;
             _vm.SelectedChConfigIndex = (ChannelConfiguration)Index;
-            App.Device.Hardware.SetHardwareParameter(DeviceParameterType.ChannelConfiguration, Index);
+            App.Device.Hardware.SetParameter(DeviceParameterType.ChannelConfiguration, Index);
             break;
           case 4:
             _vm.SelectedOrderContent = Content;
             _vm.SelectedOrderIndex = (WellReadingOrder)Index;
-            App.Device.Hardware.SetHardwareParameter(DeviceParameterType.WellReadingOrder, Index);
+            App.Device.Hardware.SetParameter(DeviceParameterType.WellReadingOrder, Index);
             break;
           case 5:
             _vm.SelectedSysControlContent = Content;

@@ -59,7 +59,7 @@ namespace DIOS.Core
       set
       {
         _scatterGate = value;
-        Hardware.SetHardwareParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.ScatterGate, (ushort)_scatterGate);
+        Hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.ScatterGate, (ushort)_scatterGate);
       }
     }
 
@@ -84,7 +84,7 @@ namespace DIOS.Core
       set
       {
         _sensitivityChannel = value;
-        Hardware.SetHardwareParameter(DeviceParameterType.HiSensitivityChannel, (ushort)_sensitivityChannel);
+        Hardware.SetParameter(DeviceParameterType.HiSensitivityChannel, (ushort)_sensitivityChannel);
       }
     }
     public float HdnrTrans
@@ -96,7 +96,7 @@ namespace DIOS.Core
       set
       {
         _hdnrTrans = value;
-        Hardware.SetHardwareParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.DNRTransition, _hdnrTrans);
+        Hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.DNRTransition, _hdnrTrans);
       }
     }
     public float HDnrCoef
@@ -108,7 +108,7 @@ namespace DIOS.Core
       set
       {
         _hdnrCoef = value;
-        Hardware.SetHardwareParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.DNRCoefficient, _hdnrCoef);
+        Hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.DNRCoefficient, _hdnrCoef);
       }
     }
     public float Compensation { get; set; }
@@ -146,8 +146,8 @@ namespace DIOS.Core
     {
       if (_dataController.Run())
       {
-        Hardware.SendHardwareCommand(DeviceCommandType.Synchronize);
-        Hardware.RequestHardwareParameter(DeviceParameterType.BoardVersion);
+        Hardware.SendCommand(DeviceCommandType.Synchronize);
+        Hardware.RequestParameter(DeviceParameterType.BoardVersion);
       }
     }
 
@@ -215,11 +215,11 @@ namespace DIOS.Core
       {
         Normalization.SuspendForTheRun();
       }
-      Hardware.SetHardwareParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.MinSSC, _beadProcessor._map.calParams.minmapssc);
-      Hardware.SetHardwareParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.MaxSSC, _beadProcessor._map.calParams.maxmapssc);
+      Hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.MinSSC, _beadProcessor._map.calParams.minmapssc);
+      Hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.MaxSSC, _beadProcessor._map.calParams.maxmapssc);
       //read section of plate
-      Hardware.RequestHardwareParameter(DeviceParameterType.MotorStepsX, MotorStepsX.Plate96Column1);
-      Hardware.RequestHardwareParameter(DeviceParameterType.MotorStepsY, MotorStepsY.Plate96RowA);
+      Hardware.RequestParameter(DeviceParameterType.MotorStepsX, MotorStepsX.Plate96Column1);
+      Hardware.RequestParameter(DeviceParameterType.MotorStepsY, MotorStepsY.Plate96RowA);
       Results.StartNewPlateReport();
       Publisher.ResetResultData();
       SetAspirateParamsForWell();  //setup for first read
@@ -229,11 +229,11 @@ namespace DIOS.Core
       Publisher.StartNewBeadEventReport();
       BeadCount = 0;
       OnStartingToReadWell();
-      Hardware.SetHardwareParameter(DeviceParameterType.IsBubbleDetectionActive, 1);
-      Hardware.SendHardwareCommand(DeviceCommandType.PositionWellPlate);
+      Hardware.SetParameter(DeviceParameterType.IsBubbleDetectionActive, 1);
+      Hardware.SendCommand(DeviceCommandType.PositionWellPlate);
 
       if(!_singleSyringeMode)
-        Hardware.SendHardwareCommand(DeviceCommandType.AspirateA);
+        Hardware.SendCommand(DeviceCommandType.AspirateA);
 
       TotalBeads = 0;
 
@@ -247,20 +247,20 @@ namespace DIOS.Core
 
     public void EjectPlate()
     {
-      Hardware.SendHardwareCommand(DeviceCommandType.EjectPlate);
+      Hardware.SendCommand(DeviceCommandType.EjectPlate);
       IsPlateEjected = true;
     }
 
     public void LoadPlate()
     {
-      Hardware.SendHardwareCommand(DeviceCommandType.LoadPlate);
+      Hardware.SendCommand(DeviceCommandType.LoadPlate);
       IsPlateEjected = false;
     }
 
     private void SetReadingParamsForWell()
     {
-      Hardware.SetHardwareParameter(DeviceParameterType.WellReadingSpeed,     (ushort)WellController.NextWell.RunSpeed);
-      Hardware.SetHardwareParameter(DeviceParameterType.ChannelConfiguration, (ushort)WellController.NextWell.ChanConfig);
+      Hardware.SetParameter(DeviceParameterType.WellReadingSpeed,     (ushort)WellController.NextWell.RunSpeed);
+      Hardware.SetParameter(DeviceParameterType.ChannelConfiguration, (ushort)WellController.NextWell.ChanConfig);
       BeadsToCapture = WellController.NextWell.BeadsToCapture;
       MinPerRegion = WellController.NextWell.MinPerRegion;
       TerminationType = WellController.NextWell.TermType;
@@ -268,19 +268,19 @@ namespace DIOS.Core
 
     private void SetAspirateParamsForWell()
     {
-      Hardware.SetHardwareParameter(DeviceParameterType.WellRowIndex,    WellController.NextWell.RowIdx);
-      Hardware.SetHardwareParameter(DeviceParameterType.WellColumnIndex, WellController.NextWell.ColIdx);
-      Hardware.SetHardwareParameter(DeviceParameterType.Volume, VolumeType.Sample,  (ushort)WellController.NextWell.SampVol);
-      Hardware.SetHardwareParameter(DeviceParameterType.Volume, VolumeType.Wash,    (ushort)WellController.NextWell.WashVol);
-      Hardware.SetHardwareParameter(DeviceParameterType.Volume, VolumeType.Agitate, (ushort)WellController.NextWell.AgitateVol);
+      Hardware.SetParameter(DeviceParameterType.WellRowIndex,    WellController.NextWell.RowIdx);
+      Hardware.SetParameter(DeviceParameterType.WellColumnIndex, WellController.NextWell.ColIdx);
+      Hardware.SetParameter(DeviceParameterType.Volume, VolumeType.Sample,  (ushort)WellController.NextWell.SampVol);
+      Hardware.SetParameter(DeviceParameterType.Volume, VolumeType.Wash,    (ushort)WellController.NextWell.WashVol);
+      Hardware.SetParameter(DeviceParameterType.Volume, VolumeType.Agitate, (ushort)WellController.NextWell.AgitateVol);
     }
 
     internal bool EndBeadRead()
     {
       if (_isReadingA || _singleSyringeMode)
-        Hardware.SendHardwareCommand(DeviceCommandType.EndReadA);
+        Hardware.SendCommand(DeviceCommandType.EndReadA);
       else
-        Hardware.SendHardwareCommand(DeviceCommandType.EndReadB);
+        Hardware.SendCommand(DeviceCommandType.EndReadB);
       return WellController.IsLastWell;
     }
 
@@ -288,32 +288,32 @@ namespace DIOS.Core
     {
       if (_singleSyringeMode)
       {
-        Hardware.SendHardwareCommand(DeviceCommandType.AspirateA);
-        Hardware.SendHardwareCommand(DeviceCommandType.ReadA);
+        Hardware.SendCommand(DeviceCommandType.AspirateA);
+        Hardware.SendCommand(DeviceCommandType.ReadA);
         return;
       }
 
       if (WellController.IsLastWell)
       {
         if (_isReadingA)
-          Hardware.SendHardwareCommand(DeviceCommandType.ReadB);
+          Hardware.SendCommand(DeviceCommandType.ReadB);
         else
-          Hardware.SendHardwareCommand(DeviceCommandType.ReadA);
+          Hardware.SendCommand(DeviceCommandType.ReadA);
         return;
       }
 
       SetAspirateParamsForWell();
       if (_isReadingA)
-        Hardware.SendHardwareCommand(DeviceCommandType.ReadBAspirateA);
+        Hardware.SendCommand(DeviceCommandType.ReadBAspirateA);
       else
-        Hardware.SendHardwareCommand(DeviceCommandType.ReadAAspirateB);
+        Hardware.SendCommand(DeviceCommandType.ReadAAspirateB);
     }
     private void OnStartingToReadWell()
     {
       IsMeasurementGoing = true;
       StartingToReadWell?.Invoke(this, new ReadingWellEventArgs(WellController.CurrentWell.RowIdx, WellController.CurrentWell.ColIdx,
         Publisher.FullBeadEventFileName));
-      Hardware.SetHardwareParameter(DeviceParameterType.TotalBeadsInFirmware); //reset totalbeads in firmware
+      Hardware.SetParameter(DeviceParameterType.TotalBeadsInFirmware); //reset totalbeads in firmware
       Console.WriteLine("Starting to read well with Params:");
       Console.WriteLine($"Termination: {(int)TerminationType}");
       Console.WriteLine($"TotalBeads: {TotalBeads}");
@@ -323,10 +323,10 @@ namespace DIOS.Core
 
     internal void OnFinishedReadingWell()
     {
-      Hardware.SendHardwareCommand(DeviceCommandType.EndSampling);
+      Hardware.SendCommand(DeviceCommandType.EndSampling);
       FinishedReadingWell?.Invoke(this, new ReadingWellEventArgs(WellController.CurrentWell.RowIdx, WellController.CurrentWell.ColIdx,
         Publisher.FullBeadEventFileName));
-      Hardware.RequestHardwareParameter(DeviceParameterType.TotalBeadsInFirmware);
+      Hardware.RequestParameter(DeviceParameterType.TotalBeadsInFirmware);
     }
 
     internal void OnFinishedMeasurement()
@@ -336,7 +336,7 @@ namespace DIOS.Core
       Results.PlateReport.completedDateTime = DateTime.Now;
       _ = Task.Run(() => { Publisher.OutputPlateReport(); });
       Results.EndOfOperationReset();
-      Hardware.SetHardwareParameter(DeviceParameterType.IsBubbleDetectionActive, 0);
+      Hardware.SetParameter(DeviceParameterType.IsBubbleDetectionActive, 0);
       if (Mode ==  OperationMode.Verification)
         Verificator.CalculateResults(_beadProcessor._map);
 
@@ -366,8 +366,8 @@ namespace DIOS.Core
     public void ReconnectUSB()
     {
       _dataController.ReconnectUSB();
-      Hardware.SetHardwareParameter(DeviceParameterType.SystemActivityStatus);
-      Hardware.SetHardwareToken(HardwareToken.Synchronization);
+      Hardware.SetParameter(DeviceParameterType.SystemActivityStatus);
+      Hardware.SetToken(HardwareToken.Synchronization);
     }
 
     public void DisconnectedUSB()

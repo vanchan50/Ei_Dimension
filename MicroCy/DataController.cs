@@ -7,7 +7,7 @@ namespace DIOS.Core
 {
   internal class DataController
   {
-    private ConcurrentQueue<(string name, CommandStruct cs)> _outCommands = new ConcurrentQueue<(string name, CommandStruct cs)>();
+    private ConcurrentQueue<CommandStruct> _outCommands = new ConcurrentQueue<CommandStruct>();
 
     private readonly object _usbOutCV = new object();
     private readonly ISerial _serialConnection;
@@ -41,7 +41,33 @@ namespace DIOS.Core
       _prioUsbOutThread.Start();
       return _serialConnection.IsActive;
     }
+
+    public void AddCommand(CommandStruct cs)
+    {
+      _outCommands.Enqueue(cs);
+      #if DEBUG
+      Console.Error.WriteLine($"{DateTime.Now.ToString()} AddCommand Enqueued {cs.ToString()}");
+      #endif
+      NotifyCommandReceived();
+    }
+
+    public void ReconnectUSB()
+    {
+      _serialConnection.Reconnect();
+    }
+
+    public void DisconnectedUSB()
+    {
+      _serialConnection.Disconnect();
+    }
     
+    #if DEBUG
+    internal void DEBUGGetCommandFromBuffer(CommandStruct cs)
+    {
+      InnerCommandProcessing(in cs);
+    }
+    #endif
+
     private void ReplyFromMC()
     {
       while (true)
@@ -76,7 +102,7 @@ namespace DIOS.Core
       {
         while (_outCommands.TryDequeue(out var cmd))
         {
-          RunCmd(cmd.name, cmd.cs);
+          RunCmd(cmd);
         }
         lock (_usbOutCV)
         {
@@ -93,27 +119,16 @@ namespace DIOS.Core
       }
     }
 
-    public void AddCommand(string command, CommandStruct cs)
-    {
-      _outCommands.Enqueue((command, cs));
-      #if DEBUG
-      Console.Error.WriteLine($"{DateTime.Now.ToString()} Enqueued [{command}]: {cs.ToString()}");
-      #endif
-      NotifyCommandReceived();
-    }
-
     /// <summary>
     /// Sends a command OUT to the USB device, then checks the IN pipe for a return value.
     /// </summary>
     /// <param name="sCmdName">A friendly name for the command.</param>
     /// <param name="cs">The CommandStruct object containing the command parameters.  This will get converted to an 8-byte array.</param>
-    private void RunCmd(string sCmdName, CommandStruct cs)
+    private void RunCmd(CommandStruct cs)
     {
-      if (sCmdName == null)
-        return;
       if (_serialConnection.IsActive)
         _serialConnection.Write(StructToByteArray(in cs));
-      Console.WriteLine($"{DateTime.Now.TimeOfDay.ToString()} Sending [{sCmdName}]: {cs.ToString()}"); //  MARK1 END
+      Console.WriteLine($"{DateTime.Now.TimeOfDay.ToString()} Sending {cs.ToString()}"); //  MARK1 END
     }
 
     private static byte[] StructToByteArray(in CommandStruct cs)
@@ -182,28 +197,11 @@ namespace DIOS.Core
       var newcmd = ByteArrayToStruct(_serialConnection.InputBuffer);
       InnerCommandProcessing(in newcmd);
     }
-    
-    #if DEBUG
-    internal void DEBUGGetCommandFromBuffer(CommandStruct cs)
-    {
-      InnerCommandProcessing(in cs);
-    }
-    #endif
 
     private bool GetBeadFromBuffer(byte shift, out RawBead outbead)
     {
       outbead = BeadArrayToStruct(_serialConnection.InputBuffer, shift);
       return outbead.Header == 0xadbeadbe;
-    }
-
-    public void ReconnectUSB()
-    {
-      _serialConnection.Reconnect();
-    }
-
-    public void DisconnectedUSB()
-    {
-      _serialConnection.Disconnect();
     }
 
     private void InnerCommandProcessing(in CommandStruct cs)
@@ -232,7 +230,7 @@ namespace DIOS.Core
           break;
         case 0x0C:  //pressure at startup
           _device.SelfTester.Data.SetPressure(cs.FParameter);
-          _device.Hardware.SetHardwareParameter(DeviceParameterType.PressureAtStartup);  //Reset Pressure, since firmware forgets to do that
+          _device.Hardware.SetParameter(DeviceParameterType.PressureAtStartup);  //Reset Pressure, since firmware forgets to do that
           outParameters = new ParameterUpdateEventArgs(DeviceParameterType.PressureAtStartup, floatParameter: cs.FParameter);
           break;
         case 0x10:
@@ -657,9 +655,9 @@ namespace DIOS.Core
           if (cs.Command == 1)
           {
             errorType = SheathFlowError.SheathEmpty;
-            _device.Hardware.SetHardwareToken(HardwareToken.Synchronization, 0x1000);
-            _device.Hardware.SetHardwareParameter(DeviceParameterType.PumpSheath, SyringeControlState.Halt, 0);
-            _device.Hardware.SetHardwareToken(HardwareToken.ActiveCommandQueueIndex, 1);
+            _device.Hardware.SetToken(HardwareToken.Synchronization, 0x1000);
+            _device.Hardware.SetParameter(DeviceParameterType.PumpSheath, SyringeControlState.Halt, 0);
+            _device.Hardware.SetToken(HardwareToken.ActiveCommandQueueIndex, 1);
           }
           else if (cs.Command == 2)
             errorType = SheathFlowError.PressureOverload;

@@ -12,18 +12,23 @@ namespace DIOS.Core.HardwareIntercom
       _dataController = dataController;
     }
 
-    private void MainCommand(string command, byte? cmd = null, byte? code = null, ushort? parameter = null, float? fparameter = null)
+    private void MainCommand(byte cmd = 0, byte code = 0, ushort parameter = 0, float fparameter = 0)
     {
-      CommandStruct cs = CommandLists.MainCmdTemplatesDict[command];
-      cs.Command = cmd ?? cs.Command;
-      cs.Code = code ?? cs.Code;
-      cs.Parameter = parameter ?? cs.Parameter;
-      cs.FParameter = fparameter ?? cs.FParameter;
-      _dataController.AddCommand(command, cs);
+      CommandStruct cs = new CommandStruct
+      {
+        Code = code,
+        Command = cmd,
+        Parameter = parameter,
+        FParameter = fparameter
+      };
+      _dataController.AddCommand(cs);
     }
 
-    public void SendHardwareCommand(DeviceCommandType command)
+    public void SendCommand(DeviceCommandType command)
     {
+      #if DEBUG
+      Console.WriteLine($"Command {command.ToString()}");
+      #endif
       ushort param = 0;
       byte commandCode = 0;
       byte extraAction = 0;
@@ -125,31 +130,31 @@ namespace DIOS.Core.HardwareIntercom
         default:
           throw new NotImplementedException();
       }
-      MainCommand("Set Property", code: commandCode, parameter: param, cmd: extraAction);
+      MainCommand(code: commandCode, parameter: param, cmd: extraAction);
     }
 
     public void MoveIdex(bool isClockwise, byte position, ushort steps)
     {
-      MainCommand("Set Property", code: 0xD7, cmd: position, parameter: steps, fparameter: Convert.ToByte(isClockwise));
+      MainCommand(code: 0xD7, cmd: position, parameter: steps, fparameter: Convert.ToByte(isClockwise));
     }
 
     public void RenewSheath()
     {
-      SendHardwareCommand(DeviceCommandType.RenewSheath);
-      SetHardwareToken(HardwareToken.Synchronization); //clear sync token to allow recovery to run
+      SendCommand(DeviceCommandType.RenewSheath);
+      SetToken(HardwareToken.Synchronization); //clear sync token to allow recovery to run
     }
 
-    public void SetHardwareParameter(DeviceParameterType primaryParameter, float value = 0f)
+    public void SetParameter(DeviceParameterType primaryParameter, float value = 0f)
     {
-      SetHardwareParameter(primaryParameter, null, value);
+      SetParameter(primaryParameter, null, value);
     }
 
-    public void SetHardwareParameter(DeviceParameterType primaryParameter, Enum subParameter, float value = 0f)
+    public void SetParameter(DeviceParameterType primaryParameter, Enum subParameter, float value = 0f)
     {
-#if DEBUG
+      #if DEBUG
       var subparReport = subParameter == null ? "-" : subParameter.ToString();
       Console.WriteLine($"SET {primaryParameter.ToString()} {subparReport} {value.ToString()}");
-#endif
+      #endif
       ushort param = 0;
       float fparam = 0;
       byte commandCode = 0x00;
@@ -989,16 +994,20 @@ namespace DIOS.Core.HardwareIntercom
           throw new NotImplementedException();
       }
 
-      MainCommand("Set Property", code: commandCode, parameter: param, fparameter: fparam, cmd: extraAction);
+      MainCommand(code: commandCode, parameter: param, fparameter: fparam, cmd: extraAction);
     }
 
-    public void RequestHardwareParameter(DeviceParameterType primaryParameter)
+    public void RequestParameter(DeviceParameterType primaryParameter)
     {
-      RequestHardwareParameter(primaryParameter, null);
+      RequestParameter(primaryParameter, null);
     }
 
-    public void RequestHardwareParameter(DeviceParameterType primaryParameter, Enum subParameter)
+    public void RequestParameter(DeviceParameterType primaryParameter, Enum subParameter)
     {
+      #if DEBUG
+      var subparReport = subParameter == null ? "-" : subParameter.ToString();
+      Console.WriteLine($"GET {primaryParameter.ToString()} {subparReport}");
+      #endif
       ushort selector = 0;
       byte commandCode = 0;
       switch (primaryParameter)
@@ -1513,11 +1522,14 @@ namespace DIOS.Core.HardwareIntercom
         default:
           throw new NotImplementedException();
       }
-      MainCommand("Get Property", code: commandCode, parameter: selector, cmd: 0x01);
+      MainCommand(code: commandCode, parameter: selector, cmd: 0x01);
     }
 
-    internal void SetHardwareToken(HardwareToken token, ushort value = 0)
+    internal void SetToken(HardwareToken token, ushort value = 0)
     {
+      #if DEBUG
+      Console.WriteLine($"TOKEN {token.ToString()} {value.ToString()}");
+      #endif
       byte commandCode = 0x00;
       switch (token)
       {
@@ -1531,7 +1543,7 @@ namespace DIOS.Core.HardwareIntercom
           commandCode = 0xC3;
           break;
       }
-      MainCommand("Set Property", code: commandCode, parameter: value, cmd: 0x02);
+      MainCommand(code: commandCode, parameter: value, cmd: 0x02);
     }
 
   }

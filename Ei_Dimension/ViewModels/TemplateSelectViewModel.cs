@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using Ei_Dimension.Controllers;
-using DIOS.Core;
 using DIOS.Core.HardwareIntercom;
 
 namespace Ei_Dimension.ViewModels
@@ -105,7 +104,7 @@ namespace Ei_Dimension.ViewModels
               temp = newTemplate.SampleVolume.ToString();
               if (int.TryParse(temp, out iRes))
               {
-                App.Device.Hardware.SetHardwareParameter(DeviceParameterType.Volume, VolumeType.Sample, (ushort)iRes);
+                App.Device.Hardware.SetParameter(DeviceParameterType.Volume, VolumeType.Sample, (ushort)iRes);
                 DashVM.Volumes[0] = temp;
               }
               else
@@ -114,7 +113,7 @@ namespace Ei_Dimension.ViewModels
               temp = newTemplate.WashVolume.ToString();
               if (int.TryParse(temp, out iRes))
               {
-                App.Device.Hardware.SetHardwareParameter(DeviceParameterType.Volume, VolumeType.Wash, (ushort)iRes);
+                App.Device.Hardware.SetParameter(DeviceParameterType.Volume, VolumeType.Wash, (ushort)iRes);
                 DashVM.Volumes[1] = temp;
               }
               else
@@ -124,7 +123,7 @@ namespace Ei_Dimension.ViewModels
               temp = newTemplate.AgitateVolume.ToString();
               if (int.TryParse(temp, out iRes))
               {
-                App.Device.Hardware.SetHardwareParameter(DeviceParameterType.Volume, VolumeType.Agitate, (ushort)iRes);
+                App.Device.Hardware.SetParameter(DeviceParameterType.Volume, VolumeType.Agitate, (ushort)iRes);
                 DashVM.Volumes[2] = temp;
               }
               else
@@ -133,7 +132,7 @@ namespace Ei_Dimension.ViewModels
               temp = newTemplate.WashRepeats.ToString();
               if (int.TryParse(temp, out iRes))
               {
-                App.Device.Hardware.SetHardwareParameter(DeviceParameterType.WashRepeatsAmount, (ushort)iRes);
+                App.Device.Hardware.SetParameter(DeviceParameterType.WashRepeatsAmount, (ushort)iRes);
                 DashVM.Repeats[0] = temp;
               }
               else
@@ -142,7 +141,7 @@ namespace Ei_Dimension.ViewModels
               temp = newTemplate.AgitateRepeats.ToString();
               if (int.TryParse(temp, out iRes))
               {
-                App.Device.Hardware.SetHardwareParameter(DeviceParameterType.AgitateRepeatsAmount, (ushort)iRes);
+                App.Device.Hardware.SetParameter(DeviceParameterType.AgitateRepeatsAmount, (ushort)iRes);
                 DashVM.Repeats[1] = temp;
               }
               else

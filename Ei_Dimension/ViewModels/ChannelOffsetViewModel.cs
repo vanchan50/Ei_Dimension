@@ -66,14 +66,14 @@ namespace Ei_Dimension.ViewModels
     public void UpdateBiasButtonClick()
     {
       UserInputHandler.InputSanityCheck();
-      App.Device.Hardware.SendHardwareCommand(DeviceCommandType.RefreshDAC);
+      App.Device.Hardware.SendCommand(DeviceCommandType.RefreshDAC);
       App.InitSTab("channeltab");
     }
 
     public void SetOffsetClick()
     {
       UserInputHandler.InputSanityCheck();
-      App.Device.Hardware.SendHardwareCommand(DeviceCommandType.SetBaseLine);
+      App.Device.Hardware.SendCommand(DeviceCommandType.SetBaseLine);
     }
 
     public void SliderValueChanged(int param)
@@ -90,19 +90,19 @@ namespace Ei_Dimension.ViewModels
       switch (param)
       {
         case 0:
-          App.Device.Hardware.SetHardwareParameter(DeviceParameterType.ChannelOffset, Channel.GreenA, (ushort)(double)SliderValue1);
+          App.Device.Hardware.SetParameter(DeviceParameterType.ChannelOffset, Channel.GreenA, (ushort)(double)SliderValue1);
           ChannelsOffsetParameters[0] = ((double)SliderValue1).ToString();
           break;
         case 1:
-          App.Device.Hardware.SetHardwareParameter(DeviceParameterType.ChannelOffset, Channel.GreenB, (ushort)(double)SliderValue2);
+          App.Device.Hardware.SetParameter(DeviceParameterType.ChannelOffset, Channel.GreenB, (ushort)(double)SliderValue2);
           ChannelsOffsetParameters[1] = ((double)SliderValue2).ToString();
           break;
         case 2:
-          App.Device.Hardware.SetHardwareParameter(DeviceParameterType.ChannelOffset, Channel.GreenC, (ushort)(double)SliderValue3);
+          App.Device.Hardware.SetParameter(DeviceParameterType.ChannelOffset, Channel.GreenC, (ushort)(double)SliderValue3);
           ChannelsOffsetParameters[2] = ((double)SliderValue3).ToString();
           break;
       }
-      App.Device.Hardware.SendHardwareCommand(DeviceCommandType.RefreshDAC);
+      App.Device.Hardware.SendCommand(DeviceCommandType.RefreshDAC);
     }
 
     public void DecodeBackgroundStats(ChannelsAveragesStats Stats)
