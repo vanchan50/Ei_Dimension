@@ -145,7 +145,7 @@ namespace Ei_Dimension.ViewModels
       InputSelectorState[0] = InputSelectorState[1];
       InputSelectorState[1] = temp;
       IInputSelectorState = IInputSelectorState == 0 ? 1 : 0;
-      App.Device.SetHardwareParameter(DeviceParameterType.IsInputSelectorAtPickup, IInputSelectorState);
+      App.Device.Hardware.SetHardwareParameter(DeviceParameterType.IsInputSelectorAtPickup, IInputSelectorState);
     }
 
     public void ValvesButtonClick(int num)
@@ -178,7 +178,7 @@ namespace Ei_Dimension.ViewModels
           parameter = DeviceParameterType.ValveFan1;
           break;
       }
-      App.Device.SetHardwareParameter(parameter, param);
+      App.Device.Hardware.SetHardwareParameter(parameter, param);
     }
 
     public void PressureMonToggleButtonClick()
@@ -245,34 +245,34 @@ namespace Ei_Dimension.ViewModels
             _activeLasers -= 4;
           break;
       }
-      App.Device.SetHardwareParameter(DeviceParameterType.IsLaserActive, _activeLasers);
+      App.Device.Hardware.SetHardwareParameter(DeviceParameterType.IsLaserActive, _activeLasers);
     }
 
     public void SheathRunButtonClick()
     {
       UserInputHandler.InputSanityCheck();
       if (SyringeControlSheathValue[0] == "")
-        App.Device.SetHardwareParameter(DeviceParameterType.PumpSheath, (SyringeControlState)SyringeControlStates[0], 0);
+        App.Device.Hardware.SetHardwareParameter(DeviceParameterType.PumpSheath, (SyringeControlState)SyringeControlStates[0], 0);
       else if (ushort.TryParse(SyringeControlSheathValue[0], out ushort usRes))
-        App.Device.SetHardwareParameter(DeviceParameterType.PumpSheath, (SyringeControlState)SyringeControlStates[0], usRes);
+        App.Device.Hardware.SetHardwareParameter(DeviceParameterType.PumpSheath, (SyringeControlState)SyringeControlStates[0], usRes);
     }
 
     public void SampleARunButtonClick()
     {
       UserInputHandler.InputSanityCheck();
       if (SyringeControlSampleAValue[0] == "")
-        App.Device.SetHardwareParameter(DeviceParameterType.PumpSampleA, (SyringeControlState)SyringeControlStates[1], 0);
+        App.Device.Hardware.SetHardwareParameter(DeviceParameterType.PumpSampleA, (SyringeControlState)SyringeControlStates[1], 0);
       else if (ushort.TryParse(SyringeControlSampleAValue[0], out ushort usRes))
-        App.Device.SetHardwareParameter(DeviceParameterType.PumpSampleA, (SyringeControlState)SyringeControlStates[1], usRes);
+        App.Device.Hardware.SetHardwareParameter(DeviceParameterType.PumpSampleA, (SyringeControlState)SyringeControlStates[1], usRes);
     }
 
     public void SampleBRunButtonClick()
     {
       UserInputHandler.InputSanityCheck();
       if (SyringeControlSampleBValue[0] == "")
-        App.Device.SetHardwareParameter(DeviceParameterType.PumpSampleB, (SyringeControlState)SyringeControlStates[2], 0);
+        App.Device.Hardware.SetHardwareParameter(DeviceParameterType.PumpSampleB, (SyringeControlState)SyringeControlStates[2], 0);
       else if (ushort.TryParse(SyringeControlSampleBValue[0], out ushort usRes))
-        App.Device.SetHardwareParameter(DeviceParameterType.PumpSampleB, (SyringeControlState)SyringeControlStates[2], usRes);
+        App.Device.Hardware.SetHardwareParameter(DeviceParameterType.PumpSampleB, (SyringeControlState)SyringeControlStates[2], usRes);
     }
 
     public void GetPositionToggleButtonClick()
@@ -293,7 +293,7 @@ namespace Ei_Dimension.ViewModels
         GetPositionToggleButtonStateBool[0] = false;
         state = 0;
       }
-      App.Device.SetHardwareParameter(DeviceParameterType.IsSyringePositionActive, state);
+      App.Device.Hardware.SetHardwareParameter(DeviceParameterType.IsSyringePositionActive, state);
     }
 
     public void GetPositionButtonsClick(int num)
@@ -313,7 +313,7 @@ namespace Ei_Dimension.ViewModels
           pos = SyringePosition.SampleB;
           break;
       }
-      App.Device.RequestHardwareParameter(DeviceParameterType.SyringePosition, pos);
+      App.Device.Hardware.RequestHardwareParameter(DeviceParameterType.SyringePosition, pos);
     }
 
     public void SamplingToggleButtonClick()
@@ -321,9 +321,9 @@ namespace Ei_Dimension.ViewModels
       UserInputHandler.InputSanityCheck();
       SamplingActive = !SamplingActive;
       if(SamplingActive)
-        App.Device.SendHardwareCommand(DeviceCommandType.StartSampling);
+        App.Device.Hardware.SendHardwareCommand(DeviceCommandType.StartSampling);
       else
-        App.Device.SendHardwareCommand(DeviceCommandType.EndSampling);
+        App.Device.Hardware.SendHardwareCommand(DeviceCommandType.EndSampling);
     }
 
     public void SingleStepDebugToggleButtonClick()
@@ -331,26 +331,26 @@ namespace Ei_Dimension.ViewModels
       UserInputHandler.InputSanityCheck();
       SingleStepDebugActive = !SingleStepDebugActive;
       var param = SingleStepDebugActive ? 1 : 0;
-      App.Device.SetHardwareParameter(DeviceParameterType.IsSingleStepDebugActive, param);
+      App.Device.Hardware.SetHardwareParameter(DeviceParameterType.IsSingleStepDebugActive, param);
     }
 
     public void FlushButtonClick()
     {
       UserInputHandler.InputSanityCheck();
-      App.Device.SendHardwareCommand(DeviceCommandType.FlushCommandQueue);
+      App.Device.Hardware.SendHardwareCommand(DeviceCommandType.FlushCommandQueue);
     }
 
     public void ClearButtonClick()
     {
       UserInputHandler.InputSanityCheck();
-      App.Device.SetHardwareParameter(DeviceParameterType.SystemActivityStatus);
+      App.Device.Hardware.SetHardwareParameter(DeviceParameterType.SystemActivityStatus);
     }
 
     public void UpdateFirmwareButtonClick()
     {
       Action Save = () =>
       {
-        App.Device.SendHardwareCommand(DeviceCommandType.UpdateFirmware);
+        App.Device.Hardware.SendHardwareCommand(DeviceCommandType.UpdateFirmware);
         System.Threading.Thread.Sleep(1500);
         App.Current.Shutdown();
 
@@ -370,13 +370,13 @@ namespace Ei_Dimension.ViewModels
     public void StartupButtonClick()
     {
       UserInputHandler.InputSanityCheck();
-      App.Device.SendHardwareCommand(DeviceCommandType.Startup);
+      App.Device.Hardware.SendHardwareCommand(DeviceCommandType.Startup);
     }
 
     public void MoveIdexButtonClick()
     {
       UserInputHandler.InputSanityCheck();
-      App.Device.MoveIdex(CWDirectionActive, byte.Parse(IdexTextBoxInputs[0]), ushort.Parse(IdexTextBoxInputs[1]));
+      App.Device.Hardware.MoveIdex(CWDirectionActive, byte.Parse(IdexTextBoxInputs[0]), ushort.Parse(IdexTextBoxInputs[1]));
     }
 
     public void CWDirectionToggleButtonClick()
@@ -388,7 +388,7 @@ namespace Ei_Dimension.ViewModels
     public void IdexPositionButtonClick()
     {
       UserInputHandler.InputSanityCheck();
-      App.Device.RequestHardwareParameter(DeviceParameterType.IdexPosition);
+      App.Device.Hardware.RequestHardwareParameter(DeviceParameterType.IdexPosition);
     }
 
     public void SuppressWarningsClick()

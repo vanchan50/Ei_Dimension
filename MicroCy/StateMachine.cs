@@ -29,7 +29,7 @@ namespace DIOS.Core
       switch (_state)
       {
         case State.Reset:
-          _device.RequestHardwareParameter(DeviceParameterType.BeadConcentration);
+          _device.Hardware.RequestHardwareParameter(DeviceParameterType.BeadConcentration);
           //Skip the tick
           return;
         case State.Start:
@@ -68,15 +68,15 @@ namespace DIOS.Core
       {
         return true;
       }
-      _device.RequestHardwareParameter(DeviceParameterType.SystemActivityStatus);
+      _device.Hardware.RequestHardwareParameter(DeviceParameterType.SystemActivityStatus);
       return false;
     }
     
     private void Action4()
     {
-      _device.SendHardwareCommand(DeviceCommandType.FlushCommandQueue);
-      _device.SetHardwareToken(HardwareToken.EmptySyringeTrigger); //clear empty syringe token
-      _device.SetHardwareToken(HardwareToken.Synchronization); //clear sync token to allow next sequence to execute
+      _device.Hardware.SendHardwareCommand(DeviceCommandType.FlushCommandQueue);
+      _device.Hardware.SetHardwareToken(HardwareToken.EmptySyringeTrigger); //clear empty syringe token
+      _device.Hardware.SetHardwareToken(HardwareToken.Synchronization); //clear sync token to allow next sequence to execute
       if(_device.EndBeadRead())
         _device.OnFinishedMeasurement();
       else

@@ -100,7 +100,7 @@ namespace Ei_Dimension.ViewModels
     {
       if(IsSystemBusy() || IsMeasurementGoing())
         return;
-      App.Device.SendHardwareCommand(DeviceCommandType.FlashSave);
+      App.Device.Hardware.SendHardwareCommand(DeviceCommandType.FlashSave);
       Notification.ShowLocalizedError(nameof(Language.Resources.Notification_FlashSaved));
     }
 
@@ -108,7 +108,7 @@ namespace Ei_Dimension.ViewModels
     {
       if (IsSystemBusy() || IsMeasurementGoing())
         return;
-      App.Device.SendHardwareCommand(DeviceCommandType.FlashRestore);
+      App.Device.Hardware.SendHardwareCommand(DeviceCommandType.FlashRestore);
       Notification.ShowLocalizedError(nameof(Language.Resources.Notification_FlashRestored));
     }
 
@@ -116,7 +116,7 @@ namespace Ei_Dimension.ViewModels
     {
       if (IsSystemBusy() || IsMeasurementGoing())
         return;
-      App.Device.SendHardwareCommand(DeviceCommandType.FlashFactoryReset);
+      App.Device.Hardware.SendHardwareCommand(DeviceCommandType.FlashFactoryReset);
       Notification.Show("Flash Restored to Factory Defaults");
       Notification.ShowLocalizedError(nameof(Language.Resources.Notification_FlashRestoredToDefaults));
     }

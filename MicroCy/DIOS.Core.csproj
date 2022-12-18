@@ -60,6 +60,7 @@
     <Compile Include="ClassificationMap.cs" />
     <Compile Include="DataController.cs" />
     <Compile Include="DeviceCommandType.cs" />
+    <Compile Include="HardwareIntercom\HardwareInterface.cs" />
     <Compile Include="HardwareToken.cs" />
     <Compile Include="LaserType.cs" />
     <Compile Include="MotorDirection.cs" />
@@ -134,5 +135,6 @@
       <Name>WinUSBNet</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

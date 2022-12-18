@@ -231,7 +231,7 @@ namespace DIOS.Core
           break;
         case 0x0C:  //pressure at startup
           _device.SelfTester.Data.SetPressure(cs.FParameter);
-          _device.SetHardwareParameter(DeviceParameterType.PressureAtStartup);  //Reset Pressure, since firmware forgets to do that
+          _device.Hardware.SetHardwareParameter(DeviceParameterType.PressureAtStartup);  //Reset Pressure, since firmware forgets to do that
           outParameters = new ParameterUpdateEventArgs(DeviceParameterType.PressureAtStartup, floatParameter: cs.FParameter);
           break;
         case 0x10:
@@ -656,9 +656,9 @@ namespace DIOS.Core
           if (cs.Command == 1)
           {
             errorType = SheathFlowError.SheathEmpty;
-            _device.SetHardwareToken(HardwareToken.Synchronization, 0x1000);
-            _device.SetHardwareParameter(DeviceParameterType.PumpSheath, SyringeControlState.Halt, 0);
-            _device.SetHardwareToken(HardwareToken.ActiveCommandQueueIndex, 1);
+            _device.Hardware.SetHardwareToken(HardwareToken.Synchronization, 0x1000);
+            _device.Hardware.SetHardwareParameter(DeviceParameterType.PumpSheath, SyringeControlState.Halt, 0);
+            _device.Hardware.SetHardwareToken(HardwareToken.ActiveCommandQueueIndex, 1);
           }
           else if (cs.Command == 2)
             errorType = SheathFlowError.PressureOverload;

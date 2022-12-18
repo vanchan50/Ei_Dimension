@@ -51,7 +51,7 @@ namespace Ei_Dimension.ViewModels
     {
       UserInputHandler.InputSanityCheck();
       if (int.TryParse(SanitizeSecondsContent[0], out int res))
-        App.Device.SetHardwareParameter(DeviceParameterType.UVCSanitize, res);
+        App.Device.Hardware.SetHardwareParameter(DeviceParameterType.UVCSanitize, res);
     }
 
     public void NavigateTab()

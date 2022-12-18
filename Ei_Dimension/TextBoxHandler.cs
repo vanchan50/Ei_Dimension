@@ -609,7 +609,7 @@ namespace Ei_Dimension
           {
             void Act()
             {
-              App.Device.RenewSheath();
+              App.Device.Hardware.RenewSheath();
               lock (_uiThreadLock)
               {
                 Monitor.Pulse(_uiThreadLock);
@@ -729,7 +729,7 @@ namespace Ei_Dimension
     public static void UpdatePressureMonitor()
     {
       if (ComponentsViewModel.Instance.PressureMonToggleButtonState)
-        App.Device.RequestHardwareParameter(DeviceParameterType.Pressure);
+        App.Device.Hardware.RequestHardwareParameter(DeviceParameterType.Pressure);
     }
   }
 }

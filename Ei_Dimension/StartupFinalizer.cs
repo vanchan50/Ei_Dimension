@@ -68,7 +68,7 @@ namespace Ei_Dimension
 
       LanguageSwap.SetLanguage(MaintenanceViewModel.Instance.LanguageItems[Settings.Default.Language].Locale);
       Views.ExperimentView.Instance.DbButton.IsChecked = true;
-      App.Device.RequestHardwareParameter(DeviceParameterType.CalibrationMargin);
+      App.Device.Hardware.RequestHardwareParameter(DeviceParameterType.CalibrationMargin);
       //3D plot TRS transforms
       var matrix = Views.ResultsView.Instance.AnalysisPlot.ContentTransform.Value;
       matrix.Rotate(new System.Windows.Media.Media3D.Quaternion(new System.Windows.Media.Media3D.Vector3D(0, 1, 0), 90));

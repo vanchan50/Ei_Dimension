@@ -176,10 +176,10 @@ namespace Ei_Dimension.ViewModels
       if (newPD != null)
       {
         //apply
-        App.Device.SetHardwareParameter(DeviceParameterType.MotorStepsZTemporary, MotorStepsZ.A1,  newPD.A1);
-        App.Device.SetHardwareParameter(DeviceParameterType.MotorStepsZTemporary, MotorStepsZ.A12, newPD.A12);
-        App.Device.SetHardwareParameter(DeviceParameterType.MotorStepsZTemporary, MotorStepsZ.H1,  newPD.H1);
-        App.Device.SetHardwareParameter(DeviceParameterType.MotorStepsZTemporary, MotorStepsZ.H12, newPD.H12);
+        App.Device.Hardware.SetHardwareParameter(DeviceParameterType.MotorStepsZTemporary, MotorStepsZ.A1,  newPD.A1);
+        App.Device.Hardware.SetHardwareParameter(DeviceParameterType.MotorStepsZTemporary, MotorStepsZ.A12, newPD.A12);
+        App.Device.Hardware.SetHardwareParameter(DeviceParameterType.MotorStepsZTemporary, MotorStepsZ.H1,  newPD.H1);
+        App.Device.Hardware.SetHardwareParameter(DeviceParameterType.MotorStepsZTemporary, MotorStepsZ.H12, newPD.H12);
         UpdateCurrent(newPD);
         CurrentPlateName = Path.GetFileNameWithoutExtension(SelectedItem);
         UnselectAll();
@@ -307,15 +307,15 @@ namespace Ei_Dimension.ViewModels
     /// <param name="value">0 means "max current"</param>
     private void ChangeDACCurrent(ushort value)
     {
-      App.Device.SetHardwareParameter(DeviceParameterType.MotorZ, MotorParameterType.CurrentLimit, value);
-      App.Device.SendHardwareCommand(DeviceCommandType.RefreshDAC);
+      App.Device.Hardware.SetHardwareParameter(DeviceParameterType.MotorZ, MotorParameterType.CurrentLimit, value);
+      App.Device.Hardware.SendHardwareCommand(DeviceCommandType.RefreshDAC);
     }
 
     private void MovePlateToWell(Well well)
     {
-      App.Device.SetHardwareParameter(DeviceParameterType.WellRowIndex,    well.RowIdx);
-      App.Device.SetHardwareParameter(DeviceParameterType.WellColumnIndex, well.ColIdx);
-      App.Device.SendHardwareCommand(DeviceCommandType.PositionWellPlate);
+      App.Device.Hardware.SetHardwareParameter(DeviceParameterType.WellRowIndex,    well.RowIdx);
+      App.Device.Hardware.SetHardwareParameter(DeviceParameterType.WellColumnIndex, well.ColIdx);
+      App.Device.Hardware.SendHardwareCommand(DeviceCommandType.PositionWellPlate);
       lock (App.Device.ScriptF9FinishedLock)
       {
         Monitor.Wait(App.Device.ScriptF9FinishedLock);
@@ -335,7 +335,7 @@ namespace Ei_Dimension.ViewModels
     private void MoveProbe(ushort height, bool up)
     {
       var direction = up ? MotorDirection.Up : MotorDirection.Down;
-      App.Device.SetHardwareParameter(DeviceParameterType.MotorMoveZ, direction, height);
+      App.Device.Hardware.SetHardwareParameter(DeviceParameterType.MotorMoveZ, direction, height);
       lock (App.Device.SystemActivityNotBusyNotificationLock)
       {
         Monitor.Wait(App.Device.SystemActivityNotBusyNotificationLock);
@@ -346,7 +346,7 @@ namespace Ei_Dimension.ViewModels
     {
       lock (ZStepIsUpdatedLock)
       {
-        App.Device.RequestHardwareParameter(DeviceParameterType.MotorZ, MotorParameterType.CurrentStep);
+        App.Device.Hardware.RequestHardwareParameter(DeviceParameterType.MotorZ, MotorParameterType.CurrentStep);
         Monitor.Wait(ZStepIsUpdatedLock);
       }
       Thread.Sleep(500);

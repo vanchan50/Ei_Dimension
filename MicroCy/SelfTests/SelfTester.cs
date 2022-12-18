@@ -16,8 +16,8 @@
 
     internal void FluidicsTest()
     {
-      _device.RequestHardwareParameter(DeviceParameterType.PressureAtStartup);
-      _device.SendHardwareCommand(DeviceCommandType.Startup);
+      _device.Hardware.RequestHardwareParameter(DeviceParameterType.PressureAtStartup);
+      _device.Hardware.SendHardwareCommand(DeviceCommandType.Startup);
       // result to DataController.InnerCommandProcessing(). Probably should form a SelfTestError class
       //SelfTestError should be a property of this class
     }
@@ -37,13 +37,13 @@
 
     internal void ScriptFinishedSignal()
     {
-      _device.RequestHardwareParameter(DeviceParameterType.PressureAtStartup);
+      _device.Hardware.RequestHardwareParameter(DeviceParameterType.PressureAtStartup);
       Motorsinit[2] = false;
-      _device.RequestHardwareParameter(DeviceParameterType.MotorZ, MotorParameterType.CurrentStep);
+      _device.Hardware.RequestHardwareParameter(DeviceParameterType.MotorZ, MotorParameterType.CurrentStep);
       Motorsinit[0] = false;
-      _device.RequestHardwareParameter(DeviceParameterType.MotorX, MotorParameterType.CurrentStep);
+      _device.Hardware.RequestHardwareParameter(DeviceParameterType.MotorX, MotorParameterType.CurrentStep);
       Motorsinit[1] = false;
-      _device.RequestHardwareParameter(DeviceParameterType.MotorY, MotorParameterType.CurrentStep);
+      _device.Hardware.RequestHardwareParameter(DeviceParameterType.MotorY, MotorParameterType.CurrentStep);
     }
   }
 }
