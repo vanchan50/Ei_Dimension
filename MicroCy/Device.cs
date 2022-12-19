@@ -118,7 +118,7 @@ namespace DIOS.Core
     }
     public float MaxPressure { get; set; }
     public bool IsPlateEjected { get; internal set; }
-    private bool _singleSyringeMode;
+    internal bool _singleSyringeMode;
     public static bool IncludeReg0InPlateSummary { get; set; }  //TODO: crutch for filesaving
 
     internal bool _isReadingA;
@@ -200,6 +200,10 @@ namespace DIOS.Core
     internal void SetupRead()
     {
       SetReadingParamsForWell();
+      if (_singleSyringeMode)
+      {
+        SetAspirateParamsForWell();
+      }
       WellController.Advance();
       Results.StartNewWell(WellController.CurrentWell);
       Publisher.StartNewBeadEventReport();

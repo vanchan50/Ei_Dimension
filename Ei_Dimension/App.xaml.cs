@@ -268,7 +268,13 @@ namespace Ei_Dimension
           OutputLegacyReport();
           if (DiosApp.RunPlateContinuously)
           {
-            MainButtonsViewModel.Instance.StartButtonClick();
+            App.Current.Dispatcher.BeginInvoke((Action)(async() =>
+            {
+              Device.EjectPlate();
+              await System.Threading.Tasks.Task.Delay(5000);
+              Device.LoadPlate();
+              MainButtonsViewModel.Instance.StartButtonClick();
+            }));
           }
           break;
         case OperationMode.Calibration:

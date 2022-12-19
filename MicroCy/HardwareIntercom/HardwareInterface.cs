@@ -306,9 +306,11 @@ namespace DIOS.Core.HardwareIntercom
           {
             case SampleSyringeType.Single:
               param = 0xFFFF;
+              _device._singleSyringeMode = true;
               break;
             case SampleSyringeType.Double:
               param = 0;
+              _device._singleSyringeMode = false;
               break;
             default:
               throw new NotImplementedException();
