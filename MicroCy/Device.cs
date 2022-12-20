@@ -281,7 +281,15 @@ namespace DIOS.Core
 
     internal bool EndBeadRead()
     {
-      if (_isReadingA || _singleSyringeMode)
+      if (_singleSyringeMode)
+      {
+        Hardware.SendCommand(DeviceCommandType.EndReadA);
+        if(!WellController.IsLastWell)
+          Hardware.SendCommand(DeviceCommandType.PositionWellPlate);
+        return WellController.IsLastWell;
+      }
+
+      if (_isReadingA)
         Hardware.SendCommand(DeviceCommandType.EndReadA);
       else
         Hardware.SendCommand(DeviceCommandType.EndReadB);
