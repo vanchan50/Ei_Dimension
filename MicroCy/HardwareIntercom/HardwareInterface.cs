@@ -27,7 +27,7 @@ namespace DIOS.Core.HardwareIntercom
     public void SendCommand(DeviceCommandType command)
     {
       #if DEBUG
-      Console.WriteLine($"Command {command.ToString()}");
+      Console.WriteLine($"{DateTime.Now.ToString()} CMD {command.ToString()}");
       #endif
       ushort param = 0;
       byte commandCode = 0;
@@ -152,8 +152,8 @@ namespace DIOS.Core.HardwareIntercom
     public void SetParameter(DeviceParameterType primaryParameter, Enum subParameter, float value = 0f)
     {
       #if DEBUG
-      var subparReport = subParameter == null ? "-" : subParameter.ToString();
-      Console.WriteLine($"SET {primaryParameter.ToString()} {subparReport} {value.ToString()}");
+      var subparReport = subParameter == null ? "" : subParameter.ToString();
+      Console.WriteLine($"{DateTime.Now.ToString()} SET {primaryParameter.ToString()} {subparReport} {value.ToString()}");
       #endif
       ushort param = 0;
       float fparam = 0;
@@ -1007,8 +1007,8 @@ namespace DIOS.Core.HardwareIntercom
     public void RequestParameter(DeviceParameterType primaryParameter, Enum subParameter)
     {
       #if DEBUG
-      var subparReport = subParameter == null ? "-" : subParameter.ToString();
-      Console.WriteLine($"GET {primaryParameter.ToString()} {subparReport}");
+      var subparReport = subParameter == null ? "" : subParameter.ToString();
+      Console.WriteLine($"{DateTime.Now.ToString()} GET {primaryParameter.ToString()} {subparReport}");
       #endif
       ushort selector = 0;
       byte commandCode = 0;
@@ -1530,7 +1530,7 @@ namespace DIOS.Core.HardwareIntercom
     internal void SetToken(HardwareToken token, ushort value = 0)
     {
       #if DEBUG
-      Console.WriteLine($"TOKEN {token.ToString()} {value.ToString()}");
+      Console.WriteLine($"{DateTime.Now.ToString()} TOKEN {token.ToString()} {value.ToString()}");
       #endif
       byte commandCode = 0x00;
       switch (token)

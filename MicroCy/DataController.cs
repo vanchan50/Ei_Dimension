@@ -128,7 +128,6 @@ namespace DIOS.Core
     {
       if (_serialConnection.IsActive)
         _serialConnection.Write(StructToByteArray(in cs));
-      Console.WriteLine($"{DateTime.Now.TimeOfDay.ToString()} Sending {cs.ToString()}"); //  MARK1 END
     }
 
     private static byte[] StructToByteArray(in CommandStruct cs)
