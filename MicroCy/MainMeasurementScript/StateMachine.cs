@@ -2,18 +2,20 @@
 using System.Threading.Tasks;
 using DIOS.Core.HardwareIntercom;
 
-namespace DIOS.Core
+namespace DIOS.Core.MainMeasurementScript
 {
   internal class StateMachine
   {
     private readonly Device _device;
+    private readonly MeasurementScript _script;
     private State _state;
 
     public bool Report { get; set; }
 
-    public StateMachine(Device device, bool report)
+    public StateMachine(Device device, MeasurementScript script, bool report)
     {
       _device = device;
+      _script = script;
       Report = report;
     }
 
@@ -75,14 +77,11 @@ namespace DIOS.Core
     
     private void Action4()
     {
-      _device.Hardware.SendCommand(DeviceCommandType.FlushCommandQueue);
-      _device.Hardware.SetToken(HardwareToken.EmptySyringeTrigger); //clear empty syringe token
-      _device.Hardware.SetToken(HardwareToken.Synchronization); //clear sync token to allow next sequence to execute
-      if(_device.EndBeadRead())
+      if(_script.EndBeadRead())
         _device.OnFinishedMeasurement();
       else
       {
-        _device.SetupRead();
+        _script.SetupRead();
       }
       Task.Run(()=>
       {

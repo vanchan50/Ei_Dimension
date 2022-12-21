@@ -1007,8 +1007,11 @@ namespace DIOS.Core.HardwareIntercom
     public void RequestParameter(DeviceParameterType primaryParameter, Enum subParameter)
     {
       #if DEBUG
-      var subparReport = subParameter == null ? "" : subParameter.ToString();
-      Console.WriteLine($"{DateTime.Now.ToString()} GET {primaryParameter.ToString()} {subparReport}");
+      if (primaryParameter != DeviceParameterType.BeadConcentration)
+      {
+        var subparReport = subParameter == null ? "" : subParameter.ToString();
+        Console.WriteLine($"{DateTime.Now.ToString()} GET {primaryParameter.ToString()} {subparReport}");
+      }
       #endif
       ushort selector = 0;
       byte commandCode = 0;

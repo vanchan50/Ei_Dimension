@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Concurrent;
 using System.Threading.Tasks;
 using DIOS.Core.HardwareIntercom;
+using DIOS.Core.MainMeasurementScript;
 using DIOS.Core.SelfTests;
 
 /*
@@ -127,9 +128,9 @@ namespace DIOS.Core
     private float _hdnrTrans;
     private float _hdnrCoef;
     private readonly DataController _dataController;
-    private readonly StateMachine _stateMach;
     internal SelfTester SelfTester { get; }
     internal readonly BeadProcessor _beadProcessor;
+    private readonly MeasurementScript _script;
 
     public Device(ISerial connection, string folderPath)
     {
@@ -137,9 +138,9 @@ namespace DIOS.Core
       Results = new RunResults(this);
       _beadProcessor = new BeadProcessor(this);
       _dataController = new DataController(this, Results, connection);
-      _stateMach = new StateMachine(this, true);
       Publisher = new ResultsPublisher(this, folderPath);
       Hardware = new HardwareInterface(this, _dataController);
+      _script = new MeasurementScript(this);
     }
 
     public void Init()
@@ -153,13 +154,13 @@ namespace DIOS.Core
 
     public void UpdateStateMachine()
     {
-      _stateMach.Action();
+      _script.StateMach.Action();
     }
 
     public void PrematureStop()
     {
-      WellController.PreparePrematureStop();
-      _stateMach.Start();
+      WellController.PreparePrematureStop(_singleSyringeMode);
+      _script.StateMach.Start();
     }
 
     /// <summary>
@@ -167,7 +168,7 @@ namespace DIOS.Core
     /// </summary>
     public void StartStateMachine()
     {
-      _stateMach.Start();
+      _script.StateMach.Start();
     }
 
     public void StartSelfTest()
@@ -197,55 +198,15 @@ namespace DIOS.Core
       return await t;
     }
 
-    internal void SetupRead()
-    {
-      SetReadingParamsForWell();
-      if (_singleSyringeMode)
-      {
-        SetAspirateParamsForWell();
-      }
-      WellController.Advance();
-      Results.StartNewWell(WellController.CurrentWell);
-      Publisher.StartNewBeadEventReport();
-      BeadCount = 0;
-
-      OnStartingToReadWell();
-      StartBeadRead();
-    }
-
     public void StartOperation()
     {
       if (Mode != OperationMode.Normal)
       {
         Normalization.SuspendForTheRun();
       }
-      Hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.MinSSC, _beadProcessor._map.calParams.minmapssc);
-      Hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.MaxSSC, _beadProcessor._map.calParams.maxmapssc);
-      //read section of plate
-      Hardware.RequestParameter(DeviceParameterType.MotorStepsX, MotorStepsX.Plate96Column1);
-      Hardware.RequestParameter(DeviceParameterType.MotorStepsY, MotorStepsY.Plate96RowA);
       Results.StartNewPlateReport();
       Publisher.ResetResultData();
-      SetAspirateParamsForWell();  //setup for first read
-      SetReadingParamsForWell();
-      WellController.Advance();
-      Results.StartNewWell(WellController.CurrentWell);
-      Publisher.StartNewBeadEventReport();
-      BeadCount = 0;
-      OnStartingToReadWell();
-      Hardware.SetParameter(DeviceParameterType.IsBubbleDetectionActive, 1);
-      Hardware.SendCommand(DeviceCommandType.PositionWellPlate);
-
-      if(!_singleSyringeMode)
-        Hardware.SendCommand(DeviceCommandType.AspirateA);
-
-      TotalBeads = 0;
-
-      _isReadingA = false;
-      StartBeadRead();
-
-      if (TerminationType != Termination.TotalBeadsCaptured) //set some limit for running to eos or if regions are wrong
-        BeadsToCapture = 100000;
+      _script.Start();
     }
 
 
@@ -261,67 +222,12 @@ namespace DIOS.Core
       IsPlateEjected = false;
     }
 
-    private void SetReadingParamsForWell()
+    internal void OnStartingToReadWell()
     {
-      Hardware.SetParameter(DeviceParameterType.WellReadingSpeed,     (ushort)WellController.NextWell.RunSpeed);
-      Hardware.SetParameter(DeviceParameterType.ChannelConfiguration, (ushort)WellController.NextWell.ChanConfig);
-      BeadsToCapture = WellController.NextWell.BeadsToCapture;
-      MinPerRegion = WellController.NextWell.MinPerRegion;
-      TerminationType = WellController.NextWell.TermType;
-    }
-
-    private void SetAspirateParamsForWell()
-    {
-      Hardware.SetParameter(DeviceParameterType.WellRowIndex,    WellController.NextWell.RowIdx);
-      Hardware.SetParameter(DeviceParameterType.WellColumnIndex, WellController.NextWell.ColIdx);
-      Hardware.SetParameter(DeviceParameterType.Volume, VolumeType.Sample,  (ushort)WellController.NextWell.SampVol);
-      Hardware.SetParameter(DeviceParameterType.Volume, VolumeType.Wash,    (ushort)WellController.NextWell.WashVol);
-      Hardware.SetParameter(DeviceParameterType.Volume, VolumeType.Agitate, (ushort)WellController.NextWell.AgitateVol);
-    }
-
-    internal bool EndBeadRead()
-    {
-      if (_singleSyringeMode)
-      {
-        Hardware.SendCommand(DeviceCommandType.EndReadA);
-        if(!WellController.IsLastWell)
-          Hardware.SendCommand(DeviceCommandType.PositionWellPlate);
-        return WellController.IsLastWell;
-      }
-
-      if (_isReadingA)
-        Hardware.SendCommand(DeviceCommandType.EndReadA);
-      else
-        Hardware.SendCommand(DeviceCommandType.EndReadB);
-      return WellController.IsLastWell;
-    }
-
-    private void StartBeadRead()
-    {
-      if (_singleSyringeMode)
-      {
-        Hardware.SendCommand(DeviceCommandType.AspirateA);
-        Hardware.SendCommand(DeviceCommandType.ReadA);
-        return;
-      }
-
-      if (WellController.IsLastWell)
-      {
-        if (_isReadingA)
-          Hardware.SendCommand(DeviceCommandType.ReadB);
-        else
-          Hardware.SendCommand(DeviceCommandType.ReadA);
-        return;
-      }
-
-      SetAspirateParamsForWell();
-      if (_isReadingA)
-        Hardware.SendCommand(DeviceCommandType.ReadBAspirateA);
-      else
-        Hardware.SendCommand(DeviceCommandType.ReadAAspirateB);
-    }
-    private void OnStartingToReadWell()
-    {
+      WellController.Advance();
+      Results.StartNewWell(WellController.CurrentWell);
+      Publisher.StartNewBeadEventReport();
+      BeadCount = 0;
       IsMeasurementGoing = true;
       StartingToReadWell?.Invoke(this, new ReadingWellEventArgs(WellController.CurrentWell.RowIdx, WellController.CurrentWell.ColIdx,
         Publisher.FullBeadEventFileName));

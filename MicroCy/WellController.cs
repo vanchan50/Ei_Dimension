@@ -42,8 +42,14 @@ namespace DIOS.Core
         NextWell = WellsToRead.Peek();
     }
 
-    internal void PreparePrematureStop()
+    internal void PreparePrematureStop(bool singleSyringeMode)
     {
+      if (singleSyringeMode)
+      {
+        WellsToRead.Clear();
+        IsLastWell = true;
+        return;
+      }
       if (WellsToRead.Count <= 1)
         //if end read on tube or single well, nothing else is aspirated otherwise
         //just read the next well in order since it is already aspirated

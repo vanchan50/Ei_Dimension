@@ -69,6 +69,7 @@
     <Compile Include="HardwareIntercom\MotorStepsX.cs" />
     <Compile Include="HardwareIntercom\MotorStepsY.cs" />
     <Compile Include="HardwareIntercom\MotorStepsZ.cs" />
+    <Compile Include="MainMeasurementScript\MeasurementScript.cs" />
     <Compile Include="ParameterUpdateEventArgs.cs" />
     <Compile Include="Enums\Gate.cs" />
     <Compile Include="Enums\HiSensitivityChannel.cs" />
@@ -90,7 +91,7 @@
     <Compile Include="RunResults.cs" />
     <Compile Include="SelfTests\SelfTester.cs" />
     <Compile Include="SelfTests\SelfTestData.cs" />
-    <Compile Include="StateMachine.cs" />
+    <Compile Include="MainMeasurementScript\StateMachine.cs" />
     <Compile Include="Structs\CalParams.cs" />
     <Compile Include="Structs\CustomMap.cs" />
     <Compile Include="Structs\ProcessedBead.cs" />
