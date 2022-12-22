@@ -12,18 +12,6 @@ namespace DIOS.Core.HardwareIntercom
       _dataController = dataController;
     }
 
-    private void MainCommand(byte cmd = 0, byte code = 0, ushort parameter = 0, float fparameter = 0)
-    {
-      CommandStruct cs = new CommandStruct
-      {
-        Code = code,
-        Command = cmd,
-        Parameter = parameter,
-        FParameter = fparameter
-      };
-      _dataController.AddCommand(cs);
-    }
-
     public void SendCommand(DeviceCommandType command)
     {
       #if DEBUG
@@ -1549,6 +1537,18 @@ namespace DIOS.Core.HardwareIntercom
           break;
       }
       MainCommand(code: commandCode, parameter: value, cmd: 0x02);
+    }
+
+    private void MainCommand(byte cmd = 0, byte code = 0, ushort parameter = 0, float fparameter = 0)
+    {
+      CommandStruct cs = new CommandStruct
+      {
+        Code = code,
+        Command = cmd,
+        Parameter = parameter,
+        FParameter = fparameter
+      };
+      _dataController.AddCommand(cs);
     }
 
   }

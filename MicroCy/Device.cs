@@ -72,7 +72,15 @@ namespace DIOS.Core
     public int BeadCount { get; internal set; }
     public int TotalBeads { get; internal set; }
     public int MinPerRegion { get; set; }
-    public bool IsMeasurementGoing { get; private set; }
+
+    public bool IsMeasurementGoing
+    {
+      get
+      {
+        return _dataController.IsMeasurementGoing;
+      }
+    }
+
     public bool SaveIndividualBeadEvents { get; set; }
     public bool RMeans { get; set; }
     public bool OnlyClassifiedInBeadEventFile { get; set; }
@@ -226,9 +234,9 @@ namespace DIOS.Core
     {
       WellController.Advance();
       Results.StartNewWell(WellController.CurrentWell);
-      Publisher.StartNewBeadEventReport();
+      Publisher.StartNewBeadEventReport(WellController.CurrentWell);
       BeadCount = 0;
-      IsMeasurementGoing = true;
+      _dataController.IsMeasurementGoing = true;
       StartingToReadWell?.Invoke(this, new ReadingWellEventArgs(WellController.CurrentWell.RowIdx, WellController.CurrentWell.ColIdx,
         Publisher.FullBeadEventFileName));
       Hardware.SetParameter(DeviceParameterType.TotalBeadsInFirmware); //reset totalbeads in firmware
@@ -249,10 +257,10 @@ namespace DIOS.Core
 
     internal void OnFinishedMeasurement()
     {
-      IsMeasurementGoing = false;
+      _dataController.IsMeasurementGoing = false;
       BeadCount = 0;
       Results.PlateReport.completedDateTime = DateTime.Now;
-      _ = Task.Run(() => { Publisher.OutputPlateReport(); });
+      _ = Task.Run(() => { Publisher.OutputPlateReport(Results.PlateReport.JSONify()); });
       Results.EndOfOperationReset();
       Hardware.SetParameter(DeviceParameterType.IsBubbleDetectionActive, 0);
       if (Mode ==  OperationMode.Verification)

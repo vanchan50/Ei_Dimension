@@ -7,6 +7,7 @@ namespace DIOS.Core
 {
   internal class DataController
   {
+    public bool IsMeasurementGoing { get; set; }
     private ConcurrentQueue<CommandStruct> _outCommands = new ConcurrentQueue<CommandStruct>();
 
     private readonly object _usbOutCV = new object();
@@ -80,7 +81,7 @@ namespace DIOS.Core
           continue;
         }
 
-        if (_device.IsMeasurementGoing) //  this condition avoids the necessity of cleaning up leftover data in the system USB interface. That could happen after operation abortion and program restart
+        if (IsMeasurementGoing) //  this condition avoids the necessity of cleaning up leftover data in the system USB interface. That could happen after operation abortion and program restart
         {
           for (byte i = 0; i < 8; i++)
           {

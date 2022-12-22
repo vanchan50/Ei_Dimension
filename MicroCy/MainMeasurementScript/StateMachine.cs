@@ -61,7 +61,14 @@ namespace DIOS.Core.MainMeasurementScript
 
     private void Action2()
     {
-      _ = Task.Run(() => { _device.Publisher.PublishEverything(); });
+      _ = Task.Run(() =>
+      {
+        _device.Results.MakeStats();  //TODO: need to check if the well is finished reading before call
+        _device.Publisher.WriteResultDataToFile(_device.Results.PublishWellStats());
+        _device.Publisher.SaveBeadEventFile(_device.Results.PublishBeadEvents());
+        _device.Publisher.DoSomethingWithWorkOrder();
+        Console.WriteLine($"{DateTime.Now.ToString()} Reporting Background File Save Complete");
+      });
       GetRunStatistics();
     }
     
