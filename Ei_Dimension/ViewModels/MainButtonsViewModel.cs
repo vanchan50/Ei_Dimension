@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Ei_Dimension.Controllers;
+using System.Security.Policy;
 
 namespace Ei_Dimension.ViewModels
 {
@@ -109,6 +110,7 @@ namespace Ei_Dimension.ViewModels
         Console.WriteLine("Normalization Enabled");
       else
         Console.WriteLine("Normalization Disabled");
+      App.Device.Publisher.ResultsFile.MakeNew();
       App.Device.StartOperation();
     }
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using DIOS.Core.HardwareIntercom;
 
@@ -8,71 +9,49 @@ namespace DIOS.Core.MainMeasurementScript
   {
     private readonly Device _device;
     private readonly MeasurementScript _script;
-    private State _state;
+    private int _started;
 
-    public bool Report { get; set; }
-
-    public StateMachine(Device device, MeasurementScript script, bool report)
+    public StateMachine(Device device, MeasurementScript script)
     {
       _device = device;
       _script = script;
-      Report = report;
     }
 
     public void Start()
     {
-      if(_state == State.Reset)
-        _state = State.Start;
-      Console.WriteLine("SM start");
-    }
+      if (Interlocked.CompareExchange(ref _started, 1, 0) == 1)
+        return;
 
-    public void Action()
-    {
-      //TODO: allow only one instance
-      switch (_state)
+      Console.WriteLine("SM start");
+      Task.Run(() =>
       {
-        case State.Reset:
-          _device.Hardware.RequestParameter(DeviceParameterType.BeadConcentration);
-          //Skip the tick
-          return;
-        case State.Start:
-          Action1();
-          break;
-        case State.State2:
-          Action2();
-          break;
-        case State.State3:
-          if (!Action3())
-            return;
-          break;
-        case State.End:
-          Action4();
-          break;
-      }
-      if (Report)
-        ReportState();
-      Advance();
+        Action1();
+        Thread.Sleep(500);  //not necessary?
+        while (!Action2())
+        {
+          Thread.Sleep(500);
+        }
+        Action3();
+
+        _started = 0;
+      });
     }
     
     private void Action1()
     {
       _device.OnFinishedReadingWell();
-    }
-
-    private void Action2()
-    {
       _ = Task.Run(() =>
       {
-        _device.Results.MakeStats();  //TODO: need to check if the well is finished reading before call
-        _device.Publisher.WriteResultDataToFile(_device.Results.PublishWellStats());
-        _device.Publisher.SaveBeadEventFile(_device.Results.PublishBeadEvents());
+        _device.Results.MakeWellStats();  //TODO: need to check if the well is finished reading before call
+        _device.Publisher.ResultsFile.AppendAndWrite(_device.Results.PublishWellStats()); //makewellstats should be awaited only for this method
+        _device.Publisher.BeadEventFile.CreateAndWrite(_device.Results.PublishBeadEvents());
         _device.Publisher.DoSomethingWithWorkOrder();
         Console.WriteLine($"{DateTime.Now.ToString()} Reporting Background File Save Complete");
       });
-      GetRunStatistics();
+      _device.OnNewStatsAvailable();
     }
     
-    private bool Action3()
+    private bool Action2()
     {
       if (!_device.SystemActivity[11])  //does not contain Washing
       {
@@ -82,7 +61,7 @@ namespace DIOS.Core.MainMeasurementScript
       return false;
     }
     
-    private void Action4()
+    private void Action3()
     {
       if(_script.EndBeadRead())
         _device.OnFinishedMeasurement();
@@ -95,50 +74,6 @@ namespace DIOS.Core.MainMeasurementScript
         GC.Collect();
         GC.WaitForPendingFinalizers();
       });
-    }
-
-    private void Advance()
-    {
-      if (_state < State.End)
-        _state++;
-      else
-        _state = State.Reset;
-      Console.WriteLine($"SM advance to {_state}");
-    }
-
-    private void ReportState()
-    {
-      string str = null;
-      switch (_state)
-      {
-        case State.Start:
-          str = $"{DateTime.Now.ToString()} Reporting End Sampling";
-          break;
-        case State.State2:
-          str = $"{DateTime.Now.ToString()} Reporting Background File Save Init";
-          break;
-        case State.State3:
-          str = $"{DateTime.Now.ToString()} Reporting Washing Complete";
-          break;
-        case State.End:
-          str = $"{DateTime.Now.ToString()} Reporting End of current well";
-          break;
-      }
-      Console.WriteLine(str);
-    }
-
-    private void GetRunStatistics()
-    {
-      _device.OnNewStatsAvailable();
-    }
-
-    private enum State
-    {
-      Reset,
-      Start,
-      State2,
-      State3,
-      End
     }
   }
 }

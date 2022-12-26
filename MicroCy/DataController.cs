@@ -260,7 +260,7 @@ namespace DIOS.Core
         case 0x1B:
           if (cs.Parameter == 0)
           {
-            _device.StartStateMachine();  //Fired only on success (Parameter == 0)
+            _device.StopOperation();  //Fired only on success (Parameter == 0)
             outParameters = new ParameterUpdateEventArgs(DeviceParameterType.CalibrationSuccess);
           }
           break;
@@ -719,7 +719,7 @@ namespace DIOS.Core
           return;
         case 0xFD:
         case 0xFE:
-          _device.StartStateMachine();
+          _device.StopOperation();
           break;
         default:
           return;

@@ -46,6 +46,11 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FileIO\BeadEventFileWriter.cs" />
+    <Compile Include="FileIO\LegacyReportFileWriter.cs" />
+    <Compile Include="FileIO\PlateReportFileWriter.cs" />
+    <Compile Include="FileIO\PlateStatusFileWriter.cs" />
+    <Compile Include="FileIO\ResultsFileWriter.cs" />
     <Compile Include="HardwareIntercom\AlignMotorSequence.cs" />
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="HardwareIntercom\AutoAlignState.cs" />
@@ -87,7 +92,7 @@
     <Compile Include="Structs\BeadEventsData.cs" />
     <Compile Include="FileIO\VerificationReportPublisher.cs" />
     <Compile Include="MapController.cs" />
-    <Compile Include="ResultsPublisher.cs" />
+    <Compile Include="FileIO\ResultsPublisher.cs" />
     <Compile Include="RunResults.cs" />
     <Compile Include="SelfTests\SelfTester.cs" />
     <Compile Include="SelfTests\SelfTestData.cs" />
@@ -111,7 +116,7 @@
     <Compile Include="PlateReport.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Structs\ReadingWellEventArgs.cs" />
-    <Compile Include="Structs\WellStatsData.cs" />
+    <Compile Include="Structs\ResultingWellStatsData.cs" />
     <Compile Include="Structs\Zone.cs" />
     <Compile Include="HardwareIntercom\SyringeControlState.cs" />
     <Compile Include="HardwareIntercom\SyringePosition.cs" />

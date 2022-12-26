@@ -22,7 +22,6 @@ namespace Ei_Dimension
     public static ResultsCache Cache { get; } = new ResultsCache();
     public static MapRegionsController MapRegions { get; set; }
     public static bool _nextWellWarning;
-    public static bool MakeLegacyPlateReport { get; set; } = Settings.Default.LegacyPlateReport;
 
     private static bool _workOrderPending;
     private static FileSystemWatcher _workOrderWatcher;
@@ -189,12 +188,13 @@ namespace Ei_Dimension
     
     private void StartingToReadWellEventHandler(object sender, ReadingWellEventArgs e)
     {
-      MultiTube.GetModifiedWellIndexes(e, out var row, out var col);
+      var wellFilePath = Device.Publisher.BeadEventFile.MakeNewFileName(e.Well);
+      MultiTube.GetModifiedWellIndexes(e.Well, out var row, out var col);
 
       //ResultsViewModel.Instance.PlatePictogramIsCovered = Visibility.Visible; //TODO: temporary solution
 
       PlatePictogramViewModel.Instance.PlatePictogram.CurrentlyReadCell = (row, col);
-      PlatePictogramViewModel.Instance.PlatePictogram.ChangeState(row, col, Models.WellType.NowReading, GetWarningState(), FilePath: e.FilePath);
+      PlatePictogramViewModel.Instance.PlatePictogram.ChangeState(row, col, Models.WellType.NowReading, GetWarningState(), wellFilePath);
       
       App.Current.Dispatcher.Invoke(() =>
       {
@@ -219,14 +219,14 @@ namespace Ei_Dimension
     {
       var type = GetWellStateForPictogram();
       
-      MultiTube.GetModifiedWellIndexes(e, out var row, out var col, proceed:true);
+      MultiTube.GetModifiedWellIndexes(e.Well, out var row, out var col, proceed:true);
 
       //Cache.Store(row, col);
       //ResultsViewModel.Instance.PlatePictogramIsCovered = Visibility.Hidden; //TODO: temporary solution
 
       PlatePictogramViewModel.Instance.PlatePictogram.CurrentlyReadCell = (-1, -1);
       PlatePictogramViewModel.Instance.PlatePictogram.ChangeState(row, col, type);
-      SavePlateState();
+      Device.Publisher.PlateStatusFile.Overwrite(PlatePictogramViewModel.Instance.PlatePictogram.GetSerializedPlate());
       if (Device.Control == SystemControl.WorkOrder)
       {
         App.Current.Dispatcher.Invoke(() => DashboardViewModel.Instance.WorkOrder[0] = ""); //actually questionable if not in workorder operation
@@ -260,12 +260,17 @@ namespace Ei_Dimension
 
     public void FinishedMeasurementEventHandler(object sender, EventArgs e)
     {
+      var plateReportJson = Device.Results.PlateReport.JSONify();
+      Device.Publisher.PlateReportFile.CreateAndWrite(plateReportJson);
       MainButtonsViewModel.Instance.StartButtonEnabled = true;
       PlatePictogramViewModel.Instance.PlatePictogram.CurrentlyReadCell = (-1, -1);
       switch (Device.Mode)
       {
         case OperationMode.Normal:
-          OutputLegacyReport();
+          var header = MapRegionsController.GetLegacyReportHeader();
+          var legacyReport = Device.Results.PlateReport.LegacyReport(header);
+          OutputLegacyReport(legacyReport);
+
           if (DiosApp.RunPlateContinuously)
           {
             App.Current.Dispatcher.BeginInvoke((Action)(async() =>
@@ -326,54 +331,21 @@ namespace Ei_Dimension
       }));
     }
 
-    public static void OutputLegacyReport()
+    public static void OutputLegacyReport(string legacyReport)
     {
-      if (!MakeLegacyPlateReport)
-      {
-        Console.WriteLine("Legacy Plate Report Inactive");
-        return;
-      }
-
       var bldr = new StringBuilder();
       bldr.AppendLine("Program,\"DIOS\"");
-      bldr.AppendLine($"Build,\"{Program.BUILD}\",Firmware,\"{Device.FirmwareVersion}\"");
+      bldr.AppendLine($"Build,\"{DiosApp.BUILD}\",Firmware,\"{Device.FirmwareVersion}\"");
       bldr.AppendLine($"Date,\"{DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss", System.Globalization.CultureInfo.CreateSpecificCulture("en-GB"))}\"\n");
 
       bldr.AppendLine($"Instrument,\"{Environment.MachineName}\"");
       bldr.AppendLine($"Session,\"{Device.Publisher.Outfilename}\"\n\n\n\n\n\n\n");
 
       bldr.AppendLine($"Samples,\"{WellsSelectViewModel.Instance.CurrentTableSize}\"\n");
-      var header = MapRegionsController.GetLegacyReportHeader();
-      bldr.Append(Device.Results.PlateReport.LegacyReport(header));
+      bldr.Append(legacyReport);
+      var wholeReport = bldr.ToString();
 
-
-      string rfilename = Device.Control == SystemControl.Manual ? Device.Publisher.Outfilename : Device.WorkOrder.plateID.ToString();
-      var directoryName = $"{Device.Publisher.Outdir}\\AcquisitionData";
-      try
-      {
-        if (!Directory.Exists(directoryName))
-          _ = Directory.CreateDirectory(directoryName);
-      }
-      catch
-      {
-        Console.WriteLine($"Failed to create {directoryName}");
-        return;
-      }
-
-      try
-      {
-        var fileName = $"{directoryName}" +
-                       "\\LxResults_" + rfilename + "_" + Device.Publisher.Date + ".csv";
-        using (TextWriter jwriter = new StreamWriter(fileName))
-        {
-          jwriter.Write(bldr.ToString());
-          Console.WriteLine($"Legacy Plate Report saved as {fileName}");
-        }
-      }
-      catch
-      {
-        Console.WriteLine("Failed to create Legacy Plate Report");
-      }
+      Device.Publisher.LegacyReportFile.CreateAndWrite(wholeReport);
     }
 
     public static void SetLogOutput()
@@ -401,20 +373,6 @@ namespace Ei_Dimension
     {
       DevExpress.Xpf.Core.ApplicationThemeHelper.ApplicationThemeName = DevExpress.Xpf.Core.Theme.Office2019ColorfulName;
       base.OnStartup(e);
-    }
-
-    public static void SavePlateState()
-    {
-      //overwrite the whole thing
-      try
-      {
-        string contents = PlatePictogramViewModel.Instance.PlatePictogram.GetSerializedPlate();
-        File.WriteAllText($"{DiosApp.RootDirectory.FullName}\\Status\\StatusFile.json", contents);
-      }
-      catch(Exception e)
-      {
-        Notification.Show($"Problem with status file save, Please report this issue to the Manufacturer {e.Message}");
-      }
     }
 
     public static void InitSTab(string tabname)
@@ -669,10 +627,11 @@ namespace Ei_Dimension
         Settings.Default.Save();
       }
       Device.Publisher.Outfilename = Settings.Default.SaveFileName;
-      Device.Publisher.MakePlateReport = Settings.Default.PlateReport;
+      Device.Publisher.IsPlateReportPublishingActive = Settings.Default.PlateReport;
       Device.Control = (SystemControl)Settings.Default.SystemControl;
-      Device.SaveIndividualBeadEvents = Settings.Default.Everyevent;
-      Device.RMeans = Settings.Default.RMeans;
+      Device.Publisher.IsBeadEventPublishingActive = Settings.Default.Everyevent;
+      Device.Publisher.IsResultsPublishingActive = Settings.Default.RMeans;
+      Device.Publisher.IsLegacyPlateReportPublishingActive = Settings.Default.LegacyPlateReport;
       Device.TerminationType = (Termination)Settings.Default.EndRead;
       Device.MinPerRegion = Settings.Default.MinPerRegion;
       Device.BeadsToCapture = Settings.Default.BeadsToCapture;

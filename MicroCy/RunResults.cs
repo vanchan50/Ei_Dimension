@@ -11,7 +11,7 @@ namespace DIOS.Core
     private Device _device;
     private ICollection<int> _regionsToOutput;
     private bool _minPerRegCheckTrigger;
-    private readonly WellStatsData _wellstatsData = new WellStatsData();
+    private readonly ResultingWellStatsData _wellstatsData = new ResultingWellStatsData();
 
     public RunResults(Device device)
     {
@@ -49,7 +49,7 @@ namespace DIOS.Core
       PlateReport.Reset();
     }
 
-    internal void MakeStats()
+    internal void MakeWellStats()
     {
       var stats = new WellStats(WellResults.Well, MakeDeepCopy(), _device.BeadCount);
       PlateReport.Add(stats);
@@ -115,13 +115,13 @@ namespace DIOS.Core
           if (_minPerRegCheckTrigger)  //a region made it, are there more that haven't
           {
             if (MinPerRegionAchieved() >= 0)
-              _device.StartStateMachine();
+              _device.StopOperation();
             _minPerRegCheckTrigger = false;
           }
           break;
         case Termination.TotalBeadsCaptured:
           if (_device.BeadCount >= _device.BeadsToCapture)
-            _device.StartStateMachine();
+            _device.StopOperation();
           break;
         case Termination.EndOfSample:
           break;

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime;
 using DIOS.Core;
 
 namespace DIOSApplication
@@ -10,12 +11,14 @@ namespace DIOSApplication
     public MapController MapController { get; }
     public DirectoryInfo RootDirectory { get; private set; }
     public bool RunPlateContinuously { get; set; }
+    public readonly string BUILD = "1.4.0.15";
 
     public DIOSApp()
     {
       SetSystemDirectories();
       MapController = new MapController($"{RootDirectory.FullName}\\Config");
     }
+
     private void SetSystemDirectories()
     {
       RootDirectory = new DirectoryInfo(Path.Combine(@"C:\Emissioninc", Environment.MachineName));

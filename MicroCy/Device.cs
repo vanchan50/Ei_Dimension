@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections;
 using System.Collections.Concurrent;
 using System.Threading.Tasks;
+using DIOS.Core.FileIO;
 using DIOS.Core.HardwareIntercom;
 using DIOS.Core.MainMeasurementScript;
 using DIOS.Core.SelfTests;
@@ -80,9 +81,6 @@ namespace DIOS.Core
         return _dataController.IsMeasurementGoing;
       }
     }
-
-    public bool SaveIndividualBeadEvents { get; set; }
-    public bool RMeans { get; set; }
     public bool OnlyClassifiedInBeadEventFile { get; set; }
     public HiSensitivityChannel SensitivityChannel
     {
@@ -160,11 +158,6 @@ namespace DIOS.Core
       }
     }
 
-    public void UpdateStateMachine()
-    {
-      _script.StateMach.Action();
-    }
-
     public void PrematureStop()
     {
       WellController.PreparePrematureStop(_singleSyringeMode);
@@ -172,11 +165,26 @@ namespace DIOS.Core
     }
 
     /// <summary>
-    /// Starts a sequence of commands to finalize well measurement. The sequence is in a form of state machine that takes several timer ticks
+    /// Starts a sequence of commands to finalize well measurement
+    /// <br>The sequence is in a form of state machine and is NOT instant</br>
     /// </summary>
-    public void StartStateMachine()
+    public void StopOperation()
     {
       _script.StateMach.Start();
+    }
+
+    /// <summary>
+    /// Sends a sequence of commands to startup a measurement.
+    /// The operation is conducted on the other thread, while this function quickly returns
+    /// </summary>
+    public void StartOperation()
+    {
+      if (Mode != OperationMode.Normal)
+      {
+        Normalization.SuspendForTheRun();
+      }
+      Results.StartNewPlateReport();
+      _script.Start();
     }
 
     public void StartSelfTest()
@@ -206,18 +214,6 @@ namespace DIOS.Core
       return await t;
     }
 
-    public void StartOperation()
-    {
-      if (Mode != OperationMode.Normal)
-      {
-        Normalization.SuspendForTheRun();
-      }
-      Results.StartNewPlateReport();
-      Publisher.ResetResultData();
-      _script.Start();
-    }
-
-
     public void EjectPlate()
     {
       Hardware.SendCommand(DeviceCommandType.EjectPlate);
@@ -234,11 +230,9 @@ namespace DIOS.Core
     {
       WellController.Advance();
       Results.StartNewWell(WellController.CurrentWell);
-      Publisher.StartNewBeadEventReport(WellController.CurrentWell);
       BeadCount = 0;
       _dataController.IsMeasurementGoing = true;
-      StartingToReadWell?.Invoke(this, new ReadingWellEventArgs(WellController.CurrentWell.RowIdx, WellController.CurrentWell.ColIdx,
-        Publisher.FullBeadEventFileName));
+      StartingToReadWell?.Invoke(this, new ReadingWellEventArgs(WellController.CurrentWell));
       Hardware.SetParameter(DeviceParameterType.TotalBeadsInFirmware); //reset totalbeads in firmware
       Console.WriteLine("Starting to read well with Params:");
       Console.WriteLine($"Termination: {(int)TerminationType}");
@@ -250,9 +244,8 @@ namespace DIOS.Core
     internal void OnFinishedReadingWell()
     {
       Hardware.SendCommand(DeviceCommandType.EndSampling);
-      FinishedReadingWell?.Invoke(this, new ReadingWellEventArgs(WellController.CurrentWell.RowIdx, WellController.CurrentWell.ColIdx,
-        Publisher.FullBeadEventFileName));
       Hardware.RequestParameter(DeviceParameterType.TotalBeadsInFirmware);
+      FinishedReadingWell?.Invoke(this, new ReadingWellEventArgs(WellController.CurrentWell));
     }
 
     internal void OnFinishedMeasurement()
@@ -260,7 +253,6 @@ namespace DIOS.Core
       _dataController.IsMeasurementGoing = false;
       BeadCount = 0;
       Results.PlateReport.completedDateTime = DateTime.Now;
-      _ = Task.Run(() => { Publisher.OutputPlateReport(Results.PlateReport.JSONify()); });
       Results.EndOfOperationReset();
       Hardware.SetParameter(DeviceParameterType.IsBubbleDetectionActive, 0);
       if (Mode ==  OperationMode.Verification)

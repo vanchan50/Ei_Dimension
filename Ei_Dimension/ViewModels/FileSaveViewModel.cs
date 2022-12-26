@@ -95,15 +95,15 @@ namespace Ei_Dimension.ViewModels
       switch (num)
       {
         case 0:
-          App.Device.SaveIndividualBeadEvents = Checkboxes[num];
+          App.Device.Publisher.IsBeadEventPublishingActive = Checkboxes[num];
           Settings.Default.Everyevent = Checkboxes[num];
           break;
         case 1:
-          App.Device.RMeans = Checkboxes[num];
+          App.Device.Publisher.IsResultsPublishingActive = Checkboxes[num];
           Settings.Default.RMeans = Checkboxes[num];
           break;
         case 2:
-          App.Device.Publisher.MakePlateReport = Checkboxes[num];
+          App.Device.Publisher.IsPlateReportPublishingActive = Checkboxes[num];
           Settings.Default.PlateReport = Checkboxes[num];
           break;
         case 3:
@@ -116,7 +116,7 @@ namespace Ei_Dimension.ViewModels
         case 5:
           break;
         case 6:
-          App.MakeLegacyPlateReport = Checkboxes[num];
+          App.Device.Publisher.IsLegacyPlateReportPublishingActive = Checkboxes[num];
           Settings.Default.LegacyPlateReport = Checkboxes[num];
           break;
         case 7:

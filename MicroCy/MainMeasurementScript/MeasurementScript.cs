@@ -14,7 +14,7 @@ namespace DIOS.Core.MainMeasurementScript
       _device = device;
       _hardware = device.Hardware;
       _wellController = device.WellController;
-      StateMach = new StateMachine(_device, this, true);
+      StateMach = new StateMachine(_device, this);
     }
 
     public void Start()

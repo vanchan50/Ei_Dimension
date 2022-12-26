@@ -1,17 +1,11 @@
-﻿using System;
-
-namespace DIOS.Core
+﻿namespace DIOS.Core
 {
   public class ReadingWellEventArgs
   {
-    public byte Row { get; set; }
-    public byte Column { get; set; }
-    public string FilePath { get; set; }
-    public ReadingWellEventArgs(byte row, byte col, string filepath = null)
+    public Well Well { get;}
+    public ReadingWellEventArgs(Well well)
     {
-      Row = row;
-      Column = col;
-      FilePath = filepath;
+      Well = well;
     }
   }
 }

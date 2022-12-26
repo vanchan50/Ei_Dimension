@@ -3,7 +3,7 @@ using System.Text;
 
 namespace DIOS.Core
 {
-  internal class WellStatsData
+  internal class ResultingWellStatsData
   {
     private readonly StringBuilder _dataOut = new StringBuilder();
     public const string HEADER = "Region,Bead Count,Median FI,Trimmed Mean FI,CV%\r";

@@ -7,7 +7,7 @@ namespace Ei_Dimension
   {
     private static byte _multiTubeRow;
     private static byte _multiTubeCol;
-    public static void GetModifiedWellIndexes(ReadingWellEventArgs e, out byte row, out byte col, bool proceed = false)
+    public static void GetModifiedWellIndexes(Well well, out byte row, out byte col, bool proceed = false)
     {
       if (isATube())
       {
@@ -18,8 +18,8 @@ namespace Ei_Dimension
         return;
       }
       //clear drawingboard if just switched to multitube!!! //DrawingPlate._multitubeOverrideReset switchflip jsut for that
-      row = e.Row;
-      col = e.Column;
+      row = well.RowIdx;
+      col = well.ColIdx;
       Reset();
     }
 

@@ -3,7 +3,7 @@
 namespace DIOS.Core
 {
   [Serializable]
-  public class Well //TODO:make it immutable (make it struct?)
+  public class Well //TODO:make it immutable
   {
     public byte RowIdx;
     public byte ColIdx;
@@ -33,6 +33,13 @@ namespace DIOS.Core
       TermType = well.TermType;
       BeadsToCapture = well.BeadsToCapture;
       MinPerRegion = well.MinPerRegion;
+    }
+
+    public string CoordinatesString()
+    {
+      char rowletter = (char)(0x41 + RowIdx);
+      string colLetter = (ColIdx + 1).ToString();
+      return $"{rowletter}{colLetter}";
     }
   }
 }
