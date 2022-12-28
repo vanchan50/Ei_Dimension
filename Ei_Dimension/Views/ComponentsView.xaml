@@ -803,21 +803,28 @@
     <Button Content="{lang:Loc Update_FW}"
             Height="80" Width="200" HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Margin="600,600,0,0"
+            Margin="600,500,0,0"
             Style="{StaticResource ButtonStyle}"
             Command="{Binding UpdateFirmwareButtonClickCommand}"/>
     <Button Content="{lang:Loc Clear}"
             Height="80" Width="200" HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Margin="600,700,0,0"
+            Margin="600,600,0,0"
             Style="{StaticResource ButtonStyle}"
             Command="{Binding ClearButtonClickCommand}"/>
     <ToggleButton Style="{StaticResource ToggleButtonThemeStyle}"
                   Height="80" Width="200" HorizontalAlignment="Left"
                   VerticalAlignment="Top"
-                  Margin="600,800,0,0"
+                  Margin="600,700,0,0"
                   Content="{lang:Loc Components_Suppress_Warnings}"
                   IsChecked="{Binding SuppressWarnings, Mode=OneWay}"
                   Command="{Binding SuppressWarningsClickCommand}"/>
+    <ToggleButton VerticalAlignment="Top"
+                  Content="{lang:Loc MTBF_mode}"
+                  Command="{Binding ContinuousModeToggleCommand}"
+                  IsChecked="{Binding ContinuousModeOn}"
+                  Style="{StaticResource ToggleButtonThemeStyle}"
+                  Height="80" Width="200" HorizontalAlignment="Left"
+                  Margin="600,800,0,0"/>
   </Grid>
 </UserControl>

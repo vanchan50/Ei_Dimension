@@ -52,6 +52,7 @@ namespace Ei_Dimension.ViewModels
 
     public static ComponentsViewModel Instance { get; private set; }
     public virtual bool SuppressWarnings { get; set; }
+    public virtual bool ContinuousModeOn { get; set; }
 
     public byte[] SyringeControlStates { get; } = { 0, 0, 0 };
     private ushort _activeLasers;
@@ -397,6 +398,11 @@ namespace Ei_Dimension.ViewModels
       SuppressWarnings = !SuppressWarnings;
       Settings.Default.SuppressWarnings = SuppressWarnings;
       Settings.Default.Save();
+    }
+
+    public void ContinuousModeToggle()
+    {
+      App.DiosApp.RunPlateContinuously = ContinuousModeOn;
     }
 
     public void FocusedBox(int num)

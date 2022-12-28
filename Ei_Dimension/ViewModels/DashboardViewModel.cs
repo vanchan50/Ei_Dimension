@@ -1,7 +1,5 @@
-﻿using System.Collections.Generic;
-using DevExpress.Mvvm.DataAnnotations;
+﻿using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
-using Ei_Dimension.Models;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -30,7 +28,6 @@ namespace Ei_Dimension.ViewModels
     public virtual string SelectedEndReadContent { get; set; }
     public virtual ObservableCollection<DropDownButtonContents> EndReadItems { get; set; }
     public virtual bool CalValModeEnabled { get; set; }
-    public virtual bool ContinuousModeOn { get; set; }
     public virtual bool CalModeOn { get; set; }
     public virtual bool ValModeOn { get; set; }
     public virtual ObservableCollection<string> CaliDateBox { get; set; } = new ObservableCollection<string> { "" };
@@ -237,11 +234,6 @@ namespace Ei_Dimension.ViewModels
           EndReadVisibility[1] = Visibility.Hidden;
           break;
       }
-    }
-
-    public void ContinuousModeToggle()
-    {
-      App.DiosApp.RunPlateContinuously = ContinuousModeOn;
     }
 
     public void CalModeToggle()

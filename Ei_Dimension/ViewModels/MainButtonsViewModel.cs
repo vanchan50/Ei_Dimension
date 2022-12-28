@@ -126,6 +126,11 @@ namespace Ei_Dimension.ViewModels
       }
       else
       {
+        if (App.DiosApp.RunPlateContinuously)
+        {
+          ComponentsViewModel.Instance.ContinuousModeOn = false;
+          ComponentsViewModel.Instance.ContinuousModeToggle();
+        }
         App.Device.PrematureStop();
       }
     }
