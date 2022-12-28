@@ -124,13 +124,10 @@ namespace Ei_Dimension.ViewModels
 
     private bool IsSystemBusy()
     {
-      for (var i = 0; i < App.Device.SystemActivity.Length; i++)
+      if (App.Device.SystemMonitor.IsBusy())
       {
-        if (App.Device.SystemActivity[i]) //if any activity is going on - dismiss
-        {
-          Notification.ShowLocalizedError(nameof(Language.Resources.Notification_WaitSystemIdle));
-          return true;
-        }
+        Notification.ShowLocalizedError(nameof(Language.Resources.Notification_WaitSystemIdle));
+        return true;
       }
       return false;
     }

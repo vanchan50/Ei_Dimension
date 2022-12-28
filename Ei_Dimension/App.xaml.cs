@@ -226,6 +226,7 @@ namespace Ei_Dimension
 
       PlatePictogramViewModel.Instance.PlatePictogram.CurrentlyReadCell = (-1, -1);
       PlatePictogramViewModel.Instance.PlatePictogram.ChangeState(row, col, type);
+
       Device.Publisher.PlateStatusFile.Overwrite(PlatePictogramViewModel.Instance.PlatePictogram.GetSerializedPlate());
       if (Device.Control == SystemControl.WorkOrder)
       {

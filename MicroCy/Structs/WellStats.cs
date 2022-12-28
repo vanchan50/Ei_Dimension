@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using System.Text;
 using Newtonsoft.Json;
@@ -14,24 +13,23 @@ namespace DIOS.Core.Structs
   internal class WellStats
   {
     [JsonProperty("Well")]
-    private readonly Well _well;
+    public Well Well { get; }
+    [JsonIgnore]
+    public int TotalCount { get; }
+
     [JsonProperty("Results")]
     private readonly List<RegionReporterStats> _results = new List<RegionReporterStats>(101);
-    [JsonIgnore]
-    private int _totalCountPerWell;
-    [JsonIgnore]
-    private static readonly char[] Alphabet = Enumerable.Range('A', 16).Select(x => (char)x).ToArray();
 
     public WellStats(Well well, List<RegionReporterResultVolatile> results, int totalBead)
     {
-      _well = new Well(well);
+      Well = new Well(well);
       foreach (var regionResult in results)
       {
         var stats = new RegionReporterStats(regionResult);
         _results.Add(stats);
       }
       _results.Sort((x, y) => x.Region.CompareTo(y.Region));
-      _totalCountPerWell += totalBead;
+      TotalCount = totalBead;
     }
 
     public List<(int region, int mfi)> GetReporterMFI()
@@ -52,9 +50,7 @@ namespace DIOS.Core.Structs
     public override string ToString()
     {
       var bldr = new StringBuilder();
-      var row = Alphabet[_well.RowIdx].ToString();
-      var col = _well.ColIdx + 1; //columns are 1 based
-      bldr.AppendLine($"Well {row}{col}:");
+      bldr.AppendLine($"Well {Well.CoordinatesString()}:");
       foreach (var result in _results)
       {
         bldr.AppendLine(result.ToString());
@@ -65,25 +61,19 @@ namespace DIOS.Core.Structs
     public string ToStringLegacy(FieldInfo property)
     {
       var bldr = new StringBuilder();
-
-      var row = Alphabet[_well.RowIdx].ToString();
-      var col = _well.ColIdx + 1; //columns are 1 based
-      bldr.Append($"\"{row}{col}\",");
+      bldr.Append($"\"{Well.CoordinatesString()}\",");
       string Sample = "";
       bldr.Append($"\"{Sample}\",");
       foreach (var result in _results)
       {
-        if (result.Region == 0)
+        if (result.Region == 0 && !Device.IncludeReg0InPlateSummary)
         {
-          if (!Device.IncludeReg0InPlateSummary)
-          {
-            continue;
-          }
+          continue;
         }
         var value = property.GetValue(result);
         bldr.Append($"\"{value}\",");
       }
-      bldr.Append($"\"{_totalCountPerWell}\",");
+      bldr.Append($"\"{TotalCount}\",");
       string Notes = "";
       bldr.Append($"\"{Notes}\"");
       return bldr.ToString();

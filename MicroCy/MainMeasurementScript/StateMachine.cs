@@ -53,12 +53,12 @@ namespace DIOS.Core.MainMeasurementScript
     
     private bool Action2()
     {
-      if (!_device.SystemActivity[11])  //does not contain Washing
+      if (_device.SystemMonitor.ContainsWashing())  //does not contain Washing
       {
-        return true;
+        _device.Hardware.RequestParameter(DeviceParameterType.SystemActivityStatus);
+        return false;
       }
-      _device.Hardware.RequestParameter(DeviceParameterType.SystemActivityStatus);
-      return false;
+      return true;
     }
     
     private void Action3()

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Text;
 
 namespace DIOS.Core.FileIO
 {
@@ -38,6 +39,9 @@ namespace DIOS.Core.FileIO
       if (!_publisher.IsResultsPublishingActive || WellStats.Length == 0)
         return;
 
+      if (!Device.IncludeReg0InPlateSummary)
+        RemoveRegion0(ref WellStats);
+
       var directoryName = Path.Combine(_publisher.Outdir, ResultsPublisher.DATAFOLDERNAME);
       if (!_publisher.OutputDirectoryExists(directoryName))
         return;
@@ -57,6 +61,22 @@ namespace DIOS.Core.FileIO
     {
       _publisher.OutDirCheck();
       _thisRunStatsFileName = Path.Combine(_publisher.Outdir, ResultsPublisher.DATAFOLDERNAME, $"Results_{_publisher.Outfilename}_{_publisher.Date}.csv");
+    }
+
+    private void RemoveRegion0(ref string output)
+    {
+      var sb = new StringBuilder();
+      var r = new StringReader(output);
+      string s = r.ReadLine();
+      while (s != null)
+      {
+        if (!s.StartsWith("0"))
+        {
+          sb.AppendLine(s);
+        }
+        s = r.ReadLine();
+      }
+      output = sb.ToString();
     }
   }
 }

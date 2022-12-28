@@ -635,13 +635,7 @@ namespace DIOS.Core
           outParameters = new ParameterUpdateEventArgs(DeviceParameterType.LaserPower, intParameter: (int)LaserType.Red, floatParameter: cs.Parameter / 4096.0f / 0.040f * 3.3f);
           break;
         case 0xCC:
-          for (var i = 0; i < _device.SystemActivity.Length; i++)
-          {
-            if ((cs.Parameter & (1 << i)) != 0)
-              _device.SystemActivity[i] = true;
-            else
-              _device.SystemActivity[i] = false;
-          }
+          _device.SystemMonitor.DecodeMessage(cs.Parameter);
           //currently used only for probe autoheight feature
           if (cs.Parameter == 0)
           {

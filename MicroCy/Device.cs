@@ -41,7 +41,7 @@ namespace DIOS.Core
     public WorkOrder WorkOrder { get; set; }
     public ConcurrentQueue<ProcessedBead> DataOut { get; } = new ConcurrentQueue<ProcessedBead>();
     public WellController WellController { get; } = new WellController();
-    public BitArray SystemActivity { get; } = new BitArray(16, false);
+    public SystemActivity SystemMonitor { get; } = new SystemActivity();
     public HardwareInterface Hardware { get; }
     public object SystemActivityNotBusyNotificationLock { get; } = new object();
     public object ScriptF9FinishedLock { get; } = new object();

@@ -121,6 +121,7 @@
     <Compile Include="HardwareIntercom\SyringeControlState.cs" />
     <Compile Include="HardwareIntercom\SyringePosition.cs" />
     <Compile Include="HardwareIntercom\SyringeSpeed.cs" />
+    <Compile Include="SystemActivity.cs" />
     <Compile Include="USBConnection.cs" />
     <Compile Include="ValidationStats.cs" />
     <Compile Include="Verificator.cs" />

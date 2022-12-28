@@ -30,8 +30,7 @@ namespace Ei_Dimension.ViewModels
 
     public void Load()
     {
-      var idx = App.DiosApp.MapController.MapList.FindIndex(x => x.mapName == App.DiosApp.MapController.ActiveMap.mapName);
-      var map = App.DiosApp.MapController.MapList[idx];
+      var map = App.DiosApp.MapController.ActiveMap;
       foreach (var regionData in MapRegionsController.RegionsList)
       {
         if (map.Regions.TryGetValue(regionData.Number, out var region))
@@ -69,9 +68,6 @@ namespace Ei_Dimension.ViewModels
 
     public void ClearClick()
     {
-      var idx = App.DiosApp.MapController.MapList.FindIndex(x => x.mapName == App.DiosApp.MapController.ActiveMap.mapName);
-      var map = App.DiosApp.MapController.MapList[idx];
-
       foreach (var regionData in MapRegionsController.RegionsList)
       {
         regionData.MFIValue[0] = 0.ToString();
@@ -81,8 +77,7 @@ namespace Ei_Dimension.ViewModels
     public void SaveClick()
     {
       UserInputHandler.InputSanityCheck();
-      var idx = App.DiosApp.MapController.MapList.FindIndex(x => x.mapName == App.DiosApp.MapController.ActiveMap.mapName);
-      var map = App.DiosApp.MapController.MapList[idx];
+      var map = App.DiosApp.MapController.ActiveMap;
 
       var newRegions = map.regions;
       for (var i = 0; i < map.regions.Count; i++)

@@ -93,8 +93,8 @@ Move that processing to the other project?
 !!!!!Engineering GEnie blessing arrived!!!!!!
       App right now is a set of <user input> "switches", that set some switches in the hardware.
       Way to GO -> UI does not send any commands before asked to. It just keeps the data in ordered! queues.
-      On th epress of "Start" or some action button, a "Collector" script goes around and combines those queues in specified order!
-      This was the API is a bunch of "Collector" scripts that expect the ordered! commands queue
+      On the press of "Start" or some action button, a "Collector" script goes around and combines those queues in specified order!
+      This way the API is a bunch of "Collector" scripts that expect the ordered! commands queue
       The app function is to catch the BeadStruct data, that the hardware spits out.
       Optionally the "Data Interpreter" can be run on the data to produce graphs
       UI still has to update on timer, so sending "GET"'s is still a thing
@@ -124,3 +124,8 @@ make test for each command component. test that it outputs correct event on comm
 test that events are handled correctly (that would be hard, since links to VM's). could make vms's manually in tests
 tests that request/set Hardware command send correct messages
 
+device needs to output general data. all kinds of stats go to app layer
+dasboard mapselector click should only call onmapchanged, all other actions should be called there
+
+Finally make SystemActivity into own class. simple nuff (name it SystemMonitor?)
+TextBoxHandler still has duplicate logic  @case DeviceParameterType.SystemActivityStatus
