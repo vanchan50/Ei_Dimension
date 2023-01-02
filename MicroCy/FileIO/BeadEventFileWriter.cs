@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 
 namespace DIOS.Core.FileIO
 {
@@ -18,7 +17,7 @@ namespace DIOS.Core.FileIO
     {
       if (!_publisher.IsBeadEventPublishingActive)
       {
-        Console.WriteLine("Bead event Saving inactive");
+        _publisher._logger.Log("Bead event Saving inactive");
         return;
       }
 
@@ -29,11 +28,11 @@ namespace DIOS.Core.FileIO
       try
       {
         File.WriteAllText(_fullName, beadEventsList);
-        Console.WriteLine($"Bead event saved as {_fullName}");
+        _publisher._logger.Log($"Bead event saved as {_fullName}");
       }
       catch
       {
-        Console.WriteLine($"Failed to write Bead event to {_fullName}");
+        _publisher._logger.Log($"Failed to write Bead event to {_fullName}");
       }
     }
 

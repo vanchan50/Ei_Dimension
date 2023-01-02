@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
+﻿using System.Text;
 
 namespace DIOS.Core.FileIO
 {
@@ -9,9 +6,11 @@ namespace DIOS.Core.FileIO
   {
     private StringBuilder _data = new StringBuilder();
     //private string _path;
+    private readonly ILogger _logger;
 
-    public VerificationReportPublisher()
+    public VerificationReportPublisher(ILogger logger)
     {
+      _logger = logger;
       //_path = DateTime.Now.ToString("dd.MM.yyyy.hh-mm-ss",
       //  System.Globalization.CultureInfo.CreateSpecificCulture("en-US")) + "VerificationReport.txt";
     }
@@ -42,20 +41,20 @@ namespace DIOS.Core.FileIO
       //}
       //catch
       //{
-      //  Console.WriteLine($"Failed to create {directoryName}");
+      //  _logger.Log($"Failed to create {directoryName}");
       //  return;
       //}
       //
       //try
       //{
       //  File.AppendAllText(_path, _data.ToString());
-      //  Console.WriteLine($"Verification Report saved as {_path}");
+      //  _logger.Log($"Verification Report saved as {_path}");
       //}
       //catch
       //{
-      //  Console.WriteLine($"Failed to append data to {_path}");
+      //  _logger.Log($"Failed to append data to {_path}");
       //}
-      Console.WriteLine(_data.ToString());
+      _logger.Log(_data.ToString());
     }
   }
 }

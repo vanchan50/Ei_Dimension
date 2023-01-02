@@ -5,7 +5,7 @@ using DIOS.Core.FileIO;
 
 namespace DIOS.Core
 {
-  public static class Verificator
+  public class Verificator
   {
     private static readonly List<ValidationStats> RegionalStats = new List<ValidationStats>(50);
     private static Dictionary<int, int> _classifiedRegionsDict = new Dictionary<int, int>();  //region,index
@@ -19,9 +19,10 @@ namespace DIOS.Core
     private static int _totalUnclassifiedBeads;
     private static int _highestUnclassifiedCount; 
     private static int _highestUnclassifiedCountRegion = -1;
-    private static readonly VerificationReportPublisher _publisher = new VerificationReportPublisher();
+    private readonly VerificationReportPublisher _publisher;
     private static CultureInfo _culture;
     private static VerificationReport _report;
+    private readonly ILogger _logger;
     private static readonly Dictionary<string, (string en, string zh)> _culturedText = new Dictionary<string, (string en, string zh)>
     {
       ["Test1_1"] = ("Test1: Regions", "测试1：区域"),
@@ -34,7 +35,13 @@ namespace DIOS.Core
       ["Test3_3"] = ("events misclassified into regions", "微球错误分类至区域")
     };
 
-    public static void Reset(List<(int regionNum, double InputReporter)> regions)
+    public Verificator(ILogger logger)
+    {
+      _logger = logger;
+      _publisher = new VerificationReportPublisher(_logger);
+    }
+
+    public void Reset(List<(int regionNum, double InputReporter)> regions)
     {
       RegionalStats.Clear();
       _totalClassifiedBeads = 0;
@@ -59,12 +66,12 @@ namespace DIOS.Core
       _report = new VerificationReport();
     }
 
-    public static void PublishReport()
+    public void PublishReport()
     {
       _publisher.PublishReport();
     }
 
-    public static bool ReporterToleranceTest(double errorThresholdPercent, out string msg)
+    public bool ReporterToleranceTest(double errorThresholdPercent, out string msg)
     {
       msg = null;
       if (errorThresholdPercent < 0)
@@ -76,7 +83,7 @@ namespace DIOS.Core
       foreach (var reg in RegionalStats)
       {
         var ActualReporterMedian = GetMedianReporterForRegion(reg.Region);
-        //Console.WriteLine($"Verification Fail. Test 1 Reporter tolerance\nReporter value ({ReporterMedian.ToString()}) deviation is more than Threshold is {errorThresholdPercent.ToString($"{0:0.00}")}% from the target ({reg.InputReporter})");
+        //_logger.Log($"Verification Fail. Test 1 Reporter tolerance\nReporter value ({ReporterMedian.ToString()}) deviation is more than Threshold is {errorThresholdPercent.ToString($"{0:0.00}")}% from the target ({reg.InputReporter})");
         var errorPercentage = 100 * (reg.InputReporter - ActualReporterMedian) / reg.InputReporter;  //how much Actual is less than InputReporter
         if (ActualReporterMedian <= reg.InputReporter * thresholdMultiplier)
         {
@@ -103,7 +110,7 @@ namespace DIOS.Core
       return passed;
     }
 
-    public static bool ClassificationToleranceTest(double errorThresholdPercent, out string msg)
+    public bool ClassificationToleranceTest(double errorThresholdPercent, out string msg)
     {
       msg = null;
       if (errorThresholdPercent < 0)
@@ -127,7 +134,7 @@ namespace DIOS.Core
       if (difPercent > errorThresholdPercent)
       {
         passed = false;
-        //Console.WriteLine($"Verification Fail. Test 2 Classification tolerance\nMax difference between region counts is {difPercent.ToString()}%, Threshold is {errorThresholdPercent.ToString($"{0:0.00}")}");
+        //_logger.Log($"Verification Fail. Test 2 Classification tolerance\nMax difference between region counts is {difPercent.ToString()}%, Threshold is {errorThresholdPercent.ToString($"{0:0.00}")}");
         msg = $"{GetCulturedMsg("Test2_1")}: {difPercent.ToString()}% {GetCulturedMsg("Test2_2")}";
         _publisher.AddData("\nClassification Tolerance Test:\n");
         _publisher.AddData($"{difPercent.ToString()}% of verification events outside target regions\n");
@@ -137,7 +144,7 @@ namespace DIOS.Core
       return passed;
     }
 
-    public static bool MisclassificationToleranceTest(double errorThresholdPercent, out string msg)
+    public bool MisclassificationToleranceTest(double errorThresholdPercent, out string msg)
     {
       msg = null;
       if (errorThresholdPercent < 0)
@@ -153,7 +160,7 @@ namespace DIOS.Core
         if ( ((reg.Value / (double)_lowestCount) * 100 ) > errorThresholdPercent)
         {
           passed = false;
-          //Console.WriteLine($"Verification Fail. Test 3 Misclassification tolerance\nRegion #{reg.Key} Count is higher than the threshold {errorThresholdPercent.ToString($"{0:0.00}")}%");
+          //_logger.Log($"Verification Fail. Test 3 Misclassification tolerance\nRegion #{reg.Key} Count is higher than the threshold {errorThresholdPercent.ToString($"{0:0.00}")}%");
           problematicRegions.Add(reg.Key);
         }
       }

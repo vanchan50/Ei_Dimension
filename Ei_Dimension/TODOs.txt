@@ -129,3 +129,4 @@ dasboard mapselector click should only call onmapchanged, all other actions shou
 
 Finally make SystemActivity into own class. simple nuff (name it SystemMonitor?)
 TextBoxHandler still has duplicate logic  @case DeviceParameterType.SystemActivityStatus
+MapController needs more attention

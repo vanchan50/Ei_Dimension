@@ -16,7 +16,7 @@ namespace Ei_Dimension
     public void ParameterUpdateEventHandler(object sender, ParameterUpdateEventArgs parameter)
     {
       #if DEBUG
-      Console.WriteLine(parameter.ToString());
+      App.Logger.Log(parameter.ToString());
       #endif
       Action update = null;
       switch (parameter.Type)
@@ -31,7 +31,7 @@ namespace Ei_Dimension
           update = () =>
           {
             MainViewModel.Instance.TotalBeadsInFirmware[0] = parameter.FloatParameter.ToString();
-            Console.WriteLine($"[Report] FW:SW {MainViewModel.Instance.TotalBeadsInFirmware[0]} : {MainViewModel.Instance.EventCountCurrent[0]}");
+            App.Logger.Log($"[Report] FW:SW {MainViewModel.Instance.TotalBeadsInFirmware[0]} : {MainViewModel.Instance.EventCountCurrent[0]}");
           };
           break;
         case DeviceParameterType.CalibrationMargin:
@@ -714,7 +714,7 @@ namespace Ei_Dimension
             var msg2 = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Messages_Press_OK_ToContinue),
               Language.TranslationSource.Instance.CurrentCulture);
             Notification.Show($"{msg1}\n{msg2}");
-            Console.WriteLine("Bubble Detector Fault");
+            App.Logger.Log("Bubble Detector Fault");
           }
           break;
       }

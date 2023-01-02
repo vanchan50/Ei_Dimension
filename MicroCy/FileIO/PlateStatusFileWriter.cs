@@ -21,7 +21,7 @@ namespace DIOS.Core.FileIO
       }
       catch (Exception e)
       {
-        Console.WriteLine($"Problem with status file save, Please report this issue to the Manufacturer {e.Message}");
+        _publisher._logger.Log($"Problem with status file save, Please report this issue to the Manufacturer {e.Message}");
       }
     }
   }

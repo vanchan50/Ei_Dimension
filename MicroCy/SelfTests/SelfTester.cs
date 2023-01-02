@@ -9,11 +9,13 @@ namespace DIOS.Core.SelfTests
     internal bool IsActive { get; private set; } = true;
 
     private Device _device;
+    private ILogger _logger;
 
-    internal SelfTester(Device device)
+    internal SelfTester(Device device, ILogger logger)
     {
       _device = device;
-      Data = new SelfTestData(device);
+      Data = new SelfTestData(device, logger);
+      _logger = logger;
     }
 
     internal void FluidicsTest()

@@ -107,9 +107,9 @@ namespace Ei_Dimension.ViewModels
         ResultsViewModel.Instance.CurrentCvItems[i] = "";
       }
       if (App.Device.Normalization.IsEnabled)
-        Console.WriteLine("Normalization Enabled");
+        App.Logger.Log("Normalization Enabled");
       else
-        Console.WriteLine("Normalization Disabled");
+        App.Logger.Log("Normalization Disabled");
       App.Device.Publisher.ResultsFile.MakeNew();
       App.Device.StartOperation();
     }
@@ -148,7 +148,7 @@ namespace Ei_Dimension.ViewModels
           regions.Add((reg, inputReporter));
         }
       }
-      Verificator.Reset(regions);
+      App.Device.Verificator.Reset(regions);
     }
 
     private static void DefaultRegionNaming()

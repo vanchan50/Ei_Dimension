@@ -8,13 +8,14 @@ namespace DIOS.Core.MainMeasurementScript
     private readonly Device _device;
     private readonly HardwareInterface _hardware;
     private WellController _wellController;
+    private ILogger _logger;
 
-    public MeasurementScript(Device device)
+    public MeasurementScript(Device device, ILogger logger)
     {
       _device = device;
       _hardware = device.Hardware;
       _wellController = device.WellController;
-      StateMach = new StateMachine(_device, this);
+      StateMach = new StateMachine(_device, this, logger);
     }
 
     public void Start()

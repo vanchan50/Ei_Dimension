@@ -27,7 +27,7 @@ namespace DIOS.Core.SelfTests
       private set
       {
         _startupPressure = value;
-        Console.WriteLine($"Startup pressure: {value}");
+        _logger.Log($"Startup pressure: {value}");
       }
     }
 
@@ -42,7 +42,7 @@ namespace DIOS.Core.SelfTests
       private set
       {
         _pressure = value;
-        Console.WriteLine($"Pressure: {value}");
+        _logger.Log($"Pressure: {value}");
       }
     }
 
@@ -56,7 +56,7 @@ namespace DIOS.Core.SelfTests
       set
       {
         _motorX = value;
-        Console.WriteLine($"Motor X: {value}");
+        _logger.Log($"Motor X: {value}");
       }
     }
 
@@ -71,7 +71,7 @@ namespace DIOS.Core.SelfTests
       set
       {
         _motorY = value;
-        Console.WriteLine($"Motor Y: {value}");
+        _logger.Log($"Motor Y: {value}");
       }
     }
 
@@ -86,7 +86,7 @@ namespace DIOS.Core.SelfTests
       set
       {
         _motorZ = value;
-        Console.WriteLine($"Motor Z: {value}");
+        _logger.Log($"Motor Z: {value}");
       }
     }
 
@@ -97,10 +97,12 @@ namespace DIOS.Core.SelfTests
     private float? _startupPressure;
     private bool _startup = true;
     private Device _device;
+    private ILogger _logger;
 
-    internal SelfTestData(Device device)
+    internal SelfTestData(Device device, ILogger logger)
     {
       _device = device;
+      _logger = logger;
     }
 
     internal void SetPressure(float pressure)

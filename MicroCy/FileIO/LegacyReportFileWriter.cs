@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 
 namespace DIOS.Core.FileIO
 {
@@ -16,7 +15,7 @@ namespace DIOS.Core.FileIO
     {
       if (!_publisher.IsLegacyPlateReportPublishingActive)
       {
-        Console.WriteLine("Legacy Plate Report Inactive");
+        _publisher._logger.Log("Legacy Plate Report Inactive");
         return;
       }
 
@@ -28,11 +27,11 @@ namespace DIOS.Core.FileIO
       try
       {
         File.WriteAllText(fileName, LegacyReport);
-        Console.WriteLine($"Legacy Plate Report saved as {fileName}");
+        _publisher._logger.Log($"Legacy Plate Report saved as {fileName}");
       }
       catch
       {
-        Console.WriteLine("Failed to create Legacy Plate Report");
+        _publisher._logger.Log("Failed to create Legacy Plate Report");
       }
     }
   }

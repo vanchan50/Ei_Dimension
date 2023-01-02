@@ -11,13 +11,15 @@ namespace DIOS.Core
     public List<CustomMap> MapList { get; } = new List<CustomMap>();
     public event EventHandler<CustomMap> ChangedActiveMap;
     private string _mapFolder;
+    private ILogger _logger;
 
-    public MapController(string mapFolder)
+    public MapController(string mapFolder, ILogger logger)
     {
       _mapFolder = mapFolder;
       MoveMaps();
       UpdateMaps();
       LoadMaps();
+      _logger = logger;
     }
 
     public void SetMap(CustomMap map)
@@ -48,7 +50,7 @@ namespace DIOS.Core
         }
         catch
         {
-          Console.WriteLine($"Problem with Maps in {_mapFolder} folder");
+          _logger.Log($"Problem with Maps in {_mapFolder} folder");
           SetMap(MapList[0]);
         }
       }
@@ -260,7 +262,7 @@ namespace DIOS.Core
         }
         catch
         {
-          Console.WriteLine($"Failed to backup {originalMap.mapName}");
+          _logger.Log($"Failed to backup {originalMap.mapName}");
         }
         //swap
         foreach (var region in updateMap.Regions)
@@ -274,7 +276,7 @@ namespace DIOS.Core
         }
         //save
         if (!WriteToMap(originalMap))
-          Console.WriteLine($"Failed to update {originalMap.mapName}");
+          _logger.Log($"Failed to update {originalMap.mapName}");
         File.Delete(mp);
       }
     }

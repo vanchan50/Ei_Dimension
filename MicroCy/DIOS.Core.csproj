@@ -74,6 +74,7 @@
     <Compile Include="HardwareIntercom\MotorStepsX.cs" />
     <Compile Include="HardwareIntercom\MotorStepsY.cs" />
     <Compile Include="HardwareIntercom\MotorStepsZ.cs" />
+    <Compile Include="ILogger.cs" />
     <Compile Include="MainMeasurementScript\MeasurementScript.cs" />
     <Compile Include="ParameterUpdateEventArgs.cs" />
     <Compile Include="Enums\Gate.cs" />

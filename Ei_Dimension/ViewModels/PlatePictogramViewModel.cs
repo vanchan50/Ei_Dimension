@@ -83,7 +83,7 @@ namespace Ei_Dimension.ViewModels
       if (App.Device.IsMeasurementGoing)
         return;
 #if DEBUG
-      Console.WriteLine(new System.Diagnostics.StackTrace());
+      App.Logger.Log(new System.Diagnostics.StackTrace().ToString());
 #endif
 
       ResultsViewModel.Instance.PlotCurrent();

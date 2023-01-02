@@ -354,7 +354,7 @@ namespace Ei_Dimension.ViewModels
       var currentStep = float.Parse(MotorsViewModel.Instance.ParametersZ[5]);
       var epsilonZ = float.Parse(ZStep[0]);
       #if DEBUG
-      Console.WriteLine($"ACTUAL PROBE HEIGHT: {currentStep},\t REPORTED HEIGHT: {currentStep - epsilonZ}");
+      App.Logger.Log($"ACTUAL PROBE HEIGHT: {currentStep},\t REPORTED HEIGHT: {currentStep - epsilonZ}");
       #endif
       return currentStep - epsilonZ;
     }

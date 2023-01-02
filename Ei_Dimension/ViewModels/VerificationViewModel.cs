@@ -3,7 +3,7 @@ using DevExpress.Mvvm.POCO;
 using DIOS.Core;
 using System;
 using System.Collections.ObjectModel;
-using DIOSApplication;
+using DIOS.Application;
 using Ei_Dimension.Controllers;
 
 namespace Ei_Dimension.ViewModels
@@ -203,9 +203,9 @@ namespace Ei_Dimension.ViewModels
     {
       errorMsg = null;
       Verificator.SetCulture(Language.TranslationSource.Instance.CurrentCulture);
-      var passed1 = Verificator.ReporterToleranceTest(Settings.Default.ValidatorToleranceReporter, out var msg1);
-      var passed2 = Verificator.ClassificationToleranceTest(Settings.Default.ValidatorToleranceClassification, out var msg2);
-      var passed3 = Verificator.MisclassificationToleranceTest(Settings.Default.ValidatorToleranceMisclassification, out var msg3);
+      var passed1 = App.Device.Verificator.ReporterToleranceTest(Settings.Default.ValidatorToleranceReporter, out var msg1);
+      var passed2 = App.Device.Verificator.ClassificationToleranceTest(Settings.Default.ValidatorToleranceClassification, out var msg2);
+      var passed3 = App.Device.Verificator.MisclassificationToleranceTest(Settings.Default.ValidatorToleranceMisclassification, out var msg3);
       Verificator.PublishResult($"{App.DiosApp.RootDirectory.FullName}\\SystemLogs\\VerificationLogs.txt");
       if (msg1 != null)
         errorMsg = msg1;

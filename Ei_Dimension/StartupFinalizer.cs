@@ -98,12 +98,10 @@ namespace Ei_Dimension
       if (selfTestErrorMessage != null)
         Notification.ShowError(selfTestErrorMessage);
       
-      #if DEBUG
-      Console.Error.WriteLine($"Detected Board Rev v{App.Device.BoardVersion}");
-      #endif
+      App.Logger.Log($"Detected Board Rev v{App.Device.BoardVersion}");
       if(App.Device.FirmwareVersion != null)
         MainViewModel.AppVersion += App.Device.FirmwareVersion;
-      Console.WriteLine(MainViewModel.AppVersion);
+      App.Logger.Log(MainViewModel.AppVersion);
       if (App.Device.BoardVersion > 0)
         HideChannels();
     }

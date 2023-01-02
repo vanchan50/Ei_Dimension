@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 
 namespace DIOS.Core.FileIO
 {
@@ -16,7 +15,7 @@ namespace DIOS.Core.FileIO
     {
       if (!_publisher.IsPlateReportPublishingActive)
       {
-        Console.WriteLine("Plate Report Inactive");
+        _publisher._logger.Log("Plate Report Inactive");
         return;
       }
 
@@ -27,11 +26,11 @@ namespace DIOS.Core.FileIO
       {
         var fullFilePath = Path.Combine(_publisher.SUMMARYFOLDERNAME, $"Summary_{_publisher.ReportFileName}_{_publisher.Date}.json");
         File.WriteAllText(fullFilePath, PlateReportJSON);
-        Console.WriteLine($"Plate Report saved as {fullFilePath}");
+        _publisher._logger.Log($"Plate Report saved as {fullFilePath}");
       }
       catch
       {
-        Console.WriteLine("Failed to create Plate Report");
+        _publisher._logger.Log("Failed to create Plate Report");
       }
     }
   }

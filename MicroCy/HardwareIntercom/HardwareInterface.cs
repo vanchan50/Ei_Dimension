@@ -6,16 +6,18 @@ namespace DIOS.Core.HardwareIntercom
   {
     private DataController _dataController;
     private Device _device;
-    internal HardwareInterface(Device device, DataController dataController)
+    private readonly ILogger _logger;
+    internal HardwareInterface(Device device, DataController dataController, ILogger logger)
     {
       _device = device;
       _dataController = dataController;
+      _logger = logger;
     }
 
     public void SendCommand(DeviceCommandType command)
     {
       #if DEBUG
-      Console.WriteLine($"{DateTime.Now.ToString()} CMD {command.ToString()}");
+      _logger.Log($"{DateTime.Now.ToString()} CMD {command.ToString()}");
       #endif
       ushort param = 0;
       byte commandCode = 0;
@@ -141,7 +143,7 @@ namespace DIOS.Core.HardwareIntercom
     {
       #if DEBUG
       var subparReport = subParameter == null ? "" : subParameter.ToString();
-      Console.WriteLine($"{DateTime.Now.ToString()} SET {primaryParameter.ToString()} {subparReport} {value.ToString()}");
+      _logger.Log($"{DateTime.Now.ToString()} SET {primaryParameter.ToString()} {subparReport} {value.ToString()}");
       #endif
       ushort param = 0;
       float fparam = 0;
@@ -998,7 +1000,7 @@ namespace DIOS.Core.HardwareIntercom
       if (primaryParameter != DeviceParameterType.BeadConcentration)
       {
         var subparReport = subParameter == null ? "" : subParameter.ToString();
-        Console.WriteLine($"{DateTime.Now.ToString()} GET {primaryParameter.ToString()} {subparReport}");
+        _logger.Log($"{DateTime.Now.ToString()} GET {primaryParameter.ToString()} {subparReport}");
       }
       #endif
       ushort selector = 0;
@@ -1521,7 +1523,7 @@ namespace DIOS.Core.HardwareIntercom
     internal void SetToken(HardwareToken token, ushort value = 0)
     {
       #if DEBUG
-      Console.WriteLine($"{DateTime.Now.ToString()} TOKEN {token.ToString()} {value.ToString()}");
+      _logger.Log($"{DateTime.Now.ToString()} TOKEN {token.ToString()} {value.ToString()}");
       #endif
       byte commandCode = 0x00;
       switch (token)

@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Text;
 
 namespace DIOS.Core.FileIO
@@ -26,11 +25,11 @@ namespace DIOS.Core.FileIO
       try
       {
         File.AppendAllText(_thisRunStatsFileName, ResultingWellStatsData.HEADER);
-        Console.WriteLine($"Results summary file created {_thisRunStatsFileName}");
+        _publisher._logger.Log($"Results summary file created {_thisRunStatsFileName}");
       }
       catch
       {
-        Console.WriteLine($"Failed to create file {_thisRunStatsFileName}");
+        _publisher._logger.Log($"Failed to create file {_thisRunStatsFileName}");
       }
     }
 
@@ -49,11 +48,11 @@ namespace DIOS.Core.FileIO
       try
       {
         File.AppendAllText(_thisRunStatsFileName, WellStats);
-        Console.WriteLine($"Results summary saved as {_thisRunStatsFileName}");
+        _publisher._logger.Log($"Results summary saved as {_thisRunStatsFileName}");
       }
       catch
       {
-        Console.WriteLine($"Failed to append data to {_thisRunStatsFileName}");
+        _publisher._logger.Log($"Failed to append data to {_thisRunStatsFileName}");
       }
     }
 

@@ -29,7 +29,7 @@ namespace Ei_Dimension
       }
       catch (Exception e)
       {
-        Console.WriteLine(e.StackTrace);
+        App.Logger.Log(e.StackTrace);
       }
 #endif
     }

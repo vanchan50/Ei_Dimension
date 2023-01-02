@@ -9,7 +9,8 @@ using System.Text;
 using DIOS.Core.HardwareIntercom;
 using Ei_Dimension.Cache;
 using Ei_Dimension.Controllers;
-using DIOSApplication;
+using DIOS.Application;
+using DIOS.Application.FileIO;
 
 namespace Ei_Dimension
 {
@@ -21,6 +22,9 @@ namespace Ei_Dimension
     public static Device Device { get; private set; }
     public static ResultsCache Cache { get; } = new ResultsCache();
     public static MapRegionsController MapRegions { get; set; }
+
+    public static ILogger Logger => DiosApp.Logger;
+
     public static bool _nextWellWarning;
 
     private static bool _workOrderPending;
@@ -295,7 +299,7 @@ namespace Ei_Dimension
           {
             Current.Dispatcher.Invoke(()=>Notification.ShowError(errorMsg, 26));
           }
-          Verificator.PublishReport();
+          Device.Verificator.PublishReport();
           Current.Dispatcher.Invoke(DashboardViewModel.Instance.ValModeToggle);
           //Notification.ShowLocalizedError(nameof(Language.Resources.Validation_Fail));
           break;
@@ -347,27 +351,6 @@ namespace Ei_Dimension
       var wholeReport = bldr.ToString();
 
       Device.Publisher.LegacyReportFile.CreateAndWrite(wholeReport);
-    }
-
-    public static void SetLogOutput()
-    {
-      string folder = $"{DiosApp.RootDirectory.FullName}\\SystemLogs";
-      string fileName = "EventLog";
-      if (!Directory.Exists(folder))
-        Directory.CreateDirectory(folder);
-      string logPath = $"{folder}\\{fileName}";
-      string logFilePath = logPath + ".txt";
-    
-      string backFilePath = logPath + ".bak";
-      if (File.Exists(logFilePath))
-      {
-        File.Delete(backFilePath);
-        File.Move(logFilePath, backFilePath);
-      }
-      var fs = new FileStream(logFilePath, FileMode.Create);
-      var logWriter = new StreamWriter(fs);
-      logWriter.AutoFlush = true;
-      Console.SetOut(logWriter);
     }
 
     protected override void OnStartup(StartupEventArgs e)
@@ -594,9 +577,8 @@ namespace Ei_Dimension
     private void InitApp(Device device)
     {
       StatisticsExtension.TailDiscardPercentage = Settings.Default.StatisticsTailDiscardPercentage;
-      Device = device ?? new Device(new USBConnection(), DiosApp.RootDirectory.FullName);
-
-      SetLogOutput();
+      Device = device ?? new Device(new USBConnection(DiosApp.Logger), DiosApp.RootDirectory.FullName, DiosApp.Logger);
+      
       DiosApp.MapController.OnAppLoaded(Settings.Default.DefaultMap);
       Device.StartingToReadWell += StartingToReadWellEventHandler;
       Device.FinishedReadingWell += FinishedReadingWellEventHandler;

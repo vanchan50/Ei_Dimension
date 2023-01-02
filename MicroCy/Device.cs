@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections;
 using System.Collections.Concurrent;
 using System.Threading.Tasks;
 using DIOS.Core.FileIO;
@@ -127,6 +125,7 @@ namespace DIOS.Core
     public bool IsPlateEjected { get; internal set; }
     internal bool _singleSyringeMode;
     public static bool IncludeReg0InPlateSummary { get; set; }  //TODO: crutch for filesaving
+    public readonly Verificator Verificator;
 
     internal bool _isReadingA;
     private Gate _scatterGate;
@@ -137,16 +136,19 @@ namespace DIOS.Core
     internal SelfTester SelfTester { get; }
     internal readonly BeadProcessor _beadProcessor;
     private readonly MeasurementScript _script;
+    private readonly ILogger _logger;
 
-    public Device(ISerial connection, string folderPath)
+    public Device(ISerial connection, string folderPath, ILogger logger)
     {
-      SelfTester = new SelfTester(this);
+      SelfTester = new SelfTester(this, logger);
       Results = new RunResults(this);
       _beadProcessor = new BeadProcessor(this);
-      _dataController = new DataController(this, Results, connection);
-      Publisher = new ResultsPublisher(this, folderPath);
-      Hardware = new HardwareInterface(this, _dataController);
-      _script = new MeasurementScript(this);
+      _dataController = new DataController(this, Results, connection, logger);
+      Publisher = new ResultsPublisher(this, folderPath, logger);
+      Hardware = new HardwareInterface(this, _dataController, logger);
+      _script = new MeasurementScript(this, logger);
+      _logger = logger;
+      Verificator = new Verificator(_logger);
     }
 
     public void Init()
@@ -206,7 +208,7 @@ namespace DIOS.Core
           System.Threading.Thread.Sleep(100);
         }
         #if DEBUG
-        Console.WriteLine("\nSelfTest Finished\n\n");
+        _logger.Log("\nSelfTest Finished\n\n");
         #endif
         return data;
       });
@@ -234,11 +236,11 @@ namespace DIOS.Core
       _dataController.IsMeasurementGoing = true;
       StartingToReadWell?.Invoke(this, new ReadingWellEventArgs(WellController.CurrentWell));
       Hardware.SetParameter(DeviceParameterType.TotalBeadsInFirmware); //reset totalbeads in firmware
-      Console.WriteLine("Starting to read well with Params:");
-      Console.WriteLine($"Termination: {(int)TerminationType}");
-      Console.WriteLine($"TotalBeads: {TotalBeads}");
-      Console.WriteLine($"BeadCount: {BeadCount}");
-      Console.WriteLine($"BeadsToCapture: {BeadsToCapture}");
+      _logger.Log("Starting to read well with Params:");
+      _logger.Log($"Termination: {(int)TerminationType}");
+      _logger.Log($"TotalBeads: {TotalBeads}");
+      _logger.Log($"BeadCount: {BeadCount}");
+      _logger.Log($"BeadsToCapture: {BeadsToCapture}");
     }
 
     internal void OnFinishedReadingWell()

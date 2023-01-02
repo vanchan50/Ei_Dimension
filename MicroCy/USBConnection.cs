@@ -11,18 +11,22 @@ namespace DIOS.Core
     private USBDevice _usbDevice;
     private readonly Guid _interfaceGuid = Guid.ParseExact("F70242C7-FB25-443B-9E7E-A4260F373982", "D");  // interface GUID, not device guid
     private readonly object _disconnectionLock = new object();
+    private ILogger _logger;
 
-    public USBConnection()
+    public USBConnection(ILogger logger)
     {
+      _logger = logger;
     }
 
     public void Start()
     {
       if (Init())
       {
+        #if DEBUG
         Console.Error.WriteLine("OutPipe Address:");
         Console.Error.WriteLine($"\t\t\t0x{Convert.ToString(_usbDevice.Interfaces[0].OutPipe.Address, 2).PadLeft(8, '0')}");
         ListAvailablePipes();
+        #endif
       }
     }
 
@@ -34,7 +38,7 @@ namespace DIOS.Core
         try
         {
           _usbDevice = new USBDevice(di[0].DevicePath);     // just grab the first one for now, but should support multiples
-          Console.WriteLine(string.Format("{0}:{1}", _usbDevice.Descriptor.FullName, _usbDevice.Descriptor.SerialNumber));
+          _logger.Log(string.Format("{0}:{1}", _usbDevice.Descriptor.FullName, _usbDevice.Descriptor.SerialNumber));
           _usbDevice.Interfaces[0].OutPipe.Policy.PipeTransferTimeout = 400;
           //USBDevice.Interfaces[0].InPipe.Policy.PipeTransferTimeout = 600;
           _usbDevice.Interfaces[0].InPipe.Policy.AutoClearStall = true;
@@ -44,7 +48,7 @@ namespace DIOS.Core
         catch { return false; }
         return true;
       }
-      Console.WriteLine("USB devices not found");
+      _logger.Log("USB devices not found");
       return false;
     }
 
@@ -56,8 +60,7 @@ namespace DIOS.Core
       }
       catch (USBException e)
       {
-        Console.WriteLine($"{e.Message} {e.InnerException}");
-        Console.Error.WriteLine($"{e.Message} {e.InnerException}");
+        _logger.Log($"{e.Message} {e.InnerException}");
         if (!IsActive)
         {
           lock (_disconnectionLock)
@@ -89,8 +92,7 @@ namespace DIOS.Core
         }
         catch (USBException e)
         {
-          Console.WriteLine($"{e.Message} {e.InnerException}");
-          Console.Error.WriteLine($"{e.Message} {e.InnerException}");
+          _logger.Log($"{e.Message} {e.InnerException}");
           Disconnect();
 
           lock (_disconnectionLock)

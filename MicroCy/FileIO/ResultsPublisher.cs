@@ -27,8 +27,9 @@ namespace DIOS.Core.FileIO
 
     private string _folder;
     private Device _device;
+    internal ILogger _logger;
 
-    public ResultsPublisher(Device device, string folder)
+    public ResultsPublisher(Device device, string folder, ILogger logger)
     {
       _device = device;
       _folder = folder;
@@ -39,6 +40,7 @@ namespace DIOS.Core.FileIO
       PlateReportFile = new PlateReportFileWriter(this);
       LegacyReportFile = new LegacyReportFileWriter(this);
       PlateStatusFile = new PlateStatusFileWriter(this);
+      _logger = logger;
     }
 
     /// <summary>
@@ -71,7 +73,7 @@ namespace DIOS.Core.FileIO
       }
       catch
       {
-        Console.WriteLine($"Failed to create {fullDirectoryPath}");
+        _logger.Log($"Failed to create {fullDirectoryPath}");
         directoryExists = false;
       }
 

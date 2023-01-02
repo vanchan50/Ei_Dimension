@@ -231,30 +231,5 @@
                Text="{Binding OutFolder[0]}">
       </TextBox>
     </StackPanel>
-
-    <StackPanel Orientation="Horizontal" 
-                Height="40"
-                Margin="750,800,0,0"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Top">
-      <CheckBox FontFamily="{StaticResource AppTextFont}"
-                    FontSize="30"
-                    FontWeight="UltraBold"
-                    Foreground="{StaticResource AppTextColor}"
-                    Margin="0,4,0,0"
-                    Style="{StaticResource CheckboxStyle}"
-                    IsChecked="{Binding Checkboxes[7],Mode=OneWay}">
-        <dxmvvm:Interaction.Behaviors>
-          <dxmvvm:EventToCommand EventName="Checked" Command="{Binding CheckedBoxCommand}" CommandParameter="7"/>
-          <dxmvvm:EventToCommand EventName="Unchecked" Command="{Binding UncheckedBoxCommand}" CommandParameter="7"/>
-        </dxmvvm:Interaction.Behaviors>
-      </CheckBox>
-      <TextBlock Text="{lang:Loc FileSave_Sys_Log}"
-                 FontFamily="{StaticResource AppTextFont}"
-                 FontSize="30"
-                 FontWeight="UltraBold"
-                 Foreground="{StaticResource AppTextColor}"
-                 Margin="4,0,0,0"/>
-    </StackPanel>
   </Grid>
 </UserControl>

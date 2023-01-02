@@ -30,8 +30,7 @@ namespace Ei_Dimension.ViewModels
         Settings.Default.OnlyClassifed,
         false,
         false,
-        Settings.Default.LegacyPlateReport,
-        true
+        Settings.Default.LegacyPlateReport
       };
       Instance = this;
     }
@@ -118,17 +117,6 @@ namespace Ei_Dimension.ViewModels
         case 6:
           App.Device.Publisher.IsLegacyPlateReportPublishingActive = Checkboxes[num];
           Settings.Default.LegacyPlateReport = Checkboxes[num];
-          break;
-        case 7:
-          if (Checkboxes[num])
-            App.SetLogOutput();
-          else
-          {
-            Console.Out.Close();
-            StreamWriter sw = new StreamWriter(Console.OpenStandardOutput());
-            sw.AutoFlush = true;
-            Console.SetOut(sw);
-          }
           break;
       }
       Settings.Default.Save();

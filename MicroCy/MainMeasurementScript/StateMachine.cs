@@ -10,11 +10,13 @@ namespace DIOS.Core.MainMeasurementScript
     private readonly Device _device;
     private readonly MeasurementScript _script;
     private int _started;
+    private ILogger _logger;
 
-    public StateMachine(Device device, MeasurementScript script)
+    public StateMachine(Device device, MeasurementScript script, ILogger logger)
     {
       _device = device;
       _script = script;
+      _logger = logger;
     }
 
     public void Start()
@@ -22,7 +24,7 @@ namespace DIOS.Core.MainMeasurementScript
       if (Interlocked.CompareExchange(ref _started, 1, 0) == 1)
         return;
 
-      Console.WriteLine("SM start");
+      _logger.Log("SM start");
       Task.Run(() =>
       {
         Action1();
@@ -46,7 +48,7 @@ namespace DIOS.Core.MainMeasurementScript
         _device.Publisher.ResultsFile.AppendAndWrite(_device.Results.PublishWellStats()); //makewellstats should be awaited only for this method
         _device.Publisher.BeadEventFile.CreateAndWrite(_device.Results.PublishBeadEvents());
         _device.Publisher.DoSomethingWithWorkOrder();
-        Console.WriteLine($"{DateTime.Now.ToString()} Reporting Background File Save Complete");
+        _logger.Log($"{DateTime.Now.ToString()} Reporting Background File Save Complete");
       });
       _device.OnNewStatsAvailable();
     }

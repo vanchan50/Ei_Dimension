@@ -16,12 +16,14 @@ namespace DIOS.Core
     private readonly Thread _prioUsbOutThread;
     private readonly Device _device;
     private readonly RunResults _results;
+    private readonly ILogger _logger;
 
-    public DataController(Device device, RunResults runResults, ISerial connection)
+    public DataController(Device device, RunResults runResults, ISerial connection, ILogger logger)
     {
       _device = device;
       _results = runResults;
       _serialConnection = connection;
+      _logger = logger;
 
       //setup threads
       _prioUsbInThread = new Thread(ReplyFromMC);
@@ -709,7 +711,7 @@ namespace DIOS.Core
         case 0xDD:
         case 0xDE:
         case 0xDF:
-          Console.WriteLine($"{DateTime.Now.ToString()} E-series script [{cs.ToString()}]");
+          _logger.Log($"{DateTime.Now.ToString()} E-series script [{cs.ToString()}]");
           return;
         case 0xFD:
         case 0xFE:
@@ -718,7 +720,7 @@ namespace DIOS.Core
         default:
           return;
       }
-      Console.WriteLine($"{DateTime.Now.ToString()} Received [{cs.ToString()}]");
+      _logger.Log($"{DateTime.Now.ToString()} Received [{cs.ToString()}]");
       if (outParameters != null)
       {
         _device.OnParameterUpdate(outParameters);

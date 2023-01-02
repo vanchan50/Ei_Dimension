@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -49,7 +48,7 @@ namespace Ei_Dimension.Controllers
         var sp = GetSPByName(name);
         if (sp == null)
         {
-          Console.Error.WriteLine("Tried to remove inexistent region from table");
+          App.Logger.Log("Tried to remove inexistent region from table");
           return;
         }
         for (var i = sp.Children.Count - 1; i > -1; i--)
