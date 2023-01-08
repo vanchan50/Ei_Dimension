@@ -244,5 +244,31 @@
                  Foreground="{StaticResource AppTextColor}"
                  Margin="4,0,0,0"/>
     </StackPanel>
+
+
+    <!--Syringe Size-->
+    <Border HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Margin="940,150,0,0">
+      <StackPanel>
+        <TextBlock Text="{lang:Loc SyringeSpeeds_SampleSyringeSize}"
+                   FontFamily="{StaticResource AppTextFont}"
+                   FontSize="36" TextAlignment="Center"
+                   FontWeight="UltraBold"
+                   TextWrapping="Wrap"
+                   Width="140" Height="100"
+                   Foreground="{StaticResource AppTextColor}"
+                   HorizontalAlignment="Center"/>
+        <TextBox Width="140" Name="SyringeSize"
+                 Style="{StaticResource InputFieldStyle}"
+                 Text="{Binding SampleSyringeSize[0]}">
+          <dxmvvm:Interaction.Behaviors>
+            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="12"/>
+            <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+          </dxmvvm:Interaction.Behaviors>
+        </TextBox>
+      </StackPanel>
+    </Border>
+
   </Grid>
 </UserControl>

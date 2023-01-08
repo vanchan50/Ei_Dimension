@@ -10,7 +10,6 @@ using DIOS.Core.HardwareIntercom;
 using Ei_Dimension.Cache;
 using Ei_Dimension.Controllers;
 using DIOS.Application;
-using DIOS.Application.FileIO;
 
 namespace Ei_Dimension
 {
@@ -625,6 +624,7 @@ namespace Ei_Dimension
       Device.HdnrTrans = DiosApp.MapController.ActiveMap.calParams.DNRTrans;
       Device.Compensation = DiosApp.MapController.ActiveMap.calParams.compensation;
       Device.Hardware.RequestParameter(DeviceParameterType.SampleSyringeType);
+      Device.Hardware.RequestParameter(DeviceParameterType.SampleSyringeSize);
       //Device.MainCommand("Set Property", code: 0x97, parameter: 1170);  //set current limit of aligner motors if leds are off //0x97 no longer used
       Device.MaxPressure = Settings.Default.MaxPressure;
     }

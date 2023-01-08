@@ -1196,6 +1196,9 @@ Speeds</value>
   <data name="SyringeSpeeds_Samples" xml:space="preserve">
     <value>Samples</value>
   </data>
+  <data name="SyringeSpeeds_SampleSyringeSize" xml:space="preserve">
+    <value>Syringe Size</value>
+  </data>
   <data name="SyringeSpeeds_Speeds" xml:space="preserve">
     <value>Syringe Speeds</value>
   </data>

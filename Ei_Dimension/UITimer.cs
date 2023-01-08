@@ -77,7 +77,7 @@ namespace Ei_Dimension
       new CommandStruct{ Code = 0xF4, Command = 0x00, Parameter = 1, FParameter = 32},
       new CommandStruct{ Code = 0xF9, Command = 0x00, Parameter = 1, FParameter = 32},
       new CommandStruct{ Code = 0xDE, Command = 0x00, Parameter = 1, FParameter = 32},
-      new CommandStruct{ Code = 0xFD, Command = 0x00, Parameter = 1, FParameter = 32}
+      //new CommandStruct{ Code = 0xFD, Command = 0x00, Parameter = 1, FParameter = 32}
       
       //Fill me up and test
     };
@@ -118,6 +118,7 @@ namespace Ei_Dimension
         }
         if (System.Windows.Input.Keyboard.IsKeyDown(System.Windows.Input.Key.F3))
         {
+          App.Device.DEBUGOnParameterUpdate(DeviceParameterType.SampleSyringeSize, 43);
           //App.Device.DEBUGCommandTest(DEBUGCommandList[DEBUGCommandCounter++]);
           foreach (var cs in DEBUGCommandList)
           {

@@ -224,6 +224,9 @@ namespace DIOS.Core
         case 0x04:
           outParameters = new ParameterUpdateEventArgs(DeviceParameterType.IdexPosition, intParameter: cs.Parameter);
           break;
+        case 0x05:
+          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.SampleSyringeSize, intParameter: cs.Parameter);
+          break;
         case 0x06:
           outParameters = new ParameterUpdateEventArgs(DeviceParameterType.TotalBeadsInFirmware, floatParameter: cs.FParameter);
           break;
@@ -711,7 +714,6 @@ namespace DIOS.Core
         case 0xDD:
         case 0xDE:
         case 0xDF:
-          _logger.Log($"{DateTime.Now.ToString()} E-series script [{cs.ToString()}]");
           return;
         case 0xFD:
         case 0xFE:
@@ -720,7 +722,7 @@ namespace DIOS.Core
         default:
           return;
       }
-      _logger.Log($"{DateTime.Now.ToString()} Received [{cs.ToString()}]");
+      _logger.Log($"{DateTime.Now.ToString()} REC [{cs.ToString()}]");
       if (outParameters != null)
       {
         _device.OnParameterUpdate(outParameters);

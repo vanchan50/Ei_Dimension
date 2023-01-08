@@ -3180,6 +3180,15 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Syringe Size.
+        /// </summary>
+        public static string SyringeSpeeds_SampleSyringeSize {
+            get {
+                return ResourceManager.GetString("SyringeSpeeds_SampleSyringeSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Syringe Speeds.
         /// </summary>
         public static string SyringeSpeeds_Speeds {

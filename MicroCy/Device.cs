@@ -301,6 +301,11 @@ namespace DIOS.Core
       BoardVersion = v;
     }
 
+    public void DEBUGOnParameterUpdate(DeviceParameterType type, int intparam = -1, float floatparam = -1F)
+    {
+      ParameterUpdate?.Invoke(this, new ParameterUpdateEventArgs(type, intparam, floatparam));
+    }
+
     public void DEBUGJBeadADD()
     {
       var r = new Random();

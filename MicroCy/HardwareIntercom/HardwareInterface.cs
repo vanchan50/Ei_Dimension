@@ -161,6 +161,10 @@ namespace DIOS.Core.HardwareIntercom
           commandCode = 0x04;
           break;
         */
+        case DeviceParameterType.SampleSyringeSize:
+          commandCode = 0x05;
+          param = intValue;
+          break;
         case DeviceParameterType.TotalBeadsInFirmware:  //reset totalbeads in firmware
           commandCode = 0x06;
           fparam = value;
@@ -1015,6 +1019,9 @@ namespace DIOS.Core.HardwareIntercom
           break;
         case DeviceParameterType.IdexPosition:
           commandCode = 0x04;
+          break;
+        case DeviceParameterType.SampleSyringeSize:
+          commandCode = 0x05;
           break;
         case DeviceParameterType.TotalBeadsInFirmware:
           commandCode = 0x06;

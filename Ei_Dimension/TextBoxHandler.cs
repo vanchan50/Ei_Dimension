@@ -15,9 +15,7 @@ namespace Ei_Dimension
 
     public void ParameterUpdateEventHandler(object sender, ParameterUpdateEventArgs parameter)
     {
-      #if DEBUG
-      App.Logger.Log(parameter.ToString());
-      #endif
+      App.Logger.Log($"{DateTime.Now.ToString()} UI UPDATE: {parameter.ToString()}");
       Action update = null;
       switch (parameter.Type)
       {
@@ -716,6 +714,9 @@ namespace Ei_Dimension
             Notification.Show($"{msg1}\n{msg2}");
             App.Logger.Log("Bubble Detector Fault");
           }
+          break;
+        case DeviceParameterType.SampleSyringeSize:
+          update = () => SyringeSpeedsViewModel.Instance.SampleSyringeSize[0] = parameter.Parameter.ToString();
           break;
       }
       if (update != null)

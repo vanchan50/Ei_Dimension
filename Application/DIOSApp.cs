@@ -9,7 +9,7 @@ namespace DIOS.Application
   public class DIOSApp
   {
     public MapController MapController { get; }
-    public DirectoryInfo RootDirectory { get; private set; }
+    public DirectoryInfo RootDirectory { get; private set; } = new DirectoryInfo(Path.Combine(@"C:\Emissioninc", Environment.MachineName));
     public bool RunPlateContinuously { get; set; }
     public readonly string BUILD = "1.5.0.3";
     public ILogger Logger { get; }
@@ -23,8 +23,7 @@ namespace DIOS.Application
 
     private void SetSystemDirectories()
     {
-      RootDirectory = new DirectoryInfo(Path.Combine(@"C:\Emissioninc", Environment.MachineName));
-      List<string> subDirectories = new List<string>(8) { "Config", "WorkOrder", "SavedImages", "Archive", "Status", "SystemLogs" };
+      List<string> subDirectories = new List<string>(8) { "Config", "WorkOrder", "SavedImages", "Archive", "Status" };
       try
       {
         foreach (var d in subDirectories)

@@ -92,6 +92,7 @@
     AlignMotor,
     UVCSanitize,
     ///<summary>Subparamter: AutoAlignState</summary>
-    AutoAlignState
+    AutoAlignState,
+    SampleSyringeSize
   }
 }

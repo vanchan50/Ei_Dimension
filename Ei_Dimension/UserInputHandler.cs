@@ -1539,8 +1539,20 @@ namespace Ei_Dimension
             failed = true;
             ErrorMessage = App.Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
             break;
+          case nameof(SyringeSpeedsViewModel.SampleSyringeSize):
+            if (int.TryParse(_tempNewString, out iRes))
+            {
+              if (iRes >= 0 && iRes <= 65535)
+              {
+                App.Device.Hardware.SetParameter(DeviceParameterType.SampleSyringeSize, iRes);
+                break;
+              }
+            }
+            failed = true;
+            ErrorMessage = "[0-65535]";
+            break;
         }
-        if(VerificationViewModel.Instance.isActivePage)
+        if (VerificationViewModel.Instance.isActivePage)
         {
           if (int.TryParse(_tempNewString, out iRes))
           {
