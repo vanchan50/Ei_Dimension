@@ -71,7 +71,7 @@ namespace Ei_Dimension
       new CommandStruct{ Code = 0xC8, Command = 0x00, Parameter = 1, FParameter = 32},
       new CommandStruct{ Code = 0xC9, Command = 0x00, Parameter = 1, FParameter = 32},
       new CommandStruct{ Code = 0xCC, Command = 0x00, Parameter = 1, FParameter = 32},
-      new CommandStruct{ Code = 0xF1, Command = 0x01, Parameter = 1, FParameter = 32},
+      new CommandStruct{ Code = 0xF1, Command = 0x01, Parameter = 1, FParameter = 32},  //SheathFlow
       new CommandStruct{ Code = 0xF2, Command = 0x00, Parameter = 1, FParameter = 32},
       new CommandStruct{ Code = 0xF3, Command = 0x00, Parameter = 1, FParameter = 32},
       new CommandStruct{ Code = 0xF4, Command = 0x00, Parameter = 1, FParameter = 32},
@@ -118,12 +118,13 @@ namespace Ei_Dimension
         }
         if (System.Windows.Input.Keyboard.IsKeyDown(System.Windows.Input.Key.F3))
         {
-          App.Device.DEBUGOnParameterUpdate(DeviceParameterType.SampleSyringeSize, 43);
-          //App.Device.DEBUGCommandTest(DEBUGCommandList[DEBUGCommandCounter++]);
-          foreach (var cs in DEBUGCommandList)
-          {
-            App.Device.DEBUGCommandTest(cs);
-          }
+          App.Device.DEBUGOnParameterUpdate(DeviceParameterType.DirectFlashValue, 43, floatparam: 12.45f);
+          //App.Device.DEBUGOnParameterUpdate(DeviceParameterType.SampleSyringeSize, 43);
+          ////App.Device.DEBUGCommandTest(DEBUGCommandList[DEBUGCommandCounter++]);
+          //foreach (var cs in DEBUGCommandList)
+          //{
+          //  App.Device.DEBUGCommandTest(cs);
+          //}
         }
       });
       #endif

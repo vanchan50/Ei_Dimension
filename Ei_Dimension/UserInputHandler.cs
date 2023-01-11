@@ -1,6 +1,7 @@
 ﻿using Ei_Dimension.ViewModels;
 using DIOS.Core;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Reflection;
 using System.Windows.Controls;
 using Ei_Dimension.Models;
@@ -1542,14 +1543,47 @@ namespace Ei_Dimension
           case nameof(SyringeSpeedsViewModel.SampleSyringeSize):
             if (int.TryParse(_tempNewString, out iRes))
             {
-              if (iRes >= 0 && iRes <= 65535)
+              if (iRes >= 0 && iRes <= 12500)
               {
                 App.Device.Hardware.SetParameter(DeviceParameterType.SampleSyringeSize, iRes);
                 break;
               }
             }
             failed = true;
+            ErrorMessage = "[0-12500]";
+            break;
+          case nameof(DirectMemoryAccessViewModel.HexCode):
+            if (int.TryParse(_tempNewString, NumberStyles.HexNumber, Language.TranslationSource.Instance.CurrentCulture, out iRes))
+            {
+              if (iRes >= 0 && iRes <= 255)
+              {
+                break;
+              }
+            }
+            failed = true;
+            ErrorMessage = "[00-FF]";
+            break;
+          case nameof(DirectMemoryAccessViewModel.IntValue):
+            if (int.TryParse(_tempNewString, out iRes))
+            {
+              if (iRes >= 0 && iRes <= 65535)
+              {
+                break;
+              }
+            }
+            failed = true;
             ErrorMessage = "[0-65535]";
+            break;
+          case nameof(DirectMemoryAccessViewModel.FloatValue):
+            if (float.TryParse(_tempNewString, out fRes))
+            {
+              if (fRes >= 0 && fRes <= float.MaxValue)
+              {
+                break;
+              }
+            }
+            failed = true;
+            ErrorMessage = $"[0-{float.MaxValue}]";
             break;
         }
         if (VerificationViewModel.Instance.isActivePage)

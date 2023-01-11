@@ -405,6 +405,11 @@ namespace Ei_Dimension.ViewModels
       App.DiosApp.RunPlateContinuously = ContinuousModeOn;
     }
 
+    public void DirectMemoryAccessClick()
+    {
+      DirectMemoryAccessViewModel.Instance.ShowView();
+    }
+
     public void FocusedBox(int num)
     {
       switch (num)

@@ -29,7 +29,7 @@ namespace DIOS.Core.MainMeasurementScript
       {
         Action1();
         Thread.Sleep(500);  //not necessary?
-        while (!Action2())
+        while (WashingIsOngoing())
         {
           Thread.Sleep(500);
         }
@@ -53,14 +53,14 @@ namespace DIOS.Core.MainMeasurementScript
       _device.OnNewStatsAvailable();
     }
     
-    private bool Action2()
+    private bool WashingIsOngoing()
     {
       if (_device.SystemMonitor.ContainsWashing())  //does not contain Washing
       {
         _device.Hardware.RequestParameter(DeviceParameterType.SystemActivityStatus);
-        return false;
+        return true;
       }
-      return true;
+      return false;
     }
     
     private void Action3()

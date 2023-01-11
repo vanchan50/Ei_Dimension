@@ -1,12 +1,9 @@
-﻿using DevExpress.Mvvm;
-using DevExpress.Mvvm.DataAnnotations;
+﻿using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
 using System;
-using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows;
 using Ei_Dimension.Controllers;
-using Ei_Dimension.Core;
 
 namespace Ei_Dimension.ViewModels
 {

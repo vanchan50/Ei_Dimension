@@ -11,7 +11,7 @@ namespace DIOS.Application
     public MapController MapController { get; }
     public DirectoryInfo RootDirectory { get; private set; } = new DirectoryInfo(Path.Combine(@"C:\Emissioninc", Environment.MachineName));
     public bool RunPlateContinuously { get; set; }
-    public readonly string BUILD = "1.5.0.3";
+    public readonly string BUILD = "1.5.1.1";
     public ILogger Logger { get; }
 
     public DIOSApp()

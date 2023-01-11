@@ -826,5 +826,11 @@
                   Style="{StaticResource ToggleButtonThemeStyle}"
                   Height="80" Width="200" HorizontalAlignment="Left"
                   Margin="600,800,0,0"/>
+    <Button Content="{lang:Loc DirectMemoryAccess_DirectMemoryAccessButton}"
+            Height="80" Width="200" HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Margin="1340,800,0,0"
+            Style="{StaticResource ButtonStyle}"
+            Command="{Binding DirectMemoryAccessClickCommand}"/>
   </Grid>
 </UserControl>

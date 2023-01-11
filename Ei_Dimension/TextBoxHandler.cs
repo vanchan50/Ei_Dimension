@@ -11,7 +11,7 @@ namespace Ei_Dimension
     private static readonly string[] SyncElements = { "SHEATH", "SAMPLE_A", "SAMPLE_B", "FLASH", "END_WELL", "VALVES", "X_MOTOR",
       "Y_MOTOR", "Z_MOTOR", "PROXIMITY", "PRESSURE", "WASHING", "FAULT", "ALIGN MOTOR", "MAIN VALVE", "SINGLE STEP" };
 
-    private readonly object _uiThreadLock = new object();
+    private readonly object _callingThreadLock = new object();
 
     public void ParameterUpdateEventHandler(object sender, ParameterUpdateEventArgs parameter)
     {
@@ -609,9 +609,9 @@ namespace Ei_Dimension
             void Act()
             {
               App.Device.Hardware.RenewSheath();
-              lock (_uiThreadLock)
+              lock (_callingThreadLock)
               {
-                Monitor.Pulse(_uiThreadLock);
+                Monitor.Pulse(_callingThreadLock);
               }
             }
             App.Current.Dispatcher.Invoke(() =>
@@ -622,9 +622,9 @@ namespace Ei_Dimension
                 Language.TranslationSource.Instance.CurrentCulture);
               Notification.Show($"{msg1}\n{msg2}", Act, "OK");
             });
-            lock (_uiThreadLock)
+            lock (_callingThreadLock) //will hang "ReplyFromMC" thread until pulsed. Is that the desired behaviour? think about it
             {
-              Monitor.Wait(_uiThreadLock);
+              Monitor.Wait(_callingThreadLock);
             }
           }
           else if (parameter.Parameter == (int)SheathFlowError.PressureOverload)
@@ -634,9 +634,9 @@ namespace Ei_Dimension
               void Act()
               {
                 Environment.Exit(0);
-                lock (_uiThreadLock)
+                lock (_callingThreadLock)
                 {
-                  Monitor.Pulse(_uiThreadLock);
+                  Monitor.Pulse(_callingThreadLock);
                 }
               }
               App.Current.Dispatcher.Invoke(() =>
@@ -650,9 +650,9 @@ namespace Ei_Dimension
                 Notification.Show($"{msg1}\n{msg2}", Act,
                     msg3);
               });
-              lock (_uiThreadLock)
+              lock (_callingThreadLock)
               {
-                Monitor.Wait(_uiThreadLock);
+                Monitor.Wait(_callingThreadLock);
               }
             }
           }
@@ -673,9 +673,9 @@ namespace Ei_Dimension
             //App.Device.Publisher.PublishEverything();
 
             //Environment.Exit(0);
-            lock (_uiThreadLock)
+            lock (_callingThreadLock)
             {
-              Monitor.Pulse(_uiThreadLock);
+              Monitor.Pulse(_callingThreadLock);
             }
           }
           App.Current.Dispatcher.Invoke(() =>
@@ -684,9 +684,9 @@ namespace Ei_Dimension
               Language.TranslationSource.Instance.CurrentCulture);
             Notification.Show(ws + $"\n{msg}", Act1, "OK");
           });
-          lock (_uiThreadLock)
+          lock (_callingThreadLock)
           {
-            Monitor.Wait(_uiThreadLock);
+            Monitor.Wait(_callingThreadLock);
           }
           break;
         case DeviceParameterType.NextWellWarning:
@@ -717,6 +717,14 @@ namespace Ei_Dimension
           break;
         case DeviceParameterType.SampleSyringeSize:
           update = () => SyringeSpeedsViewModel.Instance.SampleSyringeSize[0] = parameter.Parameter.ToString();
+          break;
+        case DeviceParameterType.DirectFlashValue:
+          update = () =>
+          {
+            Views.DirectMemoryAccessView.Instance.UnBlockUI();
+            DirectMemoryAccessViewModel.Instance.IntValue[0] = parameter.Parameter.ToString();
+            DirectMemoryAccessViewModel.Instance.FloatValue[0] = parameter.FloatParameter.ToString("F4");
+          };
           break;
       }
       if (update != null)

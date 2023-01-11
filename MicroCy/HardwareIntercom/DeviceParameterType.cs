@@ -93,6 +93,8 @@
     UVCSanitize,
     ///<summary>Subparamter: AutoAlignState</summary>
     AutoAlignState,
-    SampleSyringeSize
+    SampleSyringeSize,
+    ///<summary>unique parameter, used by DirectFlashAccess feature</summary>
+    DirectFlashValue
   }
 }

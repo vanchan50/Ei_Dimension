@@ -727,6 +727,8 @@ namespace DIOS.Core
       {
         _device.OnParameterUpdate(outParameters);
       }
+
+      _device.Hardware.DirectFlashReturnValue(in cs);
     }
   }
 }

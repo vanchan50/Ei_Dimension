@@ -12,7 +12,6 @@ using System.IO;
 using DIOS.Core;
 using DIOS.Core.HardwareIntercom;
 using Ei_Dimension.Models;
-using TextChangedEventArgs = System.Windows.Controls.TextChangedEventArgs;
 
 namespace Ei_Dimension.ViewModels
 {
@@ -35,7 +34,7 @@ namespace Ei_Dimension.ViewModels
     public virtual ObservableCollection<string> FreshlyMeasuredValues { get; set; } = new ObservableCollection<string> { "", "", "", "" };
     public virtual ObservableCollection<string> CurrentValues { get; set; } = new ObservableCollection<string> { "", "", "", "" };
     public virtual ObservableCollection<string> SelectedValues { get; set; } = new ObservableCollection<string> { "", "", "", "" };
-    public virtual Visibility DeleteVisible { get; set; } = Visibility.Hidden;
+    public virtual Visibility DeleteButtonIsVisible { get; set; } = Visibility.Hidden;
 
     private static List<char> _invalidChars = new List<char>();
     public static PlateCustomizationViewModel Instance { get; private set; }
@@ -81,7 +80,7 @@ namespace Ei_Dimension.ViewModels
       if (_plateName == DEFAULTNAME)
       {
         UpdateSelected(DefaultPlate);
-        DeleteVisible = Visibility.Hidden;
+        DeleteButtonIsVisible = Visibility.Hidden;
         return;
       }
 
@@ -97,7 +96,7 @@ namespace Ei_Dimension.ViewModels
       catch
       {
       }
-      DeleteVisible = Visibility.Visible;
+      DeleteButtonIsVisible = Visibility.Visible;
     }
 
     public void SavePlate()
@@ -131,7 +130,7 @@ namespace Ei_Dimension.ViewModels
         void Overwrite()
         {
           SavingProcedure(path);
-          DeleteVisible = Visibility.Hidden;
+          DeleteButtonIsVisible = Visibility.Hidden;
         }
 
         if (Language.TranslationSource.Instance.CurrentCulture.TextInfo.CultureName == "zh-CN")
@@ -147,7 +146,7 @@ namespace Ei_Dimension.ViewModels
         return;
       }
       SavingProcedure(path);
-      DeleteVisible = Visibility.Hidden;
+      DeleteButtonIsVisible = Visibility.Hidden;
     }
 
     public void LoadPlate()
@@ -196,7 +195,7 @@ namespace Ei_Dimension.ViewModels
         {
           File.Delete(SelectedItem);
           NameList.Remove(_plateName);
-          DeleteVisible = Visibility.Hidden;
+          DeleteButtonIsVisible = Visibility.Hidden;
         }
 
         //if (Language.TranslationSource.Instance.CurrentCulture.TextInfo.CultureName == "zh-CN")
@@ -211,7 +210,7 @@ namespace Ei_Dimension.ViewModels
         //}
       }
       UpdateSelected(null);
-      DeleteVisible = Visibility.Hidden;
+      DeleteButtonIsVisible = Visibility.Hidden;
     }
 
     public void TunePlate()
@@ -270,6 +269,7 @@ namespace Ei_Dimension.ViewModels
     public void HideView()
     {
       UserInputHandler.InputSanityCheck();
+      App.HideKeyboard();
       CustomizationVisible = Visibility.Hidden;
       UnselectAll();
     }
@@ -277,7 +277,7 @@ namespace Ei_Dimension.ViewModels
     public void ShowView()
     {
       CustomizationVisible = Visibility.Visible;
-      DeleteVisible = Visibility.Hidden;
+      DeleteButtonIsVisible = Visibility.Hidden;
     }
 
     private float ProbeTuningProcedure(Well well)

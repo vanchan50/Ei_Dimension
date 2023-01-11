@@ -238,6 +238,7 @@
     <Compile Include="ViewModels\ChannelsViewModel.cs" />
     <Compile Include="ViewModels\ComponentsViewModel.cs" />
     <Compile Include="ViewModels\DashboardViewModel.cs" />
+    <Compile Include="ViewModels\DirectMemoryAccessViewModel.cs" />
     <Compile Include="ViewModels\ExperimentViewModel.cs" />
     <Compile Include="ViewModels\FileSaveViewModel.cs" />
     <Compile Include="ViewModels\HintViewModel.cs" />
@@ -255,6 +256,9 @@
     <Compile Include="ViewModels\SelRegionsViewModel.cs" />
     <Compile Include="ViewModels\TemplateSelectViewModel.cs" />
     <Compile Include="ViewModels\VerificationViewModel.cs" />
+    <Compile Include="Views\DirectMemoryAccessView.xaml.cs">
+      <DependentUpon>DirectMemoryAccessView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\HintView.xaml.cs">
       <DependentUpon>HintView.xaml</DependentUpon>
     </Compile>
@@ -402,6 +406,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Styles\ToggleButtonThemeStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DirectMemoryAccessView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

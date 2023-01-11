@@ -1174,6 +1174,73 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Code
+        ///(Hex).
+        /// </summary>
+        public static string DirectMemoryAccess_Code {
+            get {
+                return ResourceManager.GetString("DirectMemoryAccess_Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Direct Memory Access.
+        /// </summary>
+        public static string DirectMemoryAccess_DirectMemoryAccess {
+            get {
+                return ResourceManager.GetString("DirectMemoryAccess_DirectMemoryAccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to         Direct
+        ///Memory Access.
+        /// </summary>
+        public static string DirectMemoryAccess_DirectMemoryAccessButton {
+            get {
+                return ResourceManager.GetString("DirectMemoryAccess_DirectMemoryAccessButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Float
+        ///Value.
+        /// </summary>
+        public static string DirectMemoryAccess_FloatValue {
+            get {
+                return ResourceManager.GetString("DirectMemoryAccess_FloatValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Get.
+        /// </summary>
+        public static string DirectMemoryAccess_Get {
+            get {
+                return ResourceManager.GetString("DirectMemoryAccess_Get", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Integer
+        /// Value.
+        /// </summary>
+        public static string DirectMemoryAccess_IntValue {
+            get {
+                return ResourceManager.GetString("DirectMemoryAccess_IntValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set.
+        /// </summary>
+        public static string DirectMemoryAccess_Set {
+            get {
+                return ResourceManager.GetString("DirectMemoryAccess_Set", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Boot.
         /// </summary>
         public static string Dropdown_Boot {
@@ -3180,7 +3247,7 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Syringe Size.
+        ///   Looks up a localized string similar to Syringe Size, μl.
         /// </summary>
         public static string SyringeSpeeds_SampleSyringeSize {
             get {

@@ -504,6 +504,31 @@ Warnings</value>
   <data name="DefaultTemplateName" xml:space="preserve">
     <value>TemplateName</value>
   </data>
+  <data name="DirectMemoryAccess_Code" xml:space="preserve">
+    <value>Code
+(Hex)</value>
+  </data>
+  <data name="DirectMemoryAccess_DirectMemoryAccess" xml:space="preserve">
+    <value>Direct Memory Access</value>
+  </data>
+  <data name="DirectMemoryAccess_DirectMemoryAccessButton" xml:space="preserve">
+    <value>        Direct
+Memory Access</value>
+  </data>
+  <data name="DirectMemoryAccess_FloatValue" xml:space="preserve">
+    <value>Float
+Value</value>
+  </data>
+  <data name="DirectMemoryAccess_Get" xml:space="preserve">
+    <value>Get</value>
+  </data>
+  <data name="DirectMemoryAccess_IntValue" xml:space="preserve">
+    <value>Integer
+ Value</value>
+  </data>
+  <data name="DirectMemoryAccess_Set" xml:space="preserve">
+    <value>Set</value>
+  </data>
   <data name="Dropdown_Boot" xml:space="preserve">
     <value>Boot</value>
   </data>
@@ -1197,7 +1222,7 @@ Speeds</value>
     <value>Samples</value>
   </data>
   <data name="SyringeSpeeds_SampleSyringeSize" xml:space="preserve">
-    <value>Syringe Size</value>
+    <value>Syringe Size, μl</value>
   </data>
   <data name="SyringeSpeeds_Speeds" xml:space="preserve">
     <value>Syringe Speeds</value>

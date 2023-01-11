@@ -4,6 +4,7 @@ namespace DIOS.Core.HardwareIntercom
 {
   public class HardwareInterface
   {
+    private byte _latestDirectGetCode;
     private DataController _dataController;
     private Device _device;
     private readonly ILogger _logger;
@@ -16,9 +17,7 @@ namespace DIOS.Core.HardwareIntercom
 
     public void SendCommand(DeviceCommandType command)
     {
-      #if DEBUG
       _logger.Log($"{DateTime.Now.ToString()} CMD {command.ToString()}");
-      #endif
       ushort param = 0;
       byte commandCode = 0;
       byte extraAction = 0;
@@ -141,10 +140,8 @@ namespace DIOS.Core.HardwareIntercom
 
     public void SetParameter(DeviceParameterType primaryParameter, Enum subParameter, float value = 0f)
     {
-      #if DEBUG
       var subparReport = subParameter == null ? "" : subParameter.ToString();
       _logger.Log($"{DateTime.Now.ToString()} SET {primaryParameter.ToString()} {subparReport} {value.ToString()}");
-      #endif
       ushort param = 0;
       float fparam = 0;
       byte commandCode = 0x00;
@@ -1000,13 +997,11 @@ namespace DIOS.Core.HardwareIntercom
 
     public void RequestParameter(DeviceParameterType primaryParameter, Enum subParameter)
     {
-      #if DEBUG
       if (primaryParameter != DeviceParameterType.BeadConcentration)
       {
         var subparReport = subParameter == null ? "" : subParameter.ToString();
         _logger.Log($"{DateTime.Now.ToString()} GET {primaryParameter.ToString()} {subparReport}");
       }
-      #endif
       ushort selector = 0;
       byte commandCode = 0;
       switch (primaryParameter)
@@ -1527,11 +1522,42 @@ namespace DIOS.Core.HardwareIntercom
       MainCommand(code: commandCode, parameter: selector, cmd: 0x01);
     }
 
+    /// <summary>
+    /// Unsafe method for direct flash access<br></br>
+    /// Use with caution<br></br>
+    /// If used with GET - the response would be an event of type DeviceParameterType.DirectFlashValue
+    /// </summary>
+    /// <param name="getValue">True for "get" false for "set"</param>
+    /// <param name="code">Command code as a hex byte</param>
+    /// <param name="parameter">int value, if applicable</param>
+    /// <param name="floatParameter">float value, if applicable</param>
+    public void DirectFlashAccess(bool getValue, byte code, ushort parameter = 0, float floatParameter = 0.0f)
+    {
+      var getset = getValue ? 0x01 : 0x02;
+      _logger.Log($"{DateTime.Now.ToString()} DIR [{code},{getset},{parameter},{floatParameter}]");
+      if (getValue)
+      {
+        _latestDirectGetCode = code;
+      }
+      MainCommand(code: code, parameter: parameter, cmd: (byte)getset, fparameter: floatParameter);
+    }
+
+    /// <summary>
+    /// If DirectFlashAccess Get is called, this method raises an event with response<br></br>
+    /// If not - nothing happens
+    /// </summary>
+    internal void DirectFlashReturnValue(in CommandStruct cs)
+    {
+      if (cs.Code == _latestDirectGetCode)
+      {
+        _device.OnParameterUpdate(new ParameterUpdateEventArgs(DeviceParameterType.DirectFlashValue, intParameter: cs.Parameter, floatParameter: cs.FParameter));
+        _latestDirectGetCode = 0;
+      }
+    }
+
     internal void SetToken(HardwareToken token, ushort value = 0)
     {
-      #if DEBUG
       _logger.Log($"{DateTime.Now.ToString()} TOKEN {token.ToString()} {value.ToString()}");
-      #endif
       byte commandCode = 0x00;
       switch (token)
       {
@@ -1559,6 +1585,5 @@ namespace DIOS.Core.HardwareIntercom
       };
       _dataController.AddCommand(cs);
     }
-
   }
 }
