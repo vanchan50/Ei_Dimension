@@ -670,7 +670,7 @@ namespace Ei_Dimension
 
           void Act1()
           {
-            //App.Device.Publisher.PublishEverything();
+            //App.DiosApp.Publisher.PublishEverything();
 
             //Environment.Exit(0);
             lock (_callingThreadLock)

@@ -42,14 +42,6 @@ namespace DIOS.Core.MainMeasurementScript
     private void Action1()
     {
       _device.OnFinishedReadingWell();
-      _ = Task.Run(() =>
-      {
-        _device.Results.MakeWellStats();  //TODO: need to check if the well is finished reading before call
-        _device.Publisher.ResultsFile.AppendAndWrite(_device.Results.PublishWellStats()); //makewellstats should be awaited only for this method
-        _device.Publisher.BeadEventFile.CreateAndWrite(_device.Results.PublishBeadEvents());
-        _device.Publisher.DoSomethingWithWorkOrder();
-        _logger.Log($"{DateTime.Now.ToString()} Reporting Background File Save Complete");
-      });
       _device.OnNewStatsAvailable();
     }
     

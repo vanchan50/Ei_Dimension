@@ -1,6 +1,7 @@
 ﻿using System.IO;
+using DIOS.Core;
 
-namespace DIOS.Core.FileIO
+namespace DIOS.Application.FileIO
 {
   public class BeadEventFileWriter
   {

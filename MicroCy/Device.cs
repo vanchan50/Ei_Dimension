@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Threading.Tasks;
-using DIOS.Core.FileIO;
 using DIOS.Core.HardwareIntercom;
 using DIOS.Core.MainMeasurementScript;
 using DIOS.Core.SelfTests;
@@ -34,7 +33,6 @@ namespace DIOS.Core
 {
   public class Device
   {
-    public ResultsPublisher Publisher { get; }
     public RunResults Results { get; }
     public WorkOrder WorkOrder { get; set; }
     public ConcurrentQueue<ProcessedBead> DataOut { get; } = new ConcurrentQueue<ProcessedBead>();
@@ -138,13 +136,12 @@ namespace DIOS.Core
     private readonly MeasurementScript _script;
     private readonly ILogger _logger;
 
-    public Device(ISerial connection, string folderPath, ILogger logger)
+    public Device(ISerial connection, ILogger logger)
     {
       SelfTester = new SelfTester(this, logger);
       Results = new RunResults(this);
       _beadProcessor = new BeadProcessor(this);
       _dataController = new DataController(this, Results, connection, logger);
-      Publisher = new ResultsPublisher(this, folderPath, logger);
       Hardware = new HardwareInterface(this, _dataController, logger);
       _script = new MeasurementScript(this, logger);
       _logger = logger;

@@ -36,7 +36,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DIOSApp.cs" />
+    <Compile Include="FileIO\BeadEventFileWriter.cs" />
+    <Compile Include="FileIO\LegacyReportFileWriter.cs" />
     <Compile Include="FileIO\Logger.cs" />
+    <Compile Include="FileIO\PlateReportFileWriter.cs" />
+    <Compile Include="FileIO\PlateStatusFileWriter.cs" />
+    <Compile Include="FileIO\ResultsFileWriter.cs" />
+    <Compile Include="FileIO\ResultsPublisher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

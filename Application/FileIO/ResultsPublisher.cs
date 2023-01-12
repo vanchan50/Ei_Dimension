@@ -1,8 +1,9 @@
 ﻿using System;
 using System.IO;
 using System.Globalization;
+using DIOS.Core;
 
-namespace DIOS.Core.FileIO
+namespace DIOS.Application.FileIO
 {
   public class ResultsPublisher
   {
@@ -18,7 +19,6 @@ namespace DIOS.Core.FileIO
     public PlateReportFileWriter PlateReportFile { get; }
     public LegacyReportFileWriter LegacyReportFile { get; }
     public PlateStatusFileWriter PlateStatusFile { get; }
-    public string ReportFileName => _device.Control == SystemControl.Manual ? Outfilename : _device.WorkOrder.plateID.ToString();
     public string Date => DateTime.Now.ToString("dd.MM.yyyy.HH-mm-ss", CultureInfo.CreateSpecificCulture("en-GB"));
 
     public const string DATAFOLDERNAME = "AcquisitionData";
@@ -26,12 +26,10 @@ namespace DIOS.Core.FileIO
     public readonly string SUMMARYFOLDERNAME;
 
     private string _folder;
-    private Device _device;
     internal ILogger _logger;
 
-    public ResultsPublisher(Device device, string folder, ILogger logger)
+    public ResultsPublisher(string folder, ILogger logger)
     {
-      _device = device;
       _folder = folder;
       Outdir = _folder;
       SUMMARYFOLDERNAME = $"{_folder}\\Result\\Summary";

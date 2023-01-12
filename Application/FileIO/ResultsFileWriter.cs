@@ -1,7 +1,8 @@
 ﻿using System.IO;
 using System.Text;
+using DIOS.Core;
 
-namespace DIOS.Core.FileIO
+namespace DIOS.Application.FileIO
 {
   public class ResultsFileWriter
   {

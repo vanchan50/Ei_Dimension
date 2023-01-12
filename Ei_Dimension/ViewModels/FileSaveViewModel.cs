@@ -59,15 +59,15 @@ namespace Ei_Dimension.ViewModels
       UserInputHandler.InputSanityCheck();
       if (defaultDir)
       {
-        App.Device.Publisher.Outdir = Settings.Default.LastOutFolder = App.DiosApp.RootDirectory.FullName;
+        App.DiosApp.Publisher.Outdir = Settings.Default.LastOutFolder = App.DiosApp.RootDirectory.FullName;
         Settings.Default.Save();
         OutFolder[0] = Settings.Default.LastOutFolder;
         return;
       }
-      FolderBrowserDialogService.StartPath = App.Device.Publisher.Outdir;
+      FolderBrowserDialogService.StartPath = App.DiosApp.Publisher.Outdir;
       if (FolderBrowserDialogService.ShowDialog())
       {
-        App.Device.Publisher.Outdir = Settings.Default.LastOutFolder = FolderBrowserDialogService.ResultPath;
+        App.DiosApp.Publisher.Outdir = Settings.Default.LastOutFolder = FolderBrowserDialogService.ResultPath;
         Settings.Default.Save();
         OutFolder[0] = Settings.Default.LastOutFolder;
       }
@@ -94,15 +94,15 @@ namespace Ei_Dimension.ViewModels
       switch (num)
       {
         case 0:
-          App.Device.Publisher.IsBeadEventPublishingActive = Checkboxes[num];
+          App.DiosApp.Publisher.IsBeadEventPublishingActive = Checkboxes[num];
           Settings.Default.Everyevent = Checkboxes[num];
           break;
         case 1:
-          App.Device.Publisher.IsResultsPublishingActive = Checkboxes[num];
+          App.DiosApp.Publisher.IsResultsPublishingActive = Checkboxes[num];
           Settings.Default.RMeans = Checkboxes[num];
           break;
         case 2:
-          App.Device.Publisher.IsPlateReportPublishingActive = Checkboxes[num];
+          App.DiosApp.Publisher.IsPlateReportPublishingActive = Checkboxes[num];
           Settings.Default.PlateReport = Checkboxes[num];
           break;
         case 3:
@@ -115,7 +115,7 @@ namespace Ei_Dimension.ViewModels
         case 5:
           break;
         case 6:
-          App.Device.Publisher.IsLegacyPlateReportPublishingActive = Checkboxes[num];
+          App.DiosApp.Publisher.IsLegacyPlateReportPublishingActive = Checkboxes[num];
           Settings.Default.LegacyPlateReport = Checkboxes[num];
           break;
       }

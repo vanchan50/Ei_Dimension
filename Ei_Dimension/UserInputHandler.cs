@@ -1450,7 +1450,7 @@ namespace Ei_Dimension
             }
             break;
           case nameof(FileSaveViewModel.Instance.BaseFileName):
-            App.Device.Publisher.Outfilename = _tempNewString;
+            App.DiosApp.Publisher.Outfilename = _tempNewString;
             Settings.Default.SaveFileName = _tempNewString;
             break;
           case nameof(ComponentsViewModel.Instance.MaxPressureBox):

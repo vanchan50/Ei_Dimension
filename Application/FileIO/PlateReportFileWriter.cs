@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace DIOS.Core.FileIO
+namespace DIOS.Application.FileIO
 {
   public class PlateReportFileWriter
   {
@@ -11,7 +11,7 @@ namespace DIOS.Core.FileIO
       _publisher = publisher;
     }
 
-    public void CreateAndWrite(string PlateReportJSON)
+    public void CreateAndWrite(string plateReportJSON, string filename)
     {
       if (!_publisher.IsPlateReportPublishingActive)
       {
@@ -24,14 +24,19 @@ namespace DIOS.Core.FileIO
 
       try
       {
-        var fullFilePath = Path.Combine(_publisher.SUMMARYFOLDERNAME, $"Summary_{_publisher.ReportFileName}_{_publisher.Date}.json");
-        File.WriteAllText(fullFilePath, PlateReportJSON);
+        var fullFilePath = Path.Combine(_publisher.SUMMARYFOLDERNAME, $"Summary_{filename}_{_publisher.Date}.json");
+        File.WriteAllText(fullFilePath, plateReportJSON);
         _publisher._logger.Log($"Plate Report saved as {fullFilePath}");
       }
       catch
       {
         _publisher._logger.Log("Failed to create Plate Report");
       }
+    }
+
+    public void CreateAndWrite(string plateReportJSON)
+    {
+      CreateAndWrite(plateReportJSON, _publisher.Outfilename);
     }
   }
 }

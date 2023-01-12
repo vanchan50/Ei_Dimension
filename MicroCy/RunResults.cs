@@ -11,7 +11,7 @@ namespace DIOS.Core
     private Device _device;
     private ICollection<int> _regionsToOutput;
     private bool _minPerRegCheckTrigger;
-    private readonly ResultingWellStatsData _statsForAllWells = new ResultingWellStatsData();
+    private readonly ResultingWellStatsData _wellStats = new ResultingWellStatsData();
 
     public RunResults(Device device)
     {
@@ -49,11 +49,11 @@ namespace DIOS.Core
       PlateReport.Reset();
     }
 
-    internal void MakeWellStats()
+    public void MakeWellStats()
     {
       var stats = new WellStats(WellResults.Well, MakeDeepCopy(), _device.BeadCount);
       PlateReport.Add(stats);
-      _statsForAllWells.Add(stats.ToString());
+      _wellStats.Add(stats.ToString());
     }
 
     internal void StartNewWell(Well well)
@@ -61,7 +61,7 @@ namespace DIOS.Core
       if (_regionsToOutput == null)
         throw new Exception("SetupRunRegions() must be called before the run");
       WellResults.Reset(well, _regionsToOutput);
-      _statsForAllWells.Reset();
+      _wellStats.Reset();
       _minPerRegCheckTrigger = false;
     }
 
@@ -84,14 +84,14 @@ namespace DIOS.Core
       }
     }
 
-    internal string PublishBeadEvents()
+    public string PublishBeadEvents()
     {
       return WellResults.BeadEventsData.Publish(_device.OnlyClassifiedInBeadEventFile);
     }
 
-    internal string PublishWellStats()
+    public string PublishWellStats()
     {
-      return _statsForAllWells.Publish();
+      return _wellStats.Publish();
     }
 
     private void FillWellResults(in ProcessedBead bead)

@@ -10,6 +10,7 @@ using DIOS.Core.HardwareIntercom;
 using Ei_Dimension.Cache;
 using Ei_Dimension.Controllers;
 using DIOS.Application;
+using System.Threading.Tasks;
 
 namespace Ei_Dimension
 {
@@ -112,10 +113,10 @@ namespace Ei_Dimension
       string date = DateTime.Now.ToString("dd.MM.yyyy.hh-mm-ss", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"));
       try
       {
-        App.Device.Publisher.OutDirCheck();
-        if (!Directory.Exists(App.Device.Publisher.Outdir + "\\SavedImages"))
-          Directory.CreateDirectory(App.Device.Publisher.Outdir + "\\SavedImages");
-        chart.ExportToImage(App.Device.Publisher.Outdir + @"\SavedImages\" + date + ".png", options);
+        App.DiosApp.Publisher.OutDirCheck();
+        if (!Directory.Exists(App.DiosApp.Publisher.Outdir + "\\SavedImages"))
+          Directory.CreateDirectory(App.DiosApp.Publisher.Outdir + "\\SavedImages");
+        chart.ExportToImage(App.DiosApp.Publisher.Outdir + @"\SavedImages\" + date + ".png", options);
       }
       catch
       {
@@ -191,7 +192,7 @@ namespace Ei_Dimension
     
     private void StartingToReadWellEventHandler(object sender, ReadingWellEventArgs e)
     {
-      var wellFilePath = Device.Publisher.BeadEventFile.MakeNewFileName(e.Well);
+      var wellFilePath = DiosApp.Publisher.BeadEventFile.MakeNewFileName(e.Well);
       MultiTube.GetModifiedWellIndexes(e.Well, out var row, out var col);
 
       //ResultsViewModel.Instance.PlatePictogramIsCovered = Visibility.Visible; //TODO: temporary solution
@@ -220,6 +221,8 @@ namespace Ei_Dimension
 
     public void FinishedReadingWellEventHandler(object sender, ReadingWellEventArgs e)
     {
+      SaveWellFiles();
+
       var type = GetWellStateForPictogram();
       
       MultiTube.GetModifiedWellIndexes(e.Well, out var row, out var col, proceed:true);
@@ -230,11 +233,23 @@ namespace Ei_Dimension
       PlatePictogramViewModel.Instance.PlatePictogram.CurrentlyReadCell = (-1, -1);
       PlatePictogramViewModel.Instance.PlatePictogram.ChangeState(row, col, type);
 
-      Device.Publisher.PlateStatusFile.Overwrite(PlatePictogramViewModel.Instance.PlatePictogram.GetSerializedPlate());
+      DiosApp.Publisher.PlateStatusFile.Overwrite(PlatePictogramViewModel.Instance.PlatePictogram.GetSerializedPlate());
       if (Device.Control == SystemControl.WorkOrder)
       {
         App.Current.Dispatcher.Invoke(() => DashboardViewModel.Instance.WorkOrder[0] = ""); //actually questionable if not in workorder operation
       }
+    }
+
+    private static void SaveWellFiles()
+    {
+      _ = Task.Run(() =>
+      {
+        Device.Results.MakeWellStats();  //TODO: need to check if the well is finished reading before call
+        DiosApp.Publisher.ResultsFile.AppendAndWrite(Device.Results.PublishWellStats()); //makewellstats should be awaited only for this method
+        DiosApp.Publisher.BeadEventFile.CreateAndWrite(Device.Results.PublishBeadEvents());
+        DiosApp.Publisher.DoSomethingWithWorkOrder();
+        DiosApp.Logger.Log($"{DateTime.Now.ToString()} Reporting Background File Save Complete");
+      });
     }
 
     private static Models.WellType GetWellStateForPictogram()
@@ -265,7 +280,15 @@ namespace Ei_Dimension
     public void FinishedMeasurementEventHandler(object sender, EventArgs e)
     {
       var plateReportJson = Device.Results.PlateReport.JSONify();
-      Device.Publisher.PlateReportFile.CreateAndWrite(plateReportJson);
+      if (Device.Control == SystemControl.Manual)
+      {
+        DiosApp.Publisher.PlateReportFile.CreateAndWrite(plateReportJson);
+      }
+      else
+      {
+        DiosApp.Publisher.PlateReportFile.CreateAndWrite(plateReportJson, Device.WorkOrder.plateID.ToString());
+      }
+
       MainButtonsViewModel.Instance.StartButtonEnabled = true;
       PlatePictogramViewModel.Instance.PlatePictogram.CurrentlyReadCell = (-1, -1);
       switch (Device.Mode)
@@ -343,13 +366,20 @@ namespace Ei_Dimension
       bldr.AppendLine($"Date,\"{DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss", System.Globalization.CultureInfo.CreateSpecificCulture("en-GB"))}\"\n");
 
       bldr.AppendLine($"Instrument,\"{Environment.MachineName}\"");
-      bldr.AppendLine($"Session,\"{Device.Publisher.Outfilename}\"\n\n\n\n\n\n\n");
+      bldr.AppendLine($"Session,\"{DiosApp.Publisher.Outfilename}\"\n\n\n\n\n\n\n");
 
       bldr.AppendLine($"Samples,\"{WellsSelectViewModel.Instance.CurrentTableSize}\"\n");
       bldr.Append(legacyReport);
       var wholeReport = bldr.ToString();
 
-      Device.Publisher.LegacyReportFile.CreateAndWrite(wholeReport);
+      if (Device.Control == SystemControl.Manual)
+      {
+        DiosApp.Publisher.LegacyReportFile.CreateAndWrite(wholeReport);
+      }
+      else
+      {
+        DiosApp.Publisher.LegacyReportFile.CreateAndWrite(wholeReport, Device.WorkOrder.plateID.ToString());
+      }
     }
 
     protected override void OnStartup(StartupEventArgs e)
@@ -512,7 +542,7 @@ namespace Ei_Dimension
     public void OnNewWorkOrder(object sender, FileSystemEventArgs e)
     {
       var name = Path.GetFileNameWithoutExtension(e.Name);
-      Device.Publisher.WorkOrderPath = e.FullPath;
+      DiosApp.Publisher.WorkOrderPath = e.FullPath;
       if (!ParseWorkOrder())
         return;
       
@@ -532,13 +562,13 @@ namespace Ei_Dimension
       if (fileEntries.Length == 0)
         return;
       var name = Path.GetFileNameWithoutExtension(fileEntries[0]);
-      Device.Publisher.WorkOrderPath = fileEntries[0];
+      DiosApp.Publisher.WorkOrderPath = fileEntries[0];
       int i = 1;
       while (!ParseWorkOrder())
       {
         if (i < fileEntries.Length)
         {
-          Device.Publisher.WorkOrderPath = fileEntries[i];
+          DiosApp.Publisher.WorkOrderPath = fileEntries[i];
           name = Path.GetFileNameWithoutExtension(fileEntries[i]);
           i++;
         }
@@ -560,7 +590,7 @@ namespace Ei_Dimension
     {
       try
       {
-        using (TextReader reader = new StreamReader(Device.Publisher.WorkOrderPath))
+        using (TextReader reader = new StreamReader(DiosApp.Publisher.WorkOrderPath))
         {
           var contents = reader.ReadToEnd();
           Device.WorkOrder = Newtonsoft.Json.JsonConvert.DeserializeObject<WorkOrder>(contents);
@@ -576,7 +606,7 @@ namespace Ei_Dimension
     private void InitApp(Device device)
     {
       StatisticsExtension.TailDiscardPercentage = Settings.Default.StatisticsTailDiscardPercentage;
-      Device = device ?? new Device(new USBConnection(DiosApp.Logger), DiosApp.RootDirectory.FullName, DiosApp.Logger);
+      Device = device ?? new Device(new USBConnection(DiosApp.Logger), DiosApp.Logger);
       
       DiosApp.MapController.OnAppLoaded(Settings.Default.DefaultMap);
       Device.StartingToReadWell += StartingToReadWellEventHandler;
@@ -602,18 +632,18 @@ namespace Ei_Dimension
       Device.Init();
 
       if (Directory.Exists(Settings.Default.LastOutFolder))
-        Device.Publisher.Outdir = Settings.Default.LastOutFolder;
+        DiosApp.Publisher.Outdir = Settings.Default.LastOutFolder;
       else
       {
-        Settings.Default.LastOutFolder = Device.Publisher.Outdir;
+        Settings.Default.LastOutFolder = DiosApp.Publisher.Outdir;
         Settings.Default.Save();
       }
-      Device.Publisher.Outfilename = Settings.Default.SaveFileName;
-      Device.Publisher.IsPlateReportPublishingActive = Settings.Default.PlateReport;
+      DiosApp.Publisher.Outfilename = Settings.Default.SaveFileName;
+      DiosApp.Publisher.IsPlateReportPublishingActive = Settings.Default.PlateReport;
       Device.Control = (SystemControl)Settings.Default.SystemControl;
-      Device.Publisher.IsBeadEventPublishingActive = Settings.Default.Everyevent;
-      Device.Publisher.IsResultsPublishingActive = Settings.Default.RMeans;
-      Device.Publisher.IsLegacyPlateReportPublishingActive = Settings.Default.LegacyPlateReport;
+      DiosApp.Publisher.IsBeadEventPublishingActive = Settings.Default.Everyevent;
+      DiosApp.Publisher.IsResultsPublishingActive = Settings.Default.RMeans;
+      DiosApp.Publisher.IsLegacyPlateReportPublishingActive = Settings.Default.LegacyPlateReport;
       Device.TerminationType = (Termination)Settings.Default.EndRead;
       Device.MinPerRegion = Settings.Default.MinPerRegion;
       Device.BeadsToCapture = Settings.Default.BeadsToCapture;

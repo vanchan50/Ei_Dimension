@@ -110,7 +110,7 @@ namespace Ei_Dimension.ViewModels
         App.Logger.Log("Normalization Enabled");
       else
         App.Logger.Log("Normalization Disabled");
-      App.Device.Publisher.ResultsFile.MakeNew();
+      App.DiosApp.Publisher.ResultsFile.MakeNew();
       App.Device.StartOperation();
     }
 
