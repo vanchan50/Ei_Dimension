@@ -301,7 +301,6 @@ namespace Ei_Dimension.ViewModels
     public void GetPositionButtonsClick(int num)
     {
       UserInputHandler.InputSanityCheck();
-      ushort param = 0;
       SyringePosition pos = SyringePosition.Sheath;
       switch (num)
       {

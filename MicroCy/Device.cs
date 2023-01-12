@@ -160,7 +160,7 @@ namespace DIOS.Core
     public void PrematureStop()
     {
       WellController.PreparePrematureStop(_singleSyringeMode);
-      _script.StateMach.Start();
+      _script.FinalizeWellReading();
     }
 
     /// <summary>
@@ -169,7 +169,7 @@ namespace DIOS.Core
     /// </summary>
     public void StopOperation()
     {
-      _script.StateMach.Start();
+      _script.FinalizeWellReading();
     }
 
     /// <summary>

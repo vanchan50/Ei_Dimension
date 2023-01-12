@@ -110,13 +110,12 @@ namespace Ei_Dimension
         Resolution = dpi,
         Format = new System.Drawing.Imaging.ImageFormat(System.Drawing.Imaging.ImageFormat.Png.Guid)
       };
-      string date = DateTime.Now.ToString("dd.MM.yyyy.hh-mm-ss", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"));
       try
       {
         App.DiosApp.Publisher.OutDirCheck();
-        if (!Directory.Exists(App.DiosApp.Publisher.Outdir + "\\SavedImages"))
-          Directory.CreateDirectory(App.DiosApp.Publisher.Outdir + "\\SavedImages");
-        chart.ExportToImage(App.DiosApp.Publisher.Outdir + @"\SavedImages\" + date + ".png", options);
+        if (!Directory.Exists(DiosApp.Publisher.Outdir + "\\SavedImages"))
+          Directory.CreateDirectory(DiosApp.Publisher.Outdir + "\\SavedImages");
+        chart.ExportToImage(DiosApp.Publisher.Outdir + @"\SavedImages\" + DiosApp.Publisher.Date + ".png", options);
       }
       catch
       {

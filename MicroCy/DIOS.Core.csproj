@@ -91,7 +91,6 @@
     <Compile Include="RunResults.cs" />
     <Compile Include="SelfTests\SelfTester.cs" />
     <Compile Include="SelfTests\SelfTestData.cs" />
-    <Compile Include="MainMeasurementScript\StateMachine.cs" />
     <Compile Include="Structs\CalParams.cs" />
     <Compile Include="Structs\CustomMap.cs" />
     <Compile Include="Structs\ProcessedBead.cs" />

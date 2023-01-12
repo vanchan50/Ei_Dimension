@@ -1,13 +1,16 @@
 ﻿using DIOS.Core.HardwareIntercom;
+using System;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace DIOS.Core.MainMeasurementScript
 {
   internal class MeasurementScript
   {
-    public readonly StateMachine StateMach;
     private readonly Device _device;
     private readonly HardwareInterface _hardware;
     private WellController _wellController;
+    private int _finalizerStarted;
     private ILogger _logger;
 
     public MeasurementScript(Device device, ILogger logger)
@@ -15,7 +18,6 @@ namespace DIOS.Core.MainMeasurementScript
       _device = device;
       _hardware = device.Hardware;
       _wellController = device.WellController;
-      StateMach = new StateMachine(_device, this, logger);
     }
 
     public void Start()
@@ -43,7 +45,58 @@ namespace DIOS.Core.MainMeasurementScript
         _device.BeadsToCapture = 100000;
     }
 
-    public void SetupRead()
+    public void FinalizeWellReading()
+    {
+      if (Interlocked.CompareExchange(ref _finalizerStarted, 1, 0) == 1)
+        return;
+
+      _logger.Log("SM start");
+      Task.Run(() =>
+      {
+        Action1();
+        Thread.Sleep(500);  //not necessary?
+        while (WashingIsOngoing())
+        {
+          Thread.Sleep(500);
+        }
+        Action3();
+
+        _finalizerStarted = 0;
+      });
+    }
+
+    private void Action1()
+    {
+      _device.OnFinishedReadingWell();
+      _device.OnNewStatsAvailable();
+    }
+
+    private bool WashingIsOngoing()
+    {
+      if (_device.SystemMonitor.ContainsWashing())  //does not contain Washing
+      {
+        _device.Hardware.RequestParameter(DeviceParameterType.SystemActivityStatus);
+        return true;
+      }
+      return false;
+    }
+
+    private void Action3()
+    {
+      if (EndBeadRead())
+        _device.OnFinishedMeasurement();
+      else
+      {
+        SetupRead();
+      }
+      Task.Run(() =>
+      {
+        GC.Collect();
+        GC.WaitForPendingFinalizers();
+      });
+    }
+
+    private void SetupRead()
     {
       SetReadingParamsForWell();
       if (_device._singleSyringeMode)
@@ -56,7 +109,7 @@ namespace DIOS.Core.MainMeasurementScript
       StartBeadRead();
     }
 
-    public bool EndBeadRead()
+    private bool EndBeadRead()
     {
       _device.Hardware.SendCommand(DeviceCommandType.FlushCommandQueue);
       _device.Hardware.SetToken(HardwareToken.EmptySyringeTrigger); //clear empty syringe token
