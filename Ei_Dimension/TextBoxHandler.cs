@@ -733,7 +733,7 @@ namespace Ei_Dimension
 
     public static void UpdateEventCounter()
     {
-      App.Current.Dispatcher.Invoke(() => MainViewModel.Instance.EventCountCurrent[0] = App.Device.BeadCount.ToString());
+      MainViewModel.Instance.EventCountCurrent[0] = App.Device.BeadCount.ToString();
     }
 
     public static void UpdatePressureMonitor()

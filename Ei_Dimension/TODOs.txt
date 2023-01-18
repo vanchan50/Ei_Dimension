@@ -130,3 +130,6 @@ dasboard mapselector click should only call onmapchanged, all other actions shou
 Finally make SystemActivity into own class. simple nuff (name it SystemMonitor?)
 TextBoxHandler still has duplicate logic  @case DeviceParameterType.SystemActivityStatus
 MapController needs more attention
+
+BeadEventsData should not output a string, but a list. process the list elsewhere (in writer?)
+true for other writers (or make static decoder class (should be better))

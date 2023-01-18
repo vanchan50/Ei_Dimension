@@ -90,9 +90,16 @@ namespace DIOS.Core
             //might be less than 8 beads in buffer
             if (!GetBeadFromBuffer(i, out var outbead))
               break;
-            _results.AddRawBeadEvent(in outbead);
+            _device.BeadCount++;
+            var processedBead = _device._beadProcessor.CalculateBeadParams(in outbead);
+            _results.AddProcessedBeadEvent(in processedBead);
+            _device.DataOut.Enqueue(processedBead);
           }
-          _results.TerminationReadyCheck();
+
+          if (_results.IsMeasurementTerminationAchieved(_device.TerminationType))
+          {
+            _device.StopOperation();
+          }
         }
         _serialConnection.ClearBuffer();  //TODO: is it necessary?
       }

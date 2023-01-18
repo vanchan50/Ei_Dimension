@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Threading;
 using Ei_Dimension.Controllers;
 using DIOS.Core.HardwareIntercom;
+using Ei_Dimension.ViewModels;
 
 namespace Ei_Dimension
 {
@@ -103,7 +104,7 @@ namespace Ei_Dimension
       {
         GraphsController.Instance.Update();
         ActiveRegionsStatsController.Instance.UpdateCurrentStats();
-        TextBoxHandler.UpdateEventCounter();
+        App.Current.Dispatcher.Invoke(TextBoxHandler.UpdateEventCounter);
         App.Device.Hardware.RequestParameter(DeviceParameterType.BeadConcentration);
       }
       TextBoxHandler.UpdatePressureMonitor();

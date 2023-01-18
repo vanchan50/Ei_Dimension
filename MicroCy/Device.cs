@@ -60,16 +60,13 @@ namespace DIOS.Core
         Hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.ScatterGate, (ushort)_scatterGate);
       }
     }
-
     public Termination TerminationType { get; set; } = Termination.MinPerRegion;
     public int BoardVersion { get; internal set; }
     public string FirmwareVersion { get; internal set; }
     public float ReporterScaling { get; set; } = 1;
     public int BeadsToCapture { get; set; }
     public int BeadCount { get; internal set; }
-    public int TotalBeads { get; internal set; }
     public int MinPerRegion { get; set; }
-
     public bool IsMeasurementGoing
     {
       get
@@ -77,7 +74,6 @@ namespace DIOS.Core
         return _dataController.IsMeasurementGoing;
       }
     }
-    public bool OnlyClassifiedInBeadEventFile { get; set; }
     public HiSensitivityChannel SensitivityChannel
     {
       get
@@ -235,13 +231,13 @@ namespace DIOS.Core
       Hardware.SetParameter(DeviceParameterType.TotalBeadsInFirmware); //reset totalbeads in firmware
       _logger.Log("Starting to read well with Params:");
       _logger.Log($"Termination: {(int)TerminationType}");
-      _logger.Log($"TotalBeads: {TotalBeads}");
       _logger.Log($"BeadCount: {BeadCount}");
       _logger.Log($"BeadsToCapture: {BeadsToCapture}");
     }
 
     internal void OnFinishedReadingWell()
     {
+      _logger.Log("Finished Reading Well");
       Hardware.SendCommand(DeviceCommandType.EndSampling);
       Hardware.RequestParameter(DeviceParameterType.TotalBeadsInFirmware);
       FinishedReadingWell?.Invoke(this, new ReadingWellEventArgs(WellController.CurrentWell));
@@ -250,7 +246,6 @@ namespace DIOS.Core
     internal void OnFinishedMeasurement()
     {
       _dataController.IsMeasurementGoing = false;
-      BeadCount = 0;
       Results.PlateReport.completedDateTime = DateTime.Now;
       Results.EndOfOperationReset();
       Hardware.SetParameter(DeviceParameterType.IsBubbleDetectionActive, 0);
@@ -343,16 +338,22 @@ namespace DIOS.Core
       switch (choose)
       {
         case 0:
-          Results.AddRawBeadEvent(in kek);
+          var processedBead = _beadProcessor.CalculateBeadParams(in kek);
+          Results.AddProcessedBeadEvent(in processedBead);
           break;
         case 1:
-          Results.AddRawBeadEvent(in pek);
+          var processedBead2 = _beadProcessor.CalculateBeadParams(in pek);
+          Results.AddProcessedBeadEvent(in processedBead2);
           break;
         case 2:
-          Results.AddRawBeadEvent(in rek0);
+          var processedBead3 = _beadProcessor.CalculateBeadParams(in rek0);
+          Results.AddProcessedBeadEvent(in processedBead3);
           break;
       }
-      Results.TerminationReadyCheck();
+      if (Results.IsMeasurementTerminationAchieved(TerminationType))
+      {
+        StopOperation();
+      }
     }
 
     public void DEBUGCommandTest(CommandStruct cs)

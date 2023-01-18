@@ -245,7 +245,7 @@ namespace Ei_Dimension
       {
         Device.Results.MakeWellStats();  //TODO: need to check if the well is finished reading before call
         DiosApp.Publisher.ResultsFile.AppendAndWrite(Device.Results.PublishWellStats()); //makewellstats should be awaited only for this method
-        DiosApp.Publisher.BeadEventFile.CreateAndWrite(Device.Results.PublishBeadEvents());
+        DiosApp.Publisher.BeadEventFile.CreateAndWrite(Device.Results.PublishBeadEvents(DiosApp.Publisher.IsOnlyClassifiedBeadsPublishingActive));
         DiosApp.Publisher.DoSomethingWithWorkOrder();
         DiosApp.Logger.Log($"{DateTime.Now.ToString()} Reporting Background File Save Complete");
       });
@@ -646,7 +646,7 @@ namespace Ei_Dimension
       Device.TerminationType = (Termination)Settings.Default.EndRead;
       Device.MinPerRegion = Settings.Default.MinPerRegion;
       Device.BeadsToCapture = Settings.Default.BeadsToCapture;
-      Device.OnlyClassifiedInBeadEventFile = Settings.Default.OnlyClassifed;
+      DiosApp.Publisher.IsOnlyClassifiedBeadsPublishingActive = Settings.Default.OnlyClassifed;
       Device.SensitivityChannel = Settings.Default.SensitivityChannelB ? HiSensitivityChannel.GreenB : HiSensitivityChannel.GreenC;
       Device.ReporterScaling = Settings.Default.ReporterScaling;
       Device.Hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.Attenuation, DiosApp.MapController.ActiveMap.calParams.att);

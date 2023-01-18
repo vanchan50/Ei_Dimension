@@ -36,8 +36,6 @@ namespace DIOS.Core.MainMeasurementScript
       if (!_device._singleSyringeMode)
         _hardware.SendCommand(DeviceCommandType.AspirateA);
 
-      _device.TotalBeads = 0;
-
       _device._isReadingA = false;
       StartBeadRead();
 
@@ -50,10 +48,10 @@ namespace DIOS.Core.MainMeasurementScript
       if (Interlocked.CompareExchange(ref _finalizerStarted, 1, 0) == 1)
         return;
 
-      _logger.Log("SM start");
       Task.Run(() =>
       {
-        Action1();
+        _device.OnFinishedReadingWell();
+        _device.OnNewStatsAvailable();
         Thread.Sleep(500);  //not necessary?
         while (WashingIsOngoing())
         {
@@ -61,14 +59,14 @@ namespace DIOS.Core.MainMeasurementScript
         }
         Action3();
 
+        Task.Run(() =>
+        {
+          GC.Collect();
+          GC.WaitForPendingFinalizers();
+        });
+
         _finalizerStarted = 0;
       });
-    }
-
-    private void Action1()
-    {
-      _device.OnFinishedReadingWell();
-      _device.OnNewStatsAvailable();
     }
 
     private bool WashingIsOngoing()
@@ -89,11 +87,6 @@ namespace DIOS.Core.MainMeasurementScript
       {
         SetupRead();
       }
-      Task.Run(() =>
-      {
-        GC.Collect();
-        GC.WaitForPendingFinalizers();
-      });
     }
 
     private void SetupRead()

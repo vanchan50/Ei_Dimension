@@ -59,7 +59,7 @@ namespace Ei_Dimension.Controllers
       if (!_activeRegionsUpdateGoing)
       {
         _activeRegionsUpdateGoing = true;
-        var copy = App.Device.Results.MakeDeepCopy();//TODO:hotpath allocations
+        var copy = App.Device.Results.MakeWellResultsClone();//TODO:hotpath allocations
         var action = App.MapRegions.IsNullRegionActive ? UpdateNullRegionProcedure(copy) : UpdateRegionsProcedure(copy);
         _ = App.Current.Dispatcher.BeginInvoke(action);
       }

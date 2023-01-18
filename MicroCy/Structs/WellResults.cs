@@ -56,7 +56,7 @@ namespace DIOS.Core.Structs
       return -1;
     }
     
-    internal List<RegionReporterResultVolatile> GetResults()
+    internal List<RegionReporterResultVolatile> GetResultsClone()
     {
       var resultsCount = _reporterPerRegion.Count;
       var copy = new List<RegionReporterResultVolatile>(resultsCount);

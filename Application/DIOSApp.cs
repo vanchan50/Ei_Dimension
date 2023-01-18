@@ -12,7 +12,7 @@ namespace DIOS.Application
     public DirectoryInfo RootDirectory { get; } = new DirectoryInfo(Path.Combine(@"C:\Emissioninc", Environment.MachineName));
     public ResultsPublisher Publisher { get; }
     public bool RunPlateContinuously { get; set; }
-    public readonly string BUILD = "1.5.1.1";
+    public readonly string BUILD = "1.5.1.2";
     public ILogger Logger { get; }
 
     public DIOSApp()

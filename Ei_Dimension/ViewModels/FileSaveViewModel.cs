@@ -106,7 +106,7 @@ namespace Ei_Dimension.ViewModels
           Settings.Default.PlateReport = Checkboxes[num];
           break;
         case 3:
-          App.Device.OnlyClassifiedInBeadEventFile = Checkboxes[num];
+          App.DiosApp.Publisher.IsOnlyClassifiedBeadsPublishingActive = Checkboxes[num];
           Settings.Default.OnlyClassifed = Checkboxes[num];
           break;
         case 4:

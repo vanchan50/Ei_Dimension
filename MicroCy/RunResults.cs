@@ -8,10 +8,10 @@ namespace DIOS.Core
   {
     public PlateReport PlateReport { get; } = new PlateReport();
     internal WellResults WellResults { get; } = new WellResults();
-    private Device _device;
+    private readonly Device _device;
     private ICollection<int> _regionsToOutput;
     private bool _minPerRegCheckTrigger;
-    private readonly ResultingWellStatsData _wellStats = new ResultingWellStatsData();
+    private readonly ResultingWellStatsData _measuredWellStats = new ResultingWellStatsData();
 
     public RunResults(Device device)
     {
@@ -30,9 +30,9 @@ namespace DIOS.Core
         _regionsToOutput = new List<int>();
     }
 
-    public List<RegionReporterResultVolatile> MakeDeepCopy()
+    public List<RegionReporterResultVolatile> MakeWellResultsClone()
     {
-      return WellResults.GetResults();
+      return WellResults.GetResultsClone();
     }
 
     /// <summary>
@@ -51,9 +51,9 @@ namespace DIOS.Core
 
     public void MakeWellStats()
     {
-      var stats = new WellStats(WellResults.Well, MakeDeepCopy(), _device.BeadCount);
+      var stats = new WellStats(WellResults.Well, MakeWellResultsClone(), _device.BeadCount);
       PlateReport.Add(stats);
-      _wellStats.Add(stats.ToString());
+      _measuredWellStats.Add(stats.ToString());
     }
 
     internal void StartNewWell(Well well)
@@ -61,17 +61,17 @@ namespace DIOS.Core
       if (_regionsToOutput == null)
         throw new Exception("SetupRunRegions() must be called before the run");
       WellResults.Reset(well, _regionsToOutput);
-      _wellStats.Reset();
+      _measuredWellStats.Reset();
       _minPerRegCheckTrigger = false;
     }
 
-    internal void AddRawBeadEvent(in RawBead rawBead)
+    internal void AddProcessedBeadEvent(in ProcessedBead processedBead)
     {
-      _device.BeadCount++;
-      _device.TotalBeads++;
-      var processedBead = _device._beadProcessor.CalculateBeadParams(in rawBead);
-      _device.DataOut.Enqueue(processedBead);
-      FillWellResults(in processedBead);
+      var count = WellResults.Add(in processedBead);//TODO:move to normal mode case?
+      //it also checks region 0, but it is only a trigger, the real check is done in MinPerRegionAchieved()
+      if (!_minPerRegCheckTrigger)
+        _minPerRegCheckTrigger = count == _device.MinPerRegion;  //see if well is done via sufficient beads in each region
+
       switch (_device.Mode)
       {
         case OperationMode.Normal:
@@ -84,22 +84,14 @@ namespace DIOS.Core
       }
     }
 
-    public string PublishBeadEvents()
+    public string PublishBeadEvents(bool publishOnlyClassified)
     {
-      return WellResults.BeadEventsData.Publish(_device.OnlyClassifiedInBeadEventFile);
+      return WellResults.BeadEventsData.Publish(publishOnlyClassified);
     }
 
     public string PublishWellStats()
     {
-      return _wellStats.Publish();
-    }
-
-    private void FillWellResults(in ProcessedBead bead)
-    {
-      var count = WellResults.Add(in bead);
-      //it also checks region 0, but it is only a trigger, the real check is done in MinPerRegionAchieved()
-      if (!_minPerRegCheckTrigger)
-        _minPerRegCheckTrigger = count == _device.MinPerRegion;  //see if assay is done via sufficient beads in each region
+      return _measuredWellStats.Publish();
     }
 
     internal void EndOfOperationReset()
@@ -107,25 +99,32 @@ namespace DIOS.Core
       _regionsToOutput = null;
     }
 
-    internal void TerminationReadyCheck()
+    internal bool IsMeasurementTerminationAchieved(Termination type)
     {
-      switch (_device.TerminationType)
+      bool stopMeasurement = false;
+      switch (type)
       {
         case Termination.MinPerRegion:
           if (_minPerRegCheckTrigger)  //a region made it, are there more that haven't
           {
             if (MinPerRegionAchieved() >= 0)
-              _device.StopOperation();
+            {
+              stopMeasurement = true;
+            }
             _minPerRegCheckTrigger = false;
           }
           break;
         case Termination.TotalBeadsCaptured:
           if (_device.BeadCount >= _device.BeadsToCapture)
-            _device.StopOperation();
+          {
+            stopMeasurement = true;
+          }
           break;
         case Termination.EndOfSample:
           break;
       }
+
+      return stopMeasurement;
     }
   }
 }

@@ -13,6 +13,7 @@ namespace DIOS.Application.FileIO
     public bool IsResultsPublishingActive { get; set; }
     public bool IsBeadEventPublishingActive { get; set; }
     public bool IsLegacyPlateReportPublishingActive { get; set; }
+    public bool IsOnlyClassifiedBeadsPublishingActive { get; set; }
     public string WorkOrderPath { get; set; }
     public ResultsFileWriter ResultsFile { get; }
     public BeadEventFileWriter BeadEventFile { get; }
