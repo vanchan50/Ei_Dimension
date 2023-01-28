@@ -37,6 +37,9 @@
     public float reporter;  //computed from Green B and Green C
 
     public const int ZONEOFFSET = 1000;
+    public const string HEADER = "Time(1 us Tick),FSC bg,Viol SSC bg,CL0 bg,CL1 bg,CL2 bg,CL3 bg,Red SSC bg,Green SSC bg," +
+                                  "Green B bg,Green C bg,Green B,Green C,Red-Grn Offset,Grn-Viol Offset,Region,Forward Scatter,Violet SSC,CL0," +
+                                  "Red SSC,CL1,CL2,CL3,Green SSC,Reporter";
     public override string ToString()   //setup for csv output
     {
       return $"{EventTime.ToString()},{fsc_bg.ToString()},{vssc_bg.ToString()},{cl0_bg.ToString()},{cl1_bg.ToString()},{cl2_bg.ToString()},{cl3_bg.ToString()},{rssc_bg.ToString()},{gssc_bg.ToString()},{greenB_bg.ToString()},{greenC_bg.ToString()},{greenB.ToString()},{greenC.ToString()},{l_offset_rg.ToString()},{l_offset_gv.ToString()},{(zone * ZONEOFFSET + region).ToString()},{fsc.ToString()},{violetssc.ToString()},{cl0.ToString()},{redssc.ToString()},{cl1.ToString()},{cl2.ToString()},{cl3.ToString()},{greenssc.ToString()},{reporter.ToString($"{0:0.000}")}";

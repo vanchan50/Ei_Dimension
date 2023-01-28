@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
+using DIOS.Core;
 using Newtonsoft.Json;
 
-namespace DIOS.Core.Structs
+namespace DIOS.Application
 {
   /// <summary>
   /// A class for output.
@@ -58,7 +59,7 @@ namespace DIOS.Core.Structs
       return bldr.ToString();
     }
 
-    public string ToStringLegacy(FieldInfo property)
+    public string ToStringLegacy(FieldInfo property, bool includeRegion0)
     {
       var bldr = new StringBuilder();
       bldr.Append($"\"{Well.CoordinatesString()}\",");
@@ -66,7 +67,7 @@ namespace DIOS.Core.Structs
       bldr.Append($"\"{Sample}\",");
       foreach (var result in _results)
       {
-        if (result.Region == 0 && !Device.IncludeReg0InPlateSummary)
+        if (result.Region == 0 && !includeRegion0)
         {
           continue;
         }

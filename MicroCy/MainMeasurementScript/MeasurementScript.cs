@@ -51,7 +51,6 @@ namespace DIOS.Core.MainMeasurementScript
       Task.Run(() =>
       {
         _device.OnFinishedReadingWell();
-        _device.OnNewStatsAvailable();
         Thread.Sleep(500);  //not necessary?
         while (WashingIsOngoing())
         {

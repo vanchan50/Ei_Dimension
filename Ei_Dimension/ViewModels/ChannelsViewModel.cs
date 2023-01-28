@@ -49,7 +49,7 @@ namespace Ei_Dimension.ViewModels
     public void UpdateBiasButtonClick()
     {
       UserInputHandler.InputSanityCheck();
-      App.Device.Hardware.SendCommand(DeviceCommandType.RefreshDAC);
+      App.DiosApp.Device.Hardware.SendCommand(DeviceCommandType.RefreshDAC);
       App.InitSTab("channeltab");
     }
 
@@ -159,16 +159,16 @@ namespace Ei_Dimension.ViewModels
       Bias30Parameters[7] = map.calvssc.ToString();
       Bias30Parameters[8] = map.calcl0.ToString();
       Bias30Parameters[9] = map.calfsc.ToString();
-      App.Device.Hardware.SetParameter(DeviceParameterType.ChannelBias30C, Channel.GreenA, map.calgssc);
-      App.Device.Hardware.SetParameter(DeviceParameterType.ChannelBias30C, Channel.GreenB, map.calrpmaj);
-      App.Device.Hardware.SetParameter(DeviceParameterType.ChannelBias30C, Channel.GreenC, map.calrpmin);
-      App.Device.Hardware.SetParameter(DeviceParameterType.ChannelBias30C, Channel.RedA, map.calcl3);
-      App.Device.Hardware.SetParameter(DeviceParameterType.ChannelBias30C, Channel.RedB, map.calrssc);
-      App.Device.Hardware.SetParameter(DeviceParameterType.ChannelBias30C, Channel.RedC, map.calcl1);
-      App.Device.Hardware.SetParameter(DeviceParameterType.ChannelBias30C, Channel.RedD, map.calcl2);
-      App.Device.Hardware.SetParameter(DeviceParameterType.ChannelBias30C, Channel.VioletA, map.calvssc);
-      App.Device.Hardware.SetParameter(DeviceParameterType.ChannelBias30C, Channel.VioletB, map.calcl0);
-      App.Device.Hardware.SetParameter(DeviceParameterType.ChannelBias30C, Channel.ForwardScatter, map.calfsc);
+      App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ChannelBias30C, Channel.GreenA, map.calgssc);
+      App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ChannelBias30C, Channel.GreenB, map.calrpmaj);
+      App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ChannelBias30C, Channel.GreenC, map.calrpmin);
+      App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ChannelBias30C, Channel.RedA, map.calcl3);
+      App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ChannelBias30C, Channel.RedB, map.calrssc);
+      App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ChannelBias30C, Channel.RedC, map.calcl1);
+      App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ChannelBias30C, Channel.RedD, map.calcl2);
+      App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ChannelBias30C, Channel.VioletA, map.calvssc);
+      App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ChannelBias30C, Channel.VioletB, map.calcl0);
+      App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ChannelBias30C, Channel.ForwardScatter, map.calfsc);
     }
   }
 }

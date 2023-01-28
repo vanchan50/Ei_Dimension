@@ -16,7 +16,7 @@ namespace DIOS.Core.Tests
       //DiosApp.MapController.SetMap(DiosApp.MapController.MapList[1]);
       device.WellController.Init(new List<Well>{new Well{ RowIdx = 1, ColIdx = 1 }});
       device.Normalization.Enable();
-      device.StartOperation();
+      device.StartOperation(null);
       //fakeUSB.ReadBead(new RawBead
       //{
       //  Header = 0xadbeadbe,
@@ -25,7 +25,7 @@ namespace DIOS.Core.Tests
       //});
 
       Thread.Sleep(1000);
-      var t = device.DataOut;
+      //var t = device.DataOut;
     }
   }
 }

@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
-using DIOS.Core;
+using DIOS.Application;
 using Ei_Dimension.Controllers;
 using Ei_Dimension.Graphing.HeatMap;
 using Ei_Dimension.Models;

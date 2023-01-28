@@ -1,7 +1,6 @@
 ﻿using DevExpress.Mvvm;
 using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
-using DIOS.Core;
 using DIOS.Core.HardwareIntercom;
 
 namespace Ei_Dimension.ViewModels
@@ -101,7 +100,7 @@ namespace Ei_Dimension.ViewModels
     {
       if(IsSystemBusy() || IsMeasurementGoing())
         return;
-      App.Device.Hardware.SendCommand(DeviceCommandType.FlashSave);
+      App.DiosApp.Device.Hardware.SendCommand(DeviceCommandType.FlashSave);
       Notification.ShowLocalizedError(nameof(Language.Resources.Notification_FlashSaved));
     }
 
@@ -109,7 +108,7 @@ namespace Ei_Dimension.ViewModels
     {
       if (IsSystemBusy() || IsMeasurementGoing())
         return;
-      App.Device.Hardware.SendCommand(DeviceCommandType.FlashRestore);
+      App.DiosApp.Device.Hardware.SendCommand(DeviceCommandType.FlashRestore);
       Notification.ShowLocalizedError(nameof(Language.Resources.Notification_FlashRestored));
     }
 
@@ -117,14 +116,14 @@ namespace Ei_Dimension.ViewModels
     {
       if (IsSystemBusy() || IsMeasurementGoing())
         return;
-      App.Device.Hardware.SendCommand(DeviceCommandType.FlashFactoryReset);
+      App.DiosApp.Device.Hardware.SendCommand(DeviceCommandType.FlashFactoryReset);
       Notification.Show("Flash Restored to Factory Defaults");
       Notification.ShowLocalizedError(nameof(Language.Resources.Notification_FlashRestoredToDefaults));
     }
 
     private bool IsSystemBusy()
     {
-      if (App.Device.SystemMonitor.IsBusy())
+      if (App.DiosApp.Device.SystemMonitor.IsBusy())
       {
         Notification.ShowLocalizedError(nameof(Language.Resources.Notification_WaitSystemIdle));
         return true;
@@ -134,7 +133,7 @@ namespace Ei_Dimension.ViewModels
 
     private bool IsMeasurementGoing()
     {
-      if (App.Device.IsMeasurementGoing) //if any activity is going on - dismiss
+      if (App.DiosApp.Device.IsMeasurementGoing) //if any activity is going on - dismiss
       {
         Notification.ShowError("Please wait, until the Measurement is complete\nand try again");
         return true;

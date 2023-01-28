@@ -80,7 +80,7 @@ namespace Ei_Dimension.ViewModels
 
     public void ToCurrentButtonClick()
     {
-      if (App.Device.IsMeasurementGoing)
+      if (App.DiosApp.Device.IsMeasurementGoing)
         return;
 #if DEBUG
       App.Logger.Log(new System.Diagnostics.StackTrace().ToString());
@@ -98,7 +98,7 @@ namespace Ei_Dimension.ViewModels
 
     public void SelectedCellChanged()
     {
-      if (App.Device.IsMeasurementGoing)
+      if (App.DiosApp.Device.IsMeasurementGoing)
         return;
       var temp = PlatePictogram.GetSelectedCell();
       if (temp.row == -1)

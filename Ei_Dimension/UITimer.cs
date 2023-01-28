@@ -5,6 +5,7 @@ using System.Threading;
 using Ei_Dimension.Controllers;
 using DIOS.Core.HardwareIntercom;
 using Ei_Dimension.ViewModels;
+using static DevExpress.Xpo.Helpers.CannotLoadObjectsHelper;
 
 namespace Ei_Dimension
 {
@@ -100,12 +101,12 @@ namespace Ei_Dimension
       if (Interlocked.CompareExchange(ref _uiUpdateIsActive, 1, 0) == 1)
         return;
       
-      if (App.Device.IsMeasurementGoing)
+      if (App.DiosApp.Device.IsMeasurementGoing)
       {
         GraphsController.Instance.Update();
         ActiveRegionsStatsController.Instance.UpdateCurrentStats();
         App.Current.Dispatcher.Invoke(TextBoxHandler.UpdateEventCounter);
-        App.Device.Hardware.RequestParameter(DeviceParameterType.BeadConcentration);
+        App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.BeadConcentration);
       }
       TextBoxHandler.UpdatePressureMonitor();
       ServiceMenuEnabler.Update();
@@ -115,20 +116,71 @@ namespace Ei_Dimension
       App.Current.Dispatcher.Invoke(() => {
         if (System.Windows.Input.Keyboard.IsKeyDown(System.Windows.Input.Key.J))
         {
-          App.Device.DEBUGJBeadADD();
+          DEBUGJBeadADD();
         }
         if (System.Windows.Input.Keyboard.IsKeyDown(System.Windows.Input.Key.F3))
         {
-          App.Device.DEBUGOnParameterUpdate(DeviceParameterType.DirectFlashValue, 43, floatparam: 12.45f);
-          //App.Device.DEBUGOnParameterUpdate(DeviceParameterType.SampleSyringeSize, 43);
-          ////App.Device.DEBUGCommandTest(DEBUGCommandList[DEBUGCommandCounter++]);
+          App.DiosApp.Device.DEBUGOnParameterUpdate(DeviceParameterType.DirectFlashValue, 43, floatparam: 12.45f);
+          //App.DiosApp.Device.DEBUGOnParameterUpdate(DeviceParameterType.SampleSyringeSize, 43);
+          ////App.DiosApp.Device.DEBUGCommandTest(DEBUGCommandList[DEBUGCommandCounter++]);
           //foreach (var cs in DEBUGCommandList)
           //{
-          //  App.Device.DEBUGCommandTest(cs);
+          //  App.DiosApp.Device.DEBUGCommandTest(cs);
           //}
         }
       });
-      #endif
+#endif
+    }
+
+    public static void DEBUGJBeadADD()
+    {
+      var r = new Random();
+      var choose = r.Next(0, 3);
+      ProcessedBead bead = new ProcessedBead();
+      switch (choose)
+      {
+        case 0:
+          bead = new ProcessedBead
+          {
+            fsc = 2.36f,
+            redssc = r.Next(1000, 20000),
+            cl0 = r.Next(1050, 1300),
+            cl1 = r.Next(1450, 1700),
+            cl2 = r.Next(1500, 1650),
+            greenB = (ushort)r.Next(9, 12),
+            greenC = 48950
+          };
+          break;
+        case 1:
+          bead = new ProcessedBead
+          {
+            fsc = 15.82f,
+            redssc = r.Next(1000, 20000),
+            cl0 = 250f,
+            cl1 = 500f,
+            cl2 = 500f,
+            greenB = (ushort)r.Next(80, 150),
+            greenC = 65212
+          };
+          break;
+        case 2:
+          bead = new ProcessedBead
+          {
+            fsc = 2.36f,
+            redssc = r.Next(1000, 20000),
+            cl0 = r.Next(1050, 1300),
+            cl1 = 35000,
+            cl2 = 200,
+            greenB = (ushort)r.Next(9, 12),
+            greenC = 48950
+          };
+          break;
+      }
+      App.DiosApp.Results.AddProcessedBeadEvent(in bead);
+      if (App.DiosApp.Results.IsMeasurementTerminationAchieved(App.DiosApp.Device.TerminationType))
+      {
+        App.DiosApp.Device.StopOperation();
+      }
     }
   }
 }

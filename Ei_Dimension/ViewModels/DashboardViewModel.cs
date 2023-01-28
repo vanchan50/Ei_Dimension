@@ -150,27 +150,27 @@ namespace Ei_Dimension.ViewModels
     public void SetFixedVolumeButtonClick(ushort num)
     {
       UserInputHandler.InputSanityCheck();
-      App.Device.Hardware.SetParameter(DeviceParameterType.Volume, VolumeType.Sample, num);
+      App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.Volume, VolumeType.Sample, num);
       Volumes[0] = num.ToString();
     }
 
     public void FluidicsButtonClick(int i)
     {
       UserInputHandler.InputSanityCheck();
-      App.Device.Hardware.SetParameter(DeviceParameterType.IsBubbleDetectionActive, 1);
+      App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.IsBubbleDetectionActive, 1);
       switch (i)
       {
         case 0:
-          App.Device.Hardware.SendCommand(DeviceCommandType.Prime);
+          App.DiosApp.Device.Hardware.SendCommand(DeviceCommandType.Prime);
           break;
         case 1:
-          App.Device.Hardware.SendCommand(DeviceCommandType.WashA);
+          App.DiosApp.Device.Hardware.SendCommand(DeviceCommandType.WashA);
           break;
         case 2:
-          App.Device.Hardware.SendCommand(DeviceCommandType.WashB);
+          App.DiosApp.Device.Hardware.SendCommand(DeviceCommandType.WashB);
           break;
       }
-      App.Device.Hardware.SetParameter(DeviceParameterType.IsBubbleDetectionActive, 0);
+      App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.IsBubbleDetectionActive, 0);
     }
 
     public void FocusedBox(int num)
@@ -240,25 +240,25 @@ namespace Ei_Dimension.ViewModels
     {
       void ReturnToNormal()
       {
-        App.Device.Mode = OperationMode.Normal;
+        App.DiosApp.Device.Mode = OperationMode.Normal;
         EndReadItems[_dbEndReadIndexTempHolder].Click(6);
         Volumes[0] = _dbsampleVolumeTempHolder;
-        App.Device.Hardware.SetParameter(DeviceParameterType.Volume, VolumeType.Sample, ushort.Parse(_dbsampleVolumeTempHolder));
+        App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.Volume, VolumeType.Sample, ushort.Parse(_dbsampleVolumeTempHolder));
         MainButtonsViewModel.Instance.Flavor[0] = null;
         MainWindow.Instance.wndw.Background = (System.Windows.Media.SolidColorBrush)App.Current.Resources["AppBackground"];
         UnlockMapSelection();
         UnLockEndReadSelection();
-        App.Device.Hardware.SendCommand(DeviceCommandType.CalibrationModeDeactivate);
+        App.DiosApp.Device.Hardware.SendCommand(DeviceCommandType.CalibrationModeDeactivate);
       }
 
       UserInputHandler.InputSanityCheck();
       if (CalModeOn)
       {
-        if (App.Device.Mode == OperationMode.Normal)
+        if (App.DiosApp.Device.Mode == OperationMode.Normal)
         {
           _dbsampleVolumeTempHolder = Volumes[0];
           SetFixedVolumeButtonClick(100);
-          App.Device.Mode = OperationMode.Calibration;
+          App.DiosApp.Device.Mode = OperationMode.Calibration;
           CalibrationViewModel.Instance.CalFailsInARow = 0;
           CalibrationViewModel.Instance.MakeCalMap();
           _dbEndReadIndexTempHolder = SelectedEndReadIndex;
@@ -268,11 +268,11 @@ namespace Ei_Dimension.ViewModels
           MainWindow.Instance.wndw.Background = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(255, 255, 191));
           LockMapSelection();
           LockEndReadSelection();
-          App.Device.Hardware.SendCommand(DeviceCommandType.CalibrationModeActivate);
+          App.DiosApp.Device.Hardware.SendCommand(DeviceCommandType.CalibrationModeActivate);
           return;
         }
         CalModeOn = false;
-        if (App.Device.Mode == OperationMode.Verification)
+        if (App.DiosApp.Device.Mode == OperationMode.Verification)
         {
           var msg = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Messages_Instrument_IsIn_ValMode),
             Language.TranslationSource.Instance.CurrentCulture);
@@ -291,9 +291,9 @@ namespace Ei_Dimension.ViewModels
     {
       void ReturnToNormal()
       {
-        App.Device.Mode = OperationMode.Normal;
+        App.DiosApp.Device.Mode = OperationMode.Normal;
         Volumes[0] = _dbsampleVolumeTempHolder;
-        App.Device.Hardware.SetParameter(DeviceParameterType.Volume, VolumeType.Sample, ushort.Parse(_dbsampleVolumeTempHolder));
+        App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.Volume, VolumeType.Sample, ushort.Parse(_dbsampleVolumeTempHolder));
         MainButtonsViewModel.Instance.Flavor[0] = null;
         MainWindow.Instance.wndw.Background = (System.Windows.Media.SolidColorBrush)App.Current.Resources["AppBackground"];
         ResultsViewModel.Instance.ValidationCoverVisible = Visibility.Hidden;
@@ -303,11 +303,11 @@ namespace Ei_Dimension.ViewModels
       UserInputHandler.InputSanityCheck();
       if (ValModeOn)
       {
-        if (App.Device.Mode == OperationMode.Normal && VerificationViewModel.Instance.ValMapInfoReady())
+        if (App.DiosApp.Device.Mode == OperationMode.Normal && VerificationViewModel.Instance.ValMapInfoReady())
         {
           _dbsampleVolumeTempHolder = Volumes[0];
           SetFixedVolumeButtonClick(25);
-          App.Device.Mode = OperationMode.Verification;
+          App.DiosApp.Device.Mode = OperationMode.Verification;
           MainButtonsViewModel.Instance.Flavor[0] = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Maintenance_Validation),
             Language.TranslationSource.Instance.CurrentCulture);
           MainWindow.Instance.wndw.Background = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(97, 162, 135));
@@ -316,7 +316,7 @@ namespace Ei_Dimension.ViewModels
           return;
         }
         ValModeOn = false;
-        if (App.Device.Mode == OperationMode.Calibration)
+        if (App.DiosApp.Device.Mode == OperationMode.Calibration)
         {
           var msg = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Messages_Instrument_IsIn_CalMode),
             Language.TranslationSource.Instance.CurrentCulture);
@@ -438,7 +438,7 @@ namespace Ei_Dimension.ViewModels
           case 1:
             _vm.SelectedSpeedContent = Content;
             _vm.SelectedSpeedIndex = (WellReadingSpeed)Index;
-            App.Device.Hardware.SetParameter(DeviceParameterType.WellReadingSpeed, Index);
+            App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.WellReadingSpeed, Index);
             break;
           case 2:
             _vm.SelectedClassiMapContent = Content;
@@ -450,12 +450,12 @@ namespace Ei_Dimension.ViewModels
           case 3:
             _vm.SelectedChConfigContent = Content;
             _vm.SelectedChConfigIndex = (ChannelConfiguration)Index;
-            App.Device.Hardware.SetParameter(DeviceParameterType.ChannelConfiguration, Index);
+            App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ChannelConfiguration, Index);
             break;
           case 4:
             _vm.SelectedOrderContent = Content;
             _vm.SelectedOrderIndex = (WellReadingOrder)Index;
-            App.Device.Hardware.SetParameter(DeviceParameterType.WellReadingOrder, Index);
+            App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.WellReadingOrder, Index);
             break;
           case 5:
             _vm.SelectedSysControlContent = Content;

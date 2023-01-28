@@ -608,7 +608,7 @@ namespace Ei_Dimension
           {
             void Act()
             {
-              App.Device.Hardware.RenewSheath();
+              App.DiosApp.Device.Hardware.RenewSheath();
               lock (_callingThreadLock)
               {
                 Monitor.Pulse(_callingThreadLock);
@@ -629,7 +629,7 @@ namespace Ei_Dimension
           }
           else if (parameter.Parameter == (int)SheathFlowError.PressureOverload)
           {
-            if (parameter.FloatParameter > App.Device.MaxPressure)
+            if (parameter.FloatParameter > App.DiosApp.Device.MaxPressure)
             {
               void Act()
               {
@@ -690,16 +690,16 @@ namespace Ei_Dimension
           }
           break;
         case DeviceParameterType.NextWellWarning:
-          if (!ComponentsViewModel.Instance.SuppressWarnings && App.Device.IsMeasurementGoing)
+          if (!ComponentsViewModel.Instance.SuppressWarnings && App.DiosApp.Device.IsMeasurementGoing)
           {
             update = () =>
             {
-              var currentWell = App.Device.WellController.CurrentWell;
+              var currentWell = App.DiosApp.Device.WellController.CurrentWell;
               if (currentWell == null)
                 return;
               PlatePictogramViewModel.Instance.PlatePictogram.ChangeState(currentWell.RowIdx, currentWell.ColIdx,
                 warning: Models.WellWarningState.YellowWarning);
-              if (!App.Device.WellController.IsLastWell) //aspirating next
+              if (!App.DiosApp.Device.WellController.IsLastWell) //aspirating next
                 App._nextWellWarning = true;
             };
           }
@@ -733,13 +733,13 @@ namespace Ei_Dimension
 
     public static void UpdateEventCounter()
     {
-      MainViewModel.Instance.EventCountCurrent[0] = App.Device.BeadCount.ToString();
+      MainViewModel.Instance.EventCountCurrent[0] = App.DiosApp.Device.BeadCount.ToString();
     }
 
     public static void UpdatePressureMonitor()
     {
       if (ComponentsViewModel.Instance.PressureMonToggleButtonState)
-        App.Device.Hardware.RequestParameter(DeviceParameterType.Pressure);
+        App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.Pressure);
     }
   }
 }

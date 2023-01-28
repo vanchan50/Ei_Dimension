@@ -1,6 +1,7 @@
 ﻿using Ei_Dimension.Models;
 using System;
 using System.Collections.Generic;
+using DIOS.Application;
 using DIOS.Core;
 using Ei_Dimension.Controllers;
 using Ei_Dimension.ViewModels;

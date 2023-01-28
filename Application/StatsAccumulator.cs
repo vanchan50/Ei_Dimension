@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using DIOS.Core;
 
-namespace DIOS.Core
+namespace DIOS.Application
 {
   public class StatsAccumulator
   {

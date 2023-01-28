@@ -54,8 +54,8 @@ namespace Ei_Dimension.ViewModels
 
       ClassificationTargetsContents = new ObservableCollection<string> { "0", "0", "0", "0", "0"};  //init on map changed
 
-      CompensationPercentageContent = new ObservableCollection<string> { App.Device.Compensation.ToString() };
-      DNRContents = new ObservableCollection<string> { "", App.Device.HdnrTrans.ToString() };
+      CompensationPercentageContent = new ObservableCollection<string> { App.DiosApp.Device.Compensation.ToString() };
+      DNRContents = new ObservableCollection<string> { "", App.DiosApp.Device.HdnrTrans.ToString() };
 
       AttenuationBox = new ObservableCollection<string> { App.DiosApp.MapController.ActiveMap.calParams.att.ToString() };
 
@@ -73,17 +73,17 @@ namespace Ei_Dimension.ViewModels
     public void CalibrationSuccess()
     {
       System.Threading.Thread.Sleep(1000);  //not really needed
-      App.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.GreenA);
-      App.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.GreenB);
-      App.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.GreenC);
-      App.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.RedA);
-      App.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.RedB);
-      App.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.RedC);
-      App.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.RedD);
-      App.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.VioletA);
-      App.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.VioletB);
-      App.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.ForwardScatter);
-      App.Device.Hardware.RequestParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.DNRCoefficient);
+      App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.GreenA);
+      App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.GreenB);
+      App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.GreenC);
+      App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.RedA);
+      App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.RedB);
+      App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.RedC);
+      App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.RedD);
+      App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.VioletA);
+      App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.VioletB);
+      App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.ForwardScatter);
+      App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.DNRCoefficient);
       System.Threading.Thread.Sleep(1000);
       Action Cancel = () =>
       {
@@ -167,16 +167,16 @@ namespace Ei_Dimension.ViewModels
     public void SaveCalButtonClick()
     {
       UserInputHandler.InputSanityCheck();
-      App.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.GreenA);
-      App.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.GreenB);
-      App.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.GreenC);
-      App.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.RedA);
-      App.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.RedB);
-      App.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.RedC);
-      App.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.RedD);
-      App.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.VioletA);
-      App.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.VioletB);
-      App.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.ForwardScatter);
+      App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.GreenA);
+      App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.GreenB);
+      App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.GreenC);
+      App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.RedA);
+      App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.RedB);
+      App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.RedC);
+      App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.RedD);
+      App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.VioletA);
+      App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.VioletB);
+      App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.ForwardScatter);
       System.Threading.Thread.Sleep(1000);
       var res = App.DiosApp.MapController.SaveCalVals(new MapCalParameters
       {
@@ -288,27 +288,27 @@ namespace Ei_Dimension.ViewModels
       EventTriggerContents[2] = map.calParams.maxmapssc.ToString();
       AttenuationBox[0] = map.calParams.att.ToString();
       EventTriggerContents[0] = map.calParams.height.ToString();
-      App.Device.Hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.MinSSC, map.calParams.minmapssc);
-      App.Device.Hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.MaxSSC, map.calParams.maxmapssc);
-      App.Device.Hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.Attenuation, map.calParams.att);
-      App.Device.Hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.Height, map.calParams.height);
+      App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.MinSSC, map.calParams.minmapssc);
+      App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.MaxSSC, map.calParams.maxmapssc);
+      App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.Attenuation, map.calParams.att);
+      App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.Height, map.calParams.height);
       GatingItems[map.calParams.gate].Click();
       CompensationPercentageContent[0] = map.calParams.compensation.ToString();
       DNRContents[0] = map.calParams.DNRCoef.ToString();
       DNRContents[1] = map.calParams.DNRTrans.ToString();
-      App.Device.Compensation = map.calParams.compensation;
-      App.Device.HDnrCoef = map.calParams.DNRCoef;
-      App.Device.HdnrTrans = map.calParams.DNRTrans;
+      App.DiosApp.Device.Compensation = map.calParams.compensation;
+      App.DiosApp.Device.HDnrCoef = map.calParams.DNRCoef;
+      App.DiosApp.Device.HdnrTrans = map.calParams.DNRTrans;
       ClassificationTargetsContents[0] = map.calParams.CL0.ToString();
       ClassificationTargetsContents[1] = map.calParams.CL1.ToString();
       ClassificationTargetsContents[2] = map.calParams.CL2.ToString();
       ClassificationTargetsContents[3] = map.calParams.CL3.ToString();
       ClassificationTargetsContents[4] = map.calParams.RP1.ToString();
-      App.Device.Hardware.SetParameter(DeviceParameterType.CalibrationTarget, CalibrationTarget.CL0, map.calParams.CL0);
-      App.Device.Hardware.SetParameter(DeviceParameterType.CalibrationTarget, CalibrationTarget.CL1, map.calParams.CL1);
-      App.Device.Hardware.SetParameter(DeviceParameterType.CalibrationTarget, CalibrationTarget.CL2, map.calParams.CL2);
-      App.Device.Hardware.SetParameter(DeviceParameterType.CalibrationTarget, CalibrationTarget.CL3, map.calParams.CL3);
-      App.Device.Hardware.SetParameter(DeviceParameterType.CalibrationTarget, CalibrationTarget.RP1, map.calParams.RP1);
+      App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.CalibrationTarget, CalibrationTarget.CL0, map.calParams.CL0);
+      App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.CalibrationTarget, CalibrationTarget.CL1, map.calParams.CL1);
+      App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.CalibrationTarget, CalibrationTarget.CL2, map.calParams.CL2);
+      App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.CalibrationTarget, CalibrationTarget.CL3, map.calParams.CL3);
+      App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.CalibrationTarget, CalibrationTarget.RP1, map.calParams.RP1);
     }
 
     public class DropDownButtonContents : Core.ObservableObject
@@ -340,7 +340,7 @@ namespace Ei_Dimension.ViewModels
       {
         _vm.SelectedGatingContent = Content;
         _vm.SelectedGatingIndex = Index;
-        App.Device.ScatterGate = (Gate)Index;
+        App.DiosApp.Device.ScatterGate = (Gate)Index;
       }
 
       public static void ResetIndex()

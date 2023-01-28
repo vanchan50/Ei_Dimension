@@ -1,13 +1,17 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
-using DIOS.Core.Structs;
+using DIOS.Core;
 
-namespace DIOS.Core
+namespace DIOS.Application
 {
   public class RunResults
   {
+    public ConcurrentQueue<ProcessedBead> DataOut { get; } = new ConcurrentQueue<ProcessedBead>();
+    public List<ProcessedBead> OutputBeadsCollector { get; } = new List<ProcessedBead>(2000000);
     public PlateReport PlateReport { get; } = new PlateReport();
-    internal WellResults WellResults { get; } = new WellResults();
+    public WellResults WellResults { get; } = new WellResults();
+    public ResultsProcessor ResultsProc { get; }
     private readonly Device _device;
     private ICollection<int> _regionsToOutput;
     private bool _minPerRegCheckTrigger;
@@ -39,12 +43,12 @@ namespace DIOS.Core
     /// Checks if MinPerRegion Condition is met. Not thread safe. Supposed to be called after the well is read or in the measurement sequence thread
     /// </summary>
     /// <returns>A positive number or 0, if MinPerRegions is met; otherwise returns a negative number of lacking beads</returns>
-    public int MinPerRegionAchieved()
+    public int MinPerRegionAchieved(int minPerRegion)
     {
-      return WellResults.MinPerAllRegionsAchieved(_device.MinPerRegion);
+      return WellResults.MinPerAllRegionsAchieved(minPerRegion);
     }
 
-    internal void StartNewPlateReport()
+    public void StartNewPlateReport()
     {
       PlateReport.Reset();
     }
@@ -56,16 +60,17 @@ namespace DIOS.Core
       _measuredWellStats.Add(stats.ToString());
     }
 
-    internal void StartNewWell(Well well)
+    public void StartNewWell(Well well)
     {
       if (_regionsToOutput == null)
         throw new Exception("SetupRunRegions() must be called before the run");
       WellResults.Reset(well, _regionsToOutput);
       _measuredWellStats.Reset();
       _minPerRegCheckTrigger = false;
+      ResultsProc.NewWellStarting();
     }
 
-    internal void AddProcessedBeadEvent(in ProcessedBead processedBead)
+    public void AddProcessedBeadEvent(in ProcessedBead processedBead)
     {
       var count = WellResults.Add(in processedBead);//TODO:move to normal mode case?
       //it also checks region 0, but it is only a trigger, the real check is done in MinPerRegionAchieved()
@@ -84,9 +89,9 @@ namespace DIOS.Core
       }
     }
 
-    public string PublishBeadEvents(bool publishOnlyClassified)
+    public BeadEventsData PublishBeadEvents()
     {
-      return WellResults.BeadEventsData.Publish(publishOnlyClassified);
+      return WellResults.BeadEventsData;
     }
 
     public string PublishWellStats()
@@ -94,12 +99,12 @@ namespace DIOS.Core
       return _measuredWellStats.Publish();
     }
 
-    internal void EndOfOperationReset()
+    public void EndOfOperationReset()
     {
       _regionsToOutput = null;
     }
 
-    internal bool IsMeasurementTerminationAchieved(Termination type)
+    public bool IsMeasurementTerminationAchieved(Termination type)
     {
       bool stopMeasurement = false;
       switch (type)
@@ -107,7 +112,7 @@ namespace DIOS.Core
         case Termination.MinPerRegion:
           if (_minPerRegCheckTrigger)  //a region made it, are there more that haven't
           {
-            if (MinPerRegionAchieved() >= 0)
+            if (MinPerRegionAchieved(_device.MinPerRegion) >= 0)
             {
               stopMeasurement = true;
             }

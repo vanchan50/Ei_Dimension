@@ -143,7 +143,7 @@ namespace Ei_Dimension.ViewModels
       var param = num == 96 ? 0 : 1;
       if (num == 1)
         param = 2;
-      App.Device.Hardware.SetParameter(DeviceParameterType.PlateType, param);
+      App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.PlateType, param);
     }
 
     public void RunMotorButtonClick(string s)
@@ -156,21 +156,21 @@ namespace Ei_Dimension.ViewModels
           if (float.TryParse(ParametersX[0], out fRes))
           {
             var direction = ParametersX[1] == "Left" ? MotorDirection.Left : MotorDirection.Right;
-            App.Device.Hardware.SetParameter(DeviceParameterType.MotorMoveX, direction, fRes);
+            App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorMoveX, direction, fRes);
           }
           break;
         case "y":
           if (float.TryParse(ParametersY[0], out fRes))
           {
             var direction = ParametersY[1] == "Back" ? MotorDirection.Back : MotorDirection.Front;
-            App.Device.Hardware.SetParameter(DeviceParameterType.MotorMoveY, direction, fRes);
+            App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorMoveY, direction, fRes);
           }
           break;
         case "z":
           if (float.TryParse(ParametersZ[0], out fRes))
           {
             var direction = ParametersZ[1] == "Up" ? MotorDirection.Up : MotorDirection.Down;
-            App.Device.Hardware.SetParameter(DeviceParameterType.MotorMoveZ, direction, fRes);
+            App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorMoveZ, direction, fRes);
           }
           break;
       }
@@ -182,13 +182,13 @@ namespace Ei_Dimension.ViewModels
       switch (s)
       {
         case "x":
-          App.Device.Hardware.SetParameter(DeviceParameterType.MotorMoveX, MotorDirection.Halt);
+          App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorMoveX, MotorDirection.Halt);
           break;
         case "y":
-          App.Device.Hardware.SetParameter(DeviceParameterType.MotorMoveY, MotorDirection.Halt);
+          App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorMoveY, MotorDirection.Halt);
           break;
         case "z":
-          App.Device.Hardware.SetParameter(DeviceParameterType.MotorMoveZ, MotorDirection.Halt);
+          App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorMoveZ, MotorDirection.Halt);
           break;
       }
     }
@@ -196,9 +196,9 @@ namespace Ei_Dimension.ViewModels
     public void GoToWellButtonClick()
     {
       UserInputHandler.InputSanityCheck();
-      App.Device.Hardware.SetParameter(DeviceParameterType.WellRowIndex, SelectedWellRowIndex);
-      App.Device.Hardware.SetParameter(DeviceParameterType.WellColumnIndex, SelectedWellColumnIndex);
-      App.Device.Hardware.SendCommand(DeviceCommandType.PositionWellPlate);
+      App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.WellRowIndex, SelectedWellRowIndex);
+      App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.WellColumnIndex, SelectedWellColumnIndex);
+      App.DiosApp.Device.Hardware.SendCommand(DeviceCommandType.PositionWellPlate);
     }
 
     public void PollStepToggleButtonClick()
@@ -206,7 +206,7 @@ namespace Ei_Dimension.ViewModels
       UserInputHandler.InputSanityCheck();
       PollStepActive[0] = !PollStepActive[0];
       var param = PollStepActive[0] ? 1 : 0;
-      App.Device.Hardware.SetParameter(DeviceParameterType.PollStepActivity, param);
+      App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.PollStepActivity, param);
     }
 
     public void PollStepSelector(string s)
@@ -406,12 +406,12 @@ namespace Ei_Dimension.ViewModels
         {
           case 1:
             _vm.SelectedWellRow = Content;
-            App.Device.Hardware.SetParameter(DeviceParameterType.WellRowIndex, Index);
+            App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.WellRowIndex, Index);
             _vm.SelectedWellRowIndex = Index;
             break;
           case 2:
             _vm.SelectedWellColumn = Content;
-            App.Device.Hardware.SetParameter(DeviceParameterType.WellColumnIndex, Index);
+            App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.WellColumnIndex, Index);
             _vm.SelectedWellColumnIndex = Index;
             break;
         }

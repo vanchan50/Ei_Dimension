@@ -34,9 +34,9 @@ namespace Ei_Dimension.ViewModels
     { 
       UserInputHandler.InputSanityCheck();
       if (state)
-        App.Device.Hardware.SetParameter(DeviceParameterType.SampleSyringeType, SampleSyringeType.Double);
+        App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.SampleSyringeType, SampleSyringeType.Double);
       else
-        App.Device.Hardware.SetParameter(DeviceParameterType.SampleSyringeType, SampleSyringeType.Single);
+        App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.SampleSyringeType, SampleSyringeType.Single);
       SingleSyringeMode[0] = state;
     }
 

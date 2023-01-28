@@ -2,8 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using DIOS.Core;
 
-namespace DIOS.Core
+namespace DIOS.Application
 {
   public class MapController
   {

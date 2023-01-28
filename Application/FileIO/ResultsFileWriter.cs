@@ -39,7 +39,7 @@ namespace DIOS.Application.FileIO
       if (!_publisher.IsResultsPublishingActive || WellStats.Length == 0)
         return;
 
-      if (!Device.IncludeReg0InPlateSummary)
+      if (!_publisher.IncludeReg0InPlateSummary)
         RemoveRegion0(ref WellStats);
 
       var directoryName = Path.Combine(_publisher.Outdir, ResultsPublisher.DATAFOLDERNAME);

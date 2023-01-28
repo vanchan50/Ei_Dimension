@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-namespace DIOS.Core
+namespace DIOS.Application
 {
   /// <summary>
   /// A Deep Copy of RegionReporterResult (List of reporter values for a region)

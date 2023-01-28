@@ -42,13 +42,13 @@ namespace Ei_Dimension.ViewModels
 
     public void PostClick()
     {
-      if (App.Device.IsMeasurementGoing)
+      if (App.DiosApp.Device.IsMeasurementGoing)
       {
         Notification.ShowError("Please wait until the measurement is finished");
         return;
       }
 
-      var list = App.Device.Results.PlateReport.GetRegionalReporterMFI();
+      var list = App.DiosApp.Results.PlateReport.GetRegionalReporterMFI();
 
       if (list == null)
       {
@@ -112,9 +112,9 @@ namespace Ei_Dimension.ViewModels
     {
       UserInputHandler.InputSanityCheck();
       if(state)
-        App.Device.Normalization.Enable();
+        App.DiosApp.Device.Normalization.Enable();
       else
-        App.Device.Normalization.Disable();
+        App.DiosApp.Device.Normalization.Disable();
       NormalizationEnabled[0] = state;
       MainViewModel.Instance.SetNormalizationMarker(state);
     }

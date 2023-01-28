@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
+using DIOS.Core;
 
-namespace DIOS.Core.Structs
+namespace DIOS.Application
 {
-  internal class WellResults
+  public class WellResults
   {
     public Well Well { get; private set; }
     public BeadEventsData BeadEventsData { get; } = new BeadEventsData();
@@ -68,12 +69,12 @@ namespace DIOS.Core.Structs
       return copy;
     }
 
-    internal ChannelsCalibrationStats GetStats()
+    public ChannelsCalibrationStats GetStats()
     {
       return _calibrationStatsAccumulator.CalculateStats();
     }
 
-    internal ChannelsAveragesStats GetBackgroundAverages()
+    public ChannelsAveragesStats GetBackgroundAverages()
     {
       return _backgroundStatsAccumulator.CalculateAverages();
     }

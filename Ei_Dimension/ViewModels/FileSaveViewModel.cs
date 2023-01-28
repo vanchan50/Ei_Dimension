@@ -1,6 +1,7 @@
 ﻿using DevExpress.Mvvm;
 using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
+using DIOS.Application;
 using DIOS.Core;
 using System;
 using System.Collections.ObjectModel;
@@ -110,7 +111,7 @@ namespace Ei_Dimension.ViewModels
           Settings.Default.OnlyClassifed = Checkboxes[num];
           break;
         case 4:
-          Device.IncludeReg0InPlateSummary = Checkboxes[num];
+          App.DiosApp.Publisher.IncludeReg0InPlateSummary = Checkboxes[num];
           break;
         case 5:
           break;

@@ -67,7 +67,7 @@ namespace Ei_Dimension.Graphing
     {
       Action BuildWmap = null;
       List<HeatMapPoint> Map = GetCurrentMap();
-      switch (App.Device.Mode)
+      switch (App.DiosApp.Device.Mode)
       {
         case OperationMode.Normal:
           BuildWmap = () => {

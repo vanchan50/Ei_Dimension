@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using DIOS.Core.HardwareIntercom;
 using DIOS.Core.MainMeasurementScript;
@@ -33,9 +34,7 @@ namespace DIOS.Core
 {
   public class Device
   {
-    public RunResults Results { get; }
     public WorkOrder WorkOrder { get; set; }
-    public ConcurrentQueue<ProcessedBead> DataOut { get; } = new ConcurrentQueue<ProcessedBead>();
     public WellController WellController { get; } = new WellController();
     public SystemActivity SystemMonitor { get; } = new SystemActivity();
     public HardwareInterface Hardware { get; }
@@ -44,7 +43,6 @@ namespace DIOS.Core
     public event EventHandler<ReadingWellEventArgs> StartingToReadWell;
     public event EventHandler<ReadingWellEventArgs> FinishedReadingWell;
     public event EventHandler FinishedMeasurement;
-    public event EventHandler<StatsEventArgs> NewStatsAvailable;
     public event EventHandler<ParameterUpdateEventArgs> ParameterUpdate;
     public OperationMode Mode { get; set; } = OperationMode.Normal;
     public SystemControl Control { get; set; } = SystemControl.Manual;
@@ -118,7 +116,6 @@ namespace DIOS.Core
     public float MaxPressure { get; set; }
     public bool IsPlateEjected { get; internal set; }
     internal bool _singleSyringeMode;
-    public static bool IncludeReg0InPlateSummary { get; set; }  //TODO: crutch for filesaving
     public readonly Verificator Verificator;
 
     internal bool _isReadingA;
@@ -135,9 +132,8 @@ namespace DIOS.Core
     public Device(ISerial connection, ILogger logger)
     {
       SelfTester = new SelfTester(this, logger);
-      Results = new RunResults(this);
       _beadProcessor = new BeadProcessor(this);
-      _dataController = new DataController(this, Results, connection, logger);
+      _dataController = new DataController(this, connection, logger);
       Hardware = new HardwareInterface(this, _dataController, logger);
       _script = new MeasurementScript(this, logger);
       _logger = logger;
@@ -172,13 +168,13 @@ namespace DIOS.Core
     /// Sends a sequence of commands to startup a measurement.
     /// The operation is conducted on the other thread, while this function quickly returns
     /// </summary>
-    public void StartOperation()
+    public void StartOperation(ICollection<ProcessedBead> outputBeads)
     {
       if (Mode != OperationMode.Normal)
       {
         Normalization.SuspendForTheRun();
       }
-      Results.StartNewPlateReport();
+      _dataController.ExternalOutput = outputBeads;
       _script.Start();
     }
 
@@ -224,7 +220,6 @@ namespace DIOS.Core
     internal void OnStartingToReadWell()
     {
       WellController.Advance();
-      Results.StartNewWell(WellController.CurrentWell);
       BeadCount = 0;
       _dataController.IsMeasurementGoing = true;
       StartingToReadWell?.Invoke(this, new ReadingWellEventArgs(WellController.CurrentWell));
@@ -246,8 +241,7 @@ namespace DIOS.Core
     internal void OnFinishedMeasurement()
     {
       _dataController.IsMeasurementGoing = false;
-      Results.PlateReport.completedDateTime = DateTime.Now;
-      Results.EndOfOperationReset();
+      _dataController.ExternalOutput = null;
       Hardware.SetParameter(DeviceParameterType.IsBubbleDetectionActive, 0);
       if (Mode ==  OperationMode.Verification)
         Verificator.CalculateResults(_beadProcessor._map);
@@ -256,13 +250,6 @@ namespace DIOS.Core
         Normalization.Restore();
 
       FinishedMeasurement?.Invoke(this, EventArgs.Empty);
-    }
-
-    internal void OnNewStatsAvailable()
-    {
-      var stats = Results.WellResults.GetStats();
-      var averageBackgrounds = Results.WellResults.GetBackgroundAverages();
-      NewStatsAvailable?.Invoke(this, new StatsEventArgs(stats, averageBackgrounds));
     }
 
     internal void OnParameterUpdate(ParameterUpdateEventArgs param)
@@ -296,64 +283,6 @@ namespace DIOS.Core
     public void DEBUGOnParameterUpdate(DeviceParameterType type, int intparam = -1, float floatparam = -1F)
     {
       ParameterUpdate?.Invoke(this, new ParameterUpdateEventArgs(type, intparam, floatparam));
-    }
-
-    public void DEBUGJBeadADD()
-    {
-      var r = new Random();
-      var kek = new RawBead
-      {
-        Header = 0xadbeadbe,
-        fsc = 2.36f,
-        redssc = r.Next(1000,20000),
-        cl0 = r.Next(1050, 1300),
-        cl1 = r.Next(1450, 1700),
-        cl2 = r.Next(1500, 1650),
-        greenB = (ushort)r.Next(9, 12),
-        greenC = 48950
-      };
-      var pek = new RawBead
-      {
-        Header = 0xadbeadbe,
-        fsc = 15.82f,
-        redssc = r.Next(1000, 20000),
-        cl0 = 250f,
-        cl1 = 500f,
-        cl2 = 500f,
-        greenB = (ushort)r.Next(80,150),
-        greenC = 65212
-      };
-      var rek0 = new RawBead
-      {
-        Header = 0xadbeadbe,
-        fsc = 2.36f,
-        redssc = r.Next(1000, 20000),
-        cl0 = r.Next(1050, 1300),
-        cl1 = 35000,
-        cl2 = 200,
-        greenB = (ushort)r.Next(9, 12),
-        greenC = 48950
-      };
-      var choose = r.Next(0, 3);
-      switch (choose)
-      {
-        case 0:
-          var processedBead = _beadProcessor.CalculateBeadParams(in kek);
-          Results.AddProcessedBeadEvent(in processedBead);
-          break;
-        case 1:
-          var processedBead2 = _beadProcessor.CalculateBeadParams(in pek);
-          Results.AddProcessedBeadEvent(in processedBead2);
-          break;
-        case 2:
-          var processedBead3 = _beadProcessor.CalculateBeadParams(in rek0);
-          Results.AddProcessedBeadEvent(in processedBead3);
-          break;
-      }
-      if (Results.IsMeasurementTerminationAchieved(TerminationType))
-      {
-        StopOperation();
-      }
     }
 
     public void DEBUGCommandTest(CommandStruct cs)

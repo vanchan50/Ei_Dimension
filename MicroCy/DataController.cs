@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Threading;
 using DIOS.Core.HardwareIntercom;
 
@@ -8,6 +9,7 @@ namespace DIOS.Core
   internal class DataController
   {
     public bool IsMeasurementGoing { get; set; }
+    internal ICollection<ProcessedBead> ExternalOutput { get; set; }
     private ConcurrentQueue<CommandStruct> _outCommands = new ConcurrentQueue<CommandStruct>();
 
     private readonly object _usbOutCV = new object();
@@ -15,13 +17,11 @@ namespace DIOS.Core
     private readonly Thread _prioUsbInThread;
     private readonly Thread _prioUsbOutThread;
     private readonly Device _device;
-    private readonly RunResults _results;
     private readonly ILogger _logger;
 
-    public DataController(Device device, RunResults runResults, ISerial connection, ILogger logger)
+    public DataController(Device device, ISerial connection, ILogger logger)
     {
       _device = device;
-      _results = runResults;
       _serialConnection = connection;
       _logger = logger;
 
@@ -92,13 +92,7 @@ namespace DIOS.Core
               break;
             _device.BeadCount++;
             var processedBead = _device._beadProcessor.CalculateBeadParams(in outbead);
-            _results.AddProcessedBeadEvent(in processedBead);
-            _device.DataOut.Enqueue(processedBead);
-          }
-
-          if (_results.IsMeasurementTerminationAchieved(_device.TerminationType))
-          {
-            _device.StopOperation();
+            ExternalOutput.Add(processedBead);
           }
         }
         _serialConnection.ClearBuffer();  //TODO: is it necessary?

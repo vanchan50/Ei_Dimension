@@ -75,7 +75,7 @@ namespace Ei_Dimension.ViewModels
       switch (num)
       {
         case 1:
-          App.Device.Hardware.SetParameter(DeviceParameterType.PlateType, (ushort)PlateType.Tube);
+          App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.PlateType, (ushort)PlateType.Tube);
           Table384Visible = Visibility.Hidden;
           Table96Visible = Visibility.Hidden;
           break;
@@ -89,7 +89,7 @@ namespace Ei_Dimension.ViewModels
               row.Reset();
             }
           }
-          App.Device.Hardware.SetParameter(DeviceParameterType.PlateType, (ushort)PlateType.Plate96);
+          App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.PlateType, (ushort)PlateType.Plate96);
           break;
         case 384:
           Table384Visible = Visibility.Visible;
@@ -101,7 +101,7 @@ namespace Ei_Dimension.ViewModels
               row.Reset();
             }
           }
-          App.Device.Hardware.SetParameter(DeviceParameterType.PlateType, (ushort)PlateType.Plate384);
+          App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.PlateType, (ushort)PlateType.Plate384);
           break;
       }
       CurrentTableSize = num;
@@ -146,10 +146,10 @@ namespace Ei_Dimension.ViewModels
         return wells;
       }
 
-      if (App.Device.Control == SystemControl.WorkOrder)
+      if (App.DiosApp.Device.Control == SystemControl.WorkOrder)
       {
         //fill wells from work order
-        wells = App.Device.WorkOrder.woWells;
+        wells = App.DiosApp.Device.WorkOrder.woWells;
         return wells;
       }
 

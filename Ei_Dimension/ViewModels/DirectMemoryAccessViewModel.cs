@@ -45,12 +45,12 @@ namespace Ei_Dimension.ViewModels
       var fVal = float.Parse(FloatValue[0]);
       if (getset)
       {
-        App.Device.Hardware.DirectFlashAccess(getset, code);
+        App.DiosApp.Device.Hardware.DirectFlashAccess(getset, code);
         Views.DirectMemoryAccessView.Instance.BlockUI();
       }
       else //set
       {
-        App.Device.Hardware.DirectFlashAccess(getset, code, iVal, fVal);
+        App.DiosApp.Device.Hardware.DirectFlashAccess(getset, code, iVal, fVal);
       }
     }
 

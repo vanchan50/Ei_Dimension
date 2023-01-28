@@ -5,6 +5,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using DIOS.Application;
 using DIOS.Core;
 using Ei_Dimension.Models;
 using Ei_Dimension.ViewModels;
@@ -65,7 +66,7 @@ namespace Ei_Dimension.Controllers
         || (ActiveRegionNums.Count == 1 && ActiveRegionNums.Contains(0)));
     }
 
-    public static string GetLegacyReportHeader()
+    public static string GetLegacyReportHeader(bool includeRegion0)
     {
       var bldr = new StringBuilder();
       bldr.Append("\"Location\",");
@@ -74,7 +75,7 @@ namespace Ei_Dimension.Controllers
       {
         if (region.Number == 0)
         {
-          if (Device.IncludeReg0InPlateSummary)
+          if (includeRegion0)
           {
             bldr.Append($"\"{region.GetLegacyHeader()}\",");
           }

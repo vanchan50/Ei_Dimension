@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
-using DIOS.Core;
-using Ei_Dimension.Graphing.HeatMap;
+using DIOS.Application;
 
 namespace Ei_Dimension.Controllers
 {
@@ -59,7 +58,7 @@ namespace Ei_Dimension.Controllers
       if (!_activeRegionsUpdateGoing)
       {
         _activeRegionsUpdateGoing = true;
-        var copy = App.Device.Results.MakeWellResultsClone();//TODO:hotpath allocations
+        var copy = App.DiosApp.Results.MakeWellResultsClone();//TODO:hotpath allocations
         var action = App.MapRegions.IsNullRegionActive ? UpdateNullRegionProcedure(copy) : UpdateRegionsProcedure(copy);
         _ = App.Current.Dispatcher.BeginInvoke(action);
       }

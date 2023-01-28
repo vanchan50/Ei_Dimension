@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using DIOS.Core.Structs;
 using Newtonsoft.Json;
 
-namespace DIOS.Core
+namespace DIOS.Application
 {
   [JsonObject(MemberSerialization.Fields)]
   public class PlateReport
@@ -43,7 +42,7 @@ namespace DIOS.Core
       _size = 0;
     }
 
-    public string LegacyReport(string header)
+    public string LegacyReport(string header, bool includeRegion0)
     {
       var median = typeof(RegionReporterStats).GetField(nameof(RegionReporterStats.MedFi));
       var count = typeof(RegionReporterStats).GetField(nameof(RegionReporterStats.Count));
@@ -54,19 +53,19 @@ namespace DIOS.Core
       bldr.AppendLine($"{header}");
       foreach (var well in _wells)
       {
-        bldr.AppendLine(well.ToStringLegacy(median));
+        bldr.AppendLine(well.ToStringLegacy(median, includeRegion0));
       }
       bldr.AppendLine("Data Type:,\"Count\"");
       bldr.AppendLine($"{header}");
       foreach (var well in _wells)
       {
-        bldr.AppendLine(well.ToStringLegacy(count));
+        bldr.AppendLine(well.ToStringLegacy(count, includeRegion0));
       }
       bldr.AppendLine("Data Type:,\"TRIMMED % CV\"");
       bldr.AppendLine($"{header}");
       foreach (var well in _wells)
       {
-        bldr.AppendLine(well.ToStringLegacy(coeffVar));
+        bldr.AppendLine(well.ToStringLegacy(coeffVar, includeRegion0));
       }
       return bldr.ToString();
     }

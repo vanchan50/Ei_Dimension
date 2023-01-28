@@ -57,7 +57,7 @@ namespace Ei_Dimension
         //Views.ChannelOffsetView.Instance.BaselineSP.Width = 180;
         Views.ChannelOffsetView.Instance.AvgBgSP.Width = 180;
         ((TextBlock) sender).Text = "TEST BoardVersion = 3";
-        App.Device.DEBUGSetBoardVersion(3);
+        App.DiosApp.Device.DEBUGSetBoardVersion(3);
       }
       else
       {
@@ -66,7 +66,7 @@ namespace Ei_Dimension
         //Views.ChannelOffsetView.Instance.BaselineSP.Width = 0;
         Views.ChannelOffsetView.Instance.AvgBgSP.Width = 0;
         ((TextBlock) sender).Text = "TEST BoardVersion = 1";
-        App.Device.DEBUGSetBoardVersion(1);
+        App.DiosApp.Device.DEBUGSetBoardVersion(1);
       }
     }
 #endif

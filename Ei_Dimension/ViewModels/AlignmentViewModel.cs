@@ -40,23 +40,23 @@ namespace Ei_Dimension.ViewModels
 
     public void AutoAlignSelector(byte num)
     {
-      App.Device.Hardware.SetParameter(DeviceParameterType.AutoAlignState, (AutoAlignState)num);
+      App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.AutoAlignState, (AutoAlignState)num);
       AutoAlignSelectorState = num;
     }
 
     public void ScanAlignSequenceClick()
     {
-      App.Device.Hardware.SetParameter(DeviceParameterType.AlignMotor, AlignMotorSequence.Scan);
+      App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.AlignMotor, AlignMotorSequence.Scan);
     }
 
     public void FindPeakAlignSequenceClick()
     {
-      App.Device.Hardware.SetParameter(DeviceParameterType.AlignMotor, AlignMotorSequence.FindPeak);
+      App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.AlignMotor, AlignMotorSequence.FindPeak);
     }
 
     public void GoToAlignSequenceClick()
     {
-      App.Device.Hardware.SetParameter(DeviceParameterType.AlignMotor, AlignMotorSequence.GoTo);
+      App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.AlignMotor, AlignMotorSequence.GoTo);
     }
 
     public void TextChanged(TextChangedEventArgs e)

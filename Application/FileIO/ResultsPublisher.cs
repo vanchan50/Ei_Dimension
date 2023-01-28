@@ -10,6 +10,7 @@ namespace DIOS.Application.FileIO
     public string Outdir { get; set; }  //  user selectable
     public string Outfilename { get; set; } = "ResultFile";
     public bool IsPlateReportPublishingActive { get; set; }
+    public bool IncludeReg0InPlateSummary { get; set; }
     public bool IsResultsPublishingActive { get; set; }
     public bool IsBeadEventPublishingActive { get; set; }
     public bool IsLegacyPlateReportPublishingActive { get; set; }

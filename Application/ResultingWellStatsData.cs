@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace DIOS.Core
+namespace DIOS.Application
 {
   public class ResultingWellStatsData
   {

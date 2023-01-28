@@ -1,4 +1,6 @@
-﻿namespace DIOS.Core
+﻿using DIOS.Core;
+
+namespace DIOS.Application
 {
   public class BackgroundStatsAccumulator : StatsAccumulator
   {

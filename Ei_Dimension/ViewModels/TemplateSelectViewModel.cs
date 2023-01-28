@@ -84,7 +84,7 @@ namespace Ei_Dimension.ViewModels
               var temp = newTemplate.MinPerRegion.ToString();
               if (int.TryParse(temp, out iRes))
               {
-                App.Device.MinPerRegion = iRes;
+                App.DiosApp.Device.MinPerRegion = iRes;
                 Settings.Default.MinPerRegion = iRes;
                 DashVM.EndRead[0] = temp;
               }
@@ -94,7 +94,7 @@ namespace Ei_Dimension.ViewModels
               temp = newTemplate.TotalEvents.ToString();
               if (int.TryParse(temp, out iRes))
               {
-                App.Device.BeadsToCapture = iRes;
+                App.DiosApp.Device.BeadsToCapture = iRes;
                 Settings.Default.BeadsToCapture = iRes;
                 DashVM.EndRead[1] = temp;
               }
@@ -104,7 +104,7 @@ namespace Ei_Dimension.ViewModels
               temp = newTemplate.SampleVolume.ToString();
               if (int.TryParse(temp, out iRes))
               {
-                App.Device.Hardware.SetParameter(DeviceParameterType.Volume, VolumeType.Sample, (ushort)iRes);
+                App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.Volume, VolumeType.Sample, (ushort)iRes);
                 DashVM.Volumes[0] = temp;
               }
               else
@@ -113,7 +113,7 @@ namespace Ei_Dimension.ViewModels
               temp = newTemplate.WashVolume.ToString();
               if (int.TryParse(temp, out iRes))
               {
-                App.Device.Hardware.SetParameter(DeviceParameterType.Volume, VolumeType.Wash, (ushort)iRes);
+                App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.Volume, VolumeType.Wash, (ushort)iRes);
                 DashVM.Volumes[1] = temp;
               }
               else
@@ -123,7 +123,7 @@ namespace Ei_Dimension.ViewModels
               temp = newTemplate.AgitateVolume.ToString();
               if (int.TryParse(temp, out iRes))
               {
-                App.Device.Hardware.SetParameter(DeviceParameterType.Volume, VolumeType.Agitate, (ushort)iRes);
+                App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.Volume, VolumeType.Agitate, (ushort)iRes);
                 DashVM.Volumes[2] = temp;
               }
               else
@@ -132,7 +132,7 @@ namespace Ei_Dimension.ViewModels
               temp = newTemplate.WashRepeats.ToString();
               if (int.TryParse(temp, out iRes))
               {
-                App.Device.Hardware.SetParameter(DeviceParameterType.WashRepeatsAmount, (ushort)iRes);
+                App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.WashRepeatsAmount, (ushort)iRes);
                 DashVM.Repeats[0] = temp;
               }
               else
@@ -141,7 +141,7 @@ namespace Ei_Dimension.ViewModels
               temp = newTemplate.AgitateRepeats.ToString();
               if (int.TryParse(temp, out iRes))
               {
-                App.Device.Hardware.SetParameter(DeviceParameterType.AgitateRepeatsAmount, (ushort)iRes);
+                App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.AgitateRepeatsAmount, (ushort)iRes);
                 DashVM.Repeats[1] = temp;
               }
               else

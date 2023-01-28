@@ -203,7 +203,7 @@ namespace DIOS.Core
     /// Called on every Read from USB, in Verification mode. Not used in other modes
     /// </summary>
     /// <param name="outbead"></param>
-    internal static void FillStats(in ProcessedBead bead)
+    public static void FillStats(in ProcessedBead bead)
     {
       _totalBeads++;
       //if region is classified

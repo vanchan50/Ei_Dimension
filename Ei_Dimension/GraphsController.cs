@@ -53,7 +53,7 @@ namespace Ei_Dimension
     private void UpdateBinfoList()
     {
       _tempBeadInfoList.Clear();
-      while (App.Device.DataOut.TryDequeue(out ProcessedBead bead))
+      while (App.DiosApp.Results.DataOut.TryDequeue(out ProcessedBead bead))
       {
         _tempBeadInfoList.Add(bead);
       }

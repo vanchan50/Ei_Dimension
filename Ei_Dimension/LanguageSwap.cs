@@ -108,7 +108,7 @@ namespace Ei_Dimension
       {
         ChannelsVM.SensitivityItems[0].Content = RM.GetString(nameof(Language.Resources.Channels_Sens_B), curCulture);
         ChannelsVM.SensitivityItems[1].Content = RM.GetString(nameof(Language.Resources.Channels_Sens_C), curCulture);
-        ChannelsVM.SelectedSensitivityContent = ChannelsVM.SensitivityItems[(int)App.Device.SensitivityChannel].Content;
+        ChannelsVM.SelectedSensitivityContent = ChannelsVM.SensitivityItems[(int)App.DiosApp.Device.SensitivityChannel].Content;
       }
       var VerVM = VerificationViewModel.Instance;
       if (VerVM != null)

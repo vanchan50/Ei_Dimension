@@ -5,7 +5,6 @@ using System.Windows.Media.Imaging;
 using Ei_Dimension.Controllers;
 using Ei_Dimension.Graphing.HeatMap;
 using MadWizard.WinUSBNet;
-using DIOS.Core;
 using DIOS.Core.HardwareIntercom;
 
 namespace Ei_Dimension
@@ -26,7 +25,7 @@ namespace Ei_Dimension
 
       App.SetupDevice();
       if (!System.Windows.Input.Keyboard.IsKeyDown(System.Windows.Input.Key.LeftCtrl))
-        App.Device.StartSelfTest();
+        App.DiosApp.Device.StartSelfTest();
 
       if (Program.SpecializedVer == CompanyID.China)
       {
@@ -69,7 +68,7 @@ namespace Ei_Dimension
 
       LanguageSwap.SetLanguage(MaintenanceViewModel.Instance.LanguageItems[Settings.Default.Language].Locale);
       Views.ExperimentView.Instance.DbButton.IsChecked = true;
-      App.Device.Hardware.RequestParameter(DeviceParameterType.CalibrationMargin);
+      App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.CalibrationMargin);
       //3D plot TRS transforms
       var matrix = Views.ResultsView.Instance.AnalysisPlot.ContentTransform.Value;
       matrix.Rotate(new System.Windows.Media.Media3D.Quaternion(new System.Windows.Media.Media3D.Vector3D(0, 1, 0), 90));
@@ -93,27 +92,27 @@ namespace Ei_Dimension
       usbnotif.Arrival += Usbnotif_Arrival;
       usbnotif.Removal += Usbnotif_Removal;
 
-      var selfTestResult = await App.Device.GetSelfTestResultAsync();
+      var selfTestResult = await App.DiosApp.Device.GetSelfTestResultAsync();
       string selfTestErrorMessage = SelfTestErrorDecoder.Decode(selfTestResult);
       if (selfTestErrorMessage != null)
         Notification.ShowError(selfTestErrorMessage);
       
-      App.Logger.Log($"Detected Board Rev v{App.Device.BoardVersion}");
-      if(App.Device.FirmwareVersion != null)
-        MainViewModel.AppVersion += App.Device.FirmwareVersion;
+      App.Logger.Log($"Detected Board Rev v{App.DiosApp.Device.BoardVersion}");
+      if(App.DiosApp.Device.FirmwareVersion != null)
+        MainViewModel.AppVersion += App.DiosApp.Device.FirmwareVersion;
       App.Logger.Log(MainViewModel.AppVersion);
-      if (App.Device.BoardVersion > 0)
+      if (App.DiosApp.Device.BoardVersion > 0)
         HideChannels();
     }
 
     private static void Usbnotif_Removal(object sender, USBEvent e)
     {
-      App.Device.DisconnectedUSB();
+      App.DiosApp.Device.DisconnectedUSB();
     }
 
     private static void Usbnotif_Arrival(object sender, USBEvent e)
     {
-      App.Device.ReconnectUSB();
+      App.DiosApp.Device.ReconnectUSB();
     }
 
     private static void WipedSettingsMessage()

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Ei_Dimension.Controllers;
 using System.Security.Policy;
+using static DevExpress.Xpo.Helpers.CannotLoadObjectsHelper;
 
 namespace Ei_Dimension.ViewModels
 {
@@ -32,20 +33,20 @@ namespace Ei_Dimension.ViewModels
     public void LoadButtonClick()
     {
       UserInputHandler.InputSanityCheck();
-      App.Device.LoadPlate();
+      App.DiosApp.Device.LoadPlate();
     }
 
     public void EjectButtonClick()
     {
       UserInputHandler.InputSanityCheck();
-      App.Device.EjectPlate();
+      App.DiosApp.Device.EjectPlate();
     }
 
     public void StartButtonClick()
     {
       UserInputHandler.InputSanityCheck();
       //TODO: bad design, contains 0 can never happen here
-      if (App.Device.TerminationType == Termination.MinPerRegion
+      if (App.DiosApp.Device.TerminationType == Termination.MinPerRegion
           && !MapRegionsController.AreThereActiveRegions()) 
       {
         var msg = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Messages_MinPerReg_RequiresAtLeast1),
@@ -62,10 +63,10 @@ namespace Ei_Dimension.ViewModels
         Notification.Show(msg);
         return;
       }
-      App.Device.WellController.Init(wells);
+      App.DiosApp.Device.WellController.Init(wells);
 
       HashSet<int> regions = null;
-      switch (App.Device.Mode)
+      switch (App.DiosApp.Device.Mode)
       {
         case OperationMode.Normal:
           if (!MapRegionsController.AreThereActiveRegions())
@@ -95,7 +96,7 @@ namespace Ei_Dimension.ViewModels
       }
       MainViewModel.Instance.NavigationSelector(1);
 
-      App.Device.Results.SetupRunRegions(regions);
+      App.DiosApp.Results.SetupRunRegions(regions);
       StartButtonEnabled = false;
       ResultsViewModel.Instance.ClearGraphs();
       PlatePictogramViewModel.Instance.PlatePictogram.Clear();
@@ -106,18 +107,20 @@ namespace Ei_Dimension.ViewModels
         ResultsViewModel.Instance.CurrentMfiItems[i] = "";
         ResultsViewModel.Instance.CurrentCvItems[i] = "";
       }
-      if (App.Device.Normalization.IsEnabled)
+      if (App.DiosApp.Device.Normalization.IsEnabled)
         App.Logger.Log("Normalization Enabled");
       else
         App.Logger.Log("Normalization Disabled");
       App.DiosApp.Publisher.ResultsFile.MakeNew();
-      App.Device.StartOperation();
+      App.DiosApp.Results.StartNewPlateReport();
+      App.DiosApp.Device.StartOperation(App.DiosApp.Results.OutputBeadsCollector);
+      App.DiosApp.Results.ResultsProc.StartBeadProcessing();//call after StartOperation, so IsMeasurementGoing == true
     }
 
     public void EndButtonClick()
     {
       UserInputHandler.InputSanityCheck();
-      if (!App.Device.IsMeasurementGoing)  //end button press before start, cancel work order
+      if (!App.DiosApp.Device.IsMeasurementGoing)  //end button press before start, cancel work order
       {
         if (DashboardViewModel.Instance.SelectedSystemControlIndex == 1)
         {
@@ -131,7 +134,7 @@ namespace Ei_Dimension.ViewModels
           ComponentsViewModel.Instance.ContinuousModeOn = false;
           ComponentsViewModel.Instance.ContinuousModeToggle();
         }
-        App.Device.PrematureStop();
+        App.DiosApp.Device.PrematureStop();
       }
     }
 
@@ -144,11 +147,11 @@ namespace Ei_Dimension.ViewModels
         {
           int reg = MapRegionsController.RegionsList[i].Number;
           var inputReporter = double.Parse(MapRegionsController.RegionsList[i].TargetReporterValue[0]);
-          inputReporter /= App.Device.ReporterScaling;  //adjust for scaling factor
+          inputReporter /= App.DiosApp.Device.ReporterScaling;  //adjust for scaling factor
           regions.Add((reg, inputReporter));
         }
       }
-      App.Device.Verificator.Reset(regions);
+      App.DiosApp.Device.Verificator.Reset(regions);
     }
 
     private static void DefaultRegionNaming()
