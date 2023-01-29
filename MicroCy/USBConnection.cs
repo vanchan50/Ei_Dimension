@@ -100,7 +100,9 @@ namespace DIOS.Core
             Monitor.Wait(_disconnectionLock);
           }
         }
+        return;
       }
+      Thread.Sleep(300);// if connection was broken - try again in 300ms
     }
 
     public void EndRead(IAsyncResult result)

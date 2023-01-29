@@ -340,7 +340,7 @@ namespace Ei_Dimension.ViewModels
       {
         _vm.SelectedGatingContent = Content;
         _vm.SelectedGatingIndex = Index;
-        App.DiosApp.Device.ScatterGate = (Gate)Index;
+        App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.ScatterGate, (ushort)(Gate)Index);
       }
 
       public static void ResetIndex()

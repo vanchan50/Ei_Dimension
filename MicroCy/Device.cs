@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using DIOS.Core.HardwareIntercom;
@@ -46,18 +45,6 @@ namespace DIOS.Core
     public event EventHandler<ParameterUpdateEventArgs> ParameterUpdate;
     public OperationMode Mode { get; set; } = OperationMode.Normal;
     public SystemControl Control { get; set; } = SystemControl.Manual;
-    public Gate ScatterGate
-    {
-      get
-      {
-        return _scatterGate;
-      }
-      set
-      {
-        _scatterGate = value;
-        Hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.ScatterGate, (ushort)_scatterGate);
-      }
-    }
     public Termination TerminationType { get; set; } = Termination.MinPerRegion;
     public int BoardVersion { get; internal set; }
     public string FirmwareVersion { get; internal set; }
@@ -119,7 +106,6 @@ namespace DIOS.Core
     public readonly Verificator Verificator;
 
     internal bool _isReadingA;
-    private Gate _scatterGate;
     private HiSensitivityChannel _sensitivityChannel;
     private float _hdnrTrans;
     private float _hdnrCoef;
