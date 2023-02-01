@@ -644,7 +644,7 @@ namespace Ei_Dimension
       DiosApp.Publisher.IsLegacyPlateReportPublishingActive = Settings.Default.LegacyPlateReport;
       DiosApp.Device.TerminationType = (Termination)Settings.Default.EndRead;
       DiosApp.Device.MinPerRegion = Settings.Default.MinPerRegion;
-      DiosApp.Device.BeadsToCapture = Settings.Default.BeadsToCapture;
+      DiosApp.Device.TotalBeadsToCapture = Settings.Default.BeadsToCapture;
       DiosApp.Publisher.IsOnlyClassifiedBeadsPublishingActive = Settings.Default.OnlyClassifed;
       DiosApp.Device.SensitivityChannel = Settings.Default.SensitivityChannelB ? HiSensitivityChannel.GreenB : HiSensitivityChannel.GreenC;
       DiosApp.Device.ReporterScaling = Settings.Default.ReporterScaling;

@@ -133,7 +133,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 1)
                 {
-                  App.DiosApp.Device.BeadsToCapture = iRes;
+                  App.DiosApp.Device.TotalBeadsToCapture = iRes;
                   Settings.Default.BeadsToCapture = iRes;
                   break;
                 }

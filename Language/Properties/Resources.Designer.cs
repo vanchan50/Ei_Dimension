@@ -3387,7 +3387,7 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Verification Succesful!.
+        ///   Looks up a localized string similar to Verification Successful!.
         /// </summary>
         public static string Validation_Success {
             get {

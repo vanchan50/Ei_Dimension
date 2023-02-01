@@ -1272,7 +1272,7 @@ Target</value>
 Verification</value>
   </data>
   <data name="Validation_Success" xml:space="preserve">
-    <value>Verification Succesful!</value>
+    <value>Verification Successful!</value>
   </data>
   <data name="Value" xml:space="preserve">
     <value>Value</value>

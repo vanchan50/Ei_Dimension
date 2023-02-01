@@ -22,11 +22,7 @@ namespace Ei_Dimension.Language
         if (_currentCulture != value)
         {
           _currentCulture = value;
-          var @event = PropertyChanged;
-          if (@event != null)
-          {
-            @event.Invoke(this, new PropertyChangedEventArgs(string.Empty));
-          }
+          PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(string.Empty));
         }
       }
     }

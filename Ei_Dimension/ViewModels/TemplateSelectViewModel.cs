@@ -94,7 +94,7 @@ namespace Ei_Dimension.ViewModels
               temp = newTemplate.TotalEvents.ToString();
               if (int.TryParse(temp, out iRes))
               {
-                App.DiosApp.Device.BeadsToCapture = iRes;
+                App.DiosApp.Device.TotalBeadsToCapture = iRes;
                 Settings.Default.BeadsToCapture = iRes;
                 DashVM.EndRead[1] = temp;
               }

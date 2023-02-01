@@ -20,6 +20,7 @@ namespace DIOS.Application
     public RunResults(Device device)
     {
       _device = device;
+      ResultsProc = new ResultsProcessor(_device, this);
     }
 
     /// <summary>
@@ -120,7 +121,7 @@ namespace DIOS.Application
           }
           break;
         case Termination.TotalBeadsCaptured:
-          if (_device.BeadCount >= _device.BeadsToCapture)
+          if (_device.BeadCount >= _device.TotalBeadsToCapture)
           {
             stopMeasurement = true;
           }
