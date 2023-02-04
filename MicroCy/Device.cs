@@ -33,7 +33,6 @@ namespace DIOS.Core
 {
   public class Device
   {
-    public WorkOrder WorkOrder { get; set; }
     public WellController WellController { get; } = new WellController();
     public SystemActivity SystemMonitor { get; } = new SystemActivity();
     public HardwareInterface Hardware { get; }
@@ -44,7 +43,6 @@ namespace DIOS.Core
     public event EventHandler FinishedMeasurement;
     public event EventHandler<ParameterUpdateEventArgs> ParameterUpdate;
     public OperationMode Mode { get; set; } = OperationMode.Normal;
-    public SystemControl Control { get; set; } = SystemControl.Manual;
     public int BoardVersion { get; internal set; }
     public string FirmwareVersion { get; internal set; }
     public float ReporterScaling { get; set; } = 1;

@@ -89,7 +89,7 @@ namespace Ei_Dimension
 
     public static void SetSystemControl(byte num)
     {
-      DiosApp.Device.Control = (SystemControl)num;
+      DiosApp.Control = (SystemControl)num;
       Settings.Default.SystemControl = num;
       Settings.Default.Save();
     }
@@ -242,7 +242,7 @@ namespace Ei_Dimension
       PlatePictogramViewModel.Instance.PlatePictogram.ChangeState(row, col, type);
 
       DiosApp.Publisher.PlateStatusFile.Overwrite(PlatePictogramViewModel.Instance.PlatePictogram.GetSerializedPlate());
-      if (DiosApp.Device.Control == SystemControl.WorkOrder)
+      if (DiosApp.Control == SystemControl.WorkOrder)
       {
         App.Current.Dispatcher.Invoke(() => DashboardViewModel.Instance.WorkOrder[0] = ""); //actually questionable if not in workorder operation
       }
@@ -298,13 +298,13 @@ namespace Ei_Dimension
       DiosApp.Results.PlateReport.completedDateTime = DateTime.Now;
       DiosApp.Results.EndOfOperationReset();
       var plateReportJson = DiosApp.Results.PlateReport.JSONify();
-      if (DiosApp.Device.Control == SystemControl.Manual)
+      if (DiosApp.Control == SystemControl.Manual)
       {
         DiosApp.Publisher.PlateReportFile.CreateAndWrite(plateReportJson);
       }
       else
       {
-        DiosApp.Publisher.PlateReportFile.CreateAndWrite(plateReportJson, DiosApp.Device.WorkOrder.plateID.ToString());
+        DiosApp.Publisher.PlateReportFile.CreateAndWrite(plateReportJson, DiosApp.WorkOrder.plateID.ToString());
       }
 
       MainButtonsViewModel.Instance.StartButtonEnabled = true;
@@ -381,13 +381,13 @@ namespace Ei_Dimension
       bldr.Append(legacyReport);
       var wholeReport = bldr.ToString();
 
-      if (DiosApp.Device.Control == SystemControl.Manual)
+      if (DiosApp.Control == SystemControl.Manual)
       {
         DiosApp.Publisher.LegacyReportFile.CreateAndWrite(wholeReport);
       }
       else
       {
-        DiosApp.Publisher.LegacyReportFile.CreateAndWrite(wholeReport, DiosApp.Device.WorkOrder.plateID.ToString());
+        DiosApp.Publisher.LegacyReportFile.CreateAndWrite(wholeReport, DiosApp.WorkOrder.plateID.ToString());
       }
     }
 
@@ -602,7 +602,7 @@ namespace Ei_Dimension
         using (TextReader reader = new StreamReader(DiosApp.Publisher.WorkOrderPath))
         {
           var contents = reader.ReadToEnd();
-          DiosApp.Device.WorkOrder = Newtonsoft.Json.JsonConvert.DeserializeObject<WorkOrder>(contents);
+          DiosApp.WorkOrder = Newtonsoft.Json.JsonConvert.DeserializeObject<WorkOrder>(contents);
         }
       }
       catch
@@ -647,7 +647,7 @@ namespace Ei_Dimension
       }
       DiosApp.Publisher.Outfilename = Settings.Default.SaveFileName;
       DiosApp.Publisher.IsPlateReportPublishingActive = Settings.Default.PlateReport;
-      DiosApp.Device.Control = (SystemControl)Settings.Default.SystemControl;
+      DiosApp.Control = (SystemControl)Settings.Default.SystemControl;
       DiosApp.Publisher.IsBeadEventPublishingActive = Settings.Default.Everyevent;
       DiosApp.Publisher.IsResultsPublishingActive = Settings.Default.RMeans;
       DiosApp.Publisher.IsLegacyPlateReportPublishingActive = Settings.Default.LegacyPlateReport;

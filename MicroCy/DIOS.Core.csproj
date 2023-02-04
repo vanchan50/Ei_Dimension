@@ -74,7 +74,6 @@
     <Compile Include="Enums\Gate.cs" />
     <Compile Include="Enums\HiSensitivityChannel.cs" />
     <Compile Include="Enums\OperationMode.cs" />
-    <Compile Include="Enums\SystemControl.cs" />
     <Compile Include="FileIO\VerificationReport.cs" />
     <Compile Include="NormalizationSettings.cs" />
     <Compile Include="HardwareIntercom\PlateType.cs" />
@@ -109,7 +108,6 @@
     <Compile Include="HardwareIntercom\VolumeType.cs" />
     <Compile Include="WellController.cs" />
     <Compile Include="Structs\Well.cs" />
-    <Compile Include="Structs\WorkOrder.cs" />
     <Compile Include="WellReadingOrder.cs" />
     <Compile Include="WellReadingSpeed.cs" />
   </ItemGroup>

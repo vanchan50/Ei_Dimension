@@ -59,9 +59,11 @@
     <Compile Include="ResultsProcessor.cs" />
     <Compile Include="RunResults.cs" />
     <Compile Include="StatsAccumulator.cs" />
+    <Compile Include="SystemControl.cs" />
     <Compile Include="Termination.cs" />
     <Compile Include="WellResults.cs" />
     <Compile Include="WellStats.cs" />
+    <Compile Include="WorkOrder.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MicroCy\DIOS.Core.csproj">

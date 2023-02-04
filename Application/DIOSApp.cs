@@ -13,9 +13,11 @@ namespace DIOS.Application
     public DirectoryInfo RootDirectory { get; } = new DirectoryInfo(Path.Combine(@"C:\Emissioninc", Environment.MachineName));
     public ResultsPublisher Publisher { get; }
     public RunResults Results { get; }
+    public SystemControl Control { get; set; } = SystemControl.Manual;
     public Termination TerminationType { get; set; } = Termination.MinPerRegion;
     public int TotalBeadsToCapture { get; set; }
     public int MinPerRegion { get; set; }
+    public WorkOrder WorkOrder { get; set; }
     public bool RunPlateContinuously { get; set; }
     public readonly string BUILD = "1.5.2.2";
     public ILogger Logger { get; }

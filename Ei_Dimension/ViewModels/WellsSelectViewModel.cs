@@ -147,10 +147,10 @@ namespace Ei_Dimension.ViewModels
         return wells;
       }
 
-      if (App.DiosApp.Device.Control == SystemControl.WorkOrder)
+      if (App.DiosApp.Control == SystemControl.WorkOrder)
       {
         //fill wells from work order
-        wells = App.DiosApp.Device.WorkOrder.woWells;
+        wells = App.DiosApp.WorkOrder.woWells;
         return wells;
       }
 
