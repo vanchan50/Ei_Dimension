@@ -59,6 +59,7 @@
     <Compile Include="ResultsProcessor.cs" />
     <Compile Include="RunResults.cs" />
     <Compile Include="StatsAccumulator.cs" />
+    <Compile Include="Termination.cs" />
     <Compile Include="WellResults.cs" />
     <Compile Include="WellStats.cs" />
   </ItemGroup>

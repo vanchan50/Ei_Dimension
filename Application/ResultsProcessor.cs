@@ -34,7 +34,7 @@ namespace DIOS.Application
           _results.AddProcessedBeadEvent(in bead);
           _results.DataOut.Enqueue(bead);
 
-          if (_results.IsMeasurementTerminationAchieved(_device.TerminationType))//endofsample never triggers!
+          if (_results.IsMeasurementTerminationAchieved())//endofsample never triggers!
           {
             _device.StopOperation();
           }

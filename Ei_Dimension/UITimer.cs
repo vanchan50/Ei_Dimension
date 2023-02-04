@@ -177,7 +177,7 @@ namespace Ei_Dimension
           break;
       }
       App.DiosApp.Results.AddProcessedBeadEvent(in bead);
-      if (App.DiosApp.Results.IsMeasurementTerminationAchieved(App.DiosApp.Device.TerminationType))
+      if (App.DiosApp.Results.IsMeasurementTerminationAchieved())
       {
         App.DiosApp.Device.StopOperation();
       }

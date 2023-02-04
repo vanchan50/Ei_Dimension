@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
+using DIOS.Application;
 using DIOS.Core.HardwareIntercom;
 
 namespace Ei_Dimension.ViewModels
@@ -175,7 +176,7 @@ namespace Ei_Dimension.ViewModels
         ChanConfig = DashboardViewModel.Instance.SelectedChConfigIndex,
         MinPerRegion = int.Parse(DashboardViewModel.Instance.EndRead[0]),
         BeadsToCapture = int.Parse(DashboardViewModel.Instance.EndRead[1]),
-        TermType = (Termination)DashboardViewModel.Instance.SelectedEndReadIndex
+        //TermType = (Termination)DashboardViewModel.Instance.SelectedEndReadIndex
       };
     }
 

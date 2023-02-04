@@ -16,10 +16,12 @@ namespace DIOS.Application
     private ICollection<int> _regionsToOutput;
     private bool _minPerRegCheckTrigger;
     private readonly ResultingWellStatsData _measuredWellStats = new ResultingWellStatsData();
+    private readonly DIOSApp _diosApp;
 
-    public RunResults(Device device)
+    public RunResults(Device device, DIOSApp diosApp)
     {
       _device = device;
+      _diosApp = diosApp;
       ResultsProc = new ResultsProcessor(_device, this);
     }
 
@@ -76,7 +78,7 @@ namespace DIOS.Application
       var count = WellResults.Add(in processedBead);//TODO:move to normal mode case?
       //it also checks region 0, but it is only a trigger, the real check is done in MinPerRegionAchieved()
       if (!_minPerRegCheckTrigger)
-        _minPerRegCheckTrigger = count == _device.MinPerRegion;  //see if well is done via sufficient beads in each region
+        _minPerRegCheckTrigger = count == _diosApp.MinPerRegion;  //see if well is done via sufficient beads in each region
 
       switch (_device.Mode)
       {
@@ -105,15 +107,15 @@ namespace DIOS.Application
       _regionsToOutput = null;
     }
 
-    public bool IsMeasurementTerminationAchieved(Termination type)
+    public bool IsMeasurementTerminationAchieved()
     {
       bool stopMeasurement = false;
-      switch (type)
+      switch (_diosApp.TerminationType)
       {
         case Termination.MinPerRegion:
           if (_minPerRegCheckTrigger)  //a region made it, are there more that haven't
           {
-            if (MinPerRegionAchieved(_device.MinPerRegion) >= 0)
+            if (MinPerRegionAchieved(_diosApp.MinPerRegion) >= 0)
             {
               stopMeasurement = true;
             }
@@ -121,7 +123,7 @@ namespace DIOS.Application
           }
           break;
         case Termination.TotalBeadsCaptured:
-          if (_device.BeadCount >= _device.TotalBeadsToCapture)
+          if (_device.BeadCount >= _diosApp.TotalBeadsToCapture)
           {
             stopMeasurement = true;
           }

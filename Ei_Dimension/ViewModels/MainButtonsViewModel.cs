@@ -1,12 +1,10 @@
 ﻿using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
 using DIOS.Core;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Ei_Dimension.Controllers;
-using System.Security.Policy;
-using static DevExpress.Xpo.Helpers.CannotLoadObjectsHelper;
+using DIOS.Application;
 
 namespace Ei_Dimension.ViewModels
 {
@@ -46,7 +44,7 @@ namespace Ei_Dimension.ViewModels
     {
       UserInputHandler.InputSanityCheck();
       //TODO: bad design, contains 0 can never happen here
-      if (App.DiosApp.Device.TerminationType == Termination.MinPerRegion
+      if (App.DiosApp.TerminationType == Termination.MinPerRegion
           && !MapRegionsController.AreThereActiveRegions()) 
       {
         var msg = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Messages_MinPerReg_RequiresAtLeast1),

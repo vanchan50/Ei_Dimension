@@ -12,7 +12,7 @@ namespace DIOS.Core
     public short SampVol;
     public short WashVol;
     public short AgitateVol;
-    public Termination TermType;
+    //public Termination TermType;
     public int BeadsToCapture;
     public int MinPerRegion;
 
@@ -30,7 +30,7 @@ namespace DIOS.Core
       SampVol = well.SampVol;
       WashVol = well.WashVol;
       AgitateVol = well.AgitateVol;
-      TermType = well.TermType;
+      //TermType = well.TermType;
       BeadsToCapture = well.BeadsToCapture;
       MinPerRegion = well.MinPerRegion;
     }

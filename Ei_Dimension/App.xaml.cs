@@ -96,7 +96,7 @@ namespace Ei_Dimension
 
     public static void SetTerminationType(byte num)
     {
-      DiosApp.Device.TerminationType = (Termination)num;
+      DiosApp.TerminationType = (Termination)num;
       Settings.Default.EndRead = num;
       Settings.Default.Save();
     }
@@ -190,6 +190,15 @@ namespace Ei_Dimension
     
     private void StartingToReadWellEventHandler(object sender, ReadingWellEventArgs e)
     {
+      DiosApp.TotalBeadsToCapture = e.Well.BeadsToCapture;
+      DiosApp.MinPerRegion = e.Well.MinPerRegion;
+      //DiosApp.TerminationType = e.Well.TermType;
+
+      Logger.Log("Starting to read well with Params:");
+      Logger.Log($"Termination: {(int)DiosApp.TerminationType}");
+      Logger.Log($"MinPerRegion: {DiosApp.MinPerRegion}");
+      Logger.Log($"BeadsToCapture: {DiosApp.TotalBeadsToCapture}");
+
       var wellFilePath = DiosApp.Publisher.BeadEventFile.MakeNewFileName(e.Well);
       DiosApp.Results.StartNewWell(e.Well);
       MultiTube.GetModifiedWellIndexes(e.Well, out var row, out var col);
@@ -264,15 +273,15 @@ namespace Ei_Dimension
       var type = Models.WellType.Success;
 
       if (DiosApp.Device.Mode != OperationMode.Normal
-          || DiosApp.Device.TerminationType != Termination.MinPerRegion)
+          || DiosApp.TerminationType != Termination.MinPerRegion)
         return type;
 
-      var lacking = DiosApp.Results.MinPerRegionAchieved(DiosApp.Device.MinPerRegion);
+      var lacking = DiosApp.Results.MinPerRegionAchieved(DiosApp.MinPerRegion);
       //not achieved
       if (lacking < 0)
       {
         //if lacking more then 25% of minperregion beads 
-        if (-lacking > DiosApp.Device.MinPerRegion * 0.25)
+        if (-lacking > DiosApp.MinPerRegion * 0.25)
         {
           type = Models.WellType.Fail;
         }
@@ -642,9 +651,9 @@ namespace Ei_Dimension
       DiosApp.Publisher.IsBeadEventPublishingActive = Settings.Default.Everyevent;
       DiosApp.Publisher.IsResultsPublishingActive = Settings.Default.RMeans;
       DiosApp.Publisher.IsLegacyPlateReportPublishingActive = Settings.Default.LegacyPlateReport;
-      DiosApp.Device.TerminationType = (Termination)Settings.Default.EndRead;
-      DiosApp.Device.MinPerRegion = Settings.Default.MinPerRegion;
-      DiosApp.Device.TotalBeadsToCapture = Settings.Default.BeadsToCapture;
+      DiosApp.TerminationType = (Termination)Settings.Default.EndRead;
+      DiosApp.MinPerRegion = Settings.Default.MinPerRegion;
+      DiosApp.TotalBeadsToCapture = Settings.Default.BeadsToCapture;
       DiosApp.Publisher.IsOnlyClassifiedBeadsPublishingActive = Settings.Default.OnlyClassifed;
       DiosApp.Device.SensitivityChannel = Settings.Default.SensitivityChannelB ? HiSensitivityChannel.GreenB : HiSensitivityChannel.GreenC;
       DiosApp.Device.ReporterScaling = Settings.Default.ReporterScaling;

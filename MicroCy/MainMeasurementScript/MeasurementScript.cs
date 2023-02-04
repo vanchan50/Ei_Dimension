@@ -38,9 +38,6 @@ namespace DIOS.Core.MainMeasurementScript
 
       _device._isReadingA = false;
       StartBeadRead();
-
-      if (_device.TerminationType != Termination.TotalBeadsCaptured) //set some limit for running to eos or if regions are wrong
-        _device.TotalBeadsToCapture = 100000;
     }
 
     public void FinalizeWellReading()
@@ -118,9 +115,6 @@ namespace DIOS.Core.MainMeasurementScript
     {
       _hardware.SetParameter(DeviceParameterType.WellReadingSpeed, (ushort)_wellController.NextWell.RunSpeed);
       _hardware.SetParameter(DeviceParameterType.ChannelConfiguration, (ushort)_wellController.NextWell.ChanConfig);
-      _device.TotalBeadsToCapture = _wellController.NextWell.BeadsToCapture;
-      _device.MinPerRegion = _wellController.NextWell.MinPerRegion;
-      _device.TerminationType = _wellController.NextWell.TermType;
     }
 
     private void SetAspirateParamsForWell()

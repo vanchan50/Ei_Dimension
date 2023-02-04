@@ -45,12 +45,9 @@ namespace DIOS.Core
     public event EventHandler<ParameterUpdateEventArgs> ParameterUpdate;
     public OperationMode Mode { get; set; } = OperationMode.Normal;
     public SystemControl Control { get; set; } = SystemControl.Manual;
-    public Termination TerminationType { get; set; } = Termination.MinPerRegion;
     public int BoardVersion { get; internal set; }
     public string FirmwareVersion { get; internal set; }
     public float ReporterScaling { get; set; } = 1;
-    public int TotalBeadsToCapture { get; set; }
-    public int MinPerRegion { get; set; }
     public int BeadCount { get; internal set; }
     public bool IsMeasurementGoing
     {
@@ -210,10 +207,6 @@ namespace DIOS.Core
       _dataController.IsMeasurementGoing = true;
       StartingToReadWell?.Invoke(this, new ReadingWellEventArgs(WellController.CurrentWell));
       Hardware.SetParameter(DeviceParameterType.TotalBeadsInFirmware); //reset totalbeads in firmware
-      _logger.Log("Starting to read well with Params:");
-      _logger.Log($"Termination: {(int)TerminationType}");
-      _logger.Log($"BeadCount: {BeadCount}");
-      _logger.Log($"BeadsToCapture: {TotalBeadsToCapture}");
     }
 
     internal void OnFinishedReadingWell()

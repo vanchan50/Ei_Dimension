@@ -119,7 +119,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 1)
                 {
-                  App.DiosApp.Device.MinPerRegion = iRes;
+                  App.DiosApp.MinPerRegion = iRes;
                   Settings.Default.MinPerRegion = iRes;
                   break;
                 }
@@ -133,7 +133,7 @@ namespace Ei_Dimension
               {
                 if (iRes >= 1)
                 {
-                  App.DiosApp.Device.TotalBeadsToCapture = iRes;
+                  App.DiosApp.TotalBeadsToCapture = iRes;
                   Settings.Default.BeadsToCapture = iRes;
                   break;
                 }

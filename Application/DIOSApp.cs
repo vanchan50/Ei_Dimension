@@ -13,6 +13,9 @@ namespace DIOS.Application
     public DirectoryInfo RootDirectory { get; } = new DirectoryInfo(Path.Combine(@"C:\Emissioninc", Environment.MachineName));
     public ResultsPublisher Publisher { get; }
     public RunResults Results { get; }
+    public Termination TerminationType { get; set; } = Termination.MinPerRegion;
+    public int TotalBeadsToCapture { get; set; }
+    public int MinPerRegion { get; set; }
     public bool RunPlateContinuously { get; set; }
     public readonly string BUILD = "1.5.2.2";
     public ILogger Logger { get; }
@@ -24,7 +27,7 @@ namespace DIOS.Application
       MapController = new MapController($"{RootDirectory.FullName}\\Config", Logger);
       Publisher = new ResultsPublisher(RootDirectory.FullName, Logger);
       Device = new Device(new USBConnection(Logger), Logger);
-      Results = new RunResults(Device);
+      Results = new RunResults(Device, this);
     }
 
     private void SetSystemDirectories()
