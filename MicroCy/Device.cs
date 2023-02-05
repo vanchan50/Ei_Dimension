@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using DIOS.Core.HardwareIntercom;
 using DIOS.Core.MainMeasurementScript;
@@ -36,8 +37,6 @@ namespace DIOS.Core
     public WellController WellController { get; } = new WellController();
     public SystemActivity SystemMonitor { get; } = new SystemActivity();
     public HardwareInterface Hardware { get; }
-    public object SystemActivityNotBusyNotificationLock { get; } = new object();
-    public object ScriptF9FinishedLock { get; } = new object();
     public event EventHandler<ReadingWellEventArgs> StartingToReadWell;
     public event EventHandler<ReadingWellEventArgs> FinishedReadingWell;
     public event EventHandler FinishedMeasurement;
@@ -97,16 +96,16 @@ namespace DIOS.Core
     }
     public float MaxPressure { get; set; }
     public bool IsPlateEjected { get; internal set; }
-    internal bool _singleSyringeMode;
     public readonly Verificator Verificator;
+    internal bool _singleSyringeMode;
 
     internal bool _isReadingA;
+    internal SelfTester SelfTester { get; }
+    internal readonly BeadProcessor _beadProcessor;
     private HiSensitivityChannel _sensitivityChannel;
     private float _hdnrTrans;
     private float _hdnrCoef;
     private readonly DataController _dataController;
-    internal SelfTester SelfTester { get; }
-    internal readonly BeadProcessor _beadProcessor;
     private readonly MeasurementScript _script;
     private readonly ILogger _logger;
 

@@ -45,6 +45,7 @@ namespace Ei_Dimension.ViewModels
     public PlateDepths DefaultPlate { get; } = new PlateDepths{ A1 = 1, A12 = 2, H1 = 3, H12 = 4 };
     public const string DEFAULTNAME = "Default";
     public const string PLATETYPEFILEEXTENSION = ".dplt";
+    private readonly Device _device;
     protected PlateCustomizationViewModel()
     {
       var PlateTypeList = Directory.GetFiles($"{App.DiosApp.RootDirectory}\\Config", $"*{PLATETYPEFILEEXTENSION}");
@@ -61,6 +62,7 @@ namespace Ei_Dimension.ViewModels
 
       CurrentPlateName = DEFAULTNAME;
       UpdateDefault();
+      _device = App.DiosApp.Device;
     }
 
     public static PlateCustomizationViewModel Create()
@@ -176,10 +178,10 @@ namespace Ei_Dimension.ViewModels
       if (newPD != null)
       {
         //apply
-        App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorStepsZTemporary, MotorStepsZ.A1,  newPD.A1);
-        App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorStepsZTemporary, MotorStepsZ.A12, newPD.A12);
-        App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorStepsZTemporary, MotorStepsZ.H1,  newPD.H1);
-        App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorStepsZTemporary, MotorStepsZ.H12, newPD.H12);
+        _device.Hardware.SetParameter(DeviceParameterType.MotorStepsZTemporary, MotorStepsZ.A1,  newPD.A1);
+        _device.Hardware.SetParameter(DeviceParameterType.MotorStepsZTemporary, MotorStepsZ.A12, newPD.A12);
+        _device.Hardware.SetParameter(DeviceParameterType.MotorStepsZTemporary, MotorStepsZ.H1,  newPD.H1);
+        _device.Hardware.SetParameter(DeviceParameterType.MotorStepsZTemporary, MotorStepsZ.H12, newPD.H12);
         UpdateCurrent(newPD);
         CurrentPlateName = Path.GetFileNameWithoutExtension(SelectedItem);
         UnselectAll();
@@ -218,7 +220,7 @@ namespace Ei_Dimension.ViewModels
       if (Interlocked.CompareExchange(ref _tuningIsRunning, 1, 0) == 1)
         return;
 
-      if (App.DiosApp.Device.IsMeasurementGoing)
+      if (_device.IsMeasurementGoing)
       {
         Notification.Show("Please wait for the measurement to complete");
         _tuningIsRunning = 0;
@@ -289,16 +291,16 @@ namespace Ei_Dimension.ViewModels
       if (!ushort.TryParse(FinalZMotorPosition[0], out var motorZFinalHeight))
         return -1;
 
-      MovePlateToWell(well);
+      _device.Hardware.MovePlateToWell(well);
 
       ChangeDACCurrent(decreaseCurrentTo);
-      DescendProbe(motorZInitHeight);
+      _device.Hardware.DescendProbe(motorZInitHeight);
 
       var resultingHeight = GetResultingProbeHeight();
       ChangeDACCurrent(0);
 
 
-      AscendProbe(motorZFinalHeight);
+      _device.Hardware.AscendProbe(motorZFinalHeight);
 
       return resultingHeight;
     }
@@ -308,46 +310,15 @@ namespace Ei_Dimension.ViewModels
     /// <param name="value">0 means "max current"</param>
     private void ChangeDACCurrent(ushort value)
     {
-      App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorZ, MotorParameterType.CurrentLimit, value);
-      App.DiosApp.Device.Hardware.SendCommand(DeviceCommandType.RefreshDAC);
-    }
-
-    private void MovePlateToWell(Well well)
-    {
-      App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.WellRowIndex,    well.RowIdx);
-      App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.WellColumnIndex, well.ColIdx);
-      App.DiosApp.Device.Hardware.SendCommand(DeviceCommandType.PositionWellPlate);
-      lock (App.DiosApp.Device.ScriptF9FinishedLock)
-      {
-        Monitor.Wait(App.DiosApp.Device.ScriptF9FinishedLock);
-      }
-    }
-
-    private void AscendProbe(ushort height)
-    {
-      MoveProbe(height, up: true);
-    }
-
-    private void DescendProbe(ushort height)
-    {
-      MoveProbe(height, up: false);
-    }
-
-    private void MoveProbe(ushort height, bool up)
-    {
-      var direction = up ? MotorDirection.Up : MotorDirection.Down;
-      App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorMoveZ, direction, height);
-      lock (App.DiosApp.Device.SystemActivityNotBusyNotificationLock)
-      {
-        Monitor.Wait(App.DiosApp.Device.SystemActivityNotBusyNotificationLock);
-      }
+      _device.Hardware.SetParameter(DeviceParameterType.MotorZ, MotorParameterType.CurrentLimit, value);
+      _device.Hardware.SendCommand(DeviceCommandType.RefreshDAC);
     }
 
     private float GetResultingProbeHeight()
     {
       lock (ZStepIsUpdatedLock)
       {
-        App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.MotorZ, MotorParameterType.CurrentStep);
+        _device.Hardware.RequestParameter(DeviceParameterType.MotorZ, MotorParameterType.CurrentStep);
         Monitor.Wait(ZStepIsUpdatedLock);
       }
       Thread.Sleep(500);
@@ -378,7 +349,7 @@ namespace Ei_Dimension.ViewModels
 
     private bool IsPlateEjected()
     {
-      if (!App.DiosApp.Device.IsPlateEjected)
+      if (!_device.IsPlateEjected)
         return false;
       
       var requirementsLock = new object();

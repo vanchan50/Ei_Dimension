@@ -13,6 +13,8 @@ namespace DIOS.Core
     private ConcurrentQueue<CommandStruct> _outCommands = new ConcurrentQueue<CommandStruct>();
 
     private readonly object _usbOutCV = new object();
+    internal object ScriptF9FinishedLock { get; } = new object(); //TODO: hide into function or maybe system monitor has info. then just poll it
+    internal object SystemActivityNotBusyNotificationLock { get; } = new object();
     private readonly ISerial _serialConnection;
     private readonly Thread _prioUsbInThread;
     private readonly Thread _prioUsbOutThread;
@@ -645,9 +647,9 @@ namespace DIOS.Core
           //currently used only for probe autoheight feature
           if (cs.Parameter == 0)
           {
-            lock (_device.SystemActivityNotBusyNotificationLock)
+            lock (SystemActivityNotBusyNotificationLock)
             {
-              Monitor.PulseAll(_device.SystemActivityNotBusyNotificationLock);
+              Monitor.PulseAll(SystemActivityNotBusyNotificationLock);
             }
           }
           outParameters = new ParameterUpdateEventArgs(DeviceParameterType.SystemActivityStatus, intParameter: cs.Parameter);
@@ -691,9 +693,9 @@ namespace DIOS.Core
               _device.IsPlateEjected = false;
               break;
             case 0xE7:
-              lock (_device.ScriptF9FinishedLock)
+              lock (ScriptF9FinishedLock)
               {
-                Monitor.PulseAll(_device.ScriptF9FinishedLock);
+                Monitor.PulseAll(ScriptF9FinishedLock);
               }
               break;
           }

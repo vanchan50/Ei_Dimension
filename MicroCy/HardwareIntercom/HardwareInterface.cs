@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 
 namespace DIOS.Core.HardwareIntercom
 {
@@ -1572,6 +1573,53 @@ namespace DIOS.Core.HardwareIntercom
           break;
       }
       MainCommand(code: commandCode, parameter: value, cmd: 0x02);
+    }
+    /// <summary>
+    /// Blocking until finished movement<br></br>
+    /// Moves plate to a designated well.
+    /// </summary>
+    /// <param name="well"></param>
+    public void MovePlateToWell(Well well)
+    {
+      SetParameter(DeviceParameterType.WellRowIndex, well.RowIdx);
+      SetParameter(DeviceParameterType.WellColumnIndex, well.ColIdx);
+      SendCommand(DeviceCommandType.PositionWellPlate);
+      lock (_dataController.ScriptF9FinishedLock)
+      {
+        Monitor.Wait(_dataController.ScriptF9FinishedLock);
+      }
+    }
+
+    /// <summary>
+    /// Blocking until finished movement<br></br>
+    /// </summary>
+    /// <param name="height"></param>
+    public void AscendProbe(ushort height)
+    {
+      MoveProbeZ(height, MotorDirection.Up);
+    }
+
+    /// <summary>
+    /// Blocking until finished movement<br></br>
+    /// </summary>
+    /// <param name="height"></param>
+    public void DescendProbe(ushort height)
+    {
+      MoveProbeZ(height, MotorDirection.Down);
+    }
+
+    private void MoveProbeZ(ushort height, MotorDirection direction)
+    {
+      if (direction != MotorDirection.Up && direction != MotorDirection.Down)
+      {
+        throw new ArgumentException("MotorDirection can only be Up or Down");
+      }
+
+      SetParameter(DeviceParameterType.MotorMoveZ, direction, height);
+      lock (_dataController.SystemActivityNotBusyNotificationLock)
+      {
+        Monitor.Wait(_dataController.SystemActivityNotBusyNotificationLock);
+      }
     }
 
     private void MainCommand(byte cmd = 0, byte code = 0, ushort parameter = 0, float fparameter = 0)
