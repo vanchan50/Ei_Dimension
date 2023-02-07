@@ -20,7 +20,7 @@ namespace Ei_Dimension.ViewModels
     public virtual ObservableCollection<string> EventTriggerContents { get; set; }
     public virtual ObservableCollection<string> ClassificationTargetsContents { get; set; }
     public virtual ObservableCollection<string> CompensationPercentageContent { get; set; }
-    public virtual ObservableCollection<string> DNRContents { get; set; }
+    public virtual ObservableCollection<string> DNRContents { get; set; } = new ObservableCollection<string> { "", "" };
     public virtual ObservableCollection<string> AttenuationBox { get; set; }
     public byte CalFailsInARow { get; set; }
     public bool CalJustFailed { get; set; }
@@ -55,7 +55,6 @@ namespace Ei_Dimension.ViewModels
       ClassificationTargetsContents = new ObservableCollection<string> { "0", "0", "0", "0", "0"};  //init on map changed
 
       CompensationPercentageContent = new ObservableCollection<string> { App.DiosApp.Device.Compensation.ToString() };
-      DNRContents = new ObservableCollection<string> { "", App.DiosApp.Device.HdnrTrans.ToString() };
 
       AttenuationBox = new ObservableCollection<string> { App.DiosApp.MapController.ActiveMap.calParams.att.ToString() };
 
@@ -297,8 +296,8 @@ namespace Ei_Dimension.ViewModels
       DNRContents[0] = map.calParams.DNRCoef.ToString();
       DNRContents[1] = map.calParams.DNRTrans.ToString();
       App.DiosApp.Device.Compensation = map.calParams.compensation;
-      App.DiosApp.Device.HDnrCoef = map.calParams.DNRCoef;
-      App.DiosApp.Device.HdnrTrans = map.calParams.DNRTrans;
+      App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.DNRCoefficient, map.calParams.DNRCoef);
+      App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.DNRTransition, map.calParams.DNRTrans);
       ClassificationTargetsContents[0] = map.calParams.CL0.ToString();
       ClassificationTargetsContents[1] = map.calParams.CL1.ToString();
       ClassificationTargetsContents[2] = map.calParams.CL2.ToString();

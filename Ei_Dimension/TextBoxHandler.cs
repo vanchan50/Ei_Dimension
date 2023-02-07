@@ -603,7 +603,7 @@ namespace Ei_Dimension
             }
           };
           break;
-        case DeviceParameterType.SheathFlowError:  //change command to parameter dependency in the lib. send unspecified in case cmd !=1 or !=2, so it doesnt break
+        case DeviceParameterType.SheathFlowError:
           if (parameter.Parameter == (int)SheathFlowError.SheathEmpty)
           {
             void Act()
@@ -622,7 +622,7 @@ namespace Ei_Dimension
                 Language.TranslationSource.Instance.CurrentCulture);
               Notification.Show($"{msg1}\n{msg2}", Act, "OK");
             });
-            lock (_callingThreadLock) //will hang "ReplyFromMC" thread until pulsed. Is that the desired behaviour? think about it
+            lock (_callingThreadLock) //will hang "ReplyFromMC" thread until pulsed. Is that the desired behaviour?
             {
               Monitor.Wait(_callingThreadLock);
             }

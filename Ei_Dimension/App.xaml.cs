@@ -658,7 +658,7 @@ namespace Ei_Dimension
       DiosApp.Device.SensitivityChannel = Settings.Default.SensitivityChannelB ? HiSensitivityChannel.GreenB : HiSensitivityChannel.GreenC;
       DiosApp.Device.ReporterScaling = Settings.Default.ReporterScaling;
       DiosApp.Device.Hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.Attenuation, DiosApp.MapController.ActiveMap.calParams.att);
-      DiosApp.Device.HdnrTrans = DiosApp.MapController.ActiveMap.calParams.DNRTrans;
+      DiosApp.Device.Hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.DNRTransition, DiosApp.MapController.ActiveMap.calParams.DNRTrans);
       DiosApp.Device.Compensation = DiosApp.MapController.ActiveMap.calParams.compensation;
       DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.SampleSyringeType);
       DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.SampleSyringeSize);

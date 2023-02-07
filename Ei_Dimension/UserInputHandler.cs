@@ -91,7 +91,7 @@ namespace Ei_Dimension
               {
                 if (fRes >= 1 && fRes <= 300)
                 {
-                  App.DiosApp.Device.HDnrCoef = fRes;
+                  App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.DNRCoefficient, fRes);
                   break;
                 }
               }
@@ -104,7 +104,7 @@ namespace Ei_Dimension
               {
                 if (fRes >= 1 && fRes <= 40000)
                 {
-                  App.DiosApp.Device.HdnrTrans = fRes;
+                  App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.DNRTransition, fRes);
                   break;
                 }
               }

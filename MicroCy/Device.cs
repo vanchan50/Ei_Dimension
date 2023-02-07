@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
 using DIOS.Core.HardwareIntercom;
 using DIOS.Core.MainMeasurementScript;
@@ -36,6 +35,9 @@ namespace DIOS.Core
   {
     public WellController WellController { get; } = new WellController();
     public SystemActivity SystemMonitor { get; } = new SystemActivity();
+    /// <summary>
+    /// Abstractions on the hardware commands and parameters
+    /// </summary>
     public HardwareInterface Hardware { get; }
     public event EventHandler<ReadingWellEventArgs> StartingToReadWell;
     public event EventHandler<ReadingWellEventArgs> FinishedReadingWell;
@@ -44,8 +46,20 @@ namespace DIOS.Core
     public OperationMode Mode { get; set; } = OperationMode.Normal;
     public int BoardVersion { get; internal set; }
     public string FirmwareVersion { get; internal set; }
+    /// <summary>
+    /// An inverse coefficient for the bead Reporter<br></br>
+    /// Applied before Reporter Normalization
+    /// </summary>
     public float ReporterScaling { get; set; } = 1;
+    /// <summary>
+    /// Amount of bead events for the current well<br></br>
+    /// Resets on the start of new Well
+    /// </summary>
     public int BeadCount { get; internal set; }
+    /// <summary>
+    /// The flag is set when the Device is in the measurement process;<br></br>
+    /// Reset when the plate measurement is complete
+    /// </summary>
     public bool IsMeasurementGoing
     {
       get
@@ -65,30 +79,9 @@ namespace DIOS.Core
         Hardware.SetParameter(DeviceParameterType.HiSensitivityChannel, (ushort)_sensitivityChannel);
       }
     }
-    public float HdnrTrans
-    {
-      get
-      {
-        return _hdnrTrans;
-      }
-      set
-      {
-        _hdnrTrans = value;
-        Hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.DNRTransition, _hdnrTrans);
-      }
-    }
-    public float HDnrCoef
-    {
-      get
-      {
-        return _hdnrCoef;
-      }
-      set
-      {
-        _hdnrCoef = value;
-        Hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.DNRCoefficient, _hdnrCoef);
-      }
-    }
+    /// <summary>
+    /// A coefficient for high dynamic range channel
+    /// </summary>
     public float Compensation { get; set; }
     public NormalizationSettings Normalization
     {
@@ -100,11 +93,11 @@ namespace DIOS.Core
     internal bool _singleSyringeMode;
 
     internal bool _isReadingA;
-    internal SelfTester SelfTester { get; }
+    internal float HdnrTrans;
+    internal float HDnrCoef;
+    internal readonly SelfTester SelfTester;
     internal readonly BeadProcessor _beadProcessor;
     private HiSensitivityChannel _sensitivityChannel;
-    private float _hdnrTrans;
-    private float _hdnrCoef;
     private readonly DataController _dataController;
     private readonly MeasurementScript _script;
     private readonly ILogger _logger;

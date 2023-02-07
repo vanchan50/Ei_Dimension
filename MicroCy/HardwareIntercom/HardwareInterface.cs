@@ -237,10 +237,12 @@ namespace DIOS.Core.HardwareIntercom
             case CalibrationParameter.DNRCoefficient:
               fparam = value;
               commandCode = 0x20;
+              _device.HDnrCoef = fparam;
               break;
             case CalibrationParameter.DNRTransition:
               fparam = value;
               commandCode = 0x0A;
+              _device.HdnrTrans = fparam;
               break;
             case CalibrationParameter.ScatterGate:
               param = intValue;
