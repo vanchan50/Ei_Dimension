@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="BackgroundStatsAccumulator.cs" />
     <Compile Include="BeadEventsData.cs" />
+    <Compile Include="BeadEventSink.cs" />
     <Compile Include="DIOSApp.cs" />
     <Compile Include="FileIO\BeadEventFileWriter.cs" />
     <Compile Include="FileIO\LegacyReportFileWriter.cs" />

@@ -8,7 +8,7 @@ namespace DIOS.Application
   public class RunResults
   {
     public ConcurrentQueue<ProcessedBead> DataOut { get; } = new ConcurrentQueue<ProcessedBead>();
-    public List<ProcessedBead> OutputBeadsCollector { get; } = new List<ProcessedBead>(2000000);
+    public BeadEventSink OutputBeadsCollector { get; } = new BeadEventSink(2000000);
     public PlateReport PlateReport { get; } = new PlateReport();
     public WellResults WellResults { get; } = new WellResults();
     public ResultsProcessor ResultsProc { get; }

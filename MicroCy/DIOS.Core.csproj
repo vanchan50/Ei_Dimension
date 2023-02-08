@@ -68,6 +68,7 @@
     <Compile Include="HardwareIntercom\MotorStepsX.cs" />
     <Compile Include="HardwareIntercom\MotorStepsY.cs" />
     <Compile Include="HardwareIntercom\MotorStepsZ.cs" />
+    <Compile Include="IBeadEventSink.cs" />
     <Compile Include="ILogger.cs" />
     <Compile Include="MainMeasurementScript\MeasurementScript.cs" />
     <Compile Include="ParameterUpdateEventArgs.cs" />

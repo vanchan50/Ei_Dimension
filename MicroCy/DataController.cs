@@ -9,7 +9,7 @@ namespace DIOS.Core
   internal class DataController
   {
     public bool IsMeasurementGoing { get; set; }
-    internal ICollection<ProcessedBead> ExternalOutput { get; set; }
+    internal IBeadEventSink BeadEventSink { get; set; }
     private ConcurrentQueue<CommandStruct> _outCommands = new ConcurrentQueue<CommandStruct>();
 
     private readonly object _usbOutCV = new object();
@@ -94,7 +94,7 @@ namespace DIOS.Core
               break;
             _device.BeadCount++;
             var processedBead = _device._beadProcessor.CalculateBeadParams(in outbead);
-            ExternalOutput.Add(processedBead);
+            BeadEventSink.Add(processedBead);
           }
         }
         _serialConnection.ClearBuffer();  //TODO: is it necessary?

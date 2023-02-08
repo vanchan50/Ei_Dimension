@@ -141,13 +141,13 @@ namespace DIOS.Core
     /// Sends a sequence of commands to startup a measurement.
     /// The operation is conducted on the other thread, while this function quickly returns
     /// </summary>
-    public void StartOperation(ICollection<ProcessedBead> outputBeads)
+    public void StartOperation(IBeadEventSink beadEventSink)
     {
       if (Mode != OperationMode.Normal)
       {
         Normalization.SuspendForTheRun();
       }
-      _dataController.ExternalOutput = outputBeads;
+      _dataController.BeadEventSink = beadEventSink;
       _script.Start();
     }
 
@@ -210,7 +210,7 @@ namespace DIOS.Core
     internal void OnFinishedMeasurement()
     {
       _dataController.IsMeasurementGoing = false;
-      _dataController.ExternalOutput = null;
+      _dataController.BeadEventSink = null;
       Hardware.SetParameter(DeviceParameterType.IsBubbleDetectionActive, 0);
       if (Mode ==  OperationMode.Verification)
         Verificator.CalculateResults(_beadProcessor._map);
