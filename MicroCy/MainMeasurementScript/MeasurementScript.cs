@@ -33,7 +33,7 @@ namespace DIOS.Core.MainMeasurementScript
       _hardware.SetParameter(DeviceParameterType.IsBubbleDetectionActive, 1);
       _hardware.SendCommand(DeviceCommandType.PositionWellPlate);
 
-      if (!_device._singleSyringeMode)
+      if (!_device.SingleSyringeMode)
         _hardware.SendCommand(DeviceCommandType.AspirateA);
 
       _device._isReadingA = false;
@@ -88,7 +88,7 @@ namespace DIOS.Core.MainMeasurementScript
     private void SetupRead()
     {
       SetReadingParamsForWell();
-      if (_device._singleSyringeMode)
+      if (_device.SingleSyringeMode)
       {
         SetAspirateParamsForWell();
         _hardware.SendCommand(DeviceCommandType.PositionWellPlate);
@@ -104,7 +104,7 @@ namespace DIOS.Core.MainMeasurementScript
       _device.Hardware.SetToken(HardwareToken.EmptySyringeTrigger); //clear empty syringe token
       _device.Hardware.SetToken(HardwareToken.Synchronization); //clear sync token to allow next sequence to execute
 
-      if (_device._isReadingA || _device._singleSyringeMode)
+      if (_device._isReadingA || _device.SingleSyringeMode)
         _hardware.SendCommand(DeviceCommandType.EndReadA);
       else
         _hardware.SendCommand(DeviceCommandType.EndReadB);
@@ -128,7 +128,7 @@ namespace DIOS.Core.MainMeasurementScript
 
     private void StartBeadRead()
     {
-      if (_device._singleSyringeMode)
+      if (_device.SingleSyringeMode)
       {
         _hardware.SendCommand(DeviceCommandType.AspirateA);
         _hardware.SendCommand(DeviceCommandType.ReadA);

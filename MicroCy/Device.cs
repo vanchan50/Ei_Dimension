@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using DIOS.Core.HardwareIntercom;
 using DIOS.Core.MainMeasurementScript;
 using DIOS.Core.SelfTests;
 
-/*
- * Most commands on the host side parallel the Properties and Methods document fo QB-1000
- * The only complex action is reading a region of wells defined by the READ SECTION parameters and button
- * They define an rectangular area of the plate that may include the entire plate. The complexity is
- * furthered by the fact that a read can be terminated in many different ways:
+/* a read can be terminated in many different ways:
  * 1. Manually with the END SECTION READ button
  * 2. Manually with the END READ button which just ends the current well read and goes on the the next well
  * 3. OUT OF SHEATH condition, the sheath syringe is a position 0
@@ -23,14 +18,14 @@ using DIOS.Core.SelfTests;
  * 2. The sync token is cleared allowing new commands to execute immediately
  * 3. An FD or FE is sent to the host to tell it to save the data file and then it sends an EE or EF
  * 4. An EE or EF sequence is executed in the instrument, flushing the remaining sample and resetting syringes
- * 5. If regioncount is 1-- == 0 the last sample is read, if > 0 the next well is also aspirated
  * 
- * When the host initiates an end condition (isDone== true)
- * This version is being used at MRBM
  */
 
 namespace DIOS.Core
 {
+  /// <summary>
+  /// Main class that provides access to all of the system functions
+  /// </summary>
   public class Device
   {
     public WellController WellController { get; } = new WellController();
@@ -67,18 +62,6 @@ namespace DIOS.Core
         return _dataController.IsMeasurementGoing;
       }
     }
-    public HiSensitivityChannel SensitivityChannel
-    {
-      get
-      {
-        return _sensitivityChannel;
-      }
-      set
-      {
-        _sensitivityChannel = value;
-        Hardware.SetParameter(DeviceParameterType.HiSensitivityChannel, (ushort)_sensitivityChannel);
-      }
-    }
     /// <summary>
     /// A coefficient for high dynamic range channel
     /// </summary>
@@ -90,14 +73,12 @@ namespace DIOS.Core
     public float MaxPressure { get; set; }
     public bool IsPlateEjected { get; internal set; }
     public readonly Verificator Verificator;
-    internal bool _singleSyringeMode;
-
+    internal bool SingleSyringeMode { get; set; }
     internal bool _isReadingA;
     internal float HdnrTrans;
     internal float HDnrCoef;
     internal readonly SelfTester SelfTester;
     internal readonly BeadProcessor _beadProcessor;
-    private HiSensitivityChannel _sensitivityChannel;
     private readonly DataController _dataController;
     private readonly MeasurementScript _script;
     private readonly ILogger _logger;
@@ -124,7 +105,7 @@ namespace DIOS.Core
 
     public void PrematureStop()
     {
-      WellController.PreparePrematureStop(_singleSyringeMode);
+      WellController.PreparePrematureStop(SingleSyringeMode);
       _script.FinalizeWellReading();
     }
 

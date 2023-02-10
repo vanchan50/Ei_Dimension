@@ -8,6 +8,7 @@
     private readonly Device _device;
     private readonly ClassificationMap _classificationMap = new ClassificationMap();
     internal CustomMap _map;
+    internal HiSensitivityChannel SensitivityChannel { get; set; }
 
     public BeadProcessor(Device device)
     {
@@ -65,7 +66,7 @@
     {
       //greenMaj is the hi dyn range channel,
       //greenMin is the high sensitivity channel(depends on filter placement)
-      if (_device.SensitivityChannel == HiSensitivityChannel.GreenB)
+      if (SensitivityChannel == HiSensitivityChannel.GreenB)
       {
         _greenMaj = rawBead.greenC;
         _greenMin = rawBead.greenB;

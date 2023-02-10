@@ -5,6 +5,11 @@
     public bool IsEnabled { get; private set; } = true;
     private bool _cache;
 
+    internal NormalizationSettings()
+    {
+      
+    }
+
     public void Enable()
     {
       IsEnabled = true;

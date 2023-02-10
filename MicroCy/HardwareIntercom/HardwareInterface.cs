@@ -209,7 +209,18 @@ namespace DIOS.Core.HardwareIntercom
           break;
         case DeviceParameterType.HiSensitivityChannel:
           commandCode = 0x1E;
-          param = intValue;
+          switch (subParameter)
+          {
+            case HiSensitivityChannel.GreenB:
+              param = (ushort)HiSensitivityChannel.GreenB;
+              break;
+            case HiSensitivityChannel.GreenC:
+              param = (ushort)HiSensitivityChannel.GreenC;
+              break;
+            default:
+              throw new NotImplementedException();
+          }
+          _device._beadProcessor.SensitivityChannel = (HiSensitivityChannel)subParameter;
           break;
         case DeviceParameterType.UVCSanitize:
           commandCode = 0x1F;
@@ -300,11 +311,11 @@ namespace DIOS.Core.HardwareIntercom
           {
             case SampleSyringeType.Single:
               param = 0xFFFF;
-              _device._singleSyringeMode = true;
+              _device.SingleSyringeMode = true;
               break;
             case SampleSyringeType.Double:
               param = 0;
-              _device._singleSyringeMode = false;
+              _device.SingleSyringeMode = false;
               break;
             default:
               throw new NotImplementedException();

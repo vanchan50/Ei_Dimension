@@ -11,6 +11,7 @@ using Ei_Dimension.Cache;
 using Ei_Dimension.Controllers;
 using DIOS.Application;
 using System.Threading.Tasks;
+using DevExpress.XtraSpreadsheet.Import.Xls;
 
 namespace Ei_Dimension
 {
@@ -655,7 +656,8 @@ namespace Ei_Dimension
       DiosApp.MinPerRegion = Settings.Default.MinPerRegion;
       DiosApp.TotalBeadsToCapture = Settings.Default.BeadsToCapture;
       DiosApp.Publisher.IsOnlyClassifiedBeadsPublishingActive = Settings.Default.OnlyClassifed;
-      DiosApp.Device.SensitivityChannel = Settings.Default.SensitivityChannelB ? HiSensitivityChannel.GreenB : HiSensitivityChannel.GreenC;
+      var hiSensChannel = Settings.Default.SensitivityChannelB ? HiSensitivityChannel.GreenB : HiSensitivityChannel.GreenC;
+      DiosApp.Device.Hardware.SetParameter(DeviceParameterType.HiSensitivityChannel, hiSensChannel);
       DiosApp.Device.ReporterScaling = Settings.Default.ReporterScaling;
       DiosApp.Device.Hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.Attenuation, DiosApp.MapController.ActiveMap.calParams.att);
       DiosApp.Device.Hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.DNRTransition, DiosApp.MapController.ActiveMap.calParams.DNRTrans);

@@ -33,7 +33,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Ei_Dimension\Ei_Dimension.csproj" />
     <ProjectReference Include="..\..\MicroCy\DIOS.Core.csproj" />
-    <ProjectReference Include="..\DIOS.Core.Tests\DIOS.Core.Tests.csproj" />
   </ItemGroup>
 
   <ItemGroup>

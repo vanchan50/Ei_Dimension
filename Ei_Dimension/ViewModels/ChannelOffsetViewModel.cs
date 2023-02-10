@@ -235,8 +235,8 @@ namespace Ei_Dimension.ViewModels
 
     private static void SetSensitivityChannel(byte num)
     {
-      App.DiosApp.Device.SensitivityChannel = (HiSensitivityChannel)num;
-      Settings.Default.SensitivityChannelB = num == 0;
+      App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.HiSensitivityChannel, (HiSensitivityChannel)num);
+      Settings.Default.SensitivityChannelB = num == (byte)HiSensitivityChannel.GreenB;
       Settings.Default.Save();
     }
 

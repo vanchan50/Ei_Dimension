@@ -375,11 +375,11 @@ namespace DIOS.Core
           {
             case SampleSyringeType.Single:
               outpar = (int)SampleSyringeType.Single;
-              _device._singleSyringeMode = true;
+              _device.SingleSyringeMode = true;
               break;
             case SampleSyringeType.Double:
               outpar = (int)SampleSyringeType.Double;
-              _device._singleSyringeMode = false;
+              _device.SingleSyringeMode = false;
               break;
           }
           outParameters = new ParameterUpdateEventArgs(DeviceParameterType.SampleSyringeType, intParameter: outpar);
