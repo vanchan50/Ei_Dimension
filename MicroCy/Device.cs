@@ -85,13 +85,13 @@ namespace DIOS.Core
 
     public Device(ISerial connection, ILogger logger)
     {
+      _logger = logger;
       SelfTester = new SelfTester(this, logger);
       _beadProcessor = new BeadProcessor(this);
       _dataController = new DataController(this, connection, logger);
       Hardware = new HardwareInterface(this, _dataController, logger);
       _script = new MeasurementScript(this, logger);
-      _logger = logger;
-      Verificator = new Verificator(_logger);
+      Verificator = new Verificator(logger);
     }
 
     public void Init()

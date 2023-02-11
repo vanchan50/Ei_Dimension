@@ -3,7 +3,6 @@ using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using DIOS.Core;
-using DIOS.Core.Tests;
 using Xunit;
 using Ei_Dimension;
 using Ei_Dimension.Controllers;
