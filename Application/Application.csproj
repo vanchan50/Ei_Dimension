@@ -42,7 +42,10 @@
     <Compile Include="BackgroundStatsAccumulator.cs" />
     <Compile Include="BeadEventsData.cs" />
     <Compile Include="BeadEventSink.cs" />
+    <Compile Include="ChannelsAveragesStats.cs" />
+    <Compile Include="ChannelsCalibrationStats.cs" />
     <Compile Include="DIOSApp.cs" />
+    <Compile Include="DistributionStats.cs" />
     <Compile Include="FileIO\BeadEventFileWriter.cs" />
     <Compile Include="FileIO\LegacyReportFileWriter.cs" />
     <Compile Include="FileIO\Logger.cs" />
@@ -59,6 +62,7 @@
     <Compile Include="ResultingWellStatsData.cs" />
     <Compile Include="ResultsProcessor.cs" />
     <Compile Include="RunResults.cs" />
+    <Compile Include="StatisticsExtension.cs" />
     <Compile Include="StatsAccumulator.cs" />
     <Compile Include="SystemControl.cs" />
     <Compile Include="Termination.cs" />

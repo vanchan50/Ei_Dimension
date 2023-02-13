@@ -52,10 +52,8 @@
     <Compile Include="HardwareIntercom\CalibrationParameter.cs" />
     <Compile Include="HardwareIntercom\CalibrationTarget.cs" />
     <Compile Include="HardwareIntercom\Channel.cs" />
-    <Compile Include="ChannelConfiguration.cs" />
-    <Compile Include="ChannelsAveragesStats.cs" />
+    <Compile Include="HardwareIntercom\ChannelConfiguration.cs" />
     <Compile Include="BeadProcessor.cs" />
-    <Compile Include="ChannelsCalibrationStats.cs" />
     <Compile Include="ClassificationMap.cs" />
     <Compile Include="DataController.cs" />
     <Compile Include="HardwareIntercom\DeviceCommandType.cs" />
@@ -79,15 +77,12 @@
     <Compile Include="HardwareIntercom\PlateType.cs" />
     <Compile Include="HardwareIntercom\SampleSyringeType.cs" />
     <Compile Include="HardwareIntercom\SheathFlowError.cs" />
-    <Compile Include="StatisticsExtension.cs" />
     <Compile Include="SelfTests\SelfTester.cs" />
     <Compile Include="SelfTests\SelfTestData.cs" />
     <Compile Include="Structs\CalParams.cs" />
     <Compile Include="Structs\CustomMap.cs" />
     <Compile Include="Structs\ProcessedBead.cs" />
     <Compile Include="Structs\RawBead.cs" />
-    <Compile Include="CommandLists.cs" />
-    <Compile Include="Structs\DistributionStats.cs" />
     <Compile Include="Structs\MapCalParameters.cs" />
     <Compile Include="Structs\CommandStruct.cs" />
     <Compile Include="ISerial.cs" />
@@ -116,9 +111,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <InternalsVisibleTo Include="DIOS.Core.Tests" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

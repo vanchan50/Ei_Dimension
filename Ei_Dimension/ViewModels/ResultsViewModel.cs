@@ -1,11 +1,10 @@
 ﻿using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
-using Ei_Dimension.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Threading.Tasks;
+using DIOS.Application;
 using DIOS.Core;
 using Ei_Dimension.Controllers;
 using Ei_Dimension.Graphing;

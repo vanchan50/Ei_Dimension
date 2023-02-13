@@ -1,9 +1,9 @@
 ﻿using Ei_Dimension.ViewModels;
-using DIOS.Core;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Reflection;
 using System.Windows.Controls;
+using DIOS.Application;
 using Ei_Dimension.Models;
 using DIOS.Core.HardwareIntercom;
 

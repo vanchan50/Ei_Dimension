@@ -2,6 +2,7 @@
 using DevExpress.Mvvm.POCO;
 using System.Collections.ObjectModel;
 using System.Windows.Controls;
+using DIOS.Application;
 using DIOS.Core;
 using DIOS.Core.HardwareIntercom;
 

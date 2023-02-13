@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace DIOS.Core
+namespace DIOS.Application
 {
   public static class StatisticsExtension
   {
