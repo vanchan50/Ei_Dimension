@@ -34,11 +34,23 @@ namespace DIOS.Core
     /// Abstractions on the hardware commands and parameters
     /// </summary>
     public HardwareInterface Hardware { get; }
+    /// <summary>
+    /// Fired on reading start of every Well/Tube
+    /// </summary>
     public event EventHandler<ReadingWellEventArgs> StartingToReadWell;
+    /// <summary>
+    /// Fired on reading end of every Well/Tube
+    /// </summary>
     public event EventHandler<ReadingWellEventArgs> FinishedReadingWell;
+    /// <summary>
+    /// Fired when every Well/Tube are read.
+    /// </summary>
     public event EventHandler FinishedMeasurement;
+    /// <summary>
+    /// Fired on every request/change of the Hardware parameter
+    /// </summary>
     public event EventHandler<ParameterUpdateEventArgs> ParameterUpdate;
-    public OperationMode Mode { get; set; } = OperationMode.Normal;
+    public OperationMode Mode { get; set; } = OperationMode.Normal; //TODO: move to app layer?
     public int BoardVersion { get; internal set; }
     public string FirmwareVersion { get; internal set; }
     /// <summary>
@@ -72,7 +84,6 @@ namespace DIOS.Core
     }
     public float MaxPressure { get; set; }
     public bool IsPlateEjected { get; internal set; }
-    public readonly Verificator Verificator;
     internal bool SingleSyringeMode { get; set; }
     internal bool _isReadingA;
     internal float HdnrTrans;
@@ -91,7 +102,6 @@ namespace DIOS.Core
       _dataController = new DataController(this, connection, logger);
       Hardware = new HardwareInterface(this, _dataController, logger);
       _script = new MeasurementScript(this, logger);
-      Verificator = new Verificator(logger);
     }
 
     public void Init()
@@ -193,8 +203,6 @@ namespace DIOS.Core
       _dataController.IsMeasurementGoing = false;
       _dataController.BeadEventSink = null;
       Hardware.SetParameter(DeviceParameterType.IsBubbleDetectionActive, 0);
-      if (Mode ==  OperationMode.Verification)
-        Verificator.CalculateResults(_beadProcessor._map);
 
       if (Mode != OperationMode.Normal)
         Normalization.Restore();

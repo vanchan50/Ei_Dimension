@@ -87,6 +87,8 @@ namespace Ei_Dimension
         DashVM.ChConfigItems[0].Content = RM.GetString(nameof(Language.Resources.Dropdown_Standard), curCulture);
         DashVM.ChConfigItems[1].Content = RM.GetString(nameof(Language.Resources.Dropdown_Cells), curCulture);
         DashVM.ChConfigItems[2].Content = RM.GetString(nameof(Language.Resources.Dropdown_FM3D), curCulture);
+        DashVM.ChConfigItems[3].Content = RM.GetString(nameof(Language.Resources.Dropdown_StandardPlusFSC), curCulture);
+        DashVM.ChConfigItems[4].Content = RM.GetString(nameof(Language.Resources.Dropdown_StandardPlusExt), curCulture);
         DashVM.SelectedChConfigContent = DashVM.ChConfigItems[(int)DashVM.SelectedChConfigIndex].Content;
 
         DashVM.OrderItems[0].Content = RM.GetString(nameof(Language.Resources.Column), curCulture);

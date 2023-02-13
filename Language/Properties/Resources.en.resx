@@ -604,6 +604,10 @@ Value</value>
   <data name="Dropdown_Standard" xml:space="preserve">
     <value>Standard</value>
   </data>
+  <data name="Dropdown_StandardPlusExt" xml:space="preserve">
+    <value>Standard
++ Ext Range</value>
+  </data>
   <data name="Dropdown_StandardPlusFSC" xml:space="preserve">
     <value>Standard
    + FSC</value>

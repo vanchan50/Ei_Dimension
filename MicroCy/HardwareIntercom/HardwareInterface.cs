@@ -742,7 +742,26 @@ namespace DIOS.Core.HardwareIntercom
           break;
         case DeviceParameterType.ChannelConfiguration:
           commandCode = 0xC2;
-          param = intValue;
+          switch (subParameter)
+          {
+            case ChannelConfiguration.Standard:
+              param = (ushort)ChannelConfiguration.Standard;
+              break;
+            case ChannelConfiguration.Cells:
+              param = (ushort)ChannelConfiguration.Cells;
+              break;
+            case ChannelConfiguration.FM3D:
+              param = (ushort)ChannelConfiguration.FM3D;
+              break;
+            case ChannelConfiguration.StandardPlusFsc:
+              param = (ushort)ChannelConfiguration.StandardPlusFsc;
+              break;
+            case ChannelConfiguration.StandardPlusExt:
+              param = (ushort)ChannelConfiguration.StandardPlusExt;
+              break;
+            default:
+              throw new NotImplementedException();
+          }
           break;
         /*  //Not used in SET
         case DeviceParameterType.LaserPower:

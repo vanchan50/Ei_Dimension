@@ -11,7 +11,6 @@ using Ei_Dimension.Cache;
 using Ei_Dimension.Controllers;
 using DIOS.Application;
 using System.Threading.Tasks;
-using DevExpress.XtraSpreadsheet.Import.Xls;
 
 namespace Ei_Dimension
 {
@@ -296,6 +295,9 @@ namespace Ei_Dimension
 
     public void FinishedMeasurementEventHandler(object sender, EventArgs e)
     {
+      if (DiosApp.Device.Mode == OperationMode.Verification)
+        DiosApp.Verificator.CalculateResults(DiosApp.MapController.ActiveMap);
+
       DiosApp.Results.PlateReport.completedDateTime = DateTime.Now;
       DiosApp.Results.EndOfOperationReset();
       var plateReportJson = DiosApp.Results.PlateReport.JSONify();
@@ -332,7 +334,7 @@ namespace Ei_Dimension
           CalibrationViewModel.Instance.CalibrationFailCheck();
           break;
         case OperationMode.Verification:
-          if (VerificationViewModel.AnalyzeVerificationResults(out var errorMsg))
+          if (VerificationViewModel.Instance.AnalyzeVerificationResults(out var errorMsg))
           {
             _ = Current.Dispatcher.BeginInvoke((Action)VerificationViewModel.VerificationSuccess);
           }
@@ -340,7 +342,7 @@ namespace Ei_Dimension
           {
             Current.Dispatcher.Invoke(()=>Notification.ShowError(errorMsg, 26));
           }
-          DiosApp.Device.Verificator.PublishReport();
+          DiosApp.Verificator.PublishReport();
           Current.Dispatcher.Invoke(DashboardViewModel.Instance.ValModeToggle);
           //Notification.ShowLocalizedError(nameof(Language.Resources.Validation_Fail));
           break;
@@ -414,7 +416,7 @@ namespace Ei_Dimension
             DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.PlateType); // plate type needed here?really? same question for the rest, actually
             DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.WellReadingSpeed);
             DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.WellReadingOrder);
-            DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelConfiguration);
+            DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelConfiguration); //never used in the ui or anywhere
           };
           break;
         case "reportingtab":

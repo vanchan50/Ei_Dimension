@@ -59,6 +59,7 @@
     BeadConcentration,
     WellReadingSpeed,
     WellReadingOrder,
+    ///<summary>Subparamter: ChannelConfiguration</summary>
     ChannelConfiguration,
     PlateType,
     WashRepeatsAmount,

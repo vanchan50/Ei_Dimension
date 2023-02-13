@@ -5,7 +5,6 @@ using System.Threading;
 using Ei_Dimension.Controllers;
 using DIOS.Core.HardwareIntercom;
 using Ei_Dimension.ViewModels;
-using static DevExpress.Xpo.Helpers.CannotLoadObjectsHelper;
 
 namespace Ei_Dimension
 {
@@ -111,6 +110,9 @@ namespace Ei_Dimension
       TextBoxHandler.UpdatePressureMonitor();
       ServiceMenuEnabler.Update();
       _uiUpdateIsActive = 0;
+
+      //DashboardViewModel.Instance.ChConfigItems[3].Click(3);
+      //MaintenanceViewModel.Instance.LanguageItems[0].Click();
 
       #if DEBUG
       App.Current.Dispatcher.Invoke(() => {

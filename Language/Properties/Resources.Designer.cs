@@ -1460,7 +1460,18 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Standard + FSC.
+        ///   Looks up a localized string similar to Standard
+        ///+ Ext Range.
+        /// </summary>
+        public static string Dropdown_StandardPlusExt {
+            get {
+                return ResourceManager.GetString("Dropdown_StandardPlusExt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Standard
+        ///   + FSC.
         /// </summary>
         public static string Dropdown_StandardPlusFSC {
             get {

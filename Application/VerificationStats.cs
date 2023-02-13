@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
+using DIOS.Core;
 
-namespace DIOS.Core
+namespace DIOS.Application
 {
-  public class ValidationStats
+  public class VerificationStats
   {
     public int Region { get; }
     public double InputReporter { get; }
@@ -12,7 +13,7 @@ namespace DIOS.Core
     private readonly List<float> _cl1 = new List<float>(100000);
     private readonly List<float> _cl2 = new List<float>(100000);
 
-    public ValidationStats(int regionNum, double inputReporter)
+    public VerificationStats(int regionNum, double inputReporter)
     {
       Region = regionNum;
       InputReporter = inputReporter;

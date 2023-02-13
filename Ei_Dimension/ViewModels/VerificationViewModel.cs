@@ -199,14 +199,14 @@ namespace Ei_Dimension.ViewModels
       return true;
     }
 
-    public static bool AnalyzeVerificationResults(out string errorMsg)
+    public bool AnalyzeVerificationResults(out string errorMsg)
     {
       errorMsg = null;
-      Verificator.SetCulture(Language.TranslationSource.Instance.CurrentCulture);
-      var passed1 = App.DiosApp.Device.Verificator.ReporterToleranceTest(Settings.Default.ValidatorToleranceReporter, out var msg1);
-      var passed2 = App.DiosApp.Device.Verificator.ClassificationToleranceTest(Settings.Default.ValidatorToleranceClassification, out var msg2);
-      var passed3 = App.DiosApp.Device.Verificator.MisclassificationToleranceTest(Settings.Default.ValidatorToleranceMisclassification, out var msg3);
-      Verificator.PublishResult($"{App.DiosApp.RootDirectory.FullName}\\SystemLogs\\VerificationLogs.txt");
+      App.DiosApp.Verificator.SetCulture(Language.TranslationSource.Instance.CurrentCulture);
+      var passed1 = App.DiosApp.Verificator.ReporterToleranceTest(Settings.Default.ValidatorToleranceReporter, out var msg1);
+      var passed2 = App.DiosApp.Verificator.ClassificationToleranceTest(Settings.Default.ValidatorToleranceClassification, out var msg2);
+      var passed3 = App.DiosApp.Verificator.MisclassificationToleranceTest(Settings.Default.ValidatorToleranceMisclassification, out var msg3);
+      App.DiosApp.Verificator.PublishResult($"{App.DiosApp.RootDirectory.FullName}\\SystemLogs\\VerificationLogs.txt");
       if (msg1 != null)
         errorMsg = msg1;
       if (msg2 != null)

@@ -19,6 +19,7 @@ namespace DIOS.Application
     public int MinPerRegion { get; set; }
     public WorkOrder WorkOrder { get; set; }
     public bool RunPlateContinuously { get; set; }
+    public Verificator Verificator { get; }
     public readonly string BUILD = "1.5.2.2";
     public ILogger Logger { get; }
 
@@ -30,6 +31,7 @@ namespace DIOS.Application
       Publisher = new ResultsPublisher(RootDirectory.FullName, Logger);
       Device = new Device(new USBConnection(Logger), Logger);
       Results = new RunResults(Device, this);
+      Verificator = new Verificator(Logger);
     }
 
     private void SetSystemDirectories()

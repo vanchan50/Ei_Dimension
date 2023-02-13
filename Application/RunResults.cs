@@ -87,7 +87,7 @@ namespace DIOS.Application
         case OperationMode.Calibration:
           break;
         case OperationMode.Verification:
-          Verificator.FillStats(in processedBead);
+          _diosApp.Verificator.FillStats(in processedBead);
           break;
       }
     }

@@ -75,13 +75,11 @@
     <Compile Include="Enums\Gate.cs" />
     <Compile Include="Enums\HiSensitivityChannel.cs" />
     <Compile Include="Enums\OperationMode.cs" />
-    <Compile Include="FileIO\VerificationReport.cs" />
     <Compile Include="NormalizationSettings.cs" />
     <Compile Include="HardwareIntercom\PlateType.cs" />
     <Compile Include="HardwareIntercom\SampleSyringeType.cs" />
     <Compile Include="HardwareIntercom\SheathFlowError.cs" />
     <Compile Include="StatisticsExtension.cs" />
-    <Compile Include="FileIO\VerificationReportPublisher.cs" />
     <Compile Include="SelfTests\SelfTester.cs" />
     <Compile Include="SelfTests\SelfTestData.cs" />
     <Compile Include="Structs\CalParams.cs" />
@@ -104,8 +102,6 @@
     <Compile Include="HardwareIntercom\SyringeSpeed.cs" />
     <Compile Include="SystemActivity.cs" />
     <Compile Include="USBConnection.cs" />
-    <Compile Include="ValidationStats.cs" />
-    <Compile Include="Verificator.cs" />
     <Compile Include="HardwareIntercom\VolumeType.cs" />
     <Compile Include="WellController.cs" />
     <Compile Include="Structs\Well.cs" />
@@ -124,5 +120,6 @@
   <ItemGroup>
     <InternalsVisibleTo Include="DIOS.Core.Tests" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

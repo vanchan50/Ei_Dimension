@@ -3,6 +3,7 @@ using DevExpress.Mvvm.POCO;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using DIOS.Core;
 using DIOS.Core.HardwareIntercom;
 
@@ -81,7 +82,8 @@ namespace Ei_Dimension.ViewModels
         new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_Standard), curCulture), this),
         new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_Cells), curCulture), this),
         new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_FM3D), curCulture), this),
-        new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_StandardPlusFSC), curCulture), this)
+        new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_StandardPlusFSC), curCulture), this),
+        new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_StandardPlusExt), curCulture), this)
       };
       SelectedChConfigContent = ChConfigItems[(int)SelectedChConfigIndex].Content;
       DropDownButtonContents.ResetIndex();
@@ -245,7 +247,7 @@ namespace Ei_Dimension.ViewModels
         Volumes[0] = _dbsampleVolumeTempHolder;
         App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.Volume, VolumeType.Sample, ushort.Parse(_dbsampleVolumeTempHolder));
         MainButtonsViewModel.Instance.Flavor[0] = null;
-        MainWindow.Instance.wndw.Background = (System.Windows.Media.SolidColorBrush)App.Current.Resources["AppBackground"];
+        MainWindow.Instance.wndw.Background = App.Current.Resources["AppBackground"] as SolidColorBrush;
         UnlockMapSelection();
         UnLockEndReadSelection();
         App.DiosApp.Device.Hardware.SendCommand(DeviceCommandType.CalibrationModeDeactivate);
@@ -265,12 +267,13 @@ namespace Ei_Dimension.ViewModels
           EndReadItems[2].Click(6);
           MainButtonsViewModel.Instance.Flavor[0] = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Maintenance_Calibration),
             Language.TranslationSource.Instance.CurrentCulture);
-          MainWindow.Instance.wndw.Background = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(255, 255, 191));
+          MainWindow.Instance.wndw.Background = new SolidColorBrush(Color.FromRgb(255, 255, 191));
           LockMapSelection();
           LockEndReadSelection();
           App.DiosApp.Device.Hardware.SendCommand(DeviceCommandType.CalibrationModeActivate);
           return;
         }
+
         CalModeOn = false;
         if (App.DiosApp.Device.Mode == OperationMode.Verification)
         {
@@ -279,6 +282,7 @@ namespace Ei_Dimension.ViewModels
           Notification.Show(msg);
           return;
         }
+
         ReturnToNormal();
       }
       else
@@ -295,7 +299,7 @@ namespace Ei_Dimension.ViewModels
         Volumes[0] = _dbsampleVolumeTempHolder;
         App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.Volume, VolumeType.Sample, ushort.Parse(_dbsampleVolumeTempHolder));
         MainButtonsViewModel.Instance.Flavor[0] = null;
-        MainWindow.Instance.wndw.Background = (System.Windows.Media.SolidColorBrush)App.Current.Resources["AppBackground"];
+        MainWindow.Instance.wndw.Background = App.Current.Resources["AppBackground"] as SolidColorBrush;
         ResultsViewModel.Instance.ValidationCoverVisible = Visibility.Hidden;
         UnlockMapSelection();
       }
@@ -310,7 +314,7 @@ namespace Ei_Dimension.ViewModels
           App.DiosApp.Device.Mode = OperationMode.Verification;
           MainButtonsViewModel.Instance.Flavor[0] = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Maintenance_Validation),
             Language.TranslationSource.Instance.CurrentCulture);
-          MainWindow.Instance.wndw.Background = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(97, 162, 135));
+          MainWindow.Instance.wndw.Background = new SolidColorBrush(Color.FromRgb(97, 162, 135));
           ResultsViewModel.Instance.ValidationCoverVisible = Visibility.Visible;
           LockMapSelection();
           return;
@@ -450,7 +454,7 @@ namespace Ei_Dimension.ViewModels
           case 3:
             _vm.SelectedChConfigContent = Content;
             _vm.SelectedChConfigIndex = (ChannelConfiguration)Index;
-            App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ChannelConfiguration, Index);
+            App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ChannelConfiguration, (ChannelConfiguration)Index);
             break;
           case 4:
             _vm.SelectedOrderContent = Content;

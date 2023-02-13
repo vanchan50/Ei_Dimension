@@ -1,6 +1,7 @@
 ﻿using System.Text;
+using DIOS.Core;
 
-namespace DIOS.Core.FileIO
+namespace DIOS.Application
 {
   internal class VerificationReportPublisher
   {

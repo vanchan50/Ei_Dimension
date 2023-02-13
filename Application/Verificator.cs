@@ -1,27 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using DIOS.Core.FileIO;
+using DIOS.Core;
 
-namespace DIOS.Core
+namespace DIOS.Application
 {
   public class Verificator
   {
-    private static readonly List<ValidationStats> RegionalStats = new List<ValidationStats>(50);
-    private static Dictionary<int, int> _classifiedRegionsDict = new Dictionary<int, int>();  //region,index
-    private static Dictionary<int, int> _unclassifiedRegionsDict = new Dictionary<int, int>();  //region,count
-    private static int _highestCount = 0;
-    private static int _lowestCount = int.MaxValue;
-    private static int _lowestCountRegion = -1;
-    private static int _highestCountRegion = -1;
-    private static int _totalClassifiedBeads;
-    private static int _totalBeads;
-    private static int _totalUnclassifiedBeads;
-    private static int _highestUnclassifiedCount; 
-    private static int _highestUnclassifiedCountRegion = -1;
+    private readonly List<VerificationStats> RegionalStats = new List<VerificationStats>(50);
+    private Dictionary<int, int> _classifiedRegionsDict = new Dictionary<int, int>();  //region,index
+    private Dictionary<int, int> _unclassifiedRegionsDict = new Dictionary<int, int>();  //region,count
+    private int _highestCount = 0;
+    private int _lowestCount = int.MaxValue;
+    private int _lowestCountRegion = -1;
+    private int _highestCountRegion = -1;
+    private int _totalClassifiedBeads;
+    private int _totalBeads;
+    private int _totalUnclassifiedBeads;
+    private int _highestUnclassifiedCount; 
+    private int _highestUnclassifiedCountRegion = -1;
     private readonly VerificationReportPublisher _publisher;
-    private static CultureInfo _culture;
-    private static VerificationReport _report;
+    private CultureInfo _culture;
+    private VerificationReport _report;
     private readonly ILogger _logger;
     private static readonly Dictionary<string, (string en, string zh)> _culturedText = new Dictionary<string, (string en, string zh)>
     {
@@ -58,7 +58,7 @@ namespace DIOS.Core
       foreach (var reg in regions)
       {
         _classifiedRegionsDict.Add(reg.regionNum, RegionalStats.Count);
-        RegionalStats.Add(new ValidationStats(reg.regionNum, reg.InputReporter));
+        RegionalStats.Add(new VerificationStats(reg.regionNum, reg.InputReporter));
       }
 
       _culture = new CultureInfo("en-US");
@@ -189,12 +189,12 @@ namespace DIOS.Core
     /// Hack to have a message in different language
     /// </summary>
     /// <param name="culture"></param>
-    public static void SetCulture(CultureInfo culture)
+    public void SetCulture(CultureInfo culture)
     {
       _culture = culture;
     }
 
-    public static void PublishResult(string path)
+    public  void PublishResult(string path)
     {
       _report.Publish(path);
     }
@@ -203,7 +203,7 @@ namespace DIOS.Core
     /// Called on every Read from USB, in Verification mode. Not used in other modes
     /// </summary>
     /// <param name="outbead"></param>
-    public static void FillStats(in ProcessedBead bead)
+    public void FillStats(in ProcessedBead bead)
     {
       _totalBeads++;
       //if region is classified
@@ -225,7 +225,7 @@ namespace DIOS.Core
       _unclassifiedRegionsDict.Add(bead.region, 1);
     }
 
-    internal static void CalculateResults(CustomMap activeMap)
+    public void CalculateResults(CustomMap activeMap)
     {
       //RegionalStats holds regions with defined Reporter target
       foreach (var region in RegionalStats)
@@ -286,7 +286,7 @@ namespace DIOS.Core
 
     }
 
-    private static double GetMedianReporterForRegion(int regionNum)
+    private double GetMedianReporterForRegion(int regionNum)
     {
       var index = RegionalStats.FindIndex(x => x.Region == regionNum);
       if (double.IsNaN(RegionalStats[index].Stats[0].Median))
@@ -294,7 +294,7 @@ namespace DIOS.Core
       return RegionalStats[index].Stats[0].Median;
     }
 
-    private static string GetCulturedMsg(string str)
+    private string GetCulturedMsg(string str)
     {
       string msg = null;
       var resource = _culturedText[str];

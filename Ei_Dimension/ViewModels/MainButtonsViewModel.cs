@@ -149,7 +149,7 @@ namespace Ei_Dimension.ViewModels
           regions.Add((reg, inputReporter));
         }
       }
-      App.DiosApp.Device.Verificator.Reset(regions);
+      App.DiosApp.Verificator.Reset(regions);
     }
 
     private static void DefaultRegionNaming()

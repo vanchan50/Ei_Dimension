@@ -604,8 +604,13 @@ Value</value>
   <data name="Dropdown_Standard" xml:space="preserve">
     <value>Standard</value>
   </data>
+  <data name="Dropdown_StandardPlusExt" xml:space="preserve">
+    <value>Standard
++ Ext Range</value>
+  </data>
   <data name="Dropdown_StandardPlusFSC" xml:space="preserve">
-    <value>Standard + FSC</value>
+    <value>Standard
+   + FSC</value>
   </data>
   <data name="Dropdown_Valve_Left" xml:space="preserve">
     <value>Valve Left</value>
