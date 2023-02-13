@@ -1086,7 +1086,7 @@
                       IsChecked="{Binding SquareSelActive, Mode=OneWay}"
                       Command="{Binding ToggleSqareSelectionCommand}"/>
         -->
-        <!--pack://application:,,,/DevExpress.Images.v21.2;component/SvgImages/DiagramIcons/connector.svg-->
+        <!--pack://application:,,,/DevExpress.Images.v21.1;component/SvgImages/DiagramIcons/connector.svg-->
       </StackPanel>
     </Border>
     

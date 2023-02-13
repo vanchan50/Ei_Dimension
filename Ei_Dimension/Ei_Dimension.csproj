@@ -80,86 +80,75 @@
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DevExpress.Charts.v21.1.Core, Version=21.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+    <Reference Include="DevExpress.Charts.v21.2.Core, Version=21.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
-    <Reference Include="DevExpress.DataAccess.v21.1, Version=21.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+    <Reference Include="DevExpress.DataAccess.v21.2, Version=21.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\DevExpress 21.1\Components\Bin\Framework\DevExpress.DataAccess.v21.1.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Dialogs.v21.1.Core, Version=21.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+    <Reference Include="DevExpress.Dialogs.v21.2.Core, Version=21.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\DevExpress 21.1\Components\Bin\Framework\DevExpress.Dialogs.v21.1.Core.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Images.v21.1, Version=21.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+    <Reference Include="DevExpress.Images.v21.2, Version=21.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\DevExpress 21.1\Components\Bin\Framework\DevExpress.Images.v21.1.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Mvvm.v21.1">
+    <Reference Include="DevExpress.Mvvm.v21.2">
       <Private>True</Private>
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
-    <Reference Include="DevExpress.Data.Desktop.v21.1">
+    <Reference Include="DevExpress.Data.Desktop.v21.2">
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
-    <Reference Include="DevExpress.Data.v21.1">
+    <Reference Include="DevExpress.Data.v21.2">
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
-    <Reference Include="DevExpress.Printing.v21.1.Core">
+    <Reference Include="DevExpress.Printing.v21.2.Core">
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
-    <Reference Include="DevExpress.Sparkline.v21.1.Core, Version=21.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+    <Reference Include="DevExpress.Sparkline.v21.2.Core, Version=21.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\DevExpress 21.1\Components\Bin\Framework\DevExpress.Sparkline.v21.1.Core.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Spreadsheet.v21.1.Core, Version=21.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+    <Reference Include="DevExpress.Spreadsheet.v21.2.Core, Version=21.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\DevExpress 21.1\Components\Bin\Framework\DevExpress.Spreadsheet.v21.1.Core.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.TreeMap.v21.1.Core, Version=21.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+    <Reference Include="DevExpress.TreeMap.v21.2.Core, Version=21.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\DevExpress 21.1\Components\Bin\Framework\DevExpress.TreeMap.v21.1.Core.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Xpf.Charts.v21.1, Version=21.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+    <Reference Include="DevExpress.Xpf.Charts.v21.2, Version=21.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
-    <Reference Include="DevExpress.Xpf.Controls.v21.1, Version=21.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+    <Reference Include="DevExpress.Xpf.Controls.v21.2, Version=21.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
-    <Reference Include="DevExpress.Xpf.Core.v21.1">
+    <Reference Include="DevExpress.Xpf.Core.v21.2">
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
-    <Reference Include="DevExpress.Xpf.Dialogs.v21.1, Version=21.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+    <Reference Include="DevExpress.Xpf.Dialogs.v21.2, Version=21.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\DevExpress 21.1\Components\Bin\Framework\DevExpress.Xpf.Dialogs.v21.1.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Xpf.Map.v21.1, Version=21.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+    <Reference Include="DevExpress.Map.v21.2.Core, Version=21.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\DevExpress 21.1\Components\Bin\Framework\DevExpress.Xpf.Map.v21.1.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Xpf.NavBar.v21.1, Version=21.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+    <Reference Include="DevExpress.Xpf.Map.v21.2, Version=21.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\DevExpress 21.1\Components\Bin\Framework\DevExpress.Xpf.NavBar.v21.1.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Xpf.Spreadsheet.v21.1, Version=21.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+    <Reference Include="DevExpress.Xpf.NavBar.v21.2, Version=21.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\DevExpress 21.1\Components\Bin\Framework\DevExpress.Xpf.Spreadsheet.v21.1.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Xpf.Themes.Office2019Colorful.v21.1, Version=21.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+    <Reference Include="DevExpress.Xpf.Spreadsheet.v21.2, Version=21.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\DevExpress 21.1\Components\Bin\Framework\DevExpress.Xpf.Themes.Office2019Colorful.v21.1.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Xpf.Themes.VS2019Blue.v21.1, Version=21.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+    <Reference Include="DevExpress.Xpf.Themes.Office2019Colorful.v21.2, Version=21.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\DevExpress 21.1\Components\Bin\Framework\DevExpress.Xpf.Themes.VS2019Blue.v21.1.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Xpf.TreeMap.v21.1, Version=21.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+    <Reference Include="DevExpress.Xpf.Themes.VS2019Blue.v21.2, Version=21.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\DevExpress 21.1\Components\Bin\Framework\DevExpress.Xpf.TreeMap.v21.1.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Xpo.v21.1, Version=21.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+    <Reference Include="DevExpress.Xpf.TreeMap.v21.2, Version=21.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\DevExpress 21.1\Components\Bin\Framework\DevExpress.Xpo.v21.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Xpo.v21.2, Version=21.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -561,9 +550,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Application\Application.csproj">
+    <ProjectReference Include="..\Application\DIOS.Application.csproj">
       <Project>{7999001c-c595-4f3b-9364-35393ceea43d}</Project>
-      <Name>Application</Name>
+      <Name>DIOS.Application</Name>
     </ProjectReference>
     <ProjectReference Include="..\Language\Language.csproj">
       <Project>{ae6ffeca-703a-49a8-8979-7381fb4dbae9}</Project>

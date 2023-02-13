@@ -29,7 +29,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "APP.Tests", "Tests\APP.Test
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinUSBNet", "winusbnet-2.1.0\WinUSBNet\WinUSBNet.csproj", "{BF8C5514-4AAA-46BB-A35D-341E5743EE13}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\Application.csproj", "{7999001C-C595-4F3B-9364-35393CEEA43D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DIOS.Application", "Application\DIOS.Application.csproj", "{7999001C-C595-4F3B-9364-35393CEEA43D}"
 	ProjectSection(ProjectDependencies) = postProject
 		{A4B56FCD-95DD-44CD-8F5B-6EE456BBD095} = {A4B56FCD-95DD-44CD-8F5B-6EE456BBD095}
 	EndProjectSection
