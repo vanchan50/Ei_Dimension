@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using DIOS.Core;
 
 namespace DIOS.Application
@@ -13,7 +14,7 @@ namespace DIOS.Application
     private readonly BackgroundStatsAccumulator _backgroundStatsAccumulator = new BackgroundStatsAccumulator();
     private int _non0RegionsCount;  //cached data for optimization. discard region 0 from calculation. only for minPerReg case
 
-    internal void Reset(Well well, ICollection<int> regions)
+    internal void Reset(Well well, IReadOnlyCollection<int> regions)
     {
       Well = new Well(well);
       _reporterPerRegion.Clear();

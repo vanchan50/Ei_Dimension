@@ -114,7 +114,7 @@ namespace DIOS.Core.MainMeasurementScript
     private void SetReadingParamsForWell()
     {
       _hardware.SetParameter(DeviceParameterType.WellReadingSpeed, (ushort)_wellController.NextWell.RunSpeed);
-      _hardware.SetParameter(DeviceParameterType.ChannelConfiguration, (ushort)_wellController.NextWell.ChanConfig);
+      _hardware.SetParameter(DeviceParameterType.ChannelConfiguration, _wellController.NextWell.ChanConfig);
     }
 
     private void SetAspirateParamsForWell()

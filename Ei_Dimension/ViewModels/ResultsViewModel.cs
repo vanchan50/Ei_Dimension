@@ -212,6 +212,15 @@ namespace Ei_Dimension.ViewModels
       });
     }
 
+    public void ClearCurrentCalibrationStats()
+    {
+      for (var i = 0; i < 10; i++)
+      {
+        CurrentMfiItems[i] = "";
+        CurrentCvItems[i] = "";
+      }
+    }
+
     public void DecodeCalibrationStats(ChannelsCalibrationStats stats, bool current)
     {
       ObservableCollection<string> mfiItems;

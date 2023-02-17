@@ -5,8 +5,6 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using DIOS.Application;
-using DIOS.Core;
 using Ei_Dimension.Models;
 using Ei_Dimension.ViewModels;
 
@@ -173,6 +171,22 @@ namespace Ei_Dimension.Controllers
     {
       _resultsTableController.RemoveNullTb();
       ActiveRegionNums.Remove(0);
+    }
+
+    public static List<(int regionNum, double InputReporter)> MakeVerificationList()
+    {
+      var regions = new List<(int regionNum, double InputReporter)>();
+      for (var i = 1; i < RegionsList.Count; i++)
+      {
+        int reg = RegionsList[i].Number;
+        if (ActiveVerificationRegionNums.Contains(reg))
+        {
+          var inputReporter = double.Parse(RegionsList[i].TargetReporterValue[0]);
+          inputReporter /= App.DiosApp.Device.ReporterScaling;  //adjust for scaling factor
+          regions.Add((reg, inputReporter));
+        }
+      }
+      return regions;
     }
 
     private void AddTextboxes(int regionIndex)

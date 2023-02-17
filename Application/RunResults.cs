@@ -13,7 +13,7 @@ namespace DIOS.Application
     public WellResults WellResults { get; } = new WellResults();
     public ResultsProcessor ResultsProc { get; }
     private readonly Device _device;
-    private ICollection<int> _regionsToOutput;
+    private IReadOnlyCollection<int> _regionsToOutput;
     private bool _minPerRegCheckTrigger;
     private readonly ResultingWellStatsData _measuredWellStats = new ResultingWellStatsData();
     private readonly DIOSApp _diosApp;
@@ -30,7 +30,7 @@ namespace DIOS.Application
     /// </summary>
     /// <param name="regions"> the region numbers to output</param>
     /// <returns></returns>
-    public void SetupRunRegions(ICollection<int> regions)
+    public void SetupRunRegions(IReadOnlyCollection<int> regions)
     {
       _regionsToOutput = regions;
       if (regions == null)

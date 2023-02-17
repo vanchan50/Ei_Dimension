@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using DIOS.Core.HardwareIntercom;
 using DIOS.Core.MainMeasurementScript;
@@ -132,8 +133,13 @@ namespace DIOS.Core
     /// Sends a sequence of commands to startup a measurement.
     /// The operation is conducted on the other thread, while this function quickly returns
     /// </summary>
-    public void StartOperation(IBeadEventSink beadEventSink)
+    public void StartOperation(IReadOnlyCollection<Well> wells, IBeadEventSink beadEventSink)
     {
+      if (wells.Count == 0)
+      {
+        throw new ArgumentException("Wells count = 0");
+      }
+      WellController.Init(wells);
       if (Mode != OperationMode.Normal)
       {
         Normalization.SuspendForTheRun();

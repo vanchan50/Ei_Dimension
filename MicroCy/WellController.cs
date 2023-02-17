@@ -11,7 +11,7 @@ namespace DIOS.Core
 
     private Queue<Well> WellsToRead = new Queue<Well>();
 
-    public void Init(IEnumerable<Well> Wells)
+    public void Init(IReadOnlyCollection<Well> Wells)
     {
       CurrentWell = null;
       NextWell = null;

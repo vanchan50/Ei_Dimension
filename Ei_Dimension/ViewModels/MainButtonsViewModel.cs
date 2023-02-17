@@ -43,9 +43,9 @@ namespace Ei_Dimension.ViewModels
     public void StartButtonClick()
     {
       UserInputHandler.InputSanityCheck();
-      //TODO: bad design, contains 0 can never happen here
+      //TODO: contains 0 can never happen here
       if (App.DiosApp.TerminationType == Termination.MinPerRegion
-          && !MapRegionsController.AreThereActiveRegions()) 
+          && !MapRegionsController.AreThereActiveRegions())
       {
         var msg = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Messages_MinPerReg_RequiresAtLeast1),
           Language.TranslationSource.Instance.CurrentCulture);
@@ -61,7 +61,6 @@ namespace Ei_Dimension.ViewModels
         Notification.Show(msg);
         return;
       }
-      App.DiosApp.Device.WellController.Init(wells);
 
       HashSet<int> regions = null;
       switch (App.DiosApp.Device.Mode)
@@ -89,30 +88,19 @@ namespace Ei_Dimension.ViewModels
             return;
           }
           App.MapRegions.RemoveNullTextBoxes();
-          MakeNewVerificator();
+          var verificationRegions = MapRegionsController.MakeVerificationList();
+          App.DiosApp.Verificator.Reset(verificationRegions);
           break;
       }
       MainViewModel.Instance.NavigationSelector(1);
 
-      App.DiosApp.Results.SetupRunRegions(regions);
       StartButtonEnabled = false;
       ResultsViewModel.Instance.ClearGraphs();
       PlatePictogramViewModel.Instance.PlatePictogram.Clear();
       ResultsViewModel.Instance.PlotCurrent();
       PlatePictogramViewModel.Instance.PlatePictogram.SetWellsForReading(wells);
-      for(var i = 0; i < 10; i++)
-      {
-        ResultsViewModel.Instance.CurrentMfiItems[i] = "";
-        ResultsViewModel.Instance.CurrentCvItems[i] = "";
-      }
-      if (App.DiosApp.Device.Normalization.IsEnabled)
-        App.Logger.Log("Normalization Enabled");
-      else
-        App.Logger.Log("Normalization Disabled");
-      App.DiosApp.Publisher.ResultsFile.MakeNew();
-      App.DiosApp.Results.StartNewPlateReport();
-      App.DiosApp.Device.StartOperation(App.DiosApp.Results.OutputBeadsCollector);
-      App.DiosApp.Results.ResultsProc.StartBeadProcessing();//call after StartOperation, so IsMeasurementGoing == true
+      ResultsViewModel.Instance.ClearCurrentCalibrationStats();
+      App.DiosApp.StartOperation(regions, wells);
     }
 
     public void EndButtonClick()
@@ -134,22 +122,6 @@ namespace Ei_Dimension.ViewModels
         }
         App.DiosApp.Device.PrematureStop();
       }
-    }
-
-    private static void MakeNewVerificator()
-    {
-      var regions = new List<(int regionNum, double InputReporter)>();
-      for (var i = 1; i < MapRegionsController.RegionsList.Count; i++)
-      {
-        if (MapRegionsController.ActiveVerificationRegionNums.Contains(MapRegionsController.RegionsList[i].Number))
-        {
-          int reg = MapRegionsController.RegionsList[i].Number;
-          var inputReporter = double.Parse(MapRegionsController.RegionsList[i].TargetReporterValue[0]);
-          inputReporter /= App.DiosApp.Device.ReporterScaling;  //adjust for scaling factor
-          regions.Add((reg, inputReporter));
-        }
-      }
-      App.DiosApp.Verificator.Reset(regions);
     }
 
     private static void DefaultRegionNaming()

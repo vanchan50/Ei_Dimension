@@ -34,6 +34,19 @@ namespace DIOS.Application
       Verificator = new Verificator(Logger);
     }
 
+    public void StartOperation(IReadOnlyCollection<int> regions, IReadOnlyCollection<Well> wells)
+    {
+      Results.SetupRunRegions(regions);
+      if (Device.Normalization.IsEnabled)
+        Logger.Log("Normalization Enabled");
+      else
+        Logger.Log("Normalization Disabled");
+      Publisher.ResultsFile.MakeNew();
+      Results.StartNewPlateReport();
+      Device.StartOperation(wells, Results.OutputBeadsCollector);
+      Results.ResultsProc.StartBeadProcessing();//call after StartOperation, so IsMeasurementGoing == true
+    }
+
     private void SetSystemDirectories()
     {
       List<string> subDirectories = new List<string> { "Config", "WorkOrder", "SavedImages", "Archive", "Status" };
