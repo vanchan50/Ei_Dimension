@@ -650,14 +650,15 @@ namespace Ei_Dimension
       }
       DiosApp.Publisher.Outfilename = Settings.Default.SaveFileName;
       DiosApp.Publisher.IsPlateReportPublishingActive = Settings.Default.PlateReport;
-      DiosApp.Control = (SystemControl)Settings.Default.SystemControl;
       DiosApp.Publisher.IsBeadEventPublishingActive = Settings.Default.Everyevent;
       DiosApp.Publisher.IsResultsPublishingActive = Settings.Default.RMeans;
       DiosApp.Publisher.IsLegacyPlateReportPublishingActive = Settings.Default.LegacyPlateReport;
+      DiosApp.Publisher.IsOnlyClassifiedBeadsPublishingActive = Settings.Default.OnlyClassifed;
+
+      DiosApp.Control = (SystemControl)Settings.Default.SystemControl;
       DiosApp.TerminationType = (Termination)Settings.Default.EndRead;
       DiosApp.MinPerRegion = Settings.Default.MinPerRegion;
       DiosApp.TotalBeadsToCapture = Settings.Default.BeadsToCapture;
-      DiosApp.Publisher.IsOnlyClassifiedBeadsPublishingActive = Settings.Default.OnlyClassifed;
       var hiSensChannel = Settings.Default.SensitivityChannelB ? HiSensitivityChannel.GreenB : HiSensitivityChannel.GreenC;
       DiosApp.Device.Hardware.SetParameter(DeviceParameterType.HiSensitivityChannel, hiSensChannel);
       DiosApp.Device.ReporterScaling = Settings.Default.ReporterScaling;

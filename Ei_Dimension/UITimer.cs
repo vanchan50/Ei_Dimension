@@ -122,7 +122,6 @@ namespace Ei_Dimension
         }
         if (System.Windows.Input.Keyboard.IsKeyDown(System.Windows.Input.Key.F3))
         {
-          App.DiosApp.Device.DEBUGOnParameterUpdate(DeviceParameterType.DirectFlashValue, 43, floatparam: 12.45f);
           //App.DiosApp.Device.DEBUGOnParameterUpdate(DeviceParameterType.SampleSyringeSize, 43);
           ////App.DiosApp.Device.DEBUGCommandTest(DEBUGCommandList[DEBUGCommandCounter++]);
           //foreach (var cs in DEBUGCommandList)

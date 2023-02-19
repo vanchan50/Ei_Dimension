@@ -89,12 +89,12 @@ namespace Ei_Dimension.ViewModels
       App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.ForwardScatter);
       App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.DNRCoefficient);
 
-      App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ExtendedRangeMultiplier, Channel.RedC);
-      App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ExtendedRangeMultiplier, Channel.RedD);
       System.Threading.Thread.Sleep(1000);
       Action Cancel = () =>
       {
         DashboardViewModel.Instance.CalModeToggle();
+        App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ExtendedRangeMultiplier, Channel.RedC);
+        App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ExtendedRangeMultiplier, Channel.RedD);
       };
       Action Save = () =>
       {

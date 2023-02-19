@@ -754,8 +754,11 @@ namespace Ei_Dimension
               App.DiosApp.Device.ExtendedRangeCL1Multiplier = _externalRangeMultipliersbuffer[0];
               App.DiosApp.Device.ExtendedRangeCL2Multiplier = _externalRangeMultipliersbuffer[1];
             };
-            Notification.Show($"New extended range Multipliers are\nCL1: {_externalRangeMultipliersbuffer[0]}\nCL2: {_externalRangeMultipliersbuffer[1]}",
-              overwrite, "", null, "Keep Previous");
+            App.Current.Dispatcher.BeginInvoke((Action)(() =>
+            {
+              Notification.Show($"New extended range Multipliers are:\n\tCL1: {_externalRangeMultipliersbuffer[0]}\n\tCL2: {_externalRangeMultipliersbuffer[1]}",
+                overwrite, "Apply new", null, "Keep Previous", fontSize: 34);
+            }));
           }
           //update = () => CalibrationViewModel.Instance.ExtendedRangeMultipliers[pos18] = parameter.FloatParameter.ToString("F3");
           break;
