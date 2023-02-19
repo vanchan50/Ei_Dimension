@@ -20,8 +20,10 @@ namespace Ei_Dimension.ViewModels
     public virtual ObservableCollection<string> EventTriggerContents { get; set; }
     public virtual ObservableCollection<string> ClassificationTargetsContents { get; set; }
     public virtual ObservableCollection<string> CompensationPercentageContent { get; set; }
-    public virtual ObservableCollection<string> DNRContents { get; set; } = new ObservableCollection<string> { "", "" };
+    public virtual ObservableCollection<string> DNRContents { get; set; } = new ObservableCollection<string> { "0", "0" };
     public virtual ObservableCollection<string> AttenuationBox { get; set; }
+    public virtual ObservableCollection<string> ExtendedRangeThresholds { get; set; } = new ObservableCollection<string> { "0", "0" };
+    public virtual ObservableCollection<string> ExtendedRangeMultipliers { get; set; } = new ObservableCollection<string> { "0", "0" };
     public byte CalFailsInARow { get; set; }
     public bool CalJustFailed { get; set; }
 
@@ -61,6 +63,9 @@ namespace Ei_Dimension.ViewModels
       CalFailsInARow = 0;
       CalJustFailed = true;
 
+      ExtendedRangeThresholds[0] = App.DiosApp.Device.ExtendedRangeCL1Threshold.ToString();
+      ExtendedRangeThresholds[1] = App.DiosApp.Device.ExtendedRangeCL2Threshold.ToString();
+
       Instance = this;
     }
 
@@ -83,6 +88,9 @@ namespace Ei_Dimension.ViewModels
       App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.VioletB);
       App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.ForwardScatter);
       App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.DNRCoefficient);
+
+      App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ExtendedRangeMultiplier, Channel.RedC);
+      App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ExtendedRangeMultiplier, Channel.RedD);
       System.Threading.Thread.Sleep(1000);
       Action Cancel = () =>
       {
@@ -218,6 +226,8 @@ namespace Ei_Dimension.ViewModels
 
     public void FocusedBox(int num)
     {
+      var cl1SP = Views.CalibrationView.Instance.ExtendedRangeCL1.Children;
+      var cl2SP = Views.CalibrationView.Instance.ExtendedRangeCL2.Children;
       switch (num)
       {
         case 0:
@@ -267,6 +277,22 @@ namespace Ei_Dimension.ViewModels
         case 11:
           UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(AttenuationBox)), this, 0, Views.CalibrationView.Instance.TB10);
           MainViewModel.Instance.NumpadToggleButton(Views.CalibrationView.Instance.TB10);
+          break;
+        case 12:
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ExtendedRangeThresholds)), this, 0, (TextBox)cl1SP[0]);
+          MainViewModel.Instance.NumpadToggleButton((TextBox)cl1SP[0]);
+          break;
+        case 13:
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ExtendedRangeMultipliers)), this, 0, (TextBox)cl1SP[1]);
+          MainViewModel.Instance.NumpadToggleButton((TextBox)cl1SP[1]);
+          break;
+        case 14:
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ExtendedRangeThresholds)), this, 1, (TextBox)cl2SP[0]);
+          MainViewModel.Instance.NumpadToggleButton((TextBox)cl2SP[0]);
+          break;
+        case 15:
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ExtendedRangeMultipliers)), this, 1, (TextBox)cl2SP[1]);
+          MainViewModel.Instance.NumpadToggleButton((TextBox)cl2SP[1]);
           break;
       }
     }

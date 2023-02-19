@@ -241,6 +241,14 @@ namespace DIOS.Core
           _device.Hardware.SetParameter(DeviceParameterType.PressureAtStartup);  //Reset Pressure, since firmware forgets to do that
           outParameters = new ParameterUpdateEventArgs(DeviceParameterType.PressureAtStartup, floatParameter: cs.FParameter);
           break;
+        case 0x0E:
+          //_device._beadProcessor._extendedRangeCL1Multiplier = cs.Parameter / 1000f;
+          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.ExtendedRangeMultiplier, intParameter: (int)Channel.RedC, floatParameter: cs.Parameter / 1000f);
+          break;
+        case 0x0F:
+          //_device._beadProcessor._extendedRangeCL2Multiplier = cs.Parameter / 1000f;
+          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.ExtendedRangeMultiplier, intParameter: (int)Channel.RedD, floatParameter: cs.Parameter / 1000f);
+          break;
         case 0x10:
           outParameters = new ParameterUpdateEventArgs(DeviceParameterType.ValveCuvetDrain, intParameter: cs.Parameter);
           break;

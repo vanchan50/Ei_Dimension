@@ -1584,6 +1584,62 @@ namespace Ei_Dimension
             failed = true;
             ErrorMessage = $"[0-{float.MaxValue}]";
             break;
+          case nameof(CalibrationViewModel.ExtendedRangeThresholds):
+            if (SelectedTextBox.index == 0)
+            {
+              if (float.TryParse(_tempNewString, out fRes))
+              {
+                if (fRes >= 0 && fRes <= float.MaxValue)
+                {
+                  App.DiosApp.Device.ExtendedRangeCL1Threshold = fRes;
+                  break;
+                }
+              }
+              failed = true;
+              ErrorMessage = "[Not Negative]";
+            }
+            if (SelectedTextBox.index == 1)
+            {
+              if (float.TryParse(_tempNewString, out fRes))
+              {
+                if (fRes >= 0 && fRes <= float.MaxValue)
+                {
+                  App.DiosApp.Device.ExtendedRangeCL2Threshold = fRes;
+                  break;
+                }
+              }
+              failed = true;
+              ErrorMessage = "[Not Negative]";
+            }
+            break;
+          case nameof(CalibrationViewModel.ExtendedRangeMultipliers):
+            if (SelectedTextBox.index == 0)
+            {
+              if (float.TryParse(_tempNewString, out fRes))
+              {
+                if (fRes >= 0 && fRes <= float.MaxValue)
+                {
+                  App.DiosApp.Device.ExtendedRangeCL1Multiplier = fRes;
+                  break;
+                }
+              }
+              failed = true;
+              ErrorMessage = "[Not Negative]";
+            }
+            if (SelectedTextBox.index == 1)
+            {
+              if (float.TryParse(_tempNewString, out fRes))
+              {
+                if (fRes >= 0 && fRes <= float.MaxValue)
+                {
+                  App.DiosApp.Device.ExtendedRangeCL2Multiplier = fRes;
+                  break;
+                }
+              }
+              failed = true;
+              ErrorMessage = "[Not Negative]";
+            }
+            break;
         }
         if (VerificationViewModel.Instance.isActivePage)
         {

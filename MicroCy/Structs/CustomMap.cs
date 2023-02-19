@@ -49,7 +49,7 @@ namespace DIOS.Core
         CL0ZonesEnabled = true;
     }
 
-    public float GetFactorizedNormalizationForRegion(int region)
+    public float GetFactorizedNormalizationForRegion(in ushort region)
     {
       return (float)(factor * Regions[region].NormalizationMFI);
     }

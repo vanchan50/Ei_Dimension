@@ -12,6 +12,8 @@ namespace Ei_Dimension
       "Y_MOTOR", "Z_MOTOR", "PROXIMITY", "PRESSURE", "WASHING", "FAULT", "ALIGN MOTOR", "MAIN VALVE", "SINGLE STEP" };
 
     private readonly object _callingThreadLock = new object();
+    private int _externalRangeMultipliersObtained;
+    private float[] _externalRangeMultipliersbuffer = {0, 0};
 
     public void ParameterUpdateEventHandler(object sender, ParameterUpdateEventArgs parameter)
     {
@@ -725,6 +727,37 @@ namespace Ei_Dimension
             DirectMemoryAccessViewModel.Instance.IntValue[0] = parameter.Parameter.ToString();
             DirectMemoryAccessViewModel.Instance.FloatValue[0] = parameter.FloatParameter.ToString("F4");
           };
+          break;
+        case DeviceParameterType.ExtendedRangeMultiplier:
+          //ExtendedRangeMultiplier must be requested always as a couple. otherwise the logic breaks
+          var type18 = (Channel)parameter.Parameter;
+          var pos18 = 0;
+          switch (type18)
+          {
+            case Channel.RedC:
+              pos18 = 0;
+              _externalRangeMultipliersbuffer[0] = parameter.FloatParameter;
+              break;
+            case Channel.RedD:
+              pos18 = 1;
+              _externalRangeMultipliersbuffer[1] = parameter.FloatParameter;
+              break;
+          }
+
+          if (Interlocked.Increment(ref _externalRangeMultipliersObtained) > 1)
+          {
+            _externalRangeMultipliersObtained = 0;
+            Action overwrite = () =>
+            {
+              CalibrationViewModel.Instance.ExtendedRangeMultipliers[0] = _externalRangeMultipliersbuffer[0].ToString("F3");
+              CalibrationViewModel.Instance.ExtendedRangeMultipliers[1] = _externalRangeMultipliersbuffer[1].ToString("F3");
+              App.DiosApp.Device.ExtendedRangeCL1Multiplier = _externalRangeMultipliersbuffer[0];
+              App.DiosApp.Device.ExtendedRangeCL2Multiplier = _externalRangeMultipliersbuffer[1];
+            };
+            Notification.Show($"New extended range Multipliers are\nCL1: {_externalRangeMultipliersbuffer[0]}\nCL2: {_externalRangeMultipliersbuffer[1]}",
+              overwrite, "", null, "Keep Previous");
+          }
+          //update = () => CalibrationViewModel.Instance.ExtendedRangeMultipliers[pos18] = parameter.FloatParameter.ToString("F3");
           break;
       }
       if (update != null)

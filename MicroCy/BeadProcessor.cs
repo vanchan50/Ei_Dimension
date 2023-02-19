@@ -9,6 +9,12 @@
     private readonly ClassificationMap _classificationMap = new ClassificationMap();
     internal CustomMap _map;
     internal HiSensitivityChannel SensitivityChannel { get; set; }
+    internal float _extendedRangeCL1Multiplier;
+    internal float _extendedRangeCL2Multiplier;
+    internal float _extendedRangeCL1Threshold;
+    internal float _extendedRangeCL2Threshold;
+    internal bool _extendedRangeEnabled = false;
+    private float[] _compensatedCoordinatesCache = { 0,0,0,0 }; //cl0,cl1,cl2,cl3
 
     public BeadProcessor(Device device)
     {
@@ -25,10 +31,14 @@
     {
       //The order of operations matters here
       AssignSensitivityChannels(in rawBead);
-      var compensated = CalculateCompensatedCoordinates(in rawBead);
+      CalculateCompensatedCoordinates(in rawBead);
+      if (_extendedRangeEnabled)
+      {
+        CalculateCompensatedCoordinatesForExtendedRange(in rawBead);
+      }
       var reg = (ushort) _classificationMap.ClassifyBeadToRegion(in rawBead);
-      var rep = CalculateReporter(reg);
-      var zon = (ushort) ClassifyBeadToZone(compensated.cl0);
+      var rep = CalculateReporter(in reg);
+      var zon = (ushort) ClassifyBeadToZone(in _compensatedCoordinatesCache[0]);
       var outBead = new ProcessedBead
       {
         EventTime = rawBead.EventTime,
@@ -50,11 +60,11 @@
         //fsc = (float)Math.Pow(10, rawBead.fsc),
         fsc = rawBead.fsc,
         violetssc = rawBead.violetssc,
-        cl0 = compensated.cl0,
+        cl0 = _compensatedCoordinatesCache[0],
         redssc = rawBead.redssc,
-        cl1 = compensated.cl1,
-        cl2 = compensated.cl2,
-        cl3 = compensated.cl3,
+        cl1 = _compensatedCoordinatesCache[1],
+        cl2 = _compensatedCoordinatesCache[2],
+        cl3 = _compensatedCoordinatesCache[3],
         greenssc = rawBead.greenssc,
         reporter = rep,
         zone = zon
@@ -76,32 +86,52 @@
       _greenMin = rawBead.greenC;
     }
 
-    private (float cl0, float cl1, float cl2, float cl3) CalculateCompensatedCoordinates(in RawBead outbead)
+    private void CalculateCompensatedCoordinates(in RawBead outbead)
     {
-      var cl1comp = _greenMaj * _device.Compensation / 100;
-      var cl2comp = cl1comp * 0.26f;
-      return (
-        outbead.cl0,
-        outbead.cl1 - cl1comp,  //Compensation
-        outbead.cl2 - cl2comp,  //Compensation
-        outbead.cl3
-      );
+      var cl1Comp = _greenMaj * _device.Compensation / 100;
+      var cl2Comp = cl1Comp * 0.26f;
+
+      var compensatedCl1 = outbead.cl1 - cl1Comp;
+      var compensatedCl2 = outbead.cl2 - cl2Comp;
+
+      //Thread unsafe
+      _compensatedCoordinatesCache[0] = outbead.cl0;
+      _compensatedCoordinatesCache[1] = compensatedCl1;
+      _compensatedCoordinatesCache[2] = compensatedCl2;
+      _compensatedCoordinatesCache[3] = outbead.cl3;
     }
 
-    private float CalculateReporter(ushort region)
+    private void CalculateCompensatedCoordinatesForExtendedRange(in RawBead outbead)
+    {
+      //thread unsafe
+      var cl1 = _compensatedCoordinatesCache[1];
+      var cl2 = _compensatedCoordinatesCache[2];
+
+      if (cl1 > _extendedRangeCL1Threshold)
+      {
+        _compensatedCoordinatesCache[1] = _extendedRangeCL1Multiplier * outbead.violetssc;
+      }
+
+      if (cl2 > _extendedRangeCL2Threshold)
+      {
+        _compensatedCoordinatesCache[2] = _extendedRangeCL2Multiplier * outbead.cl0;
+      }
+    }
+
+    private float CalculateReporter(in ushort region)
     {
       var basicReporter = _greenMin > _device.HdnrTrans ? _greenMaj * _device.HDnrCoef : _greenMin;
       var scaledReporter = (basicReporter / _device.ReporterScaling);
       if (!Normalization.IsEnabled || region == 0)
         return scaledReporter;
-      var rep = _map.GetFactorizedNormalizationForRegion(region);
+      var rep = _map.GetFactorizedNormalizationForRegion(in region);
       scaledReporter -= rep;
       if (scaledReporter < 0)
         return 0;
       return scaledReporter;
     }
 
-    private int ClassifyBeadToZone(float cl0)
+    private int ClassifyBeadToZone(in float cl0)
     {
       if (!_map.CL0ZonesEnabled)
         return 0;

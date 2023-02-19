@@ -1867,6 +1867,15 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Extended Range Options.
+        /// </summary>
+        public static string ExtendedRangeOptions {
+            get {
+                return ResourceManager.GetString("ExtendedRangeOptions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Base File Name.
         /// </summary>
         public static string FileSave_Base_Filename {
@@ -2551,6 +2560,15 @@ namespace Ei_Dimension.Language {
         public static string MTBF_mode {
             get {
                 return ResourceManager.GetString("MTBF_mode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Multiplier.
+        /// </summary>
+        public static string Multiplier {
+            get {
+                return ResourceManager.GetString("Multiplier", resourceCulture);
             }
         }
         
@@ -3299,6 +3317,15 @@ namespace Ei_Dimension.Language {
         public static string Text_Files {
             get {
                 return ResourceManager.GetString("Text_Files", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Threshold.
+        /// </summary>
+        public static string Threshold {
+            get {
+                return ResourceManager.GetString("Threshold", resourceCulture);
             }
         }
         

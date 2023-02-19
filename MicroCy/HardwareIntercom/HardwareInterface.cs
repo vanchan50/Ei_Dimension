@@ -742,6 +742,7 @@ namespace DIOS.Core.HardwareIntercom
           break;
         case DeviceParameterType.ChannelConfiguration:
           commandCode = 0xC2;
+          _device._beadProcessor._extendedRangeEnabled = false;
           switch (subParameter)
           {
             case ChannelConfiguration.Standard:
@@ -758,6 +759,7 @@ namespace DIOS.Core.HardwareIntercom
               break;
             case ChannelConfiguration.StandardPlusExt:
               param = (ushort)ChannelConfiguration.StandardPlusExt;
+              _device._beadProcessor._extendedRangeEnabled = true;
               break;
             default:
               throw new NotImplementedException();
@@ -1551,6 +1553,19 @@ namespace DIOS.Core.HardwareIntercom
           break;
         default:
           throw new NotImplementedException();
+        case DeviceParameterType.ExtendedRangeMultiplier:
+          switch (subParameter)
+          {
+            case Channel.RedC:
+              commandCode = 0x0E;
+              break;
+            case Channel.RedD:
+              commandCode = 0x0F;
+              break;
+            default:
+              throw new NotImplementedException();
+          }
+          break;
       }
       MainCommand(code: commandCode, parameter: selector, cmd: 0x01);
     }

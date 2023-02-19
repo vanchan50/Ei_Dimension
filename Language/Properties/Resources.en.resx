@@ -753,6 +753,9 @@ Order</value>
    Order
 +Barcode</value>
   </data>
+  <data name="ExtendedRangeOptions" xml:space="preserve">
+    <value>Extended Range Options</value>
+  </data>
   <data name="FileSave_Base_Filename" xml:space="preserve">
     <value>Base File Name</value>
   </data>
@@ -984,6 +987,9 @@ Update the Firmware?</value>
   <data name="MTBF_mode" xml:space="preserve">
     <value>Continuous
     Mode</value>
+  </data>
+  <data name="Multiplier" xml:space="preserve">
+    <value>Multiplier</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>Name</value>
@@ -1240,6 +1246,9 @@ Speeds</value>
   </data>
   <data name="Text_Files" xml:space="preserve">
     <value>Text Files</value>
+  </data>
+  <data name="Threshold" xml:space="preserve">
+    <value>Threshold</value>
   </data>
   <data name="Update_FW" xml:space="preserve">
     <value> Update
