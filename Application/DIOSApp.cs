@@ -20,7 +20,7 @@ namespace DIOS.Application
     public WorkOrder WorkOrder { get; set; }
     public bool RunPlateContinuously { get; set; }
     public Verificator Verificator { get; }
-    public readonly string BUILD = "1.5.2.3";
+    public readonly string BUILD = "1.5.3.1";
     public ILogger Logger { get; }
 
     public DIOSApp()

@@ -92,6 +92,8 @@ namespace Ei_Dimension
       usbnotif.Arrival += Usbnotif_Arrival;
       usbnotif.Removal += Usbnotif_Removal;
 
+      HideChannels();
+
       var selfTestResult = await App.DiosApp.Device.GetSelfTestResultAsync();
       string selfTestErrorMessage = SelfTestErrorDecoder.Decode(selfTestResult);
       if (selfTestErrorMessage != null)
@@ -101,8 +103,6 @@ namespace Ei_Dimension
       if(App.DiosApp.Device.FirmwareVersion != null)
         MainViewModel.AppVersion += App.DiosApp.Device.FirmwareVersion;
       App.Logger.Log(MainViewModel.AppVersion);
-      if (App.DiosApp.Device.BoardVersion > 0)
-        HideChannels();
     }
 
     private static void Usbnotif_Removal(object sender, USBEvent e)
