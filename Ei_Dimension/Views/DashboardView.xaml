@@ -352,44 +352,6 @@
             <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
           </dxmvvm:Interaction.Behaviors>
         </TextBox>
-        <TextBlock Text="{lang:Loc Experiment_Ch_Config}"
-                 FontFamily="{StaticResource AppTextFont}"
-                 FontSize="26"
-                 FontWeight="UltraBold"
-                 Foreground="{StaticResource AppTextColor}"
-                 HorizontalAlignment="Center"
-                 VerticalAlignment="Top"
-                 Margin="0,6,0,3"/>
-        <dx:DropDownButton Width="200"
-                           Height="80" Cursor="Hand"
-                           FontSize="25" Command="{Binding DropPressCommand}"
-                           HorizontalAlignment="Center"
-                           dxb:BarManager.ShowGlyphsInPopupMenus="False"
-                           FontFamily="{StaticResource AppTextFont}"
-                           Foreground="{StaticResource AppTextColor}"
-                           Content="{Binding SelectedChConfigContent}">
-          <dxb:PopupMenu ItemLinksSource="{Binding ChConfigItems}">
-            <dxb:PopupMenu.ItemTemplate>
-              <DataTemplate>
-                <ContentControl>
-                  <dxb:BarButtonItem Content="{Binding Content}"  
-                                 ItemClick="{DXEvent Click((int)3)}">
-                    <dxb:BarButtonItem.ContentTemplate>
-                      <DataTemplate>
-                        <Grid Width="150">
-                          <TextBlock Text="{Binding}" HorizontalAlignment="Center"
-                                   FontFamily="{StaticResource AppTextFont}"
-                                   Foreground="{StaticResource AppTextColor}"
-                                   FontSize="25"/>
-                        </Grid>
-                      </DataTemplate>
-                    </dxb:BarButtonItem.ContentTemplate>
-                  </dxb:BarButtonItem>
-                </ContentControl>
-              </DataTemplate>
-            </dxb:PopupMenu.ItemTemplate>
-          </dxb:PopupMenu>
-        </dx:DropDownButton>
         <TextBlock Text="{lang:Loc Experiment_Classific_Map}"
                    FontFamily="{StaticResource AppTextFont}"
                    FontSize="26"
@@ -577,8 +539,8 @@
     <Rectangle HorizontalAlignment="Left"
                VerticalAlignment="Top"
                Width="202"
-               Height="80"
-               Margin="65,353,0,0"
+               Height="83"
+               Margin="65,227,0,0"
                Opacity="0.4"
                Fill="Orange"
                IsHitTestVisible="False"

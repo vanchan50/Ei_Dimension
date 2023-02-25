@@ -54,7 +54,7 @@ namespace APP.Tests
       var DashVM = DashboardViewModel.Instance;
       DashVM.SpeedItems[0].Click(1);
       DashVM.ClassiMapItems[0].Click(2);
-      DashVM.ChConfigItems[0].Click(3);
+      ComponentsViewModel.Instance.ChConfigItems[0].Click(3);
       DashVM.OrderItems[0].Click(4);
       DashVM.SysControlItems[0].Click(5);
       DashVM.EndReadItems[0].Click(6);

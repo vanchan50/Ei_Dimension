@@ -43,6 +43,15 @@ namespace Ei_Dimension
             curCulture);
         }
 
+
+
+        ComponentsVM.ChConfigItems[0].Content = RM.GetString(nameof(Language.Resources.Dropdown_Standard), curCulture);
+        ComponentsVM.ChConfigItems[1].Content = RM.GetString(nameof(Language.Resources.Dropdown_Cells), curCulture);
+        ComponentsVM.ChConfigItems[2].Content = RM.GetString(nameof(Language.Resources.Dropdown_FM3D), curCulture);
+        ComponentsVM.ChConfigItems[3].Content = RM.GetString(nameof(Language.Resources.Dropdown_StandardPlusFSC), curCulture);
+        ComponentsVM.ChConfigItems[4].Content = RM.GetString(nameof(Language.Resources.Dropdown_StandardPlusExt), curCulture);
+        ComponentsVM.SelectedChConfigContent = ComponentsVM.ChConfigItems[(int)ComponentsVM.SelectedChConfigIndex].Content;
+
         ComponentsVM.SyringeControlItems[0].Content = RM.GetString(nameof(Language.Resources.Dropdown_Halt), curCulture);
         ComponentsVM.SyringeControlItems[1].Content = RM.GetString(nameof(Language.Resources.Dropdown_Move_Absolute), curCulture);
         ComponentsVM.SyringeControlItems[2].Content = RM.GetString(nameof(Language.Resources.Dropdown_Pickup), curCulture);
@@ -83,13 +92,6 @@ namespace Ei_Dimension
         DashVM.SpeedItems[1].Content = RM.GetString(nameof(Language.Resources.Dropdown_Hi_Speed), curCulture);
         DashVM.SpeedItems[2].Content = RM.GetString(nameof(Language.Resources.Dropdown_Hi_Sens), curCulture);
         DashVM.SelectedSpeedContent = DashVM.SpeedItems[(int)DashVM.SelectedSpeedIndex].Content;
-
-        DashVM.ChConfigItems[0].Content = RM.GetString(nameof(Language.Resources.Dropdown_Standard), curCulture);
-        DashVM.ChConfigItems[1].Content = RM.GetString(nameof(Language.Resources.Dropdown_Cells), curCulture);
-        DashVM.ChConfigItems[2].Content = RM.GetString(nameof(Language.Resources.Dropdown_FM3D), curCulture);
-        DashVM.ChConfigItems[3].Content = RM.GetString(nameof(Language.Resources.Dropdown_StandardPlusFSC), curCulture);
-        DashVM.ChConfigItems[4].Content = RM.GetString(nameof(Language.Resources.Dropdown_StandardPlusExt), curCulture);
-        DashVM.SelectedChConfigContent = DashVM.ChConfigItems[(int)DashVM.SelectedChConfigIndex].Content;
 
         DashVM.OrderItems[0].Content = RM.GetString(nameof(Language.Resources.Column), curCulture);
         DashVM.OrderItems[1].Content = RM.GetString(nameof(Language.Resources.Row), curCulture);

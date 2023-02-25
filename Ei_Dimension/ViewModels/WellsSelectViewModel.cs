@@ -173,7 +173,7 @@ namespace Ei_Dimension.ViewModels
         SampVol = volRes,
         WashVol = washRes,
         AgitateVol = agitRes,
-        ChanConfig = DashboardViewModel.Instance.SelectedChConfigIndex,
+        ChanConfig = ComponentsViewModel.Instance.SelectedChConfigIndex,
         MinPerRegion = int.Parse(DashboardViewModel.Instance.EndRead[0]),
         BeadsToCapture = int.Parse(DashboardViewModel.Instance.EndRead[1]),
         //TermType = (Termination)DashboardViewModel.Instance.SelectedEndReadIndex

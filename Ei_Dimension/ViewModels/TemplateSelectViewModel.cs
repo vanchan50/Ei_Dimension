@@ -76,7 +76,7 @@ namespace Ei_Dimension.ViewModels
               var DashVM = DashboardViewModel.Instance;
               DashVM.SpeedItems[newTemplate.Speed].Click(1);
               DashVM.ClassiMapItems[App.GetMapIndex(newTemplate.Map)].Click(2);
-              DashVM.ChConfigItems[newTemplate.ChConfig].Click(3);
+              ComponentsViewModel.Instance.ChConfigItems[newTemplate.ChConfig].Click(3);
               DashVM.OrderItems[newTemplate.Order].Click(4);
               DashVM.SysControlItems[newTemplate.SysControl].Click(5);
               DashVM.EndReadItems[newTemplate.EndRead].Click(6);
@@ -271,7 +271,7 @@ namespace Ei_Dimension.ViewModels
           var DashVM = DashboardViewModel.Instance;
           temp.Name = TemplateSaveName[0];
           temp.SysControl = DashVM.SelectedSystemControlIndex;
-          temp.ChConfig = (byte)DashVM.SelectedChConfigIndex;
+          temp.ChConfig = (byte)ComponentsViewModel.Instance.SelectedChConfigIndex;
           temp.Order = (byte)DashVM.SelectedOrderIndex;
           temp.Speed = (byte)DashVM.SelectedSpeedIndex;
           temp.Map = DashVM.SelectedClassiMapContent;

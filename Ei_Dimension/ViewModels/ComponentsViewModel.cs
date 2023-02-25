@@ -57,6 +57,9 @@ namespace Ei_Dimension.ViewModels
     public virtual Visibility ExtendedRangeVisible { get; set; } = Visibility.Hidden;
     public virtual ObservableCollection<string> ExtendedRangeThresholds { get; set; } = new ObservableCollection<string> { "0", "0" };
     public virtual ObservableCollection<string> ExtendedRangeMultipliers { get; set; } = new ObservableCollection<string> { "0", "0" };
+    public virtual string SelectedChConfigContent { get; set; }
+    public virtual ObservableCollection<DropDownButtonContents> ChConfigItems { get; set; }
+    public ChannelConfiguration SelectedChConfigIndex { get; set; } = ChannelConfiguration.Standard;
 
     public byte[] SyringeControlStates { get; } = { 0, 0, 0 };
     private ushort _activeLasers;
@@ -98,6 +101,7 @@ namespace Ei_Dimension.ViewModels
         new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_Speed_Preset), curCulture), this),
         new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_Pos), curCulture), this)
       };
+      DropDownButtonContents.ResetIndex();
       SelectedSheathContent = SyringeControlItems[0].Content;
       SelectedSampleAContent = SyringeControlItems[0].Content;
       SelectedSampleBContent = SyringeControlItems[0].Content;
@@ -138,6 +142,19 @@ namespace Ei_Dimension.ViewModels
       ExtendedRangeThresholds[1] = App.DiosApp.Device.ExtendedRangeCL2Threshold.ToString();
       ExtendedRangeMultipliers[0] = App.DiosApp.Device.ExtendedRangeCL1Multiplier.ToString();
       ExtendedRangeMultipliers[1] = App.DiosApp.Device.ExtendedRangeCL2Multiplier.ToString();
+
+      ChConfigItems = new ObservableCollection<DropDownButtonContents>
+      {
+        new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_Standard), curCulture), this),
+        new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_Cells), curCulture), this),
+        new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_FM3D), curCulture), this),
+        new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_StandardPlusFSC), curCulture), this),
+        new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_StandardPlusExt), curCulture), this),
+        new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_OEMA), curCulture), this),
+        new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_OEMPMT), curCulture), this)
+      };
+      SelectedChConfigContent = ChConfigItems[(int)SelectedChConfigIndex].Content;
+      DropDownButtonContents.ResetIndex();
 
       Instance = this;
 
@@ -536,6 +553,12 @@ namespace Ei_Dimension.ViewModels
           case 3:
             _vm.SelectedSampleBContent = Content;
             _vm.SyringeControlStates[2] = Index;
+            break;
+          case 4:
+            _vm.SelectedChConfigContent = Content;
+            _vm.SelectedChConfigIndex = (ChannelConfiguration)Index;
+            _vm.ExtendedRangeVisible = _vm.SelectedChConfigIndex == ChannelConfiguration.StandardPlusExt ? Visibility.Visible : Visibility.Hidden;
+            App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ChannelConfiguration, (ChannelConfiguration)Index);
             break;
         }
       }

@@ -20,8 +20,6 @@ namespace Ei_Dimension.ViewModels
     public virtual ObservableCollection<DropDownButtonContents> SpeedItems { get; set; }
     public virtual string SelectedClassiMapContent { get; set; }
     public virtual ObservableCollection<DropDownButtonContents> ClassiMapItems { get; set; }
-    public virtual string SelectedChConfigContent { get; set; }
-    public virtual ObservableCollection<DropDownButtonContents> ChConfigItems { get; set; }
     public virtual string SelectedOrderContent { get; set; }
     public virtual ObservableCollection<DropDownButtonContents> OrderItems { get; set; }
     public virtual string SelectedSysControlContent { get; set; }
@@ -37,7 +35,6 @@ namespace Ei_Dimension.ViewModels
 
     public byte SelectedSystemControlIndex { get; set; }
     public WellReadingSpeed SelectedSpeedIndex { get; set; } = WellReadingSpeed.Normal;
-    public ChannelConfiguration SelectedChConfigIndex { get; set; } = ChannelConfiguration.Standard;
     public WellReadingOrder SelectedOrderIndex { get; set; } = WellReadingOrder.Column;
     public byte SelectedEndReadIndex { get; set; }
     public virtual ObservableCollection<Visibility> EndReadVisibility { get; set; }
@@ -75,19 +72,6 @@ namespace Ei_Dimension.ViewModels
         ClassiMapItems.Add(new DropDownButtonContents("No map", this));
         SelectedClassiMapContent = "No map";
       }
-      DropDownButtonContents.ResetIndex();
-
-      ChConfigItems = new ObservableCollection<DropDownButtonContents>
-      {
-        new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_Standard), curCulture), this),
-        new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_Cells), curCulture), this),
-        new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_FM3D), curCulture), this),
-        new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_StandardPlusFSC), curCulture), this),
-        new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_StandardPlusExt), curCulture), this),
-        new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_OEMA), curCulture), this),
-        new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_OEMPMT), curCulture), this)
-      };
-      SelectedChConfigContent = ChConfigItems[(int)SelectedChConfigIndex].Content;
       DropDownButtonContents.ResetIndex();
 
       OrderItems = new ObservableCollection<DropDownButtonContents>
@@ -452,12 +436,6 @@ namespace Ei_Dimension.ViewModels
             App.MapRegions.FillRegions();
             VerificationViewModel.Instance.LoadClick(fromCode: true);
             NormalizationViewModel.Instance.Load();
-            break;
-          case 3:
-            _vm.SelectedChConfigContent = Content;
-            _vm.SelectedChConfigIndex = (ChannelConfiguration)Index;
-            ComponentsViewModel.Instance.ExtendedRangeVisible = _vm.SelectedChConfigIndex == ChannelConfiguration.StandardPlusExt ? Visibility.Visible: Visibility.Hidden;
-            App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ChannelConfiguration, (ChannelConfiguration)Index);
             break;
           case 4:
             _vm.SelectedOrderContent = Content;
