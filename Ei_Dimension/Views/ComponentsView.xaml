@@ -158,7 +158,7 @@
     <!--Valves-->
     <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Margin="50,430,0,0">
+            Margin="20,430,0,0">
 
       <StackPanel VerticalAlignment="Stretch">
         <TextBlock Text="{lang:Loc Components_Valves}"
@@ -185,7 +185,7 @@
             </ToggleButton>
             <ToggleButton Style="{StaticResource ToggleButtonThemeStyle}"
                           Height="75"
-                          Margin="0,5,0,0"
+                          Margin="0,4,0,4"
                           Content="{lang:Loc Components_Fan}"
                           IsChecked="{Binding ValvesStates[3], Mode=OneWay}"
                           Command="{Binding ValvesButtonClickCommand}">
@@ -211,7 +211,7 @@
     <!--Statistics TailDiscard-->
     <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Margin="70,720,0,0">
+            Margin="50,720,0,0">
       <StackPanel>
         <TextBlock Text="{lang:Loc Components_Stats_Cutoff}"
                    FontFamily="{StaticResource AppTextFont}"
@@ -600,7 +600,7 @@
     <!--Get Position-->
     <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Margin="900,610,0,0"
+            Margin="1280,540,0,0"
             Width="340">
       <Grid>
         <StackPanel HorizontalAlignment="Left"
@@ -680,7 +680,7 @@
     
     <!--Sampling-->
     <Border HorizontalAlignment="Left"
-            Margin="300,535,0,0"
+            Margin="210,490,0,0"
             Width="160">
       <StackPanel>
         <ToggleButton Style="{StaticResource ToggleButtonThemeStyle}"
@@ -800,37 +800,139 @@
       </StackPanel>
     </StackPanel>
 
-    <Button Content="{lang:Loc Update_FW}"
-            Height="80" Width="200" HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Margin="600,500,0,0"
-            Style="{StaticResource ButtonStyle}"
-            Command="{Binding UpdateFirmwareButtonClickCommand}"/>
-    <Button Content="{lang:Loc Clear}"
-            Height="80" Width="200" HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Margin="600,600,0,0"
-            Style="{StaticResource ButtonStyle}"
-            Command="{Binding ClearButtonClickCommand}"/>
-    <ToggleButton Style="{StaticResource ToggleButtonThemeStyle}"
-                  Height="80" Width="200" HorizontalAlignment="Left"
-                  VerticalAlignment="Top"
-                  Margin="600,700,0,0"
-                  Content="{lang:Loc Components_Suppress_Warnings}"
-                  IsChecked="{Binding SuppressWarnings, Mode=OneWay}"
-                  Command="{Binding SuppressWarningsClickCommand}"/>
-    <ToggleButton VerticalAlignment="Top"
-                  Content="{lang:Loc MTBF_mode}"
-                  Command="{Binding ContinuousModeToggleCommand}"
-                  IsChecked="{Binding ContinuousModeOn}"
-                  Style="{StaticResource ToggleButtonThemeStyle}"
-                  Height="80" Width="200" HorizontalAlignment="Left"
-                  Margin="600,800,0,0"/>
+    <StackPanel HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Margin="380,490,0,0">
+
+      <Button Content="{lang:Loc Update_FW}"
+              Height="80" Width="200"
+              Style="{StaticResource ButtonStyle}"
+              Command="{Binding UpdateFirmwareButtonClickCommand}"/>
+      <Button Content="{lang:Loc Clear}"
+              Height="80" Width="200"
+              Margin="0,4,0,0"
+              Style="{StaticResource ButtonStyle}"
+              Command="{Binding ClearButtonClickCommand}"/>
+      <ToggleButton Content="{lang:Loc Components_Suppress_Warnings}"
+                    Height="80" Width="200"
+                    Margin="0,4,0,0"
+                    Style="{StaticResource ToggleButtonThemeStyle}"
+                    IsChecked="{Binding SuppressWarnings, Mode=OneWay}"
+                    Command="{Binding SuppressWarningsClickCommand}"/>
+      <ToggleButton Content="{lang:Loc MTBF_mode}"
+                    Height="80" Width="200"
+                    Margin="0,4,0,0"
+                    Style="{StaticResource ToggleButtonThemeStyle}"
+                    IsChecked="{Binding ContinuousModeOn}"
+                    Command="{Binding ContinuousModeToggleCommand}"/>
+    </StackPanel>
     <Button Content="{lang:Loc DirectMemoryAccess_DirectMemoryAccessButton}"
             Height="80" Width="200" HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Margin="1340,800,0,0"
             Style="{StaticResource ButtonStyle}"
             Command="{Binding DirectMemoryAccessClickCommand}"/>
+
+    <!-- Extended range options -->
+    <Border HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Margin="650,600,0,0"
+            Visibility="{Binding ExtendedRangeVisible}">
+      <StackPanel>
+        <TextBlock Text="{lang:Loc ExtendedRangeOptions}"
+                   FontFamily="{StaticResource AppTextFont}"
+                   FontSize="36"
+                   FontWeight="UltraBold"
+                   Height="50"
+                   Foreground="{StaticResource AppTextColor}"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Top"
+                   Margin="0,0,0,0"/>
+        <StackPanel Orientation="Horizontal"
+                    Margin="234,0,0,0">
+          <TextBlock Text="{lang:Loc CL1}"
+                     FontFamily="{StaticResource AppTextFont}"
+                     FontSize="36"
+                     FontWeight="UltraBold"
+                     Foreground="{StaticResource AppTextColor}"
+                     HorizontalAlignment="Right"
+                     VerticalAlignment="Top"
+                     Margin="0,0,0,0"/>
+          <TextBlock Text="{lang:Loc CL2}"
+                     FontFamily="{StaticResource AppTextFont}"
+                     FontSize="36"
+                     FontWeight="UltraBold"
+                     Foreground="{StaticResource AppTextColor}"
+                     HorizontalAlignment="Right"
+                     VerticalAlignment="Top"
+                     Margin="96,0,0,4"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+          <StackPanel Margin="0,0,4,0" Width="180">
+            <TextBlock Text="{lang:Loc Threshold}"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="36"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Right"
+                 VerticalAlignment="Top"
+                 Margin="0,6,4,0"/>
+            <TextBlock Text="{lang:Loc Multiplier}"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="36"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Right"
+                 VerticalAlignment="Top"
+                 Margin="0,5,4,0"/>
+          </StackPanel>
+          <Border Background="{StaticResource RibbonBackgroundActive}">
+            <StackPanel Orientation="Horizontal">
+              <StackPanel Width="180" Name="ExtendedRangeCL1">
+                <TextBox HorizontalAlignment="Stretch"
+                        Margin="10,10,10,10"
+                        Style="{StaticResource InputFieldStyle}"
+                        Text="{Binding ExtendedRangeThresholds[0]}">
+                  <dxmvvm:Interaction.Behaviors>
+                    <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="9"/>
+                    <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+                  </dxmvvm:Interaction.Behaviors>
+                </TextBox>
+                <TextBox HorizontalAlignment="Stretch"
+                        Margin="10,0,10,10"
+                        Style="{StaticResource InputFieldStyle}"
+                        Text="{Binding ExtendedRangeMultipliers[0]}">
+                  <dxmvvm:Interaction.Behaviors>
+                    <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="10"/>
+                    <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+                  </dxmvvm:Interaction.Behaviors>
+                </TextBox>
+              </StackPanel>
+              <StackPanel Width="180" Name="ExtendedRangeCL2">
+                <TextBox HorizontalAlignment="Stretch"
+                         Margin="0,10,10,10"
+                         Style="{StaticResource InputFieldStyle}"
+                         Text="{Binding ExtendedRangeThresholds[1]}">
+                  <dxmvvm:Interaction.Behaviors>
+                    <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="11"/>
+                    <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+                  </dxmvvm:Interaction.Behaviors>
+                </TextBox>
+                <TextBox HorizontalAlignment="Stretch"
+                         Margin="0,0,10,10"
+                         Style="{StaticResource InputFieldStyle}"
+                         Text="{Binding ExtendedRangeMultipliers[1]}">
+                  <dxmvvm:Interaction.Behaviors>
+                    <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="12"/>
+                    <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+                  </dxmvvm:Interaction.Behaviors>
+                </TextBox>
+              </StackPanel>
+            </StackPanel>
+          </Border>
+        </StackPanel>
+      </StackPanel>
+    </Border>
+
   </Grid>
 </UserControl>

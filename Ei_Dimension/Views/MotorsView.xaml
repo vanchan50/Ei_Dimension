@@ -583,7 +583,7 @@
             </Border>
           </StackPanel>
           <StackPanel VerticalAlignment="Stretch"
-                      Width="130"
+                      Width="160"
                       Margin="0,54,3,0">
             <TextBlock Text="{lang:Loc Motors_Row_A}"
                        FontFamily="{StaticResource AppTextFont}"
@@ -614,6 +614,13 @@
                        HorizontalAlignment="Right"
                        Margin="0,6,10,0"/>
             <TextBlock Text="{lang:Loc Experiment_Tube}"
+                       FontFamily="{StaticResource AppTextFont}"
+                       FontSize="36"
+                       FontWeight="UltraBold"
+                       Foreground="{StaticResource AppTextColor}"
+                       HorizontalAlignment="Right"
+                       Margin="0,2,10,0"/>
+            <TextBlock Text="{lang:Loc Motors_Tray}"
                        FontFamily="{StaticResource AppTextFont}"
                        FontSize="36"
                        FontWeight="UltraBold"
@@ -671,11 +678,20 @@
                   </dxmvvm:Interaction.Behaviors>
                 </TextBox>
                 <TextBox HorizontalAlignment="Stretch"
-                         Margin="10,10,10,10"
+                         Margin="10,10,10,0"
                          Style="{StaticResource InputFieldStyle}"
                          Text="{Binding StepsParametersY[4]}">
                   <dxmvvm:Interaction.Behaviors>
                     <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="27"/>
+                    <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+                  </dxmvvm:Interaction.Behaviors>
+                </TextBox>
+                <TextBox HorizontalAlignment="Stretch"
+                         Margin="10,10,10,10"
+                         Style="{StaticResource InputFieldStyle}"
+                         Text="{Binding TraySteps[0]}">
+                  <dxmvvm:Interaction.Behaviors>
+                    <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="36"/>
                     <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
                   </dxmvvm:Interaction.Behaviors>
                 </TextBox>
@@ -789,7 +805,7 @@
     <!--Well Selection-->
     <Border VerticalAlignment="top"
             HorizontalAlignment="Left"
-            Margin="970,475,0,0">
+            Margin="970,550,0,0">
       <StackPanel>
 
         <TextBlock Text="{lang:Loc Motors_Man_Well_Sel}"

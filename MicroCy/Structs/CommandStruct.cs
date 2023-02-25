@@ -9,7 +9,7 @@
 
     public override string ToString()
     {
-      return string.Format("{0:X2},{1:X2},{2},{3:F1}", Code, Command, Parameter, FParameter);
+      return string.Format("{0:X2},{1:X2},{2},{3:F3}", Code, Command, Parameter, FParameter);
     }
   }
 }

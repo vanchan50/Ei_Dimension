@@ -28,6 +28,7 @@ namespace Ei_Dimension.ViewModels
     public virtual ObservableCollection<string> StepsParametersY { get; set; }
     public virtual ObservableCollection<string> StepsParametersZ { get; set; }
     public virtual ObservableCollection<bool> WellSelectionButtonsChecked { get; set; }
+    public virtual ObservableCollection<string> TraySteps { get; set; } = new ObservableCollection<string> { "" };
 
     public static MotorsViewModel Instance { get; private set; }
 
@@ -375,6 +376,10 @@ namespace Ei_Dimension.ViewModels
         case 35:
           UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ParametersZ)), this, 7, (TextBox)Views.MotorsView.Instance.zStepsSP.Children[5]);
           MainViewModel.Instance.NumpadToggleButton((TextBox)Views.MotorsView.Instance.zStepsSP.Children[5]);
+          break;
+        case 36:
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(TraySteps)), this, 0, (TextBox)Views.MotorsView.Instance.ySP.Children[5]);
+          MainViewModel.Instance.NumpadToggleButton((TextBox)Views.MotorsView.Instance.ySP.Children[5]);
           break;
       }
     }

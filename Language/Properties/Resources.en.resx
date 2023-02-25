@@ -577,6 +577,12 @@ Value</value>
     <value>Normal
 2.5 µL/sec</value>
   </data>
+  <data name="Dropdown_OEMA" xml:space="preserve">
+    <value>OEM A</value>
+  </data>
+  <data name="Dropdown_OEMPMT" xml:space="preserve">
+    <value>OEM PMT</value>
+  </data>
   <data name="Dropdown_Pickup" xml:space="preserve">
     <value>Pickup</value>
   </data>
@@ -980,6 +986,9 @@ Update the Firmware?</value>
   </data>
   <data name="Motors_Steps" xml:space="preserve">
     <value>Steps</value>
+  </data>
+  <data name="Motors_Tray" xml:space="preserve">
+    <value>Extended</value>
   </data>
   <data name="Motors_Up" xml:space="preserve">
     <value>Up</value>

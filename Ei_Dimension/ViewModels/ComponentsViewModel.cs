@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Windows.Controls;
 using DIOS.Core;
 using DIOS.Core.HardwareIntercom;
+using System.Windows;
 
 namespace Ei_Dimension.ViewModels
 {
@@ -53,6 +54,9 @@ namespace Ei_Dimension.ViewModels
     public static ComponentsViewModel Instance { get; private set; }
     public virtual bool SuppressWarnings { get; set; }
     public virtual bool ContinuousModeOn { get; set; }
+    public virtual Visibility ExtendedRangeVisible { get; set; } = Visibility.Hidden;
+    public virtual ObservableCollection<string> ExtendedRangeThresholds { get; set; } = new ObservableCollection<string> { "0", "0" };
+    public virtual ObservableCollection<string> ExtendedRangeMultipliers { get; set; } = new ObservableCollection<string> { "0", "0" };
 
     public byte[] SyringeControlStates { get; } = { 0, 0, 0 };
     private ushort _activeLasers;
@@ -129,6 +133,11 @@ namespace Ei_Dimension.ViewModels
       }
 
       PressureUnitToggleButtonState = Settings.Default.PressureUnitsPSI;
+
+      ExtendedRangeThresholds[0] = App.DiosApp.Device.ExtendedRangeCL1Threshold.ToString();
+      ExtendedRangeThresholds[1] = App.DiosApp.Device.ExtendedRangeCL2Threshold.ToString();
+      ExtendedRangeMultipliers[0] = App.DiosApp.Device.ExtendedRangeCL1Multiplier.ToString();
+      ExtendedRangeMultipliers[1] = App.DiosApp.Device.ExtendedRangeCL2Multiplier.ToString();
 
       Instance = this;
 
@@ -409,8 +418,19 @@ namespace Ei_Dimension.ViewModels
       DirectMemoryAccessViewModel.Instance.ShowView();
     }
 
+    public void SaveExtRangeValuesToMap()
+    {
+      var cl1Threshold = float.Parse(ExtendedRangeThresholds[0]);
+      var cl2Threshold = float.Parse(ExtendedRangeThresholds[1]);
+      var cl1Multiplier = float.Parse(ExtendedRangeMultipliers[0]);
+      var cl2Multiplier = float.Parse(ExtendedRangeMultipliers[0]);
+      App.DiosApp.MapController.SaveExtendedRangeValues(cl1Threshold, cl2Threshold, cl1Multiplier, cl2Multiplier);
+    }
+
     public void FocusedBox(int num)
     {
+      var cl1SP = Views.ComponentsView.Instance.ExtendedRangeCL1.Children;
+      var cl2SP = Views.ComponentsView.Instance.ExtendedRangeCL2.Children;
       switch (num)
       {
         case 0:
@@ -441,7 +461,35 @@ namespace Ei_Dimension.ViewModels
           UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(StatisticsCutoffBox)), this, 0, Views.ComponentsView.Instance.CutoffTB);
           MainViewModel.Instance.NumpadToggleButton(Views.ComponentsView.Instance.CutoffTB);
           break;
+        case 9:
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ExtendedRangeThresholds)), this, 0, (TextBox)cl1SP[0]);
+          MainViewModel.Instance.NumpadToggleButton((TextBox)cl1SP[0]);
+          break;
+        case 10:
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ExtendedRangeMultipliers)), this, 0, (TextBox)cl1SP[1]);
+          MainViewModel.Instance.NumpadToggleButton((TextBox)cl1SP[1]);
+          break;
+        case 11:
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ExtendedRangeThresholds)), this, 1, (TextBox)cl2SP[0]);
+          MainViewModel.Instance.NumpadToggleButton((TextBox)cl2SP[0]);
+          break;
+        case 12:
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ExtendedRangeMultipliers)), this, 1, (TextBox)cl2SP[1]);
+          MainViewModel.Instance.NumpadToggleButton((TextBox)cl2SP[1]);
+          break;
       }
+    }
+
+    public void OnMapChanged(CustomMap map)
+    {
+      ExtendedRangeMultipliers[0] = map.extendedRangeCL1Multiplier.ToString("F3");
+      ExtendedRangeMultipliers[1] = map.extendedRangeCL2Multiplier.ToString("F3");
+      App.DiosApp.Device.ExtendedRangeCL1Multiplier = map.extendedRangeCL1Multiplier;
+      App.DiosApp.Device.ExtendedRangeCL2Multiplier = map.extendedRangeCL2Multiplier;
+      ExtendedRangeThresholds[0] = map.extendedRangeCL1Threshold.ToString("F3");
+      ExtendedRangeThresholds[1] = map.extendedRangeCL2Threshold.ToString("F3");
+      App.DiosApp.Device.ExtendedRangeCL1Threshold = map.extendedRangeCL1Threshold;
+      App.DiosApp.Device.ExtendedRangeCL2Threshold = map.extendedRangeCL2Threshold;
     }
 
     public void TextChanged(TextChangedEventArgs e)

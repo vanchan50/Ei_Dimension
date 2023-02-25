@@ -1379,6 +1379,24 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to OEM A.
+        /// </summary>
+        public static string Dropdown_OEMA {
+            get {
+                return ResourceManager.GetString("Dropdown_OEMA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OEM PMT.
+        /// </summary>
+        public static string Dropdown_OEMPMT {
+            get {
+                return ResourceManager.GetString("Dropdown_OEMPMT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Pickup.
         /// </summary>
         public static string Dropdown_Pickup {
@@ -2541,6 +2559,15 @@ namespace Ei_Dimension.Language {
         public static string Motors_Steps {
             get {
                 return ResourceManager.GetString("Motors_Steps", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Extended.
+        /// </summary>
+        public static string Motors_Tray {
+            get {
+                return ResourceManager.GetString("Motors_Tray", resourceCulture);
             }
         }
         

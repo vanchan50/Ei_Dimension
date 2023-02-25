@@ -736,6 +736,10 @@ namespace DIOS.Core.HardwareIntercom
               throw new NotImplementedException();
           }
           break;
+        case DeviceParameterType.TraySteps:
+          commandCode = 0xBC;
+          fparam = value;
+          break;
         case DeviceParameterType.IsLaserActive:
           commandCode = 0xC0;
           param = intValue;
@@ -760,6 +764,12 @@ namespace DIOS.Core.HardwareIntercom
             case ChannelConfiguration.StandardPlusExt:
               param = (ushort)ChannelConfiguration.StandardPlusExt;
               _device._beadProcessor._extendedRangeEnabled = true;
+              break;
+            case ChannelConfiguration.OEMA:
+              param = (ushort)ChannelConfiguration.OEMA;
+              break;
+            case ChannelConfiguration.OEMPMT:
+              param = (ushort)ChannelConfiguration.OEMPMT;
               break;
             default:
               throw new NotImplementedException();
@@ -1509,6 +1519,9 @@ namespace DIOS.Core.HardwareIntercom
           break;
         case DeviceParameterType.WellColumnIndex:
           commandCode = 0xAE;
+          break;
+        case DeviceParameterType.TraySteps:
+          commandCode = 0xBC;
           break;
         case DeviceParameterType.Volume:
           switch (subParameter)

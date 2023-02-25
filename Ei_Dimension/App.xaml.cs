@@ -359,6 +359,9 @@ namespace Ei_Dimension
         if (CalibrationViewModel.Instance != null)
           CalibrationViewModel.Instance.OnMapChanged(map);
 
+        if (ComponentsViewModel.Instance != null)
+          ComponentsViewModel.Instance.OnMapChanged(map);
+
         if (ChannelsViewModel.Instance != null)
           ChannelsViewModel.Instance.OnMapChanged(map);
 
@@ -667,6 +670,7 @@ namespace Ei_Dimension
       DiosApp.Device.Compensation = DiosApp.MapController.ActiveMap.calParams.compensation;
       DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.SampleSyringeType);
       DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.SampleSyringeSize);
+      DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.TraySteps);
       //DiosApp.Device.MainCommand("Set Property", code: 0x97, parameter: 1170);  //set current limit of aligner motors if leds are off //0x97 no longer used
       DiosApp.Device.MaxPressure = Settings.Default.MaxPressure;
     }

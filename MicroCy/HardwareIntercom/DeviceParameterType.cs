@@ -98,6 +98,7 @@
     ///<summary>unique parameter, used by DirectFlashAccess feature</summary>
     DirectFlashValue,
     ///<summary>Subparamter: Channel</summary>
-    ExtendedRangeMultiplier
+    ExtendedRangeMultiplier,
+    TraySteps
   }
 }

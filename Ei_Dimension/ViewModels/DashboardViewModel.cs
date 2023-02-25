@@ -83,7 +83,9 @@ namespace Ei_Dimension.ViewModels
         new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_Cells), curCulture), this),
         new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_FM3D), curCulture), this),
         new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_StandardPlusFSC), curCulture), this),
-        new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_StandardPlusExt), curCulture), this)
+        new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_StandardPlusExt), curCulture), this),
+        new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_OEMA), curCulture), this),
+        new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_OEMPMT), curCulture), this)
       };
       SelectedChConfigContent = ChConfigItems[(int)SelectedChConfigIndex].Content;
       DropDownButtonContents.ResetIndex();
@@ -454,6 +456,7 @@ namespace Ei_Dimension.ViewModels
           case 3:
             _vm.SelectedChConfigContent = Content;
             _vm.SelectedChConfigIndex = (ChannelConfiguration)Index;
+            ComponentsViewModel.Instance.ExtendedRangeVisible = _vm.SelectedChConfigIndex == ChannelConfiguration.StandardPlusExt ? Visibility.Visible: Visibility.Hidden;
             App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ChannelConfiguration, (ChannelConfiguration)Index);
             break;
           case 4:

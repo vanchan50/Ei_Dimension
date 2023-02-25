@@ -35,11 +35,13 @@ namespace Ei_Dimension.ViewModels
 
     public void ShowView()
     {
+      UserInputHandler.InputSanityCheck();
       ViewVisible = Visibility.Visible;
     }
 
     public void Direct(bool getset)
     {
+      UserInputHandler.InputSanityCheck();
       var code = byte.Parse(HexCode[0], NumberStyles.HexNumber, Language.TranslationSource.Instance.CurrentCulture);
       var iVal = ushort.Parse(IntValue[0]);
       var fVal = float.Parse(FloatValue[0]);

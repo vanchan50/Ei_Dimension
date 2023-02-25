@@ -9,10 +9,10 @@
     private readonly ClassificationMap _classificationMap = new ClassificationMap();
     internal CustomMap _map;
     internal HiSensitivityChannel SensitivityChannel { get; set; }
-    internal float _extendedRangeCL1Multiplier;
-    internal float _extendedRangeCL2Multiplier;
-    internal float _extendedRangeCL1Threshold;
-    internal float _extendedRangeCL2Threshold;
+    internal float _extendedRangeCL1Multiplier = 1;
+    internal float _extendedRangeCL2Multiplier = 1;
+    internal float _extendedRangeCL1Threshold = 50000;
+    internal float _extendedRangeCL2Threshold = 50000;
     internal bool _extendedRangeEnabled = false;
     private float[] _compensatedCoordinatesCache = { 0,0,0,0 }; //cl0,cl1,cl2,cl3
 

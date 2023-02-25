@@ -720,6 +720,9 @@ namespace Ei_Dimension
         case DeviceParameterType.SampleSyringeSize:
           update = () => SyringeSpeedsViewModel.Instance.SampleSyringeSize[0] = parameter.Parameter.ToString();
           break;
+        case DeviceParameterType.TraySteps:
+          update = () => MotorsViewModel.Instance.TraySteps[0] = parameter.FloatParameter.ToString("F3");
+          break;
         case DeviceParameterType.DirectFlashValue:
           update = () =>
           {
@@ -749,10 +752,11 @@ namespace Ei_Dimension
             _externalRangeMultipliersObtained = 0;
             Action overwrite = () =>
             {
-              CalibrationViewModel.Instance.ExtendedRangeMultipliers[0] = _externalRangeMultipliersbuffer[0].ToString("F3");
-              CalibrationViewModel.Instance.ExtendedRangeMultipliers[1] = _externalRangeMultipliersbuffer[1].ToString("F3");
+              ComponentsViewModel.Instance.ExtendedRangeMultipliers[0] = _externalRangeMultipliersbuffer[0].ToString("F3");
+              ComponentsViewModel.Instance.ExtendedRangeMultipliers[1] = _externalRangeMultipliersbuffer[1].ToString("F3");
               App.DiosApp.Device.ExtendedRangeCL1Multiplier = _externalRangeMultipliersbuffer[0];
               App.DiosApp.Device.ExtendedRangeCL2Multiplier = _externalRangeMultipliersbuffer[1];
+              ComponentsViewModel.Instance.SaveExtRangeValuesToMap();
             };
             App.Current.Dispatcher.BeginInvoke((Action)(() =>
             {

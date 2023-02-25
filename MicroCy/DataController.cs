@@ -650,6 +650,9 @@ namespace DIOS.Core
         case 0xC9:
           outParameters = new ParameterUpdateEventArgs(DeviceParameterType.LaserPower, intParameter: (int)LaserType.Red, floatParameter: cs.Parameter / 4096.0f / 0.040f * 3.3f);
           break;
+        case 0xBC:
+          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.TraySteps, floatParameter: cs.FParameter);
+          break;
         case 0xCC:
           _device.SystemMonitor.DecodeMessage(cs.Parameter);
           //currently used only for probe autoheight feature
