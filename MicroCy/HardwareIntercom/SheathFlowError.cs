@@ -3,7 +3,7 @@
   public enum SheathFlowError
   {
     SheathEmpty,
-    PressureOverload,
+    HighPressure,
     Unspecified
   }
 }

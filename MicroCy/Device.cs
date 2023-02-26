@@ -83,6 +83,9 @@ namespace DIOS.Core
     {
       get { return _beadProcessor.Normalization; }
     }
+    /// <summary>
+    /// Max allowed pressure of sheath in a flow cell
+    /// </summary>
     public float MaxPressure { get; set; }
     public bool IsPlateEjected { get; internal set; }
     public float ExtendedRangeCL1Threshold

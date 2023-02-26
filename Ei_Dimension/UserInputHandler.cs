@@ -1597,7 +1597,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              ErrorMessage = "[Not Negative]";
+              ErrorMessage = $"[0-{float.MaxValue}]";
             }
             if (SelectedTextBox.index == 1)
             {
@@ -1611,7 +1611,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              ErrorMessage = "[Not Negative]";
+              ErrorMessage = $"[0-{float.MaxValue}]";
             }
             break;
           case nameof(ComponentsViewModel.ExtendedRangeMultipliers):
@@ -1627,7 +1627,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              ErrorMessage = "[Not Negative]";
+              ErrorMessage = $"[0-{float.MaxValue}]";
             }
             if (SelectedTextBox.index == 1)
             {
@@ -1641,7 +1641,7 @@ namespace Ei_Dimension
                 }
               }
               failed = true;
-              ErrorMessage = "[Not Negative]";
+              ErrorMessage = $"[0-{float.MaxValue}]";
             }
             break;
           case nameof(MotorsViewModel.TraySteps):

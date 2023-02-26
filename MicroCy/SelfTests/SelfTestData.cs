@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace DIOS.Core.SelfTests
+﻿namespace DIOS.Core.SelfTests
 {
   public class SelfTestData
   {

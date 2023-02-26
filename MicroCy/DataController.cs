@@ -675,7 +675,7 @@ namespace DIOS.Core
             _device.Hardware.SetToken(HardwareToken.ActiveCommandQueueIndex, 1);
           }
           else if (cs.Command == 2)
-            errorType = SheathFlowError.PressureOverload;
+            errorType = SheathFlowError.HighPressure;
 
           outParameters = new ParameterUpdateEventArgs(DeviceParameterType.SheathFlowError, intParameter: (int)errorType, floatParameter: cs.FParameter);
           break;
@@ -733,8 +733,6 @@ namespace DIOS.Core
         case 0xFE:
           _device.StopOperation();
           break;
-        default:
-          return;
       }
       _logger.Log($"{DateTime.Now.ToString()} REC [{cs.ToString()}]");
       if (outParameters != null)

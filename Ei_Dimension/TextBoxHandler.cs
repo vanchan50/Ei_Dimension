@@ -629,7 +629,7 @@ namespace Ei_Dimension
               Monitor.Wait(_callingThreadLock);
             }
           }
-          else if (parameter.Parameter == (int)SheathFlowError.PressureOverload)
+          else if (parameter.Parameter == (int)SheathFlowError.HighPressure)
           {
             if (parameter.FloatParameter > App.DiosApp.Device.MaxPressure)
             {
