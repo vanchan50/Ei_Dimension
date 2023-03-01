@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Text;
 using DIOS.Core;
 
@@ -34,9 +35,10 @@ namespace DIOS.Application.FileIO
         File.WriteAllText(_fullName, beadsString);
         _publisher._logger.Log($"Bead event saved as {_fullName}");
       }
-      catch
+      catch (Exception e)
       {
         _publisher._logger.Log($"Failed to write Bead event to {_fullName}");
+        _publisher._logger.Log(e.Message);
       }
     }
 
