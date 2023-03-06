@@ -24,7 +24,6 @@ namespace Ei_Dimension.ViewModels
     private string _templateName;
     public static TemplateSelectViewModel Instance { get; private set; }
     public virtual Visibility DeleteVisible { get; set; } = Visibility.Hidden;
-    private static List<char> _invalidChars = new List<char>();
     protected TemplateSelectViewModel()
     {
       var defTemplateName = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.DefaultTemplateName),
@@ -36,9 +35,7 @@ namespace Ei_Dimension.ViewModels
       {
         NameList.Add(Path.GetFileNameWithoutExtension(template));
       }
-
-      _invalidChars.AddRange(Path.GetInvalidPathChars());
-      _invalidChars.AddRange(Path.GetInvalidFileNameChars());
+      
       Instance = this;
     }
 
@@ -231,7 +228,7 @@ namespace Ei_Dimension.ViewModels
     {
       UserInputHandler.InputSanityCheck();
       var path = App.DiosApp.RootDirectory + @"\Config\" + TemplateSaveName[0] + ".dtml";
-      foreach (var c in _invalidChars)
+      foreach (var c in App.InvalidChars)
       {
         if (TemplateSaveName[0].Contains(c.ToString()))
         {

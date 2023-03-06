@@ -763,7 +763,7 @@ Order</value>
     <value>Extended Range Options</value>
   </data>
   <data name="FileSave_Base_Filename" xml:space="preserve">
-    <value>Base File Name</value>
+    <value>Base File Name :</value>
   </data>
   <data name="FileSave_Discard_Unclassified_Beads" xml:space="preserve">
     <value>Discard Unclassified Beads From Bead Event File</value>

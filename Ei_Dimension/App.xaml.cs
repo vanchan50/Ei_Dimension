@@ -11,6 +11,7 @@ using Ei_Dimension.Cache;
 using Ei_Dimension.Controllers;
 using DIOS.Application;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace Ei_Dimension
 {
@@ -25,20 +26,20 @@ namespace Ei_Dimension
     public static ILogger Logger => DiosApp.Logger;
 
     public static bool _nextWellWarning;
+    public static readonly HashSet<char> InvalidChars = new HashSet<char>();
 
     private static bool _workOrderPending;
     private static FileSystemWatcher _workOrderWatcher;
     private static readonly TextBoxHandler _textBoxHandler = new TextBoxHandler();
 
-    public App()
+    static App()
     {
+      InvalidChars.UnionWith(Path.GetInvalidFileNameChars());
       CorruptSettingsChecker();
-      InitApp(null);
     }
 
-    public App(Device device)
+    public App(Device device = null)
     {
-      CorruptSettingsChecker();
       InitApp(device);
     }
 

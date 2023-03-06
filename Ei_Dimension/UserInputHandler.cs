@@ -1449,6 +1449,22 @@ namespace Ei_Dimension
             }
             break;
           case nameof(FileSaveViewModel.Instance.BaseFileName):
+            var flag = false;
+            foreach (var c in App.InvalidChars)
+            {
+              if (_tempNewString.Contains(c.ToString()))
+              {
+                flag = true;
+                break;
+              }
+            }
+
+            if (flag)
+            {
+              failed = true;
+              ErrorMessage = "Invalid Name";
+              break;
+            }
             App.DiosApp.Publisher.Outfilename = _tempNewString;
             Settings.Default.SaveFileName = _tempNewString;
             break;

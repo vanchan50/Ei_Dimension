@@ -1,11 +1,7 @@
 ﻿using DevExpress.Mvvm;
 using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
-using DIOS.Application;
-using DIOS.Core;
-using System;
 using System.Collections.ObjectModel;
-using System.IO;
 using System.Windows.Controls;
 
 namespace Ei_Dimension.ViewModels

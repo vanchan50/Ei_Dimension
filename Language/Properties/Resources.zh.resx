@@ -629,7 +629,7 @@
 +条形码</value>
   </data>
   <data name="FileSave_Base_Filename" xml:space="preserve">
-    <value>基础文件名</value>
+    <value>基础文件名 :</value>
   </data>
   <data name="FileSave_Discard_Unclassified_Beads" xml:space="preserve">
     <value>从原始数据文件中舍弃未分类的粒子</value>

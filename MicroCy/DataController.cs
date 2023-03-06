@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Threading;
 using DIOS.Core.HardwareIntercom;
 
@@ -728,7 +727,7 @@ namespace DIOS.Core
         case 0xDD:
         case 0xDE:
         case 0xDF:
-          return;
+          break;
         case 0xFD:
         case 0xFE:
           _device.StopOperation();

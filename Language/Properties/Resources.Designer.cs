@@ -1894,7 +1894,7 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Base File Name.
+        ///   Looks up a localized string similar to Base File Name :.
         /// </summary>
         public static string FileSave_Base_Filename {
             get {
