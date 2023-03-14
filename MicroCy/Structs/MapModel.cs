@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 namespace DIOS.Core
 {
   [JsonObject(MemberSerialization.Fields)]
-  public class CustomMap
+  public class MapModel
   {
     public readonly string mapName;
 

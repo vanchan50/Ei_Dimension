@@ -284,7 +284,7 @@ namespace Ei_Dimension.ViewModels
       UserInputHandler.InputSanityCheck();
     }
 
-    public void OnMapChanged(CustomMap map)
+    public void OnMapChanged(MapModel map)
     {
       EventTriggerContents[1] = map.calParams.minmapssc.ToString();
       EventTriggerContents[2] = map.calParams.maxmapssc.ToString();

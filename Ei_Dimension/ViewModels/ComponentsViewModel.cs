@@ -497,7 +497,7 @@ namespace Ei_Dimension.ViewModels
       }
     }
 
-    public void OnMapChanged(CustomMap map)
+    public void OnMapChanged(MapModel map)
     {
       ExtendedRangeMultipliers[0] = map.extendedRangeCL1Multiplier.ToString("F3");
       ExtendedRangeMultipliers[1] = map.extendedRangeCL2Multiplier.ToString("F3");

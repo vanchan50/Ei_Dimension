@@ -112,14 +112,14 @@ namespace Ei_Dimension
       };
       try
       {
-        App.DiosApp.Publisher.OutDirCheck();
+        DiosApp.Publisher.OutDirCheck();
         if (!Directory.Exists(DiosApp.Publisher.Outdir + "\\SavedImages"))
           Directory.CreateDirectory(DiosApp.Publisher.Outdir + "\\SavedImages");
         chart.ExportToImage(DiosApp.Publisher.Outdir + @"\SavedImages\" + DiosApp.Publisher.Date + ".png", options);
       }
       catch
       {
-        App.Current.Dispatcher.Invoke(() =>
+        Current.Dispatcher.Invoke(() =>
           Notification.Show("Save failed"));
       }
     }
@@ -350,7 +350,7 @@ namespace Ei_Dimension
       }
     }
 
-    public void MapChangedEventHandler(object sender, CustomMap map)
+    public void MapChangedEventHandler(object sender, MapModel map)
     {
       DiosApp.Device.SetMap(map);
       _ = Current.Dispatcher.BeginInvoke((Action)(() =>

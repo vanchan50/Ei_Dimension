@@ -52,7 +52,7 @@
     ///<summary>Subparamter: SheathFlowErrorType</summary>
     SheathFlowError,
     SampleSyringeStatus,
-    NextWellWarning,
+    WellWarning,
     BubbleDetectorStatus,
     ///<summary>For internal use</summary>
     BoardVersion,

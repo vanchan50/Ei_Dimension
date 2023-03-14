@@ -29,7 +29,6 @@ namespace DIOS.Core
   /// </summary>
   public class Device
   {
-    public WellController WellController { get; } = new WellController();
     public SystemActivity SystemMonitor { get; } = new SystemActivity();
     /// <summary>
     /// Abstractions on the hardware commands and parameters
@@ -138,6 +137,7 @@ namespace DIOS.Core
     internal float HDnrCoef;
     internal readonly SelfTester SelfTester;
     internal readonly BeadProcessor _beadProcessor;
+    internal readonly WellController _wellController = new WellController();
     private readonly DataController _dataController;
     private readonly MeasurementScript _script;
     private readonly ILogger _logger;
@@ -163,7 +163,7 @@ namespace DIOS.Core
 
     public void PrematureStop()
     {
-      WellController.PreparePrematureStop(SingleSyringeMode);
+      _wellController.PreparePrematureStop(SingleSyringeMode);
       _script.FinalizeWellReading();
     }
 
@@ -186,7 +186,7 @@ namespace DIOS.Core
       {
         throw new ArgumentException("Wells count = 0");
       }
-      WellController.Init(wells);
+      _wellController.Init(wells);
       if (Mode != OperationMode.Normal)
       {
         Normalization.SuspendForTheRun();
@@ -235,12 +235,29 @@ namespace DIOS.Core
       IsPlateEjected = false;
     }
 
+    public void SetMap(MapModel map)
+    {
+      _beadProcessor.SetMap(map);
+    }
+
+    public void ReconnectUSB()
+    {
+      _dataController.ReconnectUSB();
+      Hardware.SetParameter(DeviceParameterType.SystemActivityStatus);
+      Hardware.SetToken(HardwareToken.Synchronization);
+    }
+
+    public void DisconnectedUSB()
+    {
+      _dataController.DisconnectedUSB();
+    }
+
     internal void OnStartingToReadWell()
     {
-      WellController.Advance();
+      _wellController.Advance();
       BeadCount = 0;
       _dataController.IsMeasurementGoing = true;
-      StartingToReadWell?.Invoke(this, new ReadingWellEventArgs(WellController.CurrentWell));
+      StartingToReadWell?.Invoke(this, new ReadingWellEventArgs(_wellController.CurrentWell));
       Hardware.SetParameter(DeviceParameterType.TotalBeadsInFirmware); //reset totalbeads in firmware
     }
 
@@ -249,7 +266,7 @@ namespace DIOS.Core
       _logger.Log("Finished Reading Well");
       Hardware.SendCommand(DeviceCommandType.EndSampling);
       Hardware.RequestParameter(DeviceParameterType.TotalBeadsInFirmware);
-      FinishedReadingWell?.Invoke(this, new ReadingWellEventArgs(WellController.CurrentWell));
+      FinishedReadingWell?.Invoke(this, new ReadingWellEventArgs(_wellController.CurrentWell));
     }
 
     internal void OnFinishedMeasurement()
@@ -269,24 +286,7 @@ namespace DIOS.Core
       ParameterUpdate?.Invoke(this, param);
     }
 
-    public void SetMap(CustomMap map)
-    {
-      _beadProcessor.SetMap(map);
-    }
-
-    public void ReconnectUSB()
-    {
-      _dataController.ReconnectUSB();
-      Hardware.SetParameter(DeviceParameterType.SystemActivityStatus);
-      Hardware.SetToken(HardwareToken.Synchronization);
-    }
-
-    public void DisconnectedUSB()
-    {
-      _dataController.DisconnectedUSB();
-    }
-
-#if DEBUG
+    #if DEBUG
     public void DEBUGSetBoardVersion(int v)
     {
       BoardVersion = v;

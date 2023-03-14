@@ -147,7 +147,7 @@ namespace Ei_Dimension.ViewModels
       UserInputHandler.InjectToFocusedTextbox(((TextBox)e.Source).Text, true);
     }
 
-    public void OnMapChanged(CustomMap map)
+    public void OnMapChanged(MapModel map)
     {
       Bias30Parameters[0] = map.calgssc.ToString();
       Bias30Parameters[1] = map.calrpmaj.ToString();

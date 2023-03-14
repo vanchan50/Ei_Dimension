@@ -80,7 +80,7 @@
     <Compile Include="SelfTests\SelfTester.cs" />
     <Compile Include="SelfTests\SelfTestData.cs" />
     <Compile Include="Structs\CalParams.cs" />
-    <Compile Include="Structs\CustomMap.cs" />
+    <Compile Include="Structs\MapModel.cs" />
     <Compile Include="Structs\ProcessedBead.cs" />
     <Compile Include="Structs\RawBead.cs" />
     <Compile Include="Structs\MapCalParameters.cs" />

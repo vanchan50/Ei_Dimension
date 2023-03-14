@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace DIOS.Core
 {
-  public class WellController
+  internal class WellController
   {
     public bool IsLastWell { get; private set; }
     public Well CurrentWell { get; private set; }

@@ -378,7 +378,7 @@ namespace Ei_Dimension.ViewModels
       ValidDateBox[0] = $"{year}.{month}.{day}";
     }
 
-    public void OnMapChanged(CustomMap map)
+    public void OnMapChanged(MapModel map)
     {
       if (map.validation)
       {

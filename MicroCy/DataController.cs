@@ -684,7 +684,8 @@ namespace DIOS.Core
           outParameters = new ParameterUpdateEventArgs(DeviceParameterType.SampleSyringeStatus, intParameter: validCommand, floatParameter: sampleA);
           break;
         case 0xF3:
-          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.NextWellWarning);
+          int warnNextWell = _device._wellController.IsLastWell ? 0 : 1; 
+          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.WellWarning, intParameter: warnNextWell);
           break;
         case 0xF4:
           outParameters = new ParameterUpdateEventArgs(DeviceParameterType.BubbleDetectorStatus, intParameter: cs.Command);

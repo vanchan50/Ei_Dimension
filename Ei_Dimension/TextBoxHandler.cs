@@ -691,17 +691,17 @@ namespace Ei_Dimension
             Monitor.Wait(_callingThreadLock);
           }
           break;
-        case DeviceParameterType.NextWellWarning:
+        case DeviceParameterType.WellWarning:
           if (!ComponentsViewModel.Instance.SuppressWarnings && App.DiosApp.Device.IsMeasurementGoing)
           {
             update = () =>
             {
-              var currentWell = App.DiosApp.Device.WellController.CurrentWell;
-              if (currentWell == null)
+              var currentWell = PlatePictogramViewModel.Instance.PlatePictogram.CurrentlyReadCell;
+              if (currentWell.row == -1 && currentWell.col == -1)
                 return;
-              PlatePictogramViewModel.Instance.PlatePictogram.ChangeState(currentWell.RowIdx, currentWell.ColIdx,
+              PlatePictogramViewModel.Instance.PlatePictogram.ChangeState(currentWell.row, currentWell.col,
                 warning: Models.WellWarningState.YellowWarning);
-              if (!App.DiosApp.Device.WellController.IsLastWell) //aspirating next
+              if (parameter.Parameter != 0) //aspirating next
                 App._nextWellWarning = true;
             };
           }

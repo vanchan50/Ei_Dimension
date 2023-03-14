@@ -135,7 +135,7 @@ namespace Ei_Dimension.ViewModels
       UserInputHandler.InjectToFocusedTextbox(((TextBox)e.Source).Text, true);
     }
 
-    public void OnMapChanged(CustomMap map)
+    public void OnMapChanged(MapModel map)
     {
       NormalizationFactor[0] = map.factor.ToString();
     }

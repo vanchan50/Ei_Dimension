@@ -15,7 +15,7 @@ namespace DIOS.Core
       ClassificationBins = GenerateLogSpace(1, 60000, CLASSIFICATIONMAPSIZE);
     }
 
-    public void ConstructClassificationMap(CustomMap cMap)
+    public void ConstructClassificationMap(MapModel cMap)
     {
       _actPrimaryIndex = (byte)cMap.midorderidx; //what channel cl0 - cl3?
       _actSecondaryIndex = (byte)cMap.loworderidx;

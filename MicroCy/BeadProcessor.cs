@@ -7,7 +7,7 @@
     private float _greenMaj;
     private readonly Device _device;
     private readonly ClassificationMap _classificationMap = new ClassificationMap();
-    internal CustomMap _map;
+    internal MapModel _map;
     internal HiSensitivityChannel SensitivityChannel { get; set; }
     internal float _extendedRangeCL1Multiplier = 1;
     internal float _extendedRangeCL2Multiplier = 1;
@@ -21,7 +21,7 @@
       _device = device;
     }
 
-    public void SetMap(CustomMap map)
+    public void SetMap(MapModel map)
     {
       _map = map;
       _classificationMap.ConstructClassificationMap(_map);

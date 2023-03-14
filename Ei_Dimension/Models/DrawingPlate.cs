@@ -107,7 +107,7 @@ namespace Ei_Dimension.Models
         _multitubeOverrideReset = true;
     }
 
-    public void ChangeState(byte row, byte col, WellType? type = null, WellWarningState? warning = null, string FilePath = null)
+    public void ChangeState(int row, int col, WellType? type = null, WellWarningState? warning = null, string FilePath = null)
     {
       if(type != null)
         _wells[row, col].Type = (WellType)type;

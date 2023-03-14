@@ -225,7 +225,7 @@ namespace DIOS.Application
       _unclassifiedRegionsDict.Add(bead.region, 1);
     }
 
-    public void CalculateResults(CustomMap activeMap)
+    public void CalculateResults(MapModel activeMap)
     {
       //RegionalStats holds regions with defined Reporter target
       foreach (var region in RegionalStats)

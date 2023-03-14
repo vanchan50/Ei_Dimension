@@ -17,7 +17,7 @@ namespace DIOS.Core.MainMeasurementScript
     {
       _device = device;
       _hardware = device.Hardware;
-      _wellController = device.WellController;
+      _wellController = device._wellController;
     }
 
     public void Start()

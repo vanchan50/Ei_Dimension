@@ -8,9 +8,9 @@ namespace DIOS.Application
 {
   public class MapController
   {
-    public CustomMap ActiveMap { get; private set; }
-    public List<CustomMap> MapList { get; } = new List<CustomMap>();
-    public event EventHandler<CustomMap> ChangedActiveMap;
+    public MapModel ActiveMap { get; private set; }
+    public List<MapModel> MapList { get; } = new List<MapModel>();
+    public event EventHandler<MapModel> ChangedActiveMap;
     private string _mapFolder;
     private ILogger _logger;
 
@@ -23,7 +23,7 @@ namespace DIOS.Application
       _logger = logger;
     }
 
-    public void SetMap(CustomMap map)
+    public void SetMap(MapModel map)
     {
       ActiveMap = map;
       OnMapChanged();
@@ -182,7 +182,7 @@ namespace DIOS.Application
           var fileContents = reader.ReadToEnd();
           try
           {
-            var map = JsonConvert.DeserializeObject<CustomMap>(fileContents);
+            var map = JsonConvert.DeserializeObject<MapModel>(fileContents);
             map.Init();
             MapList.Add(map);
           }
@@ -235,14 +235,14 @@ namespace DIOS.Application
         }
 
         //load
-        CustomMap originalMap = null;
-        CustomMap updateMap = null;
+        MapModel originalMap = null;
+        MapModel updateMap = null;
         using (TextReader reader = new StreamReader(destination))
         {
           var fileContents = reader.ReadToEnd();
           try
           {
-            originalMap = JsonConvert.DeserializeObject<CustomMap>(fileContents);
+            originalMap = JsonConvert.DeserializeObject<MapModel>(fileContents);
             originalMap.Init();
           }
           catch
@@ -255,7 +255,7 @@ namespace DIOS.Application
           var fileContents = reader.ReadToEnd();
           try
           {
-            updateMap = JsonConvert.DeserializeObject<CustomMap>(fileContents);
+            updateMap = JsonConvert.DeserializeObject<MapModel>(fileContents);
             updateMap.Init();
           }
           catch
@@ -298,7 +298,7 @@ namespace DIOS.Application
       }
     }
 
-    private bool WriteToMap(CustomMap map)
+    private bool WriteToMap(MapModel map)
     {
       var contents = JsonConvert.SerializeObject(map);
       try
