@@ -357,6 +357,9 @@ namespace DIOS.Core
         case 0x35:
           outParameters = new ParameterUpdateEventArgs(DeviceParameterType.SyringeSpeedSheath, intParameter: (int)SyringeSpeed.MaxSpeed, floatParameter: cs.Parameter);
           break;
+        case 0x36:
+          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.SheathFlushVolume, intParameter: cs.Parameter);
+          break;
         case 0x38:
           outParameters = new ParameterUpdateEventArgs(DeviceParameterType.SyringeSpeedSample, intParameter: (int)SyringeSpeed.Normal, floatParameter: cs.Parameter);
           break;

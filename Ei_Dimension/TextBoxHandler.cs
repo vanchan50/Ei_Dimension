@@ -720,6 +720,9 @@ namespace Ei_Dimension
         case DeviceParameterType.SampleSyringeSize:
           update = () => SyringeSpeedsViewModel.Instance.SampleSyringeSize[0] = parameter.Parameter.ToString();
           break;
+        case DeviceParameterType.SheathFlushVolume:
+          update = () => SyringeSpeedsViewModel.Instance.SheathFlushVolume[0] = parameter.Parameter.ToString();
+          break;
         case DeviceParameterType.TraySteps:
           update = () => MotorsViewModel.Instance.TraySteps[0] = parameter.FloatParameter.ToString("F3");
           break;

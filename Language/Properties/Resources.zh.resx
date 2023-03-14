@@ -1049,6 +1049,9 @@
   <data name="SyringeSpeeds_Samples" xml:space="preserve">
     <value>样本</value>
   </data>
+  <data name="SyringeSpeeds_SheathFlushVolume" xml:space="preserve">
+    <value>Sheath Flush Volume, μl</value>
+  </data>
   <data name="SyringeSpeeds_Speeds" xml:space="preserve">
     <value>注射泵速度</value>
   </data>

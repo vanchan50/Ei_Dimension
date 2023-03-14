@@ -3312,6 +3312,15 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sheath Flush Volume, μl.
+        /// </summary>
+        public static string SyringeSpeeds_SheathFlushVolume {
+            get {
+                return ResourceManager.GetString("SyringeSpeeds_SheathFlushVolume", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Syringe Speeds.
         /// </summary>
         public static string SyringeSpeeds_Speeds {

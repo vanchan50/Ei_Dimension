@@ -1567,6 +1567,18 @@ namespace Ei_Dimension
             failed = true;
             ErrorMessage = "[0-12500]";
             break;
+          case nameof(SyringeSpeedsViewModel.SheathFlushVolume):
+            if (int.TryParse(_tempNewString, out iRes))
+            {
+              if (iRes >= 0 && iRes <= 12000)
+              {
+                App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.SheathFlushVolume, iRes);
+                break;
+              }
+            }
+            failed = true;
+            ErrorMessage = "[0-12000]";
+            break;
           case nameof(DirectMemoryAccessViewModel.HexCode):
             if (int.TryParse(_tempNewString, NumberStyles.HexNumber, Language.TranslationSource.Instance.CurrentCulture, out iRes))
             {

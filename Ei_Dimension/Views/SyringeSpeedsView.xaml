@@ -267,6 +267,23 @@
             <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
           </dxmvvm:Interaction.Behaviors>
         </TextBox>
+        <TextBlock Text="{lang:Loc SyringeSpeeds_SheathFlushVolume}"
+                   FontFamily="{StaticResource AppTextFont}"
+                   FontSize="36" TextAlignment="Center"
+                   FontWeight="UltraBold"
+                   TextWrapping="Wrap"
+                   Width="200" Height="100"
+                   Margin="0,30,0,6"
+                   Foreground="{StaticResource AppTextColor}"
+                   HorizontalAlignment="Center"/>
+        <TextBox Width="140" Name="SheathFlush"
+                 Style="{StaticResource InputFieldStyle}"
+                 Text="{Binding SheathFlushVolume[0]}">
+          <dxmvvm:Interaction.Behaviors>
+            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="13"/>
+            <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+          </dxmvvm:Interaction.Behaviors>
+        </TextBox>
       </StackPanel>
     </Border>
 

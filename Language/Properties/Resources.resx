@@ -1244,6 +1244,9 @@ Speeds</value>
   <data name="SyringeSpeeds_SampleSyringeSize" xml:space="preserve">
     <value>Syringe Size, μl</value>
   </data>
+  <data name="SyringeSpeeds_SheathFlushVolume" xml:space="preserve">
+    <value>Sheath Flush Volume, μl</value>
+  </data>
   <data name="SyringeSpeeds_Speeds" xml:space="preserve">
     <value>Syringe Speeds</value>
   </data>

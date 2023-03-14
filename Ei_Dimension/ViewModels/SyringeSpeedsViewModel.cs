@@ -13,6 +13,7 @@ namespace Ei_Dimension.ViewModels
     public virtual ObservableCollection<string> SamplesSyringeParameters { get; set; } = new ObservableCollection<string>();
     public virtual ObservableCollection<bool> SingleSyringeMode { get; set; } = new ObservableCollection<bool>{ false };
     public virtual ObservableCollection<string> SampleSyringeSize { get; set; } = new ObservableCollection<string>{""};
+    public virtual ObservableCollection<string> SheathFlushVolume { get; set; } = new ObservableCollection<string> { "" };
     public static SyringeSpeedsViewModel Instance { get; private set; }
 
     protected SyringeSpeedsViewModel()
@@ -97,6 +98,10 @@ namespace Ei_Dimension.ViewModels
         case 12:
           UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(SampleSyringeSize)), this, 0, Views.SyringeSpeedsView.Instance.SyringeSize);
           MainViewModel.Instance.NumpadToggleButton(Views.SyringeSpeedsView.Instance.SyringeSize);
+          break;
+        case 13:
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(SheathFlushVolume)), this, 0, Views.SyringeSpeedsView.Instance.SheathFlush);
+          MainViewModel.Instance.NumpadToggleButton(Views.SyringeSpeedsView.Instance.SheathFlush);
           break;
       }
     }

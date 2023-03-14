@@ -689,6 +689,10 @@ namespace DIOS.Core.HardwareIntercom
               throw new NotImplementedException();
           }
           break;
+        case DeviceParameterType.SheathFlushVolume:
+          commandCode = 0x36;
+          param = intValue;
+          break;
         case DeviceParameterType.WashRepeatsAmount:
           commandCode = 0x86;
           param = intValue;
@@ -1498,6 +1502,9 @@ namespace DIOS.Core.HardwareIntercom
             default:
               throw new NotImplementedException();
           }
+          break;
+        case DeviceParameterType.SheathFlushVolume:
+          commandCode = 0x36;
           break;
         case DeviceParameterType.WashRepeatsAmount:
           commandCode = 0x86;

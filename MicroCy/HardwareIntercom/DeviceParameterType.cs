@@ -99,6 +99,7 @@
     DirectFlashValue,
     ///<summary>Subparamter: Channel</summary>
     ExtendedRangeMultiplier,
-    TraySteps
+    TraySteps,
+    SheathFlushVolume
   }
 }

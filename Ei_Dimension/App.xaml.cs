@@ -671,6 +671,7 @@ namespace Ei_Dimension
       DiosApp.Device.Compensation = DiosApp.MapController.ActiveMap.calParams.compensation;
       DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.SampleSyringeType);
       DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.SampleSyringeSize);
+      DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.SheathFlushVolume);
       DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.TraySteps);
       DiosApp.Device.Hardware.SetParameter(DeviceParameterType.WashRepeatsAmount, 1); //1 is the default. same as in the box in dashboard
       DiosApp.Device.Hardware.SetParameter(DeviceParameterType.AgitateRepeatsAmount, 1); //1 is the default. same as in the box in dashboard
