@@ -360,6 +360,9 @@ namespace DIOS.Core
         case 0x36:
           outParameters = new ParameterUpdateEventArgs(DeviceParameterType.SheathFlushVolume, intParameter: cs.Parameter);
           break;
+        case 0x37:
+          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.WellEdgeDeltaHeight, intParameter: cs.Parameter);
+          break;
         case 0x38:
           outParameters = new ParameterUpdateEventArgs(DeviceParameterType.SyringeSpeedSample, intParameter: (int)SyringeSpeed.Normal, floatParameter: cs.Parameter);
           break;
@@ -393,6 +396,9 @@ namespace DIOS.Core
               break;
           }
           outParameters = new ParameterUpdateEventArgs(DeviceParameterType.SampleSyringeType, intParameter: outpar);
+          break;
+        case 0x3F:
+          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.DistanceToWellEdge, intParameter: cs.Parameter);
           break;
         case 0x41:
           outParameters = new ParameterUpdateEventArgs(DeviceParameterType.MotorZ, intParameter: (int)MotorParameterType.StartSpeed, floatParameter: cs.Parameter);
@@ -507,6 +513,9 @@ namespace DIOS.Core
           break;
         case 0x84:
           outParameters = new ParameterUpdateEventArgs(DeviceParameterType.ChannelTemperature, intParameter: (int)Channel.ForwardScatter, floatParameter: cs.Parameter / 10.0f);
+          break;
+        case 0xA9:
+          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.IsWellEdgeAgitateActive, intParameter: cs.Parameter);
           break;
         case 0xB0:
           outParameters = new ParameterUpdateEventArgs(DeviceParameterType.ChannelTemperature, intParameter: (int)Channel.GreenA, floatParameter: cs.Parameter / 10.0f);

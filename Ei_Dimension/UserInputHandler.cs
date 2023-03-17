@@ -1579,6 +1579,30 @@ namespace Ei_Dimension
             failed = true;
             ErrorMessage = "[0-12000]";
             break;
+          case nameof(SyringeSpeedsViewModel.EdgeDistance):
+            if (int.TryParse(_tempNewString, out iRes))
+            {
+              if (iRes >= 0 && iRes <= 150)
+              {
+                App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.DistanceToWellEdge, iRes);
+                break;
+              }
+            }
+            failed = true;
+            ErrorMessage = "[0-150]";
+            break;
+          case nameof(SyringeSpeedsViewModel.EdgeHeight):
+            if (int.TryParse(_tempNewString, out iRes))
+            {
+              if (iRes >= 0 && iRes <= 100)
+              {
+                App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.WellEdgeDeltaHeight, iRes);
+                break;
+              }
+            }
+            failed = true;
+            ErrorMessage = "[0-100]";
+            break;
           case nameof(DirectMemoryAccessViewModel.HexCode):
             if (int.TryParse(_tempNewString, NumberStyles.HexNumber, Language.TranslationSource.Instance.CurrentCulture, out iRes))
             {

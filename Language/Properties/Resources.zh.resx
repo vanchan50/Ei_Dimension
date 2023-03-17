@@ -1028,6 +1028,15 @@
   <data name="Sheath" xml:space="preserve">
     <value>鞘液</value>
   </data>
+  <data name="SyringeSpeeds_AgitateFromWellEdge" xml:space="preserve">
+    <value>Agitate From Well Edge</value>
+  </data>
+  <data name="SyringeSpeeds_DistanceToEdge" xml:space="preserve">
+    <value>Distance To Edge</value>
+  </data>
+  <data name="SyringeSpeeds_EdgeAgitateHeight" xml:space="preserve">
+    <value>Edge Agitate Δ Height</value>
+  </data>
   <data name="SyringeSpeeds_Flush" xml:space="preserve">
     <value>冲洗</value>
   </data>

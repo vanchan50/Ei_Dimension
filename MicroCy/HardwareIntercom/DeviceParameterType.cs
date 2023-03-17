@@ -100,6 +100,9 @@
     ///<summary>Subparamter: Channel</summary>
     ExtendedRangeMultiplier,
     TraySteps,
-    SheathFlushVolume
+    SheathFlushVolume,
+    IsWellEdgeAgitateActive,
+    DistanceToWellEdge,
+    WellEdgeDeltaHeight
   }
 }

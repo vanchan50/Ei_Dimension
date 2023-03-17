@@ -249,7 +249,7 @@
     <!--Syringe Size-->
     <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Margin="940,150,0,0">
+            Margin="940,210,0,0">
       <StackPanel>
         <TextBlock Text="{lang:Loc SyringeSpeeds_SampleSyringeSize}"
                    FontFamily="{StaticResource AppTextFont}"
@@ -286,6 +286,68 @@
         </TextBox>
       </StackPanel>
     </Border>
+
+    <!--Edge Agitate-->
+    <StackPanel HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Margin="1170,150,0,0">
+      <StackPanel Orientation="Horizontal"
+                  Width="400"
+                  Height="60"
+                  HorizontalAlignment="Left"
+                  VerticalAlignment="Top">
+        <CheckBox FontFamily="{StaticResource AppTextFont}"
+                  FontSize="30"
+                  FontWeight="UltraBold"
+                  Foreground="{StaticResource AppTextColor}"
+                  Style="{StaticResource CheckboxStyle}"
+                  IsChecked="{Binding WellEdgeAgitate[0],Mode=OneWay}">
+          <dxmvvm:Interaction.Behaviors>
+            <dxmvvm:EventToCommand EventName="Checked" Command="{Binding WellEdgeAgitateCheckedCommand}" CommandParameter="True"/>
+            <dxmvvm:EventToCommand EventName="Unchecked" Command="{Binding WellEdgeAgitateCheckedCommand}" CommandParameter="False"/>
+          </dxmvvm:Interaction.Behaviors>
+        </CheckBox>
+        <TextBlock Text="{lang:Loc SyringeSpeeds_AgitateFromWellEdge}"
+                   FontFamily="{StaticResource AppTextFont}"
+                   FontSize="36"
+                   FontWeight="UltraBold"
+                   Foreground="{StaticResource AppTextColor}"
+                   Margin="4,0,0,0"/>
+      </StackPanel>
+      <TextBlock Text="{lang:Loc SyringeSpeeds_DistanceToEdge}"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="36" TextAlignment="Center"
+                 FontWeight="UltraBold"
+                 TextWrapping="Wrap"
+                 Width="140" Height="100"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Center"/>
+      <TextBox Width="140" Name="EdgeDistance"
+               Style="{StaticResource InputFieldStyle}"
+               Text="{Binding EdgeDistance[0]}">
+        <dxmvvm:Interaction.Behaviors>
+          <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="14"/>
+          <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+        </dxmvvm:Interaction.Behaviors>
+      </TextBox>
+      <TextBlock Text="{lang:Loc SyringeSpeeds_EdgeAgitateHeight}"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="36" TextAlignment="Center"
+                 FontWeight="UltraBold"
+                 TextWrapping="Wrap"
+                 Width="200" Height="100"
+                 Margin="0,30,0,6"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Center"/>
+      <TextBox Width="140" Name="DeltaHeight"
+               Style="{StaticResource InputFieldStyle}"
+               Text="{Binding EdgeHeight[0]}">
+        <dxmvvm:Interaction.Behaviors>
+          <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="15"/>
+          <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+        </dxmvvm:Interaction.Behaviors>
+      </TextBox>
+    </StackPanel>
 
   </Grid>
 </UserControl>

@@ -12,8 +12,11 @@ namespace Ei_Dimension.ViewModels
     public virtual ObservableCollection<string> SheathSyringeParameters { get; set; } = new ObservableCollection<string>();
     public virtual ObservableCollection<string> SamplesSyringeParameters { get; set; } = new ObservableCollection<string>();
     public virtual ObservableCollection<bool> SingleSyringeMode { get; set; } = new ObservableCollection<bool>{ false };
+    public virtual ObservableCollection<bool> WellEdgeAgitate { get; set; } = new ObservableCollection<bool> { false };
     public virtual ObservableCollection<string> SampleSyringeSize { get; set; } = new ObservableCollection<string>{""};
     public virtual ObservableCollection<string> SheathFlushVolume { get; set; } = new ObservableCollection<string> { "" };
+    public virtual ObservableCollection<string> EdgeDistance { get; set; } = new ObservableCollection<string> { "" };
+    public virtual ObservableCollection<string> EdgeHeight { get; set; } = new ObservableCollection<string> { "" };
     public static SyringeSpeedsViewModel Instance { get; private set; }
 
     protected SyringeSpeedsViewModel()
@@ -39,6 +42,16 @@ namespace Ei_Dimension.ViewModels
       else
         App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.SampleSyringeType, SampleSyringeType.Single);
       SingleSyringeMode[0] = state;
+    }
+
+    public void WellEdgeAgitateChecked(bool state)
+    {
+      UserInputHandler.InputSanityCheck();
+      if (state)
+        App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.IsWellEdgeAgitateActive, 1);
+      else
+        App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.IsWellEdgeAgitateActive, 0);
+      WellEdgeAgitate[0] = state;
     }
 
     public void FocusedBox(int num)
@@ -102,6 +115,14 @@ namespace Ei_Dimension.ViewModels
         case 13:
           UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(SheathFlushVolume)), this, 0, Views.SyringeSpeedsView.Instance.SheathFlush);
           MainViewModel.Instance.NumpadToggleButton(Views.SyringeSpeedsView.Instance.SheathFlush);
+          break;
+        case 14:
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(EdgeDistance)), this, 0, Views.SyringeSpeedsView.Instance.EdgeDistance);
+          MainViewModel.Instance.NumpadToggleButton(Views.SyringeSpeedsView.Instance.EdgeDistance);
+          break;
+        case 15:
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(EdgeHeight)), this, 0, Views.SyringeSpeedsView.Instance.DeltaHeight);
+          MainViewModel.Instance.NumpadToggleButton(Views.SyringeSpeedsView.Instance.DeltaHeight);
           break;
       }
     }

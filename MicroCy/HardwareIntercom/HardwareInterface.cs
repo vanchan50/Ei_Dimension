@@ -693,6 +693,14 @@ namespace DIOS.Core.HardwareIntercom
           commandCode = 0x36;
           param = intValue;
           break;
+        case DeviceParameterType.WellEdgeDeltaHeight:
+          commandCode = 0x37;
+          param = intValue;
+          break;
+        case DeviceParameterType.DistanceToWellEdge:
+          commandCode = 0x3F;
+          param = intValue;
+          break;
         case DeviceParameterType.WashRepeatsAmount:
           commandCode = 0x86;
           param = intValue;
@@ -703,6 +711,10 @@ namespace DIOS.Core.HardwareIntercom
           break;
         case DeviceParameterType.WellReadingOrder:
           commandCode = 0xA8;
+          param = intValue;
+          break;
+        case DeviceParameterType.IsWellEdgeAgitateActive:
+          commandCode = 0xA9;
           param = intValue;
           break;
         case DeviceParameterType.WellReadingSpeed:
@@ -1506,6 +1518,12 @@ namespace DIOS.Core.HardwareIntercom
         case DeviceParameterType.SheathFlushVolume:
           commandCode = 0x36;
           break;
+        case DeviceParameterType.WellEdgeDeltaHeight:
+          commandCode = 0x37;
+          break;
+        case DeviceParameterType.DistanceToWellEdge:
+          commandCode = 0x3F;
+          break;
         case DeviceParameterType.WashRepeatsAmount:
           commandCode = 0x86;
           break;
@@ -1514,6 +1532,9 @@ namespace DIOS.Core.HardwareIntercom
           break;
         case DeviceParameterType.WellReadingOrder:
           commandCode = 0xA8;
+          break;
+        case DeviceParameterType.IsWellEdgeAgitateActive:
+          commandCode = 0xA9;
           break;
         case DeviceParameterType.WellReadingSpeed:
           commandCode = 0xAA;

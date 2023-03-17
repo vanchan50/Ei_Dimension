@@ -223,6 +223,16 @@ namespace Ei_Dimension
           }
           update = () => SyringeSpeedsViewModel.Instance.SingleSyringeMode[0] = out17;
           break;
+        case DeviceParameterType.IsWellEdgeAgitateActive:
+          bool sign = parameter.Parameter != 0;
+          update = () => SyringeSpeedsViewModel.Instance.WellEdgeAgitate[0] = sign;
+          break;
+        case DeviceParameterType.DistanceToWellEdge:
+          update = () => SyringeSpeedsViewModel.Instance.EdgeDistance[0] = parameter.Parameter.ToString();
+          break;
+        case DeviceParameterType.WellEdgeDeltaHeight:
+          update = () => SyringeSpeedsViewModel.Instance.EdgeHeight[0] = parameter.Parameter.ToString();
+          break;
         case DeviceParameterType.MotorX:
           var type4 = (MotorParameterType)parameter.Parameter;
           var pos4 = 0;

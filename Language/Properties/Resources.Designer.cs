@@ -3231,11 +3231,38 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Agitate From Well Edge.
+        /// </summary>
+        public static string SyringeSpeeds_AgitateFromWellEdge {
+            get {
+                return ResourceManager.GetString("SyringeSpeeds_AgitateFromWellEdge", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Distance To Edge.
+        /// </summary>
+        public static string SyringeSpeeds_DistanceToEdge {
+            get {
+                return ResourceManager.GetString("SyringeSpeeds_DistanceToEdge", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dual Sample Syringes.
         /// </summary>
         public static string SyringeSpeeds_DualSampleSyringes {
             get {
                 return ResourceManager.GetString("SyringeSpeeds_DualSampleSyringes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edge Agitate Δ Height.
+        /// </summary>
+        public static string SyringeSpeeds_EdgeAgitateHeight {
+            get {
+                return ResourceManager.GetString("SyringeSpeeds_EdgeAgitateHeight", resourceCulture);
             }
         }
         
