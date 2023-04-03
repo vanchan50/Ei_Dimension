@@ -15,22 +15,22 @@ namespace DIOS.Application.FileIO
     {
       if (!_publisher.IsPlateReportPublishingActive)
       {
-        _publisher._logger.Log("Plate Report Inactive");
+        _publisher._logger.Log("Plate Report Publishing Inactive");
         return;
       }
 
       if (!_publisher.OutputDirectoryExists(_publisher.SUMMARYFOLDERNAME))
         return;
 
+      var fullFilePath = Path.Combine(_publisher.SUMMARYFOLDERNAME, $"Summary_{filename}_{_publisher.Date}.json");
       try
       {
-        var fullFilePath = Path.Combine(_publisher.SUMMARYFOLDERNAME, $"Summary_{filename}_{_publisher.Date}.json");
         File.WriteAllText(fullFilePath, plateReportJSON);
-        _publisher._logger.Log($"Plate Report saved as {fullFilePath}");
+        _publisher._logger.Log($"Plate Report saved as \"{fullFilePath}\"");
       }
       catch
       {
-        _publisher._logger.Log("Failed to create Plate Report");
+        _publisher._logger.Log($"Failed to create Plate Report at \"{fullFilePath}\"");
       }
     }
 

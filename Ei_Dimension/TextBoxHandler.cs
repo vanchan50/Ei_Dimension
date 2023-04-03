@@ -17,7 +17,10 @@ namespace Ei_Dimension
 
     public void ParameterUpdateEventHandler(object sender, ParameterUpdateEventArgs parameter)
     {
-      App.Logger.Log($"{DateTime.Now.ToString()} UI UPDATE: {parameter.ToString()}");
+      if (parameter.Type != DeviceParameterType.BeadConcentration)
+      {
+        App.Logger.Log($"{DateTime.Now.ToString()} UI UPDATE: {parameter.ToString()}");
+      }
       Action update = null;
       switch (parameter.Type)
       {

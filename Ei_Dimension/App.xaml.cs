@@ -663,12 +663,12 @@ namespace Ei_Dimension
       DiosApp.TerminationType = (Termination)Settings.Default.EndRead;
       DiosApp.MinPerRegion = Settings.Default.MinPerRegion;
       DiosApp.TotalBeadsToCapture = Settings.Default.BeadsToCapture;
+      DiosApp.Device.MaxPressure = Settings.Default.MaxPressure;
+      DiosApp.Device.ReporterScaling = Settings.Default.ReporterScaling;
       var hiSensChannel = Settings.Default.SensitivityChannelB ? HiSensitivityChannel.GreenB : HiSensitivityChannel.GreenC;
       DiosApp.Device.Hardware.SetParameter(DeviceParameterType.HiSensitivityChannel, hiSensChannel);
-      DiosApp.Device.ReporterScaling = Settings.Default.ReporterScaling;
       DiosApp.Device.Hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.Attenuation, DiosApp.MapController.ActiveMap.calParams.att);
       DiosApp.Device.Hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.DNRTransition, DiosApp.MapController.ActiveMap.calParams.DNRTrans);
-      DiosApp.Device.Compensation = DiosApp.MapController.ActiveMap.calParams.compensation;
       DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.SampleSyringeType);
       DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.SampleSyringeSize);
       DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.SheathFlushVolume);
@@ -679,7 +679,6 @@ namespace Ei_Dimension
       DiosApp.Device.Hardware.SetParameter(DeviceParameterType.WashRepeatsAmount, 1); //1 is the default. same as in the box in dashboard
       DiosApp.Device.Hardware.SetParameter(DeviceParameterType.AgitateRepeatsAmount, 1); //1 is the default. same as in the box in dashboard
       //DiosApp.Device.MainCommand("Set Property", code: 0x97, parameter: 1170);  //set current limit of aligner motors if leds are off //0x97 no longer used
-      DiosApp.Device.MaxPressure = Settings.Default.MaxPressure;
     }
   }
 }

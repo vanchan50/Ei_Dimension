@@ -377,6 +377,11 @@ namespace Ei_Dimension.ViewModels
       }
     }
 
+    public void TextChanged(TextChangedEventArgs e)
+    {
+      UserInputHandler.InjectToFocusedTextbox(((TextBox)e.Source).Text, true);
+    }
+
     private void ShowWaitIndicator()
     {
       WaitIndicatorBorderVisibility = Visibility.Visible;

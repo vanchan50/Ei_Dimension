@@ -26,11 +26,11 @@ namespace DIOS.Application.FileIO
       try
       {
         File.AppendAllText(_thisRunStatsFileName, ResultingWellStatsData.HEADER);
-        _publisher._logger.Log($"Results summary file created {_thisRunStatsFileName}");
+        _publisher._logger.Log($"Results summary file created at \"{_thisRunStatsFileName}\"");
       }
       catch (Exception e)
       {
-        _publisher._logger.Log($"Failed to create file {_thisRunStatsFileName}");
+        _publisher._logger.Log($"Failed to create file at \"{_thisRunStatsFileName}\"");
         _publisher._logger.Log(e.Message);
       }
     }

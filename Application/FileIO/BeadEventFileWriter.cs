@@ -33,11 +33,11 @@ namespace DIOS.Application.FileIO
       try
       {
         File.WriteAllText(_fullName, beadsString);
-        _publisher._logger.Log($"Bead event saved as {_fullName}");
+        _publisher._logger.Log($"Bead event saved as \"{_fullName}\"");
       }
       catch (Exception e)
       {
-        _publisher._logger.Log($"Failed to write Bead event to {_fullName}");
+        _publisher._logger.Log($"Failed to write Bead event to \"{_fullName}\"");
         _publisher._logger.Log(e.Message);
       }
     }

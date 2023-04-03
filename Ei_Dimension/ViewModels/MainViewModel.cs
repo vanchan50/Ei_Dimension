@@ -247,7 +247,14 @@ namespace Ei_Dimension.ViewModels
       double shiftX = 0;
       double shiftY = -30;
 
-      HintViewModel.Instance.Width = tb.ActualWidth;
+      if (tb.ActualWidth < 200)
+      {
+        HintViewModel.Instance.Width = tb.ActualWidth;
+      }
+      else
+      {
+        HintViewModel.Instance.Width = 200;
+      }
       MainWindow.Instance.Hint.Margin = new Thickness(p.X - shiftX, p.Y + shiftY, 0, 0);
       HintViewModel.Instance.Text[0] = text;
       HintViewModel.Instance.HintVisible = Visibility.Visible;

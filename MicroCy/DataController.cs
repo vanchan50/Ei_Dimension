@@ -746,13 +746,19 @@ namespace DIOS.Core
           _device.StopOperation();
           break;
       }
-      _logger.Log($"{DateTime.Now.ToString()} REC [{cs.ToString()}]");
       if (outParameters != null)
       {
         _device.OnParameterUpdate(outParameters);
       }
 
       _device.Hardware.DirectFlashReturnValue(in cs);
+
+      #if DEBUG
+      if (cs.Code != 0x1D)
+      {
+        _logger.Log($"{DateTime.Now.ToString()} REC [{cs.ToString()}]");
+      }
+      #endif
     }
   }
 }

@@ -32,11 +32,11 @@ namespace DIOS.Application.FileIO
       try
       {
         File.WriteAllText(fullFilePath, legacyReport);
-        _publisher._logger.Log($"Legacy Plate Report saved as {fullFilePath}");
+        _publisher._logger.Log($"Legacy Plate Report saved at \"{fullFilePath}\"");
       }
       catch
       {
-        _publisher._logger.Log("Failed to create Legacy Plate Report");
+        _publisher._logger.Log($"Failed to create Legacy Plate Report at \"{fullFilePath}\"");
       }
     }
 

@@ -25,6 +25,5 @@
       <Rectangle Fill="{StaticResource RibbonBackgroundActive}"
                  Width="5"/>
     </StackPanel>
-
   </Grid>
 </UserControl>

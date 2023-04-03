@@ -1496,6 +1496,22 @@ namespace Ei_Dimension
               $"[{(2 * ComponentsViewModel.TOKILOPASCALCOEFFICIENT).ToString("f3")}-{(40 * ComponentsViewModel.TOKILOPASCALCOEFFICIENT).ToString("f3")}]";
             break;
           case nameof(TemplateSelectViewModel.Instance.TemplateSaveName):
+            var flag1 = false;
+            foreach (var c in App.InvalidChars)
+            {
+              if (_tempNewString.Contains(c.ToString()))
+              {
+                flag1 = true;
+                break;
+              }
+            }
+
+            if (flag1)
+            {
+              failed = true;
+              ErrorMessage = "Invalid Name";
+              break;
+            }
             TemplateSelectViewModel.Instance.TemplateSaveName[0] = _tempNewString;
             break;
           case nameof(MaintenanceViewModel.Instance.SanitizeSecondsContent):

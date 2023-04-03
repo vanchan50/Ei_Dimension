@@ -452,7 +452,7 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Forward Scatter.
+        ///   Looks up a localized string similar to External PMT.
         /// </summary>
         public static string Channels_Forward_Scatter {
             get {

@@ -22,7 +22,7 @@
     public byte l_offset_gv;    //samples between green and violet peak
     public int region;
     public int zone;     //*1K shift and inject into region
-    public float fsc;       //Forward Scatter
+    public float fsc;       //Forward Scatter -> changed to "External PMT"
 
     public float violetssc; //Violet A
     public float cl0;       //Violet B
