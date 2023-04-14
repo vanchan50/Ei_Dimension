@@ -103,6 +103,7 @@
     SheathFlushVolume,
     IsWellEdgeAgitateActive,
     DistanceToWellEdge,
-    WellEdgeDeltaHeight
+    WellEdgeDeltaHeight,
+    FlushCycles
   }
 }

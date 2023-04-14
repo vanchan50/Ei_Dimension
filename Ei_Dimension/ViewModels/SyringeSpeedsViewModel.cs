@@ -17,6 +17,7 @@ namespace Ei_Dimension.ViewModels
     public virtual ObservableCollection<string> SheathFlushVolume { get; set; } = new ObservableCollection<string> { "" };
     public virtual ObservableCollection<string> EdgeDistance { get; set; } = new ObservableCollection<string> { "" };
     public virtual ObservableCollection<string> EdgeHeight { get; set; } = new ObservableCollection<string> { "" };
+    public virtual ObservableCollection<string> FlushCycles { get; set; } = new ObservableCollection<string> { "" };
     public static SyringeSpeedsViewModel Instance { get; private set; }
 
     protected SyringeSpeedsViewModel()
@@ -123,6 +124,10 @@ namespace Ei_Dimension.ViewModels
         case 15:
           UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(EdgeHeight)), this, 0, Views.SyringeSpeedsView.Instance.DeltaHeight);
           MainViewModel.Instance.NumpadToggleButton(Views.SyringeSpeedsView.Instance.DeltaHeight);
+          break;
+        case 16:
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(FlushCycles)), this, 0, Views.SyringeSpeedsView.Instance.FlushCycles);
+          MainViewModel.Instance.NumpadToggleButton(Views.SyringeSpeedsView.Instance.FlushCycles);
           break;
       }
     }

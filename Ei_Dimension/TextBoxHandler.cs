@@ -236,6 +236,9 @@ namespace Ei_Dimension
         case DeviceParameterType.WellEdgeDeltaHeight:
           update = () => SyringeSpeedsViewModel.Instance.EdgeHeight[0] = parameter.Parameter.ToString();
           break;
+        case DeviceParameterType.FlushCycles:
+          update = () => SyringeSpeedsViewModel.Instance.FlushCycles[0] = parameter.Parameter.ToString();
+          break;
         case DeviceParameterType.MotorX:
           var type4 = (MotorParameterType)parameter.Parameter;
           var pos4 = 0;

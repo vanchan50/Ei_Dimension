@@ -1232,6 +1232,9 @@ Speeds</value>
   <data name="SyringeSpeeds_Flush" xml:space="preserve">
     <value>Flush</value>
   </data>
+  <data name="SyringeSpeeds_FlushCycles" xml:space="preserve">
+    <value>Flush Cycles</value>
+  </data>
   <data name="SyringeSpeeds_HiSens" xml:space="preserve">
     <value>Hi Sens</value>
   </data>

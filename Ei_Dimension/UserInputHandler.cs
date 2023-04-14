@@ -141,12 +141,13 @@ namespace Ei_Dimension
               ErrorMessage = "[>0]";
             }
             break;
-          case nameof(DashboardViewModel.Instance.Volumes):
+          case nameof(DashboardViewModel.Volumes):
             if (SelectedTextBox.index == 0)
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 10 && iRes <= 100)
+                //if (iRes >= 10 && iRes <= 100)
+                if (iRes >= 0)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.Volume, VolumeType.Sample, (ushort)iRes);
                   break;
@@ -159,7 +160,8 @@ namespace Ei_Dimension
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 1 && iRes <= 150)
+                //if (iRes >= 1 && iRes <= 150)
+                if (iRes >= 0)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.Volume, VolumeType.Wash, (ushort)iRes);
                   break;
@@ -172,7 +174,8 @@ namespace Ei_Dimension
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 1 && iRes <= 500)
+                //if (iRes >= 1 && iRes <= 500)
+                if (iRes >= 0)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.Volume, VolumeType.Agitate, (ushort)iRes);
                   break;
@@ -182,7 +185,7 @@ namespace Ei_Dimension
               ErrorMessage = "[1-500]";
             }
             break;
-          case nameof(DashboardViewModel.Instance.Repeats):
+          case nameof(DashboardViewModel.Repeats):
             if (SelectedTextBox.index == 0)
             {
               if (int.TryParse(_tempNewString, out iRes))
@@ -1618,6 +1621,18 @@ namespace Ei_Dimension
             }
             failed = true;
             ErrorMessage = "[0-100]";
+            break;
+          case nameof(SyringeSpeedsViewModel.FlushCycles):
+            if (int.TryParse(_tempNewString, out iRes))
+            {
+              if (iRes >= 0)// && iRes <= 100)
+              {
+                App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.FlushCycles, iRes);
+                break;
+              }
+            }
+            failed = true;
+            ErrorMessage = $"[0-{int.MaxValue}]";
             break;
           case nameof(DirectMemoryAccessViewModel.HexCode):
             if (int.TryParse(_tempNewString, NumberStyles.HexNumber, Language.TranslationSource.Instance.CurrentCulture, out iRes))

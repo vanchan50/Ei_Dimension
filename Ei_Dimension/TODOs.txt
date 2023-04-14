@@ -133,3 +133,5 @@ MapController needs more attention
 
 BeadEventsData should not output a string, but a list. process the list elsewhere (in writer?)
 true for other writers (or make static decoder class (should be better))
+
+large file causes please wait to stuck

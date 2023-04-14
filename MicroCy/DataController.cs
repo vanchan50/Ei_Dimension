@@ -619,6 +619,9 @@ namespace DIOS.Core
         case 0x86:
           outParameters = new ParameterUpdateEventArgs(DeviceParameterType.WashRepeatsAmount, intParameter: cs.Parameter);
           break;
+        case 0x87:
+          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.FlushCycles, intParameter: cs.Parameter);
+          break;
         case 0xA8:
           outParameters = new ParameterUpdateEventArgs(DeviceParameterType.WellReadingOrder, intParameter: cs.Parameter);
           break;

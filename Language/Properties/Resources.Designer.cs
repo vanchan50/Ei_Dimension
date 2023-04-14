@@ -3276,6 +3276,15 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Flush Cycles.
+        /// </summary>
+        public static string SyringeSpeeds_FlushCycles {
+            get {
+                return ResourceManager.GetString("SyringeSpeeds_FlushCycles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hi Sens.
         /// </summary>
         public static string SyringeSpeeds_HiSens {

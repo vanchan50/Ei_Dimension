@@ -705,6 +705,10 @@ namespace DIOS.Core.HardwareIntercom
           commandCode = 0x86;
           param = intValue;
           break;
+        case DeviceParameterType.FlushCycles:
+          commandCode = 0x87;
+          param = intValue;
+          break;
         case DeviceParameterType.AgitateRepeatsAmount:
           commandCode = 0x7F;
           param = intValue;
@@ -1526,6 +1530,9 @@ namespace DIOS.Core.HardwareIntercom
           break;
         case DeviceParameterType.WashRepeatsAmount:
           commandCode = 0x86;
+          break;
+        case DeviceParameterType.FlushCycles:
+          commandCode = 0x87;
           break;
         case DeviceParameterType.AgitateRepeatsAmount:
           commandCode = 0x7F;
