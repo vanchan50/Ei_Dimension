@@ -33,6 +33,14 @@ namespace Ei_Dimension
     private static string _tempOldString;
     private static string _tempNewString;
     private static bool _cancelKeyboardInjectionFlag;
+    private static bool _disableSanityCheck;
+
+    static UserInputHandler()
+    {
+      #if DEBUG
+      _disableSanityCheck = true;
+      #endif
+    }
 
     public static void InjectToFocusedTextbox(string input, bool keyboardinput = false)
     {
@@ -74,7 +82,7 @@ namespace Ei_Dimension
           case nameof(CalibrationViewModel.Instance.CompensationPercentageContent):
             if (float.TryParse(_tempNewString, out fRes))
             {
-              if (fRes >= 0 && fRes <= 10)
+              if ((fRes >= 0 && fRes <= 10) || _disableSanityCheck)
               {
                 App.DiosApp.Device.Compensation = fRes;
                 break;
@@ -88,7 +96,7 @@ namespace Ei_Dimension
             {
               if (float.TryParse(_tempNewString, out fRes))
               {
-                if (fRes >= 1 && fRes <= 300)
+                if ((fRes >= 1 && fRes <= 300) || _disableSanityCheck)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.DNRCoefficient, fRes);
                   break;
@@ -101,7 +109,7 @@ namespace Ei_Dimension
             {
               if (float.TryParse(_tempNewString, out fRes))
               {
-                if (fRes >= 1 && fRes <= 40000)
+                if ((fRes >= 1 && fRes <= 40000) || _disableSanityCheck)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.DNRTransition, fRes);
                   break;
@@ -116,7 +124,7 @@ namespace Ei_Dimension
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 1)
+                if ((iRes >= 1) || _disableSanityCheck)
                 {
                   App.DiosApp.MinPerRegion = iRes;
                   Settings.Default.MinPerRegion = iRes;
@@ -130,7 +138,7 @@ namespace Ei_Dimension
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 1)
+                if ((iRes >= 1) || _disableSanityCheck)
                 {
                   App.DiosApp.TotalBeadsToCapture = iRes;
                   Settings.Default.BeadsToCapture = iRes;
@@ -147,7 +155,7 @@ namespace Ei_Dimension
               if (int.TryParse(_tempNewString, out iRes))
               {
                 //if (iRes >= 10 && iRes <= 100)
-                if (iRes >= 0)
+                if ((iRes >= 0) || _disableSanityCheck)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.Volume, VolumeType.Sample, (ushort)iRes);
                   break;
@@ -161,7 +169,7 @@ namespace Ei_Dimension
               if (int.TryParse(_tempNewString, out iRes))
               {
                 //if (iRes >= 1 && iRes <= 150)
-                if (iRes >= 0)
+                if ((iRes >= 0) || _disableSanityCheck)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.Volume, VolumeType.Wash, (ushort)iRes);
                   break;
@@ -175,7 +183,7 @@ namespace Ei_Dimension
               if (int.TryParse(_tempNewString, out iRes))
               {
                 //if (iRes >= 1 && iRes <= 500)
-                if (iRes >= 0)
+                if ((iRes >= 0) || _disableSanityCheck)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.Volume, VolumeType.Agitate, (ushort)iRes);
                   break;
@@ -190,7 +198,7 @@ namespace Ei_Dimension
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 1 && iRes <= 10)
+                if ((iRes >= 1 && iRes <= 10) || _disableSanityCheck)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.WashRepeatsAmount, (ushort)iRes);
                   break;
@@ -203,7 +211,7 @@ namespace Ei_Dimension
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 1 && iRes <= 10)
+                if ((iRes >= 1 && iRes <= 10) || _disableSanityCheck)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.AgitateRepeatsAmount, (ushort)iRes);
                   break;
@@ -218,7 +226,7 @@ namespace Ei_Dimension
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 1 && iRes <= 2000)
+                if ((iRes >= 1 && iRes <= 2000) || _disableSanityCheck)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.Height, iRes);
                   break;
@@ -231,7 +239,7 @@ namespace Ei_Dimension
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 0 && iRes <= 20000)
+                if ((iRes >= 0 && iRes <= 20000) || _disableSanityCheck)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.MinSSC, iRes);
                   break;
@@ -244,7 +252,7 @@ namespace Ei_Dimension
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 0 && iRes <= 30000)
+                if ((iRes >= 0 && iRes <= 30000) || _disableSanityCheck)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.MaxSSC, iRes);
                   break;
@@ -259,7 +267,7 @@ namespace Ei_Dimension
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 0 && iRes <= 30000)
+                if ((iRes >= 0 && iRes <= 30000) || _disableSanityCheck)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.CalibrationTarget, CalibrationTarget.CL0, iRes);
                   break;
@@ -272,7 +280,7 @@ namespace Ei_Dimension
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 0 && iRes <= 30000)
+                if ((iRes >= 0 && iRes <= 30000) || _disableSanityCheck)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.CalibrationTarget, CalibrationTarget.CL1, iRes);
                   break;
@@ -285,7 +293,7 @@ namespace Ei_Dimension
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 0 && iRes <= 30000)
+                if ((iRes >= 0 && iRes <= 30000) || _disableSanityCheck)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.CalibrationTarget, CalibrationTarget.CL2, iRes);
                   break;
@@ -298,7 +306,7 @@ namespace Ei_Dimension
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 0 && iRes <= 30000)
+                if ((iRes >= 0 && iRes <= 30000) || _disableSanityCheck)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.CalibrationTarget, CalibrationTarget.CL3, iRes);
                   break;
@@ -311,7 +319,7 @@ namespace Ei_Dimension
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 0 && iRes <= 30000)
+                if ((iRes >= 0 && iRes <= 30000) || _disableSanityCheck)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.CalibrationTarget, CalibrationTarget.RP1, iRes);
                   break;
@@ -324,7 +332,7 @@ namespace Ei_Dimension
           case nameof(CalibrationViewModel.Instance.AttenuationBox):
             if (int.TryParse(_tempNewString, out iRes))
             {
-              if (iRes >= 0 && iRes <= 100)
+              if ((iRes >= 0 && iRes <= 100) || _disableSanityCheck)
               {
                 App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.Attenuation, iRes);
                 break;
@@ -338,7 +346,7 @@ namespace Ei_Dimension
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 0 && iRes <= 1000)
+                if ((iRes >= 0 && iRes <= 1000) || _disableSanityCheck)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.SyringeSpeedSheath, SyringeSpeed.Normal, iRes);
                   break;
@@ -351,7 +359,7 @@ namespace Ei_Dimension
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 0 && iRes <= 1000)
+                if ((iRes >= 0 && iRes <= 1000) || _disableSanityCheck)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.SyringeSpeedSheath, SyringeSpeed.HiSpeed, iRes);
                   break;
@@ -364,7 +372,7 @@ namespace Ei_Dimension
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 0 && iRes <= 1000)
+                if ((iRes >= 0 && iRes <= 1000) || _disableSanityCheck)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.SyringeSpeedSheath, SyringeSpeed.HiSensitivity, iRes);
                   break;
@@ -377,7 +385,7 @@ namespace Ei_Dimension
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 0 && iRes <= 8000)
+                if ((iRes >= 0 && iRes <= 8000) || _disableSanityCheck)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.SyringeSpeedSheath, SyringeSpeed.Flush, iRes);
                   break;
@@ -390,7 +398,7 @@ namespace Ei_Dimension
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 0 && iRes <= 8000)
+                if ((iRes >= 0 && iRes <= 8000) || _disableSanityCheck)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.SyringeSpeedSheath, SyringeSpeed.Pickup, iRes);
                   break;
@@ -403,7 +411,7 @@ namespace Ei_Dimension
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 0 && iRes <= 8000)
+                if ((iRes >= 0 && iRes <= 8000) || _disableSanityCheck)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.SyringeSpeedSheath, SyringeSpeed.MaxSpeed, iRes);
                   break;
@@ -418,7 +426,7 @@ namespace Ei_Dimension
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 0 && iRes <= 1000)
+                if ((iRes >= 0 && iRes <= 1000) || _disableSanityCheck)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.SyringeSpeedSample, SyringeSpeed.Normal, iRes);
                   break;
@@ -431,7 +439,7 @@ namespace Ei_Dimension
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 0 && iRes <= 1000)
+                if ((iRes >= 0 && iRes <= 1000) || _disableSanityCheck)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.SyringeSpeedSample, SyringeSpeed.HiSpeed, iRes);
                   break;
@@ -444,7 +452,7 @@ namespace Ei_Dimension
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 0 && iRes <= 1000)
+                if ((iRes >= 0 && iRes <= 1000) || _disableSanityCheck)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.SyringeSpeedSample, SyringeSpeed.HiSensitivity, iRes);
                   break;
@@ -457,7 +465,7 @@ namespace Ei_Dimension
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 0 && iRes <= 8000)
+                if ((iRes >= 0 && iRes <= 8000) || _disableSanityCheck)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.SyringeSpeedSample, SyringeSpeed.Flush, iRes);
                   break;
@@ -470,7 +478,7 @@ namespace Ei_Dimension
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 0 && iRes <= 8000)
+                if ((iRes >= 0 && iRes <= 8000) || _disableSanityCheck)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.SyringeSpeedSample, SyringeSpeed.Pickup, iRes);
                   break;
@@ -483,7 +491,7 @@ namespace Ei_Dimension
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 0 && iRes <= 8000)
+                if ((iRes >= 0 && iRes <= 8000) || _disableSanityCheck)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.SyringeSpeedSample, SyringeSpeed.MaxSpeed, iRes);
                   break;
@@ -496,7 +504,7 @@ namespace Ei_Dimension
           case "SiPMTempCoeff":
             if (float.TryParse(_tempNewString, out fRes))
             {
-              if (fRes >= -10.0000000001 && fRes <= 10.00000000000001)
+              if ((fRes >= -10.0000000001 && fRes <= 10.00000000000001) || _disableSanityCheck)
               {
                 App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.SiPMTempCoeff, fRes);
                 break;
@@ -508,7 +516,7 @@ namespace Ei_Dimension
           case "CalibrationMargin":
             if (float.TryParse(_tempNewString, out fRes))
             {
-              if (fRes >= 0 && fRes < 0.1)
+              if ((fRes >= 0 && fRes < 0.1) || _disableSanityCheck)
               {
                 App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.CalibrationMargin, fRes);
                 break;
@@ -520,7 +528,7 @@ namespace Ei_Dimension
           case "ReporterScale":
             if (float.TryParse(_tempNewString, out fRes))
             {
-              if (fRes > 0)
+              if ((fRes > 0) || _disableSanityCheck)
               {
                 App.DiosApp.Device.ReporterScaling = fRes;
                 Settings.Default.ReporterScaling = fRes;
@@ -536,7 +544,7 @@ namespace Ei_Dimension
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 0 && ((App.DiosApp.Device.BoardVersion == 0 && iRes <= 3500) || (App.DiosApp.Device.BoardVersion >= 1 && iRes <= 10000)))
+                if ((iRes >= 0 && ((App.DiosApp.Device.BoardVersion == 0 && iRes <= 3500) || (App.DiosApp.Device.BoardVersion >= 1 && iRes <= 10000))) || _disableSanityCheck)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ChannelBias30C, Channel.GreenA, iRes);
                   break;
@@ -549,7 +557,7 @@ namespace Ei_Dimension
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 0 && ((App.DiosApp.Device.BoardVersion == 0 && iRes <= 3500) || (App.DiosApp.Device.BoardVersion >= 1 && iRes <= 10000)))
+                if ((iRes >= 0 && ((App.DiosApp.Device.BoardVersion == 0 && iRes <= 3500) || (App.DiosApp.Device.BoardVersion >= 1 && iRes <= 10000))) || _disableSanityCheck)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ChannelBias30C, Channel.GreenB, iRes);
                   break;
@@ -562,7 +570,7 @@ namespace Ei_Dimension
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 0 && ((App.DiosApp.Device.BoardVersion == 0 && iRes <= 3500) || (App.DiosApp.Device.BoardVersion >= 1 && iRes <= 10000)))
+                if ((iRes >= 0 && ((App.DiosApp.Device.BoardVersion == 0 && iRes <= 3500) || (App.DiosApp.Device.BoardVersion >= 1 && iRes <= 10000))) || _disableSanityCheck)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ChannelBias30C, Channel.GreenC, iRes);
                   break;
@@ -575,7 +583,7 @@ namespace Ei_Dimension
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 0 && ((App.DiosApp.Device.BoardVersion == 0 && iRes <= 3500) || (App.DiosApp.Device.BoardVersion >= 1 && iRes <= 10000)))
+                if ((iRes >= 0 && ((App.DiosApp.Device.BoardVersion == 0 && iRes <= 3500) || (App.DiosApp.Device.BoardVersion >= 1 && iRes <= 10000))) || _disableSanityCheck)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ChannelBias30C, Channel.RedA, iRes);
                   break;
@@ -588,7 +596,7 @@ namespace Ei_Dimension
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 0 && ((App.DiosApp.Device.BoardVersion == 0 && iRes <= 3500) || (App.DiosApp.Device.BoardVersion >= 1 && iRes <= 10000)))
+                if ((iRes >= 0 && ((App.DiosApp.Device.BoardVersion == 0 && iRes <= 3500) || (App.DiosApp.Device.BoardVersion >= 1 && iRes <= 10000))) || _disableSanityCheck)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ChannelBias30C, Channel.RedB, iRes);
                   break;
@@ -601,7 +609,7 @@ namespace Ei_Dimension
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 0 && ((App.DiosApp.Device.BoardVersion == 0 && iRes <= 3500) || (App.DiosApp.Device.BoardVersion >= 1 && iRes <= 10000)))
+                if ((iRes >= 0 && ((App.DiosApp.Device.BoardVersion == 0 && iRes <= 3500) || (App.DiosApp.Device.BoardVersion >= 1 && iRes <= 10000))) || _disableSanityCheck)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ChannelBias30C, Channel.RedC, iRes);
                   break;
@@ -614,7 +622,7 @@ namespace Ei_Dimension
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 0 && ((App.DiosApp.Device.BoardVersion == 0 && iRes <= 3500) || (App.DiosApp.Device.BoardVersion >= 1 && iRes <= 10000)))
+                if ((iRes >= 0 && ((App.DiosApp.Device.BoardVersion == 0 && iRes <= 3500) || (App.DiosApp.Device.BoardVersion >= 1 && iRes <= 10000))) || _disableSanityCheck)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ChannelBias30C, Channel.RedD, iRes);
                   break;
@@ -627,7 +635,7 @@ namespace Ei_Dimension
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 0 && ((App.DiosApp.Device.BoardVersion == 0 && iRes <= 3500) || (App.DiosApp.Device.BoardVersion >= 1 && iRes <= 10000)))
+                if ((iRes >= 0 && ((App.DiosApp.Device.BoardVersion == 0 && iRes <= 3500) || (App.DiosApp.Device.BoardVersion >= 1 && iRes <= 10000))) || _disableSanityCheck)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ChannelBias30C, Channel.VioletA, iRes);
                   break;
@@ -640,7 +648,7 @@ namespace Ei_Dimension
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 0 && ((App.DiosApp.Device.BoardVersion == 0 && iRes <= 3500) || (App.DiosApp.Device.BoardVersion >= 1 && iRes <= 10000)))
+                if ((iRes >= 0 && ((App.DiosApp.Device.BoardVersion == 0 && iRes <= 3500) || (App.DiosApp.Device.BoardVersion >= 1 && iRes <= 10000))) || _disableSanityCheck)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ChannelBias30C, Channel.VioletB, iRes);
                   break;
@@ -653,7 +661,7 @@ namespace Ei_Dimension
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 0 && ((App.DiosApp.Device.BoardVersion == 0 && iRes <= 3500) || (App.DiosApp.Device.BoardVersion >= 1 && iRes <= 10000)))
+                if ((iRes >= 0 && ((App.DiosApp.Device.BoardVersion == 0 && iRes <= 3500) || (App.DiosApp.Device.BoardVersion >= 1 && iRes <= 10000))) || _disableSanityCheck)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ChannelBias30C, Channel.ForwardScatter, iRes);
                   break;
@@ -668,7 +676,7 @@ namespace Ei_Dimension
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 0 && ((App.DiosApp.Device.BoardVersion == 0 && iRes <= 4095) || (App.DiosApp.Device.BoardVersion >= 1 && iRes <= 65535)))
+                if ((iRes >= 0 && ((App.DiosApp.Device.BoardVersion == 0 && iRes <= 4095) || (App.DiosApp.Device.BoardVersion >= 1 && iRes <= 65535))) || _disableSanityCheck)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ChannelOffset, Channel.GreenA, iRes);
                   ChannelOffsetViewModel.Instance.OverrideSliderChange = true;
@@ -683,7 +691,7 @@ namespace Ei_Dimension
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 0 && ((App.DiosApp.Device.BoardVersion == 0 && iRes <= 4095) || (App.DiosApp.Device.BoardVersion >= 1 && iRes <= 65535)))
+                if ((iRes >= 0 && ((App.DiosApp.Device.BoardVersion == 0 && iRes <= 4095) || (App.DiosApp.Device.BoardVersion >= 1 && iRes <= 65535))) || _disableSanityCheck)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ChannelOffset, Channel.GreenB, iRes);
                   ChannelOffsetViewModel.Instance.OverrideSliderChange = true;
@@ -698,7 +706,7 @@ namespace Ei_Dimension
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 0 && ((App.DiosApp.Device.BoardVersion == 0 && iRes <= 4095) || (App.DiosApp.Device.BoardVersion >= 1 && iRes <= 65535)))
+                if ((iRes >= 0 && ((App.DiosApp.Device.BoardVersion == 0 && iRes <= 4095) || (App.DiosApp.Device.BoardVersion >= 1 && iRes <= 65535))) || _disableSanityCheck)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ChannelOffset, Channel.GreenC, iRes);
                   ChannelOffsetViewModel.Instance.OverrideSliderChange = true;
@@ -713,7 +721,7 @@ namespace Ei_Dimension
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 0 && ((App.DiosApp.Device.BoardVersion == 0 && iRes <= 4095) || (App.DiosApp.Device.BoardVersion >= 1 && iRes <= 65535)))
+                if ((iRes >= 0 && ((App.DiosApp.Device.BoardVersion == 0 && iRes <= 4095) || (App.DiosApp.Device.BoardVersion >= 1 && iRes <= 65535))) || _disableSanityCheck)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ChannelOffset, Channel.RedA, iRes);
                   break;
@@ -726,7 +734,7 @@ namespace Ei_Dimension
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 0 && ((App.DiosApp.Device.BoardVersion == 0 && iRes <= 4095) || (App.DiosApp.Device.BoardVersion >= 1 && iRes <= 65535)))
+                if ((iRes >= 0 && ((App.DiosApp.Device.BoardVersion == 0 && iRes <= 4095) || (App.DiosApp.Device.BoardVersion >= 1 && iRes <= 65535))) || _disableSanityCheck)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ChannelOffset, Channel.RedB, iRes);
                   break;
@@ -739,7 +747,7 @@ namespace Ei_Dimension
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 0 && ((App.DiosApp.Device.BoardVersion == 0 && iRes <= 4095) || (App.DiosApp.Device.BoardVersion >= 1 && iRes <= 65535)))
+                if ((iRes >= 0 && ((App.DiosApp.Device.BoardVersion == 0 && iRes <= 4095) || (App.DiosApp.Device.BoardVersion >= 1 && iRes <= 65535))) || _disableSanityCheck)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ChannelOffset, Channel.RedC, iRes);
                   break;
@@ -752,7 +760,7 @@ namespace Ei_Dimension
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 0 && ((App.DiosApp.Device.BoardVersion == 0 && iRes <= 4095) || (App.DiosApp.Device.BoardVersion >= 1 && iRes <= 65535)))
+                if ((iRes >= 0 && ((App.DiosApp.Device.BoardVersion == 0 && iRes <= 4095) || (App.DiosApp.Device.BoardVersion >= 1 && iRes <= 65535))) || _disableSanityCheck)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ChannelOffset, Channel.RedD, iRes);
                   break;
@@ -765,7 +773,7 @@ namespace Ei_Dimension
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 0 && ((App.DiosApp.Device.BoardVersion == 0 && iRes <= 4095) || (App.DiosApp.Device.BoardVersion >= 1 && iRes <= 65535)))
+                if ((iRes >= 0 && ((App.DiosApp.Device.BoardVersion == 0 && iRes <= 4095) || (App.DiosApp.Device.BoardVersion >= 1 && iRes <= 65535))) || _disableSanityCheck)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ChannelOffset, Channel.VioletA, iRes);
                   break;
@@ -778,7 +786,7 @@ namespace Ei_Dimension
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 0 && ((App.DiosApp.Device.BoardVersion == 0 && iRes <= 4095) || (App.DiosApp.Device.BoardVersion >= 1 && iRes <= 65535)))
+                if ((iRes >= 0 && ((App.DiosApp.Device.BoardVersion == 0 && iRes <= 4095) || (App.DiosApp.Device.BoardVersion >= 1 && iRes <= 65535))) || _disableSanityCheck)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ChannelOffset, Channel.VioletB, iRes);
                   break;
@@ -791,7 +799,7 @@ namespace Ei_Dimension
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 0 && ((App.DiosApp.Device.BoardVersion == 0 && iRes <= 4095) || (App.DiosApp.Device.BoardVersion >= 1 && iRes <= 65535)))
+                if ((iRes >= 0 && ((App.DiosApp.Device.BoardVersion == 0 && iRes <= 4095) || (App.DiosApp.Device.BoardVersion >= 1 && iRes <= 65535))) || _disableSanityCheck)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ChannelOffset, Channel.ForwardScatter, iRes);
                   break;
@@ -940,7 +948,7 @@ namespace Ei_Dimension
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 0 && iRes <= 65535)
+                if ((iRes >= 0 && iRes <= 65535) || _disableSanityCheck)
                 {
                   break;
                 }
@@ -952,7 +960,7 @@ namespace Ei_Dimension
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 1000 && iRes <= 3000)
+                if ((iRes >= 1000 && iRes <= 3000) || _disableSanityCheck)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorX, MotorParameterType.Slope, iRes);
                   break;
@@ -965,7 +973,7 @@ namespace Ei_Dimension
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 1000 && iRes <= 5000)
+                if ((iRes >= 1000 && iRes <= 5000) || _disableSanityCheck)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorX, MotorParameterType.StartSpeed, iRes);
                   break;
@@ -978,7 +986,7 @@ namespace Ei_Dimension
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 1000 && iRes <= 10000)
+                if ((iRes >= 1000 && iRes <= 10000) || _disableSanityCheck)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorX, MotorParameterType.RunSpeed, iRes);
                   break;
@@ -991,7 +999,7 @@ namespace Ei_Dimension
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 200 && iRes <= 2000)
+                if ((iRes >= 200 && iRes <= 2000) || _disableSanityCheck)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorX, MotorParameterType.EncoderSteps, iRes);
                   Settings.Default.StepsPerRevX = (ushort)iRes;
@@ -1005,7 +1013,7 @@ namespace Ei_Dimension
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 0 && ((App.DiosApp.Device.BoardVersion == 0 && iRes <= 4095) || (App.DiosApp.Device.BoardVersion >= 1 && iRes <= 65535)))
+                if ((iRes >= 0 && ((App.DiosApp.Device.BoardVersion == 0 && iRes <= 4095) || (App.DiosApp.Device.BoardVersion >= 1 && iRes <= 65535))) || _disableSanityCheck)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorX, MotorParameterType.CurrentLimit, iRes);
                   break;
@@ -1020,7 +1028,7 @@ namespace Ei_Dimension
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 0 && iRes <= 65535)
+                if ((iRes >= 0 && iRes <= 65535) || _disableSanityCheck)
                 {
                   break;
                 }
@@ -1032,7 +1040,7 @@ namespace Ei_Dimension
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 1000 && iRes <= 3000)
+                if ((iRes >= 1000 && iRes <= 3000) || _disableSanityCheck)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorY, MotorParameterType.Slope, iRes);
                   break;
@@ -1045,7 +1053,7 @@ namespace Ei_Dimension
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 1000 && iRes <= 5000)
+                if ((iRes >= 1000 && iRes <= 5000) || _disableSanityCheck)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorY, MotorParameterType.StartSpeed, iRes);
                   break;
@@ -1058,7 +1066,7 @@ namespace Ei_Dimension
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 1000 && iRes <= 10000)
+                if ((iRes >= 1000 && iRes <= 10000) || _disableSanityCheck)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorY, MotorParameterType.RunSpeed, iRes);
                   break;
@@ -1071,7 +1079,7 @@ namespace Ei_Dimension
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 200 && iRes <= 2000)
+                if ((iRes >= 200 && iRes <= 2000) || _disableSanityCheck)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorY, MotorParameterType.EncoderSteps, iRes);
                   Settings.Default.StepsPerRevY = (ushort)iRes;
@@ -1085,7 +1093,7 @@ namespace Ei_Dimension
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 0 && ((App.DiosApp.Device.BoardVersion == 0 && iRes <= 4095) || (App.DiosApp.Device.BoardVersion >= 1 && iRes <= 65535)))
+                if ((iRes >= 0 && ((App.DiosApp.Device.BoardVersion == 0 && iRes <= 4095) || (App.DiosApp.Device.BoardVersion >= 1 && iRes <= 65535))) || _disableSanityCheck)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorY, MotorParameterType.CurrentLimit, iRes);
                   break;
@@ -1100,7 +1108,7 @@ namespace Ei_Dimension
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 0 && iRes <= 65535)
+                if ((iRes >= 0 && iRes <= 65535) || _disableSanityCheck)
                 {
                   break;
                 }
@@ -1112,7 +1120,7 @@ namespace Ei_Dimension
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 1000 && iRes <= 3000)
+                if ((iRes >= 1000 && iRes <= 3000) || _disableSanityCheck)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorZ, MotorParameterType.Slope, iRes);
                   break;
@@ -1125,7 +1133,7 @@ namespace Ei_Dimension
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 1000 && iRes <= 5000)
+                if ((iRes >= 1000 && iRes <= 5000) || _disableSanityCheck)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorZ, MotorParameterType.StartSpeed, iRes);
                   break;
@@ -1138,7 +1146,7 @@ namespace Ei_Dimension
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 1000 && iRes <= 10000)
+                if ((iRes >= 1000 && iRes <= 10000) || _disableSanityCheck)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorZ, MotorParameterType.RunSpeed, iRes);
                   break;
@@ -1151,7 +1159,7 @@ namespace Ei_Dimension
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 200 && iRes <= 2000)
+                if ((iRes >= 200 && iRes <= 2000) || _disableSanityCheck)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorZ, MotorParameterType.EncoderSteps, iRes);
                   Settings.Default.StepsPerRevZ = (ushort)iRes;
@@ -1165,7 +1173,7 @@ namespace Ei_Dimension
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                if (iRes >= 0 && ((App.DiosApp.Device.BoardVersion == 0 && iRes <= 4095) || (App.DiosApp.Device.BoardVersion >= 1 && iRes <= 65535)))
+                if ((iRes >= 0 && ((App.DiosApp.Device.BoardVersion == 0 && iRes <= 4095) || (App.DiosApp.Device.BoardVersion >= 1 && iRes <= 65535))) || _disableSanityCheck)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorZ, MotorParameterType.CurrentLimit, iRes);
                   break;
@@ -1180,7 +1188,7 @@ namespace Ei_Dimension
             {
               if (float.TryParse(_tempNewString, out fRes))
               {
-                if (fRes >= 0 && fRes <= 20000.0000000001)
+                if ((fRes >= 0 && fRes <= 20000.0000000001) || _disableSanityCheck)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorStepsX, MotorStepsX.Plate96Column1, fRes);
                   break;
@@ -1193,7 +1201,7 @@ namespace Ei_Dimension
             {
               if (float.TryParse(_tempNewString, out fRes))
               {
-                if (fRes >= 0 && fRes <= 20000.0000000001)
+                if ((fRes >= 0 && fRes <= 20000.0000000001) || _disableSanityCheck)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorStepsX, MotorStepsX.Plate96Column12, fRes);
                   break;
@@ -1206,7 +1214,7 @@ namespace Ei_Dimension
             {
               if (float.TryParse(_tempNewString, out fRes))
               {
-                if (fRes >= 0 && fRes <= 20000.0000000001)
+                if ((fRes >= 0 && fRes <= 20000.0000000001) || _disableSanityCheck)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorStepsX, MotorStepsX.Plate384Column1, fRes);
                   break;
@@ -1219,7 +1227,7 @@ namespace Ei_Dimension
             {
               if (float.TryParse(_tempNewString, out fRes))
               {
-                if (fRes >= 0 && fRes <= 20000.0000000001)
+                if ((fRes >= 0 && fRes <= 20000.0000000001) || _disableSanityCheck)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorStepsX, MotorStepsX.Plate384Column24, fRes);
                   break;
@@ -1232,7 +1240,7 @@ namespace Ei_Dimension
             {
               if (float.TryParse(_tempNewString, out fRes))
               {
-                if (fRes >= 0 && fRes <= 20000.0000000001)
+                if ((fRes >= 0 && fRes <= 20000.0000000001) || _disableSanityCheck)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorStepsX, MotorStepsX.Tube, fRes);
                   break;
@@ -1247,7 +1255,7 @@ namespace Ei_Dimension
             {
               if (float.TryParse(_tempNewString, out fRes))
               {
-                if (fRes >= 0 && fRes <= 20000.0000000001)
+                if ((fRes >= 0 && fRes <= 20000.0000000001) || _disableSanityCheck)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorStepsY, MotorStepsY.Plate96RowA, fRes);
                   break;
@@ -1260,7 +1268,7 @@ namespace Ei_Dimension
             {
               if (float.TryParse(_tempNewString, out fRes))
               {
-                if (fRes >= 0 && fRes <= 20000.0000000001)
+                if ((fRes >= 0 && fRes <= 20000.0000000001) || _disableSanityCheck)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorStepsY, MotorStepsY.Plate96RowH, fRes);
                   break;
@@ -1273,7 +1281,7 @@ namespace Ei_Dimension
             {
               if (float.TryParse(_tempNewString, out fRes))
               {
-                if (fRes >= 0 && fRes <= 20000.0000000001)
+                if ((fRes >= 0 && fRes <= 20000.0000000001) || _disableSanityCheck)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorStepsY, MotorStepsY.Plate384RowA, fRes);
                   break;
@@ -1286,7 +1294,7 @@ namespace Ei_Dimension
             {
               if (float.TryParse(_tempNewString, out fRes))
               {
-                if (fRes >= 0 && fRes <= 20000.0000000001)
+                if ((fRes >= 0 && fRes <= 20000.0000000001) || _disableSanityCheck)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorStepsY, MotorStepsY.Plate384RowP, fRes);
                   break;
@@ -1299,7 +1307,7 @@ namespace Ei_Dimension
             {
               if (float.TryParse(_tempNewString, out fRes))
               {
-                if (fRes >= 0 && fRes <= 20000.0000000001)
+                if ((fRes >= 0 && fRes <= 20000.0000000001) || _disableSanityCheck)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorStepsY, MotorStepsY.Tube, fRes);
                   break;
@@ -1314,7 +1322,7 @@ namespace Ei_Dimension
             {
               if (float.TryParse(_tempNewString, out fRes))
               {
-                if (fRes >= 0 && fRes <= 1000.0000000001)
+                if ((fRes >= 0 && fRes <= 1000.0000000001) || _disableSanityCheck)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorStepsZ, MotorStepsZ.A1, fRes);
                   PlateCustomizationViewModel.Instance.DefaultPlate.A1 = fRes;
@@ -1329,7 +1337,7 @@ namespace Ei_Dimension
             {
               if (float.TryParse(_tempNewString, out fRes))
               {
-                if (fRes >= 0 && fRes <= 1000.0000000001)
+                if ((fRes >= 0 && fRes <= 1000.0000000001) || _disableSanityCheck)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorStepsZ, MotorStepsZ.A12, fRes);
                   PlateCustomizationViewModel.Instance.DefaultPlate.A12 = fRes;
@@ -1344,7 +1352,7 @@ namespace Ei_Dimension
             {
               if (float.TryParse(_tempNewString, out fRes))
               {
-                if (fRes >= 0 && fRes <= 1000.0000000001)
+                if ((fRes >= 0 && fRes <= 1000.0000000001) || _disableSanityCheck)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorStepsZ, MotorStepsZ.H1, fRes);
                   PlateCustomizationViewModel.Instance.DefaultPlate.H1 = fRes;
@@ -1359,7 +1367,7 @@ namespace Ei_Dimension
             {
               if (float.TryParse(_tempNewString, out fRes))
               {
-                if (fRes >= 0 && fRes <= 1000.0000000001)
+                if ((fRes >= 0 && fRes <= 1000.0000000001) || _disableSanityCheck)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorStepsZ, MotorStepsZ.H12, fRes);
                   PlateCustomizationViewModel.Instance.DefaultPlate.H12 = fRes;
@@ -1374,7 +1382,7 @@ namespace Ei_Dimension
             {
               if (float.TryParse(_tempNewString, out fRes))
               {
-                if (fRes >= 0 && fRes <= 1000.0000000001)
+                if ((fRes >= 0 && fRes <= 1000.0000000001) || _disableSanityCheck)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorStepsZ, MotorStepsZ.Tube, fRes);
                   break;
@@ -1415,7 +1423,7 @@ namespace Ei_Dimension
             {
               if (double.TryParse(_tempNewString, out dRes))
               {
-                if (dRes >= 0)
+                if ((dRes >= 0) || _disableSanityCheck)
                 {
                   Settings.Default.ValidatorToleranceReporter = dRes;
                   break;
@@ -1428,7 +1436,7 @@ namespace Ei_Dimension
             {
               if (double.TryParse(_tempNewString, out dRes))
               {
-                if (dRes >= 0)
+                if ((dRes >= 0) || _disableSanityCheck)
                 {
                   Settings.Default.ValidatorToleranceClassification = dRes;
                   break;
@@ -1441,7 +1449,7 @@ namespace Ei_Dimension
             {
               if (double.TryParse(_tempNewString, out dRes))
               {
-                if (dRes >= 0)
+                if ((dRes >= 0) || _disableSanityCheck)
                 {
                   Settings.Default.ValidatorToleranceMisclassification = dRes;
                   break;
@@ -1476,7 +1484,7 @@ namespace Ei_Dimension
             {
               if (Settings.Default.PressureUnitsPSI)
               {
-                if (fRes >= 2 && fRes <= 40)
+                if ((fRes >= 2 && fRes <= 40) || _disableSanityCheck)
                 {
                   Settings.Default.MaxPressure = fRes;
                   App.DiosApp.Device.MaxPressure = fRes;
@@ -1520,7 +1528,7 @@ namespace Ei_Dimension
           case nameof(MaintenanceViewModel.Instance.SanitizeSecondsContent):
             if (int.TryParse(_tempNewString, out iRes))
             {
-              if (iRes >= 1 && iRes <= 100)
+              if ((iRes >= 1 && iRes <= 100) || _disableSanityCheck)
               {
                 break;
               }
@@ -1531,7 +1539,7 @@ namespace Ei_Dimension
           case nameof(NormalizationViewModel.Instance.NormalizationFactor):
             if (float.TryParse(_tempNewString, out fRes))
             {
-              if (fRes >= 0.9 && fRes <= 0.99)
+              if ((fRes >= 0.9 && fRes <= 0.99) || _disableSanityCheck)
               {
                 break;
               }
@@ -1542,7 +1550,7 @@ namespace Ei_Dimension
           case nameof(MapRegionData.MFIValue):
             if (int.TryParse(_tempNewString, out iRes))
             {
-              if (iRes >= 0)// && iRes <= 100)
+              if (iRes >= 0)// && iRes <= 100) || _overrideSanityCheck)
               {
                 break;
               }
@@ -1553,7 +1561,7 @@ namespace Ei_Dimension
           case nameof(ComponentsViewModel.Instance.StatisticsCutoffBox):
             if (double.TryParse(_tempNewString, out dRes))
             {
-              if (dRes >= 0 && dRes <= 45)
+              if ((dRes >= 0 && dRes <= 45) || _disableSanityCheck)
               {
                 Settings.Default.StatisticsTailDiscardPercentage = dRes / 100;
                 StatisticsExtension.TailDiscardPercentage = dRes / 100;
@@ -1566,7 +1574,7 @@ namespace Ei_Dimension
           case nameof(PlateCustomizationViewModel.Instance.DACCurrentLimit):
             if (int.TryParse(_tempNewString, out iRes))
             {
-              if (iRes >= 0 && ((App.DiosApp.Device.BoardVersion == 0 && iRes <= 4095) || (App.DiosApp.Device.BoardVersion >= 1 && iRes <= 65535)))
+              if ((iRes >= 0 && ((App.DiosApp.Device.BoardVersion == 0 && iRes <= 4095) || (App.DiosApp.Device.BoardVersion >= 1 && iRes <= 65535))) || _disableSanityCheck)
               {
                 break;
               }
@@ -1577,7 +1585,7 @@ namespace Ei_Dimension
           case nameof(SyringeSpeedsViewModel.SampleSyringeSize):
             if (int.TryParse(_tempNewString, out iRes))
             {
-              if (iRes >= 0 && iRes <= 12500)
+              if ((iRes >= 0 && iRes <= 12500) || _disableSanityCheck)
               {
                 App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.SampleSyringeSize, iRes);
                 break;
@@ -1589,7 +1597,7 @@ namespace Ei_Dimension
           case nameof(SyringeSpeedsViewModel.SheathFlushVolume):
             if (int.TryParse(_tempNewString, out iRes))
             {
-              if (iRes >= 0 && iRes <= 12000)
+              if ((iRes >= 0 && iRes <= 12000) || _disableSanityCheck)
               {
                 App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.SheathFlushVolume, iRes);
                 break;
@@ -1601,7 +1609,7 @@ namespace Ei_Dimension
           case nameof(SyringeSpeedsViewModel.EdgeDistance):
             if (int.TryParse(_tempNewString, out iRes))
             {
-              if (iRes >= 0 && iRes <= 150)
+              if ((iRes >= 0 && iRes <= 150) || _disableSanityCheck)
               {
                 App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.DistanceToWellEdge, iRes);
                 break;
@@ -1613,7 +1621,7 @@ namespace Ei_Dimension
           case nameof(SyringeSpeedsViewModel.EdgeHeight):
             if (int.TryParse(_tempNewString, out iRes))
             {
-              if (iRes >= 0 && iRes <= 100)
+              if ((iRes >= 0 && iRes <= 100) || _disableSanityCheck)
               {
                 App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.WellEdgeDeltaHeight, iRes);
                 break;
@@ -1625,7 +1633,7 @@ namespace Ei_Dimension
           case nameof(SyringeSpeedsViewModel.FlushCycles):
             if (int.TryParse(_tempNewString, out iRes))
             {
-              if (iRes >= 0)// && iRes <= 100)
+              if (iRes >= 0)// && iRes <= 100) || _overrideSanityCheck)
               {
                 App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.FlushCycles, iRes);
                 break;
@@ -1672,7 +1680,7 @@ namespace Ei_Dimension
             {
               if (float.TryParse(_tempNewString, out fRes))
               {
-                if (fRes >= 0 && fRes <= float.MaxValue)
+                if (fRes >= 0 && fRes <= float.MaxValue)// || _overrideSanityCheck)
                 {
                   App.DiosApp.Device.ExtendedRangeCL1Threshold = fRes;
                   ComponentsViewModel.Instance.SaveExtRangeValuesToMap();
@@ -1686,7 +1694,7 @@ namespace Ei_Dimension
             {
               if (float.TryParse(_tempNewString, out fRes))
               {
-                if (fRes >= 0 && fRes <= float.MaxValue)
+                if (fRes >= 0 && fRes <= float.MaxValue)// || _overrideSanityCheck)
                 {
                   App.DiosApp.Device.ExtendedRangeCL2Threshold = fRes;
                   ComponentsViewModel.Instance.SaveExtRangeValuesToMap();
@@ -1702,7 +1710,7 @@ namespace Ei_Dimension
             {
               if (float.TryParse(_tempNewString, out fRes))
               {
-                if (fRes >= 0 && fRes <= float.MaxValue)
+                if (fRes >= 0 && fRes <= float.MaxValue)// || _overrideSanityCheck)
                 {
                   App.DiosApp.Device.ExtendedRangeCL1Multiplier = fRes;
                   ComponentsViewModel.Instance.SaveExtRangeValuesToMap();
@@ -1716,7 +1724,7 @@ namespace Ei_Dimension
             {
               if (float.TryParse(_tempNewString, out fRes))
               {
-                if (fRes >= 0 && fRes <= float.MaxValue)
+                if (fRes >= 0 && fRes <= float.MaxValue)// || _overrideSanityCheck)
                 {
                   App.DiosApp.Device.ExtendedRangeCL2Multiplier = fRes;
                   ComponentsViewModel.Instance.SaveExtRangeValuesToMap();
@@ -1744,7 +1752,7 @@ namespace Ei_Dimension
         {
           if (int.TryParse(_tempNewString, out iRes))
           {
-            if (iRes < 0 || iRes > 1000000)
+            if ((iRes < 0 || iRes > 1000000) || _disableSanityCheck)
             {
               failed = true;
               ErrorMessage = "[0-1000000]";
