@@ -245,8 +245,11 @@ To Current Map</value>
   <data name="Channels_Calibration_Margin" xml:space="preserve">
     <value>Calibration Margin</value>
   </data>
-  <data name="Channels_Forward_Scatter" xml:space="preserve">
+  <data name="Channels_ExternalPMT" xml:space="preserve">
     <value>External PMT</value>
+  </data>
+  <data name="Channels_Forward_Scatter" xml:space="preserve">
+    <value>Forward Scatter</value>
   </data>
   <data name="Channels_Green_A" xml:space="preserve">
     <value>Green A (SSC)</value>

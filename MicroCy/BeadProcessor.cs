@@ -37,8 +37,8 @@
         CalculateCompensatedCoordinatesForExtendedRange(in rawBead);
       }
       var reg = (ushort) _classificationMap.ClassifyBeadToRegion(in rawBead);
-      var rep = CalculateReporter(in reg);
-      var zon = (ushort) ClassifyBeadToZone(in _compensatedCoordinatesCache[0]);
+      var rep = CalculateReporter(reg);
+      var zon = (ushort) ClassifyBeadToZone(_compensatedCoordinatesCache[0]);
       var outBead = new ProcessedBead
       {
         EventTime = rawBead.EventTime,
@@ -70,7 +70,7 @@
         zone = zon
       };
       return outBead;
-    }
+    } //reporter is the last calculated thing
 
     private void AssignSensitivityChannels(in RawBead rawBead)
     {
@@ -118,7 +118,7 @@
       }
     }
 
-    private float CalculateReporter(in ushort region)
+    private float CalculateReporter(ushort region)
     {
       var basicReporter = _greenMin > _device.HdnrTrans ? _greenMaj * _device.HDnrCoef : _greenMin;
       var scaledReporter = (basicReporter / _device.ReporterScaling);
@@ -131,7 +131,7 @@
       return scaledReporter;
     }
 
-    private int ClassifyBeadToZone(in float cl0)
+    private int ClassifyBeadToZone(float cl0)
     {
       if (!_map.CL0ZonesEnabled)
         return 0;

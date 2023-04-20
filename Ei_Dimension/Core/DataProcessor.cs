@@ -145,7 +145,7 @@ namespace Ei_Dimension.Core
       }));
     }
 
-    public static void BinScatterData(List<ProcessedBead> list, bool fromFile = false)
+    public static void BinScatterData(List<ProcessedBead> inputBeadList, bool fromFile = false)
     {
       var ScatterDataCount = ScatterData.CurrentReporter.Count;
       var MaxValue = ScatterData.CurrentReporter[ScatterDataCount - 1].Argument;
@@ -178,9 +178,9 @@ namespace Ei_Dimension.Core
       }
 
       //bool failed = false;
-      foreach (var beadD in list)
+      foreach (var processedBead in inputBeadList)
       {
-        var bead = beadD;
+        var bead = processedBead;
         //overflow protection
         bead.fsc = bead.fsc < MaxValue ? bead.fsc : MaxValue;
         bead.violetssc = bead.violetssc < MaxValue ? bead.violetssc : MaxValue;

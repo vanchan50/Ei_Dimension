@@ -104,7 +104,7 @@
                  HorizontalAlignment="Right"
                  VerticalAlignment="Top"
                  Margin="0,18,4,0"/>
-          <TextBlock Text="{lang:Loc Channels_Forward_Scatter}"
+          <TextBlock Text="{lang:Loc Channels_ExternalPMT}"
                  FontFamily="{StaticResource AppTextFont}"
                  FontSize="36"
                  FontWeight="UltraBold"

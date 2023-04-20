@@ -454,6 +454,15 @@ namespace Ei_Dimension.Language {
         /// <summary>
         ///   Looks up a localized string similar to External PMT.
         /// </summary>
+        public static string Channels_ExternalPMT {
+            get {
+                return ResourceManager.GetString("Channels_ExternalPMT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Forward Scatter.
+        /// </summary>
         public static string Channels_Forward_Scatter {
             get {
                 return ResourceManager.GetString("Channels_Forward_Scatter", resourceCulture);
