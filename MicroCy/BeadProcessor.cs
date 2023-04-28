@@ -14,6 +14,7 @@
     internal float _extendedRangeCL1Threshold = 50000;
     internal float _extendedRangeCL2Threshold = 50000;
     internal bool _extendedRangeEnabled = false;
+    internal bool _channelRedirectionEnabled = false;
     private float[] _compensatedCoordinatesCache = { 0,0,0,0 }; //cl0,cl1,cl2,cl3
 
     public BeadProcessor(Device device)
@@ -29,16 +30,6 @@
 
     public ProcessedBead CalculateBeadParams(in RawBead rawBead)
     {
-      //The order of operations matters here
-      AssignSensitivityChannels(in rawBead);
-      CalculateCompensatedCoordinates(in rawBead);
-      if (_extendedRangeEnabled)
-      {
-        CalculateCompensatedCoordinatesForExtendedRange(in rawBead);
-      }
-      var reg = (ushort) _classificationMap.ClassifyBeadToRegion(in rawBead);
-      var rep = CalculateReporter(reg);
-      var zon = (ushort) ClassifyBeadToZone(_compensatedCoordinatesCache[0]);
       var outBead = new ProcessedBead
       {
         EventTime = rawBead.EventTime,
@@ -56,26 +47,60 @@
         greenC = rawBead.greenC,
         l_offset_rg = rawBead.l_offset_rg,
         l_offset_gv = rawBead.l_offset_gv,
-        region = reg,
         //fsc = (float)Math.Pow(10, rawBead.fsc),
         fsc = rawBead.fsc,
         violetssc = rawBead.violetssc,
-        cl0 = _compensatedCoordinatesCache[0],
         redssc = rawBead.redssc,
-        cl1 = _compensatedCoordinatesCache[1],
-        cl2 = _compensatedCoordinatesCache[2],
-        cl3 = _compensatedCoordinatesCache[3],
-        greenssc = rawBead.greenssc,
-        reporter = rep,
-        zone = zon
+        greenssc = rawBead.greenssc
       };
+      //The order of operations matters here
+
+      if (_channelRedirectionEnabled)
+      {
+        //OEM case
+        outBead.cl1_bg = rawBead.greenB_bg;
+        outBead.cl2_bg = rawBead.greenC_bg;
+        outBead.greenB_bg = rawBead.cl1_bg;
+        outBead.greenC_bg = rawBead.cl2_bg;
+        outBead.greenB = rawBead.cl1;
+        outBead.greenC = rawBead.cl2;
+        //red channels are processed, and are written in the finalization part
+
+        ChannelRedirection(in rawBead);
+      }
+      else
+      {
+        //normal case
+        AssignSensitivityChannels(in rawBead);
+        CalculateCompensatedCoordinates(in rawBead);
+        if (_extendedRangeEnabled)
+        {
+          CalculateCompensatedCoordinatesForExtendedRange(in rawBead);
+        }
+      }
+
+      var reg = (ushort) _classificationMap.ClassifyBeadToRegion(in rawBead);
+      var rep = CalculateReporter(reg);
+      var zon = (ushort) ClassifyBeadToZone(_compensatedCoordinatesCache[0]);
+
+      //finalize outBead data
+      outBead.cl0 = _compensatedCoordinatesCache[0];
+      outBead.cl1 = _compensatedCoordinatesCache[1];
+      outBead.cl2 = _compensatedCoordinatesCache[2];
+      outBead.cl3 = _compensatedCoordinatesCache[3];
+      outBead.region = reg;
+      outBead.reporter = rep;
+      outBead.zone = zon;
+
       return outBead;
     } //reporter is the last calculated thing
+    //do we leave _bg singnals as is? or do we swap them too?
 
     private void AssignSensitivityChannels(in RawBead rawBead)
     {
       //greenMaj is the hi dyn range channel,
       //greenMin is the high sensitivity channel(depends on filter placement)
+      
       if (SensitivityChannel == HiSensitivityChannel.GreenB)
       {
         _greenMaj = rawBead.greenC;
@@ -86,36 +111,64 @@
       _greenMin = rawBead.greenC;
     }
 
-    private void CalculateCompensatedCoordinates(in RawBead outbead)
+    private void CalculateCompensatedCoordinates(in RawBead rawBead)
     {
       var cl1Comp = _greenMaj * _device.Compensation / 100;
       var cl2Comp = cl1Comp * 0.26f;
 
-      var compensatedCl1 = outbead.cl1 - cl1Comp;
-      var compensatedCl2 = outbead.cl2 - cl2Comp;
+      var compensatedCl1 = rawBead.cl1 - cl1Comp;
+      var compensatedCl2 = rawBead.cl2 - cl2Comp;
 
       //Thread unsafe
-      _compensatedCoordinatesCache[0] = outbead.cl0;
+      _compensatedCoordinatesCache[0] = rawBead.cl0;
       _compensatedCoordinatesCache[1] = compensatedCl1;
       _compensatedCoordinatesCache[2] = compensatedCl2;
-      _compensatedCoordinatesCache[3] = outbead.cl3;
+      _compensatedCoordinatesCache[3] = rawBead.cl3;
     }
 
-    private void CalculateCompensatedCoordinatesForExtendedRange(in RawBead outbead)
+    private void CalculateCompensatedCoordinatesForExtendedRange(in RawBead rawBead)
     {
       //thread unsafe
       var cl1 = _compensatedCoordinatesCache[1];
       var cl2 = _compensatedCoordinatesCache[2];
-
+      //if ever used with Channel redirection, these checks can be wrong
       if (cl1 > _extendedRangeCL1Threshold)
       {
-        _compensatedCoordinatesCache[1] = _extendedRangeCL1Multiplier * outbead.violetssc;
+        _compensatedCoordinatesCache[1] = _extendedRangeCL1Multiplier * rawBead.violetssc;
       }
 
       if (cl2 > _extendedRangeCL2Threshold)
       {
-        _compensatedCoordinatesCache[2] = _extendedRangeCL2Multiplier * outbead.cl0;
+        _compensatedCoordinatesCache[2] = _extendedRangeCL2Multiplier * rawBead.cl0;
       }
+    }
+
+    private void ChannelRedirection(in RawBead rawBead)
+    {
+      //greenMaj is the hi dyn range channel,
+      //greenMin is the high sensitivity channel(depends on filter placement)
+
+      if (SensitivityChannel == HiSensitivityChannel.GreenB)
+      {
+        _greenMaj = rawBead.cl2;
+        _greenMin = rawBead.cl1;
+        return;
+      }
+      _greenMaj = rawBead.cl1;
+      _greenMin = rawBead.cl2;
+
+
+      var cl1Comp = _greenMaj * _device.Compensation / 100;
+      var cl2Comp = cl1Comp * 0.26f;
+
+      var compensatedCl1 = rawBead.greenB - cl1Comp;
+      var compensatedCl2 = rawBead.greenC - cl2Comp;
+
+      //Thread unsafe
+      _compensatedCoordinatesCache[0] = rawBead.cl0;
+      _compensatedCoordinatesCache[1] = compensatedCl1;
+      _compensatedCoordinatesCache[2] = compensatedCl2;
+      _compensatedCoordinatesCache[3] = rawBead.cl3;
     }
 
     private float CalculateReporter(ushort region)

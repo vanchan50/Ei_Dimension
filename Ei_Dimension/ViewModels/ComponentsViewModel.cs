@@ -558,7 +558,7 @@ namespace Ei_Dimension.ViewModels
             _vm.SelectedChConfigContent = Content;
             _vm.SelectedChConfigIndex = (ChannelConfiguration)Index;
             _vm.ExtendedRangeVisible = _vm.SelectedChConfigIndex == ChannelConfiguration.StandardPlusExt ? Visibility.Visible : Visibility.Hidden;
-            App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ChannelConfiguration, (ChannelConfiguration)Index);
+            App.SetChannelConfig((ChannelConfiguration)Index);
             break;
         }
       }

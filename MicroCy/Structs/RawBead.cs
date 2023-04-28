@@ -27,13 +27,13 @@
     public float violetssc; //Violet A
     public float cl0;       //Violet B
 
-    public float redssc;    //Red D
+    public float redssc;    //Red B
     public float cl1;       //Red C
 
-    public float cl2;       //Red B
+    public float cl2;       //Red D
     public float cl3;       //Red A
 
-    public float greenssc;
+    public float greenssc;  //Green A
     public float reporter;  //computed from Green B and Green C
 
     public override string ToString()   //setup for csv output

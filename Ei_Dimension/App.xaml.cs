@@ -22,6 +22,8 @@ namespace Ei_Dimension
     public static (PropertyInfo prop, object VM) KeyboardShow { get; set; }
     public static ResultsCache Cache { get; } = new ResultsCache();
     public static MapRegionsController MapRegions { get; set; }
+    /// <summary>doubles the variable in device, but for UI usage</summary>
+    public static bool ChannelRedirectionEnabled { get; private set; } = false;
 
     public static ILogger Logger => DiosApp.Logger;
 
@@ -100,6 +102,14 @@ namespace Ei_Dimension
       DiosApp.TerminationType = (Termination)num;
       Settings.Default.EndRead = num;
       Settings.Default.Save();
+    }
+
+    public static void SetChannelConfig(ChannelConfiguration chConfig)
+    {
+      DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ChannelConfiguration, chConfig);
+      ChannelRedirectionEnabled = chConfig == ChannelConfiguration.OEMA ||
+                                    chConfig == ChannelConfiguration.OEMPMT;
+      LanguageSwap.TranslateChannelsOffsetVM();//swaps between red <-> green
     }
 
     public static void Export(DevExpress.Xpf.Charts.ChartControlBase chart, in int dpi)

@@ -767,6 +767,7 @@ namespace DIOS.Core.HardwareIntercom
         case DeviceParameterType.ChannelConfiguration:
           commandCode = 0xC2;
           _device._beadProcessor._extendedRangeEnabled = false;
+          _device._beadProcessor._channelRedirectionEnabled = false;
           switch (subParameter)
           {
             case ChannelConfiguration.Standard:
@@ -787,9 +788,11 @@ namespace DIOS.Core.HardwareIntercom
               break;
             case ChannelConfiguration.OEMA:
               param = (ushort)ChannelConfiguration.OEMA;
+              _device._beadProcessor._channelRedirectionEnabled = true;
               break;
             case ChannelConfiguration.OEMPMT:
               param = (ushort)ChannelConfiguration.OEMPMT;
+              _device._beadProcessor._channelRedirectionEnabled = true;
               break;
             default:
               throw new NotImplementedException();

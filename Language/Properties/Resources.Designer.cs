@@ -574,18 +574,36 @@ namespace Ei_Dimension.Language {
         /// <summary>
         ///   Looks up a localized string similar to Green B.
         /// </summary>
-        public static string Channels_Sens_B {
+        public static string Channels_Sens_GreenB {
             get {
-                return ResourceManager.GetString("Channels_Sens_B", resourceCulture);
+                return ResourceManager.GetString("Channels_Sens_GreenB", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Green C.
         /// </summary>
-        public static string Channels_Sens_C {
+        public static string Channels_Sens_GreenC {
             get {
-                return ResourceManager.GetString("Channels_Sens_C", resourceCulture);
+                return ResourceManager.GetString("Channels_Sens_GreenC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Red C.
+        /// </summary>
+        public static string Channels_Sens_RedC {
+            get {
+                return ResourceManager.GetString("Channels_Sens_RedC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Red D.
+        /// </summary>
+        public static string Channels_Sens_RedD {
+            get {
+                return ResourceManager.GetString("Channels_Sens_RedD", resourceCulture);
             }
         }
         

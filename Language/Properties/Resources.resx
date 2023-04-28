@@ -287,11 +287,17 @@ To Current Map</value>
 To Current
      Map</value>
   </data>
-  <data name="Channels_Sens_B" xml:space="preserve">
+  <data name="Channels_Sens_GreenB" xml:space="preserve">
     <value>Green B</value>
   </data>
-  <data name="Channels_Sens_C" xml:space="preserve">
+  <data name="Channels_Sens_GreenC" xml:space="preserve">
     <value>Green C</value>
+  </data>
+  <data name="Channels_Sens_RedC" xml:space="preserve">
+    <value>Red C</value>
+  </data>
+  <data name="Channels_Sens_RedD" xml:space="preserve">
+    <value>Red D</value>
   </data>
   <data name="Channels_Set_Offset" xml:space="preserve">
     <value>Set Offset</value>

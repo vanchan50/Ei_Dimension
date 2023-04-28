@@ -2,7 +2,7 @@
 {
   public enum HiSensitivityChannel
   {
-    GreenB,
-    GreenC
+    GreenB, //Maps to RedC in case of _channelRedirectionEnabled
+    GreenC  //Maps to RedD in case of _channelRedirectionEnabled
   }
 }

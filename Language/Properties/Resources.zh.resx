@@ -254,11 +254,17 @@
     <value>保存偏压到
   当前珠图</value>
   </data>
-  <data name="Channels_Sens_B" xml:space="preserve">
+  <data name="Channels_Sens_GreenB" xml:space="preserve">
     <value>绿光 B</value>
   </data>
-  <data name="Channels_Sens_C" xml:space="preserve">
+  <data name="Channels_Sens_GreenC" xml:space="preserve">
     <value>绿光 C</value>
+  </data>
+  <data name="Channels_Sens_RedC" xml:space="preserve">
+    <value>红光 C</value>
+  </data>
+  <data name="Channels_Sens_RedD" xml:space="preserve">
+    <value>红光 D</value>
   </data>
   <data name="Channels_Set_Offset" xml:space="preserve">
     <value>设置偏移</value>
