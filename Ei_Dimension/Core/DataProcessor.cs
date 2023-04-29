@@ -151,9 +151,10 @@ namespace Ei_Dimension.Core
       var MaxValue = ScatterData.CurrentReporter[ScatterDataCount - 1].Argument;
       int[] reporter, fsc, red, green, violet;
       //NULL Region is included in RegionsList
-      var RegionsReporter = new List<RegionReporterResult>(MapRegionsController.RegionsList.Count);  //for mean and count 
+      List<RegionReporterResult> RegionsReporter = null;  //for mean and count 
       if (fromFile)
       {
+        RegionsReporter = new List<RegionReporterResult>(MapRegionsController.RegionsList.Count);
         reporter = ScatterData.bReporter;
         fsc = ScatterData.bFsc;
         red = ScatterData.bRed;
@@ -188,21 +189,12 @@ namespace Ei_Dimension.Core
         bead.greenssc = bead.greenssc < MaxValue ? bead.greenssc : MaxValue;
         bead.reporter = bead.reporter < MaxValue ? bead.reporter : MaxValue;
 
-        int i = Array.BinarySearch(HistogramData.Bins, (int)bead.fsc);
-        if (i < 0)
-          i = ~i;
-        int j = Array.BinarySearch(HistogramData.Bins, (int)bead.redssc);
-        if (j < 0)
-          j = ~j;
-        int k = Array.BinarySearch(HistogramData.Bins, (int)bead.greenssc);
-        if (k < 0)
-          k = ~k;
-        int o = Array.BinarySearch(HistogramData.Bins, (int)bead.violetssc);
-        if (o < 0)
-          o = ~o;
-        int l = Array.BinarySearch(HistogramData.Bins, (int)bead.reporter);
-        if (l < 0)
-          l = ~l;
+        
+        int i = FindBinForHistogram(bead.fsc);
+        int j = FindBinForHistogram(bead.redssc);
+        int k = FindBinForHistogram(bead.greenssc);
+        int o = FindBinForHistogram(bead.violetssc);
+        int l = FindBinForHistogram(bead.reporter);
 
         fsc[i]++;
         red[j]++;
@@ -225,19 +217,15 @@ namespace Ei_Dimension.Core
       //if (failed)
       //  System.Windows.MessageBox.Show("An error occured during Well File Read");
 
-      var Stats = new List<RegionReporterStats>(RegionsReporter.Count);
       if (fromFile)
       {
+        var Stats = new List<RegionReporterStats>(RegionsReporter.Count);
         foreach (var reporterValues in RegionsReporter)
         {
           Stats.Add(new RegionReporterStats(reporterValues));
         }
-      }
 
-      _ = App.Current.Dispatcher.BeginInvoke((Action)(() =>
-      {
-        ScatterChartViewModel.Instance.ScttrData.FillCurrentData(fromFile);
-        if (fromFile)
+        _ = App.Current.Dispatcher.BeginInvoke((Action)(() =>
         {
           var j = 0;
           foreach (var stat in Stats)
@@ -247,8 +235,21 @@ namespace Ei_Dimension.Core
             j++;
           }
           ResultsViewModel.Instance.ResultsWaitIndicatorVisibility = false;
-        }
+        }));
+      }
+
+      _ = App.Current.Dispatcher.BeginInvoke((Action)(() =>
+      {
+        ScatterChartViewModel.Instance.ScttrData.FillCurrentData(fromFile);
       }));
+    }
+
+    private static int FindBinForHistogram(float value)
+    {
+      var binNumber = Array.BinarySearch(HistogramData.Bins, (int)value);
+      if (binNumber < 0)
+        binNumber = ~binNumber;
+      return binNumber;
     }
 
     public static void BinMapData(List<ProcessedBead> beadInfoList, bool current = true, bool hiRez = false)

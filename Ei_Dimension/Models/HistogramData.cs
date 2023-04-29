@@ -25,6 +25,7 @@ namespace Ei_Dimension.Models
     private int _value;
     private int _argument;
     public static int[] Bins{ get; private set; }
+    public const int UPPERLIMIT = 1000000;
     public HistogramData(int val, int arg)
     {
       _value = val;
@@ -32,7 +33,7 @@ namespace Ei_Dimension.Models
     }
     static HistogramData()
     {
-      Bins = DataProcessor.GenerateLogSpace(1, 1000000, 384);
+      Bins = DataProcessor.GenerateLogSpace(1, UPPERLIMIT, 384);
     }
   }
 }

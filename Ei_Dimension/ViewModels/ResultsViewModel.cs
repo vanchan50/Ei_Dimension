@@ -9,6 +9,7 @@ using DIOS.Core;
 using Ei_Dimension.Controllers;
 using Ei_Dimension.Graphing;
 using Ei_Dimension.Graphing.HeatMap;
+using System.Threading;
 
 namespace Ei_Dimension.ViewModels
 {
@@ -36,7 +37,7 @@ namespace Ei_Dimension.ViewModels
     public virtual ObservableCollection<bool> CLButtonsChecked { get; set; }
     public virtual ObservableCollection<string> CLAxis { get; set; }
     public static ResultsViewModel Instance { get; private set; }
-    private bool _fillDataActive;
+    private int _fillDataActive;
     public const int HIREZDEFINITION = 512;
 
     private List<ProcessedBead> _cachedBeadStructsForLoadedData = new List<ProcessedBead>(100000);
@@ -79,7 +80,6 @@ namespace Ei_Dimension.ViewModels
       }
       DisplayedMfiItems = CurrentMfiItems;
       DisplayedCvItems = CurrentCvItems;
-      _fillDataActive = false;
     }
 
     public static ResultsViewModel Create()
@@ -143,7 +143,7 @@ namespace Ei_Dimension.ViewModels
           var bs = Core.DataProcessor.ParseRow(linesInFile[i]);
           beadStructs.Add(bs);
         }
-        catch(FormatException){}
+        catch(FormatException) { }
       }
       return true;
     }
@@ -153,37 +153,53 @@ namespace Ei_Dimension.ViewModels
     /// </summary>
     public void FillAllData()
     {
-      if (_fillDataActive)
+      if (Interlocked.CompareExchange(ref _fillDataActive, 1, 0) == 1)
       {
         Notification.Show("Please wait for the previous well to load");
         return;
       }
-      _fillDataActive = true;
+
       var hiRez = AnalysisVisible == System.Windows.Visibility.Visible;
       _ = Task.Run(() =>
       {
-        var path = PlatePictogramViewModel.Instance.PlatePictogram.GetSelectedFilePath();  //@"C:\Emissioninc\KEIZ0R-LEGION\AcquisitionData\rowtest1A1_0.csv";//
-        if (!System.IO.File.Exists(path)) //rowtest1A1_0  //BeadAssayA1_19 //val speed test 2E7_0
+        try
         {
-          Notification.ShowLocalized(  nameof(Language.Resources.Notification_File_Inexistent));
+          var path = PlatePictogramViewModel.Instance.PlatePictogram.GetSelectedFilePath(); //@"C:\Emissioninc\KEIZ0R-LEGION\AcquisitionData\rowtest1A1_0.csv";//
+          if (!System.IO.File.Exists(path)) //rowtest1A1_0  //BeadAssayA1_19 //val speed test 2E7_0
+          {
+            Notification.ShowLocalized(nameof(Language.Resources.Notification_File_Inexistent));
+            ResultsWaitIndicatorVisibility = false;
+            ChartWaitIndicatorVisibility = false;
+            _fillDataActive = 0;
+            return;
+          }
+
+          AnalysisMap.InitBackingWellResults();
+          _cachedBeadStructsForLoadedData.Clear();
+          if (!ParseBeadInfo(path, _cachedBeadStructsForLoadedData))
+          {
+            ResultsWaitIndicatorVisibility = false;
+            ChartWaitIndicatorVisibility = false;
+            _fillDataActive = 0;
+            return;
+          }
+
+          _ = Task.Run(() => Core.DataProcessor.BinScatterData(_cachedBeadStructsForLoadedData, fromFile: true));
+          _ = Task.Run(() => Core.DataProcessor.CalculateStatistics(_cachedBeadStructsForLoadedData));
+          Core.DataProcessor.BinMapData(_cachedBeadStructsForLoadedData, current: false, hiRez);
+          //DisplayedMap.Sort((x, y) => x.A.CompareTo(y.A));
+        }
+        catch (Exception e)
+        {
+          if (e.GetType() == typeof(OverflowException))
+          {//can bubble up from ParseBeadInfo()
+            App.Current.Dispatcher.Invoke(() => Notification.ShowError("Overflow error while reading from file\nPlease report to the developer"));
+          }
           ResultsWaitIndicatorVisibility = false;
           ChartWaitIndicatorVisibility = false;
-          _fillDataActive = false;
-          return;
+          _fillDataActive = 0;
         }
-        AnalysisMap.InitBackingWellResults();
-        _cachedBeadStructsForLoadedData.Clear();
-        if (!ParseBeadInfo(path, _cachedBeadStructsForLoadedData))
-        {
-          ResultsWaitIndicatorVisibility = false;
-          ChartWaitIndicatorVisibility = false;
-          _fillDataActive = false;
-          return;
-        }
-        _ = Task.Run(() => Core.DataProcessor.BinScatterData(_cachedBeadStructsForLoadedData, fromFile: true));
-        _ = Task.Run(() => Core.DataProcessor.CalculateStatistics(_cachedBeadStructsForLoadedData));
-        Core.DataProcessor.BinMapData(_cachedBeadStructsForLoadedData, current: false, hiRez);
-        //DisplayedMap.Sort((x, y) => x.A.CompareTo(y.A));
+
         _ = App.Current.Dispatcher.BeginInvoke((Action)(() =>
         {
           try
@@ -205,7 +221,7 @@ namespace Ei_Dimension.ViewModels
           finally
           {
             ChartWaitIndicatorVisibility = false;
-            _fillDataActive = false;
+            _fillDataActive = 0;
           }
         }));
         MainViewModel.Instance.EventCountLocal[0] = _cachedBeadStructsForLoadedData.Count.ToString();
