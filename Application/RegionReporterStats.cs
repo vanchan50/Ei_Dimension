@@ -1,5 +1,4 @@
 ﻿using System;
-using DIOS.Core;
 
 namespace DIOS.Application
 {

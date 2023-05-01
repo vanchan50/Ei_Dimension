@@ -1,6 +1,7 @@
 ﻿using Ei_Dimension.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using DIOS.Application;
 using DIOS.Core;
 using Ei_Dimension.Controllers;
@@ -11,7 +12,6 @@ namespace Ei_Dimension.Core
 {
   public static class DataProcessor
   {
-    private static readonly char[] _separator = {','};
     private const string _100plexAMapName = "D100Aplex";
     private const string _100plexBMapName = "D100Bplex";
     private static readonly HashSet<int> WeightedRegions = new HashSet<int> {1,2,3,4,5,6,7,8,10,11,16,17,23,24,31,32,40,41,50,60,71};
@@ -19,62 +19,6 @@ namespace Ei_Dimension.Core
     public static int FromCLSpaceToReal(int pointInClSpace, double[] bins)
     {
       return (int)bins[pointInClSpace];
-    }
-
-    public static List<string> GetDataFromFile(string path)
-    {
-      var str = new List<string>(100000);
-      using (var fin = new System.IO.FileStream(path, System.IO.FileMode.Open, System.IO.FileAccess.Read,
-               System.IO.FileShare.Read))
-      using (var sr = new System.IO.StreamReader(fin))
-      {
-        // ReSharper disable once MethodHasAsyncOverload
-        sr.ReadLine();
-        while (!sr.EndOfStream)
-        {
-          str.Add(sr.ReadLine());
-        }
-      }
-      return str;
-    }
-
-    public static ProcessedBead ParseRow(string data)
-    {
-      var numFormat = System.Globalization.CultureInfo.InvariantCulture.NumberFormat;
-      string[] words = data.Split(_separator);
-      int i = 0;
-      ProcessedBead binfo = new ProcessedBead
-      {
-        EventTime = uint.Parse(words[i++]),
-        fsc_bg = byte.Parse(words[i++]),
-        vssc_bg = byte.Parse(words[i++]),
-        cl0_bg = byte.Parse(words[i++]),
-        cl1_bg = byte.Parse(words[i++]),
-        cl2_bg = byte.Parse(words[i++]),
-        cl3_bg = byte.Parse(words[i++]),
-        rssc_bg = byte.Parse(words[i++]),
-        gssc_bg = byte.Parse(words[i++]),
-        greenB_bg = ushort.Parse(words[i++]),
-        greenC_bg = ushort.Parse(words[i++]),
-        greenB = ushort.Parse(words[i++]),
-        greenC = ushort.Parse(words[i++]),
-        l_offset_rg = byte.Parse(words[i++]),
-        l_offset_gv = byte.Parse(words[i++]),
-
-        region = (ushort.Parse(words[i])) % ProcessedBead.ZONEOFFSET, //16123
-        zone = (ushort.Parse(words[i++])) / ProcessedBead.ZONEOFFSET,
-
-        fsc = float.Parse(words[i++], numFormat),
-        violetssc = float.Parse(words[i++], numFormat),
-        cl0 = float.Parse(words[i++], numFormat),
-        redssc = float.Parse(words[i++], numFormat),
-        cl1 = float.Parse(words[i++], numFormat),
-        cl2 = float.Parse(words[i++], numFormat),
-        cl3 = float.Parse(words[i++], numFormat),
-        greenssc = float.Parse(words[i++], numFormat),
-        reporter = float.Parse(words[i], numFormat),
-      };
-      return binfo;
     }
 
     public static List<HistogramData> LinearizeDictionary(SortedDictionary<int,int> dict)
@@ -190,11 +134,11 @@ namespace Ei_Dimension.Core
         bead.reporter = bead.reporter < MaxValue ? bead.reporter : MaxValue;
 
         
-        int i = FindBinForHistogram(bead.fsc);
-        int j = FindBinForHistogram(bead.redssc);
-        int k = FindBinForHistogram(bead.greenssc);
-        int o = FindBinForHistogram(bead.violetssc);
-        int l = FindBinForHistogram(bead.reporter);
+        int i = FindPlaceInBin(bead.fsc);
+        int j = FindPlaceInBin(bead.redssc);
+        int k = FindPlaceInBin(bead.greenssc);
+        int o = FindPlaceInBin(bead.violetssc);
+        int l = FindPlaceInBin(bead.reporter);
 
         fsc[i]++;
         red[j]++;
@@ -244,7 +188,7 @@ namespace Ei_Dimension.Core
       }));
     }
 
-    private static int FindBinForHistogram(float value)
+    private static int FindPlaceInBin(float value)
     {
       var binNumber = Array.BinarySearch(HistogramData.Bins, (int)value);
       if (binNumber < 0)

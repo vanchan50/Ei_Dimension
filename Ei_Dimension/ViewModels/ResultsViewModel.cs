@@ -4,8 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
-using DIOS.Application;
 using DIOS.Core;
+using DIOS.Application;
+using DIOS.Application.FileIO;
 using Ei_Dimension.Controllers;
 using Ei_Dimension.Graphing;
 using Ei_Dimension.Graphing.HeatMap;
@@ -40,7 +41,7 @@ namespace Ei_Dimension.ViewModels
     private int _fillDataActive;
     public const int HIREZDEFINITION = 512;
 
-    private List<ProcessedBead> _cachedBeadStructsForLoadedData = new List<ProcessedBead>(100000);
+    private List<ProcessedBead> _cachedBeadStructsForLoadedData = new List<ProcessedBead>(2000000);
 
     protected ResultsViewModel()
     {
@@ -128,26 +129,6 @@ namespace Ei_Dimension.ViewModels
       Views.ResultsView.Instance.ClearHeatMaps();
     }
 
-    private bool ParseBeadInfo(string path, List<ProcessedBead> beadStructs)
-    {
-      List<string> linesInFile = Core.DataProcessor.GetDataFromFile(path);
-      if (linesInFile.Count == 1 && linesInFile[0] == " ")
-      {
-        Notification.ShowLocalized(nameof(Language.Resources.Notification_Empty_File));
-        return false;
-      }
-      for (var i = 0; i < linesInFile.Count; i++)
-      {
-        try
-        {
-          var bs = Core.DataProcessor.ParseRow(linesInFile[i]);
-          beadStructs.Add(bs);
-        }
-        catch(FormatException) { }
-      }
-      return true;
-    }
-
     /// <summary>
     /// Task to fill XY plot with data from file
     /// </summary>
@@ -176,8 +157,9 @@ namespace Ei_Dimension.ViewModels
 
           AnalysisMap.InitBackingWellResults();
           _cachedBeadStructsForLoadedData.Clear();
-          if (!ParseBeadInfo(path, _cachedBeadStructsForLoadedData))
+          if (!BeadParser.ParseBeadInfoFile(path, _cachedBeadStructsForLoadedData))
           {
+            Notification.ShowLocalized(nameof(Language.Resources.Notification_Empty_File));
             ResultsWaitIndicatorVisibility = false;
             ChartWaitIndicatorVisibility = false;
             _fillDataActive = 0;

@@ -158,8 +158,8 @@
       _greenMin = rawBead.cl2;
 
 
-      var cl1Comp = _greenMaj * _device.Compensation / 100;
-      var cl2Comp = cl1Comp * 0.26f;
+      var cl1Comp = _greenMaj;// * _device.Compensation / 100;
+      var cl2Comp = cl1Comp;// * 0.26f;
 
       var compensatedCl1 = rawBead.greenB - cl1Comp;
       var compensatedCl2 = rawBead.greenC - cl2Comp;
