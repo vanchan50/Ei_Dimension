@@ -43,7 +43,7 @@
                                   "Red SSC,CL1,CL2,CL3,Green SSC,Reporter";
     public override string ToString()   //setup for csv output
     {
-      return $"{EventTime.ToString()},{fsc_bg.ToString()},{vssc_bg.ToString()},{cl0_bg.ToString()},{cl1_bg.ToString()},{cl2_bg.ToString()},{cl3_bg.ToString()},{rssc_bg.ToString()},{gssc_bg.ToString()},{greenB_bg.ToString()},{greenC_bg.ToString()},{greenB.ToString("F0")},{greenC.ToString("F0")},{l_offset_rg.ToString()},{l_offset_gv.ToString()},{(zone * ZONEOFFSET + region).ToString()},{fsc.ToString()},{violetssc.ToString()},{cl0.ToString()},{redssc.ToString()},{cl1.ToString()},{cl2.ToString()},{cl3.ToString()},{greenssc.ToString()},{reporter.ToString($"{0:0.000}")}";
+      return $"{EventTime.ToString()},{fsc_bg.ToString()},{vssc_bg.ToString()},{cl0_bg.ToString()},{cl1_bg.ToString()},{cl2_bg.ToString()},{cl3_bg.ToString()},{rssc_bg.ToString()},{gssc_bg.ToString()},{greenB_bg.ToString()},{greenC_bg.ToString()},{greenB:F0},{greenC:F0)},{l_offset_rg.ToString()},{l_offset_gv.ToString()},{(zone * ZONEOFFSET + region).ToString()},{fsc.ToString()},{violetssc.ToString()},{cl0.ToString()},{redssc.ToString()},{cl1.ToString()},{cl2.ToString()},{cl3.ToString()},{greenssc.ToString()},{reporter:F3}";
     }
   }
 }

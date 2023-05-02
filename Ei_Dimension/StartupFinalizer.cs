@@ -103,6 +103,9 @@ namespace Ei_Dimension
       if(App.DiosApp.Device.FirmwareVersion != null)
         MainViewModel.AppVersion += App.DiosApp.Device.FirmwareVersion;
       App.Logger.Log(MainViewModel.AppVersion);
+      #if DEBUG
+      App.Logger.Log("DEBUG MODE");
+      #endif
     }
 
     private static void Usbnotif_Removal(object sender, USBEvent e)

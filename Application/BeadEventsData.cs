@@ -13,7 +13,7 @@ namespace DIOS.Application
       }
     }
 
-    private readonly List<ProcessedBead> _list = new List<ProcessedBead>(500000);
+    private readonly List<ProcessedBead> _list = new List<ProcessedBead>(2000000);
 
     public void Add(in ProcessedBead bead)
     {

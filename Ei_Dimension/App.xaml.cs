@@ -12,6 +12,7 @@ using Ei_Dimension.Controllers;
 using DIOS.Application;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using Ei_Dimension.Graphing;
 
 namespace Ei_Dimension
 {
@@ -205,10 +206,7 @@ namespace Ei_Dimension
       DiosApp.MinPerRegion = e.Well.MinPerRegion;
       //DiosApp.TerminationType = e.Well.TermType;
 
-      Logger.Log("Starting to read well with Params:");
-      Logger.Log($"Termination: {(int)DiosApp.TerminationType}");
-      Logger.Log($"MinPerRegion: {DiosApp.MinPerRegion}");
-      Logger.Log($"BeadsToCapture: {DiosApp.TotalBeadsToCapture}");
+      Logger.Log($"Starting to read well {e.Well.CoordinatesString()} with Params:\nTermination: {(int)DiosApp.TerminationType}\nMinPerRegion: {DiosApp.MinPerRegion}\nBeadsToCapture: {DiosApp.TotalBeadsToCapture}");
 
       var wellFilePath = DiosApp.Publisher.BeadEventFile.MakeNewFileName(e.Well);
       DiosApp.Results.StartNewWell(e.Well);
@@ -240,6 +238,7 @@ namespace Ei_Dimension
 
     public void FinishedReadingWellEventHandler(object sender, ReadingWellEventArgs e)
     {
+      Logger.Log($"Finished Reading well {e.Well.CoordinatesString()}");
       SaveWellFiles();
 
       var type = GetWellStateForPictogram();
@@ -381,6 +380,9 @@ namespace Ei_Dimension
 
         if (NormalizationViewModel.Instance != null)
           NormalizationViewModel.Instance.OnMapChanged(map);
+
+        if (ResultsViewModel.Instance.AnalysisMap != null)
+          ResultsViewModel.Instance.AnalysisMap.OnMapChanged(map);
       }));
     }
 

@@ -9,7 +9,8 @@ namespace DIOS.Application.FileIO
   {
     private string _fullName;
     private ResultsPublisher _publisher;
-    private readonly StringBuilder _dataOut = new StringBuilder();
+    private readonly StringBuilder _dataOut = new StringBuilder(AVGSTRLENGTH * 2000000);
+    private const int AVGSTRLENGTH = 110;
 
     public BeadEventFileWriter(ResultsPublisher publisher)
     {
@@ -24,7 +25,15 @@ namespace DIOS.Application.FileIO
         return;
       }
 
-      var beadsString = Decode(eventsData);
+      string beadsString = null;
+      try
+      {
+        beadsString = Decode(eventsData);
+      }
+      catch (OutOfMemoryException)
+      {
+        _publisher._logger.Log("[PROBLEM] BeadEventFileWriter out of memory");
+      }
 
       var directoryName = Path.Combine(_publisher.Outdir, ResultsPublisher.DATAFOLDERNAME);
       if (!_publisher.OutputDirectoryExists(directoryName))

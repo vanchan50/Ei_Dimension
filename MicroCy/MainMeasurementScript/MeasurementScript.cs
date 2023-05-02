@@ -18,10 +18,12 @@ namespace DIOS.Core.MainMeasurementScript
       _device = device;
       _hardware = device.Hardware;
       _wellController = device._wellController;
+      _logger = logger;
     }
 
     public void Start()
     {
+      _logger.Log($"{DateTime.Now.ToString()} Starting read sequence");
       _hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.MinSSC, _device._beadProcessor._map.calParams.minmapssc);
       _hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.MaxSSC, _device._beadProcessor._map.calParams.maxmapssc);
       //read section of plate
@@ -113,17 +115,21 @@ namespace DIOS.Core.MainMeasurementScript
 
     private void SetReadingParamsForWell()
     {
+      _logger.Log("Reading Setup\n{");
       _hardware.SetParameter(DeviceParameterType.WellReadingSpeed, (ushort)_wellController.NextWell.RunSpeed);
       _hardware.SetParameter(DeviceParameterType.ChannelConfiguration, _wellController.NextWell.ChanConfig);
+      _logger.Log("}");
     }
 
     private void SetAspirateParamsForWell()
     {
+      _logger.Log("Aspiration Setup\n{");
       _hardware.SetParameter(DeviceParameterType.WellRowIndex, _wellController.NextWell.RowIdx);
       _hardware.SetParameter(DeviceParameterType.WellColumnIndex, _wellController.NextWell.ColIdx);
       _hardware.SetParameter(DeviceParameterType.Volume, VolumeType.Sample, (ushort)_wellController.NextWell.SampVol);
       _hardware.SetParameter(DeviceParameterType.Volume, VolumeType.Wash, (ushort)_wellController.NextWell.WashVol);
       _hardware.SetParameter(DeviceParameterType.Volume, VolumeType.Agitate, (ushort)_wellController.NextWell.AgitateVol);
+      _logger.Log("}");
     }
 
     private void StartBeadRead()

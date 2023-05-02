@@ -4,6 +4,7 @@ using System.Linq;
 using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
 using DIOS.Application;
+using DIOS.Core;
 using Ei_Dimension.Controllers;
 using Ei_Dimension.Graphing.HeatMap;
 using Ei_Dimension.Models;
@@ -13,7 +14,7 @@ namespace Ei_Dimension.Graphing
   [POCOViewModel]
   public class AnalysysMap
   {
-    public List<RegionReporterResult> BackingWResults { get; set; }
+    public List<RegionReporterResult> BackingWResults { get; protected set; } = new List<RegionReporterResult>();
     public virtual ObservableCollection<DoubleHeatMapData> DisplayedMap { get; set; }
     public virtual ObservableCollection<DoubleHeatMapData> Current01Map { get; protected set; } = new ObservableCollection<DoubleHeatMapData>();
     public virtual ObservableCollection<DoubleHeatMapData> Current02Map { get; protected set; } = new ObservableCollection<DoubleHeatMapData>();
@@ -29,10 +30,10 @@ namespace Ei_Dimension.Graphing
     public virtual ObservableCollection<DoubleHeatMapData> Backing23Map { get; protected set; } = new ObservableCollection<DoubleHeatMapData>();
 
     private object _lock = new object();
+    private MapModel _activeMap;
     protected AnalysysMap()
     {
       DisplayedMap = Current12Map;
-      BackingWResults = new List<RegionReporterResult>();
     }
 
     public static AnalysysMap Create()
@@ -83,7 +84,7 @@ namespace Ei_Dimension.Graphing
     {
       foreach (var result in BackingWResults)
       {
-        if (App.DiosApp.MapController.ActiveMap.Regions.TryGetValue(result.regionNumber, out var region))
+        if (_activeMap.Regions.TryGetValue(result.regionNumber, out var region))
         {
           var x = HeatMapPoint.bins[region.Center.x];
           var y = HeatMapPoint.bins[region.Center.y];
@@ -100,9 +101,10 @@ namespace Ei_Dimension.Graphing
 
     public void AddDataPoint(int regionIndex, double reporterAvg)
     {
-      var x = HeatMapPoint.bins[App.DiosApp.MapController.ActiveMap.regions[regionIndex].Center.x];
-      var y = HeatMapPoint.bins[App.DiosApp.MapController.ActiveMap.regions[regionIndex].Center.y];
-      Current12Map.Add(new Models.DoubleHeatMapData(x, y, reporterAvg));
+      var region = _activeMap.regions[regionIndex];
+      var x = HeatMapPoint.bins[region.Center.x];
+      var y = HeatMapPoint.bins[region.Center.y];
+      Current12Map.Add(new DoubleHeatMapData(x, y, reporterAvg));
     }
 
     public void ChangeDisplayedMap(MapIndex mapIndex, bool current)
@@ -156,6 +158,11 @@ namespace Ei_Dimension.Graphing
             break;
         }
       }
+    }
+
+    public void OnMapChanged(MapModel map)
+    {
+      _activeMap = map;
     }
   }
 }

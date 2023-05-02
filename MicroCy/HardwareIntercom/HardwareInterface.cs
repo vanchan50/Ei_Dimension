@@ -18,7 +18,7 @@ namespace DIOS.Core.HardwareIntercom
 
     public void SendCommand(DeviceCommandType command)
     {
-      _logger.Log($"{DateTime.Now.ToString()} CMD {command.ToString()}");
+      _logger.Log($"CMD {command.ToString()}");
       ushort param = 0;
       byte commandCode = 0;
       byte extraAction = 0;
@@ -142,7 +142,7 @@ namespace DIOS.Core.HardwareIntercom
     public void SetParameter(DeviceParameterType primaryParameter, Enum subParameter, float value = 0f)
     {
       var subparReport = subParameter == null ? "" : subParameter.ToString();
-      _logger.Log($"{DateTime.Now.ToString()} SET {primaryParameter.ToString()} {subparReport} {value.ToString()}");
+      _logger.Log($"SET {primaryParameter.ToString()} {subparReport} {value.ToString()}");
       ushort param = 0;
       float fparam = 0;
       byte commandCode = 0x00;
@@ -1068,7 +1068,7 @@ namespace DIOS.Core.HardwareIntercom
       if (primaryParameter != DeviceParameterType.BeadConcentration)
       {
         var subparReport = subParameter == null ? "" : subParameter.ToString();
-        _logger.Log($"{DateTime.Now.ToString()} GET {primaryParameter.ToString()} {subparReport}");
+        _logger.Log($"GET {primaryParameter.ToString()} {subparReport}");
       }
       ushort selector = 0;
       byte commandCode = 0;
@@ -1656,7 +1656,7 @@ namespace DIOS.Core.HardwareIntercom
 
     internal void SetToken(HardwareToken token, ushort value = 0)
     {
-      _logger.Log($"{DateTime.Now.ToString()} TOKEN {token.ToString()} {value.ToString()}");
+      _logger.Log($"TOKEN {token.ToString()} {value.ToString()}");
       byte commandCode = 0x00;
       switch (token)
       {

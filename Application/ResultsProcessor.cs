@@ -26,7 +26,6 @@ namespace DIOS.Application
     {
       while (true)
       {
-
         var size = _results.OutputBeadsCollector.Count;
         while (resultsProcessed < size)
         {

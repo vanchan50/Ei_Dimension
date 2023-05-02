@@ -37,10 +37,6 @@ namespace DIOS.Application
     public void StartOperation(IReadOnlyCollection<int> regions, IReadOnlyCollection<Well> wells)
     {
       Results.SetupRunRegions(regions);
-      if (Device.Normalization.IsEnabled)
-        Logger.Log("Normalization Enabled");
-      else
-        Logger.Log("Normalization Disabled");
       Publisher.ResultsFile.MakeNew();
       Results.StartNewPlateReport();
       Device.StartOperation(wells, Results.OutputBeadsCollector);

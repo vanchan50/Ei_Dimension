@@ -21,11 +21,9 @@ namespace DIOS.Core
       FloatParameter = floatParameter;
     }
 
-    #if DEBUG
     public override string ToString()
     {
       return $"Type:{Enum.GetName(typeof(DeviceParameterType), Type)}\tParam:{Parameter}\tFloat:{FloatParameter}";
     }
-    #endif
   }
 }

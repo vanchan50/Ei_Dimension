@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Threading.Tasks;
 using DIOS.Core.HardwareIntercom;
 using DIOS.Core.MainMeasurementScript;
@@ -190,9 +191,25 @@ namespace DIOS.Core
       if (Mode != OperationMode.Normal)
       {
         Normalization.SuspendForTheRun();
+        _logger.Log("Normalization Suspended;");
       }
+      else
+      {
+        if (Normalization.IsEnabled)
+          _logger.Log("Normalization Enabled");
+        else
+          _logger.Log("Normalization Disabled");
+      }
+      _logger.Log($"Operation Mode = {Mode}");
       _dataController.BeadEventSink = beadEventSink;
       _logger.Log("Extended Range calculation " + (_beadProcessor._extendedRangeEnabled ? "enabled" : "disabled"));
+      StringBuilder wellreport = new StringBuilder("[");
+      foreach (var well in wells)
+      {
+        wellreport.Append($"{well.CoordinatesString()},");
+      }
+      wellreport.Replace(",", "]", wellreport.Length -1, 1);
+      _logger.Log($"Number of wells to read: {wells.Count} {wellreport.ToString()}");
       _script.Start();
     }
 
@@ -263,7 +280,6 @@ namespace DIOS.Core
 
     internal void OnFinishedReadingWell()
     {
-      _logger.Log("Finished Reading Well");
       Hardware.SendCommand(DeviceCommandType.EndSampling);
       Hardware.RequestParameter(DeviceParameterType.TotalBeadsInFirmware);
       FinishedReadingWell?.Invoke(this, new ReadingWellEventArgs(_wellController.CurrentWell));

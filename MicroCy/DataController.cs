@@ -50,7 +50,7 @@ namespace DIOS.Core
     {
       _outCommands.Enqueue(cs);
       #if DEBUG
-      Console.Error.WriteLine($"{DateTime.Now.ToString()} AddCommand Enqueued {cs.ToString()}");
+      Console.Error.WriteLine($"[DEBUG] AddCommand Enqueued {cs.ToString()}");
       #endif
       NotifyCommandReceived();
     }
@@ -759,7 +759,7 @@ namespace DIOS.Core
       #if DEBUG
       if (cs.Code != 0x1D)
       {
-        _logger.Log($"{DateTime.Now.ToString()} REC [{cs.ToString()}]");
+        _logger.Log($"REC [{cs.ToString()}]");
       }
       #endif
     }

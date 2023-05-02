@@ -149,7 +149,8 @@ namespace Ei_Dimension
             cl1 = r.Next(1450, 1700),
             cl2 = r.Next(1500, 1650),
             greenB = (ushort)r.Next(9, 12),
-            greenC = 48950
+            greenC = 48950,
+            reporter = 23.9f
           };
           break;
         case 1:
@@ -161,7 +162,8 @@ namespace Ei_Dimension
             cl1 = 500f,
             cl2 = 500f,
             greenB = (ushort)r.Next(80, 150),
-            greenC = 65212
+            greenC = 65212,
+            reporter = 84342261.623467f
           };
           break;
         case 2:
@@ -173,7 +175,8 @@ namespace Ei_Dimension
             cl1 = 35000,
             cl2 = 200,
             greenB = (ushort)r.Next(9, 12),
-            greenC = 48950
+            greenC = 48950,
+            reporter = 1239.123f
           };
           break;
       }
