@@ -41,7 +41,7 @@ namespace Ei_Dimension.ViewModels
     private int _fillDataActive;
     public const int HIREZDEFINITION = 512;
 
-    private List<ProcessedBead> _cachedBeadStructsForLoadedData = new List<ProcessedBead>(2000000);
+    private readonly List<ProcessedBead> _cachedBeadStructsForLoadedData = new List<ProcessedBead>(2000000);
 
     protected ResultsViewModel()
     {
@@ -145,9 +145,12 @@ namespace Ei_Dimension.ViewModels
       {
         try
         {
-          var path = PlatePictogramViewModel.Instance.PlatePictogram.GetSelectedFilePath(); //@"C:\Emissioninc\KEIZ0R-LEGION\AcquisitionData\rowtest1A1_0.csv";//
+          var path = "PlatePictogramViewModel.Instance.PlatePictogram.GetSelectedFilePath()"; //@"C:\Emissioninc\KEIZ0R-LEGION\AcquisitionData\xxxA1_01.05.2023.13-26-29.csv";//
           if (!System.IO.File.Exists(path)) //rowtest1A1_0  //BeadAssayA1_19 //val speed test 2E7_0
           {
+            #if DEBUG
+            App.Logger.Log($"LOADING FILE FAILED, FILE \"{path}\" doesn't exist");
+            #endif
             Notification.ShowLocalized(nameof(Language.Resources.Notification_File_Inexistent));
             ResultsWaitIndicatorVisibility = false;
             ChartWaitIndicatorVisibility = false;
@@ -159,6 +162,9 @@ namespace Ei_Dimension.ViewModels
           _cachedBeadStructsForLoadedData.Clear();
           if (!BeadParser.ParseBeadInfoFile(path, _cachedBeadStructsForLoadedData))
           {
+            #if DEBUG
+            App.Logger.Log($"LOADING FILE FAILED, FILE \"{path}\" is empty");
+            #endif
             Notification.ShowLocalized(nameof(Language.Resources.Notification_Empty_File));
             ResultsWaitIndicatorVisibility = false;
             ChartWaitIndicatorVisibility = false;
@@ -175,8 +181,17 @@ namespace Ei_Dimension.ViewModels
         {
           if (e.GetType() == typeof(OverflowException))
           {//can bubble up from ParseBeadInfo()
+            #if DEBUG
+            App.Logger.Log("LOADING FILE FAILED, FILE overflow");
+            #endif
             App.Current.Dispatcher.Invoke(() => Notification.ShowError("Overflow error while reading from file\nPlease report to the developer"));
           }
+          #if DEBUG
+          else
+          {
+            App.Logger.Log($"LOADING FILE FAILED, exception: {e.Message}");
+          }
+          #endif
           ResultsWaitIndicatorVisibility = false;
           ChartWaitIndicatorVisibility = false;
           _fillDataActive = 0;
