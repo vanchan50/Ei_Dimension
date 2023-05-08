@@ -505,6 +505,30 @@ namespace DIOS.Core
         case 0x6E:
           outParameters = new ParameterUpdateEventArgs(DeviceParameterType.MotorStepsY, intParameter: (int)MotorStepsY.Plate384RowP, floatParameter: cs.FParameter);
           break;
+        case 0x70:
+          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.FluidicPathLength, intParameter: (int)FluidicPathLength.LoopAVolume, floatParameter: cs.Parameter);
+          break;
+        case 0x71:
+          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.FluidicPathLength, intParameter: (int)FluidicPathLength.LoopBVolume, floatParameter: cs.Parameter);
+          break;
+        case 0x72:
+          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.FluidicPathLength, intParameter: (int)FluidicPathLength.LoopAToPickupNeedle, floatParameter: cs.Parameter);
+          break;
+        case 0x73:
+          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.FluidicPathLength, intParameter: (int)FluidicPathLength.LoopBToPickupNeedle, floatParameter: cs.Parameter);
+          break;
+        case 0x74:
+          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.FluidicPathLength, intParameter: (int)FluidicPathLength.LoopAToFlowcellBase, floatParameter: cs.Parameter);
+          break;
+        case 0x75:
+          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.FluidicPathLength, intParameter: (int)FluidicPathLength.LoopBToFlowcellBase, floatParameter: cs.Parameter);
+          break;
+        case 0x76:
+          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.FluidicPathLength, intParameter: (int)FluidicPathLength.FlowCellNeedleVolume, floatParameter: cs.Parameter);
+          break;
+        case 0x77:
+          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.FluidicPathLength, intParameter: (int)FluidicPathLength.PickupNeedleVolume, floatParameter: cs.Parameter);
+          break;
         case 0x80:
           outParameters = new ParameterUpdateEventArgs(DeviceParameterType.ChannelTemperature, intParameter: (int)Channel.VioletA, floatParameter: cs.Parameter / 10.0f);
           break;

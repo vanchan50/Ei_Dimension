@@ -6,6 +6,9 @@ using Ei_Dimension.Controllers;
 using Ei_Dimension.Graphing.HeatMap;
 using MadWizard.WinUSBNet;
 using DIOS.Core.HardwareIntercom;
+using DIOS.Application;
+using DIOS.Core;
+using System.IO;
 
 namespace Ei_Dimension
 {
@@ -23,7 +26,7 @@ namespace Ei_Dimension
       if (_done)
         throw new Exception("StartupFinalizer can only be called once");
 
-      App.SetupDevice();
+      SetupDevice();
       if (!System.Windows.Input.Keyboard.IsKeyDown(System.Windows.Input.Key.LeftCtrl))
         App.DiosApp.Device.StartSelfTest();
 
@@ -106,6 +109,60 @@ namespace Ei_Dimension
       #if DEBUG
       App.Logger.Log("DEBUG MODE");
       #endif
+    }
+
+    private static void SetupDevice()
+    {
+      if (App.DiosApp.Device == null)
+        throw new Exception("Device not initialized");
+
+      App.DiosApp.Device.Init();
+
+      if (Directory.Exists(Settings.Default.LastOutFolder))
+        App.DiosApp.Publisher.Outdir = Settings.Default.LastOutFolder;
+      else
+      {
+        Settings.Default.LastOutFolder = App.DiosApp.Publisher.Outdir;
+        Settings.Default.Save();
+      }
+      App.DiosApp.Publisher.Outfilename = Settings.Default.SaveFileName;
+      App.DiosApp.Publisher.IsPlateReportPublishingActive = Settings.Default.PlateReport;
+      App.DiosApp.Publisher.IsBeadEventPublishingActive = Settings.Default.Everyevent;
+      App.DiosApp.Publisher.IsResultsPublishingActive = Settings.Default.RMeans;
+      App.DiosApp.Publisher.IsLegacyPlateReportPublishingActive = Settings.Default.LegacyPlateReport;
+      App.DiosApp.Publisher.IsOnlyClassifiedBeadsPublishingActive = Settings.Default.OnlyClassifed;
+
+      App.DiosApp.Control = (SystemControl)Settings.Default.SystemControl;
+      App.DiosApp.TerminationType = (Termination)Settings.Default.EndRead;
+      App.DiosApp.MinPerRegion = Settings.Default.MinPerRegion;
+      App.DiosApp.TotalBeadsToCapture = Settings.Default.BeadsToCapture;
+      App.DiosApp.Device.MaxPressure = Settings.Default.MaxPressure;
+      App.DiosApp.Device.ReporterScaling = Settings.Default.ReporterScaling;
+      var hiSensChannel = Settings.Default.SensitivityChannelB ? HiSensitivityChannel.GreenB : HiSensitivityChannel.GreenC;
+      App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.HiSensitivityChannel, hiSensChannel);
+      var map = App.DiosApp.MapController.ActiveMap;
+      App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.Attenuation, map.calParams.att);
+      App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.DNRTransition, map.calParams.DNRTrans);
+      App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.SampleSyringeType);
+      App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.SampleSyringeSize);
+      App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.SheathFlushVolume);
+      App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.TraySteps);
+      App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.IsWellEdgeAgitateActive);
+      App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.DistanceToWellEdge);
+      App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.WellEdgeDeltaHeight);
+      App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.FlushCycles);
+      App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.IsFlowCellInverted);
+      App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.FluidicPathLength, FluidicPathLength.LoopAVolume);
+      App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.FluidicPathLength, FluidicPathLength.LoopBVolume);
+      App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.FluidicPathLength, FluidicPathLength.LoopAToPickupNeedle);
+      App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.FluidicPathLength, FluidicPathLength.LoopBToPickupNeedle);
+      App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.FluidicPathLength, FluidicPathLength.LoopAToFlowcellBase);
+      App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.FluidicPathLength, FluidicPathLength.LoopBToFlowcellBase);
+      App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.FluidicPathLength, FluidicPathLength.FlowCellNeedleVolume);
+      App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.FluidicPathLength, FluidicPathLength.PickupNeedleVolume);
+      App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.WashRepeatsAmount, 1); //1 is the default. same as in the box in dashboard
+      App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.AgitateRepeatsAmount, 1); //1 is the default. same as in the box in dashboard
+      //App.DiosApp.Device.MainCommand("Set Property", code: 0x97, parameter: 1170);  //set current limit of aligner motors if leds are off //0x97 no longer used
     }
 
     private static void Usbnotif_Removal(object sender, USBEvent e)

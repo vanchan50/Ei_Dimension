@@ -689,6 +689,38 @@ namespace DIOS.Core.HardwareIntercom
               throw new NotImplementedException();
           }
           break;
+        case DeviceParameterType.FluidicPathLength:
+          param = intValue;
+          switch (subParameter)
+          {
+            case FluidicPathLength.LoopAVolume:
+              commandCode = 0x70;
+              break;
+            case FluidicPathLength.LoopBVolume:
+              commandCode = 0x71;
+              break;
+            case FluidicPathLength.LoopAToPickupNeedle:
+              commandCode = 0x72;
+              break;
+            case FluidicPathLength.LoopBToPickupNeedle:
+              commandCode = 0x73;
+              break;
+            case FluidicPathLength.LoopAToFlowcellBase:
+              commandCode = 0x74;
+              break;
+            case FluidicPathLength.LoopBToFlowcellBase:
+              commandCode = 0x75;
+              break;
+            case FluidicPathLength.FlowCellNeedleVolume:
+              commandCode = 0x76;
+              break;
+            case FluidicPathLength.PickupNeedleVolume:
+              commandCode = 0x77;
+              break;
+            default:
+              throw new NotImplementedException();
+          }
+          break;
         case DeviceParameterType.SheathFlushVolume:
           commandCode = 0x36;
           param = intValue;
@@ -1157,6 +1189,37 @@ namespace DIOS.Core.HardwareIntercom
               break;
             case CalibrationTarget.RP1:
               commandCode = 0x8F;
+              break;
+            default:
+              throw new NotImplementedException();
+          }
+          break;
+        case DeviceParameterType.FluidicPathLength:
+          switch (subParameter)
+          {
+            case FluidicPathLength.LoopAVolume:
+              commandCode = 0x70;
+              break;
+            case FluidicPathLength.LoopBVolume:
+              commandCode = 0x71;
+              break;
+            case FluidicPathLength.LoopAToPickupNeedle:
+              commandCode = 0x72;
+              break;
+            case FluidicPathLength.LoopBToPickupNeedle:
+              commandCode = 0x73;
+              break;
+            case FluidicPathLength.LoopAToFlowcellBase:
+              commandCode = 0x74;
+              break;
+            case FluidicPathLength.LoopBToFlowcellBase:
+              commandCode = 0x75;
+              break;
+            case FluidicPathLength.FlowCellNeedleVolume:
+              commandCode = 0x76;
+              break;
+            case FluidicPathLength.PickupNeedleVolume:
+              commandCode = 0x77;
               break;
             default:
               throw new NotImplementedException();

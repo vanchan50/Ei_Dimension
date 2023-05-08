@@ -104,10 +104,10 @@ namespace Ei_Dimension
       {
         GraphsController.Instance.Update();
         ActiveRegionsStatsController.Instance.UpdateCurrentStats();
-        App.Current.Dispatcher.Invoke(TextBoxHandler.UpdateEventCounter);
+        App.Current.Dispatcher.Invoke(IncomingUpdateHandler.UpdateEventCounter);
         App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.BeadConcentration);
       }
-      TextBoxHandler.UpdatePressureMonitor();
+      IncomingUpdateHandler.UpdatePressureMonitor();
       ServiceMenuEnabler.Update();
       _uiUpdateIsActive = 0;
 

@@ -33,7 +33,7 @@ namespace Ei_Dimension
 
     private static bool _workOrderPending;
     private static FileSystemWatcher _workOrderWatcher;
-    private static readonly TextBoxHandler _textBoxHandler = new TextBoxHandler();
+    private static readonly IncomingUpdateHandler IncomingUpdateHandler = new IncomingUpdateHandler();
 
     static App()
     {
@@ -640,7 +640,7 @@ namespace Ei_Dimension
       DiosApp.Device.FinishedReadingWell += FinishedReadingWellEventHandler;
       DiosApp.Device.FinishedMeasurement += FinishedMeasurementEventHandler;
       DiosApp.MapController.ChangedActiveMap += MapChangedEventHandler;
-      DiosApp.Device.ParameterUpdate += _textBoxHandler.ParameterUpdateEventHandler;
+      DiosApp.Device.ParameterUpdate += IncomingUpdateHandler.ParameterUpdateEventHandler;
       _workOrderPending = false;
       _nextWellWarning = false;
       _workOrderWatcher = new FileSystemWatcher($"{DiosApp.RootDirectory.FullName}\\WorkOrder");
@@ -648,51 +648,6 @@ namespace Ei_Dimension
       _workOrderWatcher.Filter = "*.txt";
       _workOrderWatcher.EnableRaisingEvents = true;
       _workOrderWatcher.Created += OnNewWorkOrder;
-    }
-
-    public static void SetupDevice()
-    {
-      if (DiosApp.Device == null)
-        throw new Exception("Device not initialized");
-
-      DiosApp.Device.Init();
-
-      if (Directory.Exists(Settings.Default.LastOutFolder))
-        DiosApp.Publisher.Outdir = Settings.Default.LastOutFolder;
-      else
-      {
-        Settings.Default.LastOutFolder = DiosApp.Publisher.Outdir;
-        Settings.Default.Save();
-      }
-      DiosApp.Publisher.Outfilename = Settings.Default.SaveFileName;
-      DiosApp.Publisher.IsPlateReportPublishingActive = Settings.Default.PlateReport;
-      DiosApp.Publisher.IsBeadEventPublishingActive = Settings.Default.Everyevent;
-      DiosApp.Publisher.IsResultsPublishingActive = Settings.Default.RMeans;
-      DiosApp.Publisher.IsLegacyPlateReportPublishingActive = Settings.Default.LegacyPlateReport;
-      DiosApp.Publisher.IsOnlyClassifiedBeadsPublishingActive = Settings.Default.OnlyClassifed;
-
-      DiosApp.Control = (SystemControl)Settings.Default.SystemControl;
-      DiosApp.TerminationType = (Termination)Settings.Default.EndRead;
-      DiosApp.MinPerRegion = Settings.Default.MinPerRegion;
-      DiosApp.TotalBeadsToCapture = Settings.Default.BeadsToCapture;
-      DiosApp.Device.MaxPressure = Settings.Default.MaxPressure;
-      DiosApp.Device.ReporterScaling = Settings.Default.ReporterScaling;
-      var hiSensChannel = Settings.Default.SensitivityChannelB ? HiSensitivityChannel.GreenB : HiSensitivityChannel.GreenC;
-      DiosApp.Device.Hardware.SetParameter(DeviceParameterType.HiSensitivityChannel, hiSensChannel);
-      DiosApp.Device.Hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.Attenuation, DiosApp.MapController.ActiveMap.calParams.att);
-      DiosApp.Device.Hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.DNRTransition, DiosApp.MapController.ActiveMap.calParams.DNRTrans);
-      DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.SampleSyringeType);
-      DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.SampleSyringeSize);
-      DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.SheathFlushVolume);
-      DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.TraySteps);
-      DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.IsWellEdgeAgitateActive);
-      DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.DistanceToWellEdge);
-      DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.WellEdgeDeltaHeight);
-      DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.FlushCycles);
-      DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.IsFlowCellInverted);
-      DiosApp.Device.Hardware.SetParameter(DeviceParameterType.WashRepeatsAmount, 1); //1 is the default. same as in the box in dashboard
-      DiosApp.Device.Hardware.SetParameter(DeviceParameterType.AgitateRepeatsAmount, 1); //1 is the default. same as in the box in dashboard
-      //DiosApp.Device.MainCommand("Set Property", code: 0x97, parameter: 1170);  //set current limit of aligner motors if leds are off //0x97 no longer used
     }
   }
 }

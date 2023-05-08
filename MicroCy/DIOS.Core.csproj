@@ -59,6 +59,7 @@
     <Compile Include="DataController.cs" />
     <Compile Include="HardwareIntercom\DeviceCommandType.cs" />
     <Compile Include="HardwareIntercom\DeviceParameterType.cs" />
+    <Compile Include="HardwareIntercom\FluidicPathLength.cs" />
     <Compile Include="HardwareIntercom\HardwareInterface.cs" />
     <Compile Include="HardwareIntercom\HardwareToken.cs" />
     <Compile Include="HardwareIntercom\LaserType.cs" />

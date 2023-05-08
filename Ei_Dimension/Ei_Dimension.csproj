@@ -217,7 +217,7 @@
     </Compile>
     <Compile Include="StartupFinalizer.cs" />
     <Compile Include="Styles\EmbeddedImg.cs" />
-    <Compile Include="TextBoxHandler.cs" />
+    <Compile Include="IncomingUpdateHandler.cs" />
     <Compile Include="UITimer.cs" />
     <Compile Include="UserInputHandler.cs" />
     <Compile Include="ViewModels\AlignmentViewModel.cs" />

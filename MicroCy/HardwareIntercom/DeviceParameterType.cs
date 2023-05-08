@@ -105,6 +105,8 @@
     DistanceToWellEdge,
     WellEdgeDeltaHeight,
     FlushCycles,
-    IsFlowCellInverted
+    IsFlowCellInverted,
+    ///<summary>Subparamter: FluidicPathLength</summary>
+    FluidicPathLength
   }
 }
