@@ -374,6 +374,10 @@ Direction</value>
   <data name="Components_Input_Sel" xml:space="preserve">
     <value>Input Selector</value>
   </data>
+  <data name="Components_InvertedFlowCell" xml:space="preserve">
+    <value>Inverted
+Flow Cell</value>
+  </data>
   <data name="Components_Lasers" xml:space="preserve">
     <value>Lasers</value>
   </data>

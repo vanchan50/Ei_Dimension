@@ -689,6 +689,7 @@ namespace Ei_Dimension
       DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.DistanceToWellEdge);
       DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.WellEdgeDeltaHeight);
       DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.FlushCycles);
+      DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.IsFlowCellInverted);
       DiosApp.Device.Hardware.SetParameter(DeviceParameterType.WashRepeatsAmount, 1); //1 is the default. same as in the box in dashboard
       DiosApp.Device.Hardware.SetParameter(DeviceParameterType.AgitateRepeatsAmount, 1); //1 is the default. same as in the box in dashboard
       //DiosApp.Device.MainCommand("Set Property", code: 0x97, parameter: 1170);  //set current limit of aligner motors if leds are off //0x97 no longer used

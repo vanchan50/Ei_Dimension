@@ -760,6 +760,10 @@ namespace DIOS.Core.HardwareIntercom
           commandCode = 0xBC;
           fparam = value;
           break;
+        case DeviceParameterType.IsFlowCellInverted:
+          commandCode = 0xBE;
+          param = intValue;
+          break;
         case DeviceParameterType.IsLaserActive:
           commandCode = 0xC0;
           param = intValue;
@@ -1560,6 +1564,9 @@ namespace DIOS.Core.HardwareIntercom
           break;
         case DeviceParameterType.TraySteps:
           commandCode = 0xBC;
+          break;
+        case DeviceParameterType.IsFlowCellInverted:
+          commandCode = 0xBE;
           break;
         case DeviceParameterType.Volume:
           switch (subParameter)

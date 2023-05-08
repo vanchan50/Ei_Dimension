@@ -111,6 +111,9 @@ namespace Ei_Dimension
         case DeviceParameterType.BeadConcentration:
           update = () => MainViewModel.Instance.SetBeadConcentrationMonitorValue(parameter.Parameter);
           break;
+        case DeviceParameterType.IsFlowCellInverted:
+          update = () => ComponentsViewModel.Instance.InvertedFlowCellOn = parameter.Parameter == 1;
+          break;
         case DeviceParameterType.CalibrationParameter:
           var type16 = (CalibrationParameter)parameter.Parameter;
           switch (type16)

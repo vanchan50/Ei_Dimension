@@ -792,6 +792,16 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Inverted
+        ///Flow Cell.
+        /// </summary>
+        public static string Components_InvertedFlowCell {
+            get {
+                return ResourceManager.GetString("Components_InvertedFlowCell", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lasers.
         /// </summary>
         public static string Components_Lasers {

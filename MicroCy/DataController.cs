@@ -538,6 +538,9 @@ namespace DIOS.Core
         case 0xB6:
           outParameters = new ParameterUpdateEventArgs(DeviceParameterType.ChannelTemperature, intParameter: (int)Channel.RedD, floatParameter: cs.Parameter / 10.0f);
           break;
+        case 0xBE:
+          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.IsFlowCellInverted, intParameter: cs.Parameter );
+          break;
         case 0x93:
           outParameters = new ParameterUpdateEventArgs(DeviceParameterType.ChannelCompensationBias, intParameter: (int)Channel.ForwardScatter, floatParameter: cs.Parameter);
           break;

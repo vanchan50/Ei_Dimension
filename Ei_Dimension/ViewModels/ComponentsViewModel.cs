@@ -54,6 +54,7 @@ namespace Ei_Dimension.ViewModels
     public static ComponentsViewModel Instance { get; private set; }
     public virtual bool SuppressWarnings { get; set; }
     public virtual bool ContinuousModeOn { get; set; }
+    public virtual bool InvertedFlowCellOn { get; set; }
     public virtual Visibility ExtendedRangeVisible { get; set; } = Visibility.Hidden;
     public virtual ObservableCollection<string> ExtendedRangeThresholds { get; set; } = new ObservableCollection<string> { "0", "0" };
     public virtual ObservableCollection<string> ExtendedRangeMultipliers { get; set; } = new ObservableCollection<string> { "0", "0" };
@@ -428,6 +429,11 @@ namespace Ei_Dimension.ViewModels
     public void ContinuousModeToggle()
     {
       App.DiosApp.RunPlateContinuously = ContinuousModeOn;
+    }
+
+    public void InvertedFlowCellToggle()
+    {
+      App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.IsFlowCellInverted, InvertedFlowCellOn ? 1 : 0);
     }
 
     public void DirectMemoryAccessClick()

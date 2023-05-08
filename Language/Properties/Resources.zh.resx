@@ -331,6 +331,10 @@
   <data name="Components_Input_Sel" xml:space="preserve">
     <value>输入选择</value>
   </data>
+  <data name="Components_InvertedFlowCell" xml:space="preserve">
+    <value>Inverted
+Flow Cell</value>
+  </data>
   <data name="Components_Lasers" xml:space="preserve">
     <value>激光器</value>
   </data>

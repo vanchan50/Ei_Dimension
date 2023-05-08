@@ -104,6 +104,7 @@
     IsWellEdgeAgitateActive,
     DistanceToWellEdge,
     WellEdgeDeltaHeight,
-    FlushCycles
+    FlushCycles,
+    IsFlowCellInverted
   }
 }
