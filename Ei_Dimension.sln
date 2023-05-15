@@ -14,6 +14,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Language", "Language\Language.csproj", "{AE6FFECA-703A-49A8-8979-7381FB4DBAE9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{22FD0680-0B04-454B-A417-430343B3685A}"
+	ProjectSection(SolutionItems) = preProject
+		Tests\AutoTests.playlist = Tests\AutoTests.playlist
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DIOS.Core.Tests", "Tests\DIOS.Core.Tests\DIOS.Core.Tests.csproj", "{9820248A-CD97-4E68-B702-60D43FDF3C62}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -34,7 +37,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DIOS.Application", "Applica
 		{A4B56FCD-95DD-44CD-8F5B-6EE456BBD095} = {A4B56FCD-95DD-44CD-8F5B-6EE456BBD095}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DIOS.Application.Tests", "Tests\DIOS.Application.Tests\DIOS.Application.Tests.csproj", "{2B612403-F435-408F-A43F-1AA1F9A84561}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DIOS.Application.Tests", "Tests\DIOS.Application.Tests\DIOS.Application.Tests.csproj", "{2B612403-F435-408F-A43F-1AA1F9A84561}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

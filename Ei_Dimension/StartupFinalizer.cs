@@ -29,6 +29,13 @@ namespace Ei_Dimension
       SetupDevice();
       if (!System.Windows.Input.Keyboard.IsKeyDown(System.Windows.Input.Key.LeftCtrl))
         App.DiosApp.Device.StartSelfTest();
+      Settings.Default.SanityCheckEnabled = false;
+      Settings.Default.Save();
+      if (!Settings.Default.SanityCheckEnabled)
+      {
+        UserInputHandler._disableSanityCheck = true;
+        App.Logger.Log("Sanity check disabled");
+      }
 
       if (Program.SpecializedVer == CompanyID.China)
       {

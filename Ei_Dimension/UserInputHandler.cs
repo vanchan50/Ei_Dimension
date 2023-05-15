@@ -33,7 +33,7 @@ namespace Ei_Dimension
     private static string _tempOldString;
     private static string _tempNewString;
     private static bool _cancelKeyboardInjectionFlag;
-    private static bool _disableSanityCheck;
+    public static bool _disableSanityCheck;
 
     static UserInputHandler()
     {

@@ -1,0 +1,42 @@
+<Playlist Version="2.0">
+  <Rule Name="Includes" Match="Any">
+    <Rule Match="All">
+      <Property Name="Solution" />
+      <Rule Match="Any">
+        <Rule Match="All">
+          <Property Name="Project" Value="DIOS.Application.Tests" />
+          <Rule Match="Any">
+            <Rule Match="All">
+              <Property Name="Namespace" Value="DIOS.Application.Tests" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="BeadEventFileWriterTest" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="DIOS.Application.Tests.BeadEventFileWriterTest.Stringify_ShouldIdentifyZone_WhenZoneAndRegionArePresent" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="DIOS.Application.Tests.BeadEventFileWriterTest.Stringify_ShouldIdentifyZone_WhenZoneAndRegionArePresent" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="DIOS.Application.Tests.BeadEventFileWriterTest.Stringify_ShouldRoundDown_WhenFloatValuesAreLessThanHalf" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="DIOS.Application.Tests.BeadEventFileWriterTest.Stringify_ShouldRoundDown_WhenFloatValuesAreLessThanHalf" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="DIOS.Application.Tests.BeadEventFileWriterTest.Stringify_ShouldRoundUp_WhenFloatValuesAreMoreThanHalf" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="DIOS.Application.Tests.BeadEventFileWriterTest.Stringify_ShouldRoundUp_WhenFloatValuesAreMoreThanHalf" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+          </Rule>
+        </Rule>
+      </Rule>
+    </Rule>
+  </Rule>
+</Playlist>
