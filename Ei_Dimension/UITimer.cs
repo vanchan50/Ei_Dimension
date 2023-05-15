@@ -122,6 +122,14 @@ namespace Ei_Dimension
         }
         if (System.Windows.Input.Keyboard.IsKeyDown(System.Windows.Input.Key.F3))
         {
+          //App.DiosApp.Device.DEBUGOnParameterUpdate(DeviceParameterType.FluidicPathLength, (int)FluidicPathLength.LoopAToPickupNeedle, 1);
+          //App.DiosApp.Device.DEBUGOnParameterUpdate(DeviceParameterType.FluidicPathLength, (int)FluidicPathLength.LoopBToPickupNeedle, 2);
+          //App.DiosApp.Device.DEBUGOnParameterUpdate(DeviceParameterType.FluidicPathLength, (int)FluidicPathLength.LoopAToFlowcellBase, 3);
+          //App.DiosApp.Device.DEBUGOnParameterUpdate(DeviceParameterType.FluidicPathLength, (int)FluidicPathLength.LoopBToFlowcellBase, 4);
+          //App.DiosApp.Device.DEBUGOnParameterUpdate(DeviceParameterType.FluidicPathLength, (int)FluidicPathLength.LoopAVolume, 5);
+          //App.DiosApp.Device.DEBUGOnParameterUpdate(DeviceParameterType.FluidicPathLength, (int)FluidicPathLength.LoopBVolume, 6);
+          //App.DiosApp.Device.DEBUGOnParameterUpdate(DeviceParameterType.FluidicPathLength, (int)FluidicPathLength.FlowCellNeedleVolume, 7);
+          //App.DiosApp.Device.DEBUGOnParameterUpdate(DeviceParameterType.FluidicPathLength, (int)FluidicPathLength.PickupNeedleVolume, 8);
           //App.DiosApp.Device.DEBUGOnParameterUpdate(DeviceParameterType.IsFlowCellInverted, 0);
           //App.DiosApp.Device.DEBUGOnParameterUpdate(DeviceParameterType.FlushCycles, 43);
           ////App.DiosApp.Device.DEBUGCommandTest(DEBUGCommandList[DEBUGCommandCounter++]);

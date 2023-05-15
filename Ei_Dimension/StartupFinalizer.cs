@@ -96,8 +96,17 @@ namespace Ei_Dimension
       usbnotif.Removal += Usbnotif_Removal;
 
       HideChannels();
+        #if DEBUG
+        Notification.ShowError("Motor out of position messages are suppressed in StartupFinalizer");
+        #endif
 
       var selfTestResult = await App.DiosApp.Device.GetSelfTestResultAsync();
+
+        App.Logger.Log("Motor out of position messages are suppressed");
+        selfTestResult.MotorX = null;
+        selfTestResult.MotorY = null;
+        selfTestResult.MotorZ = null;
+
       string selfTestErrorMessage = SelfTestErrorDecoder.Decode(selfTestResult);
       if (selfTestErrorMessage != null)
         Notification.ShowError(selfTestErrorMessage);
