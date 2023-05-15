@@ -1047,6 +1047,33 @@ Flow Cell</value>
   <data name="SyringeSpeeds_EdgeAgitateHeight" xml:space="preserve">
     <value>Edge Agitate Δ Height</value>
   </data>
+  <data name="SyringeSpeeds_FluidicPathsLengths" xml:space="preserve">
+    <value>Fluidic Path Lengths</value>
+  </data>
+  <data name="SyringeSpeeds_Fluidic_FlowCellVol" xml:space="preserve">
+    <value>Flow Cell Volume, nl</value>
+  </data>
+  <data name="SyringeSpeeds_Fluidic_LoopAToFlowCell" xml:space="preserve">
+    <value>Loop A To Flow Cell, nl</value>
+  </data>
+  <data name="SyringeSpeeds_Fluidic_LoopAToPickupNeedle" xml:space="preserve">
+    <value>Loop A To Pickup Needle, nl</value>
+  </data>
+  <data name="SyringeSpeeds_Fluidic_LoopAVol" xml:space="preserve">
+    <value>Loop A Volume, μl</value>
+  </data>
+  <data name="SyringeSpeeds_Fluidic_LoopBToFlowCell" xml:space="preserve">
+    <value>Loop B To Flow Cell, nl</value>
+  </data>
+  <data name="SyringeSpeeds_Fluidic_LoopBToPickupNeedle" xml:space="preserve">
+    <value>Loop B To Pickup Needle, nl</value>
+  </data>
+  <data name="SyringeSpeeds_Fluidic_LoopBVol" xml:space="preserve">
+    <value>Loop B Volume, μl</value>
+  </data>
+  <data name="SyringeSpeeds_Fluidic_PickupVol" xml:space="preserve">
+    <value>Pickup Needle Volume, nl</value>
+  </data>
   <data name="SyringeSpeeds_Flush" xml:space="preserve">
     <value>冲洗</value>
   </data>
