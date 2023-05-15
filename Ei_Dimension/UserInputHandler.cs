@@ -501,7 +501,113 @@ namespace Ei_Dimension
               ErrorMessage = "[1-8000]";
             }
             break;
-          case "SiPMTempCoeff":
+          case nameof(SyringeSpeedsViewModel.FluidicPathLengths):
+            if (SelectedTextBox.index == 0)
+            {
+              if (int.TryParse(_tempNewString, out iRes))
+              {
+                if ((iRes >= 0) || _disableSanityCheck)
+                {
+                  App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.FluidicPathLength, FluidicPathLength.LoopAVolume, iRes);
+                  break;
+                }
+              }
+              failed = true;
+              ErrorMessage = "[>0]";
+            }
+            if (SelectedTextBox.index == 1)
+            {
+              if (int.TryParse(_tempNewString, out iRes))
+              {
+                if ((iRes >= 0) || _disableSanityCheck)
+                {
+                  App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.FluidicPathLength, FluidicPathLength.LoopBVolume, iRes);
+                  break;
+                }
+              }
+              failed = true;
+              ErrorMessage = "[>0]";
+            }
+            if (SelectedTextBox.index == 2)
+            {
+              if (int.TryParse(_tempNewString, out iRes))
+              {
+                if ((iRes >= 0) || _disableSanityCheck)
+                {
+                  App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.FluidicPathLength, FluidicPathLength.LoopAToPickupNeedle, iRes);
+                  break;
+                }
+              }
+              failed = true;
+              ErrorMessage = "[>0]";
+            }
+            if (SelectedTextBox.index == 3)
+            {
+              if (int.TryParse(_tempNewString, out iRes))
+              {
+                if ((iRes >= 0) || _disableSanityCheck)
+                {
+                  App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.FluidicPathLength, FluidicPathLength.LoopBToPickupNeedle, iRes);
+                  break;
+                }
+              }
+              failed = true;
+              ErrorMessage = "[>0]";
+            }
+            if (SelectedTextBox.index == 4)
+            {
+              if (int.TryParse(_tempNewString, out iRes))
+              {
+                if ((iRes >= 0) || _disableSanityCheck)
+                {
+                  App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.FluidicPathLength, FluidicPathLength.LoopAToFlowcellBase, iRes);
+                  break;
+                }
+              }
+              failed = true;
+              ErrorMessage = "[>0]";
+            }
+            if (SelectedTextBox.index == 5)
+            {
+              if (int.TryParse(_tempNewString, out iRes))
+              {
+                if ((iRes >= 0) || _disableSanityCheck)
+                {
+                  App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.FluidicPathLength, FluidicPathLength.LoopBToFlowcellBase, iRes);
+                  break;
+                }
+              }
+              failed = true;
+              ErrorMessage = "[>0]";
+            }
+            if (SelectedTextBox.index == 6)
+            {
+              if (int.TryParse(_tempNewString, out iRes))
+              {
+                if ((iRes >= 0) || _disableSanityCheck)
+                {
+                  App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.FluidicPathLength, FluidicPathLength.FlowCellNeedleVolume, iRes);
+                  break;
+                }
+              }
+              failed = true;
+              ErrorMessage = "[>0]";
+            }
+            if (SelectedTextBox.index == 7)
+            {
+              if (int.TryParse(_tempNewString, out iRes))
+              {
+                if ((iRes >= 0) || _disableSanityCheck)
+                {
+                  App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.FluidicPathLength, FluidicPathLength.PickupNeedleVolume, iRes);
+                  break;
+                }
+              }
+              failed = true;
+              ErrorMessage = "[>0]";
+            }
+            break;
+          case nameof(ChannelOffsetViewModel.SiPMTempCoeff):
             if (float.TryParse(_tempNewString, out fRes))
             {
               if ((fRes >= -10.0000000001 && fRes <= 10.00000000000001) || _disableSanityCheck)
@@ -513,7 +619,7 @@ namespace Ei_Dimension
             failed = true;
             ErrorMessage = "[-10.0 - 10.0]";
             break;
-          case "CalibrationMargin":
+          case nameof(ChannelOffsetViewModel.CalibrationMargin):
             if (float.TryParse(_tempNewString, out fRes))
             {
               if ((fRes >= 0 && fRes < 0.1) || _disableSanityCheck)
@@ -525,7 +631,7 @@ namespace Ei_Dimension
             failed = true;
             ErrorMessage = "[0.0 - 0.1]";
             break;
-          case "ReporterScale":
+          case nameof(ChannelOffsetViewModel.ReporterScale):
             if (float.TryParse(_tempNewString, out fRes))
             {
               if ((fRes > 0) || _disableSanityCheck)

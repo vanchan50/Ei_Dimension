@@ -788,6 +788,38 @@ namespace Ei_Dimension
           }
           //update = () => CalibrationViewModel.Instance.ExtendedRangeMultipliers[pos18] = parameter.FloatParameter.ToString("F3");
           break;
+        case DeviceParameterType.FluidicPathLength:
+          var type19 = (FluidicPathLength)parameter.Parameter;
+          var pos19 = 0;
+          switch (type19)
+          {
+            case FluidicPathLength.LoopAVolume:
+              pos19 = 0;
+              break;
+            case FluidicPathLength.LoopBVolume:
+              pos19 = 1;
+              break;
+            case FluidicPathLength.LoopAToPickupNeedle:
+              pos19 = 2;
+              break;
+            case FluidicPathLength.LoopBToPickupNeedle:
+              pos19 = 3;
+              break;
+            case FluidicPathLength.LoopAToFlowcellBase:
+              pos19 = 4;
+              break;
+            case FluidicPathLength.LoopBToFlowcellBase:
+              pos19 = 5;
+              break;
+            case FluidicPathLength.FlowCellNeedleVolume:
+              pos19 = 6;
+              break;
+            case FluidicPathLength.PickupNeedleVolume:
+              pos19 = 7;
+              break;
+          }
+          update = () => SyringeSpeedsViewModel.Instance.FluidicPathLengths[pos19] = parameter.FloatParameter.ToString("F0");
+          break;
       }
       if (update != null)
         App.Current.Dispatcher.Invoke(update);

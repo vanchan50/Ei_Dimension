@@ -20,14 +20,14 @@
     
     <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Margin="150,120,0,0">
+            Margin="0,120,0,0">
       <StackPanel Orientation="Horizontal"
                   HorizontalAlignment="Stretch"
                   VerticalAlignment="Stretch"
                   Margin="10,0,10,0">
         <StackPanel VerticalAlignment="Stretch"
                     Margin="0,49,3,0"
-                    Width="300">
+                    Width="200">
           <TextBlock Text="{lang:Loc SyringeSpeeds_Normal}"
                  FontFamily="{StaticResource AppTextFont}"
                  FontSize="36"
@@ -219,13 +219,179 @@
       </StackPanel>
     </Border>
 
+    <Border HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Margin="560,120,0,0">
+      <StackPanel Orientation="Horizontal"
+                  HorizontalAlignment="Stretch"
+                  VerticalAlignment="Stretch"
+                  Margin="10,0,10,0">
+        <StackPanel VerticalAlignment="Stretch"
+                    Margin="0,99,6,0"
+                    Width="470">
+          <TextBlock Text="{lang:Loc SyringeSpeeds_Fluidic_LoopAVol}"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="36"
+                 FontWeight="Bold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Right"
+                 VerticalAlignment="Top"
+                 Margin="0,0,4,0"/>
+          <TextBlock Text="{lang:Loc SyringeSpeeds_Fluidic_LoopBVol}"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="36"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Right"
+                 VerticalAlignment="Top"
+                 Margin="0,10,4,0"/>
+          <TextBlock Text="{lang:Loc SyringeSpeeds_Fluidic_LoopAToPickupNeedle}"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="36"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Right"
+                 VerticalAlignment="Top"
+                 Margin="0,10,4,0"/>
+          <TextBlock Text="{lang:Loc SyringeSpeeds_Fluidic_LoopBToPickupNeedle}"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="36"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Right"
+                 VerticalAlignment="Top"
+                 Margin="0,13,4,0"/>
+          <TextBlock Text="{lang:Loc SyringeSpeeds_Fluidic_LoopAToFlowCell}"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="36"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Right"
+                 VerticalAlignment="Top"
+                 Margin="0,10,4,0"/>
+          <TextBlock Text="{lang:Loc SyringeSpeeds_Fluidic_LoopBToFlowCell}"
+                     FontFamily="{StaticResource AppTextFont}"
+                     FontSize="36"
+                     FontWeight="UltraBold"
+                     Foreground="{StaticResource AppTextColor}"
+                     HorizontalAlignment="Right"
+                     VerticalAlignment="Top"
+                     Margin="0,10,4,0"/>
+          <TextBlock Text="{lang:Loc SyringeSpeeds_Fluidic_FlowCellVol}"
+                     FontFamily="{StaticResource AppTextFont}"
+                     FontSize="36"
+                     FontWeight="UltraBold"
+                     Foreground="{StaticResource AppTextColor}"
+                     HorizontalAlignment="Right"
+                     VerticalAlignment="Top"
+                     Margin="0,10,4,0"/>
+          <TextBlock Text="{lang:Loc SyringeSpeeds_Fluidic_PickupVol}"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="36"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Right"
+                 VerticalAlignment="Top"
+                 Margin="0,10,4,0"/>
+        </StackPanel>
+
+        <StackPanel VerticalAlignment="Stretch"
+                    Width="176">
+          <TextBlock Text="{lang:Loc SyringeSpeeds_FluidicPathsLengths}"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="36"
+                 FontWeight="UltraBold"
+                 TextWrapping="Wrap"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Center"
+                 VerticalAlignment="Top"/>
+          <Border Background="{StaticResource RibbonBackgroundActive}">
+            <StackPanel Name="fluidicsLengthsSP">
+              <TextBox HorizontalAlignment="Stretch"
+                       Margin="10,8,10,15"
+                       Style="{StaticResource InputFieldStyle}"
+                       Text="{Binding FluidicPathLengths[0]}">
+                <dxmvvm:Interaction.Behaviors>
+                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="17"/>
+                  <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+                </dxmvvm:Interaction.Behaviors>
+              </TextBox>
+              <TextBox HorizontalAlignment="Stretch"
+                      Margin="10,0,10,15"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding FluidicPathLengths[1]}">
+                <dxmvvm:Interaction.Behaviors>
+                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="18"/>
+                  <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+                </dxmvvm:Interaction.Behaviors>
+              </TextBox>
+              <TextBox HorizontalAlignment="Stretch"
+                      Margin="10,0,10,15"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding FluidicPathLengths[2]}">
+                <dxmvvm:Interaction.Behaviors>
+                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="19"/>
+                  <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+                </dxmvvm:Interaction.Behaviors>
+              </TextBox>
+              <TextBox HorizontalAlignment="Stretch"
+                      Margin="10,0,10,15"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding FluidicPathLengths[3]}">
+                <dxmvvm:Interaction.Behaviors>
+                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="20"/>
+                  <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+                </dxmvvm:Interaction.Behaviors>
+              </TextBox>
+              <TextBox HorizontalAlignment="Stretch"
+                      Margin="10,0,10,15"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding FluidicPathLengths[4]}">
+                <dxmvvm:Interaction.Behaviors>
+                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="21"/>
+                  <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+                </dxmvvm:Interaction.Behaviors>
+              </TextBox>
+              <TextBox HorizontalAlignment="Stretch"
+                      Margin="10,0,10,10"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding FluidicPathLengths[5]}">
+                <dxmvvm:Interaction.Behaviors>
+                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="22"/>
+                  <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+                </dxmvvm:Interaction.Behaviors>
+              </TextBox>
+              <TextBox HorizontalAlignment="Stretch"
+                       Margin="10,0,10,10"
+                       Style="{StaticResource InputFieldStyle}"
+                       Text="{Binding FluidicPathLengths[6]}">
+                <dxmvvm:Interaction.Behaviors>
+                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="23"/>
+                  <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+                </dxmvvm:Interaction.Behaviors>
+              </TextBox>
+              <TextBox HorizontalAlignment="Stretch"
+                       Margin="10,0,10,10"
+                       Style="{StaticResource InputFieldStyle}"
+                       Text="{Binding FluidicPathLengths[7]}">
+                <dxmvvm:Interaction.Behaviors>
+                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="24"/>
+                  <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+                </dxmvvm:Interaction.Behaviors>
+              </TextBox>
+            </StackPanel>
+          </Border>
+        </StackPanel>
+      </StackPanel>
+    </Border>
+
     <!--SingleSyringle mode checkbox-->
     <StackPanel Orientation="Horizontal"
                 Width="400"
                 Height="60"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
-                Margin="470,550,0,0">
+                Margin="130,550,0,0">
       <CheckBox FontFamily="{StaticResource AppTextFont}"
                 FontSize="30"
                 FontWeight="UltraBold"
@@ -249,88 +415,72 @@
     <!--Syringe Size-->
     <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Margin="940,210,0,0">
-      <StackPanel>
-        <TextBlock Text="{lang:Loc SyringeSpeeds_SampleSyringeSize}"
-                   FontFamily="{StaticResource AppTextFont}"
-                   FontSize="36" TextAlignment="Center"
-                   FontWeight="UltraBold"
-                   TextWrapping="Wrap"
-                   Width="140" Height="100"
-                   Foreground="{StaticResource AppTextColor}"
-                   HorizontalAlignment="Center"/>
-        <TextBox Width="140" Name="SyringeSize"
-                 Style="{StaticResource InputFieldStyle}"
-                 Text="{Binding SampleSyringeSize[0]}">
-          <dxmvvm:Interaction.Behaviors>
-            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="12"/>
-            <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
-          </dxmvvm:Interaction.Behaviors>
-        </TextBox>
-        <TextBlock Text="{lang:Loc SyringeSpeeds_SheathFlushVolume}"
-                   FontFamily="{StaticResource AppTextFont}"
-                   FontSize="36" TextAlignment="Center"
-                   FontWeight="UltraBold"
-                   TextWrapping="Wrap"
-                   Width="200" Height="100"
-                   Margin="0,30,0,6"
-                   Foreground="{StaticResource AppTextColor}"
-                   HorizontalAlignment="Center"/>
-        <TextBox Width="140" Name="SheathFlush"
-                 Style="{StaticResource InputFieldStyle}"
-                 Text="{Binding SheathFlushVolume[0]}">
-          <dxmvvm:Interaction.Behaviors>
-            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="13"/>
-            <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
-          </dxmvvm:Interaction.Behaviors>
-        </TextBox>
-        <TextBlock Text="{lang:Loc SyringeSpeeds_FlushCycles}"
-                   FontFamily="{StaticResource AppTextFont}"
-                   FontSize="36" TextAlignment="Center"
-                   FontWeight="UltraBold"
-                   TextWrapping="Wrap"
-                   Width="200" Height="50"
-                   Margin="0,30,0,6"
-                   Foreground="{StaticResource AppTextColor}"
-                   HorizontalAlignment="Center"/>
-        <TextBox Width="140" Name="FlushCycles"
-                 Style="{StaticResource InputFieldStyle}"
-                 Text="{Binding FlushCycles[0]}">
-          <dxmvvm:Interaction.Behaviors>
-            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="16"/>
-            <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
-          </dxmvvm:Interaction.Behaviors>
-        </TextBox>
+            Margin="40,710,0,0">
+      <StackPanel Orientation="Horizontal">
+        <StackPanel>
+          <TextBlock Text="{lang:Loc SyringeSpeeds_SampleSyringeSize}"
+                     FontFamily="{StaticResource AppTextFont}"
+                     FontSize="36" TextAlignment="Center"
+                     FontWeight="UltraBold"
+                     TextWrapping="Wrap"
+                     Width="140" Height="100"
+                     Margin="0,0,0,6"
+                     Foreground="{StaticResource AppTextColor}"
+                     HorizontalAlignment="Center"/>
+          <TextBox Width="140" Name="SyringeSize"
+                   Style="{StaticResource InputFieldStyle}"
+                   Text="{Binding SampleSyringeSize[0]}">
+            <dxmvvm:Interaction.Behaviors>
+              <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="12"/>
+              <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+            </dxmvvm:Interaction.Behaviors>
+          </TextBox>
+        </StackPanel>
+        <StackPanel Margin="10,0,0,0">
+          <TextBlock Text="{lang:Loc SyringeSpeeds_SheathFlushVolume}"
+                     FontFamily="{StaticResource AppTextFont}"
+                     FontSize="36" TextAlignment="Center"
+                     FontWeight="UltraBold"
+                     TextWrapping="Wrap"
+                     Width="200" Height="100"
+                     Margin="0,0,0,6"
+                     Foreground="{StaticResource AppTextColor}"
+                     HorizontalAlignment="Center"/>
+          <TextBox Width="140" Name="SheathFlush"
+                   Style="{StaticResource InputFieldStyle}"
+                   Text="{Binding SheathFlushVolume[0]}">
+            <dxmvvm:Interaction.Behaviors>
+              <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="13"/>
+              <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+            </dxmvvm:Interaction.Behaviors>
+          </TextBox>
+        </StackPanel>
+        <StackPanel>
+          <TextBlock Text="{lang:Loc SyringeSpeeds_FlushCycles}"
+                     FontFamily="{StaticResource AppTextFont}"
+                     FontSize="36" TextAlignment="Center"
+                     FontWeight="UltraBold"
+                     TextWrapping="Wrap"
+                     Width="200" Height="100"
+                     Margin="0,0,0,6"
+                     Foreground="{StaticResource AppTextColor}"
+                     HorizontalAlignment="Center"/>
+          <TextBox Width="140" Name="FlushCycles"
+                   Style="{StaticResource InputFieldStyle}"
+                   Text="{Binding FlushCycles[0]}">
+            <dxmvvm:Interaction.Behaviors>
+              <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="16"/>
+              <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+            </dxmvvm:Interaction.Behaviors>
+          </TextBox>
+        </StackPanel>
       </StackPanel>
     </Border>
 
     <!--Edge Agitate-->
     <StackPanel HorizontalAlignment="Left"
                 VerticalAlignment="Top"
-                Margin="1170,150,0,0">
-      <StackPanel Orientation="Horizontal"
-                  Width="400"
-                  Height="60"
-                  HorizontalAlignment="Left"
-                  VerticalAlignment="Top">
-        <CheckBox FontFamily="{StaticResource AppTextFont}"
-                  FontSize="30"
-                  FontWeight="UltraBold"
-                  Foreground="{StaticResource AppTextColor}"
-                  Style="{StaticResource CheckboxStyle}"
-                  IsChecked="{Binding WellEdgeAgitate[0],Mode=OneWay}">
-          <dxmvvm:Interaction.Behaviors>
-            <dxmvvm:EventToCommand EventName="Checked" Command="{Binding WellEdgeAgitateCheckedCommand}" CommandParameter="True"/>
-            <dxmvvm:EventToCommand EventName="Unchecked" Command="{Binding WellEdgeAgitateCheckedCommand}" CommandParameter="False"/>
-          </dxmvvm:Interaction.Behaviors>
-        </CheckBox>
-        <TextBlock Text="{lang:Loc SyringeSpeeds_AgitateFromWellEdge}"
-                   FontFamily="{StaticResource AppTextFont}"
-                   FontSize="36"
-                   FontWeight="UltraBold"
-                   Foreground="{StaticResource AppTextColor}"
-                   Margin="4,0,0,0"/>
-      </StackPanel>
+                Margin="1230,210,0,0">
       <TextBlock Text="{lang:Loc SyringeSpeeds_DistanceToEdge}"
                  FontFamily="{StaticResource AppTextFont}"
                  FontSize="36" TextAlignment="Center"
@@ -364,6 +514,30 @@
           <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
         </dxmvvm:Interaction.Behaviors>
       </TextBox>
+      <StackPanel Orientation="Horizontal"
+                  Width="400"
+                  Height="60"
+                  HorizontalAlignment="Left"
+                  VerticalAlignment="Top"
+                  Margin="0,10,0,0">
+        <CheckBox FontFamily="{StaticResource AppTextFont}"
+                  FontSize="30"
+                  FontWeight="UltraBold"
+                  Foreground="{StaticResource AppTextColor}"
+                  Style="{StaticResource CheckboxStyle}"
+                  IsChecked="{Binding WellEdgeAgitate[0],Mode=OneWay}">
+          <dxmvvm:Interaction.Behaviors>
+            <dxmvvm:EventToCommand EventName="Checked" Command="{Binding WellEdgeAgitateCheckedCommand}" CommandParameter="True"/>
+            <dxmvvm:EventToCommand EventName="Unchecked" Command="{Binding WellEdgeAgitateCheckedCommand}" CommandParameter="False"/>
+          </dxmvvm:Interaction.Behaviors>
+        </CheckBox>
+        <TextBlock Text="{lang:Loc SyringeSpeeds_AgitateFromWellEdge}"
+                   FontFamily="{StaticResource AppTextFont}"
+                   FontSize="36"
+                   FontWeight="UltraBold"
+                   Foreground="{StaticResource AppTextColor}"
+                   Margin="4,0,0,0"/>
+      </StackPanel>
     </StackPanel>
 
   </Grid>

@@ -11,6 +11,7 @@ namespace Ei_Dimension.ViewModels
   {
     public virtual ObservableCollection<string> SheathSyringeParameters { get; set; } = new ObservableCollection<string>();
     public virtual ObservableCollection<string> SamplesSyringeParameters { get; set; } = new ObservableCollection<string>();
+    public virtual ObservableCollection<string> FluidicPathLengths { get; set; } = new ObservableCollection<string>();
     public virtual ObservableCollection<bool> SingleSyringeMode { get; set; } = new ObservableCollection<bool>{ false };
     public virtual ObservableCollection<bool> WellEdgeAgitate { get; set; } = new ObservableCollection<bool> { false };
     public virtual ObservableCollection<string> SampleSyringeSize { get; set; } = new ObservableCollection<string>{""};
@@ -26,6 +27,11 @@ namespace Ei_Dimension.ViewModels
       {
         SheathSyringeParameters.Add("");
         SamplesSyringeParameters.Add("");
+      }
+
+      for (var i = 0; i < 8; i++)
+      {
+        FluidicPathLengths.Add("");
       }
       Instance = this;
     }
@@ -59,6 +65,7 @@ namespace Ei_Dimension.ViewModels
     {
       var sheathSP = Views.SyringeSpeedsView.Instance.sheathSP.Children;
       var samplesSP = Views.SyringeSpeedsView.Instance.samplesSP.Children;
+      var fluidicsSP = Views.SyringeSpeedsView.Instance.fluidicsLengthsSP.Children;
       switch (num)
       {
         case 0:
@@ -128,6 +135,38 @@ namespace Ei_Dimension.ViewModels
         case 16:
           UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(FlushCycles)), this, 0, Views.SyringeSpeedsView.Instance.FlushCycles);
           MainViewModel.Instance.NumpadToggleButton(Views.SyringeSpeedsView.Instance.FlushCycles);
+          break;
+        case 17:
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(FluidicPathLengths)), this, 0, (TextBox)fluidicsSP[0]);
+          MainViewModel.Instance.NumpadToggleButton((TextBox)fluidicsSP[0]);
+          break;
+        case 18:
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(FluidicPathLengths)), this, 1, (TextBox)fluidicsSP[1]);
+          MainViewModel.Instance.NumpadToggleButton((TextBox)fluidicsSP[1]);
+          break;
+        case 19:
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(FluidicPathLengths)), this, 2, (TextBox)fluidicsSP[2]);
+          MainViewModel.Instance.NumpadToggleButton((TextBox)fluidicsSP[2]);
+          break;
+        case 20:
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(FluidicPathLengths)), this, 3, (TextBox)fluidicsSP[3]);
+          MainViewModel.Instance.NumpadToggleButton((TextBox)fluidicsSP[3]);
+          break;
+        case 21:
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(FluidicPathLengths)), this, 4, (TextBox)fluidicsSP[4]);
+          MainViewModel.Instance.NumpadToggleButton((TextBox)fluidicsSP[4]);
+          break;
+        case 22:
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(FluidicPathLengths)), this, 5, (TextBox)fluidicsSP[5]);
+          MainViewModel.Instance.NumpadToggleButton((TextBox)fluidicsSP[5]);
+          break;
+        case 23:
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(FluidicPathLengths)), this, 6, (TextBox)fluidicsSP[6]);
+          MainViewModel.Instance.NumpadToggleButton((TextBox)fluidicsSP[6]);
+          break;
+        case 24:
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(FluidicPathLengths)), this, 7, (TextBox)fluidicsSP[7]);
+          MainViewModel.Instance.NumpadToggleButton((TextBox)fluidicsSP[7]);
           break;
       }
     }

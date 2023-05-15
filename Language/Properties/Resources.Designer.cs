@@ -3304,6 +3304,87 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Flow Cell Volume, nl.
+        /// </summary>
+        public static string SyringeSpeeds_Fluidic_FlowCellVol {
+            get {
+                return ResourceManager.GetString("SyringeSpeeds_Fluidic_FlowCellVol", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loop A To Flow Cell, nl.
+        /// </summary>
+        public static string SyringeSpeeds_Fluidic_LoopAToFlowCell {
+            get {
+                return ResourceManager.GetString("SyringeSpeeds_Fluidic_LoopAToFlowCell", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loop A To Pickup Needle, nl.
+        /// </summary>
+        public static string SyringeSpeeds_Fluidic_LoopAToPickupNeedle {
+            get {
+                return ResourceManager.GetString("SyringeSpeeds_Fluidic_LoopAToPickupNeedle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loop A Volume, μl.
+        /// </summary>
+        public static string SyringeSpeeds_Fluidic_LoopAVol {
+            get {
+                return ResourceManager.GetString("SyringeSpeeds_Fluidic_LoopAVol", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loop B To Flow Cell, nl.
+        /// </summary>
+        public static string SyringeSpeeds_Fluidic_LoopBToFlowCell {
+            get {
+                return ResourceManager.GetString("SyringeSpeeds_Fluidic_LoopBToFlowCell", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loop B To Pickup Needle, nl.
+        /// </summary>
+        public static string SyringeSpeeds_Fluidic_LoopBToPickupNeedle {
+            get {
+                return ResourceManager.GetString("SyringeSpeeds_Fluidic_LoopBToPickupNeedle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loop B Volume, μl.
+        /// </summary>
+        public static string SyringeSpeeds_Fluidic_LoopBVol {
+            get {
+                return ResourceManager.GetString("SyringeSpeeds_Fluidic_LoopBVol", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pickup Needle Volume, nl.
+        /// </summary>
+        public static string SyringeSpeeds_Fluidic_PickupVol {
+            get {
+                return ResourceManager.GetString("SyringeSpeeds_Fluidic_PickupVol", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fluidic Path Lengths.
+        /// </summary>
+        public static string SyringeSpeeds_FluidicPathsLengths {
+            get {
+                return ResourceManager.GetString("SyringeSpeeds_FluidicPathsLengths", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Flush.
         /// </summary>
         public static string SyringeSpeeds_Flush {

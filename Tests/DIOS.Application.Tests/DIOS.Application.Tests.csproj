@@ -4,20 +4,12 @@
     <TargetFramework>net472</TargetFramework>
 
     <IsPackable>false</IsPackable>
-
-    <OutputType>Library</OutputType>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DefineConstants>$(DefineConstants)</DefineConstants>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DefineConstants>$(DefineConstants)</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentAssertions" Version="6.11.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.5.0" />
+    <PackageReference Include="NSubstitute" Version="5.0.0" />
     <PackageReference Include="xunit" Version="2.4.2" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -27,17 +19,10 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Xunit.StaFact" Version="1.1.11" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Ei_Dimension\Ei_Dimension.csproj" />
-    <ProjectReference Include="..\..\MicroCy\DIOS.Core.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="PresentationFramework" />
-    <Reference Include="WindowsBase" />
+    <ProjectReference Include="..\..\Application\DIOS.Application.csproj" />
   </ItemGroup>
 
 </Project>

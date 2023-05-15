@@ -12,7 +12,6 @@ using Ei_Dimension.Controllers;
 using DIOS.Application;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using Ei_Dimension.Graphing;
 
 namespace Ei_Dimension
 {
