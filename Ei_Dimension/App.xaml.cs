@@ -12,6 +12,7 @@ using Ei_Dimension.Controllers;
 using DIOS.Application;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using DIOS.Application.Domain;
 
 namespace Ei_Dimension
 {
@@ -214,7 +215,7 @@ namespace Ei_Dimension
       //ResultsViewModel.Instance.PlatePictogramIsCovered = Visibility.Visible; //TODO: temporary solution
 
       PlatePictogramViewModel.Instance.PlatePictogram.CurrentlyReadCell = (row, col);
-      PlatePictogramViewModel.Instance.PlatePictogram.ChangeState(row, col, Models.WellType.NowReading, GetWarningState(), wellFilePath);
+      PlatePictogramViewModel.Instance.PlatePictogram.ChangeState(row, col, WellType.NowReading, GetWarningState(), wellFilePath);
       
       App.Current.Dispatcher.Invoke(() =>
       {
@@ -271,15 +272,14 @@ namespace Ei_Dimension
       {
         DiosApp.Results.MakeWellStats();  //TODO: need to check if the well is finished reading before call
         DiosApp.Publisher.ResultsFile.AppendAndWrite(DiosApp.Results.PublishWellStats()); //makewellstats should be awaited only for this method
-        DiosApp.Publisher.BeadEventFile.CreateAndWrite(DiosApp.Results.PublishBeadEvents());
         DiosApp.Publisher.DoSomethingWithWorkOrder();
-        DiosApp.Logger.Log($"{DateTime.Now.ToString()} Background File Save Complete");
       });
+      DiosApp.Publisher.BeadEventFile.CreateAndWrite(DiosApp.Results.PublishBeadEvents());
     }
 
-    private static Models.WellType GetWellStateForPictogram()
+    private static WellType GetWellStateForPictogram()
     {
-      var type = Models.WellType.Success;
+      var type = WellType.Success;
 
       if (DiosApp.Device.Mode != OperationMode.Normal
           || DiosApp.TerminationType != Termination.MinPerRegion)
@@ -292,11 +292,11 @@ namespace Ei_Dimension
         //if lacking more then 25% of minperregion beads 
         if (-lacking > DiosApp.MinPerRegion * 0.25)
         {
-          type = Models.WellType.Fail;
+          type = WellType.Fail;
         }
         else
         {
-          type = Models.WellType.LightFail;
+          type = WellType.LightFail;
         }
       }
       return type;

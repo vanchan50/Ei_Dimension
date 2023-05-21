@@ -46,6 +46,7 @@
     <Compile Include="ChannelsCalibrationStats.cs" />
     <Compile Include="DIOSApp.cs" />
     <Compile Include="DistributionStats.cs" />
+    <Compile Include="Domain\WellType.cs" />
     <Compile Include="FileIO\BeadEventFileWriter.cs" />
     <Compile Include="FileIO\BeadParser.cs" />
     <Compile Include="FileIO\LegacyReportFileWriter.cs" />
@@ -84,5 +85,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using DIOS.Application.Domain;
 
 namespace Ei_Dimension.Models
 {

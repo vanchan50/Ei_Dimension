@@ -9,6 +9,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using DIOS.Application.Domain;
 using Ei_Dimension.Controllers;
 using DIOS.Core.HardwareIntercom;
 

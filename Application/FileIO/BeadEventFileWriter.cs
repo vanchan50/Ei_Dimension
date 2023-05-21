@@ -37,6 +37,10 @@ namespace DIOS.Application.FileIO
       {
         _publisher._logger.Log("[PROBLEM] BeadEventFileWriter out of memory");
       }
+      catch (Exception e)
+      {
+        _publisher._logger.Log($"[PROBLEM] BeadEventFileWriter {e.Message}");
+      }
 
       var directoryName = Path.Combine(_publisher.Outdir, ResultsPublisher.DATAFOLDERNAME);
       if (!_publisher.OutputDirectoryExists(directoryName))

@@ -1,4 +1,4 @@
-﻿namespace Ei_Dimension.Models
+﻿namespace DIOS.Application.Domain
 {
   public enum WellType
   {

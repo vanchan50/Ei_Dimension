@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using DIOS.Application.Domain;
 
 namespace Ei_Dimension.Models
 {
@@ -25,15 +26,17 @@ namespace Ei_Dimension.Models
 
     protected DrawingPlate()
     {
-      DrawingWells = new ObservableCollection<WellTableRow>();
-      DrawingWells.Add(new WellTableRow(0, 12)); //A
-      DrawingWells.Add(new WellTableRow(1, 12)); //B
-      DrawingWells.Add(new WellTableRow(2, 12)); //C
-      DrawingWells.Add(new WellTableRow(3, 12)); //D
-      DrawingWells.Add(new WellTableRow(4, 12)); //E
-      DrawingWells.Add(new WellTableRow(5, 12)); //F
-      DrawingWells.Add(new WellTableRow(6, 12)); //G
-      DrawingWells.Add(new WellTableRow(7, 12)); //H
+      DrawingWells = new ObservableCollection<WellTableRow>
+      {
+        new WellTableRow(0, 12), //A
+        new WellTableRow(1, 12), //B
+        new WellTableRow(2, 12), //C
+        new WellTableRow(3, 12), //D
+        new WellTableRow(4, 12), //E
+        new WellTableRow(5, 12), //F
+        new WellTableRow(6, 12), //G
+        new WellTableRow(7, 12)  //H
+      };
 
       _wells = new PlateWell[16, 24];
       for (var i = 0; i < 16; i++)
