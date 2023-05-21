@@ -213,7 +213,7 @@ namespace Ei_Dimension.ViewModels
             }
             if (_templateName == null)
             {
-              _templateName = SelectedItem.Substring(SelectedItem.LastIndexOf("\\") + 1, SelectedItem.Length - SelectedItem.LastIndexOf("\\") - 6);
+              _templateName = SelectedItem.Substring(SelectedItem.LastIndexOf(@"\") + 1, SelectedItem.Length - SelectedItem.LastIndexOf(@"\") - 6);
             }
             ExperimentViewModel.Instance.CurrentTemplateName = _templateName;
             Settings.Default.LastTemplate = SelectedItem;
