@@ -54,11 +54,23 @@ namespace DIOS.Core
     public OperationMode Mode { get; set; } = OperationMode.Normal; //TODO: move to app layer?
     public int BoardVersion { get; internal set; }
     public string FirmwareVersion { get; internal set; }
+
     /// <summary>
     /// An inverse coefficient for the bead Reporter<br></br>
     /// Applied before Reporter Normalization
     /// </summary>
-    public float ReporterScaling { get; set; } = 1;
+    public float ReporterScaling
+    {
+      get
+      {
+        return _reporterScaling;
+      }
+      set
+      {
+        _reporterScaling = value;
+        _beadProcessor._inverseReporterScaling = 1 / value;
+      }
+    }
     /// <summary>
     /// Amount of bead events for the current well<br></br>
     /// Resets on the start of new Well
@@ -142,6 +154,7 @@ namespace DIOS.Core
     private readonly DataController _dataController;
     private readonly MeasurementScript _script;
     private readonly ILogger _logger;
+    private float _reporterScaling = 1;
 
     public Device(ISerial connection, ILogger logger)
     {

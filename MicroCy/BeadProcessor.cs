@@ -16,6 +16,7 @@
     internal bool _extendedRangeEnabled = false;
     internal bool _channelRedirectionEnabled = false;
     private float[] _compensatedCoordinatesCache = { 0,0,0,0 }; //cl0,cl1,cl2,cl3
+    internal float _inverseReporterScaling;
 
     public BeadProcessor(Device device)
     {
@@ -53,6 +54,7 @@
         redssc = rawBead.redssc,
         greenssc = rawBead.greenssc
       };
+
       //The order of operations matters here
 
       if (_channelRedirectionEnabled)
@@ -174,10 +176,10 @@
     private float CalculateReporter(ushort region)
     {
       var basicReporter = _greenMin > _device.HdnrTrans ? _greenMaj * _device.HDnrCoef : _greenMin;
-      var scaledReporter = (basicReporter / _device.ReporterScaling);
+      var scaledReporter = (basicReporter * _inverseReporterScaling);
       if (!Normalization.IsEnabled || region == 0)
         return scaledReporter;
-      var rep = _map.GetFactorizedNormalizationForRegion(in region);
+      var rep = _map.GetFactorizedNormalizationForRegion(region);
       scaledReporter -= rep;
       if (scaledReporter < 0)
         return 0;
