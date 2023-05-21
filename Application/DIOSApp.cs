@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
+using DIOS.Application.Domain;
 using DIOS.Application.FileIO;
 using DIOS.Core;
 
@@ -58,6 +60,42 @@ namespace DIOS.Application
       {
         Console.WriteLine("Directory Creation Failed");
       }
+    }
+
+    public WellType GetWellStateForPictogram()
+    {
+      var type = WellType.Success;
+
+      if (Device.Mode != OperationMode.Normal
+          || TerminationType != Termination.MinPerRegion)
+        return type;
+
+      var lacking = Results.MinPerRegionAchieved(MinPerRegion);
+      //not achieved
+      if (lacking < 0)
+      {
+        //if lacking more then 25% of minperregion beads 
+        if (-lacking > MinPerRegion * 0.25)
+        {
+          type = WellType.Fail;
+        }
+        else
+        {
+          type = WellType.LightFail;
+        }
+      }
+      return type;
+    }
+
+    public void SaveWellFiles()
+    {
+      _ = Task.Run(() =>
+      {
+        Results.MakeWellStats();
+        Publisher.ResultsFile.AppendAndWrite(Results.PublishWellStats()); //makewellstats should be awaited only for this method
+        Publisher.DoSomethingWithWorkOrder();
+      });
+      Publisher.BeadEventFile.CreateAndWrite(Results.PublishBeadEvents());
     }
   }
 }

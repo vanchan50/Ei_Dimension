@@ -63,20 +63,6 @@ namespace Ei_Dimension
       }
     }
 
-    public static int GetMapIndex(string mapName)
-    {
-      var mapList = DiosApp.MapController.MapList;
-      int i = 0;
-      for (; i < mapList.Count; i++)
-      {
-        if (mapList[i].mapName == mapName)
-          break;
-      }
-      if (i == mapList.Count)
-        i = -1;
-      return i;
-    }
-
     public static void SetActiveMap(string mapName)
     {
       for (var i = 0; i < DiosApp.MapController.MapList.Count; i++)
@@ -123,10 +109,11 @@ namespace Ei_Dimension
       };
       try
       {
-        DiosApp.Publisher.OutDirCheck();
-        if (!Directory.Exists(DiosApp.Publisher.Outdir + "\\SavedImages"))
-          Directory.CreateDirectory(DiosApp.Publisher.Outdir + "\\SavedImages");
-        chart.ExportToImage(DiosApp.Publisher.Outdir + @"\SavedImages\" + DiosApp.Publisher.Date + ".png", options);
+        var path = DiosApp.Publisher.Outdir + @"\SavedImages";
+        if (DiosApp.Publisher.OutputDirectoryExists(path))
+        {
+          chart.ExportToImage($"{path}\\{DiosApp.Publisher.Date}.png", options);
+        }
       }
       catch
       {
@@ -239,9 +226,9 @@ namespace Ei_Dimension
     public void FinishedReadingWellEventHandler(object sender, ReadingWellEventArgs e)
     {
       Logger.Log($"Finished Reading well {e.Well.CoordinatesString()}");
-      SaveWellFiles();
+      DiosApp.SaveWellFiles();
 
-      var type = GetWellStateForPictogram();
+      var type = DiosApp.GetWellStateForPictogram();
       
       MultiTube.GetModifiedWellIndexes(e.Well, out var row, out var col, proceed:true);
 
@@ -264,42 +251,6 @@ namespace Ei_Dimension
         ResultsViewModel.Instance.DecodeCalibrationStats(stats, current: true);
         ChannelOffsetViewModel.Instance.DecodeBackgroundStats(averageBackgrounds);
       }));
-    }
-
-    private static void SaveWellFiles()
-    {
-      _ = Task.Run(() =>
-      {
-        DiosApp.Results.MakeWellStats();  //TODO: need to check if the well is finished reading before call
-        DiosApp.Publisher.ResultsFile.AppendAndWrite(DiosApp.Results.PublishWellStats()); //makewellstats should be awaited only for this method
-        DiosApp.Publisher.DoSomethingWithWorkOrder();
-      });
-      DiosApp.Publisher.BeadEventFile.CreateAndWrite(DiosApp.Results.PublishBeadEvents());
-    }
-
-    private static WellType GetWellStateForPictogram()
-    {
-      var type = WellType.Success;
-
-      if (DiosApp.Device.Mode != OperationMode.Normal
-          || DiosApp.TerminationType != Termination.MinPerRegion)
-        return type;
-
-      var lacking = DiosApp.Results.MinPerRegionAchieved(DiosApp.MinPerRegion);
-      //not achieved
-      if (lacking < 0)
-      {
-        //if lacking more then 25% of minperregion beads 
-        if (-lacking > DiosApp.MinPerRegion * 0.25)
-        {
-          type = WellType.Fail;
-        }
-        else
-        {
-          type = WellType.LightFail;
-        }
-      }
-      return type;
     }
 
     public void FinishedMeasurementEventHandler(object sender, EventArgs e)

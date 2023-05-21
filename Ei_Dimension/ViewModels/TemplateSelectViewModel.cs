@@ -73,7 +73,7 @@ namespace Ei_Dimension.ViewModels
               int iRes;
               var DashVM = DashboardViewModel.Instance;
               DashVM.SpeedItems[newTemplate.Speed].Click(1);
-              DashVM.ClassiMapItems[App.GetMapIndex(newTemplate.Map)].Click(2);
+              DashVM.ClassiMapItems[App.DiosApp.MapController.GetMapIndexByName(newTemplate.Map)].Click(2);
               ComponentsViewModel.Instance.ChConfigItems[newTemplate.ChConfig].Click(3);
               DashVM.OrderItems[newTemplate.Order].Click(4);
               DashVM.SysControlItems[newTemplate.SysControl].Click(5);

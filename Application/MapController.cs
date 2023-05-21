@@ -29,6 +29,17 @@ namespace DIOS.Application
       OnMapChanged();
     }
 
+    public int GetMapIndexByName(string mapName)
+    {
+      int i = 0;
+      for (; i < MapList.Count; i++)
+      {
+        if (MapList[i].mapName == mapName)
+          return i;
+      }
+      return -1;
+    }
+
     public void OnAppLoaded(int id)
     {
       if (id > MapList.Count - 1)

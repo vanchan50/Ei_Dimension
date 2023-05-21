@@ -119,6 +119,10 @@ namespace Ei_Dimension
           break;
       }
       App.DiosApp.Results.AddProcessedBeadEvent(in bead);
+      App.DiosApp.Results.DataOut.Enqueue(bead);
+      typeof(Device).GetProperty("BeadCount")?
+        .SetValue(App.DiosApp.Device, App.DiosApp.Device.BeadCount + 1);
+
       if (App.DiosApp.Results.IsMeasurementTerminationAchieved())
       {
         App.DiosApp.Device.StopOperation();
