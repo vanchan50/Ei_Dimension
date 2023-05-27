@@ -32,6 +32,23 @@
                     </Rule>
                   </Rule>
                 </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="MapControllerTest" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="DIOS.Application.Tests.MapControllerTest.GetMapIndexByName_ShouldReturnNegative_WhenMapNameDoesntExist" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="DIOS.Application.Tests.MapControllerTest.GetMapIndexByName_ShouldReturnNegative_WhenMapNameDoesntExist" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="DIOS.Application.Tests.MapControllerTest.GetMapIndexByName_ShouldReturnProperIndex_WhenMapNameExists" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="DIOS.Application.Tests.MapControllerTest.GetMapIndexByName_ShouldReturnProperIndex_WhenMapNameExists" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
               </Rule>
             </Rule>
           </Rule>

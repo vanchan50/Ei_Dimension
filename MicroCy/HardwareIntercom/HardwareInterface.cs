@@ -714,7 +714,7 @@ namespace DIOS.Core.HardwareIntercom
             case FluidicPathLength.FlowCellNeedleVolume:
               commandCode = 0x76;
               break;
-            case FluidicPathLength.PickupNeedleVolume:
+            case FluidicPathLength.SpacerSlug:
               commandCode = 0x77;
               break;
             default:
@@ -1218,7 +1218,7 @@ namespace DIOS.Core.HardwareIntercom
             case FluidicPathLength.FlowCellNeedleVolume:
               commandCode = 0x76;
               break;
-            case FluidicPathLength.PickupNeedleVolume:
+            case FluidicPathLength.SpacerSlug:
               commandCode = 0x77;
               break;
             default:

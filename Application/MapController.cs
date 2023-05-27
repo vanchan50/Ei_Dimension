@@ -40,6 +40,22 @@ namespace DIOS.Application
       return -1;
     }
 
+    public MapModel GetMapByName(string mapName)
+    {
+      var index = GetMapIndexByName(mapName);
+      if (index == -1)
+        return null;
+      
+      return MapList[index];
+    }
+
+    public MapModel GetMapByIndex(int index)
+    {
+      if(index < 0 || index >= MapList.Count)
+        return null;
+      return MapList[index];
+    }
+
     public void OnAppLoaded(int id)
     {
       if (id > MapList.Count - 1)

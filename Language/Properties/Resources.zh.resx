@@ -1071,8 +1071,8 @@ Flow Cell</value>
   <data name="SyringeSpeeds_Fluidic_LoopBVol" xml:space="preserve">
     <value>Loop B Volume, μl</value>
   </data>
-  <data name="SyringeSpeeds_Fluidic_PickupVol" xml:space="preserve">
-    <value>Pickup Needle Volume, nl</value>
+  <data name="SyringeSpeeds_Fluidic_SpacerSlug" xml:space="preserve">
+    <value>Spacer Slug, μl</value>
   </data>
   <data name="SyringeSpeeds_Flush" xml:space="preserve">
     <value>冲洗</value>

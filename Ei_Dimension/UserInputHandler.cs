@@ -599,7 +599,7 @@ namespace Ei_Dimension
               {
                 if ((iRes >= 0) || _disableSanityCheck)
                 {
-                  App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.FluidicPathLength, FluidicPathLength.PickupNeedleVolume, iRes);
+                  App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.FluidicPathLength, FluidicPathLength.SpacerSlug, iRes);
                   break;
                 }
               }
@@ -1858,7 +1858,7 @@ namespace Ei_Dimension
         {
           if (int.TryParse(_tempNewString, out iRes))
           {
-            if ((iRes < 0 || iRes > 1000000) || _disableSanityCheck)
+            if ((iRes < 0 || iRes > 1000000) && !_disableSanityCheck)
             {
               failed = true;
               ErrorMessage = "[0-1000000]";

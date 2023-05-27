@@ -3367,11 +3367,11 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Pickup Needle Volume, nl.
+        ///   Looks up a localized string similar to Spacer Slug, μl.
         /// </summary>
-        public static string SyringeSpeeds_Fluidic_PickupVol {
+        public static string SyringeSpeeds_Fluidic_SpacerSlug {
             get {
-                return ResourceManager.GetString("SyringeSpeeds_Fluidic_PickupVol", resourceCulture);
+                return ResourceManager.GetString("SyringeSpeeds_Fluidic_SpacerSlug", resourceCulture);
             }
         }
         

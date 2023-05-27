@@ -814,7 +814,7 @@ namespace Ei_Dimension
             case FluidicPathLength.FlowCellNeedleVolume:
               pos19 = 6;
               break;
-            case FluidicPathLength.PickupNeedleVolume:
+            case FluidicPathLength.SpacerSlug:
               pos19 = 7;
               break;
           }

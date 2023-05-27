@@ -3,7 +3,6 @@ using DevExpress.Mvvm.POCO;
 using DIOS.Core;
 using System;
 using System.Collections.ObjectModel;
-using DIOS.Application;
 using Ei_Dimension.Controllers;
 
 namespace Ei_Dimension.ViewModels
@@ -44,8 +43,7 @@ namespace Ei_Dimension.ViewModels
 
     public void LoadClick(bool fromCode = false)
     {
-      var idx = App.DiosApp.MapController.MapList.FindIndex(x => x.mapName == App.DiosApp.MapController.ActiveMap.mapName);
-      var map = App.DiosApp.MapController.MapList[idx];
+      var map = App.DiosApp.MapController.GetMapByName(App.DiosApp.MapController.ActiveMap.mapName);
       for (var i = 0; i < map.regions.Count; i++)
       {
         //Reset all Verification Regions
@@ -72,8 +70,7 @@ namespace Ei_Dimension.ViewModels
     public void SaveClick()
     {
       UserInputHandler.InputSanityCheck();
-      var idx = App.DiosApp.MapController.MapList.FindIndex(x => x.mapName == App.DiosApp.MapController.ActiveMap.mapName);
-      var map = App.DiosApp.MapController.MapList[idx];
+      var map = App.DiosApp.MapController.GetMapByName(App.DiosApp.MapController.ActiveMap.mapName);
       for (var i = 1; i < MapRegionsController.RegionsList.Count; i++)
       {
         var index = map.regions.FindIndex(x => x.Number == MapRegionsController.RegionsList[i].Number);

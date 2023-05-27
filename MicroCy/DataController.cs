@@ -527,7 +527,7 @@ namespace DIOS.Core
           outParameters = new ParameterUpdateEventArgs(DeviceParameterType.FluidicPathLength, intParameter: (int)FluidicPathLength.FlowCellNeedleVolume, floatParameter: cs.Parameter);
           break;
         case 0x77:
-          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.FluidicPathLength, intParameter: (int)FluidicPathLength.PickupNeedleVolume, floatParameter: cs.Parameter);
+          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.FluidicPathLength, intParameter: (int)FluidicPathLength.SpacerSlug, floatParameter: cs.Parameter);
           break;
         case 0x80:
           outParameters = new ParameterUpdateEventArgs(DeviceParameterType.ChannelTemperature, intParameter: (int)Channel.VioletA, floatParameter: cs.Parameter / 10.0f);

@@ -10,7 +10,6 @@ using DIOS.Core.HardwareIntercom;
 using Ei_Dimension.Cache;
 using Ei_Dimension.Controllers;
 using DIOS.Application;
-using System.Threading.Tasks;
 using System.Collections.Generic;
 using DIOS.Application.Domain;
 
@@ -65,16 +64,15 @@ namespace Ei_Dimension
 
     public static void SetActiveMap(string mapName)
     {
-      for (var i = 0; i < DiosApp.MapController.MapList.Count; i++)
-      {
-        if (DiosApp.MapController.MapList[i].mapName == mapName)
-        {
-          DiosApp.MapController.SetMap(DiosApp.MapController.MapList[i]);
-          Settings.Default.DefaultMap = i;
-          Settings.Default.Save();
-          break;
-        }
-      }
+      var index = DiosApp.MapController.GetMapIndexByName(mapName);
+      if (index < 0)
+        return;
+      var map = DiosApp.MapController.GetMapByIndex(index);
+      if (map == null)
+        return;
+      DiosApp.MapController.SetMap(map);
+      Settings.Default.DefaultMap = index;
+      Settings.Default.Save();
     }
 
     public static void SetSystemControl(byte num)

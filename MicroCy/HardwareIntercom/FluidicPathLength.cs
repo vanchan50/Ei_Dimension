@@ -9,6 +9,6 @@
     LoopAToFlowcellBase,
     LoopBToFlowcellBase,
     FlowCellNeedleVolume,
-    PickupNeedleVolume,
+    SpacerSlug,
   }
 }
