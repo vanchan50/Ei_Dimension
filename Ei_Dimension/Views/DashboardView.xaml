@@ -533,6 +533,16 @@
               <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
             </dxmvvm:Interaction.Behaviors>
           </TextBox>
+          <TextBox HorizontalAlignment="Center"
+                   Width="170" Name="Endr2TB"
+                   Style="{StaticResource InputFieldStyle}"
+                   Text="{Binding EndRead[2]}"
+                   Visibility="{Binding EndReadVisibility[2]}">
+            <dxmvvm:Interaction.Behaviors>
+              <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="8"/>
+              <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+            </dxmvvm:Interaction.Behaviors>
+          </TextBox>
         </Grid>
       </StackPanel>
     </Border>

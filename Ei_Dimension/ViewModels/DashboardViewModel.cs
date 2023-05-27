@@ -12,7 +12,7 @@ namespace Ei_Dimension.ViewModels
   [POCOViewModel]
   public class DashboardViewModel
   {
-    public virtual ObservableCollection<string> EndRead { get; set; } = new ObservableCollection<string> { "100", "500" };
+    public virtual ObservableCollection<string> EndRead { get; set; } = new ObservableCollection<string> { "100", "500", "60" };
     public virtual ObservableCollection<string> Volumes { get; set; } = new ObservableCollection<string> { "0", "0", "0" };
     public virtual ObservableCollection<string> Repeats { get; set; } = new ObservableCollection<string> { "1", "1" };
     public virtual ObservableCollection<string> WorkOrder { get; set; } = new ObservableCollection<string> { "" };
@@ -99,16 +99,21 @@ namespace Ei_Dimension.ViewModels
 
       VerificationWarningVisible = Visibility.Hidden;
 
+      EndRead[0] = Settings.Default.MinPerRegion.ToString();
+      EndRead[1] = Settings.Default.BeadsToCapture.ToString();
+      EndRead[2] = Settings.Default.TerminationTimer.ToString();
       EndReadItems = new ObservableCollection<DropDownButtonContents>
       {
         new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Experiment_Min_Per_Reg), curCulture), this),
         new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Experiment_Total_Events), curCulture), this),
         new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Experiment_End_of_Sample), curCulture), this),
+        new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Experiment_Timer), curCulture), this),
       };
       SelectedEndReadIndex = Settings.Default.EndRead;
       SelectedEndReadContent = EndReadItems[SelectedEndReadIndex].Content;
       EndReadVisibility = new ObservableCollection<Visibility>
       {
+        Visibility.Hidden,
         Visibility.Hidden,
         Visibility.Hidden
       };
@@ -197,6 +202,10 @@ namespace Ei_Dimension.ViewModels
           UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(Repeats)), this, 1, Views.DashboardView.Instance.AgitateRepTB);
           MainViewModel.Instance.NumpadToggleButton(Views.DashboardView.Instance.AgitateRepTB);
           break;
+        case 8:
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(EndRead)), this, 2, Views.DashboardView.Instance.Endr2TB);
+          MainViewModel.Instance.NumpadToggleButton(Views.DashboardView.Instance.Endr2TB);
+          break;
       }
     }
 
@@ -205,21 +214,29 @@ namespace Ei_Dimension.ViewModels
       UserInputHandler.InjectToFocusedTextbox(((TextBox)e.Source).Text, true);
     }
 
-    private void EndReadVisibilitySwitch()
+    internal void EndReadVisibilitySwitch()
     {
       switch (SelectedEndReadIndex)
       {
         case 0:
           EndReadVisibility[0] = Visibility.Visible;
           EndReadVisibility[1] = Visibility.Hidden;
+          EndReadVisibility[2] = Visibility.Hidden;
           break;
         case 1:
           EndReadVisibility[0] = Visibility.Hidden;
           EndReadVisibility[1] = Visibility.Visible;
+          EndReadVisibility[2] = Visibility.Hidden;
+          break;
+        case 3:
+          EndReadVisibility[0] = Visibility.Hidden;
+          EndReadVisibility[1] = Visibility.Hidden;
+          EndReadVisibility[2] = Visibility.Visible;
           break;
         default:
           EndReadVisibility[0] = Visibility.Hidden;
           EndReadVisibility[1] = Visibility.Hidden;
+          EndReadVisibility[2] = Visibility.Hidden;
           break;
       }
     }
@@ -463,7 +480,6 @@ namespace Ei_Dimension.ViewModels
             _vm.SelectedEndReadContent = Content;
             _vm.SelectedEndReadIndex = Index;
             App.SetTerminationType(Index);
-            _vm.EndReadVisibilitySwitch();
             break;
         }
       }

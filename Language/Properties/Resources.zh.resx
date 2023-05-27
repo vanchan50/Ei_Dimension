@@ -619,6 +619,9 @@ Flow Cell</value>
   <data name="Experiment_System_Monitor" xml:space="preserve">
     <value>系统监视窗</value>
   </data>
+  <data name="Experiment_Timer" xml:space="preserve">
+    <value>Timer</value>
+  </data>
   <data name="Experiment_Total_Events" xml:space="preserve">
     <value>已选区总计数</value>
   </data>

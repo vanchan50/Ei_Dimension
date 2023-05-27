@@ -418,5 +418,17 @@ namespace Ei_Dimension {
                 this["SanityCheckEnabled"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("60")]
+        public int TerminationTimer {
+            get {
+                return ((int)(this["TerminationTimer"]));
+            }
+            set {
+                this["TerminationTimer"] = value;
+            }
+        }
     }
 }

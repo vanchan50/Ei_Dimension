@@ -85,6 +85,7 @@ namespace Ei_Dimension
     public static void SetTerminationType(byte num)
     {
       DiosApp.TerminationType = (Termination)num;
+      DashboardViewModel.Instance.EndReadVisibilitySwitch();
       Settings.Default.EndRead = num;
       Settings.Default.Save();
     }
@@ -191,7 +192,7 @@ namespace Ei_Dimension
       DiosApp.MinPerRegion = e.Well.MinPerRegion;
       //DiosApp.TerminationType = e.Well.TermType;
 
-      Logger.Log($"Starting to read well {e.Well.CoordinatesString()} with Params:\nTermination: {(int)DiosApp.TerminationType}\nMinPerRegion: {DiosApp.MinPerRegion}\nBeadsToCapture: {DiosApp.TotalBeadsToCapture}");
+      Logger.Log($"Starting to read well {e.Well.CoordinatesString()} with Params:\nTermination: {DiosApp.TerminationType}\nMinPerRegion: {DiosApp.MinPerRegion}\nBeadsToCapture: {DiosApp.TotalBeadsToCapture}\nTerminationTimer: {DiosApp.TerminationTimer}");
 
       var wellFilePath = DiosApp.Publisher.BeadEventFile.MakeNewFileName(e.Well);
       DiosApp.Results.StartNewWell(e.Well);

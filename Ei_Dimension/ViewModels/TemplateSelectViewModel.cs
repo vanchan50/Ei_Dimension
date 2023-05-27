@@ -98,7 +98,17 @@ namespace Ei_Dimension.ViewModels
               }
               else
                 throw new Exception();
-              
+
+              temp = newTemplate.TerminationTimer.ToString();
+              if (int.TryParse(temp, out iRes))
+              {
+                App.DiosApp.TerminationTimer = iRes;
+                Settings.Default.TerminationTimer = iRes;
+                DashVM.EndRead[2] = temp;
+              }
+              else
+                throw new Exception();
+
               temp = newTemplate.SampleVolume.ToString();
               if (int.TryParse(temp, out iRes))
               {
@@ -281,6 +291,7 @@ namespace Ei_Dimension.ViewModels
           temp.AgitateRepeats = uint.Parse(DashVM.Repeats[1]);
           temp.MinPerRegion = uint.Parse(DashVM.EndRead[0]);
           temp.TotalEvents = uint.Parse(DashVM.EndRead[1]);
+          temp.TerminationTimer = uint.Parse(DashVM.EndRead[2]);
           uint checkboxes = 0;
           for (var i = 0; i < FileSaveViewModel.Instance.Checkboxes.Count - 1; i++)  // -1 to not store system log
           {

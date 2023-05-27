@@ -132,6 +132,7 @@ namespace Ei_Dimension
         DashVM.EndReadItems[0].Content = _rm.GetString(nameof(Language.Resources.Experiment_Min_Per_Reg), _curCulture);
         DashVM.EndReadItems[1].Content = _rm.GetString(nameof(Language.Resources.Experiment_Total_Events), _curCulture);
         DashVM.EndReadItems[2].Content = _rm.GetString(nameof(Language.Resources.Experiment_End_of_Sample), _curCulture);
+        DashVM.EndReadItems[3].Content = _rm.GetString(nameof(Language.Resources.Experiment_Timer), _curCulture);
         DashVM.SelectedEndReadContent = DashVM.EndReadItems[DashVM.SelectedEndReadIndex].Content;
       }
     }

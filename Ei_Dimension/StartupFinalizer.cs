@@ -152,6 +152,7 @@ namespace Ei_Dimension
       App.DiosApp.TerminationType = (Termination)Settings.Default.EndRead;
       App.DiosApp.MinPerRegion = Settings.Default.MinPerRegion;
       App.DiosApp.TotalBeadsToCapture = Settings.Default.BeadsToCapture;
+      App.DiosApp.TerminationTimer = Settings.Default.TerminationTimer;
       App.DiosApp.Device.MaxPressure = Settings.Default.MaxPressure;
       App.DiosApp.Device.ReporterScaling = Settings.Default.ReporterScaling;
       var hiSensChannel = Settings.Default.SensitivityChannelB ? HiSensitivityChannel.GreenB : HiSensitivityChannel.GreenC;

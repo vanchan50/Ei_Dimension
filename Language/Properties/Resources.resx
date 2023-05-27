@@ -745,6 +745,9 @@ Template</value>
   <data name="Experiment_System_Monitor" xml:space="preserve">
     <value>System Monitor</value>
   </data>
+  <data name="Experiment_Timer" xml:space="preserve">
+    <value>Timer</value>
+  </data>
   <data name="Experiment_Total_Events" xml:space="preserve">
     <value>Total
 Events</value>

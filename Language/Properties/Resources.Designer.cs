@@ -1853,6 +1853,15 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Timer.
+        /// </summary>
+        public static string Experiment_Timer {
+            get {
+                return ResourceManager.GetString("Experiment_Timer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Total
         ///Events.
         /// </summary>

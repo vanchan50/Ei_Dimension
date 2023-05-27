@@ -130,6 +130,8 @@ namespace DIOS.Application
           break;
         case Termination.EndOfSample:
           break;
+        case Termination.Timer:
+          break;
       }
 
       return stopMeasurement;

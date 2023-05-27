@@ -148,6 +148,20 @@ namespace Ei_Dimension
               failed = true;
               ErrorMessage = "[>0]";
             }
+            if (SelectedTextBox.index == 2)
+            {
+              if (int.TryParse(_tempNewString, out iRes))
+              {
+                if ((iRes >= 1) || _disableSanityCheck)
+                {
+                  App.DiosApp.TerminationTimer = iRes;
+                  Settings.Default.TerminationTimer = iRes;
+                  break;
+                }
+              }
+              failed = true;
+              ErrorMessage = "[>0]";
+            }
             break;
           case nameof(DashboardViewModel.Volumes):
             if (SelectedTextBox.index == 0)

@@ -21,6 +21,7 @@ namespace Ei_Dimension.Models
     public byte EndRead;
     public uint MinPerRegion;
     public uint TotalEvents;
+    public uint TerminationTimer;
     public uint FileSaveCheckboxes;
     public int TableSize;
     public uint WashRepeats;

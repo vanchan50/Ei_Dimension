@@ -20,6 +20,7 @@ namespace DIOS.Application
     public Termination TerminationType { get; set; } = Termination.MinPerRegion;
     public int TotalBeadsToCapture { get; set; }
     public int MinPerRegion { get; set; }
+    public int TerminationTimer { get; set; }
     public WorkOrder WorkOrder { get; set; }
     public bool RunPlateContinuously { get; set; }
     public Verificator Verificator { get; }
@@ -67,6 +68,7 @@ namespace DIOS.Application
     {
       var type = WellType.Success;
 
+      //feature only for Normal mode, MinPerRegion Termination
       if (Device.Mode != OperationMode.Normal
           || TerminationType != Termination.MinPerRegion)
         return type;
