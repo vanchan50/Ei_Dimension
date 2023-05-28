@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Threading;
 using DIOS.Core;
 
 namespace DIOS.Application
@@ -17,12 +18,15 @@ namespace DIOS.Application
     private bool _minPerRegCheckTrigger;
     private readonly ResultingWellStatsData _measuredWellStats = new ResultingWellStatsData();
     private readonly DIOSApp _diosApp;
+    private Timer _timer;
+    private int _timeoutAchieved;
 
     public RunResults(Device device, DIOSApp diosApp)
     {
       _device = device;
       _diosApp = diosApp;
       ResultsProc = new ResultsProcessor(_device, this);
+      _timer = new Timer(TerminateMeasurementByTimeout);
     }
 
     /// <summary>
@@ -71,6 +75,7 @@ namespace DIOS.Application
       _measuredWellStats.Reset();
       _minPerRegCheckTrigger = false;
       ResultsProc.NewWellStarting();
+      ResetTerminationTimer(_diosApp.TerminationTime);
     }
 
     public void AddProcessedBeadEvent(in ProcessedBead processedBead)
@@ -131,10 +136,28 @@ namespace DIOS.Application
         case Termination.EndOfSample:
           break;
         case Termination.Timer:
+          if (_timeoutAchieved > 0)
+          {
+            stopMeasurement = true;
+          }
           break;
       }
 
       return stopMeasurement;
+    }
+
+    public void ResetTerminationTimer(int seconds)
+    {
+      if (seconds <= 0)
+        throw new ArgumentException("Seconds should be a positive number");
+      _timeoutAchieved = 0;
+      _ = _timer.Change(new TimeSpan(0, 0, 0, seconds, 0),
+        new TimeSpan(0, 0, 0, 0, -1));
+    }
+
+    private void TerminateMeasurementByTimeout(object state)
+    {
+      Interlocked.CompareExchange(ref _timeoutAchieved, 1, 0);
     }
   }
 }

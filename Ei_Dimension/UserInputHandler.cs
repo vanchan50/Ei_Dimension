@@ -154,7 +154,7 @@ namespace Ei_Dimension
               {
                 if ((iRes >= 1) || _disableSanityCheck)
                 {
-                  App.DiosApp.TerminationTimer = iRes;
+                  App.DiosApp.TerminationTime = iRes;
                   Settings.Default.TerminationTimer = iRes;
                   break;
                 }

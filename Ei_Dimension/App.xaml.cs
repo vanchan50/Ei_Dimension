@@ -192,7 +192,7 @@ namespace Ei_Dimension
       DiosApp.MinPerRegion = e.Well.MinPerRegion;
       //DiosApp.TerminationType = e.Well.TermType;
 
-      Logger.Log($"Starting to read well {e.Well.CoordinatesString()} with Params:\nTermination: {DiosApp.TerminationType}\nMinPerRegion: {DiosApp.MinPerRegion}\nBeadsToCapture: {DiosApp.TotalBeadsToCapture}\nTerminationTimer: {DiosApp.TerminationTimer}");
+      Logger.Log($"Starting to read well {e.Well.CoordinatesString()} with Params:\nTermination: {DiosApp.TerminationType}\nMinPerRegion: {DiosApp.MinPerRegion}\nBeadsToCapture: {DiosApp.TotalBeadsToCapture}\nTerminationTimer: {DiosApp.TerminationTime}");
 
       var wellFilePath = DiosApp.Publisher.BeadEventFile.MakeNewFileName(e.Well);
       DiosApp.Results.StartNewWell(e.Well);

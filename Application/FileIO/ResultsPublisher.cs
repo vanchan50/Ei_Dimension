@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Globalization;
+using System.Text;
 using DIOS.Core;
 
 namespace DIOS.Application.FileIO
@@ -78,6 +79,24 @@ namespace DIOS.Application.FileIO
       }
 
       return directoryExists;
+    }
+
+    public string ReportActivePublishingFlags()
+    {
+      var bldr = new StringBuilder(256);
+      bldr.AppendLine("PlateReportPublishing: " + IsFlagActive(IsPlateReportPublishingActive));
+      bldr.AppendLine("IncludeRegion0InPlateSummary: " + IsFlagActive(IncludeReg0InPlateSummary));
+      bldr.AppendLine("ResultsPublishing: " + IsFlagActive(IsResultsPublishingActive));
+      bldr.AppendLine("BeadEventPublishing: " + IsFlagActive(IsBeadEventPublishingActive));
+      bldr.AppendLine("LegacyPlateReportPublishing: " + IsFlagActive(IsLegacyPlateReportPublishingActive));
+      bldr.AppendLine("OnlyClassifiedBeadsPublishing: " + IsFlagActive(IsOnlyClassifiedBeadsPublishingActive));
+
+      return bldr.ToString();
+
+      string IsFlagActive(bool flag)
+      {
+        return flag ? "Active" : "Inactive";
+      }
     }
   }
 }

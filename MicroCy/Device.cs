@@ -204,18 +204,18 @@ namespace DIOS.Core
       if (Mode != OperationMode.Normal)
       {
         Normalization.SuspendForTheRun();
-        _logger.Log("Normalization Suspended;");
+        _logger.Log("Normalization: Suspended;");
       }
       else
       {
         if (Normalization.IsEnabled)
-          _logger.Log("Normalization Enabled");
+          _logger.Log("Normalization: Enabled");
         else
-          _logger.Log("Normalization Disabled");
+          _logger.Log("Normalization: Disabled");
       }
-      _logger.Log($"Operation Mode = {Mode}");
+      _logger.Log($"Operation Mode: {Mode}");
       _dataController.BeadEventSink = beadEventSink;
-      _logger.Log("Extended Range calculation " + (_beadProcessor._extendedRangeEnabled ? "enabled" : "disabled"));
+      _logger.Log("Extended Range calculation: " + (_beadProcessor._extendedRangeEnabled ? "enabled" : "disabled"));
       StringBuilder wellreport = new StringBuilder("[");
       foreach (var well in wells)
       {

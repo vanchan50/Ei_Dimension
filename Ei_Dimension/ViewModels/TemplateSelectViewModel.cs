@@ -102,7 +102,7 @@ namespace Ei_Dimension.ViewModels
               temp = newTemplate.TerminationTimer.ToString();
               if (int.TryParse(temp, out iRes))
               {
-                App.DiosApp.TerminationTimer = iRes;
+                App.DiosApp.TerminationTime = iRes;
                 Settings.Default.TerminationTimer = iRes;
                 DashVM.EndRead[2] = temp;
               }

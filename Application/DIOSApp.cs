@@ -20,7 +20,7 @@ namespace DIOS.Application
     public Termination TerminationType { get; set; } = Termination.MinPerRegion;
     public int TotalBeadsToCapture { get; set; }
     public int MinPerRegion { get; set; }
-    public int TerminationTimer { get; set; }
+    public int TerminationTime { get; set; }
     public WorkOrder WorkOrder { get; set; }
     public bool RunPlateContinuously { get; set; }
     public Verificator Verificator { get; }
@@ -43,6 +43,7 @@ namespace DIOS.Application
       Results.SetupRunRegions(regions);
       Publisher.ResultsFile.MakeNew();
       Results.StartNewPlateReport();
+      Logger.Log(Publisher.ReportActivePublishingFlags());
       Device.StartOperation(wells, Results.OutputBeadsCollector);
       Results.ResultsProc.StartBeadProcessing();//call after StartOperation, so IsMeasurementGoing == true
     }
