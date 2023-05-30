@@ -118,8 +118,9 @@ namespace Ei_Dimension
           };
           break;
       }
-      App.DiosApp.Results.AddProcessedBeadEvent(in bead);
-      App.DiosApp.Results.DataOut.Enqueue(bead);
+      App.DiosApp.Results.OutputBeadsCollector.Add(bead);
+      //App.DiosApp.Results.AddProcessedBeadEvent(in bead);
+      //App.DiosApp.Results.DataOut.Enqueue(bead);
       typeof(Device).GetProperty("BeadCount")?
         .SetValue(App.DiosApp.Device, App.DiosApp.Device.BeadCount + 1);
 

@@ -75,7 +75,6 @@ namespace DIOS.Application
       _measuredWellStats.Reset();
       _minPerRegCheckTrigger = false;
       ResultsProc.NewWellStarting();
-      ResetTerminationTimer(_diosApp.TerminationTime);
     }
 
     public void AddProcessedBeadEvent(in ProcessedBead processedBead)
@@ -146,10 +145,11 @@ namespace DIOS.Application
       return stopMeasurement;
     }
 
-    public void ResetTerminationTimer(int seconds)
+    public void ResetTerminationTimer()//int seconds)
     {
-      if (seconds <= 0)
-        throw new ArgumentException("Seconds should be a positive number");
+      int seconds = _diosApp.TerminationTime;
+      //if (seconds <= 0)
+      //  throw new ArgumentException("Seconds should be a positive number");
       _timeoutAchieved = 0;
       _ = _timer.Change(new TimeSpan(0, 0, 0, seconds, 0),
         new TimeSpan(0, 0, 0, 0, -1));

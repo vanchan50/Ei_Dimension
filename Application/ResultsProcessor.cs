@@ -33,6 +33,11 @@ namespace DIOS.Application
           _results.AddProcessedBeadEvent(in bead);
           _results.DataOut.Enqueue(bead);
 
+          if (resultsProcessed == 1)
+          {
+            _results.ResetTerminationTimer();
+          }
+
           if (_results.IsMeasurementTerminationAchieved())//endofsample never triggers!
           {
             _device.StopOperation();

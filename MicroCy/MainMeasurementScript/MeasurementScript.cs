@@ -31,7 +31,6 @@ namespace DIOS.Core.MainMeasurementScript
       _hardware.RequestParameter(DeviceParameterType.MotorStepsY, MotorStepsY.Plate96RowA);
       SetReadingParamsForWell();
       SetAspirateParamsForWell();  //setup for first read
-      _device.OnStartingToReadWell();
       _hardware.SetParameter(DeviceParameterType.IsBubbleDetectionActive, 1);
       _hardware.SendCommand(DeviceCommandType.PositionWellPlate);
 
@@ -39,6 +38,7 @@ namespace DIOS.Core.MainMeasurementScript
         _hardware.SendCommand(DeviceCommandType.AspirateA);
 
       _device._isReadingA = false;
+      _device.OnStartingToReadWell();
       StartBeadRead();
     }
 
