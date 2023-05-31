@@ -33,9 +33,9 @@ namespace DIOS.Application
           _results.AddProcessedBeadEvent(in bead);
           _results.DataOut.Enqueue(bead);
 
-          if (resultsProcessed == 1)
-          {
-            _results.ResetTerminationTimer();
+          if (resultsProcessed == 1)  //Trigger on 1st bead arrived is the simplest solution, at least for now;
+          { //Comes from the asynchronous nature of the instrument
+            _results.StartTerminationTimer();
           }
 
           if (_results.IsMeasurementTerminationAchieved())//endofsample never triggers!

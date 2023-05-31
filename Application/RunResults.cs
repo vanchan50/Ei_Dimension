@@ -138,6 +138,7 @@ namespace DIOS.Application
           if (_timeoutAchieved > 0)
           {
             stopMeasurement = true;
+            _timeoutAchieved = 0;
           }
           break;
       }
@@ -145,12 +146,12 @@ namespace DIOS.Application
       return stopMeasurement;
     }
 
-    public void ResetTerminationTimer()//int seconds)
+    public void StartTerminationTimer()//int seconds)
     {
       int seconds = _diosApp.TerminationTime;
       //if (seconds <= 0)
       //  throw new ArgumentException("Seconds should be a positive number");
-      _timeoutAchieved = 0;
+      //_timeoutAchieved = 0;
       _ = _timer.Change(new TimeSpan(0, 0, 0, seconds, 0),
         new TimeSpan(0, 0, 0, 0, -1));
     }
