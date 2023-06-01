@@ -853,6 +853,9 @@ Flow Cell</value>
   <data name="Motors_Up" xml:space="preserve">
     <value>向上</value>
   </data>
+  <data name="Motors_WashStation" xml:space="preserve">
+    <value>Wash Station</value>
+  </data>
   <data name="Name" xml:space="preserve">
     <value>检测项目</value>
   </data>

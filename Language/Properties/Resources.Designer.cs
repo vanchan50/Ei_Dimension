@@ -2627,6 +2627,15 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Wash Station.
+        /// </summary>
+        public static string Motors_WashStation {
+            get {
+                return ResourceManager.GetString("Motors_WashStation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Continuous
         ///    Mode.
         /// </summary>

@@ -1,20 +1,17 @@
-﻿using DevExpress.Mvvm;
-using DevExpress.Mvvm.DataAnnotations;
+﻿using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
-using DevExpress.Mvvm.UI;
-using DIOS.Core;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Controls;
 using DIOS.Core.HardwareIntercom;
+using System.Windows;
 
 namespace Ei_Dimension.ViewModels
 {
   [POCOViewModel]
   public class MotorsViewModel
   {
-    public virtual ObservableCollection<bool> PollStepActive { get; set; }
+    public virtual ObservableCollection<bool> PollStepActive { get; set; } = new ObservableCollection<bool> { false };
     public virtual ObservableCollection<DropDownButtonContents> WellRowButtonItems { get; set; }
     public virtual ObservableCollection<DropDownButtonContents> WellColumnButtonItems { get; set; }
     public virtual string SelectedWellRow { get; set; }
@@ -29,6 +26,8 @@ namespace Ei_Dimension.ViewModels
     public virtual ObservableCollection<string> StepsParametersZ { get; set; }
     public virtual ObservableCollection<bool> WellSelectionButtonsChecked { get; set; }
     public virtual ObservableCollection<string> TraySteps { get; set; } = new ObservableCollection<string> { "" };
+    public virtual ObservableCollection<bool> WashStationActive { get; set; }
+    public virtual Visibility WashStationVisibility { get; set; } = Visibility.Collapsed;
 
     public static MotorsViewModel Instance { get; private set; }
 
@@ -36,7 +35,6 @@ namespace Ei_Dimension.ViewModels
 
     protected MotorsViewModel()
     {
-      PollStepActive = new ObservableCollection<bool> { false };
       ParametersX = new ObservableCollection<string>();
       ParametersY = new ObservableCollection<string>();
       ParametersZ = new ObservableCollection<string>();
@@ -80,6 +78,9 @@ namespace Ei_Dimension.ViewModels
       DropDownButtonContents.ResetIndex();
       SelectedWellRowIndex = 0;
       SelectedWellColumnIndex = 0;
+
+      WashStationActive = new ObservableCollection<bool> { Settings.Default.UseWashStation == 1 };
+      WashStationVisibility = Settings.Default.UseWashStation == 1 ? Visibility.Visible : Visibility.Collapsed;
       Instance = this;
     }
 
@@ -234,6 +235,16 @@ namespace Ei_Dimension.ViewModels
           ParametersZ[1] = s;
           break;
       }
+    }
+
+    public void WashStationToggleButtonClick()
+    {
+      UserInputHandler.InputSanityCheck();
+      WashStationActive[0] = !WashStationActive[0];
+      Settings.Default.UseWashStation = WashStationActive[0] ? 1 : 0;
+      Settings.Default.Save();
+      WashStationVisibility = WashStationActive[0] ? Visibility.Visible : Visibility.Collapsed;
+      App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.UseWashStation, Settings.Default.UseWashStation);
     }
 
     public void DropPress()

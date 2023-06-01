@@ -788,6 +788,10 @@ namespace DIOS.Core.HardwareIntercom
               throw new NotImplementedException();
           }
           break;
+        case DeviceParameterType.UseWashStation:
+          commandCode = 0xB9;
+          param = intValue;
+          break;
         case DeviceParameterType.TraySteps:
           commandCode = 0xBC;
           fparam = value;
@@ -1624,6 +1628,9 @@ namespace DIOS.Core.HardwareIntercom
           break;
         case DeviceParameterType.WellColumnIndex:
           commandCode = 0xAE;
+          break;
+        case DeviceParameterType.UseWashStation:
+          commandCode = 0xB9;
           break;
         case DeviceParameterType.TraySteps:
           commandCode = 0xBC;

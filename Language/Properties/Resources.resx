@@ -1009,6 +1009,9 @@ Update the Firmware?</value>
   <data name="Motors_Up" xml:space="preserve">
     <value>Up</value>
   </data>
+  <data name="Motors_WashStation" xml:space="preserve">
+    <value>Wash Station</value>
+  </data>
   <data name="MTBF_mode" xml:space="preserve">
     <value>Continuous
     Mode</value>

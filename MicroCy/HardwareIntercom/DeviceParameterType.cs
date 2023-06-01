@@ -107,6 +107,7 @@
     FlushCycles,
     IsFlowCellInverted,
     ///<summary>Subparamter: FluidicPathLength</summary>
-    FluidicPathLength
+    FluidicPathLength,
+    UseWashStation
   }
 }

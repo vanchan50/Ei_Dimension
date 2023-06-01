@@ -691,6 +691,9 @@ namespace DIOS.Core
         case 0xC9:
           outParameters = new ParameterUpdateEventArgs(DeviceParameterType.LaserPower, intParameter: (int)LaserType.Red, floatParameter: cs.Parameter / 4096.0f / 0.040f * 3.3f);
           break;
+        case 0xB9:
+          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.UseWashStation, intParameter: cs.Parameter);
+          break;
         case 0xBC:
           outParameters = new ParameterUpdateEventArgs(DeviceParameterType.TraySteps, floatParameter: cs.FParameter);
           break;

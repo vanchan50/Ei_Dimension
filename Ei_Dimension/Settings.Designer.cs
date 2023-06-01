@@ -430,5 +430,17 @@ namespace Ei_Dimension {
                 this["TerminationTimer"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int UseWashStation {
+            get {
+                return ((int)(this["UseWashStation"]));
+            }
+            set {
+                this["UseWashStation"] = value;
+            }
+        }
     }
 }
