@@ -694,6 +694,9 @@ namespace DIOS.Core
         case 0xB9:
           outParameters = new ParameterUpdateEventArgs(DeviceParameterType.UseWashStation, intParameter: cs.Parameter);
           break;
+        case 0xBA:
+          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.WashStationXCenterCoordinate, intParameter: cs.Parameter);
+          break;
         case 0xBC:
           outParameters = new ParameterUpdateEventArgs(DeviceParameterType.TraySteps, floatParameter: cs.FParameter);
           break;

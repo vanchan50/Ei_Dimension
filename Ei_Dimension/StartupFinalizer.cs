@@ -170,6 +170,7 @@ namespace Ei_Dimension
       App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.FlushCycles);
       App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.IsFlowCellInverted);
       App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.UseWashStation, Settings.Default.UseWashStation);
+      App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.WashStationXCenterCoordinate);
       App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.FluidicPathLength, FluidicPathLength.LoopAVolume);
       App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.FluidicPathLength, FluidicPathLength.LoopBVolume);
       App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.FluidicPathLength, FluidicPathLength.LoopAToPickupNeedle);

@@ -108,6 +108,7 @@
     IsFlowCellInverted,
     ///<summary>Subparamter: FluidicPathLength</summary>
     FluidicPathLength,
-    UseWashStation
+    UseWashStation,
+    WashStationXCenterCoordinate
   }
 }

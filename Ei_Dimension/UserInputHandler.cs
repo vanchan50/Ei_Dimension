@@ -1867,6 +1867,18 @@ namespace Ei_Dimension
             failed = true;
             ErrorMessage = $"[0-{float.MaxValue}]";
             break;
+          case nameof(MotorsViewModel.WashStationXCenterCoordinate):
+            if (int.TryParse(_tempNewString, out iRes))
+            {
+              if ((iRes >= 0 && iRes <= 60000) || _disableSanityCheck)
+              {
+                App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.WashStationXCenterCoordinate, iRes);
+                break;
+              }
+            }
+            failed = true;
+            ErrorMessage = "[0-60000]";
+            break;
         }
         if (VerificationViewModel.Instance.isActivePage)
         {

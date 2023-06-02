@@ -792,6 +792,10 @@ namespace DIOS.Core.HardwareIntercom
           commandCode = 0xB9;
           param = intValue;
           break;
+        case DeviceParameterType.WashStationXCenterCoordinate:
+          commandCode = 0xBA;
+          param = intValue;
+          break;
         case DeviceParameterType.TraySteps:
           commandCode = 0xBC;
           fparam = value;
@@ -1631,6 +1635,9 @@ namespace DIOS.Core.HardwareIntercom
           break;
         case DeviceParameterType.UseWashStation:
           commandCode = 0xB9;
+          break;
+        case DeviceParameterType.WashStationXCenterCoordinate:
+          commandCode = 0xBA;
           break;
         case DeviceParameterType.TraySteps:
           commandCode = 0xBC;

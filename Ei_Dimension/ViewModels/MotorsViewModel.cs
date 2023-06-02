@@ -28,6 +28,7 @@ namespace Ei_Dimension.ViewModels
     public virtual ObservableCollection<string> TraySteps { get; set; } = new ObservableCollection<string> { "" };
     public virtual ObservableCollection<bool> WashStationActive { get; set; }
     public virtual Visibility WashStationVisibility { get; set; } = Visibility.Collapsed;
+    public virtual ObservableCollection<string> WashStationXCenterCoordinate { get; set; } = new ObservableCollection<string> { "" };
 
     public static MotorsViewModel Instance { get; private set; }
 
@@ -391,6 +392,10 @@ namespace Ei_Dimension.ViewModels
         case 36:
           UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(TraySteps)), this, 0, (TextBox)Views.MotorsView.Instance.ySP.Children[5]);
           MainViewModel.Instance.NumpadToggleButton((TextBox)Views.MotorsView.Instance.ySP.Children[5]);
+          break;
+        case 37:
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(WashStationXCenterCoordinate)), this, 0, (TextBox)Views.MotorsView.Instance.xSP.Children[5]);
+          MainViewModel.Instance.NumpadToggleButton((TextBox)Views.MotorsView.Instance.xSP.Children[5]);
           break;
       }
     }

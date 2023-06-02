@@ -594,7 +594,7 @@
                          Margin="10,0,10,10"
                          Visibility="{Binding WashStationVisibility}"
                          Style="{StaticResource InputFieldStyle}"
-                         Text="{Binding StepsParametersX[4]}">
+                         Text="{Binding WashStationXCenterCoordinate[0]}">
                   <dxmvvm:Interaction.Behaviors>
                     <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="37"/>
                     <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>

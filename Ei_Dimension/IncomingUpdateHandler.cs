@@ -820,6 +820,9 @@ namespace Ei_Dimension
           }
           update = () => SyringeSpeedsViewModel.Instance.FluidicPathLengths[pos19] = parameter.FloatParameter.ToString("F0");
           break;
+        case DeviceParameterType.WashStationXCenterCoordinate:
+          update = () => MotorsViewModel.Instance.WashStationXCenterCoordinate[0] = parameter.Parameter.ToString();
+          break;
       }
       if (update != null)
         App.Current.Dispatcher.Invoke(update);
