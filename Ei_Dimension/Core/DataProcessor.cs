@@ -107,10 +107,7 @@ namespace Ei_Dimension.Core
 
         for (var i = 0; i < MapRegionsController.RegionsList.Count; i++)
         {
-          RegionsReporter.Add(new RegionReporterResult
-          {
-            regionNumber = MapRegionsController.RegionsList[i].Number
-          });
+          RegionsReporter.Add(new RegionReporterResult(MapRegionsController.RegionsList[i].Number));
         }
       }
       else
@@ -151,7 +148,7 @@ namespace Ei_Dimension.Core
         {
           var index = MapRegionsController.GetMapRegionIndex(bead.region);
           if (index != -1)
-            RegionsReporter[index].ReporterValues.Add(bead.reporter);
+            RegionsReporter[index].Add(bead.reporter);
           //else if (bead.region == 0)
           //  continue;
           //else
@@ -251,7 +248,7 @@ namespace Ei_Dimension.Core
           var index = analysisMap.BackingWResults.FindIndex(x => x.regionNumber == beadInfoList[i].region);
           if (index != -1)
           {
-            analysisMap.BackingWResults[index].ReporterValues.Add(beadInfoList[i].reporter);
+            analysisMap.BackingWResults[index].Add(beadInfoList[i].reporter);
           }
         }
         i++;

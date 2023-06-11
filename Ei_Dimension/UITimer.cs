@@ -125,10 +125,11 @@ namespace Ei_Dimension
       typeof(Device).GetProperty("BeadCount")?
         .SetValue(App.DiosApp.Device, App.DiosApp.Device.BeadCount + 1);
 
-      if (App.DiosApp.Results.IsMeasurementTerminationAchieved())
-      {
-        App.DiosApp.Device.StopOperation();
-      }
+      //var isMeasurementTerminationAchieved = (bool)typeof(ReadTerminator).GetMethod("IsMeasurementTerminationAchieved",new Type[]{typeof(int)}).Invoke(App.DiosApp.Terminator, new object[]{App.DiosApp.Device.BeadCount});
+      //if (isMeasurementTerminationAchieved)
+      //{
+      //  App.DiosApp.Device.StopOperation();
+      //}
     }
     #endif
   }

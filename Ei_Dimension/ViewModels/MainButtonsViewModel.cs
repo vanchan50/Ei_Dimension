@@ -44,7 +44,7 @@ namespace Ei_Dimension.ViewModels
     {
       UserInputHandler.InputSanityCheck();
       //TODO: contains 0 can never happen here
-      if (App.DiosApp.TerminationType == Termination.MinPerRegion
+      if (App.DiosApp.Terminator.TerminationType == Termination.MinPerRegion
           && !MapRegionsController.AreThereActiveRegions())
       {
         var msg = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Messages_MinPerReg_RequiresAtLeast1),

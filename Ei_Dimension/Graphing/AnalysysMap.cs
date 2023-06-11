@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
 using DIOS.Application;
@@ -75,7 +74,7 @@ namespace Ei_Dimension.Graphing
         {
           if (reg == 0)
             continue;
-          BackingWResults.Add(new RegionReporterResult { regionNumber = (ushort)reg });
+          BackingWResults.Add(new RegionReporterResult(reg));
         }
       }
     }
@@ -90,9 +89,9 @@ namespace Ei_Dimension.Graphing
           var y = HeatMapPoint.bins[region.Center.y];
           lock (_lock)
           {
-            if (result.ReporterValues.Count > 0)
+            if (result.Count > 0)
             {
-              Backing12Map.Add(new DoubleHeatMapData(x, y, result.ReporterValues.Average()));
+              Backing12Map.Add(new DoubleHeatMapData(x, y, result.Average()));
             }
           }
         }

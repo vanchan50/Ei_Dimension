@@ -126,7 +126,7 @@ namespace Ei_Dimension
               {
                 if ((iRes >= 1) || _disableSanityCheck)
                 {
-                  App.DiosApp.MinPerRegion = iRes;
+                  App.DiosApp.Terminator.MinPerRegion = iRes;
                   Settings.Default.MinPerRegion = iRes;
                   break;
                 }
@@ -140,7 +140,7 @@ namespace Ei_Dimension
               {
                 if ((iRes >= 1) || _disableSanityCheck)
                 {
-                  App.DiosApp.TotalBeadsToCapture = iRes;
+                  App.DiosApp.Terminator.TotalBeadsToCapture = iRes;
                   Settings.Default.BeadsToCapture = iRes;
                   break;
                 }
@@ -154,7 +154,7 @@ namespace Ei_Dimension
               {
                 if ((iRes >= 1) || _disableSanityCheck)
                 {
-                  App.DiosApp.TerminationTime = iRes;
+                  App.DiosApp.Terminator.TerminationTime = iRes;
                   Settings.Default.TerminationTimer = iRes;
                   break;
                 }

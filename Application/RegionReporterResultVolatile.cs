@@ -1,6 +1,4 @@
-﻿using System.Linq;
-
-namespace DIOS.Application
+﻿namespace DIOS.Application
 {
   /// <summary>
   /// A Deep Copy of RegionReporterResult (List of reporter values for a region)
@@ -8,18 +6,17 @@ namespace DIOS.Application
   /// </summary>
   public class RegionReporterResultVolatile : RegionReporterResult
   {
-    public RegionReporterResultVolatile()
+    public RegionReporterResultVolatile(int region) : base(region)
     {
-        
+
     }
 
-    public RegionReporterResultVolatile(RegionReporterResult copySource)
+    public RegionReporterResultVolatile(RegionReporterResult copySource) : base(copySource.regionNumber)
     {
-      regionNumber = copySource.regionNumber;
-      var count = copySource.ReporterValues.Count < CAPACITY ? copySource.ReporterValues.Count : CAPACITY;
+      var count = copySource.Count < CAPACITY ? copySource.Count : CAPACITY;
       for (var j = 0; j < count; j++)
       {
-        ReporterValues.Add(copySource.ReporterValues[j]);
+        Add(copySource.ReporterValues[j]);
       }
     }
 
@@ -27,15 +24,15 @@ namespace DIOS.Application
     //  TODO: duplicates RegionReporterStats.MakeStats() behavior
     public void MakeStats(out int count, out float mean)
     {
-      if (ReporterValues.Count == 0)
+      if (Count == 0)
       {
         count = 0;
         mean = 0;
         return;
       }
-      var avg = ReporterValues.Average();
-      count = ReporterValues.Count;
-      if (count >= 20)
+      var avg = Average();
+      count = Count;
+      if (Count >= 20)
       {
         mean = CalculateMean();
         return;
@@ -46,16 +43,15 @@ namespace DIOS.Application
     private float CalculateMean()
     {
       ReporterValues.Sort();
-      var count = ReporterValues.Count;
-      int quarterIndex = count / 4;
+      int quarterIndex = Count / 4;
 
       float sum = 0;
-      for (var i = quarterIndex; i < count - quarterIndex; i++)
+      for (var i = quarterIndex; i < Count - quarterIndex; i++)
       {
         sum += ReporterValues[i];
       }
 
-      return sum / (count - 2 * quarterIndex);
+      return sum / (Count - 2 * quarterIndex);
     }
   }
 }

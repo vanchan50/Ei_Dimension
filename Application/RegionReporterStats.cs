@@ -14,7 +14,7 @@ namespace DIOS.Application
     //  TODO: duplicates RegionReporterResultVolatile.MakeStats() behavior
     public RegionReporterStats(RegionReporterResult regionNumber)
     {
-      Count = regionNumber.ReporterValues.Count;
+      Count = regionNumber.Count;
       Region = regionNumber.regionNumber;
       var stats = regionNumber.ReporterValues.GetDistributionStatistics();
       MeanFi = stats.Mean;

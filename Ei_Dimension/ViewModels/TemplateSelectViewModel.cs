@@ -82,7 +82,7 @@ namespace Ei_Dimension.ViewModels
               var temp = newTemplate.MinPerRegion.ToString();
               if (int.TryParse(temp, out iRes))
               {
-                App.DiosApp.MinPerRegion = iRes;
+                App.DiosApp.Terminator.MinPerRegion = iRes;
                 Settings.Default.MinPerRegion = iRes;
                 DashVM.EndRead[0] = temp;
               }
@@ -92,7 +92,7 @@ namespace Ei_Dimension.ViewModels
               temp = newTemplate.TotalEvents.ToString();
               if (int.TryParse(temp, out iRes))
               {
-                App.DiosApp.TotalBeadsToCapture = iRes;
+                App.DiosApp.Terminator.TotalBeadsToCapture = iRes;
                 Settings.Default.BeadsToCapture = iRes;
                 DashVM.EndRead[1] = temp;
               }
@@ -102,7 +102,7 @@ namespace Ei_Dimension.ViewModels
               temp = newTemplate.TerminationTimer.ToString();
               if (int.TryParse(temp, out iRes))
               {
-                App.DiosApp.TerminationTime = iRes;
+                App.DiosApp.Terminator.TerminationTime = iRes;
                 Settings.Default.TerminationTimer = iRes;
                 DashVM.EndRead[2] = temp;
               }

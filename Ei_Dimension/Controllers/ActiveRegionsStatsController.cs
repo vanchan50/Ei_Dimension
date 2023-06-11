@@ -34,7 +34,7 @@ namespace Ei_Dimension.Controllers
 
     private static ActiveRegionsStatsController _instance;
     private static bool _activeRegionsUpdateGoing;
-    private static readonly RegionReporterResultVolatile _nullWellRegionResult = new RegionReporterResultVolatile();
+    private static readonly RegionReporterResultVolatile _nullWellRegionResult = new RegionReporterResultVolatile(0);
 
     protected ActiveRegionsStatsController()
     {
@@ -91,9 +91,9 @@ namespace Ei_Dimension.Controllers
     {
       foreach (var result in wellresults)
       {
-        if (result.ReporterValues.Count > 0)
+        if (result.Count > 0)
         {
-          _nullWellRegionResult.ReporterValues.InsertRange(_nullWellRegionResult.ReporterValues.Count, result.ReporterValues);
+          _nullWellRegionResult.ReporterValues.InsertRange(_nullWellRegionResult.Count, result.ReporterValues);
         }
       }
 

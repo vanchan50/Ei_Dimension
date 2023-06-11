@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Threading;
 using DIOS.Core;
 
 namespace DIOS.Application
@@ -11,22 +10,16 @@ namespace DIOS.Application
     public ConcurrentQueue<ProcessedBead> DataOut { get; } = new ConcurrentQueue<ProcessedBead>();
     public BeadEventSink OutputBeadsCollector { get; } = new BeadEventSink(2000000);
     public PlateReport PlateReport { get; } = new PlateReport();
-    public WellResults WellResults { get; } = new WellResults();
-    public ResultsProcessor ResultsProc { get; }
+    public WellResults CurrentWellResults { get; } = new WellResults();
     private readonly Device _device;
     private IReadOnlyCollection<int> _regionsToOutput;
-    private bool _minPerRegCheckTrigger;
     private readonly ResultingWellStatsData _measuredWellStats = new ResultingWellStatsData();
     private readonly DIOSApp _diosApp;
-    private Timer _timer;
-    private int _timeoutAchieved;
 
     public RunResults(Device device, DIOSApp diosApp)
     {
       _device = device;
       _diosApp = diosApp;
-      ResultsProc = new ResultsProcessor(_device, this);
-      _timer = new Timer(TerminateMeasurementByTimeout);
     }
 
     /// <summary>
@@ -43,16 +36,16 @@ namespace DIOS.Application
 
     public List<RegionReporterResultVolatile> MakeWellResultsClone()
     {
-      return WellResults.GetResultsClone();
+      return CurrentWellResults.GetResultsClone();
     }
 
     /// <summary>
     /// Checks if MinPerRegion Condition is met. Not thread safe. Supposed to be called after the well is read or in the measurement sequence thread
     /// </summary>
     /// <returns>A positive number or 0, if MinPerRegions is met; otherwise returns a negative number of lacking beads</returns>
-    public int MinPerRegionAchieved(int minPerRegion)
+    internal int MinPerRegionAchieved(int minPerRegion)
     {
-      return WellResults.MinPerAllRegionsAchieved(minPerRegion);
+      return CurrentWellResults.MinPerAllRegionsAchieved(minPerRegion);
     }
 
     public void StartNewPlateReport()
@@ -62,7 +55,7 @@ namespace DIOS.Application
 
     public void MakeWellStats()
     {
-      var stats = new WellStats(WellResults.Well, MakeWellResultsClone(), _device.BeadCount);
+      var stats = new WellStats(CurrentWellResults.Well, MakeWellResultsClone(), _device.BeadCount);
       PlateReport.Add(stats);
       _measuredWellStats.Add(stats.ToString());
     }
@@ -71,18 +64,16 @@ namespace DIOS.Application
     {
       if (_regionsToOutput == null)
         throw new Exception("SetupRunRegions() must be called before the run");
-      WellResults.Reset(well, _regionsToOutput);
+      CurrentWellResults.Reset(well, _regionsToOutput);
       _measuredWellStats.Reset();
-      _minPerRegCheckTrigger = false;
-      ResultsProc.NewWellStarting();
     }
 
     public void AddProcessedBeadEvent(in ProcessedBead processedBead)
     {
-      var count = WellResults.Add(in processedBead);//TODO:move to normal mode case?
+      var countForTheRegion = CurrentWellResults.Add(in processedBead);//TODO:move to normal mode case?
       //it also checks region 0, but it is only a trigger, the real check is done in MinPerRegionAchieved()
-      if (!_minPerRegCheckTrigger)
-        _minPerRegCheckTrigger = count == _diosApp.MinPerRegion;  //see if well is done via sufficient beads in each region
+      if (!_diosApp.Terminator.MinPerRegCheckTrigger)
+        _diosApp.Terminator.MinPerRegCheckTrigger = countForTheRegion == _diosApp.Terminator.MinPerRegion;  //see if well is done via sufficient beads in each region
 
       switch (_device.Mode)
       {
@@ -98,7 +89,7 @@ namespace DIOS.Application
 
     public BeadEventsData PublishBeadEvents()
     {
-      return WellResults.BeadEventsData;
+      return CurrentWellResults.BeadEventsData;
     }
 
     public string PublishWellStats()
@@ -109,56 +100,6 @@ namespace DIOS.Application
     public void EndOfOperationReset()
     {
       _regionsToOutput = null;
-    }
-
-    public bool IsMeasurementTerminationAchieved()
-    {
-      bool stopMeasurement = false;
-      switch (_diosApp.TerminationType)
-      {
-        case Termination.MinPerRegion:
-          if (_minPerRegCheckTrigger)  //a region made it, are there more that haven't
-          {
-            if (MinPerRegionAchieved(_diosApp.MinPerRegion) >= 0)
-            {
-              stopMeasurement = true;
-            }
-            _minPerRegCheckTrigger = false;
-          }
-          break;
-        case Termination.TotalBeadsCaptured:
-          if (_device.BeadCount >= _diosApp.TotalBeadsToCapture)
-          {
-            stopMeasurement = true;
-          }
-          break;
-        case Termination.EndOfSample:
-          break;
-        case Termination.Timer:
-          if (_timeoutAchieved > 0)
-          {
-            stopMeasurement = true;
-            _timeoutAchieved = 0;
-          }
-          break;
-      }
-
-      return stopMeasurement;
-    }
-
-    public void StartTerminationTimer()//int seconds)
-    {
-      int seconds = _diosApp.TerminationTime;
-      //if (seconds <= 0)
-      //  throw new ArgumentException("Seconds should be a positive number");
-      //_timeoutAchieved = 0;
-      _ = _timer.Change(new TimeSpan(0, 0, 0, seconds, 0),
-        new TimeSpan(0, 0, 0, 0, -1));
-    }
-
-    private void TerminateMeasurementByTimeout(object state)
-    {
-      Interlocked.CompareExchange(ref _timeoutAchieved, 1, 0);
     }
   }
 }

@@ -149,10 +149,10 @@ namespace Ei_Dimension
       App.DiosApp.Publisher.IsOnlyClassifiedBeadsPublishingActive = Settings.Default.OnlyClassifed;
 
       App.DiosApp.Control = (SystemControl)Settings.Default.SystemControl;
-      App.DiosApp.TerminationType = (Termination)Settings.Default.EndRead;
-      App.DiosApp.MinPerRegion = Settings.Default.MinPerRegion;
-      App.DiosApp.TotalBeadsToCapture = Settings.Default.BeadsToCapture;
-      App.DiosApp.TerminationTime = Settings.Default.TerminationTimer;
+      App.DiosApp.Terminator.TerminationType = (Termination)Settings.Default.EndRead;
+      App.DiosApp.Terminator.MinPerRegion = Settings.Default.MinPerRegion;
+      App.DiosApp.Terminator.TotalBeadsToCapture = Settings.Default.BeadsToCapture;
+      App.DiosApp.Terminator.TerminationTime = Settings.Default.TerminationTimer;
       App.DiosApp.Device.MaxPressure = Settings.Default.MaxPressure;
       App.DiosApp.Device.ReporterScaling = Settings.Default.ReporterScaling;
       var hiSensChannel = Settings.Default.SensitivityChannelB ? HiSensitivityChannel.GreenB : HiSensitivityChannel.GreenC;

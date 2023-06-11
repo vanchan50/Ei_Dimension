@@ -1,14 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace DIOS.Application
 {
-  [Serializable]
   public class RegionReporterResult
   {
-    public int regionNumber;
+    public readonly int regionNumber;
     public List<float> ReporterValues = new List<float>(CAPACITY);
     //public List<float> RP1bgnd = new List<float>(CAPACITY);
     public const int CAPACITY = 40000;
+    public int Count => ReporterValues.Count;
+
+    public RegionReporterResult(int region)
+    {
+      regionNumber = region;
+    }
+
+    public void Add(float reporterValue)
+    {
+      ReporterValues.Add(reporterValue);
+    }
+
+    public float Average()
+    {
+      return ReporterValues.Average();
+    }
   }
 }

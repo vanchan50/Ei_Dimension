@@ -16,11 +16,9 @@ namespace DIOS.Application
     public DirectoryInfo RootDirectory { get; } = new DirectoryInfo(Path.Combine(@"C:\Emissioninc", Environment.MachineName));
     public ResultsPublisher Publisher { get; }
     public RunResults Results { get; }
+    public ResultsProcessor ResultsProc { get; }  //TODO make private
     public SystemControl Control { get; set; } = SystemControl.Manual;
-    public Termination TerminationType { get; set; } = Termination.MinPerRegion;
-    public int TotalBeadsToCapture { get; set; }
-    public int MinPerRegion { get; set; }
-    public int TerminationTime { get; set; }
+    public ReadTerminator Terminator => ResultsProc.Terminator;
     public WorkOrder WorkOrder { get; set; }
     public bool RunPlateContinuously { get; set; }
     public Verificator Verificator { get; }
@@ -35,6 +33,7 @@ namespace DIOS.Application
       Publisher = new ResultsPublisher(RootDirectory.FullName, Logger);
       Device = new Device(new USBConnection(Logger), Logger);
       Results = new RunResults(Device, this);
+      ResultsProc = new ResultsProcessor(Device, Results);
       Verificator = new Verificator(Logger);
     }
 
@@ -45,7 +44,7 @@ namespace DIOS.Application
       Results.StartNewPlateReport();
       Logger.Log(Publisher.ReportActivePublishingFlags());
       Device.StartOperation(wells, Results.OutputBeadsCollector);
-      Results.ResultsProc.StartBeadProcessing();//call after StartOperation, so IsMeasurementGoing == true
+      ResultsProc.StartBeadProcessing();//call after StartOperation, so IsMeasurementGoing == true
     }
 
     private void SetSystemDirectories()
@@ -71,15 +70,15 @@ namespace DIOS.Application
 
       //feature only for Normal mode, MinPerRegion Termination
       if (Device.Mode != OperationMode.Normal
-          || TerminationType != Termination.MinPerRegion)
+          || Terminator.TerminationType != Termination.MinPerRegion)
         return type;
 
-      var lacking = Results.MinPerRegionAchieved(MinPerRegion);
+      var lacking = Results.MinPerRegionAchieved(Terminator.MinPerRegion);
       //not achieved
       if (lacking < 0)
       {
         //if lacking more then 25% of minperregion beads 
-        if (-lacking > MinPerRegion * 0.25)
+        if (-lacking > Terminator.MinPerRegion * 0.25)
         {
           type = WellType.Fail;
         }

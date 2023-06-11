@@ -84,7 +84,7 @@ namespace Ei_Dimension
 
     public static void SetTerminationType(byte num)
     {
-      DiosApp.TerminationType = (Termination)num;
+      DiosApp.Terminator.TerminationType = (Termination)num;
       DashboardViewModel.Instance.EndReadVisibilitySwitch();
       Settings.Default.EndRead = num;
       Settings.Default.Save();
@@ -188,14 +188,15 @@ namespace Ei_Dimension
     
     private void StartingToReadWellEventHandler(object sender, ReadingWellEventArgs e)
     {
-      DiosApp.TotalBeadsToCapture = e.Well.BeadsToCapture;
-      DiosApp.MinPerRegion = e.Well.MinPerRegion;
+      DiosApp.Terminator.TotalBeadsToCapture = e.Well.BeadsToCapture;
+      DiosApp.Terminator.MinPerRegion = e.Well.MinPerRegion;
       //DiosApp.TerminationType = e.Well.TermType;
 
-      Logger.Log($"Starting to read well {e.Well.CoordinatesString()} with Params:\nTermination: {DiosApp.TerminationType}\nMinPerRegion: {DiosApp.MinPerRegion}\nBeadsToCapture: {DiosApp.TotalBeadsToCapture}\nTerminationTimer: {DiosApp.TerminationTime}");
+      Logger.Log($"Starting to read well {e.Well.CoordinatesString()} with Params:\nTermination: {DiosApp.Terminator.TerminationType}\nMinPerRegion: {DiosApp.Terminator.MinPerRegion}\nBeadsToCapture: {DiosApp.Terminator.TotalBeadsToCapture}\nTerminationTimer: {DiosApp.Terminator.TerminationTime}");
 
       var wellFilePath = DiosApp.Publisher.BeadEventFile.MakeNewFileName(e.Well);
       DiosApp.Results.StartNewWell(e.Well);
+      DiosApp.ResultsProc.NewWellStarting();
       MultiTube.GetModifiedWellIndexes(e.Well, out var row, out var col);
 
       //ResultsViewModel.Instance.PlatePictogramIsCovered = Visibility.Visible; //TODO: temporary solution
@@ -243,8 +244,8 @@ namespace Ei_Dimension
         App.Current.Dispatcher.Invoke(() => DashboardViewModel.Instance.WorkOrder[0] = ""); //actually questionable if not in workorder operation
       }
 
-      var stats = DiosApp.Results.WellResults.GetStats();
-      var averageBackgrounds = DiosApp.Results.WellResults.GetBackgroundAverages();
+      var stats = DiosApp.Results.CurrentWellResults.GetStats();
+      var averageBackgrounds = DiosApp.Results.CurrentWellResults.GetBackgroundAverages();
       _ = Current.Dispatcher.BeginInvoke((Action)(() =>
       {
         ResultsViewModel.Instance.DecodeCalibrationStats(stats, current: true);
