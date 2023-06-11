@@ -58,6 +58,9 @@ namespace Ei_Dimension.Controllers
       FillRegions();
     }
 
+    /// <summary>
+    /// </summary>
+    /// <returns>false if there are no active regions or the only active region is Nullregion</returns>
     public static bool AreThereActiveRegions()
     {
       return !(ActiveRegionNums.Count == 0

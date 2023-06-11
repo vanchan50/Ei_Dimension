@@ -13,7 +13,7 @@ namespace Ei_Dimension.Graphing
   [POCOViewModel]
   public class AnalysysMap
   {
-    public List<RegionReporterResult> BackingWResults { get; protected set; } = new List<RegionReporterResult>();
+    public ReporterResultManager BackingWResults { get; protected set; } = new ReporterResultManager();
     public virtual ObservableCollection<DoubleHeatMapData> DisplayedMap { get; set; }
     public virtual ObservableCollection<DoubleHeatMapData> Current01Map { get; protected set; } = new ObservableCollection<DoubleHeatMapData>();
     public virtual ObservableCollection<DoubleHeatMapData> Current02Map { get; protected set; } = new ObservableCollection<DoubleHeatMapData>();

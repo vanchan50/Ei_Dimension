@@ -192,7 +192,7 @@ namespace DIOS.Core
 
     /// <summary>
     /// Sends a sequence of commands to startup a measurement.
-    /// The operation is conducted on the other thread, while this function quickly returns
+    /// <br>The operation is conducted on the other thread, while this function quickly returns</br>
     /// </summary>
     public void StartOperation(IReadOnlyCollection<Well> wells, IBeadEventSink beadEventSink)
     {

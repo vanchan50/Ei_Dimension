@@ -62,6 +62,7 @@
     <Compile Include="RegionReporterResult.cs" />
     <Compile Include="RegionReporterResultVolatile.cs" />
     <Compile Include="RegionReporterStats.cs" />
+    <Compile Include="ReporterResultManager.cs" />
     <Compile Include="ResultingWellStatsData.cs" />
     <Compile Include="ResultsProcessor.cs" />
     <Compile Include="RunResults.cs" />

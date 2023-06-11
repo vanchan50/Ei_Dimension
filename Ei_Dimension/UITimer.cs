@@ -115,7 +115,8 @@ namespace Ei_Dimension
             cl2 = 200,
             greenB = (ushort)r.Next(9, 12),
             greenC = 48950,
-            reporter = 1239.123f
+            reporter = 1239.123f,
+            region = 1
           };
           break;
       }

@@ -69,7 +69,7 @@ namespace Ei_Dimension.ViewModels
           if (!MapRegionsController.AreThereActiveRegions())
           {
             //this adds region0 to ActiveRegionNums
-            SelectNullRegion();
+            DisplayNullregionInUI();
           }
           MapRegionsController.ActiveRegionNums.Add(0);
           //DefaultRegionNaming();
@@ -135,7 +135,7 @@ namespace Ei_Dimension.ViewModels
       }
     }
 
-    private static void SelectNullRegion()
+    private static void DisplayNullregionInUI()
     {
       App.MapRegions.ShowNullTextBoxes();
     }
