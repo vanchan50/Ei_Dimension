@@ -23,6 +23,8 @@ namespace DIOS.Application
 
     public float Average()
     {
+      if(ReporterValues.Count == 0)
+        return 0;
       return ReporterValues.Average();
     }
   }

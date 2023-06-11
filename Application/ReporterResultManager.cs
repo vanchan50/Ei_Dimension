@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using DIOS.Core;
 
 namespace DIOS.Application
@@ -6,6 +7,7 @@ namespace DIOS.Application
   public class ReporterResultManager
   {
     public int RegionsCount { get; private set; }
+    public IReadOnlyCollection<int> CurrentActiveRegions { get; private set; }
 
     private readonly List<RegionReporterResult> _reporterPerRegion = new List<RegionReporterResult>();
     private readonly SortedDictionary<int, int> _regionIndexDictionary = new SortedDictionary<int, int>();//region,position
@@ -15,6 +17,7 @@ namespace DIOS.Application
     {
       _reporterPerRegion.Clear();
       _regionIndexDictionary.Clear();
+      CurrentActiveRegions = regions;
 
       bool containsRegion0 = false;
 
@@ -57,6 +60,15 @@ namespace DIOS.Application
       }
       //return negative count, so the check is passed
       return -1;
+    }
+
+    public RegionReporterResult GetReporterResultsByRegion(int region)
+    {
+      if (_regionIndexDictionary.TryGetValue(region, out var index))
+      {
+        return _reporterPerRegion[index];
+      }
+      throw new IndexOutOfRangeException($"Region #{region} is not set up");
     }
 
     internal List<RegionReporterResultVolatile> GetResultsClone()

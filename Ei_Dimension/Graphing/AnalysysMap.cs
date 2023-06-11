@@ -67,32 +67,31 @@ namespace Ei_Dimension.Graphing
 
     public void InitBackingWellResults()
     {
-      BackingWResults.Clear();
+      List<int> regions = new List<int>();
       if (MapRegionsController.ActiveRegionNums.Count > 0)
       {
         foreach (var reg in MapRegionsController.ActiveRegionNums)
         {
           if (reg == 0)
             continue;
-          BackingWResults.Add(new RegionReporterResult(reg));
+          regions.Add(reg);
         }
       }
+      BackingWResults.Reset(regions);
     }
 
     public void FillBackingMap()
     {
-      foreach (var result in BackingWResults)
+      foreach (var regionNumber in BackingWResults.CurrentActiveRegions)
       {
-        if (_activeMap.Regions.TryGetValue(result.regionNumber, out var region))
+        if (_activeMap.Regions.TryGetValue(regionNumber, out var region))
         {
           var x = HeatMapPoint.bins[region.Center.x];
           var y = HeatMapPoint.bins[region.Center.y];
           lock (_lock)
           {
-            if (result.Count > 0)
-            {
-              Backing12Map.Add(new DoubleHeatMapData(x, y, result.Average()));
-            }
+            var value = BackingWResults.GetReporterResultsByRegion(regionNumber).Average();
+            Backing12Map.Add(new DoubleHeatMapData(x, y, value));
           }
         }
       }

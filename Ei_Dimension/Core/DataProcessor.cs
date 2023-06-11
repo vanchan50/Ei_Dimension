@@ -1,7 +1,6 @@
 ﻿using Ei_Dimension.Models;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using DIOS.Application;
 using DIOS.Core;
 using Ei_Dimension.Controllers;
@@ -245,11 +244,7 @@ namespace Ei_Dimension.Core
         //3DReporterPlot
         if (!current)
         {
-          var index = analysisMap.BackingWResults.FindIndex(x => x.regionNumber == beadInfoList[i].region);
-          if (index != -1)
-          {
-            analysisMap.BackingWResults[index].Add(beadInfoList[i].reporter);
-          }
+          analysisMap.BackingWResults.Add(beadInfoList[i]);
         }
         i++;
       }
