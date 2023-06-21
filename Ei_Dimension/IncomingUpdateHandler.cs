@@ -575,8 +575,11 @@ namespace Ei_Dimension
             case VolumeType.Wash:
               pos13 = 1;
               break;
-            case VolumeType.Agitate:
+            case VolumeType.ProbeWash:
               pos13 = 2;
+              break;
+            case VolumeType.Agitate:
+              pos13 = 3;
               break;
           }
           update = () => DashboardViewModel.Instance.Volumes[pos13] = parameter.FloatParameter.ToString("F0");

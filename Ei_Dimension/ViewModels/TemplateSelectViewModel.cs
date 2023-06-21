@@ -126,13 +126,21 @@ namespace Ei_Dimension.ViewModels
               }
               else
                 throw new Exception();
-              
-              
+
+              temp = newTemplate.ProbeWashVolume.ToString();
+              if (int.TryParse(temp, out iRes))
+              {
+                App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.Volume, VolumeType.ProbeWash, (ushort)iRes);
+                DashVM.Volumes[2] = temp;
+              }
+              else
+                throw new Exception();
+
               temp = newTemplate.AgitateVolume.ToString();
               if (int.TryParse(temp, out iRes))
               {
                 App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.Volume, VolumeType.Agitate, (ushort)iRes);
-                DashVM.Volumes[2] = temp;
+                DashVM.Volumes[3] = temp;
               }
               else
                 throw new Exception();
@@ -146,11 +154,20 @@ namespace Ei_Dimension.ViewModels
               else
                 throw new Exception();
 
+              temp = newTemplate.ProbewashRepeats.ToString();
+              if (int.TryParse(temp, out iRes))
+              {
+                App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ProbewashRepeatsAmount, (ushort)iRes);
+                DashVM.Repeats[1] = temp;
+              }
+              else
+                throw new Exception();
+
               temp = newTemplate.AgitateRepeats.ToString();
               if (int.TryParse(temp, out iRes))
               {
                 App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.AgitateRepeatsAmount, (ushort)iRes);
-                DashVM.Repeats[1] = temp;
+                DashVM.Repeats[2] = temp;
               }
               else
                 throw new Exception();
@@ -286,9 +303,11 @@ namespace Ei_Dimension.ViewModels
           temp.EndRead = DashVM.SelectedEndReadIndex;
           temp.SampleVolume = uint.Parse(DashVM.Volumes[0]);
           temp.WashVolume = uint.Parse(DashVM.Volumes[1]);
-          temp.AgitateVolume = uint.Parse(DashVM.Volumes[2]);
+          temp.ProbeWashVolume = uint.Parse(DashVM.Volumes[2]);
+          temp.AgitateVolume = uint.Parse(DashVM.Volumes[3]);
           temp.WashRepeats = uint.Parse(DashVM.Repeats[0]);
-          temp.AgitateRepeats = uint.Parse(DashVM.Repeats[1]);
+          temp.ProbewashRepeats = uint.Parse(DashVM.Repeats[1]);
+          temp.AgitateRepeats = uint.Parse(DashVM.Repeats[2]);
           temp.MinPerRegion = uint.Parse(DashVM.EndRead[0]);
           temp.TotalEvents = uint.Parse(DashVM.EndRead[1]);
           temp.TerminationTimer = uint.Parse(DashVM.EndRead[2]);

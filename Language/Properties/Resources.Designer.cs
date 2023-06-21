@@ -1760,6 +1760,26 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Probe Wash
+        ///   Repeats.
+        /// </summary>
+        public static string Experiment_Probewash_Repeats {
+            get {
+                return ResourceManager.GetString("Experiment_Probewash_Repeats", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Probe Wash
+        ///Volume, µL.
+        /// </summary>
+        public static string Experiment_ProbeWash_Vol {
+            get {
+                return ResourceManager.GetString("Experiment_ProbeWash_Vol", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sample
         ///Volume, µL.
         /// </summary>

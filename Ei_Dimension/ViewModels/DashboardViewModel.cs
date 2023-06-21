@@ -13,8 +13,8 @@ namespace Ei_Dimension.ViewModels
   public class DashboardViewModel
   {
     public virtual ObservableCollection<string> EndRead { get; set; } = new ObservableCollection<string> { "100", "500", "60" };
-    public virtual ObservableCollection<string> Volumes { get; set; } = new ObservableCollection<string> { "0", "0", "0" };
-    public virtual ObservableCollection<string> Repeats { get; set; } = new ObservableCollection<string> { "1", "1" };
+    public virtual ObservableCollection<string> Volumes { get; set; } = new ObservableCollection<string> { "0", "0", "0", "0" };
+    public virtual ObservableCollection<string> Repeats { get; set; } = new ObservableCollection<string> { "1", "0", "1" };
     public virtual ObservableCollection<string> WorkOrder { get; set; } = new ObservableCollection<string> { "" };
     public virtual string SelectedSpeedContent { get; set; }
     public virtual ObservableCollection<DropDownButtonContents> SpeedItems { get; set; }
@@ -171,38 +171,46 @@ namespace Ei_Dimension.ViewModels
       switch (num)
       {
         case 0:
-          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(EndRead)), this, 0, Views.DashboardView.Instance.Endr0TB);
-          MainViewModel.Instance.NumpadToggleButton(Views.DashboardView.Instance.Endr0TB);
-          break; 
-        case 1:
-          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(EndRead)), this, 1, Views.DashboardView.Instance.Endr1TB);
-          MainViewModel.Instance.NumpadToggleButton(Views.DashboardView.Instance.Endr1TB);
-          break;
-        case 2:
           UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(Volumes)), this, 0, Views.DashboardView.Instance.SampVTB);
           MainViewModel.Instance.NumpadToggleButton(Views.DashboardView.Instance.SampVTB);
           break;
-        case 3:
+        case 1:
           UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(Volumes)), this, 1, Views.DashboardView.Instance.WashVTB);
           MainViewModel.Instance.NumpadToggleButton(Views.DashboardView.Instance.WashVTB);
           break;
-        case 4:
-          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(Volumes)), this, 2, Views.DashboardView.Instance.AgitVTB);
+        case 2:
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(Volumes)), this, 2, Views.DashboardView.Instance.ProbeWashVTB);
+          MainViewModel.Instance.NumpadToggleButton(Views.DashboardView.Instance.ProbeWashVTB);
+          break;
+        case 3:
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(Volumes)), this, 3, Views.DashboardView.Instance.AgitVTB);
           MainViewModel.Instance.NumpadToggleButton(Views.DashboardView.Instance.AgitVTB);
           break;
-        case 5:
-          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(WorkOrder)), this, 0, Views.DashboardView.Instance.SysCTB);
-          MainViewModel.Instance.NumpadToggleButton(Views.DashboardView.Instance.SysCTB);
-          break;
-        case 6:
+        case 4:
           UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(Repeats)), this, 0, Views.DashboardView.Instance.WashRepTB);
           MainViewModel.Instance.NumpadToggleButton(Views.DashboardView.Instance.WashRepTB);
           break;
-        case 7:
-          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(Repeats)), this, 1, Views.DashboardView.Instance.AgitateRepTB);
+        case 5:
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(Repeats)), this, 1, Views.DashboardView.Instance.ProbewashRepTB);
+          MainViewModel.Instance.NumpadToggleButton(Views.DashboardView.Instance.ProbewashRepTB);
+          break;
+        case 6:
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(Repeats)), this, 2, Views.DashboardView.Instance.AgitateRepTB);
           MainViewModel.Instance.NumpadToggleButton(Views.DashboardView.Instance.AgitateRepTB);
           break;
         case 8:
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(WorkOrder)), this, 0, Views.DashboardView.Instance.SysCTB);
+          MainViewModel.Instance.NumpadToggleButton(Views.DashboardView.Instance.SysCTB);
+          break;
+        case 9:
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(EndRead)), this, 0, Views.DashboardView.Instance.Endr0TB);
+          MainViewModel.Instance.NumpadToggleButton(Views.DashboardView.Instance.Endr0TB);
+          break;
+        case 10:
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(EndRead)), this, 1, Views.DashboardView.Instance.Endr1TB);
+          MainViewModel.Instance.NumpadToggleButton(Views.DashboardView.Instance.Endr1TB);
+          break;
+        case 11:
           UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(EndRead)), this, 2, Views.DashboardView.Instance.Endr2TB);
           MainViewModel.Instance.NumpadToggleButton(Views.DashboardView.Instance.Endr2TB);
           break;

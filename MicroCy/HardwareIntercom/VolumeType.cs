@@ -4,6 +4,7 @@
   {
     Sample,
     Wash,
+    ProbeWash,
     Agitate
   }
 }

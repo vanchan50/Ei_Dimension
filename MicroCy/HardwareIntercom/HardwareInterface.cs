@@ -737,6 +737,10 @@ namespace DIOS.Core.HardwareIntercom
           commandCode = 0x86;
           param = intValue;
           break;
+        case DeviceParameterType.ProbewashRepeatsAmount:
+          //commandCode = ;
+          param = intValue;
+          break;
         case DeviceParameterType.FlushCycles:
           commandCode = 0x87;
           param = intValue;
@@ -777,7 +781,10 @@ namespace DIOS.Core.HardwareIntercom
               param = intValue;
               break;
             case VolumeType.Sample:
-              commandCode = 0xAF;
+              commandCode = 0xA2;
+              param = intValue;
+              break;
+            case VolumeType.ProbeWash:
               param = intValue;
               break;
             case VolumeType.Agitate:
@@ -1609,6 +1616,9 @@ namespace DIOS.Core.HardwareIntercom
         case DeviceParameterType.WashRepeatsAmount:
           commandCode = 0x86;
           break;
+        case DeviceParameterType.ProbewashRepeatsAmount:
+          //commandCode = ;
+          break;
         case DeviceParameterType.FlushCycles:
           commandCode = 0x87;
           break;
@@ -1653,6 +1663,8 @@ namespace DIOS.Core.HardwareIntercom
               break;
             case VolumeType.Sample:
               commandCode = 0xAF;
+              break;
+            case VolumeType.ProbeWash:
               break;
             case VolumeType.Agitate:
               commandCode = 0xC4;

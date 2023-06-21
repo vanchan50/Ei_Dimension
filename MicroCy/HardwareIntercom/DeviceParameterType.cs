@@ -63,6 +63,7 @@
     ChannelConfiguration,
     PlateType,
     WashRepeatsAmount,
+    ProbewashRepeatsAmount,
     AgitateRepeatsAmount,
     ///<summary>Subparamter: CalibrationTarget</summary>
     CalibrationTarget,

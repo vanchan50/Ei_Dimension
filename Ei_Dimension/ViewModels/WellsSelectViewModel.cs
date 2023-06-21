@@ -164,7 +164,7 @@ namespace Ei_Dimension.ViewModels
     {
       _ = short.TryParse(DashboardViewModel.Instance.Volumes[0], out var volRes);
       _ = short.TryParse(DashboardViewModel.Instance.Volumes[1], out var washRes);
-      _ = short.TryParse(DashboardViewModel.Instance.Volumes[2], out var agitRes);
+      _ = short.TryParse(DashboardViewModel.Instance.Volumes[3], out var agitRes);
 
       return new Well
       {

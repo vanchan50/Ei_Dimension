@@ -712,6 +712,14 @@ Region</value>
   <data name="Experiment_Order" xml:space="preserve">
     <value>Order</value>
   </data>
+  <data name="Experiment_Probewash_Repeats" xml:space="preserve">
+    <value>Probe Wash
+   Repeats</value>
+  </data>
+  <data name="Experiment_ProbeWash_Vol" xml:space="preserve">
+    <value>Probe Wash
+Volume, µL</value>
+  </data>
   <data name="Experiment_Samp_Vol" xml:space="preserve">
     <value>Sample
 Volume, µL</value>

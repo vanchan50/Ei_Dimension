@@ -589,6 +589,14 @@ Flow Cell</value>
   <data name="Experiment_Order" xml:space="preserve">
     <value>上样顺序</value>
   </data>
+  <data name="Experiment_Probewash_Repeats" xml:space="preserve">
+    <value>Probe Wash
+   Repeats</value>
+  </data>
+  <data name="Experiment_ProbeWash_Vol" xml:space="preserve">
+    <value>Probe Wash
+Volume, µL</value>
+  </data>
   <data name="Experiment_Samp_Vol" xml:space="preserve">
     <value>样本体积, µL</value>
   </data>

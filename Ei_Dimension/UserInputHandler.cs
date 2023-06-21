@@ -168,8 +168,7 @@ namespace Ei_Dimension
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                //if (iRes >= 10 && iRes <= 100)
-                if ((iRes >= 0) || _disableSanityCheck)
+                if ((iRes >= 10 && iRes <= 100) || _disableSanityCheck)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.Volume, VolumeType.Sample, (ushort)iRes);
                   break;
@@ -182,8 +181,7 @@ namespace Ei_Dimension
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                //if (iRes >= 1 && iRes <= 150)
-                if ((iRes >= 0) || _disableSanityCheck)
+                if ((iRes >= 1 && iRes <= 150) || _disableSanityCheck)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.Volume, VolumeType.Wash, (ushort)iRes);
                   break;
@@ -196,8 +194,20 @@ namespace Ei_Dimension
             {
               if (int.TryParse(_tempNewString, out iRes))
               {
-                //if (iRes >= 1 && iRes <= 500)
-                if ((iRes >= 0) || _disableSanityCheck)
+                if ((iRes >= 1 && iRes <= 500) || _disableSanityCheck)
+                {
+                  App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.Volume, VolumeType.ProbeWash, (ushort)iRes);
+                  break;
+                }
+              }
+              failed = true;
+              ErrorMessage = "[1-500]";
+            }
+            if (SelectedTextBox.index == 3)
+            {
+              if (int.TryParse(_tempNewString, out iRes))
+              {
+                if ((iRes >= 1 && iRes <= 500) || _disableSanityCheck)
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.Volume, VolumeType.Agitate, (ushort)iRes);
                   break;
@@ -222,6 +232,19 @@ namespace Ei_Dimension
               ErrorMessage = "[1-10]";
             }
             if (SelectedTextBox.index == 1)
+            {
+              if (int.TryParse(_tempNewString, out iRes))
+              {
+                if ((iRes >= 0 && iRes <= 5) || _disableSanityCheck)
+                {
+                  App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ProbewashRepeatsAmount, (ushort)iRes);
+                  break;
+                }
+              }
+              failed = true;
+              ErrorMessage = "[0-5]";
+            }
+            if (SelectedTextBox.index == 2)
             {
               if (int.TryParse(_tempNewString, out iRes))
               {

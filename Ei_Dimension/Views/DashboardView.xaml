@@ -170,12 +170,12 @@
     <!--Volumes-->
     <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Margin="320,30,0,0">
+            Margin="320,10,0,0">
       <StackPanel Width="200">
         <TextBlock Text="{lang:Loc Experiment_Samp_Vol}"
                    FontFamily="{StaticResource AppTextFont}"
-                   FontSize="30"
-                   Height="80"
+                   FontSize="26"
+                   Height="68"
                    FontWeight="UltraBold"
                    HorizontalAlignment="Center"
                    Foreground="{StaticResource AppTextColor}"/>
@@ -184,7 +184,7 @@
                  Style="{StaticResource InputFieldStyle}"
                  Text="{Binding Volumes[0]}">
           <dxmvvm:Interaction.Behaviors>
-            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="2"/>
+            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="0"/>
             <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
           </dxmvvm:Interaction.Behaviors>
         </TextBox>
@@ -227,8 +227,8 @@
         </StackPanel>
         <TextBlock Text="{lang:Loc Experiment_Wash_Vol}"
                    FontFamily="{StaticResource AppTextFont}"
-                   FontSize="30"
-                   Height="80"
+                   FontSize="26"
+                   Height="68"
                    FontWeight="UltraBold"
                    HorizontalAlignment="Center"
                    Foreground="{StaticResource AppTextColor}"/>
@@ -237,14 +237,30 @@
                  Style="{StaticResource InputFieldStyle}"
                  Text="{Binding Volumes[1]}">
           <dxmvvm:Interaction.Behaviors>
-            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="3"/>
+            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="1"/>
+            <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+          </dxmvvm:Interaction.Behaviors>
+        </TextBox>
+        <TextBlock Text="{lang:Loc Experiment_ProbeWash_Vol}"
+                   FontFamily="{StaticResource AppTextFont}"
+                   FontSize="26"
+                   Height="68"
+                   FontWeight="UltraBold"
+                   HorizontalAlignment="Center"
+                   Foreground="{StaticResource AppTextColor}"/>
+        <TextBox HorizontalAlignment="Stretch"
+                 Margin="0,4,0,0" Name="ProbeWashVTB"
+                 Style="{StaticResource InputFieldStyle}"
+                 Text="{Binding Volumes[2]}">
+          <dxmvvm:Interaction.Behaviors>
+            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="2"/>
             <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
           </dxmvvm:Interaction.Behaviors>
         </TextBox>
         <TextBlock Text="{lang:Loc Experiment_Agitate_Vol}"
                    FontFamily="{StaticResource AppTextFont}"
-                   FontSize="30"
-                   Height="80"
+                   FontSize="26"
+                   Height="68"
                    FontWeight="UltraBold"
                    HorizontalAlignment="Center"
                    Foreground="{StaticResource AppTextColor}"
@@ -252,43 +268,60 @@
         <TextBox HorizontalAlignment="Stretch"
                  Margin="0,4,0,0" Name="AgitVTB"
                  Style="{StaticResource InputFieldStyle}"
-                 Text="{Binding Volumes[2]}">
+                 Text="{Binding Volumes[3]}">
           <dxmvvm:Interaction.Behaviors>
-            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="4"/>
+            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="3"/>
             <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
           </dxmvvm:Interaction.Behaviors>
         </TextBox>
         <TextBlock Text="{lang:Loc Experiment_Wash_Repeats}"
                    FontFamily="{StaticResource AppTextFont}"
-                   FontSize="30"
-                   Height="40"
+                   FontSize="26"
+                   Height="34"
                    FontWeight="UltraBold"
                    HorizontalAlignment="Center"
                    Foreground="{StaticResource AppTextColor}"
-                   Margin="0,33,0,0"/>
+                   Margin="0,4,0,0"/>
         <TextBox HorizontalAlignment="Stretch"
                  Margin="0,4,0,0" Name="WashRepTB"
                  Style="{StaticResource InputFieldStyle}"
                  Text="{Binding Repeats[0]}">
           <dxmvvm:Interaction.Behaviors>
-            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="6"/>
+            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="4"/>
+            <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+          </dxmvvm:Interaction.Behaviors>
+        </TextBox>
+        <TextBlock Text="{lang:Loc Experiment_Probewash_Repeats}"
+                   FontFamily="{StaticResource AppTextFont}"
+                   FontSize="26"
+                   Height="68"
+                   FontWeight="UltraBold"
+                   HorizontalAlignment="Center"
+                   Foreground="{StaticResource AppTextColor}"
+                   Margin="0,4,0,0"/>
+        <TextBox HorizontalAlignment="Stretch"
+                 Margin="0,4,0,0" Name="ProbewashRepTB"
+                 Style="{StaticResource InputFieldStyle}"
+                 Text="{Binding Repeats[1]}">
+          <dxmvvm:Interaction.Behaviors>
+            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="5"/>
             <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
           </dxmvvm:Interaction.Behaviors>
         </TextBox>
         <TextBlock Text="{lang:Loc Experiment_Agitate_Repeats}"
                    FontFamily="{StaticResource AppTextFont}"
-                   FontSize="30"
-                   Height="40"
+                   FontSize="26"
+                   Height="34"
                    FontWeight="UltraBold"
                    HorizontalAlignment="Center"
                    Foreground="{StaticResource AppTextColor}"
-                   Margin="0,13,0,0"/>
+                   Margin="0,4,0,0"/>
         <TextBox HorizontalAlignment="Stretch"
                  Margin="0,4,0,0" Name="AgitateRepTB"
                  Style="{StaticResource InputFieldStyle}"
-                 Text="{Binding Repeats[1]}">
+                 Text="{Binding Repeats[2]}">
           <dxmvvm:Interaction.Behaviors>
-            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="7"/>
+            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="6"/>
             <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
           </dxmvvm:Interaction.Behaviors>
         </TextBox>
@@ -348,7 +381,7 @@
                    FontSize="20"
                    Margin=" 0,5,0,0">
           <dxmvvm:Interaction.Behaviors>
-            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="5"/>
+            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="8"/>
             <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
           </dxmvvm:Interaction.Behaviors>
         </TextBox>
@@ -519,7 +552,7 @@
                    Text="{Binding EndRead[0]}"
                    Visibility="{Binding EndReadVisibility[0]}">
             <dxmvvm:Interaction.Behaviors>
-              <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="0"/>
+              <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="9"/>
               <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
             </dxmvvm:Interaction.Behaviors>
           </TextBox>
@@ -529,7 +562,7 @@
                    Text="{Binding EndRead[1]}"
                    Visibility="{Binding EndReadVisibility[1]}">
             <dxmvvm:Interaction.Behaviors>
-              <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="1"/>
+              <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="10"/>
               <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
             </dxmvvm:Interaction.Behaviors>
           </TextBox>
@@ -539,7 +572,7 @@
                    Text="{Binding EndRead[2]}"
                    Visibility="{Binding EndReadVisibility[2]}">
             <dxmvvm:Interaction.Behaviors>
-              <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="8"/>
+              <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="11"/>
               <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
             </dxmvvm:Interaction.Behaviors>
           </TextBox>

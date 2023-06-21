@@ -646,6 +646,9 @@ namespace DIOS.Core
         case 0x86:
           outParameters = new ParameterUpdateEventArgs(DeviceParameterType.WashRepeatsAmount, intParameter: cs.Parameter);
           break;
+        //case 0x86:
+        //  outParameters = new ParameterUpdateEventArgs(DeviceParameterType.ProbewashRepeatsAmount, intParameter: cs.Parameter);
+        //  break;
         case 0x87:
           outParameters = new ParameterUpdateEventArgs(DeviceParameterType.FlushCycles, intParameter: cs.Parameter);
           break;
@@ -673,6 +676,9 @@ namespace DIOS.Core
         case 0xC4:
           outParameters = new ParameterUpdateEventArgs(DeviceParameterType.Volume, intParameter: (int)VolumeType.Agitate, floatParameter: cs.Parameter);
           break;
+        //case 0xAF:
+        //  outParameters = new ParameterUpdateEventArgs(DeviceParameterType.Volume, intParameter: (int)VolumeType.ProbeWash, floatParameter: cs.Parameter);
+        //  break;
         case 0xB8:
           outParameters = new ParameterUpdateEventArgs(DeviceParameterType.GreenAVoltage, floatParameter: cs.Parameter * 0.0008f);
           break;

@@ -17,6 +17,7 @@ namespace Ei_Dimension.Models
     public byte Speed;
     public uint SampleVolume;
     public uint WashVolume;
+    public uint ProbeWashVolume;
     public uint AgitateVolume;
     public byte EndRead;
     public uint MinPerRegion;
@@ -25,6 +26,7 @@ namespace Ei_Dimension.Models
     public uint FileSaveCheckboxes;
     public int TableSize;
     public uint WashRepeats;
+    public uint ProbewashRepeats;
     public uint AgitateRepeats;
     public List<List<WellType>> SelectedWells;
     public string PlateType;
