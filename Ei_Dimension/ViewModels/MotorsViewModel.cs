@@ -322,16 +322,16 @@ namespace Ei_Dimension.ViewModels
           MainViewModel.Instance.NumpadToggleButton((TextBox)Views.MotorsView.Instance.xSP.Children[0]);
           break;
         case 19:
-          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(StepsParametersX)), this, 1, (TextBox)Views.MotorsView.Instance.xSP.Children[1]);
-          MainViewModel.Instance.NumpadToggleButton((TextBox)Views.MotorsView.Instance.xSP.Children[1]);
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(StepsParametersX)), this, 1, (TextBox)Views.MotorsView.Instance.xSP.Children[3]);
+          MainViewModel.Instance.NumpadToggleButton((TextBox)Views.MotorsView.Instance.xSP.Children[3]);
           break;
         case 20:
           UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(StepsParametersX)), this, 2, (TextBox)Views.MotorsView.Instance.xSP.Children[2]);
           MainViewModel.Instance.NumpadToggleButton((TextBox)Views.MotorsView.Instance.xSP.Children[2]);
           break;
         case 21:
-          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(StepsParametersX)), this, 3, (TextBox)Views.MotorsView.Instance.xSP.Children[3]);
-          MainViewModel.Instance.NumpadToggleButton((TextBox)Views.MotorsView.Instance.xSP.Children[3]);
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(StepsParametersX)), this, 3, (TextBox)Views.MotorsView.Instance.xSP.Children[1]);
+          MainViewModel.Instance.NumpadToggleButton((TextBox)Views.MotorsView.Instance.xSP.Children[1]);
           break;
         case 22:
           UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(StepsParametersX)), this, 4, (TextBox)Views.MotorsView.Instance.xSP.Children[4]);
@@ -342,16 +342,16 @@ namespace Ei_Dimension.ViewModels
           MainViewModel.Instance.NumpadToggleButton((TextBox)Views.MotorsView.Instance.ySP.Children[0]);
           break;
         case 24:
-          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(StepsParametersY)), this, 1, (TextBox)Views.MotorsView.Instance.ySP.Children[1]);
-          MainViewModel.Instance.NumpadToggleButton((TextBox)Views.MotorsView.Instance.ySP.Children[1]);
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(StepsParametersY)), this, 1, (TextBox)Views.MotorsView.Instance.ySP.Children[3]);
+          MainViewModel.Instance.NumpadToggleButton((TextBox)Views.MotorsView.Instance.ySP.Children[3]);
           break;
         case 25:
           UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(StepsParametersY)), this, 2, (TextBox)Views.MotorsView.Instance.ySP.Children[2]);
           MainViewModel.Instance.NumpadToggleButton((TextBox)Views.MotorsView.Instance.ySP.Children[2]);
           break;
         case 26:
-          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(StepsParametersY)), this, 3, (TextBox)Views.MotorsView.Instance.ySP.Children[3]);
-          MainViewModel.Instance.NumpadToggleButton((TextBox)Views.MotorsView.Instance.ySP.Children[3]);
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(StepsParametersY)), this, 3, (TextBox)Views.MotorsView.Instance.ySP.Children[1]);
+          MainViewModel.Instance.NumpadToggleButton((TextBox)Views.MotorsView.Instance.ySP.Children[1]);
           break;
         case 27:
           UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(StepsParametersY)), this, 4, (TextBox)Views.MotorsView.Instance.ySP.Children[4]);
