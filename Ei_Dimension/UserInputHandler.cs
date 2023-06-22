@@ -866,7 +866,7 @@ namespace Ei_Dimension
               {
                 if ((iRes >= 0 && ((App.DiosApp.Device.BoardVersion == 0 && iRes <= 4095) || (App.DiosApp.Device.BoardVersion >= 1 && iRes <= 65535))) || _disableSanityCheck)
                 {
-                  App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ChannelOffset, Channel.RedA, iRes);
+                  //App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ChannelOffset, Channel.RedA, iRes);
                   break;
                 }
               }
@@ -879,7 +879,7 @@ namespace Ei_Dimension
               {
                 if ((iRes >= 0 && ((App.DiosApp.Device.BoardVersion == 0 && iRes <= 4095) || (App.DiosApp.Device.BoardVersion >= 1 && iRes <= 65535))) || _disableSanityCheck)
                 {
-                  App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ChannelOffset, Channel.RedB, iRes);
+                  //App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ChannelOffset, Channel.RedB, iRes);
                   break;
                 }
               }

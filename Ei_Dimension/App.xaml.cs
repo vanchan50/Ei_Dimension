@@ -62,6 +62,16 @@ namespace Ei_Dimension
       }
     }
 
+    public static void RunInUIThreadSync(Action method)
+    {
+      App.Current.Dispatcher.Invoke(method);
+    }
+
+    public static void RunInUIThreadAsync(Delegate method)
+    {
+      App.Current.Dispatcher.BeginInvoke(method);
+    }
+
     public static void SetActiveMap(string mapName)
     {
       var index = DiosApp.MapController.GetMapIndexByName(mapName);
@@ -194,7 +204,7 @@ namespace Ei_Dimension
 
       Logger.Log($"Starting to read well {e.Well.CoordinatesString()} with Params:\nTermination: {DiosApp.Terminator.TerminationType}\nMinPerRegion: {DiosApp.Terminator.MinPerRegion}\nBeadsToCapture: {DiosApp.Terminator.TotalBeadsToCapture}\nTerminationTimer: {DiosApp.Terminator.TerminationTime}");
 
-      var wellFilePath = DiosApp.Publisher.BeadEventFile.MakeNewFileName(e.Well);
+      var wellFilePath = DiosApp.Publisher.BeadEventFile.GenerateNewFileName(e.Well);
       DiosApp.Results.StartNewWell(e.Well);
       DiosApp.ResultsProc.NewWellStarting();
       MultiTube.GetModifiedWellIndexes(e.Well, out var row, out var col);
@@ -447,8 +457,8 @@ namespace Ei_Dimension
             DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelOffset, Channel.GreenA);
             DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelOffset, Channel.GreenB);
             DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelOffset, Channel.GreenC);
-            DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelOffset, Channel.RedA);
-            DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelOffset, Channel.RedB);
+            //DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelOffset, Channel.RedA);
+            //DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelOffset, Channel.RedB);
             DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelOffset, Channel.RedC);
             DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelOffset, Channel.RedD);
             DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelOffset, Channel.VioletA);

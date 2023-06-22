@@ -164,6 +164,7 @@ namespace Ei_Dimension.ViewModels
     {
       _ = short.TryParse(DashboardViewModel.Instance.Volumes[0], out var volRes);
       _ = short.TryParse(DashboardViewModel.Instance.Volumes[1], out var washRes);
+      _ = short.TryParse(DashboardViewModel.Instance.Volumes[2], out var probewashRes);
       _ = short.TryParse(DashboardViewModel.Instance.Volumes[3], out var agitRes);
 
       return new Well
@@ -173,6 +174,7 @@ namespace Ei_Dimension.ViewModels
         RunSpeed = DashboardViewModel.Instance.SelectedSpeedIndex,
         SampVol = volRes,
         WashVol = washRes,
+        ProbewashVol = probewashRes,
         AgitateVol = agitRes,
         ChanConfig = ComponentsViewModel.Instance.SelectedChConfigIndex,
         MinPerRegion = int.Parse(DashboardViewModel.Instance.EndRead[0]),

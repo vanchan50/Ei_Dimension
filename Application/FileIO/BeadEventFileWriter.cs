@@ -58,7 +58,7 @@ namespace DIOS.Application.FileIO
       }
     }
 
-    public string MakeNewFileName(Well currentWell)
+    public string GenerateNewFileName(Well currentWell)
     {
       var directoryName = Path.Combine(_publisher.Outdir, ResultsPublisher.DATAFOLDERNAME);
       if (!_publisher.OutputDirectoryExists(directoryName))

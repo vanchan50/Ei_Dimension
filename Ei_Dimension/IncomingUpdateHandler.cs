@@ -507,12 +507,12 @@ namespace Ei_Dimension
             case Channel.GreenC:
               pos12 = 2;
               break;
-            case Channel.RedA:
-              pos12 = 3;
-              break;
-            case Channel.RedB:
-              pos12 = 4;
-              break;
+            //case Channel.RedA:
+            //  pos12 = 3;
+            //  break;
+            //case Channel.RedB:
+            //  pos12 = 4;
+            //  break;
             case Channel.RedC:
               pos12 = 5;
               break;

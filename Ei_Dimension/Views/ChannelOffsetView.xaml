@@ -439,20 +439,26 @@
               <TextBox HorizontalAlignment="Stretch"
                       Margin="10,35,10,0"
                       Style="{StaticResource InputFieldStyle}"
+                      IsReadOnly="True"
                       Text="{Binding ChannelsOffsetParameters[3]}">
+                <!--
                 <dxmvvm:Interaction.Behaviors>
                   <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="3"/>
                   <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
                 </dxmvvm:Interaction.Behaviors>
+                -->
               </TextBox>
               <TextBox HorizontalAlignment="Stretch"
                       Margin="10,15,10,0"
+                      IsReadOnly="True"
                       Style="{StaticResource InputFieldStyle}"
                       Text="{Binding ChannelsOffsetParameters[4]}">
+                <!--
                 <dxmvvm:Interaction.Behaviors>
                   <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="4"/>
                   <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
                 </dxmvvm:Interaction.Behaviors>
+                -->
               </TextBox>
               <TextBox HorizontalAlignment="Stretch"
                       Margin="10,15,10,0"

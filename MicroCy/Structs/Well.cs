@@ -1,9 +1,7 @@
-﻿using System;
-using DIOS.Core.HardwareIntercom;
+﻿using DIOS.Core.HardwareIntercom;
 
 namespace DIOS.Core
 {
-  [Serializable]
   public class Well //TODO:make it immutable
   {
     public byte RowIdx;
@@ -12,6 +10,7 @@ namespace DIOS.Core
     public ChannelConfiguration ChanConfig;
     public short SampVol;
     public short WashVol;
+    public short ProbewashVol;
     public short AgitateVol;
     //public Termination TermType;
     public int BeadsToCapture;
@@ -30,6 +29,7 @@ namespace DIOS.Core
       ChanConfig = well.ChanConfig;
       SampVol = well.SampVol;
       WashVol = well.WashVol;
+      ProbewashVol = well.ProbewashVol;
       AgitateVol = well.AgitateVol;
       //TermType = well.TermType;
       BeadsToCapture = well.BeadsToCapture;

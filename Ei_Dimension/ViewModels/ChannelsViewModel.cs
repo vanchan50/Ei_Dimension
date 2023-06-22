@@ -56,7 +56,7 @@ namespace Ei_Dimension.ViewModels
     public void SaveBiasButtonClick()
     {
       UserInputHandler.InputSanityCheck();
-      var res = App.DiosApp.MapController.SaveCalVals(new DIOS.Core.MapCalParameters
+      var writeIsSuccessful = App.DiosApp.MapController.SaveCalVals(new MapCalParameters
       {
         TempCl0 = int.Parse(Bias30Parameters[8]),
         TempCl1 = int.Parse(Bias30Parameters[5]),
@@ -84,7 +84,7 @@ namespace Ei_Dimension.ViewModels
         Caldate = null,
         Valdate = null
       });
-      if (!res)
+      if (!writeIsSuccessful)
       {
         App.Current.Dispatcher.Invoke(() =>
           Notification.Show("Save failed"));
