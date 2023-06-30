@@ -6,17 +6,19 @@ namespace DIOS.Application
   public class WellResults
   {
     public Well Well { get; private set; }
-    public BeadEventsData BeadEventsData { get; } = new BeadEventsData();
-    public uint Size { get; private set; }
+    internal BeadEventsData BeadEventsData { get; } = new BeadEventsData();
     private readonly ReporterResultManager _reporterManager = new ReporterResultManager();
     private readonly StatsAccumulator _calibrationStatsAccumulator = new StatsAccumulator();
     private readonly BackgroundStatsAccumulator _backgroundStatsAccumulator = new BackgroundStatsAccumulator();
+    private uint _size;
+    private int _nextNewBeadIndex;
 
     internal void Reset(Well well, IReadOnlyCollection<int> regions)
     {
       Well = new Well(well);
       BeadEventsData.Reset();
-      Size = 0;
+      _size = 0;
+      _nextNewBeadIndex = 0;
       _calibrationStatsAccumulator.Reset();
       _backgroundStatsAccumulator.Reset();
       _reporterManager.Reset(regions);
@@ -25,7 +27,7 @@ namespace DIOS.Application
     internal int Add(in ProcessedBead bead)
     {
       BeadEventsData.Add(in bead);
-      Size++;
+      _size++;
       //accum stats for run as a whole, used during aligment and QC
       _calibrationStatsAccumulator.Add(in bead);
       _backgroundStatsAccumulator.Add(in bead);
@@ -47,6 +49,21 @@ namespace DIOS.Application
     public ChannelsAveragesStats GetBackgroundAverages()
     {
       return _backgroundStatsAccumulator.CalculateAverages();
+    }
+
+    public IEnumerable<ProcessedBead> GetNewBeads()
+    {
+      if (_size == 0)
+      {
+        yield break;
+      }
+
+      if (_nextNewBeadIndex >= _size)
+      {
+        yield break;
+      }
+
+      yield return BeadEventsData[_nextNewBeadIndex++];
     }
 
     /// <summary>

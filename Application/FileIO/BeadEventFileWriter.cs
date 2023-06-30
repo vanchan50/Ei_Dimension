@@ -73,7 +73,7 @@ namespace DIOS.Application.FileIO
       _ = _dataOut.Clear();
       _ = _dataOut.AppendLine(HEADER);
 
-      foreach (var bead in eventsData.List)
+      foreach (var bead in eventsData)
       {
         if (bead.region == 0 && _publisher.IsOnlyClassifiedBeadsPublishingActive)
           continue;

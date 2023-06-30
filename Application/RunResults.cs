@@ -34,6 +34,11 @@ namespace DIOS.Application
         _regionsToOutput = new List<int>();
     }
 
+    public IEnumerable<ProcessedBead> GetNewBeads()
+    {
+      return CurrentWellResults.GetNewBeads();
+    }
+
     public List<RegionReporterResultVolatile> MakeWellResultsClone()
     {
       return CurrentWellResults.GetResultsClone();

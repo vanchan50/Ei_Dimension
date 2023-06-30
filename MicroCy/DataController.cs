@@ -683,10 +683,10 @@ namespace DIOS.Core
           outParameters = new ParameterUpdateEventArgs(DeviceParameterType.GreenAVoltage, floatParameter: cs.Parameter * 0.0008f);
           break;
         case 0xC0:
-          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.IsLaserActive, intParameter: cs.Parameter);  //0Red 1Green 2Violet
+          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.IsLaserActive, intParameter: (int)(LaserType)cs.Parameter);  //0Red 1Green 2Violet
           break;
         case 0xC2:
-          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.ChannelConfiguration, intParameter: cs.Parameter);
+          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.ChannelConfiguration, intParameter: (int)(ChannelConfiguration)cs.Parameter);
           break;
         case 0xC7:
           outParameters = new ParameterUpdateEventArgs(DeviceParameterType.LaserPower, intParameter: (int)LaserType.Violet, floatParameter: cs.Parameter / 4096.0f / 0.040f * 3.3f);

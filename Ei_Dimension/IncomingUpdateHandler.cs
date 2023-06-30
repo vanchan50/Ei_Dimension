@@ -826,6 +826,35 @@ namespace Ei_Dimension
         case DeviceParameterType.WashStationXCenterCoordinate:
           update = () => MotorsViewModel.Instance.WashStationXCenterCoordinate[0] = parameter.Parameter.ToString();
           break;
+        case DeviceParameterType.ChannelConfiguration:
+          var type20 = (ChannelConfiguration)parameter.Parameter;
+          var pos20 = 0;
+          switch (type20)
+          {
+            case ChannelConfiguration.Standard:
+              pos20 = 0;
+              break;
+            case ChannelConfiguration.Cells:
+              pos20 = 1;
+              break;
+            case ChannelConfiguration.FM3D:
+              pos20 = 2;
+              break;
+            case ChannelConfiguration.StandardPlusFsc:
+              pos20 = 3;
+              break;
+            case ChannelConfiguration.StandardPlusExt:
+              pos20 = 4;
+              break;
+            case ChannelConfiguration.OEMA:
+              pos20 = 5;
+              break;
+            case ChannelConfiguration.OEMPMT:
+              pos20 = 6;
+              break;
+          }
+          update = () => ComponentsViewModel.Instance.ChConfigItems[pos20].Click(4);
+          break;
       }
       if (update != null)
         App.Current.Dispatcher.Invoke(update);

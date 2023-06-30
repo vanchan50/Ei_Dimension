@@ -1,17 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using DIOS.Core;
 
 namespace DIOS.Application
 {
-  public class BeadEventsData
+  public class BeadEventsData : IEnumerable<ProcessedBead>
   {
-    public List<ProcessedBead> List
-    {
-      get
-      {
-        return _list;
-      }
-    }
+    public ProcessedBead this[int index] => _list[index];
 
     private readonly List<ProcessedBead> _list = new List<ProcessedBead>(2000000);
 
@@ -24,5 +19,16 @@ namespace DIOS.Application
     {
       _list.Clear();
     }
+
+    public IEnumerator<ProcessedBead> GetEnumerator()
+    {
+      return _list.GetEnumerator();
+    }
+
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+      return GetEnumerator();
+    }
+    //use yield return instead of DataOut.TryDequeue()
   }
 }

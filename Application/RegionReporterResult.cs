@@ -8,7 +8,7 @@ namespace DIOS.Application
     public readonly int regionNumber;
     public List<float> ReporterValues = new List<float>(CAPACITY);
     //public List<float> RP1bgnd = new List<float>(CAPACITY);
-    public const int CAPACITY = 40000;
+    public const int CAPACITY = 100000;
     public int Count => ReporterValues.Count;
 
     public RegionReporterResult(int region)

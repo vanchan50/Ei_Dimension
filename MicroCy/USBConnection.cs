@@ -10,6 +10,7 @@ namespace DIOS.Core
     public bool IsActive { get; private set; }
     private USBDevice _usbDevice;
     private readonly Guid _interfaceGuid = Guid.ParseExact("F70242C7-FB25-443B-9E7E-A4260F373982", "D");  // interface GUID, not device guid
+    private readonly Guid _allDevicesInterfaceGuid = Guid.ParseExact("A5DCBF10-6530-11D2-901F-00C04FB951ED", "D");  // interface GUID, not device guid
     private readonly object _disconnectionLock = new object();
     private ILogger _logger;
 
@@ -32,7 +33,7 @@ namespace DIOS.Core
 
     private bool Init()
     {
-      USBDeviceInfo[] di = USBDevice.GetDevices(_interfaceGuid);   // Get all the MicroCy devices connected
+      USBDeviceInfo[] di = USBDevice.GetDevices(_interfaceGuid);
       if (di.Length > 0)
       {
         try

@@ -13,7 +13,7 @@
 
     public RegionReporterResultVolatile(RegionReporterResult copySource) : base(copySource.regionNumber)
     {
-      var count = copySource.Count < CAPACITY ? copySource.Count : CAPACITY;
+      var count = copySource.Count;
       for (var j = 0; j < count; j++)
       {
         Add(copySource.ReporterValues[j]);
