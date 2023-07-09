@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Threading;
+using DIOS.Core;
 using MadWizard.WinUSBNet;
 
-namespace DIOS.Core
+namespace DIOS.Application.SerialIO
 {
   public class USBConnection : ISerial
   {
@@ -10,7 +11,6 @@ namespace DIOS.Core
     public bool IsActive { get; private set; }
     private USBDevice _usbDevice;
     private readonly Guid _interfaceGuid = Guid.ParseExact("F70242C7-FB25-443B-9E7E-A4260F373982", "D");  // interface GUID, not device guid
-    private readonly Guid _allDevicesInterfaceGuid = Guid.ParseExact("A5DCBF10-6530-11D2-901F-00C04FB951ED", "D");  // interface GUID, not device guid
     private readonly object _disconnectionLock = new object();
     private ILogger _logger;
 
@@ -38,7 +38,7 @@ namespace DIOS.Core
       {
         try
         {
-          _usbDevice = new USBDevice(di[0].DevicePath);     // just grab the first one for now, but should support multiples
+          _usbDevice = new USBDevice(di[0].DevicePath); // just grab the first one for now, but should support multiples
           _logger.Log(string.Format("{0}:{1}", _usbDevice.Descriptor.FullName, _usbDevice.Descriptor.SerialNumber));
           _usbDevice.Interfaces[0].OutPipe.Policy.PipeTransferTimeout = 400;
           //USBDevice.Interfaces[0].InPipe.Policy.PipeTransferTimeout = 600;
@@ -46,7 +46,11 @@ namespace DIOS.Core
           _usbDevice.Interfaces[0].OutPipe.Policy.AutoClearStall = true;
           IsActive = true;
         }
-        catch { return false; }
+        catch
+        {
+          _logger.Log("Could not connect to serial USB device");
+          return false;
+        }
         return true;
       }
       _logger.Log("USB devices not found");

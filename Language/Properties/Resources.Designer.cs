@@ -1809,6 +1809,15 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Scan.
+        /// </summary>
+        public static string Experiment_Scan {
+            get {
+                return ResourceManager.GetString("Experiment_Scan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select Active
         /// Regions.
         /// </summary>

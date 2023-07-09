@@ -17,6 +17,7 @@
     internal bool _channelRedirectionEnabled = false;
     private float[] _compensatedCoordinatesCache = { 0,0,0,0 }; //cl0,cl1,cl2,cl3
     internal float _inverseReporterScaling;
+    internal float _actualCompensation;
 
     public BeadProcessor(Device device)
     {
@@ -69,6 +70,10 @@
         //red channels are processed, and are written in the finalization part
 
         ChannelRedirection(in rawBead);
+        outBead.cl0 = rawBead.cl0;
+        outBead.cl1 = rawBead.greenB;
+        outBead.cl2 = rawBead.greenC;
+        outBead.cl3 = rawBead.cl3;
       }
       else
       {
@@ -79,24 +84,24 @@
         {
           CalculateCompensatedCoordinatesForExtendedRange(in rawBead);
         }
+        //finalize outBead data
+        outBead.cl0 = _compensatedCoordinatesCache[0];
+        outBead.cl1 = _compensatedCoordinatesCache[1];
+        outBead.cl2 = _compensatedCoordinatesCache[2];
+        outBead.cl3 = _compensatedCoordinatesCache[3];
       }
 
       var reg = (ushort) _classificationMap.ClassifyBeadToRegion(in rawBead);
       var rep = CalculateReporter(reg);
-      var zon = (ushort) ClassifyBeadToZone(_compensatedCoordinatesCache[0]);
+      var zon = (ushort) ClassifyBeadToZone(outBead.cl0);
 
       //finalize outBead data
-      outBead.cl0 = _compensatedCoordinatesCache[0];
-      outBead.cl1 = _compensatedCoordinatesCache[1];
-      outBead.cl2 = _compensatedCoordinatesCache[2];
-      outBead.cl3 = _compensatedCoordinatesCache[3];
       outBead.region = reg;
       outBead.reporter = rep;
       outBead.zone = zon;
 
       return outBead;
     } //reporter is the last calculated thing
-    //do we leave _bg singnals as is? or do we swap them too?
 
     private void AssignSensitivityChannels(in RawBead rawBead)
     {
@@ -115,7 +120,11 @@
 
     private void CalculateCompensatedCoordinates(in RawBead rawBead)
     {
-      var cl1Comp = _greenMaj * _device.Compensation / 100;
+      //Compensation exists for the cases when in normal config, the broad reporter freq band extends into the CL1 and CL2 band
+      //we subtract a fraction of the reporter signal from CL1 and CL2,
+      //so really bright reporter signals don’t push the cl1 and cl2 coordinates out of the region
+      //there is about 1% excitation of the reporter fluorophore by the red laser and that causes the shift
+      var cl1Comp = _greenMaj * _actualCompensation;
       var cl2Comp = cl1Comp * 0.26f;
 
       var compensatedCl1 = rawBead.cl1 - cl1Comp;
@@ -150,6 +159,7 @@
       //greenMaj is the hi dyn range channel,
       //greenMin is the high sensitivity channel(depends on filter placement)
 
+      //The idea of Compenstaion doesn't really exist for the case of Swapped channels
       if (SensitivityChannel == HiSensitivityChannel.GreenB)
       {
         _greenMaj = rawBead.cl2;
@@ -160,17 +170,17 @@
       _greenMin = rawBead.cl2;
 
 
-      var cl1Comp = _greenMaj;// * _device.Compensation / 100;
-      var cl2Comp = cl1Comp;// * 0.26f;
-
-      var compensatedCl1 = rawBead.greenB - cl1Comp;
-      var compensatedCl2 = rawBead.greenC - cl2Comp;
+      //var cl1Comp = _greenMaj;// * _actualCompensation;
+      //var cl2Comp = cl1Comp;// * 0.26f;
+      //
+      //var compensatedCl1 = rawBead.greenB - cl1Comp;
+      //var compensatedCl2 = rawBead.greenC - cl2Comp;
 
       //Thread unsafe
-      _compensatedCoordinatesCache[0] = rawBead.cl0;
-      _compensatedCoordinatesCache[1] = compensatedCl1;
-      _compensatedCoordinatesCache[2] = compensatedCl2;
-      _compensatedCoordinatesCache[3] = rawBead.cl3;
+      //_compensatedCoordinatesCache[0] = rawBead.cl0;
+      //_compensatedCoordinatesCache[1] = rawBead.greenB;
+      //_compensatedCoordinatesCache[2] = rawBead.greenC;
+      //_compensatedCoordinatesCache[3] = rawBead.cl3;
     }
 
     private float CalculateReporter(ushort region)

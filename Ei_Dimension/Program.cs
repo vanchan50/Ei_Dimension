@@ -7,6 +7,7 @@ namespace Ei_Dimension
   {
     internal static CompanyID SpecializedVer = CompanyID.US;
     public static SplashScreen SplashScreen { get; private set; }
+    private static App _app = new App();
     [STAThread]
     public static void Main(string[] args)
     {
@@ -16,22 +17,17 @@ namespace Ei_Dimension
         SplashScreen = new SplashScreen(@"/Icons/SplashCh.png");
 #if !DEBUG
       SplashScreen.Show(false, true);
-      var app = new App();
-      app.InitializeComponent();
-      _ = app.Run();
 #endif
-#if DEBUG
       try
       {
-        var app = new App();
-        app.InitializeComponent();
-        _ = app.Run();
+        _app.InitializeComponent();
+        _ = _app.Run();
       }
       catch (Exception e)
       {
+        App.Logger.Log(e.Message);
         App.Logger.Log(e.StackTrace);
       }
-#endif
     }
   }
 }

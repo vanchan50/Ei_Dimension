@@ -68,10 +68,13 @@
     <Compile Include="ResultingWellStatsData.cs" />
     <Compile Include="ResultsProcessor.cs" />
     <Compile Include="RunResults.cs" />
+    <Compile Include="SerialIO\IBarcodeReader.cs" />
+    <Compile Include="SerialIO\USBBarcodeReader.cs" />
     <Compile Include="StatisticsExtension.cs" />
     <Compile Include="StatsAccumulator.cs" />
     <Compile Include="SystemControl.cs" />
     <Compile Include="Termination.cs" />
+    <Compile Include="SerialIO\USBConnection.cs" />
     <Compile Include="VerificationStats.cs" />
     <Compile Include="VerificationReport.cs" />
     <Compile Include="VerificationReportPublisher.cs" />
@@ -84,6 +87,10 @@
     <ProjectReference Include="..\MicroCy\DIOS.Core.csproj">
       <Project>{a4b56fcd-95dd-44cd-8f5b-6ee456bbd095}</Project>
       <Name>DIOS.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\winusbnet-2.1.0\WinUSBNet\WinUSBNet.csproj">
+      <Project>{bf8c5514-4aaa-46bb-a35d-341e5743ee13}</Project>
+      <Name>WinUSBNet</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

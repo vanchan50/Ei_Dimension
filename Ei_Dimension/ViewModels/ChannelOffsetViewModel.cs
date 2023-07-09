@@ -11,11 +11,10 @@ namespace Ei_Dimension.ViewModels
   [POCOViewModel]
   public class ChannelOffsetViewModel
   {
-    public virtual ObservableCollection<string> ChannelsOffsetParameters { get; set; }
+    public virtual ObservableCollection<string> ChannelsOffsetParameters { get; set; } = new ObservableCollection<string> { "","","" };
     //public virtual ObservableCollection<string> ChannelsBaseline { get; set; }
     public virtual ObservableCollection<string> GreenAVoltage { get; set; } = new ObservableCollection<string> { "" };
     public virtual ObservableCollection<string> AverageBg { get; set; }
-    public virtual System.Windows.Visibility OldBoardOffsetsVisible { get; set; }
     public virtual object SliderValue1 { get; set; }
     public virtual object SliderValue2 { get; set; }
     public virtual object SliderValue3 { get; set; }
@@ -32,17 +31,14 @@ namespace Ei_Dimension.ViewModels
 
     protected ChannelOffsetViewModel()
     {
-      ChannelsOffsetParameters = new ObservableCollection<string>();
       //ChannelsBaseline = new ObservableCollection<string>();
       AverageBg = new ObservableCollection<string>();
-      OldBoardOffsetsVisible = System.Windows.Visibility.Visible;
       SiPMTempCoeff = new ObservableCollection<string> { "" };
       CalibrationMargin = new ObservableCollection<string> { "" };
       ReporterScale = new ObservableCollection<string> { Settings.Default.ReporterScaling.ToString($"{0:0.000}") };
       MainViewModel.Instance.SetScalingMarker(Settings.Default.ReporterScaling);
       for (var i = 0; i < 10; i++)
       {
-        ChannelsOffsetParameters.Add("");
         //ChannelsBaseline.Add("");
         AverageBg.Add("");
       }
@@ -124,7 +120,6 @@ namespace Ei_Dimension.ViewModels
     {
       var Stackpanel = Views.ChannelOffsetView.Instance.SP.Children;
       //var BaselineStackpanel = Views.ChannelOffsetView.Instance.SP2.Children;
-      var InnerStackpanel = ((StackPanel)Stackpanel[3]).Children;
       switch (num)
       {
         case 0:
@@ -138,34 +133,6 @@ namespace Ei_Dimension.ViewModels
         case 2:
           UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsOffsetParameters)), this, 2, (TextBox)Stackpanel[2]);
           MainViewModel.Instance.NumpadToggleButton((TextBox)Stackpanel[2]);
-          break;
-        case 3:
-          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsOffsetParameters)), this, 3, (TextBox)InnerStackpanel[0]);
-          MainViewModel.Instance.NumpadToggleButton((TextBox)InnerStackpanel[0]);
-          break;
-        case 4:
-          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsOffsetParameters)), this, 4, (TextBox)InnerStackpanel[1]);
-          MainViewModel.Instance.NumpadToggleButton((TextBox)InnerStackpanel[1]);
-          break;
-        case 5:
-          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsOffsetParameters)), this, 5, (TextBox)InnerStackpanel[2]);
-          MainViewModel.Instance.NumpadToggleButton((TextBox)InnerStackpanel[2]);
-          break;
-        case 6:
-          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsOffsetParameters)), this, 6, (TextBox)InnerStackpanel[3]);
-          MainViewModel.Instance.NumpadToggleButton((TextBox)InnerStackpanel[3]);
-          break;
-        case 7:
-          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsOffsetParameters)), this, 7, (TextBox)InnerStackpanel[4]);
-          MainViewModel.Instance.NumpadToggleButton((TextBox)InnerStackpanel[4]);
-          break;
-        case 8:
-          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsOffsetParameters)), this, 8, (TextBox)InnerStackpanel[5]);
-          MainViewModel.Instance.NumpadToggleButton((TextBox)InnerStackpanel[5]);
-          break;
-        case 9:
-          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsOffsetParameters)), this, 9, (TextBox)InnerStackpanel[6]);
-          MainViewModel.Instance.NumpadToggleButton((TextBox)InnerStackpanel[6]);
           break;
         case 10:
           UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(SiPMTempCoeff)), this, 0, Views.ChannelOffsetView.Instance.CoefTB);

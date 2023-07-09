@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using DIOS.Core;
 using DIOS.Core.HardwareIntercom;
+using DIOS.Application;
 
 namespace Ei_Dimension.ViewModels
 {
@@ -33,7 +34,7 @@ namespace Ei_Dimension.ViewModels
     public virtual ObservableCollection<string> ValidDateBox { get; set; } = new ObservableCollection<string> { "" };
     public static DashboardViewModel Instance { get; private set; }
 
-    public byte SelectedSystemControlIndex { get; set; }
+    public byte SelectedSystemControlIndex { get; set; } = 0;
     public WellReadingSpeed SelectedSpeedIndex { get; set; } = WellReadingSpeed.Normal;
     public WellReadingOrder SelectedOrderIndex { get; set; } = WellReadingOrder.Column;
     public byte SelectedEndReadIndex { get; set; }
@@ -88,7 +89,6 @@ namespace Ei_Dimension.ViewModels
         new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Experiment_Work_Order), curCulture), this),
         //new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Experiment_Work_Order_Plus_Bcode), curCulture), this),
       };
-      SelectedSystemControlIndex = Settings.Default.SystemControl;
       SelectedSysControlContent = SysControlItems[SelectedSystemControlIndex].Content;
       DropDownButtonContents.ResetIndex();
 
@@ -198,10 +198,10 @@ namespace Ei_Dimension.ViewModels
           UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(Repeats)), this, 2, Views.DashboardView.Instance.AgitateRepTB);
           MainViewModel.Instance.NumpadToggleButton(Views.DashboardView.Instance.AgitateRepTB);
           break;
-        case 8:
-          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(WorkOrder)), this, 0, Views.DashboardView.Instance.SysCTB);
-          MainViewModel.Instance.NumpadToggleButton(Views.DashboardView.Instance.SysCTB);
-          break;
+        //case 8:
+        //  UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(WorkOrder)), this, 0, Views.DashboardView.Instance.SysCTB);
+        //  MainViewModel.Instance.NumpadToggleButton(Views.DashboardView.Instance.SysCTB);
+        //  break;
         case 9:
           UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(EndRead)), this, 0, Views.DashboardView.Instance.Endr0TB);
           MainViewModel.Instance.NumpadToggleButton(Views.DashboardView.Instance.Endr0TB);
@@ -251,6 +251,13 @@ namespace Ei_Dimension.ViewModels
 
     public void CalModeToggle()
     {
+      if (App.DiosApp.Control == SystemControl.WorkOrder)
+      {
+        Notification.Show("Calibration is not available in WorkOrder Mode");
+        CalModeOn = false;
+        return;
+      }
+
       void ReturnToNormal()
       {
         App.DiosApp.Device.Mode = OperationMode.Normal;
@@ -304,6 +311,13 @@ namespace Ei_Dimension.ViewModels
 
     public void ValModeToggle()
     {
+      if (App.DiosApp.Control == SystemControl.WorkOrder)
+      {
+        Notification.Show("Validation is not available in WorkOrder Mode");
+        ValModeOn = false;
+        return;
+      }
+
       void ReturnToNormal()
       {
         App.DiosApp.Device.Mode = OperationMode.Normal;
@@ -471,16 +485,12 @@ namespace Ei_Dimension.ViewModels
             _vm.SelectedSysControlContent = Content;
             _vm.SelectedSystemControlIndex = Index;
             App.SetSystemControl(Index);
-            if (Index != 0)
+            if ((SystemControl)Index == SystemControl.WorkOrder)
             {
-              ExperimentViewModel.Instance.WellSelectVisible = Visibility.Hidden;
-              MainButtonsViewModel.Instance.StartButtonEnabled = false;
               _vm.WorkOrderVisibility = Visibility.Visible;
             }
             else
             {
-              ExperimentViewModel.Instance.WellSelectVisible = Visibility.Visible;
-              MainButtonsViewModel.Instance.StartButtonEnabled = true;
               _vm.WorkOrderVisibility = Visibility.Hidden;
             }
             break;

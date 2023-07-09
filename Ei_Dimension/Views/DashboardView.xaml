@@ -378,12 +378,8 @@
                    Style="{StaticResource InputFieldStyle}"
                    Text="{Binding WorkOrder[0]}"
                    Visibility="{Binding WorkOrderVisibility}"
-                   FontSize="20"
+                   IsReadOnly="True"
                    Margin=" 0,5,0,0">
-          <dxmvvm:Interaction.Behaviors>
-            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="8"/>
-            <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
-          </dxmvvm:Interaction.Behaviors>
         </TextBox>
         <TextBlock Text="{lang:Loc Experiment_Classific_Map}"
                    FontFamily="{StaticResource AppTextFont}"

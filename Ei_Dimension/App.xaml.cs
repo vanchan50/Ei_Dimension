@@ -90,6 +90,18 @@ namespace Ei_Dimension
       DiosApp.Control = (SystemControl)num;
       Settings.Default.SystemControl = num;
       Settings.Default.Save();
+      if (DiosApp.Control == SystemControl.WorkOrder)
+      {
+        ExperimentViewModel.Instance.WellSelectVisible = Visibility.Hidden;
+        MainButtonsViewModel.Instance.StartButtonEnabled = false;
+        MainButtonsViewModel.Instance.ShowScanButton();
+      }
+      else
+      {
+        ExperimentViewModel.Instance.WellSelectVisible = Visibility.Visible;
+        MainButtonsViewModel.Instance.StartButtonEnabled = true;
+        MainButtonsViewModel.Instance.HideScanButton();
+      }
     }
 
     public static void SetTerminationType(byte num)
@@ -102,10 +114,11 @@ namespace Ei_Dimension
 
     public static void SetChannelConfig(ChannelConfiguration chConfig)
     {
+      var OEMMode = chConfig == ChannelConfiguration.OEMA ||
+                         chConfig == ChannelConfiguration.OEMPMT;
+
       DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ChannelConfiguration, chConfig);
-      ChannelRedirectionEnabled = chConfig == ChannelConfiguration.OEMA ||
-                                    chConfig == ChannelConfiguration.OEMPMT;
-      LanguageSwap.TranslateChannelsOffsetVM();//swaps between red <-> green
+      SetOEMMode(OEMMode);
     }
 
     public static void Export(DevExpress.Xpf.Charts.ChartControlBase chart, in int dpi)
@@ -149,6 +162,16 @@ namespace Ei_Dimension
         return;
       System.Windows.Input.FocusManager.SetFocusedElement(System.Windows.Input.FocusManager.GetFocusScope(Ei_Dimension.MainWindow.Instance), null);
       System.Windows.Input.Keyboard.ClearFocus();
+    }
+
+    public static void SetOEMMode(bool On)
+    {
+      ChannelRedirectionEnabled = On;
+      LanguageSwap.TranslateChannelsOffsetVM();//swaps between red <-> green
+      if (On)
+      {
+
+      }
     }
 
     /*
@@ -317,6 +340,12 @@ namespace Ei_Dimension
           //Notification.ShowLocalizedError(nameof(Language.Resources.Validation_Fail));
           break;
       }
+
+      if (DiosApp.Control == SystemControl.WorkOrder)
+      {
+        MainButtonsViewModel.Instance.StartButtonEnabled = false;
+        MainButtonsViewModel.Instance.ShowScanButton();
+      }
     }
 
     public void MapChangedEventHandler(object sender, MapModel map)
@@ -457,13 +486,6 @@ namespace Ei_Dimension
             DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelOffset, Channel.GreenA);
             DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelOffset, Channel.GreenB);
             DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelOffset, Channel.GreenC);
-            //DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelOffset, Channel.RedA);
-            //DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelOffset, Channel.RedB);
-            DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelOffset, Channel.RedC);
-            DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelOffset, Channel.RedD);
-            DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelOffset, Channel.VioletA);
-            DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelOffset, Channel.VioletB);
-            DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelOffset, Channel.ForwardScatter);
             DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.CalibrationMargin);
             DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.SiPMTempCoeff);
           };

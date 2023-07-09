@@ -295,10 +295,10 @@ namespace Ei_Dimension.ViewModels
       App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.Attenuation, map.calParams.att);
       App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.Height, map.calParams.height);
       GatingItems[map.calParams.gate].Click();
-      CompensationPercentageContent[0] = map.calParams.compensation.ToString();
       DNRContents[0] = map.calParams.DNRCoef.ToString();
       DNRContents[1] = map.calParams.DNRTrans.ToString();
       App.DiosApp.Device.Compensation = map.calParams.compensation;
+      CompensationPercentageContent[0] = map.calParams.compensation.ToString();
       App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.DNRCoefficient, map.calParams.DNRCoef);
       App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.DNRTransition, map.calParams.DNRTrans);
       ClassificationTargetsContents[0] = map.calParams.CL0.ToString();

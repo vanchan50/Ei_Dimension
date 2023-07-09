@@ -222,7 +222,7 @@
                  Margin="0,11,4,0"/>
         </StackPanel>
       <!--Avg BG-->
-      <StackPanel Name="AvgBgSP" Width="0">
+      <StackPanel Name="AvgBgSP" Width="180">
           <TextBlock Text="{lang:Loc Channels_Average_BG}"
                      FontFamily="{StaticResource AppTextFont}"
                      FontSize="36"
@@ -427,90 +427,19 @@
               </dxmvvm:Interaction.Behaviors>
             </TextBox>
             <TextBox HorizontalAlignment="Stretch"
-                      Margin="10,15,10,0"
-                      Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding ChannelsOffsetParameters[2]}">
+                     Margin="10,15,10,10"
+                     Style="{StaticResource InputFieldStyle}"
+                     Text="{Binding ChannelsOffsetParameters[2]}">
               <dxmvvm:Interaction.Behaviors>
                 <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="2"/>
                 <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
               </dxmvvm:Interaction.Behaviors>
             </TextBox>
-            <StackPanel Visibility="{Binding OldBoardOffsetsVisible}">
-              <TextBox HorizontalAlignment="Stretch"
-                      Margin="10,35,10,0"
-                      Style="{StaticResource InputFieldStyle}"
-                      IsReadOnly="True"
-                      Text="{Binding ChannelsOffsetParameters[3]}">
-                <!--
-                <dxmvvm:Interaction.Behaviors>
-                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="3"/>
-                  <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
-                </dxmvvm:Interaction.Behaviors>
-                -->
-              </TextBox>
-              <TextBox HorizontalAlignment="Stretch"
-                      Margin="10,15,10,0"
-                      IsReadOnly="True"
-                      Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding ChannelsOffsetParameters[4]}">
-                <!--
-                <dxmvvm:Interaction.Behaviors>
-                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="4"/>
-                  <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
-                </dxmvvm:Interaction.Behaviors>
-                -->
-              </TextBox>
-              <TextBox HorizontalAlignment="Stretch"
-                      Margin="10,15,10,0"
-                      Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding ChannelsOffsetParameters[5]}">
-                <dxmvvm:Interaction.Behaviors>
-                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="5"/>
-                  <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
-                </dxmvvm:Interaction.Behaviors>
-              </TextBox>
-              <TextBox HorizontalAlignment="Stretch"
-                      Margin="10,15,10,0"
-                      Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding ChannelsOffsetParameters[6]}">
-                <dxmvvm:Interaction.Behaviors>
-                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="6"/>
-                  <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
-                </dxmvvm:Interaction.Behaviors>
-              </TextBox>
-              <TextBox HorizontalAlignment="Stretch"
-                      Margin="10,15,10,0"
-                      Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding ChannelsOffsetParameters[7]}">
-                <dxmvvm:Interaction.Behaviors>
-                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="7"/>
-                  <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
-                </dxmvvm:Interaction.Behaviors>
-              </TextBox>
-              <TextBox HorizontalAlignment="Stretch"
-                      Margin="10,15,10,0"
-                      Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding ChannelsOffsetParameters[8]}">
-                <dxmvvm:Interaction.Behaviors>
-                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="8"/>
-                  <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
-                </dxmvvm:Interaction.Behaviors>
-              </TextBox>
-              <TextBox HorizontalAlignment="Stretch"
-                      Margin="10,15,10,10"
-                      Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding ChannelsOffsetParameters[9]}">
-                <dxmvvm:Interaction.Behaviors>
-                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="9"/>
-                  <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
-                </dxmvvm:Interaction.Behaviors>
-              </TextBox>
-            </StackPanel>
           </StackPanel>
         </Border>
         </StackPanel>
       <!--Sliders-->
-      <StackPanel Margin="10,48,0,0" Name="SlidersSP" Visibility="Hidden">
+      <StackPanel Margin="10,48,0,0">
         <StackPanel.Resources>
           <Style x:Key="trackBarEditThumbStyle"
                  TargetType="Thumb">

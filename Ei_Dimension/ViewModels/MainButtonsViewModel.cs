@@ -1,23 +1,27 @@
-﻿using DevExpress.Mvvm.DataAnnotations;
+﻿using System;
+using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
 using DIOS.Core;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Ei_Dimension.Controllers;
 using DIOS.Application;
+using System.Windows;
+using System.Threading;
 
 namespace Ei_Dimension.ViewModels
 {
   [POCOViewModel]
   public class MainButtonsViewModel
   {
-    public virtual bool StartButtonEnabled { get; set; }
+    public virtual bool StartButtonEnabled { get; set; } = true;
     public static MainButtonsViewModel Instance { get; private set; }
     public virtual ObservableCollection<string> ActiveList { get; set; }
     public virtual ObservableCollection<string> Flavor { get; set; }
+    public virtual Visibility ScanButtonVisibility { get; set; } = Visibility.Collapsed;
+    private int _scanOngoing;
     protected MainButtonsViewModel()
     {
-      StartButtonEnabled = true;
       ActiveList = new ObservableCollection<string>();
       Flavor = new ObservableCollection<string> { null };
       Instance = this;
@@ -40,6 +44,37 @@ namespace Ei_Dimension.ViewModels
       App.DiosApp.Device.EjectPlate();
     }
 
+    public async void ScanButtonClick()
+    {
+      if (Interlocked.CompareExchange(ref _scanOngoing, 1, 0) == 1)
+        return;
+
+      UserInputHandler.InputSanityCheck();
+      var data = await App.DiosApp.BarcodeReader.QueryReadAsync(2000);
+
+      var success = !string.IsNullOrEmpty(data);
+
+      if (success)
+      {
+        DashboardViewModel.Instance.WorkOrder[0] = data;
+        StartButtonEnabled = true;
+        HideScanButton();
+      }
+      _scanOngoing = 0;
+    }
+
+    public void ShowScanButton()
+    {
+      UserInputHandler.InputSanityCheck();
+      ScanButtonVisibility = Visibility.Visible;
+    }
+
+    public void HideScanButton()
+    {
+      UserInputHandler.InputSanityCheck();
+      ScanButtonVisibility = Visibility.Collapsed;
+    }
+
     public void StartButtonClick()
     {
       UserInputHandler.InputSanityCheck();
@@ -53,7 +88,17 @@ namespace Ei_Dimension.ViewModels
         return;
       }
 
-      var wells = WellsSelectViewModel.Instance.OutputWells();
+      IReadOnlyCollection<Well> wells;
+      if (App.DiosApp.Control == SystemControl.WorkOrder)
+      {
+        //fill wells from work order
+        wells = App.DiosApp.WorkOrder.woWells;
+      }
+      else
+      {
+        wells = WellsSelectViewModel.Instance.OutputWells();
+      }
+
       if (wells.Count == 0)
       {
         var msg = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Messages_NoWellsOrTube_Selected),

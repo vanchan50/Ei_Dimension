@@ -102,7 +102,6 @@ namespace Ei_Dimension
       usbnotif.Arrival += Usbnotif_Arrival;
       usbnotif.Removal += Usbnotif_Removal;
 
-      HideChannels();
         #if DEBUG
         Notification.ShowError("Motor out of position messages are suppressed in StartupFinalizer");
         #endif
@@ -147,8 +146,7 @@ namespace Ei_Dimension
       App.DiosApp.Publisher.IsResultsPublishingActive = Settings.Default.RMeans;
       App.DiosApp.Publisher.IsLegacyPlateReportPublishingActive = Settings.Default.LegacyPlateReport;
       App.DiosApp.Publisher.IsOnlyClassifiedBeadsPublishingActive = Settings.Default.OnlyClassifed;
-
-      App.DiosApp.Control = (SystemControl)Settings.Default.SystemControl;
+      DashboardViewModel.Instance.SysControlItems[Settings.Default.SystemControl].Click(5);
       App.DiosApp.Terminator.TerminationType = (Termination)Settings.Default.EndRead;
       App.DiosApp.Terminator.MinPerRegion = Settings.Default.MinPerRegion;
       App.DiosApp.Terminator.TotalBeadsToCapture = Settings.Default.BeadsToCapture;
@@ -204,14 +202,6 @@ namespace Ei_Dimension
     private static void WipedSettingsMessage()
     {
       Notification.Show("User data was Corrupted.\nDefault Values Restored.\nPlease check the Instrument Settings");
-    }
-
-    private static void HideChannels()
-    {
-      ChannelOffsetViewModel.Instance.OldBoardOffsetsVisible = Visibility.Hidden;
-      Views.ChannelOffsetView.Instance.SlidersSP.Visibility = Visibility.Visible;
-      //Views.ChannelOffsetView.Instance.BaselineSP.Width = 180;
-      Views.ChannelOffsetView.Instance.AvgBgSP.Width = 180;
     }
   }
 }

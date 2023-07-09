@@ -412,27 +412,6 @@ namespace DIOS.Core.HardwareIntercom
             case Channel.GreenC:
               commandCode = 0xA5;
               break;
-            //case Channel.RedA:
-            //  commandCode = 0xA3;
-            //  break;
-            //case Channel.RedB:
-            //  commandCode = 0xA2;
-            //  break;
-            case Channel.RedC:
-              commandCode = 0xA1;
-              break;
-            case Channel.RedD:
-              commandCode = 0x9F;
-              break;
-            case Channel.VioletA:
-              commandCode = 0x9D;
-              break;
-            case Channel.VioletB:
-              commandCode = 0x9C;
-              break;
-            case Channel.ForwardScatter:
-              commandCode = 0x9E;
-              break;
             default:
               throw new NotImplementedException();
           }
@@ -1397,27 +1376,6 @@ namespace DIOS.Core.HardwareIntercom
               break;
             case Channel.GreenC:
               commandCode = 0xA5;
-              break;
-            //case Channel.RedA:
-            //  commandCode = 0xA3;
-            //  break;
-            //case Channel.RedB:
-            //  commandCode = 0xA2;
-            //  break;
-            case Channel.RedC:
-              commandCode = 0xA1;
-              break;
-            case Channel.RedD:
-              commandCode = 0x9F;
-              break;
-            case Channel.VioletA:
-              commandCode = 0x9D;
-              break;
-            case Channel.VioletB:
-              commandCode = 0x9C;
-              break;
-            case Channel.ForwardScatter:
-              commandCode = 0x9E;
               break;
             default:
               throw new NotImplementedException();

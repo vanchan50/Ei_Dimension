@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using DIOS.Application.Domain;
+using DIOS.Core;
 
 namespace Ei_Dimension.Models
 {
@@ -156,7 +157,7 @@ namespace Ei_Dimension.Models
       return true;
     }
 
-    public void SetWellsForReading(List<DIOS.Core.Well> wells)
+    public void SetWellsForReading(IReadOnlyCollection<Well> wells)
     {
       //Multitube case Override
       if (ViewModels.WellsSelectViewModel.Instance.CurrentTableSize == 1)

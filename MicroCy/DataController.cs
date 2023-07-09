@@ -595,30 +595,9 @@ namespace DIOS.Core
         case 0xA7:
           outParameters = new ParameterUpdateEventArgs(DeviceParameterType.ChannelCompensationBias, intParameter: (int)Channel.RedC, floatParameter: cs.Parameter);
           break;
-        case 0x9C:
-          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.ChannelOffset, intParameter: (int)Channel.VioletB, floatParameter: cs.Parameter);
-          break;
-        case 0x9D:
-          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.ChannelOffset, intParameter: (int)Channel.VioletA, floatParameter: cs.Parameter);
-          break;
-        case 0x9E:
-          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.ChannelOffset, intParameter: (int)Channel.ForwardScatter, floatParameter: cs.Parameter);
-          break;
-        case 0x9F:
-          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.ChannelOffset, intParameter: (int)Channel.RedD, floatParameter: cs.Parameter);
-          break;
         case 0xA0:
           outParameters = new ParameterUpdateEventArgs(DeviceParameterType.ChannelOffset, intParameter: (int)Channel.GreenA, floatParameter: cs.Parameter);
           break;
-        case 0xA1:
-          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.ChannelOffset, intParameter: (int)Channel.RedC, floatParameter: cs.Parameter);
-          break;
-        //case 0xA2:
-        //  outParameters = new ParameterUpdateEventArgs(DeviceParameterType.ChannelOffset, intParameter: (int)Channel.RedB, floatParameter: cs.Parameter);
-        //  break;
-        //case 0xA3:
-        //  outParameters = new ParameterUpdateEventArgs(DeviceParameterType.ChannelOffset, intParameter: (int)Channel.RedA, floatParameter: cs.Parameter);
-        //  break;
         case 0xA4:
           outParameters = new ParameterUpdateEventArgs(DeviceParameterType.ChannelOffset, intParameter: (int)Channel.GreenB, floatParameter: cs.Parameter);
           break;

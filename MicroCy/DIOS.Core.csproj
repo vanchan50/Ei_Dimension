@@ -98,18 +98,11 @@
     <Compile Include="HardwareIntercom\SyringePosition.cs" />
     <Compile Include="HardwareIntercom\SyringeSpeed.cs" />
     <Compile Include="SystemActivity.cs" />
-    <Compile Include="USBConnection.cs" />
     <Compile Include="HardwareIntercom\VolumeType.cs" />
     <Compile Include="WellController.cs" />
     <Compile Include="Structs\Well.cs" />
     <Compile Include="WellReadingOrder.cs" />
     <Compile Include="WellReadingSpeed.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\winusbnet-2.1.0\WinUSBNet\WinUSBNet.csproj">
-      <Project>{bf8c5514-4aaa-46bb-a35d-341e5743ee13}</Project>
-      <Name>WinUSBNet</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

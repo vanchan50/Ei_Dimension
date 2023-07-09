@@ -90,6 +90,14 @@
                        HorizontalAlignment="Left"
                        VerticalAlignment="Top"
                        Margin="0,90,0,0"/>
+            <Button Content="{lang:Loc Experiment_Scan}"
+                    Style="{StaticResource ButtonStyle}"
+                    Command="{Binding ScanButtonClickCommand}"
+                    Visibility="{Binding ScanButtonVisibility}"
+                    Height="160" Width="160"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Background="DarkOrange"/>
           </Grid>
         </StackPanel>
         <StackPanel Orientation="Horizontal"

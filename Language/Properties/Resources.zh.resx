@@ -606,6 +606,9 @@ Volume, µL</value>
   <data name="Experiment_Save_Template_Dialog_Title" xml:space="preserve">
     <value>保存模板</value>
   </data>
+  <data name="Experiment_Scan" xml:space="preserve">
+    <value>Scan</value>
+  </data>
   <data name="Experiment_Select_Wells" xml:space="preserve">
     <value>孔板选择</value>
   </data>

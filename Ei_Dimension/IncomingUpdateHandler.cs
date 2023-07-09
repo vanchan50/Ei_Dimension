@@ -507,33 +507,6 @@ namespace Ei_Dimension
             case Channel.GreenC:
               pos12 = 2;
               break;
-            //case Channel.RedA:
-            //  pos12 = 3;
-            //  break;
-            //case Channel.RedB:
-            //  pos12 = 4;
-            //  break;
-            case Channel.RedC:
-              pos12 = 5;
-              break;
-            case Channel.RedD:
-              pos12 = 6;
-              break;
-            case Channel.VioletA:
-              pos12 = 7;
-              break;
-            case Channel.VioletB:
-              pos12 = 8;
-              break;
-            case Channel.ForwardScatter:
-              pos12 = 9;
-              break;
-          }
-          //no-sliders case
-          if (pos12 > 2)
-          {
-            update = () => ChannelOffsetViewModel.Instance.ChannelsOffsetParameters[pos12] = parameter.FloatParameter.ToString("F0");
-            break;
           }
           //sliders case
           switch (pos12)

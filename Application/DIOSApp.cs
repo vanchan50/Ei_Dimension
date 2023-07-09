@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using DIOS.Application.Domain;
 using DIOS.Application.FileIO;
+using DIOS.Application.SerialIO;
 using DIOS.Core;
 
 namespace DIOS.Application
@@ -22,6 +23,7 @@ namespace DIOS.Application
     public WorkOrder WorkOrder { get; set; }
     public bool RunPlateContinuously { get; set; }
     public Verificator Verificator { get; }
+    public IBarcodeReader BarcodeReader { get; }
     public readonly string BUILD = Assembly.GetCallingAssembly().GetName().Version.ToString();
     public ILogger Logger { get; }
 
@@ -35,6 +37,7 @@ namespace DIOS.Application
       Results = new RunResults(Device, this);
       ResultsProc = new ResultsProcessor(Device, Results);
       Verificator = new Verificator(Logger);
+      BarcodeReader = new USBBarcodeReader(Logger);
     }
 
     public void StartOperation(IReadOnlyCollection<int> regions, IReadOnlyCollection<Well> wells)

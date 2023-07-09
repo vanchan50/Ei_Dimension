@@ -90,7 +90,18 @@ namespace DIOS.Core
     /// <summary>
     /// A coefficient for high dynamic range channel
     /// </summary>
-    public float Compensation { get; set; }
+    public float Compensation
+    {
+      get
+      {
+        return _compensation;
+      }
+      set
+      {
+        _compensation = value;
+        _beadProcessor._actualCompensation = value / 100f;
+      }
+    }
     public NormalizationSettings Normalization
     {
       get { return _beadProcessor.Normalization; }
@@ -155,6 +166,7 @@ namespace DIOS.Core
     private readonly MeasurementScript _script;
     private readonly ILogger _logger;
     private float _reporterScaling = 1;
+    private float _compensation = 1;
 
     public Device(ISerial connection, ILogger logger)
     {
@@ -316,10 +328,6 @@ namespace DIOS.Core
     }
 
     #if DEBUG
-    public void DEBUGSetBoardVersion(int v)
-    {
-      BoardVersion = v;
-    }
 
     public void DEBUGOnParameterUpdate(DeviceParameterType type, int intparam = -1, float floatparam = -1F)
     {

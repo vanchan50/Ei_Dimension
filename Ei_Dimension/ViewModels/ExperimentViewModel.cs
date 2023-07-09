@@ -8,14 +8,13 @@ namespace Ei_Dimension.ViewModels
   [POCOViewModel]
   public class ExperimentViewModel
   {
-    public virtual Visibility WellSelectVisible { get; set; }
+    public virtual Visibility WellSelectVisible { get; set; } = Visibility.Visible;
     public static ExperimentViewModel Instance { get; private set; }
     public virtual string CurrentTemplateName { get; set; }
     private INavigationService NavigationService => this.GetService<INavigationService>();
 
     protected ExperimentViewModel()
     {
-      WellSelectVisible = Settings.Default.SystemControl == 0 ? Visibility.Visible : Visibility.Hidden;
       var noneTemplateName = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.TemplateName_None),
         Language.TranslationSource.Instance.CurrentCulture);
       CurrentTemplateName = noneTemplateName;

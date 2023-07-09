@@ -32,13 +32,14 @@ namespace Ei_Dimension.Controllers
       }
     }
 
+    public const int NULLREGIONCAPACITY = 100000;
     private static ActiveRegionsStatsController _instance;
     private static bool _activeRegionsUpdateGoing;
     private static readonly RegionReporterResultVolatile _nullWellRegionResult = new RegionReporterResultVolatile(0);
 
     protected ActiveRegionsStatsController()
     {
-      _nullWellRegionResult.ReporterValues.Capacity = 100000;
+      _nullWellRegionResult.ReporterValues.Capacity = NULLREGIONCAPACITY;
     }
 
     public void DisplayCurrentBeadStats(bool current = true)
