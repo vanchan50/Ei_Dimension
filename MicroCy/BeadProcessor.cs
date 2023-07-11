@@ -91,7 +91,7 @@
         outBead.cl3 = _compensatedCoordinatesCache[3];
       }
 
-      var reg = (ushort) _classificationMap.ClassifyBeadToRegion(in rawBead);
+      var reg = (ushort) _classificationMap.ClassifyBeadToRegion(in outBead);
       var rep = CalculateReporter(reg);
       var zon = (ushort) ClassifyBeadToZone(outBead.cl0);
 
