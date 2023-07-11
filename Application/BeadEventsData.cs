@@ -7,6 +7,7 @@ namespace DIOS.Application
   public class BeadEventsData : IEnumerable<ProcessedBead>
   {
     public ProcessedBead this[int index] => _list[index];
+    public int Count => _list.Count;
 
     private readonly List<ProcessedBead> _list = new List<ProcessedBead>(2000000);
 

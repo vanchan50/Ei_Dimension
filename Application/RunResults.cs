@@ -15,6 +15,7 @@ namespace DIOS.Application
     private IReadOnlyCollection<int> _regionsToOutput;
     private readonly ResultingWellStatsData _measuredWellStats = new ResultingWellStatsData();
     private readonly DIOSApp _diosApp;
+    private bool _isFrozen = false;
 
     public RunResults(Device device, DIOSApp diosApp)
     {
@@ -71,10 +72,14 @@ namespace DIOS.Application
         throw new Exception("SetupRunRegions() must be called before the run");
       CurrentWellResults.Reset(well, _regionsToOutput);
       _measuredWellStats.Reset();
+      _isFrozen = false;
     }
 
     public void AddProcessedBeadEvent(in ProcessedBead processedBead)
     {
+      if (_isFrozen)
+        return;
+
       var countForTheRegion = CurrentWellResults.Add(in processedBead);//TODO:move to normal mode case?
       //it also checks region 0, but it is only a trigger, the real check is done in MinPerRegionAchieved()
       if (!_diosApp.Terminator.MinPerRegCheckTrigger)
@@ -90,6 +95,14 @@ namespace DIOS.Application
           _diosApp.Verificator.FillStats(in processedBead);
           break;
       }
+    }
+
+    /// <summary>
+    /// Freezes well results update until next well is started
+    /// </summary>
+    public void FreezeWellResults()
+    {
+      _isFrozen = true;
     }
 
     public BeadEventsData PublishBeadEvents()

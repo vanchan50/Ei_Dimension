@@ -12,6 +12,7 @@ using Ei_Dimension.Controllers;
 using DIOS.Application;
 using System.Collections.Generic;
 using DIOS.Application.Domain;
+using static DevExpress.Xpo.Helpers.CannotLoadObjectsHelper;
 
 namespace Ei_Dimension
 {
@@ -259,6 +260,7 @@ namespace Ei_Dimension
     public void FinishedReadingWellEventHandler(object sender, ReadingWellEventArgs e)
     {
       Logger.Log($"Finished Reading well {e.Well.CoordinatesString()}");
+      DiosApp.Results.FreezeWellResults();
       DiosApp.SaveWellFiles();
 
       var type = DiosApp.GetWellStateForPictogram();

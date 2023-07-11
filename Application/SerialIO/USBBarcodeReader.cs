@@ -29,7 +29,7 @@ namespace DIOS.Application.SerialIO
       try
       {
         var comPortAddress = FindCOMDevice();
-        _logger.Log($"COM Device found: {comPortAddress}");
+        _logger.Log($"BCR found at: {comPortAddress}");
         _comPort = new SerialPort(comPortAddress, 9600, Parity.None, 8, StopBits.One);
         _comPort.ReadTimeout = 20000;
         _comPort.WriteTimeout = 500;
