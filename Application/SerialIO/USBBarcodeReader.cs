@@ -33,8 +33,6 @@ namespace DIOS.Application.SerialIO
         _comPort = new SerialPort(comPortAddress, 9600, Parity.None, 8, StopBits.One);
         _comPort.ReadTimeout = 20000;
         _comPort.WriteTimeout = 500;
-        _comPort.Open();
-        _comPort.Close();
       }
       catch
       {

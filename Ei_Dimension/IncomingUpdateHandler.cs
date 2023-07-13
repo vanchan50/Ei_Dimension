@@ -261,9 +261,6 @@ namespace Ei_Dimension
               pos4 = 5;
               format4 = "N3";
               break;
-            case MotorParameterType.CurrentLimit:
-              pos4 = 7;
-              break;
           }
           update = () => MotorsViewModel.Instance.ParametersX[pos4] = parameter.FloatParameter.ToString(format4);
           break;
@@ -285,9 +282,6 @@ namespace Ei_Dimension
             case MotorParameterType.CurrentStep:
               pos5 = 5;
               format5 = "N3";
-              break;
-            case MotorParameterType.CurrentLimit:
-              pos5 = 7;
               break;
           }
           update = () => MotorsViewModel.Instance.ParametersY[pos5] = parameter.FloatParameter.ToString(format5);

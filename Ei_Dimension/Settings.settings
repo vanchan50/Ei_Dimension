@@ -39,13 +39,13 @@
       <Value Profile="(Default)">500</Value>
     </Setting>
     <Setting Name="StepsPerRevX" Type="System.UInt16" Scope="User">
-      <Value Profile="(Default)">500</Value>
+      <Value Profile="(Default)">2000</Value>
     </Setting>
     <Setting Name="StepsPerRevY" Type="System.UInt16" Scope="User">
-      <Value Profile="(Default)">500</Value>
+      <Value Profile="(Default)">2000</Value>
     </Setting>
     <Setting Name="StepsPerRevZ" Type="System.UInt16" Scope="User">
-      <Value Profile="(Default)">500</Value>
+      <Value Profile="(Default)">2000</Value>
     </Setting>
     <Setting Name="SensitivityChannelB" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
@@ -81,13 +81,13 @@
       <Value Profile="(Default)">1</Value>
     </Setting>
     <Setting Name="ValidatorToleranceReporter" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">10</Value>
+      <Value Profile="(Default)">30</Value>
     </Setting>
     <Setting Name="ValidatorToleranceClassification" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">10</Value>
+      <Value Profile="(Default)">40</Value>
     </Setting>
     <Setting Name="ValidatorToleranceMisclassification" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">10</Value>
+      <Value Profile="(Default)">20</Value>
     </Setting>
     <Setting Name="LegacyPlateReport" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>

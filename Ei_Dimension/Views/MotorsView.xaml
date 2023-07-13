@@ -210,12 +210,15 @@
               </TextBox>
               <TextBox HorizontalAlignment="Stretch"
                    Margin="10,10,5,10"
+                   IsReadOnly="True"
                    Style="{StaticResource InputFieldStyle}"
                    Text="{Binding ParametersX[7]}">
+                <!--
                 <dxmvvm:Interaction.Behaviors>
                   <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="33"/>
                   <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
                 </dxmvvm:Interaction.Behaviors>
+                -->
               </TextBox>
             </StackPanel>
           </Border>
@@ -331,12 +334,15 @@
               </TextBox>
               <TextBox HorizontalAlignment="Stretch"
                        Margin="5,10,5,10"
+                       IsReadOnly="True"
                        Style="{StaticResource InputFieldStyle}"
                        Text="{Binding ParametersY[7]}">
+                <!--
                 <dxmvvm:Interaction.Behaviors>
                   <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="34"/>
                   <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
                 </dxmvvm:Interaction.Behaviors>
+                -->
               </TextBox>
             </StackPanel>
           </Border>

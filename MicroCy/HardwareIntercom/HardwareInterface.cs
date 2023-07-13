@@ -489,9 +489,6 @@ namespace DIOS.Core.HardwareIntercom
               commandCode = 0x54;
               break;
             */
-            case MotorParameterType.CurrentLimit:
-              commandCode = 0x90;
-              break;
             default:
               throw new NotImplementedException();
           }
@@ -517,9 +514,6 @@ namespace DIOS.Core.HardwareIntercom
               commandCode = 0x64;
               break;
             */
-            case MotorParameterType.CurrentLimit:
-              commandCode = 0x91;
-              break;
             default:
               throw new NotImplementedException();
           }
@@ -1446,9 +1440,6 @@ namespace DIOS.Core.HardwareIntercom
             case MotorParameterType.CurrentStep:
               commandCode = 0x54;
               break;
-            case MotorParameterType.CurrentLimit:
-              commandCode = 0x90;
-              break;
             default:
               throw new NotImplementedException();
           }
@@ -1467,9 +1458,6 @@ namespace DIOS.Core.HardwareIntercom
               break;
             case MotorParameterType.CurrentStep:
               commandCode = 0x64;
-              break;
-            case MotorParameterType.CurrentLimit:
-              commandCode = 0x91;
               break;
             default:
               throw new NotImplementedException();

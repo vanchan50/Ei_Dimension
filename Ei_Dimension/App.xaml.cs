@@ -499,12 +499,10 @@ namespace Ei_Dimension
             DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.MotorX, MotorParameterType.StartSpeed);
             DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.MotorX, MotorParameterType.RunSpeed);
             DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.MotorX, MotorParameterType.CurrentStep);
-            DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.MotorX, MotorParameterType.CurrentLimit);
             DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.MotorY, MotorParameterType.Slope);
             DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.MotorY, MotorParameterType.StartSpeed);
             DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.MotorY, MotorParameterType.RunSpeed);
             DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.MotorY, MotorParameterType.CurrentStep);
-            DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.MotorY, MotorParameterType.CurrentLimit);
             DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.MotorZ, MotorParameterType.Slope);
             DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.MotorZ, MotorParameterType.StartSpeed);
             DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.MotorZ, MotorParameterType.RunSpeed);

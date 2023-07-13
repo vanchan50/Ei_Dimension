@@ -151,7 +151,7 @@
         <TextBox HorizontalAlignment="Stretch"
                  Margin="30,0,30,13"
                  Style="{StaticResource InputFieldStyle}"
-                 Text="{Binding ValidationTolerances[0]}">
+                 Text="{Binding VerificationTolerances[0]}">
           <dxmvvm:Interaction.Behaviors>
             <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="0"/>
             <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
@@ -171,7 +171,7 @@
         <TextBox HorizontalAlignment="Stretch"
                  Margin="30,0,30,13"
                  Style="{StaticResource InputFieldStyle}"
-                 Text="{Binding ValidationTolerances[1]}">
+                 Text="{Binding VerificationTolerances[1]}">
           <dxmvvm:Interaction.Behaviors>
             <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="1"/>
             <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
@@ -191,7 +191,7 @@
         <TextBox HorizontalAlignment="Stretch"
                  Margin="30,0,30,13"
                  Style="{StaticResource InputFieldStyle}"
-                 Text="{Binding ValidationTolerances[2]}">
+                 Text="{Binding VerificationTolerances[2]}">
           <dxmvvm:Interaction.Behaviors>
             <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="2"/>
             <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>

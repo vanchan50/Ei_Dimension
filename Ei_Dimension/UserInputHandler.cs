@@ -1061,19 +1061,19 @@ namespace Ei_Dimension
               failed = true;
               ErrorMessage = "[200-2000]";
             }
-            if (SelectedTextBox.index == 7)
-            {
-              if (int.TryParse(_tempNewString, out iRes))
-              {
-                if ((iRes >= 0 && ((App.DiosApp.Device.BoardVersion == 0 && iRes <= 4095) || (App.DiosApp.Device.BoardVersion >= 1 && iRes <= 65535))) || _disableSanityCheck)
-                {
-                  App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorX, MotorParameterType.CurrentLimit, iRes);
-                  break;
-                }
-              }
-              failed = true;
-              ErrorMessage = App.DiosApp.Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
-            }
+            //if (SelectedTextBox.index == 7)
+            //{
+            //  if (int.TryParse(_tempNewString, out iRes))
+            //  {
+            //    if ((iRes >= 0 && ((App.DiosApp.Device.BoardVersion == 0 && iRes <= 4095) || (App.DiosApp.Device.BoardVersion >= 1 && iRes <= 65535))) || _disableSanityCheck)
+            //    {
+            //      App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorX, MotorParameterType.CurrentLimit, iRes);
+            //      break;
+            //    }
+            //  }
+            //  failed = true;
+            //  ErrorMessage = App.DiosApp.Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
+            //}
             break;
           case nameof(MotorsViewModel.Instance.ParametersY):
             if (SelectedTextBox.index == 0)
@@ -1141,19 +1141,19 @@ namespace Ei_Dimension
               failed = true;
               ErrorMessage = "[200-2000]";
             }
-            if (SelectedTextBox.index == 7)
-            {
-              if (int.TryParse(_tempNewString, out iRes))
-              {
-                if ((iRes >= 0 && ((App.DiosApp.Device.BoardVersion == 0 && iRes <= 4095) || (App.DiosApp.Device.BoardVersion >= 1 && iRes <= 65535))) || _disableSanityCheck)
-                {
-                  App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorY, MotorParameterType.CurrentLimit, iRes);
-                  break;
-                }
-              }
-              failed = true;
-              ErrorMessage = App.DiosApp.Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
-            }
+            //if (SelectedTextBox.index == 7)
+            //{
+            //  if (int.TryParse(_tempNewString, out iRes))
+            //  {
+            //    if ((iRes >= 0 && ((App.DiosApp.Device.BoardVersion == 0 && iRes <= 4095) || (App.DiosApp.Device.BoardVersion >= 1 && iRes <= 65535))) || _disableSanityCheck)
+            //    {
+            //      App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorY, MotorParameterType.CurrentLimit, iRes);
+            //      break;
+            //    }
+            //  }
+            //  failed = true;
+            //  ErrorMessage = App.DiosApp.Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
+            //}
             break;
           case nameof(MotorsViewModel.Instance.ParametersZ):
             if (SelectedTextBox.index == 0)
@@ -1470,7 +1470,7 @@ namespace Ei_Dimension
               ErrorMessage = "[0-65535]";
             }
             break;
-          case nameof(AlignmentViewModel.Instance.ValidationTolerances):
+          case nameof(AlignmentViewModel.Instance.VerificationTolerances):
             if (SelectedTextBox.index == 0)
             {
               if (double.TryParse(_tempNewString, out dRes))

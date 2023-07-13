@@ -74,45 +74,62 @@ namespace DIOS.Core
 
     private void ReplyFromMC()
     {
-      while (true)
+      try
       {
-        _serialConnection.Read();
-
-        if (!_serialConnection.IsBeadInBuffer())
+        while (true)
         {
-          GetCommandFromBuffer();
-          continue;
-        }
+          _serialConnection.Read();
 
-        if (IsMeasurementGoing) //  this condition avoids the necessity of cleaning up leftover data in the system USB interface. That could happen after operation abortion and program restart
-        {
-          for (byte i = 0; i < 8; i++)
+          if (!_serialConnection.IsBeadInBuffer())
           {
-            //might be less than 8 beads in buffer
-            if (!GetBeadFromBuffer(i, out var outbead))
-              break;
-            _device.BeadCount++;
-            var processedBead = _device._beadProcessor.CalculateBeadParams(in outbead);
-            BeadEventSink.Add(processedBead);
+            GetCommandFromBuffer();
+            continue;
           }
+
+          if (IsMeasurementGoing) //  this condition avoids the necessity of cleaning up leftover data in the system USB interface. That could happen after operation abortion and program restart
+          {
+            for (byte i = 0; i < 8; i++)
+            {
+              //might be less than 8 beads in buffer
+              if (!GetBeadFromBuffer(i, out var outbead))
+                break;
+              _device.BeadCount++;
+              var processedBead = _device._beadProcessor.CalculateBeadParams(in outbead);
+              BeadEventSink.Add(processedBead);
+            }
+          }
+
+          _serialConnection.ClearBuffer(); //TODO: is it necessary?
         }
-        _serialConnection.ClearBuffer();  //TODO: is it necessary?
+      }
+      catch (Exception e)
+      {
+        _logger.Log("[CRITICAL] USB READ failed");
+        _logger.Log(e.Message);
       }
     }
 
     private void WriteToMC()
     {
-      var timeOut = new TimeSpan(0, 0, seconds: 2);
-      while (true)
+      try
       {
-        while (_outCommands.TryDequeue(out var cmd))
+        var timeOut = new TimeSpan(0, 0, seconds: 2);
+        while (true)
         {
-          RunCmd(cmd);
+          while (_outCommands.TryDequeue(out var cmd))
+          {
+            RunCmd(cmd);
+          }
+          lock (_usbOutCV)
+          {
+            Monitor.Wait(_usbOutCV, timeOut);
+          }
         }
-        lock (_usbOutCV)
-        {
-          Monitor.Wait(_usbOutCV, timeOut);
-        }
+      }
+      catch (Exception e)
+      {
+        _logger.Log("[CRITICAL] USB WRITE failed");
+        _logger.Log(e.Message);
       }
     }
 
@@ -452,9 +469,6 @@ namespace DIOS.Core
           }
           outParameters = new ParameterUpdateEventArgs(DeviceParameterType.MotorX, intParameter: (int)MotorParameterType.CurrentStep, floatParameter: cs.FParameter);
           break;
-        case 0x90:
-          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.MotorX, intParameter: (int)MotorParameterType.CurrentLimit, floatParameter: cs.Parameter);
-          break;
         case 0x56:
           outParameters = new ParameterUpdateEventArgs(DeviceParameterType.MotorStepsX, intParameter: (int)MotorStepsX.Tube, floatParameter: cs.FParameter);
           break;
@@ -486,9 +500,6 @@ namespace DIOS.Core
             _device.SelfTester.Motorsinit[1] = true;
           }
           outParameters = new ParameterUpdateEventArgs(DeviceParameterType.MotorY, intParameter: (int)MotorParameterType.CurrentStep, floatParameter: cs.FParameter);
-          break;
-        case 0x91:
-          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.MotorY, intParameter: (int)MotorParameterType.CurrentLimit, floatParameter: cs.Parameter);
           break;
         case 0x66:
           outParameters = new ParameterUpdateEventArgs(DeviceParameterType.MotorStepsY, intParameter: (int)MotorStepsY.Tube, floatParameter: cs.FParameter);

@@ -1,5 +1,4 @@
-﻿using System;
-using DevExpress.Mvvm.DataAnnotations;
+﻿using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
 using DIOS.Core;
 using System.Collections.Generic;
