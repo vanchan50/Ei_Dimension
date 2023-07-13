@@ -14,6 +14,9 @@ namespace DIOS.Application.FileIO
     public const string HEADER = "Time(1 ms Tick),FSC bg,Viol SSC bg,CL0 bg,CL1 bg,CL2 bg,CL3 bg,Red SSC bg,Green SSC bg," +
                                  "Green B bg,Green C bg,Green B,Green C,Red-Grn Offset,Grn-Viol Offset,Region,Forward Scatter,Violet SSC,CL0," +
                                  "Red SSC,CL1,CL2,CL3,Green SSC,Reporter";
+    public const string OEMHEADER = "Time(1 ms Tick),FSC bg,Viol SSC bg,CL0 bg,CL4 bg,CL5 bg,CL3 bg,Red SSC bg,Green SSC bg," +
+                                 "Red C bg,Red D bg,Red C,Red D,Red-Grn Offset,Grn-Viol Offset,Region,Forward Scatter,Violet SSC,CL0," +
+                                 "Red SSC,CL4,CL5,CL3,Green SSC,Reporter";
 
     public BeadEventFileWriter(ResultsPublisher publisher)
     {
@@ -71,7 +74,8 @@ namespace DIOS.Application.FileIO
     private string Decode(BeadEventsData eventsData)
     {
       _ = _dataOut.Clear();
-      _ = _dataOut.AppendLine(HEADER);
+      var header = _publisher.IsOEMModeActive ? OEMHEADER : HEADER;
+      _ = _dataOut.AppendLine(header);
 
       foreach (var bead in eventsData)
       {

@@ -37,6 +37,8 @@ namespace Ei_Dimension.ViewModels
     public virtual string PlexButtonString { get; set; }
     public virtual ObservableCollection<bool> CLButtonsChecked { get; set; }
     public virtual ObservableCollection<string> CLAxis { get; set; }
+    public virtual string XYPlot_DataChannel1Name { get; set; } = "CL1";
+    public virtual string XYPlot_DataChannel2Name { get; set; } = "CL2";
     public static ResultsViewModel Instance { get; private set; }
     private int _fillDataActive;
     public const int HIREZDEFINITION = 512;
@@ -127,6 +129,20 @@ namespace Ei_Dimension.ViewModels
         //do not ResetCurrentActiveRegionsDisplayedStats() here. This function can be called during runtime -> can loose data
         //ResetCurrentActiveRegionsDisplayedStats() is called in the App.StartingToReadWellEventHandler()
       Views.ResultsView.Instance.ClearHeatMaps();
+    }
+
+    public void SwapXYNamesToOEM(bool On)
+    {
+      if (On)
+      {
+        XYPlot_DataChannel1Name = "CL4";
+        XYPlot_DataChannel2Name = "CL5";
+      }
+      else
+      {
+        XYPlot_DataChannel1Name = "CL1";
+        XYPlot_DataChannel2Name = "CL2";
+      }
     }
 
     /// <summary>

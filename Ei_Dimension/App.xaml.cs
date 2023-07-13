@@ -169,7 +169,13 @@ namespace Ei_Dimension
     {
       ChannelRedirectionEnabled = On;
       LanguageSwap.TranslateChannelsOffsetVM();//swaps between red <-> green
+      DiosApp.Publisher.IsOEMModeActive = On;
+      ResultsViewModel.Instance.SwapXYNamesToOEM(On);
       if (On)
+      {
+
+      }
+      else
       {
 
       }
@@ -423,7 +429,6 @@ namespace Ei_Dimension
             DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.PlateType); // plate type needed here?really? same question for the rest, actually
             DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.WellReadingSpeed);
             DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.WellReadingOrder);
-            DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelConfiguration); //never used in the ui or anywhere
           };
           break;
         case "reportingtab":
