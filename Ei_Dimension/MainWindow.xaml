@@ -122,7 +122,7 @@
 
     <Grid Width="630" Height="366"
           VerticalAlignment="Top" HorizontalAlignment="Left"
-          Margin="1248,140,0,0"
+          Margin="1268,140,0,0"
           Visibility="{Binding StartButtonsVisible}">
       <Views:MainButtonsView />
     </Grid>

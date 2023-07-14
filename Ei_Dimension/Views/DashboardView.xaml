@@ -16,7 +16,7 @@
     <!--Fluidics-->
     <Border HorizontalAlignment="Left"
           VerticalAlignment="Top"
-          Margin="1250,370,0,0">
+          Margin="1270,370,0,0">
       <StackPanel>
         <TextBlock Text="{lang:Loc Components_Fluidics}"
                  FontFamily="{StaticResource AppTextFont}"
