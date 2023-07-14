@@ -2277,7 +2277,7 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to  Mean.
+        ///   Looks up a localized string similar to Mean.
         /// </summary>
         public static string Mean {
             get {
@@ -3401,6 +3401,42 @@ namespace Ei_Dimension.Language {
         public static string Sheath {
             get {
                 return ResourceManager.GetString("Sheath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Green B (RP maj).
+        /// </summary>
+        public static string Statistics_OEM_GreenB {
+            get {
+                return ResourceManager.GetString("Statistics_OEM_GreenB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Green C (RP min).
+        /// </summary>
+        public static string Statistics_OEM_GreenC {
+            get {
+                return ResourceManager.GetString("Statistics_OEM_GreenC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Red C (CL4).
+        /// </summary>
+        public static string Statistics_OEM_Red_C {
+            get {
+                return ResourceManager.GetString("Statistics_OEM_Red_C", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Red D (CL5).
+        /// </summary>
+        public static string Statistics_OEM_Red_D {
+            get {
+                return ResourceManager.GetString("Statistics_OEM_Red_D", resourceCulture);
             }
         }
         

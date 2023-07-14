@@ -1085,6 +1085,18 @@ Volume, µL</value>
   <data name="Sheath" xml:space="preserve">
     <value>鞘液</value>
   </data>
+  <data name="Statistics_OEM_GreenB" xml:space="preserve">
+    <value>Green B (RP maj)</value>
+  </data>
+  <data name="Statistics_OEM_GreenC" xml:space="preserve">
+    <value>Green C (RP min)</value>
+  </data>
+  <data name="Statistics_OEM_Red_C" xml:space="preserve">
+    <value>Red C (CL4)</value>
+  </data>
+  <data name="Statistics_OEM_Red_D" xml:space="preserve">
+    <value>Red D (CL5)</value>
+  </data>
   <data name="SyringeSpeeds_AgitateFromWellEdge" xml:space="preserve">
     <value>Agitate From Well Edge</value>
   </data>

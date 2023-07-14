@@ -37,8 +37,10 @@ namespace Ei_Dimension.ViewModels
     public virtual string PlexButtonString { get; set; }
     public virtual ObservableCollection<bool> CLButtonsChecked { get; set; }
     public virtual ObservableCollection<string> CLAxis { get; set; }
+    //Strings to make channel swap line up with names
     public virtual string XYPlot_DataChannel1Name { get; set; } = "CL1";
     public virtual string XYPlot_DataChannel2Name { get; set; } = "CL2";
+    public virtual ObservableCollection<string> StatisticsLabels { get; set; }
     public static ResultsViewModel Instance { get; private set; }
     private int _fillDataActive;
     public const int HIREZDEFINITION = 512;
@@ -83,6 +85,20 @@ namespace Ei_Dimension.ViewModels
       }
       DisplayedMfiItems = CurrentMfiItems;
       DisplayedCvItems = CurrentCvItems;
+
+      StatisticsLabels = new ObservableCollection<string>
+      {
+        Language.Resources.Channels_Green_A,
+        Language.Resources.Channels_Green_B,
+        Language.Resources.Channels_Green_C,
+        Language.Resources.DataAn_Red_SSC,
+        Language.Resources.CL1,
+        Language.Resources.CL2,
+        Language.Resources.CL3,
+        Language.Resources.DataAn_Violet_SSC,
+        Language.Resources.CL0,
+        Language.Resources.Channels_ExternalPMT
+      };
     }
 
     public static ResultsViewModel Create()

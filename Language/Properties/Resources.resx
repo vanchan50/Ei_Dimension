@@ -894,7 +894,7 @@ output folder</value>
     <value>Verification</value>
   </data>
   <data name="Mean" xml:space="preserve">
-    <value> Mean</value>
+    <value>Mean</value>
   </data>
   <data name="Messages_Bubble_Detector_Fault" xml:space="preserve">
     <value>Bubble Detector Fault</value>
@@ -1276,6 +1276,18 @@ Speeds</value>
   </data>
   <data name="Sheath" xml:space="preserve">
     <value>Sheath</value>
+  </data>
+  <data name="Statistics_OEM_GreenB" xml:space="preserve">
+    <value>Green B (RP maj)</value>
+  </data>
+  <data name="Statistics_OEM_GreenC" xml:space="preserve">
+    <value>Green C (RP min)</value>
+  </data>
+  <data name="Statistics_OEM_Red_C" xml:space="preserve">
+    <value>Red C (CL4)</value>
+  </data>
+  <data name="Statistics_OEM_Red_D" xml:space="preserve">
+    <value>Red D (CL5)</value>
   </data>
   <data name="SyringeSpeeds_AgitateFromWellEdge" xml:space="preserve">
     <value>Agitate From Well Edge</value>

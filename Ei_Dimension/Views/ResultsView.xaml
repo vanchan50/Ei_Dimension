@@ -16,36 +16,39 @@
              d:DesignHeight="944" d:DesignWidth="1920">
   <Grid>
     <Border HorizontalAlignment="Left" VerticalAlignment="Top"
-            Margin="750,0,0,0" Width="470" Height="900">
+            Margin="750,0,0,0"
+            Width="496"
+            Height="900">
       <Grid>
-        <Button Width="470" Height="50"
-                  HorizontalAlignment="Left"
-                  VerticalAlignment="Top"
-                  FontSize="36"
-                  Content="{Binding PlexButtonString}"
-                  Style="{StaticResource ButtonStyle}"
-                  Command="{Binding PlexButtonClickCommand}"/>
+        <Button Height="50"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Top"
+                FontSize="36"
+                Content="{Binding PlexButtonString}"
+                Style="{StaticResource ButtonStyle}"
+                Command="{Binding PlexButtonClickCommand}"/>
         <Grid Visibility="{Binding MultiPlexVisible}">
           <StackPanel Margin="0,48,0,4">
             <Border Height="45"
-                HorizontalAlignment="Left">
+                    HorizontalAlignment="Left"
+                    Margin="20,0,0,0">
               <Grid>
                 <TextBlock Text="{lang:Loc Name}"
-                         Width="178"
+                         Width="168"
                          FontSize="30"
                          TextAlignment="Center"
                          HorizontalAlignment="Left"/>
                 <TextBlock Text="{lang:Loc Results_Count_Table}"
                          FontSize="30"
                          Width="119"
-                         Margin="178,0,0,0"
+                         Margin="168,0,0,0"
                          TextAlignment="Center"
                          HorizontalAlignment="Left"/>
                 <TextBlock Text="{lang:Loc Mean}"
                          FontSize="30"
-                         Width="155"
-                         Margin="317,0,0,0"
-                         TextAlignment="Left"
+                         Width="140"
+                         Margin="287,0,0,0"
+                         TextAlignment="Center"
                          HorizontalAlignment="Left"/>
               </Grid>
             </Border>
@@ -79,15 +82,15 @@
                       VerticalAlignment="Stretch">
             <StackPanel HorizontalAlignment="Right"
                     Margin="0,60,8,0"
-                    Width ="166">
-              <TextBlock Text="{lang:Loc Channels_Green_A}"
+                    Width ="190">
+              <TextBlock Text="{Binding StatisticsLabels[0]}"
                          FontFamily="{StaticResource AppTextFont}"
                          FontSize="26"
                          FontWeight="UltraBold"
                          Foreground="{StaticResource AppTextColor}"
                          HorizontalAlignment="Right"
                          VerticalAlignment="Top"/>
-              <TextBlock Text="{lang:Loc Channels_Green_B}"
+              <TextBlock Text="{Binding StatisticsLabels[1]}"
                          FontFamily="{StaticResource AppTextFont}"
                          FontSize="26"
                          FontWeight="UltraBold"
@@ -95,7 +98,7 @@
                          HorizontalAlignment="Right"
                          VerticalAlignment="Top"
                          Margin="0,32,0,0"/>
-              <TextBlock Text="{lang:Loc Channels_Green_C}"
+              <TextBlock Text="{Binding StatisticsLabels[2]}"
                          FontFamily="{StaticResource AppTextFont}"
                          FontSize="26"
                          FontWeight="UltraBold"
@@ -103,7 +106,7 @@
                          HorizontalAlignment="Right"
                          VerticalAlignment="Top"
                          Margin="0,26,0,0"/>
-              <TextBlock Text="{lang:Loc DataAn_Red_SSC}"
+              <TextBlock Text="{Binding StatisticsLabels[3]}"
                          FontFamily="{StaticResource AppTextFont}"
                          FontSize="26"
                          FontWeight="UltraBold"
@@ -111,7 +114,7 @@
                          HorizontalAlignment="Right"
                          VerticalAlignment="Top"
                          Margin="0,30,0,0"/>
-              <TextBlock Text="{lang:Loc CL1}"
+              <TextBlock Text="{Binding StatisticsLabels[4]}"
                          FontFamily="{StaticResource AppTextFont}"
                          FontSize="26"
                          FontWeight="UltraBold"
@@ -119,7 +122,7 @@
                          HorizontalAlignment="Right"
                          VerticalAlignment="Top"
                          Margin="0,30,0,0"/>
-              <TextBlock Text="{lang:Loc CL2}"
+              <TextBlock Text="{Binding StatisticsLabels[5]}"
                          FontFamily="{StaticResource AppTextFont}"
                          FontSize="26"
                          FontWeight="UltraBold"
@@ -127,7 +130,7 @@
                          HorizontalAlignment="Right"
                          VerticalAlignment="Top"
                          Margin="0,26,0,0"/>
-              <TextBlock Text="{lang:Loc CL3}"
+              <TextBlock Text="{Binding StatisticsLabels[6]}"
                          FontFamily="{StaticResource AppTextFont}"
                          FontSize="26"
                          FontWeight="UltraBold"
@@ -135,7 +138,7 @@
                          HorizontalAlignment="Right"
                          VerticalAlignment="Top"
                          Margin="0,26,0,0"/>
-              <TextBlock Text="{lang:Loc DataAn_Violet_SSC}"
+              <TextBlock Text="{Binding StatisticsLabels[7]}"
                          FontFamily="{StaticResource AppTextFont}"
                          FontSize="26"
                          FontWeight="UltraBold"
@@ -143,7 +146,7 @@
                          HorizontalAlignment="Right"
                          VerticalAlignment="Top"
                          Margin="0,32,0,0"/>
-              <TextBlock Text="{lang:Loc CL0}"
+              <TextBlock Text="{Binding StatisticsLabels[8]}"
                          FontFamily="{StaticResource AppTextFont}"
                          FontSize="26"
                          FontWeight="UltraBold"
@@ -151,7 +154,7 @@
                          HorizontalAlignment="Right"
                          VerticalAlignment="Top"
                          Margin="0,28,0,0"/>
-              <TextBlock Text="{lang:Loc DataAn_FSC}"
+              <TextBlock Text="{Binding StatisticsLabels[9]}"
                          FontFamily="{StaticResource AppTextFont}"
                          FontSize="26"
                          FontWeight="UltraBold"
@@ -730,7 +733,7 @@
 
     <!--Plate pictogram-->
     <Grid Width="660" Height="524"
-          Margin="1230,372,0,0"
+          Margin="1250,372,0,0"
           HorizontalAlignment="Left"
           VerticalAlignment="Top">
       <Views:PlatePictogramView/>
