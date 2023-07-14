@@ -169,6 +169,7 @@ namespace Ei_Dimension
     {
       ChannelRedirectionEnabled = On;
       LanguageSwap.TranslateChannelsOffsetVM();//swaps between red <-> green
+      LanguageSwap.TranslateChannelsVM();
       LanguageSwap.TranslateResultsVM();
       DiosApp.Publisher.IsOEMModeActive = On;
       ResultsViewModel.Instance.SwapXYNamesToOEM(On);

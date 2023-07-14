@@ -324,7 +324,7 @@
       <Rectangle Fill="{StaticResource AppBackground}"
                  HorizontalAlignment="Left"
                  VerticalAlignment="Top"
-                 Width="1220" Height="900"
+                 Width="1250" Height="900"
                  Margin="0,0,0,0"/>
       <!--<Grid Visibility="{Binding Analysis3DVisible}">-->
       <Grid Visibility="{Binding Analysis3DVisible}">

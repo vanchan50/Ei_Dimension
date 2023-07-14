@@ -597,6 +597,69 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Green B (CL4).
+        /// </summary>
+        public static string Channels_OEM_Green_B {
+            get {
+                return ResourceManager.GetString("Channels_OEM_Green_B", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Green C (CL5).
+        /// </summary>
+        public static string Channels_OEM_Green_C {
+            get {
+                return ResourceManager.GetString("Channels_OEM_Green_C", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Red A.
+        /// </summary>
+        public static string Channels_OEM_RedA {
+            get {
+                return ResourceManager.GetString("Channels_OEM_RedA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Red C.
+        /// </summary>
+        public static string Channels_OEM_RedC {
+            get {
+                return ResourceManager.GetString("Channels_OEM_RedC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Red D.
+        /// </summary>
+        public static string Channels_OEM_RedD {
+            get {
+                return ResourceManager.GetString("Channels_OEM_RedD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Violet A.
+        /// </summary>
+        public static string Channels_OEM_VioletA {
+            get {
+                return ResourceManager.GetString("Channels_OEM_VioletA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Violet B.
+        /// </summary>
+        public static string Channels_OEM_VioletB {
+            get {
+                return ResourceManager.GetString("Channels_OEM_VioletB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Offset.
         /// </summary>
         public static string Channels_Offset_Header {

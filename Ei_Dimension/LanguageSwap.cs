@@ -23,6 +23,7 @@ namespace Ei_Dimension
       TranslateComponentsVM();
       TranslateCalibrationVM();
       TranslateDashboardVM();
+      TranslateChannelsVM();
       TranslateChannelsOffsetVM();
       TranslateVerificationVM();
       TranslateTemplateSelectVM();
@@ -134,6 +135,40 @@ namespace Ei_Dimension
         DashVM.EndReadItems[2].Content = _rm.GetString(nameof(Language.Resources.Experiment_End_of_Sample), _curCulture);
         DashVM.EndReadItems[3].Content = _rm.GetString(nameof(Language.Resources.Experiment_Timer), _curCulture);
         DashVM.SelectedEndReadContent = DashVM.EndReadItems[DashVM.SelectedEndReadIndex].Content;
+      }
+    }
+
+    public static void TranslateChannelsVM()
+    {
+      var ChannelsVM = ChannelsViewModel.Instance;
+      if (ChannelsVM != null)
+      {
+        if (App.ChannelRedirectionEnabled)
+        {
+          ChannelsVM.Labels[0] = _rm.GetString(nameof(Language.Resources.Channels_Green_A), _curCulture);
+          ChannelsVM.Labels[1] = _rm.GetString(nameof(Language.Resources.Channels_OEM_Green_B), _curCulture);
+          ChannelsVM.Labels[2] = _rm.GetString(nameof(Language.Resources.Channels_OEM_Green_C), _curCulture);
+          ChannelsVM.Labels[3] = _rm.GetString(nameof(Language.Resources.Channels_OEM_RedA), _curCulture);
+          ChannelsVM.Labels[4] = _rm.GetString(nameof(Language.Resources.Channels_Red_B), _curCulture);
+          ChannelsVM.Labels[5] = _rm.GetString(nameof(Language.Resources.Channels_OEM_RedC), _curCulture);
+          ChannelsVM.Labels[6] = _rm.GetString(nameof(Language.Resources.Channels_OEM_RedD), _curCulture);
+          ChannelsVM.Labels[7] = _rm.GetString(nameof(Language.Resources.Channels_OEM_VioletA), _curCulture);
+          ChannelsVM.Labels[8] = _rm.GetString(nameof(Language.Resources.Channels_OEM_VioletB), _curCulture);
+          ChannelsVM.Labels[9] = _rm.GetString(nameof(Language.Resources.Channels_ExternalPMT), _curCulture);
+        }
+        else
+        {
+          ChannelsVM.Labels[0] = _rm.GetString(nameof(Language.Resources.Channels_Green_A), _curCulture);
+          ChannelsVM.Labels[1] = _rm.GetString(nameof(Language.Resources.Channels_Green_B), _curCulture);
+          ChannelsVM.Labels[2] = _rm.GetString(nameof(Language.Resources.Channels_Green_C), _curCulture);
+          ChannelsVM.Labels[3] = _rm.GetString(nameof(Language.Resources.Channels_Red_A), _curCulture);
+          ChannelsVM.Labels[4] = _rm.GetString(nameof(Language.Resources.Channels_Red_B), _curCulture);
+          ChannelsVM.Labels[5] = _rm.GetString(nameof(Language.Resources.Channels_Red_C), _curCulture);
+          ChannelsVM.Labels[6] = _rm.GetString(nameof(Language.Resources.Channels_Red_D), _curCulture);
+          ChannelsVM.Labels[7] = _rm.GetString(nameof(Language.Resources.Channels_Violet_A), _curCulture);
+          ChannelsVM.Labels[8] = _rm.GetString(nameof(Language.Resources.Channels_Violet_B), _curCulture);
+          ChannelsVM.Labels[9] = _rm.GetString(nameof(Language.Resources.Channels_ExternalPMT), _curCulture);
+        }
       }
     }
 

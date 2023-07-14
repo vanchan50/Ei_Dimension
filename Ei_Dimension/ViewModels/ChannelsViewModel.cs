@@ -13,6 +13,7 @@ namespace Ei_Dimension.ViewModels
     public virtual ObservableCollection<string> Bias30Parameters { get; set; }
     public virtual ObservableCollection<string> TcompBiasParameters { get; set; }
     public virtual ObservableCollection<string> TempParameters { get; set; }
+    public virtual ObservableCollection<string> Labels { get; set; }
 
     public static ChannelsViewModel Instance { get; private set; }
 
@@ -38,6 +39,20 @@ namespace Ei_Dimension.ViewModels
         TcompBiasParameters.Add("");
         TempParameters.Add("");
       }
+
+      Labels = new ObservableCollection<string>
+      {
+        Language.Resources.Channels_Green_A,
+        Language.Resources.Channels_Green_B,
+        Language.Resources.Channels_Green_C,
+        Language.Resources.Channels_Red_A,
+        Language.Resources.Channels_Red_B,
+        Language.Resources.Channels_Red_C,
+        Language.Resources.Channels_Red_D,
+        Language.Resources.Channels_Violet_A,
+        Language.Resources.Channels_Violet_B,
+        Language.Resources.Channels_ExternalPMT
+      };
       Instance = this;
     }
 

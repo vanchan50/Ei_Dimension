@@ -262,6 +262,27 @@
   <data name="Channels_Hi_Sens_Chan" xml:space="preserve">
     <value>高灵敏通道</value>
   </data>
+  <data name="Channels_OEM_Green_B" xml:space="preserve">
+    <value>Green B (CL4)</value>
+  </data>
+  <data name="Channels_OEM_Green_C" xml:space="preserve">
+    <value>Green C (CL5)</value>
+  </data>
+  <data name="Channels_OEM_RedA" xml:space="preserve">
+    <value>Red A</value>
+  </data>
+  <data name="Channels_OEM_RedC" xml:space="preserve">
+    <value>Red C</value>
+  </data>
+  <data name="Channels_OEM_RedD" xml:space="preserve">
+    <value>Red D</value>
+  </data>
+  <data name="Channels_OEM_VioletA" xml:space="preserve">
+    <value>Violet A</value>
+  </data>
+  <data name="Channels_OEM_VioletB" xml:space="preserve">
+    <value>Violet B</value>
+  </data>
   <data name="Channels_Offset_Header" xml:space="preserve">
     <value>基线偏移</value>
   </data>
