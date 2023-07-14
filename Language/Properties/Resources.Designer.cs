@@ -416,6 +416,96 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Forward Scatter.
+        /// </summary>
+        public static string ChannelOffsets_Forward_Scatter {
+            get {
+                return ResourceManager.GetString("ChannelOffsets_Forward_Scatter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Green A (SSC).
+        /// </summary>
+        public static string ChannelOffsets_Green_A {
+            get {
+                return ResourceManager.GetString("ChannelOffsets_Green_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Green B.
+        /// </summary>
+        public static string ChannelOffsets_Green_B {
+            get {
+                return ResourceManager.GetString("ChannelOffsets_Green_B", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Green C.
+        /// </summary>
+        public static string ChannelOffsets_Green_C {
+            get {
+                return ResourceManager.GetString("ChannelOffsets_Green_C", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Red A (CL3).
+        /// </summary>
+        public static string ChannelOffsets_Red_A {
+            get {
+                return ResourceManager.GetString("ChannelOffsets_Red_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Red B (SSC).
+        /// </summary>
+        public static string ChannelOffsets_Red_B {
+            get {
+                return ResourceManager.GetString("ChannelOffsets_Red_B", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Red C (CL1).
+        /// </summary>
+        public static string ChannelOffsets_Red_C {
+            get {
+                return ResourceManager.GetString("ChannelOffsets_Red_C", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Red D (CL2).
+        /// </summary>
+        public static string ChannelOffsets_Red_D {
+            get {
+                return ResourceManager.GetString("ChannelOffsets_Red_D", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Violet A (SSC).
+        /// </summary>
+        public static string ChannelOffsets_Violet_A {
+            get {
+                return ResourceManager.GetString("ChannelOffsets_Violet_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Violet B (CL0).
+        /// </summary>
+        public static string ChannelOffsets_Violet_B {
+            get {
+                return ResourceManager.GetString("ChannelOffsets_Violet_B", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Average BG.
         /// </summary>
         public static string Channels_Average_BG {

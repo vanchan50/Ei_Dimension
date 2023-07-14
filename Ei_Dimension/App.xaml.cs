@@ -253,7 +253,6 @@ namespace Ei_Dimension
     }
 
     private static Models.WellWarningState GetWarningState()
-
     {
       if (_nextWellWarning)
       {

@@ -205,6 +205,36 @@
   <data name="Cancel" xml:space="preserve">
     <value>取消</value>
   </data>
+  <data name="ChannelOffsets_Forward_Scatter" xml:space="preserve">
+    <value>Forward Scatter</value>
+  </data>
+  <data name="ChannelOffsets_Green_A" xml:space="preserve">
+    <value>Green A (SSC)</value>
+  </data>
+  <data name="ChannelOffsets_Green_B" xml:space="preserve">
+    <value>Green B</value>
+  </data>
+  <data name="ChannelOffsets_Green_C" xml:space="preserve">
+    <value>Green C</value>
+  </data>
+  <data name="ChannelOffsets_Red_A" xml:space="preserve">
+    <value>Red A (CL3)</value>
+  </data>
+  <data name="ChannelOffsets_Red_B" xml:space="preserve">
+    <value>Red B (SSC)</value>
+  </data>
+  <data name="ChannelOffsets_Red_C" xml:space="preserve">
+    <value>Red C (CL1)</value>
+  </data>
+  <data name="ChannelOffsets_Red_D" xml:space="preserve">
+    <value>Red D (CL2)</value>
+  </data>
+  <data name="ChannelOffsets_Violet_A" xml:space="preserve">
+    <value>Violet A (SSC)</value>
+  </data>
+  <data name="ChannelOffsets_Violet_B" xml:space="preserve">
+    <value>Violet B (CL0)</value>
+  </data>
   <data name="Channels_Average_BG" xml:space="preserve">
     <value>平均本底</value>
   </data>
