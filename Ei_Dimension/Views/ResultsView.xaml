@@ -54,7 +54,8 @@
             </Border>
             <ScrollViewer HorizontalScrollBarVisibility="Disabled"
                     VerticalScrollBarVisibility="Visible" Height="773">
-              <ListBox Name="Table" Background="{StaticResource RibbonBackgroundActive}">
+              <ListBox Name="Table"
+                       Background="{StaticResource RibbonBackgroundActive}">
                 <ListBox.ItemsPanel>
                   <ItemsPanelTemplate>
                     <WrapPanel Width="440"/>
@@ -64,12 +65,11 @@
             </ScrollViewer>
           </StackPanel>
           <Rectangle Visibility="{Binding ValidationCoverVisible}"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Top"
-                   Width="451"
-                   Height="801"
-                   Fill="{StaticResource RibbonBackgroundActive}"
-                   Margin="1,94,0,0"/>
+                     HorizontalAlignment="Left"
+                     VerticalAlignment="Top"
+                     Width="451" Height="801"
+                     Fill="{StaticResource RibbonBackgroundActive}"
+                     Margin="1,94,0,0"/>
         </Grid>
         <!--Calibration Statistics-->
         <Border HorizontalAlignment="Left"

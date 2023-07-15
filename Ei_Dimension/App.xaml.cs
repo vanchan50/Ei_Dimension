@@ -11,8 +11,8 @@ using Ei_Dimension.Cache;
 using Ei_Dimension.Controllers;
 using DIOS.Application;
 using System.Collections.Generic;
+using System.Windows.Threading;
 using DIOS.Application.Domain;
-using static DevExpress.Xpo.Helpers.CannotLoadObjectsHelper;
 
 namespace Ei_Dimension
 {
@@ -611,6 +611,16 @@ namespace Ei_Dimension
       return true;
     }
 
+    private void DispatcherExceptionHandler(object sender, DispatcherUnhandledExceptionEventArgs args)
+    {
+      Logger.Log("[PROBLEM] Dispatcher exception");
+      Logger.Log($"[PROBLEM] Source: {args.Exception.Source}");
+      Logger.Log($"[PROBLEM] Message: {args.Exception.Message}");
+      Logger.Log($"[PROBLEM] From: {args.Exception.TargetSite.Name}");
+      Logger.Log($"[PROBLEM] trace: {args.Exception.StackTrace}");
+
+    }
+
     private void InitApp(Device device)
     {
       StatisticsExtension.TailDiscardPercentage = Settings.Default.StatisticsTailDiscardPercentage;
@@ -628,6 +638,8 @@ namespace Ei_Dimension
       _workOrderWatcher.Filter = "*.txt";
       _workOrderWatcher.EnableRaisingEvents = true;
       _workOrderWatcher.Created += OnNewWorkOrder;
+
+      App.Current.Dispatcher.UnhandledException += DispatcherExceptionHandler;
     }
   }
 }
