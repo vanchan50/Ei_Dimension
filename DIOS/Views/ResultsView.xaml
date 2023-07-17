@@ -1,0 +1,743 @@
+﻿<UserControl x:Class="Ei_Dimension.Views.ResultsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:dxc="http://schemas.devexpress.com/winfx/2008/xaml/charts"
+             xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+             xmlns:Views="clr-namespace:Ei_Dimension.Views"
+             xmlns:ViewModels="clr-namespace:Ei_Dimension.ViewModels"
+             xmlns:lang="clr-namespace:Ei_Dimension.Language;assembly=Language"
+             mc:Ignorable="d"
+             xmlns:img="clr-namespace:Ei_Dimension.Styles"
+             xmlns:system="clr-namespace:System;assembly=System.Runtime"
+             DataContext="{dxmvvm:ViewModelSource Type=ViewModels:ResultsViewModel}"
+             d:DesignHeight="944" d:DesignWidth="1920">
+  <Grid>
+    <Border HorizontalAlignment="Left" VerticalAlignment="Top"
+            Margin="750,0,0,0"
+            Width="496"
+            Height="900">
+      <Grid>
+        <Button Height="50"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Top"
+                FontSize="36"
+                Content="{Binding PlexButtonString}"
+                Style="{StaticResource ButtonStyle}"
+                Command="{Binding PlexButtonClickCommand}"/>
+        <Grid Visibility="{Binding MultiPlexVisible}">
+          <StackPanel Margin="0,48,0,4">
+            <Border Height="45"
+                    HorizontalAlignment="Left"
+                    Margin="20,0,0,0">
+              <Grid>
+                <TextBlock Text="{lang:Loc Name}"
+                         Width="168"
+                         FontSize="30"
+                         TextAlignment="Center"
+                         HorizontalAlignment="Left"/>
+                <TextBlock Text="{lang:Loc Results_Count_Table}"
+                         FontSize="30"
+                         Width="119"
+                         Margin="168,0,0,0"
+                         TextAlignment="Center"
+                         HorizontalAlignment="Left"/>
+                <TextBlock Text="{lang:Loc Mean}"
+                         FontSize="30"
+                         Width="140"
+                         Margin="287,0,0,0"
+                         TextAlignment="Center"
+                         HorizontalAlignment="Left"/>
+              </Grid>
+            </Border>
+            <ScrollViewer HorizontalScrollBarVisibility="Disabled"
+                    VerticalScrollBarVisibility="Visible" Height="773">
+              <ListBox Name="Table"
+                       Background="{StaticResource RibbonBackgroundActive}">
+                <ListBox.ItemsPanel>
+                  <ItemsPanelTemplate>
+                    <WrapPanel Width="440"/>
+                  </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+              </ListBox>
+            </ScrollViewer>
+          </StackPanel>
+          <Rectangle Visibility="{Binding ValidationCoverVisible}"
+                     HorizontalAlignment="Left"
+                     VerticalAlignment="Top"
+                     Width="451" Height="801"
+                     Fill="{StaticResource RibbonBackgroundActive}"
+                     Margin="1,94,0,0"/>
+        </Grid>
+        <!--Calibration Statistics-->
+        <Border HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Height="846"
+                Margin="0,50,0,0"
+                Visibility="{Binding SinglePlexVisible}">
+          <StackPanel Orientation="Horizontal"
+                      HorizontalAlignment="Stretch"
+                      VerticalAlignment="Stretch">
+            <StackPanel HorizontalAlignment="Right"
+                    Margin="0,60,8,0"
+                    Width ="190">
+              <TextBlock Text="{Binding StatisticsLabels[0]}"
+                         FontFamily="{StaticResource AppTextFont}"
+                         FontSize="26"
+                         FontWeight="UltraBold"
+                         Foreground="{StaticResource AppTextColor}"
+                         HorizontalAlignment="Right"
+                         VerticalAlignment="Top"/>
+              <TextBlock Text="{Binding StatisticsLabels[1]}"
+                         FontFamily="{StaticResource AppTextFont}"
+                         FontSize="26"
+                         FontWeight="UltraBold"
+                         Foreground="{StaticResource AppTextColor}"
+                         HorizontalAlignment="Right"
+                         VerticalAlignment="Top"
+                         Margin="0,32,0,0"/>
+              <TextBlock Text="{Binding StatisticsLabels[2]}"
+                         FontFamily="{StaticResource AppTextFont}"
+                         FontSize="26"
+                         FontWeight="UltraBold"
+                         Foreground="{StaticResource AppTextColor}"
+                         HorizontalAlignment="Right"
+                         VerticalAlignment="Top"
+                         Margin="0,26,0,0"/>
+              <TextBlock Text="{Binding StatisticsLabels[3]}"
+                         FontFamily="{StaticResource AppTextFont}"
+                         FontSize="26"
+                         FontWeight="UltraBold"
+                         Foreground="{StaticResource AppTextColor}"
+                         HorizontalAlignment="Right"
+                         VerticalAlignment="Top"
+                         Margin="0,30,0,0"/>
+              <TextBlock Text="{Binding StatisticsLabels[4]}"
+                         FontFamily="{StaticResource AppTextFont}"
+                         FontSize="26"
+                         FontWeight="UltraBold"
+                         Foreground="{StaticResource AppTextColor}"
+                         HorizontalAlignment="Right"
+                         VerticalAlignment="Top"
+                         Margin="0,30,0,0"/>
+              <TextBlock Text="{Binding StatisticsLabels[5]}"
+                         FontFamily="{StaticResource AppTextFont}"
+                         FontSize="26"
+                         FontWeight="UltraBold"
+                         Foreground="{StaticResource AppTextColor}"
+                         HorizontalAlignment="Right"
+                         VerticalAlignment="Top"
+                         Margin="0,26,0,0"/>
+              <TextBlock Text="{Binding StatisticsLabels[6]}"
+                         FontFamily="{StaticResource AppTextFont}"
+                         FontSize="26"
+                         FontWeight="UltraBold"
+                         Foreground="{StaticResource AppTextColor}"
+                         HorizontalAlignment="Right"
+                         VerticalAlignment="Top"
+                         Margin="0,26,0,0"/>
+              <TextBlock Text="{Binding StatisticsLabels[7]}"
+                         FontFamily="{StaticResource AppTextFont}"
+                         FontSize="26"
+                         FontWeight="UltraBold"
+                         Foreground="{StaticResource AppTextColor}"
+                         HorizontalAlignment="Right"
+                         VerticalAlignment="Top"
+                         Margin="0,32,0,0"/>
+              <TextBlock Text="{Binding StatisticsLabels[8]}"
+                         FontFamily="{StaticResource AppTextFont}"
+                         FontSize="26"
+                         FontWeight="UltraBold"
+                         Foreground="{StaticResource AppTextColor}"
+                         HorizontalAlignment="Right"
+                         VerticalAlignment="Top"
+                         Margin="0,28,0,0"/>
+              <TextBlock Text="{Binding StatisticsLabels[9]}"
+                         FontFamily="{StaticResource AppTextFont}"
+                         FontSize="26"
+                         FontWeight="UltraBold"
+                         Foreground="{StaticResource AppTextColor}"
+                         HorizontalAlignment="Right"
+                         VerticalAlignment="Top"
+                         Margin="0,28,0,0"/>
+            </StackPanel>
+            <StackPanel>
+              <TextBlock Text="{lang:Loc DataAn_MFI}"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="36"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Center"
+                 Margin="0,0,0,4"/>
+              <Border Background="{StaticResource RibbonBackgroundActive}">
+                <StackPanel VerticalAlignment="Stretch"
+                    Width="150">
+                  <TextBox HorizontalAlignment="Stretch"
+                      Margin="8,8,8,20"
+                      IsReadOnly="True"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding DisplayedMfiItems[0]}"/>
+                  <TextBox HorizontalAlignment="Stretch"
+                      Margin="8,0,8,20"
+                      IsReadOnly="True"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding DisplayedMfiItems[1]}"/>
+                  <TextBox HorizontalAlignment="Stretch"
+                      Margin="8,0,8,20"
+                      IsReadOnly="True"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding DisplayedMfiItems[2]}"/>
+                  <TextBox HorizontalAlignment="Stretch"
+                      Margin="8,0,8,20"
+                      IsReadOnly="True"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding DisplayedMfiItems[3]}"/>
+                  <TextBox HorizontalAlignment="Stretch"
+                      Margin="8,0,8,20"
+                      IsReadOnly="True"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding DisplayedMfiItems[4]}"/>
+                  <TextBox HorizontalAlignment="Stretch"
+                      Margin="8,0,8,20"
+                      IsReadOnly="True"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding DisplayedMfiItems[5]}"/>
+                  <TextBox HorizontalAlignment="Stretch"
+                      Margin="8,0,8,20"
+                      IsReadOnly="True"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding DisplayedMfiItems[6]}"/>
+                  <TextBox HorizontalAlignment="Stretch"
+                      Margin="8,0,8,20"
+                      IsReadOnly="True"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding DisplayedMfiItems[7]}"/>
+                  <TextBox HorizontalAlignment="Stretch"
+                      Margin="8,0,8,20"
+                      IsReadOnly="True"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding DisplayedMfiItems[8]}"/>
+                  <TextBox HorizontalAlignment="Stretch"
+                      Margin="8,0,8,8"
+                      IsReadOnly="True"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding DisplayedMfiItems[9]}"/>
+                </StackPanel>
+              </Border>
+            </StackPanel>
+            <StackPanel>
+              <TextBlock Text="{lang:Loc DataAn_CV}"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="36"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Center"
+                 Margin="0,0,0,4"/>
+              <Border Background="{StaticResource RibbonBackgroundActive}">
+                <StackPanel VerticalAlignment="Stretch"
+                    Width="150">
+                  <TextBox HorizontalAlignment="Stretch"
+                      Margin="8,8,8,20"
+                      IsReadOnly="True"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding DisplayedCvItems[0]}"/>
+                  <TextBox HorizontalAlignment="Stretch"
+                      Margin="8,0,8,20"
+                      IsReadOnly="True"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding DisplayedCvItems[1]}"/>
+                  <TextBox HorizontalAlignment="Stretch"
+                      Margin="8,0,8,20"
+                      IsReadOnly="True"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding DisplayedCvItems[2]}"/>
+                  <TextBox HorizontalAlignment="Stretch"
+                      Margin="8,0,8,20"
+                      IsReadOnly="True"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding DisplayedCvItems[3]}"/>
+                  <TextBox HorizontalAlignment="Stretch"
+                      Margin="8,0,8,20"
+                      IsReadOnly="True"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding DisplayedCvItems[4]}"/>
+                  <TextBox HorizontalAlignment="Stretch"
+                      Margin="8,0,8,20"
+                      IsReadOnly="True"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding DisplayedCvItems[5]}"/>
+                  <TextBox HorizontalAlignment="Stretch"
+                      Margin="8,0,8,20"
+                      IsReadOnly="True"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding DisplayedCvItems[6]}"/>
+                  <TextBox HorizontalAlignment="Stretch"
+                      Margin="8,0,8,20"
+                      IsReadOnly="True"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding DisplayedCvItems[7]}"/>
+                  <TextBox HorizontalAlignment="Stretch"
+                      Margin="8,0,8,20"
+                      IsReadOnly="True"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding DisplayedCvItems[8]}"/>
+                  <TextBox HorizontalAlignment="Stretch"
+                      Margin="8,0,8,8"
+                      IsReadOnly="True"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding DisplayedCvItems[9]}"/>
+                </StackPanel>
+              </Border>
+            </StackPanel>
+          </StackPanel>
+        </Border>
+        <dx:WaitIndicator DeferedVisibility="{Binding ResultsWaitIndicatorVisibility}" Content="Loading..."
+                          HorizontalAlignment="Left"
+                          VerticalAlignment="Top"
+                          Margin="120,400,0,0">
+          <dx:WaitIndicator.ContentTemplate>
+            <DataTemplate>
+              <StackPanel Orientation="Vertical">
+                <TextBlock Text="Please Wait" FontSize="20"/>
+                <TextBlock Text="{Binding}"/>
+              </StackPanel>
+            </DataTemplate>
+          </dx:WaitIndicator.ContentTemplate>
+        </dx:WaitIndicator>
+      </Grid>
+    </Border>
+
+    <!--Scatter-->
+    <Grid Width="740" Height="472"
+          VerticalAlignment="Top" HorizontalAlignment="Left"
+          Focusable="False">
+      <Views:ScatterChartView/>
+    </Grid>
+
+    <!--Analysis Chart-->
+    <!--<Grid Visibility="{Binding AnalysisVisible}">-->
+    <Grid Visibility="{Binding AnalysisVisible}"
+          MouseEnter="Plot3D_MouseEnter"
+          MouseLeave="Plot3D_MouseLeave">
+      <Rectangle Fill="{StaticResource AppBackground}"
+                 HorizontalAlignment="Left"
+                 VerticalAlignment="Top"
+                 Width="1250" Height="900"
+                 Margin="0,0,0,0"/>
+      <!--<Grid Visibility="{Binding Analysis3DVisible}">-->
+      <Grid Visibility="{Binding Analysis3DVisible}">
+        <dxc:Chart3DControl Width="1120" Height="850"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            BorderThickness="0" Name="AnalysisPlot"
+                            EnableRuntimeZooming="False"
+                            EnableRuntimeRotation="False"
+                            EnableRuntimeScrolling="False"
+                            ShowXOZPlane="False"
+                            ShowYOZPlane="False"
+                            ShowXOYPlane="True"
+                            ZoomPercent="117"
+                            Focusable="False"
+                            Margin="100,0,0,0">
+          <dxc:Chart3DControl.ContentTransform>
+            <MatrixTransform3D/>
+          </dxc:Chart3DControl.ContentTransform>
+          <dxc:Chart3DControl.Legends>
+            <dxc:Legend HorizontalPosition="Right"
+                        VerticalPosition="Top"
+                        Orientation="Vertical"
+                        BorderThickness="0">
+            </dxc:Legend>
+          </dxc:Chart3DControl.Legends>
+          <dxc:Chart3DControl.XAxis>
+            <dxc:XAxis3D Logarithmic="True" GridLinesMinorVisible="True"
+                         MinorCount="8" GridLinesMinorBrush="Gray"
+                         GridLinesBrush="Gray">
+              <dxc:XAxis3D.WholeRange>
+                <dxc:Range MinValue="10" MaxValue="35000"/>
+              </dxc:XAxis3D.WholeRange>
+              <dxc:XAxis3D.Title>
+                <dxc:AxisTitle Content="{Binding CLAxis[1]}"
+                               FontSize="40"
+                               Foreground="{StaticResource AppTextColor}"/>
+              </dxc:XAxis3D.Title>
+            </dxc:XAxis3D>
+          </dxc:Chart3DControl.XAxis>
+          <dxc:Chart3DControl.YAxis>
+            <dxc:YAxis3D Logarithmic="True" GridLinesMinorVisible="True" MinorCount="8"
+                         GridLinesMinorBrush="Gray" GridLinesBrush="Gray">
+              <dxc:YAxis3D.WholeRange>
+                <dxc:Range MinValue="10" MaxValue="35000"/>
+              </dxc:YAxis3D.WholeRange>
+              <dxc:YAxis3D.Title>
+                <dxc:AxisTitle Content="{Binding CLAxis[0]}"
+                               FontSize="40"
+                               Foreground="{StaticResource AppTextColor}"/>
+              </dxc:YAxis3D.Title>
+            </dxc:YAxis3D>
+          </dxc:Chart3DControl.YAxis>
+          <dxc:Chart3DControl.ZAxis>
+            <dxc:ZAxis3D Logarithmic="True">
+              <dxc:ZAxis3D.Label>
+                <dxc:AxisLabel Visible="False"/>
+              </dxc:ZAxis3D.Label>
+              <dxc:ZAxis3D.Title>
+                <dxc:AxisTitle Content=""
+                               FontSize="40" Visible="False"
+                               Foreground="{StaticResource AppTextColor}"/>
+              </dxc:ZAxis3D.Title>
+            </dxc:ZAxis3D>
+          </dxc:Chart3DControl.ZAxis>
+
+          <dxc:Series3DStorage>
+            <dxc:Series3D CrosshairEnabled="False"
+                          LabelsVisibility="False"
+                          CrosshairLabelVisibility="False">
+              <dxc:SeriesPoint3DDataSourceAdapter DataSource="{Binding AnalysisMap.DisplayedMap}"
+                                                  XArgumentDataMember="Y"
+                                                  YArgumentDataMember="X" 
+                                                  ValueDataMember="A"/>
+              <dxc:Series3D.View>
+                <dxc:Bar3DSeriesView EqualBarSize="True">
+                  <dxc:Bar3DSeriesView.Colorizer>
+                    <dxc:RangeColorizer3D ApproximateColors="True"
+                                          RangeStops="0 500 2000 4000 8000 16000 32000 64000">
+                      <dxc:RangeColorizer3D.Palette>
+                        <dxc:CustomPalette>
+                          <dxc:CustomPalette.Colors>
+                            <Color>#FF9400D3</Color>
+                            <Color>#FF4472C4</Color>
+                            <Color>#FF5B9BD5</Color>
+                            <Color>#FF70AD47</Color>
+                            <Color>#FFFFC000</Color>
+                            <Color>#FFED7D31</Color>
+                            <Color>#FFFF4500</Color>
+                            <Color>#FFFF0000</Color>
+                          </dxc:CustomPalette.Colors>
+                        </dxc:CustomPalette>
+                      </dxc:RangeColorizer3D.Palette>
+                    </dxc:RangeColorizer3D>
+                  </dxc:Bar3DSeriesView.Colorizer>
+                  <dxc:Bar3DSeriesView.BarSize>
+                    <dxc:Bar3DSize X="10.13" Z="1.5"/>
+                  </dxc:Bar3DSeriesView.BarSize>
+                  <dxc:Bar3DSeriesView.BarModel>
+                    <dxc:Bar3DOctagonPointModel ShowFacets="True"/>
+                  </dxc:Bar3DSeriesView.BarModel>
+                </dxc:Bar3DSeriesView>
+              </dxc:Series3D.View>
+            </dxc:Series3D>
+          </dxc:Series3DStorage>
+        </dxc:Chart3DControl>
+        <Button Width="50" Height="50"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top" Visibility="Hidden"
+                Margin="280,26,0,0" Name="printAnalysis"
+                Command="{Binding AnalysisPrintCommand}"
+                Style="{StaticResource PrintButtonStyle}"
+                img:EmbeddedImg.Image="{dx:DXImage 'SvgImages/XAF/Action_Export_ToImage.svg'}">
+        </Button>
+      </Grid>
+      <!--
+                <dxc:SurfaceSeriesView>
+                  <dxc:SurfaceSeriesView.BackFillStyle>
+                    <dxc:SolidFillStyle Brush="Black"/>
+                  </dxc:SurfaceSeriesView.BackFillStyle>
+                  <dxc:SurfaceSeriesView.FillStyle>
+                    <dxc:GradientFillStyle LegendTextPattern="{}{V}">
+                      <dxc:GradientFillStyle.ColorStops>
+                        <dxc:ColorStop Color="#FF4472C4" Offset="0%"/>
+                        <dxc:ColorStop Color="#FF5B9BD5" Offset="25%"/>
+                        <dxc:ColorStop Color="#FF70AD47" Offset="50%"/>
+                        <dxc:ColorStop Color="#FFFFC000" Offset="75%"/>
+                        <dxc:ColorStop Color="#FFED7D31" Offset="100%"/>
+                      </dxc:GradientFillStyle.ColorStops>
+                    </dxc:GradientFillStyle>
+                  </dxc:SurfaceSeriesView.FillStyle>
+                </dxc:SurfaceSeriesView>
+      -->
+    </Grid>
+
+    <!--Heatmap Chart-->
+    <!--<Grid Visibility="{Binding Analysis2DVisible}">-->
+    <Grid MouseEnter="XYPlot_MouseEnter"
+          MouseLeave="XYPlot_MouseLeave"
+          Visibility="{Binding Analysis2DVisible}">
+      <Rectangle Fill="{StaticResource AppBackground}"
+                 HorizontalAlignment="Left"
+                 VerticalAlignment="Top"
+                 Width="740" Height="428"
+                 Margin="0,472,0,0"/>
+      <dxc:ChartControl Width="660" Height="412"
+                      HorizontalAlignment="Left"
+                      VerticalAlignment="Top"
+                      BorderThickness="0" Name="XYPlot"
+                      Focusable="False"
+                      Margin="80,444,0,0">
+        <dxc:XYDiagram2D Focusable="False" Name="ChC"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Top">
+          <dxc:XYDiagram2D.AxisY>
+            <dxc:AxisY2D Logarithmic="True"
+                       GridLinesMinorVisible="True"
+                       MinorCount="8"
+                       Interlaced="False"
+                       TickmarksMinorVisible="False"
+                       FontFamily="{StaticResource AppTextFont}"
+                       TickmarksVisible="False">
+              <dxc:AxisY2D.Label>
+                <dxc:AxisLabel FontSize="24"/>
+              </dxc:AxisY2D.Label>
+              <dxc:AxisY2D.Title >
+                <dxc:AxisTitle Content="{Binding CLAxis[1]}"
+                             FontSize="30"
+                               Foreground="{StaticResource AppTextColor}"
+                             FontWeight="UltraBold"
+                             Visible="False"/>
+              </dxc:AxisY2D.Title>
+              <dxc:AxisY2D.WholeRange>
+                <dxc:Range MinValue="10"
+                           MaxValue="60000"
+                           AutoSideMargins="False"/>
+              </dxc:AxisY2D.WholeRange>
+              <dxc:AxisY2D.VisualRange>
+                <dxc:Range MinValue="10"
+                           MaxValue="60000"
+                           AutoSideMargins="False"/>
+              </dxc:AxisY2D.VisualRange>
+            </dxc:AxisY2D>
+          </dxc:XYDiagram2D.AxisY>
+          <dxc:XYDiagram2D.AxisX>
+            <dxc:AxisX2D Logarithmic="True"
+                       GridLinesMinorVisible="True"
+                       MinorCount="8"
+                       FontFamily="{StaticResource AppTextFont}"
+                       GridLinesVisible="True"
+                       TickmarksMinorVisible="False"
+                       TickmarksVisible="False">
+              <dxc:AxisX2D.Label>
+                <dxc:AxisLabel FontSize="24"/>
+              </dxc:AxisX2D.Label>
+              <dxc:AxisX2D.Title>
+                <dxc:AxisTitle Content="{Binding CLAxis[0]}"
+                               FontSize="30"
+                               Foreground="{StaticResource AppTextColor}"
+                               FontWeight="UltraBold"
+                               Visible="False"/>
+              </dxc:AxisX2D.Title>
+              <dxc:AxisX2D.WholeRange>
+                <dxc:Range MinValue="10"
+                           MaxValue="60000"
+                           AutoSideMargins="False"/>
+              </dxc:AxisX2D.WholeRange>
+              <dxc:AxisX2D.VisualRange>
+                <dxc:Range MinValue="10"
+                           MaxValue="60000"
+                           AutoSideMargins="False"/>
+              </dxc:AxisX2D.VisualRange>
+            </dxc:AxisX2D>
+          </dxc:XYDiagram2D.AxisX>
+          <dxc:PointSeries2D DataSource="{Binding WrldMap.DisplayedWorldMap}"
+                             ArgumentDataMember="X"
+                             ValueDataMember="Y"
+                             CrosshairContentShowMode="Legend"
+                             MarkerSize="5" Name="WldMap"
+                             Brush="LightGray">
+            <dxc:PointSeries2D.MarkerModel>
+              <dxc:BorderlessSimpleMarker2DModel/>
+            </dxc:PointSeries2D.MarkerModel>
+          </dxc:PointSeries2D>
+          <dxc:PointSeries2D Name="HeatMap"
+                             DisplayName="HeatMap"
+                             MarkerSize="3">
+            <dxc:PointSeries2D.MarkerModel>
+              <dxc:BorderlessSimpleMarker2DModel/>
+            </dxc:PointSeries2D.MarkerModel>
+          </dxc:PointSeries2D>
+          <dxc:PointSeries2D Name="LargeHeatMap"
+                             DisplayName="LHeatMap"
+                             MarkerSize="3">
+            <dxc:PointSeries2D.MarkerModel>
+              <dxc:BorderlessSimpleMarker2DModel/>
+            </dxc:PointSeries2D.MarkerModel>
+          </dxc:PointSeries2D>
+        </dxc:XYDiagram2D>
+      </dxc:ChartControl>
+      <Button Width="50" Height="50"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top" Visibility="Hidden"
+            Margin="175,470,0,0" Name="printXY"
+            Command="{Binding XYprintCommand}"
+            Style="{StaticResource PrintButtonStyle}"
+            img:EmbeddedImg.Image="{dx:DXImage 'SvgImages/XAF/Action_Export_ToImage.svg'}">
+      </Button>
+    </Grid>
+
+    <Grid Visibility="{Binding AnalysisVisible}">
+      <dx:WaitIndicator DeferedVisibility="{Binding ChartWaitIndicatorVisibility}"
+                        Content="Loading..."
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Margin="560,380,0,0">
+        <dx:WaitIndicator.ContentTemplate>
+          <DataTemplate>
+            <StackPanel Orientation="Vertical">
+              <TextBlock Text="Please Wait" FontSize="20"/>
+              <TextBlock Text="{Binding}"/>
+            </StackPanel>
+          </DataTemplate>
+        </dx:WaitIndicator.ContentTemplate>
+      </dx:WaitIndicator>
+      <StackPanel Margin="30,60,0,0"
+                  Width="240"
+                  HorizontalAlignment="Left"
+                  VerticalAlignment="Top">
+        <RadioButton Content="{lang:Loc Analysis_Plot2D}"
+                     Height="84" Name="Plot2DButton"
+                     img:EmbeddedImg.Image="{dx:DXImage 'SvgImages/XAF/Action_Debug_Stop.svg'}"
+                     Style="{DynamicResource SubRibbonButtonStyle}"
+                     Command="{Binding Show2DCommand}"
+                     Opacity="0.6"/>
+        <RadioButton Content="{lang:Loc Analysis_Plot3D}"
+                     Height="84" Name="Plot3DButton"
+                     IsChecked="True"
+                     img:EmbeddedImg.Image="{dx:DXImage 'SvgImages/XAF/ModelEditor_Class_Object.svg'}"
+                     Style="{DynamicResource SubRibbonButtonStyle}"
+                     Command="{Binding Show3DCommand}"
+                     Opacity="0.6"/>
+      </StackPanel>
+    </Grid>
+
+    <!--Cl0-3Y Buttons-->
+    <StackPanel HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Margin="15,550,0,0">
+      <RadioButton Width="80" Height="50"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Content="CL0" 
+                   FontSize="35" Cursor="Hand"
+                   IsChecked="{Binding CLButtonsChecked[0], Mode=OneWay}"
+                   Style="{StaticResource RadioButtonHorizontalThemeStyle}"
+                   Command="{Binding CLButtonClickCommand}">
+        <RadioButton.CommandParameter>
+          <system:Int32>0</system:Int32>
+        </RadioButton.CommandParameter>
+      </RadioButton>
+      <RadioButton Width="80" Height="50"
+                   Margin="0,6,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Content="{Binding XYPlot_DataChannel1Name}"
+                   FontSize="35" Cursor="Hand"
+                   IsChecked="{Binding CLButtonsChecked[1], Mode=OneWay}"
+                   Style="{StaticResource RadioButtonHorizontalThemeStyle}"
+                   Command="{Binding CLButtonClickCommand}">
+        <RadioButton.CommandParameter>
+          <system:Int32>1</system:Int32>
+        </RadioButton.CommandParameter>
+      </RadioButton>
+      <RadioButton Width="80" Height="50"
+                   Margin="0,6,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Content="{Binding XYPlot_DataChannel2Name}"
+                   FontSize="35" Cursor="Hand"
+                   IsChecked="{Binding CLButtonsChecked[2], Mode=OneWay}"
+                   Style="{StaticResource RadioButtonHorizontalThemeStyle}"
+                   Command="{Binding CLButtonClickCommand}">
+        <RadioButton.CommandParameter>
+          <system:Int32>2</system:Int32>
+        </RadioButton.CommandParameter>
+      </RadioButton>
+      <RadioButton Width="80" Height="50"
+                   Margin="0,6,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Content="CL3"
+                   FontSize="35" Cursor="Hand"
+                   IsChecked="{Binding CLButtonsChecked[3], Mode=OneWay}"
+                   Style="{StaticResource RadioButtonHorizontalThemeStyle}"
+                   Command="{Binding CLButtonClickCommand}">
+        <RadioButton.CommandParameter>
+          <system:Int32>3</system:Int32>
+        </RadioButton.CommandParameter>
+      </RadioButton>
+    </StackPanel>
+    <!--Cl0-3X Buttons-->
+    <StackPanel Orientation="Horizontal"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Margin="250,850,0,0">
+      <RadioButton Width="80" Height="50"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Content="CL0"
+                   FontSize="35" Cursor="Hand"
+                   IsChecked="{Binding CLButtonsChecked[4], Mode=OneWay}"
+                   Style="{StaticResource RadioButtonHorizontalThemeStyle}"
+                   Command="{Binding CLButtonClickCommand}">
+        <RadioButton.CommandParameter>
+          <system:Int32>4</system:Int32>
+        </RadioButton.CommandParameter>
+      </RadioButton>
+      <RadioButton Width="80" Height="50"
+                   Margin="6,0,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Content="{Binding XYPlot_DataChannel1Name}"
+                   FontSize="35" Cursor="Hand"
+                   IsChecked="{Binding CLButtonsChecked[5], Mode=OneWay}"
+                   Style="{StaticResource RadioButtonHorizontalThemeStyle}"
+                   Command="{Binding CLButtonClickCommand}">
+        <RadioButton.CommandParameter>
+          <system:Int32>5</system:Int32>
+        </RadioButton.CommandParameter>
+      </RadioButton>
+      <RadioButton Width="80" Height="50"
+                   Margin="6,0,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Content="{Binding XYPlot_DataChannel2Name}"
+                   FontSize="35" Cursor="Hand"
+                   IsChecked="{Binding CLButtonsChecked[6], Mode=OneWay}"
+                   Style="{StaticResource RadioButtonHorizontalThemeStyle}"
+                   Command="{Binding CLButtonClickCommand}">
+        <RadioButton.CommandParameter>
+          <system:Int32>6</system:Int32>
+        </RadioButton.CommandParameter>
+      </RadioButton>
+      <RadioButton Width="80" Height="50"
+                   Margin="6,0,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Content="CL3"
+                   FontSize="35" Cursor="Hand"
+                   IsChecked="{Binding CLButtonsChecked[7], Mode=OneWay}"
+                   Style="{StaticResource RadioButtonHorizontalThemeStyle}"
+                   Command="{Binding CLButtonClickCommand}">
+        <RadioButton.CommandParameter>
+          <system:Int32>7</system:Int32>
+        </RadioButton.CommandParameter>
+      </RadioButton>
+    </StackPanel>
+
+    <!-- Company Logo Left -->
+    <Image HorizontalAlignment="Left" VerticalAlignment="Top"
+           Margin="10,898,0,0" Name="InstrumentLogo"
+           Width="430" Height="40"
+           Source="/Icons/dimension flow analyzer logo.png"
+           RenderOptions.BitmapScalingMode="HighQuality"/>
+
+    <!--Plate pictogram-->
+    <Grid Width="660" Height="524"
+          Margin="1250,372,0,0"
+          HorizontalAlignment="Left"
+          VerticalAlignment="Top">
+      <Views:PlatePictogramView/>
+    </Grid>
+
+  </Grid>
+</UserControl>

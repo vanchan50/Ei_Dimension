@@ -1,8 +1,4 @@
-﻿using Xunit;
-using FluentAssertions;
-using System.IO;
-using System;
-using DIOS.Core;
+﻿using DIOS.Core;
 
 namespace DIOS.Application.Tests
 {

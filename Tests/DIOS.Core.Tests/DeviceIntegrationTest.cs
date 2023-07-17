@@ -1,9 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Threading;
-using Xunit;
-using DIOS.Core;
-
 namespace DIOS.Core.Tests
 {
   public class DeviceIntegrationTest

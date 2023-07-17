@@ -1,7 +1,4 @@
-﻿using System;
-using System.Threading;
-
-namespace DIOS.Core.Tests
+﻿namespace DIOS.Core.Tests
 {
   public class FakeUSBConnection : ISerial
   {

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using DIOS.Core;
-using FluentAssertions;
-using Xunit;
+﻿using DIOS.Core;
 using Xunit.Abstractions;
 
 namespace DIOS.Application.Tests

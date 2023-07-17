@@ -1,0 +1,67 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33213.308
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DIOS", "DIOS\DIOS.csproj", "{144670CB-6396-488C-A76D-2E03A3B69E78}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinUSBNet", "winusbnet-2.1.0\WinUSBNet\WinUSBNet.csproj", "{3AD313DD-C46B-4127-B5E1-4A8D9CB81563}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DIOS.Core", "DIOS.Core\DIOS.Core.csproj", "{B4DFEDC6-095E-4AAD-945E-7D23A05FDEF0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DIOS.Application", "DIOS.Application\DIOS.Application.csproj", "{96204C93-14E8-433E-9314-09C259836CDB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Language", "Language\Language.csproj", "{6633AD6C-C85F-46A3-BF66-492D4CDCA42C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DIOS.Application.Tests", "Tests\DIOS.Application.Tests\DIOS.Application.Tests.csproj", "{18A83D57-DFF7-4297-AA7A-27E7EFD4B48A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{F168471F-8AFD-4D11-BA03-3DD3C115FFB5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DIOS.Core.Tests", "Tests\DIOS.Core.Tests\DIOS.Core.Tests.csproj", "{571EB7EF-2473-4931-93D0-0679B9C93A29}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{144670CB-6396-488C-A76D-2E03A3B69E78}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{144670CB-6396-488C-A76D-2E03A3B69E78}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{144670CB-6396-488C-A76D-2E03A3B69E78}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{144670CB-6396-488C-A76D-2E03A3B69E78}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3AD313DD-C46B-4127-B5E1-4A8D9CB81563}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3AD313DD-C46B-4127-B5E1-4A8D9CB81563}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3AD313DD-C46B-4127-B5E1-4A8D9CB81563}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3AD313DD-C46B-4127-B5E1-4A8D9CB81563}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B4DFEDC6-095E-4AAD-945E-7D23A05FDEF0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4DFEDC6-095E-4AAD-945E-7D23A05FDEF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4DFEDC6-095E-4AAD-945E-7D23A05FDEF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4DFEDC6-095E-4AAD-945E-7D23A05FDEF0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{96204C93-14E8-433E-9314-09C259836CDB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96204C93-14E8-433E-9314-09C259836CDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96204C93-14E8-433E-9314-09C259836CDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96204C93-14E8-433E-9314-09C259836CDB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6633AD6C-C85F-46A3-BF66-492D4CDCA42C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6633AD6C-C85F-46A3-BF66-492D4CDCA42C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6633AD6C-C85F-46A3-BF66-492D4CDCA42C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6633AD6C-C85F-46A3-BF66-492D4CDCA42C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18A83D57-DFF7-4297-AA7A-27E7EFD4B48A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18A83D57-DFF7-4297-AA7A-27E7EFD4B48A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18A83D57-DFF7-4297-AA7A-27E7EFD4B48A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18A83D57-DFF7-4297-AA7A-27E7EFD4B48A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{571EB7EF-2473-4931-93D0-0679B9C93A29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{571EB7EF-2473-4931-93D0-0679B9C93A29}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{571EB7EF-2473-4931-93D0-0679B9C93A29}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{571EB7EF-2473-4931-93D0-0679B9C93A29}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{18A83D57-DFF7-4297-AA7A-27E7EFD4B48A} = {F168471F-8AFD-4D11-BA03-3DD3C115FFB5}
+		{571EB7EF-2473-4931-93D0-0679B9C93A29} = {F168471F-8AFD-4D11-BA03-3DD3C115FFB5}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3DFEB680-B2EC-405C-8C1B-9E31C5D8C2CF}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,419 @@
+﻿<UserControl x:Class="Ei_Dimension.Views.ChannelsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+             xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
+             xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+             xmlns:ViewModels="clr-namespace:Ei_Dimension.ViewModels"
+             xmlns:lang="clr-namespace:Ei_Dimension.Language;assembly=Language"
+             mc:Ignorable="d"
+             DataContext="{dxmvvm:ViewModelSource Type=ViewModels:ChannelsViewModel}"
+             d:DesignHeight="944" d:DesignWidth="1632">
+  <Grid>
+    <TextBlock Text="{lang:Loc Maintenance_Channels}"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="50"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Left"
+                 VerticalAlignment="Top"
+                 Margin="540,20,250,0"/>
+
+    <Border HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Margin="100,120,0,00">
+      <StackPanel Orientation="Horizontal"
+                  HorizontalAlignment="Stretch"
+                  VerticalAlignment="Stretch"
+                  Margin="10,0,10,0">
+        <StackPanel VerticalAlignment="Stretch"
+                    Margin="0,51,3,0"
+                    Width="300">
+          <TextBlock Text="{Binding Labels[0]}"
+                     FontFamily="{StaticResource AppTextFont}"
+                     FontSize="36"
+                     FontWeight="UltraBold"
+                     Foreground="{StaticResource AppTextColor}"
+                     HorizontalAlignment="Right"
+                     VerticalAlignment="Top"
+                     Margin="0,0,4,0"/>
+          <TextBlock Text="{Binding Labels[1]}"
+                     FontFamily="{StaticResource AppTextFont}"
+                     FontSize="36"
+                     FontWeight="UltraBold"
+                     Foreground="{StaticResource AppTextColor}"
+                     HorizontalAlignment="Right"
+                     VerticalAlignment="Top"
+                     Margin="0,20,4,0"/>
+          <TextBlock Text="{Binding Labels[2]}"
+                     FontFamily="{StaticResource AppTextFont}"
+                     FontSize="36"
+                     FontWeight="UltraBold"
+                     Foreground="{StaticResource AppTextColor}"
+                     HorizontalAlignment="Right"
+                     VerticalAlignment="Top"
+                     Margin="0,20,4,0"/>
+          <TextBlock Text="{Binding Labels[3]}"
+                     FontFamily="{StaticResource AppTextFont}"
+                     FontSize="36"
+                     FontWeight="UltraBold"
+                     Foreground="{StaticResource AppTextColor}"
+                     HorizontalAlignment="Right"
+                     VerticalAlignment="Top"
+                     Margin="0,18,4,0"/>
+          <TextBlock Text="{Binding Labels[4]}"
+                     FontFamily="{StaticResource AppTextFont}"
+                     FontSize="36"
+                     FontWeight="UltraBold"
+                     Foreground="{StaticResource AppTextColor}"
+                     HorizontalAlignment="Right"
+                     VerticalAlignment="Top"
+                     Margin="0,20,4,0"/>
+          <TextBlock Text="{Binding Labels[5]}"
+                     FontFamily="{StaticResource AppTextFont}"
+                     FontSize="36"
+                     FontWeight="UltraBold"
+                     Foreground="{StaticResource AppTextColor}"
+                     HorizontalAlignment="Right"
+                     VerticalAlignment="Top"
+                     Margin="0,20,4,0"/>
+          <TextBlock Text="{Binding Labels[6]}"
+                     FontFamily="{StaticResource AppTextFont}"
+                     FontSize="36"
+                     FontWeight="UltraBold"
+                     Foreground="{StaticResource AppTextColor}"
+                     HorizontalAlignment="Right"
+                     VerticalAlignment="Top"
+                     Margin="0,20,4,0"/>
+          <TextBlock Text="{Binding Labels[7]}"
+                     FontFamily="{StaticResource AppTextFont}"
+                     FontSize="36"
+                     FontWeight="UltraBold"
+                     Foreground="{StaticResource AppTextColor}"
+                     HorizontalAlignment="Right"
+                     VerticalAlignment="Top"
+                     Margin="0,18,4,0"/>
+          <TextBlock Text="{Binding Labels[8]}"
+                     FontFamily="{StaticResource AppTextFont}"
+                     FontSize="36"
+                     FontWeight="UltraBold"
+                     Foreground="{StaticResource AppTextColor}"
+                     HorizontalAlignment="Right"
+                     VerticalAlignment="Top"
+                     Margin="0,18,4,0"/>
+          <TextBlock Text="{Binding Labels[9]}"
+                     FontFamily="{StaticResource AppTextFont}"
+                     FontSize="36"
+                     FontWeight="UltraBold"
+                     Foreground="{StaticResource AppTextColor}"
+                     HorizontalAlignment="Right"
+                     VerticalAlignment="Top"
+                     Margin="0,19,4,0"/>
+        </StackPanel>
+        <StackPanel VerticalAlignment="Stretch"
+                    Width="190">
+          <TextBlock Text="{lang:Loc Channels_Bias}"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="33"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Center"
+                 VerticalAlignment="Top"
+                 Margin="0,0,0,3"/>
+          <Border Background="{StaticResource RibbonBackgroundActive}">
+            <StackPanel Name="SP">
+              <TextBox HorizontalAlignment="Stretch"
+                       Margin="10,10,5,24"
+                       Style="{StaticResource InputFieldStyle}"
+                       Text="{Binding Bias30Parameters[0]}">
+                <dxmvvm:Interaction.Behaviors>
+                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="0"/>
+                  <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+                </dxmvvm:Interaction.Behaviors>
+              </TextBox>
+              <TextBox HorizontalAlignment="Stretch"
+                      Margin="10,0,5,24"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding Bias30Parameters[1]}">
+                <dxmvvm:Interaction.Behaviors>
+                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="1"/>
+                  <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+                </dxmvvm:Interaction.Behaviors>
+              </TextBox>
+              <TextBox HorizontalAlignment="Stretch"
+                      Margin="10,0,5,24"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding Bias30Parameters[2]}">
+                <dxmvvm:Interaction.Behaviors>
+                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="2"/>
+                  <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+                </dxmvvm:Interaction.Behaviors>
+              </TextBox>
+              <TextBox HorizontalAlignment="Stretch"
+                      Margin="10,0,5,24"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding Bias30Parameters[3]}">
+                <dxmvvm:Interaction.Behaviors>
+                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="3"/>
+                  <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+                </dxmvvm:Interaction.Behaviors>
+              </TextBox>
+              <TextBox HorizontalAlignment="Stretch"
+                      Margin="10,0,5,24"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding Bias30Parameters[4]}">
+                <dxmvvm:Interaction.Behaviors>
+                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="4"/>
+                  <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+                </dxmvvm:Interaction.Behaviors>
+              </TextBox>
+              <TextBox HorizontalAlignment="Stretch"
+                      Margin="10,0,5,24"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding Bias30Parameters[5]}">
+                <dxmvvm:Interaction.Behaviors>
+                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="5"/>
+                  <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+                </dxmvvm:Interaction.Behaviors>
+              </TextBox>
+              <TextBox HorizontalAlignment="Stretch"
+                      Margin="10,0,5,24"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding Bias30Parameters[6]}">
+                <dxmvvm:Interaction.Behaviors>
+                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="6"/>
+                  <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+                </dxmvvm:Interaction.Behaviors>
+              </TextBox>
+              <TextBox HorizontalAlignment="Stretch"
+                      Margin="10,0,5,24"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding Bias30Parameters[7]}">
+                <dxmvvm:Interaction.Behaviors>
+                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="7"/>
+                  <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+                </dxmvvm:Interaction.Behaviors>
+              </TextBox>
+              <TextBox HorizontalAlignment="Stretch"
+                      Margin="10,0,5,24"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding Bias30Parameters[8]}">
+                <dxmvvm:Interaction.Behaviors>
+                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="8"/>
+                  <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+                </dxmvvm:Interaction.Behaviors>
+              </TextBox>
+              <TextBox HorizontalAlignment="Stretch"
+                      Margin="10,0,5,10"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding Bias30Parameters[9]}">
+                <dxmvvm:Interaction.Behaviors>
+                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="9"/>
+                  <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+                </dxmvvm:Interaction.Behaviors>
+              </TextBox>
+            </StackPanel>
+          </Border>
+        </StackPanel>
+        <StackPanel VerticalAlignment="Stretch"
+                    Width="190">
+          <TextBlock Text="{lang:Loc Channels_Tcomp_Bias}"
+                     FontFamily="{StaticResource AppTextFont}"
+                     FontSize="33"
+                     FontWeight="UltraBold"
+                     Foreground="{StaticResource AppTextColor}"
+                     HorizontalAlignment="Center"
+                     VerticalAlignment="Top"
+                     Margin="0,0,0,3"/>
+          <Border Background="{StaticResource RibbonBackgroundActive}">
+            <StackPanel>
+              <TextBox HorizontalAlignment="Stretch"
+                       Margin="5,10,5,24"
+                       IsReadOnly="True"
+                       Style="{StaticResource InputFieldStyle}"
+                       Text="{Binding TcompBiasParameters[0]}"/>
+              <TextBox HorizontalAlignment="Stretch"
+                      Margin="5,0,5,24"
+                      IsReadOnly="True"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding TcompBiasParameters[1]}"/>
+              <TextBox HorizontalAlignment="Stretch"
+                      Margin="5,0,5,24"
+                      IsReadOnly="True"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding TcompBiasParameters[2]}"/>
+              <TextBox HorizontalAlignment="Stretch"
+                      Margin="5,0,5,24"
+                      IsReadOnly="True"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding TcompBiasParameters[3]}"/>
+              <TextBox HorizontalAlignment="Stretch"
+                      Margin="5,0,5,24"
+                      IsReadOnly="True"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding TcompBiasParameters[4]}"/>
+              <TextBox HorizontalAlignment="Stretch"
+                      Margin="5,0,5,24"
+                      IsReadOnly="True"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding TcompBiasParameters[5]}"/>
+              <TextBox HorizontalAlignment="Stretch"
+                      Margin="5,0,5,24"
+                      IsReadOnly="True"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding TcompBiasParameters[6]}"/>
+              <TextBox HorizontalAlignment="Stretch"
+                      Margin="5,0,5,24"
+                      IsReadOnly="True"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding TcompBiasParameters[7]}"/>
+              <TextBox HorizontalAlignment="Stretch"
+                      Margin="5,0,5,24"
+                      IsReadOnly="True"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding TcompBiasParameters[8]}"/>
+              <TextBox HorizontalAlignment="Stretch"
+                       Margin="5,0,5,10"
+                       IsReadOnly="True"
+                       Style="{StaticResource InputFieldStyle}"
+                       Text="{Binding TcompBiasParameters[9]}"/>
+            </StackPanel>
+          </Border>
+        </StackPanel>
+        <StackPanel VerticalAlignment="Stretch"
+                    Width="190">
+          <TextBlock Text="{lang:Loc Temp}"
+                     FontFamily="{StaticResource AppTextFont}"
+                     FontSize="33"
+                     FontWeight="UltraBold"
+                     Foreground="{StaticResource AppTextColor}"
+                     HorizontalAlignment="Center"
+                     VerticalAlignment="Top"
+                     Margin="0,0,0,3"/>
+          <Border Background="{StaticResource RibbonBackgroundActive}">
+            <StackPanel>
+              <TextBox HorizontalAlignment="Stretch"
+                       Margin="5,10,5,24"
+                       IsReadOnly="True"
+                       Style="{StaticResource InputFieldStyle}"
+                       Text="{Binding TempParameters[0]}"/>
+              <TextBox HorizontalAlignment="Stretch"
+                       Margin="5,0,5,24"
+                       IsReadOnly="True"
+                       Style="{StaticResource InputFieldStyle}"
+                       Text="{Binding TempParameters[1]}"/>
+              <TextBox HorizontalAlignment="Stretch"
+                       Margin="5,0,5,24"
+                       IsReadOnly="True"
+                       Style="{StaticResource InputFieldStyle}"
+                       Text="{Binding TempParameters[2]}"/>
+              <TextBox HorizontalAlignment="Stretch"
+                       Margin="5,0,5,24"
+                       IsReadOnly="True"
+                       Style="{StaticResource InputFieldStyle}"
+                       Text="{Binding TempParameters[3]}"/>
+              <TextBox HorizontalAlignment="Stretch"
+                       Margin="5,0,5,24"
+                       IsReadOnly="True"
+                       Style="{StaticResource InputFieldStyle}"
+                       Text="{Binding TempParameters[4]}"/>
+              <TextBox HorizontalAlignment="Stretch"
+                       Margin="5,0,5,24"
+                       IsReadOnly="True"
+                       Style="{StaticResource InputFieldStyle}"
+                       Text="{Binding TempParameters[5]}"/>
+              <TextBox HorizontalAlignment="Stretch"
+                       Margin="5,0,5,24"
+                       IsReadOnly="True"
+                       Style="{StaticResource InputFieldStyle}"
+                       Text="{Binding TempParameters[6]}"/>
+              <TextBox HorizontalAlignment="Stretch"
+                       Margin="5,0,5,24"
+                       IsReadOnly="True"
+                       Style="{StaticResource InputFieldStyle}"
+                       Text="{Binding TempParameters[7]}"/>
+              <TextBox HorizontalAlignment="Stretch"
+                       Margin="5,0,5,24"
+                       IsReadOnly="True"
+                       Style="{StaticResource InputFieldStyle}"
+                       Text="{Binding TempParameters[8]}"/>
+              <TextBox HorizontalAlignment="Stretch"
+                       Margin="5,0,5,10"
+                       IsReadOnly="True"
+                       Style="{StaticResource InputFieldStyle}"
+                       Text="{Binding TempParameters[9]}"/>
+            </StackPanel>
+          </Border>
+        </StackPanel>
+        <StackPanel VerticalAlignment="Stretch"
+                    Width="220"
+                    Margin="30,55,0,0">
+          <Button Content="{lang:Loc Channels_Update_Bias}"
+                  Command="{Binding UpdateBiasButtonClickCommand}"
+                  Style="{StaticResource ButtonStyle}"
+                  Height="85" Cursor="Hand"
+                  Margin="0,0,0,6"/>
+          <Button Content="{lang:Loc Channels_Save_Bias_To_Map}"
+                  Command="{Binding SaveBiasButtonClickCommand}"
+                  Style="{StaticResource ButtonStyle}"
+                  Height="150" Cursor="Hand"
+                  Margin="0,0,0,3"/>
+          <Border HorizontalAlignment="Left"
+                  VerticalAlignment="Top"
+                  x:Name="clmap">
+            <StackPanel>
+              <TextBlock Text="{lang:Loc Experiment_Classific_Map}"
+                         FontFamily="{StaticResource AppTextFont}"
+                         FontSize="26"
+                         FontWeight="UltraBold"
+                         Foreground="{StaticResource AppTextColor}"
+                         HorizontalAlignment="Center"
+                         VerticalAlignment="Top"
+                         Margin="0,16,0,3"/>
+              <dx:DropDownButton Width="170" Name="MapSelectr"
+                                 Height="80" Cursor="Hand"
+                                 FontSize="25" Command="{Binding DropPressCommand}"
+                                 HorizontalAlignment="Center"
+                                 dxb:BarManager.ShowGlyphsInPopupMenus="False"
+                                 FontFamily="{StaticResource AppTextFont}"
+                                 Foreground="{StaticResource AppTextColor}"
+                                 Content="{Binding SelectedClassiMapContent}">
+                <dxb:PopupControlContainer>
+                  <ScrollViewer MaxHeight="600">
+                    <dxb:MenuBarControl>
+                      <dxb:MenuBarControl.Menu>
+                        <dxb:PopupMenu ItemLinksSource="{Binding ClassiMapItems}">
+                          <dxb:PopupMenu.ItemTemplate>
+                            <DataTemplate>
+                              <ContentControl>
+                                <dxb:BarButtonItem Content="{Binding Content}"  
+                                                   ItemClick="{DXEvent Click((int)2)}">
+                                  <dxb:BarButtonItem.ContentTemplate>
+                                    <DataTemplate>
+                                      <Grid Width="130">
+                                        <TextBlock Text="{Binding}" HorizontalAlignment="Center"
+                                                   FontFamily="{StaticResource AppTextFont}"
+                                                   Foreground="{StaticResource AppTextColor}"
+                                                   FontSize="25"/>
+                                      </Grid>
+                                    </DataTemplate>
+                                  </dxb:BarButtonItem.ContentTemplate>
+                                </dxb:BarButtonItem>
+                              </ContentControl>
+                            </DataTemplate>
+                          </dxb:PopupMenu.ItemTemplate>
+                        </dxb:PopupMenu>
+                      </dxb:MenuBarControl.Menu>
+                    </dxb:MenuBarControl>
+                  </ScrollViewer>
+                </dxb:PopupControlContainer>
+              </dx:DropDownButton>
+            </StackPanel>
+          </Border>
+        </StackPanel>
+      </StackPanel>
+    </Border>
+  </Grid>
+</UserControl>
