@@ -71,6 +71,15 @@
                        HorizontalAlignment="Left"
                        VerticalAlignment="Top"
                        Margin="0,90,0,0"/>
+            <Button Content="{lang:Loc Experiment_Scan}"
+                    Style="{StaticResource ButtonStyle}"
+                    Command="{Binding ScanButtonClickCommand}"
+                    Visibility="{Binding ScanButtonVisibility}"
+                    Height="160" Width="160"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Background="DarkOrange"
+                    Margin="0,0,12,0"/>
           </Grid>
           <Grid>
             <Button Content="{lang:Loc Experiment_Start}"
@@ -80,7 +89,7 @@
                   IsEnabled="{Binding StartButtonEnabled}"
                   HorizontalAlignment="Center"
                   VerticalAlignment="Center"
-                  Background="ForestGreen"/>
+                  Background="{Binding StartButtonColor}"/>
             <TextBlock Text="{Binding Flavor[0]}"
                        Width="160" IsHitTestVisible="False"
                        FontFamily="{StaticResource AppTextFont}"
@@ -90,14 +99,6 @@
                        HorizontalAlignment="Left"
                        VerticalAlignment="Top"
                        Margin="0,90,0,0"/>
-            <Button Content="{lang:Loc Experiment_Scan}"
-                    Style="{StaticResource ButtonStyle}"
-                    Command="{Binding ScanButtonClickCommand}"
-                    Visibility="{Binding ScanButtonVisibility}"
-                    Height="160" Width="160"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Background="DarkOrange"/>
           </Grid>
         </StackPanel>
         <StackPanel Orientation="Horizontal"
@@ -114,8 +115,7 @@
                   Command="{Binding LoadButtonClickCommand}"
                   Height="160" Width="160"
                   HorizontalAlignment="Center"
-                  VerticalAlignment="Center"
-                  Cursor="Hand"/>
+                  VerticalAlignment="Center"/>
         </StackPanel>
       </StackPanel>
     </Border>

@@ -8,6 +8,7 @@ using Ei_Dimension.Controllers;
 using DIOS.Application;
 using System.Windows;
 using System.Threading;
+using System.Windows.Media;
 
 namespace Ei_Dimension.ViewModels
 {
@@ -19,6 +20,9 @@ namespace Ei_Dimension.ViewModels
     public virtual ObservableCollection<string> ActiveList { get; set; }
     public virtual ObservableCollection<string> Flavor { get; set; }
     public virtual Visibility ScanButtonVisibility { get; set; } = Visibility.Collapsed;
+    public virtual SolidColorBrush StartButtonColor { get; set; } = _inactiveColorBrush;
+    private static SolidColorBrush _inactiveColorBrush = Brushes.DimGray;
+    private static SolidColorBrush _activeColorBrush = Brushes.ForestGreen;
     private int _scanOngoing;
     protected MainButtonsViewModel()
     {
@@ -67,8 +71,7 @@ namespace Ei_Dimension.ViewModels
       if (success)
       {
         DashboardViewModel.Instance.WorkOrder[0] = data;
-        StartButtonEnabled = true;
-        HideScanButton();
+        EnableStartButton(true);
       }
       _scanOngoing = 0;
     }
@@ -85,9 +88,16 @@ namespace Ei_Dimension.ViewModels
       ScanButtonVisibility = Visibility.Collapsed;
     }
 
+    public void EnableStartButton(bool enable)
+    {
+      StartButtonEnabled = enable;
+      StartButtonColor = enable ? _activeColorBrush : _inactiveColorBrush;
+    }
+
     public void StartButtonClick()
     {
       UserInputHandler.InputSanityCheck();
+      HideScanButton();
       //TODO: contains 0 can never happen here
       if (App.DiosApp.Terminator.TerminationType == Termination.MinPerRegion
           && !MapRegionsController.AreThereActiveRegions())
@@ -149,7 +159,7 @@ namespace Ei_Dimension.ViewModels
       }
       MainViewModel.Instance.NavigationSelector(1);
 
-      StartButtonEnabled = false;
+      EnableStartButton(false);
       ResultsViewModel.Instance.ClearGraphs();
       PlatePictogramViewModel.Instance.PlatePictogram.Clear();
       ResultsViewModel.Instance.PlotCurrent();

@@ -94,13 +94,13 @@ namespace Ei_Dimension
       if (DiosApp.Control == SystemControl.WorkOrder)
       {
         ExperimentViewModel.Instance.WellSelectVisible = Visibility.Hidden;
-        MainButtonsViewModel.Instance.StartButtonEnabled = false;
+        MainButtonsViewModel.Instance.EnableStartButton(false);
         MainButtonsViewModel.Instance.ShowScanButton();
       }
       else
       {
         ExperimentViewModel.Instance.WellSelectVisible = Visibility.Visible;
-        MainButtonsViewModel.Instance.StartButtonEnabled = true;
+        MainButtonsViewModel.Instance.EnableStartButton(true);
         MainButtonsViewModel.Instance.HideScanButton();
       }
     }
@@ -303,8 +303,7 @@ namespace Ei_Dimension
       {
         DiosApp.Publisher.PlateReportFile.CreateAndWrite(plateReportJson, DiosApp.WorkOrder.plateID.ToString());
       }
-
-      MainButtonsViewModel.Instance.StartButtonEnabled = true;
+      
       PlatePictogramViewModel.Instance.PlatePictogram.CurrentlyReadCell = (-1, -1);
       switch (DiosApp.Device.Mode)
       {
@@ -344,8 +343,12 @@ namespace Ei_Dimension
 
       if (DiosApp.Control == SystemControl.WorkOrder)
       {
-        MainButtonsViewModel.Instance.StartButtonEnabled = false;
+        MainButtonsViewModel.Instance.EnableStartButton(false);
         MainButtonsViewModel.Instance.ShowScanButton();
+      }
+      else
+      {
+        MainButtonsViewModel.Instance.EnableStartButton(true);
       }
     }
 
@@ -557,9 +560,9 @@ namespace Ei_Dimension
       _workOrderPending = true;
       DashboardViewModel.Instance.WorkOrder[0] = name;  //check for already existing one 
       // if WO already selected -> allow start. else the WO checking action should perform the same check
-      if (DashboardViewModel.Instance.SelectedSystemControlIndex == 1)  //no barcode required so allow start
+      if (DiosApp.Control == SystemControl.WorkOrder)  //no barcode required so allow start
       {
-        MainButtonsViewModel.Instance.StartButtonEnabled = true;
+        MainButtonsViewModel.Instance.EnableStartButton(true);
         _workOrderPending = false;  //questionable logic. can check on non empty textbox
       }
     }
@@ -587,9 +590,9 @@ namespace Ei_Dimension
       DashboardViewModel.Instance.WorkOrder[0] = name;  //should be first succesfully parsed
       _workOrderPending = true;
       // if WO already selected -> allow start. else the WO checking action should perform the same check
-      if (DashboardViewModel.Instance.SelectedSystemControlIndex == 1)  //no barcode required so allow start
+      if (DiosApp.Control == SystemControl.WorkOrder)  //no barcode required so allow start
       {
-        MainButtonsViewModel.Instance.StartButtonEnabled = true;
+        MainButtonsViewModel.Instance.EnableStartButton(true);
         _workOrderPending = false;
       }
     }

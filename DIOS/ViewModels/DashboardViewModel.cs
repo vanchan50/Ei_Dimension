@@ -120,10 +120,10 @@ namespace Ei_Dimension.ViewModels
       EndReadVisibilitySwitch();
       DropDownButtonContents.ResetIndex();
 
-      if (SelectedSystemControlIndex == 0)
-        MainButtonsViewModel.Instance.StartButtonEnabled = true;
+      if (App.DiosApp.Control == SystemControl.Manual)
+        MainButtonsViewModel.Instance.EnableStartButton(true);
       else
-        MainButtonsViewModel.Instance.StartButtonEnabled = false;
+        MainButtonsViewModel.Instance.EnableStartButton(false);
 
       CalValModeEnabled = App.DiosApp.MapController.ActiveMap.validation;
       _dbsampleVolumeTempHolder = null;
