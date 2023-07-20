@@ -1,13 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0-windows</TargetFramework>
+    <TargetFramework>net7.0-windows</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <FileVersion>1.6.1.1</FileVersion>
     <AssemblyVersion>1.6.1.1</AssemblyVersion>
     <Copyright>"Copyright ©  2023"</Copyright>
     <Authors>Dimension Inc.</Authors>
+    <Version>1.6.1.1</Version>
   </PropertyGroup>
 
   <ItemGroup>

@@ -3,7 +3,6 @@ using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
 using System.Collections.ObjectModel;
 using System.Windows.Controls;
-using DIOS.Core;
 using DIOS.Core.HardwareIntercom;
 
 namespace Ei_Dimension.ViewModels
@@ -29,7 +28,7 @@ namespace Ei_Dimension.ViewModels
       LanguageItems = new ObservableCollection<DropDownButtonContents>();
       foreach(var lang in Language.Supported.Languages)
       {
-        LanguageItems.Add(new DropDownButtonContents(lang.Item1, lang.Item2, this));
+        LanguageItems.Add(new DropDownButtonContents(lang.name, lang.locale, this));
       }
       SelectedLanguage = LanguageItems[Settings.Default.Language].Content;
       Instance = this;

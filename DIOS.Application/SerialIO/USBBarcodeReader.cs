@@ -1,37 +1,44 @@
 ﻿using DIOS.Core;
 using System.IO.Ports;
-using System.Management;
 
 namespace DIOS.Application.SerialIO
 {
   public class USBBarcodeReader : IBarcodeReader
   {
-    private ILogger _logger;
+    public bool IsAvailable { get; }
+
     private SerialPort _comPort;
-    private static byte[] _readCommand = { 0x04, 0xE4, 0x04, 0x00, 0xFF, 0x14 };
+    private ILogger _logger;
     private CancellationToken _cancellationToken;
     private int _readInProcess;
+    private static byte[] _readCommand = { 0x04, 0xE4, 0x04, 0x00, 0xFF, 0x14 };
     private const string VID = "AF99";
     private const string PID = "8003";
 
     public USBBarcodeReader(ILogger logger)
     {
       _logger = logger;
-      Init();
+      IsAvailable = Init();
     }
 
     private bool Init()
     {
       try
       {
-        var comPortAddress = FindCOMDevice();
-        _logger.Log($"BCR found at: {comPortAddress}");
+        var comPortAddress = ComDeviceSeeker.FindCOMDevice(VID, PID);
+        if (comPortAddress is null)
+        {
+          _logger.Log("BCR not found");
+          return false;
+        }
         _comPort = new SerialPort(comPortAddress, 9600, Parity.None, 8, StopBits.One);
+        _logger.Log($"BCR found at: {comPortAddress}");
         _comPort.ReadTimeout = 20000;
         _comPort.WriteTimeout = 500;
       }
-      catch
+      catch (Exception e)
       {
+        _logger.Log(e.Message);
         _logger.Log("Could not connect to Barcode Reader");
         return false;
       }
@@ -41,6 +48,8 @@ namespace DIOS.Application.SerialIO
 
     public async Task<string> QueryReadAsync(int millisecondsTimeout)
     {
+      if (!IsAvailable)
+        throw new IOException("BCR Unavailable");
       if (Interlocked.CompareExchange(ref _readInProcess, 1, 0) == 1)
         throw new IOException("Only one read query is available at a time");
       
@@ -87,88 +96,6 @@ namespace DIOS.Application.SerialIO
       }
       output = output.TrimEnd('\r', '\n');
       return output;
-    }
-
-    private string FindCOMDevice()
-    {
-      ManagementObjectCollection objCollection;
-      try
-      {
-        using (ManagementObjectSearcher searcher = new ManagementObjectSearcher("root\\CIMV2", "SELECT * FROM Win32_PnPEntity"))
-        {
-          objCollection = searcher.Get();
-        }
-
-        foreach (var queryObj in objCollection)
-        {
-          if (queryObj is null)
-          {
-            continue;
-          }
-
-          if (queryObj["Caption"] is null)
-          {
-            continue;
-          }
-
-          string Caption = queryObj["Caption"].ToString();
-
-          if (!Caption.Contains("(COM"))
-          {
-            continue;
-          }
-
-          if (queryObj["deviceid"] is null)
-          {
-            continue;
-          }
-
-          var deviceId = queryObj["deviceid"].ToString(); //"DeviceID"
-
-          var localVID = GetVID(deviceId);
-          var localPID = GetPID(deviceId);
-
-          if (localVID == VID && localPID == PID)
-          {
-            var CaptionInfo = GetCaptionInfo(Caption);
-            return CaptionInfo;
-          }
-        }
-      }
-      catch (ManagementException e)
-      {
-        _logger.Log(e.Message);
-      }
-
-      return null;
-    }
-
-    private string GetCaptionInfo(string caption)
-    {
-      int captionIndex = caption.IndexOf("(COM");
-      return caption.Substring(captionIndex + 1).TrimEnd(')'); // make the trimming more correct 
-    }
-
-    private string GetVID(string deviceID )
-    {
-      int vidIndex = deviceID.IndexOf("VID_");
-      if (vidIndex == -1)
-      {
-        return null;
-      }
-      var startingAtVid = deviceID.Substring(vidIndex + 4); // + 4 to remove "VID_"                    
-      return startingAtVid.Substring(0, 4); // vid is four characters long
-    }
-
-    private string GetPID(string deviceID)
-    {
-      int pidIndex = deviceID.IndexOf("PID_");
-      if (pidIndex == -1)
-      {
-        return null;
-      }
-      var startingAtPid = deviceID.Substring(pidIndex + 4); // + 4 to remove "PID_"                    
-      return startingAtPid.Substring(0, 4); // pid is four characters long
     }
   }
 }

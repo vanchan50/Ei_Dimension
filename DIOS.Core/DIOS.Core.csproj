@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <Copyright>Copyright ©  2018</Copyright>
@@ -10,6 +10,7 @@
     <AssemblyVersion>1.6.1.1</AssemblyVersion>
     <FileVersion>1.6.1.1</FileVersion>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    <Version>1.6.1.1</Version>
   </PropertyGroup>
 
   <ItemGroup>

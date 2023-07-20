@@ -1,6 +1,4 @@
-﻿using System;
-using System.Threading;
-using DIOS.Core;
+﻿using DIOS.Core;
 using MadWizard.WinUSBNet;
 
 namespace DIOS.Application.SerialIO

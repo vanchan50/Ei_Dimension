@@ -3,6 +3,7 @@ using DevExpress.Mvvm.POCO;
 using DIOS.Core;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using Ei_Dimension.Controllers;
 using DIOS.Application;
 using System.Windows;
@@ -49,7 +50,17 @@ namespace Ei_Dimension.ViewModels
         return;
 
       UserInputHandler.InputSanityCheck();
-      var data = await App.DiosApp.BarcodeReader.QueryReadAsync(2000);
+      string data = null;
+      try
+      {
+        data = await App.DiosApp.BarcodeReader.QueryReadAsync(2000);
+      }
+      catch(IOException)
+      {
+        Notification.ShowError("BCR not available");
+        _scanOngoing = 0;
+        return;
+      }
 
       var success = !string.IsNullOrEmpty(data);
 
@@ -152,7 +163,7 @@ namespace Ei_Dimension.ViewModels
       UserInputHandler.InputSanityCheck();
       if (!App.DiosApp.Device.IsMeasurementGoing)  //end button press before start, cancel work order
       {
-        if (DashboardViewModel.Instance.SelectedSystemControlIndex == 1)
+        if (App.DiosApp.Control == SystemControl.WorkOrder)
         {
           DashboardViewModel.Instance.WorkOrder[0] = ""; //actually questionable if not in workorder operation
         }

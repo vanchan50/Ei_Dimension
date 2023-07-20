@@ -79,7 +79,7 @@ namespace Ei_Dimension
       if (index < 0)
         return;
       var map = DiosApp.MapController.GetMapByIndex(index);
-      if (map == null)
+      if (map is null)
         return;
       DiosApp.MapController.SetMap(map);
       Settings.Default.DefaultMap = index;
