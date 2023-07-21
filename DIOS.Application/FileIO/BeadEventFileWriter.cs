@@ -13,8 +13,8 @@ namespace DIOS.Application.FileIO
                                  "Green B bg,Green C bg,Green B,Green C,Red-Grn Offset,Grn-Viol Offset,Region,Forward Scatter,Violet SSC,CL0," +
                                  "Red SSC,CL1,CL2,CL3,Green SSC,Reporter";
     public const string OEMHEADER = "Time(1 ms Tick),FSC bg,Viol A bg,Viol B bg,Red C bg,Red D bg,Red A bg,Red B bg,Green A bg," +
-                                 "Green B bg,Green C bg,Red C,Red D,Red-Grn Offset,Grn-Viol Offset,Region,Forward Scatter,Violet SSC,Viol B," +
-                                 "Red SSC,Green B,Green C,Red A,Green SSC,Reporter";
+                                    "Green B bg,Green C bg,Red C,Red D,Red-Grn Offset,Grn-Viol Offset,Region,Forward Scatter,Violet SSC,Viol B," +
+                                    "Red SSC,Green B,Green C,Red A,Green SSC,Reporter";
 
     public BeadEventFileWriter(ResultsPublisher publisher)
     {

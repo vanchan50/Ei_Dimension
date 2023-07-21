@@ -172,7 +172,7 @@ namespace Ei_Dimension
       LanguageSwap.TranslateChannelsVM();
       LanguageSwap.TranslateResultsVM();
       DiosApp.Publisher.IsOEMModeActive = On;
-      ResultsViewModel.Instance.SwapXYNamesToOEM(On);
+      //ResultsViewModel.Instance.SwapXYNamesToOEM(On);
     }
 
     /*
