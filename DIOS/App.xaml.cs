@@ -489,6 +489,12 @@ namespace Ei_Dimension
             DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelOffset, Channel.GreenA);
             DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelOffset, Channel.GreenB);
             DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelOffset, Channel.GreenC);
+            DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelOffset, Channel.RedA);
+            DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelOffset, Channel.RedB);
+            DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelOffset, Channel.RedC);
+            DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelOffset, Channel.RedD);
+            DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelOffset, Channel.VioletA);
+            DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelOffset, Channel.VioletB);
             DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.CalibrationMargin);
             DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.SiPMTempCoeff);
           };

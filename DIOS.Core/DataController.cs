@@ -615,6 +615,24 @@ namespace DIOS.Core
         case 0xA5:
           outParameters = new ParameterUpdateEventArgs(DeviceParameterType.ChannelOffset, intParameter: (int)Channel.GreenC, floatParameter: cs.Parameter);
           break;
+        case 0x9C:
+          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.ChannelOffset, intParameter: (int)Channel.RedA, floatParameter: cs.Parameter);
+          break;
+        case 0x9D:
+          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.ChannelOffset, intParameter: (int)Channel.RedB, floatParameter: cs.Parameter);
+          break;
+        case 0x9E:
+          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.ChannelOffset, intParameter: (int)Channel.RedC, floatParameter: cs.Parameter);
+          break;
+        case 0x9F:
+          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.ChannelOffset, intParameter: (int)Channel.RedD, floatParameter: cs.Parameter);
+          break;
+        case 0xA1:
+          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.ChannelOffset, intParameter: (int)Channel.VioletA, floatParameter: cs.Parameter);
+          break;
+        case 0x91:
+          outParameters = new ParameterUpdateEventArgs(DeviceParameterType.ChannelOffset, intParameter: (int)Channel.VioletB, floatParameter: cs.Parameter);
+          break;
         case 0x7F:
           outParameters = new ParameterUpdateEventArgs(DeviceParameterType.AgitateRepeatsAmount, intParameter: cs.Parameter);
           break;

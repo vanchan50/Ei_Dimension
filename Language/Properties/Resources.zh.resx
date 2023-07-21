@@ -206,34 +206,34 @@
     <value>取消</value>
   </data>
   <data name="ChannelOffsets_Forward_Scatter" xml:space="preserve">
-    <value>Forward Scatter</value>
+    <value>前向散射</value>
   </data>
   <data name="ChannelOffsets_Green_A" xml:space="preserve">
-    <value>Green A (SSC)</value>
+    <value>绿光 A</value>
   </data>
   <data name="ChannelOffsets_Green_B" xml:space="preserve">
-    <value>Green B</value>
+    <value>绿光 B</value>
   </data>
   <data name="ChannelOffsets_Green_C" xml:space="preserve">
-    <value>Green C</value>
+    <value>绿光 C</value>
   </data>
   <data name="ChannelOffsets_Red_A" xml:space="preserve">
-    <value>Red A (CL3)</value>
+    <value>红光 A</value>
   </data>
   <data name="ChannelOffsets_Red_B" xml:space="preserve">
-    <value>Red B (SSC)</value>
+    <value>红光 B</value>
   </data>
   <data name="ChannelOffsets_Red_C" xml:space="preserve">
-    <value>Red C (CL1)</value>
+    <value>红光 C</value>
   </data>
   <data name="ChannelOffsets_Red_D" xml:space="preserve">
-    <value>Red D (CL2)</value>
+    <value>红光 D</value>
   </data>
   <data name="ChannelOffsets_Violet_A" xml:space="preserve">
-    <value>Violet A (SSC)</value>
+    <value>紫光 A</value>
   </data>
   <data name="ChannelOffsets_Violet_B" xml:space="preserve">
-    <value>Violet B (CL0)</value>
+    <value>紫光 B</value>
   </data>
   <data name="Channels_Average_BG" xml:space="preserve">
     <value>平均本底</value>
@@ -263,25 +263,25 @@
     <value>高灵敏通道</value>
   </data>
   <data name="Channels_OEM_Green_B" xml:space="preserve">
-    <value>Green B (CL4)</value>
+    <value>绿光 B (CL4)</value>
   </data>
   <data name="Channels_OEM_Green_C" xml:space="preserve">
-    <value>Green C (CL5)</value>
+    <value>绿光 C (CL5)</value>
   </data>
   <data name="Channels_OEM_RedA" xml:space="preserve">
-    <value>Red A</value>
+    <value>红光 A</value>
   </data>
   <data name="Channels_OEM_RedC" xml:space="preserve">
-    <value>Red C</value>
+    <value>红光 C</value>
   </data>
   <data name="Channels_OEM_RedD" xml:space="preserve">
-    <value>Red D</value>
+    <value>红光 D</value>
   </data>
   <data name="Channels_OEM_VioletA" xml:space="preserve">
-    <value>Violet A</value>
+    <value>紫光 A</value>
   </data>
   <data name="Channels_OEM_VioletB" xml:space="preserve">
-    <value>Violet B</value>
+    <value>紫光 B</value>
   </data>
   <data name="Channels_Offset_Header" xml:space="preserve">
     <value>基线偏移</value>
@@ -1107,16 +1107,16 @@ Volume, µL</value>
     <value>鞘液</value>
   </data>
   <data name="Statistics_OEM_GreenB" xml:space="preserve">
-    <value>Green B (RP maj)</value>
+    <value>绿光 B (RP maj)</value>
   </data>
   <data name="Statistics_OEM_GreenC" xml:space="preserve">
-    <value>Green C (RP min)</value>
+    <value>绿光 C (RP min)</value>
   </data>
   <data name="Statistics_OEM_Red_C" xml:space="preserve">
-    <value>Red C (CL4)</value>
+    <value>红光 C (CL4)</value>
   </data>
   <data name="Statistics_OEM_Red_D" xml:space="preserve">
-    <value>Red D (CL5)</value>
+    <value>红光 D (CL5)</value>
   </data>
   <data name="SyringeSpeeds_AgitateFromWellEdge" xml:space="preserve">
     <value>Agitate From Well Edge</value>

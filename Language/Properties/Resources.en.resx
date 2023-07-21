@@ -237,7 +237,7 @@ To Current Map</value>
     <value>Forward Scatter</value>
   </data>
   <data name="ChannelOffsets_Green_A" xml:space="preserve">
-    <value>Green A (SSC)</value>
+    <value>Green A</value>
   </data>
   <data name="ChannelOffsets_Green_B" xml:space="preserve">
     <value>Green B</value>
@@ -246,22 +246,22 @@ To Current Map</value>
     <value>Green C</value>
   </data>
   <data name="ChannelOffsets_Red_A" xml:space="preserve">
-    <value>Red A (CL3)</value>
+    <value>Red A</value>
   </data>
   <data name="ChannelOffsets_Red_B" xml:space="preserve">
-    <value>Red B (SSC)</value>
+    <value>Red B</value>
   </data>
   <data name="ChannelOffsets_Red_C" xml:space="preserve">
-    <value>Red C (CL1)</value>
+    <value>Red C</value>
   </data>
   <data name="ChannelOffsets_Red_D" xml:space="preserve">
-    <value>Red D (CL2)</value>
+    <value>Red D</value>
   </data>
   <data name="ChannelOffsets_Violet_A" xml:space="preserve">
-    <value>Violet A (SSC)</value>
+    <value>Violet A</value>
   </data>
   <data name="ChannelOffsets_Violet_B" xml:space="preserve">
-    <value>Violet B (CL0)</value>
+    <value>Violet B</value>
   </data>
   <data name="Channels_Average_BG" xml:space="preserve">
     <value>Average BG</value>

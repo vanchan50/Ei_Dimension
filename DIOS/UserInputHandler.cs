@@ -823,7 +823,7 @@ namespace Ei_Dimension
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ChannelOffset, Channel.GreenA, iRes);
                   ChannelOffsetViewModel.Instance.OverrideSliderChange = true;
-                  ChannelOffsetViewModel.Instance.SliderValue1 = (double) iRes;
+                  ChannelOffsetViewModel.Instance.SliderValues[0] = (double)iRes;
                   break;
                 }
               }
@@ -838,7 +838,7 @@ namespace Ei_Dimension
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ChannelOffset, Channel.GreenB, iRes);
                   ChannelOffsetViewModel.Instance.OverrideSliderChange = true;
-                  ChannelOffsetViewModel.Instance.SliderValue2 = (double) iRes;
+                  ChannelOffsetViewModel.Instance.SliderValues[1] = (double)iRes;
                   break;
                 }
               }
@@ -853,7 +853,112 @@ namespace Ei_Dimension
                 {
                   App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ChannelOffset, Channel.GreenC, iRes);
                   ChannelOffsetViewModel.Instance.OverrideSliderChange = true;
-                  ChannelOffsetViewModel.Instance.SliderValue3 = (double) iRes;
+                  ChannelOffsetViewModel.Instance.SliderValues[2] = (double)iRes;
+                  break;
+                }
+              }
+              failed = true;
+              ErrorMessage = App.DiosApp.Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
+            }
+            if (SelectedTextBox.index == 3)
+            {
+              if (int.TryParse(_tempNewString, out iRes))
+              {
+                if ((iRes >= 0 && ((App.DiosApp.Device.BoardVersion == 0 && iRes <= 4095) || (App.DiosApp.Device.BoardVersion >= 1 && iRes <= 65535))) || _disableSanityCheck)
+                {
+                  App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ChannelOffset, Channel.RedA, iRes);
+                  ChannelOffsetViewModel.Instance.OverrideSliderChange = true;
+                  ChannelOffsetViewModel.Instance.SliderValues[3] = (double)iRes;
+                  break;
+                }
+              }
+              failed = true;
+              ErrorMessage = App.DiosApp.Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
+            }
+            if (SelectedTextBox.index == 4)
+            {
+              if (int.TryParse(_tempNewString, out iRes))
+              {
+                if ((iRes >= 0 && ((App.DiosApp.Device.BoardVersion == 0 && iRes <= 4095) || (App.DiosApp.Device.BoardVersion >= 1 && iRes <= 65535))) || _disableSanityCheck)
+                {
+                  App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ChannelOffset, Channel.RedB, iRes);
+                  ChannelOffsetViewModel.Instance.OverrideSliderChange = true;
+                  ChannelOffsetViewModel.Instance.SliderValues[4] = (double)iRes;
+                  break;
+                }
+              }
+              failed = true;
+              ErrorMessage = App.DiosApp.Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
+            }
+            if (SelectedTextBox.index == 5)
+            {
+              if (int.TryParse(_tempNewString, out iRes))
+              {
+                if ((iRes >= 0 && ((App.DiosApp.Device.BoardVersion == 0 && iRes <= 4095) || (App.DiosApp.Device.BoardVersion >= 1 && iRes <= 65535))) || _disableSanityCheck)
+                {
+                  App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ChannelOffset, Channel.RedC, iRes);
+                  ChannelOffsetViewModel.Instance.OverrideSliderChange = true;
+                  ChannelOffsetViewModel.Instance.SliderValues[5] = (double)iRes;
+                  break;
+                }
+              }
+              failed = true;
+              ErrorMessage = App.DiosApp.Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
+            }
+            if (SelectedTextBox.index == 6)
+            {
+              if (int.TryParse(_tempNewString, out iRes))
+              {
+                if ((iRes >= 0 && ((App.DiosApp.Device.BoardVersion == 0 && iRes <= 4095) || (App.DiosApp.Device.BoardVersion >= 1 && iRes <= 65535))) || _disableSanityCheck)
+                {
+                  App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ChannelOffset, Channel.RedD, iRes);
+                  ChannelOffsetViewModel.Instance.OverrideSliderChange = true;
+                  ChannelOffsetViewModel.Instance.SliderValues[6] = (double)iRes;
+                  break;
+                }
+              }
+              failed = true;
+              ErrorMessage = App.DiosApp.Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
+            }
+            if (SelectedTextBox.index == 7)
+            {
+              if (int.TryParse(_tempNewString, out iRes))
+              {
+                if ((iRes >= 0 && ((App.DiosApp.Device.BoardVersion == 0 && iRes <= 4095) || (App.DiosApp.Device.BoardVersion >= 1 && iRes <= 65535))) || _disableSanityCheck)
+                {
+                  App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ChannelOffset, Channel.VioletA, iRes);
+                  ChannelOffsetViewModel.Instance.OverrideSliderChange = true;
+                  ChannelOffsetViewModel.Instance.SliderValues[7] = (double)iRes;
+                  break;
+                }
+              }
+              failed = true;
+              ErrorMessage = App.DiosApp.Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
+            }
+            if (SelectedTextBox.index == 8)
+            {
+              if (int.TryParse(_tempNewString, out iRes))
+              {
+                if ((iRes >= 0 && ((App.DiosApp.Device.BoardVersion == 0 && iRes <= 4095) || (App.DiosApp.Device.BoardVersion >= 1 && iRes <= 65535))) || _disableSanityCheck)
+                {
+                  App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ChannelOffset, Channel.VioletB, iRes);
+                  ChannelOffsetViewModel.Instance.OverrideSliderChange = true;
+                  ChannelOffsetViewModel.Instance.SliderValues[8] = (double)iRes;
+                  break;
+                }
+              }
+              failed = true;
+              ErrorMessage = App.DiosApp.Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
+            }
+            if (SelectedTextBox.index == 9)
+            {
+              if (int.TryParse(_tempNewString, out iRes))
+              {
+                if ((iRes >= 0 && ((App.DiosApp.Device.BoardVersion == 0 && iRes <= 4095) || (App.DiosApp.Device.BoardVersion >= 1 && iRes <= 65535))) || _disableSanityCheck)
+                {
+                  App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ChannelOffset, Channel.GreenC, iRes);
+                  ChannelOffsetViewModel.Instance.OverrideSliderChange = true;
+                  ChannelOffsetViewModel.Instance.SliderValues[9] = (double)iRes;
                   break;
                 }
               }

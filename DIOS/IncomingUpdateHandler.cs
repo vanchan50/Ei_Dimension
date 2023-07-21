@@ -501,35 +501,33 @@ namespace Ei_Dimension
             case Channel.GreenC:
               pos12 = 2;
               break;
+            case Channel.RedA:
+              pos12 = 3;
+              break;
+            case Channel.RedB:
+              pos12 = 4;
+              break;
+            case Channel.RedC:
+              pos12 = 5;
+              break;
+            case Channel.RedD:
+              pos12 = 6;
+              break;
+            case Channel.VioletA:
+              pos12 = 7;
+              break;
+            case Channel.VioletB:
+              pos12 = 8;
+              break;
+            default:
+              throw new NotImplementedException();
           }
-          //sliders case
-          switch (pos12)
+          update = () =>
           {
-            case 0:
-              update = () =>
-              {
-                ChannelOffsetViewModel.Instance.ChannelsOffsetParameters[0] = parameter.FloatParameter.ToString("F0");
-                ChannelOffsetViewModel.Instance.OverrideSliderChange = true;
-                ChannelOffsetViewModel.Instance.SliderValue1 = (double)(parameter.FloatParameter);
-              };
-              break;
-            case 1:
-              update = () =>
-              {
-                ChannelOffsetViewModel.Instance.ChannelsOffsetParameters[1] = parameter.FloatParameter.ToString("F0");
-                ChannelOffsetViewModel.Instance.OverrideSliderChange = true;
-                ChannelOffsetViewModel.Instance.SliderValue2 = (double)(parameter.FloatParameter);
-              };
-              break;
-            case 2:
-              update = () =>
-              {
-                ChannelOffsetViewModel.Instance.ChannelsOffsetParameters[2] = parameter.FloatParameter.ToString("F0");
-                ChannelOffsetViewModel.Instance.OverrideSliderChange = true;
-                ChannelOffsetViewModel.Instance.SliderValue3 = (double)(parameter.FloatParameter);
-              };
-              break;
-          }
+            ChannelOffsetViewModel.Instance.ChannelsOffsetParameters[pos12] = parameter.FloatParameter.ToString("F0");
+            ChannelOffsetViewModel.Instance.OverrideSliderChange = true;
+            ChannelOffsetViewModel.Instance.SliderValues[pos12] = (double)(parameter.FloatParameter);
+          };
           break;
         case DeviceParameterType.Volume:
           var type13 = (VolumeType)parameter.Parameter;

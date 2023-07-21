@@ -1,4 +1,5 @@
-﻿using DevExpress.Mvvm.DataAnnotations;
+﻿using System;
+using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
 using System.Collections.ObjectModel;
 using System.Windows.Controls;
@@ -11,16 +12,14 @@ namespace Ei_Dimension.ViewModels
   [POCOViewModel]
   public class ChannelOffsetViewModel
   {
-    public virtual ObservableCollection<string> ChannelsOffsetParameters { get; set; } = new ObservableCollection<string> { "","","" };
+    public virtual ObservableCollection<string> ChannelsOffsetParameters { get; set; } = new ObservableCollection<string>();
     //public virtual ObservableCollection<string> ChannelsBaseline { get; set; }
     public virtual ObservableCollection<string> GreenAVoltage { get; set; } = new ObservableCollection<string> { "" };
-    public virtual ObservableCollection<string> AverageBg { get; set; }
-    public virtual object SliderValue1 { get; set; }
-    public virtual object SliderValue2 { get; set; }
-    public virtual object SliderValue3 { get; set; }
+    public virtual ObservableCollection<string> AverageBg { get; set; } = new ObservableCollection<string>();
+    public virtual ObservableCollection<object> SliderValues { get; set; } = new ObservableCollection<object>();
     public bool OverrideSliderChange { get; set; }
-    public virtual ObservableCollection<string> SiPMTempCoeff { get; set; }
-    public virtual ObservableCollection<string> CalibrationMargin { get; set; }
+    public virtual ObservableCollection<string> SiPMTempCoeff { get; set; } = new ObservableCollection<string> { "" };
+    public virtual ObservableCollection<string> CalibrationMargin { get; set; } = new ObservableCollection<string> { "" };
     public virtual ObservableCollection<string> ReporterScale { get; set; }
     //public virtual ObservableCollection<bool> Checkbox { get; set; }
     public virtual string SelectedSensitivityContent { get; set; }
@@ -32,9 +31,6 @@ namespace Ei_Dimension.ViewModels
     protected ChannelOffsetViewModel()
     {
       //ChannelsBaseline = new ObservableCollection<string>();
-      AverageBg = new ObservableCollection<string>();
-      SiPMTempCoeff = new ObservableCollection<string> { "" };
-      CalibrationMargin = new ObservableCollection<string> { "" };
       ReporterScale = new ObservableCollection<string> { Settings.Default.ReporterScaling.ToString($"{0:0.000}") };
       MainViewModel.Instance.SetScalingMarker(Settings.Default.ReporterScaling);
       for (var i = 0; i < 10; i++)
@@ -52,6 +48,12 @@ namespace Ei_Dimension.ViewModels
       };
       SelectedSensitivityIndex = Settings.Default.SensitivityChannelB ? (byte)0 : (byte)1;
       SelectedSensitivityContent = SensitivityItems[SelectedSensitivityIndex].Content;
+
+      for (var i = 0; i < 9; i++)
+      {
+        ChannelsOffsetParameters.Add("");
+        SliderValues.Add(new object());
+      }
       Instance = this;
     }
 
@@ -75,8 +77,8 @@ namespace Ei_Dimension.ViewModels
 
     public void SliderValueChanged(int param)
     {
-      if (App.DiosApp.Device.BoardVersion < 1)
-        return;
+      //if (App.DiosApp.Device.BoardVersion < 1)
+      //  return;
 
       if (OverrideSliderChange)
       {
@@ -84,21 +86,42 @@ namespace Ei_Dimension.ViewModels
         return;
       }
 
+      var value = (ushort)(double)SliderValues[param];
+      Channel channel;
       switch (param)
       {
         case 0:
-          App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ChannelOffset, Channel.GreenA, (ushort)(double)SliderValue1);
-          ChannelsOffsetParameters[0] = ((double)SliderValue1).ToString();
+          channel = Channel.GreenA;
           break;
         case 1:
-          App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ChannelOffset, Channel.GreenB, (ushort)(double)SliderValue2);
-          ChannelsOffsetParameters[1] = ((double)SliderValue2).ToString();
+          channel = Channel.GreenB;
           break;
         case 2:
-          App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ChannelOffset, Channel.GreenC, (ushort)(double)SliderValue3);
-          ChannelsOffsetParameters[2] = ((double)SliderValue3).ToString();
+          channel = Channel.GreenC;
           break;
+        case 3:
+          channel = Channel.RedA;
+          break;
+        case 4:
+          channel = Channel.RedB;
+          break;
+        case 5:
+          channel = Channel.RedC;
+          break;
+        case 6:
+          channel = Channel.RedD;
+          break;
+        case 7:
+          channel = Channel.VioletA;
+          break;
+        case 8:
+          channel = Channel.VioletB;
+          break;
+        default:
+          throw new NotImplementedException();
       }
+      App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ChannelOffset, channel, value);
+      ChannelsOffsetParameters[param] = ((double)SliderValues[param]).ToString();
       App.DiosApp.Device.Hardware.SendCommand(DeviceCommandType.RefreshDAC);
     }
 
@@ -133,6 +156,30 @@ namespace Ei_Dimension.ViewModels
         case 2:
           UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsOffsetParameters)), this, 2, (TextBox)Stackpanel[2]);
           MainViewModel.Instance.NumpadToggleButton((TextBox)Stackpanel[2]);
+          break;
+        case 3:
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsOffsetParameters)), this, 3, (TextBox)Stackpanel[3]);
+          MainViewModel.Instance.NumpadToggleButton((TextBox)Stackpanel[3]);
+          break;
+        case 4:
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsOffsetParameters)), this, 4, (TextBox)Stackpanel[4]);
+          MainViewModel.Instance.NumpadToggleButton((TextBox)Stackpanel[4]);
+          break;
+        case 5:
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsOffsetParameters)), this, 5, (TextBox)Stackpanel[5]);
+          MainViewModel.Instance.NumpadToggleButton((TextBox)Stackpanel[5]);
+          break;
+        case 6:
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsOffsetParameters)), this, 6, (TextBox)Stackpanel[6]);
+          MainViewModel.Instance.NumpadToggleButton((TextBox)Stackpanel[6]);
+          break;
+        case 7:
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsOffsetParameters)), this, 7, (TextBox)Stackpanel[7]);
+          MainViewModel.Instance.NumpadToggleButton((TextBox)Stackpanel[7]);
+          break;
+        case 8:
+          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsOffsetParameters)), this, 8, (TextBox)Stackpanel[8]);
+          MainViewModel.Instance.NumpadToggleButton((TextBox)Stackpanel[8]);
           break;
         case 10:
           UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(SiPMTempCoeff)), this, 0, Views.ChannelOffsetView.Instance.CoefTB);

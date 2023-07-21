@@ -43,6 +43,8 @@ namespace Ei_Dimension
       //MaintenanceViewModel.Instance.LanguageItems[0].Click();
 
       #if DEBUG
+      if (App.Current is null)
+        return;//just so it doesnt break here
       App.Current.Dispatcher.Invoke(() => {
         if (System.Windows.Input.Keyboard.IsKeyDown(System.Windows.Input.Key.J))
         {

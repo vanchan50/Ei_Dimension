@@ -425,7 +425,7 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Green A (SSC).
+        ///   Looks up a localized string similar to Green A.
         /// </summary>
         public static string ChannelOffsets_Green_A {
             get {
@@ -452,7 +452,7 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Red A (CL3).
+        ///   Looks up a localized string similar to Red A.
         /// </summary>
         public static string ChannelOffsets_Red_A {
             get {
@@ -461,7 +461,7 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Red B (SSC).
+        ///   Looks up a localized string similar to Red B.
         /// </summary>
         public static string ChannelOffsets_Red_B {
             get {
@@ -470,7 +470,7 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Red C (CL1).
+        ///   Looks up a localized string similar to Red C.
         /// </summary>
         public static string ChannelOffsets_Red_C {
             get {
@@ -479,7 +479,7 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Red D (CL2).
+        ///   Looks up a localized string similar to Red D.
         /// </summary>
         public static string ChannelOffsets_Red_D {
             get {
@@ -488,7 +488,7 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Violet A (SSC).
+        ///   Looks up a localized string similar to Violet A.
         /// </summary>
         public static string ChannelOffsets_Violet_A {
             get {
@@ -497,7 +497,7 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Violet B (CL0).
+        ///   Looks up a localized string similar to Violet B.
         /// </summary>
         public static string ChannelOffsets_Violet_B {
             get {
