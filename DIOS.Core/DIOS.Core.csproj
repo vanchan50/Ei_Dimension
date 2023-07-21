@@ -7,10 +7,10 @@
     <Copyright>Copyright ©  2018</Copyright>
     <Title>DIOS.Core</Title>
     <Company>Dimension Inc.</Company>
-    <AssemblyVersion>1.6.1.1</AssemblyVersion>
-    <FileVersion>1.6.1.1</FileVersion>
+    <AssemblyVersion>1.6.1.2</AssemblyVersion>
+    <FileVersion>1.6.1.2</FileVersion>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
-    <Version>1.6.1.1</Version>
+    <Version>1.6.1.2</Version>
   </PropertyGroup>
 
   <ItemGroup>

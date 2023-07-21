@@ -52,6 +52,7 @@ namespace Ei_Dimension
         }
         if (System.Windows.Input.Keyboard.IsKeyDown(System.Windows.Input.Key.F3))
         {
+          //App.DiosApp.Device.DEBUGOnParameterUpdate(DeviceParameterType.GreenAVoltage, floatparam:15f);
           //App.DiosApp.Device.DEBUGOnParameterUpdate(DeviceParameterType.WashStationXCenterCoordinate, 15);
           //App.DiosApp.Device.DEBUGOnParameterUpdate(DeviceParameterType.FluidicPathLength, (int)FluidicPathLength.LoopAToPickupNeedle, 1);
           //App.DiosApp.Device.DEBUGOnParameterUpdate(DeviceParameterType.FluidicPathLength, (int)FluidicPathLength.LoopBToPickupNeedle, 2);

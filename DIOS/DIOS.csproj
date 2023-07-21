@@ -18,9 +18,9 @@
     <StartupObject>Ei_Dimension.Program</StartupObject>
     <ApplicationIcon>laser-icon-16521-Windows.ico</ApplicationIcon>
     <Copyright>"Copyright ©  2021"</Copyright>
-    <AssemblyVersion>1.6.1.1</AssemblyVersion>
-    <FileVersion>1.6.1.1</FileVersion>
-    <Version>1.6.1.1</Version>
+    <AssemblyVersion>1.6.1.2</AssemblyVersion>
+    <FileVersion>1.6.1.2</FileVersion>
+    <Version>1.6.1.2</Version>
     <AssemblyName>Ei_Dimension</AssemblyName>
   </PropertyGroup>
 

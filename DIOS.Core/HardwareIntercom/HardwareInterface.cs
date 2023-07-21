@@ -787,6 +787,10 @@ namespace DIOS.Core.HardwareIntercom
               throw new NotImplementedException();
           }
           break;
+        case DeviceParameterType.GreenAVoltage:
+          commandCode = 0xB8;
+          throw new NotImplementedException();
+          break;
         case DeviceParameterType.UseWashStation:
           commandCode = 0xB9;
           param = intValue;
@@ -1625,6 +1629,9 @@ namespace DIOS.Core.HardwareIntercom
           break;
         case DeviceParameterType.WellColumnIndex:
           commandCode = 0xAE;
+          break;
+        case DeviceParameterType.GreenAVoltage:
+          commandCode = 0xB8;
           break;
         case DeviceParameterType.UseWashStation:
           commandCode = 0xB9;
