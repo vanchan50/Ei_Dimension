@@ -27,9 +27,6 @@ namespace Ei_Dimension
         case DeviceParameterType.SiPMTempCoeff:
           update = () => ChannelOffsetViewModel.Instance.SiPMTempCoeff[0] = parameter.FloatParameter.ToString();
           break;
-        case DeviceParameterType.IdexPosition:
-          update = () => ComponentsViewModel.Instance.IdexTextBoxInputs[0] = parameter.Parameter.ToString("X2");
-          break;
         case DeviceParameterType.TotalBeadsInFirmware:
           update = () =>
           {
@@ -110,9 +107,6 @@ namespace Ei_Dimension
           break;
         case DeviceParameterType.BeadConcentration:
           update = () => MainViewModel.Instance.SetBeadConcentrationMonitorValue(parameter.Parameter);
-          break;
-        case DeviceParameterType.IsFlowCellInverted:
-          update = () => ComponentsViewModel.Instance.InvertedFlowCellOn = parameter.Parameter == 1;
           break;
         case DeviceParameterType.CalibrationParameter:
           var type16 = (CalibrationParameter)parameter.Parameter;

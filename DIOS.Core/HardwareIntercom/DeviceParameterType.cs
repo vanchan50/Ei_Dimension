@@ -3,7 +3,6 @@
   public enum DeviceParameterType
   {
     SiPMTempCoeff,
-    IdexPosition,
     IdexSteps,
     TotalBeadsInFirmware,
     CalibrationMargin,
@@ -106,7 +105,6 @@
     DistanceToWellEdge,
     WellEdgeDeltaHeight,
     FlushCycles,
-    IsFlowCellInverted,
     ///<summary>Subparamter: FluidicPathLength</summary>
     FluidicPathLength,
     UseWashStation,

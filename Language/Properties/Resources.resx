@@ -406,10 +406,6 @@ Offset</value>
     <value>Cuvet Drain
      Open</value>
   </data>
-  <data name="Components_CW_Dir" xml:space="preserve">
-    <value>    CW
-Direction</value>
-  </data>
   <data name="Components_Fan" xml:space="preserve">
     <value>Fan 1</value>
   </data>
@@ -425,21 +421,8 @@ Direction</value>
   <data name="Components_Input_Sel" xml:space="preserve">
     <value>Input Selector</value>
   </data>
-  <data name="Components_InvertedFlowCell" xml:space="preserve">
-    <value>Inverted
-Flow Cell</value>
-  </data>
   <data name="Components_Lasers" xml:space="preserve">
     <value>Lasers</value>
-  </data>
-  <data name="Components_Max_Steps" xml:space="preserve">
-    <value>Max Steps</value>
-  </data>
-  <data name="Components_Move_Idex" xml:space="preserve">
-    <value>Move Idex</value>
-  </data>
-  <data name="Components_Position" xml:space="preserve">
-    <value>Position</value>
   </data>
   <data name="Components_Pressure" xml:space="preserve">
     <value>Pressure</value>

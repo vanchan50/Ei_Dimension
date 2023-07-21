@@ -37,9 +37,6 @@ namespace Ei_Dimension.ViewModels
     public virtual bool SamplingActive { get; set; }
     public virtual bool SingleStepDebugActive { get; set; }
 
-    public virtual ObservableCollection<string> IdexTextBoxInputs { get; set; }
-    public virtual bool CWDirectionActive { get; set; }
-
     public virtual ObservableCollection<string> MaxPressureBox { get; set; }
     public virtual ObservableCollection<string> StatisticsCutoffBox { get; set; }
 
@@ -54,7 +51,6 @@ namespace Ei_Dimension.ViewModels
     public static ComponentsViewModel Instance { get; private set; }
     public virtual bool SuppressWarnings { get; set; }
     public virtual bool ContinuousModeOn { get; set; }
-    public virtual bool InvertedFlowCellOn { get; set; }
     public virtual Visibility ExtendedRangeVisible { get; set; } = Visibility.Hidden;
     public virtual ObservableCollection<string> ExtendedRangeThresholds { get; set; } = new ObservableCollection<string> { "0", "0" };
     public virtual ObservableCollection<string> ExtendedRangeMultipliers { get; set; } = new ObservableCollection<string> { "0", "0" };
@@ -117,9 +113,7 @@ namespace Ei_Dimension.ViewModels
 
       SamplingActive = false;
       SingleStepDebugActive = false;
-
-      IdexTextBoxInputs = new ObservableCollection<string> { "", "" };
-      CWDirectionActive = false;
+      
       MaxPressureBox = new ObservableCollection<string> { "" };
       StatisticsCutoffBox = new ObservableCollection<string> { (100 * Settings.Default.StatisticsTailDiscardPercentage).ToString() };
       SuppressWarnings = Settings.Default.SuppressWarnings;
@@ -401,24 +395,6 @@ namespace Ei_Dimension.ViewModels
       App.DiosApp.Device.Hardware.SendCommand(DeviceCommandType.Startup);
     }
 
-    public void MoveIdexButtonClick()
-    {
-      UserInputHandler.InputSanityCheck();
-      App.DiosApp.Device.Hardware.MoveIdex(CWDirectionActive, byte.Parse(IdexTextBoxInputs[0]), ushort.Parse(IdexTextBoxInputs[1]));
-    }
-
-    public void CWDirectionToggleButtonClick()
-    {
-      UserInputHandler.InputSanityCheck();
-      CWDirectionActive = !CWDirectionActive;
-    }
-
-    public void IdexPositionButtonClick()
-    {
-      UserInputHandler.InputSanityCheck();
-      App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.IdexPosition);
-    }
-
     public void SuppressWarningsClick()
     {
       SuppressWarnings = !SuppressWarnings;
@@ -429,11 +405,6 @@ namespace Ei_Dimension.ViewModels
     public void ContinuousModeToggle()
     {
       App.DiosApp.RunPlateContinuously = ContinuousModeOn;
-    }
-
-    public void InvertedFlowCellToggle()
-    {
-      App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.IsFlowCellInverted, InvertedFlowCellOn ? 1 : 0);
     }
 
     public void DirectMemoryAccessClick()
@@ -456,14 +427,6 @@ namespace Ei_Dimension.ViewModels
       var cl2SP = Views.ComponentsView.Instance.ExtendedRangeCL2.Children;
       switch (num)
       {
-        case 0:
-          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(IdexTextBoxInputs)), this, 0, Views.ComponentsView.Instance.TB0);
-          MainViewModel.Instance.NumpadToggleButton(Views.ComponentsView.Instance.TB0);
-          break;
-        case 1:
-          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(IdexTextBoxInputs)), this, 1, Views.ComponentsView.Instance.TB1);
-          MainViewModel.Instance.NumpadToggleButton(Views.ComponentsView.Instance.TB1);
-          break;
         case 2:
           UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(MaxPressureBox)), this, 0, Views.ComponentsView.Instance.TB2);
           MainViewModel.Instance.NumpadToggleButton(Views.ComponentsView.Instance.TB2);

@@ -890,16 +890,6 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to     CW
-        ///Direction.
-        /// </summary>
-        public static string Components_CW_Dir {
-            get {
-                return ResourceManager.GetString("Components_CW_Dir", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Fan 1.
         /// </summary>
         public static string Components_Fan {
@@ -945,48 +935,11 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Inverted
-        ///Flow Cell.
-        /// </summary>
-        public static string Components_InvertedFlowCell {
-            get {
-                return ResourceManager.GetString("Components_InvertedFlowCell", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Lasers.
         /// </summary>
         public static string Components_Lasers {
             get {
                 return ResourceManager.GetString("Components_Lasers", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Max Steps.
-        /// </summary>
-        public static string Components_Max_Steps {
-            get {
-                return ResourceManager.GetString("Components_Max_Steps", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Move Idex.
-        /// </summary>
-        public static string Components_Move_Idex {
-            get {
-                return ResourceManager.GetString("Components_Move_Idex", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Position.
-        /// </summary>
-        public static string Components_Position {
-            get {
-                return ResourceManager.GetString("Components_Position", resourceCulture);
             }
         }
         

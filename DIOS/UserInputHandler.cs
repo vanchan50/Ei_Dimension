@@ -1549,32 +1549,6 @@ namespace Ei_Dimension
               ErrorMessage = "[0-1000]";
             }
             break;
-          case nameof(ComponentsViewModel.Instance.IdexTextBoxInputs):
-            if (SelectedTextBox.index == 0)
-            {
-              if (byte.TryParse(_tempNewString, out bRes))
-              {
-                if (bRes >= 0 && bRes <= 255)
-                {
-                  break;
-                }
-              }
-              failed = true;
-              ErrorMessage = "[0-255]";
-            }
-            if (SelectedTextBox.index == 1)
-            {
-              if (ushort.TryParse(_tempNewString, out usRes))
-              {
-                if (usRes >= 0 && usRes <= 65535)
-                {
-                  break;
-                }
-              }
-              failed = true;
-              ErrorMessage = "[0-65535]";
-            }
-            break;
           case nameof(AlignmentViewModel.Instance.VerificationTolerances):
             if (SelectedTextBox.index == 0)
             {

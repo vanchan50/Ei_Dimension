@@ -364,9 +364,6 @@
   <data name="Components_Cuvet_Drain_Open" xml:space="preserve">
     <value>打开泄压阀</value>
   </data>
-  <data name="Components_CW_Dir" xml:space="preserve">
-    <value>顺时方向</value>
-  </data>
   <data name="Components_Fan" xml:space="preserve">
     <value>风扇 1</value>
   </data>
@@ -382,21 +379,8 @@
   <data name="Components_Input_Sel" xml:space="preserve">
     <value>输入选择</value>
   </data>
-  <data name="Components_InvertedFlowCell" xml:space="preserve">
-    <value>Inverted
-Flow Cell</value>
-  </data>
   <data name="Components_Lasers" xml:space="preserve">
     <value>激光器</value>
-  </data>
-  <data name="Components_Max_Steps" xml:space="preserve">
-    <value>最大步数</value>
-  </data>
-  <data name="Components_Move_Idex" xml:space="preserve">
-    <value>移动 Idex</value>
-  </data>
-  <data name="Components_Position" xml:space="preserve">
-    <value>位置</value>
   </data>
   <data name="Components_Pressure" xml:space="preserve">
     <value>压力</value>

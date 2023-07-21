@@ -123,11 +123,6 @@ namespace DIOS.Core.HardwareIntercom
       MainCommand(code: commandCode, parameter: param, cmd: extraAction);
     }
 
-    public void MoveIdex(bool isClockwise, byte position, ushort steps)
-    {
-      MainCommand(code: 0xD7, cmd: position, parameter: steps, fparameter: Convert.ToByte(isClockwise));
-    }
-
     public void RenewSheath()
     {
       SendCommand(DeviceCommandType.RenewSheath);
@@ -154,11 +149,6 @@ namespace DIOS.Core.HardwareIntercom
           commandCode = 0x02;
           fparam = value;
           break;
-        /*Not used in SET
-        case DeviceParameterType.IdexPosition:
-          commandCode = 0x04;
-          break;
-        */
         case DeviceParameterType.SampleSyringeSize:
           commandCode = 0x05;
           param = intValue;
@@ -803,10 +793,6 @@ namespace DIOS.Core.HardwareIntercom
           commandCode = 0xBC;
           fparam = value;
           break;
-        case DeviceParameterType.IsFlowCellInverted:
-          commandCode = 0xBE;
-          param = intValue;
-          break;
         case DeviceParameterType.IsLaserActive:
           commandCode = 0xC0;
           param = intValue;
@@ -1126,9 +1112,6 @@ namespace DIOS.Core.HardwareIntercom
           break;
         case DeviceParameterType.SiPMTempCoeff:
           commandCode = 0x02;
-          break;
-        case DeviceParameterType.IdexPosition:
-          commandCode = 0x04;
           break;
         case DeviceParameterType.SampleSyringeSize:
           commandCode = 0x05;
@@ -1641,9 +1624,6 @@ namespace DIOS.Core.HardwareIntercom
           break;
         case DeviceParameterType.TraySteps:
           commandCode = 0xBC;
-          break;
-        case DeviceParameterType.IsFlowCellInverted:
-          commandCode = 0xBE;
           break;
         case DeviceParameterType.Volume:
           switch (subParameter)
