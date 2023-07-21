@@ -116,9 +116,6 @@ namespace Ei_Dimension
         Notification.ShowError(selfTestErrorMessage);
       
       App.Logger.Log($"Detected Board Rev v{App.DiosApp.Device.BoardVersion}");
-      if(App.DiosApp.Device.FirmwareVersion != null)
-        MainViewModel.AppVersion += App.DiosApp.Device.FirmwareVersion;
-      App.Logger.Log(MainViewModel.AppVersion);
       #if DEBUG
       App.Logger.Log("DEBUG MODE");
       #endif

@@ -11,9 +11,9 @@ namespace Ei_Dimension.ViewModels
   [POCOViewModel]
   public class MainViewModel
   {
-    public static string AppVersion { get; set; } = $"Application Version: {App.DiosApp.BUILD}\n   Firmware Version: ";
+    public virtual string AppVersion => $"Application Version: {App.DiosApp.BUILD}\n   Firmware Version: {App.DiosApp.Device.FirmwareVersion}";
     public ObservableCollection<string> TotalBeadsInFirmware { get; set; } = new ObservableCollection<string> { "0" };
-    public virtual ObservableCollection<bool> MainSelectorState { get; set; }
+    public virtual ObservableCollection<bool> MainSelectorState { get; set; } = new ObservableCollection<bool> { false, false, false, false, false };
     public virtual Visibility NumpadVisible { get; set; }
     public virtual Visibility KeyboardVisible { get; set; }
     public virtual ObservableCollection<string> EventCountField { get; set; }
@@ -41,7 +41,6 @@ namespace Ei_Dimension.ViewModels
 
     protected MainViewModel()
     {
-      MainSelectorState = new ObservableCollection<bool> { false, false, false, false, false };
       App.NumpadShow = (this.GetType().GetProperty(nameof(NumpadVisible)), this);
       App.KeyboardShow = (this.GetType().GetProperty(nameof(KeyboardVisible)), this);
       NumpadVisible = Visibility.Hidden;
