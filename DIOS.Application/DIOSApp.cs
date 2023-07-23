@@ -10,7 +10,7 @@ namespace DIOS.Application
   {
     public Device Device { get; }
     public MapController MapController { get; }
-    public DirectoryInfo RootDirectory { get; } = new DirectoryInfo(Path.Combine(@"C:\Emissioninc", Environment.MachineName));
+    public DirectoryInfo RootDirectory { get; }
     public ResultsPublisher Publisher { get; }
     public RunResults Results { get; }
     public ResultsProcessor ResultsProc { get; }  //TODO make private
@@ -23,8 +23,9 @@ namespace DIOS.Application
     public readonly string BUILD = Assembly.GetCallingAssembly().GetName().Version.ToString();
     public ILogger Logger { get; }
 
-    public DIOSApp()
+    public DIOSApp(string rootDirectory)
     {
+      RootDirectory = new(Path.Combine(@"C:\Emissioninc", Environment.MachineName));
       SetSystemDirectories();
       Logger = new Logger(RootDirectory.FullName);
       MapController = new MapController($"{RootDirectory.FullName}\\Config", Logger);

@@ -13,12 +13,14 @@ using DIOS.Application;
 using System.Collections.Generic;
 using System.Windows.Threading;
 using DIOS.Application.Domain;
+using Microsoft.Extensions.Hosting;
 
 namespace Ei_Dimension
 {
   public partial class App : Application
   {
-    public static DIOSApp DiosApp { get; } = new ();
+    public static IHost AppHost { get; }
+    public static DIOSApp DiosApp { get; }
     public static (PropertyInfo prop, object VM) NumpadShow { get; set; }
     public static (PropertyInfo prop, object VM) KeyboardShow { get; set; }
     public static ResultsCache Cache { get; } = new ();
@@ -37,6 +39,8 @@ namespace Ei_Dimension
 
     static App()
     {
+      var drives = DriveInfo.GetDrives();
+      DiosApp = new(Path.Combine($"{drives[0].Name}", "Emissioninc", Environment.MachineName));
       InvalidChars.UnionWith(Path.GetInvalidFileNameChars());
       CorruptSettingsChecker();
     }
