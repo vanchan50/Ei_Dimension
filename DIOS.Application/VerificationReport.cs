@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-
+﻿
 namespace DIOS.Application
 {
   public class VerificationReport
   {
-    public DateTime Time;
     public int TotalBeads;
     public double Tolerance1;
     public double Tolerance2;
@@ -31,14 +27,15 @@ namespace DIOS.Application
     {
       if (Test1regions.Count < 4)
         throw new Exception("less than 4 test1 regions selected");
-      Time = DateTime.Now;
-      return $"{Time.ToString("dd.MM.yyyy", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))}," +
-             $"{Time.ToString("HH:mm:ss", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))}," +
-             $"{TotalBeads},{Tolerance1},{Tolerance2},{Tolerance3},{Passed},{Test1regions[0].region},{Test1regions[0].errror:F2}," +
-             $"{Test1regions[1].region},{Test1regions[1].errror:F2},{Test1regions[2].region},{Test1regions[2].errror:F2}," +
-             $"{Test1regions[3].region},{Test1regions[3].errror:F2},{UnclassifiedBeadsPercentage:F2}," +
-             $"{Test3HighestUnclassifiedCountRegion},{Test3HighestUnclassifiedCount},{Test3NearestClassifiedCountRegion},{Test3NearestClassifiedCount}," +
-             $"{Test3MisclassificationsPercentage:F2}\n";
+      var dateTime = DateTime.Now;
+      var date = dateTime.ToString("dd.MM.yyyy", System.Globalization.CultureInfo.CreateSpecificCulture("en-GB"));
+      var time = dateTime.ToString("HH:mm:ss", System.Globalization.CultureInfo.CreateSpecificCulture("en-GB"));
+
+      return $"{date},{time},{TotalBeads},{Tolerance1},{Tolerance2},{Tolerance3},{Passed},{Test1regions[0].region}," +
+             $"{Test1regions[0].errror:F2},{Test1regions[1].region},{Test1regions[1].errror:F2},{Test1regions[2].region}," +
+             $"{Test1regions[2].errror:F2},{Test1regions[3].region},{Test1regions[3].errror:F2},{UnclassifiedBeadsPercentage:F2}," +
+             $"{Test3HighestUnclassifiedCountRegion},{Test3HighestUnclassifiedCount},{Test3NearestClassifiedCountRegion}," +
+             $"{Test3NearestClassifiedCount},{Test3MisclassificationsPercentage:F2}\n";
     }
 
     public void Publish(string path)

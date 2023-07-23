@@ -1,6 +1,4 @@
-﻿using System;
-using System.IO;
-using DIOS.Core;
+﻿using DIOS.Core;
 
 namespace DIOS.Application.FileIO
 {
@@ -13,6 +11,7 @@ namespace DIOS.Application.FileIO
     private readonly StreamWriter _streamWriter;
     private readonly string _logPath;
     private readonly string _backupLogPath;
+    private string Time => DateTime.Now.ToString("HH:mm:ss", System.Globalization.CultureInfo.CreateSpecificCulture("en-GB"));
 
     public Logger(string path)
     {
@@ -37,7 +36,7 @@ namespace DIOS.Application.FileIO
 
     public void Log(string message)
     {
-      _streamWriter.WriteLine(message);
+      _streamWriter.WriteLine($"{Time}\t{message}");
     }
 
     public void LogError(string message)

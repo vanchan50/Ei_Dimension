@@ -295,10 +295,10 @@ To Current Map</value>
     Channel</value>
   </data>
   <data name="Channels_OEM_Green_B" xml:space="preserve">
-    <value>Green B (CL4)</value>
+    <value>Green B (CL1)</value>
   </data>
   <data name="Channels_OEM_Green_C" xml:space="preserve">
-    <value>Green C (CL5)</value>
+    <value>Green C (CL2)</value>
   </data>
   <data name="Channels_OEM_RedA" xml:space="preserve">
     <value>Red A</value>
@@ -1282,16 +1282,16 @@ Speeds</value>
     <value>Sheath</value>
   </data>
   <data name="Statistics_OEM_GreenB" xml:space="preserve">
-    <value>Green B (RP maj)</value>
+    <value>Green B (CL1)</value>
   </data>
   <data name="Statistics_OEM_GreenC" xml:space="preserve">
-    <value>Green C (RP min)</value>
+    <value>Green C (CL2)</value>
   </data>
   <data name="Statistics_OEM_Red_C" xml:space="preserve">
-    <value>Red C (CL4)</value>
+    <value>Red C (RP maj)</value>
   </data>
   <data name="Statistics_OEM_Red_D" xml:space="preserve">
-    <value>Red D (CL5)</value>
+    <value>Red D (RP min)</value>
   </data>
   <data name="SyringeSpeeds_AgitateFromWellEdge" xml:space="preserve">
     <value>Agitate From Well Edge</value>

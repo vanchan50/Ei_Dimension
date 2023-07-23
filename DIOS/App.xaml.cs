@@ -18,10 +18,10 @@ namespace Ei_Dimension
 {
   public partial class App : Application
   {
-    public static DIOSApp DiosApp { get; } = new DIOSApp();
+    public static DIOSApp DiosApp { get; } = new ();
     public static (PropertyInfo prop, object VM) NumpadShow { get; set; }
     public static (PropertyInfo prop, object VM) KeyboardShow { get; set; }
-    public static ResultsCache Cache { get; } = new ResultsCache();
+    public static ResultsCache Cache { get; } = new ();
     public static MapRegionsController MapRegions { get; set; }
     /// <summary>doubles the variable in device, but for UI usage</summary>
     public static bool ChannelRedirectionEnabled { get; private set; } = false;
@@ -29,11 +29,11 @@ namespace Ei_Dimension
     public static ILogger Logger => DiosApp.Logger;
 
     public static bool _nextWellWarning;
-    public static readonly HashSet<char> InvalidChars = new HashSet<char>();
+    public static readonly HashSet<char> InvalidChars = new();
 
     private static bool _workOrderPending;
     private static FileSystemWatcher _workOrderWatcher;
-    private static readonly IncomingUpdateHandler IncomingUpdateHandler = new IncomingUpdateHandler();
+    private static readonly IncomingUpdateHandler IncomingUpdateHandler = new ();
 
     static App()
     {
@@ -41,9 +41,9 @@ namespace Ei_Dimension
       CorruptSettingsChecker();
     }
 
-    public App(Device device = null)
+    public App()
     {
-      InitApp(device);
+      InitApp();
     }
 
     private static void CorruptSettingsChecker()
@@ -630,7 +630,7 @@ namespace Ei_Dimension
 
     }
 
-    private void InitApp(Device device)
+    private void InitApp()
     {
       StatisticsExtension.TailDiscardPercentage = Settings.Default.StatisticsTailDiscardPercentage;
 

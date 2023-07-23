@@ -263,10 +263,10 @@
     <value>高灵敏通道</value>
   </data>
   <data name="Channels_OEM_Green_B" xml:space="preserve">
-    <value>绿光 B (CL4)</value>
+    <value>绿光 B (CL1)</value>
   </data>
   <data name="Channels_OEM_Green_C" xml:space="preserve">
-    <value>绿光 C (CL5)</value>
+    <value>绿光 C (CL2)</value>
   </data>
   <data name="Channels_OEM_RedA" xml:space="preserve">
     <value>红光 A</value>
@@ -1091,16 +1091,16 @@ Volume, µL</value>
     <value>鞘液</value>
   </data>
   <data name="Statistics_OEM_GreenB" xml:space="preserve">
-    <value>绿光 B (RP maj)</value>
+    <value>绿光 B (CL1)</value>
   </data>
   <data name="Statistics_OEM_GreenC" xml:space="preserve">
-    <value>绿光 C (RP min)</value>
+    <value>绿光 C (CL2)</value>
   </data>
   <data name="Statistics_OEM_Red_C" xml:space="preserve">
-    <value>红光 C (CL4)</value>
+    <value>红光 C (RP maj)</value>
   </data>
   <data name="Statistics_OEM_Red_D" xml:space="preserve">
-    <value>红光 D (CL5)</value>
+    <value>红光 D (RP min)</value>
   </data>
   <data name="SyringeSpeeds_AgitateFromWellEdge" xml:space="preserve">
     <value>Agitate From Well Edge</value>

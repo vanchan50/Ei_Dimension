@@ -14,8 +14,11 @@ namespace DIOS.Application
     public MapController(string mapFolder, ILogger logger)
     {
       _mapFolder = mapFolder;
-      MoveMaps();
-      UpdateMaps();
+
+      var exePath = Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
+      var initialMapFolderPath = $"{exePath}\\Maps";
+      MoveMaps(from: initialMapFolderPath);
+      UpdateMaps(exePath);
       LoadMaps();
       _logger = logger;
     }
@@ -215,13 +218,12 @@ namespace DIOS.Application
       }
     }
 
-    public void MoveMaps()
+    public void MoveMaps(string from)
     {
-      string path = $"{Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName)}\\Maps";
       string[] files = null;
       try
       {
-        files = Directory.GetFiles(path, "*.dmap");
+        files = Directory.GetFiles(from, "*.dmap");
       }
       catch { return; }
 
@@ -237,10 +239,10 @@ namespace DIOS.Application
       }
     }
 
-    public void UpdateMaps()
+    public void UpdateMaps(string exePath)
     {
-      string path = $"{Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName)}\\Maps";
-      string[] files = null;
+      string path = $"{exePath}\\Maps";
+      IEnumerable<string> files;
       try
       {
         files = Directory.GetFiles(path, "*.dmapu");
@@ -287,15 +289,13 @@ namespace DIOS.Application
           }
         }
         //backup
-        var backupPath = $"{Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName)}"
-                         + "\\Backups";
+        var backupPath = $"{exePath}\\Backups";
           Directory.CreateDirectory(backupPath);
         var contents = JsonConvert.SerializeObject(originalMap);
         try
         {
           using (var stream =
-                 new StreamWriter($"{Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName)}"
-                                  + $"\\Backups\\{DateTime.Now.ToString("dd.MM.yyyy.hh-mm-ss", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))}"
+                 new StreamWriter($"{backupPath}\\{DateTime.Now.ToString("dd.MM.yyyy.hh-mm-ss", System.Globalization.CultureInfo.CreateSpecificCulture("en-GB"))}"
                                   + originalMap.mapName + @".dmap"))
           {
             stream.Write(contents);

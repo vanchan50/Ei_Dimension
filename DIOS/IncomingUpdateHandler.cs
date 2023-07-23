@@ -818,16 +818,5 @@ namespace Ei_Dimension
       if (update != null)
         App.Current.Dispatcher.Invoke(update);
     }
-
-    public static void UpdateEventCounter()
-    {
-      MainViewModel.Instance.EventCountCurrent[0] = App.DiosApp.Device.BeadCount.ToString();
-    }
-
-    public static void UpdatePressureMonitor()
-    {
-      if (ComponentsViewModel.Instance.PressureMonToggleButtonState)
-        App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.Pressure);
-    }
   }
 }

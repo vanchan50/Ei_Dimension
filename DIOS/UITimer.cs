@@ -3,6 +3,7 @@ using System;
 using System.Threading;
 using Ei_Dimension.Controllers;
 using DIOS.Core.HardwareIntercom;
+using Ei_Dimension.ViewModels;
 
 namespace Ei_Dimension
 {
@@ -32,10 +33,10 @@ namespace Ei_Dimension
       {
         GraphsController.Instance.Update();
         ActiveRegionsStatsController.Instance.UpdateCurrentStats();
-        App.Current.Dispatcher.Invoke(IncomingUpdateHandler.UpdateEventCounter);
+        App.Current.Dispatcher.Invoke(UpdateEventCounter);
         App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.BeadConcentration);
       }
-      IncomingUpdateHandler.UpdatePressureMonitor();
+      UpdatePressureMonitor();
       ServiceMenuEnabler.Update();
       _uiUpdateIsActive = 0;
 
@@ -74,7 +75,7 @@ namespace Ei_Dimension
       #endif
     }
 
-    #if DEBUG
+#if DEBUG
     public static void DEBUGJBeadADD()
     {
       var r = new Random();
@@ -136,5 +137,16 @@ namespace Ei_Dimension
       //}
     }
     #endif
+
+    public static void UpdateEventCounter()
+    {
+      MainViewModel.Instance.EventCountCurrent[0] = App.DiosApp.Device.BeadCount.ToString();
+    }
+
+    public static void UpdatePressureMonitor()
+    {
+      if (ComponentsViewModel.Instance.PressureMonToggleButtonState)
+        App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.Pressure);
+    }
   }
 }

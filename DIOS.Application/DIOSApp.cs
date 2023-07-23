@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
-using System.Threading.Tasks;
+﻿using System.Reflection;
 using DIOS.Application.Domain;
 using DIOS.Application.FileIO;
 using DIOS.Application.SerialIO;

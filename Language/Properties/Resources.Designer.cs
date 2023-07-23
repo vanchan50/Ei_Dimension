@@ -597,7 +597,7 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Green B (CL4).
+        ///   Looks up a localized string similar to Green B (CL1).
         /// </summary>
         public static string Channels_OEM_Green_B {
             get {
@@ -606,7 +606,7 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Green C (CL5).
+        ///   Looks up a localized string similar to Green C (CL2).
         /// </summary>
         public static string Channels_OEM_Green_C {
             get {
@@ -3421,7 +3421,7 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Green B (RP maj).
+        ///   Looks up a localized string similar to Green B (CL1).
         /// </summary>
         public static string Statistics_OEM_GreenB {
             get {
@@ -3430,7 +3430,7 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Green C (RP min).
+        ///   Looks up a localized string similar to Green C (CL2).
         /// </summary>
         public static string Statistics_OEM_GreenC {
             get {
@@ -3439,7 +3439,7 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Red C (CL4).
+        ///   Looks up a localized string similar to Red C (RP maj).
         /// </summary>
         public static string Statistics_OEM_Red_C {
             get {
@@ -3448,7 +3448,7 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Red D (CL5).
+        ///   Looks up a localized string similar to Red D (RP min).
         /// </summary>
         public static string Statistics_OEM_Red_D {
             get {
