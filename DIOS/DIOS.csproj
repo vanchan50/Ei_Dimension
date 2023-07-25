@@ -1,7 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <LangVersion>9</LangVersion>
     <IncludePackageReferencesDuringMarkupCompilation>true</IncludePackageReferencesDuringMarkupCompilation>
   </PropertyGroup>
 
@@ -12,15 +11,10 @@
     <RootNamespace>Ei_Dimension</RootNamespace>
     <PackageId>Ei_Dimension</PackageId>
     <Title>Ei_Dimension</Title>
-    <Authors></Authors>
     <Product>Ei_Dimension</Product>
-    <Company>Dimension Inc.</Company>
     <StartupObject>Ei_Dimension.Program</StartupObject>
     <ApplicationIcon>laser-icon-16521-Windows.ico</ApplicationIcon>
     <Copyright>"Copyright ©  2021"</Copyright>
-    <AssemblyVersion>1.6.1.2</AssemblyVersion>
-    <FileVersion>1.6.1.2</FileVersion>
-    <Version>1.6.1.2</Version>
     <AssemblyName>Ei_Dimension</AssemblyName>
   </PropertyGroup>
 

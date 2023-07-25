@@ -13,11 +13,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DIOS.Application", "DIOS.Ap
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Language", "Language\Language.csproj", "{6633AD6C-C85F-46A3-BF66-492D4CDCA42C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DIOS.Application.Tests", "Tests\DIOS.Application.Tests\DIOS.Application.Tests.csproj", "{18A83D57-DFF7-4297-AA7A-27E7EFD4B48A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DIOS.Application.Tests", "Tests\DIOS.Application.Tests\DIOS.Application.Tests.csproj", "{18A83D57-DFF7-4297-AA7A-27E7EFD4B48A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{F168471F-8AFD-4D11-BA03-3DD3C115FFB5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DIOS.Core.Tests", "Tests\DIOS.Core.Tests\DIOS.Core.Tests.csproj", "{571EB7EF-2473-4931-93D0-0679B9C93A29}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DIOS.Core.Tests", "Tests\DIOS.Core.Tests\DIOS.Core.Tests.csproj", "{571EB7EF-2473-4931-93D0-0679B9C93A29}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B7C67C2D-7E43-4A10-9604-FFFB8EE051D6}"
+	ProjectSection(SolutionItems) = preProject
+		Directory.Build.props = Directory.Build.props
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -4,11 +4,7 @@
     <TargetFramework>net7.0-windows</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <FileVersion>1.6.1.2</FileVersion>
-    <AssemblyVersion>1.6.1.2</AssemblyVersion>
     <Copyright>"Copyright ©  2023"</Copyright>
-    <Authors>Dimension Inc.</Authors>
-    <Version>1.6.1.2</Version>
   </PropertyGroup>
 
   <ItemGroup>

@@ -23,13 +23,13 @@ namespace DIOS.Application
     public readonly string BUILD = Assembly.GetCallingAssembly().GetName().Version.ToString();
     public ILogger Logger { get; }
 
-    public DIOSApp(string rootDirectory)
+    public DIOSApp(string rootDirectory, ILogger logger)
     {
-      RootDirectory = new(Path.Combine(@"C:\Emissioninc", Environment.MachineName));
+      RootDirectory = new(rootDirectory);
       SetSystemDirectories();
-      Logger = new Logger(RootDirectory.FullName);
-      MapController = new MapController($"{RootDirectory.FullName}\\Config", Logger);
-      Publisher = new ResultsPublisher(RootDirectory.FullName, Logger);
+      Logger = logger;
+      MapController = new MapController($"{rootDirectory}\\Config", Logger);
+      Publisher = new ResultsPublisher(rootDirectory, Logger);
       Device = new Device(new USBConnection(Logger), Logger);
       Results = new RunResults(Device, this);
       ResultsProc = new ResultsProcessor(Device, Results);

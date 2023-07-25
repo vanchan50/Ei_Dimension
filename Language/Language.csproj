@@ -5,13 +5,8 @@
 	  <UseWPF>true</UseWPF>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <Authors>$(AssemblyName)</Authors>
-    <Company>Dimension Inc.</Company>
     <Copyright>Copyright ©  2021</Copyright>
-    <FileVersion>1.6.1.2</FileVersion>
-    <AssemblyVersion>1.6.1.2</AssemblyVersion>
     <RootNamespace>Ei_Dimension.Language</RootNamespace>
-    <Version>1.6.1.2</Version>
   </PropertyGroup>
 
   <ItemGroup>

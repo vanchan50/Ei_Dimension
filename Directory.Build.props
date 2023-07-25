@@ -1,0 +1,13 @@
+<Project>
+  <PropertyGroup>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Company>Dimension Inc.</Company>
+	  <Authors>Dimension Inc.</Authors>
+    <AssemblyVersion>1.6.1.3</AssemblyVersion>
+    <FileVersion>1.6.1.3</FileVersion>
+    <Version>1.6.1.3</Version>
+  </PropertyGroup>
+</Project>
