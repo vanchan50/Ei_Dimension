@@ -1,46 +1,45 @@
 ﻿using Ei_Dimension.Core;
 using System.Collections.Generic;
 
-namespace Ei_Dimension.Models
+namespace Ei_Dimension.Models;
+
+public class DoubleHeatMapData : ObservableObject
 {
-  public class DoubleHeatMapData : ObservableObject
+  public double X
   {
-    public double X
+    get => _x;
+    set
     {
-      get => _x;
-      set
-      {
-        _x = value;
-        OnPropertyChanged();
-      }
+      _x = value;
+      OnPropertyChanged();
     }
-    public double Y
+  }
+  public double Y
+  {
+    get => _y;
+    set
     {
-      get => _y;
-      set
-      {
-        _y = value;
-        OnPropertyChanged();
-      }
+      _y = value;
+      OnPropertyChanged();
     }
-    public double A
+  }
+  public double A
+  {
+    get => _a;
+    set
     {
-      get => _a;
-      set
-      {
-        _a = value;
-        OnPropertyChanged();
-      }
+      _a = value;
+      OnPropertyChanged();
     }
-    private double _x;
-    private double _y;
-    private double _a;
-    public static double[] bins { get; }
-    public DoubleHeatMapData(double x, double y, double a)
-    {
-      X = x;
-      Y = y;
-      A = a;
-    }
+  }
+  private double _x;
+  private double _y;
+  private double _a;
+  public static double[] bins { get; }
+  public DoubleHeatMapData(double x, double y, double a)
+  {
+    X = x;
+    Y = y;
+    A = a;
   }
 }

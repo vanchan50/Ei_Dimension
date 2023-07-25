@@ -1,26 +1,25 @@
 ﻿using System.Text;
 
-namespace DIOS.Application
+namespace DIOS.Application;
+
+public class ResultingWellStatsData
 {
-  public class ResultingWellStatsData
+  private readonly StringBuilder _dataOut = new StringBuilder();
+  public const string HEADER = "Region,Bead Count,Median FI,Trimmed Mean FI,CV%\r";
+
+  public void Add(string stats)
   {
-    private readonly StringBuilder _dataOut = new StringBuilder();
-    public const string HEADER = "Region,Bead Count,Median FI,Trimmed Mean FI,CV%\r";
+    _dataOut.AppendLine(stats);
+  }
 
-    public void Add(string stats)
-    {
-      _dataOut.AppendLine(stats);
-    }
+  public void Reset()
+  {
+    _ = _dataOut.Clear();
+  }
 
-    public void Reset()
-    {
-      _ = _dataOut.Clear();
-    }
-
-    public string Publish()
-    {
-      var result = _dataOut.ToString();
-      return result;
-    }
+  public string Publish()
+  {
+    var result = _dataOut.ToString();
+    return result;
   }
 }

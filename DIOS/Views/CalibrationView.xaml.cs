@@ -12,21 +12,20 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Ei_Dimension.Views
+namespace Ei_Dimension.Views;
+
+/// <summary>
+/// Interaction logic for CalibrationView.xaml
+/// </summary>
+public partial class CalibrationView : UserControl
 {
-  /// <summary>
-  /// Interaction logic for CalibrationView.xaml
-  /// </summary>
-  public partial class CalibrationView : UserControl
+  public static CalibrationView Instance { get; private set; }
+  public CalibrationView()
   {
-    public static CalibrationView Instance { get; private set; }
-    public CalibrationView()
-    {
-      InitializeComponent();
-      Instance = this;
+    InitializeComponent();
+    Instance = this;
 #if DEBUG
-      System.Console.Error.WriteLine("#14 CalibrationView Loaded");
+    System.Console.Error.WriteLine("#14 CalibrationView Loaded");
 #endif
-    }
   }
 }

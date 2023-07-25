@@ -8,159 +8,158 @@ using Ei_Dimension.Controllers;
 using Ei_Dimension.Graphing.HeatMap;
 using Ei_Dimension.Models;
 
-namespace Ei_Dimension.Graphing
+namespace Ei_Dimension.Graphing;
+
+[POCOViewModel]
+public class AnalysysMap
 {
-  [POCOViewModel]
-  public class AnalysysMap
+  public ReporterResultManager BackingWResults { get; protected set; } = new ReporterResultManager();
+  public virtual ObservableCollection<DoubleHeatMapData> DisplayedMap { get; set; }
+  public virtual ObservableCollection<DoubleHeatMapData> Current01Map { get; protected set; } = new ObservableCollection<DoubleHeatMapData>();
+  public virtual ObservableCollection<DoubleHeatMapData> Current02Map { get; protected set; } = new ObservableCollection<DoubleHeatMapData>();
+  public virtual ObservableCollection<DoubleHeatMapData> Current03Map { get; protected set; } = new ObservableCollection<DoubleHeatMapData>();
+  public virtual ObservableCollection<DoubleHeatMapData> Current12Map { get; protected set; } = new ObservableCollection<DoubleHeatMapData>();
+  public virtual ObservableCollection<DoubleHeatMapData> Current13Map { get; protected set; } = new ObservableCollection<DoubleHeatMapData>();
+  public virtual ObservableCollection<DoubleHeatMapData> Current23Map { get; protected set; } = new ObservableCollection<DoubleHeatMapData>();
+  public virtual ObservableCollection<DoubleHeatMapData> Backing01Map { get; protected set; } = new ObservableCollection<DoubleHeatMapData>();
+  public virtual ObservableCollection<DoubleHeatMapData> Backing02Map { get; protected set; } = new ObservableCollection<DoubleHeatMapData>();
+  public virtual ObservableCollection<DoubleHeatMapData> Backing03Map { get; protected set; } = new ObservableCollection<DoubleHeatMapData>();
+  public virtual ObservableCollection<DoubleHeatMapData> Backing12Map { get; protected set; } = new ObservableCollection<DoubleHeatMapData>();
+  public virtual ObservableCollection<DoubleHeatMapData> Backing13Map { get; protected set; } = new ObservableCollection<DoubleHeatMapData>();
+  public virtual ObservableCollection<DoubleHeatMapData> Backing23Map { get; protected set; } = new ObservableCollection<DoubleHeatMapData>();
+
+  private object _lock = new object();
+  private MapModel _activeMap;
+  protected AnalysysMap()
   {
-    public ReporterResultManager BackingWResults { get; protected set; } = new ReporterResultManager();
-    public virtual ObservableCollection<DoubleHeatMapData> DisplayedMap { get; set; }
-    public virtual ObservableCollection<DoubleHeatMapData> Current01Map { get; protected set; } = new ObservableCollection<DoubleHeatMapData>();
-    public virtual ObservableCollection<DoubleHeatMapData> Current02Map { get; protected set; } = new ObservableCollection<DoubleHeatMapData>();
-    public virtual ObservableCollection<DoubleHeatMapData> Current03Map { get; protected set; } = new ObservableCollection<DoubleHeatMapData>();
-    public virtual ObservableCollection<DoubleHeatMapData> Current12Map { get; protected set; } = new ObservableCollection<DoubleHeatMapData>();
-    public virtual ObservableCollection<DoubleHeatMapData> Current13Map { get; protected set; } = new ObservableCollection<DoubleHeatMapData>();
-    public virtual ObservableCollection<DoubleHeatMapData> Current23Map { get; protected set; } = new ObservableCollection<DoubleHeatMapData>();
-    public virtual ObservableCollection<DoubleHeatMapData> Backing01Map { get; protected set; } = new ObservableCollection<DoubleHeatMapData>();
-    public virtual ObservableCollection<DoubleHeatMapData> Backing02Map { get; protected set; } = new ObservableCollection<DoubleHeatMapData>();
-    public virtual ObservableCollection<DoubleHeatMapData> Backing03Map { get; protected set; } = new ObservableCollection<DoubleHeatMapData>();
-    public virtual ObservableCollection<DoubleHeatMapData> Backing12Map { get; protected set; } = new ObservableCollection<DoubleHeatMapData>();
-    public virtual ObservableCollection<DoubleHeatMapData> Backing13Map { get; protected set; } = new ObservableCollection<DoubleHeatMapData>();
-    public virtual ObservableCollection<DoubleHeatMapData> Backing23Map { get; protected set; } = new ObservableCollection<DoubleHeatMapData>();
+    DisplayedMap = Current12Map;
+  }
 
-    private object _lock = new object();
-    private MapModel _activeMap;
-    protected AnalysysMap()
+  public static AnalysysMap Create()
+  {
+    return ViewModelSource.Create(() => new AnalysysMap());
+  }
+
+  public void ClearData(bool current)
+  {
+    if (current)
     {
-      DisplayedMap = Current12Map;
+      Current01Map.Clear();
+      Current02Map.Clear();
+      Current03Map.Clear();
+      Current12Map.Clear();
+      Current13Map.Clear();
+      Current23Map.Clear();
     }
-
-    public static AnalysysMap Create()
+    else
     {
-      return ViewModelSource.Create(() => new AnalysysMap());
-    }
-
-    public void ClearData(bool current)
-    {
-      if (current)
+      Backing01Map.Clear();
+      Backing02Map.Clear();
+      Backing03Map.Clear();
+      lock (_lock)
       {
-        Current01Map.Clear();
-        Current02Map.Clear();
-        Current03Map.Clear();
-        Current12Map.Clear();
-        Current13Map.Clear();
-        Current23Map.Clear();
+        Backing12Map.Clear();
       }
-      else
+      Backing13Map.Clear();
+      Backing23Map.Clear();
+    }
+  }
+
+  public void InitBackingWellResults()
+  {
+    List<int> regions = new List<int>();
+    if (MapRegionsController.ActiveRegionNums.Count > 0)
+    {
+      foreach (var reg in MapRegionsController.ActiveRegionNums)
       {
-        Backing01Map.Clear();
-        Backing02Map.Clear();
-        Backing03Map.Clear();
+        if (reg == 0)
+          continue;
+        regions.Add(reg);
+      }
+    }
+    BackingWResults.Reset(regions);
+  }
+
+  public void FillBackingMap()
+  {
+    foreach (var regionNumber in BackingWResults.CurrentActiveRegions)
+    {
+      if (_activeMap.Regions.TryGetValue(regionNumber, out var region))
+      {
+        var x = HeatMapPoint.bins[region.Center.x];
+        var y = HeatMapPoint.bins[region.Center.y];
         lock (_lock)
         {
-          Backing12Map.Clear();
+          var value = BackingWResults.GetReporterResultsByRegion(regionNumber).Average();
+          Backing12Map.Add(new DoubleHeatMapData(x, y, value));
         }
-        Backing13Map.Clear();
-        Backing23Map.Clear();
       }
     }
+  }
 
-    public void InitBackingWellResults()
+  public void AddDataPoint(int regionIndex, double reporterAvg)
+  {
+    var region = _activeMap.regions[regionIndex];
+    var x = HeatMapPoint.bins[region.Center.x];
+    var y = HeatMapPoint.bins[region.Center.y];
+    Current12Map.Add(new DoubleHeatMapData(x, y, reporterAvg));
+  }
+
+  public void ChangeDisplayedMap(MapIndex mapIndex, bool current)
+  {
+    DisplayedMap = null;
+    if (current)
     {
-      List<int> regions = new List<int>();
-      if (MapRegionsController.ActiveRegionNums.Count > 0)
+      switch (mapIndex)
       {
-        foreach (var reg in MapRegionsController.ActiveRegionNums)
-        {
-          if (reg == 0)
-            continue;
-          regions.Add(reg);
-        }
+        case MapIndex.CL01:
+          DisplayedMap = Current01Map;
+          break;
+        case MapIndex.CL02:
+          DisplayedMap = Current02Map;
+          break;
+        case MapIndex.CL03:
+          DisplayedMap = Current03Map;
+          break;
+        case MapIndex.CL12:
+          DisplayedMap = Current12Map;
+          break;
+        case MapIndex.CL13:
+          DisplayedMap = Current13Map;
+          break;
+        case MapIndex.CL23:
+          DisplayedMap = Current23Map;
+          break;
       }
-      BackingWResults.Reset(regions);
     }
-
-    public void FillBackingMap()
+    else
     {
-      foreach (var regionNumber in BackingWResults.CurrentActiveRegions)
+      switch (mapIndex)
       {
-        if (_activeMap.Regions.TryGetValue(regionNumber, out var region))
-        {
-          var x = HeatMapPoint.bins[region.Center.x];
-          var y = HeatMapPoint.bins[region.Center.y];
-          lock (_lock)
-          {
-            var value = BackingWResults.GetReporterResultsByRegion(regionNumber).Average();
-            Backing12Map.Add(new DoubleHeatMapData(x, y, value));
-          }
-        }
+        case MapIndex.CL01:
+          DisplayedMap = Backing01Map;
+          break;
+        case MapIndex.CL02:
+          DisplayedMap = Backing02Map;
+          break;
+        case MapIndex.CL03:
+          DisplayedMap = Backing03Map;
+          break;
+        case MapIndex.CL12:
+          DisplayedMap = Backing12Map;
+          break;
+        case MapIndex.CL13:
+          DisplayedMap = Backing13Map;
+          break;
+        case MapIndex.CL23:
+          DisplayedMap = Backing23Map;
+          break;
       }
     }
+  }
 
-    public void AddDataPoint(int regionIndex, double reporterAvg)
-    {
-      var region = _activeMap.regions[regionIndex];
-      var x = HeatMapPoint.bins[region.Center.x];
-      var y = HeatMapPoint.bins[region.Center.y];
-      Current12Map.Add(new DoubleHeatMapData(x, y, reporterAvg));
-    }
-
-    public void ChangeDisplayedMap(MapIndex mapIndex, bool current)
-    {
-      DisplayedMap = null;
-      if (current)
-      {
-        switch (mapIndex)
-        {
-          case MapIndex.CL01:
-            DisplayedMap = Current01Map;
-            break;
-          case MapIndex.CL02:
-            DisplayedMap = Current02Map;
-            break;
-          case MapIndex.CL03:
-            DisplayedMap = Current03Map;
-            break;
-          case MapIndex.CL12:
-            DisplayedMap = Current12Map;
-            break;
-          case MapIndex.CL13:
-            DisplayedMap = Current13Map;
-            break;
-          case MapIndex.CL23:
-            DisplayedMap = Current23Map;
-            break;
-        }
-      }
-      else
-      {
-        switch (mapIndex)
-        {
-          case MapIndex.CL01:
-            DisplayedMap = Backing01Map;
-            break;
-          case MapIndex.CL02:
-            DisplayedMap = Backing02Map;
-            break;
-          case MapIndex.CL03:
-            DisplayedMap = Backing03Map;
-            break;
-          case MapIndex.CL12:
-            DisplayedMap = Backing12Map;
-            break;
-          case MapIndex.CL13:
-            DisplayedMap = Backing13Map;
-            break;
-          case MapIndex.CL23:
-            DisplayedMap = Backing23Map;
-            break;
-        }
-      }
-    }
-
-    public void OnMapChanged(MapModel map)
-    {
-      _activeMap = map;
-    }
+  public void OnMapChanged(MapModel map)
+  {
+    _activeMap = map;
   }
 }

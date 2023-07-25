@@ -13,414 +13,413 @@ using DIOS.Application.Domain;
 using Ei_Dimension.Controllers;
 using DIOS.Core.HardwareIntercom;
 
-namespace Ei_Dimension.ViewModels
+namespace Ei_Dimension.ViewModels;
+
+[POCOViewModel]
+public class TemplateSelectViewModel
 {
-  [POCOViewModel]
-  public class TemplateSelectViewModel
+  public virtual ObservableCollection<string> NameList { get; set; } = new ObservableCollection<string>();
+  public string SelectedItem { get; set; }
+  public virtual ObservableCollection<string> TemplateSaveName { get; set; }
+  public virtual Visibility WaitIndicatorBorderVisibility { get; set; } = Visibility.Hidden;
+  private string _templateName;
+  public static TemplateSelectViewModel Instance { get; private set; }
+  public virtual Visibility DeleteVisible { get; set; } = Visibility.Hidden;
+  protected TemplateSelectViewModel()
   {
-    public virtual ObservableCollection<string> NameList { get; set; } = new ObservableCollection<string>();
-    public string SelectedItem { get; set; }
-    public virtual ObservableCollection<string> TemplateSaveName { get; set; }
-    public virtual Visibility WaitIndicatorBorderVisibility { get; set; } = Visibility.Hidden;
-    private string _templateName;
-    public static TemplateSelectViewModel Instance { get; private set; }
-    public virtual Visibility DeleteVisible { get; set; } = Visibility.Hidden;
-    protected TemplateSelectViewModel()
-    {
-      var defTemplateName = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.DefaultTemplateName),
-        Language.TranslationSource.Instance.CurrentCulture);
-      TemplateSaveName = new ObservableCollection<string> { defTemplateName };
+    var defTemplateName = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.DefaultTemplateName),
+      Language.TranslationSource.Instance.CurrentCulture);
+    TemplateSaveName = new ObservableCollection<string> { defTemplateName };
 
-      var TemplateList = Directory.GetFiles($"{App.DiosApp.RootDirectory}\\Config", "*.dtml");
-      foreach (var template in TemplateList)
-      {
-        NameList.Add(Path.GetFileNameWithoutExtension(template));
-      }
+    var TemplateList = Directory.GetFiles($"{App.DiosApp.RootDirectory}\\Config", "*.dtml");
+    foreach (var template in TemplateList)
+    {
+      NameList.Add(Path.GetFileNameWithoutExtension(template));
+    }
       
-      Instance = this;
-    }
+    Instance = this;
+  }
 
-    public static TemplateSelectViewModel Create()
-    {
-      return ViewModelSource.Create(() => new TemplateSelectViewModel());
-    }
+  public static TemplateSelectViewModel Create()
+  {
+    return ViewModelSource.Create(() => new TemplateSelectViewModel());
+  }
 
-    public void LoadTemplate()
+  public void LoadTemplate()
+  {
+    UserInputHandler.InputSanityCheck();
+    AcquisitionTemplate newTemplate = null;
+    try
     {
-      UserInputHandler.InputSanityCheck();
-      AcquisitionTemplate newTemplate = null;
-      try
+      using (TextReader reader = new StreamReader(SelectedItem))
       {
-        using (TextReader reader = new StreamReader(SelectedItem))
-        {
-          var fileContents = reader.ReadToEnd();
-          newTemplate = JsonConvert.DeserializeObject<AcquisitionTemplate>(fileContents);
-        }
+        var fileContents = reader.ReadToEnd();
+        newTemplate = JsonConvert.DeserializeObject<AcquisitionTemplate>(fileContents);
       }
-      catch
+    }
+    catch
+    {
+      Notification.ShowLocalized(nameof(Language.Resources.Notification_No_Template_Selected));
+    }
+    if (newTemplate != null)
+    {
+      ShowWaitIndicator();
+      Task.Run(() =>
       {
-        Notification.ShowLocalized(nameof(Language.Resources.Notification_No_Template_Selected));
-      }
-      if (newTemplate != null)
-      {
-        ShowWaitIndicator();
-        Task.Run(() =>
+        App.Current.Dispatcher.Invoke((Action) (() =>
         {
-          App.Current.Dispatcher.Invoke((Action) (() =>
+          try
           {
-            try
-            {
-              int iRes;
-              var DashVM = DashboardViewModel.Instance;
-              DashVM.SpeedItems[newTemplate.Speed].Click(1);
-              DashVM.ClassiMapItems[App.DiosApp.MapController.GetMapIndexByName(newTemplate.Map)].Click(2);
-              ComponentsViewModel.Instance.ChConfigItems[newTemplate.ChConfig].Click(4);
-              DashVM.OrderItems[newTemplate.Order].Click(4);
-              DashVM.SysControlItems[newTemplate.SysControl].Click(5);
-              DashVM.EndReadItems[newTemplate.EndRead].Click(6);
+            int iRes;
+            var DashVM = DashboardViewModel.Instance;
+            DashVM.SpeedItems[newTemplate.Speed].Click(1);
+            DashVM.ClassiMapItems[App.DiosApp.MapController.GetMapIndexByName(newTemplate.Map)].Click(2);
+            ComponentsViewModel.Instance.ChConfigItems[newTemplate.ChConfig].Click(4);
+            DashVM.OrderItems[newTemplate.Order].Click(4);
+            DashVM.SysControlItems[newTemplate.SysControl].Click(5);
+            DashVM.EndReadItems[newTemplate.EndRead].Click(6);
 
-              var temp = newTemplate.MinPerRegion.ToString();
-              if (int.TryParse(temp, out iRes))
-              {
-                App.DiosApp.Terminator.MinPerRegion = iRes;
-                Settings.Default.MinPerRegion = iRes;
-                DashVM.EndRead[0] = temp;
-              }
-              else
-                throw new Exception();
+            var temp = newTemplate.MinPerRegion.ToString();
+            if (int.TryParse(temp, out iRes))
+            {
+              App.DiosApp.Terminator.MinPerRegion = iRes;
+              Settings.Default.MinPerRegion = iRes;
+              DashVM.EndRead[0] = temp;
+            }
+            else
+              throw new Exception();
               
-              temp = newTemplate.TotalEvents.ToString();
-              if (int.TryParse(temp, out iRes))
-              {
-                App.DiosApp.Terminator.TotalBeadsToCapture = iRes;
-                Settings.Default.BeadsToCapture = iRes;
-                DashVM.EndRead[1] = temp;
-              }
-              else
-                throw new Exception();
+            temp = newTemplate.TotalEvents.ToString();
+            if (int.TryParse(temp, out iRes))
+            {
+              App.DiosApp.Terminator.TotalBeadsToCapture = iRes;
+              Settings.Default.BeadsToCapture = iRes;
+              DashVM.EndRead[1] = temp;
+            }
+            else
+              throw new Exception();
 
-              temp = newTemplate.TerminationTimer.ToString();
-              if (int.TryParse(temp, out iRes))
-              {
-                App.DiosApp.Terminator.TerminationTime = iRes;
-                Settings.Default.TerminationTimer = iRes;
-                DashVM.EndRead[2] = temp;
-              }
-              else
-                throw new Exception();
+            temp = newTemplate.TerminationTimer.ToString();
+            if (int.TryParse(temp, out iRes))
+            {
+              App.DiosApp.Terminator.TerminationTime = iRes;
+              Settings.Default.TerminationTimer = iRes;
+              DashVM.EndRead[2] = temp;
+            }
+            else
+              throw new Exception();
 
-              temp = newTemplate.SampleVolume.ToString();
-              if (int.TryParse(temp, out iRes))
-              {
-                App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.Volume, VolumeType.Sample, (ushort)iRes);
-                DashVM.Volumes[0] = temp;
-              }
-              else
-                throw new Exception();
+            temp = newTemplate.SampleVolume.ToString();
+            if (int.TryParse(temp, out iRes))
+            {
+              App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.Volume, VolumeType.Sample, (ushort)iRes);
+              DashVM.Volumes[0] = temp;
+            }
+            else
+              throw new Exception();
               
-              temp = newTemplate.WashVolume.ToString();
-              if (int.TryParse(temp, out iRes))
-              {
-                App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.Volume, VolumeType.Wash, (ushort)iRes);
-                DashVM.Volumes[1] = temp;
-              }
-              else
-                throw new Exception();
-
-              temp = newTemplate.ProbeWashVolume.ToString();
-              if (int.TryParse(temp, out iRes))
-              {
-                App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.Volume, VolumeType.ProbeWash, (ushort)iRes);
-                DashVM.Volumes[2] = temp;
-              }
-              else
-                throw new Exception();
-
-              temp = newTemplate.AgitateVolume.ToString();
-              if (int.TryParse(temp, out iRes))
-              {
-                App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.Volume, VolumeType.Agitate, (ushort)iRes);
-                DashVM.Volumes[3] = temp;
-              }
-              else
-                throw new Exception();
-
-              temp = newTemplate.WashRepeats.ToString();
-              if (int.TryParse(temp, out iRes))
-              {
-                App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.WashRepeatsAmount, (ushort)iRes);
-                DashVM.Repeats[0] = temp;
-              }
-              else
-                throw new Exception();
-
-              temp = newTemplate.ProbewashRepeats.ToString();
-              if (int.TryParse(temp, out iRes))
-              {
-                App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ProbewashRepeatsAmount, (ushort)iRes);
-                DashVM.Repeats[1] = temp;
-              }
-              else
-                throw new Exception();
-
-              temp = newTemplate.AgitateRepeats.ToString();
-              if (int.TryParse(temp, out iRes))
-              {
-                App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.AgitateRepeatsAmount, (ushort)iRes);
-                DashVM.Repeats[2] = temp;
-              }
-              else
-                throw new Exception();
-
-              uint chkBox = newTemplate.FileSaveCheckboxes;
-              for (var i = FileSaveViewModel.Instance.Checkboxes.Count - 1 - 1; i > -1; i--) // -1 to not store system log
-              {
-                uint pow = (uint)Math.Pow(2, i);
-                if (chkBox >= pow)
-                {
-                  FileSaveViewModel.Instance.CheckedBox(i);
-                  chkBox -= pow;
-                }
-                else
-                  FileSaveViewModel.Instance.UncheckedBox(i);
-              }
-
-              for (var i = 0; i < MapRegionsController.RegionsList.Count - 1; i++)
-              {
-                MapRegionsController.RegionsList[i + 1].Name[0] = newTemplate.RegionsNamesList[i];
-                if (newTemplate.ActiveRegions[i])
-                {
-                  App.MapRegions.AddActiveRegion(MapRegionsController.RegionsList[i+1].Number);
-                }
-              }
-
-              if (newTemplate.TableSize != 0)
-                WellsSelectViewModel.Instance.ChangeWellTableSize(newTemplate.TableSize);
-              if (newTemplate.TableSize == 96)
-                Views.ExperimentView.Instance.DbWell96.IsChecked = true;
-              else if (newTemplate.TableSize == 384)
-                Views.ExperimentView.Instance.DbWell384.IsChecked = true;
-              else if (newTemplate.TableSize == 1)
-                Views.ExperimentView.Instance.DbTube.IsChecked = true;
-              if (newTemplate.TableSize == 96 || newTemplate.TableSize == 384)
-              {
-                var size = newTemplate.TableSize == 96 ? 12 : 24;
-                var Wells = WellsSelectViewModel.Instance.CurrentTableSize == 96
-                  ? WellsSelectViewModel.Instance.Table96Wells
-                  : WellsSelectViewModel.Instance.Table384Wells;
-                var j = 0;
-                foreach (var row in Wells)
-                {
-                  for (var i = 0; i < size; i++)
-                  {
-                    row.SetType(i, newTemplate.SelectedWells[j][i]);
-                  }
-
-                  j++;
-                }
-              }
-
-              if (newTemplate.PlateType != null)//case for old templates
-              {
-                var plateFilePath = App.DiosApp.RootDirectory + @"\Config\" + newTemplate.PlateType + PlateCustomizationViewModel.PLATETYPEFILEEXTENSION;
-                if (File.Exists(plateFilePath))
-                {
-                  PlateCustomizationViewModel.Instance.SelectedItem = plateFilePath;
-                  PlateCustomizationViewModel.Instance.LoadPlate();
-                }
-              }
-            }
-            catch
+            temp = newTemplate.WashVolume.ToString();
+            if (int.TryParse(temp, out iRes))
             {
-              Notification.ShowLocalizedError(nameof(Language.Resources.Notification_Error_Loading_template));
-              return;
+              App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.Volume, VolumeType.Wash, (ushort)iRes);
+              DashVM.Volumes[1] = temp;
             }
-            finally
+            else
+              throw new Exception();
+
+            temp = newTemplate.ProbeWashVolume.ToString();
+            if (int.TryParse(temp, out iRes))
             {
-              HideWaitIndicator();
+              App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.Volume, VolumeType.ProbeWash, (ushort)iRes);
+              DashVM.Volumes[2] = temp;
             }
-            if (_templateName == null)
+            else
+              throw new Exception();
+
+            temp = newTemplate.AgitateVolume.ToString();
+            if (int.TryParse(temp, out iRes))
             {
-              _templateName = SelectedItem.Substring(SelectedItem.LastIndexOf(@"\") + 1, SelectedItem.Length - SelectedItem.LastIndexOf(@"\") - 6);
+              App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.Volume, VolumeType.Agitate, (ushort)iRes);
+              DashVM.Volumes[3] = temp;
             }
-            ExperimentViewModel.Instance.CurrentTemplateName = _templateName;
-            Settings.Default.LastTemplate = SelectedItem;
-            Settings.Default.Save();
-            ExperimentViewModel.Instance.NavigateDashboard();
-          }));
-        });
-      }
+            else
+              throw new Exception();
+
+            temp = newTemplate.WashRepeats.ToString();
+            if (int.TryParse(temp, out iRes))
+            {
+              App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.WashRepeatsAmount, (ushort)iRes);
+              DashVM.Repeats[0] = temp;
+            }
+            else
+              throw new Exception();
+
+            temp = newTemplate.ProbewashRepeats.ToString();
+            if (int.TryParse(temp, out iRes))
+            {
+              App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ProbewashRepeatsAmount, (ushort)iRes);
+              DashVM.Repeats[1] = temp;
+            }
+            else
+              throw new Exception();
+
+            temp = newTemplate.AgitateRepeats.ToString();
+            if (int.TryParse(temp, out iRes))
+            {
+              App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.AgitateRepeatsAmount, (ushort)iRes);
+              DashVM.Repeats[2] = temp;
+            }
+            else
+              throw new Exception();
+
+            uint chkBox = newTemplate.FileSaveCheckboxes;
+            for (var i = FileSaveViewModel.Instance.Checkboxes.Count - 1 - 1; i > -1; i--) // -1 to not store system log
+            {
+              uint pow = (uint)Math.Pow(2, i);
+              if (chkBox >= pow)
+              {
+                FileSaveViewModel.Instance.CheckedBox(i);
+                chkBox -= pow;
+              }
+              else
+                FileSaveViewModel.Instance.UncheckedBox(i);
+            }
+
+            for (var i = 0; i < MapRegionsController.RegionsList.Count - 1; i++)
+            {
+              MapRegionsController.RegionsList[i + 1].Name[0] = newTemplate.RegionsNamesList[i];
+              if (newTemplate.ActiveRegions[i])
+              {
+                App.MapRegions.AddActiveRegion(MapRegionsController.RegionsList[i+1].Number);
+              }
+            }
+
+            if (newTemplate.TableSize != 0)
+              WellsSelectViewModel.Instance.ChangeWellTableSize(newTemplate.TableSize);
+            if (newTemplate.TableSize == 96)
+              Views.ExperimentView.Instance.DbWell96.IsChecked = true;
+            else if (newTemplate.TableSize == 384)
+              Views.ExperimentView.Instance.DbWell384.IsChecked = true;
+            else if (newTemplate.TableSize == 1)
+              Views.ExperimentView.Instance.DbTube.IsChecked = true;
+            if (newTemplate.TableSize == 96 || newTemplate.TableSize == 384)
+            {
+              var size = newTemplate.TableSize == 96 ? 12 : 24;
+              var Wells = WellsSelectViewModel.Instance.CurrentTableSize == 96
+                ? WellsSelectViewModel.Instance.Table96Wells
+                : WellsSelectViewModel.Instance.Table384Wells;
+              var j = 0;
+              foreach (var row in Wells)
+              {
+                for (var i = 0; i < size; i++)
+                {
+                  row.SetType(i, newTemplate.SelectedWells[j][i]);
+                }
+
+                j++;
+              }
+            }
+
+            if (newTemplate.PlateType != null)//case for old templates
+            {
+              var plateFilePath = App.DiosApp.RootDirectory + @"\Config\" + newTemplate.PlateType + PlateCustomizationViewModel.PLATETYPEFILEEXTENSION;
+              if (File.Exists(plateFilePath))
+              {
+                PlateCustomizationViewModel.Instance.SelectedItem = plateFilePath;
+                PlateCustomizationViewModel.Instance.LoadPlate();
+              }
+            }
+          }
+          catch
+          {
+            Notification.ShowLocalizedError(nameof(Language.Resources.Notification_Error_Loading_template));
+            return;
+          }
+          finally
+          {
+            HideWaitIndicator();
+          }
+          if (_templateName == null)
+          {
+            _templateName = SelectedItem.Substring(SelectedItem.LastIndexOf(@"\") + 1, SelectedItem.Length - SelectedItem.LastIndexOf(@"\") - 6);
+          }
+          ExperimentViewModel.Instance.CurrentTemplateName = _templateName;
+          Settings.Default.LastTemplate = SelectedItem;
+          Settings.Default.Save();
+          ExperimentViewModel.Instance.NavigateDashboard();
+        }));
+      });
     }
+  }
 
-    public void SaveTemplate()
+  public void SaveTemplate()
+  {
+    UserInputHandler.InputSanityCheck();
+    var path = App.DiosApp.RootDirectory + @"\Config\" + TemplateSaveName[0] + ".dtml";
+    foreach (var c in App.InvalidChars)
     {
-      UserInputHandler.InputSanityCheck();
-      var path = App.DiosApp.RootDirectory + @"\Config\" + TemplateSaveName[0] + ".dtml";
-      foreach (var c in App.InvalidChars)
+      if (TemplateSaveName[0].Contains(c.ToString()))
       {
-        if (TemplateSaveName[0].Contains(c.ToString()))
-        {
-          Notification.ShowLocalized(nameof(Language.Resources.Notification_Invalid_File_Name));
-          return;
-        }
-      }
-      if (File.Exists(path))
-      {
-        void Overwrite()
-        {
-          SavingProcedure(path);
-        }
-
-        if (Language.TranslationSource.Instance.CurrentCulture.TextInfo.CultureName == "zh-CN")
-        {
-          Notification.Show($"名为 \"{TemplateSaveName[0]}\" 的模板已存在",
-            Overwrite, "覆盖", null, "取消");
-        }
-        else
-        {
-          Notification.Show($"A template with name \"{TemplateSaveName[0]}\" already exists.",
-            Overwrite, "Overwrite", null, "Cancel");
-        }
+        Notification.ShowLocalized(nameof(Language.Resources.Notification_Invalid_File_Name));
         return;
       }
-      SavingProcedure(path);
     }
+    if (File.Exists(path))
+    {
+      void Overwrite()
+      {
+        SavingProcedure(path);
+      }
+
+      if (Language.TranslationSource.Instance.CurrentCulture.TextInfo.CultureName == "zh-CN")
+      {
+        Notification.Show($"名为 \"{TemplateSaveName[0]}\" 的模板已存在",
+          Overwrite, "覆盖", null, "取消");
+      }
+      else
+      {
+        Notification.Show($"A template with name \"{TemplateSaveName[0]}\" already exists.",
+          Overwrite, "Overwrite", null, "Cancel");
+      }
+      return;
+    }
+    SavingProcedure(path);
+  }
     
-    private void SavingProcedure(string path)
+  private void SavingProcedure(string path)
+  {
+    try
     {
-      try
+      using (var stream = new StreamWriter(path, append: false))
       {
-        using (var stream = new StreamWriter(path, append: false))
+        var temp = new AcquisitionTemplate();
+        var DashVM = DashboardViewModel.Instance;
+        temp.Name = TemplateSaveName[0];
+        temp.SysControl = DashVM.SelectedSystemControlIndex;
+        temp.ChConfig = (byte)ComponentsViewModel.Instance.SelectedChConfigIndex;
+        temp.Order = (byte)DashVM.SelectedOrderIndex;
+        temp.Speed = (byte)DashVM.SelectedSpeedIndex;
+        temp.Map = DashVM.SelectedClassiMapContent;
+        temp.EndRead = DashVM.SelectedEndReadIndex;
+        temp.SampleVolume = uint.Parse(DashVM.Volumes[0]);
+        temp.WashVolume = uint.Parse(DashVM.Volumes[1]);
+        temp.ProbeWashVolume = uint.Parse(DashVM.Volumes[2]);
+        temp.AgitateVolume = uint.Parse(DashVM.Volumes[3]);
+        temp.WashRepeats = uint.Parse(DashVM.Repeats[0]);
+        temp.ProbewashRepeats = uint.Parse(DashVM.Repeats[1]);
+        temp.AgitateRepeats = uint.Parse(DashVM.Repeats[2]);
+        temp.MinPerRegion = uint.Parse(DashVM.EndRead[0]);
+        temp.TotalEvents = uint.Parse(DashVM.EndRead[1]);
+        temp.TerminationTimer = uint.Parse(DashVM.EndRead[2]);
+        uint checkboxes = 0;
+        for (var i = 0; i < FileSaveViewModel.Instance.Checkboxes.Count - 1; i++)  // -1 to not store system log
         {
-          var temp = new AcquisitionTemplate();
-          var DashVM = DashboardViewModel.Instance;
-          temp.Name = TemplateSaveName[0];
-          temp.SysControl = DashVM.SelectedSystemControlIndex;
-          temp.ChConfig = (byte)ComponentsViewModel.Instance.SelectedChConfigIndex;
-          temp.Order = (byte)DashVM.SelectedOrderIndex;
-          temp.Speed = (byte)DashVM.SelectedSpeedIndex;
-          temp.Map = DashVM.SelectedClassiMapContent;
-          temp.EndRead = DashVM.SelectedEndReadIndex;
-          temp.SampleVolume = uint.Parse(DashVM.Volumes[0]);
-          temp.WashVolume = uint.Parse(DashVM.Volumes[1]);
-          temp.ProbeWashVolume = uint.Parse(DashVM.Volumes[2]);
-          temp.AgitateVolume = uint.Parse(DashVM.Volumes[3]);
-          temp.WashRepeats = uint.Parse(DashVM.Repeats[0]);
-          temp.ProbewashRepeats = uint.Parse(DashVM.Repeats[1]);
-          temp.AgitateRepeats = uint.Parse(DashVM.Repeats[2]);
-          temp.MinPerRegion = uint.Parse(DashVM.EndRead[0]);
-          temp.TotalEvents = uint.Parse(DashVM.EndRead[1]);
-          temp.TerminationTimer = uint.Parse(DashVM.EndRead[2]);
-          uint checkboxes = 0;
-          for (var i = 0; i < FileSaveViewModel.Instance.Checkboxes.Count - 1; i++)  // -1 to not store system log
-          {
-            int currVal = (int)Math.Pow(2, i) * (FileSaveViewModel.Instance.Checkboxes[i] ? 1 : 0);
-            checkboxes += (uint)currVal;
-          }
-          temp.FileSaveCheckboxes = checkboxes;
+          int currVal = (int)Math.Pow(2, i) * (FileSaveViewModel.Instance.Checkboxes[i] ? 1 : 0);
+          checkboxes += (uint)currVal;
+        }
+        temp.FileSaveCheckboxes = checkboxes;
 
-          foreach (var region in MapRegionsController.RegionsList)
-          {
-            if(region.Number == 0)
-              continue;
-            var isActive = MapRegionsController.ActiveRegionNums.Contains(region.Number);
-            temp.ActiveRegions.Add(isActive);
-            temp.RegionsNamesList.Add(region.Name[0]);
-          }
+        foreach (var region in MapRegionsController.RegionsList)
+        {
+          if(region.Number == 0)
+            continue;
+          var isActive = MapRegionsController.ActiveRegionNums.Contains(region.Number);
+          temp.ActiveRegions.Add(isActive);
+          temp.RegionsNamesList.Add(region.Name[0]);
+        }
 
-          temp.TableSize = WellsSelectViewModel.Instance.CurrentTableSize;
-          if (temp.TableSize != 1)
+        temp.TableSize = WellsSelectViewModel.Instance.CurrentTableSize;
+        if (temp.TableSize != 1)
+        {
+          var tempSelWells = WellsSelectViewModel.Instance.CurrentTableSize == 96 ?
+            WellsSelectViewModel.Instance.Table96Wells : WellsSelectViewModel.Instance.Table384Wells;
+          foreach (var wellRow in tempSelWells)
           {
-            var tempSelWells = WellsSelectViewModel.Instance.CurrentTableSize == 96 ?
-              WellsSelectViewModel.Instance.Table96Wells : WellsSelectViewModel.Instance.Table384Wells;
-            foreach (var wellRow in tempSelWells)
+            var list = new List<WellType>();
+            foreach (var type in wellRow.Types)
             {
-              var list = new List<WellType>();
-              foreach (var type in wellRow.Types)
-              {
-                list.Add(type);
-              }
-              temp.SelectedWells.Add(list);
+              list.Add(type);
             }
+            temp.SelectedWells.Add(list);
           }
-          temp.PlateType = PlateCustomizationViewModel.Instance.CurrentPlateName;
-          var contents = JsonConvert.SerializeObject(temp);
-          stream.Write(contents);
         }
+        temp.PlateType = PlateCustomizationViewModel.Instance.CurrentPlateName;
+        var contents = JsonConvert.SerializeObject(temp);
+        stream.Write(contents);
       }
-      catch
+    }
+    catch
+    {
+      Notification.ShowLocalized(nameof(Language.Resources.Notification_Template_Save_Problem));
+    }
+    if (!NameList.Contains(TemplateSaveName[0]))
+    {
+      NameList.Add(TemplateSaveName[0]);
+    }
+    DeleteVisible = Visibility.Hidden;
+    Views.TemplateSelectView.Instance.list.UnselectAll();
+  }
+
+  public void DeleteTemplate()
+  {
+    UserInputHandler.InputSanityCheck();
+    if (SelectedItem != null && File.Exists(SelectedItem))
+    {
+      void Delete()
       {
-        Notification.ShowLocalized(nameof(Language.Resources.Notification_Template_Save_Problem));
+        File.Delete(SelectedItem);
+        NameList.Remove(_templateName);
+        if (ExperimentViewModel.Instance.CurrentTemplateName == _templateName)
+          ExperimentViewModel.Instance.CurrentTemplateName = "None";
+        DeleteVisible = Visibility.Hidden;
       }
-      if (!NameList.Contains(TemplateSaveName[0]))
+
+      if (Language.TranslationSource.Instance.CurrentCulture.TextInfo.CultureName == "zh-CN")
       {
-        NameList.Add(TemplateSaveName[0]);
+        Notification.Show($"您要删除 \"{Path.GetFileNameWithoutExtension(SelectedItem)}\" 模板吗？",
+          Delete, "删除", null, "取消");
       }
-      DeleteVisible = Visibility.Hidden;
-      Views.TemplateSelectView.Instance.list.UnselectAll();
-    }
-
-    public void DeleteTemplate()
-    {
-      UserInputHandler.InputSanityCheck();
-      if (SelectedItem != null && File.Exists(SelectedItem))
+      else
       {
-        void Delete()
-        {
-          File.Delete(SelectedItem);
-          NameList.Remove(_templateName);
-          if (ExperimentViewModel.Instance.CurrentTemplateName == _templateName)
-            ExperimentViewModel.Instance.CurrentTemplateName = "None";
-          DeleteVisible = Visibility.Hidden;
-        }
-
-        if (Language.TranslationSource.Instance.CurrentCulture.TextInfo.CultureName == "zh-CN")
-        {
-          Notification.Show($"您要删除 \"{Path.GetFileNameWithoutExtension(SelectedItem)}\" 模板吗？",
-            Delete, "删除", null, "取消");
-        }
-        else
-        {
-          Notification.Show($"Do you want to delete \"{Path.GetFileNameWithoutExtension(SelectedItem)}\" template?",
-            Delete, "Delete", null, "Cancel");
-        }
+        Notification.Show($"Do you want to delete \"{Path.GetFileNameWithoutExtension(SelectedItem)}\" template?",
+          Delete, "Delete", null, "Cancel");
       }
     }
+  }
 
-    public void Selected(SelectionChangedEventArgs e)
-    {
-      if (e.AddedItems.Count == 0)
-        return;
-      _templateName = e.AddedItems[0].ToString();
-      SelectedItem = App.DiosApp.RootDirectory + @"\Config\" + e.AddedItems[0].ToString() + ".dtml";
-      TemplateSaveName[0] = _templateName;
-      DeleteVisible = Visibility.Visible;
-    }
+  public void Selected(SelectionChangedEventArgs e)
+  {
+    if (e.AddedItems.Count == 0)
+      return;
+    _templateName = e.AddedItems[0].ToString();
+    SelectedItem = App.DiosApp.RootDirectory + @"\Config\" + e.AddedItems[0].ToString() + ".dtml";
+    TemplateSaveName[0] = _templateName;
+    DeleteVisible = Visibility.Visible;
+  }
 
-    public void FocusedBox(int num)
+  public void FocusedBox(int num)
+  {
+    switch (num)
     {
-      switch (num)
-      {
-        case 0:
-          UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(TemplateSaveName)), this, 0, Views.TemplateSelectView.Instance.TmplBox);
-          MainViewModel.Instance.KeyboardToggle(Views.TemplateSelectView.Instance.TmplBox);
-          break;
-      }
+      case 0:
+        UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(TemplateSaveName)), this, 0, Views.TemplateSelectView.Instance.TmplBox);
+        MainViewModel.Instance.KeyboardToggle(Views.TemplateSelectView.Instance.TmplBox);
+        break;
     }
+  }
 
-    public void TextChanged(TextChangedEventArgs e)
-    {
-      UserInputHandler.InjectToFocusedTextbox(((TextBox)e.Source).Text, true);
-    }
+  public void TextChanged(TextChangedEventArgs e)
+  {
+    UserInputHandler.InjectToFocusedTextbox(((TextBox)e.Source).Text, true);
+  }
 
-    private void ShowWaitIndicator()
-    {
-      WaitIndicatorBorderVisibility = Visibility.Visible;
-    }
+  private void ShowWaitIndicator()
+  {
+    WaitIndicatorBorderVisibility = Visibility.Visible;
+  }
 
-    private void HideWaitIndicator()
-    {
-      WaitIndicatorBorderVisibility = Visibility.Hidden;
-    }
+  private void HideWaitIndicator()
+  {
+    WaitIndicatorBorderVisibility = Visibility.Hidden;
   }
 }

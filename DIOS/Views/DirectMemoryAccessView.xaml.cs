@@ -2,44 +2,43 @@
 using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace Ei_Dimension.Views
+namespace Ei_Dimension.Views;
+
+/// <summary>
+/// Interaction logic for DirectMemoryAccessView.xaml
+/// </summary>
+public partial class DirectMemoryAccessView : UserControl
 {
-  /// <summary>
-  /// Interaction logic for DirectMemoryAccessView.xaml
-  /// </summary>
-  public partial class DirectMemoryAccessView : UserControl
+  public static DirectMemoryAccessView Instance { get; private set; }
+  public DirectMemoryAccessView()
   {
-    public static DirectMemoryAccessView Instance { get; private set; }
-    public DirectMemoryAccessView()
-    {
-      InitializeComponent();
-      Instance = this;
-    }
+    InitializeComponent();
+    Instance = this;
+  }
 
-    public void BlockUI()
+  public void BlockUI()
+  {
+    foreach (UIElement input in dataSP.Children)
     {
-      foreach (UIElement input in dataSP.Children)
-      {
-        (input as TextBox).Background = (Brush)App.Current.Resources["HaltButtonBackground"];
-        (input as TextBox).IsHitTestVisible = false;
-      }
-      foreach (UIElement button in buttonsSP.Children)
-      {
-        (button as Button).IsEnabled = false;
-      }
+      (input as TextBox).Background = (Brush)App.Current.Resources["HaltButtonBackground"];
+      (input as TextBox).IsHitTestVisible = false;
     }
-
-    public void UnBlockUI()
+    foreach (UIElement button in buttonsSP.Children)
     {
-      foreach (UIElement input in dataSP.Children)
-      {
-        (input as TextBox).Background = (Brush)App.Current.Resources["AppBackground"];
-        (input as TextBox).IsHitTestVisible = true;
-      }
-      foreach (UIElement button in buttonsSP.Children)
-      {
-        (button as Button).IsEnabled = true;
-      }
+      (button as Button).IsEnabled = false;
+    }
+  }
+
+  public void UnBlockUI()
+  {
+    foreach (UIElement input in dataSP.Children)
+    {
+      (input as TextBox).Background = (Brush)App.Current.Resources["AppBackground"];
+      (input as TextBox).IsHitTestVisible = true;
+    }
+    foreach (UIElement button in buttonsSP.Children)
+    {
+      (button as Button).IsEnabled = true;
     }
   }
 }

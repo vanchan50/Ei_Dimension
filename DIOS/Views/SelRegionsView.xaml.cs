@@ -12,21 +12,20 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Ei_Dimension.Views
+namespace Ei_Dimension.Views;
+
+/// <summary>
+/// Interaction logic for SelRegionsView.xaml
+/// </summary>
+public partial class SelRegionsView : UserControl
 {
-  /// <summary>
-  /// Interaction logic for SelRegionsView.xaml
-  /// </summary>
-  public partial class SelRegionsView : UserControl
+  public static SelRegionsView Instance { get; private set; }
+  public SelRegionsView()
   {
-    public static SelRegionsView Instance { get; private set; }
-    public SelRegionsView()
-    {
-      InitializeComponent();
-      Instance = this;
+    InitializeComponent();
+    Instance = this;
 #if DEBUG
-      Console.Error.WriteLine("#12 SelRegionsView Loaded");
+    Console.Error.WriteLine("#12 SelRegionsView Loaded");
 #endif
-    }
   }
 }

@@ -1,8 +1,7 @@
-﻿namespace DIOS.Core
+﻿namespace DIOS.Core;
+
+public enum WellReadingOrder
 {
-  public enum WellReadingOrder
-  {
-    Column,
-    Row
-  }
+  Column,
+  Row
 }

@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace DIOS.Core.Tests
-{
-  public class StatisticsUnitTests
-  { /*
+namespace DIOS.Core.Tests;
+
+public class StatisticsUnitTests
+{ /*
     [Fact]
     public void Test1()
     {
@@ -181,5 +181,4 @@ namespace DIOS.Core.Tests
       };
     }
     */
-  }
 }

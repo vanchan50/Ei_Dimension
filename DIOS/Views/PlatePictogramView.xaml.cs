@@ -13,18 +13,17 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Ei_Dimension.Views
+namespace Ei_Dimension.Views;
+
+/// <summary>
+/// Interaction logic for PlatePictogramView.xaml
+/// </summary>
+public partial class PlatePictogramView : UserControl
 {
-  /// <summary>
-  /// Interaction logic for PlatePictogramView.xaml
-  /// </summary>
-  public partial class PlatePictogramView : UserControl
+  public static PlatePictogramView Instance { get; private set; }
+  public PlatePictogramView()
   {
-    public static PlatePictogramView Instance { get; private set; }
-    public PlatePictogramView()
-    {
-      InitializeComponent();
-      Instance = this;
-    }
+    InitializeComponent();
+    Instance = this;
   }
 }

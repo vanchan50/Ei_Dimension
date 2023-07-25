@@ -1,80 +1,79 @@
 ﻿using DIOS.Core;
 
-namespace DIOS.Application.FileIO
+namespace DIOS.Application.FileIO;
+
+public class Logger : ILogger
 {
-  public class Logger : ILogger
+  private const string LOGFOLDERNAME = "SystemLogs";
+  private const string LOGFILENAME = "EventLog";
+  private readonly string _folder;
+  private readonly FileStream _fStream;
+  private readonly StreamWriter _streamWriter;
+  private readonly string _logPath;
+  private readonly string _backupLogPath;
+  private string Time => DateTime.Now.ToString("HH:mm:ss", System.Globalization.CultureInfo.CreateSpecificCulture("en-GB"));
+
+  public Logger(string path)
   {
-    private const string LOGFOLDERNAME = "SystemLogs";
-    private const string LOGFILENAME = "EventLog";
-    private readonly string _folder;
-    private readonly FileStream _fStream;
-    private readonly StreamWriter _streamWriter;
-    private readonly string _logPath;
-    private readonly string _backupLogPath;
-    private string Time => DateTime.Now.ToString("HH:mm:ss", System.Globalization.CultureInfo.CreateSpecificCulture("en-GB"));
+    _folder = Path.Combine(path, LOGFOLDERNAME);
+    CheckDir(_folder);
 
-    public Logger(string path)
+    _logPath = $"{_folder}\\{LOGFILENAME}.txt";
+    _backupLogPath = $"{_folder}\\{LOGFILENAME}.bak";
+    SetBackup();
+
+    _fStream = new FileStream(_logPath, FileMode.Create);
+    _streamWriter = new StreamWriter(_fStream);
+    _streamWriter.AutoFlush = true;
+  }
+
+  ~Logger()
+  {
+    _streamWriter.Flush();
+    _streamWriter.Dispose();
+    _fStream.Dispose();
+  }
+
+  public void Log(string message)
+  {
+    _streamWriter.WriteLine($"{Time}\t{message}");
+  }
+
+  public void LogError(string message)
+  {
+    throw new NotImplementedException();
+  }
+
+  private void CheckDir(string folder)
+  {
+    try
     {
-      _folder = Path.Combine(path, LOGFOLDERNAME);
-      CheckDir(_folder);
-
-      _logPath = $"{_folder}\\{LOGFILENAME}.txt";
-      _backupLogPath = $"{_folder}\\{LOGFILENAME}.bak";
-      SetBackup();
-
-      _fStream = new FileStream(_logPath, FileMode.Create);
-      _streamWriter = new StreamWriter(_fStream);
-      _streamWriter.AutoFlush = true;
+      if (!Directory.Exists(folder))
+        Directory.CreateDirectory(folder);
     }
-
-   ~Logger()
-   {
-     _streamWriter.Flush();
-     _streamWriter.Dispose();
-     _fStream.Dispose();
-   }
-
-    public void Log(string message)
+    catch(Exception e)
     {
-      _streamWriter.WriteLine($"{Time}\t{message}");
+      Console.Error.WriteLine($"Unable to create directory {folder}");
+      Console.Error.WriteLine($"{e.Message}");
+      Environment.Exit(1);
     }
+  }
 
-    public void LogError(string message)
+  private void SetBackup()
+  {
+    try
     {
-      throw new NotImplementedException();
-    }
-
-    private void CheckDir(string folder)
-    {
-      try
+      if (File.Exists(_logPath))
       {
-        if (!Directory.Exists(folder))
-          Directory.CreateDirectory(folder);
-      }
-      catch(Exception e)
-      {
-        Console.Error.WriteLine($"Unable to create directory {folder}");
-        Console.Error.WriteLine($"{e.Message}");
-        Environment.Exit(1);
+        File.Delete(_backupLogPath);
+        File.Move(_logPath, _backupLogPath);
       }
     }
-
-    private void SetBackup()
+    catch (Exception e)
     {
-      try
-      {
-        if (File.Exists(_logPath))
-        {
-          File.Delete(_backupLogPath);
-          File.Move(_logPath, _backupLogPath);
-        }
-      }
-      catch (Exception e)
-      {
-        Console.Error.WriteLine($"Logger unable to SetBackup");
-        Console.Error.WriteLine($"{e.Message}");
-        Environment.Exit(1);
-      }
+      Console.Error.WriteLine($"Logger unable to SetBackup");
+      Console.Error.WriteLine($"{e.Message}");
+      Environment.Exit(1);
     }
   }
 }

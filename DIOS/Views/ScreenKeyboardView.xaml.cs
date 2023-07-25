@@ -12,19 +12,18 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Ei_Dimension.Views
+namespace Ei_Dimension.Views;
+
+/// <summary>
+/// Interaction logic for ScreenKeyboardView.xaml
+/// </summary>
+public partial class ScreenKeyboardView : UserControl
 {
-  /// <summary>
-  /// Interaction logic for ScreenKeyboardView.xaml
-  /// </summary>
-  public partial class ScreenKeyboardView : UserControl
+  public ScreenKeyboardView()
   {
-    public ScreenKeyboardView()
-    {
-      InitializeComponent();
+    InitializeComponent();
 #if DEBUG
-      Console.Error.WriteLine("#3 ScreenKeyboardView Loaded");
+    Console.Error.WriteLine("#3 ScreenKeyboardView Loaded");
 #endif
-    }
   }
 }

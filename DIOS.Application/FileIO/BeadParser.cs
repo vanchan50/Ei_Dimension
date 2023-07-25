@@ -3,37 +3,37 @@ using System.Collections.Generic;
 using System.IO;
 using System;
 
-namespace DIOS.Application.FileIO
+namespace DIOS.Application.FileIO;
+
+public class BeadParser
 {
-  public class BeadParser
+  private static readonly char[] Separator = { ',' };
+  private static string[] _wordsbuffer = new string[25];
+
+  public static bool ParseBeadInfoFile(string path, List<ProcessedBead> outputList)
   {
-    private static readonly char[] Separator = { ',' };
-    private static string[] _wordsbuffer = new string[25];
-
-    public static bool ParseBeadInfoFile(string path, List<ProcessedBead> outputList)
+    List<string> linesInFile = ParseFileToBeadStrings(path);
+    if (linesInFile.Count == 1 && linesInFile[0] == " ")
     {
-      List<string> linesInFile = ParseFileToBeadStrings(path);
-      if (linesInFile.Count == 1 && linesInFile[0] == " ")
-      {
-        return false;
-      }
-
-      for (var i = 0; i < linesInFile.Count; i++)
-      {
-        try
-        {
-          var bs = ParseRow(linesInFile[i]);
-          outputList.Add(bs);
-        }
-        catch (FormatException) { }
-      }
-      return true;
+      return false;
     }
 
-    private static List<string> ParseFileToBeadStrings(string path)
+    for (var i = 0; i < linesInFile.Count; i++)
     {
-      var str = new List<string>(2000000);
-      using (var fin = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read))
+      try
+      {
+        var bs = ParseRow(linesInFile[i]);
+        outputList.Add(bs);
+      }
+      catch (FormatException) { }
+    }
+    return true;
+  }
+
+  private static List<string> ParseFileToBeadStrings(string path)
+  {
+    var str = new List<string>(2000000);
+    using (var fin = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read))
       using (var sr = new StreamReader(fin))
       {
         // ReSharper disable once MethodHasAsyncOverload
@@ -43,46 +43,45 @@ namespace DIOS.Application.FileIO
           str.Add(sr.ReadLine());
         }
       }
-      return str;
-    }
+    return str;
+  }
 
-    private static ProcessedBead ParseRow(string data)
+  private static ProcessedBead ParseRow(string data)
+  {
+    var numFormat = System.Globalization.CultureInfo.InvariantCulture.NumberFormat;
+    _wordsbuffer = data.Split(Separator);
+    int i = 0;
+    ProcessedBead binfo = new ProcessedBead
     {
-      var numFormat = System.Globalization.CultureInfo.InvariantCulture.NumberFormat;
-      _wordsbuffer = data.Split(Separator);
-      int i = 0;
-      ProcessedBead binfo = new ProcessedBead
-      {
-        EventTime = uint.Parse(_wordsbuffer[i++]),
-        fsc_bg = byte.Parse(_wordsbuffer[i++]),
-        vssc_bg = byte.Parse(_wordsbuffer[i++]),
-        cl0_bg = byte.Parse(_wordsbuffer[i++]),
-        cl1_bg = ushort.Parse(_wordsbuffer[i++]),
-        cl2_bg = ushort.Parse(_wordsbuffer[i++]),
-        cl3_bg = byte.Parse(_wordsbuffer[i++]),
-        rssc_bg = byte.Parse(_wordsbuffer[i++]),
-        gssc_bg = byte.Parse(_wordsbuffer[i++]),
-        greenB_bg = ushort.Parse(_wordsbuffer[i++]),
-        greenC_bg = ushort.Parse(_wordsbuffer[i++]),
-        greenB = float.Parse(_wordsbuffer[i++]),
-        greenC = float.Parse(_wordsbuffer[i++]),
-        l_offset_rg = byte.Parse(_wordsbuffer[i++]),
-        l_offset_gv = byte.Parse(_wordsbuffer[i++]),
+      EventTime = uint.Parse(_wordsbuffer[i++]),
+      fsc_bg = byte.Parse(_wordsbuffer[i++]),
+      vssc_bg = byte.Parse(_wordsbuffer[i++]),
+      cl0_bg = byte.Parse(_wordsbuffer[i++]),
+      cl1_bg = ushort.Parse(_wordsbuffer[i++]),
+      cl2_bg = ushort.Parse(_wordsbuffer[i++]),
+      cl3_bg = byte.Parse(_wordsbuffer[i++]),
+      rssc_bg = byte.Parse(_wordsbuffer[i++]),
+      gssc_bg = byte.Parse(_wordsbuffer[i++]),
+      greenB_bg = ushort.Parse(_wordsbuffer[i++]),
+      greenC_bg = ushort.Parse(_wordsbuffer[i++]),
+      greenB = float.Parse(_wordsbuffer[i++]),
+      greenC = float.Parse(_wordsbuffer[i++]),
+      l_offset_rg = byte.Parse(_wordsbuffer[i++]),
+      l_offset_gv = byte.Parse(_wordsbuffer[i++]),
 
-        region = (ushort.Parse(_wordsbuffer[i])) % ProcessedBead.ZONEOFFSET, //16123
-        zone = (ushort.Parse(_wordsbuffer[i++])) / ProcessedBead.ZONEOFFSET,
+      region = (ushort.Parse(_wordsbuffer[i])) % ProcessedBead.ZONEOFFSET, //16123
+      zone = (ushort.Parse(_wordsbuffer[i++])) / ProcessedBead.ZONEOFFSET,
 
-        fsc = float.Parse(_wordsbuffer[i++], numFormat),
-        violetssc = float.Parse(_wordsbuffer[i++], numFormat),
-        cl0 = float.Parse(_wordsbuffer[i++], numFormat),
-        redssc = float.Parse(_wordsbuffer[i++], numFormat),
-        cl1 = float.Parse(_wordsbuffer[i++], numFormat),
-        cl2 = float.Parse(_wordsbuffer[i++], numFormat),
-        cl3 = float.Parse(_wordsbuffer[i++], numFormat),
-        greenssc = float.Parse(_wordsbuffer[i++], numFormat),
-        reporter = float.Parse(_wordsbuffer[i], numFormat),
-      };
-      return binfo;
-    }
+      fsc = float.Parse(_wordsbuffer[i++], numFormat),
+      violetssc = float.Parse(_wordsbuffer[i++], numFormat),
+      cl0 = float.Parse(_wordsbuffer[i++], numFormat),
+      redssc = float.Parse(_wordsbuffer[i++], numFormat),
+      cl1 = float.Parse(_wordsbuffer[i++], numFormat),
+      cl2 = float.Parse(_wordsbuffer[i++], numFormat),
+      cl3 = float.Parse(_wordsbuffer[i++], numFormat),
+      greenssc = float.Parse(_wordsbuffer[i++], numFormat),
+      reporter = float.Parse(_wordsbuffer[i], numFormat),
+    };
+    return binfo;
   }
 }

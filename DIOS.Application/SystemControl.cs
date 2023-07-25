@@ -1,8 +1,7 @@
-﻿namespace DIOS.Application
+﻿namespace DIOS.Application;
+
+public enum SystemControl
 {
-  public enum SystemControl
-  {
-    Manual,
-    WorkOrder
-  }
+  Manual,
+  WorkOrder
 }

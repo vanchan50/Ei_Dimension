@@ -1,9 +1,8 @@
-﻿namespace DIOS.Core.HardwareIntercom
+﻿namespace DIOS.Core.HardwareIntercom;
+
+public enum SheathFlowError
 {
-  public enum SheathFlowError
-  {
-    SheathEmpty,
-    HighPressure,
-    Unspecified
-  }
+  SheathEmpty,
+  HighPressure,
+  Unspecified
 }

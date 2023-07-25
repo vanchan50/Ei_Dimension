@@ -1,9 +1,8 @@
-﻿namespace DIOS.Core.HardwareIntercom
+﻿namespace DIOS.Core.HardwareIntercom;
+
+public enum SyringePosition
 {
-  public enum SyringePosition
-  {
-    Sheath,
-    SampleA,
-    SampleB
-  }
+  Sheath,
+  SampleA,
+  SampleB
 }

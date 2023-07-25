@@ -12,21 +12,20 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Ei_Dimension.Views
+namespace Ei_Dimension.Views;
+
+/// <summary>
+/// Interaction logic for MaintenanceView.xaml
+/// </summary>
+public partial class MaintenanceView : UserControl
 {
-  /// <summary>
-  /// Interaction logic for MaintenanceView.xaml
-  /// </summary>
-  public partial class MaintenanceView : UserControl
+  public static MaintenanceView Instance { get; private set; }
+  public MaintenanceView()
   {
-    public static MaintenanceView Instance { get; private set; }
-    public MaintenanceView()
-    {
-      InitializeComponent();
-      Instance = this;
+    InitializeComponent();
+    Instance = this;
 #if DEBUG
-      Console.Error.WriteLine("#7 MaintenanceView Loaded");
+    Console.Error.WriteLine("#7 MaintenanceView Loaded");
 #endif
-    }
   }
 }

@@ -1,15 +1,14 @@
-﻿namespace DIOS.Application.Domain
+﻿namespace DIOS.Application.Domain;
+
+public enum WellType
 {
-  public enum WellType
-  {
-    Empty,
-    Standard,
-    Control,
-    Unknown,
-    ReadyForReading,
-    NowReading,
-    Success,
-    LightFail,
-    Fail
-  }
+  Empty,
+  Standard,
+  Control,
+  Unknown,
+  ReadyForReading,
+  NowReading,
+  Success,
+  LightFail,
+  Fail
 }

@@ -1,9 +1,8 @@
-﻿namespace DIOS.Core.HardwareIntercom
+﻿namespace DIOS.Core.HardwareIntercom;
+
+internal enum HardwareToken
 {
-  internal enum HardwareToken
-  {
-    Synchronization,
-    ActiveCommandQueueIndex,
-    EmptySyringeTrigger
-  }
+  Synchronization,
+  ActiveCommandQueueIndex,
+  EmptySyringeTrigger
 }

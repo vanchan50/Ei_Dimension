@@ -1,10 +1,9 @@
-﻿namespace DIOS.Core.HardwareIntercom
+﻿namespace DIOS.Core.HardwareIntercom;
+
+public enum AutoAlignState
 {
-  public enum AutoAlignState
-  {
-    Off,
-    Green,
-    Red,
-    Violet
-  }
+  Off,
+  Green,
+  Red,
+  Violet
 }

@@ -1,9 +1,8 @@
-﻿namespace DIOS.Core
+﻿namespace DIOS.Core;
+
+public enum WellReadingSpeed
 {
-  public enum WellReadingSpeed
-  {
-    Normal,
-    HighSpeed,
-    HighSensitivity
-  }
+  Normal,
+  HighSpeed,
+  HighSensitivity
 }

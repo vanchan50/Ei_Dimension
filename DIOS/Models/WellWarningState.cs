@@ -1,8 +1,7 @@
-﻿namespace Ei_Dimension.Models
+﻿namespace Ei_Dimension.Models;
+
+public enum WellWarningState
 {
-  public enum WellWarningState
-  {
-    OK,
-    YellowWarning
-  }
+  OK,
+  YellowWarning
 }

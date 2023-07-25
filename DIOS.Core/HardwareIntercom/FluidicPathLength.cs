@@ -1,14 +1,13 @@
-﻿namespace DIOS.Core.HardwareIntercom
+﻿namespace DIOS.Core.HardwareIntercom;
+
+public enum FluidicPathLength
 {
-  public enum FluidicPathLength
-  {
-    LoopAVolume,
-    LoopBVolume,
-    LoopAToPickupNeedle,
-    LoopBToPickupNeedle,
-    LoopAToFlowcellBase,
-    LoopBToFlowcellBase,
-    FlowCellNeedleVolume,
-    SpacerSlug,
-  }
+  LoopAVolume,
+  LoopBVolume,
+  LoopAToPickupNeedle,
+  LoopBToPickupNeedle,
+  LoopAToFlowcellBase,
+  LoopBToFlowcellBase,
+  FlowCellNeedleVolume,
+  SpacerSlug,
 }

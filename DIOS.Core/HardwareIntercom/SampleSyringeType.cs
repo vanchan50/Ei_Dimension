@@ -1,8 +1,7 @@
-﻿namespace DIOS.Core.HardwareIntercom
+﻿namespace DIOS.Core.HardwareIntercom;
+
+public enum SampleSyringeType
 {
-  public enum SampleSyringeType
-  {
-    Double,
-    Single = 0xFFFF
-  }
+  Double,
+  Single = 0xFFFF
 }

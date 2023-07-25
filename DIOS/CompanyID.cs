@@ -1,8 +1,7 @@
-﻿namespace Ei_Dimension
+﻿namespace Ei_Dimension;
+
+internal enum CompanyID
 {
-  internal enum CompanyID
-  {
-    US = 0,
-    China = 1
-  }
+  US = 0,
+  China = 1
 }

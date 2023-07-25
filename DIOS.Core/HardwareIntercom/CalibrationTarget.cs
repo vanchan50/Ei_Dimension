@@ -1,11 +1,10 @@
-﻿namespace DIOS.Core.HardwareIntercom
+﻿namespace DIOS.Core.HardwareIntercom;
+
+public enum CalibrationTarget
 {
-  public enum CalibrationTarget
-  {
-    CL0,
-    CL1,
-    CL2,
-    CL3,
-    RP1
-  }
+  CL0,
+  CL1,
+  CL2,
+  CL3,
+  RP1
 }

@@ -1,9 +1,8 @@
-﻿namespace DIOS.Core
+﻿namespace DIOS.Core;
+
+public enum OperationMode
 {
-  public enum OperationMode
-  {
-    Normal,
-    Calibration,
-    Verification
-  }
+  Normal,
+  Calibration,
+  Verification
 }

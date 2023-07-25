@@ -1,8 +1,7 @@
-﻿namespace DIOS.Core
+﻿namespace DIOS.Core;
+
+public interface ILogger
 {
-  public interface ILogger
-  {
-    void Log (string message);
-    void LogError (string message);
-  }
+  void Log (string message);
+  void LogError (string message);
 }

@@ -12,21 +12,20 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Ei_Dimension.Views
+namespace Ei_Dimension.Views;
+
+/// <summary>
+/// Interaction logic for NotificationView.xaml
+/// </summary>
+public partial class NotificationView : UserControl
 {
-  /// <summary>
-  /// Interaction logic for NotificationView.xaml
-  /// </summary>
-  public partial class NotificationView : UserControl
+  public static NotificationView Instance { get; private set; }
+  public NotificationView()
   {
-    public static NotificationView Instance { get; private set; }
-    public NotificationView()
-    {
-      InitializeComponent();
-      Instance = this;
+    InitializeComponent();
+    Instance = this;
 #if DEBUG
-      Console.Error.WriteLine("#4 NotificationView Loaded");
+    Console.Error.WriteLine("#4 NotificationView Loaded");
 #endif
-    }
   }
 }

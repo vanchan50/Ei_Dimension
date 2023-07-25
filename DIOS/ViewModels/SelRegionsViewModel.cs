@@ -5,76 +5,75 @@ using System.Threading.Tasks;
 using System.Windows;
 using Ei_Dimension.Controllers;
 
-namespace Ei_Dimension.ViewModels
+namespace Ei_Dimension.ViewModels;
+
+[POCOViewModel]
+public class SelRegionsViewModel
 {
-  [POCOViewModel]
-  public class SelRegionsViewModel
+  public static SelRegionsViewModel Instance { get; private set; }
+  public virtual Visibility WaitIndicatorBorderVisibility { get; set; }
+
+  protected SelRegionsViewModel()
   {
-    public static SelRegionsViewModel Instance { get; private set; }
-    public virtual Visibility WaitIndicatorBorderVisibility { get; set; }
+    WaitIndicatorBorderVisibility = Visibility.Hidden;
+    Instance = this;
+  }
 
-    protected SelRegionsViewModel()
-    {
-      WaitIndicatorBorderVisibility = Visibility.Hidden;
-      Instance = this;
-    }
+  public static SelRegionsViewModel Create()
+  {
+    return ViewModelSource.Create(() => new SelRegionsViewModel());
+  }
 
-    public static SelRegionsViewModel Create()
-    {
-      return ViewModelSource.Create(() => new SelRegionsViewModel());
-    }
+  public void AddActiveRegion(byte num)
+  {
+    //App.MapRegions.AddActiveRegion();
+  }
 
-    public void AddActiveRegion(byte num)
+  public void AllSelectClick()
+  {
+    ShowWaitIndicator();
+    Task.Run(() =>
     {
-      //App.MapRegions.AddActiveRegion();
-    }
-
-    public void AllSelectClick()
-    {
-      ShowWaitIndicator();
-      Task.Run(() =>
-      {
-        App.Current.Dispatcher.Invoke((Action)
-          (() =>
+      App.Current.Dispatcher.Invoke((Action)
+        (() =>
+        {
+          UserInputHandler.InputSanityCheck();
+          for (var i = 0; i < MapRegionsController.RegionsList.Count; i++)
           {
-            UserInputHandler.InputSanityCheck();
-            for (var i = 0; i < MapRegionsController.RegionsList.Count; i++)
-            {
-              var reg = MapRegionsController.RegionsList[i].Number;
-              if(reg == 0)
-                continue;
-              if (!MapRegionsController.ActiveRegionNums.Contains(reg))
-                App.MapRegions.AddActiveRegion(reg);
-            }
+            var reg = MapRegionsController.RegionsList[i].Number;
+            if(reg == 0)
+              continue;
+            if (!MapRegionsController.ActiveRegionNums.Contains(reg))
+              App.MapRegions.AddActiveRegion(reg);
+          }
 
-            HideWaitIndicator();
-          }));
-      });
-    }
+          HideWaitIndicator();
+        }));
+    });
+  }
 
-    public void ResetClick()
+  public void ResetClick()
+  {
+    ShowWaitIndicator();
+    Task.Run(() =>
     {
-      ShowWaitIndicator();
-      Task.Run(() =>
-      {
-        App.Current.Dispatcher.Invoke((Action)
-          (() =>
-          {
-            UserInputHandler.InputSanityCheck();
-            App.MapRegions.ResetRegions();
-            HideWaitIndicator();
-          }));
-      });
-    }
+      App.Current.Dispatcher.Invoke((Action)
+        (() =>
+        {
+          UserInputHandler.InputSanityCheck();
+          App.MapRegions.ResetRegions();
+          HideWaitIndicator();
+        }));
+    });
+  }
 
-    private void ShowWaitIndicator()
-    {
-      WaitIndicatorBorderVisibility = Visibility.Visible;
-    }
+  private void ShowWaitIndicator()
+  {
+    WaitIndicatorBorderVisibility = Visibility.Visible;
+  }
 
-    private void HideWaitIndicator()
-    {
-      WaitIndicatorBorderVisibility = Visibility.Hidden;
-    }
+  private void HideWaitIndicator()
+  {
+    WaitIndicatorBorderVisibility = Visibility.Hidden;
   }
 }

@@ -1,11 +1,10 @@
-﻿namespace DIOS.Core
+﻿namespace DIOS.Core;
+
+public class ReadingWellEventArgs
 {
-  public class ReadingWellEventArgs
+  public Well Well { get;}
+  public ReadingWellEventArgs(Well well)
   {
-    public Well Well { get;}
-    public ReadingWellEventArgs(Well well)
-    {
-      Well = well;
-    }
+    Well = well;
   }
 }

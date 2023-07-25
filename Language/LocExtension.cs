@@ -1,14 +1,13 @@
 ﻿using System.Windows.Data;
 
-namespace Ei_Dimension.Language
+namespace Ei_Dimension.Language;
+
+public class LocExtension : Binding
 {
-  public class LocExtension : Binding
+  public LocExtension(string name)
+    : base($"[{name}]")
   {
-    public LocExtension(string name)
-        : base($"[{name}]")
-    {
-      Mode = BindingMode.OneWay;
-      Source = TranslationSource.Instance;
-    }
+    Mode = BindingMode.OneWay;
+    Source = TranslationSource.Instance;
   }
 }

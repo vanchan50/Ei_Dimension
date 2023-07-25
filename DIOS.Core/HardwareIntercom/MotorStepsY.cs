@@ -1,11 +1,10 @@
-﻿namespace DIOS.Core.HardwareIntercom
+﻿namespace DIOS.Core.HardwareIntercom;
+
+public enum MotorStepsY
 {
-  public enum MotorStepsY
-  {
-    Plate96RowA,
-    Plate96RowH,
-    Plate384RowA,
-    Plate384RowP,
-    Tube
-  }
+  Plate96RowA,
+  Plate96RowH,
+  Plate384RowA,
+  Plate384RowP,
+  Tube
 }

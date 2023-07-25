@@ -1,18 +1,17 @@
-﻿namespace DIOS.Core.HardwareIntercom
+﻿namespace DIOS.Core.HardwareIntercom;
+
+public enum SyringeControlState
 {
-  public enum SyringeControlState
-  {
-    Halt,
-    MoveAbsolute,
-    Pickup,
-    PreInject,
-    Speed,
-    Initialize,
-    Boot,
-    ValveLeft,
-    ValveRight,
-    MicroStep,
-    SpeedPreset,
-    Position
-  }
+  Halt,
+  MoveAbsolute,
+  Pickup,
+  PreInject,
+  Speed,
+  Initialize,
+  Boot,
+  ValveLeft,
+  ValveRight,
+  MicroStep,
+  SpeedPreset,
+  Position
 }

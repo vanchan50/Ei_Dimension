@@ -1,13 +1,12 @@
-﻿namespace DIOS.Core.HardwareIntercom
+﻿namespace DIOS.Core.HardwareIntercom;
+
+public enum MotorDirection
 {
-  public enum MotorDirection
-  {
-    Halt,
-    Left,
-    Right,
-    Back,
-    Front,
-    Up,
-    Down
-  }
+  Halt,
+  Left,
+  Right,
+  Back,
+  Front,
+  Up,
+  Down
 }

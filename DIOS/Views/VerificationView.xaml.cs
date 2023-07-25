@@ -12,21 +12,20 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Ei_Dimension.Views
+namespace Ei_Dimension.Views;
+
+/// <summary>
+/// Interaction logic for ValidationView.xaml
+/// </summary>
+public partial class VerificationView : UserControl
 {
-  /// <summary>
-  /// Interaction logic for ValidationView.xaml
-  /// </summary>
-  public partial class VerificationView : UserControl
+  public static VerificationView Instance { get; private set; }
+  public VerificationView()
   {
-    public static VerificationView Instance { get; private set; }
-    public VerificationView()
-    {
-      InitializeComponent();
-      Instance = this;
+    InitializeComponent();
+    Instance = this;
 #if DEBUG
-      Console.Error.WriteLine("#15 VerificationView Loaded");
+    Console.Error.WriteLine("#15 VerificationView Loaded");
 #endif
-    }
   }
 }

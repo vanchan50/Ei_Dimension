@@ -1,9 +1,8 @@
-﻿namespace DIOS.Core.HardwareIntercom
+﻿namespace DIOS.Core.HardwareIntercom;
+
+public enum LaserType
 {
-  public enum LaserType
-  {
-    Red,
-    Green,
-    Violet
-  }
+  Red,
+  Green,
+  Violet
 }

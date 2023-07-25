@@ -12,21 +12,20 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Ei_Dimension.Views
+namespace Ei_Dimension.Views;
+
+/// <summary>
+/// Interaction logic for AlignmentView.xaml
+/// </summary>
+public partial class AlignmentView : UserControl
 {
-  /// <summary>
-  /// Interaction logic for AlignmentView.xaml
-  /// </summary>
-  public partial class AlignmentView : UserControl
+  public static AlignmentView Instance { get; private set; }
+  public AlignmentView()
   {
-    public static AlignmentView Instance { get; private set; }
-    public AlignmentView()
-    {
-      InitializeComponent();
-      Instance = this;
+    InitializeComponent();
+    Instance = this;
 #if DEBUG
-      System.Console.Error.WriteLine("#19 AlignmentView Loaded");
+    System.Console.Error.WriteLine("#19 AlignmentView Loaded");
 #endif
-    }
   }
 }

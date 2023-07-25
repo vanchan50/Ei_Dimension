@@ -1,52 +1,51 @@
 ﻿using System.IO;
 
-namespace DIOS.Application.FileIO
+namespace DIOS.Application.FileIO;
+
+public class LegacyReportFileWriter
 {
-  public class LegacyReportFileWriter
+  private ResultsPublisher _publisher;
+
+  public LegacyReportFileWriter(ResultsPublisher publisher)
   {
-    private ResultsPublisher _publisher;
+    _publisher = publisher;
+  }
 
-    public LegacyReportFileWriter(ResultsPublisher publisher)
+  /// <summary>
+  /// Saves report with a custom OutFileName
+  /// </summary>
+  /// <param name="legacyReport">Report to save</param>
+  /// <param name="filename">Customizable file name. Used for PlateID</param>
+  public void CreateAndWrite(string legacyReport, string filename)
+  {
+    if (!_publisher.IsLegacyPlateReportPublishingActive)
     {
-      _publisher = publisher;
+      _publisher._logger.Log("Legacy Plate Report Inactive");
+      return;
     }
 
-    /// <summary>
-    /// Saves report with a custom OutFileName
-    /// </summary>
-    /// <param name="legacyReport">Report to save</param>
-    /// <param name="filename">Customizable file name. Used for PlateID</param>
-    public void CreateAndWrite(string legacyReport, string filename)
+    var directoryName = Path.Combine(_publisher.Outdir, ResultsPublisher.DATAFOLDERNAME);
+    if (!_publisher.OutputDirectoryExists(directoryName))
+      return;
+
+    var fullFilePath = $"{directoryName}\\LxResults_{filename}_{_publisher.Date}.csv";
+    try
     {
-      if (!_publisher.IsLegacyPlateReportPublishingActive)
-      {
-        _publisher._logger.Log("Legacy Plate Report Inactive");
-        return;
-      }
-
-      var directoryName = Path.Combine(_publisher.Outdir, ResultsPublisher.DATAFOLDERNAME);
-      if (!_publisher.OutputDirectoryExists(directoryName))
-        return;
-
-      var fullFilePath = $"{directoryName}\\LxResults_{filename}_{_publisher.Date}.csv";
-      try
-      {
-        File.WriteAllText(fullFilePath, legacyReport);
-        _publisher._logger.Log($"Legacy Plate Report saved at \"{fullFilePath}\"");
-      }
-      catch
-      {
-        _publisher._logger.Log($"Failed to create Legacy Plate Report at \"{fullFilePath}\"");
-      }
+      File.WriteAllText(fullFilePath, legacyReport);
+      _publisher._logger.Log($"Legacy Plate Report saved at \"{fullFilePath}\"");
     }
-
-    /// <summary>
-    /// Saves report with a regular OutFileName, specified in the Publisher
-    /// </summary>
-    /// <param name="legacyReport">Report to save</param>
-    public void CreateAndWrite(string legacyReport)
+    catch
     {
-      CreateAndWrite(legacyReport, _publisher.Outfilename);
+      _publisher._logger.Log($"Failed to create Legacy Plate Report at \"{fullFilePath}\"");
     }
+  }
+
+  /// <summary>
+  /// Saves report with a regular OutFileName, specified in the Publisher
+  /// </summary>
+  /// <param name="legacyReport">Report to save</param>
+  public void CreateAndWrite(string legacyReport)
+  {
+    CreateAndWrite(legacyReport, _publisher.Outfilename);
   }
 }

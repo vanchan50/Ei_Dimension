@@ -1,17 +1,16 @@
 ﻿using System.Windows.Controls;
 
-namespace Ei_Dimension.Views
+namespace Ei_Dimension.Views;
+
+/// <summary>
+/// Interaction logic for PlateCustomizationView.xaml
+/// </summary>
+public partial class PlateCustomizationView : UserControl
 {
-  /// <summary>
-  /// Interaction logic for PlateCustomizationView.xaml
-  /// </summary>
-  public partial class PlateCustomizationView : UserControl
+  public static PlateCustomizationView Instance { get; private set; }
+  public PlateCustomizationView()
   {
-    public static PlateCustomizationView Instance { get; private set; }
-    public PlateCustomizationView()
-    {
-      InitializeComponent();
-      Instance = this;
-    }
+    InitializeComponent();
+    Instance = this;
   }
 }

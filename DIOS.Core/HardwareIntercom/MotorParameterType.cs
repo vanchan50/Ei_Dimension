@@ -1,14 +1,13 @@
-﻿namespace DIOS.Core.HardwareIntercom
+﻿namespace DIOS.Core.HardwareIntercom;
+
+public enum MotorParameterType
 {
-  public enum MotorParameterType
-  {
-    Steps,
-    Direction,
-    Slope,
-    StartSpeed,
-    RunSpeed,
-    CurrentStep,
-    EncoderSteps,
-    CurrentLimit
-  }
+  Steps,
+  Direction,
+  Slope,
+  StartSpeed,
+  RunSpeed,
+  CurrentStep,
+  EncoderSteps,
+  CurrentLimit
 }

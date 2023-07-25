@@ -1,10 +1,9 @@
-﻿namespace DIOS.Core.HardwareIntercom
+﻿namespace DIOS.Core.HardwareIntercom;
+
+public enum VolumeType
 {
-  public enum VolumeType
-  {
-    Sample,
-    Wash,
-    ProbeWash,
-    Agitate
-  }
+  Sample,
+  Wash,
+  ProbeWash,
+  Agitate
 }

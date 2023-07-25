@@ -1,9 +1,8 @@
-﻿namespace DIOS.Core.HardwareIntercom
+﻿namespace DIOS.Core.HardwareIntercom;
+
+public enum PlateType
 {
-  public enum PlateType
-  {
-    Plate96,
-    Plate384,
-    Tube
-  }
+  Plate96,
+  Plate384,
+  Tube
 }

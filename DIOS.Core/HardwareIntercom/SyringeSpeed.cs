@@ -1,12 +1,11 @@
-﻿namespace DIOS.Core.HardwareIntercom
+﻿namespace DIOS.Core.HardwareIntercom;
+
+public enum SyringeSpeed
 {
-  public enum SyringeSpeed
-  {
-    Normal,
-    HiSpeed,
-    HiSensitivity,
-    Flush,
-    Pickup,
-    MaxSpeed
-  }
+  Normal,
+  HiSpeed,
+  HiSensitivity,
+  Flush,
+  Pickup,
+  MaxSpeed
 }

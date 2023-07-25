@@ -12,19 +12,18 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Ei_Dimension.Views
+namespace Ei_Dimension.Views;
+
+/// <summary>
+/// Interaction logic for MainButtonsView.xaml
+/// </summary>
+public partial class MainButtonsView : UserControl
 {
-  /// <summary>
-  /// Interaction logic for MainButtonsView.xaml
-  /// </summary>
-  public partial class MainButtonsView : UserControl
+  public MainButtonsView()
   {
-    public MainButtonsView()
-    {
-      InitializeComponent();
-      #if DEBUG
-      Console.Error.WriteLine("#1 MainButtonsView Loaded");
-      #endif
-    }
+    InitializeComponent();
+#if DEBUG
+    Console.Error.WriteLine("#1 MainButtonsView Loaded");
+#endif
   }
 }

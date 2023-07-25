@@ -12,145 +12,144 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Ei_Dimension.Views
+namespace Ei_Dimension.Views;
+
+/// <summary>
+/// Interaction logic for WellsSelectView.xaml
+/// </summary>
+public partial class WellsSelectView : UserControl
 {
-  /// <summary>
-  /// Interaction logic for WellsSelectView.xaml
-  /// </summary>
-  public partial class WellsSelectView : UserControl
+  public static WellsSelectView Instance { get; private set; }
+  public static bool SquareSelectionMode { get; set; }
+  private readonly int shiftX384 = 0;
+  private readonly int shiftY384 = 0;
+  private readonly int ColWidth384;
+  private readonly int RowHeight384;
+  private readonly int shiftX96 = 0;
+  private readonly int shiftY96 = 0;
+  private readonly int ColWidth96;
+  private readonly int RowHeight96;
+  private (int x, int y) _basis;
+  private (int x, int y) _previousPoint;
+
+  public WellsSelectView()
   {
-    public static WellsSelectView Instance { get; private set; }
-    public static bool SquareSelectionMode { get; set; }
-    private readonly int shiftX384 = 0;
-    private readonly int shiftY384 = 0;
-    private readonly int ColWidth384;
-    private readonly int RowHeight384;
-    private readonly int shiftX96 = 0;
-    private readonly int shiftY96 = 0;
-    private readonly int ColWidth96;
-    private readonly int RowHeight96;
-    private (int x, int y) _basis;
-    private (int x, int y) _previousPoint;
-
-    public WellsSelectView()
-    {
-      InitializeComponent();
-      ColWidth96 = (int)(double)App.Current.Resources["Table96Width"];
-      RowHeight96 = (int)(double)App.Current.Resources["Table96Width"];
-      ColWidth384 = (int)(double)App.Current.Resources["Table384Width"];
-      RowHeight384 = (int)(double)App.Current.Resources["Table384Width"];
-      Instance = this;
-      SquareSelectionMode = true;
+    InitializeComponent();
+    ColWidth96 = (int)(double)App.Current.Resources["Table96Width"];
+    RowHeight96 = (int)(double)App.Current.Resources["Table96Width"];
+    ColWidth384 = (int)(double)App.Current.Resources["Table384Width"];
+    RowHeight384 = (int)(double)App.Current.Resources["Table384Width"];
+    Instance = this;
+    SquareSelectionMode = true;
 #if DEBUG
-      Console.Error.WriteLine("#9 WellsSelectView Loaded");
+    Console.Error.WriteLine("#9 WellsSelectView Loaded");
 #endif
-    }
+  }
 
-    public void SelectAllCells(int tablesize)
+  public void SelectAllCells(int tablesize)
+  {
+    if (tablesize == 96)
+      grd96.SelectAllCells();
+    else if (tablesize == 384)
+      grd384.SelectAllCells();
+  }
+
+  public void ClearAllCells()
+  {
+    grd96.UnselectAllCells();
+    grd384.UnselectAllCells();
+    grd96.SelectedCells.Clear();
+    grd384.SelectedCells.Clear();
+  }
+
+  private void grd384_TouchMove(object sender, TouchEventArgs e)
+  {
+    var tp = e.GetTouchPoint(grd384);
+    int indexX = (int)Math.Floor((tp.Position.X - shiftX384) / ColWidth384);
+    int indexY = (int)Math.Floor((tp.Position.Y - shiftY384) / RowHeight384);
+
+    if (indexX >= 0 && indexX < 24 && indexY >= 0 && indexY < 16)
     {
-      if (tablesize == 96)
-        grd96.SelectAllCells();
-      else if (tablesize == 384)
-        grd384.SelectAllCells();
+      TouchSelection(indexX, indexY, grd384);
     }
+  }
 
-    public void ClearAllCells()
+  private void grd384_TouchDown(object sender, TouchEventArgs e)
+  {
+    grd384.SelectedCells.Clear();
+  }
+
+  private void grd96_TouchMove(object sender, TouchEventArgs e)
+  {
+    var tp = e.GetTouchPoint(grd96);
+    int indexX = (int)Math.Floor((tp.Position.X - shiftX96) / ColWidth96);
+    int indexY = (int)Math.Floor((tp.Position.Y - shiftY96) / RowHeight96);
+
+    if (indexX >= 0 && indexX < 12 && indexY >= 0 && indexY < 8)
     {
-      grd96.UnselectAllCells();
-      grd384.UnselectAllCells();
-      grd96.SelectedCells.Clear();
-      grd384.SelectedCells.Clear();
+      TouchSelection(indexX, indexY, grd96);
     }
+  }
 
-    private void grd384_TouchMove(object sender, TouchEventArgs e)
+  private void grd96_TouchDown(object sender, TouchEventArgs e)
+  {
+    grd96.SelectedCells.Clear();
+  }
+
+  private void TouchSelection(int x, int y, DataGrid grid)
+  {
+
+    var c = new DataGridCellInfo(grid.Items[y], grid.Columns[x]);
+    if (!SquareSelectionMode)
     {
-      var tp = e.GetTouchPoint(grd384);
-      int indexX = (int)Math.Floor((tp.Position.X - shiftX384) / ColWidth384);
-      int indexY = (int)Math.Floor((tp.Position.Y - shiftY384) / RowHeight384);
-
-      if (indexX >= 0 && indexX < 24 && indexY >= 0 && indexY < 16)
+      if (!grid.SelectedCells.Contains(c))
+        grid.SelectedCells.Add(c);
+    }
+    else
+    {
+      if (grid.SelectedCells.Count == 0)
       {
-        TouchSelection(indexX, indexY, grd384);
-      }
-    }
-
-    private void grd384_TouchDown(object sender, TouchEventArgs e)
-    {
-      grd384.SelectedCells.Clear();
-    }
-
-    private void grd96_TouchMove(object sender, TouchEventArgs e)
-    {
-      var tp = e.GetTouchPoint(grd96);
-      int indexX = (int)Math.Floor((tp.Position.X - shiftX96) / ColWidth96);
-      int indexY = (int)Math.Floor((tp.Position.Y - shiftY96) / RowHeight96);
-
-      if (indexX >= 0 && indexX < 12 && indexY >= 0 && indexY < 8)
-      {
-        TouchSelection(indexX, indexY, grd96);
-      }
-    }
-
-    private void grd96_TouchDown(object sender, TouchEventArgs e)
-    {
-      grd96.SelectedCells.Clear();
-    }
-
-    private void TouchSelection(int x, int y, DataGrid grid)
-    {
-
-      var c = new DataGridCellInfo(grid.Items[y], grid.Columns[x]);
-      if (!SquareSelectionMode)
-      {
-        if (!grid.SelectedCells.Contains(c))
-          grid.SelectedCells.Add(c);
+        grid.SelectedCells.Add(c);
+        _basis = (x, y);
+        _previousPoint = (x, y);
       }
       else
       {
-        if (grid.SelectedCells.Count == 0)
+        if (_previousPoint.x == x && _previousPoint.y == y)
+          return;
+        _previousPoint = (x, y);
+        grid.SelectedCells.Clear();
+
+        int xStart;
+        int xEnd;
+        int yStart;
+        int yEnd;
+        if (x >= _basis.x)
         {
-          grid.SelectedCells.Add(c);
-          _basis = (x, y);
-          _previousPoint = (x, y);
+          xStart = _basis.x;
+          xEnd = x;
         }
         else
         {
-          if (_previousPoint.x == x && _previousPoint.y == y)
-            return;
-          _previousPoint = (x, y);
-          grid.SelectedCells.Clear();
+          xStart = x;
+          xEnd = _basis.x;
+        }
+        if (y >= _basis.y)
+        {
+          yStart = _basis.y;
+          yEnd = y;
+        }
+        else
+        {
+          yStart = y;
+          yEnd = _basis.y;
+        }
 
-          int xStart;
-          int xEnd;
-          int yStart;
-          int yEnd;
-          if (x >= _basis.x)
+        for (var i = xStart; i <= xEnd; i++)
+        {
+          for (var j = yStart; j <= yEnd; j++)
           {
-            xStart = _basis.x;
-            xEnd = x;
-          }
-          else
-          {
-            xStart = x;
-            xEnd = _basis.x;
-          }
-          if (y >= _basis.y)
-          {
-            yStart = _basis.y;
-            yEnd = y;
-          }
-          else
-          {
-            yStart = y;
-            yEnd = _basis.y;
-          }
-
-          for (var i = xStart; i <= xEnd; i++)
-          {
-            for (var j = yStart; j <= yEnd; j++)
-            {
-              grid.SelectedCells.Add(new DataGridCellInfo(grid.Items[j], grid.Columns[i]));
-            }
+            grid.SelectedCells.Add(new DataGridCellInfo(grid.Items[j], grid.Columns[i]));
           }
         }
       }

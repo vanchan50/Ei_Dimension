@@ -1,11 +1,10 @@
-﻿namespace DIOS.Core
+﻿namespace DIOS.Core;
+
+public enum VerificationExpirationTime
 {
-  public enum VerificationExpirationTime
-  {
-    Day,
-    Week,
-    Month,
-    Quarter,
-    Year
-  }
+  Day,
+  Week,
+  Month,
+  Quarter,
+  Year
 }

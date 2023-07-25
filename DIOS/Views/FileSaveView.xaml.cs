@@ -12,22 +12,21 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Ei_Dimension.Views
+namespace Ei_Dimension.Views;
+
+/// <summary>
+/// Interaction logic for FileSaveView.xaml
+/// </summary>
+public partial class FileSaveView : UserControl
 {
-  /// <summary>
-  /// Interaction logic for FileSaveView.xaml
-  /// </summary>
-  public partial class FileSaveView : UserControl
+  public static FileSaveView Instance { get; private set;
+  }
+  public FileSaveView()
   {
-    public static FileSaveView Instance { get; private set;
-    }
-    public FileSaveView()
-    {
-      InitializeComponent();
-      Instance = this;
+    InitializeComponent();
+    Instance = this;
 #if DEBUG
-      Console.Error.WriteLine("#11 FileSaveView Loaded");
+    Console.Error.WriteLine("#11 FileSaveView Loaded");
 #endif
-    }
   }
 }

@@ -12,21 +12,20 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Ei_Dimension.Views
+namespace Ei_Dimension.Views;
+
+/// <summary>
+/// Interaction logic for ChannelOffsetView.xaml
+/// </summary>
+public partial class ChannelOffsetView : UserControl
 {
-  /// <summary>
-  /// Interaction logic for ChannelOffsetView.xaml
-  /// </summary>
-  public partial class ChannelOffsetView : UserControl
+  public static ChannelOffsetView Instance { get; private set; }
+  public ChannelOffsetView()
   {
-    public static ChannelOffsetView Instance { get; private set; }
-    public ChannelOffsetView()
-    {
-      InitializeComponent();
-      Instance = this;
+    InitializeComponent();
+    Instance = this;
 #if DEBUG
-      System.Console.Error.WriteLine("#20 ChannelOffsetView Loaded");
+    System.Console.Error.WriteLine("#20 ChannelOffsetView Loaded");
 #endif
-    }
   }
 }

@@ -12,21 +12,20 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Ei_Dimension.Views
+namespace Ei_Dimension.Views;
+
+/// <summary>
+/// Interaction logic for TemplateSelectView.xaml
+/// </summary>
+public partial class TemplateSelectView : UserControl
 {
-  /// <summary>
-  /// Interaction logic for TemplateSelectView.xaml
-  /// </summary>
-  public partial class TemplateSelectView : UserControl
+  public static TemplateSelectView Instance { get; private set; }
+  public TemplateSelectView()
   {
-    public static TemplateSelectView Instance { get; private set; }
-    public TemplateSelectView()
-    {
-      InitializeComponent();
-      Instance = this;
+    InitializeComponent();
+    Instance = this;
 #if DEBUG
-      Console.Error.WriteLine("#13 TemplateSelectView Loaded");
+    Console.Error.WriteLine("#13 TemplateSelectView Loaded");
 #endif
-    }
   }
 }

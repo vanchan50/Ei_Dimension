@@ -12,16 +12,15 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Ei_Dimension.Views
+namespace Ei_Dimension.Views;
+
+/// <summary>
+/// Interaction logic for HintView.xaml
+/// </summary>
+public partial class HintView : UserControl
 {
-  /// <summary>
-  /// Interaction logic for HintView.xaml
-  /// </summary>
-  public partial class HintView : UserControl
+  public HintView()
   {
-    public HintView()
-    {
-      InitializeComponent();
-    }
+    InitializeComponent();
   }
 }

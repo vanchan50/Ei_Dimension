@@ -4,101 +4,100 @@ using DIOS.Application.FileIO;
 using DIOS.Application.SerialIO;
 using DIOS.Core;
 
-namespace DIOS.Application
-{ 
-  public class DIOSApp
+namespace DIOS.Application;
+
+public class DIOSApp
+{
+  public Device Device { get; }
+  public MapController MapController { get; }
+  public DirectoryInfo RootDirectory { get; }
+  public ResultsPublisher Publisher { get; }
+  public RunResults Results { get; }
+  public ResultsProcessor ResultsProc { get; }  //TODO make private
+  public SystemControl Control { get; set; } = SystemControl.Manual;
+  public ReadTerminator Terminator => ResultsProc.Terminator;
+  public WorkOrder WorkOrder { get; set; }
+  public bool RunPlateContinuously { get; set; }
+  public Verificator Verificator { get; }
+  public IBarcodeReader BarcodeReader { get; }
+  public readonly string BUILD = Assembly.GetCallingAssembly().GetName().Version.ToString();
+  public ILogger Logger { get; }
+
+  public DIOSApp(string rootDirectory, ILogger logger)
   {
-    public Device Device { get; }
-    public MapController MapController { get; }
-    public DirectoryInfo RootDirectory { get; }
-    public ResultsPublisher Publisher { get; }
-    public RunResults Results { get; }
-    public ResultsProcessor ResultsProc { get; }  //TODO make private
-    public SystemControl Control { get; set; } = SystemControl.Manual;
-    public ReadTerminator Terminator => ResultsProc.Terminator;
-    public WorkOrder WorkOrder { get; set; }
-    public bool RunPlateContinuously { get; set; }
-    public Verificator Verificator { get; }
-    public IBarcodeReader BarcodeReader { get; }
-    public readonly string BUILD = Assembly.GetCallingAssembly().GetName().Version.ToString();
-    public ILogger Logger { get; }
+    RootDirectory = new(rootDirectory);
+    SetSystemDirectories();
+    Logger = logger;
+    MapController = new MapController($"{rootDirectory}\\Config", Logger);
+    Publisher = new ResultsPublisher(rootDirectory, Logger);
+    Device = new Device(new USBConnection(Logger), Logger);
+    Results = new RunResults(Device, this);
+    ResultsProc = new ResultsProcessor(Device, Results);
+    Verificator = new Verificator(Logger);
+    BarcodeReader = new USBBarcodeReader(Logger);
+  }
 
-    public DIOSApp(string rootDirectory, ILogger logger)
-    {
-      RootDirectory = new(rootDirectory);
-      SetSystemDirectories();
-      Logger = logger;
-      MapController = new MapController($"{rootDirectory}\\Config", Logger);
-      Publisher = new ResultsPublisher(rootDirectory, Logger);
-      Device = new Device(new USBConnection(Logger), Logger);
-      Results = new RunResults(Device, this);
-      ResultsProc = new ResultsProcessor(Device, Results);
-      Verificator = new Verificator(Logger);
-      BarcodeReader = new USBBarcodeReader(Logger);
-    }
+  public void StartOperation(IReadOnlyCollection<int> regions, IReadOnlyCollection<Well> wells)
+  {
+    Results.SetupRunRegions(regions);
+    Publisher.ResultsFile.MakeNew();
+    Results.StartNewPlateReport();
+    Logger.Log(Publisher.ReportActivePublishingFlags());
+    Device.StartOperation(wells, Results.OutputBeadsCollector);
+    ResultsProc.StartBeadProcessing();//call after StartOperation, so IsMeasurementGoing == true
+  }
 
-    public void StartOperation(IReadOnlyCollection<int> regions, IReadOnlyCollection<Well> wells)
+  private void SetSystemDirectories()
+  {
+    List<string> subDirectories = new List<string> { "Config", "WorkOrder", "SavedImages", "Archive", "Status" };
+    try
     {
-      Results.SetupRunRegions(regions);
-      Publisher.ResultsFile.MakeNew();
-      Results.StartNewPlateReport();
-      Logger.Log(Publisher.ReportActivePublishingFlags());
-      Device.StartOperation(wells, Results.OutputBeadsCollector);
-      ResultsProc.StartBeadProcessing();//call after StartOperation, so IsMeasurementGoing == true
-    }
-
-    private void SetSystemDirectories()
-    {
-      List<string> subDirectories = new List<string> { "Config", "WorkOrder", "SavedImages", "Archive", "Status" };
-      try
+      foreach (var d in subDirectories)
       {
-        foreach (var d in subDirectories)
-        {
-          RootDirectory.CreateSubdirectory(d);
-        }
-        Directory.CreateDirectory(RootDirectory.FullName + @"\Result" + @"\Detail");
+        RootDirectory.CreateSubdirectory(d);
       }
-      catch
-      {
-        Console.WriteLine("Directory Creation Failed");
-      }
+      Directory.CreateDirectory(RootDirectory.FullName + @"\Result" + @"\Detail");
     }
-
-    public WellType GetWellStateForPictogram()
+    catch
     {
-      var type = WellType.Success;
+      Console.WriteLine("Directory Creation Failed");
+    }
+  }
 
-      //feature only for Normal mode, MinPerRegion Termination
-      if (Device.Mode != OperationMode.Normal
-          || Terminator.TerminationType != Termination.MinPerRegion)
-        return type;
+  public WellType GetWellStateForPictogram()
+  {
+    var type = WellType.Success;
 
-      var lacking = Results.MinPerRegionAchieved(Terminator.MinPerRegion);
-      //not achieved
-      if (lacking < 0)
-      {
-        //if lacking more then 25% of minperregion beads 
-        if (-lacking > Terminator.MinPerRegion * 0.25)
-        {
-          type = WellType.Fail;
-        }
-        else
-        {
-          type = WellType.LightFail;
-        }
-      }
+    //feature only for Normal mode, MinPerRegion Termination
+    if (Device.Mode != OperationMode.Normal
+        || Terminator.TerminationType != Termination.MinPerRegion)
       return type;
-    }
 
-    public void SaveWellFiles()
+    var lacking = Results.MinPerRegionAchieved(Terminator.MinPerRegion);
+    //not achieved
+    if (lacking < 0)
     {
-      _ = Task.Run(() =>
+      //if lacking more then 25% of minperregion beads 
+      if (-lacking > Terminator.MinPerRegion * 0.25)
       {
-        Results.MakeWellStats();
-        Publisher.ResultsFile.AppendAndWrite(Results.PublishWellStats()); //makewellstats should be awaited only for this method
-        Publisher.DoSomethingWithWorkOrder();
-      });
-      Publisher.BeadEventFile.CreateAndWrite(Results.PublishBeadEvents());
+        type = WellType.Fail;
+      }
+      else
+      {
+        type = WellType.LightFail;
+      }
     }
+    return type;
+  }
+
+  public void SaveWellFiles()
+  {
+    _ = Task.Run(() =>
+    {
+      Results.MakeWellStats();
+      Publisher.ResultsFile.AppendAndWrite(Results.PublishWellStats()); //makewellstats should be awaited only for this method
+      Publisher.DoSomethingWithWorkOrder();
+    });
+    Publisher.BeadEventFile.CreateAndWrite(Results.PublishBeadEvents());
   }
 }

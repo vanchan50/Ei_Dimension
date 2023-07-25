@@ -1,13 +1,12 @@
-﻿namespace DIOS.Core.HardwareIntercom
+﻿namespace DIOS.Core.HardwareIntercom;
+
+public enum CalibrationParameter
 {
-  public enum CalibrationParameter
-  {
-    Height,
-    MinSSC,
-    MaxSSC,
-    Attenuation,
-    DNRCoefficient,
-    DNRTransition,
-    ScatterGate
-  }
+  Height,
+  MinSSC,
+  MaxSSC,
+  Attenuation,
+  DNRCoefficient,
+  DNRTransition,
+  ScatterGate
 }

@@ -12,19 +12,18 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Ei_Dimension.Views
+namespace Ei_Dimension.Views;
+
+/// <summary>
+/// Interaction logic for NumpadView.xaml
+/// </summary>
+public partial class NumpadView : UserControl
 {
-  /// <summary>
-  /// Interaction logic for NumpadView.xaml
-  /// </summary>
-  public partial class NumpadView : UserControl
+  public NumpadView()
   {
-    public NumpadView()
-    {
-      InitializeComponent();
+    InitializeComponent();
 #if DEBUG
-      Console.Error.WriteLine("#2 NumpadView Loaded");
+    Console.Error.WriteLine("#2 NumpadView Loaded");
 #endif
-    }
   }
 }

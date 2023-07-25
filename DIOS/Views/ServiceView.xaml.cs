@@ -12,19 +12,18 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Ei_Dimension.Views
+namespace Ei_Dimension.Views;
+
+/// <summary>
+/// Interaction logic for ServiceView.xaml
+/// </summary>
+public partial class ServiceView : UserControl
 {
-  /// <summary>
-  /// Interaction logic for ServiceView.xaml
-  /// </summary>
-  public partial class ServiceView : UserControl
+  public ServiceView()
   {
-    public ServiceView()
-    {
-      InitializeComponent();
+    InitializeComponent();
 #if DEBUG
-      Console.Error.WriteLine("#8 ServiceView Loaded");
+    Console.Error.WriteLine("#8 ServiceView Loaded");
 #endif
-    }
   }
 }

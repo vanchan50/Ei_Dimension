@@ -13,21 +13,20 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Ei_Dimension.Views
+namespace Ei_Dimension.Views;
+
+/// <summary>
+/// Interaction logic for NormalizationView.xaml
+/// </summary>
+public partial class NormalizationView : UserControl
 {
-  /// <summary>
-  /// Interaction logic for NormalizationView.xaml
-  /// </summary>
-  public partial class NormalizationView : UserControl
+  public static NormalizationView Instance { get; private set; }
+  public NormalizationView()
   {
-    public static NormalizationView Instance { get; private set; }
-    public NormalizationView()
-    {
-      InitializeComponent();
-      Instance = this;
-      #if DEBUG
-      Console.Error.WriteLine("# NormalizationView Loaded");
-      #endif
-    }
+    InitializeComponent();
+    Instance = this;
+#if DEBUG
+    Console.Error.WriteLine("# NormalizationView Loaded");
+#endif
   }
 }
