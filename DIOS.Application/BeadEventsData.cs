@@ -1,34 +1,45 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using DIOS.Core;
+﻿using DIOS.Core;
 
 namespace DIOS.Application;
 
-public class BeadEventsData : IEnumerable<ProcessedBead>
+public class BeadEventsData
 {
+  /// <summary>
+  /// Raw access to Processed beads
+  /// </summary>
   public ProcessedBead this[int index] => _list[index];
-  public int Count => _list.Count;
+  public int Count => _size;
 
-  private readonly List<ProcessedBead> _list = new List<ProcessedBead>(2000000);
+  private readonly List<ProcessedBead> _list = new(2000000);
+  private int _size;
+  private int _nextNewBeadIndex;
 
   public void Add(in ProcessedBead bead)
   {
     _list.Add(bead);
+    _size++;
   }
 
   public void Reset()
   {
+    _size = 0;
+    _nextNewBeadIndex = 0;
     _list.Clear();
   }
 
-  public IEnumerator<ProcessedBead> GetEnumerator()
+  public IEnumerable<ProcessedBead> GetNewBeadsEnumerable()
   {
-    return _list.GetEnumerator();
+    while (_nextNewBeadIndex < _size)
+    {
+      yield return _list[_nextNewBeadIndex++];
+    }
   }
 
-  IEnumerator IEnumerable.GetEnumerator()
+  public IEnumerable<ProcessedBead> GetAllBeadsEnumerable()
   {
-    return GetEnumerator();
+    for (var i = 0; i < _size; i++)
+    {
+      yield return _list[i];
+    }
   }
-  //use yield return instead of DataOut.TryDequeue()
 }

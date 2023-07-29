@@ -1,19 +1,16 @@
-﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
+﻿using System.Collections.Concurrent;
 using DIOS.Core;
 
 namespace DIOS.Application;
 
 public class RunResults
 {
-  public ConcurrentQueue<ProcessedBead> DataOut { get; } = new ConcurrentQueue<ProcessedBead>();
-  public BeadEventSink OutputBeadsCollector { get; } = new BeadEventSink(2000000);
-  public PlateReport PlateReport { get; } = new PlateReport();
-  public WellResults CurrentWellResults { get; } = new WellResults();
+  public BeadEventSink OutputBeadsCollector { get; } = new (2000000);
+  public PlateReport PlateReport { get; } = new ();
+  public WellResults CurrentWellResults { get; } = new ();
   private readonly Device _device;
-  private IReadOnlyCollection<int> _regionsToOutput;
-  private readonly ResultingWellStatsData _measuredWellStats = new ResultingWellStatsData();
+  private IReadOnlyCollection<int> _regionsToOutput = null!;
+  private readonly ResultingWellStatsData _measuredWellStats = new ();
   private readonly DIOSApp _diosApp;
   private bool _isFrozen = false;
 
@@ -31,13 +28,7 @@ public class RunResults
   public void SetupRunRegions(IReadOnlyCollection<int> regions)
   {
     _regionsToOutput = regions;
-    if (regions == null)
-      _regionsToOutput = new List<int>();
-  }
-
-  public IEnumerable<ProcessedBead> GetNewBeads()
-  {
-    return CurrentWellResults.GetNewBeads();
+    _regionsToOutput ??= new List<int>();
   }
 
   public List<RegionReporterResultVolatile> MakeWellResultsClone()
@@ -68,7 +59,7 @@ public class RunResults
 
   public void StartNewWell(Well well)
   {
-    if (_regionsToOutput == null)
+    if (_regionsToOutput is null)
       throw new Exception("SetupRunRegions() must be called before the run");
     CurrentWellResults.Reset(well, _regionsToOutput);
     _measuredWellStats.Reset();
@@ -105,9 +96,19 @@ public class RunResults
     _isFrozen = true;
   }
 
-  public BeadEventsData PublishBeadEvents()
+  /// <summary>
+  /// The method to get all the new beads in a measurement cycle
+  /// </summary>
+  /// <returns>IEnumerable of all the beads since last query</returns>
+  /// <exception cref="ArgumentOutOfRangeException"></exception>
+  public IEnumerable<ProcessedBead> GetNewBeads()
   {
-    return CurrentWellResults.BeadEventsData;
+    return CurrentWellResults.GetNewBeads();
+  }
+
+  public IEnumerable<ProcessedBead> PublishBeadEvents()
+  {
+    return CurrentWellResults.GetAllBeads();
   }
 
   public string PublishWellStats()
@@ -117,6 +118,6 @@ public class RunResults
 
   public void EndOfOperationReset()
   {
-    _regionsToOutput = null;
+    _regionsToOutput = null!;
   }
 }

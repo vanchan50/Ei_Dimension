@@ -1,7 +1,4 @@
-﻿using System;
-using System.Threading;
-
-namespace DIOS.Application.Domain;
+﻿namespace DIOS.Application.Domain;
 
 public class ReadTerminator
 {

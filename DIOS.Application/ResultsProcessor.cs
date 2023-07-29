@@ -1,6 +1,5 @@
 ﻿using DIOS.Application.Domain;
 using DIOS.Core;
-using System.Threading;
 
 namespace DIOS.Application;
 
@@ -8,9 +7,9 @@ public class ResultsProcessor
 {
   private readonly Thread _resultsProcessingThread;
   private int _resultsProcessed;
-  private readonly object _processingCV = new object();
-  private Device _device;
-  private RunResults _results;
+  private readonly object _processingCV = new ();
+  private readonly Device _device;
+  private readonly RunResults _results;
   internal readonly ReadTerminator Terminator;
 
   public ResultsProcessor(Device device, RunResults results)
@@ -21,7 +20,7 @@ public class ResultsProcessor
     //setup thread
     _resultsProcessingThread = new Thread(ResultsProcessing);
     _resultsProcessingThread.IsBackground = true;
-    _resultsProcessingThread.Name = "ResultsProcessing";
+    _resultsProcessingThread.Name = nameof(ResultsProcessing);
     _resultsProcessingThread.Start();
   }
 
@@ -34,7 +33,6 @@ public class ResultsProcessor
       {
         var bead = _results.OutputBeadsCollector[_resultsProcessed++];
         _results.AddProcessedBeadEvent(in bead);
-        _results.DataOut.Enqueue(bead);
 
         if (_resultsProcessed == 1)  //Trigger on 1st bead arrived is the simplest solution, at least for now;
         { //Comes from the asynchronous nature of the instrument

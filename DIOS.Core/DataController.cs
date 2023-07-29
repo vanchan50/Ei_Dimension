@@ -9,11 +9,11 @@ internal class DataController
 {
   public bool IsMeasurementGoing { get; set; }
   internal IBeadEventSink BeadEventSink { get; set; }
-  private ConcurrentQueue<CommandStruct> _outCommands = new ConcurrentQueue<CommandStruct>();
+  private ConcurrentQueue<CommandStruct> _outCommands = new ();
 
-  private readonly object _usbOutCV = new object();
-  internal object ScriptF9FinishedLock { get; } = new object(); //TODO: hide into function or maybe system monitor has info. then just poll it
-  internal object SystemActivityNotBusyNotificationLock { get; } = new object();
+  private readonly object _usbOutCV = new ();
+  internal object ScriptF9FinishedLock { get; } = new (); //TODO: hide into function or maybe system monitor has info. then just poll it
+  internal object SystemActivityNotBusyNotificationLock { get; } = new ();
   private readonly ISerial _serialConnection;
   private readonly Thread _prioUsbInThread;
   private readonly Thread _prioUsbOutThread;

@@ -21,7 +21,7 @@ public class BeadEventFileWriter
     _publisher = publisher;
   }
 
-  public void CreateAndWrite(BeadEventsData eventsData)
+  public void CreateAndWrite(IEnumerable<ProcessedBead> eventsData)
   {
     if (!_publisher.IsBeadEventPublishingActive)
     {
@@ -69,7 +69,7 @@ public class BeadEventFileWriter
     return _fullName;
   }
 
-  private string Decode(BeadEventsData eventsData)
+  private string Decode(IEnumerable<ProcessedBead> eventsData)
   {
     _ = _dataOut.Clear();
     var header = _publisher.IsOEMModeActive ? OEMHEADER : HEADER;

@@ -25,7 +25,7 @@ internal sealed class GraphsController
 
   private static GraphsController _instance;
   private static int _uiUpdateIsActive;
-  private readonly List<ProcessedBead> _tempBeadInfoList = new List<ProcessedBead>(1000);
+  private readonly List<ProcessedBead> _tempBeadInfoList = new (1000);
 
   public void Update()
   {
@@ -53,9 +53,17 @@ internal sealed class GraphsController
   private void UpdateBinfoList()
   {
     _tempBeadInfoList.Clear();
-    while (App.DiosApp.Results.DataOut.TryDequeue(out ProcessedBead bead))
+    try
     {
-      _tempBeadInfoList.Add(bead);
+      foreach (var bead in App.DiosApp.Results.GetNewBeads())
+      {
+        _tempBeadInfoList.Add(bead);
+      }
+    }
+    catch (ArgumentOutOfRangeException e)
+    {
+      //Should only be able to happen if WellResults.Reset() happens during enumeration, access to 
+      App.Logger.Log($"[WARNING]\t{nameof(UpdateBinfoList)} {e.Message}");
     }
   }
 }
