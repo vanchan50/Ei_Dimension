@@ -71,7 +71,6 @@ public class ResultsProcessor
 
   public void NewWellStarting()
   {
-    _results.OutputBeadsCollector.Clear();
     _resultsProcessed = 0;
     Terminator.MinPerRegCheckTrigger = false;
   }

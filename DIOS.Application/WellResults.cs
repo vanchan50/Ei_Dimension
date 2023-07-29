@@ -5,8 +5,6 @@ namespace DIOS.Application;
 public class WellResults
 {
   public Well Well { get; private set; }
-  public int Count => BeadEventsData.Count;
-  private BeadEventsData BeadEventsData { get; } = new ();
   private readonly ReporterResultManager _reporterManager = new ();
   private readonly StatsAccumulator _calibrationStatsAccumulator = new ();
   private readonly BackgroundStatsAccumulator _backgroundStatsAccumulator = new ();
@@ -14,7 +12,6 @@ public class WellResults
   internal void Reset(Well well, IReadOnlyCollection<int> regions)
   {
     Well = new Well(well);
-    BeadEventsData.Reset();
     _calibrationStatsAccumulator.Reset();
     _backgroundStatsAccumulator.Reset();
     _reporterManager.Reset(regions);
@@ -22,7 +19,6 @@ public class WellResults
 
   internal int Add(in ProcessedBead bead)
   {
-    BeadEventsData.Add(in bead);
     //accum stats for run as a whole, used during aligment and QC
     _calibrationStatsAccumulator.Add(in bead);
     _backgroundStatsAccumulator.Add(in bead);
@@ -44,16 +40,6 @@ public class WellResults
   public ChannelsAveragesStats GetBackgroundAverages()
   {
     return _backgroundStatsAccumulator.CalculateAverages();
-  }
-
-  public IEnumerable<ProcessedBead> GetNewBeads()
-  {
-    return BeadEventsData.GetNewBeadsEnumerable();
-  }
-
-  public IEnumerable<ProcessedBead> GetAllBeads()
-  {
-    return BeadEventsData.GetAllBeadsEnumerable();
   }
 
   /// <summary>

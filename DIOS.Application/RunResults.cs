@@ -1,5 +1,4 @@
-﻿using System.Collections.Concurrent;
-using DIOS.Core;
+﻿using DIOS.Core;
 
 namespace DIOS.Application;
 
@@ -62,6 +61,7 @@ public class RunResults
     if (_regionsToOutput is null)
       throw new Exception("SetupRunRegions() must be called before the run");
     CurrentWellResults.Reset(well, _regionsToOutput);
+    OutputBeadsCollector.Clear();
     _measuredWellStats.Reset();
     _isFrozen = false;
   }
@@ -103,12 +103,12 @@ public class RunResults
   /// <exception cref="ArgumentOutOfRangeException"></exception>
   public IEnumerable<ProcessedBead> GetNewBeads()
   {
-    return CurrentWellResults.GetNewBeads();
+    return OutputBeadsCollector.GetNewBeadsEnumerable();
   }
 
   public IEnumerable<ProcessedBead> PublishBeadEvents()
   {
-    return CurrentWellResults.GetAllBeads();
+    return OutputBeadsCollector.GetAllBeadsEnumerable();
   }
 
   public string PublishWellStats()

@@ -3,13 +3,13 @@ using Xunit.Abstractions;
 
 namespace DIOS.Application.Tests;
 
-public class BeadEventsDataTest
+public class BeadEventSinkTest
 {
-  private readonly BeadEventsData SUT = new();
+  private readonly BeadEventSink SUT = new(2000000);
   private readonly Random _r = new();
   private readonly ITestOutputHelper _output;
 
-  public BeadEventsDataTest(ITestOutputHelper output)
+  public BeadEventSinkTest(ITestOutputHelper output)
   {
     _output = output;
   }
@@ -70,7 +70,7 @@ public class BeadEventsDataTest
     Task.Run(() =>
     {
       Thread.Sleep(500);
-      SUT.Reset();
+      SUT.Clear();
     });
 
     int receivedAmount = 0;

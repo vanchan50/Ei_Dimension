@@ -29,7 +29,7 @@ namespace DIOS.Application.Tests
       Task.Run(() =>
       {
         var r = new Random();
-        while (SUT.CurrentWellResults.Count < 200)
+        while (SUT.OutputBeadsCollector.Count < 200)
         {
           var bead = new ProcessedBead
           {
