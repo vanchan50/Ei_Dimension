@@ -82,10 +82,10 @@ public static class DataProcessor
       accumulator.Add(bead);
     }
     var stats = accumulator.CalculateStats();
-    _ = App.Current.Dispatcher.BeginInvoke((Action)(() =>
+    _ = App.Current.Dispatcher.BeginInvoke(() =>
     {
       ResultsViewModel.Instance.DecodeCalibrationStats(stats, current: false);
-    }));
+    });
   }
 
   public static void BinScatterData(List<ProcessedBead> inputBeadList, bool fromFile = false)
@@ -165,7 +165,7 @@ public static class DataProcessor
         Stats.Add(new RegionReporterStats(reporterValues));
       }
 
-      _ = App.Current.Dispatcher.BeginInvoke((Action)(() =>
+      _ = App.Current.Dispatcher.BeginInvoke(() =>
       {
         var j = 0;
         foreach (var stat in Stats)
@@ -175,13 +175,13 @@ public static class DataProcessor
           j++;
         }
         ResultsViewModel.Instance.ResultsWaitIndicatorVisibility = false;
-      }));
+      });
     }
 
-    _ = App.Current.Dispatcher.BeginInvoke((Action)(() =>
+    _ = App.Current.Dispatcher.BeginInvoke(() =>
     {
       ScatterChartViewModel.Instance.ScttrData.FillCurrentData(fromFile);
-    }));
+    });
   }
 
   private static int FindPlaceInBin(float value)

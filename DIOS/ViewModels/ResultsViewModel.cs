@@ -126,10 +126,10 @@ public class ResultsViewModel
     }
     CLButtonsChecked[CL] = true;
     SetDisplayedMap();
-    _ = App.Current.Dispatcher.BeginInvoke((Action)(() =>
+    _ = App.Current.Dispatcher.BeginInvoke(() =>
     {
       HeatMapAPI.API.ReDraw();
-    }));
+    });
   }
 
   public void ClearGraphs(bool current = true)
@@ -229,7 +229,7 @@ public class ResultsViewModel
         _fillDataActive = 0;
       }
 
-      _ = App.Current.Dispatcher.BeginInvoke((Action)(() =>
+      _ = App.Current.Dispatcher.BeginInvoke(() =>
       {
         try
         {
@@ -252,7 +252,7 @@ public class ResultsViewModel
           ChartWaitIndicatorVisibility = false;
           _fillDataActive = 0;
         }
-      }));
+      });
       MainViewModel.Instance.EventCountLocal[0] = _cachedBeadStructsForLoadedData.Count.ToString();
     });
   }
@@ -325,10 +325,10 @@ public class ResultsViewModel
         ActiveRegionsStatsController.Instance.DisplayCurrentBeadStats();
       }
 
-      _ = App.Current.Dispatcher.BeginInvoke((Action)(() =>
+      _ = App.Current.Dispatcher.BeginInvoke(() =>
       {
         HeatMapAPI.API.ReDraw();
-      }));
+      });
       MainViewModel.Instance.EventCountField = MainViewModel.Instance.EventCountCurrent;
       DisplayedMfiItems = CurrentMfiItems;
       DisplayedCvItems = CurrentCvItems;
@@ -351,13 +351,13 @@ public class ResultsViewModel
   /// </summary>
   public void FillWorldMaps()
   {
-    _ = App.Current.Dispatcher.BeginInvoke((Action)(() =>
+    _ = App.Current.Dispatcher.BeginInvoke(() =>
     {
       WrldMap.InitMaps();
       PlotCurrent(DisplaysCurrentmap);
       ResultsWaitIndicatorVisibility = false;
       ChartWaitIndicatorVisibility = false;
-    }));
+    });
   }
 
   private void SetDisplayedMap()

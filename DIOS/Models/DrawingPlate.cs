@@ -315,7 +315,7 @@ public class DrawingPlate
 
     public void SetWarning(WellWarningState warning)
     {
-      _ = App.Current.Dispatcher.BeginInvoke((Action)(() =>
+      _ = App.Current.Dispatcher.BeginInvoke(() =>
       {
         switch (warning)
         {
@@ -326,7 +326,7 @@ public class DrawingPlate
             _rect.Background = Brushes.Orange;
             break;
         }
-      }));
+      });
     }
 
     public static void SetGrid(Grid grid)

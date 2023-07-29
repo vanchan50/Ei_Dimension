@@ -371,12 +371,12 @@ public class PlateCustomizationViewModel
         Monitor.PulseAll(requirementsLock);
       }
     }
-    _ = App.Current.Dispatcher.BeginInvoke((Action)(() =>
+    _ = App.Current.Dispatcher.BeginInvoke(() =>
     {
       Notification.Show("Please Load Plate",
         LoadPlate, "Load Plate",
         Cancel, "Cancel");
-    }));
+    });
     lock (requirementsLock)
     {
       Monitor.Wait(requirementsLock);

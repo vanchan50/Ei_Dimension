@@ -303,11 +303,11 @@ public partial class App : Application
 
     var stats = DiosApp.Results.CurrentWellResults.GetStats();
     var averageBackgrounds = DiosApp.Results.CurrentWellResults.GetBackgroundAverages();
-    _ = Current.Dispatcher.BeginInvoke((Action)(() =>
+    _ = Current.Dispatcher.BeginInvoke(() =>
     {
       ResultsViewModel.Instance.DecodeCalibrationStats(stats, current: true);
       ChannelOffsetViewModel.Instance.DecodeBackgroundStats(averageBackgrounds);
-    }));
+    });
   }
 
   public void FinishedMeasurementEventHandler(object sender, EventArgs e)
@@ -337,13 +337,13 @@ public partial class App : Application
 
         if (DiosApp.RunPlateContinuously)
         {
-          App.Current.Dispatcher.BeginInvoke((Action)(async () =>
+          App.Current.Dispatcher.BeginInvoke(async () =>
           {
             DiosApp.Device.EjectPlate();
             await System.Threading.Tasks.Task.Delay(5000);
             DiosApp.Device.LoadPlate();
             MainButtonsViewModel.Instance.StartButtonClick();
-          }));
+          });
         }
         break;
       case OperationMode.Calibration:
@@ -352,7 +352,7 @@ public partial class App : Application
       case OperationMode.Verification:
         if (VerificationViewModel.Instance.AnalyzeVerificationResults(out var errorMsg))
         {
-          _ = Current.Dispatcher.BeginInvoke((Action)VerificationViewModel.VerificationSuccess);
+          _ = Current.Dispatcher.BeginInvoke(VerificationViewModel.VerificationSuccess);
         }
         else
         {
@@ -378,7 +378,7 @@ public partial class App : Application
   public void MapChangedEventHandler(object sender, MapModel map)
   {
     DiosApp.Device.SetMap(map);
-    _ = Current.Dispatcher.BeginInvoke((Action)(() =>
+    _ = Current.Dispatcher.BeginInvoke(() =>
     {
       ResultsViewModel.Instance.FillWorldMaps();
 
@@ -399,7 +399,7 @@ public partial class App : Application
 
       if (ResultsViewModel.Instance.AnalysisMap != null)
         ResultsViewModel.Instance.AnalysisMap.OnMapChanged(map);
-    }));
+    });
   }
 
   public static void OutputLegacyReport(string legacyReport)

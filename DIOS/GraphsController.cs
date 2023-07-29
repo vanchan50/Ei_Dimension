@@ -42,11 +42,11 @@ internal sealed class GraphsController
         _uiUpdateIsActive = 0;
         return;
       }
-      _ = App.Current.Dispatcher.BeginInvoke((Action)(() =>
+      _ = App.Current.Dispatcher.BeginInvoke(() =>
       {
         HeatMapAPI.API.ReDraw();
         _uiUpdateIsActive = 0;
-      }));
+      });
     });
   }
 

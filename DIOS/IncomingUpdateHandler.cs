@@ -80,10 +80,10 @@ internal class IncomingUpdateHandler
         break;
       case DeviceParameterType.CalibrationSuccess:
         CalibrationViewModel.Instance.CalJustFailed = false;
-        _ = App.Current.Dispatcher.BeginInvoke((Action)(() =>
+        _ = App.Current.Dispatcher.BeginInvoke(() =>
         {
           CalibrationViewModel.Instance.CalibrationSuccess();
-        }));
+        });
         break;
       case DeviceParameterType.Pressure:
         update = () =>
@@ -742,11 +742,11 @@ internal class IncomingUpdateHandler
             App.DiosApp.Device.ExtendedRangeCL2Multiplier = _externalRangeMultipliersbuffer[1];
             ComponentsViewModel.Instance.SaveExtRangeValuesToMap();
           };
-          App.Current.Dispatcher.BeginInvoke((Action)(() =>
+          App.Current.Dispatcher.BeginInvoke(() =>
           {
             Notification.Show($"New extended range Multipliers are:\n\tCL1: {_externalRangeMultipliersbuffer[0]}\n\tCL2: {_externalRangeMultipliersbuffer[1]}",
               overwrite, "Apply new", null, "Keep Previous", fontSize: 34);
-          }));
+          });
         }
         //update = () => CalibrationViewModel.Instance.ExtendedRangeMultipliers[pos18] = parameter.FloatParameter.ToString("F3");
         break;
