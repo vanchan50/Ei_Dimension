@@ -1,6 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Text;
 using DIOS.Core;
 
@@ -17,13 +15,13 @@ public class ResultsPublisher
   public bool IsLegacyPlateReportPublishingActive { get; set; }
   public bool IsOnlyClassifiedBeadsPublishingActive { get; set; }
   public bool IsOEMModeActive { get; set; }
-  public string WorkOrderPath { get; set; }
   public ResultsFileWriter ResultsFile { get; }
   public BeadEventFileWriter BeadEventFile { get; }
   public PlateReportFileWriter PlateReportFile { get; }
   public LegacyReportFileWriter LegacyReportFile { get; }
   public PlateStatusFileWriter PlateStatusFile { get; }
   public string Date => DateTime.Now.ToString("dd.MM.yyyy.HH-mm-ss", CultureInfo.CreateSpecificCulture("en-GB"));
+  public string LegacyReportDate => DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss", CultureInfo.CreateSpecificCulture("en-GB"));
 
   public const string DATAFOLDERNAME = "AcquisitionData";
   public const string STATUSFOLDERNAME = "Status";
@@ -55,13 +53,6 @@ public class ResultsPublisher
     {
       Outdir = _folder;
     }
-  }
-
-  public void DoSomethingWithWorkOrder()
-  {
-    if (File.Exists(WorkOrderPath))
-      File.Delete(WorkOrderPath);   //result is posted, delete work order
-    //need to clear textbox in UI. this has to be an event
   }
 
   public bool OutputDirectoryExists(string fullDirectoryPath)

@@ -111,8 +111,12 @@ public class MainButtonsViewModel
     IReadOnlyCollection<Well> wells;
     if (App.DiosApp.Control == SystemControl.WorkOrder)
     {
+      if (App.DiosApp.WorkOrderController.TryGetWorkOrderById("1", out var wo))
+      {
+        App.CurrentWorkOrder = wo;
+      }
       //fill wells from work order
-      wells = App.DiosApp.WorkOrder.woWells;
+      wells = App.CurrentWorkOrder.woWells;
     }
     else
     {

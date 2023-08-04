@@ -11,9 +11,9 @@ namespace Ei_Dimension.ViewModels;
 public class DirectMemoryAccessViewModel
 {
   public virtual Visibility ViewVisible { get; set; } = Visibility.Hidden;
-  public virtual ObservableCollection<string> HexCode { get; set; } = new ObservableCollection<string> { "1" };
-  public virtual ObservableCollection<string> IntValue { get; set; } = new ObservableCollection<string> { "0" };
-  public virtual ObservableCollection<string> FloatValue { get; set; } = new ObservableCollection<string> { "0" };
+  public virtual ObservableCollection<string> HexCode { get; set; } = new(){ "1" };
+  public virtual ObservableCollection<string> IntValue { get; set; } = new(){ "0" };
+  public virtual ObservableCollection<string> FloatValue { get; set; } = new(){ "0" };
   public static DirectMemoryAccessViewModel Instance { get; private set; }
 
   protected DirectMemoryAccessViewModel()

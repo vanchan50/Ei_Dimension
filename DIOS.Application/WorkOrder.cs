@@ -5,7 +5,7 @@ namespace DIOS.Application;
 [Serializable]
 public struct WorkOrder
 {
-  public Guid plateID;
+  public string plateID;
   public Guid beadMapId;
   public short numberRows;
   public short numberCols;

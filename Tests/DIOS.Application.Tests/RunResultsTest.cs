@@ -21,7 +21,7 @@ namespace DIOS.Application.Tests
       device.Mode = OperationMode.Normal;
       var drives = DriveInfo.GetDrives();
       var appFolder = Path.Combine($"{drives[0].Name}", "Emissioninc", Environment.MachineName);
-      var SUT = new RunResults(device, new DIOSApp(appFolder, _logger));
+      var SUT = new RunResults(device, new DIOSApp(appFolder, _logger), new BeadEventSink(2000000));
 
       var putList = new List<ProcessedBead>(200);
       var takeList = new List<ProcessedBead>(200);

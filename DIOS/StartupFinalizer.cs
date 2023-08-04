@@ -85,7 +85,7 @@ internal static class StartupFinalizer
     matrix.Translate(new System.Windows.Media.Media3D.Vector3D(-100, 100, 0));
     ((System.Windows.Media.Media3D.MatrixTransform3D)Views.ResultsView.Instance.AnalysisPlot.ContentTransform).Matrix = matrix;
 
-    App.CheckAvailableWorkOrders();
+    App.DiosApp.WorkOrderController.OnAppLoaded();
     Program.SplashScreen.Close(TimeSpan.FromMilliseconds(1000));
       
     UITimer.Start();

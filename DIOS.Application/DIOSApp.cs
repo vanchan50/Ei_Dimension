@@ -10,13 +10,13 @@ public class DIOSApp
 {
   public Device Device { get; }
   public MapController MapController { get; }
+  public WorkOrderController WorkOrderController { get; }
   public DirectoryInfo RootDirectory { get; }
   public ResultsPublisher Publisher { get; }
   public RunResults Results { get; }
   public ResultsProcessor ResultsProc { get; }  //TODO make private
   public SystemControl Control { get; set; } = SystemControl.Manual;
   public ReadTerminator Terminator => ResultsProc.Terminator;
-  public WorkOrder WorkOrder { get; set; }
   public bool RunPlateContinuously { get; set; }
   public Verificator Verificator { get; }
   public IBarcodeReader BarcodeReader { get; }
@@ -29,9 +29,10 @@ public class DIOSApp
     SetSystemDirectories();
     Logger = logger;
     MapController = new MapController($"{rootDirectory}\\Config", Logger);
+    WorkOrderController = new WorkOrderController($"{rootDirectory}\\WorkOrder");
     Publisher = new ResultsPublisher(rootDirectory, Logger);
     Device = new Device(new USBConnection(Logger), Logger);
-    Results = new RunResults(Device, this);
+    Results = new RunResults(Device, this, new BeadEventSink(2000000));
     ResultsProc = new ResultsProcessor(Device, Results);
     Verificator = new Verificator(Logger);
     BarcodeReader = new USBBarcodeReader(Logger);
@@ -96,7 +97,7 @@ public class DIOSApp
     {
       Results.MakeWellStats();
       Publisher.ResultsFile.AppendAndWrite(Results.PublishWellStats()); //makewellstats should be awaited only for this method
-      Publisher.DoSomethingWithWorkOrder();
+      WorkOrderController.DoSomethingWithWorkOrder();
     });
     Publisher.BeadEventFile.CreateAndWrite(Results.PublishBeadEvents());
   }

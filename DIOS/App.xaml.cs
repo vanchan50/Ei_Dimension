@@ -30,13 +30,13 @@ public partial class App : Application
   public static bool ChannelRedirectionEnabled { get; private set; } = false;
 
   public static ILogger Logger { get; private set; }
-
+  public static WorkOrder CurrentWorkOrder { get; set; }
   public static bool _nextWellWarning = false;
   public static readonly HashSet<char> InvalidChars = new();
 
   private static bool _workOrderPending = false;
-  private static FileSystemWatcher _workOrderWatcher;
   private static readonly IncomingUpdateHandler IncomingUpdateHandler = new ();
+
 
   static App()
   {
@@ -50,6 +50,7 @@ public partial class App : Application
     var appFolder = Path.Combine($"{drives[0].Name}", "Emissioninc", Environment.MachineName);
     Logger = new Logger(appFolder);
     DiosApp = new(appFolder, Logger);
+    Logger.Log($"Application version: {DiosApp.BUILD}");
 
     StatisticsExtension.TailDiscardPercentage = Settings.Default.StatisticsTailDiscardPercentage;
 
@@ -59,12 +60,7 @@ public partial class App : Application
     DiosApp.Device.FinishedMeasurement += FinishedMeasurementEventHandler;
     DiosApp.MapController.ChangedActiveMap += MapChangedEventHandler;
     DiosApp.Device.ParameterUpdate += IncomingUpdateHandler.ParameterUpdateEventHandler;
-
-    _workOrderWatcher = new FileSystemWatcher($"{appFolder}\\WorkOrder");
-    _workOrderWatcher.NotifyFilter = NotifyFilters.FileName;
-    _workOrderWatcher.Filter = "*.txt";
-    _workOrderWatcher.EnableRaisingEvents = true;
-    _workOrderWatcher.Created += OnNewWorkOrder;
+    DiosApp.WorkOrderController.NewWorkOrder += OnNewWorkOrder;
 
     App.Current.Dispatcher.UnhandledException += DispatcherExceptionHandler;
   }
@@ -324,7 +320,7 @@ public partial class App : Application
     }
     else
     {
-      DiosApp.Publisher.PlateReportFile.CreateAndWrite(plateReportJson, DiosApp.WorkOrder.plateID.ToString());
+      DiosApp.Publisher.PlateReportFile.CreateAndWrite(plateReportJson, CurrentWorkOrder.plateID);
     }
     
     PlatePictogramViewModel.Instance.PlatePictogram.CurrentlyReadCell = (-1, -1);
@@ -404,17 +400,15 @@ public partial class App : Application
 
   public static void OutputLegacyReport(string legacyReport)
   {
-    var bldr = new StringBuilder();
-    bldr.AppendLine("Program,\"DIOS\"");
-    bldr.AppendLine($"Build,\"{DiosApp.BUILD}\",Firmware,\"{DiosApp.Device.FirmwareVersion}\"");
-    bldr.AppendLine($"Date,\"{DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss", System.Globalization.CultureInfo.CreateSpecificCulture("en-GB"))}\"\n");
-
-    bldr.AppendLine($"Instrument,\"{Environment.MachineName}\"");
-    bldr.AppendLine($"Session,\"{DiosApp.Publisher.Outfilename}\"\n\n\n\n\n\n\n");
-
-    bldr.AppendLine($"Samples,\"{WellsSelectViewModel.Instance.CurrentTableSize}\"\n");
-    bldr.Append(legacyReport);
-    var wholeReport = bldr.ToString();
+    var wholeReport = new StringBuilder()
+      .AppendLine("Program,\"DIOS\"")
+      .AppendLine($"Build,\"{DiosApp.BUILD}\",Firmware,\"{DiosApp.Device.FirmwareVersion}\"")
+      .AppendLine($"Date,\"{DiosApp.Publisher.LegacyReportDate}\"\n")
+      .AppendLine($"Instrument,\"{Environment.MachineName}\"")
+      .AppendLine($"Session,\"{DiosApp.Publisher.Outfilename}\"\n\n\n\n\n\n\n")
+      .AppendLine($"Samples,\"{WellsSelectViewModel.Instance.CurrentTableSize}\"\n")
+      .Append(legacyReport)
+      .ToString();
 
     if (DiosApp.Control == SystemControl.Manual)
     {
@@ -422,7 +416,7 @@ public partial class App : Application
     }
     else
     {
-      DiosApp.Publisher.LegacyReportFile.CreateAndWrite(wholeReport, DiosApp.WorkOrder.plateID.ToString());
+      DiosApp.Publisher.LegacyReportFile.CreateAndWrite(wholeReport, CurrentWorkOrder.plateID);
     }
   }
 
@@ -436,7 +430,7 @@ public partial class App : Application
   {
     //Removing this can lead to unforseen crucial bugs in instrument operation. If so - do with extra care
     //one example is a check in CommandLists.Readertab for changed plate parameter,which could happen in manual well selection in motors tab
-    Action actionList = null;
+    Action actionList;
     switch (tabname)
     {
       case "readertab":
@@ -575,19 +569,13 @@ public partial class App : Application
         return;
     }
 
-    if (actionList != null)
-      actionList.Invoke();
+    actionList.Invoke();
   }
 
-  public void OnNewWorkOrder(object sender, FileSystemEventArgs e)
+  public void OnNewWorkOrder(object sender, WorkOrderEventArgs e)
   {
-    var name = Path.GetFileNameWithoutExtension(e.Name);
-    DiosApp.Publisher.WorkOrderPath = e.FullPath;
-    if (!ParseWorkOrder())
-      return;
-
     _workOrderPending = true;
-    DashboardViewModel.Instance.WorkOrder[0] = name;  //check for already existing one 
+    DashboardViewModel.Instance.WorkOrder[0] = e.FileName;  //check for already existing one 
     // if WO already selected -> allow start. else the WO checking action should perform the same check
     if (DiosApp.Control == SystemControl.WorkOrder)  //no barcode required so allow start
     {
@@ -596,59 +584,15 @@ public partial class App : Application
     }
   }
 
-  public static void CheckAvailableWorkOrders()
-  {
-    string[] fileEntries = Directory.GetFiles($"{DiosApp.RootDirectory.FullName}\\WorkOrder", "*.txt");
-    if (fileEntries.Length == 0)
-      return;
-    var name = Path.GetFileNameWithoutExtension(fileEntries[0]);
-    DiosApp.Publisher.WorkOrderPath = fileEntries[0];
-    int i = 1;
-    while (!ParseWorkOrder())
-    {
-      if (i < fileEntries.Length)
-      {
-        DiosApp.Publisher.WorkOrderPath = fileEntries[i];
-        name = Path.GetFileNameWithoutExtension(fileEntries[i]);
-        i++;
-      }
-      else
-        return;
-    }
-
-    DashboardViewModel.Instance.WorkOrder[0] = name;  //should be first succesfully parsed
-    _workOrderPending = true;
-    // if WO already selected -> allow start. else the WO checking action should perform the same check
-    if (DiosApp.Control == SystemControl.WorkOrder)  //no barcode required so allow start
-    {
-      MainButtonsViewModel.Instance.EnableStartButton(true);
-      _workOrderPending = false;
-    }
-  }
-
-  private static bool ParseWorkOrder()
-  {
-    try
-    {
-      using (TextReader reader = new StreamReader(DiosApp.Publisher.WorkOrderPath))
-      {
-        var contents = reader.ReadToEnd();
-        DiosApp.WorkOrder = Newtonsoft.Json.JsonConvert.DeserializeObject<WorkOrder>(contents);
-      }
-    }
-    catch
-    {
-      return false;
-    }
-    return true;
-  }
-
   private void DispatcherExceptionHandler(object sender, DispatcherUnhandledExceptionEventArgs args)
   {
     Logger.Log("[PROBLEM] Dispatcher exception");
     Logger.Log($"[PROBLEM] Source: {args.Exception.Source}");
     Logger.Log($"[PROBLEM] Message: {args.Exception.Message}");
-    Logger.Log($"[PROBLEM] From: {args.Exception.TargetSite.Name}");
+    if (args.Exception.TargetSite is not null)
+    {
+      Logger.Log($"[PROBLEM] From: {args.Exception.TargetSite.Name}");
+    }
     Logger.Log($"[PROBLEM] trace: {args.Exception.StackTrace}");
   }
 }

@@ -4,7 +4,7 @@ namespace DIOS.Application;
 
 public class RunResults
 {
-  public BeadEventSink OutputBeadsCollector { get; } = new (2000000);
+  public BeadEventSink OutputBeadsCollector { get; }
   public PlateReport PlateReport { get; } = new ();
   public WellResults CurrentWellResults { get; } = new ();
   private readonly Device _device;
@@ -13,10 +13,11 @@ public class RunResults
   private readonly DIOSApp _diosApp;
   private bool _isFrozen = false;
 
-  public RunResults(Device device, DIOSApp diosApp)
+  public RunResults(Device device, DIOSApp diosApp, BeadEventSink sink)
   {
     _device = device;
     _diosApp = diosApp;
+    OutputBeadsCollector = sink;
   }
 
   /// <summary>
