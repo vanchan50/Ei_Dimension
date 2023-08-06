@@ -1692,7 +1692,7 @@ internal static class UserInputHandler
         case nameof(ComponentsViewModel.Instance.StatisticsCutoffBox):
           if (double.TryParse(_tempNewString, out dRes))
           {
-            if ((dRes >= 0 && dRes <= 45) || _disableSanityCheck)
+            if ((dRes >= 5 && dRes <= 45) || _disableSanityCheck)
             {
               Settings.Default.StatisticsTailDiscardPercentage = dRes / 100;
               StatisticsExtension.TailDiscardPercentage = dRes / 100;
@@ -1700,7 +1700,7 @@ internal static class UserInputHandler
             }
           }
           failed = true;
-          ErrorMessage = "[0-45]";
+          ErrorMessage = "[5-45]";
           break;
         case nameof(PlateCustomizationViewModel.Instance.DACCurrentLimit):
           if (int.TryParse(_tempNewString, out iRes))

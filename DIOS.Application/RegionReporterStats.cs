@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace DIOS.Application;
+﻿namespace DIOS.Application;
 
 [Serializable]
 public class RegionReporterStats

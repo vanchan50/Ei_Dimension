@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Text;
 using Newtonsoft.Json;
 
 namespace DIOS.Application;
@@ -12,7 +10,7 @@ public class PlateReport
   public Guid beadMapId;
   public DateTime completedDateTime;
   [JsonProperty("Wells")]
-  private List<WellStats> _wells = new List<WellStats>(384);
+  private List<WellStats> _wells = new(384);
   [JsonIgnore]
   private int _size;
 
@@ -45,6 +43,7 @@ public class PlateReport
   public string LegacyReport(string header, bool includeRegion0)
   {
     var median = typeof(RegionReporterStats).GetField(nameof(RegionReporterStats.MedFi));
+    var mean = typeof(RegionReporterStats).GetField(nameof(RegionReporterStats.MeanFi));
     var count = typeof(RegionReporterStats).GetField(nameof(RegionReporterStats.Count));
     var coeffVar = typeof(RegionReporterStats).GetField(nameof(RegionReporterStats.CoeffVar));
     var bldr = new StringBuilder();
@@ -54,6 +53,12 @@ public class PlateReport
     foreach (var well in _wells)
     {
       bldr.AppendLine(well.ToStringLegacy(median, includeRegion0));
+    }
+    bldr.AppendLine($"Data Type:,\"Mean {100 * StatisticsExtension.TailDiscardPercentage}% Trim\"");
+    bldr.AppendLine($"{header}");
+    foreach (var well in _wells)
+    {
+      bldr.AppendLine(well.ToStringLegacy(mean, includeRegion0));
     }
     bldr.AppendLine("Data Type:,\"Count\"");
     bldr.AppendLine($"{header}");

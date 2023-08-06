@@ -1,16 +1,15 @@
-﻿using System.Collections.Concurrent;
-using DIOS.Core;
+﻿using DIOS.Core;
 
 namespace DIOS.Application;
 
 public class RunResults
 {
-  public BeadEventSink OutputBeadsCollector { get; } = new (2000000);
-  public PlateReport PlateReport { get; } = new ();
-  public WellResults CurrentWellResults { get; } = new ();
+  public BeadEventSink OutputBeadsCollector { get; } = new(2000000);
+  public PlateReport PlateReport { get; } = new();
+  public WellResults CurrentWellResults { get; } = new();
   private readonly Device _device;
   private IReadOnlyCollection<int> _regionsToOutput = null!;
-  private readonly ResultingWellStatsData _measuredWellStats = new ();
+  private readonly ResultingWellStatsData _measuredWellStats = new();
   private readonly DIOSApp _diosApp;
   private bool _isFrozen = false;
 

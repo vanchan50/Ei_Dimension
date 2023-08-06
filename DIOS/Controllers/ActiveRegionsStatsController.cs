@@ -18,10 +18,10 @@ public class ActiveRegionsStatsController
   public virtual ObservableCollection<string> DisplayedActiveRegionsCount { get; protected set; }
   public virtual ObservableCollection<string> DisplayedActiveRegionsMean { get; protected set; }
   //storage for mean and count of all existing regions. For current reading and backing file select
-  public ObservableCollection<string> CurrentCount { get; } = new ObservableCollection<string>();
-  public ObservableCollection<string> CurrentMean { get; } = new ObservableCollection<string>();
-  public ObservableCollection<string> BackingCount { get; } = new ObservableCollection<string>();
-  public ObservableCollection<string> BackingMean { get; } = new ObservableCollection<string>();
+  public ObservableCollection<string> CurrentCount { get; } = new();
+  public ObservableCollection<string> CurrentMean { get; } = new();
+  public ObservableCollection<string> BackingCount { get; } = new();
+  public ObservableCollection<string> BackingMean { get; } = new();
   public static ActiveRegionsStatsController Instance
   {
     get
@@ -35,7 +35,7 @@ public class ActiveRegionsStatsController
   public const int NULLREGIONCAPACITY = 100000;
   private static ActiveRegionsStatsController _instance;
   private static bool _activeRegionsUpdateGoing;
-  private static readonly RegionReporterResultVolatile _nullWellRegionResult = new RegionReporterResultVolatile(0);
+  private static readonly RegionReporterResultVolatile _nullWellRegionResult = new(0);
 
   protected ActiveRegionsStatsController()
   {
