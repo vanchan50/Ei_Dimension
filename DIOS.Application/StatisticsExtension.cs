@@ -3,7 +3,7 @@ public static class StatisticsExtension
 {
   public static double TailDiscardPercentage { get; set; } = DEFAULTDISCARDPERCENTAGE;
 
-  private const double DEFAULTDISCARDPERCENTAGE = 0.05;
+  private const double DEFAULTDISCARDPERCENTAGE = 0.25;
 
   public static DistributionStats GetDistributionStatistics(this List<float> values)
   {
@@ -19,14 +19,14 @@ public static class StatisticsExtension
       int endIndex = count - quarter;
 
       median = values[half];
-      mean = values.Mean(quarter, endIndex);
+      //mean = values.Mean(quarter, endIndex);
 
       //CV is properly calculated via mean, but to comply to Lmnx, it is calculated with low tail discard
       //
       var start = (int)Math.Ceiling(count * TailDiscardPercentage);
       var stop = (int)Math.Floor(count * (1 - TailDiscardPercentage));
-      var meanForCVCalculation = values.Mean(start, stop);
-      coeffVar = values.CalculateCoefficientVariable(meanForCVCalculation, start, stop);
+      mean = values.Mean(start, stop);
+      coeffVar = values.CalculateCoefficientVariable(mean, start, stop);
     }
     else if (count > 0)
     {

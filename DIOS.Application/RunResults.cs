@@ -9,7 +9,7 @@ public class RunResults
   public WellResults CurrentWellResults { get; } = new ();
   private readonly Device _device;
   private IReadOnlyCollection<int> _regionsToOutput = null!;
-  private readonly ResultingWellStatsData _measuredWellStats = new ();
+  private readonly ResultingWellStatsData _measuredWellStats = new();
   private readonly DIOSApp _diosApp;
   private bool _isFrozen = false;
 

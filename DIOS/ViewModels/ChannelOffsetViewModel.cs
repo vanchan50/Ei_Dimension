@@ -43,8 +43,8 @@ public class ChannelOffsetViewModel
     var curCulture = Language.TranslationSource.Instance.CurrentCulture;
     SensitivityItems = new ObservableCollection<DropDownButtonContents>
     {
-      new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Channels_Sens_GreenB), curCulture), this),
-      new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Channels_Sens_GreenC), curCulture), this)
+      new(RM.GetString(nameof(Language.Resources.Channels_Sens_GreenB), curCulture), this),
+      new(RM.GetString(nameof(Language.Resources.Channels_Sens_GreenC), curCulture), this)
     };
     SelectedSensitivityIndex = Settings.Default.SensitivityChannelB ? (byte)0 : (byte)1;
     SelectedSensitivityContent = SensitivityItems[SelectedSensitivityIndex].Content;
