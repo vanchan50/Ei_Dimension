@@ -18,11 +18,11 @@ public class PlateReport
   /// Get the reporter Mean values. Works only for the first well (tube)
   /// </summary>
   /// <returns>a list of reporter means for the respective regions</returns>
-  public List<(int region, int mfi)> GetRegionalReporterMFI()
+  public List<(int region, int medianFi)> GetRegionalReporterMFI()
   {
     if (_wells.Count == 0 || _wells[0] == null)
       return null;
-    return _wells[0].GetReporterMFI();
+    return _wells[0].GetReporterMeanFi();
   }
 
   internal void Add(WellStats stats)

@@ -61,7 +61,7 @@ public class NormalizationViewModel
       if (MapRegionsController.ActiveRegionNums.Contains(value.region))
       {
         var idx = MapRegionsController.GetMapRegionIndex(value.region);
-        MapRegionsController.RegionsList[idx].MFIValue[0] = value.mfi.ToString();
+        MapRegionsController.RegionsList[idx].MFIValue[0] = value.medianFi.ToString();
       }
     }
   }

@@ -33,9 +33,9 @@ internal class WellStats
     TotalCount = totalBead;
   }
 
-  public List<(int region, int mfi)> GetReporterMFI()
+  public List<(int region, int medianFi)> GetReporterMeanFi()
   {
-    List<(int region, int mfi)> list = new List<(int region, int mfi)>(100);
+    List<(int region, int medianFi)> list = new List<(int region, int mfi)>(100);
 
     foreach (var regionReport in _results)
     {
