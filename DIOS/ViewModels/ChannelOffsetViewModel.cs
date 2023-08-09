@@ -77,8 +77,8 @@ public class ChannelOffsetViewModel
 
   public void SliderValueChanged(int param)
   {
-    //if (App.DiosApp.Device.BoardVersion < 1)
-    //  return;
+    if (App.DiosApp.Device.BoardVersion < 1)
+      return;
 
     if (OverrideSliderChange)
     {

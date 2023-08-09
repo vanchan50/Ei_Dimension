@@ -16,7 +16,7 @@ public class DIOSApp
   public RunResults Results { get; }
   public ResultsProcessor ResultsProc { get; }  //TODO make private
   public SystemControl Control { get; set; } = SystemControl.Manual;
-  public ReadTerminator Terminator => ResultsProc.Terminator;
+  public ReadTerminator Terminator { get; }
   public bool RunPlateContinuously { get; set; }
   public Verificator Verificator { get; }
   public IBarcodeReader BarcodeReader { get; }
@@ -33,7 +33,8 @@ public class DIOSApp
     Publisher = new ResultsPublisher(rootDirectory, Logger);
     Device = new Device(new USBConnection(Logger), Logger);
     Results = new RunResults(Device, this, new BeadEventSink(2000000));
-    ResultsProc = new ResultsProcessor(Device, Results);
+    Terminator = new ReadTerminator(Results.MinPerRegionAchieved);
+    ResultsProc = new ResultsProcessor(Device, Results, Terminator);
     Verificator = new Verificator(Logger);
     BarcodeReader = new USBBarcodeReader(Logger);
   }

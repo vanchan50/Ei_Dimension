@@ -2,7 +2,7 @@
 
 namespace DIOS.Application;
 
-public class BeadEventSink : IBeadEventSink
+public sealed class BeadEventSink : IBeadEventSink
 {
   public ProcessedBead this[int key] => _list[key];
   public int Count => _size;

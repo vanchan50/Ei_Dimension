@@ -10,13 +10,13 @@ public class ResultsProcessor
   private readonly object _processingCV = new ();
   private readonly Device _device;
   private readonly RunResults _results;
-  internal readonly ReadTerminator Terminator;
+  private readonly ReadTerminator _terminator;
 
-  public ResultsProcessor(Device device, RunResults results)
+  public ResultsProcessor(Device device, RunResults results, ReadTerminator terminator)
   {
     _device = device;
     _results = results;
-    Terminator = new ReadTerminator(_results.MinPerRegionAchieved);
+    _terminator = terminator;
     //setup thread
     _resultsProcessingThread = new Thread(ResultsProcessing);
     _resultsProcessingThread.IsBackground = true;
@@ -36,10 +36,10 @@ public class ResultsProcessor
 
         if (_resultsProcessed == 1)  //Trigger on 1st bead arrived is the simplest solution, at least for now;
         { //Comes from the asynchronous nature of the instrument
-          Terminator.StartTerminationTimer();
+          _terminator.StartTerminationTimer();
         }
 
-        if (Terminator.IsMeasurementTerminationAchieved(_device.BeadCount))//endofsample never triggers!
+        if (_terminator.IsMeasurementTerminationAchieved(_device.BeadCount))//endofsample never triggers!
         {
           _device.StopOperation();
         }
@@ -72,6 +72,6 @@ public class ResultsProcessor
   public void NewWellStarting()
   {
     _resultsProcessed = 0;
-    Terminator.MinPerRegCheckTrigger = false;
+    _terminator.MinPerRegCheckTrigger = false;
   }
 }
