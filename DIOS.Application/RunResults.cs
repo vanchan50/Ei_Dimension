@@ -33,7 +33,16 @@ public class RunResults
 
   public List<RegionReporterResultVolatile> MakeWellResultsClone()
   {
-    return CurrentWellResults.GetResultsClone();
+    List<RegionReporterResultVolatile> ret;
+    try
+    {
+      ret = CurrentWellResults.GetResultsClone();
+    }
+    catch
+    {
+      ret = new List<RegionReporterResultVolatile>();
+    }
+    return ret;
   }
 
   /// <summary>
