@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace DIOS.Core;
+﻿namespace DIOS.Core;
 
 public interface ISerial
 {

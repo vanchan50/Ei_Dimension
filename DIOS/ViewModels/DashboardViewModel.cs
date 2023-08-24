@@ -13,10 +13,10 @@ namespace Ei_Dimension.ViewModels;
 [POCOViewModel]
 public class DashboardViewModel
 {
-  public virtual ObservableCollection<string> EndRead { get; set; } = new ObservableCollection<string> { "100", "500", "60" };
-  public virtual ObservableCollection<string> Volumes { get; set; } = new ObservableCollection<string> { "0", "0", "0", "0" };
-  public virtual ObservableCollection<string> Repeats { get; set; } = new ObservableCollection<string> { "1", "0", "1" };
-  public virtual ObservableCollection<string> WorkOrder { get; set; } = new ObservableCollection<string> { "" };
+  public virtual ObservableCollection<string> EndRead { get; set; } = new(){ "100", "500", "60" };
+  public virtual ObservableCollection<string> Volumes { get; set; } = new(){ "0", "0", "0", "0" };
+  public virtual ObservableCollection<string> Repeats { get; set; } = new(){ "1", "0", "1" };
+  public virtual ObservableCollection<string> WorkOrder { get; set; } = new(){ "" };
   public virtual string SelectedSpeedContent { get; set; }
   public virtual ObservableCollection<DropDownButtonContents> SpeedItems { get; set; }
   public virtual string SelectedClassiMapContent { get; set; }
@@ -30,8 +30,8 @@ public class DashboardViewModel
   public virtual bool CalValModeEnabled { get; set; }
   public virtual bool CalModeOn { get; set; }
   public virtual bool ValModeOn { get; set; }
-  public virtual ObservableCollection<string> CaliDateBox { get; set; } = new ObservableCollection<string> { "" };
-  public virtual ObservableCollection<string> ValidDateBox { get; set; } = new ObservableCollection<string> { "" };
+  public virtual ObservableCollection<string> CaliDateBox { get; set; } = new(){ "" };
+  public virtual ObservableCollection<string> ValidDateBox { get; set; } = new(){ "" };
   public static DashboardViewModel Instance { get; private set; }
 
   public byte SelectedSystemControlIndex { get; set; } = 0;
@@ -52,9 +52,9 @@ public class DashboardViewModel
     var curCulture = Language.TranslationSource.Instance.CurrentCulture;
     SpeedItems = new ObservableCollection<DropDownButtonContents>
     {
-      new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_Normal), curCulture), this),
-      new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_Hi_Speed), curCulture), this),
-      new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_Hi_Sens), curCulture), this)
+      new(RM.GetString(nameof(Language.Resources.Dropdown_Normal), curCulture), this),
+      new(RM.GetString(nameof(Language.Resources.Dropdown_Hi_Speed), curCulture), this),
+      new(RM.GetString(nameof(Language.Resources.Dropdown_Hi_Sens), curCulture), this)
     };
     SelectedSpeedContent = SpeedItems[(int)SelectedSpeedIndex].Content;
     DropDownButtonContents.ResetIndex();
@@ -77,16 +77,16 @@ public class DashboardViewModel
 
     OrderItems = new ObservableCollection<DropDownButtonContents>
     {
-      new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Column), curCulture), this),
-      new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Row), curCulture), this),
+      new(RM.GetString(nameof(Language.Resources.Column), curCulture), this),
+      new(RM.GetString(nameof(Language.Resources.Row), curCulture), this),
     };
     SelectedOrderContent = OrderItems[(int)SelectedOrderIndex].Content;
     DropDownButtonContents.ResetIndex();
 
     SysControlItems = new ObservableCollection<DropDownButtonContents>
     {
-      new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Experiment_Manual), curCulture), this),
-      new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Experiment_Work_Order), curCulture), this),
+      new(RM.GetString(nameof(Language.Resources.Experiment_Manual), curCulture), this),
+      new(RM.GetString(nameof(Language.Resources.Experiment_Work_Order), curCulture), this),
       //new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Experiment_Work_Order_Plus_Bcode), curCulture), this),
     };
     SelectedSysControlContent = SysControlItems[SelectedSystemControlIndex].Content;
@@ -104,10 +104,10 @@ public class DashboardViewModel
     EndRead[2] = Settings.Default.TerminationTimer.ToString();
     EndReadItems = new ObservableCollection<DropDownButtonContents>
     {
-      new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Experiment_Min_Per_Reg), curCulture), this),
-      new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Experiment_Total_Events), curCulture), this),
-      new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Experiment_End_of_Sample), curCulture), this),
-      new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Experiment_Timer), curCulture), this),
+      new(RM.GetString(nameof(Language.Resources.Experiment_Min_Per_Reg), curCulture), this),
+      new(RM.GetString(nameof(Language.Resources.Experiment_Total_Events), curCulture), this),
+      new(RM.GetString(nameof(Language.Resources.Experiment_End_of_Sample), curCulture), this),
+      new(RM.GetString(nameof(Language.Resources.Experiment_Timer), curCulture), this),
     };
     SelectedEndReadIndex = Settings.Default.EndRead;
     SelectedEndReadContent = EndReadItems[SelectedEndReadIndex].Content;

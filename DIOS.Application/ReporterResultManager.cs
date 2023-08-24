@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using DIOS.Core;
+﻿using DIOS.Core;
 
 namespace DIOS.Application;
 
@@ -9,8 +7,8 @@ public class ReporterResultManager
   public int RegionsCount { get; private set; }
   public IReadOnlyCollection<int> CurrentActiveRegions { get; private set; }
 
-  private readonly List<RegionReporterResult> _reporterPerRegion = new List<RegionReporterResult>();
-  private readonly SortedDictionary<int, int> _regionIndexDictionary = new SortedDictionary<int, int>();//region,position
+  private readonly List<RegionReporterResult> _reporterPerRegion = new();
+  private readonly SortedDictionary<int, int> _regionIndexDictionary = new();//region,position
   private int _non0RegionsCount;  //cached data for optimization. discard region 0 from calculation. only for minPerReg case
 
   public void Reset(IReadOnlyCollection<int> regions)

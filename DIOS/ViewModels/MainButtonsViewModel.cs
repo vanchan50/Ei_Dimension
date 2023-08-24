@@ -116,7 +116,7 @@ public class MainButtonsViewModel
         App.CurrentWorkOrder = wo;
       }
       //fill wells from work order
-      wells = App.CurrentWorkOrder.woWells;
+      wells = App.CurrentWorkOrder.Wells;
     }
     else
     {

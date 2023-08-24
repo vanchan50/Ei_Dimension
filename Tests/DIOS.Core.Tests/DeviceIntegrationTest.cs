@@ -8,7 +8,7 @@ public class DeviceIntegrationTest
     var fakeUSB = new FakeUSBConnection();
     Device device = new Device(fakeUSB, null);
     //DiosApp.MapController.SetMap(DiosApp.MapController.MapList[1]);
-    device._wellController.Init(new List<Well>{new Well{ RowIdx = 1, ColIdx = 1 }});
+    device._wellController.Init(new List<Well>{ new(1, 1) });
     device.Normalization.Enable();
     device.StartOperation(null,null);
     //fakeUSB.ReadBead(new RawBead

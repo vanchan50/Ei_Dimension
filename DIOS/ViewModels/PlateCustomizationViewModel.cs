@@ -243,10 +243,10 @@ public class PlateCustomizationViewModel
       }
 
       ShowShield();
-      var a1 = ProbeTuningProcedure(new Well { RowIdx = 0, ColIdx = 0 });
-      var a12 = ProbeTuningProcedure(new Well { RowIdx = 0, ColIdx = 11 });
-      var h1 = ProbeTuningProcedure(new Well { RowIdx = 7, ColIdx = 0 });
-      var h12 = ProbeTuningProcedure(new Well { RowIdx = 7, ColIdx = 11 });
+      var a1 = ProbeTuningProcedure(new Well(0, 0));
+      var a12 = ProbeTuningProcedure(new Well(0, 11));
+      var h1 = ProbeTuningProcedure(new Well (7, 0));
+      var h12 = ProbeTuningProcedure(new Well (7, 11));
       HideShield();
 
       if (a1 < 0 || a12 < 0 || h1 < 0 || h12 < 0)

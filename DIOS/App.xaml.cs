@@ -320,7 +320,7 @@ public partial class App : Application
     }
     else
     {
-      DiosApp.Publisher.PlateReportFile.CreateAndWrite(plateReportJson, CurrentWorkOrder.plateID);
+      DiosApp.Publisher.PlateReportFile.CreateAndWrite(plateReportJson, CurrentWorkOrder.PlateID);
     }
     
     PlatePictogramViewModel.Instance.PlatePictogram.CurrentlyReadCell = (-1, -1);
@@ -416,7 +416,7 @@ public partial class App : Application
     }
     else
     {
-      DiosApp.Publisher.LegacyReportFile.CreateAndWrite(wholeReport, CurrentWorkOrder.plateID);
+      DiosApp.Publisher.LegacyReportFile.CreateAndWrite(wholeReport, CurrentWorkOrder.PlateID);
     }
   }
 

@@ -59,9 +59,16 @@ public class ActiveRegionsStatsController
     if (!_activeRegionsUpdateGoing)
     {
       _activeRegionsUpdateGoing = true;
-      var copy = App.DiosApp.Results.MakeWellResultsClone();//TODO:hotpath allocations
-      var action = App.MapRegions.IsNullRegionActive ? UpdateNullRegionProcedure(copy) : UpdateRegionsProcedure(copy);
-      _ = App.Current.Dispatcher.BeginInvoke(action);
+      try
+      {
+        var copy = App.DiosApp.Results.MakeWellResultsClone(); //TODO:hotpath allocations
+        var action = App.MapRegions.IsNullRegionActive ? UpdateNullRegionProcedure(copy) : UpdateRegionsProcedure(copy);
+        _ = App.Current.Dispatcher.BeginInvoke(action);
+      }
+      catch
+      {
+        _activeRegionsUpdateGoing = true;
+      }
     }
   }
 

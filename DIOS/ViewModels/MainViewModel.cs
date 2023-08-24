@@ -12,8 +12,8 @@ namespace Ei_Dimension.ViewModels;
 public class MainViewModel
 {
   public virtual string AppVersion => $"Application Version: {App.DiosApp.BUILD}\n   Firmware Version: {App.DiosApp.Device.FirmwareVersion}";
-  public ObservableCollection<string> TotalBeadsInFirmware { get; set; } = new ObservableCollection<string> { "0" };
-  public virtual ObservableCollection<bool> MainSelectorState { get; set; } = new ObservableCollection<bool> { false, false, false, false, false };
+  public ObservableCollection<string> TotalBeadsInFirmware { get; set; } = new() { "0" };
+  public virtual ObservableCollection<bool> MainSelectorState { get; set; } = new() { false, false, false, false, false };
   public virtual Visibility NumpadVisible { get; set; }
   public virtual Visibility KeyboardVisible { get; set; }
   public virtual ObservableCollection<string> EventCountField { get; set; }

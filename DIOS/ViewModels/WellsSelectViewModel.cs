@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
-using DIOS.Application;
 using DIOS.Application.Domain;
 using DIOS.Core.HardwareIntercom;
 
@@ -18,10 +17,10 @@ public class WellsSelectViewModel
 {
   public virtual Visibility Table96Visible { get; set; } = Visibility.Hidden;
   public virtual Visibility Table384Visible { get; set; } = Visibility.Hidden;
-  public virtual ObservableCollection<WellTableRow> Table96Wells { get; set; } = new ObservableCollection<WellTableRow>();
-  public virtual ObservableCollection<WellTableRow> Table384Wells { get; set; } = new ObservableCollection<WellTableRow>();
+  public virtual ObservableCollection<WellTableRow> Table96Wells { get; set; } = new();
+  public virtual ObservableCollection<WellTableRow> Table384Wells { get; set; } = new();
   public int CurrentTableSize { get; private set; } = 0;
-  private List<(int row, int col)> _selectedWellIndices = new List<(int, int)>();
+  private List<(int row, int col)> _selectedWellIndices = new();
   public static WellsSelectViewModel Instance { get; private set; }
   public virtual bool SquareSelActive { get; set; }
 
@@ -161,19 +160,21 @@ public class WellsSelectViewModel
     _ = short.TryParse(DashboardViewModel.Instance.Volumes[3], out var agitRes);
 
     return new Well
-    {
-      RowIdx = row,
-      ColIdx = col,
-      RunSpeed = DashboardViewModel.Instance.SelectedSpeedIndex,
-      SampVol = volRes,
-      WashVol = washRes,
-      ProbewashVol = probewashRes,
-      AgitateVol = agitRes,
-      ChanConfig = ComponentsViewModel.Instance.SelectedChConfigIndex,
-      MinPerRegion = int.Parse(DashboardViewModel.Instance.EndRead[0]),
-      BeadsToCapture = int.Parse(DashboardViewModel.Instance.EndRead[1]),
+    (
+      row,
+      col,
+      DashboardViewModel.Instance.SelectedSpeedIndex,
+      ComponentsViewModel.Instance.SelectedChConfigIndex,
+      volRes,
+      washRes,
+      probewashRes,
+      agitRes,
+      int.Parse(DashboardViewModel.Instance.EndRead[0]),
+      int.Parse(DashboardViewModel.Instance.EndRead[1]),
+      int.Parse(DashboardViewModel.Instance.EndRead[2])
+
       //TermType = (Termination)DashboardViewModel.Instance.SelectedEndReadIndex
-    };
+    );
   }
 
   /// <summary>

@@ -4,7 +4,7 @@ namespace DIOS.Application;
 
 public class ResultingWellStatsData
 {
-  private readonly StringBuilder _dataOut = new StringBuilder();
+  private readonly StringBuilder _dataOut = new();
   public const string HEADER = "Region,Bead Count,Median FI,Trimmed Mean FI,CV%\r";
 
   public void Add(string stats)

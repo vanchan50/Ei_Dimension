@@ -23,6 +23,7 @@ internal static class StartupFinalizer
   {
     if (_done)
       throw new Exception("StartupFinalizer can only be called once");
+    _done = true;
 
     SetupDevice();
     if (!System.Windows.Input.Keyboard.IsKeyDown(System.Windows.Input.Key.LeftCtrl))
@@ -89,7 +90,6 @@ internal static class StartupFinalizer
     Program.SplashScreen.Close(TimeSpan.FromMilliseconds(1000));
       
     UITimer.Start();
-    _done = true;
 
     if(SettingsWiped)
       WipedSettingsMessage();
@@ -116,6 +116,7 @@ internal static class StartupFinalizer
       Notification.ShowError(selfTestErrorMessage);
       
     App.Logger.Log($"Detected Board Rev v{App.DiosApp.Device.BoardVersion}");
+    App.Logger.Log(MainViewModel.Instance.AppVersion);
 #if DEBUG
     App.Logger.Log("DEBUG MODE");
 #endif

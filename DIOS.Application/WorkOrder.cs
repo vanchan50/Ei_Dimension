@@ -3,14 +3,14 @@
 namespace DIOS.Application;
 
 [Serializable]
-public struct WorkOrder
+public class WorkOrder
 {
-  public string plateID;
-  public Guid beadMapId;
-  public short numberRows;
-  public short numberCols;
-  public short wellDepth;
-  public DateTime createDateTime;        //date and time per ISO8601
-  public DateTime scheduleDateTime;
-  public List<Well> woWells;
+  public string PlateID { get; }
+  public Guid BeadMapGuid { get; }
+  public short NumberRows { get; }
+  public short NumberCols { get; }
+  public short WellDepth { get; }
+  public DateTime createDateTime { get; }        //date and time per ISO8601
+  public DateTime scheduleDateTime { get; }
+  public List<Well> Wells { get; }
 }

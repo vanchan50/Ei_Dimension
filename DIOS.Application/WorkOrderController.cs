@@ -25,7 +25,7 @@ public class WorkOrderController
   {
     try
     {
-      wo = _workOrders.First(x => x.plateID == id);
+      wo = _workOrders.First(x => x.PlateID == id);
       return true;
     }
     catch { }

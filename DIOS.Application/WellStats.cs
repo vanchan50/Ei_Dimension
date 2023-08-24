@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Reflection;
+﻿using System.Reflection;
 using System.Text;
 using DIOS.Core;
 using Newtonsoft.Json;
@@ -19,7 +18,7 @@ internal class WellStats
   public int TotalCount { get; }
 
   [JsonProperty("Results")]
-  private readonly List<RegionReporterStats> _results = new List<RegionReporterStats>(101);
+  private readonly List<RegionReporterStats> _results = new(101);
 
   public WellStats(Well well, List<RegionReporterResultVolatile> results, int totalBead)
   {

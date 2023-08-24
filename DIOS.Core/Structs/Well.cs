@@ -2,23 +2,40 @@
 
 namespace DIOS.Core;
 
-public class Well //TODO:make it immutable
-{
-  public byte RowIdx;
-  public byte ColIdx;
-  public WellReadingSpeed RunSpeed;
-  public ChannelConfiguration ChanConfig;
-  public short SampVol;
-  public short WashVol;
-  public short ProbewashVol;
-  public short AgitateVol;
-  //public Termination TermType;
-  public int BeadsToCapture;
-  public int MinPerRegion;
+public class Well
+{ 
+  public byte RowIdx { get; }
+  public byte ColIdx { get; }
+  public WellReadingSpeed RunSpeed { get; }
+  public ChannelConfiguration ChanConfig { get; }
+  public short SampVol { get; }
+  public short WashVol { get; }
+  public short ProbewashVol { get; }
+  public short AgitateVol { get; }
+  //public Termination TermType { get; }
+  public int BeadsToCapture { get; }
+  public int MinPerRegion { get; }
+  public int TerminationTimer { get; }
 
-  public Well()
+  public Well(byte row, byte col)
   {
-      
+    RowIdx = row;
+    ColIdx = col;
+  }
+  public Well(byte row, byte col, WellReadingSpeed speed, ChannelConfiguration chConfig,
+    short sampleVolume, short washVolume, short probeWashVol, short agitateVolume, int minPerRegion, int beadsToCapture, int terminationTimer)
+  {
+    RowIdx = row;
+    ColIdx = col;
+    RunSpeed = speed;
+    ChanConfig = chConfig;
+    SampVol = sampleVolume;
+    WashVol = washVolume;
+    ProbewashVol = probeWashVol;
+    AgitateVol = agitateVolume;
+    MinPerRegion = minPerRegion;
+    BeadsToCapture = beadsToCapture;
+    TerminationTimer = terminationTimer;
   }
 
   public Well( Well well )

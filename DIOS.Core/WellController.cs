@@ -9,7 +9,7 @@ internal class WellController
   public Well CurrentWell { get; private set; }
   public Well NextWell { get; private set; }
 
-  private Queue<Well> WellsToRead = new Queue<Well>();
+  private Queue<Well> WellsToRead = new();
 
   public void Init(IReadOnlyCollection<Well> Wells)
   {

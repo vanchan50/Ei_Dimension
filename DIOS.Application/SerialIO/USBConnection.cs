@@ -9,7 +9,7 @@ public class USBConnection : ISerial
   public bool IsActive { get; private set; }
   private USBDevice _usbDevice;
   private readonly Guid _interfaceGuid = Guid.ParseExact("F70242C7-FB25-443B-9E7E-A4260F373982", "D");  // interface GUID, not device guid
-  private readonly object _disconnectionLock = new object();
+  private readonly object _disconnectionLock = new();
   private ILogger _logger;
 
   public USBConnection(ILogger logger)
