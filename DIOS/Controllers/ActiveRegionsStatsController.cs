@@ -31,8 +31,8 @@ public class ActiveRegionsStatsController
       return _instance = ViewModelSource.Create(() => new ActiveRegionsStatsController());
     }
   }
-
   public const int NULLREGIONCAPACITY = 100000;
+
   private static ActiveRegionsStatsController _instance;
   private static bool _activeRegionsUpdateGoing;
   private static readonly RegionReporterResultVolatile _nullWellRegionResult = new(0);
@@ -40,6 +40,40 @@ public class ActiveRegionsStatsController
   protected ActiveRegionsStatsController()
   {
     _nullWellRegionResult.ReporterValues.Capacity = NULLREGIONCAPACITY;
+  }
+
+  public void AddNewEntry()
+  {
+    CurrentCount.Add("0");
+    CurrentMean.Add("0");
+    BackingCount.Add("0");
+    BackingMean.Add("0");
+  }
+
+  public void ResetCurrentActiveRegionsDisplayedStats()
+  {
+    for (var i = 0; i < CurrentCount.Count; i++)
+    {
+      CurrentCount[i] = "0";
+      CurrentMean[i] = "0";
+    }
+  }
+
+  public void ResetBackingDisplayedStats()
+  {
+    for (var i = 0; i < BackingCount.Count; i++)
+    {
+      BackingCount[i] = "0";
+      BackingMean[i] = "0";
+    }
+  }
+
+  public void Clear()
+  {
+    CurrentCount.Clear();
+    CurrentMean.Clear();
+    BackingCount.Clear();
+    BackingMean.Clear();
   }
 
   public void DisplayCurrentBeadStats(bool current = true)
@@ -111,39 +145,4 @@ public class ActiveRegionsStatsController
       _activeRegionsUpdateGoing = false;
     };
   }
-
-  public void AddNewEntry()
-  {
-    CurrentCount.Add("0");
-    CurrentMean.Add("0");
-    BackingCount.Add("0");
-    BackingMean.Add("0");
-  }
-
-  public void ResetCurrentActiveRegionsDisplayedStats()
-  {
-    for (var i = 0; i < CurrentCount.Count; i++)
-    {
-      CurrentCount[i] = "0";
-      CurrentMean[i] = "0";
-    }
-  }
-
-  public void ResetBackingDisplayedStats()
-  {
-    for (var i = 0; i < BackingCount.Count; i++)
-    {
-      BackingCount[i] = "0";
-      BackingMean[i] = "0";
-    }
-  }
-
-  public void Clear()
-  {
-    CurrentCount.Clear();
-    CurrentMean.Clear();
-    BackingCount.Clear();
-    BackingMean.Clear();
-  }
-
 }

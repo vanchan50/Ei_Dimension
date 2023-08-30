@@ -7,7 +7,7 @@ public class ResultsProcessor
 {
   private readonly Thread _resultsProcessingThread;
   private int _resultsProcessed;
-  private readonly object _processingCV = new ();
+  private readonly object _processingCV = new();
   private readonly Device _device;
   private readonly RunResults _results;
   private readonly ReadTerminator _terminator;
