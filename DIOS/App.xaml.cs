@@ -292,10 +292,6 @@ public partial class App : Application
     PlatePictogramViewModel.Instance.PlatePictogram.ChangeState(row, col, type);
 
     DiosApp.Publisher.PlateStatusFile.Overwrite(PlatePictogramViewModel.Instance.PlatePictogram.GetSerializedPlate());
-    if (DiosApp.Control == SystemControl.WorkOrder)
-    {
-      App.Current.Dispatcher.Invoke(() => DashboardViewModel.Instance.WorkOrder[0] = ""); //actually questionable if not in workorder operation
-    }
 
     var stats = DiosApp.Results.CurrentWellResults.GetStats();
     var averageBackgrounds = DiosApp.Results.CurrentWellResults.GetBackgroundAverages();
@@ -360,14 +356,23 @@ public partial class App : Application
         break;
     }
 
+
     if (DiosApp.Control == SystemControl.WorkOrder)
     {
-      MainButtonsViewModel.Instance.EnableStartButton(false);
-      MainButtonsViewModel.Instance.ShowScanButton();
+      App.Current.Dispatcher.Invoke(() =>
+      {
+        DashboardViewModel.Instance.WorkOrder[0] = "";
+        CurrentWorkOrder = null;
+        MainButtonsViewModel.Instance.EnableStartButton(false);
+        MainButtonsViewModel.Instance.ShowScanButton();
+      });
     }
     else
     {
-      MainButtonsViewModel.Instance.EnableStartButton(true);
+      App.Current.Dispatcher.Invoke(() =>
+      {
+        MainButtonsViewModel.Instance.EnableStartButton(true);
+      });
     }
   }
 

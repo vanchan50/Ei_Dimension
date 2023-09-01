@@ -6,7 +6,7 @@ namespace DIOS.Application;
 [JsonObject(MemberSerialization.Fields)]
 public class PlateReport
 {
-  public Guid plateID;
+  public string plateID;
   public Guid beadMapId;
   public DateTime completedDateTime;
   [JsonProperty("Wells")]
@@ -31,9 +31,9 @@ public class PlateReport
     _size++;
   }
 
-  public void Reset()
+  public void Reset(string plateId = null)
   {
-    plateID = Guid.Empty;
+    plateID = plateId;
     beadMapId = Guid.Empty;
     completedDateTime = DateTime.MinValue;
     _wells.Clear();

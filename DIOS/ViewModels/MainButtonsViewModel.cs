@@ -109,19 +109,19 @@ public class MainButtonsViewModel
     }
 
     IReadOnlyCollection<Well> wells;
-    if (App.DiosApp.Control == SystemControl.WorkOrder)
-    {
-      if (App.DiosApp.WorkOrderController.TryGetWorkOrderById("1", out var wo))
-      {
-        App.CurrentWorkOrder = wo;
-      }
-      //fill wells from work order
-      wells = App.CurrentWorkOrder.Wells;
-    }
-    else
-    {
+    //if (App.DiosApp.Control == SystemControl.WorkOrder)
+    //{
+    //  if (App.DiosApp.WorkOrderController.TryGetWorkOrderById("1", out var wo))
+    //  {
+    //    App.CurrentWorkOrder = wo;
+    //  }
+    //  //fill wells from work order
+    //  wells = App.CurrentWorkOrder.Wells;
+    //}
+    //else
+    //{
       wells = WellsSelectViewModel.Instance.OutputWells();
-    }
+    //}
 
     if (wells.Count == 0)
     {
@@ -169,20 +169,20 @@ public class MainButtonsViewModel
     ResultsViewModel.Instance.PlotCurrent();
     PlatePictogramViewModel.Instance.PlatePictogram.SetWellsForReading(wells);
     ResultsViewModel.Instance.ClearCurrentCalibrationStats();
-    App.DiosApp.StartOperation(regions, wells);
+    if (App.DiosApp.Control == SystemControl.WorkOrder && !string.IsNullOrEmpty(DashboardViewModel.Instance.WorkOrder[0]))
+    {
+      App.DiosApp.StartOperation(regions, wells, DashboardViewModel.Instance.WorkOrder[0]);
+    }
+    else
+    {
+      App.DiosApp.StartOperation(regions, wells);
+    }
   }
 
   public void EndButtonClick()
   {
     UserInputHandler.InputSanityCheck();
-    if (!App.DiosApp.Device.IsMeasurementGoing)  //end button press before start, cancel work order
-    {
-      if (App.DiosApp.Control == SystemControl.WorkOrder)
-      {
-        DashboardViewModel.Instance.WorkOrder[0] = ""; //actually questionable if not in workorder operation
-      }
-    }
-    else
+    if (App.DiosApp.Device.IsMeasurementGoing)  //end button press before start, cancel work order
     {
       if (App.DiosApp.RunPlateContinuously)
       {
