@@ -109,15 +109,15 @@ public class MainButtonsViewModel
     }
 
     IReadOnlyCollection<Well> wells;
-    if (App.DiosApp.Control == SystemControl.WorkOrder)
-    {
-      //fill wells from work order
-      wells = App.DiosApp.WorkOrder.woWells;
-    }
-    else
-    {
+    //if (App.DiosApp.Control == SystemControl.WorkOrder)
+    //{
+    //  //fill wells from work order
+    //  wells = App.DiosApp.WorkOrder.woWells;
+    //}
+    //else
+    //{
       wells = WellsSelectViewModel.Instance.OutputWells();
-    }
+    //}
 
     if (wells.Count == 0)
     {
@@ -165,7 +165,14 @@ public class MainButtonsViewModel
     ResultsViewModel.Instance.PlotCurrent();
     PlatePictogramViewModel.Instance.PlatePictogram.SetWellsForReading(wells);
     ResultsViewModel.Instance.ClearCurrentCalibrationStats();
-    App.DiosApp.StartOperation(regions, wells);
+    if (App.DiosApp.Control == SystemControl.WorkOrder && !string.IsNullOrEmpty(DashboardViewModel.Instance.WorkOrder[0]))
+    {
+      App.DiosApp.StartOperation(regions, wells, DashboardViewModel.Instance.WorkOrder[0]);
+    }
+    else
+    {
+      App.DiosApp.StartOperation(regions, wells);
+    }
   }
 
   public void EndButtonClick()

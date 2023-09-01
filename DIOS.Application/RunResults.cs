@@ -53,9 +53,9 @@ public class RunResults
     return CurrentWellResults.MinPerAllRegionsAchieved(minPerRegion);
   }
 
-  public void StartNewPlateReport()
+  public void StartNewPlateReport(string plateId = null)
   {
-    PlateReport.Reset();
+    PlateReport.Reset(plateId);
   }
 
   public void MakeWellStats()

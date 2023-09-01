@@ -184,7 +184,8 @@ public partial class App : Application
   {
     if (Ei_Dimension.MainWindow.Instance == null)
       return;
-    System.Windows.Input.FocusManager.SetFocusedElement(System.Windows.Input.FocusManager.GetFocusScope(Ei_Dimension.MainWindow.Instance), null);
+    System.Windows.Input.FocusManager.SetFocusedElement(
+      System.Windows.Input.FocusManager.GetFocusScope(Ei_Dimension.MainWindow.Instance), null);
     System.Windows.Input.Keyboard.ClearFocus();
   }
 
@@ -296,10 +297,6 @@ public partial class App : Application
     PlatePictogramViewModel.Instance.PlatePictogram.ChangeState(row, col, type);
 
     DiosApp.Publisher.PlateStatusFile.Overwrite(PlatePictogramViewModel.Instance.PlatePictogram.GetSerializedPlate());
-    if (DiosApp.Control == SystemControl.WorkOrder)
-    {
-      App.Current.Dispatcher.Invoke(() => DashboardViewModel.Instance.WorkOrder[0] = ""); //actually questionable if not in workorder operation
-    }
 
     var stats = DiosApp.Results.CurrentWellResults.GetStats();
     var averageBackgrounds = DiosApp.Results.CurrentWellResults.GetBackgroundAverages();
@@ -324,7 +321,7 @@ public partial class App : Application
     }
     else
     {
-      DiosApp.Publisher.PlateReportFile.CreateAndWrite(plateReportJson, DiosApp.WorkOrder.plateID.ToString());
+      DiosApp.Publisher.PlateReportFile.CreateAndWrite(plateReportJson, DashboardViewModel.Instance.WorkOrder[0]);
     }
     
     PlatePictogramViewModel.Instance.PlatePictogram.CurrentlyReadCell = (-1, -1);
@@ -366,12 +363,19 @@ public partial class App : Application
 
     if (DiosApp.Control == SystemControl.WorkOrder)
     {
-      MainButtonsViewModel.Instance.EnableStartButton(false);
-      MainButtonsViewModel.Instance.ShowScanButton();
+      App.Current.Dispatcher.Invoke(() =>
+      {
+        DashboardViewModel.Instance.WorkOrder[0] = "";
+        MainButtonsViewModel.Instance.EnableStartButton(false);
+        MainButtonsViewModel.Instance.ShowScanButton();
+      });
     }
     else
     {
-      MainButtonsViewModel.Instance.EnableStartButton(true);
+      App.Current.Dispatcher.Invoke(() =>
+      {
+        MainButtonsViewModel.Instance.EnableStartButton(true);
+      });
     }
   }
 
