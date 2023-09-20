@@ -184,7 +184,7 @@ public class ComponentsViewModel
       case 1:
         ValvesStates[0] = !ValvesStates[0];
         param = ValvesStates[0] ? 1 : 0;
-        parameter = DeviceParameterType.ValveFan2;
+        parameter = DeviceParameterType.WashPump;
         break;
       case 2: //not used
         ValvesStates[1] = !ValvesStates[1];

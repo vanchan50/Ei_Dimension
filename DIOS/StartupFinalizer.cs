@@ -2,11 +2,11 @@
 using System;
 using Ei_Dimension.Controllers;
 using Ei_Dimension.Graphing.HeatMap;
-using MadWizard.WinUSBNet;
 using DIOS.Core.HardwareIntercom;
 using DIOS.Application;
 using DIOS.Core;
 using System.IO;
+using DIOS.Application.SerialIO;
 
 namespace Ei_Dimension;
 
@@ -14,7 +14,6 @@ internal static class StartupFinalizer
 {
   public static bool SettingsWiped;
   private static bool _done;
-  private static USBNotifier usbnotif;
   /// <summary>
   /// Finish loading the UI. Should be called only once, after all the views have been loaded.
   /// Constructs the UI update timer
@@ -95,10 +94,7 @@ internal static class StartupFinalizer
       WipedSettingsMessage();
 
     IntPtr windowHandle = new System.Windows.Interop.WindowInteropHelper(App.Current.MainWindow).Handle;
-      
-    usbnotif = new USBNotifier(windowHandle, Guid.ParseExact("F70242C7-FB25-443B-9E7E-A4260F373982", "D"));
-    usbnotif.Arrival += Usbnotif_Arrival;
-    usbnotif.Removal += Usbnotif_Removal;
+    USBWatchdog.Setup(windowHandle, App.DiosApp.ReconnectUSB, App.DiosApp.DisconnectedUSB);
 
 #if DEBUG
     Notification.ShowError("Motor out of position messages are suppressed in StartupFinalizer");
@@ -166,6 +162,7 @@ internal static class StartupFinalizer
     App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.FlushCycles);
     App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.WashStationXCenterCoordinate);
     App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.GreenAVoltage);
+    App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.WashStationDepth);
     App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.FluidicPathLength, FluidicPathLength.LoopAVolume);
     App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.FluidicPathLength, FluidicPathLength.LoopBVolume);
     App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.FluidicPathLength, FluidicPathLength.LoopAToPickupNeedle);
@@ -183,16 +180,6 @@ internal static class StartupFinalizer
     App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.AgitateRepeatsAmount, 1); //1 is the default. same as in the box in dashboard
     //App.DiosApp.Device.MainCommand("Set Property", code: 0x97, parameter: 1170);  //set current limit of aligner motors if leds are off //0x97 no longer used
 
-  }
-
-  private static void Usbnotif_Removal(object sender, USBEvent e)
-  {
-    App.DiosApp.Device.DisconnectedUSB();
-  }
-
-  private static void Usbnotif_Arrival(object sender, USBEvent e)
-  {
-    App.DiosApp.Device.ReconnectUSB();
   }
 
   private static void WipedSettingsMessage()

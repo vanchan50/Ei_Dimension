@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Concurrent;
-using System.Threading;
+﻿using System.Collections.Concurrent;
 using DIOS.Core.HardwareIntercom;
 
 namespace DIOS.Core;
@@ -268,8 +266,8 @@ internal class DataController
       case 0x11:
         outParameters = new ParameterUpdateEventArgs(DeviceParameterType.ValveFan1, intParameter: cs.Parameter);
         break;
-      case 0x12:
-        outParameters = new ParameterUpdateEventArgs(DeviceParameterType.ValveFan2, intParameter: cs.Parameter);
+      case 0x13:
+        outParameters = new ParameterUpdateEventArgs(DeviceParameterType.WashPump, intParameter: cs.Parameter);
         break;
       case 0x14:
         outParameters = new ParameterUpdateEventArgs(DeviceParameterType.SyringePosition, intParameter: cs.Parameter, floatParameter: cs.FParameter);
@@ -279,6 +277,9 @@ internal class DataController
         break;
       case 0x16:
         outParameters = new ParameterUpdateEventArgs(DeviceParameterType.PollStepActivity, intParameter: cs.Parameter);
+        break;
+      case 0x17:
+        outParameters = new ParameterUpdateEventArgs(DeviceParameterType.WashStationDepth, intParameter: cs.Parameter);
         break;
       case 0x18:
         outParameters = new ParameterUpdateEventArgs(DeviceParameterType.IsInputSelectorAtPickup, intParameter: cs.Parameter);

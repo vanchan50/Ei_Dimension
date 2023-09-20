@@ -173,8 +173,8 @@ public class HardwareInterface
         commandCode = 0x11;
         param = intValue;
         break;
-      case DeviceParameterType.ValveFan2:
-        commandCode = 0x12;
+      case DeviceParameterType.WashPump:
+        commandCode = 0x13;
         param = intValue;
         break;
       case DeviceParameterType.IsSyringePositionActive:
@@ -183,6 +183,10 @@ public class HardwareInterface
         break;
       case DeviceParameterType.PollStepActivity:
         commandCode = 0x16;
+        param = intValue;
+        break;
+      case DeviceParameterType.WashStationDepth:
+        commandCode = 0x17;
         param = intValue;
         break;
       case DeviceParameterType.IsInputSelectorAtPickup:
@@ -1131,8 +1135,8 @@ public class HardwareInterface
       case DeviceParameterType.ValveFan1:
         commandCode = 0x11;
         break;
-      case DeviceParameterType.ValveFan2:
-        commandCode = 0x12;
+      case DeviceParameterType.WashPump:
+        commandCode = 0x13;
         break;
       case DeviceParameterType.SyringePosition: //uses selector
         commandCode = 0x14;
@@ -1153,6 +1157,9 @@ public class HardwareInterface
         break;
       case DeviceParameterType.PollStepActivity:
         commandCode = 0x16;
+        break;
+      case DeviceParameterType.WashStationDepth:
+        commandCode = 0x17;
         break;
       case DeviceParameterType.IsInputSelectorAtPickup:
         commandCode = 0x18;

@@ -1055,15 +1055,6 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fan 2.
-        /// </summary>
-        public static string Components_Valve1 {
-            get {
-                return ResourceManager.GetString("Components_Valve1", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Valve 2.
         /// </summary>
         public static string Components_Valve2 {
@@ -1105,6 +1096,16 @@ namespace Ei_Dimension.Language {
         public static string Components_Wash_B {
             get {
                 return ResourceManager.GetString("Components_Wash_B", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wash Station
+        ///      Pump.
+        /// </summary>
+        public static string Components_WashStationPump {
+            get {
+                return ResourceManager.GetString("Components_WashStationPump", resourceCulture);
             }
         }
         
@@ -2767,6 +2768,15 @@ namespace Ei_Dimension.Language {
         public static string Motors_WashStation {
             get {
                 return ResourceManager.GetString("Motors_WashStation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wash Depth.
+        /// </summary>
+        public static string Motors_ZWashDepth {
+            get {
+                return ResourceManager.GetString("Motors_ZWashDepth", resourceCulture);
             }
         }
         

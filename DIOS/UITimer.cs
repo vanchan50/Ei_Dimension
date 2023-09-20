@@ -53,6 +53,7 @@ internal static class UITimer
       }
       if (System.Windows.Input.Keyboard.IsKeyDown(System.Windows.Input.Key.F3))
       {
+        //App.DiosApp.Device.DEBUGOnParameterUpdate(DeviceParameterType.WashStationDepth, 258);
         //App.DiosApp.Device.DEBUGOnParameterUpdate(DeviceParameterType.ChannelCompensationBias, intparam:(int)Channel.ForwardScatter, 27f);
         //App.DiosApp.Device.DEBUGOnParameterUpdate(DeviceParameterType.GreenAVoltage, floatparam:15f);
         //App.DiosApp.Device.DEBUGOnParameterUpdate(DeviceParameterType.WashStationXCenterCoordinate, 15);

@@ -134,7 +134,7 @@
             </ToggleButton>
             <ToggleButton Style="{StaticResource ToggleButtonThemeStyle}"
                           Height="75"
-                          Content="{lang:Loc Components_Valve1}"
+                          Content="{lang:Loc Components_WashStationPump}"
                           IsChecked="{Binding ValvesStates[0], Mode=OneWay}"
                           Command="{Binding ValvesButtonClickCommand}">
               <ToggleButton.CommandParameter>

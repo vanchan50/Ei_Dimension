@@ -1548,6 +1548,19 @@ internal static class UserInputHandler
             failed = true;
             ErrorMessage = "[0-1000]";
           }
+          if (SelectedTextBox.index == 5)
+          {
+            if (int.TryParse(_tempNewString, out iRes))
+            {
+              if ((iRes >= 0 && iRes <= 2000) || _disableSanityCheck)
+              {
+                App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.WashStationDepth, iRes);
+                break;
+              }
+            }
+            failed = true;
+            ErrorMessage = "[0-2000]";
+          }
           break;
         case nameof(AlignmentViewModel.Instance.VerificationTolerances):
           if (SelectedTextBox.index == 0)
@@ -1939,5 +1952,4 @@ internal static class UserInputHandler
     SelectedTextBox = (null, null, 0, null);
     App.UnfocusUIElement();
   }
-
 }

@@ -412,14 +412,15 @@
   <data name="Components_To_Pickup" xml:space="preserve">
     <value>到样本池</value>
   </data>
-  <data name="Components_Valve1" xml:space="preserve">
-    <value>风扇 2</value>
-  </data>
   <data name="Components_Valve2" xml:space="preserve">
-    <value>阀门 2</value>
+    <value>Valve 2</value>
   </data>
   <data name="Components_Valves" xml:space="preserve">
     <value>阀门</value>
+  </data>
+  <data name="Components_WashStationPump" xml:space="preserve">
+    <value>Wash Station
+      Pump</value>
   </data>
   <data name="Components_Wash_A" xml:space="preserve">
     <value>清洗 A</value>
@@ -901,6 +902,9 @@ Volume, µL</value>
   </data>
   <data name="Motors_WashStation" xml:space="preserve">
     <value>Wash Station</value>
+  </data>
+  <data name="Motors_ZWashDepth" xml:space="preserve">
+    <value>Wash Depth</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>检测项目</value>

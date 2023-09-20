@@ -726,7 +726,7 @@
             </Border>
           </StackPanel>
           <StackPanel VerticalAlignment="Stretch"
-                      Width="130"
+                      Width="220"
                       Margin="0,54,3,0">
             <TextBlock Text="{lang:Loc Motors_A1}"
                        FontFamily="{StaticResource AppTextFont}"
@@ -763,6 +763,13 @@
                        Foreground="{StaticResource AppTextColor}"
                        HorizontalAlignment="Right"
                        Margin="0,2,10,0"/>
+            <TextBlock Text="{lang:Loc Motors_ZWashDepth}"
+                       FontFamily="{StaticResource AppTextFont}"
+                       FontSize="36"
+                       FontWeight="UltraBold"
+                       Foreground="{StaticResource AppTextColor}"
+                       HorizontalAlignment="Right"
+                       Margin="0,6,10,0"/>
           </StackPanel>
           <StackPanel VerticalAlignment="Stretch"
                       Width="100"
@@ -814,11 +821,20 @@
                   </dxmvvm:Interaction.Behaviors>
                 </TextBox>
                 <TextBox HorizontalAlignment="Stretch"
-                         Margin="10,10,10,10"
+                         Margin="10,10,10,0"
                          Style="{StaticResource InputFieldStyle}"
                          Text="{Binding StepsParametersZ[4]}">
                   <dxmvvm:Interaction.Behaviors>
                     <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="32"/>
+                    <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+                  </dxmvvm:Interaction.Behaviors>
+                </TextBox>
+                <TextBox HorizontalAlignment="Stretch"
+                         Margin="10,10,10,10"
+                         Style="{StaticResource InputFieldStyle}"
+                         Text="{Binding StepsParametersZ[5]}">
+                  <dxmvvm:Interaction.Behaviors>
+                    <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="38"/>
                     <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
                   </dxmvvm:Interaction.Behaviors>
                 </TextBox>

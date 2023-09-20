@@ -43,7 +43,7 @@ internal class IncomingUpdateHandler
       case DeviceParameterType.ValveFan1:
         update = () => ComponentsViewModel.Instance.ValvesStates[3] = parameter.Parameter == 1;
         break;
-      case DeviceParameterType.ValveFan2:  //sample A valve cb LEGACY, use 0x18 to switch with IDEX
+      case DeviceParameterType.WashPump:  //sample A valve cb LEGACY, use 0x18 to switch with IDEX
         update = () => ComponentsViewModel.Instance.ValvesStates[0] = parameter.Parameter == 1;
         break;
       case DeviceParameterType.SyringePosition:
@@ -404,6 +404,9 @@ internal class IncomingUpdateHandler
             update = () => MotorsViewModel.Instance.StepsParametersZ[4] = parameter.FloatParameter.ToString();
             break;
         }
+        break;
+      case DeviceParameterType.WashStationDepth:
+        update = () => MotorsViewModel.Instance.StepsParametersZ[5] = parameter.Parameter.ToString();
         break;
       case DeviceParameterType.ChannelTemperature:
         var type10 = (Channel)parameter.Parameter;

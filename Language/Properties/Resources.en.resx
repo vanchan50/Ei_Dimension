@@ -463,14 +463,15 @@ Warnings</value>
   <data name="Components_To_Pickup" xml:space="preserve">
     <value>To Pickup</value>
   </data>
-  <data name="Components_Valve1" xml:space="preserve">
-    <value>Fan 2</value>
-  </data>
   <data name="Components_Valve2" xml:space="preserve">
     <value>Valve 2</value>
   </data>
   <data name="Components_Valves" xml:space="preserve">
     <value>Valves</value>
+  </data>
+  <data name="Components_WashStationPump" xml:space="preserve">
+    <value>Wash Station
+      Pump</value>
   </data>
   <data name="Components_Wash_A" xml:space="preserve">
     <value>Wash A</value>
@@ -1056,6 +1057,9 @@ Update the Firmware?</value>
   </data>
   <data name="Motors_WashStation" xml:space="preserve">
     <value>Wash Station</value>
+  </data>
+  <data name="Motors_ZWashDepth" xml:space="preserve">
+    <value>Wash Depth</value>
   </data>
   <data name="MTBF_mode" xml:space="preserve">
     <value>Continuous

@@ -1,22 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using DIOS.Core;
+﻿using DIOS.Core;
 
 namespace DIOS.Application;
 
 public class StatsAccumulator
 {
-  protected readonly List<float> greenssc = new List<float>(MAXSIZE);
-  protected readonly List<float> greenB = new List<float>(MAXSIZE);
-  protected readonly List<float> greenC = new List<float>(MAXSIZE);
-  protected readonly List<float> redssc = new List<float>(MAXSIZE);
-  protected readonly List<float> cl1 = new List<float>(MAXSIZE);
-  protected readonly List<float> cl2 = new List<float>(MAXSIZE);
-  protected readonly List<float> cl3 = new List<float>(MAXSIZE);
-  protected readonly List<float> violetssc = new List<float>(MAXSIZE);
-  protected readonly List<float> cl0 = new List<float>(MAXSIZE);
-  protected readonly List<float> fsc = new List<float>(MAXSIZE);
+  protected readonly List<float> greenssc   =  new(MAXSIZE);
+  protected readonly List<float> greenB     =  new(MAXSIZE);
+  protected readonly List<float> greenC     =  new(MAXSIZE);
+  protected readonly List<float> redssc     =  new(MAXSIZE);
+  protected readonly List<float> cl1        =  new(MAXSIZE);
+  protected readonly List<float> cl2        =  new(MAXSIZE);
+  protected readonly List<float> cl3        =  new(MAXSIZE);
+  protected readonly List<float> violetssc  =  new(MAXSIZE);
+  protected readonly List<float> cl0        =  new(MAXSIZE);
+  protected readonly List<float> fsc        =  new(MAXSIZE);
   private const int MAXSIZE = 80000;
 
   public virtual void Add(in ProcessedBead bead)

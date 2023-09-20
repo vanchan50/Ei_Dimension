@@ -8,7 +8,7 @@ public enum DeviceParameterType
   CalibrationMargin,
   ValveCuvetDrain,
   ValveFan1,
-  ValveFan2,
+  WashPump,
   SyringePosition,
   IsSyringePositionActive,
   PollStepActivity,
@@ -108,5 +108,6 @@ public enum DeviceParameterType
   ///<summary>Subparamter: FluidicPathLength</summary>
   FluidicPathLength,
   UseWashStation,
-  WashStationXCenterCoordinate
+  WashStationXCenterCoordinate,
+  WashStationDepth
 }

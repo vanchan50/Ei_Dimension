@@ -3,6 +3,7 @@ using DIOS.Application.Domain;
 using DIOS.Application.FileIO;
 using DIOS.Application.SerialIO;
 using DIOS.Core;
+using DIOS.Core.HardwareIntercom;
 
 namespace DIOS.Application;
 
@@ -101,5 +102,15 @@ public class DIOSApp
       WorkOrderController.DoSomethingWithWorkOrder();
     });
     Publisher.BeadEventFile.CreateAndWrite(Results.PublishBeadEvents());
+  }
+
+  public void ReconnectUSB()
+  {
+    Device.ReconnectUSB();
+  }
+
+  public void DisconnectedUSB()
+  {
+    Device.DisconnectedUSB();
   }
 }

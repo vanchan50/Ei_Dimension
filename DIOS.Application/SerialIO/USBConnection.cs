@@ -11,6 +11,7 @@ public class USBConnection : ISerial
   private readonly Guid _interfaceGuid = Guid.ParseExact("F70242C7-FB25-443B-9E7E-A4260F373982", "D");  // interface GUID, not device guid
   private readonly object _disconnectionLock = new();
   private ILogger _logger;
+  private int _retryCounter;
 
   public USBConnection(ILogger logger)
   {
@@ -60,6 +61,7 @@ public class USBConnection : ISerial
     try
     {
       _usbDevice.Interfaces[0].OutPipe.Write(buffer, 0, buffer.Length);
+      _retryCounter = 0;
     }
     catch (USBException e)
     {
@@ -70,11 +72,16 @@ public class USBConnection : ISerial
         {
           Monitor.Wait(_disconnectionLock);
         }
+      }
+
+      if (_retryCounter++ < 5)
+      {
         Write(buffer);
+        Thread.Sleep(300);
       }
       else
       {
-        Write(buffer);
+        Disconnect();
       }
     }
   }
@@ -87,25 +94,26 @@ public class USBConnection : ISerial
 
   public void Read()
   {
-    if (IsActive)
+    if (!IsActive)
     {
-      try
-      {
-        _usbDevice.Interfaces[0].Pipes[0x81].Read(InputBuffer, 0, InputBuffer.Length);
-      }
-      catch (USBException e)
-      {
-        _logger.Log($"{e.Message} {e.InnerException}");
-        Disconnect();
-
-        lock (_disconnectionLock)
-        {
-          Monitor.Wait(_disconnectionLock);
-        }
-      }
+      Thread.Sleep(300);// if connection was broken - try again in 300ms
       return;
     }
-    Thread.Sleep(300);// if connection was broken - try again in 300ms
+
+    try
+    {
+      _usbDevice.Interfaces[0].Pipes[0x81].Read(InputBuffer, 0, InputBuffer.Length);
+    }
+    catch (USBException e)
+    {
+      _logger.Log($"{e.Message} {e.InnerException}");
+      Disconnect();
+
+      lock (_disconnectionLock)
+      {
+        Monitor.Wait(_disconnectionLock);
+      }
+    }
   }
 
   public void EndRead(IAsyncResult result)
@@ -117,6 +125,7 @@ public class USBConnection : ISerial
   {
     if (Init())
     {
+      _retryCounter = 0;
       lock (_disconnectionLock)
       {
         Monitor.PulseAll(_disconnectionLock);
@@ -135,6 +144,7 @@ public class USBConnection : ISerial
     Array.Clear(InputBuffer, 0, InputBuffer.Length);
   }
 
+  #if DEBUG
   private void ListAvailablePipes()
   {
     Console.Error.WriteLine();
@@ -147,6 +157,7 @@ public class USBConnection : ISerial
     Console.Error.WriteLine("##################################");
     Console.Error.WriteLine();
   }
+  #endif
 
   public bool IsBeadInBuffer()
   {

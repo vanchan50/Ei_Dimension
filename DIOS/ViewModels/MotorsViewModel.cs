@@ -57,6 +57,7 @@ public class MotorsViewModel
       StepsParametersY.Add("");
       StepsParametersZ.Add("");
     }
+    StepsParametersZ.Add("");
     ParametersX[1] = "Left";
     ParametersY[1] = "Front";
     ParametersZ[1] = "Up";
@@ -396,6 +397,10 @@ public class MotorsViewModel
       case 37:
         UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(WashStationXCenterCoordinate)), this, 0, (TextBox)Views.MotorsView.Instance.xSP.Children[5]);
         MainViewModel.Instance.NumpadToggleButton((TextBox)Views.MotorsView.Instance.xSP.Children[5]);
+        break;
+      case 38:
+        UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(StepsParametersZ)), this, 5, (TextBox)Views.MotorsView.Instance.zSP.Children[5]);
+        MainViewModel.Instance.NumpadToggleButton((TextBox)Views.MotorsView.Instance.zSP.Children[5]);
         break;
     }
   }

@@ -453,7 +453,7 @@ public partial class App : Application
         actionList = () =>
         {
           DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ValveCuvetDrain); //this all makes no sense. just check the commands. probably
-          DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ValveFan2);
+          DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.WashPump);
           DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ValveFan1);
           DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.Pressure);
         };
@@ -559,7 +559,7 @@ public partial class App : Application
         actionList = () =>
         {
           DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ValveCuvetDrain);
-          DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ValveFan2);
+          DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.WashPump);
           DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ValveFan1);
           DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.PollStepActivity);
           DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.IsInputSelectorAtPickup);
