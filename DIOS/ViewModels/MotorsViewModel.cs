@@ -11,7 +11,7 @@ namespace Ei_Dimension.ViewModels;
 [POCOViewModel]
 public class MotorsViewModel
 {
-  public virtual ObservableCollection<bool> PollStepActive { get; set; } = new ObservableCollection<bool> { false };
+  public virtual ObservableCollection<bool> PollStepActive { get; set; } = new() { false };
   public virtual ObservableCollection<DropDownButtonContents> WellRowButtonItems { get; set; }
   public virtual ObservableCollection<DropDownButtonContents> WellColumnButtonItems { get; set; }
   public virtual string SelectedWellRow { get; set; }
@@ -25,10 +25,10 @@ public class MotorsViewModel
   public virtual ObservableCollection<string> StepsParametersY { get; set; }
   public virtual ObservableCollection<string> StepsParametersZ { get; set; }
   public virtual ObservableCollection<bool> WellSelectionButtonsChecked { get; set; }
-  public virtual ObservableCollection<string> TraySteps { get; set; } = new ObservableCollection<string> { "" };
+  public virtual ObservableCollection<string> TraySteps { get; set; } = new() { "" };
   public virtual ObservableCollection<bool> WashStationActive { get; set; }
   public virtual Visibility WashStationVisibility { get; set; } = Visibility.Collapsed;
-  public virtual ObservableCollection<string> WashStationXCenterCoordinate { get; set; } = new ObservableCollection<string> { "" };
+  public virtual ObservableCollection<string> WashStationXCenterCoordinate { get; set; } = new() { "" };
 
   public static MotorsViewModel Instance { get; private set; }
 
@@ -48,9 +48,6 @@ public class MotorsViewModel
       ParametersY.Add("");
       ParametersZ.Add("");
     }
-    ParametersX[6] = Settings.Default.StepsPerRevX.ToString();
-    ParametersY[6] = Settings.Default.StepsPerRevY.ToString();
-    ParametersZ[6] = Settings.Default.StepsPerRevZ.ToString();
     for (var i = 0; i < 5; i++)
     {
       StepsParametersX.Add("");
@@ -65,7 +62,7 @@ public class MotorsViewModel
     WellSelectionButtonsChecked = new ObservableCollection<bool> { true, false, false };
     SelectedWellRow = "A";
     SelectedWellColumn = "1";
-    WellRowButtonItems = new ObservableCollection<DropDownButtonContents> { new DropDownButtonContents("A", this) };
+    WellRowButtonItems = new ObservableCollection<DropDownButtonContents> { new("A", this) };
     for (var i = 1; i < 8; i++)
     {
       WellRowButtonItems.Add(new DropDownButtonContents(Convert.ToChar('A' + i).ToString()));

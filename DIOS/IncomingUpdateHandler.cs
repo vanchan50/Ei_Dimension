@@ -11,9 +11,12 @@ internal class IncomingUpdateHandler
   private static readonly string[] SyncElements = { "SHEATH", "SAMPLE_A", "SAMPLE_B", "FLASH", "END_WELL", "VALVES", "X_MOTOR",
     "Y_MOTOR", "Z_MOTOR", "PROXIMITY", "PRESSURE", "WASHING", "FAULT", "ALIGN MOTOR", "MAIN VALVE", "SINGLE STEP" };
 
-  private readonly object _callingThreadLock = new object();
+  private readonly object _callingThreadLock = new();
   private int _externalRangeMultipliersObtained;
   private float[] _externalRangeMultipliersbuffer = {0, 0};
+  private static readonly string FormatWithNoFloatingDedcimals = "F0";
+  private static readonly string FormatWith1FloatingDedcimals = "F1";
+  private static readonly string FormatWith3FloatingDecimals = "F3";
 
   public void ParameterUpdateEventHandler(object sender, ParameterUpdateEventArgs parameter)
   {
@@ -101,8 +104,8 @@ internal class IncomingUpdateHandler
             maxPressure *= ComponentsViewModel.TOKILOPASCALCOEFFICIENT;
           }
 
-          source.PressureMon[0] = dd.ToString("F3");
-          source.PressureMon[1] = maxPressure.ToString("F3");
+          source.PressureMon[0] = dd.ToString(FormatWith3FloatingDecimals);
+          source.PressureMon[1] = maxPressure.ToString(FormatWith3FloatingDecimals);
         };
         break;
       case DeviceParameterType.BeadConcentration:
@@ -153,7 +156,7 @@ internal class IncomingUpdateHandler
             pos = 9;
             break;
         }
-        update = () => ChannelsViewModel.Instance.Bias30Parameters[pos] = Math.Round(parameter.FloatParameter).ToString("F0");
+        update = () => ChannelsViewModel.Instance.Bias30Parameters[pos] = Math.Round(parameter.FloatParameter).ToString(FormatWithNoFloatingDedcimals);
         break;
       case DeviceParameterType.SyringeSpeedSheath:
         var type2 = (SyringeSpeed)parameter.Parameter;
@@ -179,7 +182,7 @@ internal class IncomingUpdateHandler
             pos2 = 5;
             break;
         }
-        update = () => SyringeSpeedsViewModel.Instance.SheathSyringeParameters[pos2] = parameter.FloatParameter.ToString("F0");
+        update = () => SyringeSpeedsViewModel.Instance.SheathSyringeParameters[pos2] = parameter.FloatParameter.ToString(FormatWithNoFloatingDedcimals);
         break;
       case DeviceParameterType.SyringeSpeedSample:
         var type3 = (SyringeSpeed)parameter.Parameter;
@@ -205,7 +208,7 @@ internal class IncomingUpdateHandler
             pos3 = 5;
             break;
         }
-        update = () => SyringeSpeedsViewModel.Instance.SamplesSyringeParameters[pos3] = parameter.FloatParameter.ToString("F0");
+        update = () => SyringeSpeedsViewModel.Instance.SamplesSyringeParameters[pos3] = parameter.FloatParameter.ToString(FormatWithNoFloatingDedcimals);
         break;
       case DeviceParameterType.SampleSyringeType:
         var type17 = (SampleSyringeType)parameter.Parameter;
@@ -239,7 +242,7 @@ internal class IncomingUpdateHandler
       case DeviceParameterType.MotorX:
         var type4 = (MotorParameterType)parameter.Parameter;
         var pos4 = 0;
-        string format4 = "N0";
+        string format4 = FormatWithNoFloatingDedcimals;
         switch (type4)
         {
           case MotorParameterType.Slope:
@@ -253,7 +256,10 @@ internal class IncomingUpdateHandler
             break;
           case MotorParameterType.CurrentStep:
             pos4 = 5;
-            format4 = "N3";
+            format4 = FormatWith3FloatingDecimals;
+            break;
+          case MotorParameterType.EncoderSteps:
+            pos4 = 6;
             break;
         }
         update = () => MotorsViewModel.Instance.ParametersX[pos4] = parameter.FloatParameter.ToString(format4);
@@ -261,7 +267,7 @@ internal class IncomingUpdateHandler
       case DeviceParameterType.MotorY:
         var type5 = (MotorParameterType)parameter.Parameter;
         var pos5 = 0;
-        string format5 = "N0";
+        string format5 = FormatWithNoFloatingDedcimals;
         switch (type5)
         {
           case MotorParameterType.Slope:
@@ -275,7 +281,10 @@ internal class IncomingUpdateHandler
             break;
           case MotorParameterType.CurrentStep:
             pos5 = 5;
-            format5 = "N3";
+            format5 = FormatWith3FloatingDecimals;
+            break;
+          case MotorParameterType.EncoderSteps:
+            pos5 = 6;
             break;
         }
         update = () => MotorsViewModel.Instance.ParametersY[pos5] = parameter.FloatParameter.ToString(format5);
@@ -283,7 +292,7 @@ internal class IncomingUpdateHandler
       case DeviceParameterType.MotorZ:
         var type6 = (MotorParameterType)parameter.Parameter;
         var pos6 = 0;
-        string format6 = "N0";
+        string format6 = FormatWithNoFloatingDedcimals;
         switch (type6)
         {
           case MotorParameterType.Slope:
@@ -297,7 +306,10 @@ internal class IncomingUpdateHandler
             break;
           case MotorParameterType.CurrentStep:
             pos6 = 5;
-            format6 = "N3";
+            format6 = FormatWith3FloatingDecimals;
+            break;
+          case MotorParameterType.EncoderSteps:
+            pos6 = 6;
             break;
           case MotorParameterType.CurrentLimit:
             pos6 = 7;
@@ -444,7 +456,7 @@ internal class IncomingUpdateHandler
             pos10 = 9;
             break;
         }
-        update = () => ChannelsViewModel.Instance.TempParameters[pos10] = parameter.FloatParameter.ToString("F1");
+        update = () => ChannelsViewModel.Instance.TempParameters[pos10] = parameter.FloatParameter.ToString(FormatWith1FloatingDedcimals);
         break;
       case DeviceParameterType.ChannelCompensationBias:
         var type11 = (Channel)parameter.Parameter;
@@ -482,7 +494,7 @@ internal class IncomingUpdateHandler
             pos11 = 9;
             break;
         }
-        update = () => ChannelsViewModel.Instance.TcompBiasParameters[pos11] = parameter.FloatParameter.ToString("F0");
+        update = () => ChannelsViewModel.Instance.TcompBiasParameters[pos11] = parameter.FloatParameter.ToString(FormatWithNoFloatingDedcimals);
         break;
       case DeviceParameterType.ChannelOffset:
         var type12 = (Channel)parameter.Parameter;
@@ -521,7 +533,7 @@ internal class IncomingUpdateHandler
         }
         update = () =>
         {
-          ChannelOffsetViewModel.Instance.ChannelsOffsetParameters[pos12] = parameter.FloatParameter.ToString("F0");
+          ChannelOffsetViewModel.Instance.ChannelsOffsetParameters[pos12] = parameter.FloatParameter.ToString(FormatWithNoFloatingDedcimals);
           ChannelOffsetViewModel.Instance.OverrideSliderChange = true;
           ChannelOffsetViewModel.Instance.SliderValues[pos12] = (double)(parameter.FloatParameter);
         };
@@ -544,10 +556,10 @@ internal class IncomingUpdateHandler
             pos13 = 3;
             break;
         }
-        update = () => DashboardViewModel.Instance.Volumes[pos13] = parameter.FloatParameter.ToString("F0");
+        update = () => DashboardViewModel.Instance.Volumes[pos13] = parameter.FloatParameter.ToString(FormatWithNoFloatingDedcimals);
         break;
       case DeviceParameterType.GreenAVoltage:
-        update = () => ChannelOffsetViewModel.Instance.GreenAVoltage[0] = parameter.FloatParameter.ToString("F3");
+        update = () => ChannelOffsetViewModel.Instance.GreenAVoltage[0] = parameter.FloatParameter.ToString(FormatWith3FloatingDecimals);
         break;
       case DeviceParameterType.IsLaserActive:
         //0Red 1Green 2Violet
@@ -563,13 +575,13 @@ internal class IncomingUpdateHandler
         switch (type15)
         {
           case LaserType.Red:
-            update = () => ComponentsViewModel.Instance.LaserRedPowerValue[0] = parameter.FloatParameter.ToString("F1") + " mw";
+            update = () => ComponentsViewModel.Instance.LaserRedPowerValue[0] = parameter.FloatParameter.ToString(FormatWith1FloatingDedcimals) + " mw";
             break;
           case LaserType.Green:
-            update = () => ComponentsViewModel.Instance.LaserGreenPowerValue[0] = parameter.FloatParameter.ToString("F1") + " mw";
+            update = () => ComponentsViewModel.Instance.LaserGreenPowerValue[0] = parameter.FloatParameter.ToString(FormatWith1FloatingDedcimals) + " mw";
             break;
           case LaserType.Violet:
-            update = () => ComponentsViewModel.Instance.LaserVioletPowerValue[0] = parameter.FloatParameter.ToString("F1") + " mw";
+            update = () => ComponentsViewModel.Instance.LaserVioletPowerValue[0] = parameter.FloatParameter.ToString(FormatWith1FloatingDedcimals) + " mw";
             break;
         }
         break;
@@ -708,7 +720,7 @@ internal class IncomingUpdateHandler
         update = () => SyringeSpeedsViewModel.Instance.SheathFlushVolume[0] = parameter.Parameter.ToString();
         break;
       case DeviceParameterType.TraySteps:
-        update = () => MotorsViewModel.Instance.TraySteps[0] = parameter.FloatParameter.ToString("F3");
+        update = () => MotorsViewModel.Instance.TraySteps[0] = parameter.FloatParameter.ToString(FormatWith3FloatingDecimals);
         break;
       case DeviceParameterType.DirectFlashValue:
         update = () =>
@@ -739,8 +751,8 @@ internal class IncomingUpdateHandler
           _externalRangeMultipliersObtained = 0;
           Action overwrite = () =>
           {
-            ComponentsViewModel.Instance.ExtendedRangeMultipliers[0] = _externalRangeMultipliersbuffer[0].ToString("F3");
-            ComponentsViewModel.Instance.ExtendedRangeMultipliers[1] = _externalRangeMultipliersbuffer[1].ToString("F3");
+            ComponentsViewModel.Instance.ExtendedRangeMultipliers[0] = _externalRangeMultipliersbuffer[0].ToString(FormatWith3FloatingDecimals);
+            ComponentsViewModel.Instance.ExtendedRangeMultipliers[1] = _externalRangeMultipliersbuffer[1].ToString(FormatWith3FloatingDecimals);
             App.DiosApp.Device.ExtendedRangeCL1Multiplier = _externalRangeMultipliersbuffer[0];
             App.DiosApp.Device.ExtendedRangeCL2Multiplier = _externalRangeMultipliersbuffer[1];
             ComponentsViewModel.Instance.SaveExtRangeValuesToMap();
@@ -751,7 +763,7 @@ internal class IncomingUpdateHandler
               overwrite, "Apply new", null, "Keep Previous", fontSize: 34);
           });
         }
-        //update = () => CalibrationViewModel.Instance.ExtendedRangeMultipliers[pos18] = parameter.FloatParameter.ToString("F3");
+        //update = () => CalibrationViewModel.Instance.ExtendedRangeMultipliers[pos18] = parameter.FloatParameter.ToString(FormatWith3FloatingDecimals);
         break;
       case DeviceParameterType.FluidicPathLength:
         var type19 = (FluidicPathLength)parameter.Parameter;
@@ -783,7 +795,7 @@ internal class IncomingUpdateHandler
             pos19 = 7;
             break;
         }
-        update = () => SyringeSpeedsViewModel.Instance.FluidicPathLengths[pos19] = parameter.FloatParameter.ToString("F0");
+        update = () => SyringeSpeedsViewModel.Instance.FluidicPathLengths[pos19] = parameter.FloatParameter.ToString(FormatWithNoFloatingDedcimals);
         break;
       case DeviceParameterType.WashStationXCenterCoordinate:
         update = () => MotorsViewModel.Instance.WashStationXCenterCoordinate[0] = parameter.Parameter.ToString();

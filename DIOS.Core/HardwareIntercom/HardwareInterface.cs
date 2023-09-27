@@ -1470,6 +1470,9 @@ public class HardwareInterface
           case MotorParameterType.CurrentStep:
             commandCode = 0x54;
             break;
+          case MotorParameterType.EncoderSteps:
+            commandCode = 0x50;
+            break;
           default:
             throw new NotImplementedException();
         }
@@ -1489,6 +1492,9 @@ public class HardwareInterface
           case MotorParameterType.CurrentStep:
             commandCode = 0x64;
             break;
+          case MotorParameterType.EncoderSteps:
+            commandCode = 0x60;
+            break;
           default:
             throw new NotImplementedException();
         }
@@ -1507,6 +1513,9 @@ public class HardwareInterface
             break;
           case MotorParameterType.CurrentStep:
             commandCode = 0x44;
+            break;
+          case MotorParameterType.EncoderSteps:
+            commandCode = 0x40;
             break;
           case MotorParameterType.CurrentLimit:
             commandCode = 0x92;

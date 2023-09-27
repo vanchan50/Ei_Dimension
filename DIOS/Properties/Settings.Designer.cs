@@ -169,42 +169,6 @@ namespace Ei_Dimension {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("2000")]
-        public ushort StepsPerRevX {
-            get {
-                return ((ushort)(this["StepsPerRevX"]));
-            }
-            set {
-                this["StepsPerRevX"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("2000")]
-        public ushort StepsPerRevY {
-            get {
-                return ((ushort)(this["StepsPerRevY"]));
-            }
-            set {
-                this["StepsPerRevY"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("2000")]
-        public ushort StepsPerRevZ {
-            get {
-                return ((ushort)(this["StepsPerRevZ"]));
-            }
-            set {
-                this["StepsPerRevZ"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool SensitivityChannelB {
             get {

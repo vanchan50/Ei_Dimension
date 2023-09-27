@@ -53,6 +53,9 @@ internal static class UITimer
       }
       if (System.Windows.Input.Keyboard.IsKeyDown(System.Windows.Input.Key.F3))
       {
+        //App.DiosApp.Device.DEBUGOnParameterUpdate(DeviceParameterType.MotorX, (int)MotorParameterType.EncoderSteps, 1113.6f);
+        //App.DiosApp.Device.DEBUGOnParameterUpdate(DeviceParameterType.MotorY, (int)MotorParameterType.EncoderSteps, 328);
+        //App.DiosApp.Device.DEBUGOnParameterUpdate(DeviceParameterType.MotorZ, (int)MotorParameterType.EncoderSteps, 142);
         //App.DiosApp.Device.DEBUGOnParameterUpdate(DeviceParameterType.WashStationDepth, 258);
         //App.DiosApp.Device.DEBUGOnParameterUpdate(DeviceParameterType.ChannelCompensationBias, intparam:(int)Channel.ForwardScatter, 27f);
         //App.DiosApp.Device.DEBUGOnParameterUpdate(DeviceParameterType.GreenAVoltage, floatparam:15f);

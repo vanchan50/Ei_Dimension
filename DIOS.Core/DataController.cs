@@ -415,6 +415,9 @@ internal class DataController
       case 0x3F:
         outParameters = new ParameterUpdateEventArgs(DeviceParameterType.DistanceToWellEdge, intParameter: cs.Parameter);
         break;
+      case 0x40:
+        outParameters = new ParameterUpdateEventArgs(DeviceParameterType.MotorZ, intParameter: (int)MotorParameterType.EncoderSteps, floatParameter: cs.Parameter);
+        break;
       case 0x41:
         outParameters = new ParameterUpdateEventArgs(DeviceParameterType.MotorZ, intParameter: (int)MotorParameterType.StartSpeed, floatParameter: cs.Parameter);
         break;
@@ -450,6 +453,9 @@ internal class DataController
       case 0x4E:
         outParameters = new ParameterUpdateEventArgs(DeviceParameterType.MotorStepsZ, intParameter: (int)MotorStepsZ.H12, floatParameter: cs.FParameter);
         break;
+      case 0x50:
+        outParameters = new ParameterUpdateEventArgs(DeviceParameterType.MotorX, intParameter: (int)MotorParameterType.EncoderSteps, floatParameter: cs.Parameter);
+        break;
       case 0x51:
         outParameters = new ParameterUpdateEventArgs(DeviceParameterType.MotorX, intParameter: (int)MotorParameterType.StartSpeed, floatParameter: cs.Parameter);
         break;
@@ -481,6 +487,9 @@ internal class DataController
         break;
       case 0x5E:
         outParameters = new ParameterUpdateEventArgs(DeviceParameterType.MotorStepsX, intParameter: (int)MotorStepsX.Plate384Column24, floatParameter: cs.FParameter);
+        break;
+      case 0x60:
+        outParameters = new ParameterUpdateEventArgs(DeviceParameterType.MotorY, intParameter: (int)MotorParameterType.EncoderSteps, floatParameter: cs.Parameter);
         break;
       case 0x61:
         outParameters = new ParameterUpdateEventArgs(DeviceParameterType.MotorY, intParameter: (int)MotorParameterType.StartSpeed, floatParameter: cs.Parameter);

@@ -163,6 +163,9 @@ internal static class StartupFinalizer
     App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.WashStationXCenterCoordinate);
     App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.GreenAVoltage);
     App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.WashStationDepth);
+    App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.MotorX, MotorParameterType.EncoderSteps);
+    App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.MotorY, MotorParameterType.EncoderSteps);
+    App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.MotorZ, MotorParameterType.EncoderSteps);
     App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.FluidicPathLength, FluidicPathLength.LoopAVolume);
     App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.FluidicPathLength, FluidicPathLength.LoopBVolume);
     App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.FluidicPathLength, FluidicPathLength.LoopAToPickupNeedle);

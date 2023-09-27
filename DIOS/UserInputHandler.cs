@@ -1159,7 +1159,6 @@ internal static class UserInputHandler
               if ((iRes >= 200 && iRes <= 2000) || _disableSanityCheck)
               {
                 App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorX, MotorParameterType.EncoderSteps, iRes);
-                Settings.Default.StepsPerRevX = (ushort)iRes;
                 break;
               }
             }
@@ -1239,7 +1238,6 @@ internal static class UserInputHandler
               if ((iRes >= 200 && iRes <= 2000) || _disableSanityCheck)
               {
                 App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorY, MotorParameterType.EncoderSteps, iRes);
-                Settings.Default.StepsPerRevY = (ushort)iRes;
                 break;
               }
             }
@@ -1319,7 +1317,6 @@ internal static class UserInputHandler
               if ((iRes >= 200 && iRes <= 2000) || _disableSanityCheck)
               {
                 App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorZ, MotorParameterType.EncoderSteps, iRes);
-                Settings.Default.StepsPerRevZ = (ushort)iRes;
                 break;
               }
             }
