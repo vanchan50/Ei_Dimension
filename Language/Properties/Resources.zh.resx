@@ -904,7 +904,7 @@ Volume, µL</value>
     <value>Wash Station</value>
   </data>
   <data name="Motors_ZWashDepth" xml:space="preserve">
-    <value>Wash Depth</value>
+    <value>Wash</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>检测项目</value>

@@ -1059,7 +1059,7 @@ Update the Firmware?</value>
     <value>Wash Station</value>
   </data>
   <data name="Motors_ZWashDepth" xml:space="preserve">
-    <value>Wash Depth</value>
+    <value>Wash</value>
   </data>
   <data name="MTBF_mode" xml:space="preserve">
     <value>Continuous

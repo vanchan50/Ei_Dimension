@@ -85,18 +85,18 @@ public class ComponentsViewModel
     var curCulture = Language.TranslationSource.Instance.CurrentCulture;
     SyringeControlItems = new ObservableCollection<DropDownButtonContents>
     {
-      new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_Halt), curCulture), this),
-      new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_Move_Absolute), curCulture), this),
-      new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_Pickup), curCulture), this),
-      new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_Pre_inject), curCulture), this),
-      new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_Speed), curCulture), this),
-      new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_Initialize), curCulture), this),
-      new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_Boot), curCulture), this),
-      new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_Valve_Left), curCulture), this),
-      new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_Valve_Right), curCulture), this),
-      new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_Micro_step), curCulture), this),
-      new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_Speed_Preset), curCulture), this),
-      new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_Pos), curCulture), this)
+      new(RM.GetString(nameof(Language.Resources.Dropdown_Halt), curCulture), this),
+      new(RM.GetString(nameof(Language.Resources.Dropdown_Move_Absolute), curCulture), this),
+      new(RM.GetString(nameof(Language.Resources.Dropdown_Pickup), curCulture), this),
+      new(RM.GetString(nameof(Language.Resources.Dropdown_Pre_inject), curCulture), this),
+      new(RM.GetString(nameof(Language.Resources.Dropdown_Speed), curCulture), this),
+      new(RM.GetString(nameof(Language.Resources.Dropdown_Initialize), curCulture), this),
+      new(RM.GetString(nameof(Language.Resources.Dropdown_Boot), curCulture), this),
+      new(RM.GetString(nameof(Language.Resources.Dropdown_Valve_Left), curCulture), this),
+      new(RM.GetString(nameof(Language.Resources.Dropdown_Valve_Right), curCulture), this),
+      new(RM.GetString(nameof(Language.Resources.Dropdown_Micro_step), curCulture), this),
+      new(RM.GetString(nameof(Language.Resources.Dropdown_Speed_Preset), curCulture), this),
+      new(RM.GetString(nameof(Language.Resources.Dropdown_Pos), curCulture), this)
     };
     DropDownButtonContents.ResetIndex();
     SelectedSheathContent = SyringeControlItems[0].Content;
@@ -140,13 +140,13 @@ public class ComponentsViewModel
 
     ChConfigItems = new ObservableCollection<DropDownButtonContents>
     {
-      new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_Standard), curCulture), this),
-      new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_Cells), curCulture), this),
-      new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_FM3D), curCulture), this),
-      new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_StandardPlusFSC), curCulture), this),
-      new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_StandardPlusExt), curCulture), this),
-      new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_OEMA), curCulture), this),
-      new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_OEMPMT), curCulture), this)
+      new(RM.GetString(nameof(Language.Resources.Dropdown_Standard), curCulture), this),
+      new(RM.GetString(nameof(Language.Resources.Dropdown_Cells), curCulture), this),
+      new(RM.GetString(nameof(Language.Resources.Dropdown_FM3D), curCulture), this),
+      new(RM.GetString(nameof(Language.Resources.Dropdown_StandardPlusFSC), curCulture), this),
+      new(RM.GetString(nameof(Language.Resources.Dropdown_StandardPlusExt), curCulture), this),
+      new(RM.GetString(nameof(Language.Resources.Dropdown_OEMA), curCulture), this),
+      new(RM.GetString(nameof(Language.Resources.Dropdown_OEMPMT), curCulture), this)
     };
     SelectedChConfigContent = ChConfigItems[(int)SelectedChConfigIndex].Content;
     DropDownButtonContents.ResetIndex();

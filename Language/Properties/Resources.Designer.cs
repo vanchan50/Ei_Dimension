@@ -2772,7 +2772,7 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Wash Depth.
+        ///   Looks up a localized string similar to Wash.
         /// </summary>
         public static string Motors_ZWashDepth {
             get {

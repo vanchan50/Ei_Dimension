@@ -8,7 +8,9 @@ public class WorkOrder
   public string PlateID { get; }
   public Guid BeadMapGuid { get; }
   public short WellDepth { get; }
-  public DateTime createDateTime { get; }        //date and time per ISO8601
-  public DateTime scheduleDateTime { get; }
+  public DateTime CreateDateTime { get; }        //date and time per ISO8601
+  public DateTime ScheduleDateTime { get; }
+  public string WellReadingSpeed { get; } //turn into enum hispeed/lowspeed/etc
+  public Termination TerminationType { get; }
   public List<Well> Wells { get; }
 }

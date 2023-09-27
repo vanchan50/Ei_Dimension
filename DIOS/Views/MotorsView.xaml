@@ -726,7 +726,7 @@
             </Border>
           </StackPanel>
           <StackPanel VerticalAlignment="Stretch"
-                      Width="220"
+                      Width="140"
                       Margin="0,54,3,0">
             <TextBlock Text="{lang:Loc Motors_A1}"
                        FontFamily="{StaticResource AppTextFont}"
