@@ -6,6 +6,8 @@ using DIOS.Core.HardwareIntercom;
 using DIOS.Application;
 using DIOS.Core;
 using System.IO;
+using System.Windows;
+using System.Windows.Media.Imaging;
 using DIOS.Application.SerialIO;
 
 namespace Ei_Dimension;
@@ -14,6 +16,8 @@ internal static class StartupFinalizer
 {
   public static bool SettingsWiped;
   private static bool _done;
+  private static readonly BitmapImage ChLogo = new(new Uri(@"/Ei_Dimension;component/Icons/Emission_LogoCh.png", UriKind.Relative));
+  private static readonly BitmapImage ChInstrumentLogo = new(new Uri(@"/Ei_Dimension;component/Icons/dimension flow analyzer logoCh.png", UriKind.Relative));
   /// <summary>
   /// Finish loading the UI. Should be called only once, after all the views have been loaded.
   /// Constructs the UI update timer
@@ -35,13 +39,10 @@ internal static class StartupFinalizer
       App.Logger.Log("Sanity check disabled");
     }
 
-    //if (Program.SpecializedVer == CompanyID.China)
-    //{
-    //  MainWindow.Instance.CompanyLogo.Source = new BitmapImage(new Uri(@"/Ei_Dimension;component/Icons/Emission_LogoCh.png", UriKind.Relative));
-    //  MainWindow.Instance.CompanyLogo.Margin = new Thickness(1730, 1030, 5, 0);
-    //  MainWindow.Instance.InstrumentLogo.Source = new BitmapImage(new Uri(@"/Ei_Dimension;component/Icons/dimension flow analyzer logoCh.png", UriKind.Relative));
-    //  Views.ResultsView.Instance.InstrumentLogo.Source = new BitmapImage(new Uri(@"/Ei_Dimension;component/Icons/dimension flow analyzer logoCh.png", UriKind.Relative));
-    //}
+    if (Program.SpecializedVer == CompanyID.China)
+    {
+      OverrideLogosWithChinese();
+    }
 
     App.MapRegions = new MapRegionsController(
       Views.SelRegionsView.Instance.RegionsBorder,
@@ -77,13 +78,6 @@ internal static class StartupFinalizer
     LanguageSwap.SetLanguage(MaintenanceViewModel.Instance.LanguageItems[Settings.Default.Language].Locale);
     Views.ExperimentView.Instance.DbButton.IsChecked = true;
     App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.CalibrationMargin);
-    //3D plot TRS transforms
-    var matrix = Views.ResultsView.Instance.AnalysisPlot.ContentTransform.Value;
-    matrix.Rotate(new System.Windows.Media.Media3D.Quaternion(new System.Windows.Media.Media3D.Vector3D(0, 1, 0), 90));
-    matrix.Rotate(new System.Windows.Media.Media3D.Quaternion(new System.Windows.Media.Media3D.Vector3D(1, 0, 0), 40));
-    matrix.Rotate(new System.Windows.Media.Media3D.Quaternion(new System.Windows.Media.Media3D.Vector3D(0, 1, 0), -15));
-    matrix.Translate(new System.Windows.Media.Media3D.Vector3D(-100, 100, 0));
-    ((System.Windows.Media.Media3D.MatrixTransform3D)Views.ResultsView.Instance.AnalysisPlot.ContentTransform).Matrix = matrix;
 
     App.DiosApp.WorkOrderController.OnAppLoaded();
     Program.SplashScreen.Close(TimeSpan.FromMilliseconds(1000));
@@ -188,5 +182,13 @@ internal static class StartupFinalizer
   private static void WipedSettingsMessage()
   {
     Notification.Show("User data was Corrupted.\nDefault Values Restored.\nPlease check the Instrument Settings");
+  }
+
+  private static void OverrideLogosWithChinese()
+  {
+    MainWindow.Instance.CompanyLogo.Source = ChLogo;
+    MainWindow.Instance.CompanyLogo.Margin = new Thickness(1730, 1030, 5, 0);
+    MainWindow.Instance.InstrumentLogo.Source = ChInstrumentLogo;
+    Views.ResultsView.Instance.InstrumentLogo.Source = ChInstrumentLogo;
   }
 }

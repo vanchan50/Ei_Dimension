@@ -97,4 +97,19 @@ public partial class ResultsView : UserControl, IHeatMapChart
   {
     printAnalysis.Visibility = Visibility.Hidden;
   }
+
+  private void TRSTransform3DPlot()
+  {
+    var matrix = AnalysisPlot.ContentTransform.Value;
+    matrix.Rotate(new System.Windows.Media.Media3D.Quaternion(new System.Windows.Media.Media3D.Vector3D(0, 1, 0), 90));
+    matrix.Rotate(new System.Windows.Media.Media3D.Quaternion(new System.Windows.Media.Media3D.Vector3D(1, 0, 0), 40));
+    matrix.Rotate(new System.Windows.Media.Media3D.Quaternion(new System.Windows.Media.Media3D.Vector3D(0, 1, 0), -15));
+    matrix.Translate(new System.Windows.Media.Media3D.Vector3D(-100, 100, 0));
+    ((System.Windows.Media.Media3D.MatrixTransform3D)AnalysisPlot.ContentTransform).Matrix = matrix;
+  }
+
+  private void ResultsView_OnInitialized(object sender, EventArgs e)
+  {
+    TRSTransform3DPlot();
+  }
 }

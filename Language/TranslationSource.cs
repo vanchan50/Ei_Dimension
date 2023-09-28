@@ -6,9 +6,10 @@ namespace Ei_Dimension.Language;
 
 public class TranslationSource : INotifyPropertyChanged
 {
-  private readonly ResourceManager resManager = Resources.ResourceManager;
-  private CultureInfo _currentCulture;
-  public static TranslationSource Instance { get; } = new TranslationSource();
+  private static readonly ResourceManager resManager = Resources.ResourceManager;
+  private static CultureInfo _currentCulture;
+
+  public static TranslationSource Instance => _instance;
 
   public event PropertyChangedEventHandler PropertyChanged;
 
@@ -26,4 +27,6 @@ public class TranslationSource : INotifyPropertyChanged
       }
     }
   }
+
+  private static readonly TranslationSource _instance = new();
 }
