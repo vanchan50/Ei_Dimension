@@ -91,19 +91,15 @@ public class HardwareInterface
         break;
       case DeviceCommandType.ReadA:
         commandCode = 0xEA;
-        _device._isReadingA = true;
         break;
       case DeviceCommandType.ReadB:
         commandCode = 0xEB;
-        _device._isReadingA = false;
         break;
       case DeviceCommandType.ReadAAspirateB:
         commandCode = 0xEC;
-        _device._isReadingA = true;
         break;
       case DeviceCommandType.ReadBAspirateA:
         commandCode = 0xED;
-        _device._isReadingA = false;
         break;
       case DeviceCommandType.EndReadA:
         commandCode = 0xEE;

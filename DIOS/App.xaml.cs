@@ -241,9 +241,10 @@ public partial class App : Application
 
   private void StartingToReadWellEventHandler(object sender, ReadingWellEventArgs e)
   {
-    DiosApp.Terminator.TotalBeadsToCapture = e.Well.BeadsToCapture;
-    DiosApp.Terminator.MinPerRegion = e.Well.MinPerRegion;
-    //DiosApp.TerminationType = e.Well.TermType;
+    DiosApp.Terminator.TotalBeadsToCapture = (int)e.Well.BeadsToCapture;
+    DiosApp.Terminator.MinPerRegion = (int)e.Well.MinPerRegion;
+    DiosApp.Terminator.TerminationTime = (int)e.Well.TerminationTimer;
+    DiosApp.Terminator.TerminationType = e.Well.TerminationType;
 
     Logger.Log($"Starting to read well {e.Well.CoordinatesString()} with Params:\nTermination: {DiosApp.Terminator.TerminationType}\nMinPerRegion: {DiosApp.Terminator.MinPerRegion}\nBeadsToCapture: {DiosApp.Terminator.TotalBeadsToCapture}\nTerminationTimer: {DiosApp.Terminator.TerminationTime}");
 

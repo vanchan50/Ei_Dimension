@@ -13,7 +13,7 @@ namespace Ei_Dimension.ViewModels;
 [POCOViewModel]
 public class DashboardViewModel
 {
-  public virtual ObservableCollection<string> EndRead { get; set; } = new(){ "100", "500", "60" };
+  public virtual ObservableCollection<string> EndRead { get; set; } = new(){ "", "", "" };
   public virtual ObservableCollection<string> Volumes { get; set; } = new(){ "0", "0", "0", "0" };
   public virtual ObservableCollection<string> Repeats { get; set; } = new(){ "1", "0", "1" };
   public virtual ObservableCollection<string> WorkOrder { get; set; } = new(){ "" };

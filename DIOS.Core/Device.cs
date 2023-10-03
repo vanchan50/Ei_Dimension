@@ -156,7 +156,6 @@ public class Device
     }
   }
   internal bool SingleSyringeMode { get; set; }
-  internal bool _isReadingA;
   internal float HdnrTrans;
   internal float HDnrCoef;
   internal readonly SelfTester SelfTester;

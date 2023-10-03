@@ -1,4 +1,4 @@
-﻿namespace DIOS.Application;
+﻿namespace DIOS.Core;
 
 public enum Termination
 {

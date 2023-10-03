@@ -1,6 +1,6 @@
 ﻿namespace DIOS.Core.HardwareIntercom;
 
-public enum PlateType
+public enum PlateSize
 {
   Plate96,
   Plate384,

@@ -1,4 +1,5 @@
 ﻿using DIOS.Core;
+using DIOS.Core.HardwareIntercom;
 
 namespace DIOS.Application;
 
@@ -10,7 +11,7 @@ public class WorkOrder
   public short WellDepth { get; }
   public DateTime CreateDateTime { get; }        //date and time per ISO8601
   public DateTime ScheduleDateTime { get; }
-  public string WellReadingSpeed { get; } //turn into enum hispeed/lowspeed/etc
-  public Termination TerminationType { get; }
   public List<Well> Wells { get; }
+  public uint FileSaveCheckboxes { get; }
+  public PlateSize PlateSize { get; }
 }

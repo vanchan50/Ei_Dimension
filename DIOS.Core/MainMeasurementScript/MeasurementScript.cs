@@ -1,7 +1,5 @@
 ﻿using DIOS.Core.HardwareIntercom;
-using System;
-using System.Threading.Tasks;
-using System.Threading;
+using System.Globalization;
 
 namespace DIOS.Core.MainMeasurementScript;
 
@@ -12,6 +10,7 @@ internal class MeasurementScript
   private WellController _wellController;
   private int _finalizerStarted;
   private ILogger _logger;
+  private bool _isReadingA;
 
   public MeasurementScript(Device device, ILogger logger)
   {
@@ -23,7 +22,7 @@ internal class MeasurementScript
 
   public void Start()
   {
-    _logger.Log($"{DateTime.Now.ToString()} Starting read sequence");
+    _logger.Log($"{DateTime.Now.ToString("dd.MM.yyyy.HH-mm-ss", CultureInfo.CreateSpecificCulture("en-GB"))} Starting read sequence");
     _hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.MinSSC, _device._beadProcessor._map.calParams.minmapssc);
     _hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.MaxSSC, _device._beadProcessor._map.calParams.maxmapssc);
     //read section of plate
@@ -37,7 +36,7 @@ internal class MeasurementScript
     if (!_device.SingleSyringeMode)
       _hardware.SendCommand(DeviceCommandType.AspirateA);
 
-    _device._isReadingA = false;
+    _isReadingA = false;
     _device.OnStartingToReadWell();
     StartBeadRead();
   }
@@ -71,7 +70,7 @@ internal class MeasurementScript
   {
     if (_device.SystemMonitor.ContainsWashing())  //does not contain Washing
     {
-      _device.Hardware.RequestParameter(DeviceParameterType.SystemActivityStatus);
+      _hardware.RequestParameter(DeviceParameterType.SystemActivityStatus);
       return true;
     }
     return false;
@@ -102,11 +101,11 @@ internal class MeasurementScript
 
   private bool EndBeadRead()
   {
-    _device.Hardware.SendCommand(DeviceCommandType.FlushCommandQueue);
-    _device.Hardware.SetToken(HardwareToken.EmptySyringeTrigger); //clear empty syringe token
-    _device.Hardware.SetToken(HardwareToken.Synchronization); //clear sync token to allow next sequence to execute
+    _hardware.SendCommand(DeviceCommandType.FlushCommandQueue);
+    _hardware.SetToken(HardwareToken.EmptySyringeTrigger); //clear empty syringe token
+    _hardware.SetToken(HardwareToken.Synchronization); //clear sync token to allow next sequence to execute
 
-    if (_device._isReadingA || _device.SingleSyringeMode)
+    if (_isReadingA || _device.SingleSyringeMode)
       _hardware.SendCommand(DeviceCommandType.EndReadA);
     else
       _hardware.SendCommand(DeviceCommandType.EndReadB);
@@ -115,20 +114,26 @@ internal class MeasurementScript
 
   private void SetReadingParamsForWell()
   {
+    var nextWell = _wellController.NextWell;
     _logger.Log("Reading Setup\n{");
-    _hardware.SetParameter(DeviceParameterType.WellReadingSpeed, (ushort)_wellController.NextWell.RunSpeed);
-    _hardware.SetParameter(DeviceParameterType.ChannelConfiguration, _wellController.NextWell.ChanConfig);
+    _hardware.SetParameter(DeviceParameterType.WellReadingSpeed, (ushort)nextWell.RunSpeed);
+    _hardware.SetParameter(DeviceParameterType.ChannelConfiguration, nextWell.ChanConfig);
     _logger.Log("}");
   }
 
   private void SetAspirateParamsForWell()
   {
+    var nextWell = _wellController.NextWell;
     _logger.Log("Aspiration Setup\n{");
-    _hardware.SetParameter(DeviceParameterType.WellRowIndex, _wellController.NextWell.RowIdx);
-    _hardware.SetParameter(DeviceParameterType.WellColumnIndex, _wellController.NextWell.ColIdx);
-    _hardware.SetParameter(DeviceParameterType.Volume, VolumeType.Sample, (ushort)_wellController.NextWell.SampVol);
-    _hardware.SetParameter(DeviceParameterType.Volume, VolumeType.Wash, (ushort)_wellController.NextWell.WashVol);
-    _hardware.SetParameter(DeviceParameterType.Volume, VolumeType.Agitate, (ushort)_wellController.NextWell.AgitateVol);
+    _hardware.SetParameter(DeviceParameterType.WellRowIndex, nextWell.RowIdx);
+    _hardware.SetParameter(DeviceParameterType.WellColumnIndex, nextWell.ColIdx);
+    _hardware.SetParameter(DeviceParameterType.Volume, VolumeType.Sample, (ushort)nextWell.SampVol);
+    _hardware.SetParameter(DeviceParameterType.Volume, VolumeType.Wash, (ushort)nextWell.WashVol);
+    _hardware.SetParameter(DeviceParameterType.Volume, VolumeType.ProbeWash, (ushort)nextWell.ProbewashVol);
+    _hardware.SetParameter(DeviceParameterType.Volume, VolumeType.Agitate, (ushort)nextWell.AgitateVol);
+    _hardware.SetParameter(DeviceParameterType.WashRepeatsAmount, (ushort)nextWell.WashRepeats);
+    _hardware.SetParameter(DeviceParameterType.ProbewashRepeatsAmount, (ushort)nextWell.ProbeWashRepeats);
+    _hardware.SetParameter(DeviceParameterType.AgitateRepeatsAmount, (ushort)nextWell.AgitateRepeats);
     _logger.Log("}");
   }
 
@@ -138,22 +143,35 @@ internal class MeasurementScript
     {
       _hardware.SendCommand(DeviceCommandType.AspirateA);
       _hardware.SendCommand(DeviceCommandType.ReadA);
+      _isReadingA = true;
       return;
     }
 
     if (_wellController.IsLastWell)
     {
-      if (_device._isReadingA)
+      if (_isReadingA)
+      {
         _hardware.SendCommand(DeviceCommandType.ReadB);
+        _isReadingA = false;
+      }
       else
+      {
         _hardware.SendCommand(DeviceCommandType.ReadA);
+        _isReadingA = true;
+      }
       return;
     }
 
     SetAspirateParamsForWell();
-    if (_device._isReadingA)
+    if (_isReadingA)
+    {
       _hardware.SendCommand(DeviceCommandType.ReadBAspirateA);
+      _isReadingA = false;
+    }
     else
+    {
       _hardware.SendCommand(DeviceCommandType.ReadAAspirateB);
+      _isReadingA = true;
+    }
   }
 }

@@ -76,7 +76,7 @@ public class WellsSelectViewModel
     switch (num)
     {
       case 1:
-        App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.PlateType, (ushort)PlateType.Tube);
+        App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.PlateType, (ushort)PlateSize.Tube);
         Table384Visible = Visibility.Hidden;
         Table96Visible = Visibility.Hidden;
         break;
@@ -90,7 +90,7 @@ public class WellsSelectViewModel
             row.Reset();
           }
         }
-        App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.PlateType, (ushort)PlateType.Plate96);
+        App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.PlateType, (ushort)PlateSize.Plate96);
         break;
       case 384:
         Table384Visible = Visibility.Visible;
@@ -102,7 +102,7 @@ public class WellsSelectViewModel
             row.Reset();
           }
         }
-        App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.PlateType, (ushort)PlateType.Plate384);
+        App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.PlateType, (ushort)PlateSize.Plate384);
         break;
     }
     CurrentTableSize = num;
@@ -154,10 +154,17 @@ public class WellsSelectViewModel
 
   private Well MakeWell(byte row, byte col)
   {
-    _ = short.TryParse(DashboardViewModel.Instance.Volumes[0], out var volRes);
-    _ = short.TryParse(DashboardViewModel.Instance.Volumes[1], out var washRes);
-    _ = short.TryParse(DashboardViewModel.Instance.Volumes[2], out var probewashRes);
-    _ = short.TryParse(DashboardViewModel.Instance.Volumes[3], out var agitRes);
+    var volRes = uint.Parse(DashboardViewModel.Instance.Volumes[0]);
+    var washRes = uint.Parse(DashboardViewModel.Instance.Volumes[1]); 
+    var probewashRes = uint.Parse(DashboardViewModel.Instance.Volumes[2]);
+    var agitRes = uint.Parse(DashboardViewModel.Instance.Volumes[3]);
+    var minPerReg = uint.Parse(DashboardViewModel.Instance.EndRead[0]);
+    var totalBeadstoCapture = uint.Parse(DashboardViewModel.Instance.EndRead[1]);
+    var terminationTimer = uint.Parse(DashboardViewModel.Instance.EndRead[2]);
+    var terminationType = App.DiosApp.Terminator.TerminationType;
+    uint washRepeats = uint.Parse(DashboardViewModel.Instance.Repeats[0]);
+    uint probeWashRepeats = uint.Parse(DashboardViewModel.Instance.Repeats[1]);
+    uint agitateRepeats = uint.Parse(DashboardViewModel.Instance.Repeats[2]);
 
     return new Well
     (
@@ -169,11 +176,13 @@ public class WellsSelectViewModel
       washRes,
       probewashRes,
       agitRes,
-      int.Parse(DashboardViewModel.Instance.EndRead[0]),
-      int.Parse(DashboardViewModel.Instance.EndRead[1]),
-      int.Parse(DashboardViewModel.Instance.EndRead[2])
-
-      //TermType = (Termination)DashboardViewModel.Instance.SelectedEndReadIndex
+      washRepeats,
+      probeWashRepeats,
+      agitateRepeats,
+      minPerReg,
+      totalBeadstoCapture,
+      terminationTimer,
+      terminationType
     );
   }
 

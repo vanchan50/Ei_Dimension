@@ -1,4 +1,6 @@
-﻿namespace DIOS.Application.Domain;
+﻿using DIOS.Core;
+
+namespace DIOS.Application.Domain;
 
 public class ReadTerminator
 {

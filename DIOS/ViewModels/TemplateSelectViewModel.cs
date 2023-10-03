@@ -18,7 +18,7 @@ namespace Ei_Dimension.ViewModels;
 [POCOViewModel]
 public class TemplateSelectViewModel
 {
-  public virtual ObservableCollection<string> NameList { get; set; } = new ObservableCollection<string>();
+  public virtual ObservableCollection<string> NameList { get; set; } = new();
   public string SelectedItem { get; set; }
   public virtual ObservableCollection<string> TemplateSaveName { get; set; }
   public virtual Visibility WaitIndicatorBorderVisibility { get; set; } = Visibility.Hidden;
@@ -36,7 +36,7 @@ public class TemplateSelectViewModel
     {
       NameList.Add(Path.GetFileNameWithoutExtension(template));
     }
-      
+
     Instance = this;
   }
 
@@ -66,7 +66,7 @@ public class TemplateSelectViewModel
       ShowWaitIndicator();
       Task.Run(() =>
       {
-        App.Current.Dispatcher.Invoke((Action) (() =>
+        App.Current.Dispatcher.Invoke(() =>
         {
           try
           {
@@ -247,7 +247,7 @@ public class TemplateSelectViewModel
           Settings.Default.LastTemplate = SelectedItem;
           Settings.Default.Save();
           ExperimentViewModel.Instance.NavigateDashboard();
-        }));
+        });
       });
     }
   }

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace DIOS.Core;
+﻿namespace DIOS.Core;
 
 internal class WellController
 {

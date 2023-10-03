@@ -8,14 +8,17 @@ public class Well
   public byte ColIdx { get; }
   public WellReadingSpeed RunSpeed { get; }
   public ChannelConfiguration ChanConfig { get; }
-  public short SampVol { get; }
-  public short WashVol { get; }
-  public short ProbewashVol { get; }
-  public short AgitateVol { get; }
-  //public Termination TermType { get; }
-  public int BeadsToCapture { get; }
-  public int MinPerRegion { get; }
-  public int TerminationTimer { get; }
+  public uint SampVol { get; }
+  public uint WashVol { get; }
+  public uint ProbewashVol { get; }
+  public uint AgitateVol { get; }
+  public uint WashRepeats { get; }
+  public uint ProbeWashRepeats { get; }
+  public uint AgitateRepeats { get; }
+  public Termination TerminationType { get; }
+  public uint BeadsToCapture { get; }
+  public uint MinPerRegion { get; }
+  public uint TerminationTimer { get; }
 
   public Well(byte row, byte col)
   {
@@ -23,7 +26,9 @@ public class Well
     ColIdx = col;
   }
   public Well(byte row, byte col, WellReadingSpeed speed, ChannelConfiguration chConfig,
-    short sampleVolume, short washVolume, short probeWashVol, short agitateVolume, int minPerRegion, int beadsToCapture, int terminationTimer)
+    uint sampleVolume, uint washVolume, uint probeWashVol, uint agitateVolume,
+    uint washRepeats, uint probeWashRepeats, uint agitateRepeats,
+    uint minPerRegion, uint beadsToCapture, uint terminationTimer, Termination terminationType)
   {
     RowIdx = row;
     ColIdx = col;
@@ -33,9 +38,13 @@ public class Well
     WashVol = washVolume;
     ProbewashVol = probeWashVol;
     AgitateVol = agitateVolume;
+    WashRepeats = washRepeats;
+    ProbeWashRepeats = probeWashRepeats;
+    AgitateRepeats = agitateRepeats;
     MinPerRegion = minPerRegion;
     BeadsToCapture = beadsToCapture;
     TerminationTimer = terminationTimer;
+    TerminationType = terminationType;
   }
 
   public Well( Well well )
@@ -48,9 +57,13 @@ public class Well
     WashVol = well.WashVol;
     ProbewashVol = well.ProbewashVol;
     AgitateVol = well.AgitateVol;
-    //TermType = well.TermType;
-    BeadsToCapture = well.BeadsToCapture;
+    WashRepeats = well.WashRepeats;
+    ProbeWashRepeats = well.ProbeWashRepeats;
+    AgitateRepeats = well.AgitateRepeats;
     MinPerRegion = well.MinPerRegion;
+    BeadsToCapture = well.BeadsToCapture;
+    TerminationTimer = well.TerminationTimer;
+    TerminationType = well.TerminationType;
   }
 
   public string CoordinatesString()
