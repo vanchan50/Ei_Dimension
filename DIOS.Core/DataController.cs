@@ -10,19 +10,20 @@ internal class DataController
   private ConcurrentQueue<CommandStruct> _outCommands = new ();
 
   private readonly object _usbOutCV = new ();
-  internal object ScriptF9FinishedLock { get; } = new (); //TODO: hide into function or maybe system monitor has info. then just poll it
   internal object SystemActivityNotBusyNotificationLock { get; } = new ();
   private readonly ISerial _serialConnection;
   private readonly Thread _prioUsbInThread;
   private readonly Thread _prioUsbOutThread;
   private readonly Device _device;
+  private readonly HardwareScriptTracker _scriptTracker;
   private readonly ILogger _logger;
 
-  public DataController(Device device, ISerial connection, ILogger logger)
+  public DataController(Device device, ISerial connection, HardwareScriptTracker scriptTracker, ILogger logger)
   {
     _device = device;
     _serialConnection = connection;
     _logger = logger;
+    _scriptTracker = scriptTracker;
 
     //setup threads
     _prioUsbInThread = new Thread(ReplyFromMC);
@@ -765,15 +766,27 @@ internal class DataController
             break;
           case 0xE5:
             _device.IsPlateEjected = true;
+            _scriptTracker.SignalScriptEnd();
             break;
           case 0xE6:
             _device.IsPlateEjected = false;
+            _scriptTracker.SignalScriptEnd();
             break;
+          //FALLTHROUGH
+          case 0xE1:
+          case 0xE2:
+          case 0xE3:
+          case 0xE4:
           case 0xE7:
-            lock (ScriptF9FinishedLock)
-            {
-              Monitor.PulseAll(ScriptF9FinishedLock);
-            }
+          case 0xE8:
+          case 0xE9:
+          case 0xEA:
+          case 0xEB:
+          case 0xEC:
+          case 0xED:
+          case 0xEE:
+          case 0xEF:
+            _scriptTracker.SignalScriptEnd();
             break;
         }
         break;

@@ -160,7 +160,7 @@ public class Device
   internal float HDnrCoef;
   internal readonly SelfTester SelfTester;
   internal readonly BeadProcessor _beadProcessor;
-  internal readonly WellController _wellController = new WellController();
+  internal readonly WellController _wellController = new();
   private readonly DataController _dataController;
   private readonly MeasurementScript _script;
   private readonly ILogger _logger;
@@ -172,8 +172,9 @@ public class Device
     _logger = logger;
     SelfTester = new SelfTester(this, logger);
     _beadProcessor = new BeadProcessor(this);
-    _dataController = new DataController(this, connection, logger);
-    Hardware = new HardwareInterface(this, _dataController, logger);
+    var scriptTracker = new HardwareScriptTracker();
+    _dataController = new DataController(this, connection, scriptTracker, logger);
+    Hardware = new HardwareInterface(this, _dataController, scriptTracker, logger);
     _script = new MeasurementScript(this, logger);
   }
 

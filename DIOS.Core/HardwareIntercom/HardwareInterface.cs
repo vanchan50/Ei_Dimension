@@ -1,18 +1,17 @@
-﻿using System;
-using System.Threading;
-
-namespace DIOS.Core.HardwareIntercom;
+﻿namespace DIOS.Core.HardwareIntercom;
 
 public class HardwareInterface
 {
   private byte _latestDirectGetCode;
   private DataController _dataController;
   private Device _device;
+  private readonly HardwareScriptTracker _scriptTracker;
   private readonly ILogger _logger;
-  internal HardwareInterface(Device device, DataController dataController, ILogger logger)
+  internal HardwareInterface(Device device, DataController dataController, HardwareScriptTracker scriptTracker, ILogger logger)
   {
     _device = device;
     _dataController = dataController;
+    _scriptTracker = scriptTracker;
     _logger = logger;
   }
 
@@ -64,48 +63,63 @@ public class HardwareInterface
         break;
       case DeviceCommandType.Prime:
         commandCode = 0xE1;
+        _scriptTracker.Wait = true;
         break;
       case DeviceCommandType.RenewSheath:
         commandCode = 0xE2;
+        _scriptTracker.Wait = true;
         break;
       case DeviceCommandType.WashA:
         commandCode = 0xE3;
+        _scriptTracker.Wait = true;
         break;
       case DeviceCommandType.WashB:
         commandCode = 0xE4;
+        _scriptTracker.Wait = true;
         break;
       case DeviceCommandType.EjectPlate:
         commandCode = 0xE5;
+        _scriptTracker.Wait = true;
         break;
       case DeviceCommandType.LoadPlate:
         commandCode = 0xE6;
+        _scriptTracker.Wait = true;
         break;
       case DeviceCommandType.PositionWellPlate:
         commandCode = 0xE7;
+        _scriptTracker.Wait = true;
         break;
       case DeviceCommandType.AspirateA:
         commandCode = 0xE8;
+        _scriptTracker.Wait = true;
         break;
       case DeviceCommandType.AspirateB:
         commandCode = 0xE9;
+        _scriptTracker.Wait = true;
         break;
       case DeviceCommandType.ReadA:
         commandCode = 0xEA;
+        _scriptTracker.Wait = true;
         break;
       case DeviceCommandType.ReadB:
         commandCode = 0xEB;
+        _scriptTracker.Wait = true;
         break;
       case DeviceCommandType.ReadAAspirateB:
         commandCode = 0xEC;
+        _scriptTracker.Wait = true;
         break;
       case DeviceCommandType.ReadBAspirateA:
         commandCode = 0xED;
+        _scriptTracker.Wait = true;
         break;
       case DeviceCommandType.EndReadA:
         commandCode = 0xEE;
+        _scriptTracker.Wait = true;
         break;
       case DeviceCommandType.EndReadB:
         commandCode = 0xEF;
+        _scriptTracker.Wait = true;
         break;
       case DeviceCommandType.UpdateFirmware:
         commandCode = 0xF5;
@@ -117,6 +131,8 @@ public class HardwareInterface
         throw new NotImplementedException();
     }
     MainCommand(code: commandCode, parameter: param, cmd: extraAction);
+    //TODO:make another method SendScript(); And enum "script" for 0xEn
+    _scriptTracker.WaitForScriptEndOrDoNothing();
   }
 
   public void RenewSheath()
@@ -1761,10 +1777,6 @@ public class HardwareInterface
     SetParameter(DeviceParameterType.WellRowIndex, well.RowIdx);
     SetParameter(DeviceParameterType.WellColumnIndex, well.ColIdx);
     SendCommand(DeviceCommandType.PositionWellPlate);
-    lock (_dataController.ScriptF9FinishedLock)
-    {
-      Monitor.Wait(_dataController.ScriptF9FinishedLock);
-    }
   }
 
   /// <summary>
