@@ -15,7 +15,7 @@
       set
       {
         if (value && _wait)
-          throw new AccessViolationException("Waiting for two scripts simultaneously");
+          //throw new AccessViolationException("Waiting for two scripts simultaneously");
         _wait = value;
       }
     }

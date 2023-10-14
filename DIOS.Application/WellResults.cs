@@ -10,12 +10,12 @@ public class WellResults
   private readonly BackgroundStatsAccumulator _backgroundStatsAccumulator = new ();
   private readonly ResultingWellStatsData _measuredWellStats = new();
 
-  internal void Reset(Well well, IReadOnlyCollection<int> regions)
+  internal void Reset(Well well)
   {
     Well = new Well(well);
     _calibrationStatsAccumulator.Reset();
     _backgroundStatsAccumulator.Reset();
-    _reporterManager.Reset(regions);
+    _reporterManager.Reset(well.Regions);
     _measuredWellStats.Reset();
   }
 
@@ -29,7 +29,7 @@ public class WellResults
     return _reporterManager.Add(in bead);
   }
 
-  internal void AddStats(WellStats stats)
+  internal void AddWellStats(WellStats stats)
   {
     _measuredWellStats.Add(stats.ToString());
   }
@@ -44,7 +44,7 @@ public class WellResults
     return _calibrationStatsAccumulator.CalculateStats();
   }
 
-  public ChannelsAveragesStats GetBackgroundAverages()
+  public ChannelsAveragesStats GetBackgroundChannelsAverages()
   {
     return _backgroundStatsAccumulator.CalculateAverages();
   }

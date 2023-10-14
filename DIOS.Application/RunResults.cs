@@ -8,7 +8,6 @@ public class RunResults
   public PlateReport PlateReport { get; } = new ();
   public WellResults CurrentWellResults { get; } = new ();
   private readonly Device _device;
-  private IReadOnlyCollection<int> _regionsToOutput = null;
   private readonly DIOSApp _diosApp;
   private bool _isFrozen = false;
 
@@ -17,17 +16,6 @@ public class RunResults
     _device = device;
     _diosApp = diosApp;
     OutputBeadsCollector = sink;
-  }
-
-  /// <summary>
-  /// Setup and Validate the Output Regions
-  /// </summary>
-  /// <param name="regions"> the region numbers to output</param>
-  /// <returns></returns>
-  public void SetupRunRegions(IReadOnlyCollection<Well> wells)
-  {
-    _regionsToOutput = wells.First().Regions;
-    _regionsToOutput ??= new List<int>();//TODO:not necessary anymore? since wells have at least new list<> (null can be passed)
   }
 
   public List<RegionReporterResultVolatile> MakeWellResultsClone()
@@ -63,14 +51,12 @@ public class RunResults
   {
     var stats = new WellStats(CurrentWellResults.Well, MakeWellResultsClone(), _device.BeadCount);
     PlateReport.Add(stats);
-    CurrentWellResults.AddStats(stats);
+    CurrentWellResults.AddWellStats(stats);
   }
 
   public void StartNewWell(Well well)
   {
-    if (_regionsToOutput is null)
-      throw new Exception("SetupRunRegions() must be called before the run");
-    CurrentWellResults.Reset(well, _regionsToOutput);
+    CurrentWellResults.Reset(well);
     OutputBeadsCollector.Clear();
     _isFrozen = false;
   }
@@ -118,10 +104,5 @@ public class RunResults
   public IEnumerable<ProcessedBead> PublishBeadEvents()
   {
     return OutputBeadsCollector.GetAllBeadsEnumerable();
-  }
-
-  public void EndOfOperationReset()
-  {
-    _regionsToOutput = null!;
   }
 }

@@ -295,7 +295,7 @@ public partial class App : Application
     DiosApp.Publisher.PlateStatusFile.Overwrite(PlatePictogramViewModel.Instance.PlatePictogram.GetSerializedPlate());
 
     var stats = DiosApp.Results.CurrentWellResults.GetChannelStats();
-    var averageBackgrounds = DiosApp.Results.CurrentWellResults.GetBackgroundAverages();
+    var averageBackgrounds = DiosApp.Results.CurrentWellResults.GetBackgroundChannelsAverages();
     _ = Current.Dispatcher.BeginInvoke(() =>
     {
       ResultsViewModel.Instance.DecodeCalibrationStats(stats, current: true);
@@ -309,7 +309,6 @@ public partial class App : Application
       DiosApp.Verificator.CalculateResults(DiosApp.MapController.ActiveMap);
 
     DiosApp.Results.PlateReport.completedDateTime = DateTime.Now;
-    DiosApp.Results.EndOfOperationReset();
     var plateReportJson = DiosApp.Results.PlateReport.JSONify();
     if (DiosApp.Control == SystemControl.Manual)
     {

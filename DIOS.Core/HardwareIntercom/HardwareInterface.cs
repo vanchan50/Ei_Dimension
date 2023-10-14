@@ -132,7 +132,7 @@ public class HardwareInterface
     }
     MainCommand(code: commandCode, parameter: param, cmd: extraAction);
     //TODO:make another method SendScript(); And enum "script" for 0xEn
-    _scriptTracker.WaitForScriptEndOrDoNothing();
+    //_scriptTracker.WaitForScriptEndOrDoNothing();
   }
 
   public void RenewSheath()

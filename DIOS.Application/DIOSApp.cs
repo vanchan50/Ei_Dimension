@@ -42,7 +42,6 @@ public class DIOSApp
 
   public void StartOperation(IReadOnlyCollection<Well> wells, string plateId = null)
   {
-    Results.SetupRunRegions(wells);
     Publisher.ResultsFile.MakeNew();
     Results.StartNewPlateReport(plateId);
     Logger.Log(Publisher.ReportActivePublishingFlags());

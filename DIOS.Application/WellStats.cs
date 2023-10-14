@@ -9,12 +9,12 @@ namespace DIOS.Application;
 /// A class for output.
 /// <br> Contains the region Reporter stats data per well</br>
 /// </summary>
-[JsonObject(MemberSerialization.Fields)]
+[JsonObject(MemberSerialization.OptIn)]
 internal class WellStats
 {
   [JsonProperty("Well")]
-  public Well Well { get; }
-  [JsonIgnore]
+  public readonly Well Well;
+
   public int TotalCount { get; }
 
   [JsonProperty("Results")]
