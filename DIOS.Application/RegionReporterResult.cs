@@ -1,13 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-
-namespace DIOS.Application;
+﻿namespace DIOS.Application;
 
 public class RegionReporterResult
 {
   public readonly int regionNumber;
-  public List<float> ReporterValues = new List<float>(CAPACITY);
-  //public List<float> RP1bgnd = new List<float>(CAPACITY);
+  public List<float> ReporterValues = new(CAPACITY);
+  //public List<float> RP1bgnd = new(CAPACITY);
   public const int CAPACITY = 100000;
   public int Count => ReporterValues.Count;
 

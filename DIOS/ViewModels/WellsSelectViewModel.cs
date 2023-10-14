@@ -138,21 +138,21 @@ public class WellsSelectViewModel
     PlateCustomizationViewModel.Instance.ShowView();
   }
 
-  public List<Well> OutputWells()
+  public List<Well> OutputWells(IReadOnlyCollection<int> regions)
   {
     List<Well> wells;
     if (CurrentTableSize == 1)  //tube
     {
-      wells = new List<Well>{ MakeWell(0, 0) };//  a 1 record work order
+      wells = new List<Well>{ MakeWell(0, 0, regions) };//  a 1 record work order
       return wells;
     }
 
-    wells = GetWellsFromPlate();
+    wells = GetWellsFromPlate(regions);
     wells = SortWells(wells);
     return wells;
   }
 
-  private Well MakeWell(byte row, byte col)
+  private Well MakeWell(byte row, byte col, IReadOnlyCollection<int> regions)
   {
     var volRes = uint.Parse(DashboardViewModel.Instance.Volumes[0]);
     var washRes = uint.Parse(DashboardViewModel.Instance.Volumes[1]); 
@@ -170,6 +170,7 @@ public class WellsSelectViewModel
     (
       row,
       col,
+      regions,
       DashboardViewModel.Instance.SelectedSpeedIndex,
       ComponentsViewModel.Instance.SelectedChConfigIndex,
       volRes,
@@ -198,16 +199,16 @@ public class WellsSelectViewModel
     return wells;
   }
 
-  private List<Well> GetWellsFromPlate()
+  private List<Well> GetWellsFromPlate(IReadOnlyCollection<int> regions)
   {
     var wells = new List<Well>();
-    ObservableCollection<WellTableRow> plate = CurrentTableSize == 96 ? Table96Wells : Table384Wells;
+    var plate = CurrentTableSize == 96 ? Table96Wells : Table384Wells;
     for (byte r = 0; r < plate.Count; r++)
     {
       for (byte c = 0; c < plate[r].Types.Count; c++)
       {
         if (plate[r].Types[c] != WellType.Empty)
-          wells.Add(MakeWell(r, c));
+          wells.Add(MakeWell(r, c, regions));
       }
     }
     return wells;

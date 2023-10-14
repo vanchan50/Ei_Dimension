@@ -676,7 +676,7 @@ Value</value>
     <value>Active Regions</value>
   </data>
   <data name="Experiment_Agitate_Repeats" xml:space="preserve">
-    <value>Agitate Repeats</value>
+    <value>Agitate Cycles</value>
   </data>
   <data name="Experiment_Agitate_Vol" xml:space="preserve">
     <value>Agitate
@@ -749,7 +749,7 @@ Region</value>
   </data>
   <data name="Experiment_Probewash_Repeats" xml:space="preserve">
     <value>Probe Wash
-   Repeats</value>
+   Cycles</value>
   </data>
   <data name="Experiment_ProbeWash_Vol" xml:space="preserve">
     <value>Probe Wash
@@ -806,7 +806,7 @@ Events</value>
 Barcode</value>
   </data>
   <data name="Experiment_Wash_Repeats" xml:space="preserve">
-    <value>Wash Repeats</value>
+    <value>Wash Cycles</value>
   </data>
   <data name="Experiment_Wash_Vol" xml:space="preserve">
     <value> Wash

@@ -30,7 +30,7 @@ namespace DIOS.Core;
 /// </summary>
 public class Device
 {
-  public SystemActivity SystemMonitor { get; } = new SystemActivity();
+  public SystemActivity SystemMonitor { get; } = new();
   /// <summary>
   /// Abstractions on the hardware commands and parameters
   /// </summary>
@@ -166,6 +166,9 @@ public class Device
   private readonly ILogger _logger;
   private float _reporterScaling = 1;
   private float _compensation = 1;
+  #if DEBUG
+  public Action ContinueScript { get; }
+  #endif
 
   public Device(ISerial connection, ILogger logger)
   {
@@ -173,6 +176,9 @@ public class Device
     SelfTester = new SelfTester(this, logger);
     _beadProcessor = new BeadProcessor(this);
     var scriptTracker = new HardwareScriptTracker();
+    #if DEBUG
+    ContinueScript = scriptTracker.SignalScriptEnd;
+    #endif
     _dataController = new DataController(this, connection, scriptTracker, logger);
     Hardware = new HardwareInterface(this, _dataController, scriptTracker, logger);
     _script = new MeasurementScript(this, logger);

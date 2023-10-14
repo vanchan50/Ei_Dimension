@@ -14,4 +14,5 @@ public class WorkOrder
   public List<Well> Wells { get; }
   public uint FileSaveCheckboxes { get; }
   public PlateSize PlateSize { get; }
+  public string MapName { get; }
 }

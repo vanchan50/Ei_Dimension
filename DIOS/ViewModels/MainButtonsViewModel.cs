@@ -108,29 +108,6 @@ public class MainButtonsViewModel
       return;
     }
 
-    IReadOnlyCollection<Well> wells;
-    //if (App.DiosApp.Control == SystemControl.WorkOrder)
-    //{
-    //  if (App.DiosApp.WorkOrderController.TryGetWorkOrderById("1", out var wo))
-    //  {
-    //    App.CurrentWorkOrder = wo;
-    //  }
-    //  //fill wells from work order
-    //  wells = App.CurrentWorkOrder.Wells;
-    //}
-    //else
-    //{
-      wells = WellsSelectViewModel.Instance.OutputWells();
-    //}
-
-    if (wells.Count == 0)
-    {
-      var msg = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Messages_NoWellsOrTube_Selected),
-        Language.TranslationSource.Instance.CurrentCulture);
-      Notification.Show(msg);
-      return;
-    }
-
     HashSet<int> regions = null;
     switch (App.DiosApp.Device.Mode)
     {
@@ -161,6 +138,31 @@ public class MainButtonsViewModel
         App.DiosApp.Verificator.Reset(verificationRegions);
         break;
     }
+
+    IReadOnlyCollection<Well> wells;
+    //if (App.DiosApp.Control == SystemControl.WorkOrder)
+    //{
+    //  if (App.DiosApp.WorkOrderController.TryGetWorkOrderById("1", out var wo))
+    //  {
+    //    App.CurrentWorkOrder = wo;
+    //  }
+    //  //fill wells from work order
+    //  wells = App.CurrentWorkOrder.Wells;
+    //}
+    //else
+    //{
+    wells = WellsSelectViewModel.Instance.OutputWells(regions);
+    //}
+
+    if (wells.Count == 0)
+    {
+      var msg = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Messages_NoWellsOrTube_Selected),
+        Language.TranslationSource.Instance.CurrentCulture);
+      Notification.Show(msg);
+      return;
+    }
+
+
     MainViewModel.Instance.NavigationSelector(1);
 
     EnableStartButton(false);
@@ -171,11 +173,11 @@ public class MainButtonsViewModel
     ResultsViewModel.Instance.ClearCurrentCalibrationStats();
     if (App.DiosApp.Control == SystemControl.WorkOrder && !string.IsNullOrEmpty(DashboardViewModel.Instance.WorkOrder[0]))
     {
-      App.DiosApp.StartOperation(regions, wells, DashboardViewModel.Instance.WorkOrder[0]);
+      App.DiosApp.StartOperation(wells, DashboardViewModel.Instance.WorkOrder[0]);
     }
     else
     {
-      App.DiosApp.StartOperation(regions, wells);
+      App.DiosApp.StartOperation(wells);
     }
   }
 

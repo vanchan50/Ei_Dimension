@@ -1669,7 +1669,7 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Agitate Repeats.
+        ///   Looks up a localized string similar to Agitate Cycles.
         /// </summary>
         public static string Experiment_Agitate_Repeats {
             get {
@@ -1868,7 +1868,7 @@ namespace Ei_Dimension.Language {
         
         /// <summary>
         ///   Looks up a localized string similar to Probe Wash
-        ///   Repeats.
+        ///   Cycles.
         /// </summary>
         public static string Experiment_Probewash_Repeats {
             get {
@@ -2027,7 +2027,7 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Wash Repeats.
+        ///   Looks up a localized string similar to Wash Cycles.
         /// </summary>
         public static string Experiment_Wash_Repeats {
             get {

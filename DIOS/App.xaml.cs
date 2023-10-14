@@ -294,7 +294,7 @@ public partial class App : Application
 
     DiosApp.Publisher.PlateStatusFile.Overwrite(PlatePictogramViewModel.Instance.PlatePictogram.GetSerializedPlate());
 
-    var stats = DiosApp.Results.CurrentWellResults.GetStats();
+    var stats = DiosApp.Results.CurrentWellResults.GetChannelStats();
     var averageBackgrounds = DiosApp.Results.CurrentWellResults.GetBackgroundAverages();
     _ = Current.Dispatcher.BeginInvoke(() =>
     {

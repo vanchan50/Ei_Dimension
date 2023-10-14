@@ -563,6 +563,9 @@
   <data name="Experiment_Active_Regions" xml:space="preserve">
     <value>激活区域</value>
   </data>
+  <data name="Experiment_Agitate_Repeats" xml:space="preserve">
+    <value>Agitate Cycles</value>
+  </data>
   <data name="Experiment_Agitate_Vol" xml:space="preserve">
     <value>吹打体积, µL</value>
   </data>
@@ -627,7 +630,7 @@
   </data>
   <data name="Experiment_Probewash_Repeats" xml:space="preserve">
     <value>Probe Wash
-   Repeats</value>
+   Cycles</value>
   </data>
   <data name="Experiment_ProbeWash_Vol" xml:space="preserve">
     <value>Probe Wash
@@ -677,6 +680,9 @@ Volume, µL</value>
   </data>
   <data name="Experiment_Validate_Bcode" xml:space="preserve">
     <value>验证条形码</value>
+  </data>
+  <data name="Experiment_Wash_Repeats" xml:space="preserve">
+    <value>Wash Cycles</value>
   </data>
   <data name="Experiment_Wash_Vol" xml:space="preserve">
     <value>清洗体积, µL</value>

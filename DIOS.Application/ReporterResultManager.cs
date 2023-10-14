@@ -19,7 +19,7 @@ public class ReporterResultManager
 
     bool containsRegion0 = false;
 
-    foreach (var region in regions)
+    foreach (var region in CurrentActiveRegions)
     {
       //skip region0 to make it the last one. if it is there at all
       if (region == 0)

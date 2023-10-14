@@ -8,6 +8,7 @@ public class WellResults
   private readonly ReporterResultManager _reporterManager = new ();
   private readonly StatsAccumulator _calibrationStatsAccumulator = new ();
   private readonly BackgroundStatsAccumulator _backgroundStatsAccumulator = new ();
+  private readonly ResultingWellStatsData _measuredWellStats = new();
 
   internal void Reset(Well well, IReadOnlyCollection<int> regions)
   {
@@ -15,6 +16,7 @@ public class WellResults
     _calibrationStatsAccumulator.Reset();
     _backgroundStatsAccumulator.Reset();
     _reporterManager.Reset(regions);
+    _measuredWellStats.Reset();
   }
 
   internal int Add(in ProcessedBead bead)
@@ -26,13 +28,18 @@ public class WellResults
     //each entry has a list of rp1 values from each bead in that region
     return _reporterManager.Add(in bead);
   }
+
+  internal void AddStats(WellStats stats)
+  {
+    _measuredWellStats.Add(stats.ToString());
+  }
     
   internal List<RegionReporterResultVolatile> GetResultsClone()
   {
     return _reporterManager.GetResultsClone();
   }
 
-  public ChannelsCalibrationStats GetStats()
+  public ChannelsCalibrationStats GetChannelStats()
   {
     return _calibrationStatsAccumulator.CalculateStats();
   }
@@ -40,6 +47,11 @@ public class WellResults
   public ChannelsAveragesStats GetBackgroundAverages()
   {
     return _backgroundStatsAccumulator.CalculateAverages();
+  }
+
+  public string PublishWellStats()
+  {
+    return _measuredWellStats.Publish();
   }
 
   /// <summary>

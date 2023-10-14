@@ -1,5 +1,6 @@
 ﻿using DIOS.Core;
 using System;
+using System.Reflection;
 using System.Threading;
 using Ei_Dimension.Controllers;
 using DIOS.Core.HardwareIntercom;
@@ -46,6 +47,9 @@ internal static class UITimer
 #if DEBUG
     if (App.Current is null)
       return;//just so it doesnt break here
+
+    App.DiosApp.Device.ContinueScript.Invoke();
+
     App.Current.Dispatcher.Invoke(() => {
       if (System.Windows.Input.Keyboard.IsKeyDown(System.Windows.Input.Key.J))
       {

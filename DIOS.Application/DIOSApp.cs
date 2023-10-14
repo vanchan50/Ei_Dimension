@@ -40,9 +40,9 @@ public class DIOSApp
     BarcodeReader = new USBBarcodeReader(Logger);
   }
 
-  public void StartOperation(IReadOnlyCollection<int> regions, IReadOnlyCollection<Well> wells, string plateId = null)
+  public void StartOperation(IReadOnlyCollection<Well> wells, string plateId = null)
   {
-    Results.SetupRunRegions(regions);
+    Results.SetupRunRegions(wells);
     Publisher.ResultsFile.MakeNew();
     Results.StartNewPlateReport(plateId);
     Logger.Log(Publisher.ReportActivePublishingFlags());
@@ -98,7 +98,7 @@ public class DIOSApp
     _ = Task.Run(() =>
     {
       Results.MakeWellStats();
-      Publisher.ResultsFile.AppendAndWrite(Results.PublishWellStats()); //makewellstats should be awaited only for this method
+      Publisher.ResultsFile.AppendAndWrite(Results.CurrentWellResults.PublishWellStats()); //makewellstats should be awaited only for this method
       WorkOrderController.DoSomethingWithWorkOrder();
     });
     Publisher.BeadEventFile.CreateAndWrite(Results.PublishBeadEvents());

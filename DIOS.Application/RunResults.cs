@@ -8,8 +8,7 @@ public class RunResults
   public PlateReport PlateReport { get; } = new ();
   public WellResults CurrentWellResults { get; } = new ();
   private readonly Device _device;
-  private IReadOnlyCollection<int> _regionsToOutput = null!;
-  private readonly ResultingWellStatsData _measuredWellStats = new();
+  private IReadOnlyCollection<int> _regionsToOutput = null;
   private readonly DIOSApp _diosApp;
   private bool _isFrozen = false;
 
@@ -25,10 +24,10 @@ public class RunResults
   /// </summary>
   /// <param name="regions"> the region numbers to output</param>
   /// <returns></returns>
-  public void SetupRunRegions(IReadOnlyCollection<int> regions)
+  public void SetupRunRegions(IReadOnlyCollection<Well> wells)
   {
-    _regionsToOutput = regions;
-    _regionsToOutput ??= new List<int>();
+    _regionsToOutput = wells.First().Regions;
+    _regionsToOutput ??= new List<int>();//TODO:not necessary anymore? since wells have at least new list<> (null can be passed)
   }
 
   public List<RegionReporterResultVolatile> MakeWellResultsClone()
@@ -40,6 +39,7 @@ public class RunResults
     }
     catch
     {
+      //case for UpdateCurrentStats() which is called frequently and can be called in a transition(between wells) time
       ret = new List<RegionReporterResultVolatile>();
     }
     return ret;
@@ -63,7 +63,7 @@ public class RunResults
   {
     var stats = new WellStats(CurrentWellResults.Well, MakeWellResultsClone(), _device.BeadCount);
     PlateReport.Add(stats);
-    _measuredWellStats.Add(stats.ToString());
+    CurrentWellResults.AddStats(stats);
   }
 
   public void StartNewWell(Well well)
@@ -72,7 +72,6 @@ public class RunResults
       throw new Exception("SetupRunRegions() must be called before the run");
     CurrentWellResults.Reset(well, _regionsToOutput);
     OutputBeadsCollector.Clear();
-    _measuredWellStats.Reset();
     _isFrozen = false;
   }
 
@@ -119,11 +118,6 @@ public class RunResults
   public IEnumerable<ProcessedBead> PublishBeadEvents()
   {
     return OutputBeadsCollector.GetAllBeadsEnumerable();
-  }
-
-  public string PublishWellStats()
-  {
-    return _measuredWellStats.Publish();
   }
 
   public void EndOfOperationReset()

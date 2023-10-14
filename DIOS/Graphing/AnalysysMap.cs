@@ -13,22 +13,22 @@ namespace Ei_Dimension.Graphing;
 [POCOViewModel]
 public class AnalysysMap
 {
-  public ReporterResultManager BackingWResults { get; protected set; } = new ReporterResultManager();
+  public ReporterResultManager BackingWResults { get; } = new();
   public virtual ObservableCollection<DoubleHeatMapData> DisplayedMap { get; set; }
-  public virtual ObservableCollection<DoubleHeatMapData> Current01Map { get; protected set; } = new ObservableCollection<DoubleHeatMapData>();
-  public virtual ObservableCollection<DoubleHeatMapData> Current02Map { get; protected set; } = new ObservableCollection<DoubleHeatMapData>();
-  public virtual ObservableCollection<DoubleHeatMapData> Current03Map { get; protected set; } = new ObservableCollection<DoubleHeatMapData>();
-  public virtual ObservableCollection<DoubleHeatMapData> Current12Map { get; protected set; } = new ObservableCollection<DoubleHeatMapData>();
-  public virtual ObservableCollection<DoubleHeatMapData> Current13Map { get; protected set; } = new ObservableCollection<DoubleHeatMapData>();
-  public virtual ObservableCollection<DoubleHeatMapData> Current23Map { get; protected set; } = new ObservableCollection<DoubleHeatMapData>();
-  public virtual ObservableCollection<DoubleHeatMapData> Backing01Map { get; protected set; } = new ObservableCollection<DoubleHeatMapData>();
-  public virtual ObservableCollection<DoubleHeatMapData> Backing02Map { get; protected set; } = new ObservableCollection<DoubleHeatMapData>();
-  public virtual ObservableCollection<DoubleHeatMapData> Backing03Map { get; protected set; } = new ObservableCollection<DoubleHeatMapData>();
-  public virtual ObservableCollection<DoubleHeatMapData> Backing12Map { get; protected set; } = new ObservableCollection<DoubleHeatMapData>();
-  public virtual ObservableCollection<DoubleHeatMapData> Backing13Map { get; protected set; } = new ObservableCollection<DoubleHeatMapData>();
-  public virtual ObservableCollection<DoubleHeatMapData> Backing23Map { get; protected set; } = new ObservableCollection<DoubleHeatMapData>();
+  public virtual ObservableCollection<DoubleHeatMapData> Current01Map { get; } = new();
+  public virtual ObservableCollection<DoubleHeatMapData> Current02Map { get; } = new();
+  public virtual ObservableCollection<DoubleHeatMapData> Current03Map { get; } = new();
+  public virtual ObservableCollection<DoubleHeatMapData> Current12Map { get; } = new();
+  public virtual ObservableCollection<DoubleHeatMapData> Current13Map { get; } = new();
+  public virtual ObservableCollection<DoubleHeatMapData> Current23Map { get; } = new();
+  public virtual ObservableCollection<DoubleHeatMapData> Backing01Map { get; } = new();
+  public virtual ObservableCollection<DoubleHeatMapData> Backing02Map { get; } = new();
+  public virtual ObservableCollection<DoubleHeatMapData> Backing03Map { get; } = new();
+  public virtual ObservableCollection<DoubleHeatMapData> Backing12Map { get; } = new();
+  public virtual ObservableCollection<DoubleHeatMapData> Backing13Map { get; } = new();
+  public virtual ObservableCollection<DoubleHeatMapData> Backing23Map { get; } = new();
 
-  private object _lock = new object();
+  private object _lock = new();
   private MapModel _activeMap;
   protected AnalysysMap()
   {
