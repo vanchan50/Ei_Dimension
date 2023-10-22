@@ -40,10 +40,10 @@ public class DIOSApp
     BarcodeReader = new USBBarcodeReader(Logger);
   }
 
-  public void StartOperation(IReadOnlyCollection<Well> wells, string plateId = null)
+  public void StartOperation(IReadOnlyCollection<Well> wells, PlateSize plateSize, string plateId = null)
   {
     Publisher.ResultsFile.MakeNew();
-    Results.StartNewPlateReport(plateId);
+    Results.StartNewPlateReport(plateSize, plateId);
     Logger.Log(Publisher.ReportActivePublishingFlags());
     Device.StartOperation(wells, Results.OutputBeadsCollector);
     ResultsProc.StartBeadProcessing();//call after StartOperation, so IsMeasurementGoing == true

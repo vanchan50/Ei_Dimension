@@ -19,10 +19,36 @@ public class WellsSelectViewModel
   public virtual Visibility Table384Visible { get; set; } = Visibility.Hidden;
   public virtual ObservableCollection<WellTableRow> Table96Wells { get; set; } = new();
   public virtual ObservableCollection<WellTableRow> Table384Wells { get; set; } = new();
-  public int CurrentTableSize { get; private set; } = 0;
+
+  public int CurrentTableSize
+  {
+    get
+    {
+      return _currentTableSize;
+    }
+    private set
+    {
+      _currentTableSize = value;
+      switch (value)
+      {
+        case 1:
+          CurrentPlate = PlateSize.Tube;
+          break;
+        case 96:
+          CurrentPlate = PlateSize.Plate96;
+          break;
+        case 384:
+          CurrentPlate = PlateSize.Plate384;
+          break;
+      }
+    }
+  }
+
+  public PlateSize CurrentPlate { get; private set; }
   private List<(int row, int col)> _selectedWellIndices = new();
   public static WellsSelectViewModel Instance { get; private set; }
   public virtual bool SquareSelActive { get; set; }
+  private int _currentTableSize = 0;
 
   protected WellsSelectViewModel()
   {
@@ -138,7 +164,7 @@ public class WellsSelectViewModel
     PlateCustomizationViewModel.Instance.ShowView();
   }
 
-  public List<Well> OutputWells(IReadOnlyCollection<int> regions)
+  public List<Well> OutputWells(IReadOnlyCollection<(int Number, string Name)> regions)
   {
     List<Well> wells;
     if (CurrentTableSize == 1)  //tube
@@ -152,7 +178,7 @@ public class WellsSelectViewModel
     return wells;
   }
 
-  private Well MakeWell(byte row, byte col, IReadOnlyCollection<int> regions)
+  private Well MakeWell(byte row, byte col, IReadOnlyCollection<(int Number, string Name)> regions)
   {
     var volRes = uint.Parse(DashboardViewModel.Instance.Volumes[0]);
     var washRes = uint.Parse(DashboardViewModel.Instance.Volumes[1]); 
@@ -199,7 +225,7 @@ public class WellsSelectViewModel
     return wells;
   }
 
-  private List<Well> GetWellsFromPlate(IReadOnlyCollection<int> regions)
+  private List<Well> GetWellsFromPlate(IReadOnlyCollection<(int Number, string Name)> regions)
   {
     var wells = new List<Well>();
     var plate = CurrentTableSize == 96 ? Table96Wells : Table384Wells;

@@ -1,4 +1,5 @@
 ﻿using DIOS.Core;
+using DIOS.Core.HardwareIntercom;
 
 namespace DIOS.Application;
 
@@ -42,9 +43,9 @@ public class RunResults
     return CurrentWellResults.MinPerAllRegionsAchieved(minPerRegion);
   }
 
-  public void StartNewPlateReport(string plateId = null)
+  public void StartNewPlateReport(PlateSize plateSize, string plateId = null)
   {
-    PlateReport.Reset(plateId);
+    PlateReport.Reset(plateSize, plateId);
   }
 
   public void MakeWellStats()

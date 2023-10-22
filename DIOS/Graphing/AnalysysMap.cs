@@ -67,14 +67,14 @@ public class AnalysysMap
 
   public void InitBackingWellResults()
   {
-    List<int> regions = new List<int>();
+    List<(int Number, string Name)> regions = new();
     if (MapRegionsController.ActiveRegionNums.Count > 0)
     {
       foreach (var reg in MapRegionsController.ActiveRegionNums)
       {
         if (reg == 0)
           continue;
-        regions.Add(reg);
+        regions.Add((reg, reg.ToString()));
       }
     }
     BackingWResults.Reset(regions);
@@ -82,15 +82,15 @@ public class AnalysysMap
 
   public void FillBackingMap()
   {
-    foreach (var regionNumber in BackingWResults.CurrentActiveRegions)
+    foreach (var region in BackingWResults.CurrentActiveRegions)
     {
-      if (_activeMap.Regions.TryGetValue(regionNumber, out var region))
+      if (_activeMap.Regions.TryGetValue(region.Number, out var mapRegion))
       {
-        var x = HeatMapPoint.bins[region.Center.x];
-        var y = HeatMapPoint.bins[region.Center.y];
+        var x = HeatMapPoint.bins[mapRegion.Center.x];
+        var y = HeatMapPoint.bins[mapRegion.Center.y];
         lock (_lock)
         {
-          var value = BackingWResults.GetReporterResultsByRegion(regionNumber).Average();
+          var value = BackingWResults.GetReporterResultsByRegion(region.Number).Average();
           Backing12Map.Add(new DoubleHeatMapData(x, y, value));
         }
       }

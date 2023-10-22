@@ -187,7 +187,11 @@ public class TemplateSelectViewModel
 
             for (var i = 0; i < MapRegionsController.RegionsList.Count - 1; i++)
             {
-              MapRegionsController.RegionsList[i + 1].Name[0] = newTemplate.RegionsNamesList[i];
+              var regionName = newTemplate.RegionsNamesList[i];
+              if (regionName is not "")
+              {
+                MapRegionsController.RegionsList[i + 1].Name[0] = regionName;
+              }
               if (newTemplate.ActiveRegions[i])
               {
                 App.MapRegions.AddActiveRegion(MapRegionsController.RegionsList[i+1].Number);

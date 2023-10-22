@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace DIOS.Core;
+﻿namespace DIOS.Core;
 
 /// <summary>
 /// The CL2/CL1 2-D Domain

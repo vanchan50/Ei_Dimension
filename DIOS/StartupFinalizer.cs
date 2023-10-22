@@ -3,7 +3,6 @@ using System;
 using Ei_Dimension.Controllers;
 using Ei_Dimension.Graphing.HeatMap;
 using DIOS.Core.HardwareIntercom;
-using DIOS.Application;
 using DIOS.Core;
 using System.IO;
 using System.Windows;

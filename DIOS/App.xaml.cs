@@ -323,8 +323,7 @@ public partial class App : Application
     switch (DiosApp.Device.Mode)
     {
       case OperationMode.Normal:
-        var header = MapRegionsController.GetLegacyReportHeader(DiosApp.Publisher.IncludeReg0InPlateSummary);
-        var legacyReport = DiosApp.Results.PlateReport.LegacyReport(header, DiosApp.Publisher.IncludeReg0InPlateSummary);
+        var legacyReport = DiosApp.Results.PlateReport.LegacyReport(DiosApp.Publisher.IncludeReg0InPlateSummary);
         OutputLegacyReport(legacyReport);
 
         if (DiosApp.RunPlateContinuously)

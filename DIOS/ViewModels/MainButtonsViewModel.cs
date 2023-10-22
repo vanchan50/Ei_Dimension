@@ -108,7 +108,7 @@ public class MainButtonsViewModel
       return;
     }
 
-    HashSet<int> regions = null;
+    HashSet<(int Number, string Name)> regions = new();
     switch (App.DiosApp.Device.Mode)
     {
       case OperationMode.Normal:
@@ -119,7 +119,12 @@ public class MainButtonsViewModel
         }
         MapRegionsController.ActiveRegionNums.Add(0);
         //DefaultRegionNaming();
-        regions = MapRegionsController.ActiveRegionNums;
+        foreach (var activeRegionNum in MapRegionsController.ActiveRegionNums)
+        {
+          var index = MapRegionsController.GetMapRegionIndex(activeRegionNum);
+          var mapRegion = MapRegionsController.RegionsList[index];
+          regions.Add((mapRegion.Number, mapRegion.Name[0]));
+        }
         break;
       case OperationMode.Calibration:
         App.MapRegions.RemoveNullTextBoxes();
@@ -173,11 +178,11 @@ public class MainButtonsViewModel
     ResultsViewModel.Instance.ClearCurrentCalibrationStats();
     if (App.DiosApp.Control == SystemControl.WorkOrder && !string.IsNullOrEmpty(DashboardViewModel.Instance.WorkOrder[0]))
     {
-      App.DiosApp.StartOperation(wells, DashboardViewModel.Instance.WorkOrder[0]);
+      App.DiosApp.StartOperation(wells, WellsSelectViewModel.Instance.CurrentPlate, DashboardViewModel.Instance.WorkOrder[0]);
     }
     else
     {
-      App.DiosApp.StartOperation(wells);
+      App.DiosApp.StartOperation(wells, WellsSelectViewModel.Instance.CurrentPlate);
     }
   }
 

@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -13,10 +12,10 @@ namespace Ei_Dimension.Controllers;
 public partial class MapRegionsController
 {
   //all existing region numbers in a string format
-  public static ObservableCollection<MapRegionData> RegionsList { get; } = new ObservableCollection<MapRegionData>();
+  public static ObservableCollection<MapRegionData> RegionsList { get; } = new();
   //All the selected Active regions. Passed to the MicroCy.StartingProcedure()
-  public static HashSet<int> ActiveRegionNums { get; } = new HashSet<int>(101);
-  public static HashSet<int> ActiveVerificationRegionNums { get; } = new HashSet<int>(101);
+  public static HashSet<int> ActiveRegionNums { get; } = new(101);
+  public static HashSet<int> ActiveVerificationRegionNums { get; } = new(101);
   //exceptional NUllregion-case
   public bool IsNullRegionActive { get { return _resultsTableController.NullTextboxActive; } }
 
@@ -26,24 +25,24 @@ public partial class MapRegionsController
 
   private static uint _tbCounter = 1;
   private static uint _nameTbCounter = 1;
-  private static readonly Thickness _regionsTbAlignment = new Thickness(10, 10, 0, 0);
-  private static readonly Thickness _lastRegionsTbAlignment = new Thickness(10, 10, 0, 10);
-  private static readonly Thickness _NameBoxAlignment = new Thickness(0, 10, 0, 0);
-  private static readonly Thickness _lastNameBoxAlignment = new Thickness(0, 10, 0, 10);
+  private static readonly Thickness _regionsTbAlignment = new(10, 10, 0, 0);
+  private static readonly Thickness _lastRegionsTbAlignment = new(10, 10, 0, 10);
+  private static readonly Thickness _NameBoxAlignment = new(0, 10, 0, 0);
+  private static readonly Thickness _lastNameBoxAlignment = new(0, 10, 0, 10);
   private static readonly Style _regionsStyle = (Style)App.Current.Resources.MergedDictionaries[6]["RegionFieldStyle"];
   private static readonly Style _regionsNamesStyle = (Style)App.Current.Resources.MergedDictionaries[5]["InputFieldStyle"];
   private static TextBox _lastRegionsBox;
   private static TextBox _lastRegionsNameBox;
   private static TextBox _lastValidationRegionsBox;
   private static TextBox _lastValidationReporterBox;
-  private static readonly Thickness _TbAlignment = new Thickness(5, 5, 5, 0);
+  private static readonly Thickness _TbAlignment = new(5, 5, 5, 0);
 
   private ResultsTableController _resultsTableController;
   private ValidationTableController _validationTableController;
   private NormalizationTableController _normalizationTableController;
   private DashboardTableController _dashboardTableController;
 
-  private static readonly SortedDictionary<int, int> _mapRegionNumberIndexDictionary = new SortedDictionary<int, int>();
+  private static readonly SortedDictionary<int, int> _mapRegionNumberIndexDictionary = new();
 
   public MapRegionsController(StackPanel RegionsBorder, StackPanel RegionsNamesBorder, ListBox resultsTable,
     StackPanel Db_Num, StackPanel Db_Name, StackPanel Validat_Num, StackPanel Validat_Reporter,
@@ -65,29 +64,6 @@ public partial class MapRegionsController
   {
     return !(ActiveRegionNums.Count == 0
              || (ActiveRegionNums.Count == 1 && ActiveRegionNums.Contains(0)));
-  }
-
-  public static string GetLegacyReportHeader(bool includeRegion0)
-  {
-    var bldr = new StringBuilder();
-    bldr.Append("\"Location\",");
-    bldr.Append("\"Sample\",");
-    foreach (var region in RegionsList)
-    {
-      if (region.Number == 0)
-      {
-        if (includeRegion0)
-        {
-          bldr.Append($"\"{region.GetLegacyHeader()}\",");
-        }
-        continue;
-      }
-      if(ActiveRegionNums.Contains(region.Number))
-        bldr.Append($"\"{region.GetLegacyHeader()}\",");
-    }
-    bldr.Append("\"Total Events\",");
-    bldr.Append("\"Notes\"");
-    return bldr.ToString();
   }
 
   public void FillRegions(bool loadByPage = false)

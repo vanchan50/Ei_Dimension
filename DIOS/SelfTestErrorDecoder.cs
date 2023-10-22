@@ -12,7 +12,7 @@ public static class SelfTestErrorDecoder
     {
       var msg = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Messages_Startup_Overpressure),
         Language.TranslationSource.Instance.CurrentCulture);
-      if (errorMessage == null)
+      if (errorMessage is null)
         errorMessage = "";
       errorMessage += $"{msg} [{result.StartupPressure}]\n";
     }
@@ -21,7 +21,7 @@ public static class SelfTestErrorDecoder
     {
       var msg = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Messages_Overpressure),
         Language.TranslationSource.Instance.CurrentCulture);
-      if (errorMessage == null)
+      if (errorMessage is null)
         errorMessage = "";
       errorMessage += $"{msg} [{result.Pressure}]\n";
     }
@@ -30,7 +30,7 @@ public static class SelfTestErrorDecoder
     {
       var msg = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Messages_MotorX_OutOfPos),
         Language.TranslationSource.Instance.CurrentCulture);
-      if (errorMessage == null)
+      if (errorMessage is null)
         errorMessage = "";
       errorMessage += $"{msg}\n";
     }
@@ -39,7 +39,7 @@ public static class SelfTestErrorDecoder
     {
       var msg = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Messages_MotorY_OutOfPos),
         Language.TranslationSource.Instance.CurrentCulture);
-      if (errorMessage == null)
+      if (errorMessage is null)
         errorMessage = "";
       errorMessage += $"{msg}\n";
     }
@@ -48,7 +48,7 @@ public static class SelfTestErrorDecoder
     {
       var msg = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Messages_MotorZ_OutOfPos),
         Language.TranslationSource.Instance.CurrentCulture);
-      if (errorMessage == null)
+      if (errorMessage is null)
         errorMessage = "";
       errorMessage += $"{msg}\n";
     }

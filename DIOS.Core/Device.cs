@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text;
 using DIOS.Core.HardwareIntercom;
 using DIOS.Core.MainMeasurementScript;
 using DIOS.Core.SelfTests;
@@ -260,7 +257,7 @@ public class Device
       SelfTestData data;
       while (!SelfTester.GetResult(out data))
       {
-        System.Threading.Thread.Sleep(100);
+        Thread.Sleep(100);
       }
 #if DEBUG
       _logger.Log("\nSelfTest Finished\n\n");

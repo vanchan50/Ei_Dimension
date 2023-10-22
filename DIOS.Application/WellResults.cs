@@ -15,7 +15,7 @@ public class WellResults
     Well = new Well(well);
     _calibrationStatsAccumulator.Reset();
     _backgroundStatsAccumulator.Reset();
-    _reporterManager.Reset(well.Regions);
+    _reporterManager.Reset(well.ActiveRegions);
     _measuredWellStats.Reset();
   }
 

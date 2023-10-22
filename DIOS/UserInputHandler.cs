@@ -1645,7 +1645,7 @@ internal static class UserInputHandler
           }
           failed = true;
           ErrorMessage = Settings.Default.PressureUnitsPSI ? "[2-40]" :
-            $"[{(2 * ComponentsViewModel.TOKILOPASCALCOEFFICIENT).ToString("f3")}-{(40 * ComponentsViewModel.TOKILOPASCALCOEFFICIENT).ToString("f3")}]";
+            $"[{(2 * ComponentsViewModel.TOKILOPASCALCOEFFICIENT):F3)}-{(40 * ComponentsViewModel.TOKILOPASCALCOEFFICIENT):F3)}]";
           break;
         case nameof(TemplateSelectViewModel.Instance.TemplateSaveName):
           var flag1 = false;

@@ -1,5 +1,4 @@
-﻿
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using Ei_Dimension.Core;
 
 namespace Ei_Dimension.Models;
@@ -50,10 +49,5 @@ public class MapRegionData : ObservableObject
     _name = new ObservableCollection<string> { NumberString };
     _targetReporterValue = new ObservableCollection<string> { "" };
     _mfiValue = new ObservableCollection<string> { "" };
-  }
-
-  public string GetLegacyHeader()
-  {
-    return $"{Name[0]} ({NumberString})";
   }
 }

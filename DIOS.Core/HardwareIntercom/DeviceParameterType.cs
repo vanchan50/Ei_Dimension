@@ -15,6 +15,9 @@ public enum DeviceParameterType
   IsInputSelectorAtPickup,
   CalibrationSuccess,
   Pressure,
+  /// <summary>
+  /// Max value of Pressure (0x22) during startup script
+  /// </summary>
   PressureAtStartup,
   ///<summary>Subparamter: Channel</summary>
   ChannelBias30C,

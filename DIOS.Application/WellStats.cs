@@ -2,6 +2,7 @@
 using System.Text;
 using DIOS.Core;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace DIOS.Application;
 
@@ -34,7 +35,7 @@ internal class WellStats
 
   public List<(int region, int medianFi)> GetReporterMeanFi()
   {
-    List<(int region, int medianFi)> list = new List<(int region, int mfi)>(100);
+    var list = new List<(int region, int mfi)>(100);
 
     foreach (var regionReport in _results)
     {
@@ -58,14 +59,20 @@ internal class WellStats
     return bldr.ToString();
   }
 
-  public string ToStringLegacy(FieldInfo property, bool includeRegion0)
+  public string ToStringLegacy(FieldInfo property, bool includeRegion0, IReadOnlySet<(int Number, string Name)> allRegionsInPlate)
   {
     var bldr = new StringBuilder();
     bldr.Append($"\"{Well.CoordinatesString()}\",");
     string Sample = "";
     bldr.Append($"\"{Sample}\",");
-    foreach (var result in _results)
+    foreach (var region in allRegionsInPlate)
     {
+      var result = _results.Find(x => x.Region == region.Number);
+      if (result is null)
+      {
+        bldr.Append("\"#\",");
+        continue;
+      }
       if (result.Region == 0 && !includeRegion0)
       {
         continue;

@@ -5,13 +5,13 @@ namespace DIOS.Application;
 public class ReporterResultManager
 {
   public int RegionsCount { get; private set; }
-  public IReadOnlyCollection<int> CurrentActiveRegions { get; private set; }
+  public IReadOnlyCollection<(int Number, string Name)> CurrentActiveRegions { get; private set; }
 
   private readonly List<RegionReporterResult> _reporterPerRegion = new();
   private readonly SortedDictionary<int, int> _regionIndexDictionary = new();//region,position
   private int _non0RegionsCount;  //cached data for optimization. discard region 0 from calculation. only for minPerReg case
 
-  public void Reset(IReadOnlyCollection<int> regions)
+  public void Reset(IReadOnlyCollection<(int Number, string Name)> regions)
   {
     _reporterPerRegion.Clear();
     _regionIndexDictionary.Clear();
@@ -22,13 +22,13 @@ public class ReporterResultManager
     foreach (var region in CurrentActiveRegions)
     {
       //skip region0 to make it the last one. if it is there at all
-      if (region == 0)
+      if (region.Number == 0)
       {
         containsRegion0 = true;
         continue;
       }
-      _regionIndexDictionary.Add((ushort)region, _reporterPerRegion.Count);
-      _reporterPerRegion.Add(new RegionReporterResult(region));
+      _regionIndexDictionary.Add((ushort)region.Number, _reporterPerRegion.Count);
+      _reporterPerRegion.Add(new RegionReporterResult(region.Number));
     }
     //region 0 has to be the last in _wellResults
     if (containsRegion0)
