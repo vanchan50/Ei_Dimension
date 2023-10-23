@@ -27,7 +27,7 @@ namespace DIOS.Core;
 /// </summary>
 public class Device
 {
-  public SystemActivity SystemMonitor { get; } = new();
+  public SystemActivity SystemMonitor { get; }
   /// <summary>
   /// Abstractions on the hardware commands and parameters
   /// </summary>
@@ -170,6 +170,7 @@ public class Device
   public Device(ISerial connection, ILogger logger)
   {
     _logger = logger;
+    SystemMonitor = new(_logger);
     SelfTester = new SelfTester(this, logger);
     _beadProcessor = new BeadProcessor(this);
     var scriptTracker = new HardwareScriptTracker();

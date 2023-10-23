@@ -591,7 +591,7 @@ internal class IncomingUpdateHandler
           var list = MainButtonsViewModel.Instance.ActiveList;
           for (var i = 0; i < 16; i++)
           {
-            if ((parameter.Parameter & (1 << i)) != 0)
+            if ((parameter.Parameter & (1 << i)) is not 0)
             {
               if (!list.Contains(SyncElements[i]))
                 list.Add(SyncElements[i]);
