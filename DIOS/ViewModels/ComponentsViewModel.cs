@@ -14,36 +14,36 @@ namespace Ei_Dimension.ViewModels;
 public class ComponentsViewModel
 {
   public virtual ObservableCollection<string> InputSelectorState { get; set; }
-  public int IInputSelectorState { get; set; }
+  public int IInputSelectorState { get; set; } = 0;
 
-  public virtual ObservableCollection<bool> ValvesStates { get; set; }
+  public virtual ObservableCollection<bool> ValvesStates { get; set; } = new(){ false, false, false, false };
 
-  public virtual ObservableCollection<bool> LasersActive { get; set; }
-  public virtual ObservableCollection<string> LaserRedPowerValue { get; set; }
-  public virtual ObservableCollection<string> LaserGreenPowerValue { get; set; }
-  public virtual ObservableCollection<string> LaserVioletPowerValue { get; set; }
+  public virtual ObservableCollection<bool> LasersActive { get; set; } = new(){ true, true, true };
+  public virtual ObservableCollection<string> LaserRedPowerValue { get; set; } = new(){ "" };
+  public virtual ObservableCollection<string> LaserGreenPowerValue { get; set; } = new(){ "" };
+  public virtual ObservableCollection<string> LaserVioletPowerValue { get; set; } = new(){ "" };
 
   public virtual ObservableCollection<DropDownButtonContents> SyringeControlItems { get; set; }
   public virtual string SelectedSheathContent { get; set; }
   public virtual string SelectedSampleAContent { get; set; }
   public virtual string SelectedSampleBContent { get; set; }
-  public virtual ObservableCollection<string> SyringeControlSheathValue { get; set; }
-  public virtual ObservableCollection<string> SyringeControlSampleAValue { get; set; }
-  public virtual ObservableCollection<string> SyringeControlSampleBValue { get; set; }
+  public virtual ObservableCollection<string> SyringeControlSheathValue  { get; set; } = new(){ "" };
+  public virtual ObservableCollection<string> SyringeControlSampleAValue { get; set; } = new(){ "" };
+  public virtual ObservableCollection<string> SyringeControlSampleBValue { get; set; } = new(){ "" };
   public virtual string GetPositionToggleButtonState { get; set; }
-  public virtual ObservableCollection<bool> GetPositionToggleButtonStateBool { get; set; }
-  public virtual ObservableCollection<string> GetPositionTextBoxInputs { get; set; }
+  public virtual ObservableCollection<bool> GetPositionToggleButtonStateBool { get; set; } = new(){ false };
+  public virtual ObservableCollection<string> GetPositionTextBoxInputs { get; set; } = new(){ "", "", "" };
 
-  public virtual bool SamplingActive { get; set; }
-  public virtual bool SingleStepDebugActive { get; set; }
+  public virtual bool SamplingActive { get; set; } = false;
+  public virtual bool SingleStepDebugActive { get; set; } = false;
 
-  public virtual ObservableCollection<string> MaxPressureBox { get; set; }
+  public virtual ObservableCollection<string> MaxPressureBox { get; set; } = new(){ "" };
   public virtual ObservableCollection<string> StatisticsCutoffBox { get; set; }
 
   public virtual bool PressureMonToggleButtonState { get; set; }
   public virtual bool PressureUnitToggleButtonState { get; set; }
-  public virtual ObservableCollection<string> PressureUnit { get; set; } = new ObservableCollection<string> { "" };
-  public virtual ObservableCollection<string> PressureMon { get; set; } = new ObservableCollection<string> { "", "" };
+  public virtual ObservableCollection<string> PressureUnit { get; set; } = new(){ "" };
+  public virtual ObservableCollection<string> PressureMon { get; set; } = new(){ "", "" };
   public double ActualPressure { get; set; }
   public double MaxPressure { get; set; } //TextBoxHandler line 114
   public const double TOKILOPASCALCOEFFICIENT = 6.89476;
@@ -59,13 +59,12 @@ public class ComponentsViewModel
   public ChannelConfiguration SelectedChConfigIndex { get; set; } = ChannelConfiguration.Standard;
 
   public byte[] SyringeControlStates { get; } = { 0, 0, 0 };
-  private ushort _activeLasers;
+  private ushort _activeLasers = 7;
   private readonly string _loaderPath;
   private const string BOOTLOADEREXEPATH = "DIOS_FW_Loader.exe";
 
   protected ComponentsViewModel()
   {
-    ValvesStates = new ObservableCollection<bool> { false, false, false, false };
     InputSelectorState = new ObservableCollection<string>
     {
       Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Components_To_Cuvet),
@@ -73,13 +72,6 @@ public class ComponentsViewModel
       Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Components_To_Pickup),
         Language.TranslationSource.Instance.CurrentCulture)
     };
-    IInputSelectorState = 0;
-
-    LasersActive = new ObservableCollection<bool> { true, true, true };
-    LaserRedPowerValue = new ObservableCollection<string> {""};
-    LaserGreenPowerValue = new ObservableCollection<string> {""};
-    LaserVioletPowerValue = new ObservableCollection<string> {""};
-    _activeLasers = 7;
 
     var RM = Language.Resources.ResourceManager;
     var curCulture = Language.TranslationSource.Instance.CurrentCulture;
@@ -102,34 +94,11 @@ public class ComponentsViewModel
     SelectedSheathContent = SyringeControlItems[0].Content;
     SelectedSampleAContent = SyringeControlItems[0].Content;
     SelectedSampleBContent = SyringeControlItems[0].Content;
-
-    SyringeControlSheathValue = new ObservableCollection<string> {""};
-    SyringeControlSampleAValue = new ObservableCollection<string> {""};
-    SyringeControlSampleBValue = new ObservableCollection<string> {""};
       
     GetPositionToggleButtonState = RM.GetString(nameof(Language.Resources.OFF), Language.TranslationSource.Instance.CurrentCulture);
-    GetPositionToggleButtonStateBool = new ObservableCollection<bool> { false };
-    GetPositionTextBoxInputs = new ObservableCollection<string> {"", "", ""};
-
-    SamplingActive = false;
-    SingleStepDebugActive = false;
       
-    MaxPressureBox = new ObservableCollection<string> { "" };
     StatisticsCutoffBox = new ObservableCollection<string> { (100 * Settings.Default.StatisticsTailDiscardPercentage).ToString() };
     SuppressWarnings = Settings.Default.SuppressWarnings;
-
-    if (Settings.Default.PressureUnitsPSI)
-    {
-      MaxPressureBox[0] = Settings.Default.MaxPressure.ToString();
-      PressureUnit[0] = RM.GetString(nameof(Language.Resources.Pressure_Units_PSI),
-        curCulture);
-    }
-    else
-    {
-      MaxPressureBox[0] = (Settings.Default.MaxPressure * TOKILOPASCALCOEFFICIENT).ToString("f3");
-      PressureUnit[0] = RM.GetString(nameof(Language.Resources.Pressure_Units_kPa),
-        curCulture);
-    }
 
     PressureUnitToggleButtonState = Settings.Default.PressureUnitsPSI;
 
@@ -223,9 +192,9 @@ public class ComponentsViewModel
     {
       PressureUnit[0] = RM.GetString(nameof(Language.Resources.Pressure_Units_PSI),
         curCulture);
-      PressureMon[0] = ActualPressure.ToString("f3");
-      PressureMon[1] = MaxPressure.ToString("f3");
-      MaxPressureBox[0] = Settings.Default.MaxPressure.ToString("f3");
+      PressureMon[0] = ActualPressure.ToString("F3");
+      PressureMon[1] = MaxPressure.ToString("F3");
+      MaxPressureBox[0] = (double.Parse(MaxPressureBox[0]) / TOKILOPASCALCOEFFICIENT).ToString("F3");
     }
     else
     {
@@ -237,7 +206,7 @@ public class ComponentsViewModel
 
       PressureMon[0] = actual.ToString("f3");
       PressureMon[1] = maxPressure.ToString("f3");
-      MaxPressureBox[0] = (Settings.Default.MaxPressure * TOKILOPASCALCOEFFICIENT).ToString("f3");
+      MaxPressureBox[0] = (double.Parse(MaxPressureBox[0]) * TOKILOPASCALCOEFFICIENT).ToString("F3");
     }
   }
 

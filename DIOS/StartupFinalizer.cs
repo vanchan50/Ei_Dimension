@@ -21,7 +21,7 @@ internal static class StartupFinalizer
   /// Finish loading the UI. Should be called only once, after all the views have been loaded.
   /// Constructs the UI update timer
   /// </summary>
-  public static async void Run()
+  public static void Run()
   {
     if (_done)
       throw new Exception("StartupFinalizer can only be called once");
@@ -29,7 +29,7 @@ internal static class StartupFinalizer
 
     SetupDevice();
     if (!System.Windows.Input.Keyboard.IsKeyDown(System.Windows.Input.Key.LeftCtrl))
-      App.DiosApp.Device.StartSelfTest();
+      App.DiosApp.Device.Hardware.SendCommand(DeviceCommandType.Startup);
     Settings.Default.SanityCheckEnabled = false;
     Settings.Default.Save();
     if (!Settings.Default.SanityCheckEnabled)
@@ -89,22 +89,7 @@ internal static class StartupFinalizer
     IntPtr windowHandle = new System.Windows.Interop.WindowInteropHelper(App.Current.MainWindow).Handle;
     USBWatchdog.Setup(windowHandle, App.DiosApp.ReconnectUSB, App.DiosApp.DisconnectedUSB);
 
-#if DEBUG
-    Notification.ShowError("Motor out of position messages are suppressed in StartupFinalizer");
-#endif
-
-    var selfTestResult = await App.DiosApp.Device.GetSelfTestResultAsync();
-
-    App.Logger.Log("Motor out of position messages are suppressed");
-    selfTestResult.MotorX = null;
-    selfTestResult.MotorY = null;
-    selfTestResult.MotorZ = null;
-
-    string selfTestErrorMessage = SelfTestErrorDecoder.Decode(selfTestResult);
-    if (selfTestErrorMessage != null)
-      Notification.ShowError(selfTestErrorMessage);
-      
-    App.Logger.Log($"Detected Board Rev v{App.DiosApp.Device.BoardVersion}");
+    //App.Logger.Log($"Detected Board Rev v{App.DiosApp.Device.BoardVersion}");
     App.Logger.Log(MainViewModel.Instance.AppVersion);
 #if DEBUG
     App.Logger.Log("DEBUG MODE");
@@ -136,7 +121,6 @@ internal static class StartupFinalizer
     App.DiosApp.Terminator.MinPerRegion = Settings.Default.MinPerRegion;
     App.DiosApp.Terminator.TotalBeadsToCapture = Settings.Default.BeadsToCapture;
     App.DiosApp.Terminator.TerminationTime = Settings.Default.TerminationTimer;
-    App.DiosApp.Device.MaxPressure = Settings.Default.MaxPressure;
     App.DiosApp.Device.ReporterScaling = Settings.Default.ReporterScaling;
     var hiSensChannel = Settings.Default.SensitivityChannelB ? HiSensitivityChannel.GreenB : HiSensitivityChannel.GreenC;
     App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.HiSensitivityChannel, hiSensChannel);
@@ -156,6 +140,7 @@ internal static class StartupFinalizer
     App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.WashStationXCenterCoordinate);
     App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.GreenAVoltage);
     App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.WashStationDepth);
+    App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.PressureWarningLevel);
     App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.MotorX, MotorParameterType.EncoderSteps);
     App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.MotorY, MotorParameterType.EncoderSteps);
     App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.MotorZ, MotorParameterType.EncoderSteps);

@@ -173,7 +173,7 @@ public class HardwareInterface
         commandCode = 0x08;
         fparam = value;
         break;
-      case DeviceParameterType.PressureAtStartup:
+      case DeviceParameterType.PressureWarningLevel:
         commandCode = 0x0C;
         fparam = value;
         break;
@@ -1138,7 +1138,7 @@ public class HardwareInterface
       case DeviceParameterType.CalibrationMargin:
         commandCode = 0x08;
         break;
-      case DeviceParameterType.PressureAtStartup:
+      case DeviceParameterType.PressureWarningLevel:
         commandCode = 0x0C;
         break;
       case DeviceParameterType.ValveCuvetDrain:

@@ -1,7 +1,6 @@
 ﻿using System.Text;
 using DIOS.Core.HardwareIntercom;
 using DIOS.Core.MainMeasurementScript;
-using DIOS.Core.SelfTests;
 
 /* a read can be terminated in many different ways:
  * 1. Manually with the END SECTION READ button
@@ -103,10 +102,6 @@ public class Device
   {
     get { return _beadProcessor.Normalization; }
   }
-  /// <summary>
-  /// Max allowed pressure of sheath in a flow cell
-  /// </summary>
-  public float MaxPressure { get; set; }
   public bool IsPlateEjected { get; internal set; }
   public float ExtendedRangeCL1Threshold
   {
@@ -155,7 +150,6 @@ public class Device
   internal bool SingleSyringeMode { get; set; }
   internal float HdnrTrans;
   internal float HDnrCoef;
-  internal readonly SelfTester SelfTester;
   internal readonly BeadProcessor _beadProcessor;
   internal readonly WellController _wellController = new();
   private readonly DataController _dataController;
@@ -171,7 +165,6 @@ public class Device
   {
     _logger = logger;
     SystemMonitor = new(_logger);
-    SelfTester = new SelfTester(this, logger);
     _beadProcessor = new BeadProcessor(this);
     var scriptTracker = new HardwareScriptTracker();
     #if DEBUG
@@ -240,33 +233,6 @@ public class Device
     wellreport.Replace(",", "]", wellreport.Length -1, 1);
     _logger.Log($"Number of wells to read: {wells.Count} {wellreport.ToString()}");
     _script.Start();
-  }
-
-  public void StartSelfTest()
-  {
-    SelfTester.FluidicsTest();
-  }
-
-  /// <summary>
-  /// Polls the device once per 100 ms until the test result is ready
-  /// </summary>
-  /// <returns></returns>
-  public async Task<SelfTestData> GetSelfTestResultAsync()
-  {
-    var t = new Task<SelfTestData>(() =>
-    {
-      SelfTestData data;
-      while (!SelfTester.GetResult(out data))
-      {
-        Thread.Sleep(100);
-      }
-#if DEBUG
-      _logger.Log("\nSelfTest Finished\n\n");
-#endif
-      return data;
-    });
-    t.Start();
-    return await t;
   }
 
   public void EjectPlate()

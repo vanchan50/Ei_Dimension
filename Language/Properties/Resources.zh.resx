@@ -153,9 +153,6 @@
   <data name="Analysis_Plot3D" xml:space="preserve">
     <value>三维图表</value>
   </data>
-  <data name="Button_Power_Off_Sys" xml:space="preserve">
-    <value>关机</value>
-  </data>
   <data name="Button_Update" xml:space="preserve">
     <value>更新</value>
   </data>
@@ -789,20 +786,8 @@ Volume, µL</value>
   <data name="Messages_MinPerReg_RequiresAtLeast1" xml:space="preserve">
     <value>‘单区最小计数'需要至少一个激活区域</value>
   </data>
-  <data name="Messages_MotorX_OutOfPos" xml:space="preserve">
-    <value>X马达 初始位置错误</value>
-  </data>
-  <data name="Messages_MotorY_OutOfPos" xml:space="preserve">
-    <value>Y马达 初始位置错误</value>
-  </data>
-  <data name="Messages_MotorZ_OutOfPos" xml:space="preserve">
-    <value>Z马达 初始位置错误</value>
-  </data>
   <data name="Messages_NoWellsOrTube_Selected" xml:space="preserve">
     <value>未选择孔板位置或单管</value>
-  </data>
-  <data name="Messages_Overpressure" xml:space="preserve">
-    <value>液压过大</value>
   </data>
   <data name="Messages_Power_Off_Sys" xml:space="preserve">
     <value>关机</value>
@@ -821,9 +806,6 @@ Volume, µL</value>
   </data>
   <data name="Messages_Sheath_Empty" xml:space="preserve">
     <value>鞘液已用完</value>
-  </data>
-  <data name="Messages_Startup_Overpressure" xml:space="preserve">
-    <value>开机液压过大</value>
   </data>
   <data name="Messages_VerRegions_NotSelected" xml:space="preserve">
     <value>未选择验证区域</value>

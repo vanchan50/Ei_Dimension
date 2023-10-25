@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using System.Windows.Media;
 using DIOS.Core;
 using DIOS.Core.HardwareIntercom;
 using Ei_Dimension.ViewModels;
@@ -627,31 +628,26 @@ internal class IncomingUpdateHandler
         }
         else if (parameter.Parameter == (int)SheathFlowError.HighPressure)
         {
-          if (parameter.FloatParameter > App.DiosApp.Device.MaxPressure)
+          void Act()
           {
-            void Act()
-            {
-              Environment.Exit(0);
-              lock (_callingThreadLock)
-              {
-                Monitor.Pulse(_callingThreadLock);
-              }
-            }
-            App.Current.Dispatcher.Invoke(() =>
-            {
-              var msg1 = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Messages_Pressure_Overload),
-                Language.TranslationSource.Instance.CurrentCulture);
-              var msg2 = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Messages_CheckForWasteLineObstructions),
-                Language.TranslationSource.Instance.CurrentCulture);
-              var msg3 = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Button_Power_Off_Sys),
-                Language.TranslationSource.Instance.CurrentCulture);
-              Notification.Show($"{msg1}\n{msg2}", Act,
-                msg3);
-            });
             lock (_callingThreadLock)
             {
-              Monitor.Wait(_callingThreadLock);
+              Monitor.Pulse(_callingThreadLock);
             }
+          }
+
+          App.Current.Dispatcher.Invoke(() =>
+          {
+            var msg1 = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Messages_Pressure_Overload),
+              Language.TranslationSource.Instance.CurrentCulture);
+            var msg2 = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Messages_CheckForWasteLineObstructions),
+              Language.TranslationSource.Instance.CurrentCulture);
+            Notification.Show($"{msg1}\n{msg2}", Act,
+              "OK", new SolidColorBrush(Color.FromRgb(0xFF, 0x67, 0x00)));
+          });
+          lock (_callingThreadLock) //will hang "ReplyFromMC" thread until pulsed. Is that the desired behaviour?
+          {
+            Monitor.Wait(_callingThreadLock);
           }
         }
         break;
@@ -828,6 +824,17 @@ internal class IncomingUpdateHandler
             break;
         }
         update = () => ComponentsViewModel.Instance.ChConfigItems[pos20].Click(4);
+        break;
+      case DeviceParameterType.PressureWarningLevel:
+        update = () =>
+        {
+          double maxPressureVal = parameter.FloatParameter;
+          if (!Settings.Default.PressureUnitsPSI)
+          {
+            maxPressureVal *= ComponentsViewModel.TOKILOPASCALCOEFFICIENT;
+          }
+          ComponentsViewModel.Instance.MaxPressureBox[0] = maxPressureVal.ToString(FormatWith3FloatingDecimals);
+        };
         break;
     }
     if (update != null)

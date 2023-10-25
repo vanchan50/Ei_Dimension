@@ -158,10 +158,6 @@ Align Motor</value>
   <data name="Analysis_Plot3D" xml:space="preserve">
     <value>3D Chart</value>
   </data>
-  <data name="Button_Power_Off_Sys" xml:space="preserve">
-    <value>Power Off
-  System</value>
-  </data>
   <data name="Button_Update" xml:space="preserve">
     <value>Update</value>
   </data>
@@ -923,20 +919,8 @@ Update the Firmware?</value>
   <data name="Messages_MinPerReg_RequiresAtLeast1" xml:space="preserve">
     <value>"Min Per Region" End of Read requires at least 1 active region</value>
   </data>
-  <data name="Messages_MotorX_OutOfPos" xml:space="preserve">
-    <value>Out Of Position: Motor X</value>
-  </data>
-  <data name="Messages_MotorY_OutOfPos" xml:space="preserve">
-    <value>Out Of Position: Motor Y</value>
-  </data>
-  <data name="Messages_MotorZ_OutOfPos" xml:space="preserve">
-    <value>Out Of Position: Motor Z</value>
-  </data>
   <data name="Messages_NoWellsOrTube_Selected" xml:space="preserve">
     <value>No wells or Tube selected</value>
-  </data>
-  <data name="Messages_Overpressure" xml:space="preserve">
-    <value>OverPressure</value>
   </data>
   <data name="Messages_Power_Off_Sys" xml:space="preserve">
     <value>Power Off System</value>
@@ -955,9 +939,6 @@ Update the Firmware?</value>
   </data>
   <data name="Messages_Sheath_Empty" xml:space="preserve">
     <value>Sheath Empty</value>
-  </data>
-  <data name="Messages_Startup_Overpressure" xml:space="preserve">
-    <value>Startup OverPressure</value>
   </data>
   <data name="Messages_VerRegions_NotSelected" xml:space="preserve">
     <value>No Verification regions selected</value>

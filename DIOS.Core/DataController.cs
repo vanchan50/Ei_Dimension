@@ -248,10 +248,8 @@ internal class DataController
       case 0x08:
         outParameters = new ParameterUpdateEventArgs(DeviceParameterType.CalibrationMargin, floatParameter: cs.FParameter);
         break;
-      case 0x0C:  //pressure at startup
-        _device.SelfTester.Data.SetPressure(cs.FParameter);
-        _device.Hardware.SetParameter(DeviceParameterType.PressureAtStartup);  //Reset Pressure, since firmware forgets to do that
-        outParameters = new ParameterUpdateEventArgs(DeviceParameterType.PressureAtStartup, floatParameter: cs.FParameter);
+      case 0x0C:
+        outParameters = new ParameterUpdateEventArgs(DeviceParameterType.PressureWarningLevel, floatParameter: cs.FParameter);
         break;
       case 0x0E:
         //_device._beadProcessor._extendedRangeCL1Multiplier = cs.Parameter / 1000f;
@@ -429,11 +427,6 @@ internal class DataController
         outParameters = new ParameterUpdateEventArgs(DeviceParameterType.MotorZ, intParameter: (int)MotorParameterType.Slope, floatParameter: cs.Parameter);
         break;
       case 0x44:
-        if (_device.SelfTester.IsActive && !_device.SelfTester.Motorsinit[2])
-        {
-          _device.SelfTester.Data.MotorZ = cs.FParameter;
-          _device.SelfTester.Motorsinit[2] = true;
-        }
         outParameters = new ParameterUpdateEventArgs(DeviceParameterType.MotorZ, intParameter: (int)MotorParameterType.CurrentStep, floatParameter: cs.FParameter);
         break;
       case 0x92:
@@ -467,11 +460,6 @@ internal class DataController
         outParameters = new ParameterUpdateEventArgs(DeviceParameterType.MotorX, intParameter: (int)MotorParameterType.Slope, floatParameter: cs.Parameter);
         break;
       case 0x54:
-        if (_device.SelfTester.IsActive && !_device.SelfTester.Motorsinit[0])
-        {
-          _device.SelfTester.Data.MotorX = cs.FParameter;
-          _device.SelfTester.Motorsinit[0] = true;
-        }
         outParameters = new ParameterUpdateEventArgs(DeviceParameterType.MotorX, intParameter: (int)MotorParameterType.CurrentStep, floatParameter: cs.FParameter);
         break;
       case 0x56:
@@ -502,11 +490,6 @@ internal class DataController
         outParameters = new ParameterUpdateEventArgs(DeviceParameterType.MotorY, intParameter: (int)MotorParameterType.Slope, floatParameter: cs.Parameter);
         break;
       case 0x64:
-        if (_device.SelfTester.IsActive && !_device.SelfTester.Motorsinit[1])
-        {
-          _device.SelfTester.Data.MotorY = cs.FParameter;
-          _device.SelfTester.Motorsinit[1] = true;
-        }
         outParameters = new ParameterUpdateEventArgs(DeviceParameterType.MotorY, intParameter: (int)MotorParameterType.CurrentStep, floatParameter: cs.FParameter);
         break;
       case 0x66:
@@ -760,19 +743,14 @@ internal class DataController
       case 0xF9:
         switch (cs.Command)
         {
-          case 0xE0:
-            if (_device.SelfTester.IsActive)
-              _device.SelfTester.ScriptFinishedSignal();
-            break;
           case 0xE5:
             _device.IsPlateEjected = true;
-            _scriptTracker.SignalScriptEnd();
             break;
           case 0xE6:
             _device.IsPlateEjected = false;
-            _scriptTracker.SignalScriptEnd();
             break;
           //FALLTHROUGH
+          case 0xE0:
           case 0xE1:
           case 0xE2:
           case 0xE3:
@@ -786,9 +764,9 @@ internal class DataController
           case 0xED:
           case 0xEE:
           case 0xEF:
-            _scriptTracker.SignalScriptEnd();
             break;
         }
+        _scriptTracker.SignalScriptEnd();
         break;
       //FALLTHROUGH
       case 0xD0:

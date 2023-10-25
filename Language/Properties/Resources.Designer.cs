@@ -180,16 +180,6 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Power Off
-        ///  System.
-        /// </summary>
-        public static string Button_Power_Off_Sys {
-            get {
-                return ResourceManager.GetString("Button_Power_Off_Sys", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Update.
         /// </summary>
         public static string Button_Update {
@@ -2367,47 +2357,11 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Out Of Position: Motor X.
-        /// </summary>
-        public static string Messages_MotorX_OutOfPos {
-            get {
-                return ResourceManager.GetString("Messages_MotorX_OutOfPos", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Out Of Position: Motor Y.
-        /// </summary>
-        public static string Messages_MotorY_OutOfPos {
-            get {
-                return ResourceManager.GetString("Messages_MotorY_OutOfPos", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Out Of Position: Motor Z.
-        /// </summary>
-        public static string Messages_MotorZ_OutOfPos {
-            get {
-                return ResourceManager.GetString("Messages_MotorZ_OutOfPos", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to No wells or Tube selected.
         /// </summary>
         public static string Messages_NoWellsOrTube_Selected {
             get {
                 return ResourceManager.GetString("Messages_NoWellsOrTube_Selected", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to OverPressure.
-        /// </summary>
-        public static string Messages_Overpressure {
-            get {
-                return ResourceManager.GetString("Messages_Overpressure", resourceCulture);
             }
         }
         
@@ -2462,15 +2416,6 @@ namespace Ei_Dimension.Language {
         public static string Messages_Sheath_Empty {
             get {
                 return ResourceManager.GetString("Messages_Sheath_Empty", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Startup OverPressure.
-        /// </summary>
-        public static string Messages_Startup_Overpressure {
-            get {
-                return ResourceManager.GetString("Messages_Startup_Overpressure", resourceCulture);
             }
         }
         

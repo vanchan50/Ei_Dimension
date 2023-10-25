@@ -1627,18 +1627,17 @@ internal static class UserInputHandler
             {
               if ((fRes >= 2 && fRes <= 40) || _disableSanityCheck)
               {
-                Settings.Default.MaxPressure = fRes;
-                App.DiosApp.Device.MaxPressure = fRes;
+                App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.PressureWarningLevel, fRes);
                 break;
               }
             }
             else
             {
-              if (fRes >= 2 * ComponentsViewModel.TOKILOPASCALCOEFFICIENT && fRes <= 40 * ComponentsViewModel.TOKILOPASCALCOEFFICIENT)
+              if ((fRes >= 2 * ComponentsViewModel.TOKILOPASCALCOEFFICIENT && fRes <= 40 * ComponentsViewModel.TOKILOPASCALCOEFFICIENT) || _disableSanityCheck)
               {
+                //return to PSI for the FW
                 fRes /= (float)ComponentsViewModel.TOKILOPASCALCOEFFICIENT;
-                Settings.Default.MaxPressure = fRes;
-                App.DiosApp.Device.MaxPressure = fRes;
+                App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.PressureWarningLevel, fRes);
                 break;
               }
             }

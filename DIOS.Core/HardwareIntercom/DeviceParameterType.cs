@@ -16,9 +16,9 @@ public enum DeviceParameterType
   CalibrationSuccess,
   Pressure,
   /// <summary>
-  /// Max value of Pressure (0x22) during startup script
+  /// Max value of Pressure for the firmware to check for
   /// </summary>
-  PressureAtStartup,
+  PressureWarningLevel,
   ///<summary>Subparamter: Channel</summary>
   ChannelBias30C,
   ///<summary>Subparamter: SyringeSpeed</summary>
