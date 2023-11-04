@@ -51,9 +51,6 @@ public class ComponentsViewModel
   public static ComponentsViewModel Instance { get; private set; }
   public virtual bool SuppressWarnings { get; set; }
   public virtual bool ContinuousModeOn { get; set; }
-  public virtual Visibility ExtendedRangeVisible { get; set; } = Visibility.Hidden;
-  public virtual ObservableCollection<string> ExtendedRangeThresholds { get; set; } = new ObservableCollection<string> { "0", "0" };
-  public virtual ObservableCollection<string> ExtendedRangeMultipliers { get; set; } = new ObservableCollection<string> { "0", "0" };
   public virtual string SelectedChConfigContent { get; set; }
   public virtual ObservableCollection<DropDownButtonContents> ChConfigItems { get; set; }
   public ChannelConfiguration SelectedChConfigIndex { get; set; } = ChannelConfiguration.Standard;
@@ -72,40 +69,34 @@ public class ComponentsViewModel
       Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Components_To_Pickup),
         Language.TranslationSource.Instance.CurrentCulture)
     };
-
     var RM = Language.Resources.ResourceManager;
     var curCulture = Language.TranslationSource.Instance.CurrentCulture;
     SyringeControlItems = new ObservableCollection<DropDownButtonContents>
     {
-      new(RM.GetString(nameof(Language.Resources.Dropdown_Halt), curCulture), this),
-      new(RM.GetString(nameof(Language.Resources.Dropdown_Move_Absolute), curCulture), this),
-      new(RM.GetString(nameof(Language.Resources.Dropdown_Pickup), curCulture), this),
-      new(RM.GetString(nameof(Language.Resources.Dropdown_Pre_inject), curCulture), this),
-      new(RM.GetString(nameof(Language.Resources.Dropdown_Speed), curCulture), this),
-      new(RM.GetString(nameof(Language.Resources.Dropdown_Initialize), curCulture), this),
-      new(RM.GetString(nameof(Language.Resources.Dropdown_Boot), curCulture), this),
-      new(RM.GetString(nameof(Language.Resources.Dropdown_Valve_Left), curCulture), this),
-      new(RM.GetString(nameof(Language.Resources.Dropdown_Valve_Right), curCulture), this),
-      new(RM.GetString(nameof(Language.Resources.Dropdown_Micro_step), curCulture), this),
-      new(RM.GetString(nameof(Language.Resources.Dropdown_Speed_Preset), curCulture), this),
-      new(RM.GetString(nameof(Language.Resources.Dropdown_Pos), curCulture), this)
+      new(Language.TranslationSource.Instance[nameof(Language.Resources.Dropdown_Halt)], this),
+      new(Language.TranslationSource.Instance[nameof(Language.Resources.Dropdown_Move_Absolute)], this),
+      new(Language.TranslationSource.Instance[nameof(Language.Resources.Dropdown_Pickup)], this),
+      new(Language.TranslationSource.Instance[nameof(Language.Resources.Dropdown_Pre_inject)], this),
+      new(Language.TranslationSource.Instance[nameof(Language.Resources.Dropdown_Speed)], this),
+      new(Language.TranslationSource.Instance[nameof(Language.Resources.Dropdown_Initialize)], this),
+      new(Language.TranslationSource.Instance[nameof(Language.Resources.Dropdown_Boot)], this),
+      new(Language.TranslationSource.Instance[nameof(Language.Resources.Dropdown_Valve_Left)], this),
+      new(Language.TranslationSource.Instance[nameof(Language.Resources.Dropdown_Valve_Right)], this),
+      new(Language.TranslationSource.Instance[nameof(Language.Resources.Dropdown_Micro_step)], this),
+      new(Language.TranslationSource.Instance[nameof(Language.Resources.Dropdown_Speed_Preset)], this),
+      new(Language.TranslationSource.Instance[nameof(Language.Resources.Dropdown_Pos)], this)
     };
     DropDownButtonContents.ResetIndex();
     SelectedSheathContent = SyringeControlItems[0].Content;
     SelectedSampleAContent = SyringeControlItems[0].Content;
     SelectedSampleBContent = SyringeControlItems[0].Content;
       
-    GetPositionToggleButtonState = RM.GetString(nameof(Language.Resources.OFF), Language.TranslationSource.Instance.CurrentCulture);
+    GetPositionToggleButtonState = Language.TranslationSource.Instance[nameof(Language.Resources.OFF)];
       
     StatisticsCutoffBox = new ObservableCollection<string> { (100 * Settings.Default.StatisticsTailDiscardPercentage).ToString() };
     SuppressWarnings = Settings.Default.SuppressWarnings;
 
     PressureUnitToggleButtonState = Settings.Default.PressureUnitsPSI;
-
-    ExtendedRangeThresholds[0] = App.DiosApp.Device.ExtendedRangeCL1Threshold.ToString();
-    ExtendedRangeThresholds[1] = App.DiosApp.Device.ExtendedRangeCL2Threshold.ToString();
-    ExtendedRangeMultipliers[0] = App.DiosApp.Device.ExtendedRangeCL1Multiplier.ToString();
-    ExtendedRangeMultipliers[1] = App.DiosApp.Device.ExtendedRangeCL2Multiplier.ToString();
 
     ChConfigItems = new ObservableCollection<DropDownButtonContents>
     {
@@ -113,9 +104,8 @@ public class ComponentsViewModel
       new(RM.GetString(nameof(Language.Resources.Dropdown_Cells), curCulture), this),
       new(RM.GetString(nameof(Language.Resources.Dropdown_FM3D), curCulture), this),
       new(RM.GetString(nameof(Language.Resources.Dropdown_StandardPlusFSC), curCulture), this),
-      new(RM.GetString(nameof(Language.Resources.Dropdown_StandardPlusExt), curCulture), this),
-      new(RM.GetString(nameof(Language.Resources.Dropdown_OEMA), curCulture), this),
-      new(RM.GetString(nameof(Language.Resources.Dropdown_OEMPMT), curCulture), this)
+      new(RM.GetString(nameof(Language.Resources.Dropdown_OEMA), curCulture), this, 5),//intentionally skipping index = 4
+      new(RM.GetString(nameof(Language.Resources.Dropdown_OEMPMT), curCulture), this, 6)
     };
     SelectedChConfigContent = ChConfigItems[(int)SelectedChConfigIndex].Content;
     DropDownButtonContents.ResetIndex();
@@ -357,7 +347,7 @@ public class ComponentsViewModel
       Save, update,
       null, cancel, fontSize:38);
   }
-    
+
   public void StartupButtonClick()
   {
     UserInputHandler.InputSanityCheck();
@@ -381,19 +371,8 @@ public class ComponentsViewModel
     DirectMemoryAccessViewModel.Instance.ShowView();
   }
 
-  public void SaveExtRangeValuesToMap()
-  {
-    var cl1Threshold = float.Parse(ExtendedRangeThresholds[0]);
-    var cl2Threshold = float.Parse(ExtendedRangeThresholds[1]);
-    var cl1Multiplier = float.Parse(ExtendedRangeMultipliers[0]);
-    var cl2Multiplier = float.Parse(ExtendedRangeMultipliers[0]);
-    App.DiosApp.MapController.SaveExtendedRangeValues(cl1Threshold, cl2Threshold, cl1Multiplier, cl2Multiplier);
-  }
-
   public void FocusedBox(int num)
   {
-    var cl1SP = Views.ComponentsView.Instance.ExtendedRangeCL1.Children;
-    var cl2SP = Views.ComponentsView.Instance.ExtendedRangeCL2.Children;
     switch (num)
     {
       case 2:
@@ -416,35 +395,7 @@ public class ComponentsViewModel
         UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(StatisticsCutoffBox)), this, 0, Views.ComponentsView.Instance.CutoffTB);
         MainViewModel.Instance.NumpadToggleButton(Views.ComponentsView.Instance.CutoffTB);
         break;
-      case 9:
-        UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ExtendedRangeThresholds)), this, 0, (TextBox)cl1SP[0]);
-        MainViewModel.Instance.NumpadToggleButton((TextBox)cl1SP[0]);
-        break;
-      case 10:
-        UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ExtendedRangeMultipliers)), this, 0, (TextBox)cl1SP[1]);
-        MainViewModel.Instance.NumpadToggleButton((TextBox)cl1SP[1]);
-        break;
-      case 11:
-        UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ExtendedRangeThresholds)), this, 1, (TextBox)cl2SP[0]);
-        MainViewModel.Instance.NumpadToggleButton((TextBox)cl2SP[0]);
-        break;
-      case 12:
-        UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ExtendedRangeMultipliers)), this, 1, (TextBox)cl2SP[1]);
-        MainViewModel.Instance.NumpadToggleButton((TextBox)cl2SP[1]);
-        break;
     }
-  }
-
-  public void OnMapChanged(MapModel map)
-  {
-    ExtendedRangeMultipliers[0] = map.extendedRangeCL1Multiplier.ToString("F3");
-    ExtendedRangeMultipliers[1] = map.extendedRangeCL2Multiplier.ToString("F3");
-    App.DiosApp.Device.ExtendedRangeCL1Multiplier = map.extendedRangeCL1Multiplier;
-    App.DiosApp.Device.ExtendedRangeCL2Multiplier = map.extendedRangeCL2Multiplier;
-    ExtendedRangeThresholds[0] = map.extendedRangeCL1Threshold.ToString("F3");
-    ExtendedRangeThresholds[1] = map.extendedRangeCL2Threshold.ToString("F3");
-    App.DiosApp.Device.ExtendedRangeCL1Threshold = map.extendedRangeCL1Threshold;
-    App.DiosApp.Device.ExtendedRangeCL2Threshold = map.extendedRangeCL2Threshold;
   }
 
   public void TextChanged(TextChangedEventArgs e)
@@ -462,7 +413,8 @@ public class ComponentsViewModel
         OnPropertyChanged();
       }
     }
-    public byte Index { get; set; }
+
+    public byte Index { get; }
     private static byte _nextIndex = 0;
     private string _content;
     private static ComponentsViewModel _vm;
@@ -474,6 +426,16 @@ public class ComponentsViewModel
       }
       Content = content;
       Index = _nextIndex++;
+    }
+
+    public DropDownButtonContents(string content, ComponentsViewModel vm, byte index)
+    {
+      if (_vm == null)
+      {
+        _vm = vm;
+      }
+      Content = content;
+      Index = index;
     }
 
     public void Click(int num)
@@ -495,7 +457,6 @@ public class ComponentsViewModel
         case 4:
           _vm.SelectedChConfigContent = Content;
           _vm.SelectedChConfigIndex = (ChannelConfiguration)Index;
-          _vm.ExtendedRangeVisible = _vm.SelectedChConfigIndex == ChannelConfiguration.StandardPlusExt ? Visibility.Visible : Visibility.Hidden;
           App.SetChannelConfig((ChannelConfiguration)Index);
           break;
       }

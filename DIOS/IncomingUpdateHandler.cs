@@ -13,8 +13,6 @@ internal class IncomingUpdateHandler
     "Y_MOTOR", "Z_MOTOR", "WASH PUMP", "PRESSURE", "WASHING", "FAULT", "ALIGN MOTOR", "MAIN VALVE", "SINGLE STEP" };
 
   private readonly object _callingThreadLock = new();
-  private int _externalRangeMultipliersObtained;
-  private float[] _externalRangeMultipliersbuffer = {0, 0};
   private static readonly string FormatWithNoFloatingDedcimals = "F0";
   private static readonly string FormatWith1FloatingDedcimals = "F1";
   private static readonly string FormatWith3FloatingDecimals = "F3";
@@ -726,41 +724,6 @@ internal class IncomingUpdateHandler
           DirectMemoryAccessViewModel.Instance.FloatValue[0] = parameter.FloatParameter.ToString("F4");
         };
         break;
-      case DeviceParameterType.ExtendedRangeMultiplier:
-        //ExtendedRangeMultiplier must be requested always as a couple. otherwise the logic breaks
-        var type18 = (Channel)parameter.Parameter;
-        var pos18 = 0;
-        switch (type18)
-        {
-          case Channel.RedC:
-            pos18 = 0;
-            _externalRangeMultipliersbuffer[0] = parameter.FloatParameter;
-            break;
-          case Channel.RedD:
-            pos18 = 1;
-            _externalRangeMultipliersbuffer[1] = parameter.FloatParameter;
-            break;
-        }
-
-        if (Interlocked.Increment(ref _externalRangeMultipliersObtained) > 1)
-        {
-          _externalRangeMultipliersObtained = 0;
-          Action overwrite = () =>
-          {
-            ComponentsViewModel.Instance.ExtendedRangeMultipliers[0] = _externalRangeMultipliersbuffer[0].ToString(FormatWith3FloatingDecimals);
-            ComponentsViewModel.Instance.ExtendedRangeMultipliers[1] = _externalRangeMultipliersbuffer[1].ToString(FormatWith3FloatingDecimals);
-            App.DiosApp.Device.ExtendedRangeCL1Multiplier = _externalRangeMultipliersbuffer[0];
-            App.DiosApp.Device.ExtendedRangeCL2Multiplier = _externalRangeMultipliersbuffer[1];
-            ComponentsViewModel.Instance.SaveExtRangeValuesToMap();
-          };
-          App.Current.Dispatcher.BeginInvoke(() =>
-          {
-            Notification.Show($"New extended range Multipliers are:\n\tCL1: {_externalRangeMultipliersbuffer[0]}\n\tCL2: {_externalRangeMultipliersbuffer[1]}",
-              overwrite, "Apply new", null, "Keep Previous", fontSize: 34);
-          });
-        }
-        //update = () => CalibrationViewModel.Instance.ExtendedRangeMultipliers[pos18] = parameter.FloatParameter.ToString(FormatWith3FloatingDecimals);
-        break;
       case DeviceParameterType.FluidicPathLength:
         var type19 = (FluidicPathLength)parameter.Parameter;
         var pos19 = 0;
@@ -812,9 +775,6 @@ internal class IncomingUpdateHandler
             break;
           case ChannelConfiguration.StandardPlusFsc:
             pos20 = 3;
-            break;
-          case ChannelConfiguration.StandardPlusExt:
-            pos20 = 4;
             break;
           case ChannelConfiguration.OEMA:
             pos20 = 5;

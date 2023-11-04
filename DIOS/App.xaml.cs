@@ -385,9 +385,6 @@ public partial class App : Application
       if (CalibrationViewModel.Instance != null)
         CalibrationViewModel.Instance.OnMapChanged(map);
 
-      if (ComponentsViewModel.Instance != null)
-        ComponentsViewModel.Instance.OnMapChanged(map);
-
       if (ChannelsViewModel.Instance != null)
         ChannelsViewModel.Instance.OnMapChanged(map);
 

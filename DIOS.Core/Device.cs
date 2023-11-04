@@ -26,7 +26,7 @@ namespace DIOS.Core;
 /// </summary>
 public class Device
 {
-  public SystemActivity SystemMonitor { get; }
+  public SystemActivity SystemMonitor { get; } = new();
   /// <summary>
   /// Abstractions on the hardware commands and parameters
   /// </summary>
@@ -103,50 +103,6 @@ public class Device
     get { return _beadProcessor.Normalization; }
   }
   public bool IsPlateEjected { get; internal set; }
-  public float ExtendedRangeCL1Threshold
-  {
-    get
-    {
-      return _beadProcessor._extendedRangeCL1Threshold;
-    }
-    set
-    {
-      _beadProcessor._extendedRangeCL1Threshold = value;
-    }
-  } //Put it into hardwareInterface just for consistency? no matter there is no actual device parameter
-  public float ExtendedRangeCL2Threshold
-  {
-    get
-    {
-      return _beadProcessor._extendedRangeCL2Threshold;
-    }
-    set
-    {
-      _beadProcessor._extendedRangeCL2Threshold = value;
-    }
-  }
-  public float ExtendedRangeCL1Multiplier
-  {
-    get
-    {
-      return _beadProcessor._extendedRangeCL1Multiplier;
-    }
-    set
-    {
-      _beadProcessor._extendedRangeCL1Multiplier = value;
-    }
-  }
-  public float ExtendedRangeCL2Multiplier
-  {
-    get
-    {
-      return _beadProcessor._extendedRangeCL2Multiplier;
-    }
-    set
-    {
-      _beadProcessor._extendedRangeCL2Multiplier = value;
-    }
-  }
   internal bool SingleSyringeMode { get; set; }
   internal float HdnrTrans;
   internal float HDnrCoef;
@@ -164,7 +120,6 @@ public class Device
   public Device(ISerial connection, ILogger logger)
   {
     _logger = logger;
-    SystemMonitor = new(_logger);
     _beadProcessor = new BeadProcessor(this);
     var scriptTracker = new HardwareScriptTracker();
     #if DEBUG
@@ -224,7 +179,6 @@ public class Device
     }
     _logger.Log($"Operation Mode: {Mode}");
     _dataController.BeadEventSink = beadEventSink;
-    _logger.Log("Extended Range calculation: " + (_beadProcessor._extendedRangeEnabled ? "enabled" : "disabled"));
     StringBuilder wellreport = new StringBuilder("[");
     foreach (var well in wells)
     {

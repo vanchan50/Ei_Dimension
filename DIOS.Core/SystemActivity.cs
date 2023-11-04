@@ -5,18 +5,12 @@ namespace DIOS.Core;
 
 public class SystemActivity
 {
-  private ILogger _logger;
   private StringBuilder _sb = new();
   private BitArray _systemActivity = new(16, false);
   private static readonly string[] SyncElements = { "SHEATH", "SAMPLE_A", "SAMPLE_B", "FLASH", "END_WELL", "VALVES", "X_MOTOR",
     "Y_MOTOR", "Z_MOTOR", "WASH PUMP", "PRESSURE", "WASHING", "FAULT", "ALIGN MOTOR", "MAIN VALVE", "SINGLE STEP" };
 
-  public SystemActivity(ILogger logger)
-  {
-    _logger = logger;
-  }
-
-  internal void DecodeMessage(ushort message)
+  public string DecodeMessage(ushort message)
   {
     _sb.Clear()
       .Append("System Monitor: ");
@@ -30,8 +24,8 @@ public class SystemActivity
       else
         _systemActivity[i] = false;
     }
-    _sb.Remove(_sb.Length - 1, 2);
-    _logger.Log(_sb.ToString());
+    _sb.Remove(_sb.Length - 2, 2);
+    return _sb.ToString();
   }
 
   internal bool ContainsWashing()

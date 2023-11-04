@@ -100,8 +100,6 @@ public enum DeviceParameterType
   SampleSyringeSize,
   ///<summary>unique parameter, used by DirectFlashAccess feature</summary>
   DirectFlashValue,
-  ///<summary>Subparamter: Channel</summary>
-  ExtendedRangeMultiplier,
   TraySteps,
   SheathFlushVolume,
   IsWellEdgeAgitateActive,

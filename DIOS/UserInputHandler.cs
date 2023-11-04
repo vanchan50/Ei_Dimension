@@ -1815,66 +1815,6 @@ internal static class UserInputHandler
           failed = true;
           ErrorMessage = $"[0-{float.MaxValue}]";
           break;
-        case nameof(ComponentsViewModel.ExtendedRangeThresholds):
-          if (SelectedTextBox.index == 0)
-          {
-            if (float.TryParse(_tempNewString, out fRes))
-            {
-              if (fRes >= 0 && fRes <= float.MaxValue)// || _overrideSanityCheck)
-              {
-                App.DiosApp.Device.ExtendedRangeCL1Threshold = fRes;
-                ComponentsViewModel.Instance.SaveExtRangeValuesToMap();
-                break;
-              }
-            }
-            failed = true;
-            ErrorMessage = $"[0-{float.MaxValue}]";
-          }
-          if (SelectedTextBox.index == 1)
-          {
-            if (float.TryParse(_tempNewString, out fRes))
-            {
-              if (fRes >= 0 && fRes <= float.MaxValue)// || _overrideSanityCheck)
-              {
-                App.DiosApp.Device.ExtendedRangeCL2Threshold = fRes;
-                ComponentsViewModel.Instance.SaveExtRangeValuesToMap();
-                break;
-              }
-            }
-            failed = true;
-            ErrorMessage = $"[0-{float.MaxValue}]";
-          }
-          break;
-        case nameof(ComponentsViewModel.ExtendedRangeMultipliers):
-          if (SelectedTextBox.index == 0)
-          {
-            if (float.TryParse(_tempNewString, out fRes))
-            {
-              if (fRes >= 0 && fRes <= float.MaxValue)// || _overrideSanityCheck)
-              {
-                App.DiosApp.Device.ExtendedRangeCL1Multiplier = fRes;
-                ComponentsViewModel.Instance.SaveExtRangeValuesToMap();
-                break;
-              }
-            }
-            failed = true;
-            ErrorMessage = $"[0-{float.MaxValue}]";
-          }
-          if (SelectedTextBox.index == 1)
-          {
-            if (float.TryParse(_tempNewString, out fRes))
-            {
-              if (fRes >= 0 && fRes <= float.MaxValue)// || _overrideSanityCheck)
-              {
-                App.DiosApp.Device.ExtendedRangeCL2Multiplier = fRes;
-                ComponentsViewModel.Instance.SaveExtRangeValuesToMap();
-                break;
-              }
-            }
-            failed = true;
-            ErrorMessage = $"[0-{float.MaxValue}]";
-          }
-          break;
         case nameof(MotorsViewModel.TraySteps):
           if (float.TryParse(_tempNewString, out fRes))
           {

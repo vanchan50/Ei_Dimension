@@ -164,22 +164,6 @@ public class MapController
     _ = WriteToMap(map);
   }
 
-  public void SaveExtendedRangeValues(float cl1Threshold, float cl2Threshold, float cl1Multiplier, float cl2Multiplier)
-  {
-    var idx = MapList.FindIndex(x => x.mapName == ActiveMap.mapName);
-    var map = MapList[idx];
-
-    map.extendedRangeCL1Threshold = cl1Threshold;
-    map.extendedRangeCL2Threshold = cl2Threshold;
-    map.extendedRangeCL1Multiplier = cl1Multiplier;
-    map.extendedRangeCL2Multiplier = cl2Multiplier;
-
-    MapList[idx] = map;
-    ActiveMap = MapList[idx];
-
-    _ = WriteToMap(map);
-  }
-
   public bool SaveRegions(List<MapRegion> newRegions)
   {
     if (newRegions == null || newRegions.Count == 0)

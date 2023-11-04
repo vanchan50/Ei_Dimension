@@ -4,7 +4,7 @@ namespace DIOS.Application.Tests;
 
 public class MapControllerTest
 {
-  private MapController SUT = new MapController($"{Path.Combine(@"C:\Emissioninc", Environment.MachineName)}\\Config", new Fakelogger());
+  private MapController SUT = new($"{Path.Combine(@"C:\Emissioninc", Environment.MachineName)}\\Config", new Fakelogger());
 
   [Fact]
   public void GetMapIndexByName_ShouldReturnProperIndex_WhenMapNameExists()

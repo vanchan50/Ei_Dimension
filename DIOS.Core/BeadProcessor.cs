@@ -2,18 +2,13 @@
 
 internal class BeadProcessor
 {
-  public NormalizationSettings Normalization { get; } = new NormalizationSettings();
+  public NormalizationSettings Normalization { get; } = new();
   private float _greenMin;
   private float _greenMaj;
   private readonly Device _device;
-  private readonly ClassificationMap _classificationMap = new ClassificationMap();
+  private readonly ClassificationMap _classificationMap = new();
   internal MapModel _map;
   internal HiSensitivityChannel SensitivityChannel { get; set; }
-  internal float _extendedRangeCL1Multiplier = 1;
-  internal float _extendedRangeCL2Multiplier = 1;
-  internal float _extendedRangeCL1Threshold = 50000;
-  internal float _extendedRangeCL2Threshold = 50000;
-  internal bool _extendedRangeEnabled = false;
   internal bool _channelRedirectionEnabled = false;
   private float[] _compensatedCoordinatesCache = { 0,0,0,0 }; //cl0,cl1,cl2,cl3
   internal float _inverseReporterScaling;
@@ -70,26 +65,17 @@ internal class BeadProcessor
       //red channels are processed, and are written in the finalization part
 
       ChannelRedirection(in rawBead);
-      outBead.cl0 = rawBead.cl0;
-      outBead.cl1 = rawBead.greenB;
-      outBead.cl2 = rawBead.greenC;
-      outBead.cl3 = rawBead.cl3;
     }
     else
     {
       //normal case
-      AssignSensitivityChannels(in rawBead);
       CalculateCompensatedCoordinates(in rawBead);
-      if (_extendedRangeEnabled)
-      {
-        CalculateCompensatedCoordinatesForExtendedRange(in rawBead);
-      }
-      //finalize outBead data
-      outBead.cl0 = _compensatedCoordinatesCache[0];
-      outBead.cl1 = _compensatedCoordinatesCache[1];
-      outBead.cl2 = _compensatedCoordinatesCache[2];
-      outBead.cl3 = _compensatedCoordinatesCache[3];
     }
+    //finalize outBead data
+    outBead.cl0 = _compensatedCoordinatesCache[0];
+    outBead.cl1 = _compensatedCoordinatesCache[1];
+    outBead.cl2 = _compensatedCoordinatesCache[2];
+    outBead.cl3 = _compensatedCoordinatesCache[3];
 
     var reg = (ushort) _classificationMap.ClassifyBeadToRegion(in outBead);
     var rep = CalculateReporter(reg);
@@ -124,8 +110,9 @@ internal class BeadProcessor
     //we subtract a fraction of the reporter signal from CL1 and CL2,
     //so really bright reporter signals don’t push the cl1 and cl2 coordinates out of the region
     //there is about 1% excitation of the reporter fluorophore by the red laser and that causes the shift
-    var cl1Comp = _greenMaj * _actualCompensation;
-    var cl2Comp = cl1Comp * 0.26f;
+    AssignSensitivityChannels(in rawBead);
+    var cl1Comp = _greenMaj * _actualCompensation;  //also called adjust
+    var cl2Comp = cl1Comp * 0.25f;
 
     var compensatedCl1 = rawBead.cl1 - cl1Comp;
     var compensatedCl2 = rawBead.cl2 - cl2Comp;
@@ -137,29 +124,11 @@ internal class BeadProcessor
     _compensatedCoordinatesCache[3] = rawBead.cl3;
   }
 
-  private void CalculateCompensatedCoordinatesForExtendedRange(in RawBead rawBead)
-  {
-    //thread unsafe
-    var cl1 = _compensatedCoordinatesCache[1];
-    var cl2 = _compensatedCoordinatesCache[2];
-    //if ever used with Channel redirection, these checks can be wrong
-    if (cl1 > _extendedRangeCL1Threshold)
-    {
-      _compensatedCoordinatesCache[1] = _extendedRangeCL1Multiplier * rawBead.violetssc;
-    }
-
-    if (cl2 > _extendedRangeCL2Threshold)
-    {
-      _compensatedCoordinatesCache[2] = _extendedRangeCL2Multiplier * rawBead.cl0;
-    }
-  }
-
   private void ChannelRedirection(in RawBead rawBead)
   {
     //greenMaj is the hi dyn range channel,
     //greenMin is the high sensitivity channel(depends on filter placement)
 
-    //The idea of Compenstaion doesn't really exist for the case of Swapped channels
     if (SensitivityChannel == HiSensitivityChannel.GreenB)
     {
       _greenMaj = rawBead.cl2;
@@ -170,17 +139,17 @@ internal class BeadProcessor
     _greenMin = rawBead.cl2;
 
 
-    //var cl1Comp = _greenMaj;// * _actualCompensation;
-    //var cl2Comp = cl1Comp;// * 0.26f;
-    //
-    //var compensatedCl1 = rawBead.greenB - cl1Comp;
-    //var compensatedCl2 = rawBead.greenC - cl2Comp;
+    var cl1Comp = _greenMaj * _actualCompensation;  //also called adjust
+    var cl2Comp = cl1Comp * 0.25f;
+    
+    var compensatedCl1 = rawBead.greenB - cl1Comp;
+    var compensatedCl2 = rawBead.greenC - cl2Comp;
 
     //Thread unsafe
-    //_compensatedCoordinatesCache[0] = rawBead.cl0;
-    //_compensatedCoordinatesCache[1] = rawBead.greenB;
-    //_compensatedCoordinatesCache[2] = rawBead.greenC;
-    //_compensatedCoordinatesCache[3] = rawBead.cl3;
+    _compensatedCoordinatesCache[0] = rawBead.cl0;
+    _compensatedCoordinatesCache[1] = compensatedCl1;
+    _compensatedCoordinatesCache[2] = compensatedCl2;
+    _compensatedCoordinatesCache[3] = rawBead.cl3;
   }
 
   private float CalculateReporter(ushort region)

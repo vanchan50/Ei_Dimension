@@ -1613,16 +1613,6 @@ namespace Ei_Dimension.Language {
         
         /// <summary>
         ///   Looks up a localized string similar to Standard
-        ///+ Ext Range.
-        /// </summary>
-        public static string Dropdown_StandardPlusExt {
-            get {
-                return ResourceManager.GetString("Dropdown_StandardPlusExt", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Standard
         ///   + FSC.
         /// </summary>
         public static string Dropdown_StandardPlusFSC {
@@ -2053,15 +2043,6 @@ namespace Ei_Dimension.Language {
         public static string Experiment_Work_Order_Plus_Bcode {
             get {
                 return ResourceManager.GetString("Experiment_Work_Order_Plus_Bcode", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Extended Range Options.
-        /// </summary>
-        public static string ExtendedRangeOptions {
-            get {
-                return ResourceManager.GetString("ExtendedRangeOptions", resourceCulture);
             }
         }
         

@@ -815,10 +815,10 @@ public class HardwareInterface
         break;
       case DeviceParameterType.ChannelConfiguration:
         commandCode = 0xC2;
-        _device._beadProcessor._extendedRangeEnabled = false;
         _device._beadProcessor._channelRedirectionEnabled = false;
         switch (subParameter)
         {
+          //ChannelConfig = 4 is disabled in the hardware.
           case ChannelConfiguration.Standard:
             param = (ushort)ChannelConfiguration.Standard;
             break;
@@ -830,10 +830,6 @@ public class HardwareInterface
             break;
           case ChannelConfiguration.StandardPlusFsc:
             param = (ushort)ChannelConfiguration.StandardPlusFsc;
-            break;
-          case ChannelConfiguration.StandardPlusExt:
-            param = (ushort)ChannelConfiguration.StandardPlusExt;
-            _device._beadProcessor._extendedRangeEnabled = true;
             break;
           case ChannelConfiguration.OEMA:
             param = (ushort)ChannelConfiguration.OEMA;
@@ -1699,19 +1695,6 @@ public class HardwareInterface
         break;
       default:
         throw new NotImplementedException();
-      case DeviceParameterType.ExtendedRangeMultiplier:
-        switch (subParameter)
-        {
-          case Channel.RedC:
-            commandCode = 0x0E;
-            break;
-          case Channel.RedD:
-            commandCode = 0x0F;
-            break;
-          default:
-            throw new NotImplementedException();
-        }
-        break;
     }
     MainCommand(code: commandCode, parameter: selector, cmd: 0x01);
   }

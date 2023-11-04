@@ -69,7 +69,7 @@ public static class LanguageSwap
       ComponentsVM.ChConfigItems[1].Content = _rm.GetString(nameof(Language.Resources.Dropdown_Cells), _curCulture);
       ComponentsVM.ChConfigItems[2].Content = _rm.GetString(nameof(Language.Resources.Dropdown_FM3D), _curCulture);
       ComponentsVM.ChConfigItems[3].Content = _rm.GetString(nameof(Language.Resources.Dropdown_StandardPlusFSC), _curCulture);
-      ComponentsVM.ChConfigItems[4].Content = _rm.GetString(nameof(Language.Resources.Dropdown_StandardPlusExt), _curCulture);
+      //intentionally skip index 4
       ComponentsVM.SelectedChConfigContent = ComponentsVM.ChConfigItems[(int)ComponentsVM.SelectedChConfigIndex].Content;
 
       ComponentsVM.SyringeControlItems[0].Content = _rm.GetString(nameof(Language.Resources.Dropdown_Halt), _curCulture);

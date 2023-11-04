@@ -251,14 +251,6 @@ internal class DataController
       case 0x0C:
         outParameters = new ParameterUpdateEventArgs(DeviceParameterType.PressureWarningLevel, floatParameter: cs.FParameter);
         break;
-      case 0x0E:
-        //_device._beadProcessor._extendedRangeCL1Multiplier = cs.Parameter / 1000f;
-        outParameters = new ParameterUpdateEventArgs(DeviceParameterType.ExtendedRangeMultiplier, intParameter: (int)Channel.RedC, floatParameter: cs.Parameter / 1000f);
-        break;
-      case 0x0F:
-        //_device._beadProcessor._extendedRangeCL2Multiplier = cs.Parameter / 1000f;
-        outParameters = new ParameterUpdateEventArgs(DeviceParameterType.ExtendedRangeMultiplier, intParameter: (int)Channel.RedD, floatParameter: cs.Parameter / 1000f);
-        break;
       case 0x10:
         outParameters = new ParameterUpdateEventArgs(DeviceParameterType.ValveCuvetDrain, intParameter: cs.Parameter);
         break;
@@ -703,7 +695,8 @@ internal class DataController
         outParameters = new ParameterUpdateEventArgs(DeviceParameterType.TraySteps, floatParameter: cs.FParameter);
         break;
       case 0xCC:
-        _device.SystemMonitor.DecodeMessage(cs.Parameter);
+        var logString = _device.SystemMonitor.DecodeMessage(cs.Parameter);
+        _logger.Log(logString);
         //currently used only for probe autoheight feature
         if (cs.Parameter == 0)
         {

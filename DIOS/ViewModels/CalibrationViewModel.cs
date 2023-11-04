@@ -88,8 +88,6 @@ public class CalibrationViewModel
     Action Cancel = () =>
     {
       DashboardViewModel.Instance.CalModeToggle();
-      App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ExtendedRangeMultiplier, Channel.RedC);
-      App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ExtendedRangeMultiplier, Channel.RedD);
     };
     Action Save = () =>
     {
