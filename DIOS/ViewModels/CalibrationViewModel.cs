@@ -18,9 +18,9 @@ public class CalibrationViewModel
   public byte SelectedGatingIndex { get; set; }
   public virtual ObservableCollection<DropDownButtonContents> GatingItems { get; }
   public virtual ObservableCollection<string> EventTriggerContents { get; set; }
-  public virtual ObservableCollection<string> ClassificationTargetsContents { get; set; }
+  public virtual ObservableCollection<string> ClassificationTargetsContents { get; set; } = new(){ "0", "0", "0", "0", "0" };  //init on map changed
   public virtual ObservableCollection<string> CompensationPercentageContent { get; set; }
-  public virtual ObservableCollection<string> DNRContents { get; set; } = new ObservableCollection<string> { "0", "0" };
+  public virtual ObservableCollection<string> DNRContents { get; set; } = new(){ "0", "0" };
   public virtual ObservableCollection<string> AttenuationBox { get; set; }
   public byte CalFailsInARow { get; set; }
   public bool CalJustFailed { get; set; }
@@ -30,18 +30,17 @@ public class CalibrationViewModel
 
   protected CalibrationViewModel()
   {
-    var RM = Language.Resources.ResourceManager;
-    var curCulture = Language.TranslationSource.Instance.CurrentCulture;
+    var stringSource = Language.TranslationSource.Instance;
     GatingItems = new ObservableCollection<DropDownButtonContents>
     {
-      new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_None), curCulture), this),
-      new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_Green_SSC), curCulture), this),
-      new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_Red_SSC), curCulture), this),
-      new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_Green_Red_SSC), curCulture), this),
-      new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_Rp_bg), curCulture), this),
-      new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_Green_Rp_bg), curCulture), this),
-      new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_Red_Rp_bg), curCulture), this),
-      new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Dropdown_Green_Red_Rp_bg), curCulture), this)
+      new(stringSource[nameof(Language.Resources.Dropdown_None)], this),
+      new(stringSource[nameof(Language.Resources.Dropdown_Green_SSC)], this),
+      new(stringSource[nameof(Language.Resources.Dropdown_Red_SSC)], this),
+      new(stringSource[nameof(Language.Resources.Dropdown_Green_Red_SSC)], this),
+      new(stringSource[nameof(Language.Resources.Dropdown_Rp_bg)], this),
+      new(stringSource[nameof(Language.Resources.Dropdown_Green_Rp_bg)], this),
+      new(stringSource[nameof(Language.Resources.Dropdown_Red_Rp_bg)], this),
+      new(stringSource[nameof(Language.Resources.Dropdown_Green_Red_Rp_bg)], this)
     };
     SelectedGatingIndex = 0;
     SelectedGatingContent = GatingItems[SelectedGatingIndex].Content;
@@ -52,11 +51,9 @@ public class CalibrationViewModel
       App.DiosApp.MapController.ActiveMap.calParams.maxmapssc.ToString()
     };
 
-    ClassificationTargetsContents = new ObservableCollection<string> { "0", "0", "0", "0", "0"};  //init on map changed
+    CompensationPercentageContent = new(){ App.DiosApp.Device.Compensation.ToString() };
 
-    CompensationPercentageContent = new ObservableCollection<string> { App.DiosApp.Device.Compensation.ToString() };
-
-    AttenuationBox = new ObservableCollection<string> { App.DiosApp.MapController.ActiveMap.calParams.att.ToString() };
+    AttenuationBox = new(){ App.DiosApp.MapController.ActiveMap.calParams.att.ToString() };
 
     CalFailsInARow = 0;
     CalJustFailed = true;
@@ -145,7 +142,7 @@ public class CalibrationViewModel
 
   public void MakeCalMap()
   {
-    ResultsViewModel.Instance.WrldMap.CalibrationMap = new List<HeatMapPoint>();
+    ResultsViewModel.Instance.WrldMap.CalibrationMap = new();
     int cl1Index = Array.BinarySearch(HeatMapPoint.bins, int.Parse(ClassificationTargetsContents[1]));
     if (cl1Index < 0)
       cl1Index = ~cl1Index;
