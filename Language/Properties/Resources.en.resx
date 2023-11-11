@@ -1396,6 +1396,12 @@ Verification</value>
   <data name="Value" xml:space="preserve">
     <value>Value</value>
   </data>
+  <data name="Verification_maxCV" xml:space="preserve">
+    <value>Max CV</value>
+  </data>
+  <data name="Verification_MeanTolerance" xml:space="preserve">
+    <value>Mean Tolerance %</value>
+  </data>
   <data name="Verification_Table_Reporter" xml:space="preserve">
     <value>Reporter</value>
   </data>

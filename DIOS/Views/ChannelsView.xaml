@@ -23,7 +23,7 @@
 
     <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Margin="100,120,0,00">
+            Margin="100,120,0,0">
       <StackPanel Orientation="Horizontal"
                   HorizontalAlignment="Stretch"
                   VerticalAlignment="Stretch"

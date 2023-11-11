@@ -1190,6 +1190,12 @@ Volume, µL</value>
   <data name="Value" xml:space="preserve">
     <value>值</value>
   </data>
+  <data name="Verification_maxCV" xml:space="preserve">
+    <value>Max CV</value>
+  </data>
+  <data name="Verification_MeanTolerance" xml:space="preserve">
+    <value>Mean Tolerance %</value>
+  </data>
   <data name="Verification_Table_Reporter" xml:space="preserve">
     <value>报告荧光信号</value>
   </data>

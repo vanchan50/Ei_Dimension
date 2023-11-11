@@ -25,7 +25,7 @@
     <!--Warning schedule-->
     <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Margin="750,180,0,0">
+            Margin="1370,180,0,0">
       <StackPanel>
         <TextBlock Text="{lang:Loc Verification_Warning_Schedule}"
                    FontFamily="{StaticResource AppTextFont}"
@@ -75,7 +75,7 @@
     
     <StackPanel HorizontalAlignment="Left"
                 VerticalAlignment="Top"
-                Margin="750,380,0,10">
+                Margin="1370,380,0,10">
       <!--Classification Map-->
       <Border x:Name="clmap">
         <StackPanel>
@@ -193,9 +193,185 @@
       </StackPanel>
     </Border>
 
+    <!--Edit values table-->
+    <Border HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Margin="700,320,0,0">
+      <StackPanel Orientation="Horizontal">
+        <StackPanel VerticalAlignment="Stretch"
+                  Margin="0,94,3,0"
+                  Width="180">
+          <TextBlock Text="{lang:Loc DataAn_Green_SSC}"
+                   FontFamily="{StaticResource AppTextFont}"
+                   FontSize="36"
+                   FontWeight="UltraBold"
+                   Foreground="{StaticResource AppTextColor}"
+                   HorizontalAlignment="Right"
+                   VerticalAlignment="Top"
+                   Margin="0,0,4,0"/>
+          <TextBlock Text="{lang:Loc DataAn_Red_SSC}"
+                   FontFamily="{StaticResource AppTextFont}"
+                   FontSize="36"
+                   FontWeight="UltraBold"
+                   Foreground="{StaticResource AppTextColor}"
+                   HorizontalAlignment="Right"
+                   VerticalAlignment="Top"
+                   Margin="0,20,4,0"/>
+          <TextBlock Text="{lang:Loc CL1}"
+                   FontFamily="{StaticResource AppTextFont}"
+                   FontSize="36"
+                   FontWeight="UltraBold"
+                   Foreground="{StaticResource AppTextColor}"
+                   HorizontalAlignment="Right"
+                   VerticalAlignment="Top"
+                   Margin="0,20,4,0"/>
+          <TextBlock Text="{lang:Loc CL2}"
+                   FontFamily="{StaticResource AppTextFont}"
+                   FontSize="36"
+                   FontWeight="UltraBold"
+                   Foreground="{StaticResource AppTextColor}"
+                   HorizontalAlignment="Right"
+                   VerticalAlignment="Top"
+                   Margin="0,18,4,0"/>
+          <TextBlock Text="{lang:Loc Verification_Table_Reporter}"
+                   FontFamily="{StaticResource AppTextFont}"
+                   FontSize="36"
+                   FontWeight="UltraBold"
+                   Foreground="{StaticResource AppTextColor}"
+                   HorizontalAlignment="Right"
+                   VerticalAlignment="Top"
+                   Margin="0,16,4,0"/>
+        </StackPanel>
+        <StackPanel VerticalAlignment="Stretch"
+                    Width="190">
+          <TextBlock Text="{lang:Loc Verification_MeanTolerance}"
+                     Height="86"
+                     FontFamily="{StaticResource AppTextFont}"
+                     FontSize="33"
+                     FontWeight="UltraBold"
+                     TextWrapping="Wrap"
+                     Foreground="{StaticResource AppTextColor}"
+                     HorizontalAlignment="Center"
+                     VerticalAlignment="Top"
+                     Margin="0,0,0,3"/>
+          <Border Background="{StaticResource RibbonBackgroundActive}">
+            <StackPanel Name="toleranceSP">
+              <TextBox HorizontalAlignment="Stretch"
+                       Margin="10,10,5,24"
+                       Style="{StaticResource InputFieldStyle}"
+                       Text="{Binding ToleranceItems[0]}">
+                <dxmvvm:Interaction.Behaviors>
+                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="0"/>
+                  <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+                </dxmvvm:Interaction.Behaviors>
+              </TextBox>
+              <TextBox HorizontalAlignment="Stretch"
+                      Margin="10,0,5,24"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding ToleranceItems[1]}">
+                <dxmvvm:Interaction.Behaviors>
+                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="1"/>
+                  <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+                </dxmvvm:Interaction.Behaviors>
+              </TextBox>
+              <TextBox HorizontalAlignment="Stretch"
+                      Margin="10,0,5,24"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding ToleranceItems[2]}">
+                <dxmvvm:Interaction.Behaviors>
+                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="2"/>
+                  <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+                </dxmvvm:Interaction.Behaviors>
+              </TextBox>
+              <TextBox HorizontalAlignment="Stretch"
+                      Margin="10,0,5,24"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding ToleranceItems[3]}">
+                <dxmvvm:Interaction.Behaviors>
+                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="3"/>
+                  <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+                </dxmvvm:Interaction.Behaviors>
+              </TextBox>
+              <TextBox HorizontalAlignment="Stretch"
+                      Margin="10,0,5,24"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding ToleranceItems[4]}">
+                <dxmvvm:Interaction.Behaviors>
+                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="4"/>
+                  <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+                </dxmvvm:Interaction.Behaviors>
+              </TextBox>
+            </StackPanel>
+          </Border>
+        </StackPanel>
 
-    <Border HorizontalAlignment="Left" VerticalAlignment="Top"
-            Margin="700,567,0,0">
+        <StackPanel VerticalAlignment="Stretch"
+                    Width="190">
+          <TextBlock Text="{lang:Loc Verification_maxCV}"
+                     Height="86"
+                     Padding="0,40,0,0"
+                     FontFamily="{StaticResource AppTextFont}"
+                     FontSize="33"
+                     FontWeight="UltraBold"
+                     Foreground="{StaticResource AppTextColor}"
+                     HorizontalAlignment="Center"
+                     Margin="0,0,0,3"/>
+          <Border Background="{StaticResource RibbonBackgroundActive}">
+            <StackPanel Name="maxCV_SP">
+              <TextBox HorizontalAlignment="Stretch"
+                       Margin="10,10,5,24"
+                       Style="{StaticResource InputFieldStyle}"
+                       Text="{Binding MaxCVItems[0]}">
+                <dxmvvm:Interaction.Behaviors>
+                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="5"/>
+                  <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+                </dxmvvm:Interaction.Behaviors>
+              </TextBox>
+              <TextBox HorizontalAlignment="Stretch"
+                      Margin="10,0,5,24"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding MaxCVItems[1]}">
+                <dxmvvm:Interaction.Behaviors>
+                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="6"/>
+                  <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+                </dxmvvm:Interaction.Behaviors>
+              </TextBox>
+              <TextBox HorizontalAlignment="Stretch"
+                      Margin="10,0,5,24"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding MaxCVItems[2]}">
+                <dxmvvm:Interaction.Behaviors>
+                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="7"/>
+                  <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+                </dxmvvm:Interaction.Behaviors>
+              </TextBox>
+              <TextBox HorizontalAlignment="Stretch"
+                      Margin="10,0,5,24"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding MaxCVItems[3]}">
+                <dxmvvm:Interaction.Behaviors>
+                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="8"/>
+                  <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+                </dxmvvm:Interaction.Behaviors>
+              </TextBox>
+              <TextBox HorizontalAlignment="Stretch"
+                      Margin="10,0,5,24"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding MaxCVItems[4]}">
+                <dxmvvm:Interaction.Behaviors>
+                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="9"/>
+                  <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+                </dxmvvm:Interaction.Behaviors>
+              </TextBox>
+            </StackPanel>
+          </Border>
+        </StackPanel>
+      </StackPanel>
+    </Border>
+
+
+      <Border HorizontalAlignment="Left" VerticalAlignment="Top"
+            Margin="1330,567,0,0">
       <StackPanel>
         <Button Width="280" Height="140"
                 HorizontalAlignment="Left"

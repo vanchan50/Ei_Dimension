@@ -4,6 +4,7 @@ using DIOS.Core;
 using System;
 using System.Collections.ObjectModel;
 using Ei_Dimension.Controllers;
+using System.Windows.Controls;
 
 namespace Ei_Dimension.ViewModels;
 
@@ -11,6 +12,8 @@ namespace Ei_Dimension.ViewModels;
 public class VerificationViewModel
 {
   public virtual ObservableCollection<DropDownButtonContents> VerificationWarningItems { get; set; }
+  public virtual ObservableCollection<string> ToleranceItems { get; set; } = new(){"", "", "", "", ""};
+  public virtual ObservableCollection<string> MaxCVItems { get; set; } = new() { "", "", "", "", "" };
   public virtual string SelectedVerificationWarningContent { get; set; }
   public static VerificationViewModel Instance { get; private set; }
   public bool isActivePage { get; set; }
@@ -20,11 +23,11 @@ public class VerificationViewModel
     var curCulture = Language.TranslationSource.Instance.CurrentCulture;
     VerificationWarningItems = new ObservableCollection<DropDownButtonContents>
     {
-      new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Daily), curCulture), this),
-      new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Weekly), curCulture), this),
-      new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Monthly), curCulture), this),
-      new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Quarterly), curCulture), this),
-      new DropDownButtonContents(RM.GetString(nameof(Language.Resources.Yearly), curCulture), this)
+      new(RM.GetString(nameof(Language.Resources.Daily), curCulture), this),
+      new(RM.GetString(nameof(Language.Resources.Weekly), curCulture), this),
+      new(RM.GetString(nameof(Language.Resources.Monthly), curCulture), this),
+      new(RM.GetString(nameof(Language.Resources.Quarterly), curCulture), this),
+      new(RM.GetString(nameof(Language.Resources.Yearly), curCulture), this)
     };
     SelectedVerificationWarningContent = VerificationWarningItems[Settings.Default.VerificationWarningIndex].Content;
     Instance = this;
@@ -216,6 +219,60 @@ public class VerificationViewModel
   public void DropPress()
   {
     UserInputHandler.InputSanityCheck();
+  }
+
+  public void TextChanged(TextChangedEventArgs e)
+  {
+    UserInputHandler.InjectToFocusedTextbox(((TextBox)e.Source).Text, true);
+  }
+
+  public void FocusedBox(int num)
+  {
+    var toleranceSP = Views.VerificationView.Instance.toleranceSP.Children;
+    var maxCV_SP = Views.VerificationView.Instance.maxCV_SP.Children;
+    switch (num)
+    {
+      case 0:
+        UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ToleranceItems)), this, 0, toleranceSP[0] as TextBox);
+        MainViewModel.Instance.NumpadToggleButton(toleranceSP[0] as TextBox);
+        break;
+      case 1:
+        UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ToleranceItems)), this, 1, toleranceSP[1] as TextBox);
+        MainViewModel.Instance.NumpadToggleButton(toleranceSP[1] as TextBox);
+        break;
+      case 2:
+        UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ToleranceItems)), this, 2, toleranceSP[2] as TextBox);
+        MainViewModel.Instance.NumpadToggleButton(toleranceSP[2] as TextBox);
+        break;
+      case 3:
+        UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ToleranceItems)), this, 3, toleranceSP[3] as TextBox);
+        MainViewModel.Instance.NumpadToggleButton(toleranceSP[3] as TextBox);
+        break;
+      case 4:
+        UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ToleranceItems)), this, 4, toleranceSP[4] as TextBox);
+        MainViewModel.Instance.NumpadToggleButton(toleranceSP[4] as TextBox);
+        break;
+      case 5:
+        UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(MaxCVItems)), this, 0, maxCV_SP[0] as TextBox);
+        MainViewModel.Instance.NumpadToggleButton(maxCV_SP[0] as TextBox);
+        break;
+      case 6:
+        UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(MaxCVItems)), this, 1, maxCV_SP[1] as TextBox);
+        MainViewModel.Instance.NumpadToggleButton(maxCV_SP[1] as TextBox);
+        break;
+      case 7:
+        UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(MaxCVItems)), this, 2, maxCV_SP[2] as TextBox);
+        MainViewModel.Instance.NumpadToggleButton(maxCV_SP[2] as TextBox);
+        break;
+      case 8:
+        UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(MaxCVItems)), this, 3, maxCV_SP[3] as TextBox);
+        MainViewModel.Instance.NumpadToggleButton(maxCV_SP[3] as TextBox);
+        break;
+      case 9:
+        UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(MaxCVItems)), this, 4, maxCV_SP[4] as TextBox);
+        MainViewModel.Instance.NumpadToggleButton(maxCV_SP[4] as TextBox);
+        break;
+    }
   }
 
   public class DropDownButtonContents : Core.ObservableObject

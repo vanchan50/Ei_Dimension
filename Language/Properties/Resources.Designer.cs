@@ -3767,6 +3767,24 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Max CV.
+        /// </summary>
+        public static string Verification_maxCV {
+            get {
+                return ResourceManager.GetString("Verification_maxCV", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mean Tolerance %.
+        /// </summary>
+        public static string Verification_MeanTolerance {
+            get {
+                return ResourceManager.GetString("Verification_MeanTolerance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Reporter.
         /// </summary>
         public static string Verification_Table_Reporter {
