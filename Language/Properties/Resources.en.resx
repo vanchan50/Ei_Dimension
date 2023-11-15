@@ -117,20 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Alignment_Align_Seq" xml:space="preserve">
-    <value>Align Sequence</value>
-  </data>
-  <data name="Alignment_Auto_Align" xml:space="preserve">
-    <value>Auto Align</value>
-  </data>
-  <data name="Alignment_Find_Peak" xml:space="preserve">
-    <value>Find Peak</value>
-  </data>
   <data name="Alignment_GoTo" xml:space="preserve">
     <value>GoTo</value>
-  </data>
-  <data name="Alignment_GoTo_Peak" xml:space="preserve">
-    <value>GoTo Peak</value>
   </data>
   <data name="Alignment_Laser_Align_Motor" xml:space="preserve">
     <value>     Laser
@@ -145,9 +133,6 @@ Align Motor</value>
   </data>
   <data name="Alignment_Right" xml:space="preserve">
     <value>Right</value>
-  </data>
-  <data name="Alignment_Scan" xml:space="preserve">
-    <value>Scan</value>
   </data>
   <data name="All Files" xml:space="preserve">
     <value>All Files</value>
@@ -1220,9 +1205,6 @@ Plate</value>
   </data>
   <data name="Seconds" xml:space="preserve">
     <value>Seconds</value>
-  </data>
-  <data name="Service_Alignment" xml:space="preserve">
-    <value>Alignment</value>
   </data>
   <data name="Service_Alignment_Verification" xml:space="preserve">
     <value>Alignment

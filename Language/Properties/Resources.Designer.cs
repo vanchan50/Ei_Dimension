@@ -61,47 +61,11 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Align Sequence.
-        /// </summary>
-        public static string Alignment_Align_Seq {
-            get {
-                return ResourceManager.GetString("Alignment_Align_Seq", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Auto Align.
-        /// </summary>
-        public static string Alignment_Auto_Align {
-            get {
-                return ResourceManager.GetString("Alignment_Auto_Align", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Find Peak.
-        /// </summary>
-        public static string Alignment_Find_Peak {
-            get {
-                return ResourceManager.GetString("Alignment_Find_Peak", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to GoTo.
         /// </summary>
         public static string Alignment_GoTo {
             get {
                 return ResourceManager.GetString("Alignment_GoTo", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to GoTo Peak.
-        /// </summary>
-        public static string Alignment_GoTo_Peak {
-            get {
-                return ResourceManager.GetString("Alignment_GoTo_Peak", resourceCulture);
             }
         }
         
@@ -140,15 +104,6 @@ namespace Ei_Dimension.Language {
         public static string Alignment_Right {
             get {
                 return ResourceManager.GetString("Alignment_Right", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Scan.
-        /// </summary>
-        public static string Alignment_Scan {
-            get {
-                return ResourceManager.GetString("Alignment_Scan", resourceCulture);
             }
         }
         
@@ -3249,15 +3204,6 @@ namespace Ei_Dimension.Language {
         public static string Seconds {
             get {
                 return ResourceManager.GetString("Seconds", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Alignment.
-        /// </summary>
-        public static string Service_Alignment {
-            get {
-                return ResourceManager.GetString("Service_Alignment", resourceCulture);
             }
         }
         

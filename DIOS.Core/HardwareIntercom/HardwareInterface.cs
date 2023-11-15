@@ -861,26 +861,6 @@ public class HardwareInterface
         }
         break;
       */
-      case DeviceParameterType.AutoAlignState:
-        commandCode = 0xC5;
-        switch (subParameter)
-        {
-          case AutoAlignState.Off:
-            param = 0;
-            break;
-          case AutoAlignState.Green:
-            param = 1;
-            break;
-          case AutoAlignState.Red:
-            param = 2;
-            break;
-          case AutoAlignState.Violet:
-            param = 3;
-            break;
-          default:
-            throw new NotImplementedException();
-        }
-        break;
       case DeviceParameterType.SystemActivityStatus:
         commandCode = 0xCC;
         param = intValue;
@@ -1072,24 +1052,6 @@ public class HardwareInterface
             break;
           default:
             throw new NotImplementedException($"{nameof(DeviceParameterType.MotorMoveZ)} subParameter expected to be {nameof(MotorDirection.Halt)} / {nameof(MotorDirection.Up)} / {nameof(MotorDirection.Down)}");
-        }
-        break;
-      case DeviceParameterType.AlignMotor:
-        commandCode = 0xDC;
-        fparam = value;
-        switch (subParameter)
-        {
-          case AlignMotorSequence.Scan:
-            extraAction = 3;
-            break;
-          case AlignMotorSequence.FindPeak:
-            extraAction = 4;
-            break;
-          case AlignMotorSequence.GoTo:
-            extraAction = 5;
-            break;
-          default:
-            throw new NotImplementedException($"{nameof(DeviceParameterType.AlignMotor)} subParameter expected to be {nameof(AlignMotorSequence)}");
         }
         break;
       case DeviceParameterType.IsSingleStepDebugActive:

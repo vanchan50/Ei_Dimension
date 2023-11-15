@@ -92,11 +92,7 @@ public enum DeviceParameterType
   MotorMoveY,
   ///<summary>Subparamter: MotorDirection</summary>
   MotorMoveZ,
-  ///<summary>Subparamter: AlignMotorSequence</summary>
-  AlignMotor,
   UVCSanitize,
-  ///<summary>Subparamter: AutoAlignState</summary>
-  AutoAlignState,
   SampleSyringeSize,
   ///<summary>unique parameter, used by DirectFlashAccess feature</summary>
   DirectFlashValue,

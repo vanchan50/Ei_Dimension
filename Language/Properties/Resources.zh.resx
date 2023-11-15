@@ -117,20 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Alignment_Align_Seq" xml:space="preserve">
-    <value>校准顺序</value>
-  </data>
-  <data name="Alignment_Auto_Align" xml:space="preserve">
-    <value>自动校准</value>
-  </data>
-  <data name="Alignment_Find_Peak" xml:space="preserve">
-    <value>查找峰值</value>
-  </data>
   <data name="Alignment_GoTo" xml:space="preserve">
     <value>转到</value>
-  </data>
-  <data name="Alignment_GoTo_Peak" xml:space="preserve">
-    <value>转到峰值</value>
   </data>
   <data name="Alignment_Last_Calib_Pos" xml:space="preserve">
     <value>上次校准位置</value>
@@ -140,9 +128,6 @@
   </data>
   <data name="Alignment_Right" xml:space="preserve">
     <value>右</value>
-  </data>
-  <data name="Alignment_Scan" xml:space="preserve">
-    <value>扫描</value>
   </data>
   <data name="All Files" xml:space="preserve">
     <value>所有文件</value>
@@ -1048,9 +1033,6 @@ Volume, µL</value>
   </data>
   <data name="Seconds" xml:space="preserve">
     <value>秒</value>
-  </data>
-  <data name="Service_Alignment" xml:space="preserve">
-    <value>光路校准</value>
   </data>
   <data name="Service_Alignment_Verification" xml:space="preserve">
     <value>光路校准及验证</value>

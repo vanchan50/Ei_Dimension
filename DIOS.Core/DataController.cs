@@ -774,7 +774,6 @@ internal class DataController
       case 0xD9:
       case 0xDA:
       case 0xDB:
-      case 0xDC:
       case 0xDD:
       case 0xDE:
       case 0xDF:
@@ -783,6 +782,8 @@ internal class DataController
       case 0xFE:
         _device.StopOperation();
         break;
+      default:
+        throw new NotImplementedException();
     }
     if (outParameters != null)
     {
