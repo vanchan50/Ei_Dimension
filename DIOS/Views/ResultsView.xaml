@@ -68,7 +68,7 @@
           <Rectangle Visibility="{Binding ValidationCoverVisible}"
                      HorizontalAlignment="Left"
                      VerticalAlignment="Top"
-                     Width="451" Height="801"
+                     Width="478" Height="772"
                      Fill="{StaticResource RibbonBackgroundActive}"
                      Margin="1,94,0,0"/>
         </Grid>

@@ -84,7 +84,7 @@ public class MapController
     }
   }
 
-  public bool SaveCalVals(MapCalParameters param)
+  public bool SaveCalValsToCurrentMap(MapCalParameters param)
   {
     var idx = MapList.FindIndex(x => x.mapName == ActiveMap.mapName);
     var map = MapList[idx];

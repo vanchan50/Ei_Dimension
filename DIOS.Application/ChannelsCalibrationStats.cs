@@ -2,10 +2,10 @@
 
 public class ChannelsCalibrationStats
 {
-  public DistributionStats Greenssc { get; }
+  public DistributionStats Greenssc { get; }  //GreenA
   public DistributionStats GreenB { get; }
   public DistributionStats GreenC { get; }
-  public DistributionStats Redssc { get; }
+  public DistributionStats Redssc { get; }  //RedB
   public DistributionStats Cl1 { get; }
   public DistributionStats Cl2 { get; }
   public DistributionStats Cl3 { get; }

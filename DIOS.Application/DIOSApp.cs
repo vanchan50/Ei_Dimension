@@ -27,7 +27,7 @@ public class DIOSApp
   public DIOSApp(string rootDirectory, ILogger logger)
   {
     RootDirectory = new(rootDirectory);
-    SetSystemDirectories();
+    SetSystemDirectories(); 
     Logger = logger;
     MapController = new MapController($"{rootDirectory}\\Config", Logger);
     WorkOrderController = new WorkOrderController($"{rootDirectory}\\WorkOrder");

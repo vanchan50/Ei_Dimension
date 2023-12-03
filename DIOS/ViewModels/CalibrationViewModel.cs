@@ -2,9 +2,12 @@
 using DevExpress.Mvvm.POCO;
 using System.Collections.ObjectModel;
 using System.Windows.Controls;
-using System.Collections.Generic;
 using System.Windows.Media;
 using System;
+using System.Threading.Tasks;
+using DIOS.Application;
+using DIOS.Application.FileIO;
+using DIOS.Application.FileIO.Calibration;
 using DIOS.Core;
 using DIOS.Core.HardwareIntercom;
 using Ei_Dimension.Graphing.HeatMap;
@@ -15,15 +18,16 @@ namespace Ei_Dimension.ViewModels;
 public class CalibrationViewModel
 {
   public virtual string SelectedGatingContent { get; set; }
-  public byte SelectedGatingIndex { get; set; }
+  public byte SelectedGatingIndex { get; set; } = 0;
   public virtual ObservableCollection<DropDownButtonContents> GatingItems { get; }
   public virtual ObservableCollection<string> EventTriggerContents { get; set; }
   public virtual ObservableCollection<string> ClassificationTargetsContents { get; set; } = new(){ "0", "0", "0", "0", "0" };  //init on map changed
   public virtual ObservableCollection<string> CompensationPercentageContent { get; set; }
   public virtual ObservableCollection<string> DNRContents { get; set; } = new(){ "0", "0" };
   public virtual ObservableCollection<string> AttenuationBox { get; set; }
-  public byte CalFailsInARow { get; set; }
-  public bool CalJustFailed { get; set; }
+  public byte CalFailsInARow { get; set; } = 0;
+  public bool CalJustFailed { get; set; } = true;
+  public bool DoPostCalibrationRun { get; set; } = false;
 
   public static CalibrationViewModel Instance { get; private set; }
 
@@ -42,9 +46,8 @@ public class CalibrationViewModel
       new(stringSource[nameof(Language.Resources.Dropdown_Red_Rp_bg)], this),
       new(stringSource[nameof(Language.Resources.Dropdown_Green_Red_Rp_bg)], this)
     };
-    SelectedGatingIndex = 0;
     SelectedGatingContent = GatingItems[SelectedGatingIndex].Content;
-    EventTriggerContents = new ObservableCollection<string>
+    EventTriggerContents = new()
     {
       "",
       App.DiosApp.MapController.ActiveMap.calParams.minmapssc.ToString(),
@@ -54,9 +57,6 @@ public class CalibrationViewModel
     CompensationPercentageContent = new(){ App.DiosApp.Device.Compensation.ToString() };
 
     AttenuationBox = new(){ App.DiosApp.MapController.ActiveMap.calParams.att.ToString() };
-
-    CalFailsInARow = 0;
-    CalJustFailed = true;
 
     Instance = this;
   }
@@ -88,7 +88,7 @@ public class CalibrationViewModel
     };
     Action Save = () =>
     {
-      var res = App.DiosApp.MapController.SaveCalVals(new MapCalParameters
+      var res = App.DiosApp.MapController.SaveCalValsToCurrentMap(new MapCalParameters
       {
         TempCl0 = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[8]),
         TempCl1 = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[5]),
@@ -124,6 +124,10 @@ public class CalibrationViewModel
       }
       DashboardViewModel.Instance.SetCalibrationDate(App.DiosApp.MapController.ActiveMap.caltime);
       Cancel.Invoke();
+
+      System.Threading.Thread.Sleep(2000);//wait for the end of read procedure
+      DoPostCalibrationRun = true;
+      MainButtonsViewModel.Instance.StartButtonClick();//Run the 256-bead well
     };
     Notification.ShowLocalized(nameof(Language.Resources.Calibration_Success), Save, nameof(Language.Resources.Calibration_Save_Calibration_To_Map),
       Cancel, nameof(Language.Resources.Calibration_Cancel_Calibration), Brushes.Green);
@@ -135,6 +139,10 @@ public class CalibrationViewModel
     {
       App.Current.Dispatcher.Invoke(() => Notification.ShowLocalizedError(nameof(Language.Resources.Calibration_Fail)));
       App.Current.Dispatcher.Invoke(DashboardViewModel.Instance.CalModeToggle);
+      Task.Run(() =>
+      {
+        FormNewCalibrationReport(false, null);
+      });
     }
     else if (CalJustFailed)
       App.Current.Dispatcher.Invoke(() => Notification.ShowLocalizedSuccess(nameof(Language.Resources.Calibration_in_Progress)));
@@ -151,14 +159,98 @@ public class CalibrationViewModel
       cl2Index = ~cl2Index;
     for (var i = -5; i < 6; i++)
     {
+      var xCoordinateIsInBoundary = cl1Index + i >= 0 && cl1Index + i < 256;
       for (var j = -6; j < 7; j++)
       {
-        if(Math.Pow(i, 2) + Math.Pow(j, 2) <= 16
-           && cl1Index + i >= 0 && cl1Index + i < 256 && cl2Index + j >= 0 && cl2Index + j < 256)
+        var yCoordinateIsInBoundary = cl2Index + j >= 0 && cl2Index + j < 256;
+        if (Math.Pow(i, 2) + Math.Pow(j, 2) <= 16
+            && xCoordinateIsInBoundary && yCoordinateIsInBoundary)
+        {
           ResultsViewModel.Instance.WrldMap.CalibrationMap.Add(
             new HeatMapPoint((int)HeatMapPoint.bins[cl1Index + i], (int)HeatMapPoint.bins[cl2Index + j]));
+        }
       }
     }
+  }
+
+  public CalibrationReport FormNewCalibrationReport(bool isCalibrationSuccesful, ChannelsCalibrationStats stats)
+  {
+    var firmwareVersion = App.DiosApp.Device.FirmwareVersion;
+    var appVersion = App.DiosApp.BUILD;
+    var dnrCoefficient = float.Parse(DNRContents[0]);
+    var dnrTransition = float.Parse(DNRContents[1]);
+    var channelConfig = ComponentsViewModel.Instance.SelectedChConfigIndex.ToString();
+    var status = isCalibrationSuccesful;
+    var report = new CalibrationReport(firmwareVersion, appVersion, dnrCoefficient, dnrTransition, channelConfig,status);
+
+    if (!isCalibrationSuccesful)
+      return report;
+
+    var temperature = float.Parse(ChannelsViewModel.Instance.TempParameters[0]);
+    var bias30 = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[0]);
+    var mfi = stats.Greenssc.Mean;
+    var target = 8500;
+    var data = new CalibrationReportData("GreenA", temperature, bias30, target, mfi);
+    report.channelsData.Add(data);
+
+    if (App.DiosApp.Publisher.IsOEMModeActive)
+    {
+      //OEM case
+      temperature = float.Parse(ChannelsViewModel.Instance.TempParameters[1]);
+      bias30 = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[1]);
+      mfi = stats.GreenB.Mean;
+      target = int.Parse(ClassificationTargetsContents[1]);//CL1
+      data = new CalibrationReportData("GreenB", temperature, bias30, target, mfi);
+      report.channelsData.Add(data);
+    }
+
+    temperature = float.Parse(ChannelsViewModel.Instance.TempParameters[2]);
+    bias30 = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[2]);
+    mfi = stats.GreenC.Mean;
+    if (App.DiosApp.Publisher.IsOEMModeActive)
+    {
+      target = int.Parse(ClassificationTargetsContents[2]);//CL2
+    }
+    else
+    {
+      target = int.Parse(ClassificationTargetsContents[4]);//RP1
+    }
+    data = new CalibrationReportData("GreenC", temperature, bias30, target, mfi);
+    report.channelsData.Add(data);
+
+    temperature = float.Parse(ChannelsViewModel.Instance.TempParameters[4]);
+    bias30 = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[4]);
+    mfi = stats.Redssc.Mean;
+    target = 8500;
+    data = new CalibrationReportData("RedB", temperature, bias30, target, mfi);
+    report.channelsData.Add(data);
+
+    if (!App.DiosApp.Publisher.IsOEMModeActive)
+    {
+      //Non-OEM case
+      temperature = float.Parse(ChannelsViewModel.Instance.TempParameters[5]);
+      bias30 = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[5]);
+      mfi = stats.Cl1.Mean;
+      target = int.Parse(ClassificationTargetsContents[1]);//CL1
+      data = new CalibrationReportData("RedC", temperature, bias30, target, mfi);
+      report.channelsData.Add(data);
+    }
+
+    temperature = float.Parse(ChannelsViewModel.Instance.TempParameters[6]);
+    bias30 = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[6]);
+    mfi = stats.Cl2.Mean;
+    if (App.DiosApp.Publisher.IsOEMModeActive)
+    {
+      target = int.Parse(ClassificationTargetsContents[4]);//RP1
+    }
+    else
+    {
+      target = int.Parse(ClassificationTargetsContents[2]);//CL2
+    }
+    data = new CalibrationReportData("RedD", temperature, bias30, target, mfi);
+    report.channelsData.Add(data);
+
+    return report;
   }
 
   public void SaveCalButtonClick()
@@ -175,7 +267,7 @@ public class CalibrationViewModel
     App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.VioletB);
     App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.ForwardScatter);
     System.Threading.Thread.Sleep(1000);
-    var res = App.DiosApp.MapController.SaveCalVals(new MapCalParameters
+    var res = App.DiosApp.MapController.SaveCalValsToCurrentMap(new MapCalParameters
     {
       TempCl0 = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[8]),
       TempCl1 = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[5]),

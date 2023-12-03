@@ -33,7 +33,7 @@ public class WorkOrderController
     return false;
   }
 
-private void OnNewWorkOrder(object sender, FileSystemEventArgs e)
+  private void OnNewWorkOrder(object sender, FileSystemEventArgs e)
   {
     var name = Path.GetFileNameWithoutExtension(e.Name);
     _workOrderPath = e.FullPath;

@@ -1,7 +1,4 @@
-﻿using System;
-using System.IO;
-
-namespace DIOS.Application.FileIO;
+﻿namespace DIOS.Application.FileIO;
 
 public class PlateStatusFileWriter
 {

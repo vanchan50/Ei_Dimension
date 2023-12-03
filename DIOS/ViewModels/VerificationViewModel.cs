@@ -100,7 +100,7 @@ public class VerificationViewModel
         }
       }
     }
-    var res = App.DiosApp.MapController.SaveCalVals(new MapCalParameters
+    var res = App.DiosApp.MapController.SaveCalValsToCurrentMap(new MapCalParameters
     {
       TempCl0 = -1,
       TempCl1 = -1,
@@ -141,7 +141,7 @@ public class VerificationViewModel
 
   public static void VerificationSuccess()
   {
-    App.DiosApp.MapController.SaveCalVals(new MapCalParameters
+    App.DiosApp.MapController.SaveCalValsToCurrentMap(new MapCalParameters
     {
       TempCl0 = -1,
       TempCl1 = -1,

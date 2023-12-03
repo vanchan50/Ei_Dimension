@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using Ei_Dimension.Controllers;
 using DIOS.Application;
+using System;
 using System.Windows;
 using System.Threading;
 using System.Windows.Media;
@@ -70,7 +71,7 @@ public class MainButtonsViewModel
 
     if (success)
     {
-      DashboardViewModel.Instance.WorkOrder[0] = data;
+      DashboardViewModel.Instance.WorkOrderID[0] = data;
       EnableStartButton(true);
     }
     _scanOngoing = 0;
@@ -159,12 +160,22 @@ public class MainButtonsViewModel
     wells = WellsSelectViewModel.Instance.OutputWells(regions);
     //}
 
+
     if (wells.Count == 0)
     {
       var msg = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Messages_NoWellsOrTube_Selected),
         Language.TranslationSource.Instance.CurrentCulture);
       Notification.Show(msg);
       return;
+    }
+
+    //after cal case
+    if (CalibrationViewModel.Instance.DoPostCalibrationRun)
+    {
+      var oldWell = (wells as IReadOnlyList<Well>)[0];
+      var calWell = oldWell.ToCalibrationWell();
+      wells = new List<Well>{ calWell };
+      //after succesful cal, make a custom Well, that is tuned for the 256 custom thing
     }
 
 
@@ -176,9 +187,9 @@ public class MainButtonsViewModel
     ResultsViewModel.Instance.PlotCurrent();
     PlatePictogramViewModel.Instance.PlatePictogram.SetWellsForReading(wells);
     ResultsViewModel.Instance.ClearCurrentCalibrationStats();
-    if (App.DiosApp.Control == SystemControl.WorkOrder && !string.IsNullOrEmpty(DashboardViewModel.Instance.WorkOrder[0]))
+    if (App.DiosApp.Control == SystemControl.WorkOrder && !string.IsNullOrEmpty(DashboardViewModel.Instance.WorkOrderID[0]))
     {
-      App.DiosApp.StartOperation(wells, WellsSelectViewModel.Instance.CurrentPlate, DashboardViewModel.Instance.WorkOrder[0]);
+      App.DiosApp.StartOperation(wells, WellsSelectViewModel.Instance.CurrentPlate, DashboardViewModel.Instance.WorkOrderID[0]);
     }
     else
     {

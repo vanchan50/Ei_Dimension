@@ -77,4 +77,27 @@ public class Well
     string colLetter = (ColIdx + 1).ToString();
     return $"{rowletter}{colLetter}";
   }
+
+  /// <summary>
+  /// Produce a similar Well; No regions defined, and 256BeadsToRead
+  /// </summary>
+  /// <returns></returns>
+  public Well ToCalibrationWell()
+  {
+    var calibrationWell = new Well(
+      RowIdx,
+      ColIdx,
+      Array.Empty<(int, string)>(),
+      RunSpeed,
+      ChanConfig,
+      SampVol,
+      WashVol,
+      ProbewashVol,
+      AgitateVol,
+      WashRepeats,
+      ProbeWashRepeats,
+      AgitateRepeats,
+      0, 256, 0, Termination.TotalBeadsCaptured);
+    return calibrationWell;
+  }
 }

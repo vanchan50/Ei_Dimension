@@ -71,7 +71,7 @@ public class ChannelsViewModel
   public void SaveBiasButtonClick()
   {
     UserInputHandler.InputSanityCheck();
-    var writeIsSuccessful = App.DiosApp.MapController.SaveCalVals(new MapCalParameters
+    var writeIsSuccessful = App.DiosApp.MapController.SaveCalValsToCurrentMap(new MapCalParameters
     {
       TempCl0 = int.Parse(Bias30Parameters[8]),
       TempCl1 = int.Parse(Bias30Parameters[5]),

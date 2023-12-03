@@ -294,7 +294,7 @@ public class ResultsViewModel
     cvItems[3] = stats.Redssc.CoeffVar.ToString($"{0:0.00}");
 
     mfiItems[4] = stats.Cl1.Mean.ToString($"{0:0.0}");
-    cvItems[4] = stats.Cl1.CoeffVar.ToString($"{0:0.00}");
+    cvItems[4] = stats.Cl1.CoeffVar.ToString($"{0:0.00}"); 
 
     mfiItems[5] = stats.Cl2.Mean.ToString($"{0:0.0}");
     cvItems[5] = stats.Cl2.CoeffVar.ToString($"{0:0.00}");

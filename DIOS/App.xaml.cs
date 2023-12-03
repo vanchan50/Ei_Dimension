@@ -5,6 +5,7 @@ using System.IO;
 using System.Configuration;
 using System.Text;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows.Threading;
 using Microsoft.Extensions.Hosting;
 using Ei_Dimension.ViewModels;
@@ -15,6 +16,8 @@ using DIOS.Core.HardwareIntercom;
 using DIOS.Application;
 using DIOS.Application.Domain;
 using DIOS.Application.FileIO;
+using Newtonsoft.Json;
+using System.Security.Policy;
 
 namespace Ei_Dimension;
 
@@ -280,7 +283,11 @@ public partial class App : Application
   {
     Logger.Log($"Finished Reading well {e.Well.CoordinatesString()}");
     DiosApp.Results.FreezeWellResults();
-    DiosApp.SaveWellFiles();
+    if (DiosApp.Device.Mode == OperationMode.Normal &&
+        !CalibrationViewModel.Instance.DoPostCalibrationRun)
+    {
+      DiosApp.SaveWellFiles();
+    }
 
     var type = DiosApp.GetWellStateForPictogram();
 
@@ -300,6 +307,19 @@ public partial class App : Application
     {
       ResultsViewModel.Instance.DecodeCalibrationStats(stats, current: true);
       ChannelOffsetViewModel.Instance.DecodeBackgroundStats(averageBackgrounds);
+
+      if (CalibrationViewModel.Instance.DoPostCalibrationRun)//only runs after a successful calibration.
+      //hopefully this doesn't trigger before the calibration succesful message. TODO: a proper synchronization
+      {
+        var report = CalibrationViewModel.Instance.FormNewCalibrationReport(true, stats);
+        Task.Run(() =>
+        {
+          var publishableReport = JsonConvert.SerializeObject(report);
+          var path = Path.Combine(DiosApp.Publisher.Outdir, "Result", $"CalibrationReport_{DiosApp.Publisher.Date}.json");
+          File.WriteAllText(path, publishableReport);
+        });
+        CalibrationViewModel.Instance.DoPostCalibrationRun = false;
+      }
     });
   }
 
@@ -310,11 +330,12 @@ public partial class App : Application
 
     DiosApp.Results.PlateReport.completedDateTime = DateTime.Now;
     var plateReportJson = DiosApp.Results.PlateReport.JSONify();
-    if (DiosApp.Control == SystemControl.Manual)
+    if (DiosApp.Control == SystemControl.Manual &&
+          DiosApp.Device.Mode == OperationMode.Normal)
     {
       DiosApp.Publisher.PlateReportFile.CreateAndWrite(plateReportJson);
     }
-    else
+    else if (DiosApp.Control == SystemControl.WorkOrder)
     {
       DiosApp.Publisher.PlateReportFile.CreateAndWrite(plateReportJson, CurrentWorkOrder.PlateID);
     }
@@ -331,7 +352,7 @@ public partial class App : Application
           App.Current.Dispatcher.BeginInvoke(async () =>
           {
             DiosApp.Device.EjectPlate();
-            await System.Threading.Tasks.Task.Delay(5000);
+            await Task.Delay(5000);
             DiosApp.Device.LoadPlate();
             MainButtonsViewModel.Instance.StartButtonClick();
           });
@@ -360,7 +381,7 @@ public partial class App : Application
     {
       App.Current.Dispatcher.Invoke(() =>
       {
-        DashboardViewModel.Instance.WorkOrder[0] = "";
+        DashboardViewModel.Instance.WorkOrderID[0] = "";
         CurrentWorkOrder = null;
         MainButtonsViewModel.Instance.EnableStartButton(false);
         MainButtonsViewModel.Instance.ShowScanButton();
@@ -576,7 +597,7 @@ public partial class App : Application
   public void OnNewWorkOrder(object sender, WorkOrderEventArgs e)
   {
     _workOrderPending = true;
-    DashboardViewModel.Instance.WorkOrder[0] = e.FileName;  //check for already existing one 
+    DashboardViewModel.Instance.WorkOrderID[0] = e.FileName;  //check for already existing one 
     // if WO already selected -> allow start. else the WO checking action should perform the same check
     if (DiosApp.Control == SystemControl.WorkOrder)  //no barcode required so allow start
     {

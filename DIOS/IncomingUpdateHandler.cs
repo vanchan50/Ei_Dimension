@@ -84,6 +84,7 @@ internal class IncomingUpdateHandler
         CalibrationViewModel.Instance.CalJustFailed = false;
         _ = App.Current.Dispatcher.BeginInvoke(() =>
         {
+          MainButtonsViewModel.Instance.EndButtonClick();
           CalibrationViewModel.Instance.CalibrationSuccess();
         });
         break;
