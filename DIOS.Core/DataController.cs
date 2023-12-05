@@ -782,6 +782,8 @@ internal class DataController
       case 0xFE:
         _device.StopOperation();
         break;
+      case 0xCB://some unknown thing for me. ignoring for now
+        break;
       default:
         throw new NotImplementedException($"The method or operation is not implemented.\n{cs}");
     }
