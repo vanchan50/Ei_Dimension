@@ -9,16 +9,16 @@ namespace Ei_Dimension.ViewModels;
 [POCOViewModel]
 public class SyringeSpeedsViewModel
 {
-  public virtual ObservableCollection<string> SheathSyringeParameters { get; set; } = new ObservableCollection<string>();
-  public virtual ObservableCollection<string> SamplesSyringeParameters { get; set; } = new ObservableCollection<string>();
-  public virtual ObservableCollection<string> FluidicPathLengths { get; set; } = new ObservableCollection<string>();
-  public virtual ObservableCollection<bool> SingleSyringeMode { get; set; } = new ObservableCollection<bool>{ false };
-  public virtual ObservableCollection<bool> WellEdgeAgitate { get; set; } = new ObservableCollection<bool> { false };
-  public virtual ObservableCollection<string> SampleSyringeSize { get; set; } = new ObservableCollection<string>{""};
-  public virtual ObservableCollection<string> SheathFlushVolume { get; set; } = new ObservableCollection<string> { "" };
-  public virtual ObservableCollection<string> EdgeDistance { get; set; } = new ObservableCollection<string> { "" };
-  public virtual ObservableCollection<string> EdgeHeight { get; set; } = new ObservableCollection<string> { "" };
-  public virtual ObservableCollection<string> FlushCycles { get; set; } = new ObservableCollection<string> { "" };
+  public virtual ObservableCollection<string> SheathSyringeParameters { get; set; } = new();
+  public virtual ObservableCollection<string> SamplesSyringeParameters { get; set; } = new();
+  public virtual ObservableCollection<string> FluidicPathLengths { get; set; } = new();
+  public virtual ObservableCollection<bool> SingleSyringeMode { get; set; } = new(){ false };
+  public virtual ObservableCollection<bool> WellEdgeAgitate { get; set; } = new(){ false };
+  public virtual ObservableCollection<string> SampleSyringeSize { get; set; } = new(){""};
+  public virtual ObservableCollection<string> SheathFlushVolume { get; set; } = new(){ "" };
+  public virtual ObservableCollection<string> EdgeDistance { get; set; } = new(){ "" };
+  public virtual ObservableCollection<string> EdgeHeight { get; set; } = new(){ "" };
+  public virtual ObservableCollection<string> FlushCycles { get; set; } = new(){ "" };
   public static SyringeSpeedsViewModel Instance { get; private set; }
 
   protected SyringeSpeedsViewModel()

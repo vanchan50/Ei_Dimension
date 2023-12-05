@@ -783,7 +783,7 @@ internal class DataController
         _device.StopOperation();
         break;
       default:
-        throw new NotImplementedException();
+        throw new NotImplementedException($"The method or operation is not implemented.\n{cs}");
     }
     if (outParameters != null)
     {

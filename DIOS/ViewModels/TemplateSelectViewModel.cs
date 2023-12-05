@@ -7,6 +7,7 @@ using Ei_Dimension.Models;
 using System.Windows;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using DIOS.Application.Domain;
@@ -76,7 +77,9 @@ public class TemplateSelectViewModel
             DashVM.ClassiMapItems[App.DiosApp.MapController.GetMapIndexByName(newTemplate.Map)].Click(2);
             if (newTemplate.ChConfig is not 4)
             {
-              ComponentsViewModel.Instance.ChConfigItems[newTemplate.ChConfig].Click(4);
+              var chConfigButton = ComponentsViewModel.Instance.ChConfigItems.
+                First(e => e.Index == newTemplate.ChConfig);
+              chConfigButton.Click(4);
             }
             else
             {
