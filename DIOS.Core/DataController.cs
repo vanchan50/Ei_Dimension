@@ -760,6 +760,7 @@ internal class DataController
             break;
         }
         _scriptTracker.SignalScriptEnd();
+        _logger.Log($"{cs}");
         break;
       //FALLTHROUGH
       case 0xD0:
@@ -771,21 +772,26 @@ internal class DataController
       case 0xD6:
       case 0xD7:
       case 0xD8:
-      case 0xD9:
+      case 0xD9: 
       case 0xDA:
       case 0xDB:
       case 0xDD:
       case 0xDE:
       case 0xDF:
+        _logger.Log($"{cs}");
         break;
       case 0xFD:
       case 0xFE:
         _device.StopOperation();
+        _logger.Log($"{cs}");
         break;
-      case 0xCB://some unknown thing for me. ignoring for now
-        break;
+      //case 0xCB://some unknown thing for me. ignoring for now
+      //case 0x90:
+      //  break;
       default:
-        throw new NotImplementedException($"The method or operation is not implemented.\n{cs}");
+        _logger.Log($"[UNKNOWNCMD].\n{cs}");
+        break;
+        //throw new NotImplementedException($"The method or operation is not implemented.\n{cs}");
     }
     if (outParameters != null)
     {
