@@ -11,7 +11,6 @@ public class AcquisitionTemplate
   public List<bool> ActiveRegions;
   public List<string> RegionsNamesList;
   public byte SysControl;
-  public byte ChConfig;
   public string Map;
   public byte Order;
   public byte Speed;

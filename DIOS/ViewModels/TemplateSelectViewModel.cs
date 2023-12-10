@@ -75,16 +75,6 @@ public class TemplateSelectViewModel
             var DashVM = DashboardViewModel.Instance;
             DashVM.SpeedItems[newTemplate.Speed].Click(1);
             DashVM.ClassiMapItems[App.DiosApp.MapController.GetMapIndexByName(newTemplate.Map)].Click(2);
-            if (newTemplate.ChConfig is not 4)
-            {
-              var chConfigButton = ComponentsViewModel.Instance.ChConfigItems.
-                First(e => e.Index == newTemplate.ChConfig);
-              chConfigButton.Click(4);
-            }
-            else
-            {
-              Notification.Show("Channel config \"Standard + ext range\" is not available.\nPlease check the Map file");
-            }
             DashVM.OrderItems[newTemplate.Order].Click(4);
             DashVM.SysControlItems[newTemplate.SysControl].Click(5);
             DashVM.EndReadItems[newTemplate.EndRead].Click(6);
@@ -311,7 +301,6 @@ public class TemplateSelectViewModel
         var DashVM = DashboardViewModel.Instance;
         temp.Name = TemplateSaveName[0];
         temp.SysControl = DashVM.SelectedSystemControlIndex;
-        temp.ChConfig = (byte)ComponentsViewModel.Instance.SelectedChConfigIndex;
         temp.Order = (byte)DashVM.SelectedOrderIndex;
         temp.Speed = (byte)DashVM.SelectedSpeedIndex;
         temp.Map = DashVM.SelectedClassiMapContent;

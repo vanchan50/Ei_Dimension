@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading;
 using System.Windows.Media;
 using DIOS.Core;
@@ -760,30 +761,12 @@ internal class IncomingUpdateHandler
         update = () => MotorsViewModel.Instance.WashStationXCenterCoordinate[0] = parameter.Parameter.ToString();
         break;
       case DeviceParameterType.ChannelConfiguration:
-        var type20 = (ChannelConfiguration)parameter.Parameter;
-        var pos20 = 0;
-        switch (type20)
+        update = () =>
         {
-          case ChannelConfiguration.Standard:
-            pos20 = 0;
-            break;
-          case ChannelConfiguration.Cells:
-            pos20 = 1;
-            break;
-          case ChannelConfiguration.FM3D:
-            pos20 = 2;
-            break;
-          case ChannelConfiguration.StandardPlusFsc:
-            pos20 = 3;
-            break;
-          case ChannelConfiguration.OEMA:
-            pos20 = 5;
-            break;
-          case ChannelConfiguration.OEMPMT:
-            pos20 = 6;
-            break;
-        }
-        update = () => ComponentsViewModel.Instance.ChConfigItems[pos20].Click(4);
+          var chConfigButton = ComponentsViewModel.Instance.ChConfigItems.
+            First(e => e.Index == parameter.Parameter);
+          chConfigButton.Click(4);
+        };
         break;
       case DeviceParameterType.PressureWarningLevel:
         update = () =>
