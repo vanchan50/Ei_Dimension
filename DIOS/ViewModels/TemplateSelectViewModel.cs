@@ -282,6 +282,7 @@ public class TemplateSelectViewModel
     {
       void Overwrite()
       {
+        new FileInfo(path).IsReadOnly = false;
         SavingProcedure(path);
       }
 

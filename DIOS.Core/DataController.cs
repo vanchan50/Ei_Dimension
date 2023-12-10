@@ -729,6 +729,7 @@ internal class DataController
       case 0xF3:
         int warnNextWell = _device._wellController.IsLastWell ? 0 : 1; 
         outParameters = new ParameterUpdateEventArgs(DeviceParameterType.WellWarning, intParameter: warnNextWell);
+        _logger.Log($"Z Axis Fault {cs}");
         break;
       case 0xF4:
         outParameters = new ParameterUpdateEventArgs(DeviceParameterType.BubbleDetectorStatus, intParameter: cs.Command);
@@ -764,28 +765,66 @@ internal class DataController
         break;
       //FALLTHROUGH
       case 0xD0:
+        _logger.Log($"Sheath {cs}");
+        break;
       case 0xD1:
+        _logger.Log($"Samp A {cs}");
+        break;
       case 0xD2:
+        _logger.Log($"Samp B {cs}");
+        break;
       case 0xD3:
+        _logger.Log($"Update DAC {cs}");
+        break;
       case 0xD4:
+        _logger.Log($"Main Valve {cs}");
+        break;
       case 0xD5:
+        _logger.Log($"No Op {cs}");
+        break;
       case 0xD6:
+        _logger.Log($"Save Flash {cs}");
+        break;
       case 0xD7:
+        _logger.Log($"No Op {cs}");
+        break;
       case 0xD8:
-      case 0xD9: 
+        _logger.Log($"Init Vars {cs}");
+        break;
+      case 0xD9:
+        _logger.Log($"Flush Queue {cs}");
+        break;
       case 0xDA:
+        _logger.Log($"Begin Sampling {cs}");
+        break;
       case 0xDB:
+        _logger.Log($"End Sampling {cs}");
+        break;
+      case 0xDC:
+        _logger.Log($"No Op {cs}");
+        break;
       case 0xDD:
+        _logger.Log($"X Motor {cs}");
+        break;
       case 0xDE:
+        _logger.Log($"Y Motor {cs}");
+        break;
       case 0xDF:
-        _logger.Log($"{cs}");
+        _logger.Log($"Z Motor {cs}");
         break;
       case 0xFD:
+        _device.StopOperation();
+        _logger.Log($"Samp A Empty {cs}");
+        break;
       case 0xFE:
         _device.StopOperation();
-        _logger.Log($"{cs}");
+        _logger.Log($"Samp B Empty {cs}");
         break;
-      //case 0xCB://some unknown thing for me. ignoring for now
+      case 0xF6:
+        _logger.Log($"Sync Fault {cs}");
+        break;
+      case 0xCB://some unknown thing for me. ignoring for now
+        break;
       //case 0x90:
       //  break;
       default:

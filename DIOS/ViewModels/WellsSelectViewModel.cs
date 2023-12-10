@@ -164,7 +164,7 @@ public class WellsSelectViewModel
     PlateCustomizationViewModel.Instance.ShowView();
   }
 
-  public List<Well> OutputWells(IReadOnlyCollection<(int Number, string Name)> regions)
+  public IReadOnlyList<Well> OutputWells(IReadOnlyCollection<(int Number, string Name)> regions)
   {
     List<Well> wells;
     if (CurrentTableSize == 1)  //tube
@@ -187,7 +187,7 @@ public class WellsSelectViewModel
     var minPerReg = uint.Parse(DashboardViewModel.Instance.EndRead[0]);
     var totalBeadstoCapture = uint.Parse(DashboardViewModel.Instance.EndRead[1]);
     var terminationTimer = uint.Parse(DashboardViewModel.Instance.EndRead[2]);
-    var terminationType = App.DiosApp.Terminator.TerminationType;
+    var terminationType = (Termination)DashboardViewModel.Instance.SelectedEndReadIndex;
     uint washRepeats = uint.Parse(DashboardViewModel.Instance.Repeats[0]);
     uint probeWashRepeats = uint.Parse(DashboardViewModel.Instance.Repeats[1]);
     uint agitateRepeats = uint.Parse(DashboardViewModel.Instance.Repeats[2]);

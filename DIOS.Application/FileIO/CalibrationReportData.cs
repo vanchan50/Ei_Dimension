@@ -3,18 +3,20 @@ public class CalibrationReportData
 {
   public readonly float Temperature;//1decimal format
   public readonly float MFI;
+  public readonly float CV;
   public readonly float Margin;
   public readonly int Target;
   public readonly int Bias30;
   public readonly string Label;
 
-  public CalibrationReportData(string label, float temperature, int bias, int target, float mean)
+  public CalibrationReportData(string label, float temperature, int bias, int target, DistributionStats stats)
   {
     Label = label;
     Temperature = temperature;
     Bias30 = bias;
-    MFI = mean;
+    MFI = stats.Mean;
+    CV = stats.CoeffVar;
     Target = target;
-    Margin = Target - MFI;
+    Margin = Math.Abs(Target - MFI) / Target;
   }
 }

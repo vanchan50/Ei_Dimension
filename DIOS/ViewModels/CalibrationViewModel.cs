@@ -11,6 +11,8 @@ using DIOS.Application.FileIO.Calibration;
 using DIOS.Core;
 using DIOS.Core.HardwareIntercom;
 using Ei_Dimension.Graphing.HeatMap;
+using Newtonsoft.Json;
+using System.IO;
 
 namespace Ei_Dimension.ViewModels;
 
@@ -141,7 +143,10 @@ public class CalibrationViewModel
       App.Current.Dispatcher.Invoke(DashboardViewModel.Instance.CalModeToggle);
       Task.Run(() =>
       {
-        FormNewCalibrationReport(false, null);
+        var report = FormNewCalibrationReport(false, null);
+        var publishableReport = JsonConvert.SerializeObject(report);
+        var path = Path.Combine(App.DiosApp.Publisher.Outdir, "Result", $"CalibrationReport_{App.DiosApp.Publisher.Date}.json");
+        File.WriteAllText(path, publishableReport);
       });
     }
     else if (CalJustFailed)
@@ -173,7 +178,7 @@ public class CalibrationViewModel
     }
   }
 
-  public CalibrationReport FormNewCalibrationReport(bool isCalibrationSuccesful, ChannelsCalibrationStats stats)
+  public CalibrationReport FormNewCalibrationReport(bool isCalibrationSuccesful, ChannelsCalibrationStats multiChannelStats)
   {
     var firmwareVersion = App.DiosApp.Device.FirmwareVersion;
     var appVersion = App.DiosApp.BUILD;
@@ -188,9 +193,9 @@ public class CalibrationViewModel
 
     var temperature = float.Parse(ChannelsViewModel.Instance.TempParameters[0]);
     var bias30 = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[0]);
-    var mfi = stats.Greenssc.Mean;
+    var channelStats = multiChannelStats.Greenssc;
     var target = 8500;
-    var data = new CalibrationReportData("GreenA", temperature, bias30, target, mfi);
+    var data = new CalibrationReportData("GreenA", temperature, bias30, target, channelStats);
     report.channelsData.Add(data);
 
     if (App.DiosApp.Publisher.IsOEMModeActive)
@@ -198,31 +203,32 @@ public class CalibrationViewModel
       //OEM case
       temperature = float.Parse(ChannelsViewModel.Instance.TempParameters[1]);
       bias30 = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[1]);
-      mfi = stats.GreenB.Mean;
+      channelStats = multiChannelStats.Cl1;
       target = int.Parse(ClassificationTargetsContents[1]);//CL1
-      data = new CalibrationReportData("GreenB", temperature, bias30, target, mfi);
+      data = new CalibrationReportData("GreenB", temperature, bias30, target, channelStats);
       report.channelsData.Add(data);
     }
 
     temperature = float.Parse(ChannelsViewModel.Instance.TempParameters[2]);
     bias30 = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[2]);
-    mfi = stats.GreenC.Mean;
     if (App.DiosApp.Publisher.IsOEMModeActive)
     {
+      channelStats = multiChannelStats.Cl2;
       target = int.Parse(ClassificationTargetsContents[2]);//CL2
     }
     else
     {
+      channelStats = multiChannelStats.GreenC;
       target = int.Parse(ClassificationTargetsContents[4]);//RP1
     }
-    data = new CalibrationReportData("GreenC", temperature, bias30, target, mfi);
+    data = new CalibrationReportData("GreenC", temperature, bias30, target, channelStats);
     report.channelsData.Add(data);
 
     temperature = float.Parse(ChannelsViewModel.Instance.TempParameters[4]);
     bias30 = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[4]);
-    mfi = stats.Redssc.Mean;
+    channelStats = multiChannelStats.Redssc;
     target = 8500;
-    data = new CalibrationReportData("RedB", temperature, bias30, target, mfi);
+    data = new CalibrationReportData("RedB", temperature, bias30, target, channelStats);
     report.channelsData.Add(data);
 
     if (!App.DiosApp.Publisher.IsOEMModeActive)
@@ -230,24 +236,25 @@ public class CalibrationViewModel
       //Non-OEM case
       temperature = float.Parse(ChannelsViewModel.Instance.TempParameters[5]);
       bias30 = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[5]);
-      mfi = stats.Cl1.Mean;
+      channelStats = multiChannelStats.Cl1;
       target = int.Parse(ClassificationTargetsContents[1]);//CL1
-      data = new CalibrationReportData("RedC", temperature, bias30, target, mfi);
+      data = new CalibrationReportData("RedC", temperature, bias30, target, channelStats);
       report.channelsData.Add(data);
     }
 
     temperature = float.Parse(ChannelsViewModel.Instance.TempParameters[6]);
     bias30 = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[6]);
-    mfi = stats.Cl2.Mean;
     if (App.DiosApp.Publisher.IsOEMModeActive)
     {
+      channelStats = multiChannelStats.GreenC;
       target = int.Parse(ClassificationTargetsContents[4]);//RP1
     }
     else
     {
+      channelStats = multiChannelStats.Cl2;
       target = int.Parse(ClassificationTargetsContents[2]);//CL2
     }
-    data = new CalibrationReportData("RedD", temperature, bias30, target, mfi);
+    data = new CalibrationReportData("RedD", temperature, bias30, target, channelStats);
     report.channelsData.Add(data);
 
     return report;

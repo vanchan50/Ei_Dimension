@@ -117,7 +117,7 @@ internal static class StartupFinalizer
     App.DiosApp.Publisher.IsLegacyPlateReportPublishingActive = Settings.Default.LegacyPlateReport;
     App.DiosApp.Publisher.IsOnlyClassifiedBeadsPublishingActive = Settings.Default.OnlyClassifed;
     DashboardViewModel.Instance.SysControlItems[Settings.Default.SystemControl].Click(5);
-    App.DiosApp.Terminator.TerminationType = (Termination)Settings.Default.EndRead;
+    DashboardViewModel.Instance.EndReadItems[Settings.Default.EndRead].Click(6);
     App.DiosApp.Terminator.MinPerRegion = Settings.Default.MinPerRegion;
     App.DiosApp.Terminator.TotalBeadsToCapture = Settings.Default.BeadsToCapture;
     App.DiosApp.Terminator.TerminationTime = Settings.Default.TerminationTimer;

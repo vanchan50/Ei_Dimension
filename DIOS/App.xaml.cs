@@ -311,6 +311,7 @@ public partial class App : Application
       if (CalibrationViewModel.Instance.DoPostCalibrationRun)//only runs after a successful calibration.
       //hopefully this doesn't trigger before the calibration succesful message. TODO: a proper synchronization
       {
+        CalibrationViewModel.Instance.DoPostCalibrationRun = false;
         var report = CalibrationViewModel.Instance.FormNewCalibrationReport(true, stats);
         Task.Run(() =>
         {
@@ -318,7 +319,6 @@ public partial class App : Application
           var path = Path.Combine(DiosApp.Publisher.Outdir, "Result", $"CalibrationReport_{DiosApp.Publisher.Date}.json");
           File.WriteAllText(path, publishableReport);
         });
-        CalibrationViewModel.Instance.DoPostCalibrationRun = false;
       }
     });
   }

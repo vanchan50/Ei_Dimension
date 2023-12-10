@@ -99,6 +99,42 @@ public class MainButtonsViewModel
   {
     UserInputHandler.InputSanityCheck();
     HideScanButton();
+
+    var wells = ValidateInputs();
+
+    if (wells.Count == 0)
+      return;
+
+    MainViewModel.Instance.NavigationSelector(1);
+
+    EnableStartButton(false);
+    ResultsViewModel.Instance.ClearGraphs();
+    PlatePictogramViewModel.Instance.PlatePictogram.Clear();
+    ResultsViewModel.Instance.PlotCurrent();
+    PlatePictogramViewModel.Instance.PlatePictogram.SetWellsForReading(wells);
+    ResultsViewModel.Instance.ClearCurrentCalibrationStats();
+    if (App.DiosApp.Control == SystemControl.WorkOrder && !string.IsNullOrEmpty(DashboardViewModel.Instance.WorkOrderID[0]))
+    {
+      App.DiosApp.StartOperation(wells, WellsSelectViewModel.Instance.CurrentPlate, DashboardViewModel.Instance.WorkOrderID[0]);
+    }
+    else
+    {
+      App.DiosApp.StartOperation(wells, WellsSelectViewModel.Instance.CurrentPlate);
+    }
+  }
+
+  private IReadOnlyCollection<Well> ValidateInputs()
+  {
+    //after cal case
+    if (CalibrationViewModel.Instance.DoPostCalibrationRun)
+    {
+      var oldWells = WellsSelectViewModel.Instance.OutputWells(Array.Empty<(int, string)>());
+      var oldWell = oldWells[0];
+      var calWell = oldWell.ToCalibrationWell();
+      return new List<Well> { calWell };
+      //after succesful cal, make a custom Well, that is tuned for the 256 custom thing
+    }
+
     //TODO: contains 0 can never happen here
     if (App.DiosApp.Terminator.TerminationType == Termination.MinPerRegion
         && !MapRegionsController.AreThereActiveRegions())
@@ -106,7 +142,7 @@ public class MainButtonsViewModel
       var msg = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Messages_MinPerReg_RequiresAtLeast1),
         Language.TranslationSource.Instance.CurrentCulture);
       Notification.Show(msg);
-      return;
+      return Array.Empty<Well>();
     }
 
     HashSet<(int Number, string Name)> regions = new();
@@ -137,7 +173,7 @@ public class MainButtonsViewModel
         {
           Notification.ShowError($"{MapRegionsController.ActiveVerificationRegionNums.Count} " +
                                  "out of 4 Verification Regions selected\nPlease select 4 Verification Regions");
-          return;
+          return Array.Empty<Well>();
         }
         App.MapRegions.RemoveNullTextBoxes();
         var verificationRegions = MapRegionsController.MakeVerificationList();
@@ -145,7 +181,7 @@ public class MainButtonsViewModel
         break;
     }
 
-    IReadOnlyCollection<Well> wells;
+    IReadOnlyList<Well> wells;
     //if (App.DiosApp.Control == SystemControl.WorkOrder)
     //{
     //  if (App.DiosApp.WorkOrderController.TryGetWorkOrderById("1", out var wo))
@@ -159,42 +195,14 @@ public class MainButtonsViewModel
     //{
     wells = WellsSelectViewModel.Instance.OutputWells(regions);
     //}
-
-
     if (wells.Count == 0)
     {
       var msg = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Messages_NoWellsOrTube_Selected),
         Language.TranslationSource.Instance.CurrentCulture);
       Notification.Show(msg);
-      return;
     }
 
-    //after cal case
-    if (CalibrationViewModel.Instance.DoPostCalibrationRun)
-    {
-      var oldWell = (wells as IReadOnlyList<Well>)[0];
-      var calWell = oldWell.ToCalibrationWell();
-      wells = new List<Well>{ calWell };
-      //after succesful cal, make a custom Well, that is tuned for the 256 custom thing
-    }
-
-
-    MainViewModel.Instance.NavigationSelector(1);
-
-    EnableStartButton(false);
-    ResultsViewModel.Instance.ClearGraphs();
-    PlatePictogramViewModel.Instance.PlatePictogram.Clear();
-    ResultsViewModel.Instance.PlotCurrent();
-    PlatePictogramViewModel.Instance.PlatePictogram.SetWellsForReading(wells);
-    ResultsViewModel.Instance.ClearCurrentCalibrationStats();
-    if (App.DiosApp.Control == SystemControl.WorkOrder && !string.IsNullOrEmpty(DashboardViewModel.Instance.WorkOrderID[0]))
-    {
-      App.DiosApp.StartOperation(wells, WellsSelectViewModel.Instance.CurrentPlate, DashboardViewModel.Instance.WorkOrderID[0]);
-    }
-    else
-    {
-      App.DiosApp.StartOperation(wells, WellsSelectViewModel.Instance.CurrentPlate);
-    }
+    return wells;
   }
 
   public void EndButtonClick()

@@ -22,7 +22,7 @@ internal class MeasurementScript
 
   public void Start()
   {
-    _logger.Log($"{DateTime.Now.ToString("dd.MM.yyyy.HH-mm-ss", CultureInfo.CreateSpecificCulture("en-GB"))} Starting read sequence");
+    _logger.Log("Starting read sequence");
     _hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.MinSSC, _device._beadProcessor._map.calParams.minmapssc);
     _hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.MaxSSC, _device._beadProcessor._map.calParams.maxmapssc);
     //read section of plate
