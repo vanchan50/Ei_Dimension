@@ -16,8 +16,6 @@ using DIOS.Core.HardwareIntercom;
 using DIOS.Application;
 using DIOS.Application.Domain;
 using DIOS.Application.FileIO;
-using Newtonsoft.Json;
-using System.Security.Policy;
 
 namespace Ei_Dimension;
 
@@ -137,8 +135,8 @@ public partial class App : Application
 
   public static void SetChannelConfig(ChannelConfiguration chConfig)
   {
-    var OEMMode = chConfig == ChannelConfiguration.OEMA ||
-                       chConfig == ChannelConfiguration.OEMPMT;
+    var OEMMode = chConfig is ChannelConfiguration.OEMA
+                                or ChannelConfiguration.OEMPMT;
 
     DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ChannelConfiguration, chConfig);
     SetOEMMode(OEMMode);
@@ -315,9 +313,7 @@ public partial class App : Application
         var report = CalibrationViewModel.Instance.FormNewCalibrationReport(true, stats);
         Task.Run(() =>
         {
-          var publishableReport = JsonConvert.SerializeObject(report);
-          var path = Path.Combine(DiosApp.Publisher.Outdir, "Result", $"CalibrationReport_{DiosApp.Publisher.Date}.json");
-          File.WriteAllText(path, publishableReport);
+          DiosApp.Publisher.CalibrationFile.CreateAndWrite(report);
         });
       }
     });

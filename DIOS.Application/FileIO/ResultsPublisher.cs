@@ -20,11 +20,13 @@ public class ResultsPublisher
   public PlateReportFileWriter PlateReportFile { get; }
   public LegacyReportFileWriter LegacyReportFile { get; }
   public PlateStatusFileWriter PlateStatusFile { get; }
+  public CalibrationReportFileWriter CalibrationFile { get; }
   public string Date => DateTime.Now.ToString("dd.MM.yyyy.HH-mm-ss", CultureInfo.CreateSpecificCulture("en-GB"));
   public string LegacyReportDate => DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss", CultureInfo.CreateSpecificCulture("en-GB"));
 
   public const string DATAFOLDERNAME = "AcquisitionData";
   public const string STATUSFOLDERNAME = "Status";
+  public readonly string RESULTFOLDERNAME;
   public readonly string SUMMARYFOLDERNAME;
 
   private string _folder;
@@ -34,12 +36,14 @@ public class ResultsPublisher
   {
     _folder = folder;
     Outdir = _folder;
+    RESULTFOLDERNAME = $"{_folder}\\Result";
     SUMMARYFOLDERNAME = $"{_folder}\\Result\\Summary";
-    ResultsFile = new ResultsFileWriter(this);
-    BeadEventFile = new BeadEventFileWriter(this);
-    PlateReportFile = new PlateReportFileWriter(this);
-    LegacyReportFile = new LegacyReportFileWriter(this);
-    PlateStatusFile = new PlateStatusFileWriter(this);
+    ResultsFile = new(this);
+    BeadEventFile = new(this);
+    PlateReportFile = new(this);
+    LegacyReportFile = new(this);
+    PlateStatusFile = new(this);
+    CalibrationFile = new(this);
     _logger = logger;
   }
 

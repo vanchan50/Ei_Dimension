@@ -144,9 +144,10 @@ public class CalibrationViewModel
       Task.Run(() =>
       {
         var report = FormNewCalibrationReport(false, null);
-        var publishableReport = JsonConvert.SerializeObject(report);
-        var path = Path.Combine(App.DiosApp.Publisher.Outdir, "Result", $"CalibrationReport_{App.DiosApp.Publisher.Date}.json");
-        File.WriteAllText(path, publishableReport);
+        Task.Run(() =>
+        {
+          App.DiosApp.Publisher.CalibrationFile.CreateAndWrite(report);
+        });
       });
     }
     else if (CalJustFailed)
@@ -188,7 +189,7 @@ public class CalibrationViewModel
     var status = isCalibrationSuccesful;
     var report = new CalibrationReport(firmwareVersion, appVersion, dnrCoefficient, dnrTransition, channelConfig,status);
 
-    if (!isCalibrationSuccesful)
+    if (isCalibrationSuccesful is false || multiChannelStats is null)
       return report;
 
     var temperature = float.Parse(ChannelsViewModel.Instance.TempParameters[0]);
