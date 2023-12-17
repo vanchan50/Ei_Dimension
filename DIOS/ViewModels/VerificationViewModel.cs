@@ -12,8 +12,6 @@ namespace Ei_Dimension.ViewModels;
 public class VerificationViewModel
 {
   public virtual ObservableCollection<DropDownButtonContents> VerificationWarningItems { get; set; }
-  public virtual ObservableCollection<string> ToleranceItems { get; set; } = new(){"", "", "", "", ""};
-  public virtual ObservableCollection<string> MaxCVItems { get; set; } = new() { "", "", "", "", "" };
   public virtual string SelectedVerificationWarningContent { get; set; }
   public static VerificationViewModel Instance { get; private set; }
   public bool isActivePage { get; set; }
@@ -52,6 +50,7 @@ public class VerificationViewModel
       //Reset all Verification Regions
       MapRegionsController.ActiveVerificationRegionNums.Add(map.regions[i].Number);
       App.MapRegions.AddValidationRegion(map.regions[i].Number);
+
       MapRegionsController.RegionsList[i + 1].TargetReporterValue[0] = "";
 
       if (map.regions[i].isValidator)
@@ -61,6 +60,10 @@ public class VerificationViewModel
           MapRegionsController.RegionsList[i + 1].TargetReporterValue[0] = map.regions[i].VerificationTargetReporter.ToString();
       }
     }
+
+    //
+    VerificationParametersViewModel.Instance.InstallRegionVerificationData(map.regions[5]);
+    //
 
     if (!fromCode)
     {
@@ -79,11 +82,11 @@ public class VerificationViewModel
       var index = map.regions.FindIndex(x => x.Number == MapRegionsController.RegionsList[i].Number);
       if(index != -1)
       {
-        double temp = -1;
+        float temp = -1;
         if (MapRegionsController.ActiveVerificationRegionNums.Contains(MapRegionsController.RegionsList[i].Number))
         {
           map.regions[index].isValidator = true;
-          if (MapRegionsController.RegionsList[i].TargetReporterValue[0] != "" && double.TryParse(MapRegionsController.RegionsList[i].TargetReporterValue[0], out temp))
+          if (MapRegionsController.RegionsList[i].TargetReporterValue[0] != "" && float.TryParse(MapRegionsController.RegionsList[i].TargetReporterValue[0], out temp))
           {
             if(temp < 0)
               map.regions[index].VerificationTargetReporter = -1;
@@ -228,51 +231,6 @@ public class VerificationViewModel
 
   public void FocusedBox(int num)
   {
-    var toleranceSP = Views.VerificationView.Instance.toleranceSP.Children;
-    var maxCV_SP = Views.VerificationView.Instance.maxCV_SP.Children;
-    switch (num)
-    {
-      case 0:
-        UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ToleranceItems)), this, 0, toleranceSP[0] as TextBox);
-        MainViewModel.Instance.NumpadToggleButton(toleranceSP[0] as TextBox);
-        break;
-      case 1:
-        UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ToleranceItems)), this, 1, toleranceSP[1] as TextBox);
-        MainViewModel.Instance.NumpadToggleButton(toleranceSP[1] as TextBox);
-        break;
-      case 2:
-        UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ToleranceItems)), this, 2, toleranceSP[2] as TextBox);
-        MainViewModel.Instance.NumpadToggleButton(toleranceSP[2] as TextBox);
-        break;
-      case 3:
-        UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ToleranceItems)), this, 3, toleranceSP[3] as TextBox);
-        MainViewModel.Instance.NumpadToggleButton(toleranceSP[3] as TextBox);
-        break;
-      case 4:
-        UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ToleranceItems)), this, 4, toleranceSP[4] as TextBox);
-        MainViewModel.Instance.NumpadToggleButton(toleranceSP[4] as TextBox);
-        break;
-      case 5:
-        UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(MaxCVItems)), this, 0, maxCV_SP[0] as TextBox);
-        MainViewModel.Instance.NumpadToggleButton(maxCV_SP[0] as TextBox);
-        break;
-      case 6:
-        UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(MaxCVItems)), this, 1, maxCV_SP[1] as TextBox);
-        MainViewModel.Instance.NumpadToggleButton(maxCV_SP[1] as TextBox);
-        break;
-      case 7:
-        UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(MaxCVItems)), this, 2, maxCV_SP[2] as TextBox);
-        MainViewModel.Instance.NumpadToggleButton(maxCV_SP[2] as TextBox);
-        break;
-      case 8:
-        UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(MaxCVItems)), this, 3, maxCV_SP[3] as TextBox);
-        MainViewModel.Instance.NumpadToggleButton(maxCV_SP[3] as TextBox);
-        break;
-      case 9:
-        UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(MaxCVItems)), this, 4, maxCV_SP[4] as TextBox);
-        MainViewModel.Instance.NumpadToggleButton(maxCV_SP[4] as TextBox);
-        break;
-    }
   }
 
   public class DropDownButtonContents : Core.ObservableObject

@@ -989,6 +989,9 @@ Volume, µL</value>
   <data name="Red" xml:space="preserve">
     <value>红光</value>
   </data>
+  <data name="Reporter" xml:space="preserve">
+    <value>报告荧光信号</value>
+  </data>
   <data name="Reset" xml:space="preserve">
     <value>重置</value>
   </data>
@@ -1172,6 +1175,9 @@ Volume, µL</value>
   <data name="Value" xml:space="preserve">
     <value>值</value>
   </data>
+  <data name="Verification_isActiveRegion" xml:space="preserve">
+    <value>Active Region</value>
+  </data>
   <data name="Verification_maxCV" xml:space="preserve">
     <value>Max CV</value>
   </data>
@@ -1179,7 +1185,7 @@ Volume, µL</value>
     <value>Mean Tolerance %</value>
   </data>
   <data name="Verification_Table_Reporter" xml:space="preserve">
-    <value>报告荧光信号</value>
+    <value>Target 报告荧光信号</value>
   </data>
   <data name="Verification_Warning_Schedule" xml:space="preserve">
     <value>验证警告时间表</value>

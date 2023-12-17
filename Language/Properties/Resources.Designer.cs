@@ -3055,6 +3055,15 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Reporter.
+        /// </summary>
+        public static string Reporter {
+            get {
+                return ResourceManager.GetString("Reporter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Reset.
         /// </summary>
         public static string Reset {
@@ -3713,6 +3722,15 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Active Region.
+        /// </summary>
+        public static string Verification_isActiveRegion {
+            get {
+                return ResourceManager.GetString("Verification_isActiveRegion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Max CV.
         /// </summary>
         public static string Verification_maxCV {
@@ -3731,7 +3749,7 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Reporter.
+        ///   Looks up a localized string similar to Target Reporter.
         /// </summary>
         public static string Verification_Table_Reporter {
             get {

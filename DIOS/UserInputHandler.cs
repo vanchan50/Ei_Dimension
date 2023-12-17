@@ -82,7 +82,7 @@ internal static class UserInputHandler
         case nameof(CalibrationViewModel.Instance.CompensationPercentageContent):
           if (float.TryParse(_tempNewString, out fRes))
           {
-            if ((fRes >= 0 && fRes <= 10) || _disableSanityCheck)
+            if (fRes is >= 0 and <= 10 || _disableSanityCheck)
             {
               App.DiosApp.Device.Compensation = fRes;
               break;
@@ -96,7 +96,7 @@ internal static class UserInputHandler
           {
             if (float.TryParse(_tempNewString, out fRes))
             {
-              if ((fRes >= 1 && fRes <= 300) || _disableSanityCheck)
+              if (fRes is >= 1 and <= 300 || _disableSanityCheck)
               {
                 App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.DNRCoefficient, fRes);
                 break;
@@ -109,7 +109,7 @@ internal static class UserInputHandler
           {
             if (float.TryParse(_tempNewString, out fRes))
             {
-              if ((fRes >= 1 && fRes <= 40000) || _disableSanityCheck)
+              if (fRes is >= 1 and <= 40000 || _disableSanityCheck)
               {
                 App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.DNRTransition, fRes);
                 break;
@@ -168,7 +168,7 @@ internal static class UserInputHandler
           {
             if (int.TryParse(_tempNewString, out iRes))
             {
-              if ((iRes >= 10 && iRes <= 100) || _disableSanityCheck)
+              if (iRes is >= 10 and <= 100 || _disableSanityCheck)
               {
                 App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.Volume, VolumeType.Sample, (ushort)iRes);
                 break;
@@ -181,7 +181,7 @@ internal static class UserInputHandler
           {
             if (int.TryParse(_tempNewString, out iRes))
             {
-              if ((iRes >= 1 && iRes <= 150) || _disableSanityCheck)
+              if (iRes is >= 1 and <= 150 || _disableSanityCheck)
               {
                 App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.Volume, VolumeType.Wash, (ushort)iRes);
                 break;
@@ -194,7 +194,7 @@ internal static class UserInputHandler
           {
             if (int.TryParse(_tempNewString, out iRes))
             {
-              if ((iRes >= 1 && iRes <= 500) || _disableSanityCheck)
+              if (iRes is >= 1 and <= 500 || _disableSanityCheck)
               {
                 App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.Volume, VolumeType.ProbeWash, (ushort)iRes);
                 break;
@@ -207,7 +207,7 @@ internal static class UserInputHandler
           {
             if (int.TryParse(_tempNewString, out iRes))
             {
-              if ((iRes >= 1 && iRes <= 500) || _disableSanityCheck)
+              if (iRes is >= 1 and <= 500 || _disableSanityCheck)
               {
                 App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.Volume, VolumeType.Agitate, (ushort)iRes);
                 break;
@@ -222,7 +222,7 @@ internal static class UserInputHandler
           {
             if (int.TryParse(_tempNewString, out iRes))
             {
-              if ((iRes >= 1 && iRes <= 10) || _disableSanityCheck)
+              if (iRes is >= 1 and <= 10 || _disableSanityCheck)
               {
                 App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.WashRepeatsAmount, (ushort)iRes);
                 break;
@@ -235,7 +235,7 @@ internal static class UserInputHandler
           {
             if (int.TryParse(_tempNewString, out iRes))
             {
-              if ((iRes >= 0 && iRes <= 5) || _disableSanityCheck)
+              if (iRes is >= 0 and <= 5 || _disableSanityCheck)
               {
                 App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ProbewashRepeatsAmount, (ushort)iRes);
                 break;
@@ -248,7 +248,7 @@ internal static class UserInputHandler
           {
             if (int.TryParse(_tempNewString, out iRes))
             {
-              if ((iRes >= 1 && iRes <= 10) || _disableSanityCheck)
+              if (iRes is >= 1 and <= 10 || _disableSanityCheck)
               {
                 App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.AgitateRepeatsAmount, (ushort)iRes);
                 break;
@@ -263,7 +263,7 @@ internal static class UserInputHandler
           {
             if (int.TryParse(_tempNewString, out iRes))
             {
-              if ((iRes >= 1 && iRes <= 2000) || _disableSanityCheck)
+              if (iRes is >= 1 and <= 2000 || _disableSanityCheck)
               {
                 App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.Height, iRes);
                 break;
@@ -276,7 +276,7 @@ internal static class UserInputHandler
           {
             if (int.TryParse(_tempNewString, out iRes))
             {
-              if ((iRes >= 0 && iRes <= 20000) || _disableSanityCheck)
+              if (iRes is >= 0 and <= 20000 || _disableSanityCheck)
               {
                 App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.MinSSC, iRes);
                 break;
@@ -289,7 +289,7 @@ internal static class UserInputHandler
           {
             if (int.TryParse(_tempNewString, out iRes))
             {
-              if ((iRes >= 0 && iRes <= 30000) || _disableSanityCheck)
+              if (iRes is >= 0 and <= 30000 || _disableSanityCheck)
               {
                 App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.MaxSSC, iRes);
                 break;
@@ -304,7 +304,7 @@ internal static class UserInputHandler
           {
             if (int.TryParse(_tempNewString, out iRes))
             {
-              if ((iRes >= 0 && iRes <= 30000) || _disableSanityCheck)
+              if (iRes is >= 0 and <= 30000 || _disableSanityCheck)
               {
                 App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.CalibrationTarget, CalibrationTarget.CL0, iRes);
                 break;
@@ -317,7 +317,7 @@ internal static class UserInputHandler
           {
             if (int.TryParse(_tempNewString, out iRes))
             {
-              if ((iRes >= 0 && iRes <= 30000) || _disableSanityCheck)
+              if (iRes is >= 0 and <= 30000 || _disableSanityCheck)
               {
                 App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.CalibrationTarget, CalibrationTarget.CL1, iRes);
                 break;
@@ -330,7 +330,7 @@ internal static class UserInputHandler
           {
             if (int.TryParse(_tempNewString, out iRes))
             {
-              if ((iRes >= 0 && iRes <= 30000) || _disableSanityCheck)
+              if (iRes is >= 0 and <= 30000 || _disableSanityCheck)
               {
                 App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.CalibrationTarget, CalibrationTarget.CL2, iRes);
                 break;
@@ -343,7 +343,7 @@ internal static class UserInputHandler
           {
             if (int.TryParse(_tempNewString, out iRes))
             {
-              if ((iRes >= 0 && iRes <= 30000) || _disableSanityCheck)
+              if (iRes is >= 0 and <= 30000 || _disableSanityCheck)
               {
                 App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.CalibrationTarget, CalibrationTarget.CL3, iRes);
                 break;
@@ -356,7 +356,7 @@ internal static class UserInputHandler
           {
             if (int.TryParse(_tempNewString, out iRes))
             {
-              if ((iRes >= 0 && iRes <= 30000) || _disableSanityCheck)
+              if (iRes is >= 0 and <= 30000 || _disableSanityCheck)
               {
                 App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.CalibrationTarget, CalibrationTarget.RP1, iRes);
                 break;
@@ -369,7 +369,7 @@ internal static class UserInputHandler
         case nameof(CalibrationViewModel.Instance.AttenuationBox):
           if (int.TryParse(_tempNewString, out iRes))
           {
-            if ((iRes >= 0 && iRes <= 100) || _disableSanityCheck)
+            if (iRes is >= 0 and <= 100 || _disableSanityCheck)
             {
               App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.Attenuation, iRes);
               break;
@@ -383,7 +383,7 @@ internal static class UserInputHandler
           {
             if (int.TryParse(_tempNewString, out iRes))
             {
-              if ((iRes >= 0 && iRes <= 1000) || _disableSanityCheck)
+              if (iRes is >= 0 and <= 1000 || _disableSanityCheck)
               {
                 App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.SyringeSpeedSheath, SyringeSpeed.Normal, iRes);
                 break;
@@ -396,7 +396,7 @@ internal static class UserInputHandler
           {
             if (int.TryParse(_tempNewString, out iRes))
             {
-              if ((iRes >= 0 && iRes <= 1000) || _disableSanityCheck)
+              if (iRes is >= 0 and <= 1000 || _disableSanityCheck)
               {
                 App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.SyringeSpeedSheath, SyringeSpeed.HiSpeed, iRes);
                 break;
@@ -409,7 +409,7 @@ internal static class UserInputHandler
           {
             if (int.TryParse(_tempNewString, out iRes))
             {
-              if ((iRes >= 0 && iRes <= 1000) || _disableSanityCheck)
+              if (iRes is >= 0 and <= 1000 || _disableSanityCheck)
               {
                 App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.SyringeSpeedSheath, SyringeSpeed.HiSensitivity, iRes);
                 break;
@@ -422,7 +422,7 @@ internal static class UserInputHandler
           {
             if (int.TryParse(_tempNewString, out iRes))
             {
-              if ((iRes >= 0 && iRes <= 8000) || _disableSanityCheck)
+              if (iRes is >= 0 and <= 8000 || _disableSanityCheck)
               {
                 App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.SyringeSpeedSheath, SyringeSpeed.Flush, iRes);
                 break;
@@ -435,7 +435,7 @@ internal static class UserInputHandler
           {
             if (int.TryParse(_tempNewString, out iRes))
             {
-              if ((iRes >= 0 && iRes <= 8000) || _disableSanityCheck)
+              if (iRes is >= 0 and <= 8000 || _disableSanityCheck)
               {
                 App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.SyringeSpeedSheath, SyringeSpeed.Pickup, iRes);
                 break;
@@ -448,7 +448,7 @@ internal static class UserInputHandler
           {
             if (int.TryParse(_tempNewString, out iRes))
             {
-              if ((iRes >= 0 && iRes <= 8000) || _disableSanityCheck)
+              if (iRes is >= 0 and <= 8000 || _disableSanityCheck)
               {
                 App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.SyringeSpeedSheath, SyringeSpeed.MaxSpeed, iRes);
                 break;
@@ -463,7 +463,7 @@ internal static class UserInputHandler
           {
             if (int.TryParse(_tempNewString, out iRes))
             {
-              if ((iRes >= 0 && iRes <= 1000) || _disableSanityCheck)
+              if (iRes is >= 0 and <= 1000 || _disableSanityCheck)
               {
                 App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.SyringeSpeedSample, SyringeSpeed.Normal, iRes);
                 break;
@@ -476,7 +476,7 @@ internal static class UserInputHandler
           {
             if (int.TryParse(_tempNewString, out iRes))
             {
-              if ((iRes >= 0 && iRes <= 1000) || _disableSanityCheck)
+              if (iRes is >= 0 and <= 1000 || _disableSanityCheck)
               {
                 App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.SyringeSpeedSample, SyringeSpeed.HiSpeed, iRes);
                 break;
@@ -489,7 +489,7 @@ internal static class UserInputHandler
           {
             if (int.TryParse(_tempNewString, out iRes))
             {
-              if ((iRes >= 0 && iRes <= 1000) || _disableSanityCheck)
+              if (iRes is >= 0 and <= 1000 || _disableSanityCheck)
               {
                 App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.SyringeSpeedSample, SyringeSpeed.HiSensitivity, iRes);
                 break;
@@ -502,7 +502,7 @@ internal static class UserInputHandler
           {
             if (int.TryParse(_tempNewString, out iRes))
             {
-              if ((iRes >= 0 && iRes <= 8000) || _disableSanityCheck)
+              if (iRes is >= 0 and <= 8000 || _disableSanityCheck)
               {
                 App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.SyringeSpeedSample, SyringeSpeed.Flush, iRes);
                 break;
@@ -515,7 +515,7 @@ internal static class UserInputHandler
           {
             if (int.TryParse(_tempNewString, out iRes))
             {
-              if ((iRes >= 0 && iRes <= 8000) || _disableSanityCheck)
+              if (iRes is >= 0 and <= 8000 || _disableSanityCheck)
               {
                 App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.SyringeSpeedSample, SyringeSpeed.Pickup, iRes);
                 break;
@@ -528,7 +528,7 @@ internal static class UserInputHandler
           {
             if (int.TryParse(_tempNewString, out iRes))
             {
-              if ((iRes >= 0 && iRes <= 8000) || _disableSanityCheck)
+              if (iRes is >= 0 and <= 8000 || _disableSanityCheck)
               {
                 App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.SyringeSpeedSample, SyringeSpeed.MaxSpeed, iRes);
                 break;
@@ -1105,7 +1105,7 @@ internal static class UserInputHandler
           {
             if (int.TryParse(_tempNewString, out iRes))
             {
-              if ((iRes >= 0 && iRes <= 65535) || _disableSanityCheck)
+              if (iRes is >= 0 and <= 65535 || _disableSanityCheck)
               {
                 break;
               }
@@ -1117,7 +1117,7 @@ internal static class UserInputHandler
           {
             if (int.TryParse(_tempNewString, out iRes))
             {
-              if ((iRes >= 1000 && iRes <= 3000) || _disableSanityCheck)
+              if (iRes is >= 1000 and <= 3000 || _disableSanityCheck)
               {
                 App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorX, MotorParameterType.Slope, iRes);
                 break;
@@ -1130,7 +1130,7 @@ internal static class UserInputHandler
           {
             if (int.TryParse(_tempNewString, out iRes))
             {
-              if ((iRes >= 1000 && iRes <= 5000) || _disableSanityCheck)
+              if (iRes is >= 1000 and <= 5000 || _disableSanityCheck)
               {
                 App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorX, MotorParameterType.StartSpeed, iRes);
                 break;
@@ -1143,7 +1143,7 @@ internal static class UserInputHandler
           {
             if (int.TryParse(_tempNewString, out iRes))
             {
-              if ((iRes >= 1000 && iRes <= 10000) || _disableSanityCheck)
+              if (iRes is >= 1000 and <= 10000 || _disableSanityCheck)
               {
                 App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorX, MotorParameterType.RunSpeed, iRes);
                 break;
@@ -1156,7 +1156,7 @@ internal static class UserInputHandler
           {
             if (int.TryParse(_tempNewString, out iRes))
             {
-              if ((iRes >= 200 && iRes <= 2000) || _disableSanityCheck)
+              if (iRes is >= 200 and <= 2000 || _disableSanityCheck)
               {
                 App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorX, MotorParameterType.EncoderSteps, iRes);
                 break;
@@ -1184,7 +1184,7 @@ internal static class UserInputHandler
           {
             if (int.TryParse(_tempNewString, out iRes))
             {
-              if ((iRes >= 0 && iRes <= 65535) || _disableSanityCheck)
+              if (iRes is >= 0 and <= 65535 || _disableSanityCheck)
               {
                 break;
               }
@@ -1196,7 +1196,7 @@ internal static class UserInputHandler
           {
             if (int.TryParse(_tempNewString, out iRes))
             {
-              if ((iRes >= 1000 && iRes <= 3000) || _disableSanityCheck)
+              if (iRes is >= 1000 and <= 3000 || _disableSanityCheck)
               {
                 App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorY, MotorParameterType.Slope, iRes);
                 break;
@@ -1209,7 +1209,7 @@ internal static class UserInputHandler
           {
             if (int.TryParse(_tempNewString, out iRes))
             {
-              if ((iRes >= 1000 && iRes <= 5000) || _disableSanityCheck)
+              if (iRes is >= 1000 and <= 5000 || _disableSanityCheck)
               {
                 App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorY, MotorParameterType.StartSpeed, iRes);
                 break;
@@ -1222,7 +1222,7 @@ internal static class UserInputHandler
           {
             if (int.TryParse(_tempNewString, out iRes))
             {
-              if ((iRes >= 1000 && iRes <= 10000) || _disableSanityCheck)
+              if (iRes is >= 1000 and <= 10000 || _disableSanityCheck)
               {
                 App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorY, MotorParameterType.RunSpeed, iRes);
                 break;
@@ -1235,7 +1235,7 @@ internal static class UserInputHandler
           {
             if (int.TryParse(_tempNewString, out iRes))
             {
-              if ((iRes >= 200 && iRes <= 2000) || _disableSanityCheck)
+              if (iRes is >= 200 and <= 2000 || _disableSanityCheck)
               {
                 App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorY, MotorParameterType.EncoderSteps, iRes);
                 break;
@@ -1263,7 +1263,7 @@ internal static class UserInputHandler
           {
             if (int.TryParse(_tempNewString, out iRes))
             {
-              if ((iRes >= 0 && iRes <= 65535) || _disableSanityCheck)
+              if (iRes is >= 0 and <= 65535 || _disableSanityCheck)
               {
                 break;
               }
@@ -1275,7 +1275,7 @@ internal static class UserInputHandler
           {
             if (int.TryParse(_tempNewString, out iRes))
             {
-              if ((iRes >= 1000 && iRes <= 3000) || _disableSanityCheck)
+              if (iRes is >= 1000 and <= 3000 || _disableSanityCheck)
               {
                 App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorZ, MotorParameterType.Slope, iRes);
                 break;
@@ -1288,7 +1288,7 @@ internal static class UserInputHandler
           {
             if (int.TryParse(_tempNewString, out iRes))
             {
-              if ((iRes >= 1000 && iRes <= 5000) || _disableSanityCheck)
+              if (iRes is >= 1000 and <= 5000 || _disableSanityCheck)
               {
                 App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorZ, MotorParameterType.StartSpeed, iRes);
                 break;
@@ -1301,7 +1301,7 @@ internal static class UserInputHandler
           {
             if (int.TryParse(_tempNewString, out iRes))
             {
-              if ((iRes >= 1000 && iRes <= 10000) || _disableSanityCheck)
+              if (iRes is >= 1000 and <= 10000 || _disableSanityCheck)
               {
                 App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorZ, MotorParameterType.RunSpeed, iRes);
                 break;
@@ -1314,7 +1314,7 @@ internal static class UserInputHandler
           {
             if (int.TryParse(_tempNewString, out iRes))
             {
-              if ((iRes >= 200 && iRes <= 2000) || _disableSanityCheck)
+              if (iRes is >= 200 and <= 2000 || _disableSanityCheck)
               {
                 App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorZ, MotorParameterType.EncoderSteps, iRes);
                 break;
@@ -1506,7 +1506,7 @@ internal static class UserInputHandler
           {
             if (float.TryParse(_tempNewString, out fRes))
             {
-              if ((fRes >= 0 && fRes <= 1000.0000000001) || _disableSanityCheck)
+              if ((fRes is >= 0 and <= 1000.0000000001f) || _disableSanityCheck)
               {
                 App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorStepsZ, MotorStepsZ.H1, fRes);
                 PlateCustomizationViewModel.Instance.DefaultPlate.H1 = fRes;
@@ -1521,7 +1521,7 @@ internal static class UserInputHandler
           {
             if (float.TryParse(_tempNewString, out fRes))
             {
-              if ((fRes >= 0 && fRes <= 1000.0000000001) || _disableSanityCheck)
+              if ((fRes is >= 0 and <= 1000.0000000001f) || _disableSanityCheck)
               {
                 App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorStepsZ, MotorStepsZ.H12, fRes);
                 PlateCustomizationViewModel.Instance.DefaultPlate.H12 = fRes;
@@ -1536,7 +1536,7 @@ internal static class UserInputHandler
           {
             if (float.TryParse(_tempNewString, out fRes))
             {
-              if ((fRes >= 0 && fRes <= 1000.0000000001) || _disableSanityCheck)
+              if ((fRes is >= 0 and <= 1000.0000000001f) || _disableSanityCheck)
               {
                 App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorStepsZ, MotorStepsZ.Tube, fRes);
                 break;
@@ -1549,7 +1549,7 @@ internal static class UserInputHandler
           {
             if (int.TryParse(_tempNewString, out iRes))
             {
-              if ((iRes >= 0 && iRes <= 2000) || _disableSanityCheck)
+              if (iRes is >= 0 and <= 2000 || _disableSanityCheck)
               {
                 App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.WashStationDepth, iRes);
                 break;
@@ -1625,7 +1625,7 @@ internal static class UserInputHandler
           {
             if (Settings.Default.PressureUnitsPSI)
             {
-              if ((fRes >= 2 && fRes <= 40) || _disableSanityCheck)
+              if (fRes is >= 2 and <= 40 || _disableSanityCheck)
               {
                 App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.PressureWarningLevel, fRes);
                 break;
@@ -1633,7 +1633,7 @@ internal static class UserInputHandler
             }
             else
             {
-              if ((fRes >= 2 * ComponentsViewModel.TOKILOPASCALCOEFFICIENT && fRes <= 40 * ComponentsViewModel.TOKILOPASCALCOEFFICIENT) || _disableSanityCheck)
+              if (fRes is >= (float)(2 * ComponentsViewModel.TOKILOPASCALCOEFFICIENT) and <= (float)(40 * ComponentsViewModel.TOKILOPASCALCOEFFICIENT) || _disableSanityCheck)
               {
                 //return to PSI for the FW
                 fRes /= (float)ComponentsViewModel.TOKILOPASCALCOEFFICIENT;
@@ -1668,7 +1668,7 @@ internal static class UserInputHandler
         case nameof(MaintenanceViewModel.Instance.SanitizeSecondsContent):
           if (int.TryParse(_tempNewString, out iRes))
           {
-            if ((iRes >= 1 && iRes <= 100) || _disableSanityCheck)
+            if (iRes is >= 1 and <= 100 || _disableSanityCheck)
             {
               break;
             }
@@ -1679,7 +1679,7 @@ internal static class UserInputHandler
         case nameof(NormalizationViewModel.Instance.NormalizationFactor):
           if (float.TryParse(_tempNewString, out fRes))
           {
-            if ((fRes >= 0.9 && fRes <= 0.99) || _disableSanityCheck)
+            if (fRes is >= 0.9f and <= 0.99f || _disableSanityCheck)
             {
               break;
             }
@@ -1690,7 +1690,7 @@ internal static class UserInputHandler
         case nameof(MapRegionData.MFIValue):
           if (int.TryParse(_tempNewString, out iRes))
           {
-            if (iRes >= 0)// && iRes <= 100) || _overrideSanityCheck)
+            if (iRes is >= 0)// && iRes <= 100) || _overrideSanityCheck)
             {
               break;
             }
@@ -1701,7 +1701,7 @@ internal static class UserInputHandler
         case nameof(ComponentsViewModel.Instance.StatisticsCutoffBox):
           if (double.TryParse(_tempNewString, out dRes))
           {
-            if ((dRes >= 5 && dRes <= 45) || _disableSanityCheck)
+            if (dRes is >= 5 and <= 45 || _disableSanityCheck)
             {
               Settings.Default.StatisticsTailDiscardPercentage = dRes / 100;
               StatisticsExtension.TailDiscardPercentage = dRes / 100;
@@ -1725,7 +1725,7 @@ internal static class UserInputHandler
         case nameof(SyringeSpeedsViewModel.SampleSyringeSize):
           if (int.TryParse(_tempNewString, out iRes))
           {
-            if ((iRes >= 0 && iRes <= 12500) || _disableSanityCheck)
+            if (iRes is >= 0 and <= 12500 || _disableSanityCheck)
             {
               App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.SampleSyringeSize, iRes);
               break;
@@ -1737,7 +1737,7 @@ internal static class UserInputHandler
         case nameof(SyringeSpeedsViewModel.SheathFlushVolume):
           if (int.TryParse(_tempNewString, out iRes))
           {
-            if ((iRes >= 0 && iRes <= 12000) || _disableSanityCheck)
+            if (iRes is >= 0 and <= 12000 || _disableSanityCheck)
             {
               App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.SheathFlushVolume, iRes);
               break;
@@ -1749,7 +1749,7 @@ internal static class UserInputHandler
         case nameof(SyringeSpeedsViewModel.EdgeDistance):
           if (int.TryParse(_tempNewString, out iRes))
           {
-            if ((iRes >= 0 && iRes <= 150) || _disableSanityCheck)
+            if (iRes is >= 0 and <= 150 || _disableSanityCheck)
             {
               App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.DistanceToWellEdge, iRes);
               break;
@@ -1761,7 +1761,7 @@ internal static class UserInputHandler
         case nameof(SyringeSpeedsViewModel.EdgeHeight):
           if (int.TryParse(_tempNewString, out iRes))
           {
-            if ((iRes >= 0 && iRes <= 100) || _disableSanityCheck)
+            if (iRes is >= 0 and <= 100 || _disableSanityCheck)
             {
               App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.WellEdgeDeltaHeight, iRes);
               break;
@@ -1773,7 +1773,7 @@ internal static class UserInputHandler
         case nameof(SyringeSpeedsViewModel.FlushCycles):
           if (int.TryParse(_tempNewString, out iRes))
           {
-            if (iRes >= 0)// && iRes <= 100) || _overrideSanityCheck)
+            if (iRes is >= 0)// && iRes <= 100) || _overrideSanityCheck)
             {
               App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.FlushCycles, iRes);
               break;
@@ -1785,7 +1785,7 @@ internal static class UserInputHandler
         case nameof(DirectMemoryAccessViewModel.HexCode):
           if (int.TryParse(_tempNewString, NumberStyles.HexNumber, Language.TranslationSource.Instance.CurrentCulture, out iRes))
           {
-            if (iRes >= 0 && iRes <= 255)
+            if (iRes is >= 0 and <= 255)
             {
               break;
             }
@@ -1796,7 +1796,7 @@ internal static class UserInputHandler
         case nameof(DirectMemoryAccessViewModel.IntValue):
           if (int.TryParse(_tempNewString, out iRes))
           {
-            if (iRes >= 0 && iRes <= 65535)
+            if (iRes is >= 0 and <= 65535)
             {
               break;
             }
@@ -1807,7 +1807,7 @@ internal static class UserInputHandler
         case nameof(DirectMemoryAccessViewModel.FloatValue):
           if (float.TryParse(_tempNewString, out fRes))
           {
-            if (fRes >= 0 && fRes <= float.MaxValue)
+            if (fRes is >= 0 and <= float.MaxValue)
             {
               break;
             }
@@ -1818,7 +1818,7 @@ internal static class UserInputHandler
         case nameof(MotorsViewModel.TraySteps):
           if (float.TryParse(_tempNewString, out fRes))
           {
-            if (fRes >= 0 && fRes <= float.MaxValue)
+            if (fRes is >= 0 and <= float.MaxValue)
             {
               App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.TraySteps, fRes);
               break;
@@ -1830,7 +1830,7 @@ internal static class UserInputHandler
         case nameof(MotorsViewModel.WashStationXCenterCoordinate):
           if (int.TryParse(_tempNewString, out iRes))
           {
-            if ((iRes >= 0 && iRes <= 60000) || _disableSanityCheck)
+            if (iRes is >= 0 and <= 60000 || _disableSanityCheck)
             {
               App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.WashStationXCenterCoordinate, iRes);
               break;
@@ -1839,12 +1839,147 @@ internal static class UserInputHandler
           failed = true;
           ErrorMessage = "[0-60000]";
           break;
+        case nameof(VerificationParametersViewModel.ToleranceItems):
+          if (SelectedTextBox.index == 0)
+          {
+            if (float.TryParse(_tempNewString, out fRes))
+            {
+              if (fRes is >= 0 and <= 100 || _disableSanityCheck)
+              {
+                //App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorZ, MotorParameterType.RunSpeed, iRes);
+                break;
+              }
+            }
+            failed = true;
+            ErrorMessage = "[0-100]";
+          }
+          if (SelectedTextBox.index == 1)
+          {
+            if (float.TryParse(_tempNewString, out fRes))
+            {
+              if (fRes is >= 0 and <= 100 || _disableSanityCheck)
+              {
+                //App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorZ, MotorParameterType.RunSpeed, iRes);
+                break;
+              }
+            }
+            failed = true;
+            ErrorMessage = "[0-100]";
+          }
+          if (SelectedTextBox.index == 2)
+          {
+            if (float.TryParse(_tempNewString, out fRes))
+            {
+              if (fRes is >= 0 and <= 100 || _disableSanityCheck)
+              {
+                //App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorZ, MotorParameterType.RunSpeed, iRes);
+                break;
+              }
+            }
+            failed = true;
+            ErrorMessage = "[0-100]";
+          }
+          if (SelectedTextBox.index == 3)
+          {
+            if (float.TryParse(_tempNewString, out fRes))
+            {
+              if (fRes is >= 0 and <= 100 || _disableSanityCheck)
+              {
+                //App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorZ, MotorParameterType.RunSpeed, iRes);
+                break;
+              }
+            }
+            failed = true;
+            ErrorMessage = "[0-100]";
+          }
+          if (SelectedTextBox.index == 4)
+          {
+            if (float.TryParse(_tempNewString, out fRes))
+            {
+              if (fRes is >= 0 and <= 100 || _disableSanityCheck)
+              {
+                //App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorZ, MotorParameterType.RunSpeed, iRes);
+                break;
+              }
+            }
+            failed = true;
+            ErrorMessage = "[0-100]";
+          }
+          break;
+        case nameof(VerificationParametersViewModel.MaxCVItems):
+          if (SelectedTextBox.index == 0)
+          {
+            if (float.TryParse(_tempNewString, out fRes))
+            {
+              if (fRes is >= 0 and <= 100 || _disableSanityCheck)
+              {
+                //App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorZ, MotorParameterType.RunSpeed, iRes);
+                break;
+              }
+            }
+            failed = true;
+            ErrorMessage = "[0-100]";
+          }
+          if (SelectedTextBox.index == 1)
+          {
+            if (float.TryParse(_tempNewString, out fRes))
+            {
+              if (fRes is >= 0 and <= 100 || _disableSanityCheck)
+              {
+                //App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorZ, MotorParameterType.RunSpeed, iRes);
+                break;
+              }
+            }
+            failed = true;
+            ErrorMessage = "[0-100]";
+          }
+          if (SelectedTextBox.index == 2)
+          {
+            if (float.TryParse(_tempNewString, out fRes))
+            {
+              if (fRes is >= 0 and <= 100 || _disableSanityCheck)
+              {
+                //App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorZ, MotorParameterType.RunSpeed, iRes);
+                break;
+              }
+            }
+            failed = true;
+            ErrorMessage = "[0-100]";
+          }
+          if (SelectedTextBox.index == 3)
+          {
+            if (float.TryParse(_tempNewString, out fRes))
+            {
+              if (fRes is >= 0 and <= 100 || _disableSanityCheck)
+              {
+                //App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorZ, MotorParameterType.RunSpeed, iRes);
+                break;
+              }
+            }
+            failed = true;
+            ErrorMessage = "[0-100]";
+          }
+          if (SelectedTextBox.index == 4)
+          {
+            if (float.TryParse(_tempNewString, out fRes))
+            {
+              if (fRes is >= 0 and <= 100 || _disableSanityCheck)
+              {
+                //App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorZ, MotorParameterType.RunSpeed, iRes);
+                break;
+              }
+            }
+            failed = true;
+            ErrorMessage = "[0-100]";
+          }
+          break;
       }
       if (VerificationViewModel.Instance.isActivePage)
       {
+        //Verification Reporter data inputs
         if (int.TryParse(_tempNewString, out iRes))
         {
-          if ((iRes < 0 || iRes > 1000000) && !_disableSanityCheck)
+          if (iRes is < 0 or > 1000000 && !_disableSanityCheck)
           {
             failed = true;
             ErrorMessage = "[0-1000000]";

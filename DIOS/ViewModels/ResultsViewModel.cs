@@ -63,21 +63,21 @@ public class ResultsViewModel
     WrldMap = WorldMap.Create();
     AnalysisMap = AnalysysMap.Create();
 
-    CLButtonsChecked = new ObservableCollection<bool> { false, false, true, false, false, true, false, false };
-    CLAxis = new ObservableCollection<string> { "CL1", "CL2" };
+    CLButtonsChecked = new(){ false, false, true, false, false, true, false, false };
+    CLAxis = new(){ "CL1", "CL2" };
     AnalysisVisible = System.Windows.Visibility.Hidden;
     Analysis2DVisible = System.Windows.Visibility.Visible;
     Analysis3DVisible = System.Windows.Visibility.Hidden;
 
-    CurrentMfiItems = new ObservableCollection<string>();
-    CurrentCvItems = new ObservableCollection<string>();
+    CurrentMfiItems = new();
+    CurrentCvItems = new();
     for (var i = 0; i < 10; i++)
     {
       CurrentMfiItems.Add("");
       CurrentCvItems.Add("");
     }
-    BackingMfiItems = new ObservableCollection<string>();
-    BackingCvItems = new ObservableCollection<string>();
+    BackingMfiItems = new();
+    BackingCvItems = new();
     for (var i = 0; i < 10; i++)
     {
       BackingMfiItems.Add("");
@@ -86,7 +86,7 @@ public class ResultsViewModel
     DisplayedMfiItems = CurrentMfiItems;
     DisplayedCvItems = CurrentCvItems;
 
-    StatisticsLabels = new ObservableCollection<string>
+    StatisticsLabels = new()
     {
       Language.Resources.Channels_Green_A,
       Language.Resources.Channels_Green_B,

@@ -7,9 +7,11 @@
 public class MapRegion
 {
   public int Number;
-  public double VerificationTargetReporter;
+  public float VerificationTargetReporter;
   public int NormalizationMFI;
   public bool isValidator;
+  public VerificationParameters MeanTolerance;
+  public VerificationParameters MaxCV;
   public (int x, int y) Center; //coords in 256x256 space
   public List<(int x, int y)> Points; //contains coords in 256x256 space for region numbers
 

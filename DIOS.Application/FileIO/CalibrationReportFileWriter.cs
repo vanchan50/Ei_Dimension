@@ -13,7 +13,7 @@ public class CalibrationReportFileWriter
 
   public void CreateAndWrite(CalibrationReport report)
   {
-    var directoryName = Path.Combine(_publisher.Outdir, _publisher.RESULTFOLDERNAME);
+    var directoryName = Path.Combine(_publisher.Outdir, ResultsPublisher.RESULTFOLDERNAME);
     if (!_publisher.OutputDirectoryExists(directoryName))
       return;
 

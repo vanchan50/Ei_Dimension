@@ -1,7 +1,6 @@
 ﻿using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
 using Ei_Dimension.Models;
-using System;
 using System.Collections.ObjectModel;
 using System.Windows;
 
@@ -15,7 +14,7 @@ public class PlatePictogramViewModel
   public virtual Visibility TopLabel384Visible { get; set; }
   public virtual Visibility BottomLabel384Visible { get; set; }
   public virtual Visibility PlatePictogramIsCovered { get; set; }
-  public virtual ObservableCollection<bool> CornerButtonsChecked { get; } = new ObservableCollection<bool> { true, false, false, false };
+  public virtual ObservableCollection<bool> CornerButtonsChecked { get; } = new(){ true, false, false, false };
   public virtual Visibility Buttons384Visible { get; set; }
   public virtual DrawingPlate PlatePictogram { get; }
 

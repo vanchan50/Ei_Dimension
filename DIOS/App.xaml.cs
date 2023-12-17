@@ -281,11 +281,7 @@ public partial class App : Application
   {
     Logger.Log($"Finished Reading well {e.Well.CoordinatesString()}");
     DiosApp.Results.FreezeWellResults();
-    if (DiosApp.Device.Mode == OperationMode.Normal &&
-        !CalibrationViewModel.Instance.DoPostCalibrationRun)
-    {
-      DiosApp.SaveWellFiles();
-    }
+    DiosApp.SaveWellFiles();
 
     var type = DiosApp.GetWellStateForPictogram();
 

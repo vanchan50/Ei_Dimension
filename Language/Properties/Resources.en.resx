@@ -1155,6 +1155,9 @@ Plate</value>
   <data name="Red" xml:space="preserve">
     <value>Red</value>
   </data>
+  <data name="Reporter" xml:space="preserve">
+    <value>Reporter</value>
+  </data>
   <data name="Reset" xml:space="preserve">
     <value>Reset</value>
   </data>
@@ -1378,6 +1381,9 @@ Verification</value>
   <data name="Value" xml:space="preserve">
     <value>Value</value>
   </data>
+  <data name="Verification_isActiveRegion" xml:space="preserve">
+    <value>Active Region</value>
+  </data>
   <data name="Verification_maxCV" xml:space="preserve">
     <value>Max CV</value>
   </data>
@@ -1385,7 +1391,7 @@ Verification</value>
     <value>Mean Tolerance %</value>
   </data>
   <data name="Verification_Table_Reporter" xml:space="preserve">
-    <value>Reporter</value>
+    <value>Target Reporter</value>
   </data>
   <data name="Verification_Warning_Schedule" xml:space="preserve">
     <value>Verification warning schedule</value>

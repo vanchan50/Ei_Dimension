@@ -26,7 +26,7 @@ public class ResultsPublisher
 
   public const string DATAFOLDERNAME = "AcquisitionData";
   public const string STATUSFOLDERNAME = "Status";
-  public readonly string RESULTFOLDERNAME;
+  public const string RESULTFOLDERNAME = "Result";
   public readonly string SUMMARYFOLDERNAME;
 
   private string _folder;
@@ -36,7 +36,6 @@ public class ResultsPublisher
   {
     _folder = folder;
     Outdir = _folder;
-    RESULTFOLDERNAME = $"{_folder}\\Result";
     SUMMARYFOLDERNAME = $"{_folder}\\Result\\Summary";
     ResultsFile = new(this);
     BeadEventFile = new(this);

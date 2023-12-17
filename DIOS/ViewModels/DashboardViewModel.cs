@@ -321,11 +321,13 @@ public class DashboardViewModel
     {
       App.DiosApp.Device.Mode = OperationMode.Normal;
       Volumes[0] = _dbsampleVolumeTempHolder;
+      EndReadItems[_dbEndReadIndexTempHolder].Click(6);
       App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.Volume, VolumeType.Sample, ushort.Parse(_dbsampleVolumeTempHolder));
       MainButtonsViewModel.Instance.Flavor[0] = null;
       MainWindow.Instance.wndw.Background = App.Current.Resources["AppBackground"] as SolidColorBrush;
       ResultsViewModel.Instance.ValidationCoverVisible = Visibility.Hidden;
       UnlockMapSelection();
+      UnLockEndReadSelection();
     }
 
     UserInputHandler.InputSanityCheck();
@@ -340,19 +342,20 @@ public class DashboardViewModel
       _dbsampleVolumeTempHolder = Volumes[0];
       SetFixedVolumeButtonClick(25);
       App.DiosApp.Device.Mode = OperationMode.Verification;
-      MainButtonsViewModel.Instance.Flavor[0] = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Maintenance_Validation),
-        Language.TranslationSource.Instance.CurrentCulture);
+      _dbEndReadIndexTempHolder = SelectedEndReadIndex;
+      EndReadItems[2].Click(6);
+      MainButtonsViewModel.Instance.Flavor[0] = Language.TranslationSource.Instance[nameof(Language.Resources.Maintenance_Validation)];
       MainWindow.Instance.wndw.Background = new SolidColorBrush(Color.FromRgb(97, 162, 135));
       ResultsViewModel.Instance.ValidationCoverVisible = Visibility.Visible;
       LockMapSelection();
+      LockEndReadSelection();
       return;
     }
 
     ValModeOn = false;
     if (App.DiosApp.Device.Mode == OperationMode.Calibration)
     {
-      var msg = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Messages_Instrument_IsIn_CalMode),
-        Language.TranslationSource.Instance.CurrentCulture);
+      var msg = Language.TranslationSource.Instance[nameof(Language.Resources.Messages_Instrument_IsIn_CalMode)];
       Notification.Show(msg);
       return;
     }

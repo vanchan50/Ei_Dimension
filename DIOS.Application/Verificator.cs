@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
+﻿using System.Globalization;
 using DIOS.Core;
 
 namespace DIOS.Application;
 
 public class Verificator
 {
-  private readonly List<VerificationStats> RegionalStats = new List<VerificationStats>(50);
-  private Dictionary<int, int> _classifiedRegionsDict = new Dictionary<int, int>();  //region,index
-  private Dictionary<int, int> _unclassifiedRegionsDict = new Dictionary<int, int>();  //region,count
+  private readonly List<VerificationStats> RegionalStats = new(50);
+  private Dictionary<int, int> _classifiedRegionsDict = new();  //region,index
+  private Dictionary<int, int> _unclassifiedRegionsDict = new();  //region,count
   private int _highestCount = 0;
   private int _lowestCount = int.MaxValue;
   private int _lowestCountRegion = -1;
