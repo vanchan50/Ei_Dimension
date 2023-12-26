@@ -4,6 +4,7 @@ using DIOS.Core;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using Ei_Dimension.Controllers;
 using Ei_Dimension.Core;
 using Ei_Dimension.Graphing.HeatMap;
@@ -89,10 +90,17 @@ public class WorldMap
         };
         break;
       case OperationMode.Verification:
-        BuildWmap = () => {
+        BuildWmap = () =>
+        {
+          var t = App.DiosApp.MapController.ActiveMap.regions.Where(x => x.isValidator);
+          HashSet<int> verRegionNumbers = new();
+          foreach (var mapRegion in t)
+          {
+            verRegionNumbers.Add(mapRegion.Number);
+          }
           foreach (var point in Map)
           {
-            if (MapRegionsController.ActiveVerificationRegionNums.Contains(point.Region))
+            if (verRegionNumbers.Contains(point.Region))
             {
               DisplayedWorldMap.Add(point);
             }

@@ -36,7 +36,7 @@ public class DIOSApp
     Results = new RunResults(Device, this, new BeadEventSink(2000000));
     Terminator = new ReadTerminator(Results.MinPerRegionAchieved);
     ResultsProc = new ResultsProcessor(Device, Results, Terminator);
-    Verificator = new Verificator(Logger);
+    Verificator = new Verificator();
     BarcodeReader = new USBBarcodeReader(Logger);
   }
 
@@ -44,6 +44,11 @@ public class DIOSApp
   {
     Publisher.ResultsFile.MakeNew();
     Results.StartNewPlateReport(plateSize, plateId);
+    if (Device.Mode is OperationMode.Verification)
+    {
+      var regions = wells.First().ActiveRegions.Select(x => x.Number);
+      Verificator.Reset(regions);
+    }
     Logger.Log(Publisher.ReportActivePublishingFlags());
     Device.StartOperation(wells, Results.OutputBeadsCollector);
     ResultsProc.StartBeadProcessing();//call after StartOperation, so IsMeasurementGoing == true
@@ -96,7 +101,9 @@ public class DIOSApp
   {
     _ = Task.Run(() =>
     {
-      Results.MakeWellStats();
+      var stats = Results.MakeWellStats();
+      Results.PlateReport.Add(stats);
+      Results.CurrentWellResults.AddWellStats(stats);
       Publisher.ResultsFile.AppendAndWrite(Results.CurrentWellResults.PublishWellStats()); //makewellstats should be awaited only for this method
       WorkOrderController.DoSomethingWithWorkOrder();
     });

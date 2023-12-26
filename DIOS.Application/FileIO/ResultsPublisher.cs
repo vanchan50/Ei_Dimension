@@ -21,6 +21,7 @@ public class ResultsPublisher
   public LegacyReportFileWriter LegacyReportFile { get; }
   public PlateStatusFileWriter PlateStatusFile { get; }
   public CalibrationReportFileWriter CalibrationFile { get; }
+  public VerificationReportFileWriter VerificationFile { get; }
   public string Date => DateTime.Now.ToString("dd.MM.yyyy.HH-mm-ss", CultureInfo.CreateSpecificCulture("en-GB"));
   public string LegacyReportDate => DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss", CultureInfo.CreateSpecificCulture("en-GB"));
 
@@ -43,6 +44,7 @@ public class ResultsPublisher
     LegacyReportFile = new(this);
     PlateStatusFile = new(this);
     CalibrationFile = new(this);
+    VerificationFile = new(this);
     _logger = logger;
   }
 

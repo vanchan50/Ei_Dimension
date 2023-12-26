@@ -77,8 +77,6 @@ public class MaintenanceViewModel
   {
     App.HideNumpad();
     MainViewModel.Instance.HintHide();
-    if (VerificationViewModel.Instance != null)
-      VerificationViewModel.Instance.isActivePage = false;
     NavigationService.Navigate("CalibrationView", null, this);
     App.InitSTab("calibtab");
     _lastActiveTab = 0;
@@ -88,8 +86,6 @@ public class MaintenanceViewModel
   {
     App.HideNumpad();
     MainViewModel.Instance.HintHide();
-    if (VerificationViewModel.Instance != null)
-      VerificationViewModel.Instance.isActivePage = true;
     NavigationService.Navigate("VerificationView", null, this);
     _lastActiveTab = 1;
   }
@@ -98,8 +94,6 @@ public class MaintenanceViewModel
   {
     App.HideNumpad();
     MainViewModel.Instance.HintHide();
-    if (VerificationViewModel.Instance != null)
-      VerificationViewModel.Instance.isActivePage = false;
     NavigationService.Navigate("NormalizationView", null, this);
     _lastActiveTab = 2;
   }
@@ -108,8 +102,6 @@ public class MaintenanceViewModel
   {
     App.HideNumpad();
     MainViewModel.Instance.HintHide();
-    if (VerificationViewModel.Instance != null)
-      VerificationViewModel.Instance.isActivePage = false;
     NavigationService.Navigate("ChannelsView", null, this);
     App.InitSTab("channeltab");
     _lastActiveTab = 3;

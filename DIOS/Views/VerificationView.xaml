@@ -145,23 +145,6 @@
                    Margin="0,0,0,4"/>
         <Border Height="45" Width="497"
                 HorizontalAlignment="Left">
-          <Grid>
-            <TextBlock Text="{lang:Loc Dashboard_Inactive_Region}"
-                       FontSize="30"
-                       Width="140"
-                       HorizontalAlignment="Left"/>
-            <TextBlock Text="{lang:Loc Dashboard_Active_Region}"
-                       FontSize="30"
-                       Width="120"
-                       Margin="140,0,0,0"
-                       HorizontalAlignment="Left"/>
-            <TextBlock Text="{lang:Loc Verification_Table_Reporter}"
-                       Width="200"
-                       FontSize="30"
-                       Margin="270,0,0,0"
-                       HorizontalAlignment="Left"
-                       TextAlignment="Center"/>
-          </Grid>
         </Border>
         <ScrollViewer Width="497" Height="646" HorizontalAlignment="Left"
                       VerticalScrollBarVisibility="Auto">
@@ -170,34 +153,16 @@
               <StackPanel Name="VerificationNums"
                           Width="270"
                           HorizontalAlignment="Left"/>
-              <StackPanel Name="VerificationReporterValues"
-                          HorizontalAlignment="Left"
-                          Width="200"/>
             </StackPanel>
           </Border>
         </ScrollViewer>
-        <!--
-        <StackPanel Orientation="Horizontal"
-                    HorizontalAlignment="Left"
-                    Width="270" Height="60"
-                    Margin="0,4,0,0">
-          <Button Width="100" Height="60"
-                  Margin="20,0,0,0"
-                  Style="{StaticResource LeftArrowButtonThemeStyle}"
-                  Command="{Binding AddValidationRegionCommand}" CommandParameter="0"/>
-          <Button Width="100" Height="60"
-                  Margin="30,0,0,0"
-                  Style="{StaticResource RightArrowButtonThemeStyle}"
-                  Command="{Binding AddValidationRegionCommand}" CommandParameter="1"/>
-        </StackPanel>
-        -->
       </StackPanel>
     </Border>
 
     <!--Edit values table-->
     <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Margin="700,320,0,0">
+            Margin="700,140,0,0">
       <Views:VerificationParametersView/>
     </Border>
 
@@ -222,5 +187,30 @@
                 Command="{Binding SaveClickCommand}"/>
       </StackPanel>
     </Border>
+
+    <StackPanel Width="200"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Margin="1140,98,0,0">
+      <TextBlock Text="{lang:Loc Verification_MinCount}"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="36"
+                 Height="90"
+                 TextAlignment="Center"
+                 FontWeight="UltraBold"
+                 TextWrapping="Wrap"
+                 HorizontalAlignment="Center"
+                 Foreground="{StaticResource AppTextColor}"/>
+      <TextBox HorizontalAlignment="Stretch"
+               Name="minCountTb"
+               Margin="0,4,0,0"
+               Style="{StaticResource InputFieldStyle}"
+               Text="{Binding MinCount[0]}">
+        <dxmvvm:Interaction.Behaviors>
+          <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="0"/>
+          <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+        </dxmvvm:Interaction.Behaviors>
+      </TextBox>
+    </StackPanel>
   </Grid>
 </UserControl>

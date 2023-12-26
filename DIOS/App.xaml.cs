@@ -317,9 +317,6 @@ public partial class App : Application
 
   public void FinishedMeasurementEventHandler(object sender, EventArgs e)
   {
-    if (DiosApp.Device.Mode == OperationMode.Verification)
-      DiosApp.Verificator.CalculateResults(DiosApp.MapController.ActiveMap);
-
     DiosApp.Results.PlateReport.completedDateTime = DateTime.Now;
     var plateReportJson = DiosApp.Results.PlateReport.JSONify();
     if (DiosApp.Control == SystemControl.Manual &&
@@ -354,20 +351,23 @@ public partial class App : Application
         CalibrationViewModel.Instance.CalibrationFailCheck();
         break;
       case OperationMode.Verification:
-        if (VerificationViewModel.Instance.AnalyzeVerificationResults(out var errorMsg))
+        var report = VerificationViewModel.Instance.FormNewVerificationReport(DiosApp.Verificator);
+        Task.Run(() =>
+        {
+          DiosApp.Publisher.VerificationFile.CreateAndWrite(report);
+        });
+
+        if (report.Status)
         {
           _ = Current.Dispatcher.BeginInvoke(VerificationViewModel.VerificationSuccess);
         }
         else
         {
-          Current.Dispatcher.Invoke(() => Notification.ShowError(errorMsg, 26));
+          Current.Dispatcher.Invoke(() => Notification.ShowError(Language.Resources.Validation_Fail));
         }
-        DiosApp.Verificator.PublishReport();
         Current.Dispatcher.Invoke(DashboardViewModel.Instance.ValModeToggle);
-        //Notification.ShowLocalizedError(nameof(Language.Resources.Validation_Fail));
         break;
     }
-
 
     if (DiosApp.Control == SystemControl.WorkOrder)
     {

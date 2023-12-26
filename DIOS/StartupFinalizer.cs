@@ -30,8 +30,7 @@ internal static class StartupFinalizer
     SetupDevice();
     if (!System.Windows.Input.Keyboard.IsKeyDown(System.Windows.Input.Key.LeftCtrl))
       App.DiosApp.Device.Hardware.SendCommand(DeviceCommandType.Startup);
-    Settings.Default.SanityCheckEnabled = false;
-    Settings.Default.Save();
+
     if (!Settings.Default.SanityCheckEnabled)
     {
       UserInputHandler._disableSanityCheck = true;
@@ -50,7 +49,6 @@ internal static class StartupFinalizer
       Views.DashboardView.Instance.DbActiveRegionNo,
       Views.DashboardView.Instance.DbActiveRegionName,
       Views.VerificationView.Instance.VerificationNums,
-      Views.VerificationView.Instance.VerificationReporterValues,
       Views.NormalizationView.Instance.NormalizationNums,
       Views.NormalizationView.Instance.NormalizationMFIValues);
 

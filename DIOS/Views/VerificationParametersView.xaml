@@ -8,10 +8,68 @@
              xmlns:lang="clr-namespace:Ei_Dimension.Language;assembly=Language"
              mc:Ignorable="d"
              DataContext="{dxmvvm:ViewModelSource Type=ViewModels:VerificationParametersViewModel}"
-             d:DesignHeight="650" d:DesignWidth="563">
+             d:DesignHeight="720" d:DesignWidth="563">
   <Grid>
     <StackPanel>
-      <StackPanel Orientation="Horizontal">
+      <StackPanel>
+        <StackPanel Width="260"
+                    HorizontalAlignment="Center"
+                    Margin="0,0,0,0">
+          <TextBlock Text="{lang:Loc SelectedRegion}"
+                     FontFamily="{StaticResource AppTextFont}"
+                     FontSize="36"
+                     TextWrapping="Wrap"
+                     FontWeight="UltraBold"
+                     Foreground="{StaticResource AppTextColor}"/>
+          <TextBox HorizontalAlignment="Stretch"
+                   Margin="30,4,30,13"
+                   IsReadOnly="True"
+                   Style="{StaticResource InputFieldStyle}"
+                   Text="{Binding SelectedRegionNum[0]}">
+          </TextBox>
+          <TextBlock Text="{lang:Loc Verification_Table_Reporter}"
+                     FontFamily="{StaticResource AppTextFont}"
+                     FontSize="36"
+                     TextWrapping="Wrap"
+                     FontWeight="UltraBold"
+                     Foreground="{StaticResource AppTextColor}"/>
+          <TextBox HorizontalAlignment="Stretch"
+                   Margin="30,4,30,13"
+                   x:Name="TargetReporterTb"
+                   Style="{StaticResource InputFieldStyle}"
+                   Text="{Binding TargetReporter[0]}">
+            <dxmvvm:Interaction.Behaviors>
+              <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="10"/>
+              <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+            </dxmvvm:Interaction.Behaviors>
+          </TextBox>
+        </StackPanel>
+        <!--isActiveRegion checkbox-->
+        <StackPanel Orientation="Horizontal"
+                    Height="60"
+                    HorizontalAlignment="Center"
+                    Margin="0,5,0,0">
+          <CheckBox FontFamily="{StaticResource AppTextFont}"
+                    FontSize="30"
+                    FontWeight="UltraBold"
+                    Foreground="{StaticResource AppTextColor}"
+                    Style="{StaticResource CheckboxStyle}"
+                    IsChecked="{Binding IsActiveCheckbox[0],Mode=OneWay}">
+            <dxmvvm:Interaction.Behaviors>
+              <dxmvvm:EventToCommand EventName="Checked" Command="{Binding IsActiveCheckedCommand}" CommandParameter="True"/>
+              <dxmvvm:EventToCommand EventName="Unchecked" Command="{Binding IsActiveCheckedCommand}" CommandParameter="False"/>
+            </dxmvvm:Interaction.Behaviors>
+          </CheckBox>
+          <TextBlock Text="{lang:Loc Verification_isActiveRegion}"
+                     FontFamily="{StaticResource AppTextFont}"
+                     FontSize="36"
+                     FontWeight="UltraBold"
+                     Foreground="{StaticResource AppTextColor}"
+                     Margin="4,0,0,0"/>
+        </StackPanel>
+      </StackPanel>
+      <StackPanel Orientation="Horizontal"
+                  Margin="0,5,0,0">
         <StackPanel VerticalAlignment="Stretch"
                   Margin="0,94,3,0"
                   Width="180">
@@ -107,7 +165,7 @@
                 </dxmvvm:Interaction.Behaviors>
               </TextBox>
               <TextBox HorizontalAlignment="Stretch"
-                      Margin="10,0,5,24"
+                      Margin="10,0,5,8"
                       Style="{StaticResource InputFieldStyle}"
                       Text="{Binding ToleranceItems[4]}">
                 <dxmvvm:Interaction.Behaviors>
@@ -133,7 +191,7 @@
           <Border Background="{StaticResource RibbonBackgroundActive}">
             <StackPanel Name="maxCV_SP">
               <TextBox HorizontalAlignment="Stretch"
-                       Margin="10,10,5,24"
+                       Margin="5,10,10,24"
                        Style="{StaticResource InputFieldStyle}"
                        Text="{Binding MaxCVItems[0]}">
                 <dxmvvm:Interaction.Behaviors>
@@ -142,7 +200,7 @@
                 </dxmvvm:Interaction.Behaviors>
               </TextBox>
               <TextBox HorizontalAlignment="Stretch"
-                      Margin="10,0,5,24"
+                      Margin="5,0,10,24"
                       Style="{StaticResource InputFieldStyle}"
                       Text="{Binding MaxCVItems[1]}">
                 <dxmvvm:Interaction.Behaviors>
@@ -151,7 +209,7 @@
                 </dxmvvm:Interaction.Behaviors>
               </TextBox>
               <TextBox HorizontalAlignment="Stretch"
-                      Margin="10,0,5,24"
+                      Margin="5,0,10,24"
                       Style="{StaticResource InputFieldStyle}"
                       Text="{Binding MaxCVItems[2]}">
                 <dxmvvm:Interaction.Behaviors>
@@ -160,7 +218,7 @@
                 </dxmvvm:Interaction.Behaviors>
               </TextBox>
               <TextBox HorizontalAlignment="Stretch"
-                      Margin="10,0,5,24"
+                      Margin="5,0,10,24"
                       Style="{StaticResource InputFieldStyle}"
                       Text="{Binding MaxCVItems[3]}">
                 <dxmvvm:Interaction.Behaviors>
@@ -169,7 +227,7 @@
                 </dxmvvm:Interaction.Behaviors>
               </TextBox>
               <TextBox HorizontalAlignment="Stretch"
-                      Margin="10,0,5,24"
+                      Margin="5,0,10,8"
                       Style="{StaticResource InputFieldStyle}"
                       Text="{Binding MaxCVItems[4]}">
                 <dxmvvm:Interaction.Behaviors>
@@ -179,51 +237,6 @@
               </TextBox>
             </StackPanel>
           </Border>
-        </StackPanel>
-      </StackPanel>
-      <StackPanel>
-        <StackPanel Width="260"
-                    HorizontalAlignment="Center"
-                    Margin="0,5,0,0">
-          <TextBlock Text="{lang:Loc Verification_Table_Reporter}"
-                     FontFamily="{StaticResource AppTextFont}"
-                     FontSize="36"
-                     TextWrapping="Wrap"
-                     FontWeight="UltraBold"
-                     Foreground="{StaticResource AppTextColor}"/>
-          <TextBox HorizontalAlignment="Stretch"
-                   Margin="30,4,30,13"
-                   x:Name="TargetReporterTb"
-                   Style="{StaticResource InputFieldStyle}"
-                   Text="{Binding TargetReporter[0]}">
-            <dxmvvm:Interaction.Behaviors>
-              <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="10"/>
-              <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
-            </dxmvvm:Interaction.Behaviors>
-          </TextBox>
-        </StackPanel>
-        <!--isActiveRegion checkbox-->
-        <StackPanel Orientation="Horizontal"
-                    Height="60"
-                    HorizontalAlignment="Center"
-                    Margin="0,5,0,0">
-          <CheckBox FontFamily="{StaticResource AppTextFont}"
-                    FontSize="30"
-                    FontWeight="UltraBold"
-                    Foreground="{StaticResource AppTextColor}"
-                    Style="{StaticResource CheckboxStyle}"
-                    IsChecked="{Binding IsActiveCheckbox[0],Mode=OneWay}">
-            <dxmvvm:Interaction.Behaviors>
-              <dxmvvm:EventToCommand EventName="Checked" Command="{Binding IsActiveCheckedCommand}" CommandParameter="True"/>
-              <dxmvvm:EventToCommand EventName="Unchecked" Command="{Binding IsActiveCheckedCommand}" CommandParameter="False"/>
-            </dxmvvm:Interaction.Behaviors>
-          </CheckBox>
-          <TextBlock Text="{lang:Loc Verification_isActiveRegion}"
-                     FontFamily="{StaticResource AppTextFont}"
-                     FontSize="36"
-                     FontWeight="UltraBold"
-                     Foreground="{StaticResource AppTextColor}"
-                     Margin="4,0,0,0"/>
         </StackPanel>
       </StackPanel>
     </StackPanel>

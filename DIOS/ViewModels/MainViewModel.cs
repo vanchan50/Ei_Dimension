@@ -78,8 +78,6 @@ public class MainViewModel
     App.HideNumpad();
     App.HideKeyboard();
     HintHide();
-    if (VerificationViewModel.Instance != null)
-      VerificationViewModel.Instance.isActivePage = false;
     switch (num)
     {
       case 0:

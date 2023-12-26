@@ -10,6 +10,7 @@ using System;
 using System.Windows;
 using System.Threading;
 using System.Windows.Media;
+using System.Linq;
 
 namespace Ei_Dimension.ViewModels;
 
@@ -145,7 +146,7 @@ public class MainButtonsViewModel
       return Array.Empty<Well>();
     }
 
-    HashSet<(int Number, string Name)> regions = new();
+    IReadOnlyCollection<(int Number, string Name)> regions = null;
     switch (App.DiosApp.Device.Mode)
     {
       case OperationMode.Normal:
@@ -156,12 +157,14 @@ public class MainButtonsViewModel
         }
         MapRegionsController.ActiveRegionNums.Add(0);
         //DefaultRegionNaming();
+        var sregions = new HashSet<(int Number, string Name)>();
         foreach (var activeRegionNum in MapRegionsController.ActiveRegionNums)
         {
           var index = MapRegionsController.GetMapRegionIndex(activeRegionNum);
           var mapRegion = MapRegionsController.RegionsList[index];
-          regions.Add((mapRegion.Number, mapRegion.Name[0]));
+          sregions.Add((mapRegion.Number, mapRegion.Name[0]));
         }
+        regions = sregions;
         break;
       case OperationMode.Calibration:
         App.MapRegions.RemoveNullTextBoxes();
@@ -169,15 +172,14 @@ public class MainButtonsViewModel
         ResultsViewModel.Instance.ShowSinglePlexResults();
         break;
       case OperationMode.Verification:
-        if (MapRegionsController.ActiveVerificationRegionNums.Count != 4)
-        {
-          Notification.ShowError($"{MapRegionsController.ActiveVerificationRegionNums.Count} " +
-                                 "out of 4 Verification Regions selected\nPlease select 4 Verification Regions");
-          return Array.Empty<Well>();
-        }
         App.MapRegions.RemoveNullTextBoxes();
-        var verificationRegions = MapRegionsController.MakeVerificationList();
-        App.DiosApp.Verificator.Reset(verificationRegions);
+        List<(int regionNum, string regionName)> valRegions = new();
+        var list = App.DiosApp.MapController.ActiveMap.regions.Where(x => x.isValidator);
+        foreach (var validationRegion in list)
+        {
+          valRegions.Add((validationRegion.Number, validationRegion.Number.ToString()));
+        }
+        regions = valRegions;
         break;
     }
 
@@ -193,6 +195,7 @@ public class MainButtonsViewModel
     //}
     //else
     //{
+    regions ??= new HashSet<(int Number, string Name)>();
     wells = WellsSelectViewModel.Instance.OutputWells(regions);
     //}
     if (wells.Count == 0)

@@ -3,8 +3,12 @@ using DevExpress.Mvvm.POCO;
 using DIOS.Core;
 using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using Ei_Dimension.Controllers;
 using System.Windows.Controls;
+using DIOS.Application;
+using DIOS.Application.FileIO;
+using DIOS.Application.FileIO.Verification;
 
 namespace Ei_Dimension.ViewModels;
 
@@ -13,8 +17,8 @@ public class VerificationViewModel
 {
   public virtual ObservableCollection<DropDownButtonContents> VerificationWarningItems { get; set; }
   public virtual string SelectedVerificationWarningContent { get; set; }
+  public virtual ObservableCollection<string> MinCount { get; set; } = new(){ "200" };
   public static VerificationViewModel Instance { get; private set; }
-  public bool isActivePage { get; set; }
   protected VerificationViewModel()
   {
     var RM = Language.Resources.ResourceManager;
@@ -29,7 +33,6 @@ public class VerificationViewModel
     };
     SelectedVerificationWarningContent = VerificationWarningItems[Settings.Default.VerificationWarningIndex].Content;
     Instance = this;
-    isActivePage = false;
   }
 
   public static VerificationViewModel Create()
@@ -37,33 +40,13 @@ public class VerificationViewModel
     return ViewModelSource.Create(() => new VerificationViewModel());
   }
 
-  public void AddValidationRegion(byte num)
-  {
-    //App.MapRegions.AddValidationRegion(num);
-  }
-
   public void LoadClick(bool fromCode = false)
   {
     var map = App.DiosApp.MapController.GetMapByName(App.DiosApp.MapController.ActiveMap.mapName);
     for (var i = 0; i < map.regions.Count; i++)
     {
-      //Reset all Verification Regions
-      MapRegionsController.ActiveVerificationRegionNums.Add(map.regions[i].Number);
-      App.MapRegions.AddValidationRegion(map.regions[i].Number);
-
-      MapRegionsController.RegionsList[i + 1].TargetReporterValue[0] = "";
-
-      if (map.regions[i].isValidator)
-      {
-        App.MapRegions.AddValidationRegion(map.regions[i].Number);
-        if(map.regions[i].VerificationTargetReporter > -0.1)
-          MapRegionsController.RegionsList[i + 1].TargetReporterValue[0] = map.regions[i].VerificationTargetReporter.ToString();
-      }
+      MapRegionsController.RegionsList[i + 1].TargetReporterValue[0] = map.regions[i].VerificationTargetReporter.ToString();
     }
-
-    //
-    VerificationParametersViewModel.Instance.InstallRegionVerificationData(map.regions[5]);
-    //
 
     if (!fromCode)
     {
@@ -86,7 +69,8 @@ public class VerificationViewModel
         if (MapRegionsController.ActiveVerificationRegionNums.Contains(MapRegionsController.RegionsList[i].Number))
         {
           map.regions[index].isValidator = true;
-          if (MapRegionsController.RegionsList[i].TargetReporterValue[0] != "" && float.TryParse(MapRegionsController.RegionsList[i].TargetReporterValue[0], out temp))
+          if (MapRegionsController.RegionsList[i].TargetReporterValue[0] != "" &&
+                float.TryParse(MapRegionsController.RegionsList[i].TargetReporterValue[0], out temp))
           {
             if(temp < 0)
               map.regions[index].VerificationTargetReporter = -1;
@@ -97,7 +81,7 @@ public class VerificationViewModel
             map.regions[index].VerificationTargetReporter = temp;
         }
         else
-        {
+        { 
           map.regions[index].isValidator = false;
           map.regions[index].VerificationTargetReporter = -1;
         }
@@ -178,7 +162,8 @@ public class VerificationViewModel
 
   public bool ValMapInfoReady()
   {
-    if (MapRegionsController.ActiveVerificationRegionNums.Count == 0)
+    
+    if (App.DiosApp.MapController.ActiveMap.regions.Count(x => x.isValidator) == 0)
     {
       var msg = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Messages_VerRegions_NotSelected),
         Language.TranslationSource.Instance.CurrentCulture);
@@ -202,22 +187,53 @@ public class VerificationViewModel
     return true;
   }
 
-  public bool AnalyzeVerificationResults(out string errorMsg)
+  public VerificationReport FormNewVerificationReport(Verificator verificator)
   {
-    errorMsg = null;
-    App.DiosApp.Verificator.SetCulture(Language.TranslationSource.Instance.CurrentCulture);
-    var passed1 = App.DiosApp.Verificator.ReporterToleranceTest(Settings.Default.ValidatorToleranceReporter, out var msg1);
-    var passed2 = App.DiosApp.Verificator.ClassificationToleranceTest(Settings.Default.ValidatorToleranceClassification, out var msg2);
-    var passed3 = App.DiosApp.Verificator.MisclassificationToleranceTest(Settings.Default.ValidatorToleranceMisclassification, out var msg3);
-    App.DiosApp.Verificator.PublishResult($"{App.DiosApp.RootDirectory.FullName}\\SystemLogs\\VerificationLogs.txt");
-    if (msg1 != null)
-      errorMsg = msg1;
-    if (msg2 != null)
-      errorMsg = errorMsg + Environment.NewLine + msg2;
-    if (msg3 != null)
-      errorMsg = errorMsg + Environment.NewLine + msg3;
-    return passed1 && passed2 && passed3;
+    var firmwareVersion = App.DiosApp.Device.FirmwareVersion;
+    var appVersion = App.DiosApp.BUILD;
+    var dnrCoefficient = float.Parse(CalibrationViewModel.Instance.DNRContents[0]);
+    var dnrTransition = float.Parse(CalibrationViewModel.Instance.DNRContents[1]);
+    var channelConfig = ComponentsViewModel.Instance.SelectedChConfigIndex.ToString();
+    var eventHeight = float.Parse(CalibrationViewModel.Instance.EventTriggerContents[0]);
+    var lowGate = float.Parse(CalibrationViewModel.Instance.EventTriggerContents[1]);
+    var highGate = float.Parse(CalibrationViewModel.Instance.EventTriggerContents[2]);
+    var minCount = int.Parse(MinCount[0]);
+    var report = new VerificationReport(firmwareVersion, appVersion, dnrCoefficient, dnrTransition,
+      channelConfig, eventHeight, lowGate, highGate, minCount);
+
+    var list = App.DiosApp.MapController.ActiveMap.regions.Where(x => x.isValidator);
+    foreach (var validatorRegion in list)
+    {
+      var verStats = verificator.GetRegionStats(validatorRegion.Number);
+      verStats.CalculateResultingStats();
+
+      var stats = verStats.Stats[0];
+      var greenSSC = new VerificationReportChannelData(stats.Mean, stats.CoeffVar,
+        validatorRegion.MaxCV.GreenSSC, validatorRegion.MeanTolerance.GreenSSC, validatorRegion.VerificationTargetReporter);
+
+      stats = verStats.Stats[1];
+      var redSSC = new VerificationReportChannelData(stats.Mean, stats.CoeffVar,
+        validatorRegion.MaxCV.RedSSC, validatorRegion.MeanTolerance.RedSSC, validatorRegion.VerificationTargetReporter);
+
+      stats = verStats.Stats[2];
+      var cl1 = new VerificationReportChannelData(stats.Mean, stats.CoeffVar,
+        validatorRegion.MaxCV.Cl1, validatorRegion.MeanTolerance.Cl1, validatorRegion.VerificationTargetReporter);
+
+      stats = verStats.Stats[3];
+      var cl2 = new VerificationReportChannelData(stats.Mean, stats.CoeffVar,
+        validatorRegion.MaxCV.Cl2, validatorRegion.MeanTolerance.Cl2, validatorRegion.VerificationTargetReporter);
+
+      stats = verStats.Stats[4];
+      var reporter = new VerificationReportChannelData(stats.Mean, stats.CoeffVar,
+        validatorRegion.MaxCV.Reporter, validatorRegion.MeanTolerance.Reporter, validatorRegion.VerificationTargetReporter);
+      var data = new VerificationReportRegionData(validatorRegion.Number.ToString(),
+        greenSSC, redSSC, cl1, cl2, reporter, verStats.Count);
+      report.regionsData.Add(data);
+    }
+
+    return report;
   }
+
 
   public void DropPress()
   {
@@ -231,6 +247,15 @@ public class VerificationViewModel
 
   public void FocusedBox(int num)
   {
+    var minCountTb = Views.VerificationView.Instance.minCountTb;
+    switch (num)
+    {
+      case 0:
+        UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(MinCount)), this, 0,
+          minCountTb);
+        MainViewModel.Instance.NumpadToggleButton(minCountTb);
+        break;
+    }
   }
 
   public class DropDownButtonContents : Core.ObservableObject

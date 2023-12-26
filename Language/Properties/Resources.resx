@@ -1209,6 +1209,9 @@ Plate</value>
   <data name="Seconds" xml:space="preserve">
     <value>Seconds</value>
   </data>
+  <data name="SelectedRegion" xml:space="preserve">
+    <value>Selected Region</value>
+  </data>
   <data name="Service_Alignment_Verification" xml:space="preserve">
     <value>Alignment
 and Verification</value>
@@ -1389,6 +1392,9 @@ Verification</value>
   </data>
   <data name="Verification_MeanTolerance" xml:space="preserve">
     <value>Mean Tolerance %</value>
+  </data>
+  <data name="Verification_MinCount" xml:space="preserve">
+    <value>Minimal Count</value>
   </data>
   <data name="Verification_Table_Reporter" xml:space="preserve">
     <value>Target Reporter</value>

@@ -48,11 +48,9 @@ public class RunResults
     PlateReport.Reset(plateSize, plateId);
   }
 
-  public void MakeWellStats()
+  internal WellStats MakeWellStats()
   {
-    var stats = new WellStats(CurrentWellResults.Well, MakeWellResultsClone(), _device.BeadCount);
-    PlateReport.Add(stats);
-    CurrentWellResults.AddWellStats(stats);
+    return new WellStats(CurrentWellResults.Well, MakeWellResultsClone(), _device.BeadCount);
   }
 
   public void StartNewWell(Well well)
@@ -79,7 +77,7 @@ public class RunResults
       case OperationMode.Calibration:
         break;
       case OperationMode.Verification:
-        _diosApp.Verificator.FillStats(in processedBead);
+        _diosApp.Verificator.Add(in processedBead);
         break;
     }
   }

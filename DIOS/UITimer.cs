@@ -99,12 +99,14 @@ internal static class UITimer
         {
           fsc = 2.36f,
           redssc = r.Next(1000, 20000),
+          greenssc = r.Next(1000, 20000),
           cl0 = r.Next(1050, 1300),
           cl1 = r.Next(1450, 1700),
           cl2 = r.Next(1500, 1650),
           greenB = (ushort)r.Next(9, 12),
           greenC = 48950,
-          reporter = 23.9f
+          reporter = 23.9f,
+          region = 81
         };
         break;
       case 1:
@@ -112,12 +114,14 @@ internal static class UITimer
         {
           fsc = 15.82f,
           redssc = r.Next(1000, 20000),
+          greenssc = r.Next(1000, 20000),
           cl0 = 250f,
           cl1 = 500f,
           cl2 = 500f,
           greenB = (ushort)r.Next(80, 150),
           greenC = 65212,
-          reporter = 84342261.623467f
+          reporter = 84342261.623467f,
+          region = 21
         };
         break;
       case 2:
@@ -125,21 +129,26 @@ internal static class UITimer
         {
           fsc = 2.36f,
           redssc = r.Next(1000, 20000),
+          greenssc = r.Next(1000, 20000),
           cl0 = r.Next(1050, 1300),
           cl1 = 35000,
           cl2 = 200,
           greenB = (ushort)r.Next(9, 12),
           greenC = 48950,
           reporter = 1239.123f,
-          region = 1
+          region = 6
         };
         break;
     }
-    App.DiosApp.Results.OutputBeadsCollector.Add(bead);
+
+    for (int i = 0; i < 20; i++)
+    {
+      App.DiosApp.Results.OutputBeadsCollector.Add(bead);
+    }
     //App.DiosApp.Results.AddProcessedBeadEvent(in bead);
     //App.DiosApp.Results.DataOut.Enqueue(bead);
     typeof(Device).GetProperty("BeadCount")?
-      .SetValue(App.DiosApp.Device, App.DiosApp.Device.BeadCount + 1);
+      .SetValue(App.DiosApp.Device, App.DiosApp.Device.BeadCount + 20);
 
     //var isMeasurementTerminationAchieved = (bool)typeof(ReadTerminator).GetMethod("IsMeasurementTerminationAchieved",new Type[]{typeof(int)}).Invoke(App.DiosApp.Terminator, new object[]{App.DiosApp.Device.BeadCount});
     //if (isMeasurementTerminationAchieved)

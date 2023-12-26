@@ -3,6 +3,7 @@ using DevExpress.Mvvm.POCO;
 using System.Collections.ObjectModel;
 using System.Windows.Controls;
 using DIOS.Core;
+using Ei_Dimension.Controllers;
 
 namespace Ei_Dimension.ViewModels;
 
@@ -12,9 +13,10 @@ public class VerificationParametersViewModel
   public virtual ObservableCollection<string> ToleranceItems { get; set; } = new(){ "", "", "", "", "" };
   public virtual ObservableCollection<string> MaxCVItems { get; set; } = new(){ "", "", "", "", "" };
   public virtual ObservableCollection<string> TargetReporter { get; set; } = new(){ "" };
+  public virtual ObservableCollection<string> SelectedRegionNum { get; set; } = new(){ "" };
   public virtual ObservableCollection<bool> IsActiveCheckbox { get; set; } = new(){ false };
   public static VerificationParametersViewModel Instance { get; private set; }
-  private MapRegion _currentRegion;
+  public MapRegion CurrentRegion { get; private set; }
 
   protected VerificationParametersViewModel()
   {
@@ -28,7 +30,7 @@ public class VerificationParametersViewModel
 
   public void InstallRegionVerificationData(in MapRegion region)
   {
-    _currentRegion = region;
+    CurrentRegion = region;
     ToleranceItems[0] = region.MeanTolerance.GreenSSC.ToString("F3");
     ToleranceItems[1] = region.MeanTolerance.RedSSC.ToString("F3");
     ToleranceItems[2] = region.MeanTolerance.Cl1.ToString("F3");
@@ -41,6 +43,7 @@ public class VerificationParametersViewModel
     MaxCVItems[3] = region.MaxCV.Cl2.ToString("F3");
     MaxCVItems[4] = region.MaxCV.Reporter.ToString("F3");
     TargetReporter[0] = region.VerificationTargetReporter.ToString("F3");
+    SelectedRegionNum[0] = region.Number.ToString();
     IsActiveChecked(region.isValidator);
   }
 
@@ -51,7 +54,16 @@ public class VerificationParametersViewModel
       return;
 
     IsActiveCheckbox[0] = state;
-    _currentRegion.isValidator = state;
+    CurrentRegion.isValidator = state;
+
+    if (!MapRegionsController.ActiveVerificationRegionNums.Contains(CurrentRegion.Number))
+    {
+      MapRegionsController.ActiveVerificationRegionNums.Add(CurrentRegion.Number);
+    }
+    else
+    {
+      MapRegionsController.ActiveVerificationRegionNums.Remove(CurrentRegion.Number);
+    }
   }
 
   public void TextChanged(TextChangedEventArgs e)

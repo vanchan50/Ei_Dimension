@@ -45,14 +45,13 @@ public partial class MapRegionsController
   private static readonly SortedDictionary<int, int> _mapRegionNumberIndexDictionary = new();
 
   public MapRegionsController(StackPanel RegionsBorder, StackPanel RegionsNamesBorder, ListBox resultsTable,
-    StackPanel Db_Num, StackPanel Db_Name, StackPanel Validat_Num, StackPanel Validat_Reporter,
-    StackPanel Normaliz_Num, StackPanel Normaliz_MFI)
+    StackPanel Db_Num, StackPanel Db_Name, StackPanel Validat_Num, StackPanel Normaliz_Num, StackPanel Normaliz_MFI)
   {
     _regionsBorder = RegionsBorder;
     _regionsNamesBorder = RegionsNamesBorder;
     _resultsTableController = new ResultsTableController(this, resultsTable);
     _dashboardTableController = new DashboardTableController(Db_Num, Db_Name);
-    _validationTableController = new ValidationTableController(this, Validat_Num, Validat_Reporter);
+    _validationTableController = new ValidationTableController(this, Validat_Num);
     _normalizationTableController = new NormalizationTableController(this, Normaliz_Num, Normaliz_MFI);
     FillRegions();
   }
@@ -134,11 +133,6 @@ public partial class MapRegionsController
     App.UnfocusUIElement();
   }
 
-  public void AddValidationRegion(int regionNum)
-  {
-    _validationTableController.AddValidationRegion(regionNum);
-  }
-
   public void ShowNullTextBoxes()
   {
     _resultsTableController.ShowNullTb();
@@ -152,29 +146,12 @@ public partial class MapRegionsController
     ActiveRegionNums.Remove(0);
   }
 
-  public static List<(int regionNum, double InputReporter)> MakeVerificationList()
-  {
-    var regions = new List<(int regionNum, double InputReporter)>();
-    for (var i = 1; i < RegionsList.Count; i++)
-    {
-      int reg = RegionsList[i].Number;
-      if (ActiveVerificationRegionNums.Contains(reg))
-      {
-        var inputReporter = double.Parse(RegionsList[i].TargetReporterValue[0]);
-        inputReporter /= App.DiosApp.Device.ReporterScaling;  //adjust for scaling factor
-        regions.Add((reg, inputReporter));
-      }
-    }
-    return regions;
-  }
-
   private void AddTextboxes(int regionIndex)
   {
     var i = regionIndex.ToString();
     AddRegionsTextBox($"{nameof(RegionsList)}[{i}].{nameof(MapRegionData.NumberString)}");
     AddRegionsNamesTextBox($"{nameof(RegionsList)}[{i}].{nameof(MapRegionData.Name)}[0]");
     _validationTableController.AddRegionsTextBox($"{nameof(RegionsList)}[{i}].{nameof(MapRegionData.NumberString)}");
-    _validationTableController.AddReporterTextBox($"{nameof(RegionsList)}[{i}].{nameof(MapRegionData.TargetReporterValue)}[0]");
     _normalizationTableController.AddRegionsTextBox($"{nameof(RegionsList)}[{i}].{nameof(MapRegionData.NumberString)}");
     _normalizationTableController.AddMFITextBox($"{nameof(RegionsList)}[{i}].{nameof(MapRegionData.MFIValue)}[0]");
     _tbCounter++;

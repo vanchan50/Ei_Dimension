@@ -7,6 +7,6 @@
     public float RedSSC;
     public float Cl1;
     public float Cl2;
-    public int Reporter;
+    public float Reporter;
   }
 }

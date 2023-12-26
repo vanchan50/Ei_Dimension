@@ -1846,7 +1846,7 @@ internal static class UserInputHandler
             {
               if (fRes is >= 0 and <= 100 || _disableSanityCheck)
               {
-                //App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorZ, MotorParameterType.RunSpeed, iRes);
+                VerificationParametersViewModel.Instance.CurrentRegion.MeanTolerance.GreenSSC = fRes;
                 break;
               }
             }
@@ -1859,7 +1859,7 @@ internal static class UserInputHandler
             {
               if (fRes is >= 0 and <= 100 || _disableSanityCheck)
               {
-                //App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorZ, MotorParameterType.RunSpeed, iRes);
+                VerificationParametersViewModel.Instance.CurrentRegion.MeanTolerance.RedSSC = fRes;
                 break;
               }
             }
@@ -1872,7 +1872,7 @@ internal static class UserInputHandler
             {
               if (fRes is >= 0 and <= 100 || _disableSanityCheck)
               {
-                //App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorZ, MotorParameterType.RunSpeed, iRes);
+                VerificationParametersViewModel.Instance.CurrentRegion.MeanTolerance.Cl1 = fRes;
                 break;
               }
             }
@@ -1885,7 +1885,7 @@ internal static class UserInputHandler
             {
               if (fRes is >= 0 and <= 100 || _disableSanityCheck)
               {
-                //App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorZ, MotorParameterType.RunSpeed, iRes);
+                VerificationParametersViewModel.Instance.CurrentRegion.MeanTolerance.Cl2 = fRes;
                 break;
               }
             }
@@ -1898,7 +1898,7 @@ internal static class UserInputHandler
             {
               if (fRes is >= 0 and <= 100 || _disableSanityCheck)
               {
-                //App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorZ, MotorParameterType.RunSpeed, iRes);
+                VerificationParametersViewModel.Instance.CurrentRegion.MeanTolerance.Reporter = fRes;
                 break;
               }
             }
@@ -1913,7 +1913,7 @@ internal static class UserInputHandler
             {
               if (fRes is >= 0 and <= 100 || _disableSanityCheck)
               {
-                //App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorZ, MotorParameterType.RunSpeed, iRes);
+                VerificationParametersViewModel.Instance.CurrentRegion.MaxCV.GreenSSC = fRes;
                 break;
               }
             }
@@ -1926,7 +1926,7 @@ internal static class UserInputHandler
             {
               if (fRes is >= 0 and <= 100 || _disableSanityCheck)
               {
-                //App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorZ, MotorParameterType.RunSpeed, iRes);
+                VerificationParametersViewModel.Instance.CurrentRegion.MaxCV.RedSSC = fRes;
                 break;
               }
             }
@@ -1939,7 +1939,7 @@ internal static class UserInputHandler
             {
               if (fRes is >= 0 and <= 100 || _disableSanityCheck)
               {
-                //App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorZ, MotorParameterType.RunSpeed, iRes);
+                VerificationParametersViewModel.Instance.CurrentRegion.MaxCV.Cl1 = fRes;
                 break;
               }
             }
@@ -1952,7 +1952,7 @@ internal static class UserInputHandler
             {
               if (fRes is >= 0 and <= 100 || _disableSanityCheck)
               {
-                //App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorZ, MotorParameterType.RunSpeed, iRes);
+                VerificationParametersViewModel.Instance.CurrentRegion.MaxCV.Cl2 = fRes;
                 break;
               }
             }
@@ -1965,7 +1965,7 @@ internal static class UserInputHandler
             {
               if (fRes is >= 0 and <= 100 || _disableSanityCheck)
               {
-                //App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.MotorZ, MotorParameterType.RunSpeed, iRes);
+                VerificationParametersViewModel.Instance.CurrentRegion.MaxCV.Reporter = fRes;
                 break;
               }
             }
@@ -1973,23 +1973,30 @@ internal static class UserInputHandler
             ErrorMessage = "[0-100]";
           }
           break;
-      }
-      if (VerificationViewModel.Instance.isActivePage)
-      {
-        //Verification Reporter data inputs
-        if (int.TryParse(_tempNewString, out iRes))
-        {
-          if (iRes is < 0 or > 1000000 && !_disableSanityCheck)
+        case nameof(VerificationParametersViewModel.TargetReporter):
+          if (float.TryParse(_tempNewString, out fRes))
           {
-            failed = true;
-            ErrorMessage = "[0-1000000]";
+            if (fRes is >= 0 and <= 1000000 || _disableSanityCheck)
+            {
+              VerificationParametersViewModel.Instance.CurrentRegion.VerificationTargetReporter = fRes;
+              break;
+            }
           }
-        }
-        else
-        {
           failed = true;
           ErrorMessage = "[0-1000000]";
-        }
+          break;
+        case nameof(VerificationViewModel.MinCount):
+
+          if (int.TryParse(_tempNewString, out iRes))
+          {
+            if (iRes is >= 0 and <= 50000 || _disableSanityCheck)
+            {
+              break;
+            }
+          }
+          failed = true;
+          ErrorMessage = "[0-50000]";
+          break;
       }
       Settings.Default.Save();
       if (failed)

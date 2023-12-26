@@ -3,11 +3,11 @@
 [Serializable]
 public class RegionReporterStats
 {
-  public int Region;
-  public int Count;
-  public float MedFi;
-  public float MeanFi;
-  public float CoeffVar;
+  public readonly int Region;
+  public readonly int Count;
+  public readonly float MedFi;
+  public readonly float MeanFi;
+  public readonly float CoeffVar;
 
   //  TODO: duplicates RegionReporterResultVolatile.MakeStats() behavior
   public RegionReporterStats(RegionReporterResult regionNumber)

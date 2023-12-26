@@ -1,4 +1,6 @@
-﻿namespace Ei_Dimension;
+﻿using System.Windows.Threading;
+
+namespace Ei_Dimension;
 
 internal class ServiceMenuEnabler
 {
