@@ -4,11 +4,11 @@ using DIOS.Core;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using Ei_Dimension.Controllers;
 using System.Windows.Controls;
 using DIOS.Application;
 using DIOS.Application.FileIO;
 using DIOS.Application.FileIO.Verification;
+using System.Windows;
 
 namespace Ei_Dimension.ViewModels;
 
@@ -17,8 +17,9 @@ public class VerificationViewModel
 {
   public virtual ObservableCollection<DropDownButtonContents> VerificationWarningItems { get; set; }
   public virtual string SelectedVerificationWarningContent { get; set; }
-  public virtual ObservableCollection<string> MinCount { get; set; } = new(){ "200" };
+  public virtual ObservableCollection<string> MinCount { get; set; } = new(){ "" };
   public static VerificationViewModel Instance { get; private set; }
+  public virtual Visibility DetailsVisibility { get; set; } = Visibility.Hidden;
   protected VerificationViewModel()
   {
     var RM = Language.Resources.ResourceManager;
@@ -42,10 +43,13 @@ public class VerificationViewModel
 
   public void LoadClick(bool fromCode = false)
   {
-    var map = App.DiosApp.MapController.GetMapByName(App.DiosApp.MapController.ActiveMap.mapName);
+    DetailsVisibility = Visibility.Hidden;
+    var map = App.DiosApp.MapController.LoadMapByName(App.DiosApp.MapController.ActiveMap.mapName);
+
     for (var i = 0; i < map.regions.Count; i++)
     {
-      MapRegionsController.RegionsList[i + 1].TargetReporterValue[0] = map.regions[i].VerificationTargetReporter.ToString();
+      var isActive = map.regions[i].isValidator;
+        App.MapRegions.ActivateVerificationTextBox(map.regions[i].Number, isActive);
     }
 
     if (!fromCode)
@@ -59,34 +63,7 @@ public class VerificationViewModel
   public void SaveClick()
   {
     UserInputHandler.InputSanityCheck();
-    var map = App.DiosApp.MapController.GetMapByName(App.DiosApp.MapController.ActiveMap.mapName);
-    for (var i = 1; i < MapRegionsController.RegionsList.Count; i++)
-    {
-      var index = map.regions.FindIndex(x => x.Number == MapRegionsController.RegionsList[i].Number);
-      if(index != -1)
-      {
-        float temp = -1;
-        if (MapRegionsController.ActiveVerificationRegionNums.Contains(MapRegionsController.RegionsList[i].Number))
-        {
-          map.regions[index].isValidator = true;
-          if (MapRegionsController.RegionsList[i].TargetReporterValue[0] != "" &&
-                float.TryParse(MapRegionsController.RegionsList[i].TargetReporterValue[0], out temp))
-          {
-            if(temp < 0)
-              map.regions[index].VerificationTargetReporter = -1;
-            else
-              map.regions[index].VerificationTargetReporter = temp;
-          }
-          else
-            map.regions[index].VerificationTargetReporter = temp;
-        }
-        else
-        { 
-          map.regions[index].isValidator = false;
-          map.regions[index].VerificationTargetReporter = -1;
-        }
-      }
-    }
+
     var res = App.DiosApp.MapController.SaveCalValsToCurrentMap(new MapCalParameters
     {
       TempCl0 = -1,
@@ -160,9 +137,12 @@ public class VerificationViewModel
     Notification.ShowLocalizedSuccess(nameof(Language.Resources.Validation_Success));
   }
 
+  /// <summary>
+  /// Checks that verification regions are properly setup
+  /// </summary>
+  /// <returns></returns>
   public bool ValMapInfoReady()
   {
-    
     if (App.DiosApp.MapController.ActiveMap.regions.Count(x => x.isValidator) == 0)
     {
       var msg = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Messages_VerRegions_NotSelected),
@@ -171,19 +151,20 @@ public class VerificationViewModel
       return false;
     }
 
-    for (var i = 1; i < MapRegionsController.RegionsList.Count; i++)
+    foreach (var region in App.DiosApp.MapController.ActiveMap.regions)
     {
-      if (MapRegionsController.ActiveVerificationRegionNums.Contains(MapRegionsController.RegionsList[i].Number)
-          && MapRegionsController.RegionsList[i].TargetReporterValue[0] == "")
+      if (region.isValidator && region.VerificationTargetReporter < 0)
       {
         var msg1 = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Ver_Region),
           Language.TranslationSource.Instance.CurrentCulture);
         var msg2 = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Messages_Reporter_Not_Specified),
           Language.TranslationSource.Instance.CurrentCulture);
-        Notification.Show($"{msg1} {MapRegionsController.RegionsList[i]} {msg2}");
+        Notification.Show($"{msg1} {region.Number} {msg2}");
+        //any failure - instant error output
         return false;
       }
     }
+    //all is actually good
     return true;
   }
 
@@ -234,6 +215,10 @@ public class VerificationViewModel
     return report;
   }
 
+  public void OnMapChanged(MapModel map)
+  {
+    MinCount[0] = map.minVerBeads.ToString();
+  }
 
   public void DropPress()
   {

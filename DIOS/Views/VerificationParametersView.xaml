@@ -56,8 +56,8 @@
                     Style="{StaticResource CheckboxStyle}"
                     IsChecked="{Binding IsActiveCheckbox[0],Mode=OneWay}">
             <dxmvvm:Interaction.Behaviors>
-              <dxmvvm:EventToCommand EventName="Checked" Command="{Binding IsActiveCheckedCommand}" CommandParameter="True"/>
-              <dxmvvm:EventToCommand EventName="Unchecked" Command="{Binding IsActiveCheckedCommand}" CommandParameter="False"/>
+              <dxmvvm:EventToCommand EventName="Checked" Command="{Binding IsActiveCheckedBoxCommand}"/>
+              <dxmvvm:EventToCommand EventName="Unchecked" Command="{Binding IsActiveUncheckedBoxCommand}"/>
             </dxmvvm:Interaction.Behaviors>
           </CheckBox>
           <TextBlock Text="{lang:Loc Verification_isActiveRegion}"

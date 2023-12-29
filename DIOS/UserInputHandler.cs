@@ -1991,6 +1991,7 @@ internal static class UserInputHandler
           {
             if (iRes is >= 0 and <= 50000 || _disableSanityCheck)
             {
+              App.DiosApp.MapController.ActiveMap.minVerBeads = iRes;
               break;
             }
           }

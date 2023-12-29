@@ -18,16 +18,6 @@ public class MapRegionData : ObservableObject
     }
   }
 
-  public ObservableCollection<string> TargetReporterValue
-  {
-    get { return _targetReporterValue; }
-    set
-    {
-      _targetReporterValue = value;
-      OnPropertyChanged();
-    }
-  }
-
   public ObservableCollection<string> MFIValue
   {
     get { return _mfiValue; }

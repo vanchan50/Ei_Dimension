@@ -1,6 +1,7 @@
 ﻿using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
 using System.Collections.ObjectModel;
+using System.Windows;
 using System.Windows.Controls;
 using DIOS.Core;
 using Ei_Dimension.Controllers;
@@ -30,6 +31,7 @@ public class VerificationParametersViewModel
 
   public void InstallRegionVerificationData(in MapRegion region)
   {
+    VerificationViewModel.Instance.DetailsVisibility = Visibility.Visible;
     CurrentRegion = region;
     ToleranceItems[0] = region.MeanTolerance.GreenSSC.ToString("F3");
     ToleranceItems[1] = region.MeanTolerance.RedSSC.ToString("F3");
@@ -44,26 +46,32 @@ public class VerificationParametersViewModel
     MaxCVItems[4] = region.MaxCV.Reporter.ToString("F3");
     TargetReporter[0] = region.VerificationTargetReporter.ToString("F3");
     SelectedRegionNum[0] = region.Number.ToString();
-    IsActiveChecked(region.isValidator);
-  }
-
-  public void IsActiveChecked(bool state)
-  {
-    UserInputHandler.InputSanityCheck();
-    if (IsActiveCheckbox[0] == state)
-      return;
-
-    IsActiveCheckbox[0] = state;
-    CurrentRegion.isValidator = state;
-
-    if (!MapRegionsController.ActiveVerificationRegionNums.Contains(CurrentRegion.Number))
+    if (region.isValidator)
     {
-      MapRegionsController.ActiveVerificationRegionNums.Add(CurrentRegion.Number);
+      IsActiveCheckedBox(true);
     }
     else
     {
-      MapRegionsController.ActiveVerificationRegionNums.Remove(CurrentRegion.Number);
+      IsActiveUncheckedBox(true);
     }
+    //IsActiveCheckbox[0] = region.isValidator;
+  }
+
+
+  public void IsActiveCheckedBox(bool fromCode = false)
+  {
+    UserInputHandler.InputSanityCheck();
+    IsActiveCheckbox[0] = true;
+    CurrentRegion.isValidator = true;
+    App.MapRegions.ActivateVerificationTextBox(CurrentRegion.Number, true);
+  }
+
+  public void IsActiveUncheckedBox(bool fromCode = false)
+  {
+    UserInputHandler.InputSanityCheck();
+    IsActiveCheckbox[0] = false;
+    CurrentRegion.isValidator = false;
+    App.MapRegions.ActivateVerificationTextBox(CurrentRegion.Number, false);
   }
 
   public void TextChanged(TextChangedEventArgs e)

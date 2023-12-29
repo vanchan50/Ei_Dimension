@@ -49,6 +49,38 @@ public class MapController
     return MapList[index];
   }
 
+  public MapModel LoadMapByName(string mapName)
+  {
+    MapModel map = null;
+    var files = Directory.GetFiles(_mapFolder, "*.dmap");
+    foreach (var mp in files)
+    {
+      using (TextReader reader = new StreamReader(mp))
+      {
+        var fileContents = reader.ReadToEnd();
+        try
+        {
+          map = JsonConvert.DeserializeObject<MapModel>(fileContents);
+          if (map.mapName != mapName)
+          {
+            continue;
+          }
+          map.Init();
+          break;
+        }
+        catch { }
+      }
+    }
+
+    var index = GetMapIndexByName(mapName);
+    if (index == -1)
+      return null;
+
+    MapList[index] = map;
+    ActiveMap = map;
+    return MapList[index];
+  }
+
   public MapModel GetMapByIndex(int index)
   {
     if(index < 0 || index >= MapList.Count)

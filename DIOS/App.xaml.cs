@@ -393,7 +393,8 @@ public partial class App : Application
     DiosApp.Device.SetMap(map);
     _ = Current.Dispatcher.BeginInvoke(() =>
     {
-      ResultsViewModel.Instance.FillWorldMaps();
+      if (ResultsViewModel.Instance != null)
+        ResultsViewModel.Instance.FillWorldMaps();
 
       if (CalibrationViewModel.Instance != null)
         CalibrationViewModel.Instance.OnMapChanged(map);
@@ -409,6 +410,11 @@ public partial class App : Application
 
       if (ResultsViewModel.Instance.AnalysisMap != null)
         ResultsViewModel.Instance.AnalysisMap.OnMapChanged(map);
+
+      if (VerificationViewModel.Instance != null)
+        VerificationViewModel.Instance.OnMapChanged(map);
+
+
     });
   }
 

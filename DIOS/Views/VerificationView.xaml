@@ -133,20 +133,18 @@
     <!--Table-->
     <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Margin="150,120,0,0">
+            Margin="150,100,0,0">
       <StackPanel>
         <TextBlock Text="{lang:Loc Experiment_Available_Regions}"
                    FontFamily="{StaticResource AppTextFont}"
                    FontSize="36"
-                   Width="497"
+                   Width="157"
+                   TextWrapping="Wrap"
                    FontWeight="UltraBold"
                    TextAlignment="Center"
                    Foreground="{StaticResource AppTextColor}"
                    Margin="0,0,0,4"/>
-        <Border Height="45" Width="497"
-                HorizontalAlignment="Left">
-        </Border>
-        <ScrollViewer Width="497" Height="646" HorizontalAlignment="Left"
+        <ScrollViewer Width="157" Height="646" HorizontalAlignment="Left"
                       VerticalScrollBarVisibility="Auto">
           <Border Background="{StaticResource RibbonBackgroundActive}">
             <StackPanel Orientation="Horizontal">
@@ -162,7 +160,8 @@
     <!--Edit values table-->
     <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Margin="700,140,0,0">
+            Margin="360,140,0,0"
+            Visibility="{Binding DetailsVisibility}">
       <Views:VerificationParametersView/>
     </Border>
 
@@ -191,7 +190,7 @@
     <StackPanel Width="200"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
-                Margin="1140,98,0,0">
+                Margin="840,98,0,0">
       <TextBlock Text="{lang:Loc Verification_MinCount}"
                  FontFamily="{StaticResource AppTextFont}"
                  FontSize="36"

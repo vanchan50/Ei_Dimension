@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using Ei_Dimension.Models;
+using System.Windows.Media;
 using Ei_Dimension.ViewModels;
 
 namespace Ei_Dimension.Controllers;
@@ -35,7 +35,7 @@ public partial class MapRegionsController
     public void AddRegionsTextBox(string propertyPath)
     {
       var tb = new TextBox();
-      tb.Style = _regionsStyle;
+      tb.Style = _regionsActiveStyle;
       if (_lastValidationRegionsBox != null)
         _lastValidationRegionsBox.Margin = _regionsTbAlignment;
       _lastValidationRegionsBox = tb;
@@ -47,9 +47,15 @@ public partial class MapRegionsController
       _validationNum.Children.Add(tb);
     }
 
+    public void ChangeTbColor(int index, bool active)
+    {
+      var tb = _validationNum.Children[index] as TextBox;
+      tb.Tag = active ? "Activated" : "Deactivated";
+    }
+
     private void ValidationRegionsTbGotFocus(object sender, RoutedEventArgs e)
     {
-      if (!((TextBox) e.Source).IsKeyboardFocusWithin)
+      if (!((TextBox)e.Source).IsKeyboardFocusWithin)
         return;
       var regionNumber = int.Parse(((TextBox)e.Source).Text);
       //int Index = int.Parse(((TextBox)e.Source).Name.Trim('_'));

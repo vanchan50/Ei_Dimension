@@ -262,8 +262,11 @@ public class DashboardViewModel
     {
       App.DiosApp.Device.Mode = OperationMode.Normal;
       EndReadItems[_dbEndReadIndexTempHolder].Click(6);
-      Volumes[0] = _dbsampleVolumeTempHolder;
-      App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.Volume, VolumeType.Sample, ushort.Parse(_dbsampleVolumeTempHolder));
+      if (_dbsampleVolumeTempHolder is not null)
+      {
+        Volumes[0] = _dbsampleVolumeTempHolder;
+        App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.Volume, VolumeType.Sample, ushort.Parse(_dbsampleVolumeTempHolder));
+      }
       MainButtonsViewModel.Instance.Flavor[0] = null;
       MainWindow.Instance.wndw.Background = App.Current.Resources["AppBackground"] as SolidColorBrush;
       UnlockMapSelection();
@@ -320,9 +323,13 @@ public class DashboardViewModel
     void ReturnToNormal()
     {
       App.DiosApp.Device.Mode = OperationMode.Normal;
-      Volumes[0] = _dbsampleVolumeTempHolder;
+      if (_dbsampleVolumeTempHolder is not null)
+      {
+        Volumes[0] = _dbsampleVolumeTempHolder;
+        App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.Volume, VolumeType.Sample, ushort.Parse(_dbsampleVolumeTempHolder));
+        _dbsampleVolumeTempHolder = null;
+      }
       EndReadItems[_dbEndReadIndexTempHolder].Click(6);
-      App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.Volume, VolumeType.Sample, ushort.Parse(_dbsampleVolumeTempHolder));
       MainButtonsViewModel.Instance.Flavor[0] = null;
       MainWindow.Instance.wndw.Background = App.Current.Resources["AppBackground"] as SolidColorBrush;
       ResultsViewModel.Instance.ValidationCoverVisible = Visibility.Hidden;

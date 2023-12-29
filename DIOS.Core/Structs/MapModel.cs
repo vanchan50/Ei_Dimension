@@ -20,6 +20,7 @@ public class MapModel
   public int calgssc;
   public int calvssc;
   public int calfsc;
+  public int minVerBeads;
   public string caltime;
   public string valtime;
   public bool validation;

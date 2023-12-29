@@ -15,7 +15,6 @@ public partial class MapRegionsController
   public static ObservableCollection<MapRegionData> RegionsList { get; } = new();
   //All the selected Active regions. Passed to the MicroCy.StartingProcedure()
   public static HashSet<int> ActiveRegionNums { get; } = new(101);
-  public static HashSet<int> ActiveVerificationRegionNums { get; } = new(101);
   //exceptional NUllregion-case
   public bool IsNullRegionActive { get { return _resultsTableController.NullTextboxActive; } }
 
@@ -31,6 +30,7 @@ public partial class MapRegionsController
   private static readonly Thickness _lastNameBoxAlignment = new(0, 10, 0, 10);
   private static readonly Style _regionsStyle = (Style)App.Current.Resources.MergedDictionaries[6]["RegionFieldStyle"];
   private static readonly Style _regionsNamesStyle = (Style)App.Current.Resources.MergedDictionaries[5]["InputFieldStyle"];
+  private static readonly Style _regionsActiveStyle = (Style)App.Current.Resources.MergedDictionaries[13]["VerificationRegionFieldStyle"];
   private static TextBox _lastRegionsBox;
   private static TextBox _lastRegionsNameBox;
   private static TextBox _lastValidationRegionsBox;
@@ -74,7 +74,6 @@ public partial class MapRegionsController
     ClearAllTextboxes();
     RegionsList.Clear();
     ActiveRegionNums.Clear();
-    ActiveVerificationRegionNums.Clear();
     ActiveRegionsStatsController.Instance.Clear();
     _mapRegionNumberIndexDictionary.Clear();
       
@@ -276,5 +275,11 @@ public partial class MapRegionsController
     bind.Path = new PropertyPath(propertyPath);
     bind.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
     BindingOperations.SetBinding(tb, TextBox.TextProperty, bind);
+  }
+
+  public void ActivateVerificationTextBox(int regionNum, bool active = false)
+  {
+    var index = GetMapRegionIndex(regionNum);
+    _validationTableController.ChangeTbColor(index - 1, active);
   }
 }

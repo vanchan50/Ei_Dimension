@@ -4,6 +4,7 @@ using DevExpress.Mvvm.POCO;
 using System.Collections.ObjectModel;
 using System.Windows.Controls;
 using DIOS.Core.HardwareIntercom;
+using System.Windows;
 
 namespace Ei_Dimension.ViewModels;
 
@@ -56,6 +57,7 @@ public class MaintenanceViewModel
 
   public void NavigateTab()
   {
+    VerificationViewModel.Instance.DetailsVisibility = Visibility.Hidden;
     switch (_lastActiveTab)
     {
       case 0:
