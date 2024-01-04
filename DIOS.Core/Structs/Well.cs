@@ -1,4 +1,5 @@
-﻿using DIOS.Core.HardwareIntercom;
+﻿using System.Text;
+using DIOS.Core.HardwareIntercom;
 
 namespace DIOS.Core;
 

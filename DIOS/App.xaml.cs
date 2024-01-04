@@ -247,7 +247,8 @@ public partial class App : Application
     DiosApp.Terminator.TerminationTime = (int)e.Well.TerminationTimer;
     DiosApp.Terminator.TerminationType = e.Well.TerminationType;
 
-    Logger.Log($"Starting to read well {e.Well.CoordinatesString()} with Params:\nTermination: {DiosApp.Terminator.TerminationType}\nMinPerRegion: {DiosApp.Terminator.MinPerRegion}\nBeadsToCapture: {DiosApp.Terminator.TotalBeadsToCapture}\nTerminationTimer: {DiosApp.Terminator.TerminationTime}");
+    Logger.Log($"Starting to read well {e.Well.CoordinatesString()} with Params:\n\t\t\tTermination: {DiosApp.Terminator.TerminationType}\n\t\t\tMinPerRegion: {DiosApp.Terminator.MinPerRegion}\n\t\t\tBeadsToCapture: {DiosApp.Terminator.TotalBeadsToCapture}\n\t\t\tTerminationTimer: {DiosApp.Terminator.TerminationTime}");
+    Logger.Log(e.Well.PrintActiveRegions());
 
     var wellFilePath = DiosApp.Publisher.BeadEventFile.GenerateNewFileName(e.Well);
     DiosApp.Results.StartNewWell(e.Well);

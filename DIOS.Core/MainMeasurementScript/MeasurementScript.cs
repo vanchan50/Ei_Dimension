@@ -1,5 +1,4 @@
 ﻿using DIOS.Core.HardwareIntercom;
-using System.Globalization;
 
 namespace DIOS.Core.MainMeasurementScript;
 
