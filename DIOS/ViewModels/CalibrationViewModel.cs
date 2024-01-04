@@ -56,7 +56,7 @@ public class CalibrationViewModel
       App.DiosApp.MapController.ActiveMap.calParams.maxmapssc.ToString()
     };
 
-    CompensationPercentageContent = new(){ App.DiosApp.Device.Compensation.ToString() };
+    CompensationPercentageContent = new(){ App.DiosApp.Device.ToString() };
 
     AttenuationBox = new(){ App.DiosApp.MapController.ActiveMap.calParams.att.ToString() };
 
@@ -392,10 +392,12 @@ public class CalibrationViewModel
     GatingItems[map.calParams.gate].Click();
     DNRContents[0] = map.calParams.DNRCoef.ToString();
     DNRContents[1] = map.calParams.DNRTrans.ToString();
-    App.DiosApp.Device.Compensation = map.calParams.compensation;
+    App.DiosApp.Compensation = map.calParams.compensation;
     CompensationPercentageContent[0] = map.calParams.compensation.ToString();
     App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.DNRCoefficient, map.calParams.DNRCoef);
     App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.DNRTransition, map.calParams.DNRTrans);
+    App.DiosApp.HDnrCoef = map.calParams.DNRCoef;
+    App.DiosApp.HdnrTrans = map.calParams.DNRTrans;
     ClassificationTargetsContents[0] = map.calParams.CL0.ToString();
     ClassificationTargetsContents[1] = map.calParams.CL1.ToString();
     ClassificationTargetsContents[2] = map.calParams.CL2.ToString();

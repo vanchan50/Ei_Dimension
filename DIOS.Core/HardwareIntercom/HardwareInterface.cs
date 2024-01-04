@@ -226,7 +226,6 @@ public class HardwareInterface
           default:
             throw new NotImplementedException();
         }
-        _device._beadProcessor.SensitivityChannel = (HiSensitivityChannel)subParameter;
         break;
       case DeviceParameterType.UVCSanitize:
         commandCode = 0x1F;
@@ -254,12 +253,10 @@ public class HardwareInterface
           case CalibrationParameter.DNRCoefficient:
             fparam = value;
             commandCode = 0x20;
-            _device.HDnrCoef = fparam;
             break;
           case CalibrationParameter.DNRTransition:
             fparam = value;
             commandCode = 0x0A;
-            _device.HdnrTrans = fparam;
             break;
           case CalibrationParameter.ScatterGate:
             param = intValue;
@@ -815,7 +812,6 @@ public class HardwareInterface
         break;
       case DeviceParameterType.ChannelConfiguration:
         commandCode = 0xC2;
-        _device._beadProcessor._channelRedirectionEnabled = false;
         switch (subParameter)
         {
           //ChannelConfig = 4 is disabled in the hardware.
@@ -833,11 +829,9 @@ public class HardwareInterface
             break;
           case ChannelConfiguration.OEMA:
             param = (ushort)ChannelConfiguration.OEMA;
-            _device._beadProcessor._channelRedirectionEnabled = true;
             break;
           case ChannelConfiguration.OEMPMT:
             param = (ushort)ChannelConfiguration.OEMPMT;
-            _device._beadProcessor._channelRedirectionEnabled = true;
             break;
           default:
             throw new NotImplementedException();

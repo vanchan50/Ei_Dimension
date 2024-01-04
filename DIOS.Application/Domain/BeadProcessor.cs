@@ -1,22 +1,24 @@
-﻿namespace DIOS.Core;
+﻿using DIOS.Core;
 
-internal class BeadProcessor
+namespace DIOS.Application.Domain;
+
+public class BeadProcessor
 {
   public NormalizationSettings Normalization { get; } = new();
   private float _greenMin;
   private float _greenMaj;
-  private readonly Device _device;
+  private readonly DIOSApp _diosApp;
   private readonly ClassificationMap _classificationMap = new();
   internal MapModel _map;
-  internal HiSensitivityChannel SensitivityChannel { get; set; }
-  internal bool _channelRedirectionEnabled = false;
+  public HiSensitivityChannel SensitivityChannel { get; set; }
+  public bool _channelRedirectionEnabled = false;
   private float[] _compensatedCoordinatesCache = { 0,0,0,0 }; //cl0,cl1,cl2,cl3
   internal float _inverseReporterScaling;
   internal float _actualCompensation;
 
-  public BeadProcessor(Device device)
+  public BeadProcessor(DIOSApp diosapp)
   {
-    _device = device;
+    _diosApp = diosapp;
   }
 
   public void SetMap(MapModel map)
@@ -154,7 +156,7 @@ internal class BeadProcessor
 
   private float CalculateReporter(ushort region)
   {
-    var basicReporter = _greenMin > _device.HdnrTrans ? _greenMaj * _device.HDnrCoef : _greenMin;
+    var basicReporter = _greenMin > _diosApp.HdnrTrans ? _greenMaj * _diosApp.HDnrCoef : _greenMin;
     var scaledReporter = (basicReporter * _inverseReporterScaling);
     if (!Normalization.IsEnabled || region == 0)
       return scaledReporter;

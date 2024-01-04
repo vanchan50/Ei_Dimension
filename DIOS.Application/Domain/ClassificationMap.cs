@@ -1,6 +1,6 @@
-﻿using System;
+﻿using DIOS.Core;
 
-namespace DIOS.Core;
+namespace DIOS.Application.Domain;
 
 internal class ClassificationMap
 {

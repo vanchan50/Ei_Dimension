@@ -16,6 +16,7 @@ using DIOS.Core.HardwareIntercom;
 using DIOS.Application;
 using DIOS.Application.Domain;
 using DIOS.Application.FileIO;
+using static DevExpress.Office.Utils.HdcOriginModifier;
 
 namespace Ei_Dimension;
 
@@ -187,6 +188,7 @@ public partial class App : Application
 
   public static void SetOEMMode(bool On)
   {
+    DiosApp._beadProcessor._channelRedirectionEnabled = On;
     ChannelRedirectionEnabled = On;
     LanguageSwap.TranslateChannelsOffsetVM();//swaps between red <-> green
     LanguageSwap.TranslateChannelsVM();
@@ -318,6 +320,9 @@ public partial class App : Application
 
   public void FinishedMeasurementEventHandler(object sender, EventArgs e)
   {
+    if (DiosApp.Device.Mode != OperationMode.Normal)
+      DiosApp.Normalization.Restore();
+
     DiosApp.Results.PlateReport.completedDateTime = DateTime.Now;
     var plateReportJson = DiosApp.Results.PlateReport.JSONify();
     if (DiosApp.Control == SystemControl.Manual &&
@@ -391,7 +396,7 @@ public partial class App : Application
 
   public void MapChangedEventHandler(object sender, MapModel map)
   {
-    DiosApp.Device.SetMap(map);
+    DiosApp.SetMap(map);
     _ = Current.Dispatcher.BeginInvoke(() =>
     {
       if (ResultsViewModel.Instance != null)

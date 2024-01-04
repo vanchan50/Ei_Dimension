@@ -93,8 +93,7 @@ internal class DataController
             if (!GetBeadFromBuffer(i, out var outbead))
               break;
             _device.BeadCount++;
-            var processedBead = _device._beadProcessor.CalculateBeadParams(in outbead);
-            BeadEventSink.Add(processedBead);
+            BeadEventSink.Add(outbead);
           }
         }
 

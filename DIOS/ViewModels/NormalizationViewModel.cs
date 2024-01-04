@@ -112,9 +112,9 @@ public class NormalizationViewModel
   {
     UserInputHandler.InputSanityCheck();
     if(state)
-      App.DiosApp.Device.Normalization.Enable();
+      App.DiosApp.Normalization.Enable();
     else
-      App.DiosApp.Device.Normalization.Disable();
+      App.DiosApp.Normalization.Disable();
     NormalizationEnabled[0] = state;
     MainViewModel.Instance.SetNormalizationMarker(state);
   }

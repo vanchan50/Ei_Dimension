@@ -11,12 +11,14 @@ public class ResultsProcessor
   private readonly Device _device;
   private readonly RunResults _results;
   private readonly ReadTerminator _terminator;
+  private readonly BeadProcessor _beadProcessor;
 
-  public ResultsProcessor(Device device, RunResults results, ReadTerminator terminator)
+  public ResultsProcessor(Device device, RunResults results, ReadTerminator terminator, BeadProcessor beadProcessor)
   {
     _device = device;
     _results = results;
     _terminator = terminator;
+    _beadProcessor = beadProcessor;
     //setup thread
     _resultsProcessingThread = new Thread(ResultsProcessing);
     _resultsProcessingThread.IsBackground = true;
@@ -32,6 +34,7 @@ public class ResultsProcessor
       while (_resultsProcessed < size)
       {
         var bead = _results.OutputBeadsCollector[_resultsProcessed++];
+        var processedBead = _beadProcessor.CalculateBeadParams(in bead);
         _results.AddProcessedBeadEvent(in bead);
 
         if (_resultsProcessed == 1)  //Trigger on 1st bead arrived is the simplest solution, at least for now;

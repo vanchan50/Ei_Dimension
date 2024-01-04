@@ -6,7 +6,7 @@ namespace DIOS.Application;
 public class MapController
 {
   public MapModel ActiveMap { get; private set; }
-  public List<MapModel> MapList { get; } = new List<MapModel>();
+  public List<MapModel> MapList { get; } = new();
   public event EventHandler<MapModel> ChangedActiveMap;
   private string _mapFolder;
   private ILogger _logger;

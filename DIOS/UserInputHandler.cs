@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using DIOS.Application;
 using Ei_Dimension.Models;
 using DIOS.Core.HardwareIntercom;
+using DevExpress.XtraPrinting.Native;
 
 namespace Ei_Dimension;
 
@@ -84,7 +85,7 @@ internal static class UserInputHandler
           {
             if (fRes is >= 0 and <= 10 || _disableSanityCheck)
             {
-              App.DiosApp.Device.Compensation = fRes;
+              App.DiosApp.Compensation = fRes;
               break;
             }
           }
@@ -99,6 +100,7 @@ internal static class UserInputHandler
               if (fRes is >= 1 and <= 300 || _disableSanityCheck)
               {
                 App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.DNRCoefficient, fRes);
+                App.DiosApp.HDnrCoef = fRes;
                 break;
               }
             }
@@ -112,6 +114,7 @@ internal static class UserInputHandler
               if (fRes is >= 1 and <= 40000 || _disableSanityCheck)
               {
                 App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.DNRTransition, fRes);
+                App.DiosApp.HdnrTrans = fRes;
                 break;
               }
             }
@@ -673,7 +676,7 @@ internal static class UserInputHandler
           {
             if ((fRes > 0) || _disableSanityCheck)
             {
-              App.DiosApp.Device.ReporterScaling = fRes;
+              App.DiosApp.ReporterScaling = fRes;
               Settings.Default.ReporterScaling = fRes;
               MainViewModel.Instance.SetScalingMarker(fRes);
               break;

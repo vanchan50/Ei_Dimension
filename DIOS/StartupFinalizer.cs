@@ -8,6 +8,7 @@ using System.IO;
 using System.Windows;
 using System.Windows.Media.Imaging;
 using DIOS.Application.SerialIO;
+using System.Data.Common;
 
 namespace Ei_Dimension;
 
@@ -119,12 +120,14 @@ internal static class StartupFinalizer
     App.DiosApp.Terminator.MinPerRegion = Settings.Default.MinPerRegion;
     App.DiosApp.Terminator.TotalBeadsToCapture = Settings.Default.BeadsToCapture;
     App.DiosApp.Terminator.TerminationTime = Settings.Default.TerminationTimer;
-    App.DiosApp.Device.ReporterScaling = Settings.Default.ReporterScaling;
+    App.DiosApp.ReporterScaling = Settings.Default.ReporterScaling;
     var hiSensChannel = Settings.Default.SensitivityChannelB ? HiSensitivityChannel.GreenB : HiSensitivityChannel.GreenC;
     App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.HiSensitivityChannel, hiSensChannel);
+    App.DiosApp._beadProcessor.SensitivityChannel = hiSensChannel;
     var map = App.DiosApp.MapController.ActiveMap;
     App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.Attenuation, map.calParams.att);
     App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.DNRTransition, map.calParams.DNRTrans);
+    App.DiosApp.HdnrTrans = map.calParams.DNRTrans;
     App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.UseWashStation, Settings.Default.UseWashStation);
     App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelConfiguration);
     App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.SampleSyringeType);

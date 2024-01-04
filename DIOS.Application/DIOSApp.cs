@@ -23,6 +23,46 @@ public class DIOSApp
   public IBarcodeReader BarcodeReader { get; }
   public readonly string BUILD = Assembly.GetCallingAssembly().GetName().Version.ToString();
   public ILogger Logger { get; }
+  public NormalizationSettings Normalization
+  {
+    get { return _beadProcessor.Normalization; }
+  }
+  public float HdnrTrans;
+  public float HDnrCoef;
+  /// <summary>
+  /// A coefficient for high dynamic range channel
+  /// </summary>
+  public float Compensation
+  {
+    get
+    {
+      return _compensation;
+    }
+    set
+    {
+      _compensation = value;
+      _beadProcessor._actualCompensation = value / 100f;
+    }
+  }
+  /// <summary>
+  /// An inverse coefficient for the bead Reporter<br></br>
+  /// Applied before Reporter Normalization
+  /// </summary>
+  public float ReporterScaling
+  {
+    get
+    {
+      return _reporterScaling;
+    }
+    set
+    {
+      _reporterScaling = value;
+      _beadProcessor._inverseReporterScaling = 1 / value;
+    }
+  }
+  public readonly BeadProcessor _beadProcessor;
+  private float _reporterScaling = 1;
+  private float _compensation = 1;
 
   public DIOSApp(string rootDirectory, ILogger logger)
   {
@@ -35,9 +75,10 @@ public class DIOSApp
     Device = new Device(new USBConnection(Logger), Logger);
     Results = new RunResults(Device, this, new BeadEventSink(2000000));
     Terminator = new ReadTerminator(Results.MinPerRegionAchieved);
-    ResultsProc = new ResultsProcessor(Device, Results, Terminator);
     Verificator = new Verificator();
     BarcodeReader = new USBBarcodeReader(Logger);
+    _beadProcessor = new BeadProcessor(this);
+    ResultsProc = new ResultsProcessor(Device, Results, Terminator, _beadProcessor);
   }
 
   public void StartOperation(IReadOnlyCollection<Well> wells, PlateSize plateSize, string plateId = null)
@@ -50,6 +91,20 @@ public class DIOSApp
       Verificator.Reset(regions);
     }
     Logger.Log(Publisher.ReportActivePublishingFlags());
+
+    if (Device.Mode != OperationMode.Normal)
+    {
+      Normalization.SuspendForTheRun();
+      Logger.Log("Normalization: Suspended;");
+    }
+    else
+    {
+      if (Normalization.IsEnabled)
+        Logger.Log("Normalization: Enabled");
+      else
+        Logger.Log("Normalization: Disabled");
+    }
+
     Device.StartOperation(wells, Results.OutputBeadsCollector);
     ResultsProc.StartBeadProcessing();//call after StartOperation, so IsMeasurementGoing == true
   }
@@ -69,6 +124,11 @@ public class DIOSApp
     {
       Console.WriteLine("Directory Creation Failed");
     }
+  }
+
+  public void SetMap(MapModel map)
+  {
+    _beadProcessor.SetMap(map);
   }
 
   public WellType GetWellStateForPictogram()

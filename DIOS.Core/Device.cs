@@ -50,23 +50,6 @@ public class Device
   public OperationMode Mode { get; set; } = OperationMode.Normal; //TODO: move to app layer?
   public int BoardVersion { get; internal set; }
   public string FirmwareVersion { get; internal set; }
-
-  /// <summary>
-  /// An inverse coefficient for the bead Reporter<br></br>
-  /// Applied before Reporter Normalization
-  /// </summary>
-  public float ReporterScaling
-  {
-    get
-    {
-      return _reporterScaling;
-    }
-    set
-    {
-      _reporterScaling = value;
-      _beadProcessor._inverseReporterScaling = 1 / value;
-    }
-  }
   /// <summary>
   /// Amount of bead events for the current well<br></br>
   /// Resets on the start of new Well
@@ -83,36 +66,12 @@ public class Device
       return _dataController.IsMeasurementGoing;
     }
   }
-  /// <summary>
-  /// A coefficient for high dynamic range channel
-  /// </summary>
-  public float Compensation
-  {
-    get
-    {
-      return _compensation;
-    }
-    set
-    {
-      _compensation = value;
-      _beadProcessor._actualCompensation = value / 100f;
-    }
-  }
-  public NormalizationSettings Normalization
-  {
-    get { return _beadProcessor.Normalization; }
-  }
   public bool IsPlateEjected { get; internal set; }
   internal bool SingleSyringeMode { get; set; }
-  internal float HdnrTrans;
-  internal float HDnrCoef;
-  internal readonly BeadProcessor _beadProcessor;
   internal readonly WellController _wellController = new();
   private readonly DataController _dataController;
   private readonly MeasurementScript _script;
   private readonly ILogger _logger;
-  private float _reporterScaling = 1;
-  private float _compensation = 1;
   #if DEBUG
   public Action ContinueScript { get; }
   #endif
@@ -120,7 +79,6 @@ public class Device
   public Device(ISerial connection, ILogger logger)
   {
     _logger = logger;
-    _beadProcessor = new BeadProcessor(this);
     var scriptTracker = new HardwareScriptTracker();
     #if DEBUG
     ContinueScript = scriptTracker.SignalScriptEnd;
@@ -165,18 +123,6 @@ public class Device
       throw new ArgumentException("Wells count = 0");
     }
     _wellController.Init(wells);
-    if (Mode != OperationMode.Normal)
-    {
-      Normalization.SuspendForTheRun();
-      _logger.Log("Normalization: Suspended;");
-    }
-    else
-    {
-      if (Normalization.IsEnabled)
-        _logger.Log("Normalization: Enabled");
-      else
-        _logger.Log("Normalization: Disabled");
-    }
     _logger.Log($"Operation Mode: {Mode}");
     _dataController.BeadEventSink = beadEventSink;
     StringBuilder wellreport = new StringBuilder("[");
@@ -199,11 +145,6 @@ public class Device
   {
     Hardware.SendCommand(DeviceCommandType.LoadPlate);
     IsPlateEjected = false;
-  }
-
-  public void SetMap(MapModel map)
-  {
-    _beadProcessor.SetMap(map);
   }
 
   public void ReconnectUSB()
@@ -239,9 +180,6 @@ public class Device
     _dataController.IsMeasurementGoing = false;
     _dataController.BeadEventSink = null;
     Hardware.SetParameter(DeviceParameterType.IsBubbleDetectionActive, 0);
-
-    if (Mode != OperationMode.Normal)
-      Normalization.Restore();
 
     FinishedMeasurement?.Invoke(this, EventArgs.Empty);
   }

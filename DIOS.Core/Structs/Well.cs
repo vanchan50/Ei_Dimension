@@ -8,7 +8,6 @@ public class Well
   public byte RowIdx { get; }
   public byte ColIdx { get; }
   public WellReadingSpeed RunSpeed { get; }
-  public ChannelConfiguration ChanConfig { get; }
   public uint SampVol { get; }
   public uint WashVol { get; }
   public uint ProbewashVol { get; }
@@ -29,7 +28,7 @@ public class Well
     ActiveRegions = new List<(int Number, string Name)>();
   }
 
-  public Well(byte row, byte col, IReadOnlyCollection<(int Number, string Name)> regions, WellReadingSpeed speed, ChannelConfiguration chConfig,
+  public Well(byte row, byte col, IReadOnlyCollection<(int Number, string Name)> regions, WellReadingSpeed speed,
     uint sampleVolume, uint washVolume, uint probeWashVol, uint agitateVolume,
     uint washRepeats, uint probeWashRepeats, uint agitateRepeats,
     uint minPerRegion, uint beadsToCapture, uint terminationTimer, Termination terminationType)
@@ -38,7 +37,6 @@ public class Well
     ColIdx = col;
     ActiveRegions = regions.OrderBy(x => x.Number).ToList();
     RunSpeed = speed;
-    ChanConfig = chConfig;
     SampVol = sampleVolume;
     WashVol = washVolume;
     ProbewashVol = probeWashVol;
@@ -58,7 +56,6 @@ public class Well
     ColIdx = well.ColIdx;
     ActiveRegions = well.ActiveRegions;
     RunSpeed = well.RunSpeed;
-    ChanConfig = well.ChanConfig;
     SampVol = well.SampVol;
     WashVol = well.WashVol;
     ProbewashVol = well.ProbewashVol;
@@ -90,7 +87,6 @@ public class Well
       ColIdx,
       Array.Empty<(int, string)>(),
       RunSpeed,
-      ChanConfig,
       SampVol,
       WashVol,
       ProbewashVol,

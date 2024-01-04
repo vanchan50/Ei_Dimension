@@ -22,8 +22,6 @@ internal class MeasurementScript
   public void Start()
   {
     _logger.Log("Starting read sequence");
-    _hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.MinSSC, _device._beadProcessor._map.calParams.minmapssc);
-    _hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.MaxSSC, _device._beadProcessor._map.calParams.maxmapssc);
     //read section of plate
     _hardware.RequestParameter(DeviceParameterType.MotorStepsX, MotorStepsX.Plate96Column1);
     _hardware.RequestParameter(DeviceParameterType.MotorStepsY, MotorStepsY.Plate96RowA);
@@ -116,7 +114,6 @@ internal class MeasurementScript
     var nextWell = _wellController.NextWell;
     _logger.Log("Reading Setup\n{");
     _hardware.SetParameter(DeviceParameterType.WellReadingSpeed, (ushort)nextWell.RunSpeed);
-    _hardware.SetParameter(DeviceParameterType.ChannelConfiguration, nextWell.ChanConfig);
     _logger.Log("}");
   }
 

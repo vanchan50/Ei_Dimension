@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using DIOS.Application;
 using DIOS.Core;
 using DIOS.Core.HardwareIntercom;
+using System.Data.Common;
 
 namespace Ei_Dimension.ViewModels;
 
@@ -248,9 +249,10 @@ public class ChannelOffsetViewModel
     UserInputHandler.InputSanityCheck();
   }
 
-  private static void SetSensitivityChannel(byte num)
+  private void SetSensitivityChannel(byte num)
   {
     App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.HiSensitivityChannel, (HiSensitivityChannel)num);
+    App.DiosApp._beadProcessor.SensitivityChannel = (HiSensitivityChannel)num;
     Settings.Default.SensitivityChannelB = num == (byte)HiSensitivityChannel.GreenB;
     Settings.Default.Save();
   }
@@ -284,7 +286,7 @@ public class ChannelOffsetViewModel
     {
       _vm.SelectedSensitivityContent = Content;
       _vm.SelectedSensitivityIndex = Index;
-      SetSensitivityChannel(Index);
+      _vm.SetSensitivityChannel(Index);
     }
 
     public static void ResetIndex()

@@ -1,4 +1,4 @@
-﻿namespace DIOS.Core;
+﻿namespace DIOS.Application.Domain;
 
 public class NormalizationSettings
 {
@@ -26,7 +26,7 @@ public class NormalizationSettings
     IsEnabled = false;
   }
 
-  internal void Restore()
+  public void Restore()
   {
     IsEnabled = _cache;
   }

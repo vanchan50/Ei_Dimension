@@ -198,7 +198,6 @@ public class WellsSelectViewModel
       col,
       regions,
       DashboardViewModel.Instance.SelectedSpeedIndex,
-      ComponentsViewModel.Instance.SelectedChConfigIndex,
       volRes,
       washRes,
       probewashRes,
