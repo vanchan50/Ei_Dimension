@@ -4,9 +4,7 @@ using DevExpress.Mvvm.POCO;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Windows.Controls;
-using DIOS.Core;
 using DIOS.Core.HardwareIntercom;
-using System.Windows;
 
 namespace Ei_Dimension.ViewModels;
 

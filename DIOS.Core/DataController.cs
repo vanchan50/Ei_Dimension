@@ -6,7 +6,7 @@ namespace DIOS.Core;
 internal class DataController
 {
   public bool IsMeasurementGoing { get; set; }
-  internal IBeadEventSink BeadEventSink { get; set; }
+  internal IBeadEventSink<RawBead> BeadEventSink { get; set; }
   private ConcurrentQueue<CommandStruct> _outCommands = new ();
 
   private readonly object _usbOutCV = new ();
@@ -93,7 +93,7 @@ internal class DataController
             if (!GetBeadFromBuffer(i, out var outbead))
               break;
             _device.BeadCount++;
-            BeadEventSink.Add(outbead);
+            BeadEventSink.Add(in outbead);
           }
         }
 

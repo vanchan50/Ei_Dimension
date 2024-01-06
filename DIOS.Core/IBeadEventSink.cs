@@ -1,6 +1,6 @@
 ﻿namespace DIOS.Core;
 
-public interface IBeadEventSink
+public interface IBeadEventSink<T>
 {
-  void Add(ProcessedBead bead);
+  void Add(in T bead);
 }

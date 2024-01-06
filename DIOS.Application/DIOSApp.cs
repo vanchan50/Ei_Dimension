@@ -27,8 +27,6 @@ public class DIOSApp
   {
     get { return _beadProcessor.Normalization; }
   }
-  public float HdnrTrans;
-  public float HDnrCoef;
   /// <summary>
   /// A coefficient for high dynamic range channel
   /// </summary>
@@ -73,11 +71,11 @@ public class DIOSApp
     WorkOrderController = new WorkOrderController($"{rootDirectory}\\WorkOrder");
     Publisher = new ResultsPublisher(rootDirectory, Logger);
     Device = new Device(new USBConnection(Logger), Logger);
-    Results = new RunResults(Device, this, new BeadEventSink(2000000));
+    Results = new RunResults(Device, this, new BeadEventSink<RawBead>(2000000));
     Terminator = new ReadTerminator(Results.MinPerRegionAchieved);
     Verificator = new Verificator();
     BarcodeReader = new USBBarcodeReader(Logger);
-    _beadProcessor = new BeadProcessor(this);
+    _beadProcessor = new BeadProcessor();
     ResultsProc = new ResultsProcessor(Device, Results, Terminator, _beadProcessor);
   }
 
@@ -105,7 +103,7 @@ public class DIOSApp
         Logger.Log("Normalization: Disabled");
     }
 
-    Device.StartOperation(wells, Results.OutputBeadsCollector);
+    Device.StartOperation(wells, Results.RawBeadsCollector);
     ResultsProc.StartBeadProcessing();//call after StartOperation, so IsMeasurementGoing == true
   }
 

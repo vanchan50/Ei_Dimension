@@ -16,7 +16,6 @@ using DIOS.Core.HardwareIntercom;
 using DIOS.Application;
 using DIOS.Application.Domain;
 using DIOS.Application.FileIO;
-using static DevExpress.Office.Utils.HdcOriginModifier;
 
 namespace Ei_Dimension;
 
@@ -65,6 +64,8 @@ public partial class App : Application
     DiosApp.WorkOrderController.NewWorkOrder += OnNewWorkOrder;
 
     App.Current.Dispatcher.UnhandledException += DispatcherExceptionHandler;
+
+    new VerificationReportPdfFileWriter().PdfTest(null);
   }
 
   private static void CorruptSettingsChecker()

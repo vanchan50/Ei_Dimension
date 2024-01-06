@@ -396,8 +396,8 @@ public class CalibrationViewModel
     CompensationPercentageContent[0] = map.calParams.compensation.ToString();
     App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.DNRCoefficient, map.calParams.DNRCoef);
     App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.DNRTransition, map.calParams.DNRTrans);
-    App.DiosApp.HDnrCoef = map.calParams.DNRCoef;
-    App.DiosApp.HdnrTrans = map.calParams.DNRTrans;
+    App.DiosApp._beadProcessor.HDnrCoef = map.calParams.DNRCoef;
+    App.DiosApp._beadProcessor.HdnrTrans = map.calParams.DNRTrans;
     ClassificationTargetsContents[0] = map.calParams.CL0.ToString();
     ClassificationTargetsContents[1] = map.calParams.CL1.ToString();
     ClassificationTargetsContents[2] = map.calParams.CL2.ToString();

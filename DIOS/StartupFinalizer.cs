@@ -127,7 +127,7 @@ internal static class StartupFinalizer
     var map = App.DiosApp.MapController.ActiveMap;
     App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.Attenuation, map.calParams.att);
     App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.DNRTransition, map.calParams.DNRTrans);
-    App.DiosApp.HdnrTrans = map.calParams.DNRTrans;
+    App.DiosApp._beadProcessor.HdnrTrans = map.calParams.DNRTrans;
     App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.UseWashStation, Settings.Default.UseWashStation);
     App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelConfiguration);
     App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.SampleSyringeType);

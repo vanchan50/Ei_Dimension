@@ -30,12 +30,12 @@ public class ResultsProcessor
   {
     while (true)
     {
-      var size = _results.OutputBeadsCollector.Count;
+      var size = _results.RawBeadsCollector.Count;
       while (_resultsProcessed < size)
       {
-        var bead = _results.OutputBeadsCollector[_resultsProcessed++];
+        var bead = _results.RawBeadsCollector[_resultsProcessed++];
         var processedBead = _beadProcessor.CalculateBeadParams(in bead);
-        _results.AddProcessedBeadEvent(in bead);
+        _results.AddProcessedBeadEvent(in processedBead);
 
         if (_resultsProcessed == 1)  //Trigger on 1st bead arrived is the simplest solution, at least for now;
         { //Comes from the asynchronous nature of the instrument

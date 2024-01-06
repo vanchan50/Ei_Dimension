@@ -100,7 +100,7 @@ internal static class UserInputHandler
               if (fRes is >= 1 and <= 300 || _disableSanityCheck)
               {
                 App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.DNRCoefficient, fRes);
-                App.DiosApp.HDnrCoef = fRes;
+                App.DiosApp._beadProcessor.HDnrCoef = fRes;
                 break;
               }
             }
@@ -114,7 +114,7 @@ internal static class UserInputHandler
               if (fRes is >= 1 and <= 40000 || _disableSanityCheck)
               {
                 App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.DNRTransition, fRes);
-                App.DiosApp.HdnrTrans = fRes;
+                App.DiosApp._beadProcessor.HdnrTrans = fRes;
                 break;
               }
             }
@@ -225,40 +225,40 @@ internal static class UserInputHandler
           {
             if (int.TryParse(_tempNewString, out iRes))
             {
-              if (iRes is >= 1 and <= 10 || _disableSanityCheck)
+              if (iRes is >= 0 and <= 10 || _disableSanityCheck)
               {
                 App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.WashRepeatsAmount, (ushort)iRes);
                 break;
               }
             }
             failed = true;
-            ErrorMessage = "[1-10]";
+            ErrorMessage = "[0-10]";
           }
           if (SelectedTextBox.index == 1)
           {
             if (int.TryParse(_tempNewString, out iRes))
             {
-              if (iRes is >= 0 and <= 5 || _disableSanityCheck)
+              if (iRes is >= 0 and <= 10 || _disableSanityCheck)
               {
                 App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ProbewashRepeatsAmount, (ushort)iRes);
                 break;
               }
             }
             failed = true;
-            ErrorMessage = "[0-5]";
+            ErrorMessage = "[0-10]";
           }
           if (SelectedTextBox.index == 2)
           {
             if (int.TryParse(_tempNewString, out iRes))
             {
-              if (iRes is >= 1 and <= 10 || _disableSanityCheck)
+              if (iRes is >= 0 and <= 10 || _disableSanityCheck)
               {
                 App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.AgitateRepeatsAmount, (ushort)iRes);
                 break;
               }
             }
             failed = true;
-            ErrorMessage = "[1-10]";
+            ErrorMessage = "[0-10]";
           }
           break;
         case nameof(CalibrationViewModel.Instance.EventTriggerContents):

@@ -91,11 +91,11 @@ internal static class UITimer
   {
     var r = new Random();
     var choose = r.Next(0, 3);
-    ProcessedBead bead = new ProcessedBead();
+    RawBead bead = new RawBead();
     switch (choose)
     {
       case 0:
-        bead = new ProcessedBead
+        bead = new RawBead
         {
           fsc = 2.36f,
           redssc = r.Next(1000, 20000),
@@ -110,7 +110,7 @@ internal static class UITimer
         };
         break;
       case 1:
-        bead = new ProcessedBead
+        bead = new RawBead
         {
           fsc = 15.82f,
           redssc = r.Next(1000, 20000),
@@ -125,7 +125,7 @@ internal static class UITimer
         };
         break;
       case 2:
-        bead = new ProcessedBead
+        bead = new RawBead
         {
           fsc = 2.36f,
           redssc = r.Next(1000, 20000),
@@ -143,7 +143,7 @@ internal static class UITimer
 
     for (int i = 0; i < 20; i++)
     {
-      App.DiosApp.Results.OutputBeadsCollector.Add(bead);
+      App.DiosApp.Results.RawBeadsCollector.Add(bead);
     }
     //App.DiosApp.Results.AddProcessedBeadEvent(in bead);
     //App.DiosApp.Results.DataOut.Enqueue(bead);

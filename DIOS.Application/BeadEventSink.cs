@@ -2,20 +2,20 @@
 
 namespace DIOS.Application;
 
-public sealed class BeadEventSink : IBeadEventSink
+public sealed class BeadEventSink<T> : IBeadEventSink<T>
 {
-  public ProcessedBead this[int key] => _list[key];
+  public T this[int key] => _list[key];
   public int Count => _size;
-  private List<ProcessedBead> _list;
+  private List<T> _list;
   private int _size;
   private int _nextNewBeadIndex;
 
   public BeadEventSink(int capacity)
   {
-    _list = new List<ProcessedBead>(capacity);
+    _list = new List<T>(capacity);
   }
 
-  public void Add(ProcessedBead bead)
+  public void Add(in T bead)
   {
     _list.Add(bead);
     _size++;
@@ -28,7 +28,7 @@ public sealed class BeadEventSink : IBeadEventSink
     _list.Clear();
   }
 
-  public IEnumerable<ProcessedBead> GetNewBeadsEnumerable()
+  public IEnumerable<T> GetNewBeadsEnumerable()
   {
     while (_nextNewBeadIndex < _size)
     {
@@ -36,7 +36,7 @@ public sealed class BeadEventSink : IBeadEventSink
     }
   }
 
-  public IEnumerable<ProcessedBead> GetAllBeadsEnumerable()
+  public IEnumerable<T> GetAllBeadsEnumerable()
   {
     for (var i = 0; i < _size; i++)
     {

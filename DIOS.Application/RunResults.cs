@@ -5,18 +5,19 @@ namespace DIOS.Application;
 
 public class RunResults
 {
-  public BeadEventSink OutputBeadsCollector { get; }
+  public BeadEventSink<RawBead> RawBeadsCollector { get; }
+  private BeadEventSink<ProcessedBead> ProcessedBeadsCollector { get; } = new(2_000_000);
   public PlateReport PlateReport { get; } = new ();
   public WellResults CurrentWellResults { get; } = new ();
   private readonly Device _device;
   private readonly DIOSApp _diosApp;
   private bool _isFrozen = false;
 
-  public RunResults(Device device, DIOSApp diosApp, BeadEventSink sink)
+  public RunResults(Device device, DIOSApp diosApp, BeadEventSink<RawBead> sink)
   {
     _device = device;
     _diosApp = diosApp;
-    OutputBeadsCollector = sink;
+    RawBeadsCollector = sink;
   }
 
   public List<RegionReporterResultVolatile> MakeWellResultsClone()
@@ -56,7 +57,8 @@ public class RunResults
   public void StartNewWell(Well well)
   {
     CurrentWellResults.Reset(well);
-    OutputBeadsCollector.Clear();
+    RawBeadsCollector.Clear();
+    ProcessedBeadsCollector.Clear();
     _isFrozen = false;
   }
 
@@ -64,7 +66,7 @@ public class RunResults
   {
     if (_isFrozen)
       return;
-
+    ProcessedBeadsCollector.Add(in processedBead);
     var countForTheRegion = CurrentWellResults.Add(in processedBead);//TODO:move to normal mode case?
     //it also checks region 0, but it is only a trigger, the real check is done in MinPerRegionAchieved()
     if (!_diosApp.Terminator.MinPerRegCheckTrigger)
@@ -97,11 +99,11 @@ public class RunResults
   /// <exception cref="ArgumentOutOfRangeException"></exception>
   public IEnumerable<ProcessedBead> GetNewBeads()
   {
-    return OutputBeadsCollector.GetNewBeadsEnumerable();
+    return ProcessedBeadsCollector.GetNewBeadsEnumerable();
   }
 
   public IEnumerable<ProcessedBead> PublishBeadEvents()
   {
-    return OutputBeadsCollector.GetAllBeadsEnumerable();
+    return ProcessedBeadsCollector.GetAllBeadsEnumerable();
   }
 }
