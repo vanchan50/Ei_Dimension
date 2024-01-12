@@ -16,6 +16,7 @@ using DIOS.Core.HardwareIntercom;
 using DIOS.Application;
 using DIOS.Application.Domain;
 using DIOS.Application.FileIO;
+using DevExpress.Internal.WinApi.Windows.UI.Notifications;
 
 namespace Ei_Dimension;
 
@@ -65,7 +66,9 @@ public partial class App : Application
 
     App.Current.Dispatcher.UnhandledException += DispatcherExceptionHandler;
 
-    new VerificationReportPdfFileWriter().PdfTest(null);
+    //new VerificationReportPdfFileWriter().PdfTest(null);
+    //new VerificationReportPdfFileWriter().PdfTest2();
+    //Environment.Exit(0);
   }
 
   private static void CorruptSettingsChecker()
@@ -245,6 +248,7 @@ public partial class App : Application
 
   private void StartingToReadWellEventHandler(object sender, ReadingWellEventArgs e)
   {
+    ActiveRegionsStatsController.Instance.IsMeasurementGoing = true;
     DiosApp.Terminator.TotalBeadsToCapture = (int)e.Well.BeadsToCapture;
     DiosApp.Terminator.MinPerRegion = (int)e.Well.MinPerRegion;
     DiosApp.Terminator.TerminationTime = (int)e.Well.TerminationTimer;
@@ -283,9 +287,17 @@ public partial class App : Application
 
   public void FinishedReadingWellEventHandler(object sender, ReadingWellEventArgs e)
   {
+    ActiveRegionsStatsController.Instance.IsMeasurementGoing = false;
     Logger.Log($"Finished Reading well {e.Well.CoordinatesString()}");
     DiosApp.Results.FreezeWellResults();
-    DiosApp.SaveWellFiles();
+
+    Task.Run(() =>
+    {
+      var wellStats = DiosApp.Results.MakeWellStats();
+      _ = App.Current.Dispatcher.BeginInvoke(
+        ActiveRegionsStatsController.Instance.FinalUpdateRegionsProcedure, wellStats);
+      DiosApp.SaveWellFiles(wellStats);
+    });
 
     var type = DiosApp.GetWellStateForPictogram();
 

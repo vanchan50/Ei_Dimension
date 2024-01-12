@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.Collections;
+using System.Reflection;
 using System.Text;
 using DIOS.Core;
 using Newtonsoft.Json;
@@ -10,13 +11,12 @@ namespace DIOS.Application;
 /// <br> Contains the region Reporter stats data per well</br>
 /// </summary>
 [JsonObject(MemberSerialization.OptIn)]
-internal class WellStats
+public class WellStats : IEnumerable<RegionReporterStats>
 {
   [JsonProperty("Well")]
   public readonly Well Well;
 
   public int TotalCount { get; }
-
   [JsonProperty("Results")]
   private readonly List<RegionReporterStats> _results = new(101);
 
@@ -83,5 +83,15 @@ internal class WellStats
     string Notes = "";
     bldr.Append($"\"{Notes}\"");
     return bldr.ToString();
+  }
+
+  public IEnumerator<RegionReporterStats> GetEnumerator()
+  {
+    return ((IEnumerable<RegionReporterStats>)_results).GetEnumerator();
+  }
+
+  IEnumerator IEnumerable.GetEnumerator()
+  {
+    return ((IEnumerable)_results).GetEnumerator();
   }
 }

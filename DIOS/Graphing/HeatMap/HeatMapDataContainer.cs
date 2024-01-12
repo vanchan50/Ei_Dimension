@@ -6,18 +6,18 @@ namespace Ei_Dimension.Graphing.HeatMap;
 internal class HeatMapDataContainer
 {
 
-  private readonly Dictionary<(int x, int y), HeatMapPoint> _currentCL01Dict = new Dictionary<(int x, int y), HeatMapPoint>(XYMAPCAPACITY);
-  private readonly Dictionary<(int x, int y), HeatMapPoint> _currentCL02Dict = new Dictionary<(int x, int y), HeatMapPoint>(XYMAPCAPACITY);
-  private readonly Dictionary<(int x, int y), HeatMapPoint> _currentCL03Dict = new Dictionary<(int x, int y), HeatMapPoint>(XYMAPCAPACITY);
-  private readonly Dictionary<(int x, int y), HeatMapPoint> _currentCL12Dict = new Dictionary<(int x, int y), HeatMapPoint>(XYMAPCAPACITY);
-  private readonly Dictionary<(int x, int y), HeatMapPoint> _currentCL13Dict = new Dictionary<(int x, int y), HeatMapPoint>(XYMAPCAPACITY);
-  private readonly Dictionary<(int x, int y), HeatMapPoint> _currentCL23Dict = new Dictionary<(int x, int y), HeatMapPoint>(XYMAPCAPACITY);
-  private readonly Dictionary<(int x, int y), HeatMapPoint> _backingCL01Dict = new Dictionary<(int x, int y), HeatMapPoint>(XYMAPCAPACITY);
-  private readonly Dictionary<(int x, int y), HeatMapPoint> _backingCL02Dict = new Dictionary<(int x, int y), HeatMapPoint>(XYMAPCAPACITY);
-  private readonly Dictionary<(int x, int y), HeatMapPoint> _backingCL03Dict = new Dictionary<(int x, int y), HeatMapPoint>(XYMAPCAPACITY);
-  private readonly Dictionary<(int x, int y), HeatMapPoint> _backingCL12Dict = new Dictionary<(int x, int y), HeatMapPoint>(XYMAPCAPACITY);
-  private readonly Dictionary<(int x, int y), HeatMapPoint> _backingCL13Dict = new Dictionary<(int x, int y), HeatMapPoint>(XYMAPCAPACITY);
-  private readonly Dictionary<(int x, int y), HeatMapPoint> _backingCL23Dict = new Dictionary<(int x, int y), HeatMapPoint>(XYMAPCAPACITY);
+  private readonly Dictionary<(int x, int y), HeatMapPoint> _currentCL01Dict = new(XYMAPCAPACITY);
+  private readonly Dictionary<(int x, int y), HeatMapPoint> _currentCL02Dict = new(XYMAPCAPACITY);
+  private readonly Dictionary<(int x, int y), HeatMapPoint> _currentCL03Dict = new(XYMAPCAPACITY);
+  private readonly Dictionary<(int x, int y), HeatMapPoint> _currentCL12Dict = new(XYMAPCAPACITY);
+  private readonly Dictionary<(int x, int y), HeatMapPoint> _currentCL13Dict = new(XYMAPCAPACITY);
+  private readonly Dictionary<(int x, int y), HeatMapPoint> _currentCL23Dict = new(XYMAPCAPACITY);
+  private readonly Dictionary<(int x, int y), HeatMapPoint> _backingCL01Dict = new(XYMAPCAPACITY);
+  private readonly Dictionary<(int x, int y), HeatMapPoint> _backingCL02Dict = new(XYMAPCAPACITY);
+  private readonly Dictionary<(int x, int y), HeatMapPoint> _backingCL03Dict = new(XYMAPCAPACITY);
+  private readonly Dictionary<(int x, int y), HeatMapPoint> _backingCL12Dict = new(XYMAPCAPACITY);
+  private readonly Dictionary<(int x, int y), HeatMapPoint> _backingCL13Dict = new(XYMAPCAPACITY);
+  private readonly Dictionary<(int x, int y), HeatMapPoint> _backingCL23Dict = new(XYMAPCAPACITY);
   public const int XYMAPCAPACITY = 50000;  //max possible capacity is 256x256. Realistic 3/4 is ~49k
 
   public void ClearData(bool current)

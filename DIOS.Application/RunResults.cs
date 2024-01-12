@@ -35,6 +35,11 @@ public class RunResults
     return ret;
   }
 
+  public IReadOnlyDictionary<int, (int, float)> GetReporterMeansAndCount()
+  {
+    return CurrentWellResults.GetMeanCountCache();
+  }
+
   /// <summary>
   /// Checks if MinPerRegion Condition is met. Not thread safe. Supposed to be called after the well is read or in the measurement sequence thread
   /// </summary>
@@ -49,7 +54,7 @@ public class RunResults
     PlateReport.Reset(plateSize, plateId);
   }
 
-  internal WellStats MakeWellStats()
+  public WellStats MakeWellStats()
   {
     return new WellStats(CurrentWellResults.Well, MakeWellResultsClone(), _device.BeadCount);
   }
@@ -67,7 +72,7 @@ public class RunResults
     if (_isFrozen)
       return;
     ProcessedBeadsCollector.Add(in processedBead);
-    var countForTheRegion = CurrentWellResults.Add(in processedBead);//TODO:move to normal mode case?
+    var countForTheRegion = CurrentWellResults.Add(in processedBead);
     //it also checks region 0, but it is only a trigger, the real check is done in MinPerRegionAchieved()
     if (!_diosApp.Terminator.MinPerRegCheckTrigger)
       _diosApp.Terminator.MinPerRegCheckTrigger = countForTheRegion == _diosApp.Terminator.MinPerRegion;  //see if well is done via sufficient beads in each region

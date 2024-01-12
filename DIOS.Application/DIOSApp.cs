@@ -71,7 +71,7 @@ public class DIOSApp
     WorkOrderController = new WorkOrderController($"{rootDirectory}\\WorkOrder");
     Publisher = new ResultsPublisher(rootDirectory, Logger);
     Device = new Device(new USBConnection(Logger), Logger);
-    Results = new RunResults(Device, this, new BeadEventSink<RawBead>(2000000));
+    Results = new RunResults(Device, this, new BeadEventSink<RawBead>(2_000_000));
     Terminator = new ReadTerminator(Results.MinPerRegionAchieved);
     Verificator = new Verificator();
     BarcodeReader = new USBBarcodeReader(Logger);
@@ -155,14 +155,14 @@ public class DIOSApp
     return type;
   }
 
-  public void SaveWellFiles()
+  public void SaveWellFiles(WellStats stats)
   {
     _ = Task.Run(() =>
     {
-      var stats = Results.MakeWellStats();
       Results.PlateReport.Add(stats);
       Results.CurrentWellResults.AddWellStats(stats);
-      Publisher.ResultsFile.AppendAndWrite(Results.CurrentWellResults.PublishWellStats()); //makewellstats should be awaited only for this method
+      var wellResults = Results.CurrentWellResults.PublishWellStats();
+      Publisher.ResultsFile.AppendAndWrite(wellResults); //makewellstats should be awaited only for this method
       WorkOrderController.DoSomethingWithWorkOrder();
     });
     Publisher.BeadEventFile.CreateAndWrite(Results.PublishBeadEvents());

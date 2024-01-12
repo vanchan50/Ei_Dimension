@@ -41,9 +41,6 @@ internal static class UITimer
     ServiceMenuEnabler.Update();
     _uiUpdateIsActive = 0;
 
-    //DashboardViewModel.Instance.ChConfigItems[3].Click(3);
-    //MaintenanceViewModel.Instance.LanguageItems[0].Click();
-
 #if DEBUG
     if (App.Current is null)
       return;//just so it doesnt break here

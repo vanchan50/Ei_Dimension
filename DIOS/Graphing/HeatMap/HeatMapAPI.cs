@@ -143,7 +143,6 @@ internal class HeatMapAPI
           break;
         var chartPoint = new SeriesPoint(X, Y);
         chartPoint.Brush = _heatColors[j];
-
         _heatMapChart.AddXYPointToHeatMap(chartPoint, hiRez);
         break;
       }

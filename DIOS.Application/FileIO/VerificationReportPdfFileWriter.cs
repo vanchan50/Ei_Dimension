@@ -24,6 +24,7 @@ namespace DIOS.Application.FileIO
 
       // Create an empty page in this document.
       var page = document.AddPage();
+      page.Size = PageSize.A4;
 
       // Get an XGraphics object for drawing on this page.
       var gfx = XGraphics.FromPdfPage(page);
@@ -33,10 +34,6 @@ namespace DIOS.Application.FileIO
       var height = page.Height;
       gfx.DrawLine(XPens.Red, 0, 0, width, height);
       gfx.DrawLine(XPens.Red, width, 0, 0, height);
-
-      // Draw a circle with a red pen which is 1.5 point thick.
-      var r = width / 5;
-      gfx.DrawEllipse(new XPen(XColors.Red, 1.5), XBrushes.White, new XRect(width / 2 - r, height / 2 - r, 2 * r, 2 * r));
 
       //var bytes = PdfSharp.WPFonts.FontDataHelper.SegoeWP;
 
@@ -69,16 +66,6 @@ namespace DIOS.Application.FileIO
 
     public void PdfTest2()
     {
-
-    }
-  }//PdfSharpUtilities.cs
-
-  //*******************************************************************/     
-
-  /* Usage example
-
-  private void buttonRunExample_Click(object sender, EventArgs e)
-  {
       PdfSharpUtilities pdf = new PdfSharpUtilities("test.pdf", true);
 
       pdf.drawSquare(new DPoint(0, 0), 3, 2, XBrushes.Purple);
@@ -99,11 +86,9 @@ namespace DIOS.Application.FileIO
       pdf.drawTable(0, 11, 15.7, 3, XBrushes.LightGray, null);
 
       pdf.saveAndShow();
-
-  }*/
-
-  //******************************************************************/
-
+    }
+  }
+  
   public class PdfSharpUtilities
   {
     private double topMargin = 0;
@@ -121,25 +106,26 @@ namespace DIOS.Application.FileIO
 
     public PdfSharpUtilities(string argOutputpath, bool argAddMarginGuides = false)
     {
-      this.outputPath = argOutputpath;
+      outputPath = argOutputpath;
 
       //You’ll need a PDF document:
-      this.document = new PdfDocument();
+      document = new PdfDocument();
 
       //And you need a page:
-      this.page = document.AddPage();
-      this.page.Size = PageSize.Letter;
+      page = document.AddPage();
+      page.Size = PageSize.A4;
 
       //Define how much a cm is in document's units
-      this.cm = new Interpolation().linearInterpolation(0, 0, 27.9, page.Height, 1);
+      cm = new Interpolation().linearInterpolation(0, 0, 27.9, page.Height, 1);
       Console.WriteLine("1 cm:" + cm);
 
       //Drawing is done with an XGraphics object:
 
-      this.gfx = XGraphics.FromPdfPage(page);
+      gfx = XGraphics.FromPdfPage(page);
 
-      this.font = new XFont("Arial", 12, XFontStyleEx.Bold);
-      this.pen = new XPen(XColors.Black, 0.5);
+      GlobalFontSettings.FontResolver = new FailsafeFontResolver();
+      font = new XFont("Times New Roman", 20, XFontStyleEx.BoldItalic);
+      pen = new XPen(XColors.Black, 0.5);
 
       //Sugested margins
 
@@ -167,7 +153,7 @@ namespace DIOS.Application.FileIO
 
     public void drawTable(double initialPosX, double initialPosY, double width, double height, XBrush xbrush, List<string[]> contents = null)
     {
-      drawSquare(new DPoint(initialPosX, initialPosY), width, height, xbrush);
+      //drawSquare(new DPoint(initialPosX, initialPosY), width, height, xbrush);
 
       if (contents == null)
       {
@@ -220,12 +206,12 @@ namespace DIOS.Application.FileIO
 
       pointA = new DPoint(initialPosX, initialPosY);
 
-      foreach (String[] rowDataArray in contents)
+      foreach (string[] rowDataArray in contents)
       {
-        foreach (String cellText in rowDataArray)
+        foreach (string cellText in rowDataArray)
         {
 
-          this.gfx.DrawString(cellText, this.font, XBrushes.Black, new XRect(leftMargin + (pointA.x * cm), topMargin + (pointA.y * cm), distanceBetweenColumns * cm, distanceBetweenRows * cm), XStringFormats.Center);
+          gfx.DrawString(cellText, font, XBrushes.Black, new XRect(leftMargin + (pointA.x * cm), topMargin + (pointA.y * cm), distanceBetweenColumns * cm, distanceBetweenRows * cm), XStringFormats.Center);
 
           pointA.x = pointA.x + distanceBetweenColumns;
         }
@@ -235,35 +221,45 @@ namespace DIOS.Application.FileIO
       }
     }
 
-    public void addText(String text, DPoint xyStartingPosition, int size = 12)
+    public void addText(string text, DPoint xyStartingPosition, int size = 12)
     {
-      this.gfx.DrawString(text, this.font, XBrushes.Black, leftMargin + (xyStartingPosition.x * cm), topMargin + (xyStartingPosition.y * cm));
+      gfx.DrawString(text,
+        font,
+        XBrushes.Black,
+        leftMargin + (xyStartingPosition.x * cm),
+        topMargin + (xyStartingPosition.y * cm));
     }
 
     public void drawSquare(DPoint xyStartingPosition, double width, double height, XBrush xbrush)
     {
       Console.WriteLine("Drawing square starting at: " + xyStartingPosition.x + "," + xyStartingPosition.y + " width: " + width + " height: " + height);
-      this.gfx.DrawRectangle(xbrush, new XRect(leftMargin + (xyStartingPosition.x * cm), topMargin + (xyStartingPosition.y * cm), (width * cm), (height * cm)));
+      gfx.DrawRectangle(xbrush,
+        new XRect(leftMargin + (xyStartingPosition.x * cm),
+          topMargin + (xyStartingPosition.y * cm),
+          (width * cm),
+          (height * cm)));
     }
 
     public void drawLine(DPoint fromXyPosition, DPoint toXyPosition)
     {
-      this.gfx.DrawLine(this.pen, leftMargin + (fromXyPosition.x * cm), topMargin + (fromXyPosition.y * cm), leftMargin + (toXyPosition.x * cm), topMargin + (toXyPosition.y * cm));
+      gfx.DrawLine(pen,
+        leftMargin + (fromXyPosition.x * cm),
+        topMargin + (fromXyPosition.y * cm),
+        leftMargin + (toXyPosition.x * cm),
+        topMargin + (toXyPosition.y * cm));
     }
 
-    public void saveAndShow(Boolean argShowAfterSaving = true)
+    public void saveAndShow(bool argShowAfterSaving = true)
     {
       document.Save(this.outputPath);
 
       if (argShowAfterSaving)
       {
-        Process.Start(this.outputPath);
+        Process.Start(new ProcessStartInfo(outputPath) { UseShellExecute = true });
       }
     }
   }
-
-  //DPoint.cs
-
+  
   public class DPoint
   {
     public double x { get; set; }
@@ -275,8 +271,7 @@ namespace DIOS.Application.FileIO
       this.y = y;
     }
   }
-
-  //Interpolation.cs
+  
   public class Interpolation
   {
     public double linearInterpolation(double x0, double y0, double x1, double y1, double xd)

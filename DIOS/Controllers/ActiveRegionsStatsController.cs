@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Threading;
 using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
 using DIOS.Application;
@@ -32,9 +33,10 @@ public class ActiveRegionsStatsController
     }
   }
   public const int NULLREGIONCAPACITY = 100000;
+  public bool IsMeasurementGoing { get; set; } = false;
 
   private static ActiveRegionsStatsController _instance;
-  private static bool _activeRegionsUpdateGoing;
+  private static int _activeRegionsUpdateGoing;
   private static readonly RegionReporterResultVolatile _nullWellRegionResult = new(0);
 
   protected ActiveRegionsStatsController()
@@ -90,36 +92,75 @@ public class ActiveRegionsStatsController
 
   public void UpdateCurrentStats()
   {
-    if (!_activeRegionsUpdateGoing)
+    if (!IsMeasurementGoing)
+      return;
+    
+    if (Interlocked.CompareExchange(ref _activeRegionsUpdateGoing, 1, 0) > 0)
+      return;
+    
+    Action action;
+    if (App.MapRegions.IsNullRegionActive)
     {
-      _activeRegionsUpdateGoing = true;
       var copy = App.DiosApp.Results.MakeWellResultsClone(); //TODO:hotpath allocations
-      var action = App.MapRegions.IsNullRegionActive ? UpdateNullRegionProcedure(copy) : UpdateRegionsProcedure(copy);
-      _ = App.Current.Dispatcher.BeginInvoke(action);
+      action = UpdateNullRegionProcedure(copy);
     }
+    else
+    {
+      var cache = App.DiosApp.Results.GetReporterMeansAndCount();
+      action = UpdateRegionsProcedure(cache);
+    }
+    _ = App.Current.Dispatcher.BeginInvoke(action)
+      .Task.ContinueWith(x=>
+      {
+        _activeRegionsUpdateGoing = 0;
+      });
   }
 
-  private Action UpdateRegionsProcedure(List<RegionReporterResultVolatile> wellResults)
+  private Action UpdateRegionsProcedure(IReadOnlyDictionary<int, (int, float)> meanCountCache)
   {
     return () =>
     {
       ViewModels.ResultsViewModel.Instance.AnalysisMap.ClearData(current: true);
-      foreach (var result in wellResults)
+      foreach (var cache in meanCountCache)
       {
-        var index = MapRegionsController.GetMapRegionIndex(result.regionNumber);
+        var index = MapRegionsController.GetMapRegionIndex(cache.Key);
         if (index < 0)
           continue;
-        result.MakeStats(out var count, out var mean);
+        var count = cache.Value.Item1;
+        var mean = cache.Value.Item2;
 
         CurrentCount[index] = count.ToString();
-        CurrentMean[index] = mean.ToString("0.0");
+        CurrentMean[index] = mean.ToString("F1");
 
         if (index != 0)
           ViewModels.ResultsViewModel.Instance.AnalysisMap.AddDataPoint(index - 1, mean); // -1 accounts for region = 0
       }
-
-      _activeRegionsUpdateGoing = false;
     };
+  }
+
+  public void FinalUpdateRegionsProcedure(WellStats wellStats)
+  {
+    while (Interlocked.CompareExchange(ref _activeRegionsUpdateGoing, 2, 0) > 0)
+    {
+      Thread.Sleep(50);
+    }
+    ViewModels.ResultsViewModel.Instance.AnalysisMap.ClearData(current: true);
+    foreach (var result in wellStats)
+    {
+      var index = MapRegionsController.GetMapRegionIndex(result.Region);
+      if (index < 0)
+        continue;
+      var count = result.Count;
+      var mean = result.MeanFi;
+
+      CurrentCount[index] = count.ToString();
+      CurrentMean[index] = mean.ToString("F1");
+
+      if (index != 0)
+        ViewModels.ResultsViewModel.Instance.AnalysisMap.AddDataPoint(index - 1, mean); // -1 accounts for region = 0
+
+      _activeRegionsUpdateGoing = 0;
+    }
   }
 
   private Action UpdateNullRegionProcedure(List<RegionReporterResultVolatile> wellresults)
@@ -141,8 +182,6 @@ public class ActiveRegionsStatsController
 
       CurrentCount[0] = count.ToString();
       CurrentMean[0] = mean.ToString("0.0");
-
-      _activeRegionsUpdateGoing = false;
     };
   }
 }
