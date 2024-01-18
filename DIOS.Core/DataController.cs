@@ -44,8 +44,21 @@ internal class DataController
 
   public void AddCommand(CommandStruct cs)
   {
-    _clientToUSB.SendFrame(StructToByteArray(in cs));
-    _clientToUSB.SkipFrame();
+    var failed = true;
+    while (failed)
+    {
+      try
+      {
+        _clientToUSB.SendFrame(StructToByteArray(in cs));
+        _clientToUSB.SkipFrame();
+        failed = false;
+      }
+      catch(FiniteStateMachineException e)
+      {
+        Console.Error.WriteLine("sending command failed; retrying");
+        Thread.Sleep(10);
+      }
+    }
 #if DEBUG
     Console.Error.WriteLine($"[DEBUG] AddCommand Enqueued {cs.ToString()}");
 #endif
@@ -76,7 +89,6 @@ internal class DataController
       {
         _inputBuffer = _clientFromUSB.ReceiveFrameBytes();
         _clientFromUSB.SendFrameEmpty();
-        Console.WriteLine($"received buffer {_inputBuffer.Length}");
         if (!IsBeadInBuffer())
         {
           GetCommandFromBuffer();

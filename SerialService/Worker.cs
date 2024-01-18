@@ -47,7 +47,6 @@ public class Worker : BackgroundService
         if (_serialConnection.Read())
         {
           que.Enqueue(_serialConnection.InputBuffer.ToArray());
-          _logger.LogInformation($"received buffer {_serialConnection.InputBuffer.Length}");
           _serialConnection.ClearBuffer(); //TODO: is it necessary?
         }
       }
@@ -67,13 +66,11 @@ public class Worker : BackgroundService
       {
         var bytes = _serverToUSB.ReceiveFrameBytes();
         _serverToUSB.SendFrameEmpty();
-        _logger.LogInformation(ByteArrayToStruct(bytes).ToString());
         _serialConnection.Write(bytes);
       }
       catch (Exception e)
       {
-        //_logger.Log("[CRITICAL] USB WRITE failed");
-        //_logger.Log(e.Message);
+        _logger.LogInformation($"WriteToMC Exception\n{e.Data}\n{e.Message}");
       }
     }
   }
@@ -93,7 +90,7 @@ public class Worker : BackgroundService
         }
         catch (Exception e)
         {
-          _logger.LogInformation($"Exception\n{e.Data}\n{e.Message}");
+          _logger.LogInformation($"SendBuffer Exception\n{e.Data}\n{e.Message}");
           //_logger.Log("[CRITICAL] USB WRITE failed");
           //_logger.Log(e.Message);
         }
