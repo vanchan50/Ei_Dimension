@@ -1,27 +1,27 @@
-﻿using System.Collections.Concurrent;
+﻿using System.Diagnostics;
 using DIOS.Core.HardwareIntercom;
+using NetMQ;
+using NetMQ.Sockets;
 
 namespace DIOS.Core;
 
 internal class DataController
 {
+  public Process BackgroundProcess { get; }
   public bool IsMeasurementGoing { get; set; }
   internal IBeadEventSink<RawBead> BeadEventSink { get; set; }
-  private ConcurrentQueue<CommandStruct> _outCommands = new ();
-
-  private readonly object _usbOutCV = new ();
   internal object SystemActivityNotBusyNotificationLock { get; } = new ();
-  private readonly ISerial _serialConnection;
   private readonly Thread _prioUsbInThread;
-  private readonly Thread _prioUsbOutThread;
   private readonly Device _device;
   private readonly HardwareScriptTracker _scriptTracker;
+  private readonly RequestSocket _clientToUSB = new();
+  private readonly ResponseSocket _clientFromUSB = new();
   private readonly ILogger _logger;
+  private byte[] _inputBuffer;
 
-  public DataController(Device device, ISerial connection, HardwareScriptTracker scriptTracker, ILogger logger)
+  public DataController(Device device, HardwareScriptTracker scriptTracker, ILogger logger)
   {
     _device = device;
-    _serialConnection = connection;
     _logger = logger;
     _scriptTracker = scriptTracker;
 
@@ -31,37 +31,34 @@ internal class DataController
     _prioUsbInThread.IsBackground = true;
     _prioUsbInThread.Name = "USBIN";
 
-    _prioUsbOutThread = new Thread(WriteToMC);
-    _prioUsbOutThread.Priority = ThreadPriority.AboveNormal;
-    _prioUsbOutThread.IsBackground = true;
-    _prioUsbOutThread.Name = "USBOUT";
+    BackgroundProcess = Process.Start(new ProcessStartInfo("SerialService.exe") { UseShellExecute = true });
+    _clientToUSB.Connect("tcp://localhost:9020");
+    _clientFromUSB.Bind("tcp://*:9021");
   }
 
   public bool Run()
   {
-    _serialConnection.Start();
     _prioUsbInThread.Start();
-    _prioUsbOutThread.Start();
-    return _serialConnection.IsActive;
+    return true;
   }
 
   public void AddCommand(CommandStruct cs)
   {
-    _outCommands.Enqueue(cs);
+    _clientToUSB.SendFrame(StructToByteArray(in cs));
+    _clientToUSB.SkipFrame();
 #if DEBUG
     Console.Error.WriteLine($"[DEBUG] AddCommand Enqueued {cs.ToString()}");
 #endif
-    NotifyCommandReceived();
   }
 
   public void ReconnectUSB()
   {
-    _serialConnection.Reconnect();
+    //_serialConnection.Reconnect();
   }
 
   public void DisconnectedUSB()
   {
-    _serialConnection.Disconnect();
+    //_serialConnection.Disconnect();
   }
     
 #if DEBUG
@@ -77,9 +74,10 @@ internal class DataController
     {
       while (true)
       {
-        _serialConnection.Read();
-
-        if (!_serialConnection.IsBeadInBuffer())
+        _inputBuffer = _clientFromUSB.ReceiveFrameBytes();
+        _clientFromUSB.SendFrameEmpty();
+        Console.WriteLine($"received buffer {_inputBuffer.Length}");
+        if (!IsBeadInBuffer())
         {
           GetCommandFromBuffer();
           continue;
@@ -96,8 +94,6 @@ internal class DataController
             BeadEventSink.Add(in outbead);
           }
         }
-
-        _serialConnection.ClearBuffer(); //TODO: is it necessary?
       }
     }
     catch (Exception e)
@@ -105,49 +101,6 @@ internal class DataController
       _logger.Log("[CRITICAL] USB READ failed");
       _logger.Log(e.Message);
     }
-  }
-
-  private void WriteToMC()
-  {
-    try
-    {
-      var timeOut = new TimeSpan(0, 0, seconds: 2);
-      while (true)
-      {
-        while (_outCommands.TryDequeue(out var cmd))
-        {
-          RunCmd(cmd);
-        }
-        lock (_usbOutCV)
-        {
-          Monitor.Wait(_usbOutCV, timeOut);
-        }
-      }
-    }
-    catch (Exception e)
-    {
-      _logger.Log("[CRITICAL] USB WRITE failed");
-      _logger.Log(e.Message);
-    }
-  }
-
-  private void NotifyCommandReceived()
-  {
-    lock (_usbOutCV)
-    {
-      Monitor.Pulse(_usbOutCV);
-    }
-  }
-
-  /// <summary>
-  /// Sends a command OUT to the USB device, then checks the IN pipe for a return value.
-  /// </summary>
-  /// <param name="sCmdName">A friendly name for the command.</param>
-  /// <param name="cs">The CommandStruct object containing the command parameters.  This will get converted to an 8-byte array.</param>
-  private void RunCmd(CommandStruct cs)
-  {
-    if (_serialConnection.IsActive)
-      _serialConnection.Write(StructToByteArray(in cs));
   }
 
   private static byte[] StructToByteArray(in CommandStruct cs)
@@ -213,14 +166,19 @@ internal class DataController
     
   private void GetCommandFromBuffer()
   {
-    var newcmd = ByteArrayToStruct(_serialConnection.InputBuffer);
+    var newcmd = ByteArrayToStruct(_inputBuffer);
     InnerCommandProcessing(in newcmd);
   }
 
   private bool GetBeadFromBuffer(byte shift, out RawBead outbead)
   {
-    outbead = BeadArrayToStruct(_serialConnection.InputBuffer, shift);
+    outbead = BeadArrayToStruct(_inputBuffer, shift);
     return outbead.Header == 0xadbeadbe;
+  }
+
+  private bool IsBeadInBuffer()
+  {
+    return _inputBuffer[0] == 0xbe && _inputBuffer[1] == 0xad;
   }
 
   private void InnerCommandProcessing(in CommandStruct cs)

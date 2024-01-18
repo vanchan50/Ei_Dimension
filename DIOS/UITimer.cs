@@ -40,7 +40,7 @@ internal static class UITimer
     UpdatePressureMonitor();
     ServiceMenuEnabler.Update();
     _uiUpdateIsActive = 0;
-
+    
 #if DEBUG
     if (App.Current is null)
       return;//just so it doesnt break here

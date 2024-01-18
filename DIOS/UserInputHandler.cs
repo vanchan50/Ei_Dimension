@@ -171,40 +171,40 @@ internal static class UserInputHandler
           {
             if (int.TryParse(_tempNewString, out iRes))
             {
-              if (iRes is >= 10 and <= 100 || _disableSanityCheck)
+              if (iRes is >= 0 and <= 500 || _disableSanityCheck)
               {
                 App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.Volume, VolumeType.Sample, (ushort)iRes);
                 break;
               }
             }
             failed = true;
-            ErrorMessage = "[10-100]";
+            ErrorMessage = "[0-500]";
           }
           if (SelectedTextBox.index == 1)
           {
             if (int.TryParse(_tempNewString, out iRes))
             {
-              if (iRes is >= 1 and <= 150 || _disableSanityCheck)
+              if (iRes is >= 0 and <= 500 || _disableSanityCheck)
               {
                 App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.Volume, VolumeType.Wash, (ushort)iRes);
                 break;
               }
             }
             failed = true;
-            ErrorMessage = "[1-150]";
+            ErrorMessage = "[0-500]";
           }
           if (SelectedTextBox.index == 2)
           {
             if (int.TryParse(_tempNewString, out iRes))
             {
-              if (iRes is >= 1 and <= 500 || _disableSanityCheck)
+              if (iRes is >= 0 and <= 150 || _disableSanityCheck)
               {
                 App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.Volume, VolumeType.ProbeWash, (ushort)iRes);
                 break;
               }
             }
             failed = true;
-            ErrorMessage = "[1-500]";
+            ErrorMessage = "[0-150]";
           }
           if (SelectedTextBox.index == 3)
           {

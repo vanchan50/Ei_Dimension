@@ -28,5 +28,9 @@ public class Program
       App.Logger.Log(e.Message);
       App.Logger.Log(e.StackTrace);
     }
+    finally
+    {
+      App.DiosApp.Device.KillBackgroundProcess();
+    }
   }
 }

@@ -70,7 +70,7 @@ public class DIOSApp
     MapController = new MapController($"{rootDirectory}\\Config", Logger);
     WorkOrderController = new WorkOrderController($"{rootDirectory}\\WorkOrder");
     Publisher = new ResultsPublisher(rootDirectory, Logger);
-    Device = new Device(new USBConnection(Logger), Logger);
+    Device = new Device(Logger);
     Results = new RunResults(Device, this, new BeadEventSink<RawBead>(2_000_000));
     Terminator = new ReadTerminator(Results.MinPerRegionAchieved);
     Verificator = new Verificator();

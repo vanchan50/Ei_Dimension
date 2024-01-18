@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DIOS", "DIOS\DIOS.csproj", "{144670CB-6396-488C-A76D-2E03A3B69E78}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D8A2ABC6-BA77-4AFE-A553-FABF3F57424D} = {D8A2ABC6-BA77-4AFE-A553-FABF3F57424D}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinUSBNet", "winusbnet-2.1.0\WinUSBNet\WinUSBNet.csproj", "{3AD313DD-C46B-4127-B5E1-4A8D9CB81563}"
 EndProject
@@ -22,6 +25,11 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B7C67C2D-7E43-4A10-9604-FFFB8EE051D6}"
 	ProjectSection(SolutionItems) = preProject
 		Directory.Build.props = Directory.Build.props
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SerialService", "SerialService\SerialService.csproj", "{D8A2ABC6-BA77-4AFE-A553-FABF3F57424D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3AD313DD-C46B-4127-B5E1-4A8D9CB81563} = {3AD313DD-C46B-4127-B5E1-4A8D9CB81563}
 	EndProjectSection
 EndProject
 Global
@@ -56,6 +64,10 @@ Global
 		{571EB7EF-2473-4931-93D0-0679B9C93A29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{571EB7EF-2473-4931-93D0-0679B9C93A29}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{571EB7EF-2473-4931-93D0-0679B9C93A29}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8A2ABC6-BA77-4AFE-A553-FABF3F57424D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8A2ABC6-BA77-4AFE-A553-FABF3F57424D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8A2ABC6-BA77-4AFE-A553-FABF3F57424D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8A2ABC6-BA77-4AFE-A553-FABF3F57424D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

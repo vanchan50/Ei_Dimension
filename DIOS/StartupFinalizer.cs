@@ -8,7 +8,6 @@ using System.IO;
 using System.Windows;
 using System.Windows.Media.Imaging;
 using DIOS.Application.SerialIO;
-using System.Data.Common;
 
 namespace Ei_Dimension;
 

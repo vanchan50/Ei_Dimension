@@ -76,6 +76,7 @@
   <ItemGroup>
     <ProjectReference Include="..\DIOS.Application\DIOS.Application.csproj" />
     <ProjectReference Include="..\Language\Language.csproj" />
+    <ProjectReference Include="..\SerialService\SerialService.csproj" />
   </ItemGroup>
 
   <ItemGroup>

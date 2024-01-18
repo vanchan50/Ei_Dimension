@@ -21,16 +21,16 @@
                       Focusable="False" Name="ScatterPlot"
                       BorderThickness="0">
       <dxc:ChartControl.Legends>
-        <dxc:Legend HorizontalPosition="Left"
+        <dxc:Legend HorizontalPosition="Right"
+                    VerticalPosition="Top"
                     MarkerMode="CheckBox"
                     Orientation="Horizontal"
-                    Margin="200,-28,0,0"
+                    Margin="130,-28,0,0"
                     FontSize="24"
                     Background="Transparent"
                     BorderBrush="Transparent"
-                    VerticalPosition="Top"
                     Focusable="False"
-                    Width="350" Visible="True"/>
+                    Width="450" Visible="True"/>
       </dxc:ChartControl.Legends>
       <dxc:XYDiagram2D Focusable="False"
                          Width="690" Height="460"

@@ -1,9 +1,8 @@
-﻿using DIOS.Core;
-using MadWizard.WinUSBNet;
+﻿using MadWizard.WinUSBNet;
 
-namespace DIOS.Application.SerialIO;
+namespace SerialService;
 
-public class USBConnection : ISerial
+public class USBConnection
 {
   public byte[] InputBuffer { get; } = new byte[512];
   public bool IsActive { get; private set; }
@@ -38,7 +37,7 @@ public class USBConnection : ISerial
       try
       {
         _usbDevice = new USBDevice(di[0].DevicePath); // just grab the first one for now, but should support multiples
-        _logger.Log(string.Format("{0}:{1}", _usbDevice.Descriptor.FullName, _usbDevice.Descriptor.SerialNumber));
+        _logger.LogInformation(string.Format("{0}:{1}", _usbDevice.Descriptor.FullName, _usbDevice.Descriptor.SerialNumber));
         _usbDevice.Interfaces[0].OutPipe.Policy.PipeTransferTimeout = 400;
         //USBDevice.Interfaces[0].InPipe.Policy.PipeTransferTimeout = 600;
         _usbDevice.Interfaces[0].InPipe.Policy.AutoClearStall = true;
@@ -47,12 +46,12 @@ public class USBConnection : ISerial
       }
       catch
       {
-        _logger.Log("Could not connect to serial USB device");
+        _logger.LogInformation("Could not connect to serial USB device");
         return false;
       }
       return true;
     }
-    _logger.Log("USB devices not found");
+    _logger.LogInformation("USB devices not found");
     return false;
   }
 
@@ -65,7 +64,7 @@ public class USBConnection : ISerial
     }
     catch (USBException e)
     {
-      _logger.Log($"{e.Message} {e.InnerException}");
+      _logger.LogInformation($"{e.Message} {e.InnerException}");
       if (!IsActive)
       {
         lock (_disconnectionLock)
@@ -92,12 +91,12 @@ public class USBConnection : ISerial
       _ = _usbDevice.Interfaces[0].Pipes[0x81].BeginRead(InputBuffer, 0, InputBuffer.Length, func, null);
   }
 
-  public void Read()
+  public bool Read()
   {
     if (!IsActive)
     {
       Thread.Sleep(300);// if connection was broken - try again in 300ms
-      return;
+      return false;
     }
 
     try
@@ -106,14 +105,16 @@ public class USBConnection : ISerial
     }
     catch (USBException e)
     {
-      _logger.Log($"{e.Message} {e.InnerException}");
+      _logger.LogInformation($"{e.Message} {e.InnerException}");
       Disconnect();
 
       lock (_disconnectionLock)
       {
         Monitor.Wait(_disconnectionLock);
       }
+      return false;
     }
+    return true;
   }
 
   public void EndRead(IAsyncResult result)

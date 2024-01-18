@@ -76,14 +76,14 @@ public class Device
   public Action ContinueScript { get; }
   #endif
 
-  public Device(ISerial connection, ILogger logger)
+  public Device(ILogger logger)
   {
     _logger = logger;
     var scriptTracker = new HardwareScriptTracker();
     #if DEBUG
     ContinueScript = scriptTracker.SignalScriptEnd;
     #endif
-    _dataController = new DataController(this, connection, scriptTracker, logger);
+    _dataController = new DataController(this, scriptTracker, logger);
     Hardware = new HardwareInterface(this, _dataController, scriptTracker, logger);
     _script = new MeasurementScript(this, logger);
   }
@@ -187,6 +187,11 @@ public class Device
   internal void OnParameterUpdate(ParameterUpdateEventArgs param)
   {
     ParameterUpdate?.Invoke(this, param);
+  }
+
+  public void KillBackgroundProcess()
+  {
+    _dataController.BackgroundProcess.Kill();
   }
 
 #if DEBUG

@@ -16,7 +16,6 @@ using DIOS.Core.HardwareIntercom;
 using DIOS.Application;
 using DIOS.Application.Domain;
 using DIOS.Application.FileIO;
-using DevExpress.Internal.WinApi.Windows.UI.Notifications;
 
 namespace Ei_Dimension;
 
