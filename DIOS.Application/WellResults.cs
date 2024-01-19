@@ -48,7 +48,7 @@ public class WellResults
 
   internal IReadOnlyDictionary<int, (int, float)> GetMeanCountCache()
   {
-    return _meanCountPerRegionCache;
+    return new Dictionary<int, (int, float)>(_meanCountPerRegionCache);
   }
   
   internal List<RegionReporterResultVolatile> GetResultsClone()
