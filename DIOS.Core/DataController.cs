@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.Concurrent;
+using System.Diagnostics;
 using DIOS.Core.HardwareIntercom;
 using NetMQ;
 using NetMQ.Sockets;
@@ -12,12 +13,15 @@ internal class DataController
   internal IBeadEventSink<RawBead> BeadEventSink { get; set; }
   internal object SystemActivityNotBusyNotificationLock { get; } = new ();
   private readonly Thread _prioUsbInThread;
+  private readonly Thread _UsbOutThread;
   private readonly Device _device;
   private readonly HardwareScriptTracker _scriptTracker;
   private readonly RequestSocket _clientToUSB = new();
   private readonly ResponseSocket _clientFromUSB = new();
   private readonly ILogger _logger;
   private byte[] _inputBuffer;
+  private readonly ConcurrentQueue<CommandStruct> _csQueue = new();
+  private readonly object _usbOutCV = new();
 
   public DataController(Device device, HardwareScriptTracker scriptTracker, ILogger logger)
   {
@@ -30,6 +34,9 @@ internal class DataController
     _prioUsbInThread.Priority = ThreadPriority.Highest;
     _prioUsbInThread.IsBackground = true;
     _prioUsbInThread.Name = "USBIN";
+    _UsbOutThread = new Thread(SendToMC);
+    _UsbOutThread.IsBackground = true;
+    _UsbOutThread.Name = "USBOUT";
 
     BackgroundProcess = Process.Start(new ProcessStartInfo("SerialService.exe") { UseShellExecute = true });
     _clientToUSB.Connect("tcp://localhost:9020");
@@ -39,26 +46,14 @@ internal class DataController
   public bool Run()
   {
     _prioUsbInThread.Start();
+    _UsbOutThread.Start();
     return true;
   }
 
-  public void AddCommand(CommandStruct cs)
+  public void AddCommand(in CommandStruct cs)
   {
-    var failed = true;
-    while (failed)
-    {
-      try
-      {
-        _clientToUSB.SendFrame(StructToByteArray(in cs));
-        _clientToUSB.SkipFrame();
-        failed = false;
-      }
-      catch(FiniteStateMachineException e)
-      {
-        Console.Error.WriteLine("sending command failed; retrying");
-        Thread.Sleep(10);
-      }
-    }
+    _csQueue.Enqueue(cs);
+    NotifyCommandReceived();
 #if DEBUG
     Console.Error.WriteLine($"[DEBUG] AddCommand Enqueued {cs.ToString()}");
 #endif
@@ -80,12 +75,42 @@ internal class DataController
     InnerCommandProcessing(in cs);
   }
 #endif
-
+  
+  private void SendToMC()
+  {
+    var timeOut = new TimeSpan(0, 0, seconds: 2);
+    while (true)//endless thread
+    {
+      while (_csQueue.TryDequeue(out var cs))//Wait until command appears
+      {
+        var failed = true;
+        while (failed)//resend until succesful
+        {
+          try
+          {
+            _clientToUSB.SendFrame(StructToByteArray(in cs));
+            _clientToUSB.SkipFrame();
+            failed = false;
+          }
+          catch (FiniteStateMachineException e)
+          {
+            _logger.Log("sending command failed; retrying..");
+            Thread.Sleep(10);
+          }
+        }
+      }
+      lock (_usbOutCV)
+      {
+        Monitor.Wait(_usbOutCV, timeOut);
+      }
+    }
+  }
+  
   private void ReplyFromMC()
   {
-    try
+    while (true)
     {
-      while (true)
+      try
       {
         _inputBuffer = _clientFromUSB.ReceiveFrameBytes();
         _clientFromUSB.SendFrameEmpty();
@@ -107,11 +132,19 @@ internal class DataController
           }
         }
       }
+      catch (Exception e)
+      {
+        _logger.Log("[CRITICAL] USB READ failed");
+        _logger.Log(e.Message);
+      }
     }
-    catch (Exception e)
+  }
+
+  private void NotifyCommandReceived()
+  {
+    lock (_usbOutCV)
     {
-      _logger.Log("[CRITICAL] USB READ failed");
-      _logger.Log(e.Message);
+      Monitor.Pulse(_usbOutCV);
     }
   }
 

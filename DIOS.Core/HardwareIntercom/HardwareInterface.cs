@@ -1759,6 +1759,6 @@ public class HardwareInterface
       Parameter = parameter,
       FParameter = fparameter
     };
-    _dataController.AddCommand(cs);
+    _dataController.AddCommand(in cs);
   }
 }
