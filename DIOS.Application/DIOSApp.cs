@@ -167,14 +167,4 @@ public class DIOSApp
     });
     Publisher.BeadEventFile.CreateAndWrite(Results.PublishBeadEvents());
   }
-
-  public void ReconnectUSB()
-  {
-    Device.ReconnectUSB();
-  }
-
-  public void DisconnectedUSB()
-  {
-    Device.DisconnectedUSB();
-  }
 }

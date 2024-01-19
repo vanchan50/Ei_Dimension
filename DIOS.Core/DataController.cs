@@ -58,16 +58,6 @@ internal class DataController
     Console.Error.WriteLine($"[DEBUG] AddCommand Enqueued {cs.ToString()}");
 #endif
   }
-
-  public void ReconnectUSB()
-  {
-    //_serialConnection.Reconnect();
-  }
-
-  public void DisconnectedUSB()
-  {
-    //_serialConnection.Disconnect();
-  }
     
 #if DEBUG
   internal void DEBUGGetCommandFromBuffer(CommandStruct cs)

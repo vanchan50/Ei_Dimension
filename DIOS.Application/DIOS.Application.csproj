@@ -15,7 +15,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DIOS.Core\DIOS.Core.csproj" />
-    <ProjectReference Include="..\winusbnet-2.1.0\WinUSBNet\WinUSBNet.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,5 +1,6 @@
 using System.Collections.Concurrent;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using NetMQ;
 using NetMQ.Sockets;
 
@@ -14,6 +15,7 @@ public class Worker : BackgroundService
   private readonly Thread _toUsbThread;
   private readonly Thread _toDiosThread;
   private readonly ConcurrentQueue<byte[]> que = new();
+  private readonly USBWatchdog _wd;
 
   public Worker(ILogger<Worker> logger)
   {
@@ -34,8 +36,9 @@ public class Worker : BackgroundService
     _toDiosThread.IsBackground = true;
     _toDiosThread.Name = "TODIOS";
     _toDiosThread.Start();
-    que.Enqueue([1, 2, 3]);
-    
+
+    IntPtr windowHandle = GetConsoleWindow();
+    _wd = new(windowHandle, ReconnectUSB, DisconnectedUSB);
   }
 
   protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -109,6 +112,48 @@ public class Worker : BackgroundService
       }
     }
   }
+
+  private static byte[] StructToByteArray(in CommandStruct cs)
+  {
+    byte[] arrRet = new byte[8];
+    unsafe
+    {
+      fixed (CommandStruct* pCS = &cs)
+      {
+        for (var i = 0; i < 8; i++)
+        {
+          arrRet[i] = *((byte*)pCS + i);
+        }
+      }
+    }
+
+    return arrRet;
+  }
+
+  public void ReconnectUSB()
+  {
+    _serialConnection.Reconnect();
+    _logger.LogInformation($"USB Reconnected");
+    //!!!!!!!!
+    //!!!!!!!!
+    //!!!!!!!!
+    // Device.ReconnectUSB has 2 necessary commands
+    // They are here in raw
+    //!!!!!!!!
+    //!!!!!!!!
+    //!!!!!!!!
+    que.Enqueue(StructToByteArray(new(){ Code = 0xCC }));//Hardware.SetParameter(DeviceParameterType.SystemActivityStatus);
+    que.Enqueue(StructToByteArray(new(){ Code = 0xCB }));//Hardware.SetToken(HardwareToken.Synchronization);
+  }
+
+  public void DisconnectedUSB()
+  {
+    _serialConnection.Disconnect();
+    _logger.LogInformation($"USB Disconnected");
+  }
+
+  [DllImport("kernel32.dll")]
+  static extern IntPtr GetConsoleWindow();
 }
 
 public struct CommandStruct

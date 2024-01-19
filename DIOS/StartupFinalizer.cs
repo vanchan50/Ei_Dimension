@@ -7,7 +7,6 @@ using DIOS.Core;
 using System.IO;
 using System.Windows;
 using System.Windows.Media.Imaging;
-using DIOS.Application.SerialIO;
 
 namespace Ei_Dimension;
 
@@ -83,9 +82,6 @@ internal static class StartupFinalizer
 
     if(SettingsWiped)
       WipedSettingsMessage();
-
-    IntPtr windowHandle = new System.Windows.Interop.WindowInteropHelper(App.Current.MainWindow).Handle;
-    USBWatchdog.Setup(windowHandle, App.DiosApp.ReconnectUSB, App.DiosApp.DisconnectedUSB);
 
     //App.Logger.Log($"Detected Board Rev v{App.DiosApp.Device.BoardVersion}");
     App.Logger.Log(MainViewModel.Instance.AppVersion);

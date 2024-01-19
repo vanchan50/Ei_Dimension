@@ -149,14 +149,8 @@ public class Device
 
   public void ReconnectUSB()
   {
-    _dataController.ReconnectUSB();
     Hardware.SetParameter(DeviceParameterType.SystemActivityStatus);
     Hardware.SetToken(HardwareToken.Synchronization);
-  }
-
-  public void DisconnectedUSB()
-  {
-    _dataController.DisconnectedUSB();
   }
 
   internal void OnStartingToReadWell()
