@@ -86,10 +86,8 @@ public class Worker : BackgroundService
       {
         try
         {
-          _logger.LogInformation($"trying to send buffer size {_serialConnection.InputBuffer.Length}");
           _serverFromUSB.SendFrame(result);
           _serverFromUSB.SkipFrame();
-          _logger.LogInformation($"Sent buffer size {_serialConnection.InputBuffer.Length}");
         }
         catch (Exception e)
         {

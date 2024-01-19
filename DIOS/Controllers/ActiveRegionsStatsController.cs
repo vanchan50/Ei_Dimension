@@ -128,7 +128,7 @@ public class ActiveRegionsStatsController
           continue;
         var count = cache.Value.Item1;
         var mean = cache.Value.Item2;
-
+          
         CurrentCount[index] = count.ToString();
         CurrentMean[index] = mean.ToString("F1");
 
@@ -158,9 +158,8 @@ public class ActiveRegionsStatsController
 
       if (index != 0)
         ViewModels.ResultsViewModel.Instance.AnalysisMap.AddDataPoint(index - 1, mean); // -1 accounts for region = 0
-
-      _activeRegionsUpdateGoing = 0;
     }
+    _activeRegionsUpdateGoing = 0;
   }
 
   private Action UpdateNullRegionProcedure(List<RegionReporterResultVolatile> wellresults)
