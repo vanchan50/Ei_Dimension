@@ -7,6 +7,7 @@
     <Copyright>Copyright ©  2018</Copyright>
     <Title>DIOS.Core</Title>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
   <ItemGroup>

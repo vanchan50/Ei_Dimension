@@ -8,6 +8,8 @@
     <IsPackable>false</IsPackable>
 
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+
+    <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
   <ItemGroup>
