@@ -120,7 +120,6 @@ public class ActiveRegionsStatsController
   {
     return () =>
     {
-      ViewModels.ResultsViewModel.Instance.AnalysisMap.ClearData(current: true);
       foreach (var cache in meanCountCache)
       {
         var index = MapRegionsController.GetMapRegionIndex(cache.Key);
@@ -131,9 +130,6 @@ public class ActiveRegionsStatsController
           
         CurrentCount[index] = count.ToString();
         CurrentMean[index] = mean.ToString("F1");
-
-        if (index != 0)
-          ViewModels.ResultsViewModel.Instance.AnalysisMap.AddDataPoint(index - 1, mean); // -1 accounts for region = 0
       }
     };
   }
@@ -144,7 +140,7 @@ public class ActiveRegionsStatsController
     {
       Thread.Sleep(50);
     }
-    ViewModels.ResultsViewModel.Instance.AnalysisMap.ClearData(current: true);
+
     foreach (var result in wellStats)
     {
       var index = MapRegionsController.GetMapRegionIndex(result.Region);
@@ -155,9 +151,6 @@ public class ActiveRegionsStatsController
 
       CurrentCount[index] = count.ToString();
       CurrentMean[index] = mean.ToString("F1");
-
-      if (index != 0)
-        ViewModels.ResultsViewModel.Instance.AnalysisMap.AddDataPoint(index - 1, mean); // -1 accounts for region = 0
     }
     _activeRegionsUpdateGoing = 0;
   }
@@ -177,8 +170,6 @@ public class ActiveRegionsStatsController
 
     return () =>
     {
-      ViewModels.ResultsViewModel.Instance.AnalysisMap.ClearData(current:true);
-
       CurrentCount[0] = count.ToString();
       CurrentMean[0] = mean.ToString("0.0");
     };
