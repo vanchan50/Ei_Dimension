@@ -21,6 +21,7 @@ public partial class ResultsView : UserControl, IHeatMapChart
 #if DEBUG
     Console.Error.WriteLine("#6 ResultsView Loaded");
 #endif
+
   }
 
   public void AddXYPointToHeatMap(SeriesPoint chartPoint, bool LargeXY = false)
@@ -38,6 +39,18 @@ public partial class ResultsView : UserControl, IHeatMapChart
   {
     HeatMap.Points.Clear();
     LargeHeatMap.Points.Clear();
+  }
+
+  private void ResetHeatMapPoints()
+  {
+    foreach (var point in HeatMap.Points)
+    {
+      point.Brush = Brushes.Transparent;
+    }
+    foreach (var point in LargeHeatMap.Points)
+    {
+      point.Brush = Brushes.Transparent;
+    }
   }
 
   public void PrintXY(int resoultionDpi = 800)

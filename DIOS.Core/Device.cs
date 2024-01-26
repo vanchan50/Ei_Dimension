@@ -85,7 +85,7 @@ public class Device
     #endif
     _dataController = new DataController(this, scriptTracker, logger);
     Hardware = new HardwareInterface(this, _dataController, scriptTracker, logger);
-    _script = new MeasurementScript(this, logger);
+    _script = new MeasurementScript(this, Hardware, _wellController, logger);
   }
 
   public void Init()
@@ -99,6 +99,7 @@ public class Device
 
   public void PrematureStop()
   {
+    _logger.Log("[STOP] Premature Stop");
     _wellController.PreparePrematureStop(SingleSyringeMode);
     _script.FinalizeWellReading();
   }

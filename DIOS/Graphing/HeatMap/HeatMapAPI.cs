@@ -26,10 +26,10 @@ internal class HeatMapAPI
   }
 
   private Dictionary<(int x, int y), HeatMapPoint> DisplayedMap { get; set; }
-  private HeatMapDataContainer _data = new HeatMapDataContainer();
+  private HeatMapDataContainer _data = new();
 
   private readonly double[] _colorBins;
-  private readonly SolidColorBrush[] _heatColors;
+  private static readonly SolidColorBrush[] _heatColors = new SolidColorBrush[13];
   private static HeatMapAPI _instance;
   private IHeatMapChart _heatMapChart;
   private bool _chartAssigned;
@@ -38,7 +38,6 @@ internal class HeatMapAPI
   {
     DisplayedMap = _data.GetAccordingDictionary(MapIndex.CL12, current:true);
 
-    _heatColors = new SolidColorBrush[13];
     _heatColors[0] = Brushes.Black;
     _heatColors[1] = new SolidColorBrush(Color.FromRgb(0x4a, 0x00, 0x6a));
     _heatColors[2] = Brushes.DarkViolet;

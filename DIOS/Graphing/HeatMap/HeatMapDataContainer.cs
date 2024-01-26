@@ -18,7 +18,7 @@ internal class HeatMapDataContainer
   private readonly Dictionary<(int x, int y), HeatMapPoint> _backingCL12Dict = new(XYMAPCAPACITY);
   private readonly Dictionary<(int x, int y), HeatMapPoint> _backingCL13Dict = new(XYMAPCAPACITY);
   private readonly Dictionary<(int x, int y), HeatMapPoint> _backingCL23Dict = new(XYMAPCAPACITY);
-  public const int XYMAPCAPACITY = 50000;  //max possible capacity is 256x256. Realistic 3/4 is ~49k
+  public const int XYMAPCAPACITY = 65536;  //max possible capacity is 256x256. Realistic 3/4 is ~49k
 
   public void ClearData(bool current)
   {

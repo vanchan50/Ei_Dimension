@@ -11,11 +11,11 @@ internal class MeasurementScript
   private ILogger _logger;
   private bool _isReadingA;
 
-  public MeasurementScript(Device device, ILogger logger)
+  public MeasurementScript(Device device, HardwareInterface hardware, WellController wellController, ILogger logger)
   {
     _device = device;
-    _hardware = device.Hardware;
-    _wellController = device._wellController;
+    _hardware = hardware;
+    _wellController = wellController;
     _logger = logger;
   }
 
