@@ -36,12 +36,6 @@
                    Style="{DynamicResource SubRibbonButtonStyle}"
                    Command="{Binding NavigateComponentsCommand}">
       </RadioButton>
-      <RadioButton Content="{lang:Loc Service_Alignment_Verification}"
-                   Height="84"
-                   img:EmbeddedImg.Image="/Icons/alignment icon.png"
-                   Style="{DynamicResource SubRibbonButtonStyle}"
-                   Command="{Binding NavigateAlignmentCommand}">
-      </RadioButton>
       <RadioButton Content="{lang:Loc Service_Ch_Offset}"
                    Height="84"
                    img:EmbeddedImg.Image="/Icons/channel offset icon.png"
@@ -56,7 +50,7 @@
       </RadioButton>
 
 
-      <Grid Margin="0,5,0,0">
+      <Grid Margin="0,95,0,0">
         <StackPanel>
           <TextBlock Text="{lang:Loc Service_Memory_Control}"
                      FontFamily="{StaticResource AppTextFont}"

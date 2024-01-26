@@ -11,8 +11,6 @@ using DIOS.Application.FileIO.Calibration;
 using DIOS.Core;
 using DIOS.Core.HardwareIntercom;
 using Ei_Dimension.Graphing.HeatMap;
-using Newtonsoft.Json;
-using System.IO;
 
 namespace Ei_Dimension.ViewModels;
 
@@ -70,24 +68,9 @@ public class CalibrationViewModel
 
   public void CalibrationSuccess()
   {
-    System.Threading.Thread.Sleep(1000);  //not really needed
-    App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.GreenA);
-    App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.GreenB);
-    App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.GreenC);
-    App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.RedA);
-    App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.RedB);
-    App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.RedC);
-    App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.RedD);
-    App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.VioletA);
-    App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.VioletB);
-    App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.ForwardScatter);
-    App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.DNRCoefficient);
-
-    System.Threading.Thread.Sleep(1000);
-    Action Cancel = () =>
-    {
-      DashboardViewModel.Instance.CalModeToggle();
-    };
+    // make sure to update DeviceParameterType.ChannelBias30C in advance
+    //currently done in CalibrationSuccessPostRun
+    Action Cancel = DashboardViewModel.Instance.CalModeToggle;
     Action Save = () =>
     {
       var res = App.DiosApp.MapController.SaveCalValsToCurrentMap(new MapCalParameters
@@ -126,10 +109,6 @@ public class CalibrationViewModel
       }
       DashboardViewModel.Instance.SetCalibrationDate(App.DiosApp.MapController.ActiveMap.caltime);
       Cancel.Invoke();
-
-      System.Threading.Thread.Sleep(2000);//wait for the end of read procedure
-      DoPostCalibrationRun = true;
-      MainButtonsViewModel.Instance.StartButtonClick();//Run the 256-bead well
     };
     Notification.ShowLocalized(nameof(Language.Resources.Calibration_Success), Save, nameof(Language.Resources.Calibration_Save_Calibration_To_Map),
       Cancel, nameof(Language.Resources.Calibration_Cancel_Calibration), Brushes.Green);
@@ -139,7 +118,8 @@ public class CalibrationViewModel
   {
     if (++CalFailsInARow >= 3 && CalJustFailed)
     {
-      App.Current.Dispatcher.Invoke(() => Notification.ShowLocalizedError(nameof(Language.Resources.Calibration_Fail)));
+      App.Current.Dispatcher.Invoke(() =>
+        Notification.ShowLocalizedError(nameof(Language.Resources.Calibration_Fail)));
       App.Current.Dispatcher.Invoke(DashboardViewModel.Instance.CalModeToggle);
       Task.Run(() =>
       {
@@ -152,6 +132,31 @@ public class CalibrationViewModel
     }
     else if (CalJustFailed)
       App.Current.Dispatcher.Invoke(() => Notification.ShowLocalizedSuccess(nameof(Language.Resources.Calibration_in_Progress)));
+  }
+
+  public void CalibrationSuccessPostRun(object sender, EventArgs e)
+  {
+    System.Threading.Thread.Sleep(2000);//wait for the end of read procedure
+    //make sure to update DeviceParameterType.ChannelBias30C for the calibration report and calibration success
+    App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.GreenA);
+    App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.GreenB);
+    App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.GreenC);
+    App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.RedA);
+    App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.RedB);
+    App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.RedC);
+    App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.RedD);
+    App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.VioletA);
+    App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.VioletB);
+    App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.ForwardScatter);
+    App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.DNRCoefficient);
+
+    DoPostCalibrationRun = true;
+
+    var calibrationWell = WellsSelectViewModel.Instance.MakeCalibrationWell();
+    App.Current.Dispatcher.BeginInvoke(() =>
+    {
+      MainButtonsViewModel.Instance.StartButtonClick(calibrationWell);//Run the 256-bead well
+    });
   }
 
   public void MakeCalMap()

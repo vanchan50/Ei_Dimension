@@ -36,8 +36,8 @@ public class ChannelsViewModel
     TempParameters = new ObservableCollection<string>();
     for(var i = 0; i < 10; i++)
     {
-      TcompBiasParameters.Add("");
-      TempParameters.Add("");
+      TcompBiasParameters.Add("0");
+      TempParameters.Add("0");
     }
 
     Labels = new ObservableCollection<string>

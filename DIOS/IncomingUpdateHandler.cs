@@ -83,10 +83,7 @@ internal class IncomingUpdateHandler
         break;
       case DeviceParameterType.CalibrationSuccess:
         CalibrationViewModel.Instance.CalJustFailed = false;
-        _ = App.Current.Dispatcher.BeginInvoke(() =>
-        {
-          CalibrationViewModel.Instance.CalibrationSuccess();
-        });
+        App.PostMeasurementAction += CalibrationViewModel.Instance.CalibrationSuccessPostRun;
         break;
       case DeviceParameterType.Pressure:
         update = () =>

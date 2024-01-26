@@ -30,9 +30,6 @@ public class ServiceViewModel
       case 1:
         NavigateComponents();
         break;
-      case 2:
-        NavigateAlignment();
-        break;
       case 3:
         NavigateChannelOffset();
         break;
@@ -60,14 +57,6 @@ public class ServiceViewModel
     _lastActiveTab = 1;
   }
 
-  public void NavigateAlignment()
-  {
-    App.HideNumpad();
-    MainViewModel.Instance.HintHide();
-    NavigationService.Navigate("AlignmentView", null, this);
-    _lastActiveTab = 2;
-  }
-
   public void NavigateChannelOffset()
   {
     App.HideNumpad();
@@ -90,7 +79,6 @@ public class ServiceViewModel
   {
     NavigateMotors();
     NavigateComponents();
-    NavigateAlignment();
     NavigateChannelOffset();
     NavigateSyringeSpeeds();
     _lastActiveTab = 0;

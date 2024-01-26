@@ -13,6 +13,9 @@ internal static class UITimer
   private static int _uiUpdateIsActive;
   private static Timer _timer;
   private static bool _started;
+  #if DEBUG
+  private static bool _test = false;
+  #endif
 
   public static void Start()
   {
@@ -54,6 +57,11 @@ internal static class UITimer
       }
       if (System.Windows.Input.Keyboard.IsKeyDown(System.Windows.Input.Key.F3))
       {
+        //if (!_test)
+        //{
+        //  App.DiosApp.Device.DEBUGOnParameterUpdate(DeviceParameterType.CalibrationSuccess);
+        //  _test = true;
+        //}
         //App.DiosApp.Device.DEBUGOnParameterUpdate(DeviceParameterType.ChannelConfiguration, (int)ChannelConfiguration.OEMA);
         //App.DiosApp.Device.DEBUGOnParameterUpdate(DeviceParameterType.SheathFlowError, (int)SheathFlowError.HighPressure);
         //App.DiosApp.Device.DEBUGOnParameterUpdate(DeviceParameterType.MotorX, (int)MotorParameterType.EncoderSteps, 1113.6f);

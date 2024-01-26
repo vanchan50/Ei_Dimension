@@ -29,7 +29,7 @@ public partial class App : Application
   public static MapRegionsController MapRegions { get; set; }
   /// <summary>doubles the variable in device, but for UI usage</summary>
   public static bool ChannelRedirectionEnabled { get; private set; } = false;
-
+  public static event EventHandler PostMeasurementAction;
   public static ILogger Logger { get; private set; }
   public static WorkOrder CurrentWorkOrder { get; set; }
   public static bool _nextWellWarning = false;
@@ -318,14 +318,16 @@ public partial class App : Application
       ChannelOffsetViewModel.Instance.DecodeBackgroundStats(averageBackgrounds);
 
       if (CalibrationViewModel.Instance.DoPostCalibrationRun)//only runs after a successful calibration.
-      //hopefully this doesn't trigger before the calibration succesful message. TODO: a proper synchronization
       {
+        //hopefully this doesn't trigger before the calibration succesful message. TODO: a proper synchronization
         CalibrationViewModel.Instance.DoPostCalibrationRun = false;
+        PostMeasurementAction -= CalibrationViewModel.Instance.CalibrationSuccessPostRun;
         var report = CalibrationViewModel.Instance.FormNewCalibrationReport(true, stats);
         Task.Run(() =>
         {
           DiosApp.Publisher.CalibrationFile.CreateAndWrite(report);
         });
+        CalibrationViewModel.Instance.CalibrationSuccess();
       }
     });
   }
@@ -404,6 +406,7 @@ public partial class App : Application
         MainButtonsViewModel.Instance.EnableStartButton(true);
       });
     }
+    PostMeasurementAction?.Invoke(this, EventArgs.Empty);
   }
 
   public void MapChangedEventHandler(object sender, MapModel map)

@@ -54,13 +54,13 @@ public class SelRegionsViewModel
 
   public void ResetClick()
   {
+    UserInputHandler.InputSanityCheck();
     ShowWaitIndicator();
     Task.Run(() =>
     {
       App.Current.Dispatcher.Invoke((Action)
         (() =>
         {
-          UserInputHandler.InputSanityCheck();
           App.MapRegions.ResetRegions();
           HideWaitIndicator();
         }));

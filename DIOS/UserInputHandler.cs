@@ -6,7 +6,6 @@ using System.Windows.Controls;
 using DIOS.Application;
 using Ei_Dimension.Models;
 using DIOS.Core.HardwareIntercom;
-using DevExpress.XtraPrinting.Native;
 
 namespace Ei_Dimension;
 
@@ -1560,47 +1559,6 @@ internal static class UserInputHandler
             }
             failed = true;
             ErrorMessage = "[0-2000]";
-          }
-          break;
-        case nameof(AlignmentViewModel.Instance.VerificationTolerances):
-          if (SelectedTextBox.index == 0)
-          {
-            if (double.TryParse(_tempNewString, out dRes))
-            {
-              if ((dRes >= 0) || _disableSanityCheck)
-              {
-                Settings.Default.ValidatorToleranceReporter = dRes;
-                break;
-              }
-            }
-            failed = true;
-            ErrorMessage = "Non-Negative";
-          }
-          if (SelectedTextBox.index == 1)
-          {
-            if (double.TryParse(_tempNewString, out dRes))
-            {
-              if ((dRes >= 0) || _disableSanityCheck)
-              {
-                Settings.Default.ValidatorToleranceClassification = dRes;
-                break;
-              }
-            }
-            failed = true;
-            ErrorMessage = "Non-Negative";
-          }
-          if (SelectedTextBox.index == 2)
-          {
-            if (double.TryParse(_tempNewString, out dRes))
-            {
-              if ((dRes >= 0) || _disableSanityCheck)
-              {
-                Settings.Default.ValidatorToleranceMisclassification = dRes;
-                break;
-              }
-            }
-            failed = true;
-            ErrorMessage = "Non-Negative";
           }
           break;
         case nameof(FileSaveViewModel.Instance.BaseFileName):

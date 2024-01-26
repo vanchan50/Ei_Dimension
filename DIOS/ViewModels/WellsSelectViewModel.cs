@@ -9,6 +9,7 @@ using System.Windows;
 using System.Windows.Controls;
 using DIOS.Application.Domain;
 using DIOS.Core.HardwareIntercom;
+using System;
 
 namespace Ei_Dimension.ViewModels;
 
@@ -176,6 +177,16 @@ public class WellsSelectViewModel
     wells = GetWellsFromPlate(regions);
     wells = SortWells(wells);
     return wells;
+  }
+
+  public IReadOnlyCollection<Well> MakeCalibrationWell()
+  {
+    //after cal case
+    var oldWells = OutputWells(Array.Empty<(int, string)>());
+    var oldWell = oldWells[0];
+    var calWell = oldWell.ToCalibrationWell();
+    return new List<Well> { calWell };
+    //after succesful cal, make a custom Well, that is tuned for the 256 custom thing
   }
 
   private Well MakeWell(byte row, byte col, IReadOnlyCollection<(int Number, string Name)> regions)

@@ -96,13 +96,12 @@ public class MainButtonsViewModel
     StartButtonColor = enable ? _activeColorBrush : _inactiveColorBrush;
   }
 
-  public void StartButtonClick()
+  public void StartButtonClick(IReadOnlyCollection<Well> wellList = null)
   {
     UserInputHandler.InputSanityCheck();
     HideScanButton();
-
-    var wells = ValidateInputs();
-
+    var wells = wellList;
+    wells ??= ValidateInputs();
     if (wells.Count == 0)
       return;
 
@@ -126,16 +125,6 @@ public class MainButtonsViewModel
 
   private IReadOnlyCollection<Well> ValidateInputs()
   {
-    //after cal case
-    if (CalibrationViewModel.Instance.DoPostCalibrationRun)
-    {
-      var oldWells = WellsSelectViewModel.Instance.OutputWells(Array.Empty<(int, string)>());
-      var oldWell = oldWells[0];
-      var calWell = oldWell.ToCalibrationWell();
-      return new List<Well> { calWell };
-      //after succesful cal, make a custom Well, that is tuned for the 256 custom thing
-    }
-
     //TODO: contains 0 can never happen here
     if (App.DiosApp.Terminator.TerminationType == Termination.MinPerRegion
         && !MapRegionsController.AreThereActiveRegions())

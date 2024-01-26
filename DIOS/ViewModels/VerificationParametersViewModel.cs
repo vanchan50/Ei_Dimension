@@ -33,18 +33,18 @@ public class VerificationParametersViewModel
   {
     VerificationViewModel.Instance.DetailsVisibility = Visibility.Visible;
     CurrentRegion = region;
-    ToleranceItems[0] = region.MeanTolerance.GreenSSC.ToString("F3");
-    ToleranceItems[1] = region.MeanTolerance.RedSSC.ToString("F3");
-    ToleranceItems[2] = region.MeanTolerance.Cl1.ToString("F3");
-    ToleranceItems[3] = region.MeanTolerance.Cl2.ToString("F3");
-    ToleranceItems[4] = region.MeanTolerance.Reporter.ToString("F3");
+    ToleranceItems[0] = region.MeanTolerance.GreenSSC.ToString("F1");
+    ToleranceItems[1] = region.MeanTolerance.RedSSC.ToString("F1");
+    ToleranceItems[2] = region.MeanTolerance.Cl1.ToString("F1");
+    ToleranceItems[3] = region.MeanTolerance.Cl2.ToString("F1");
+    ToleranceItems[4] = region.MeanTolerance.Reporter.ToString("F1");
 
-    MaxCVItems[0] = region.MaxCV.GreenSSC.ToString("F3");
-    MaxCVItems[1] = region.MaxCV.RedSSC.ToString("F3");
-    MaxCVItems[2] = region.MaxCV.Cl1.ToString("F3");
-    MaxCVItems[3] = region.MaxCV.Cl2.ToString("F3");
-    MaxCVItems[4] = region.MaxCV.Reporter.ToString("F3");
-    TargetReporter[0] = region.VerificationTargetReporter.ToString("F3");
+    MaxCVItems[0] = region.MaxCV.GreenSSC.ToString("F1");
+    MaxCVItems[1] = region.MaxCV.RedSSC.ToString("F1");
+    MaxCVItems[2] = region.MaxCV.Cl1.ToString("F1");
+    MaxCVItems[3] = region.MaxCV.Cl2.ToString("F1");
+    MaxCVItems[4] = region.MaxCV.Reporter.ToString("F1");
+    TargetReporter[0] = region.VerificationTargetReporter.ToString("F1");
     SelectedRegionNum[0] = region.Number.ToString();
     if (region.isValidator)
     {
