@@ -82,7 +82,7 @@
                       HorizontalAlignment="Stretch"
                       VerticalAlignment="Stretch">
             <StackPanel HorizontalAlignment="Right"
-                    Margin="0,60,8,0"
+                    Margin="0,166,8,0"
                     Width ="190">
               <TextBlock Text="{Binding StatisticsLabels[0]}"
                          FontFamily="{StaticResource AppTextFont}"
@@ -165,14 +165,39 @@
                          Margin="0,28,0,0"/>
             </StackPanel>
             <StackPanel>
-              <TextBlock Text="{lang:Loc DataAn_MFI}"
-                 FontFamily="{StaticResource AppTextFont}"
-                 FontSize="36"
-                 FontWeight="UltraBold"
-                 Foreground="{StaticResource AppTextColor}"
-                 HorizontalAlignment="Center"
-                 Margin="0,0,0,4"/>
-              <Border Background="{StaticResource RibbonBackgroundActive}">
+              <StackPanel HorizontalAlignment="Center"
+                          Margin="0,8,0,0">
+                <RadioButton Content="{lang:Loc DataAn_MFI}"
+                             Style="{StaticResource RadioButtonHorizontalThemeStyle}"
+                             IsChecked="True"
+                             Width="140"
+                             FontSize="36"
+                             Command="{Binding DisplayStatsTypeChangeCommand}">
+                  <RadioButton.CommandParameter>
+                    <system:Int32>0</system:Int32>
+                  </RadioButton.CommandParameter>
+                </RadioButton>
+                <RadioButton Content="{lang:Loc Statistics_Median}"
+                             Style="{StaticResource RadioButtonHorizontalThemeStyle}"
+                             Width="140"
+                             FontSize="36"
+                             Command="{Binding DisplayStatsTypeChangeCommand}">
+                  <RadioButton.CommandParameter>
+                    <system:Int32>1</system:Int32>
+                  </RadioButton.CommandParameter>
+                </RadioButton>
+                <RadioButton Content="{lang:Loc Statistics_Peak}"
+                             Style="{StaticResource RadioButtonHorizontalThemeStyle}"
+                             Width="140"
+                             FontSize="36"
+                             Command="{Binding DisplayStatsTypeChangeCommand}">
+                  <RadioButton.CommandParameter>
+                    <system:Int32>2</system:Int32>
+                  </RadioButton.CommandParameter>
+                </RadioButton>
+              </StackPanel>
+              <Border Background="{StaticResource RibbonBackgroundActive}"
+                      Margin="0,4,0,0">
                 <StackPanel VerticalAlignment="Stretch"
                     Width="150">
                   <TextBox HorizontalAlignment="Stretch"
@@ -235,7 +260,7 @@
                  FontWeight="UltraBold"
                  Foreground="{StaticResource AppTextColor}"
                  HorizontalAlignment="Center"
-                 Margin="0,0,0,4"/>
+                 Margin="0,108,0,0"/>
               <Border Background="{StaticResource RibbonBackgroundActive}">
                 <StackPanel VerticalAlignment="Stretch"
                     Width="150">

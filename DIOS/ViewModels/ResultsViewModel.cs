@@ -32,8 +32,6 @@ public class ResultsViewModel
   public virtual System.Windows.Visibility Analysis2DVisible { get; set; }
   public virtual System.Windows.Visibility Analysis3DVisible { get; set; }
   public virtual ObservableCollection<string> DisplayedMfiItems { get; set; }
-  public virtual ObservableCollection<string> DisplayedMedianItems { get; set; }
-  public virtual ObservableCollection<string> DisplayedPeakItems { get; set; }
   public virtual ObservableCollection<string> DisplayedCvItems { get; set; }
   public virtual ObservableCollection<string> CurrentMfiItems { get; set; } = new();
   public virtual ObservableCollection<string> CurrentMedianItems { get; set; } = new();
@@ -53,8 +51,8 @@ public class ResultsViewModel
   public static ResultsViewModel Instance { get; private set; }
   private int _fillDataActive;
   public const int HIREZDEFINITION = 512;
-
-  private readonly List<ProcessedBead> _cachedBeadStructsForLoadedData = new List<ProcessedBead>(2000000);
+  private int _displayedStatsType = 2;
+  private readonly List<ProcessedBead> _cachedBeadStructsForLoadedData = new(2000000);
 
   protected ResultsViewModel()
   {
@@ -92,8 +90,6 @@ public class ResultsViewModel
     }
 
     DisplayedMfiItems = CurrentMfiItems;
-    DisplayedMedianItems = CurrentMedianItems;
-    DisplayedPeakItems = CurrentPeakItems;
     DisplayedCvItems = CurrentCvItems;
 
     StatisticsLabels = new()
@@ -415,9 +411,7 @@ public class ResultsViewModel
         HeatMapAPI.API.ReDraw();
       });
       MainViewModel.Instance.EventCountField = MainViewModel.Instance.EventCountCurrent;
-      DisplayedMfiItems = CurrentMfiItems;
-      DisplayedMedianItems = CurrentMedianItems;
-      DisplayedPeakItems = CurrentPeakItems;
+      SelectDisplayedStatsType();
       DisplayedCvItems = CurrentCvItems;
       return;
     }
@@ -429,10 +423,33 @@ public class ResultsViewModel
       ActiveRegionsStatsController.Instance.DisplayCurrentBeadStats(current: false);
     }
     MainViewModel.Instance.EventCountField = MainViewModel.Instance.EventCountLocal;
-    DisplayedMfiItems = BackingMfiItems;
-    DisplayedMedianItems = BackingMedianItems;
-    DisplayedPeakItems = BackingPeakItems;
+    SelectDisplayedStatsType();
     DisplayedCvItems = BackingCvItems;
+  }
+
+  public void DisplayStatsTypeChange(int type)
+  {
+    //0 mean(mfi)
+    //1 median
+    //2 peak
+    _displayedStatsType = type;
+    SelectDisplayedStatsType();
+  }
+
+  private void SelectDisplayedStatsType()
+  {
+    switch (_displayedStatsType)
+    {
+      case 0:
+        DisplayedMfiItems = DisplaysCurrentmap ? CurrentMfiItems : BackingMfiItems;
+        break;
+      case 1:
+        DisplayedMfiItems = DisplaysCurrentmap ? CurrentMedianItems : BackingMedianItems;
+        break;
+      case 2:
+        DisplayedMfiItems = DisplaysCurrentmap ? CurrentPeakItems : BackingPeakItems;
+        break;
+    }
   }
 
   /// <summary>

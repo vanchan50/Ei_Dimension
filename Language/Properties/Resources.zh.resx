@@ -1067,6 +1067,9 @@ Volume, µL</value>
   <data name="Sheath" xml:space="preserve">
     <value>鞘液</value>
   </data>
+  <data name="Statistics_Median" xml:space="preserve">
+    <value>Median</value>
+  </data>
   <data name="Statistics_OEM_GreenB" xml:space="preserve">
     <value>绿光 B (CL1)</value>
   </data>
@@ -1078,6 +1081,9 @@ Volume, µL</value>
   </data>
   <data name="Statistics_OEM_Red_D" xml:space="preserve">
     <value>红光 D (RP min)</value>
+  </data>
+  <data name="Statistics_Peak" xml:space="preserve">
+    <value>Peak</value>
   </data>
   <data name="SyringeSpeeds_AgitateFromWellEdge" xml:space="preserve">
     <value>Agitate From Well Edge</value>

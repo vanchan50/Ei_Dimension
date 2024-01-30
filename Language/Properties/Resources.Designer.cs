@@ -3311,6 +3311,15 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Median.
+        /// </summary>
+        public static string Statistics_Median {
+            get {
+                return ResourceManager.GetString("Statistics_Median", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Green B (CL1).
         /// </summary>
         public static string Statistics_OEM_GreenB {
@@ -3343,6 +3352,15 @@ namespace Ei_Dimension.Language {
         public static string Statistics_OEM_Red_D {
             get {
                 return ResourceManager.GetString("Statistics_OEM_Red_D", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Peak.
+        /// </summary>
+        public static string Statistics_Peak {
+            get {
+                return ResourceManager.GetString("Statistics_Peak", resourceCulture);
             }
         }
         
