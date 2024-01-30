@@ -93,55 +93,55 @@ namespace Ei_Dimension.ViewModels
         cvItems = BackingCvItems;
       }
 
-      mfiItems[0] = stats.Greenssc.Mean.ToString($"{0:0.0}");
-      medianItems[0] = stats.Greenssc.Median.ToString($"{0:0.0}");
+      mfiItems[0] = stats.Greenssc.Mean.ToString("F1");
+      medianItems[0] = stats.Greenssc.Median.ToString("F1");
       peakItems[0] = peaks.GreenA;
-      cvItems[0] = stats.Greenssc.CoeffVar.ToString($"{0:0.00}");
+      cvItems[0] = stats.Greenssc.CoeffVar.ToString("F2");
 
-      mfiItems[1] = stats.GreenB.Mean.ToString($"{0:0.0}");
-      medianItems[1] = stats.GreenB.Median.ToString($"{0:0.0}");
+      mfiItems[1] = stats.GreenB.Mean.ToString("F1");
+      medianItems[1] = stats.GreenB.Median.ToString("F1");
       peakItems[1] = peaks.GreenB;
-      cvItems[1] = stats.GreenB.CoeffVar.ToString($"{0:0.00}");
+      cvItems[1] = stats.GreenB.CoeffVar.ToString("F2");
 
-      mfiItems[2] = stats.GreenC.Mean.ToString($"{0:0.0}");
-      medianItems[2] = stats.GreenC.Median.ToString($"{0:0.0}");
+      mfiItems[2] = stats.GreenC.Mean.ToString("F1");
+      medianItems[2] = stats.GreenC.Median.ToString("F1");
       peakItems[2] = peaks.GreenC;
-      cvItems[2] = stats.GreenC.CoeffVar.ToString($"{0:0.00}");
+      cvItems[2] = stats.GreenC.CoeffVar.ToString("F2");
 
-      mfiItems[3] = stats.Redssc.Mean.ToString($"{0:0.0}");
-      medianItems[3] = stats.Redssc.Median.ToString($"{0:0.0}");
+      mfiItems[3] = stats.Redssc.Mean.ToString("F1");
+      medianItems[3] = stats.Redssc.Median.ToString("F1");
       peakItems[3] = peaks.Redssc;
-      cvItems[3] = stats.Redssc.CoeffVar.ToString($"{0:0.00}");
+      cvItems[3] = stats.Redssc.CoeffVar.ToString("F2");
 
-      mfiItems[4] = stats.Cl1.Mean.ToString($"{0:0.0}");
-      medianItems[4] = stats.Cl1.Median.ToString($"{0:0.0}");
+      mfiItems[4] = stats.Cl1.Mean.ToString("F1");
+      medianItems[4] = stats.Cl1.Median.ToString("F1");
       peakItems[4] = peaks.Cl1;
-      cvItems[4] = stats.Cl1.CoeffVar.ToString($"{0:0.00}");
+      cvItems[4] = stats.Cl1.CoeffVar.ToString("F2");
 
-      mfiItems[5] = stats.Cl2.Mean.ToString($"{0:0.0}");
-      medianItems[5] = stats.Cl2.Median.ToString($"{0:0.0}");
+      mfiItems[5] = stats.Cl2.Mean.ToString("F1");
+      medianItems[5] = stats.Cl2.Median.ToString("F1");
       peakItems[5] = peaks.Cl2;
-      cvItems[5] = stats.Cl2.CoeffVar.ToString($"{0:0.00}");
+      cvItems[5] = stats.Cl2.CoeffVar.ToString("F2");
 
-      mfiItems[6] = stats.Cl3.Mean.ToString($"{0:0.0}");
-      medianItems[6] = stats.Cl3.Median.ToString($"{0:0.0}");
+      mfiItems[6] = stats.Cl3.Mean.ToString("F1");
+      medianItems[6] = stats.Cl3.Median.ToString("F1");
       peakItems[6] = peaks.Cl3;
-      cvItems[6] = stats.Cl3.CoeffVar.ToString($"{0:0.00}");
+      cvItems[6] = stats.Cl3.CoeffVar.ToString("F2");
 
-      mfiItems[7] = stats.Violetssc.Mean.ToString($"{0:0.0}");
-      medianItems[7] = stats.Violetssc.Median.ToString($"{0:0.0}");
+      mfiItems[7] = stats.Violetssc.Mean.ToString("F1");
+      medianItems[7] = stats.Violetssc.Median.ToString("F1");
       peakItems[7] = peaks.Violetssc;
-      cvItems[7] = stats.Violetssc.CoeffVar.ToString($"{0:0.00}");
+      cvItems[7] = stats.Violetssc.CoeffVar.ToString("F2");
 
-      mfiItems[8] = stats.Cl0.Mean.ToString($"{0:0.0}");
-      medianItems[8] = stats.Cl0.Median.ToString($"{0:0.0}");
+      mfiItems[8] = stats.Cl0.Mean.ToString("F1");
+      medianItems[8] = stats.Cl0.Median.ToString("F1");
       peakItems[8] = peaks.Cl0;
-      cvItems[8] = stats.Cl0.CoeffVar.ToString($"{0:0.00}");
+      cvItems[8] = stats.Cl0.CoeffVar.ToString("F2");
 
-      mfiItems[9] = stats.Fsc.Mean.ToString($"{0:0.0}");
-      medianItems[9] = stats.Fsc.Median.ToString($"{0:0.0}");
+      mfiItems[9] = stats.Fsc.Mean.ToString("F1");
+      medianItems[9] = stats.Fsc.Median.ToString("F1");
       peakItems[9] = peaks.Fsc;
-      cvItems[9] = stats.Fsc.CoeffVar.ToString($"{0:0.00}");
+      cvItems[9] = stats.Fsc.CoeffVar.ToString("F2");
     }
 
     public void DisplayStatsTypeChange(int type)
