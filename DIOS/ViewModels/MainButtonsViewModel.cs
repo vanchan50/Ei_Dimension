@@ -112,7 +112,7 @@ public class MainButtonsViewModel
     PlatePictogramViewModel.Instance.PlatePictogram.Clear();
     ResultsViewModel.Instance.PlotCurrent();
     PlatePictogramViewModel.Instance.PlatePictogram.SetWellsForReading(wells);
-    ResultsViewModel.Instance.ClearCurrentCalibrationStats();
+    StatisticsTableViewModel.Instance.ClearCurrentCalibrationStats();
     if (App.DiosApp.Control == SystemControl.WorkOrder && !string.IsNullOrEmpty(DashboardViewModel.Instance.WorkOrderID[0]))
     {
       App.DiosApp.StartOperation(wells, WellsSelectViewModel.Instance.CurrentPlate, DashboardViewModel.Instance.WorkOrderID[0]);

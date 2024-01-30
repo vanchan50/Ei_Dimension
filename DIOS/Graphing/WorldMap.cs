@@ -14,14 +14,14 @@ namespace Ei_Dimension.Graphing;
 [POCOViewModel]
 public class WorldMap
 {
-  public virtual ObservableCollection<HeatMapPoint> DisplayedWorldMap { get; protected set; } = new ObservableCollection<HeatMapPoint>();
-  public List<HeatMapPoint> Map01 { get; } = new List<HeatMapPoint>(WORLDMAPCAPACITY);
-  public List<HeatMapPoint> Map02 { get; } = new List<HeatMapPoint>(WORLDMAPCAPACITY);
-  public List<HeatMapPoint> Map03 { get; } = new List<HeatMapPoint>(WORLDMAPCAPACITY);
-  public List<HeatMapPoint> Map12 { get; } = new List<HeatMapPoint>(WORLDMAPCAPACITY);
-  public List<HeatMapPoint> Map12Flipped { get; } = new List<HeatMapPoint>(WORLDMAPCAPACITY);
-  public List<HeatMapPoint> Map13 { get; } = new List<HeatMapPoint>(WORLDMAPCAPACITY);
-  public List<HeatMapPoint> Map23 { get; } = new List<HeatMapPoint>(WORLDMAPCAPACITY);
+  public virtual ObservableCollection<HeatMapPoint> DisplayedWorldMap { get; protected set; } = new();
+  public List<HeatMapPoint> Map01 { get; } = new(WORLDMAPCAPACITY);
+  public List<HeatMapPoint> Map02 { get; } = new(WORLDMAPCAPACITY);
+  public List<HeatMapPoint> Map03 { get; } = new(WORLDMAPCAPACITY);
+  public List<HeatMapPoint> Map12 { get; } = new(WORLDMAPCAPACITY);
+  public List<HeatMapPoint> Map12Flipped { get; } = new(WORLDMAPCAPACITY);
+  public List<HeatMapPoint> Map13 { get; } = new(WORLDMAPCAPACITY);
+  public List<HeatMapPoint> Map23 { get; } = new(WORLDMAPCAPACITY);
   public List<HeatMapPoint> CalibrationMap { get; set; }
   public MapIndex DisplayedWmap { get; set; }
   public bool Flipped { get; set; }

@@ -29,6 +29,7 @@ public static class LanguageSwap
       TranslateTemplateSelectVM();
       TranslateExperimentVM();
       TranslateResultsVM();
+      TranslateStatisticsTableVM();
       #endregion
   }
 
@@ -235,32 +236,39 @@ public static class LanguageSwap
         ResVM.PlexButtonString = _rm.GetString(nameof(Language.Resources.Experiment_Active_Regions), _curCulture);
       else if (ResVM.PlexButtonString == _rm.GetString(nameof(Language.Resources.Experiment_Stats), _exCulture))
         ResVM.PlexButtonString = _rm.GetString(nameof(Language.Resources.Experiment_Stats), _curCulture);
+    }
+  }
 
+  public static void TranslateStatisticsTableVM()
+  {
+    var StVM = StatisticsTableViewModel.Instance;
+    if (StVM != null)
+    {
       if (App.ChannelRedirectionEnabled)
       {
-        ResVM.StatisticsLabels[0] = _rm.GetString(nameof(Language.Resources.Channels_Green_A), _curCulture);
-        ResVM.StatisticsLabels[1] = _rm.GetString(nameof(Language.Resources.Statistics_OEM_Red_C), _curCulture);//
-        ResVM.StatisticsLabels[2] = _rm.GetString(nameof(Language.Resources.Statistics_OEM_Red_D), _curCulture);//
-        ResVM.StatisticsLabels[3] = _rm.GetString(nameof(Language.Resources.DataAn_Red_SSC), _curCulture);
-        ResVM.StatisticsLabels[4] = _rm.GetString(nameof(Language.Resources.Statistics_OEM_GreenB), _curCulture);//
-        ResVM.StatisticsLabels[5] = _rm.GetString(nameof(Language.Resources.Statistics_OEM_GreenC), _curCulture);//
-        ResVM.StatisticsLabels[6] = _rm.GetString(nameof(Language.Resources.CL3), _curCulture);
-        ResVM.StatisticsLabels[7] = _rm.GetString(nameof(Language.Resources.DataAn_Violet_SSC), _curCulture);
-        ResVM.StatisticsLabels[8] = _rm.GetString(nameof(Language.Resources.CL0), _curCulture);
-        ResVM.StatisticsLabels[9] = _rm.GetString(nameof(Language.Resources.Channels_ExternalPMT), _curCulture);
+        StVM.StatisticsLabels[0] = _rm.GetString(nameof(Language.Resources.Channels_Green_A), _curCulture);
+        StVM.StatisticsLabels[1] = _rm.GetString(nameof(Language.Resources.Statistics_OEM_Red_C), _curCulture);//
+        StVM.StatisticsLabels[2] = _rm.GetString(nameof(Language.Resources.Statistics_OEM_Red_D), _curCulture);//
+        StVM.StatisticsLabels[3] = _rm.GetString(nameof(Language.Resources.DataAn_Red_SSC), _curCulture);
+        StVM.StatisticsLabels[4] = _rm.GetString(nameof(Language.Resources.Statistics_OEM_GreenB), _curCulture);//
+        StVM.StatisticsLabels[5] = _rm.GetString(nameof(Language.Resources.Statistics_OEM_GreenC), _curCulture);//
+        StVM.StatisticsLabels[6] = _rm.GetString(nameof(Language.Resources.CL3), _curCulture);
+        StVM.StatisticsLabels[7] = _rm.GetString(nameof(Language.Resources.DataAn_Violet_SSC), _curCulture);
+        StVM.StatisticsLabels[8] = _rm.GetString(nameof(Language.Resources.CL0), _curCulture);
+        StVM.StatisticsLabels[9] = _rm.GetString(nameof(Language.Resources.Channels_ExternalPMT), _curCulture);
       }
       else
       {
-        ResVM.StatisticsLabels[0] = _rm.GetString(nameof(Language.Resources.Channels_Green_A), _curCulture);
-        ResVM.StatisticsLabels[1] = _rm.GetString(nameof(Language.Resources.Channels_Green_B), _curCulture);
-        ResVM.StatisticsLabels[2] = _rm.GetString(nameof(Language.Resources.Channels_Green_C), _curCulture);
-        ResVM.StatisticsLabels[3] = _rm.GetString(nameof(Language.Resources.DataAn_Red_SSC), _curCulture);
-        ResVM.StatisticsLabels[4] = _rm.GetString(nameof(Language.Resources.CL1), _curCulture);
-        ResVM.StatisticsLabels[5] = _rm.GetString(nameof(Language.Resources.CL2), _curCulture);
-        ResVM.StatisticsLabels[6] = _rm.GetString(nameof(Language.Resources.CL3), _curCulture);
-        ResVM.StatisticsLabels[7] = _rm.GetString(nameof(Language.Resources.DataAn_Violet_SSC), _curCulture);
-        ResVM.StatisticsLabels[8] = _rm.GetString(nameof(Language.Resources.CL0), _curCulture);
-        ResVM.StatisticsLabels[9] = _rm.GetString(nameof(Language.Resources.Channels_ExternalPMT), _curCulture);
+        StVM.StatisticsLabels[0] = _rm.GetString(nameof(Language.Resources.Channels_Green_A), _curCulture);
+        StVM.StatisticsLabels[1] = _rm.GetString(nameof(Language.Resources.Channels_Green_B), _curCulture);
+        StVM.StatisticsLabels[2] = _rm.GetString(nameof(Language.Resources.Channels_Green_C), _curCulture);
+        StVM.StatisticsLabels[3] = _rm.GetString(nameof(Language.Resources.DataAn_Red_SSC), _curCulture);
+        StVM.StatisticsLabels[4] = _rm.GetString(nameof(Language.Resources.CL1), _curCulture);
+        StVM.StatisticsLabels[5] = _rm.GetString(nameof(Language.Resources.CL2), _curCulture);
+        StVM.StatisticsLabels[6] = _rm.GetString(nameof(Language.Resources.CL3), _curCulture);
+        StVM.StatisticsLabels[7] = _rm.GetString(nameof(Language.Resources.DataAn_Violet_SSC), _curCulture);
+        StVM.StatisticsLabels[8] = _rm.GetString(nameof(Language.Resources.CL0), _curCulture);
+        StVM.StatisticsLabels[9] = _rm.GetString(nameof(Language.Resources.Channels_ExternalPMT), _curCulture);
       }
     }
   }

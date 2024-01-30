@@ -64,6 +64,7 @@
 
   <ItemGroup>
     <PackageReference Include="DevExpress.Images" Version="23.2.3" />
+    <PackageReference Include="DevExpress.Mvvm.CodeGenerators" Version="22.1.1" />
     <PackageReference Include="DevExpress.Wpf.Charts" Version="23.2.3" />
     <PackageReference Include="DevExpress.Wpf.Controls" Version="23.2.3" />
     <PackageReference Include="DevExpress.Wpf.Themes.Office2019Colorful" Version="23.2.3" />

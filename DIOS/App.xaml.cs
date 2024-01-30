@@ -197,6 +197,7 @@ public partial class App : Application
     LanguageSwap.TranslateChannelsOffsetVM();//swaps between red <-> green
     LanguageSwap.TranslateChannelsVM();
     LanguageSwap.TranslateResultsVM();
+    LanguageSwap.TranslateStatisticsTableVM();
     DiosApp.Publisher.IsOEMModeActive = On;
     //ResultsViewModel.Instance.SwapXYNamesToOEM(On);
   }
@@ -320,7 +321,7 @@ public partial class App : Application
     var averageBackgrounds = DiosApp.Results.CurrentWellResults.GetBackgroundChannelsAverages();
     _ = Current.Dispatcher.BeginInvoke(() =>
     {
-      ResultsViewModel.Instance.DecodeCalibrationStats(stats, histogramPeaks, current: true);
+      StatisticsTableViewModel.Instance.DecodeCalibrationStats(stats, histogramPeaks, current: true);
       ChannelOffsetViewModel.Instance.DecodeBackgroundStats(averageBackgrounds);
     });
 
