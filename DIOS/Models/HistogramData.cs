@@ -25,7 +25,7 @@ public class HistogramData : ObservableObject
   private int _value;
   private int _argument;
   public static int[] Bins{ get; private set; }
-  public const int UPPERLIMIT = 1000000;
+  public const int UPPERLIMIT = 1_000_000;
   public HistogramData(int val, int arg)
   {
     _value = val;

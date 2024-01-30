@@ -1,5 +1,6 @@
 ﻿using DIOS.Core;
 using DIOS.Core.HardwareIntercom;
+using System.Runtime.InteropServices;
 
 namespace DIOS.Application;
 
@@ -110,5 +111,10 @@ public class RunResults
   public IEnumerable<ProcessedBead> PublishBeadEvents()
   {
     return ProcessedBeadsCollector.GetAllBeadsEnumerable();
+  }
+
+  public ReadOnlySpan<ProcessedBead> GetAllBeadEventsAsSpan()
+  {
+    return ProcessedBeadsCollector.GetSpan();
   }
 }

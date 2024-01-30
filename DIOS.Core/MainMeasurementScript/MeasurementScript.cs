@@ -36,7 +36,7 @@ internal class MeasurementScript
     _isReadingA = false;
     _device.OnStartingToReadWell();
     StartBeadRead();
-  }
+  } 
 
   public void FinalizeWellReading()
   {

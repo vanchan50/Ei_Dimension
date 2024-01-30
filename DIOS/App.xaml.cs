@@ -16,6 +16,7 @@ using DIOS.Core.HardwareIntercom;
 using DIOS.Application;
 using DIOS.Application.Domain;
 using DIOS.Application.FileIO;
+using Ei_Dimension.Models;
 
 namespace Ei_Dimension;
 
@@ -310,13 +311,21 @@ public partial class App : Application
 
     DiosApp.Publisher.PlateStatusFile.Overwrite(PlatePictogramViewModel.Instance.PlatePictogram.GetSerializedPlate());
 
+
+    var allBeadsSpan = DiosApp.Results.GetAllBeadEventsAsSpan();
+    var histogramPeaks = HistogramBinner.BinData(allBeadsSpan);
+
+
     var stats = DiosApp.Results.CurrentWellResults.GetChannelStats();
     var averageBackgrounds = DiosApp.Results.CurrentWellResults.GetBackgroundChannelsAverages();
     _ = Current.Dispatcher.BeginInvoke(() =>
     {
-      ResultsViewModel.Instance.DecodeCalibrationStats(stats, current: true);
+      ResultsViewModel.Instance.DecodeCalibrationStats(stats, histogramPeaks, current: true);
       ChannelOffsetViewModel.Instance.DecodeBackgroundStats(averageBackgrounds);
+    });
 
+    _ = Current.Dispatcher.BeginInvoke(() =>
+    {
       if (CalibrationViewModel.Instance.DoPostCalibrationRun)//only runs after a successful calibration.
       {
         //hopefully this doesn't trigger before the calibration succesful message. TODO: a proper synchronization

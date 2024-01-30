@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using DIOS.Core;
 using Ei_Dimension.Graphing.HeatMap;
+using Ei_Dimension.ViewModels;
 
 namespace Ei_Dimension;
 
@@ -35,7 +37,17 @@ internal sealed class GraphsController
     _ = Task.Run(()=>
     {
       UpdateBinfoList();
-      _ = Task.Run(() => { Core.DataProcessor.BinScatterData(_tempBeadInfoList); });
+      _ = Task.Run(() =>
+      {
+        var span = CollectionsMarshal.AsSpan(_tempBeadInfoList);
+        Core.DataProcessor.BinScatterData(span);
+
+        _ = App.Current.Dispatcher.BeginInvoke(() =>
+        {
+          ScatterChartViewModel.Instance.ScttrData.FillCurrentData();
+        });
+      });
+
       Core.DataProcessor.BinMapData(_tempBeadInfoList, current: true);
       if (!ViewModels.ResultsViewModel.Instance.DisplaysCurrentmap)
       {

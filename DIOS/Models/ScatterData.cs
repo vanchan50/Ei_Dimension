@@ -13,16 +13,16 @@ public class ScatterData
   public virtual ObservableCollection<HistogramData> DisplayedRedSsc { get; set; }
   public virtual ObservableCollection<HistogramData> DisplayedGreenSsc { get; set; }
   public virtual ObservableCollection<HistogramData> DisplayedReporter { get; set; }
-  public static ObservableCollection<HistogramData> CurrentForwardSsc { get; set; } = new ObservableCollection<HistogramData>();
-  public static ObservableCollection<HistogramData> CurrentVioletSsc { get; set; } = new ObservableCollection<HistogramData>();
-  public static ObservableCollection<HistogramData> CurrentRedSsc { get; set; } = new ObservableCollection<HistogramData>();
-  public static ObservableCollection<HistogramData> CurrentGreenSsc { get; set; } = new ObservableCollection<HistogramData>();
-  public static ObservableCollection<HistogramData> CurrentReporter { get; set; } = new ObservableCollection<HistogramData>();
-  public static ObservableCollection<HistogramData> BackingForwardSsc { get; set; } = new ObservableCollection<HistogramData>();
-  public static ObservableCollection<HistogramData> BackingVioletSsc { get; set; } = new ObservableCollection<HistogramData>();
-  public static ObservableCollection<HistogramData> BackingRedSsc { get; set; } = new ObservableCollection<HistogramData>();
-  public static ObservableCollection<HistogramData> BackingGreenSsc { get; set; } = new ObservableCollection<HistogramData>();
-  public static ObservableCollection<HistogramData> BackingReporter { get; set; } = new ObservableCollection<HistogramData>();
+  public static ObservableCollection<HistogramData> CurrentForwardSsc { get; set; } = new();
+  public static ObservableCollection<HistogramData> CurrentVioletSsc { get; set; } = new();
+  public static ObservableCollection<HistogramData> CurrentRedSsc { get; set; } = new();
+  public static ObservableCollection<HistogramData> CurrentGreenSsc { get; set; } = new();
+  public static ObservableCollection<HistogramData> CurrentReporter { get; set; } = new();
+  public static ObservableCollection<HistogramData> BackingForwardSsc { get; set; } = new();
+  public static ObservableCollection<HistogramData> BackingVioletSsc { get; set; } = new();
+  public static ObservableCollection<HistogramData> BackingRedSsc { get; set; } = new();
+  public static ObservableCollection<HistogramData> BackingGreenSsc { get; set; } = new();
+  public static ObservableCollection<HistogramData> BackingReporter { get; set; } = new();
   public static int[] bReporter = new int[HistogramData.Bins.Length];
   public static int[] bFsc = new int[HistogramData.Bins.Length];
   public static int[] bRed = new int[HistogramData.Bins.Length];
@@ -33,6 +33,7 @@ public class ScatterData
   public static int[] cRed = new int[HistogramData.Bins.Length];
   public static int[] cGreen = new int[HistogramData.Bins.Length];
   public static int[] cViolet = new int[HistogramData.Bins.Length];
+
   protected ScatterData()
   {
     for (var i = 0; i < HistogramData.Bins.Length; i++)

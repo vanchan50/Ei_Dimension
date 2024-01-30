@@ -11,6 +11,9 @@ using Ei_Dimension.Controllers;
 using Ei_Dimension.Graphing;
 using Ei_Dimension.Graphing.HeatMap;
 using System.Threading;
+using Ei_Dimension.Models;
+using System.Runtime.InteropServices;
+using System.Windows.Threading;
 
 namespace Ei_Dimension.ViewModels;
 
@@ -29,11 +32,17 @@ public class ResultsViewModel
   public virtual System.Windows.Visibility Analysis2DVisible { get; set; }
   public virtual System.Windows.Visibility Analysis3DVisible { get; set; }
   public virtual ObservableCollection<string> DisplayedMfiItems { get; set; }
+  public virtual ObservableCollection<string> DisplayedMedianItems { get; set; }
+  public virtual ObservableCollection<string> DisplayedPeakItems { get; set; }
   public virtual ObservableCollection<string> DisplayedCvItems { get; set; }
-  public virtual ObservableCollection<string> CurrentMfiItems { get; set; }
-  public virtual ObservableCollection<string> CurrentCvItems { get; set; }
-  public virtual ObservableCollection<string> BackingMfiItems { get; set; }
-  public virtual ObservableCollection<string> BackingCvItems { get; set; }
+  public virtual ObservableCollection<string> CurrentMfiItems { get; set; } = new();
+  public virtual ObservableCollection<string> CurrentMedianItems { get; set; } = new();
+  public virtual ObservableCollection<string> CurrentPeakItems { get; set; } = new();
+  public virtual ObservableCollection<string> CurrentCvItems { get; set; } = new();
+  public virtual ObservableCollection<string> BackingMfiItems { get; set; } = new();
+  public virtual ObservableCollection<string> BackingMedianItems { get; set; } = new();
+  public virtual ObservableCollection<string> BackingPeakItems { get; set; } = new();
+  public virtual ObservableCollection<string> BackingCvItems { get; set; } = new();
   public virtual string PlexButtonString { get; set; }
   public virtual ObservableCollection<bool> CLButtonsChecked { get; set; }
   public virtual ObservableCollection<string> CLAxis { get; set; }
@@ -69,21 +78,22 @@ public class ResultsViewModel
     Analysis2DVisible = System.Windows.Visibility.Visible;
     Analysis3DVisible = System.Windows.Visibility.Hidden;
 
-    CurrentMfiItems = new();
-    CurrentCvItems = new();
     for (var i = 0; i < 10; i++)
     {
       CurrentMfiItems.Add("");
+      CurrentMedianItems.Add("");
+      CurrentPeakItems.Add("");
       CurrentCvItems.Add("");
-    }
-    BackingMfiItems = new();
-    BackingCvItems = new();
-    for (var i = 0; i < 10; i++)
-    {
+
       BackingMfiItems.Add("");
+      BackingMedianItems.Add("");
+      BackingPeakItems.Add("");
       BackingCvItems.Add("");
     }
+
     DisplayedMfiItems = CurrentMfiItems;
+    DisplayedMedianItems = CurrentMedianItems;
+    DisplayedPeakItems = CurrentPeakItems;
     DisplayedCvItems = CurrentCvItems;
 
     StatisticsLabels = new()
@@ -175,85 +185,132 @@ public class ResultsViewModel
     var hiRez = AnalysisVisible == System.Windows.Visibility.Visible;
     _ = Task.Run(() =>
     {
-      try
-      {
-        var path = PlatePictogramViewModel.Instance.PlatePictogram.GetSelectedFilePath(); //@"C:\Emissioninc\KEIZ0R-LEGION\AcquisitionData\xxxA1_01.05.2023.13-26-29.csv";//
-        if (!System.IO.File.Exists(path)) //rowtest1A1_0  //BeadAssayA1_19 //val speed test 2E7_0
-        {
-#if DEBUG
-          App.Logger.Log($"LOADING FILE FAILED, FILE \"{path}\" doesn't exist");
-#endif
-          Notification.ShowLocalized(nameof(Language.Resources.Notification_File_Inexistent));
-          ResultsWaitIndicatorVisibility = false;
-          ChartWaitIndicatorVisibility = false;
-          _fillDataActive = 0;
-          return;
-        }
+      if(!LoadBeadEventsFile())
+        return;
 
-        AnalysisMap.InitBackingWellResults();
-        _cachedBeadStructsForLoadedData.Clear();
-        if (!BeadParser.ParseBeadInfoFile(path, _cachedBeadStructsForLoadedData))
-        {
-#if DEBUG
-          App.Logger.Log($"LOADING FILE FAILED, FILE \"{path}\" is empty");
-#endif
-          Notification.ShowLocalized(nameof(Language.Resources.Notification_Empty_File));
-          ResultsWaitIndicatorVisibility = false;
-          ChartWaitIndicatorVisibility = false;
-          _fillDataActive = 0;
-          return;
-        }
+      _ = FillScatterChartFromFileAsync();
+      _ = FillCalibrationStatsFromFileAsync();
 
-        _ = Task.Run(() => Core.DataProcessor.BinScatterData(_cachedBeadStructsForLoadedData, fromFile: true));
-        _ = Task.Run(() => Core.DataProcessor.CalculateStatistics(_cachedBeadStructsForLoadedData));
-        Core.DataProcessor.BinMapData(_cachedBeadStructsForLoadedData, current: false, hiRez);
-        //DisplayedMap.Sort((x, y) => x.A.CompareTo(y.A));
-      }
-      catch (Exception e)
+      Core.DataProcessor.BinMapData(_cachedBeadStructsForLoadedData, current: false, hiRez);
+      //DisplayedMap.Sort((x, y) => x.A.CompareTo(y.A));
+      var t = FillHeatMapFromFileAsync(hiRez);
+      MainViewModel.Instance.EventCountLocal[0] = _cachedBeadStructsForLoadedData.Count.ToString();
+    });
+  }
+
+  private bool LoadBeadEventsFile()
+  {
+    try
+    {
+      var path = PlatePictogramViewModel.Instance.PlatePictogram.GetSelectedFilePath(); //@"C:\Emissioninc\KEIZ0R-LEGION\AcquisitionData\xxxA1_01.05.2023.13-26-29.csv";//
+      if (!BeadEventFileExists(path)) //rowtest1A1_0  //BeadAssayA1_19 //val speed test 2E7_0
+        return false;
+
+      _cachedBeadStructsForLoadedData.Clear();
+      if (!BeadParser.ParseBeadInfoFile(path, _cachedBeadStructsForLoadedData))
       {
-        if (e.GetType() == typeof(OverflowException))
-        {//can bubble up from ParseBeadInfo()
 #if DEBUG
-          App.Logger.Log("LOADING FILE FAILED, FILE overflow");
+        App.Logger.Log($"LOADING FILE FAILED, FILE \"{path}\" is empty");
 #endif
-          App.Current.Dispatcher.Invoke(() => Notification.ShowError("Overflow error while reading from file\nPlease report to the developer"));
-        }
-#if DEBUG
-        else
-        {
-          App.Logger.Log($"LOADING FILE FAILED, exception: {e.Message}");
-        }
-#endif
+        Notification.ShowLocalized(nameof(Language.Resources.Notification_Empty_File));
         ResultsWaitIndicatorVisibility = false;
         ChartWaitIndicatorVisibility = false;
         _fillDataActive = 0;
+        return false;
       }
+    }
+    catch (Exception e)
+    {
+      if (e.GetType() == typeof(OverflowException))
+      {//can bubble up from ParseBeadInfo()
+        App.Logger.Log("[PROBLEM] LOADING FILE FAILED; FILE overflow");
+        App.Current.Dispatcher.Invoke(() =>
+          Notification.ShowError("Overflow error while reading from file\nPlease report this issue"));
+      }
+      else
+      {
+        App.Logger.Log($"[PROBLEM] LOADING FILE FAILED; exception: {e.Message}");
+      }
+      ResultsWaitIndicatorVisibility = false;
+      ChartWaitIndicatorVisibility = false;
+      _fillDataActive = 0;
+      return false;
+    }
+
+    return true;
+  }
+
+  private bool BeadEventFileExists(string path)
+  {
+    if (!System.IO.File.Exists(path))
+    {
+#if DEBUG
+      App.Logger.Log($"LOADING FILE FAILED, FILE \"{path}\" doesn't exist");
+#endif
+      Notification.ShowLocalized(nameof(Language.Resources.Notification_File_Inexistent));
+      ResultsWaitIndicatorVisibility = false;
+      ChartWaitIndicatorVisibility = false;
+      _fillDataActive = 0;
+      return false;
+    }
+    return true;
+  }
+
+  private Task FillScatterChartFromFileAsync()
+  {
+    AnalysisMap.InitBackingWellResults();
+    return Task.Run(() =>
+    {
+      var allBeadsSpan = CollectionsMarshal.AsSpan(_cachedBeadStructsForLoadedData);
+      Core.DataProcessor.BinScatterData(allBeadsSpan, fromFile: true);
 
       _ = App.Current.Dispatcher.BeginInvoke(() =>
       {
-        try
-        {
-          HeatMapAPI.API.ReDraw(hiRez);
-          AnalysisMap.FillBackingMap();
-        }
-        catch (Exception e)
-        {
-          if (Language.TranslationSource.Instance.CurrentCulture.TextInfo.CultureName == "zh-CN")
-          {
-            Notification.Show($"请将此问题报告给制造商\n {e.Message}");
-          }
-          else
-          {
-            Notification.Show($"Something went wrong during File loading.\nPlease report this issue to the manufacturer\n {e.Message}");
-          }
-        }
-        finally
-        {
-          ChartWaitIndicatorVisibility = false;
-          _fillDataActive = 0;
-        }
+        ScatterChartViewModel.Instance.ScttrData.FillCurrentData(fromFile: true);
       });
-      MainViewModel.Instance.EventCountLocal[0] = _cachedBeadStructsForLoadedData.Count.ToString();
+    });
+  }
+
+  private Task FillCalibrationStatsFromFileAsync()
+  {
+    return Task.Run(() =>
+    {
+      var allBeadsSpan = CollectionsMarshal.AsSpan(_cachedBeadStructsForLoadedData);
+      var histogramPeaks = HistogramBinner.BinData(allBeadsSpan);
+
+      var stats = Core.DataProcessor.CalculateStatistics(allBeadsSpan);
+      _ = App.Current.Dispatcher.BeginInvoke(() =>
+      {
+        DecodeCalibrationStats(stats, histogramPeaks, current: false);
+      });
+    });
+  }
+
+  private DispatcherOperation FillHeatMapFromFileAsync(bool hiRez)
+  {
+    return App.Current.Dispatcher.BeginInvoke(() =>
+    {
+      try
+      {
+        HeatMapAPI.API.ReDraw(hiRez);
+        AnalysisMap.FillBackingMap();
+      }
+      catch (Exception e)
+      {
+        if (Language.TranslationSource.Instance.CurrentCulture.TextInfo.CultureName == "zh-CN")
+        {
+          Notification.Show($"请将此问题报告给制造商\n {e.Message}");
+        }
+        else
+        {
+          Notification.Show($"Something went wrong during File loading.\nPlease report this issue to the manufacturer\n {e.Message}");
+        }
+      }
+      finally
+      {
+        ChartWaitIndicatorVisibility = false;
+        _fillDataActive = 0;
+      }
     });
   }
 
@@ -262,53 +319,81 @@ public class ResultsViewModel
     for (var i = 0; i < 10; i++)
     {
       CurrentMfiItems[i] = "";
+      CurrentMedianItems[i] = "";
+      CurrentPeakItems[i] = "";
       CurrentCvItems[i] = "";
     }
   }
 
-  public void DecodeCalibrationStats(ChannelsCalibrationStats stats, bool current)
+  public void DecodeCalibrationStats(ChannelsCalibrationStats stats, ChannelsHistogramPeaks peaks, bool current)
   {
     ObservableCollection<string> mfiItems;
+    ObservableCollection<string> medianItems;
+    ObservableCollection<string> peakItems;
     ObservableCollection<string> cvItems;
     if (current)
     {
       mfiItems = CurrentMfiItems;
+      medianItems = CurrentMedianItems;
+      peakItems = CurrentPeakItems;
       cvItems = CurrentCvItems;
     }
     else
     {
       mfiItems = BackingMfiItems;
+      medianItems = BackingMedianItems;
+      peakItems = BackingPeakItems;
       cvItems = BackingCvItems;
     }
 
     mfiItems[0] = stats.Greenssc.Mean.ToString($"{0:0.0}");
+    medianItems[0] = stats.Greenssc.Median.ToString($"{0:0.0}");
+    peakItems[0] = peaks.GreenA;
     cvItems[0] = stats.Greenssc.CoeffVar.ToString($"{0:0.00}");
 
     mfiItems[1] = stats.GreenB.Mean.ToString($"{0:0.0}");
+    medianItems[1] = stats.GreenB.Median.ToString($"{0:0.0}");
+    peakItems[1] = peaks.GreenB;
     cvItems[1] = stats.GreenB.CoeffVar.ToString($"{0:0.00}");
 
     mfiItems[2] = stats.GreenC.Mean.ToString($"{0:0.0}");
+    medianItems[2] = stats.GreenC.Median.ToString($"{0:0.0}");
+    peakItems[2] = peaks.GreenC;
     cvItems[2] = stats.GreenC.CoeffVar.ToString($"{0:0.00}");
 
     mfiItems[3] = stats.Redssc.Mean.ToString($"{0:0.0}");
+    medianItems[3] = stats.Redssc.Median.ToString($"{0:0.0}");
+    peakItems[3] = peaks.Redssc;
     cvItems[3] = stats.Redssc.CoeffVar.ToString($"{0:0.00}");
 
     mfiItems[4] = stats.Cl1.Mean.ToString($"{0:0.0}");
+    medianItems[4] = stats.Cl1.Median.ToString($"{0:0.0}");
+    peakItems[4] = peaks.Cl1;
     cvItems[4] = stats.Cl1.CoeffVar.ToString($"{0:0.00}"); 
 
     mfiItems[5] = stats.Cl2.Mean.ToString($"{0:0.0}");
+    medianItems[5] = stats.Cl2.Median.ToString($"{0:0.0}");
+    peakItems[5] = peaks.Cl2;
     cvItems[5] = stats.Cl2.CoeffVar.ToString($"{0:0.00}");
 
     mfiItems[6] = stats.Cl3.Mean.ToString($"{0:0.0}");
+    medianItems[6] = stats.Cl3.Median.ToString($"{0:0.0}");
+    peakItems[6] = peaks.Cl3;
     cvItems[6] = stats.Cl3.CoeffVar.ToString($"{0:0.00}");
 
     mfiItems[7] = stats.Violetssc.Mean.ToString($"{0:0.0}");
+    medianItems[7] = stats.Violetssc.Median.ToString($"{0:0.0}");
+    peakItems[7] = peaks.Violetssc;
     cvItems[7] = stats.Violetssc.CoeffVar.ToString($"{0:0.00}");
 
     mfiItems[8] = stats.Cl0.Mean.ToString($"{0:0.0}");
+    medianItems[8] = stats.Cl0.Median.ToString($"{0:0.0}");
+    peakItems[8] = peaks.Cl0;
     cvItems[8] = stats.Cl0.CoeffVar.ToString($"{0:0.00}");
 
     mfiItems[9] = stats.Fsc.Mean.ToString($"{0:0.0}");
+    medianItems[9] = stats.Fsc.Median.ToString($"{0:0.0}");
+    peakItems[9] = peaks.Fsc;
     cvItems[9] = stats.Fsc.CoeffVar.ToString($"{0:0.00}");
   }
 
@@ -331,6 +416,8 @@ public class ResultsViewModel
       });
       MainViewModel.Instance.EventCountField = MainViewModel.Instance.EventCountCurrent;
       DisplayedMfiItems = CurrentMfiItems;
+      DisplayedMedianItems = CurrentMedianItems;
+      DisplayedPeakItems = CurrentPeakItems;
       DisplayedCvItems = CurrentCvItems;
       return;
     }
@@ -343,6 +430,8 @@ public class ResultsViewModel
     }
     MainViewModel.Instance.EventCountField = MainViewModel.Instance.EventCountLocal;
     DisplayedMfiItems = BackingMfiItems;
+    DisplayedMedianItems = BackingMedianItems;
+    DisplayedPeakItems = BackingPeakItems;
     DisplayedCvItems = BackingCvItems;
   }
 

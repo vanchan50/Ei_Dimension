@@ -1,4 +1,5 @@
 ﻿using DIOS.Core;
+using System.Runtime.InteropServices;
 
 namespace DIOS.Application;
 
@@ -26,6 +27,11 @@ public sealed class BeadEventSink<T> : IBeadEventSink<T>
     _size = 0;
     _nextNewBeadIndex = 0;
     _list.Clear();
+  }
+
+  public ReadOnlySpan<T> GetSpan()
+  {
+    return CollectionsMarshal.AsSpan(_list);
   }
 
   public IEnumerable<T> GetNewBeadsEnumerable()

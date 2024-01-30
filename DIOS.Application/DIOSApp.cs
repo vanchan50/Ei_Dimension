@@ -103,6 +103,7 @@ public class DIOSApp
         Logger.Log("Normalization: Disabled");
     }
 
+    Logger.Log($"SensitivityChannel: {_beadProcessor.SensitivityChannel}");
     Device.StartOperation(wells, Results.RawBeadsCollector);
     ResultsProc.StartBeadProcessing();//call after StartOperation, so IsMeasurementGoing == true
   }

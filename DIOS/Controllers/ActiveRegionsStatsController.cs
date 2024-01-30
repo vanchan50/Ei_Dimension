@@ -5,6 +5,7 @@ using System.Threading;
 using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
 using DIOS.Application;
+using Ei_Dimension.ViewModels;
 
 namespace Ei_Dimension.Controllers;
 
@@ -173,5 +174,21 @@ public class ActiveRegionsStatsController
       CurrentCount[0] = count.ToString();
       CurrentMean[0] = mean.ToString("0.0");
     };
+  }
+
+
+  public void UpdateBackgroundStats(IReadOnlyList<RegionReporterStats> Stats)
+  {
+    _ = App.Current.Dispatcher.BeginInvoke(() =>
+    {
+      var j = 0;
+      foreach (var stat in Stats)
+      {
+        BackingCount[j] = stat.Count.ToString();
+        BackingMean[j] = stat.MeanFi.ToString("F1");
+        j++;
+      }
+      ResultsViewModel.Instance.ResultsWaitIndicatorVisibility = false;
+    });
   }
 }

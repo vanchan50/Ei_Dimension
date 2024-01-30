@@ -6,6 +6,7 @@ using DIOS.Core;
 using Ei_Dimension.Controllers;
 using Ei_Dimension.ViewModels;
 using Ei_Dimension.Graphing.HeatMap;
+using System.Linq;
 
 namespace Ei_Dimension.Core;
 
@@ -74,24 +75,18 @@ public static class DataProcessor
     }
   }
 
-  public static void CalculateStatistics(List<ProcessedBead> list)
+  public static ChannelsCalibrationStats CalculateStatistics(ReadOnlySpan<ProcessedBead> list)
   {
     var accumulator = new StatsAccumulator();
     foreach (var bead in list)
     {
       accumulator.Add(bead);
     }
-    var stats = accumulator.CalculateStats();
-    _ = App.Current.Dispatcher.BeginInvoke(() =>
-    {
-      ResultsViewModel.Instance.DecodeCalibrationStats(stats, current: false);
-    });
+    return accumulator.CalculateStats();
   }
 
-  public static void BinScatterData(List<ProcessedBead> inputBeadList, bool fromFile = false)
+  public static void BinScatterData(ReadOnlySpan<ProcessedBead> inputBeadList, bool fromFile = false)
   {
-    var ScatterDataCount = ScatterData.CurrentReporter.Count;
-    var MaxValue = ScatterData.CurrentReporter[ScatterDataCount - 1].Argument;
     int[] reporter, fsc, red, green, violet;
     //NULL Region is included in RegionsList
     List<RegionReporterResult> RegionsReporter = null;  //for mean and count 
@@ -121,33 +116,17 @@ public static class DataProcessor
     //bool failed = false;
     foreach (var processedBead in inputBeadList)
     {
-      var bead = processedBead;
-      //overflow protection
-      bead.fsc = bead.fsc < MaxValue ? bead.fsc : MaxValue;
-      bead.violetssc = bead.violetssc < MaxValue ? bead.violetssc : MaxValue;
-      bead.redssc = bead.redssc < MaxValue ? bead.redssc : MaxValue;
-      bead.greenssc = bead.greenssc < MaxValue ? bead.greenssc : MaxValue;
-      bead.reporter = bead.reporter < MaxValue ? bead.reporter : MaxValue;
-
-        
-      int i = FindPlaceInBin(bead.fsc);
-      int j = FindPlaceInBin(bead.redssc);
-      int k = FindPlaceInBin(bead.greenssc);
-      int o = FindPlaceInBin(bead.violetssc);
-      int l = FindPlaceInBin(bead.reporter);
-
-      fsc[i]++;
-      red[j]++;
-      green[k]++;
-      violet[o]++;
-      reporter[l]++;
-
+      FillBinArray(fsc, processedBead.fsc);
+      FillBinArray(red, processedBead.redssc);
+      FillBinArray(green, processedBead.greenssc);
+      FillBinArray(violet, processedBead.violetssc);
+      FillBinArray(reporter, processedBead.reporter);
 
       if (fromFile)
       {
-        var index = MapRegionsController.GetMapRegionIndex(bead.region);
+        var index = MapRegionsController.GetMapRegionIndex(processedBead.region);
         if (index != -1)
-          RegionsReporter[index].Add(bead.reporter);
+          RegionsReporter[index].Add(processedBead.reporter);
         //else if (bead.region == 0)
         //  continue;
         //else
@@ -165,23 +144,16 @@ public static class DataProcessor
         Stats.Add(new RegionReporterStats(reporterValues));
       }
 
-      _ = App.Current.Dispatcher.BeginInvoke(() =>
-      {
-        var j = 0;
-        foreach (var stat in Stats)
-        {
-          ActiveRegionsStatsController.Instance.BackingCount[j] = stat.Count.ToString();
-          ActiveRegionsStatsController.Instance.BackingMean[j] = stat.MeanFi.ToString("0.0");
-          j++;
-        }
-        ResultsViewModel.Instance.ResultsWaitIndicatorVisibility = false;
-      });
+      ActiveRegionsStatsController.Instance.UpdateBackgroundStats(Stats);
     }
+  }
 
-    _ = App.Current.Dispatcher.BeginInvoke(() =>
-    {
-      ScatterChartViewModel.Instance.ScttrData.FillCurrentData(fromFile);
-    });
+  public static void FillBinArray(int[] array, float signal)
+  {
+    //overflow protection
+    signal = signal < HistogramData.UPPERLIMIT ? signal : HistogramData.UPPERLIMIT;
+    int index = FindPlaceInBin(signal);
+    array[index]++;
   }
 
   private static int FindPlaceInBin(float value)
@@ -190,6 +162,22 @@ public static class DataProcessor
     if (binNumber < 0)
       binNumber = ~binNumber;
     return binNumber;
+  }
+
+  public static int GetSignalPeak(int[] array)
+  {
+    var index = FindPeakIndex(array);
+    return FindPeak(index);
+  }
+
+  private static int FindPeakIndex(int[] array)
+  {
+    return Array.IndexOf(array, array.Max());
+  }
+
+  private static int FindPeak(int peakIndex)
+  {
+    return HistogramData.Bins[peakIndex];
   }
 
   public static void BinMapData(List<ProcessedBead> beadInfoList, bool current = true, bool hiRez = false)

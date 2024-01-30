@@ -14,19 +14,19 @@ public class MainViewModel
   public virtual string AppVersion => $"Application Version: {App.DiosApp.BUILD}\n   Firmware Version: {App.DiosApp.Device.FirmwareVersion}\n   x{System.IntPtr.Size * 8}";
   public ObservableCollection<string> TotalBeadsInFirmware { get; set; } = new() { "0" };
   public virtual ObservableCollection<bool> MainSelectorState { get; set; } = new() { false, false, false, false, false };
-  public virtual Visibility NumpadVisible { get; set; }
-  public virtual Visibility KeyboardVisible { get; set; }
+  public virtual Visibility NumpadVisible { get; set; } = Visibility.Hidden;
+  public virtual Visibility KeyboardVisible { get; set; } = Visibility.Hidden;
   public virtual ObservableCollection<string> EventCountField { get; set; }
-  public virtual ObservableCollection<string> EventCountCurrent { get; set; }
-  public virtual ObservableCollection<string> EventCountLocal { get; set; }
-  public virtual ObservableCollection<string> NormalizationMarkerText { get; set; }
-  public virtual ObservableCollection<string> ScalingMarkerText { get; set; }
+  public virtual ObservableCollection<string> EventCountCurrent { get; set; } = new(){ "0" };
+  public virtual ObservableCollection<string> EventCountLocal { get; set; } = new(){ "0" };
+  public virtual ObservableCollection<string> NormalizationMarkerText { get; set; } = new(){ "Normalization is ON" };
+  public virtual ObservableCollection<string> ScalingMarkerText { get; set; } = new(){ "Scaling is 1.0" };
   public virtual Brush NormalizationMarkerColor { get; set; }
   public virtual Brush ScalingMarkerColor { get; set; }
-  public virtual Visibility EventCountVisible { get; set; }
-  public virtual Visibility StartButtonsVisible { get; set; }
-  public virtual Visibility ServiceVisibility { get; set; }
-  public int ServiceVisibilityCheck { get; set; }
+  public virtual Visibility EventCountVisible { get; set; } = Visibility.Visible;
+  public virtual Visibility StartButtonsVisible { get; set; } = Visibility.Visible;
+  public virtual Visibility ServiceVisibility { get; set; } = Visibility.Hidden;
+  public int ServiceVisibilityCheck { get; set; } = 0;
   public bool TouchControlsEnabled { get; set; }
   public virtual int BeadConcentrationMonitorValue { get; protected set; } = 130;
   public virtual Brush BeadConcentrationMonitorColor { get; protected set; } = _RegularBrush;
@@ -43,20 +43,10 @@ public class MainViewModel
   {
     App.NumpadShow = (this.GetType().GetProperty(nameof(NumpadVisible)), this);
     App.KeyboardShow = (this.GetType().GetProperty(nameof(KeyboardVisible)), this);
-    NumpadVisible = Visibility.Hidden;
-    KeyboardVisible = Visibility.Hidden;
-    EventCountVisible = Visibility.Visible;
-    StartButtonsVisible = Visibility.Visible;
-    ServiceVisibility = Visibility.Hidden;
-    EventCountCurrent = new ObservableCollection<string> { "0" };
-    EventCountLocal = new ObservableCollection<string> { "0" };
-    NormalizationMarkerText = new ObservableCollection<string> { "Normalization is ON" };
-    ScalingMarkerText = new ObservableCollection<string> { "Scaling is 1.0" };
     NormalizationMarkerColor = _activeBrush;
     ScalingMarkerColor = _inactiveBrush;
     EventCountField = EventCountCurrent;
     Instance = this;
-    ServiceVisibilityCheck = 0;
     TouchControlsEnabled = Settings.Default.TouchMode;
   }
 
