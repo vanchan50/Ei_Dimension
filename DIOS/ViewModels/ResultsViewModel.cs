@@ -51,7 +51,7 @@ public class ResultsViewModel
   public static ResultsViewModel Instance { get; private set; }
   private int _fillDataActive;
   public const int HIREZDEFINITION = 512;
-  private int _displayedStatsType = 2;
+  private int _displayedStatsType = 0;
   private readonly List<ProcessedBead> _cachedBeadStructsForLoadedData = new(2000000);
 
   protected ResultsViewModel()
