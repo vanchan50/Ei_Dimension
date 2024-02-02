@@ -7,7 +7,7 @@ public class BeadEventFileWriter
 {
   private string _fullName;
   private ResultsPublisher _publisher;
-  private readonly StringBuilder _dataOut = new(AVGSTRLENGTH * 2000000);
+  private readonly StringBuilder _dataOut = new(AVGSTRLENGTH * 2_000_000);
   private const int AVGSTRLENGTH = 110;
   public const string HEADER = "Time(1 ms Tick),FSC bg,Viol SSC bg,CL0 bg,CL1 bg,CL2 bg,CL3 bg,Red SSC bg,Green SSC bg," +
                                "Green B bg,Green C bg,Green B,Green C,Red-Grn Offset,Grn-Viol Offset,Region,Forward Scatter,Violet SSC,CL0," +

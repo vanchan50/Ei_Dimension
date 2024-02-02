@@ -162,6 +162,9 @@ public class DashboardViewModel
       case 2:
         App.DiosApp.Device.Hardware.SendCommand(DeviceCommandType.WashB);
         break;
+      case 3:
+        App.DiosApp.Device.Hardware.SendCommand(DeviceCommandType.Rinse);
+        break;
     }
     App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.IsBubbleDetectionActive, 0);
   }

@@ -907,6 +907,15 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Rinse.
+        /// </summary>
+        public static string Components_Rinse {
+            get {
+                return ResourceManager.GetString("Components_Rinse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sampling
         ///    ON.
         /// </summary>

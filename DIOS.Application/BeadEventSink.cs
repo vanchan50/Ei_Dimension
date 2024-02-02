@@ -9,6 +9,7 @@ public sealed class BeadEventSink<T> : IBeadEventSink<T>
   public int Count => _size;
   private List<T> _list;
   private int _size;
+  private int _szCached;
   private int _nextNewBeadIndex;
 
   public BeadEventSink(int capacity)
@@ -25,6 +26,7 @@ public sealed class BeadEventSink<T> : IBeadEventSink<T>
   public void Clear()
   {
     _size = 0;
+    _szCached = 0;
     _nextNewBeadIndex = 0;
     _list.Clear();
   }
@@ -32,6 +34,22 @@ public sealed class BeadEventSink<T> : IBeadEventSink<T>
   public ReadOnlySpan<T> GetSpan()
   {
     return CollectionsMarshal.AsSpan(_list);
+  }
+
+  public ReadOnlySpan<T> GetNewBeadsSpan()
+  {
+    var span = CollectionsMarshal.AsSpan(_list).Slice(_nextNewBeadIndex, _szCached - _nextNewBeadIndex);
+    return span;
+  }
+
+  public void FixSpanSize()
+  {
+    _szCached = _size;
+  }
+
+  public void CycleSpanSize()
+  {
+    _nextNewBeadIndex = _szCached;
   }
 
   public IEnumerable<T> GetNewBeadsEnumerable()

@@ -35,7 +35,7 @@ public class HardwareInterface
       case DeviceCommandType.RefreshDAC:
         commandCode = 0xD3;
         break;
-      case DeviceCommandType.SetBaseLine:
+      case DeviceCommandType.Rinse:
         commandCode = 0xD5;
         break;
       case DeviceCommandType.FlashSave:

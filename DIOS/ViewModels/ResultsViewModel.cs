@@ -39,7 +39,7 @@ public class ResultsViewModel
   public static ResultsViewModel Instance { get; private set; }
   private int _fillDataActive;
   public const int HIREZDEFINITION = 512;
-  private readonly List<ProcessedBead> _cachedBeadStructsForLoadedData = new(2000000);
+  private readonly List<ProcessedBead> _cachedBeadStructsForLoadedData = new(2_000_000);
 
   protected ResultsViewModel()
   {
@@ -89,10 +89,7 @@ public class ResultsViewModel
     }
     CLButtonsChecked[CL] = true;
     SetDisplayedMap();
-    _ = App.Current.Dispatcher.BeginInvoke(() =>
-    {
-      HeatMapAPI.API.ReDraw();
-    });
+    HeatMapAPI.API.ReDraw();
   }
 
   public void ClearGraphs(bool current = true)
@@ -144,9 +141,11 @@ public class ResultsViewModel
       _ = FillScatterChartFromFileAsync();
       _ = FillCalibrationStatsFromFileAsync();
 
-      Core.DataProcessor.BinMapData(_cachedBeadStructsForLoadedData, current: false, hiRez);
+      var allBeadsSpan = CollectionsMarshal.AsSpan(_cachedBeadStructsForLoadedData);
+      Core.DataProcessor.BinMapData(allBeadsSpan, current: false, hiRez);
       //DisplayedMap.Sort((x, y) => x.A.CompareTo(y.A));
-      var t = FillHeatMapFromFileAsync(hiRez);
+      var t = FillBackingMapFromFileAsync(hiRez);
+      HeatMapAPI.API.ReDraw(hiRez);
       MainViewModel.Instance.EventCountLocal[0] = _cachedBeadStructsForLoadedData.Count.ToString();
     });
   }
@@ -217,10 +216,7 @@ public class ResultsViewModel
       var allBeadsSpan = CollectionsMarshal.AsSpan(_cachedBeadStructsForLoadedData);
       Core.DataProcessor.BinScatterData(allBeadsSpan, fromFile: true);
 
-      _ = App.Current.Dispatcher.BeginInvoke(() =>
-      {
-        ScatterChartViewModel.Instance.ScttrData.FillCurrentData(fromFile: true);
-      });
+      ScatterChartViewModel.Instance.ScttrData.FillCurrentDataASYNC_UI(fromFile: true);
     });
   }
 
@@ -239,13 +235,12 @@ public class ResultsViewModel
     });
   }
 
-  private DispatcherOperation FillHeatMapFromFileAsync(bool hiRez)
+  private DispatcherOperation FillBackingMapFromFileAsync(bool hiRez)
   {
     return App.Current.Dispatcher.BeginInvoke(() =>
     {
       try
       {
-        HeatMapAPI.API.ReDraw(hiRez);
         AnalysisMap.FillBackingMap();
       }
       catch (Exception e)
@@ -270,20 +265,17 @@ public class ResultsViewModel
   public void PlotCurrent(bool current = true)
   {
     DisplaysCurrentmap = current;
-    SetDisplayedMap();
+    App.Current.Dispatcher.Invoke(SetDisplayedMap);
     ScatterChartViewModel.Instance.ScttrData.DisplayCurrent(current);
     if (current)
     {
-      Views.PlatePictogramView.Instance.DrawingPlate.UnselectAllCells();
+      App.Current.Dispatcher.Invoke(Views.PlatePictogramView.Instance.DrawingPlate.UnselectAllCells);
       if (App.MapRegions != null)
       {
         ActiveRegionsStatsController.Instance.DisplayCurrentBeadStats();
       }
 
-      _ = App.Current.Dispatcher.BeginInvoke(() =>
-      {
-        HeatMapAPI.API.ReDraw();
-      });
+      HeatMapAPI.API.ReDraw();
       MainViewModel.Instance.EventCountField = MainViewModel.Instance.EventCountCurrent;
       StatisticsTableViewModel.Instance.SelectDisplayedStatsType();
       return;
@@ -307,6 +299,10 @@ public class ResultsViewModel
     _ = App.Current.Dispatcher.BeginInvoke(() =>
     {
       WrldMap.InitMaps();
+      ResultsWaitIndicatorVisibility = false;
+      ChartWaitIndicatorVisibility = false;
+    }).Task.ContinueWith(x =>
+    {
       PlotCurrent(DisplaysCurrentmap);
       ResultsWaitIndicatorVisibility = false;
       ChartWaitIndicatorVisibility = false;

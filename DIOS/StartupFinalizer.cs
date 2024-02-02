@@ -5,6 +5,8 @@ using Ei_Dimension.Graphing.HeatMap;
 using DIOS.Core.HardwareIntercom;
 using DIOS.Core;
 using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media.Imaging;
 
@@ -84,7 +86,12 @@ internal static class StartupFinalizer
       WipedSettingsMessage();
 
     //App.Logger.Log($"Detected Board Rev v{App.DiosApp.Device.BoardVersion}");
-    App.Logger.Log(MainViewModel.Instance.AppVersion);
+    _ = Task.Run(() =>
+    {
+      //Firmware version need some time to arrive from the Hardware
+      Thread.Sleep(1000);
+      App.Logger.Log(MainViewModel.Instance.AppVersion);
+    });
 #if DEBUG
     App.Logger.Log("DEBUG MODE");
 #endif

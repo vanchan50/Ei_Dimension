@@ -411,6 +411,9 @@ Offset</value>
   <data name="Components_Prime" xml:space="preserve">
     <value>Prime</value>
   </data>
+  <data name="Components_Rinse" xml:space="preserve">
+    <value>Rinse</value>
+  </data>
   <data name="Components_Sampling_ON" xml:space="preserve">
     <value>Sampling
     ON</value>

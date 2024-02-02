@@ -105,17 +105,12 @@
               <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
             </dxmvvm:Interaction.Behaviors>
           </TextBox>
-          <Button Content="{lang:Loc Channels_Update_Bias}"
+        <Button Content="{lang:Loc Channels_Update_Bias}"
                   Command="{Binding UpdateBiasButtonClickCommand}"
                   Style="{StaticResource ButtonStyle}"
-                  Height="85" Cursor="Hand"
+                  Height="85"
                   Margin="0,0,0,8"/>
-          <Button Content="{lang:Loc Ch_Offset_Set_Offset}"
-                  Visibility="Collapsed"
-                  Command="{Binding SetOffsetClickCommand}"
-                  Style="{StaticResource ButtonStyle}"
-                  Height="85"/>
-          <TextBlock Text="{lang:Loc Channels_Reporter_scaling}"
+        <TextBlock Text="{lang:Loc Channels_Reporter_scaling}"
                      FontFamily="{StaticResource AppTextFont}"
                      FontSize="36"
                      Height="100"

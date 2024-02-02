@@ -5,7 +5,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using DIOS.Core;
 using Ei_Dimension.Graphing.HeatMap;
-using Ei_Dimension.ViewModels;
 
 namespace Ei_Dimension;
 
@@ -28,37 +27,46 @@ internal sealed class GraphsController
   private static GraphsController _instance;
   private static int _uiUpdateIsActive;
   private readonly List<ProcessedBead> _tempBeadInfoList = new (1000);
+  private static readonly List<Task> _tasksCache = new(5);
 
   public void Update()
   {
     if (Interlocked.CompareExchange(ref _uiUpdateIsActive, 1, 0) == 1)
       return;
 
-    _ = Task.Run(()=>
+    //UpdateBinfoList();
+    App.DiosApp.Results.CycleSpanSize();
+    App.DiosApp.Results.FixSpanSize();
+    var t1 = Task.Run(() =>
     {
-      UpdateBinfoList();
-      _ = Task.Run(() =>
-      {
-        var span = CollectionsMarshal.AsSpan(_tempBeadInfoList);
-        Core.DataProcessor.BinScatterData(span);
+      var span = App.DiosApp.Results.GetNewBeadsAsSpan();
+      //var span = CollectionsMarshal.AsSpan(_tempBeadInfoList);
+      Core.DataProcessor.BinScatterData(span);
 
-        _ = App.Current.Dispatcher.BeginInvoke(() =>
-        {
-          ScatterChartViewModel.Instance.ScttrData.FillCurrentData();
-        });
-      });
+      var t2 = ViewModels.ScatterChartViewModel.Instance.ScttrData.FillCurrentDataASYNC_UI();
+      _tasksCache.Add(t2);
+    });
+    _tasksCache.Add(t1);
 
-      Core.DataProcessor.BinMapData(_tempBeadInfoList, current: true);
+
+    var t3 = Task.Run(() =>
+    {
+      var span = App.DiosApp.Results.GetNewBeadsAsSpan();
+      Core.DataProcessor.BinMapData(span, current: true);
       if (!ViewModels.ResultsViewModel.Instance.DisplaysCurrentmap)
       {
-        _uiUpdateIsActive = 0;
         return;
       }
-      _ = App.Current.Dispatcher.BeginInvoke(() =>
+      var t4 = HeatMapAPI.API.ReDraw();
+      if (t4 is not null)
       {
-        HeatMapAPI.API.ReDraw();
-        _uiUpdateIsActive = 0;
-      });
+        _tasksCache.Add(t4);
+      }
+    });
+    _tasksCache.Add(t3);
+    Task.WhenAll(_tasksCache).ContinueWith(x =>
+    {
+      _uiUpdateIsActive = 0;
     });
   }
 

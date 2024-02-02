@@ -11,7 +11,7 @@ public class USBBarcodeReader : IBarcodeReader
   private ILogger _logger;
   private CancellationToken _cancellationToken;
   private int _readInProcess;
-  private static byte[] _readCommand = { 0x04, 0xE4, 0x04, 0x00, 0xFF, 0x14 };
+  private static readonly byte[] _readCommand = { 0x04, 0xE4, 0x04, 0x00, 0xFF, 0x14 };
   private const string VID = "AF99";
   private const string PID = "8003";
 

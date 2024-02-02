@@ -2,6 +2,7 @@
 using DevExpress.Mvvm.POCO;
 using System;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 
 namespace Ei_Dimension.Models;
 
@@ -130,30 +131,41 @@ public class ScatterData
     }
   }
 
-  public void FillCurrentData(bool fromFile = false)
+  public Task FillCurrentDataASYNC_UI(bool fromFile = false)
   {
+    Task t;
     if (fromFile)
     {
-      for (var i = 0; i < BackingReporter.Count; i++)
+      t = App.Current.Dispatcher.BeginInvoke(() =>
       {
-        BackingReporter[i].Value += bReporter[i];
-        BackingForwardSsc[i].Value += bFsc[i];
-        BackingRedSsc[i].Value += bRed[i];
-        BackingGreenSsc[i].Value += bGreen[i];
-        BackingVioletSsc[i].Value += bViolet[i];
-      }
+        for (var i = 0; i < BackingReporter.Count; i++)
+        {
+          BackingReporter[i].Value += bReporter[i];
+          BackingForwardSsc[i].Value += bFsc[i];
+          BackingRedSsc[i].Value += bRed[i];
+          BackingGreenSsc[i].Value += bGreen[i];
+          BackingVioletSsc[i].Value += bViolet[i];
+        }
+      }).Task;
     }
     else
     {
-      for (var i = 0; i < CurrentReporter.Count; i++)
+      t = App.Current.Dispatcher.BeginInvoke(() =>
       {
-        CurrentReporter[i].Value += cReporter[i];
-        CurrentForwardSsc[i].Value += cFsc[i];
-        CurrentRedSsc[i].Value += cRed[i];
-        CurrentGreenSsc[i].Value += cGreen[i];
-        CurrentVioletSsc[i].Value += cViolet[i];
-      }
+        for (var i = 0; i < CurrentReporter.Count; i++)
+        {
+          CurrentReporter[i].Value += cReporter[i];
+          CurrentForwardSsc[i].Value += cFsc[i];
+          CurrentRedSsc[i].Value += cRed[i];
+          CurrentGreenSsc[i].Value += cGreen[i];
+          CurrentVioletSsc[i].Value += cViolet[i];
+        }
+      }).Task;
     }
-    ClearCounterArrays(!fromFile);
+
+    return t.ContinueWith(x =>
+    {
+      ClearCounterArrays(!fromFile);
+    });
   }
 }

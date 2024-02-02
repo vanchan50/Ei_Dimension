@@ -35,8 +35,8 @@ internal static class UITimer
       
     if (App.DiosApp.Device.IsMeasurementGoing)
     {
-      GraphsController.Instance.Update();
       ActiveRegionsStatsController.Instance.UpdateCurrentStats();
+      GraphsController.Instance.Update();
       App.Current.Dispatcher.Invoke(UpdateEventCounter);
       App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.BeadConcentration);
     }

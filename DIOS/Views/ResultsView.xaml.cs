@@ -1,5 +1,6 @@
 ﻿using DevExpress.Xpf.Charts;
 using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -24,10 +25,11 @@ public partial class ResultsView : UserControl, IHeatMapChart
 
   }
 
-  public void AddXYPointToHeatMap(SeriesPoint chartPoint, bool LargeXY = false)
+  public void AddXYPointToHeatMap(IEnumerable<SeriesPoint> chartPoints, bool LargeXY = false)
   {
     var heatmap = LargeXY ? LargeHeatMap : HeatMap;
-    heatmap.Points.Add(chartPoint);
+    //heatmap.Points.Add(chartPoint);
+    heatmap.Points.AddRange(chartPoints);
   }
 
   public void ChangeHeatMapPointColor(int index, SolidColorBrush brush)

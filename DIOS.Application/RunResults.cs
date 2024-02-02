@@ -117,4 +117,19 @@ public class RunResults
   {
     return ProcessedBeadsCollector.GetSpan();
   }
+
+  public ReadOnlySpan<ProcessedBead> GetNewBeadsAsSpan()
+  {
+    return ProcessedBeadsCollector.GetNewBeadsSpan();
+  }
+
+  public void FixSpanSize()
+  {
+    ProcessedBeadsCollector.FixSpanSize();
+  }
+
+  public void CycleSpanSize()
+  {
+    ProcessedBeadsCollector.CycleSpanSize();
+  }
 }

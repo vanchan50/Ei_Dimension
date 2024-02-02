@@ -370,6 +370,9 @@
   <data name="Components_Prime" xml:space="preserve">
     <value>灌注除气泡</value>
   </data>
+  <data name="Components_Rinse" xml:space="preserve">
+    <value>Rinse</value>
+  </data>
   <data name="Components_Sampling_ON" xml:space="preserve">
     <value>采样开启</value>
   </data>

@@ -180,7 +180,7 @@ public static class DataProcessor
     return HistogramData.Bins[peakIndex];
   }
 
-  public static void BinMapData(List<ProcessedBead> beadInfoList, bool current = true, bool hiRez = false)
+  public static void BinMapData(ReadOnlySpan<ProcessedBead> beadInfoList, bool current = true, bool hiRez = false)
   {
     //Puts points to Lists instead of filling 256x256 arrays.
     //traversing [,] array would be a downside, and condition check would also be included for every step.
@@ -190,7 +190,7 @@ public static class DataProcessor
     var boundary = hiRez ? HeatMapPoint.HiRezBins.Length - 1 : HeatMapPoint.bins.Length - 1;
     var i = 0;
 
-    while (i < beadInfoList.Count)
+    while (i < beadInfoList.Length)
     {
       var region = beadInfoList[i].region;
 

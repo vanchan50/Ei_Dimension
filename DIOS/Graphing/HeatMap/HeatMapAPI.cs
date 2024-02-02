@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Media;
 using DevExpress.Xpf.Charts;
 using Ei_Dimension.Core;
@@ -30,6 +31,7 @@ internal class HeatMapAPI
 
   private readonly double[] _colorBins;
   private static readonly SolidColorBrush[] _heatColors = new SolidColorBrush[13];
+  private readonly List<SeriesPoint> _pointsCache = new (50000);
   private static HeatMapAPI _instance;
   private IHeatMapChart _heatMapChart;
   private bool _chartAssigned;
@@ -92,10 +94,10 @@ internal class HeatMapAPI
     DisplayedMap = _data.GetAccordingDictionary(mapIndex, current);
   }
 
-  public void ReDraw(bool hiRez = false)
+  public Task ReDraw(bool hiRez = false)
   {
     if (DisplayedMap == null)
-      return;
+      return null;
 
     var heatMapList = DisplayedMap.Values; //DisplayedMap May change whenever, caching here is necessary
     if (heatMapList.Count > 0)
@@ -103,7 +105,7 @@ internal class HeatMapAPI
       int max = heatMapList.Select(point => point.Amplitude).Max();
 
       DataProcessor.GenerateLogSpaceD(1, max + 1, _heatColors.Length, _colorBins, true);
-      _heatMapChart.ClearHeatMaps();
+      App.Current.Dispatcher.Invoke(_heatMapChart.ClearHeatMaps);
       foreach (var heatMapPoint in heatMapList)
       {
         if (heatMapPoint.Amplitude <= 1) //transparent single member beads == 1  //Actual amplitude starts from 0
@@ -115,13 +117,24 @@ internal class HeatMapAPI
           X = heatMapPoint.Y;
           Y = heatMapPoint.X;
         }
-        PutColorizedPointOnHeatMapGraph(heatMapPoint.Amplitude, X, Y, hiRez);
+        CacheColorizedPoint(heatMapPoint.Amplitude, X, Y, hiRez);
       }
+
+      var t1 = DrawCallAsync_UI(hiRez);
+      return t1.ContinueWith(x =>
+        {
+          _pointsCache.Clear();
+        });
     }
     else if (heatMapList.Count == 0)
     {
-      _heatMapChart.ClearHeatMaps();
+      return App.Current.Dispatcher.BeginInvoke(() =>
+      {
+        _heatMapChart.ClearHeatMaps();
+      }).Task;
     }
+
+    return null;
   }
 
   public List<HeatMapPoint> GetCache(MapIndex mapIndex)
@@ -132,7 +145,7 @@ internal class HeatMapAPI
     return ret.Values.ToList();
   }
 
-  private void PutColorizedPointOnHeatMapGraph(int Amplitude, int X, int Y, bool hiRez)
+  private void CacheColorizedPoint(int Amplitude, int X, int Y, bool hiRez)
   {
     for (var j = 0; j < _heatColors.Length; j++)
     {
@@ -142,9 +155,17 @@ internal class HeatMapAPI
           break;
         var chartPoint = new SeriesPoint(X, Y);
         chartPoint.Brush = _heatColors[j];
-        _heatMapChart.AddXYPointToHeatMap(chartPoint, hiRez);
+        _pointsCache.Add(chartPoint);
         break;
       }
     }
+  }
+
+  private Task DrawCallAsync_UI(bool hiRez)
+  {
+    return App.Current.Dispatcher.BeginInvoke(() =>
+    {
+      _heatMapChart.AddXYPointToHeatMap(_pointsCache, hiRez);
+    }).Task;
   }
 }

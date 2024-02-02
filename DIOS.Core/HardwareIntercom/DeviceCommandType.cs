@@ -24,7 +24,7 @@ public enum DeviceCommandType
   ///<summary>Move motors. Target position is set with properties WellRowIndex, WellColumnIndex</summary>
   PositionWellPlate,
   RefreshDAC,
-  SetBaseLine,
+  Rinse,
   StartSampling,
   EndSampling,
   Startup,

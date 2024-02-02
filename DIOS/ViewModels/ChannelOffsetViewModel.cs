@@ -70,12 +70,6 @@ public class ChannelOffsetViewModel
     App.InitSTab("channeltab");
   }
 
-  public void SetOffsetClick()
-  {
-    UserInputHandler.InputSanityCheck();
-    App.DiosApp.Device.Hardware.SendCommand(DeviceCommandType.SetBaseLine);
-  }
-
   public void SliderValueChanged(int param)
   {
     //if (App.DiosApp.Device.BoardVersion < 1)
