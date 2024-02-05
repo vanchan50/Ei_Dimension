@@ -786,14 +786,8 @@ Volume, µL</value>
   <data name="Messages_Press_OK_ToContinue" xml:space="preserve">
     <value>请点击OK继续</value>
   </data>
-  <data name="Messages_Refill_Sheath_ToContinue" xml:space="preserve">
-    <value>请添加鞘液后点击OK继续</value>
-  </data>
   <data name="Messages_Reporter_Not_Specified" xml:space="preserve">
     <value>的报告分子MFI值</value>
-  </data>
-  <data name="Messages_Sheath_Empty" xml:space="preserve">
-    <value>鞘液已用完</value>
   </data>
   <data name="Messages_VerRegions_NotSelected" xml:space="preserve">
     <value>未选择验证区域</value>

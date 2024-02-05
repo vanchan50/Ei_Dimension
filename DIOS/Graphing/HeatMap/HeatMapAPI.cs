@@ -165,7 +165,14 @@ internal class HeatMapAPI
   {
     return App.Current.Dispatcher.BeginInvoke(() =>
     {
-      _heatMapChart.AddXYPointToHeatMap(_pointsCache, hiRez);
+      try
+      {
+        _heatMapChart.AddXYPointToHeatMap(_pointsCache, hiRez);
+      }
+      catch
+      {
+
+      }
     }).Task;
   }
 }

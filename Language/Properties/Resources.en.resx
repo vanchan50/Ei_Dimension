@@ -912,14 +912,8 @@ Update the Firmware?</value>
   <data name="Messages_Press_OK_ToContinue" xml:space="preserve">
     <value>Press OK to continue</value>
   </data>
-  <data name="Messages_Refill_Sheath_ToContinue" xml:space="preserve">
-    <value>Refill and press OK</value>
-  </data>
   <data name="Messages_Reporter_Not_Specified" xml:space="preserve">
     <value>reporter is not specified</value>
-  </data>
-  <data name="Messages_Sheath_Empty" xml:space="preserve">
-    <value>Sheath Empty</value>
   </data>
   <data name="Messages_VerRegions_NotSelected" xml:space="preserve">
     <value>No Verification regions selected</value>

@@ -2338,29 +2338,11 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Refill and press OK.
-        /// </summary>
-        public static string Messages_Refill_Sheath_ToContinue {
-            get {
-                return ResourceManager.GetString("Messages_Refill_Sheath_ToContinue", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to reporter is not specified.
         /// </summary>
         public static string Messages_Reporter_Not_Specified {
             get {
                 return ResourceManager.GetString("Messages_Reporter_Not_Specified", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Sheath Empty.
-        /// </summary>
-        public static string Messages_Sheath_Empty {
-            get {
-                return ResourceManager.GetString("Messages_Sheath_Empty", resourceCulture);
             }
         }
         

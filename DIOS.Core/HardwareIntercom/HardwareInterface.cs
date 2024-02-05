@@ -35,7 +35,7 @@ public class HardwareInterface
       case DeviceCommandType.RefreshDAC:
         commandCode = 0xD3;
         break;
-      case DeviceCommandType.Rinse:
+      case DeviceCommandType.SignalLED:
         commandCode = 0xD5;
         break;
       case DeviceCommandType.FlashSave:
@@ -65,7 +65,7 @@ public class HardwareInterface
         commandCode = 0xE1;
         _scriptTracker.Wait = true;
         break;
-      case DeviceCommandType.RenewSheath:
+      case DeviceCommandType.Rinse:
         commandCode = 0xE2;
         _scriptTracker.Wait = true;
         break;
@@ -133,12 +133,6 @@ public class HardwareInterface
     MainCommand(code: commandCode, parameter: param, cmd: extraAction);
     //TODO:make another method SendScript(); And enum "script" for 0xEn
     //_scriptTracker.WaitForScriptEndOrDoNothing();
-  }
-
-  public void RenewSheath()
-  {
-    SendCommand(DeviceCommandType.RenewSheath);
-    SetToken(HardwareToken.Synchronization); //clear sync token to allow recovery to run
   }
 
   public void SetParameter(DeviceParameterType primaryParameter, float value = 0f)
@@ -1080,6 +1074,9 @@ public class HardwareInterface
         break;
       case DeviceParameterType.SiPMTempCoeff:
         commandCode = 0x02;
+        break;
+      case DeviceParameterType.FluidBottleStatus:
+        commandCode = 0x04;
         break;
       case DeviceParameterType.SampleSyringeSize:
         commandCode = 0x05;

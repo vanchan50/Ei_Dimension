@@ -30,6 +30,13 @@ internal class IncomingUpdateHandler
       case DeviceParameterType.SiPMTempCoeff:
         update = () => ChannelOffsetViewModel.Instance.SiPMTempCoeff[0] = parameter.FloatParameter.ToString();
         break;
+      case DeviceParameterType.FluidBottleStatus:
+        update = () => MainViewModel.Instance.ColorBottleIndicators(
+          parameter.Parameter & (1 << 0),
+          parameter.Parameter & (1 << 1),
+          parameter.Parameter & (1 << 2)
+          );//sheath rinse waste
+        break;
       case DeviceParameterType.TotalBeadsInFirmware:
         update = () =>
         {
@@ -599,30 +606,7 @@ internal class IncomingUpdateHandler
         };
         break;
       case DeviceParameterType.SheathFlowError:
-        if (parameter.Parameter == (int)SheathFlowError.SheathEmpty)
-        {
-          void Act()
-          {
-            App.DiosApp.Device.Hardware.RenewSheath();
-            lock (_callingThreadLock)
-            {
-              Monitor.Pulse(_callingThreadLock);
-            }
-          }
-          App.Current.Dispatcher.Invoke(() =>
-          {
-            var msg1 = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Messages_Sheath_Empty),
-              Language.TranslationSource.Instance.CurrentCulture);
-            var msg2 = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Messages_Refill_Sheath_ToContinue),
-              Language.TranslationSource.Instance.CurrentCulture);
-            Notification.Show($"{msg1}\n{msg2}", Act, "OK");
-          });
-          lock (_callingThreadLock) //will hang "ReplyFromMC" thread until pulsed. Is that the desired behaviour?
-          {
-            Monitor.Wait(_callingThreadLock);
-          }
-        }
-        else if (parameter.Parameter == (int)SheathFlowError.HighPressure)
+        if (parameter.Parameter == (int)SheathFlowError.HighPressure)
         {
           void Act()
           {

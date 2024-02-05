@@ -106,5 +106,7 @@ public enum DeviceParameterType
   FluidicPathLength,
   UseWashStation,
   WashStationXCenterCoordinate,
-  WashStationDepth
+  WashStationDepth,
+  ///<summary>Subparamter: FluidBottleStatus</summary>
+  FluidBottleStatus
 }

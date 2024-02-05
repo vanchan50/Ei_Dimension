@@ -57,6 +57,7 @@ internal static class UITimer
       }
       if (System.Windows.Input.Keyboard.IsKeyDown(System.Windows.Input.Key.F3))
       {
+        App.DiosApp.Device.DEBUGOnParameterUpdate(DeviceParameterType.FluidBottleStatus, 0b101);
         //if (!_test)
         //{
         //  App.DiosApp.Device.DEBUGOnParameterUpdate(DeviceParameterType.CalibrationSuccess);

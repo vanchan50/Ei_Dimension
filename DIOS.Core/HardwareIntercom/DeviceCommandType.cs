@@ -30,5 +30,5 @@ public enum DeviceCommandType
   Startup,
   CalibrationModeActivate,
   CalibrationModeDeactivate,
-  RenewSheath
+  SignalLED
 }

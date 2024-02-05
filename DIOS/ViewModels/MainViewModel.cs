@@ -23,6 +23,12 @@ public class MainViewModel
   public virtual ObservableCollection<string> ScalingMarkerText { get; set; } = new(){ "Scaling is 1.0" };
   public virtual Brush NormalizationMarkerColor { get; set; }
   public virtual Brush ScalingMarkerColor { get; set; }
+  public virtual Brush SheathFluidMarkerColor { get; set; }
+  public virtual Brush RinseFluidMarkerColor { get; set; }
+  public virtual Brush WasteFluidMarkerColor { get; set; }
+  public virtual ObservableCollection<string> SheathFluidMarkerText { get; set; } = new() { "Sheath level is OK" };
+  public virtual ObservableCollection<string> RinseFluidMarkerText { get; set; } = new() { "Rinse level is OK" };
+  public virtual ObservableCollection<string> WasteFluidMarkerText { get; set; } = new() { "Waste level is OK" };
   public virtual Visibility EventCountVisible { get; set; } = Visibility.Visible;
   public virtual Visibility StartButtonsVisible { get; set; } = Visibility.Visible;
   public virtual Visibility ServiceVisibility { get; set; } = Visibility.Hidden;
@@ -45,6 +51,9 @@ public class MainViewModel
     App.KeyboardShow = (this.GetType().GetProperty(nameof(KeyboardVisible)), this);
     NormalizationMarkerColor = _activeBrush;
     ScalingMarkerColor = _inactiveBrush;
+    SheathFluidMarkerColor = _activeBrush;
+    RinseFluidMarkerColor = _activeBrush;
+    WasteFluidMarkerColor = _activeBrush;
     EventCountField = EventCountCurrent;
     Instance = this;
     TouchControlsEnabled = Settings.Default.TouchMode;
@@ -141,6 +150,42 @@ public class MainViewModel
     }
     NormalizationMarkerText[0] = "Normalization OFF";
     NormalizationMarkerColor = _inactiveBrush;
+  }
+
+  public void ColorBottleIndicators(int sheath, int rinse, int waste)
+  {
+    if (sheath is 0)
+    {
+      SheathFluidMarkerColor = _activeBrush;
+      SheathFluidMarkerText[0] = "Sheath level is OK";
+    }
+    else
+    {
+      SheathFluidMarkerColor = _WarningBrush;
+      SheathFluidMarkerText[0] = "Sheath level is LOW";
+    }
+
+    if (rinse is 0)
+    {
+      RinseFluidMarkerColor = _activeBrush;
+      RinseFluidMarkerText[0] = "Rinse level is OK";
+    }
+    else
+    {
+      RinseFluidMarkerColor = _WarningBrush;
+      RinseFluidMarkerText[0] = "Rinse level is LOW";
+    }
+
+    if (waste is 0)
+    {
+      WasteFluidMarkerColor = _activeBrush;
+      WasteFluidMarkerText[0] = "Waste level is OK";
+    }
+    else
+    {
+      WasteFluidMarkerColor = _WarningBrush;
+      WasteFluidMarkerText[0] = "Waste level is LOW";
+    }
   }
 
   public void SetBeadConcentrationMonitorValue(int value)

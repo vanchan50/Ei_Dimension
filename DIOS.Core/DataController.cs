@@ -231,6 +231,9 @@ internal class DataController
       case 0x02:
         outParameters = new ParameterUpdateEventArgs(DeviceParameterType.SiPMTempCoeff, floatParameter: cs.FParameter);
         break;
+      case 0x04:
+        outParameters = new ParameterUpdateEventArgs(DeviceParameterType.FluidBottleStatus, intParameter: cs.Parameter);
+        break;
       case 0x05:
         outParameters = new ParameterUpdateEventArgs(DeviceParameterType.SampleSyringeSize, intParameter: cs.Parameter);
         break;
@@ -701,14 +704,7 @@ internal class DataController
         break;
       case 0xF1:
         SheathFlowError errorType = SheathFlowError.Unspecified;
-        if (cs.Command == 1)
-        {
-          errorType = SheathFlowError.SheathEmpty;
-          _device.Hardware.SetToken(HardwareToken.Synchronization, 0x1000);
-          _device.Hardware.SetParameter(DeviceParameterType.PumpSheath, SyringeControlState.Halt, 0);
-          _device.Hardware.SetToken(HardwareToken.ActiveCommandQueueIndex, 1);
-        }
-        else if (cs.Command == 2)
+        if (cs.Command == 2)
           errorType = SheathFlowError.HighPressure;
 
         outParameters = new ParameterUpdateEventArgs(DeviceParameterType.SheathFlowError, intParameter: (int)errorType, floatParameter: cs.FParameter);

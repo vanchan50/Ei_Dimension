@@ -132,7 +132,7 @@
             VerticalAlignment="Top"
             Margin="1550,10,0,0"
             Visibility="{Binding EventCountVisible}"
-            Width="280">
+            Width="330">
       <StackPanel>
         <StackPanel Orientation="Horizontal">
           <StackPanel>
@@ -154,58 +154,117 @@
                    IsReadOnly="True"
                    Style="{StaticResource InputFieldStyle}"
                    Text="{Binding EventCountField[0]}"/>
+            <!--BeadConcentration Progress Bar-->
+            <dxe:ProgressBarEdit Width="188" Height="16"
+                                 HorizontalAlignment="Left"
+                                 Margin="0,4,0,0"
+                                 Value="{Binding BeadConcentrationMonitorValue}"
+                                 BorderBrush="Black"
+                                 Minimum="0"
+                                 Maximum="255"
+                                 ProgressBrush="{Binding BeadConcentrationMonitorColor}"
+                                 ContentDisplayMode="None"
+                                 DisplayFormatString="{}{0}%"/>
           </StackPanel>
           <!--Notification Circles-->
-          <StackPanel Orientation="Horizontal" Margin="10,58,0,0">
-            <Grid>
-              <Ellipse Width="35" Height="35"
-                     Stroke="{Binding NormalizationMarkerColor}"
-                     StrokeThickness="4"
-                     HorizontalAlignment="Center"
-                     VerticalAlignment="Center"/>
-              <TextBlock Text="N"
-                       FontSize="20"
-                       FontFamily="Verdana"
-                       FontWeight="ExtraBold"
-                       Foreground="{Binding NormalizationMarkerColor}"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center"/>
-              <ToolTipService.ToolTip>
-                <TextBlock FontSize="32" Text="{Binding NormalizationMarkerText[0]}"
-                         FontFamily="{StaticResource AppTextFont}"/>
-              </ToolTipService.ToolTip>
-            </Grid>
-            <Grid Margin="10,0,0,0">
-              <Ellipse Width="35" Height="35"
-                     Stroke="{Binding ScalingMarkerColor}"
-                     StrokeThickness="4"
-                     HorizontalAlignment="Center"
-                     VerticalAlignment="Center"/>
-              <TextBlock Text="S"
-                       FontSize="20"
-                       FontFamily="Verdana"
-                       FontWeight="ExtraBold"
-                       Foreground="{Binding ScalingMarkerColor}"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center"/>
-              <ToolTipService.ToolTip>
-                <TextBlock FontSize="32" Text="{Binding ScalingMarkerText[0]}"
-                         FontFamily="{StaticResource AppTextFont}"/>
-              </ToolTipService.ToolTip>
-            </Grid>
+          <StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="10,58,0,0">
+              <Grid>
+                <Ellipse Width="35" Height="35"
+                         Stroke="{Binding NormalizationMarkerColor}"
+                         StrokeThickness="4"
+                         HorizontalAlignment="Center"
+                         VerticalAlignment="Center"/>
+                <TextBlock Text="N"
+                           FontSize="20"
+                           FontFamily="Verdana"
+                           FontWeight="ExtraBold"
+                           Foreground="{Binding NormalizationMarkerColor}"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"/>
+                <ToolTipService.ToolTip>
+                  <TextBlock FontSize="32" Text="{Binding NormalizationMarkerText[0]}"
+                             FontFamily="{StaticResource AppTextFont}"/>
+                </ToolTipService.ToolTip>
+              </Grid>
+              <Grid Margin="10,0,0,0">
+                <Ellipse Width="35" Height="35"
+                         Stroke="{Binding ScalingMarkerColor}"
+                         StrokeThickness="4"
+                         HorizontalAlignment="Center"
+                         VerticalAlignment="Center"/>
+                <TextBlock Text="S"
+                           FontSize="20"
+                           FontFamily="Verdana"
+                           FontWeight="ExtraBold"
+                           Foreground="{Binding ScalingMarkerColor}"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"/>
+                <ToolTipService.ToolTip>
+                  <TextBlock FontSize="32" Text="{Binding ScalingMarkerText[0]}"
+                             FontFamily="{StaticResource AppTextFont}"/>
+                </ToolTipService.ToolTip>
+              </Grid>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal"
+                        Margin="0,8,0,0">
+              <Grid Margin="10,0,0,0">
+                <Ellipse Width="35" Height="35"
+                         Stroke="{Binding SheathFluidMarkerColor}"
+                         StrokeThickness="4"
+                         HorizontalAlignment="Center"
+                         VerticalAlignment="Center"/>
+                <TextBlock Text="S"
+                           FontSize="20"
+                           FontFamily="Verdana"
+                           FontWeight="ExtraBold"
+                           Foreground="{Binding SheathFluidMarkerColor}"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"/>
+                <ToolTipService.ToolTip>
+                  <TextBlock FontSize="32" Text="{Binding SheathFluidMarkerText[0]}"
+                             FontFamily="{StaticResource AppTextFont}"/>
+                </ToolTipService.ToolTip>
+              </Grid>
+              <Grid Margin="10,0,0,0">
+                <Ellipse Width="35" Height="35"
+                         Stroke="{Binding RinseFluidMarkerColor}"
+                         StrokeThickness="4"
+                         HorizontalAlignment="Center"
+                         VerticalAlignment="Center"/>
+                <TextBlock Text="R"
+                           FontSize="20"
+                           FontFamily="Verdana"
+                           FontWeight="ExtraBold"
+                           Foreground="{Binding RinseFluidMarkerColor}"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"/>
+                <ToolTipService.ToolTip>
+                  <TextBlock FontSize="32" Text="{Binding RinseFluidMarkerText[0]}"
+                             FontFamily="{StaticResource AppTextFont}"/>
+                </ToolTipService.ToolTip>
+              </Grid>
+              <Grid Margin="10,0,0,0">
+                <Ellipse Width="35" Height="35"
+                         Stroke="{Binding WasteFluidMarkerColor}"
+                         StrokeThickness="4"
+                         HorizontalAlignment="Center"
+                         VerticalAlignment="Center"/>
+                <TextBlock Text="W"
+                           FontSize="20"
+                           FontFamily="Verdana"
+                           FontWeight="ExtraBold"
+                           Foreground="{Binding WasteFluidMarkerColor}"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"/>
+                <ToolTipService.ToolTip>
+                  <TextBlock FontSize="32" Text="{Binding WasteFluidMarkerText[0]}"
+                             FontFamily="{StaticResource AppTextFont}"/>
+                </ToolTipService.ToolTip>
+              </Grid>
+            </StackPanel>
           </StackPanel>
         </StackPanel>
-        <!--BeadConcentration Progress Bar-->
-        <dxe:ProgressBarEdit Width="188" Height="16"
-                             HorizontalAlignment="Left"
-                             Margin="0,4,0,0"
-                             Value="{Binding BeadConcentrationMonitorValue}"
-                             BorderBrush="Black"
-                             Minimum="0"
-                             Maximum="255"
-                             ProgressBrush="{Binding BeadConcentrationMonitorColor}"
-                             ContentDisplayMode="None"
-                             DisplayFormatString="{}{0}%"/>
       </StackPanel>
     </Border>
 
