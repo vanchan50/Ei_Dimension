@@ -33,6 +33,7 @@
                   Height="75" Width="160"
                   HorizontalAlignment="Center"
                   VerticalAlignment="Center"
+                  x:Name="PrimeButton"
                   Margin="0,4,12,0">
             <Button.CommandParameter>
               <system:Int32>0</system:Int32>
@@ -44,6 +45,7 @@
                   Height="75" Width="160"
                   HorizontalAlignment="Center"
                   VerticalAlignment="Center"
+                  x:Name="RinseButton"
                   Margin="0,4,0,0">
             <Button.CommandParameter>
               <system:Int32>3</system:Int32>

@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media.Imaging;
+using Ei_Dimension.Views;
 
 namespace Ei_Dimension;
 
@@ -41,6 +42,8 @@ internal static class StartupFinalizer
     if (Program.SpecializedVer == CompanyID.China)
     {
       OverrideLogosWithChinese();
+      DashboardView.Instance.RinseButton.Visibility = Visibility.Collapsed;
+      DashboardView.Instance.PrimeButton.Width = 12 + 160 * 2;
     }
 
     App.MapRegions = new MapRegionsController(

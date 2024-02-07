@@ -229,6 +229,9 @@
   <data name="Channels_Calibration_Margin" xml:space="preserve">
     <value>校准裕度</value>
   </data>
+  <data name="Channels_ExternalPMT" xml:space="preserve">
+    <value>外部 PMT</value>
+  </data>
   <data name="Channels_Forward_Scatter" xml:space="preserve">
     <value>前向散射</value>
   </data>
@@ -385,6 +388,9 @@
   <data name="Components_Startup" xml:space="preserve">
     <value>启动</value>
   </data>
+  <data name="Components_Stats_Cutoff" xml:space="preserve">
+    <value>统计修剪 %</value>
+  </data>
   <data name="Components_Suppress_Warnings" xml:space="preserve">
     <value>解除警告</value>
   </data>
@@ -398,14 +404,13 @@
     <value>到样本池</value>
   </data>
   <data name="Components_Valve2" xml:space="preserve">
-    <value>Valve 2</value>
+    <value>阀门 2</value>
   </data>
   <data name="Components_Valves" xml:space="preserve">
     <value>阀门</value>
   </data>
   <data name="Components_WashStationPump" xml:space="preserve">
-    <value>Wash Station
-      Pump</value>
+    <value>清洗站泵</value>
   </data>
   <data name="Components_Wash_A" xml:space="preserve">
     <value>清洗 A</value>
@@ -469,6 +474,28 @@
   </data>
   <data name="DefaultTemplateName" xml:space="preserve">
     <value>模板名称</value>
+  </data>
+  <data name="DirectMemoryAccess_Code" xml:space="preserve">
+    <value>地址
+(Hex)</value>
+  </data>
+  <data name="DirectMemoryAccess_DirectMemoryAccess" xml:space="preserve">
+    <value>直接内存访问</value>
+  </data>
+  <data name="DirectMemoryAccess_DirectMemoryAccessButton" xml:space="preserve">
+    <value>直接内存访问</value>
+  </data>
+  <data name="DirectMemoryAccess_FloatValue" xml:space="preserve">
+    <value>浮点数值</value>
+  </data>
+  <data name="DirectMemoryAccess_Get" xml:space="preserve">
+    <value>读取</value>
+  </data>
+  <data name="DirectMemoryAccess_IntValue" xml:space="preserve">
+    <value>整数值</value>
+  </data>
+  <data name="DirectMemoryAccess_Set" xml:space="preserve">
+    <value>设置</value>
   </data>
   <data name="Dropdown_Boot" xml:space="preserve">
     <value>启动</value>
@@ -539,6 +566,10 @@
   <data name="Dropdown_Standard" xml:space="preserve">
     <value>标准</value>
   </data>
+  <data name="Dropdown_StandardPlusFSC" xml:space="preserve">
+    <value>标准
++ 前向散射</value>
+  </data>
   <data name="Dropdown_Valve_Left" xml:space="preserve">
     <value>阀门 左</value>
   </data>
@@ -549,7 +580,7 @@
     <value>激活区域</value>
   </data>
   <data name="Experiment_Agitate_Repeats" xml:space="preserve">
-    <value>Agitate Cycles</value>
+    <value>吹打次数</value>
   </data>
   <data name="Experiment_Agitate_Vol" xml:space="preserve">
     <value>吹打体积, µL</value>
@@ -614,12 +645,10 @@
     <value>上样顺序</value>
   </data>
   <data name="Experiment_Probewash_Repeats" xml:space="preserve">
-    <value>Probe Wash
-   Cycles</value>
+    <value>上样针清洗次数</value>
   </data>
   <data name="Experiment_ProbeWash_Vol" xml:space="preserve">
-    <value>Probe Wash
-Volume, µL</value>
+    <value>上样针清洗体积, µL</value>
   </data>
   <data name="Experiment_Samp_Vol" xml:space="preserve">
     <value>样本体积, µL</value>
@@ -631,7 +660,7 @@ Volume, µL</value>
     <value>保存模板</value>
   </data>
   <data name="Experiment_Scan" xml:space="preserve">
-    <value>Scan</value>
+    <value>扫描</value>
   </data>
   <data name="Experiment_Select_Wells" xml:space="preserve">
     <value>孔板选择</value>
@@ -655,7 +684,7 @@ Volume, µL</value>
     <value>系统监视窗</value>
   </data>
   <data name="Experiment_Timer" xml:space="preserve">
-    <value>Timer</value>
+    <value>计时器</value>
   </data>
   <data name="Experiment_Total_Events" xml:space="preserve">
     <value>已选区总计数</value>
@@ -667,7 +696,7 @@ Volume, µL</value>
     <value>验证条形码</value>
   </data>
   <data name="Experiment_Wash_Repeats" xml:space="preserve">
-    <value>Wash Cycles</value>
+    <value>清洗次数</value>
   </data>
   <data name="Experiment_Wash_Vol" xml:space="preserve">
     <value>清洗体积, µL</value>
@@ -867,14 +896,20 @@ Volume, µL</value>
   <data name="Motors_Steps" xml:space="preserve">
     <value>步数</value>
   </data>
+  <data name="Motors_Tray" xml:space="preserve">
+    <value>扩展</value>
+  </data>
   <data name="Motors_Up" xml:space="preserve">
     <value>向上</value>
   </data>
   <data name="Motors_WashStation" xml:space="preserve">
-    <value>Wash Station</value>
+    <value>清洗站</value>
   </data>
   <data name="Motors_ZWashDepth" xml:space="preserve">
-    <value>Wash</value>
+    <value>清洗深度</value>
+  </data>
+  <data name="MTBF_mode" xml:space="preserve">
+    <value>连续模式</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>检测项目</value>
@@ -1083,43 +1118,49 @@ Volume, µL</value>
     <value>Peak</value>
   </data>
   <data name="SyringeSpeeds_AgitateFromWellEdge" xml:space="preserve">
-    <value>Agitate From Well Edge</value>
+    <value>孔板边缘吹打</value>
   </data>
   <data name="SyringeSpeeds_DistanceToEdge" xml:space="preserve">
-    <value>Distance To Edge</value>
+    <value>边缘距离</value>
+  </data>
+  <data name="SyringeSpeeds_DualSampleSyringes" xml:space="preserve">
+    <value>双样注射泵</value>
   </data>
   <data name="SyringeSpeeds_EdgeAgitateHeight" xml:space="preserve">
-    <value>Edge Agitate Δ Height</value>
+    <value>边缘吹打深度</value>
   </data>
   <data name="SyringeSpeeds_FluidicPathsLengths" xml:space="preserve">
-    <value>Fluidic Path Lengths</value>
+    <value>流体通道长度</value>
   </data>
   <data name="SyringeSpeeds_Fluidic_FlowCellVol" xml:space="preserve">
-    <value>Flow Cell Volume, nl</value>
+    <value>流动池体积, nl</value>
   </data>
   <data name="SyringeSpeeds_Fluidic_LoopAToFlowCell" xml:space="preserve">
-    <value>Loop A To Flow Cell, nl</value>
+    <value>A循环至流动池, nl</value>
   </data>
   <data name="SyringeSpeeds_Fluidic_LoopAToPickupNeedle" xml:space="preserve">
-    <value>Loop A To Pickup Needle, nl</value>
+    <value>A循环至取液针, nl</value>
   </data>
   <data name="SyringeSpeeds_Fluidic_LoopAVol" xml:space="preserve">
-    <value>Loop A Volume, μl</value>
+    <value>A循环体积, μl</value>
   </data>
   <data name="SyringeSpeeds_Fluidic_LoopBToFlowCell" xml:space="preserve">
-    <value>Loop B To Flow Cell, nl</value>
+    <value>B循环至流动池, nl</value>
   </data>
   <data name="SyringeSpeeds_Fluidic_LoopBToPickupNeedle" xml:space="preserve">
-    <value>Loop B To Pickup Needle, nl</value>
+    <value>B循环至取液针, nl</value>
   </data>
   <data name="SyringeSpeeds_Fluidic_LoopBVol" xml:space="preserve">
-    <value>Loop B Volume, μl</value>
+    <value>B循环体积, μl</value>
   </data>
   <data name="SyringeSpeeds_Fluidic_SpacerSlug" xml:space="preserve">
-    <value>Spacer Slug, μl</value>
+    <value>间隔块, μl</value>
   </data>
   <data name="SyringeSpeeds_Flush" xml:space="preserve">
     <value>冲洗</value>
+  </data>
+  <data name="SyringeSpeeds_FlushCycles" xml:space="preserve">
+    <value>冲洗循环</value>
   </data>
   <data name="SyringeSpeeds_HiSens" xml:space="preserve">
     <value>高灵敏度</value>
@@ -1139,8 +1180,11 @@ Volume, µL</value>
   <data name="SyringeSpeeds_Samples" xml:space="preserve">
     <value>样本</value>
   </data>
+  <data name="SyringeSpeeds_SampleSyringeSize" xml:space="preserve">
+    <value>注射泵尺寸, μL</value>
+  </data>
   <data name="SyringeSpeeds_SheathFlushVolume" xml:space="preserve">
-    <value>Sheath Flush Volume, μl</value>
+    <value>冲洗鞘液体积, μL</value>
   </data>
   <data name="SyringeSpeeds_Speeds" xml:space="preserve">
     <value>注射泵速度</value>
