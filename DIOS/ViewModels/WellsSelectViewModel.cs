@@ -179,12 +179,12 @@ public class WellsSelectViewModel
     return wells;
   }
 
-  public IReadOnlyCollection<Well> MakeCalibrationWell()
+  public IReadOnlyCollection<Well> MakeCalibrationWell(uint beadsToCapture)
   {
     //after cal case
     var oldWells = OutputWells(Array.Empty<(int, string)>());
     var oldWell = oldWells[0];
-    var calWell = oldWell.ToCalibrationWell();
+    var calWell = oldWell.ToCalibrationWell(beadsToCapture);
     return new List<Well> { calWell };
     //after succesful cal, make a custom Well, that is tuned for the 256 custom thing
   }

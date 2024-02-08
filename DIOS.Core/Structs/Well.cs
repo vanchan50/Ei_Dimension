@@ -80,7 +80,7 @@ public class Well
   /// Produce a similar Well; No regions defined, and 256BeadsToRead
   /// </summary>
   /// <returns></returns>
-  public Well ToCalibrationWell()
+  public Well ToCalibrationWell(uint beadsToCapture)
   {
     var calibrationWell = new Well(
       RowIdx,
@@ -94,7 +94,7 @@ public class Well
       WashRepeats,
       ProbeWashRepeats,
       AgitateRepeats,
-      0, 256, 0, Termination.TotalBeadsCaptured);
+      0, beadsToCapture, 0, Termination.TotalBeadsCaptured);
     return calibrationWell;
   }
 }
