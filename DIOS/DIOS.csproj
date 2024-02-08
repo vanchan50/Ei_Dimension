@@ -63,12 +63,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="DevExpress.Images" Version="23.2.3" />
+    <PackageReference Include="DevExpress.Images" Version="23.2.4" />
     <PackageReference Include="DevExpress.Mvvm.CodeGenerators" Version="22.1.1" />
-    <PackageReference Include="DevExpress.Wpf.Charts" Version="23.2.3" />
-    <PackageReference Include="DevExpress.Wpf.Controls" Version="23.2.3" />
-    <PackageReference Include="DevExpress.Wpf.Themes.Office2019Colorful" Version="23.2.3" />
-    <PackageReference Include="DevExpress.Wpf.Themes.VS2019Blue" Version="23.2.3" />
+    <PackageReference Include="DevExpress.Wpf.Charts" Version="23.2.4" />
+    <PackageReference Include="DevExpress.Wpf.Controls" Version="23.2.4" />
+    <PackageReference Include="DevExpress.Wpf.Themes.Office2019Colorful" Version="23.2.4" />
+    <PackageReference Include="DevExpress.Wpf.Themes.VS2019Blue" Version="23.2.4" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />

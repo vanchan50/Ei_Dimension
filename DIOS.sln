@@ -32,6 +32,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SerialService", "SerialServ
 		{3AD313DD-C46B-4127-B5E1-4A8D9CB81563} = {3AD313DD-C46B-4127-B5E1-4A8D9CB81563}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LEDCalibrationTool", "LEDCalibrationTool\LEDCalibrationTool.csproj", "{B8F7E6B2-0ED4-4694-A75A-4224D211E87D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -102,6 +104,14 @@ Global
 		{D8A2ABC6-BA77-4AFE-A553-FABF3F57424D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D8A2ABC6-BA77-4AFE-A553-FABF3F57424D}.Release|x64.ActiveCfg = Release|x64
 		{D8A2ABC6-BA77-4AFE-A553-FABF3F57424D}.Release|x64.Build.0 = Release|x64
+		{B8F7E6B2-0ED4-4694-A75A-4224D211E87D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8F7E6B2-0ED4-4694-A75A-4224D211E87D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8F7E6B2-0ED4-4694-A75A-4224D211E87D}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{B8F7E6B2-0ED4-4694-A75A-4224D211E87D}.Debug|x64.Build.0 = Debug|Any CPU
+		{B8F7E6B2-0ED4-4694-A75A-4224D211E87D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8F7E6B2-0ED4-4694-A75A-4224D211E87D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8F7E6B2-0ED4-4694-A75A-4224D211E87D}.Release|x64.ActiveCfg = Release|Any CPU
+		{B8F7E6B2-0ED4-4694-A75A-4224D211E87D}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

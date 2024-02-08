@@ -1,0 +1,15 @@
+﻿<Application x:Class="LEDCalibrationTool.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             StartupUri="MainWindow.xaml">
+  <Application.Resources>
+    <ResourceDictionary>
+      <SolidColorBrush x:Key="AppBackground" Color="White"/>
+      <SolidColorBrush x:Key="ButtonBackground" Color="#3e58a7"/>
+      <SolidColorBrush x:Key="RibbonBackgroundActive" Color="#d8e1f3"/>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/Styles/InputFieldStyle.xaml"/>
+      </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+  </Application.Resources>
+</Application>

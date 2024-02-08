@@ -1,0 +1,48 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <Style TargetType="{x:Type TextBox}"
+         x:Key="InputFieldStyle">
+    
+    <Setter Property="SnapsToDevicePixels" Value="True"/>
+    <Setter Property="OverridesDefaultStyle" Value="True"/>
+    <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+    <Setter Property="AllowDrop" Value="true"/>
+    <Setter Property="Foreground" Value="{DynamicResource AppTextColor}"/>
+    <Setter Property="FontFamily" Value="{DynamicResource AppTextFont}"/>
+    <Setter Property="FontSize" Value="30"/>
+    <Setter Property="Height" Value="43"/>
+    <Setter Property="CaretBrush" Value="Transparent"/>
+    <Setter Property="Background" Value="{DynamicResource AppBackground}"/>
+    <Setter Property="Template">
+      <Setter.Value>
+
+        <ControlTemplate TargetType="{x:Type TextBoxBase}">
+          <Border Name="Border">
+            <Grid>
+              <Rectangle Name="ToggleButtonRect" VerticalAlignment="Stretch"
+                         HorizontalAlignment="Stretch"
+                         Fill="{TemplateBinding Background}"
+                         Stroke="{DynamicResource ButtonBackgroundHighlighted}"
+                         StrokeThickness="1"/>
+              <ScrollViewer Margin="10,0,10,0"
+                            HorizontalAlignment="Center"
+                            x:Name="PART_ContentHost"/>
+            </Grid>
+          </Border>
+          <ControlTemplate.Triggers>
+            <MultiTrigger>
+              <MultiTrigger.Conditions>
+                <Condition Property="IsFocused" Value="True"/>
+                <Condition Property="IsReadOnly" Value="False"/>
+              </MultiTrigger.Conditions>
+              <Setter Property="Background" Value="{DynamicResource MenuButtonBackgroundActive}"/>
+            </MultiTrigger>
+            <Trigger Property="IsReadOnly" Value="True">
+              <Setter Property="Background" Value="{DynamicResource HaltButtonBackground}"/>
+            </Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+</ResourceDictionary>

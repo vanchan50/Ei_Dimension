@@ -1,0 +1,358 @@
+﻿<UserControl 
+  x:Class="LEDCalibrationTool.Views.MainView"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+  xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+  xmlns:ViewModels="clr-namespace:LEDCalibrationTool.ViewModels"
+  mc:Ignorable="d" d:DesignHeight="800" d:DesignWidth="1000">
+  <UserControl.DataContext>
+      <ViewModels:MainViewModel/>
+  </UserControl.DataContext>
+  <StackPanel Orientation="Horizontal">
+    <Border Background="{StaticResource RibbonBackgroundActive}"
+            Width="180" Height="700"
+            Margin="0,42,0,0">
+      <StackPanel VerticalAlignment="Stretch" Name="SP"
+                    Width="180">
+        <TextBox HorizontalAlignment="Stretch"
+                      Margin="10,10,10,0"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding ChannelsOffsetParameters[0]}">
+          <dxmvvm:Interaction.Behaviors>
+            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="0"/>
+            <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+          </dxmvvm:Interaction.Behaviors>
+        </TextBox>
+        <TextBox HorizontalAlignment="Stretch"
+                      Margin="10,14,10,0"
+                      Style="{StaticResource InputFieldStyle}"
+                      Text="{Binding ChannelsOffsetParameters[1]}">
+          <dxmvvm:Interaction.Behaviors>
+            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="1"/>
+            <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+          </dxmvvm:Interaction.Behaviors>
+        </TextBox>
+        <TextBox HorizontalAlignment="Stretch"
+                     Margin="10,13,10,0"
+                     Style="{StaticResource InputFieldStyle}"
+                     Text="{Binding ChannelsOffsetParameters[2]}">
+          <dxmvvm:Interaction.Behaviors>
+            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="2"/>
+            <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+          </dxmvvm:Interaction.Behaviors>
+        </TextBox>
+        <TextBox HorizontalAlignment="Stretch"
+                     Margin="10,14,10,0"
+                     Style="{StaticResource InputFieldStyle}"
+                     Text="{Binding ChannelsOffsetParameters[3]}">
+          <dxmvvm:Interaction.Behaviors>
+            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="3"/>
+            <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+          </dxmvvm:Interaction.Behaviors>
+        </TextBox>
+        <TextBox HorizontalAlignment="Stretch"
+                     Margin="10,13,10,0"
+                     Style="{StaticResource InputFieldStyle}"
+                     Text="{Binding ChannelsOffsetParameters[4]}">
+          <dxmvvm:Interaction.Behaviors>
+            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="4"/>
+            <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+          </dxmvvm:Interaction.Behaviors>
+        </TextBox>
+        <TextBox HorizontalAlignment="Stretch"
+                     Margin="10,15,10,0"
+                     Style="{StaticResource InputFieldStyle}"
+                     Text="{Binding ChannelsOffsetParameters[5]}">
+          <dxmvvm:Interaction.Behaviors>
+            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="5"/>
+            <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+          </dxmvvm:Interaction.Behaviors>
+        </TextBox>
+        <TextBox HorizontalAlignment="Stretch"
+                     Margin="10,15,10,0"
+                     Style="{StaticResource InputFieldStyle}"
+                     Text="{Binding ChannelsOffsetParameters[6]}">
+          <dxmvvm:Interaction.Behaviors>
+            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="6"/>
+            <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+          </dxmvvm:Interaction.Behaviors>
+        </TextBox>
+        <TextBox HorizontalAlignment="Stretch"
+                     Margin="10,16,10,0"
+                     Style="{StaticResource InputFieldStyle}"
+                     Text="{Binding ChannelsOffsetParameters[7]}">
+          <dxmvvm:Interaction.Behaviors>
+            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="7"/>
+            <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+          </dxmvvm:Interaction.Behaviors>
+        </TextBox>
+        <TextBox HorizontalAlignment="Stretch"
+                     Margin="10,15,10,0"
+                     Style="{StaticResource InputFieldStyle}"
+                     Text="{Binding ChannelsOffsetParameters[8]}">
+          <dxmvvm:Interaction.Behaviors>
+            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="8"/>
+            <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+          </dxmvvm:Interaction.Behaviors>
+        </TextBox>
+        <TextBox HorizontalAlignment="Stretch"
+                 Margin="10,15,10,0"
+                 Style="{StaticResource InputFieldStyle}"
+                 Text="{Binding ChannelsOffsetParameters[9]}">
+          <dxmvvm:Interaction.Behaviors>
+            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="9"/>
+            <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+          </dxmvvm:Interaction.Behaviors>
+        </TextBox>
+        <TextBox HorizontalAlignment="Stretch"
+                 Margin="10,15,10,0"
+                 Style="{StaticResource InputFieldStyle}"
+                 Text="{Binding ChannelsOffsetParameters[10]}">
+          <dxmvvm:Interaction.Behaviors>
+            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="10"/>
+            <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+          </dxmvvm:Interaction.Behaviors>
+        </TextBox>
+        <TextBox HorizontalAlignment="Stretch"
+                 Margin="10,15,10,0"
+                 Style="{StaticResource InputFieldStyle}"
+                 Text="{Binding ChannelsOffsetParameters[11]}">
+          <dxmvvm:Interaction.Behaviors>
+            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="11"/>
+            <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+          </dxmvvm:Interaction.Behaviors>
+        </TextBox>
+      </StackPanel>
+    </Border>
+    <!--Sliders-->
+    <StackPanel Margin="10,48,0,0"
+                Height="710">
+      <StackPanel.Resources>
+        <Style x:Key="trackBarEditThumbStyle"
+                 TargetType="Thumb">
+          <Setter Property="Template">
+            <Setter.Value>
+              <ControlTemplate>
+                <Ellipse Width="48" Height="48"
+                           Cursor="Hand"
+                           Fill="{StaticResource ButtonBackground}"
+                           Stroke="{StaticResource AppBackground}"
+                           StrokeThickness="2"/>
+              </ControlTemplate>
+            </Setter.Value>
+          </Setter>
+        </Style>
+        <Style x:Key="nearTrackStyle"
+                 TargetType="RepeatButton">
+          <Setter Property="Template">
+            <Setter.Value>
+              <ControlTemplate>
+                <Border Background="{StaticResource ButtonBackground}"
+                          Height="24"
+                          VerticalAlignment="Center"
+                          Margin="5,0,-5,0"
+                          CornerRadius="4"/>
+              </ControlTemplate>
+            </Setter.Value>
+          </Setter>
+        </Style>
+        <Style x:Key="farTrackStyle"
+                 TargetType="RepeatButton">
+          <Setter Property="Template">
+            <Setter.Value>
+              <ControlTemplate>
+                <Border Background="{DynamicResource RibbonBackgroundActive}"
+                          Height="24"
+                          VerticalAlignment="Center"
+                          Margin="-5,0,5,0"
+                          CornerRadius="4" />
+              </ControlTemplate>
+            </Setter.Value>
+          </Setter>
+        </Style>
+      </StackPanel.Resources>
+      <dxe:TrackBarEdit Margin="0,7,0,0" 
+                          Minimum="0" Maximum="255"
+                          Width="360" EditValue="{Binding SliderValues[0]}"
+                          CornerRadius="4" TickPlacement="None"
+                          EditValuePostMode="Immediate"
+                          NearTrackStyle="{StaticResource nearTrackStyle}"
+                          FarTrackStyle="{StaticResource farTrackStyle}"
+                          ThumbStyle="{StaticResource trackBarEditThumbStyle}">
+        <dxmvvm:Interaction.Behaviors>
+          <dxmvvm:EventToCommand EventName="EditValueChanged"
+                                   Command="{Binding SliderValueChangedCommand}" CommandParameter="0"/>
+        </dxmvvm:Interaction.Behaviors>
+      </dxe:TrackBarEdit>
+      <dxe:TrackBarEdit Margin="0,10,0,0" 
+                          Minimum="0" Maximum="255"
+                          Width="360" EditValue="{Binding SliderValues[1]}"
+                          CornerRadius="4" TickPlacement="None"
+                          EditValuePostMode="Immediate"
+                          NearTrackStyle="{StaticResource nearTrackStyle}"
+                          FarTrackStyle="{StaticResource farTrackStyle}"
+                          ThumbStyle="{StaticResource trackBarEditThumbStyle}">
+        <dxmvvm:Interaction.Behaviors>
+          <dxmvvm:EventToCommand EventName="EditValueChanged"
+                                   Command="{Binding SliderValueChangedCommand}" CommandParameter="1"/>
+        </dxmvvm:Interaction.Behaviors>
+      </dxe:TrackBarEdit>
+      <dxe:TrackBarEdit Margin="0,10,0,0" 
+                          Minimum="0" Maximum="255"
+                          Width="360" EditValue="{Binding SliderValues[2]}"
+                          CornerRadius="4" TickPlacement="None"
+                          EditValuePostMode="Immediate"
+                          NearTrackStyle="{StaticResource nearTrackStyle}"
+                          FarTrackStyle="{StaticResource farTrackStyle}"
+                          ThumbStyle="{StaticResource trackBarEditThumbStyle}">
+        <dxmvvm:Interaction.Behaviors>
+          <dxmvvm:EventToCommand EventName="EditValueChanged"
+                                   Command="{Binding SliderValueChangedCommand}" CommandParameter="2"/>
+        </dxmvvm:Interaction.Behaviors>
+      </dxe:TrackBarEdit>
+      <dxe:TrackBarEdit Margin="0,10,0,0" 
+                          Minimum="0" Maximum="255"
+                          Width="360" EditValue="{Binding SliderValues[3]}"
+                          CornerRadius="4" TickPlacement="None"
+                          EditValuePostMode="Immediate"
+                          NearTrackStyle="{StaticResource nearTrackStyle}"
+                          FarTrackStyle="{StaticResource farTrackStyle}"
+                          ThumbStyle="{StaticResource trackBarEditThumbStyle}">
+        <dxmvvm:Interaction.Behaviors>
+          <dxmvvm:EventToCommand EventName="EditValueChanged"
+                                   Command="{Binding SliderValueChangedCommand}" CommandParameter="3"/>
+        </dxmvvm:Interaction.Behaviors>
+      </dxe:TrackBarEdit>
+      <dxe:TrackBarEdit Margin="0,10,0,0" 
+                          Minimum="0" Maximum="255"
+                          Width="360" EditValue="{Binding SliderValues[4]}"
+                          CornerRadius="4" TickPlacement="None"
+                          EditValuePostMode="Immediate"
+                          NearTrackStyle="{StaticResource nearTrackStyle}"
+                          FarTrackStyle="{StaticResource farTrackStyle}"
+                          ThumbStyle="{StaticResource trackBarEditThumbStyle}">
+        <dxmvvm:Interaction.Behaviors>
+          <dxmvvm:EventToCommand EventName="EditValueChanged"
+                                   Command="{Binding SliderValueChangedCommand}" CommandParameter="4"/>
+        </dxmvvm:Interaction.Behaviors>
+      </dxe:TrackBarEdit>
+      <dxe:TrackBarEdit Margin="0,10,0,0" 
+                          Minimum="0" Maximum="255"
+                          Width="360" EditValue="{Binding SliderValues[5]}"
+                          CornerRadius="4" TickPlacement="None"
+                          EditValuePostMode="Immediate"
+                          NearTrackStyle="{StaticResource nearTrackStyle}"
+                          FarTrackStyle="{StaticResource farTrackStyle}"
+                          ThumbStyle="{StaticResource trackBarEditThumbStyle}">
+        <dxmvvm:Interaction.Behaviors>
+          <dxmvvm:EventToCommand EventName="EditValueChanged"
+                                   Command="{Binding SliderValueChangedCommand}" CommandParameter="5"/>
+        </dxmvvm:Interaction.Behaviors>
+      </dxe:TrackBarEdit>
+      <dxe:TrackBarEdit Margin="0,10,0,0" 
+                          Minimum="0" Maximum="255"
+                          Width="360" EditValue="{Binding SliderValues[6]}"
+                          CornerRadius="4" TickPlacement="None"
+                          EditValuePostMode="Immediate"
+                          NearTrackStyle="{StaticResource nearTrackStyle}"
+                          FarTrackStyle="{StaticResource farTrackStyle}"
+                          ThumbStyle="{StaticResource trackBarEditThumbStyle}">
+        <dxmvvm:Interaction.Behaviors>
+          <dxmvvm:EventToCommand EventName="EditValueChanged"
+                                   Command="{Binding SliderValueChangedCommand}" CommandParameter="6"/>
+        </dxmvvm:Interaction.Behaviors>
+      </dxe:TrackBarEdit>
+      <dxe:TrackBarEdit Margin="0,10,0,0" 
+                          Minimum="0" Maximum="255"
+                          Width="360" EditValue="{Binding SliderValues[7]}"
+                          CornerRadius="4" TickPlacement="None"
+                          EditValuePostMode="Immediate"
+                          NearTrackStyle="{StaticResource nearTrackStyle}"
+                          FarTrackStyle="{StaticResource farTrackStyle}"
+                          ThumbStyle="{StaticResource trackBarEditThumbStyle}">
+        <dxmvvm:Interaction.Behaviors>
+          <dxmvvm:EventToCommand EventName="EditValueChanged"
+                                   Command="{Binding SliderValueChangedCommand}" CommandParameter="7"/>
+        </dxmvvm:Interaction.Behaviors>
+      </dxe:TrackBarEdit>
+      <dxe:TrackBarEdit Margin="0,10,0,0" 
+                          Minimum="0" Maximum="255"
+                          Width="360" EditValue="{Binding SliderValues[8]}"
+                          CornerRadius="4" TickPlacement="None"
+                          EditValuePostMode="Immediate"
+                          NearTrackStyle="{StaticResource nearTrackStyle}"
+                          FarTrackStyle="{StaticResource farTrackStyle}"
+                          ThumbStyle="{StaticResource trackBarEditThumbStyle}">
+        <dxmvvm:Interaction.Behaviors>
+          <dxmvvm:EventToCommand EventName="EditValueChanged"
+                                   Command="{Binding SliderValueChangedCommand}" CommandParameter="8"/>
+        </dxmvvm:Interaction.Behaviors>
+      </dxe:TrackBarEdit>
+      <dxe:TrackBarEdit Margin="0,10,0,0" 
+                        Minimum="0" Maximum="255"
+                        Width="360" EditValue="{Binding SliderValues[9]}"
+                        CornerRadius="4" TickPlacement="None"
+                        EditValuePostMode="Immediate"
+                        NearTrackStyle="{StaticResource nearTrackStyle}"
+                        FarTrackStyle="{StaticResource farTrackStyle}"
+                        ThumbStyle="{StaticResource trackBarEditThumbStyle}">
+        <dxmvvm:Interaction.Behaviors>
+          <dxmvvm:EventToCommand EventName="EditValueChanged"
+                                 Command="{Binding SliderValueChangedCommand}" CommandParameter="9"/>
+        </dxmvvm:Interaction.Behaviors>
+      </dxe:TrackBarEdit>
+      <dxe:TrackBarEdit Margin="0,10,0,0" 
+                        Minimum="0" Maximum="255"
+                        Width="360" EditValue="{Binding SliderValues[10]}"
+                        CornerRadius="4" TickPlacement="None"
+                        EditValuePostMode="Immediate"
+                        NearTrackStyle="{StaticResource nearTrackStyle}"
+                        FarTrackStyle="{StaticResource farTrackStyle}"
+                        ThumbStyle="{StaticResource trackBarEditThumbStyle}">
+        <dxmvvm:Interaction.Behaviors>
+          <dxmvvm:EventToCommand EventName="EditValueChanged"
+                                 Command="{Binding SliderValueChangedCommand}" CommandParameter="10"/>
+        </dxmvvm:Interaction.Behaviors>
+      </dxe:TrackBarEdit>
+      <dxe:TrackBarEdit Margin="0,10,0,0" 
+                        Minimum="0" Maximum="255"
+                        Width="360" EditValue="{Binding SliderValues[11]}"
+                        CornerRadius="4" TickPlacement="None"
+                        EditValuePostMode="Immediate"
+                        NearTrackStyle="{StaticResource nearTrackStyle}"
+                        FarTrackStyle="{StaticResource farTrackStyle}"
+                        ThumbStyle="{StaticResource trackBarEditThumbStyle}">
+        <dxmvvm:Interaction.Behaviors>
+          <dxmvvm:EventToCommand EventName="EditValueChanged"
+                                 Command="{Binding SliderValueChangedCommand}" CommandParameter="11"/>
+        </dxmvvm:Interaction.Behaviors>
+      </dxe:TrackBarEdit>
+      <!-->
+        <StackPanel Orientation="Horizontal"
+                    Margin="15,10,0,0">
+          <CheckBox FontFamily="{StaticResource AppTextFont}"
+                    FontSize="30"
+                    FontWeight="UltraBold"
+                    Foreground="{StaticResource AppTextColor}"
+                    Margin="0,4,0,0"
+                    Style="{StaticResource CheckboxStyle}"
+                    IsChecked="{Binding Checkbox[0],Mode=OneWay}">
+            <dxmvvm:Interaction.Behaviors>
+              <dxmvvm:EventToCommand EventName="Checked" Command="{Binding CheckedBoxCommand}" CommandParameter="1"/>
+              <dxmvvm:EventToCommand EventName="Unchecked" Command="{Binding CheckedBoxCommand}" CommandParameter="0"/>
+            </dxmvvm:Interaction.Behaviors>
+          </CheckBox>
+          <TextBlock Text="{lang:Loc Channels_Subtract_Baseline}"
+                     FontFamily="{StaticResource AppTextFont}"
+                     FontSize="30"
+                     FontWeight="UltraBold"
+                     Foreground="{StaticResource AppTextColor}"
+                     Margin="10,0,0,0"/>
+        </StackPanel>
+        <-->
+    </StackPanel>
+  </StackPanel>
+</UserControl>
