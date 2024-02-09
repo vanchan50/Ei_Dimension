@@ -5,9 +5,15 @@
   <Application.Resources>
     <ResourceDictionary>
       <SolidColorBrush x:Key="AppBackground" Color="White"/>
+      <SolidColorBrush x:Key="AppTextColor" Color="Black"/>
       <SolidColorBrush x:Key="ButtonBackground" Color="#3e58a7"/>
       <SolidColorBrush x:Key="RibbonBackgroundActive" Color="#d8e1f3"/>
+      <SolidColorBrush x:Key="MenuButtonBackground" Color="#ededee"/>
+      <SolidColorBrush x:Key="MenuButtonBackgroundActive" Color="#87abda"/>
+      <SolidColorBrush x:Key="HaltButtonBackgroundHighlighted" Color="#9499a9"/>
+      <FontFamily x:Key="AppTextFont">Segoe UI Semilight</FontFamily>
       <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/Styles/ToggleButtonThemeStyle.xaml"/>
         <ResourceDictionary Source="/Styles/InputFieldStyle.xaml"/>
       </ResourceDictionary.MergedDictionaries>
     </ResourceDictionary>

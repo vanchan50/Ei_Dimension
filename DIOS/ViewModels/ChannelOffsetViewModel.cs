@@ -6,7 +6,6 @@ using System.Windows.Controls;
 using DIOS.Application;
 using DIOS.Core;
 using DIOS.Core.HardwareIntercom;
-using System.Data.Common;
 
 namespace Ei_Dimension.ViewModels;
 
