@@ -12,10 +12,10 @@ namespace LEDCalibrationTool.ViewModels
     public virtual ObservableCollection<string> Values { get; set; } = new();
     public virtual ObservableCollection<object> SliderValues { get; set; } = new();
     public bool OverrideSliderChange { get; set; }
-    public ICommand SliderValueChangedCommand { get; init; }
-    public ICommand FocusedBoxCommand { get; init; }
-    public ICommand TextChangedCommand { get; init; }
-    public ICommand LedActivatedCommand { get; init; }
+    public DelegateCommand<int> SliderValueChangedCommand { get; init; }
+    public DelegateCommand<int> FocusedBoxCommand { get; init; }
+    public DelegateCommand<TextChangedEventArgs> TextChangedCommand { get; init; }
+    public DelegateCommand<int> LedActivatedCommand { get; init; }
 
     private BitArray _activeLeds = new(12, false);
     private int? _selectedId;

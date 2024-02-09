@@ -73,7 +73,7 @@ public class Worker : BackgroundService
       }
       catch (Exception e)
       {
-        _logger.LogInformation($"WriteToMC Exception\n{e.Data}\n{e.Message}");
+        _logger.LogInformation($"WriteToMC Exception\n{e.Data}\n{e.Message}\n{e.StackTrace}");
       }
     }
   }
