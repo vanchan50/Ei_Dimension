@@ -1,7 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Media;
 using Ei_Dimension.ViewModels;
 
 namespace Ei_Dimension.Controllers;

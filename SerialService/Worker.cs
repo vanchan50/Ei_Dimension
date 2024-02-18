@@ -16,6 +16,7 @@ public class Worker : BackgroundService
   private readonly Thread _toDiosThread;
   private readonly ConcurrentQueue<byte[]> que = new();
   private readonly USBWatchdog _wd;
+  private readonly byte[] arrRet = new byte[8];
 
   public Worker(ILogger<Worker> logger)
   {
@@ -111,9 +112,13 @@ public class Worker : BackgroundService
     }
   }
 
-  private static byte[] StructToByteArray(in CommandStruct cs)
+  /// <summary>
+  /// Thread unsafe
+  /// </summary>
+  /// <param name="cs"></param>
+  /// <returns></returns>
+  private byte[] StructToByteArray(in CommandStruct cs)
   {
-    byte[] arrRet = new byte[8];
     unsafe
     {
       fixed (CommandStruct* pCS = &cs)

@@ -65,10 +65,6 @@ public partial class App : Application
     DiosApp.WorkOrderController.NewWorkOrder += OnNewWorkOrder;
 
     App.Current.Dispatcher.UnhandledException += DispatcherExceptionHandler;
-
-    //new VerificationReportPdfFileWriter().PdfTest(null);
-    //new VerificationReportPdfFileWriter().PdfTest2();
-    //Environment.Exit(0);
   }
 
   private static void CorruptSettingsChecker()

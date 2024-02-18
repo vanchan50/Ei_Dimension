@@ -3,7 +3,7 @@ public class VerificationReportRegionData
 {
   public readonly VerificationReportChannelData GreenSSC;
   public readonly VerificationReportChannelData RedSSC;
-  public readonly VerificationReportChannelData Cl1;
+  public readonly VerificationReportChannelData CL1;
   public readonly VerificationReportChannelData CL2;
   public readonly VerificationReportChannelData Reporter;
   public readonly int Count;
@@ -14,7 +14,7 @@ public class VerificationReportRegionData
   {
     GreenSSC = greenSsc;
     RedSSC = redSsc;
-    Cl1 = cl1;
+    CL1 = cl1;
     CL2 = cl2;
     Reporter = reporter;
     Status = greenSsc.Status && redSsc.Status && cl1.Status && cl2.Status && reporter.Status;

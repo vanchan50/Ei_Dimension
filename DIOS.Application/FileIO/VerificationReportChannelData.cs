@@ -15,16 +15,20 @@ public class VerificationReportChannelData
     MaxCV = maxCv;
     Tolerance = tolerance;
     Target = target;
+    Status = CalculateStatus();
+  }
 
-    var tolerancePercent = tolerance/100;
+  private bool CalculateStatus()
+  {
+    var tolerancePercent = Tolerance / 100;
     var epsilon = Target * tolerancePercent;
-    Status = false;
     if (CV <= MaxCV)
     {
       if (MFI >= Target - epsilon && MFI <= Target + epsilon)
       {
-        Status = true;
+        return true;
       }
     }
+    return false;
   }
 }

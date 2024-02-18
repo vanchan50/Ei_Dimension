@@ -22,6 +22,7 @@ internal class DataController
   private byte[] _inputBuffer;
   private readonly ConcurrentQueue<CommandStruct> _csQueue = new();
   private readonly object _usbOutCV = new();
+  private readonly byte[] _outBytebuffer = new byte[8];
 
   public DataController(Device device, HardwareScriptTracker scriptTracker, ILogger logger)
   {
@@ -138,21 +139,24 @@ internal class DataController
     }
   }
 
-  private static byte[] StructToByteArray(in CommandStruct cs)
+  /// <summary>
+  /// Thread unsafe
+  /// </summary>
+  /// <param name="cs"></param>
+  /// <returns></returns>
+  private byte[] StructToByteArray(in CommandStruct cs)
   {
-    byte[] arrRet = new byte[8];
     unsafe
     {
       fixed (CommandStruct* pCS = &cs)
       {
         for (var i = 0; i < 8; i++)
         {
-          arrRet[i] = *((byte*)pCS + i);
+          _outBytebuffer[i] = *((byte*)pCS + i);
         }
       }
     }
-
-    return arrRet;
+    return _outBytebuffer;
   }
 
   private static CommandStruct ByteArrayToStruct(byte[] inmsg)

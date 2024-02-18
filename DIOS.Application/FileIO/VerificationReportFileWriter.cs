@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-
-namespace DIOS.Application.FileIO;
+﻿namespace DIOS.Application.FileIO;
 
 public class VerificationReportFileWriter
 {
@@ -17,11 +15,10 @@ public class VerificationReportFileWriter
     if (!_publisher.OutputDirectoryExists(directoryName))
       return;
 
-    var fullFilePath = $"{directoryName}\\VerificationReport_{_publisher.Date}.json";
+    var fullFilePath = $"{directoryName}\\VerificationReport_{_publisher.Date}.pdf";
     try
     {
-      var publishableReport = JsonConvert.SerializeObject(report);
-      File.WriteAllText(fullFilePath, publishableReport);
+      new VerificationReportPdfFileWriter(report).CreateAndSaveVerificationPdf(fullFilePath);
       _publisher._logger.Log($"Verification Report saved at \"{fullFilePath}\"");
     }
     catch
