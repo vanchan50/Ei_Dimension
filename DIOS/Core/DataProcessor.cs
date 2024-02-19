@@ -16,11 +16,6 @@ public static class DataProcessor
   private const string _100plexBMapName = "D100Bplex";
   private static readonly HashSet<int> WeightedRegions = new HashSet<int> {1,2,3,4,5,6,7,8,10,11,16,17,23,24,31,32,40,41,50,60,71};
 
-  public static int FromCLSpaceToReal(int pointInClSpace, double[] bins)
-  {
-    return (int)bins[pointInClSpace];
-  }
-
   public static List<HistogramData> LinearizeDictionary(SortedDictionary<int,int> dict)
   {
     var result = new List<HistogramData>();

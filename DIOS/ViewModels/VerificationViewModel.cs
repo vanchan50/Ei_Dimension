@@ -9,6 +9,8 @@ using DIOS.Application;
 using DIOS.Application.FileIO;
 using DIOS.Application.FileIO.Verification;
 using System.Windows;
+using Ei_Dimension.Graphing.HeatMap;
+using Ei_Dimension.Core;
 
 namespace Ei_Dimension.ViewModels;
 
@@ -190,19 +192,21 @@ public class VerificationViewModel
 
       var stats = verStats.Stats[0];
       var greenSSC = new VerificationReportChannelData(stats.Mean, stats.CoeffVar,
-        validatorRegion.MaxCV.GreenSSC, validatorRegion.MeanTolerance.GreenSSC, validatorRegion.VerificationTargetReporter);
+        validatorRegion.MaxCV.GreenSSC, validatorRegion.MeanTolerance.GreenSSC, 8500);
 
       stats = verStats.Stats[1];
       var redSSC = new VerificationReportChannelData(stats.Mean, stats.CoeffVar,
-        validatorRegion.MaxCV.RedSSC, validatorRegion.MeanTolerance.RedSSC, validatorRegion.VerificationTargetReporter);
+        validatorRegion.MaxCV.RedSSC, validatorRegion.MeanTolerance.RedSSC, 8500);
 
+      var targetCl1 = MapRegion.FromCLSpaceToReal(validatorRegion.Center.x, HeatMapPoint.bins);
       stats = verStats.Stats[2];
       var cl1 = new VerificationReportChannelData(stats.Mean, stats.CoeffVar,
-        validatorRegion.MaxCV.Cl1, validatorRegion.MeanTolerance.Cl1, validatorRegion.VerificationTargetReporter);
+        validatorRegion.MaxCV.Cl1, validatorRegion.MeanTolerance.Cl1, targetCl1);
 
+      var targetCl2 = MapRegion.FromCLSpaceToReal(validatorRegion.Center.y, HeatMapPoint.bins);
       stats = verStats.Stats[3];
       var cl2 = new VerificationReportChannelData(stats.Mean, stats.CoeffVar,
-        validatorRegion.MaxCV.Cl2, validatorRegion.MeanTolerance.Cl2, validatorRegion.VerificationTargetReporter);
+        validatorRegion.MaxCV.Cl2, validatorRegion.MeanTolerance.Cl2, targetCl2); 
 
       stats = verStats.Stats[4];
       var reporter = new VerificationReportChannelData(stats.Mean, stats.CoeffVar,

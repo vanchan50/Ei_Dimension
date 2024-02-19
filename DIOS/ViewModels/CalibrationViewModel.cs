@@ -11,6 +11,7 @@ using DIOS.Application.FileIO.Calibration;
 using DIOS.Core;
 using DIOS.Core.HardwareIntercom;
 using Ei_Dimension.Graphing.HeatMap;
+using Ei_Dimension.Core;
 
 namespace Ei_Dimension.ViewModels;
 
@@ -178,7 +179,8 @@ public class CalibrationViewModel
             && xCoordinateIsInBoundary && yCoordinateIsInBoundary)
         {
           ResultsViewModel.Instance.WrldMap.CalibrationMap.Add(
-            new HeatMapPoint((int)HeatMapPoint.bins[cl1Index + i], (int)HeatMapPoint.bins[cl2Index + j]));
+            new HeatMapPoint(MapRegion.FromCLSpaceToReal(cl1Index + i, HeatMapPoint.bins),
+              MapRegion.FromCLSpaceToReal(cl2Index + j, HeatMapPoint.bins)));
         }
       }
     }

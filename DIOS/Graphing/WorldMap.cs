@@ -56,8 +56,8 @@ public class WorldMap
     {
       foreach (var point in region.Value.Points)
       {
-        var x = DataProcessor.FromCLSpaceToReal(point.x, HeatMapPoint.bins);
-        var y = DataProcessor.FromCLSpaceToReal(point.y, HeatMapPoint.bins);
+        var x = MapRegion.FromCLSpaceToReal(point.x, HeatMapPoint.bins);
+        var y = MapRegion.FromCLSpaceToReal(point.y, HeatMapPoint.bins);
         Map12.Add(new HeatMapPoint(x, y, region.Key));
         Map12Flipped.Add(new HeatMapPoint(y, x, region.Key));
       }

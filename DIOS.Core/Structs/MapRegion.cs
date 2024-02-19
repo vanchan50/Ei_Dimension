@@ -37,4 +37,9 @@ public class MapRegion
     }
     return nearest;
   }
+
+  public static int FromCLSpaceToReal(int pointInClSpace, double[] bins)
+  {
+    return (int)bins[pointInClSpace];
+  }
 }

@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Ei_Dimension.Core;
+using DIOS.Core;
 
 namespace Ei_Dimension.Graphing.HeatMap;
 
@@ -52,8 +52,8 @@ internal class HeatMapDataContainer
     //TODO: use fill counter, so you don't have to traverse (0,0) points that are left as extra
     if (!dict.ContainsKey(pointInClSpace))
     {
-      var x = DataProcessor.FromCLSpaceToReal(pointInClSpace.x, bins);
-      var y = DataProcessor.FromCLSpaceToReal(pointInClSpace.y, bins);
+      var x = MapRegion.FromCLSpaceToReal(pointInClSpace.x, bins);
+      var y = MapRegion.FromCLSpaceToReal(pointInClSpace.y, bins);
       var newPoint = new HeatMapPoint(x, y);
       dict.Add(pointInClSpace, newPoint);
       return;
