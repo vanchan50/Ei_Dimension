@@ -6,24 +6,26 @@ using PdfSharp.WPFonts;
 using System.Diagnostics;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using DIOS.Application.FileIO.Calibration;
 
 namespace DIOS.Application.FileIO;
 
 public static class EmissionPdfUtilities
 {
   private static readonly List<string[]> _contents = new();
+
   public static void DrawVerificationHeader(this PdfSharpUtilities pdf, XFont font, VerificationReport report)
   {
     var format = XStringFormats.Center;
     _contents.Clear();
     _contents.Add([
-        "Date",
+      "Date",
       "Time",
       "Channel Configuration",
       "Event Height",
     ]);
     _contents.Add([
-        report.Timestamp.AsSpan(0, 10).ToString(),
+      report.Timestamp.AsSpan(0, 10).ToString(),
       report.Timestamp.AsSpan(11, 5).ToString(),
       report.ChannelConfig,
       report.EventHeight.ToString("F1")
@@ -57,8 +59,9 @@ public static class EmissionPdfUtilities
     {
       machName = machName.AsSpan(0, 20).ToString();
     }
+
     _contents.Add([
-      machName,//max 20 symb
+      machName, //max 20 symb
       report.FirmwareVersion ?? "N/A",
       report.AppVersion,
       report.Status ? "Passed" : "Failed"
@@ -66,7 +69,8 @@ public static class EmissionPdfUtilities
     pdf.drawTable(0, 2.8, 16.5, 1, font, format, _contents);
   }
 
-  public static void DrawVerificationChannelTable(this PdfSharpUtilities pdf, double positionY, XFont font, VerificationReport report, FieldInfo property, string label = null)
+  public static void DrawVerificationChannelTable(this PdfSharpUtilities pdf, double positionY, XFont font,
+    VerificationReport report, FieldInfo property, string label = null)
   {
     var format = XStringFormats.Center;
     _contents.Clear();
@@ -95,6 +99,71 @@ public static class EmissionPdfUtilities
 
     var height = _contents.Count * 0.5;
     pdf.drawTable(0, positionY, 16.5, height, font, format, _contents);
+  }
+
+  public static void DrawCalibrationHeader(this PdfSharpUtilities pdf, XFont font, CalibrationReport report)
+  {
+    var format = XStringFormats.Center;
+    _contents.Clear();
+    _contents.Add([
+      "Date",
+      "Time",
+      "Channel Configuration"
+    ]);
+    _contents.Add([
+      report.Timestamp.AsSpan(0, 10).ToString(),
+      report.Timestamp.AsSpan(11, 5).ToString(),
+      report.ChannelConfig
+    ]);
+    pdf.drawTable(0, 0.6, 16.5, 1, font, format, _contents);
+
+    _contents.Clear();
+    _contents.Add([
+      "Machine Name",
+      "Firmware Version",
+      "DIOS Version"
+    ]);
+    string machName = report.MachineName;
+    if (machName.Length > 20)
+    {
+      machName = machName.AsSpan(0, 20).ToString();
+    }
+
+    _contents.Add([
+      machName, //max 20 symb
+      report.FirmwareVersion ?? "N/A",
+      report.AppVersion,
+    ]);
+    pdf.drawTable(0, 1.7, 16.5, 1, font, format, _contents);
+
+    _contents.Clear();
+    _contents.Add([
+      "DNR Coefficient",
+      "DNR Transition",
+      "Result"
+    ]);
+    _contents.Add([
+      report.DNRCoefficient.ToString("F1"),
+      report.DNRTransition.ToString("F1"),
+      report.Status ? "Passed" : "Failed"
+    ]);
+    pdf.drawTable(0, 2.8, 16.5, 1, font, format, _contents);
+  }
+
+  public static void DrawCalibrationChannelTable(this PdfSharpUtilities pdf, double positionY, XFont font, CalibrationReportData channelData)
+  {
+    var format = XStringFormats.Center;
+    _contents.Clear();
+    _contents.Add([
+      channelData.Label,
+      channelData.Temperature.ToString("F1"),
+      channelData.Bias30.ToString(),
+      channelData.MFI.ToString("F1"),
+      channelData.CV.ToString("F1"),
+      channelData.Target.ToString(),
+      channelData.Margin.ToString("F1")
+    ]);
+    pdf.drawTable(0, positionY, 16.5, 0.5, font, format, _contents);
   }
 }
 

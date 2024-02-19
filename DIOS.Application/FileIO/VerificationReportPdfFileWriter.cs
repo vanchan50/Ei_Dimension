@@ -15,7 +15,7 @@ public class VerificationReportPdfFileWriter
 
   public void CreateAndSaveVerificationPdf(string path)
   {
-    PdfSharpUtilities pdf = new PdfSharpUtilities(path);
+    PdfSharpUtilities pdf = new PdfSharpUtilities(path, "Verification Report");
     XFont font = new XFont(new Font("Segoe UI Semilight", 11).Name, 11);
 
     pdf.addText("Verification Report", font, new DPoint(0, 0.1));

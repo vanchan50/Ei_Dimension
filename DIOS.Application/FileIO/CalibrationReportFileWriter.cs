@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-
-namespace DIOS.Application.FileIO;
+﻿namespace DIOS.Application.FileIO;
 
 public class CalibrationReportFileWriter
 {
@@ -17,11 +15,10 @@ public class CalibrationReportFileWriter
     if (!_publisher.OutputDirectoryExists(directoryName))
       return;
 
-    var fullFilePath = $"{directoryName}\\CalibrationReport_{_publisher.Date}.json";
+    var fullFilePath = $"{directoryName}\\CalibrationReport_{_publisher.Date}.pdf";
     try
     {
-      var publishableReport = JsonConvert.SerializeObject(report);
-      File.WriteAllText(fullFilePath, publishableReport);
+      new CalibrationReportPdfFileWriter(report).CreateAndSaveVerificationPdf(fullFilePath);
       _publisher._logger.Log($"Calibration Report saved at \"{fullFilePath}\"");
     }
     catch

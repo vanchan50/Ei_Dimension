@@ -22,11 +22,11 @@ public class PdfSharpUtilities
   private XPen _pen = new(XColors.Black, 0.5);  //used for drawing lines (in a table)
   private string _outputPath;
 
-  public PdfSharpUtilities(string argOutputpath, bool argAddMarginGuides = false)
+  public PdfSharpUtilities(string argOutputpath, string title, bool argAddMarginGuides = false)
   {
     _outputPath = argOutputpath;
-    _document.Info.Title = "Verification Report";
-    _document.Info.Author = "Ei_Dimension";
+    _document.Info.Title = title;
+    _document.Info.Author = "Dimension inc.";
 
     _page = _document.AddPage();
     _page.Size = PageSize.A4;

@@ -3,7 +3,7 @@
 namespace DIOS.Application.FileIO;
 public class CalibrationReport
 {
-  public readonly string Timestamp = DateTime.Now.ToString("dd.MM.yyyy.HH-mm-ss", System.Globalization.CultureInfo.CreateSpecificCulture("en-GB"));
+  public readonly string Timestamp = DateTime.Now.ToString("dd.MM.yyyy.HH:mm:ss", System.Globalization.CultureInfo.CreateSpecificCulture("en-GB"));
   public readonly string MachineName = Environment.MachineName;
   public readonly string FirmwareVersion;
   public readonly string AppVersion;

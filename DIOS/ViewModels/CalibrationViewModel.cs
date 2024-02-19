@@ -11,7 +11,6 @@ using DIOS.Application.FileIO.Calibration;
 using DIOS.Core;
 using DIOS.Core.HardwareIntercom;
 using Ei_Dimension.Graphing.HeatMap;
-using Ei_Dimension.Core;
 
 namespace Ei_Dimension.ViewModels;
 
@@ -194,7 +193,7 @@ public class CalibrationViewModel
     var dnrTransition = float.Parse(DNRContents[1]);
     var channelConfig = ComponentsViewModel.Instance.SelectedChConfigIndex.ToString();
     var status = isCalibrationSuccesful;
-    var report = new CalibrationReport(firmwareVersion, appVersion, dnrCoefficient, dnrTransition, channelConfig,status);
+    var report = new CalibrationReport(firmwareVersion, appVersion, dnrCoefficient, dnrTransition, channelConfig, status);
 
     if (isCalibrationSuccesful is false || multiChannelStats is null)
       return report;
