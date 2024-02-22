@@ -22,6 +22,12 @@ public class PdfSharpUtilities
   private XPen _pen = new(XColors.Black, 0.5);  //used for drawing lines (in a table)
   private string _outputPath;
 
+  static PdfSharpUtilities()
+  {
+    GlobalFontSettings.FontResolver = new FailsafeFontResolver();
+    //NewFontResolver.Get();
+  }
+
   public PdfSharpUtilities(string argOutputpath, string title, bool argAddMarginGuides = false)
   {
     _outputPath = argOutputpath;
@@ -33,12 +39,9 @@ public class PdfSharpUtilities
 
     //Define how much a cm is in document's units
     _cm = new Interpolation().linearInterpolation(0, 0, 27.9, _page.Height, 1);
-    Console.WriteLine("1 cm:" + _cm);
 
     _gfx = XGraphics.FromPdfPage(_page);
 
-    GlobalFontSettings.FontResolver = new FailsafeFontResolver();
-    //NewFontResolver.Get();
 
     _topMargin = 1.25 * _cm;
     _leftMargin = 1.5 * _cm;

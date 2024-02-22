@@ -21,8 +21,11 @@ public class VerificationReportFileWriter
       new VerificationReportPdfFileWriter(report).CreateAndSaveVerificationPdf(fullFilePath);
       _publisher._logger.Log($"Verification Report saved at \"{fullFilePath}\"");
     }
-    catch
+    catch(Exception e)
     {
+      _publisher._logger.Log($"{e.GetType()}");
+      _publisher._logger.Log($"{e.Message}");
+      _publisher._logger.Log($"{e.StackTrace}");
       _publisher._logger.Log($"Failed to create Verification Report at \"{fullFilePath}\"");
     }
   }

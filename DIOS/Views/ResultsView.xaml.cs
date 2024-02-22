@@ -27,9 +27,9 @@ public partial class ResultsView : UserControl, IHeatMapChart
 
   public void AddXYPointToHeatMap(IEnumerable<SeriesPoint> chartPoints, bool LargeXY = false)
   {
-    var heatmap = LargeXY ? LargeHeatMap : HeatMap;
+    PointSeries2D heatmap = LargeXY ? LargeHeatMap : HeatMap;
     //heatmap.Points.Add(chartPoint);
-    heatmap.Points.AddRange(chartPoints);
+    heatmap.Points.AddRange(chartPoints);//inside is a foreach, not memcopy
   }
 
   public void ChangeHeatMapPointColor(int index, SolidColorBrush brush)

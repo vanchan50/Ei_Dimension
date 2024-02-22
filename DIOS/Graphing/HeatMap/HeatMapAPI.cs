@@ -130,7 +130,14 @@ internal class HeatMapAPI
     {
       return App.Current.Dispatcher.BeginInvoke(() =>
       {
-        _heatMapChart.ClearHeatMaps();
+        try
+        {
+          _heatMapChart.ClearHeatMaps();
+        }
+        catch
+        {
+
+        }
       }).Task;
     }
 
@@ -169,9 +176,10 @@ internal class HeatMapAPI
       {
         _heatMapChart.AddXYPointToHeatMap(_pointsCache, hiRez);
       }
-      catch
+      catch(Exception e)
       {
-
+        App.Logger.Log($"Heatmap DrawCall exception {e.Message}");
+        App.Logger.Log($"trace: {e.StackTrace}");
       }
     }).Task;
   }
