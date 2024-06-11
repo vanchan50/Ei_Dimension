@@ -103,7 +103,7 @@ public class WellsSelectViewModel
     switch (num)
     {
       case 1:
-        App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.PlateType, (ushort)PlateSize.Tube);
+        App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.PlateType, PlateSize.Tube);
         Table384Visible = Visibility.Hidden;
         Table96Visible = Visibility.Hidden;
         break;
@@ -117,7 +117,7 @@ public class WellsSelectViewModel
             row.Reset();
           }
         }
-        App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.PlateType, (ushort)PlateSize.Plate96);
+        App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.PlateType, PlateSize.Plate96);
         break;
       case 384:
         Table384Visible = Visibility.Visible;
@@ -129,7 +129,7 @@ public class WellsSelectViewModel
             row.Reset();
           }
         }
-        App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.PlateType, (ushort)PlateSize.Plate384);
+        App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.PlateType, PlateSize.Plate384);
         break;
     }
     CurrentTableSize = num;

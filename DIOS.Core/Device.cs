@@ -42,7 +42,7 @@ public class Device
   /// <summary>
   /// Fired when every Well/Tube are read.
   /// </summary>
-  public event EventHandler FinishedMeasurement;
+  public event Action FinishedMeasurement;
   /// <summary>
   /// Fired on every request/change of the Hardware parameter
   /// </summary>
@@ -176,7 +176,7 @@ public class Device
     _dataController.BeadEventSink = null;
     Hardware.SetParameter(DeviceParameterType.IsBubbleDetectionActive, 0);
 
-    FinishedMeasurement?.Invoke(this, EventArgs.Empty);
+    FinishedMeasurement?.Invoke();
   }
 
   internal void OnParameterUpdate(ParameterUpdateEventArgs param)

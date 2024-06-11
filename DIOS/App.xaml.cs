@@ -338,7 +338,7 @@ public partial class App : Application
     });
   }
 
-  public void FinishedMeasurementEventHandler(object sender, EventArgs e)
+  public void FinishedMeasurementEventHandler()
   {
     if (DiosApp.Device.Mode != OperationMode.Normal)
       DiosApp.Normalization.Restore();

@@ -141,10 +141,10 @@ public class MotorsViewModel
         break;
     }
 
-    var param = num == 96 ? 0 : 1;
+    var plateSize = num == 96 ? PlateSize.Plate96 : PlateSize.Plate384;
     if (num == 1)
-      param = 2;
-    App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.PlateType, param);
+      plateSize = PlateSize.Tube;
+    App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.PlateType, plateSize);
   }
 
   public void RunMotorButtonClick(string s)

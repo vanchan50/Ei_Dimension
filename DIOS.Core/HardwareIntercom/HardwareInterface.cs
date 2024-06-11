@@ -751,7 +751,18 @@ public class HardwareInterface
         break;
       case DeviceParameterType.PlateType:
         commandCode = 0xAB;
-        param = intValue;
+        switch (subParameter)
+        {
+          case PlateSize.Plate96:
+            param = 0;
+            break;
+          case PlateSize.Plate384:
+            param = 1;
+            break;
+          case PlateSize.Tube:
+            param = 2;
+            break;
+        }
         break;
       case DeviceParameterType.WellRowIndex:
         commandCode = 0xAD;
