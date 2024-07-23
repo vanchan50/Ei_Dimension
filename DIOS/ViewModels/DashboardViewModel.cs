@@ -1,6 +1,7 @@
 ﻿using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -147,23 +148,23 @@ public class DashboardViewModel
     Volumes[0] = num.ToString();
   }
 
-  public void FluidicsButtonClick(int i)
+  public async Task FluidicsButtonClick(int i)
   {
     UserInputHandler.InputSanityCheck();
     App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.IsBubbleDetectionActive, 1);
     switch (i)
     {
       case 0:
-        App.DiosApp.Device.Hardware.SendCommand(DeviceCommandType.Prime);
+        await App.DiosApp.Device.Hardware.SendScriptAsync(DeviceScript.Prime);
         break;
       case 1:
-        App.DiosApp.Device.Hardware.SendCommand(DeviceCommandType.WashA);
+        await App.DiosApp.Device.Hardware.SendScriptAsync(DeviceScript.WashA);
         break;
       case 2:
-        App.DiosApp.Device.Hardware.SendCommand(DeviceCommandType.WashB);
+        await App.DiosApp.Device.Hardware.SendScriptAsync(DeviceScript.WashB);
         break;
       case 3:
-        App.DiosApp.Device.Hardware.SendCommand(DeviceCommandType.Rinse);
+        await App.DiosApp.Device.Hardware.SendScriptAsync(DeviceScript.Rinse);
         break;
     }
     App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.IsBubbleDetectionActive, 0);

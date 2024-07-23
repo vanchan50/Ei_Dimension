@@ -73,13 +73,13 @@ public class Device
   private readonly MeasurementScript _script;
   private readonly ILogger _logger;
   #if DEBUG
-  public Action ContinueScript { get; }
+  public Action<byte> ContinueScript { get; }
   #endif
 
   public Device(ILogger logger)
   {
     _logger = logger;
-    var scriptTracker = new HardwareScriptTracker();
+    var scriptTracker = new HardwareScriptTracker(logger);
     #if DEBUG
     ContinueScript = scriptTracker.SignalScriptEnd;
     #endif
@@ -117,7 +117,7 @@ public class Device
   /// Sends a sequence of commands to startup a measurement.
   /// <br>The operation is conducted on the other thread, while this function quickly returns</br>
   /// </summary>
-  public void StartOperation(IReadOnlyCollection<Well> wells, IBeadEventSink<RawBead> beadEventSink)
+  public async Task StartOperation(IReadOnlyCollection<Well> wells, IBeadEventSink<RawBead> beadEventSink)
   {
     if (wells.Count == 0)
     {
@@ -133,18 +133,18 @@ public class Device
     }
     wellreport.Replace(",", "]", wellreport.Length -1, 1);
     _logger.Log($"Number of wells to read: {wells.Count} {wellreport.ToString()}");
-    _script.Start();
+    await _script.Start();
   }
 
-  public void EjectPlate()
+  public async Task EjectPlate()
   {
-    Hardware.SendCommand(DeviceCommandType.EjectPlate);
+    await Hardware.SendScriptAsync(DeviceScript.EjectPlate);
     IsPlateEjected = true;
   }
 
-  public void LoadPlate()
+  public async Task LoadPlate()
   {
-    Hardware.SendCommand(DeviceCommandType.LoadPlate);
+    await Hardware.SendScriptAsync(DeviceScript.LoadPlate);
     IsPlateEjected = false;
   }
 

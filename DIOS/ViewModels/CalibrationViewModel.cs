@@ -153,9 +153,9 @@ public class CalibrationViewModel
     DoPostCalibrationRun = true;
 
     var calibrationWell = WellsSelectViewModel.Instance.MakeCalibrationWell(1024);
-    App.Current.Dispatcher.BeginInvoke(() =>
+    App.Current.Dispatcher.BeginInvoke(async () =>
     {
-      MainButtonsViewModel.Instance.StartButtonClick(calibrationWell);//Run the 1024-bead well
+      await MainButtonsViewModel.Instance.StartButtonClick(calibrationWell);//Run the 1024-bead well
     });
   }
 

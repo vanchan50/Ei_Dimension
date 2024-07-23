@@ -366,10 +366,10 @@ public partial class App : Application
         {
           App.Current.Dispatcher.BeginInvoke(async () =>
           {
-            DiosApp.Device.EjectPlate();
+            await DiosApp.Device.EjectPlate();
             await Task.Delay(5000);
-            DiosApp.Device.LoadPlate();
-            MainButtonsViewModel.Instance.StartButtonClick();
+            await DiosApp.Device.LoadPlate();
+            await MainButtonsViewModel.Instance.StartButtonClick();
           });
         }
         break;

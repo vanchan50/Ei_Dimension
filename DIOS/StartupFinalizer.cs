@@ -23,7 +23,7 @@ internal static class StartupFinalizer
   /// Finish loading the UI. Should be called only once, after all the views have been loaded.
   /// Constructs the UI update timer
   /// </summary>
-  public static void Run()
+  public static async Task Run()
   {
     if (_done)
       throw new Exception("StartupFinalizer can only be called once");
@@ -31,7 +31,7 @@ internal static class StartupFinalizer
 
     SetupDevice();
     if (!System.Windows.Input.Keyboard.IsKeyDown(System.Windows.Input.Key.LeftCtrl))
-      App.DiosApp.Device.Hardware.SendCommand(DeviceCommandType.Startup);
+      await App.DiosApp.Device.Hardware.SendScriptAsync(DeviceScript.Startup);
 
     if (!Settings.Default.SanityCheckEnabled)
     {
@@ -79,6 +79,7 @@ internal static class StartupFinalizer
     LanguageSwap.SetLanguage(MaintenanceViewModel.Instance.LanguageItems[Settings.Default.Language].Locale);
     Views.ExperimentView.Instance.DbButton.IsChecked = true;
     App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.CalibrationMargin);
+    App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.FluidBottleStatus);
 
     App.DiosApp.WorkOrderController.OnAppLoaded();
     Program.SplashScreen.Close(TimeSpan.FromMilliseconds(1000));

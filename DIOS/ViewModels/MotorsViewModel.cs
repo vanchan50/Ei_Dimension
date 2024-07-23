@@ -2,6 +2,7 @@
 using DevExpress.Mvvm.POCO;
 using System;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using System.Windows.Controls;
 using DIOS.Core.HardwareIntercom;
 using System.Windows;
@@ -194,12 +195,12 @@ public class MotorsViewModel
     }
   }
 
-  public void GoToWellButtonClick()
+  public async Task GoToWellButtonClick()
   {
     UserInputHandler.InputSanityCheck();
     App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.WellRowIndex, SelectedWellRowIndex);
     App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.WellColumnIndex, SelectedWellColumnIndex);
-    App.DiosApp.Device.Hardware.SendCommand(DeviceCommandType.PositionWellPlate);
+    await App.DiosApp.Device.Hardware.SendScriptAsync(DeviceScript.PositionWellPlate);
   }
 
   public void PollStepToggleButtonClick()

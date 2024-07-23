@@ -752,8 +752,7 @@ internal class DataController
           case 0xEF:
             break;
         }
-        _scriptTracker.SignalScriptEnd();
-        _logger.Log($"{cs}");
+        _scriptTracker.SignalScriptEnd(cs.Command);
         break;
       //FALLTHROUGH
       case 0xD0:

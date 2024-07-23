@@ -27,6 +27,6 @@ public partial class SyringeSpeedsView : UserControl
 #if DEBUG
     Console.Error.WriteLine("#21 SyringeSpeedsView Loaded");
 #endif
-    StartupFinalizer.Run();
+    _ = StartupFinalizer.Run();
   }
 }

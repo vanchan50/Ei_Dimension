@@ -234,7 +234,7 @@ public class PlateCustomizationViewModel
       return;
     }
 
-    Task.Run(() =>
+    Task.Run(async () =>
     {
       if (IsPlateEjected())
       {
@@ -243,10 +243,10 @@ public class PlateCustomizationViewModel
       }
 
       ShowShield();
-      var a1 = ProbeTuningProcedure(new Well(0, 0));
-      var a12 = ProbeTuningProcedure(new Well(0, 11));
-      var h1 = ProbeTuningProcedure(new Well (7, 0));
-      var h12 = ProbeTuningProcedure(new Well (7, 11));
+      var a1 = await ProbeTuningProcedure(new Well(0, 0));
+      var a12 = await ProbeTuningProcedure(new Well(0, 11));
+      var h1 = await ProbeTuningProcedure(new Well (7, 0));
+      var h12 = await ProbeTuningProcedure(new Well (7, 11));
       HideShield();
 
       if (a1 < 0 || a12 < 0 || h1 < 0 || h12 < 0)
@@ -282,7 +282,7 @@ public class PlateCustomizationViewModel
     DeleteButtonIsVisible = Visibility.Hidden;
   }
 
-  private float ProbeTuningProcedure(Well well)
+  private async Task<float> ProbeTuningProcedure(Well well)
   {
     if (!ushort.TryParse(DACCurrentLimit[0], out var decreaseCurrentTo))
       return -1;
@@ -291,7 +291,7 @@ public class PlateCustomizationViewModel
     if (!ushort.TryParse(FinalZMotorPosition[0], out var motorZFinalHeight))
       return -1;
 
-    _device.Hardware.MovePlateToWell(well);
+    await _device.Hardware.MovePlateToWell(well);
 
     ChangeDACCurrent(decreaseCurrentTo);
     _device.Hardware.DescendProbe(motorZInitHeight);
@@ -354,9 +354,9 @@ public class PlateCustomizationViewModel
       
     var requirementsLock = new object();
     bool requirementsPassed = false;
-    void LoadPlate()
+    async void PlateLoad()
     {
-      MainButtonsViewModel.Instance.LoadButtonClick();
+      await MainButtonsViewModel.Instance.LoadButtonClick();
       requirementsPassed = true;
       lock (requirementsLock)
       {
@@ -374,7 +374,7 @@ public class PlateCustomizationViewModel
     _ = App.Current.Dispatcher.BeginInvoke(() =>
     {
       Notification.Show("Please Load Plate",
-        LoadPlate, "Load Plate",
+        PlateLoad, "Load Plate",
         Cancel, "Cancel");
     });
     lock (requirementsLock)

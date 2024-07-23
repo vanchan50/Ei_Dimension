@@ -79,7 +79,7 @@ public class DIOSApp
     ResultsProc = new ResultsProcessor(Device, Results, Terminator, _beadProcessor);
   }
 
-  public void StartOperation(IReadOnlyCollection<Well> wells, PlateSize plateSize, string plateId = null)
+  public async Task StartOperation(IReadOnlyCollection<Well> wells, PlateSize plateSize, string plateId = null)
   {
     Publisher.ResultsFile.MakeNew();
     Results.StartNewPlateReport(plateSize, plateId);
@@ -104,7 +104,7 @@ public class DIOSApp
     }
 
     Logger.Log($"SensitivityChannel: {_beadProcessor.SensitivityChannel}");
-    Device.StartOperation(wells, Results.RawBeadsCollector);
+    await Device.StartOperation(wells, Results.RawBeadsCollector);
     ResultsProc.StartBeadProcessing();//call after StartOperation, so IsMeasurementGoing == true
   }
 

@@ -19,7 +19,7 @@ internal class MeasurementScript
     _logger = logger;
   }
 
-  public void Start()
+  public async Task Start()
   {
     _logger.Log("Starting read sequence");
     //read section of plate
@@ -28,14 +28,14 @@ internal class MeasurementScript
     SetReadingParamsForWell();
     SetAspirateParamsForWell();  //setup for first read
     _hardware.SetParameter(DeviceParameterType.IsBubbleDetectionActive, 1);
-    _hardware.SendCommand(DeviceCommandType.PositionWellPlate);
+    await _hardware.SendScriptAsync(DeviceScript.PositionWellPlate);
 
     if (!_device.SingleSyringeMode)
-      _hardware.SendCommand(DeviceCommandType.AspirateA);
+      await _hardware.SendScriptAsync(DeviceScript.AspirateA);
 
     _isReadingA = false;
     _device.OnStartingToReadWell();
-    StartBeadRead();
+    await StartBeadRead();
   } 
 
   public void FinalizeWellReading()
@@ -43,7 +43,7 @@ internal class MeasurementScript
     if (Interlocked.CompareExchange(ref _finalizerStarted, 1, 0) == 1)
       return;
 
-    Task.Run(() =>
+    Task.Run(async () =>
     {
       _device.OnFinishedReadingWell();
       Thread.Sleep(500);  //not necessary?
@@ -51,7 +51,7 @@ internal class MeasurementScript
       {
         Thread.Sleep(500);
       }
-      Action3();
+      await Action3();
 
       Task.Run(() =>
       {
@@ -73,39 +73,39 @@ internal class MeasurementScript
     return false;
   }
 
-  private void Action3()
+  private async Task Action3()
   {
-    if (EndBeadRead())
+    if (await EndBeadRead())
       _device.OnFinishedMeasurement();
     else
     {
-      SetupRead();
+      await SetupRead();
     }
   }
 
-  private void SetupRead()
+  private async Task SetupRead()
   {
     SetReadingParamsForWell();
     if (_device.SingleSyringeMode)
     {
       SetAspirateParamsForWell();
-      _hardware.SendCommand(DeviceCommandType.PositionWellPlate);
+      await _hardware.SendScriptAsync(DeviceScript.PositionWellPlate);
     }
 
     _device.OnStartingToReadWell();
-    StartBeadRead();
+    await StartBeadRead();
   }
 
-  private bool EndBeadRead()
+  private async Task<bool> EndBeadRead()
   {
     _hardware.SendCommand(DeviceCommandType.FlushCommandQueue);
     _hardware.SetToken(HardwareToken.EmptySyringeTrigger); //clear empty syringe token
     _hardware.SetToken(HardwareToken.Synchronization); //clear sync token to allow next sequence to execute
 
     if (_isReadingA || _device.SingleSyringeMode)
-      _hardware.SendCommand(DeviceCommandType.EndReadA);
+      await _hardware.SendScriptAsync(DeviceScript.EndReadA);
     else
-      _hardware.SendCommand(DeviceCommandType.EndReadB);
+      await _hardware.SendScriptAsync(DeviceScript.EndReadB);
     return _wellController.IsLastWell;
   }
 
@@ -133,12 +133,12 @@ internal class MeasurementScript
     _logger.Log("}");
   }
 
-  private void StartBeadRead()
+  private async Task StartBeadRead()
   {
     if (_device.SingleSyringeMode)
     {
-      _hardware.SendCommand(DeviceCommandType.AspirateA);
-      _hardware.SendCommand(DeviceCommandType.ReadA);
+      await _hardware.SendScriptAsync(DeviceScript.AspirateA);
+      await _hardware.SendScriptAsync(DeviceScript.ReadA);
       _isReadingA = true;
       return;
     }
@@ -147,12 +147,12 @@ internal class MeasurementScript
     {
       if (_isReadingA)
       {
-        _hardware.SendCommand(DeviceCommandType.ReadB);
+        await _hardware.SendScriptAsync(DeviceScript.ReadB);
         _isReadingA = false;
       }
       else
       {
-        _hardware.SendCommand(DeviceCommandType.ReadA);
+        await _hardware.SendScriptAsync(DeviceScript.ReadA);
         _isReadingA = true;
       }
       return;
@@ -161,12 +161,12 @@ internal class MeasurementScript
     SetAspirateParamsForWell();
     if (_isReadingA)
     {
-      _hardware.SendCommand(DeviceCommandType.ReadBAspirateA);
+      await _hardware.SendScriptAsync(DeviceScript.ReadBAspirateA);
       _isReadingA = false;
     }
     else
     {
-      _hardware.SendCommand(DeviceCommandType.ReadAAspirateB);
+      await _hardware.SendScriptAsync(DeviceScript.ReadAAspirateB);
       _isReadingA = true;
     }
   }

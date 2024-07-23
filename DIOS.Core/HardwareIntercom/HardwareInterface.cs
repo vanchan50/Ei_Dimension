@@ -57,69 +57,7 @@ public class HardwareInterface
         break;
       case DeviceCommandType.EndSampling:
         commandCode = 0xDB;
-        break;
-      case DeviceCommandType.Startup:
-        commandCode = 0xE0;
-        break;
-      case DeviceCommandType.Prime:
-        commandCode = 0xE1;
-        _scriptTracker.Wait = true;
-        break;
-      case DeviceCommandType.Rinse:
-        commandCode = 0xE2;
-        _scriptTracker.Wait = true;
-        break;
-      case DeviceCommandType.WashA:
-        commandCode = 0xE3;
-        _scriptTracker.Wait = true;
-        break;
-      case DeviceCommandType.WashB:
-        commandCode = 0xE4;
-        _scriptTracker.Wait = true;
-        break;
-      case DeviceCommandType.EjectPlate:
-        commandCode = 0xE5;
-        _scriptTracker.Wait = true;
-        break;
-      case DeviceCommandType.LoadPlate:
-        commandCode = 0xE6;
-        _scriptTracker.Wait = true;
-        break;
-      case DeviceCommandType.PositionWellPlate:
-        commandCode = 0xE7;
-        _scriptTracker.Wait = true;
-        break;
-      case DeviceCommandType.AspirateA:
-        commandCode = 0xE8;
-        _scriptTracker.Wait = true;
-        break;
-      case DeviceCommandType.AspirateB:
-        commandCode = 0xE9;
-        _scriptTracker.Wait = true;
-        break;
-      case DeviceCommandType.ReadA:
-        commandCode = 0xEA;
-        _scriptTracker.Wait = true;
-        break;
-      case DeviceCommandType.ReadB:
-        commandCode = 0xEB;
-        _scriptTracker.Wait = true;
-        break;
-      case DeviceCommandType.ReadAAspirateB:
-        commandCode = 0xEC;
-        _scriptTracker.Wait = true;
-        break;
-      case DeviceCommandType.ReadBAspirateA:
-        commandCode = 0xED;
-        _scriptTracker.Wait = true;
-        break;
-      case DeviceCommandType.EndReadA:
-        commandCode = 0xEE;
-        _scriptTracker.Wait = true;
-        break;
-      case DeviceCommandType.EndReadB:
-        commandCode = 0xEF;
-        _scriptTracker.Wait = true;
+        _scriptTracker.SignalScriptEnd(commandCode);
         break;
       case DeviceCommandType.UpdateFirmware:
         commandCode = 0xF5;
@@ -133,6 +71,70 @@ public class HardwareInterface
     MainCommand(code: commandCode, parameter: param, cmd: extraAction);
     //TODO:make another method SendScript(); And enum "script" for 0xEn
     //_scriptTracker.WaitForScriptEndOrDoNothing();
+  }
+
+  public async Task<DeviceScript> SendScriptAsync(DeviceScript script)
+  {
+    return await Task.Run(() =>
+    {
+      _logger.Log($"SCRIPT {script.ToString()}");
+      byte commandCode = 0;
+      switch (script)
+      {
+        case DeviceScript.Startup:
+          commandCode = 0xE0;
+          break;
+        case DeviceScript.Prime:
+          commandCode = 0xE1;
+          break;
+        case DeviceScript.Rinse:
+          commandCode = 0xE2;
+          break;
+        case DeviceScript.WashA:
+          commandCode = 0xE3;
+          break;
+        case DeviceScript.WashB:
+          commandCode = 0xE4;
+          break;
+        case DeviceScript.EjectPlate:
+          commandCode = 0xE5;
+          break;
+        case DeviceScript.LoadPlate:
+          commandCode = 0xE6;
+          break;
+        case DeviceScript.PositionWellPlate:
+          commandCode = 0xE7;
+          break;
+        case DeviceScript.AspirateA:
+          commandCode = 0xE8;
+          break;
+        case DeviceScript.AspirateB:
+          commandCode = 0xE9;
+          break;
+        case DeviceScript.ReadA:
+          commandCode = 0xEA;
+          break;
+        case DeviceScript.ReadB:
+          commandCode = 0xEB;
+          break;
+        case DeviceScript.ReadAAspirateB:
+          commandCode = 0xEC;
+          break;
+        case DeviceScript.ReadBAspirateA:
+          commandCode = 0xED;
+          break;
+        case DeviceScript.EndReadA:
+          commandCode = 0xEE;
+          break;
+        case DeviceScript.EndReadB:
+          commandCode = 0xEF;
+          break;
+        default:
+          throw new NotImplementedException();
+      }
+      _scriptTracker.SendScriptAndLock(MainCommand, commandCode);
+      return script;
+    });
   }
 
   public void SetParameter(DeviceParameterType primaryParameter, float value = 0f)
@@ -1719,11 +1721,11 @@ public class HardwareInterface
   /// Moves plate to a designated well.
   /// </summary>
   /// <param name="well"></param>
-  public void MovePlateToWell(Well well)
+  public async Task MovePlateToWell(Well well)
   {
     SetParameter(DeviceParameterType.WellRowIndex, well.RowIdx);
     SetParameter(DeviceParameterType.WellColumnIndex, well.ColIdx);
-    SendCommand(DeviceCommandType.PositionWellPlate);
+    await SendScriptAsync(DeviceScript.PositionWellPlate);
   }
 
   /// <summary>
@@ -1768,5 +1770,10 @@ public class HardwareInterface
       FParameter = fparameter
     };
     _dataController.AddCommand(in cs);
+  }
+
+  private void MainCommand(byte commandCode)
+  {
+    MainCommand(cmd: 0, code: commandCode);
   }
 }

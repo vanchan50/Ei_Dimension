@@ -48,7 +48,7 @@ internal static class UITimer
     if (App.Current is null)
       return;//just so it doesnt break here
 
-    App.DiosApp.Device.ContinueScript.Invoke();
+    App.DiosApp.Device.ContinueScript.Invoke(0xFF);
 
     App.Current.Dispatcher.Invoke(() => {
       if (System.Windows.Input.Keyboard.IsKeyDown(System.Windows.Input.Key.J))

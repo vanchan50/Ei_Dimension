@@ -11,6 +11,7 @@ using System.Windows;
 using System.Threading;
 using System.Windows.Media;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Ei_Dimension.ViewModels;
 
@@ -38,16 +39,16 @@ public class MainButtonsViewModel
     return ViewModelSource.Create(() => new MainButtonsViewModel());
   }
 
-  public void LoadButtonClick()
+  public async Task LoadButtonClick()
   {
     UserInputHandler.InputSanityCheck();
-    App.DiosApp.Device.LoadPlate();
+    await App.DiosApp.Device.LoadPlate();
   }
 
-  public void EjectButtonClick()
+  public async Task EjectButtonClick()
   {
     UserInputHandler.InputSanityCheck();
-    App.DiosApp.Device.EjectPlate();
+    await App.DiosApp.Device.EjectPlate();
   }
 
   public async void ScanButtonClick()
@@ -96,7 +97,7 @@ public class MainButtonsViewModel
     StartButtonColor = enable ? _activeColorBrush : _inactiveColorBrush;
   }
 
-  public void StartButtonClick(IReadOnlyCollection<Well> wellList = null)
+  public async Task StartButtonClick(IReadOnlyCollection<Well> wellList = null)
   {
     UserInputHandler.InputSanityCheck();
     HideScanButton();
@@ -115,11 +116,11 @@ public class MainButtonsViewModel
     StatisticsTableViewModel.Instance.ClearCurrentCalibrationStats();
     if (App.DiosApp.Control == SystemControl.WorkOrder && !string.IsNullOrEmpty(DashboardViewModel.Instance.WorkOrderID[0]))
     {
-      App.DiosApp.StartOperation(wells, WellsSelectViewModel.Instance.CurrentPlate, DashboardViewModel.Instance.WorkOrderID[0]);
+      await App.DiosApp.StartOperation(wells, WellsSelectViewModel.Instance.CurrentPlate, DashboardViewModel.Instance.WorkOrderID[0]);
     }
     else
     {
-      App.DiosApp.StartOperation(wells, WellsSelectViewModel.Instance.CurrentPlate);
+      await App.DiosApp.StartOperation(wells, WellsSelectViewModel.Instance.CurrentPlate);
     }
   }
 

@@ -1,49 +1,51 @@
-﻿namespace DIOS.Core.HardwareIntercom
+﻿namespace DIOS.Core.HardwareIntercom;
+
+/// <summary>
+/// Helper class to await end of scripts on the hardware side<br></br>
+/// Point is to not overflow the 256 command buffer
+/// </summary>
+internal class HardwareScriptTracker
 {
-  /// <summary>
-  /// Helper class to await end of scripts on the hardware side<br></br>
-  /// Point is to not overflow the 256 command buffer
-  /// </summary>
-  internal class HardwareScriptTracker
+  private readonly ILogger _logger;
+  private readonly Mutex _mutex = new();
+  private readonly AutoResetEvent _threadBlock = new(false);
+
+  public HardwareScriptTracker(ILogger logger)
   {
-    public bool Wait
-    {
-      get
-      {
-        return _wait;
-      }
-      set
-      {
-        if (value && _wait)
-          //throw new AccessViolationException("Waiting for two scripts simultaneously");
-        _wait = value;
-      }
-    }
-    private bool _wait;
-    private readonly object _lock = new();
+    _logger = logger;
+  }
+  /// <summary>
+  /// Blocks the thread, which sent a script, until a signal is received.
+  /// The signal comes from one of the "end script" messages, or in case of "Read*" scripts -
+  /// from the issuance of the 0xDB command
+  /// </summary>
+  public void SendScriptAndLock(Action<byte> SendAction, byte command)
+  {
+#if DEBUG
+    _logger.Log($"[SCRIPTTRACKER] Waiting for script: {command:X2}");
+#endif
+    _mutex.WaitOne();
+#if DEBUG
+    _logger.Log($"[SCRIPTTRACKER] Executing script: {command:X2}");
+#endif
+    SendAction(command);
+    _threadBlock.WaitOne();
+    _mutex.ReleaseMutex();
+#if DEBUG
+    _logger.Log($"[SCRIPTTRACKER] Script Released: {command:X2}");
+#endif
+  }
 
-    /// <summary>
-    /// If Input command is not a script - does nothing<br></br>
-    /// Else it blocks the calling thread
-    /// </summary>
-    public void WaitForScriptEndOrDoNothing()
-    {
-      if (_wait)
-      {
-        lock (_lock)
-        {
-          Monitor.Wait(_lock);
-        }
-        _wait = false;
-      }
-    }
-
-    public void SignalScriptEnd()
-    {
-      lock (_lock)
-      {
-        Monitor.PulseAll(_lock);
-      }
-    }
+  /// <summary>
+  /// IMPORTANT! sending 0xDB must call this. Design of the firmware implies that "Read*"
+  /// scripts are not going to end themselves, but by the 0xDB command
+  /// </summary>
+  /// <param name="command"></param>
+  public void SignalScriptEnd(byte command)
+  {
+    _threadBlock.Set();
+#if DEBUG
+    _logger.Log($"[SCRIPTTRACKER] Script Signaled: {command:X2}");
+#endif
   }
 }

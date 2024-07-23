@@ -3,6 +3,7 @@ using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using System.Windows.Controls;
 using DIOS.Core.HardwareIntercom;
 
@@ -346,10 +347,10 @@ public class ComponentsViewModel
       null, cancel, fontSize:38);
   }
 
-  public void StartupButtonClick()
+  public async Task StartupButtonClick()
   {
     UserInputHandler.InputSanityCheck();
-    App.DiosApp.Device.Hardware.SendCommand(DeviceCommandType.Startup);
+    await App.DiosApp.Device.Hardware.SendScriptAsync(DeviceScript.Startup);
   }
 
   public void SuppressWarningsClick()
