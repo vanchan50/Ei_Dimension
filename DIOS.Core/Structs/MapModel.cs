@@ -5,7 +5,7 @@ namespace DIOS.Core;
 [JsonObject(MemberSerialization.OptOut)]
 public class MapModel
 {
-  public readonly string mapName;
+  public string mapName;
 
   public int highorderidx;   //is 0 for cl0, 1 for cl1, etc
   public int midorderidx; //y

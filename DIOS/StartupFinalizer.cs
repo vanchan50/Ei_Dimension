@@ -31,7 +31,9 @@ internal static class StartupFinalizer
 
     SetupDevice();
     if (!System.Windows.Input.Keyboard.IsKeyDown(System.Windows.Input.Key.LeftCtrl))
+    {
       await App.DiosApp.Device.Hardware.SendScriptAsync(DeviceScript.Startup);
+    }
 
     if (!Settings.Default.SanityCheckEnabled)
     {
