@@ -26,9 +26,9 @@ public class MainViewModel
   public virtual Brush SheathFluidMarkerColor { get; set; }
   public virtual Brush RinseFluidMarkerColor { get; set; }
   public virtual Brush WasteFluidMarkerColor { get; set; }
-  public virtual ObservableCollection<string> SheathFluidMarkerText { get; set; } = new() { "Sheath level is OK" };
-  public virtual ObservableCollection<string> RinseFluidMarkerText { get; set; } = new() { "Rinse level is OK" };
-  public virtual ObservableCollection<string> WasteFluidMarkerText { get; set; } = new() { "Waste level is OK" };
+  public virtual ObservableCollection<string> SheathFluidMarkerText { get; set; } = new() { "Sheath level is LOW" };
+  public virtual ObservableCollection<string> RinseFluidMarkerText { get; set; } = new() { "Rinse level is LOW" };
+  public virtual ObservableCollection<string> WasteFluidMarkerText { get; set; } = new() { "Waste level is LOW" };
   public virtual Visibility EventCountVisible { get; set; } = Visibility.Visible;
   public virtual Visibility StartButtonsVisible { get; set; } = Visibility.Visible;
   public virtual Visibility ServiceVisibility { get; set; } = Visibility.Hidden;
@@ -51,9 +51,9 @@ public class MainViewModel
     App.KeyboardShow = (this.GetType().GetProperty(nameof(KeyboardVisible)), this);
     NormalizationMarkerColor = _activeBrush;
     ScalingMarkerColor = _inactiveBrush;
-    SheathFluidMarkerColor = _activeBrush;
-    RinseFluidMarkerColor = _activeBrush;
-    WasteFluidMarkerColor = _activeBrush;
+    SheathFluidMarkerColor = _inactiveBrush;
+    RinseFluidMarkerColor = _inactiveBrush;
+    WasteFluidMarkerColor = _inactiveBrush;
     EventCountField = EventCountCurrent;
     Instance = this;
     TouchControlsEnabled = Settings.Default.TouchMode;
