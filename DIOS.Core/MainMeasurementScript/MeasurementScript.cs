@@ -36,7 +36,7 @@ internal class MeasurementScript
     _isReadingA = false;
     _device.OnStartingToReadWell();
     await StartBeadRead();
-  } 
+  }
 
   public void FinalizeWellReading()
   {
@@ -49,13 +49,23 @@ internal class MeasurementScript
 
       await WashingIsNotPresent();
 
-      await Action3();
+      await EndBeadRead();
 
       _finalizerStarted = 0;
-      #if DEBUG
-      _logger.Log($"Finalizer exit {_finalizerStarted}");
-      #endif
-    });
+
+      return _wellController.IsLastWell;
+    })
+      .ContinueWith(async (x) =>
+      {
+        if (x.Result)
+        {
+          _device.OnFinishedMeasurement();
+        }
+        else
+        {
+          await SetupRead();
+        }
+      });
   }
 
   private async Task WashingIsNotPresent()
@@ -67,16 +77,6 @@ internal class MeasurementScript
       await Task.Delay(500);
     }
     //does not contain Washing
-  }
-
-  private async Task Action3()
-  {
-    if (await EndBeadRead())
-      _device.OnFinishedMeasurement();
-    else
-    {
-      await SetupRead();
-    }
   }
 
   private async Task SetupRead()
@@ -92,7 +92,7 @@ internal class MeasurementScript
     await StartBeadRead();
   }
 
-  private async Task<bool> EndBeadRead()
+  private async Task EndBeadRead()
   {
     _hardware.SendCommand(DeviceCommandType.FlushCommandQueue);
     _hardware.SetToken(HardwareToken.EmptySyringeTrigger); //clear empty syringe token
@@ -102,7 +102,6 @@ internal class MeasurementScript
       await _hardware.SendScriptAsync(DeviceScript.EndReadA);
     else
       await _hardware.SendScriptAsync(DeviceScript.EndReadB);
-    return _wellController.IsLastWell;
   }
 
   private void SetReadingParamsForWell()
@@ -134,8 +133,8 @@ internal class MeasurementScript
     if (_device.SingleSyringeMode)
     {
       await _hardware.SendScriptAsync(DeviceScript.AspirateA);
-      await _hardware.SendScriptAsync(DeviceScript.ReadA);
       _isReadingA = true;
+      await _hardware.SendScriptAsync(DeviceScript.ReadA);
       return;
     }
 
@@ -143,13 +142,13 @@ internal class MeasurementScript
     {
       if (_isReadingA)
       {
-        await _hardware.SendScriptAsync(DeviceScript.ReadB);
         _isReadingA = false;
+        await _hardware.SendScriptAsync(DeviceScript.ReadB);
       }
       else
       {
-        await _hardware.SendScriptAsync(DeviceScript.ReadA);
         _isReadingA = true;
+        await _hardware.SendScriptAsync(DeviceScript.ReadA);
       }
       return;
     }
@@ -157,13 +156,13 @@ internal class MeasurementScript
     SetAspirateParamsForWell();
     if (_isReadingA)
     {
-      await _hardware.SendScriptAsync(DeviceScript.ReadBAspirateA);
       _isReadingA = false;
+      await _hardware.SendScriptAsync(DeviceScript.ReadBAspirateA);
     }
     else
     {
-      await _hardware.SendScriptAsync(DeviceScript.ReadAAspirateB);
       _isReadingA = true;
+      await _hardware.SendScriptAsync(DeviceScript.ReadAAspirateB);
     }
   }
 }

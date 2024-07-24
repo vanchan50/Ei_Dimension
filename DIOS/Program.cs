@@ -5,7 +5,7 @@ namespace Ei_Dimension;
 
 public class Program
 {
-  internal static CompanyID SpecializedVer = CompanyID.US;
+  internal static CompanyID SpecializedVer = CompanyID.China;
   public static SplashScreen SplashScreen { get; private set; }
   private static App _app = new App();
   [STAThread]
