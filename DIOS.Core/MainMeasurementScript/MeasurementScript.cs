@@ -46,31 +46,27 @@ internal class MeasurementScript
     Task.Run(async () =>
     {
       _device.OnFinishedReadingWell();
-      Thread.Sleep(500);  //not necessary?
-      while (WashingIsOngoing())
-      {
-        Thread.Sleep(500);
-      }
+
+      await WashingIsNotPresent();
+
       await Action3();
 
-      Task.Run(() =>
-      {
-        GC.Collect();
-        GC.WaitForPendingFinalizers();
-      });
-
       _finalizerStarted = 0;
+      #if DEBUG
+      _logger.Log($"Finalizer exit {_finalizerStarted}");
+      #endif
     });
   }
 
-  private bool WashingIsOngoing()
+  private async Task WashingIsNotPresent()
   {
-    if (_device.SystemMonitor.ContainsWashing())  //does not contain Washing
+    await Task.Delay(500);  //not necessary?
+    while (_device.SystemMonitor.ContainsWashing())
     {
       _hardware.RequestParameter(DeviceParameterType.SystemActivityStatus);
-      return true;
+      await Task.Delay(500);
     }
-    return false;
+    //does not contain Washing
   }
 
   private async Task Action3()
