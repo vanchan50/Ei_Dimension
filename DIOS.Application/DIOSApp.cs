@@ -105,7 +105,6 @@ public class DIOSApp
 
     Logger.Log($"SensitivityChannel: {_beadProcessor.SensitivityChannel}");
     await Device.StartOperation(wells, Results.RawBeadsCollector);
-    ResultsProc.StartBeadProcessing();//call after StartOperation, so IsMeasurementGoing == true
   }
 
   private void SetSystemDirectories()

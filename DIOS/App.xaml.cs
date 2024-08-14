@@ -270,6 +270,8 @@ public partial class App : Application
       ResultsViewModel.Instance.ClearGraphs();
     });
     ActiveRegionsStatsController.Instance.ResetCurrentActiveRegionsDisplayedStats();
+
+    DiosApp.ResultsProc.StartBeadProcessing();//call after IsMeasurementGoing == true
   }
 
   private static Models.WellWarningState GetWarningState()
