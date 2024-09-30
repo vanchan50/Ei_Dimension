@@ -533,8 +533,9 @@
             </Setter>
           </Style>
         </StackPanel.Resources>
-        <dxe:TrackBarEdit Margin="0,7,0,0" 
-                          Minimum="21000" Maximum="24000"
+        <dxe:TrackBarEdit Margin="0,7,0,0"
+                          Minimum="{Binding SliderLowLimitGreen}"
+                          Maximum="{Binding SliderHighLimitGreen}"
                           Width="360" EditValue="{Binding SliderValues[0]}"
                           CornerRadius="4" TickPlacement="None"
                           EditValuePostMode="Immediate"
@@ -546,8 +547,9 @@
                                    Command="{Binding SliderValueChangedCommand}" CommandParameter="0"/>
           </dxmvvm:Interaction.Behaviors>
         </dxe:TrackBarEdit>
-        <dxe:TrackBarEdit Margin="0,10,0,0" 
-                          Minimum="21000" Maximum="24000"
+        <dxe:TrackBarEdit Margin="0,10,0,0"
+                          Minimum="{Binding SliderLowLimitGreen}"
+                          Maximum="{Binding SliderHighLimitGreen}"
                           Width="360" EditValue="{Binding SliderValues[1]}"
                           CornerRadius="4" TickPlacement="None"
                           EditValuePostMode="Immediate"
@@ -559,8 +561,9 @@
                                    Command="{Binding SliderValueChangedCommand}" CommandParameter="1"/>
           </dxmvvm:Interaction.Behaviors>
         </dxe:TrackBarEdit>
-        <dxe:TrackBarEdit Margin="0,10,0,20" 
-                          Minimum="21000" Maximum="24000"
+        <dxe:TrackBarEdit Margin="0,10,0,20"
+                          Minimum="{Binding SliderLowLimitGreen}"
+                          Maximum="{Binding SliderHighLimitGreen}"
                           Width="360" EditValue="{Binding SliderValues[2]}"
                           CornerRadius="4" TickPlacement="None"
                           EditValuePostMode="Immediate"
@@ -572,8 +575,9 @@
                                    Command="{Binding SliderValueChangedCommand}" CommandParameter="2"/>
           </dxmvvm:Interaction.Behaviors>
         </dxe:TrackBarEdit>
-        <dxe:TrackBarEdit Margin="0,10,0,0" 
-                          Minimum="40000" Maximum="50000"
+        <dxe:TrackBarEdit Margin="0,10,0,0"
+                          Minimum="{Binding SliderLowLimit}"
+                          Maximum="{Binding SliderHighLimit}"
                           Width="360" EditValue="{Binding SliderValues[3]}"
                           CornerRadius="4" TickPlacement="None"
                           EditValuePostMode="Immediate"
@@ -585,8 +589,9 @@
                                    Command="{Binding SliderValueChangedCommand}" CommandParameter="3"/>
           </dxmvvm:Interaction.Behaviors>
         </dxe:TrackBarEdit>
-        <dxe:TrackBarEdit Margin="0,10,0,0" 
-                          Minimum="40000" Maximum="50000"
+        <dxe:TrackBarEdit Margin="0,10,0,0"
+                          Minimum="{Binding SliderLowLimit}"
+                          Maximum="{Binding SliderHighLimit}"
                           Width="360" EditValue="{Binding SliderValues[4]}"
                           CornerRadius="4" TickPlacement="None"
                           EditValuePostMode="Immediate"
@@ -598,8 +603,9 @@
                                    Command="{Binding SliderValueChangedCommand}" CommandParameter="4"/>
           </dxmvvm:Interaction.Behaviors>
         </dxe:TrackBarEdit>
-        <dxe:TrackBarEdit Margin="0,10,0,0" 
-                          Minimum="40000" Maximum="50000"
+        <dxe:TrackBarEdit Margin="0,10,0,0"
+                          Minimum="{Binding SliderLowLimit}"
+                          Maximum="{Binding SliderHighLimit}"
                           Width="360" EditValue="{Binding SliderValues[5]}"
                           CornerRadius="4" TickPlacement="None"
                           EditValuePostMode="Immediate"
@@ -611,8 +617,9 @@
                                    Command="{Binding SliderValueChangedCommand}" CommandParameter="5"/>
           </dxmvvm:Interaction.Behaviors>
         </dxe:TrackBarEdit>
-        <dxe:TrackBarEdit Margin="0,10,0,0" 
-                          Minimum="40000" Maximum="50000"
+        <dxe:TrackBarEdit Margin="0,10,0,0"
+                          Minimum="{Binding SliderLowLimit}"
+                          Maximum="{Binding SliderHighLimit}"
                           Width="360" EditValue="{Binding SliderValues[6]}"
                           CornerRadius="4" TickPlacement="None"
                           EditValuePostMode="Immediate"
@@ -624,8 +631,9 @@
                                    Command="{Binding SliderValueChangedCommand}" CommandParameter="6"/>
           </dxmvvm:Interaction.Behaviors>
         </dxe:TrackBarEdit>
-        <dxe:TrackBarEdit Margin="0,10,0,0" 
-                          Minimum="40000" Maximum="50000"
+        <dxe:TrackBarEdit Margin="0,10,0,0"
+                          Minimum="{Binding SliderLowLimit}"
+                          Maximum="{Binding SliderHighLimit}"
                           Width="360" EditValue="{Binding SliderValues[7]}"
                           CornerRadius="4" TickPlacement="None"
                           EditValuePostMode="Immediate"
@@ -637,8 +645,9 @@
                                    Command="{Binding SliderValueChangedCommand}" CommandParameter="7"/>
           </dxmvvm:Interaction.Behaviors>
         </dxe:TrackBarEdit>
-        <dxe:TrackBarEdit Margin="0,10,0,0" 
-                          Minimum="40000" Maximum="50000"
+        <dxe:TrackBarEdit Margin="0,10,0,0"
+                          Minimum="{Binding SliderLowLimit}"
+                          Maximum="{Binding SliderHighLimit}"
                           Width="360" EditValue="{Binding SliderValues[8]}"
                           CornerRadius="4" TickPlacement="None"
                           EditValuePostMode="Immediate"
