@@ -25,10 +25,10 @@ public class ChannelOffsetViewModel
   public virtual string SelectedSensitivityContent { get; set; }
   public virtual ObservableCollection<DropDownButtonContents> SensitivityItems { get; set; }
   public byte SelectedSensitivityIndex { get; set; }
-  public double SliderLowLimitGreen => UserInputHandler._disableSanityCheck ? 0 : 21000;
-  public double SliderHighLimitGreen => UserInputHandler._disableSanityCheck ? 65535 : 24000;
-  public double SliderLowLimit => UserInputHandler._disableSanityCheck ? 0 : 40000;
-  public double SliderHighLimit => UserInputHandler._disableSanityCheck ? 65535 : 50000;
+  public double SliderLowLimitGreen => Settings.Default.SanityCheckEnabled ? 21000 : 0;
+  public double SliderHighLimitGreen => Settings.Default.SanityCheckEnabled ? 24000 : 65535;
+  public double SliderLowLimit => Settings.Default.SanityCheckEnabled ? 40000 : 0;
+  public double SliderHighLimit => Settings.Default.SanityCheckEnabled ? 50000 : 65535;
   public static ChannelOffsetViewModel Instance { get; private set; }
     
 
