@@ -14,9 +14,7 @@ public static class HistogramBinner
   private static int[] CL1 = new int[HistogramData.Bins.Length];//GreenB
   private static int[] CL2 = new int[HistogramData.Bins.Length];//GreenC
   private static int[] CL3 = new int[HistogramData.Bins.Length];
-  private static int[] VioletSSC = new int[HistogramData.Bins.Length];
-  private static int[] CL0 = new int[HistogramData.Bins.Length];
-  private static int[] ExtPMT = new int[HistogramData.Bins.Length];
+  private static int[] GreenD = new int[HistogramData.Bins.Length];
 
   public static ChannelsHistogramPeaks BinData(ReadOnlySpan<ProcessedBead> inputBeadSpan, bool fromFile = false)
   {
@@ -31,10 +29,8 @@ public static class HistogramBinner
       DataProcessor.FillBinArray(RedSSC, processedBead.redssc);
       DataProcessor.FillBinArray(CL1,    processedBead.cl1);
       DataProcessor.FillBinArray(CL2,    processedBead.cl2);
-      DataProcessor.FillBinArray(CL3,    processedBead.cl3);
-      DataProcessor.FillBinArray(VioletSSC, processedBead.violetssc);
-      DataProcessor.FillBinArray(CL0,    processedBead.cl0);
-      DataProcessor.FillBinArray(ExtPMT, processedBead.fsc);
+      DataProcessor.FillBinArray(CL3,    processedBead.redA);
+      DataProcessor.FillBinArray(GreenD, processedBead.greenD);
     }
     //if (failed)
     //  System.Windows.MessageBox.Show("An error occured during Well File Read");
@@ -45,9 +41,7 @@ public static class HistogramBinner
     var peakE = DataProcessor.GetSignalPeak(CL1);
     var peakF = DataProcessor.GetSignalPeak(CL2);
     var peakG = DataProcessor.GetSignalPeak(CL3);
-    var peakH = DataProcessor.GetSignalPeak(VioletSSC);
-    var peakI = DataProcessor.GetSignalPeak(CL0);
-    var peakJ = DataProcessor.GetSignalPeak(ExtPMT);
+    var peakI = DataProcessor.GetSignalPeak(GreenD);
 
     var result = new ChannelsHistogramPeaks
     (
@@ -58,9 +52,7 @@ public static class HistogramBinner
       peakE,
       peakF,
       peakG,
-      peakH,
-      peakI,
-      peakJ
+      peakI
       );
     ClearCounterArrays();
     return result;
@@ -75,8 +67,6 @@ public static class HistogramBinner
     Array.Clear(CL1, 0, CL1.Length);
     Array.Clear(CL2, 0, CL2.Length);
     Array.Clear(CL3, 0, CL3.Length);
-    Array.Clear(VioletSSC, 0, VioletSSC.Length);
-    Array.Clear(CL0, 0, CL0.Length);
-    Array.Clear(ExtPMT, 0, ExtPMT.Length);
+    Array.Clear(GreenD, 0, GreenD.Length);
   }
 }

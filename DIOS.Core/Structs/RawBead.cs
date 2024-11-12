@@ -1,16 +1,19 @@
-﻿namespace DIOS.Core;
+﻿using System.Runtime.InteropServices;
 
+namespace DIOS.Core;
+
+[StructLayout(LayoutKind.Sequential)]
 public struct RawBead
 {
   public uint Header;
   public uint EventTime;
 
-  public byte fsc_bg;
-  public byte vssc_bg;
-  public byte cl0_bg;
+  public byte fsc_bg; //void
+  public byte vssc_bg;  //void
+  public byte greenD_bg;
   public byte cl1_bg;
   public byte cl2_bg;
-  public byte cl3_bg;
+  public byte redA_bg;
   public byte rssc_bg;
   public byte gssc_bg;
 
@@ -20,24 +23,24 @@ public struct RawBead
   public ushort greenC;
 
   public byte l_offset_rg;    //samples between green and red peak
-  public byte l_offset_gv;    //samples between green and violet peak
+  public byte l_offset_gv;    //void
   public ushort region; //not used in the app, just a byte spacer
   public float fsc;       //Forward Scatter
 
   public float violetssc; //Violet A
-  public float cl0;       //Violet B
+  public float greenD;    //CL0
 
   public float redssc;    //Red B
   public float cl1;       //Red C
 
   public float cl2;       //Red D
-  public float cl3;       //Red A
+  public float redA;       //cl3
 
   public float greenssc;  //Green A
   public float reporter;  //computed from Green B and Green C
 
   public override string ToString()   //setup for csv output
   {
-    return $"{EventTime.ToString()},{fsc_bg.ToString()},{vssc_bg.ToString()},{cl0_bg.ToString()},{cl1_bg.ToString()},{cl2_bg.ToString()},{cl3_bg.ToString()},{rssc_bg.ToString()},{gssc_bg.ToString()},{greenB_bg.ToString()},{greenC_bg.ToString()},{greenB.ToString()},{greenC.ToString()},{l_offset_rg.ToString()},{l_offset_gv.ToString()},{region.ToString()},{fsc.ToString()},{violetssc.ToString()},{cl0.ToString()},{redssc.ToString()},{cl1.ToString()},{cl2.ToString()},{cl3.ToString()},{greenssc.ToString()},{reporter.ToString($"{0:0.000}")}";
+    return $"{EventTime.ToString()},{fsc_bg.ToString()},{vssc_bg.ToString()},{greenD_bg.ToString()},{cl1_bg.ToString()},{cl2_bg.ToString()},{redA_bg.ToString()},{rssc_bg.ToString()},{gssc_bg.ToString()},{greenB_bg.ToString()},{greenC_bg.ToString()},{greenB.ToString()},{greenC.ToString()},{l_offset_rg.ToString()},{l_offset_gv.ToString()},{region.ToString()},{fsc.ToString()},{violetssc.ToString()},{greenD.ToString()},{redssc.ToString()},{cl1.ToString()},{cl2.ToString()},{redA.ToString()},{greenssc.ToString()},{reporter.ToString($"{0:0.000}")}";
   }
 }

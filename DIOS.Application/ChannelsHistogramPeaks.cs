@@ -10,12 +10,10 @@ public class ChannelsHistogramPeaks
   public string Cl1 { get; }  //GreenB
   public string Cl2 { get; }  //GreenC
   public string Cl3 { get; }
-  public string Violetssc { get; }
-  public string Cl0 { get; }
-  public string Fsc { get; }
+  public string GreenD { get; }
 
   public ChannelsHistogramPeaks(int greenA, int greenB, int greenC, int redssc,
-    int cl1, int cl2, int cl3, int violetssc, int cl0, int fsc)
+    int cl1, int cl2, int cl3, int greenD)
   {
     GreenA = greenA.ToString();
     GreenB = greenB.ToString();
@@ -24,8 +22,6 @@ public class ChannelsHistogramPeaks
     Cl1 = cl1.ToString();
     Cl2 = cl2.ToString();
     Cl3 = cl3.ToString();
-    Violetssc = violetssc.ToString();
-    Cl0 = cl0.ToString();
-    Fsc = fsc.ToString();
+    GreenD = greenD.ToString();
   }
 }

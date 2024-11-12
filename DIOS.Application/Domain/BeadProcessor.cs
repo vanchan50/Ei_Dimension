@@ -4,18 +4,36 @@ namespace DIOS.Application.Domain;
 
 public class BeadProcessor
 {
+  public delegate ProcessedBead ProcessBead(in RawBead rawBead);
+  public ProcessBead CalculateBeadParams { get; private set; }
   public NormalizationSettings Normalization { get; } = new();
   private float _greenMin;
   private float _greenMaj;
   private readonly ClassificationMap _classificationMap = new();
   internal MapModel _map;
   public HiSensitivityChannel SensitivityChannel { get; set; }
+  public bool SpectraPlexEnabled
+  {
+    get => _spectraPlexEnabled;
+    set
+    {
+      _spectraPlexEnabled = value;
+      CalculateBeadParams = _spectraPlexEnabled ? CalculateBeadParamsSpectraPlex : CalculateBeadParamsRegular;
+    }
+  }
   public bool _channelRedirectionEnabled = false;
   public float HdnrTrans;
   public float HDnrCoef;
-  private float[] _compensatedCoordinatesCache = { 0,0,0,0 }; //cl0,cl1,cl2,cl3
+  private readonly float[] _compensatedCoordinatesCache = { 0,0,0,0 }; //cl0,cl1,cl2,cl3
   internal float _inverseReporterScaling;
   internal float _actualCompensation;
+
+  private bool _spectraPlexEnabled;
+
+  public BeadProcessor()
+  {
+    CalculateBeadParams = CalculateBeadParamsRegular;
+  }
 
   public void SetMap(MapModel map)
   {
@@ -23,17 +41,17 @@ public class BeadProcessor
     _classificationMap.ConstructClassificationMap(_map);
   }
 
-  public ProcessedBead CalculateBeadParams(in RawBead rawBead)
+  private ProcessedBead CalculateBeadParamsRegular(in RawBead rawBead)
   {
     var outBead = new ProcessedBead
     {
       EventTime = rawBead.EventTime,
-      fsc_bg = rawBead.fsc_bg,
-      vssc_bg = rawBead.vssc_bg,
-      cl0_bg = rawBead.cl0_bg,
+      fsc_bg = 0,
+      vssc_bg = 0,
+      greenD_bg = rawBead.greenD_bg,
       cl1_bg = rawBead.cl1_bg,
       cl2_bg = rawBead.cl2_bg,
-      cl3_bg = rawBead.cl3_bg,
+      redA_bg = rawBead.redA_bg,
       rssc_bg = rawBead.rssc_bg,
       gssc_bg = rawBead.gssc_bg,
       greenB_bg = rawBead.greenB_bg,
@@ -41,10 +59,9 @@ public class BeadProcessor
       greenB = rawBead.greenB,
       greenC = rawBead.greenC,
       l_offset_rg = rawBead.l_offset_rg,
-      l_offset_gv = rawBead.l_offset_gv,
-      //fsc = (float)Math.Pow(10, rawBead.fsc),
-      fsc = rawBead.fsc,
-      violetssc = rawBead.violetssc,
+      l_offset_gv = 0,
+      ratio1 = rawBead.fsc,
+      ratio2 = rawBead.violetssc,
       redssc = rawBead.redssc,
       greenssc = rawBead.greenssc
     };
@@ -70,14 +87,15 @@ public class BeadProcessor
       CalculateCompensatedCoordinates(in rawBead);
     }
     //finalize outBead data
-    outBead.cl0 = _compensatedCoordinatesCache[0];
+    outBead.greenD = _compensatedCoordinatesCache[0];
     outBead.cl1 = _compensatedCoordinatesCache[1];
     outBead.cl2 = _compensatedCoordinatesCache[2];
-    outBead.cl3 = _compensatedCoordinatesCache[3];
-
-    var reg = (ushort) _classificationMap.ClassifyBeadToRegion(in outBead);
+    outBead.redA = _compensatedCoordinatesCache[3];
+    var reg = (ushort)_classificationMap.ClassifyBeadToRegion(in outBead);
     var rep = CalculateReporter(reg);
-    var zon = (ushort) ClassifyBeadToZone(outBead.cl0);
+    var zon = (ushort) ClassifyBeadToZone(outBead.greenD);
+    outBead.ratio1 = CalculateRatio1(in outBead);
+    outBead.ratio2 = CalculateRatio2(in outBead);
 
     //finalize outBead data
     outBead.region = reg;
@@ -86,6 +104,72 @@ public class BeadProcessor
 
     return outBead;
   } //reporter is the last calculated thing
+
+  private ProcessedBead CalculateBeadParamsSpectraPlex(in RawBead rawBead)
+  {
+    var outBead = new ProcessedBead
+    {
+      EventTime = rawBead.EventTime,
+      fsc_bg = 0,
+      vssc_bg = 0,
+      greenD_bg = rawBead.greenD_bg,
+      cl1_bg = rawBead.cl1_bg,
+      cl2_bg = rawBead.cl2_bg,
+      redA_bg = rawBead.redA_bg,
+      rssc_bg = rawBead.rssc_bg,
+      gssc_bg = rawBead.gssc_bg,
+      greenB_bg = rawBead.greenB_bg,
+      greenC_bg = rawBead.greenC_bg,
+      greenB = rawBead.greenB,
+      greenC = rawBead.greenC,
+      l_offset_rg = rawBead.l_offset_rg,
+      l_offset_gv = 0,
+      ratio1 = rawBead.fsc,
+      ratio2 = rawBead.violetssc,
+      greenD = rawBead.greenD,
+      redssc = rawBead.redssc,
+      redA = rawBead.redA,
+      greenssc = rawBead.greenssc
+    };
+
+    //The order of operations matters here
+
+    if (_channelRedirectionEnabled)
+    {
+      //OEM case
+      outBead.cl1_bg = rawBead.greenB_bg;
+      outBead.cl2_bg = rawBead.greenC_bg;
+      outBead.greenB_bg = rawBead.cl1_bg;
+      outBead.greenC_bg = rawBead.cl2_bg;
+      outBead.cl1 = rawBead.greenB;
+      outBead.cl2 = rawBead.greenC;
+      outBead.greenB = rawBead.cl1;
+      outBead.greenC = rawBead.cl2;
+      //red channels are processed, and are written in the finalization part
+
+      //ChannelRedirection(in rawBead);
+    }
+    else
+    {
+      //normal case
+      //CalculateCompensatedCoordinates(in rawBead);
+      outBead.cl1 = rawBead.cl1;
+      outBead.cl2 = rawBead.cl2;
+    }
+    //finalize outBead data
+    var reg = (ushort)_classificationMap.ClassifyBeadToRegion(in outBead);
+    var rep = CalculateSpectraPlexReporter(in outBead);
+    var zon = (ushort)ClassifyBeadToZone(outBead.greenD);
+    outBead.ratio1 = CalculateRatio1(in outBead);
+    outBead.ratio2 = CalculateRatio2(in outBead);
+
+    //finalize outBead data
+    outBead.region = reg;
+    outBead.reporter = rep;
+    outBead.zone = zon;
+
+    return outBead;
+  }
 
   private void AssignSensitivityChannels(in RawBead rawBead)
   {
@@ -116,10 +200,10 @@ public class BeadProcessor
     var compensatedCl2 = rawBead.cl2 - cl2Comp;
 
     //Thread unsafe
-    _compensatedCoordinatesCache[0] = rawBead.cl0;
+    _compensatedCoordinatesCache[0] = rawBead.greenD;
     _compensatedCoordinatesCache[1] = compensatedCl1;
     _compensatedCoordinatesCache[2] = compensatedCl2;
-    _compensatedCoordinatesCache[3] = rawBead.cl3;
+    _compensatedCoordinatesCache[3] = rawBead.redA;
   }
 
   private void ChannelRedirection(in RawBead rawBead)
@@ -144,10 +228,10 @@ public class BeadProcessor
     var compensatedCl2 = rawBead.greenC - cl2Comp;
 
     //Thread unsafe
-    _compensatedCoordinatesCache[0] = rawBead.cl0;
+    _compensatedCoordinatesCache[0] = rawBead.greenD;
     _compensatedCoordinatesCache[1] = compensatedCl1;
     _compensatedCoordinatesCache[2] = compensatedCl2;
-    _compensatedCoordinatesCache[3] = rawBead.cl3;
+    _compensatedCoordinatesCache[3] = rawBead.redA;
   }
 
   private float CalculateReporter(ushort region)
@@ -161,6 +245,56 @@ public class BeadProcessor
     if (scaledReporter < 0)
       return 0;
     return scaledReporter;
+  }
+
+  private float CalculateSpectraPlexReporter(in ProcessedBead processedBead)
+  {
+    float basicReporter;
+    if (_channelRedirectionEnabled)
+    {
+      basicReporter = processedBead.cl1 + processedBead.cl2 + processedBead.redA;
+    }
+    else
+    {
+      basicReporter = processedBead.greenB + processedBead.greenC + processedBead.greenD;
+    }
+    return basicReporter;
+    //var scaledReporter = (basicReporter * _inverseReporterScaling);
+    //if (!Normalization.IsEnabled || region == 0)
+    //  return scaledReporter;
+    //var rep = _map.GetFactorizedNormalizationForRegion(region);
+    //scaledReporter -= rep;
+    //if (scaledReporter < 0)
+    //  return 0;
+    //return scaledReporter;
+  }
+
+  private float CalculateRatio1(in ProcessedBead processedBead)
+  {
+    float ratio1;
+    if (_channelRedirectionEnabled)
+    {
+      ratio1 = processedBead.redA / processedBead.cl1;
+    }
+    else
+    {
+      ratio1 = processedBead.greenB / processedBead.greenC;
+    }
+    return ratio1;
+  }
+
+  private float CalculateRatio2(in ProcessedBead processedBead)
+  {
+    float ratio2;
+    if (_channelRedirectionEnabled)
+    {
+      ratio2 = processedBead.cl2 / processedBead.cl1;
+    }
+    else
+    {
+      ratio2 = processedBead.greenD / processedBead.greenC;
+    }
+    return ratio2;
   }
 
   private int ClassifyBeadToZone(float cl0)

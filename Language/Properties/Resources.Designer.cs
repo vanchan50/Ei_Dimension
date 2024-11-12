@@ -361,15 +361,6 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Forward Scatter.
-        /// </summary>
-        public static string ChannelOffsets_Forward_Scatter {
-            get {
-                return ResourceManager.GetString("ChannelOffsets_Forward_Scatter", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Green A.
         /// </summary>
         public static string ChannelOffsets_Green_A {
@@ -433,24 +424,6 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Violet A.
-        /// </summary>
-        public static string ChannelOffsets_Violet_A {
-            get {
-                return ResourceManager.GetString("ChannelOffsets_Violet_A", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Violet B.
-        /// </summary>
-        public static string ChannelOffsets_Violet_B {
-            get {
-                return ResourceManager.GetString("ChannelOffsets_Violet_B", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Average BG.
         /// </summary>
         public static string Channels_Average_BG {
@@ -487,15 +460,6 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to External PMT.
-        /// </summary>
-        public static string Channels_ExternalPMT {
-            get {
-                return ResourceManager.GetString("Channels_ExternalPMT", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Forward Scatter.
         /// </summary>
         public static string Channels_Forward_Scatter {
@@ -528,6 +492,15 @@ namespace Ei_Dimension.Language {
         public static string Channels_Green_C {
             get {
                 return ResourceManager.GetString("Channels_Green_C", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Green D.
+        /// </summary>
+        public static string Channels_Green_D {
+            get {
+                return ResourceManager.GetString("Channels_Green_D", resourceCulture);
             }
         }
         
@@ -583,24 +556,6 @@ namespace Ei_Dimension.Language {
         public static string Channels_OEM_RedD {
             get {
                 return ResourceManager.GetString("Channels_OEM_RedD", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Violet A.
-        /// </summary>
-        public static string Channels_OEM_VioletA {
-            get {
-                return ResourceManager.GetString("Channels_OEM_VioletA", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Violet B.
-        /// </summary>
-        public static string Channels_OEM_VioletB {
-            get {
-                return ResourceManager.GetString("Channels_OEM_VioletB", resourceCulture);
             }
         }
         
@@ -749,24 +704,6 @@ namespace Ei_Dimension.Language {
         public static string Channels_Update_Bias {
             get {
                 return ResourceManager.GetString("Channels_Update_Bias", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Violet A (SSC).
-        /// </summary>
-        public static string Channels_Violet_A {
-            get {
-                return ResourceManager.GetString("Channels_Violet_A", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Violet B (CL0).
-        /// </summary>
-        public static string Channels_Violet_B {
-            get {
-                return ResourceManager.GetString("Channels_Violet_B", resourceCulture);
             }
         }
         
@@ -1254,15 +1191,6 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Violet SSC.
-        /// </summary>
-        public static string DataAn_Violet_SSC {
-            get {
-                return ResourceManager.GetString("DataAn_Violet_SSC", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to TemplateName.
         /// </summary>
         public static string DefaultTemplateName {
@@ -1344,15 +1272,6 @@ namespace Ei_Dimension.Language {
         public static string Dropdown_Boot {
             get {
                 return ResourceManager.GetString("Dropdown_Boot", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Cells.
-        /// </summary>
-        public static string Dropdown_Cells {
-            get {
-                return ResourceManager.GetString("Dropdown_Cells", resourceCulture);
             }
         }
         
@@ -1486,11 +1405,12 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to OEM PMT.
+        ///   Looks up a localized string similar to      OEM
+        ///+ Spectraplex.
         /// </summary>
-        public static string Dropdown_OEMPMT {
+        public static string Dropdown_OEMSpectraplex {
             get {
-                return ResourceManager.GetString("Dropdown_OEMPMT", resourceCulture);
+                return ResourceManager.GetString("Dropdown_OEMSpectraplex", resourceCulture);
             }
         }
         
@@ -1582,6 +1502,16 @@ namespace Ei_Dimension.Language {
         public static string Dropdown_StandardPlusFSC {
             get {
                 return ResourceManager.GetString("Dropdown_StandardPlusFSC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to     Standard
+        ///+ Spectraplex.
+        /// </summary>
+        public static string Dropdown_StandardSpectraplex {
+            get {
+                return ResourceManager.GetString("Dropdown_StandardSpectraplex", resourceCulture);
             }
         }
         

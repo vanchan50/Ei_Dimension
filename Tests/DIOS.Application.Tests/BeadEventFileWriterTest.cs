@@ -10,10 +10,10 @@ public class BeadEventFileWriterTest
     EventTime = 569,
     fsc_bg = 254,
     vssc_bg = 36,
-    cl0_bg = 255,
+    greenD_bg = 255,
     cl1_bg = 135,
     cl2_bg = 55,
-    cl3_bg = 83,
+    redA_bg = 83,
     rssc_bg = 198,
     gssc_bg = 223,
     greenB_bg = 92,
@@ -25,14 +25,14 @@ public class BeadEventFileWriterTest
     region = 0,
     zone = 0,
 
-    fsc = 2.539f,
-    violetssc = 999.9f,
-    cl0 = 158.976f,
+    ratio1 = 2.539f,
+    ratio2 = 999.9f,
+    greenD = 158.976f,
 
     redssc = 8114f,
     cl1 = 14.7888f,
     cl2 = 2.945088f,
-    cl3 = 4.9f,
+    redA = 4.9f,
     greenssc = 8337f,
     reporter = 24.568f
   };
@@ -41,10 +41,10 @@ public class BeadEventFileWriterTest
     EventTime = 569,
     fsc_bg = 254,
     vssc_bg = 36,
-    cl0_bg = 255,
+    greenD_bg = 255,
     cl1_bg = 135,
     cl2_bg = 55,
-    cl3_bg = 83,
+    redA_bg = 83,
     rssc_bg = 198,
     gssc_bg = 223,
     greenB_bg = 92,
@@ -56,14 +56,14 @@ public class BeadEventFileWriterTest
     region = 0,
     zone = 0,
 
-    fsc = 2.139f,
-    violetssc = 999.4f,
-    cl0 = 158.3976f,
+    ratio1 = 2.139f,
+    ratio2 = 999.4f,
+    greenD = 158.3976f,
 
     redssc = 8114f,
     cl1 = 14.4888f,
     cl2 = 2.345088f,
-    cl3 = 4.19f,
+    redA = 4.19f,
     greenssc = 8337f,
     reporter = 932.568f
   };

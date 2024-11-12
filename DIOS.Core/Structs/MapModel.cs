@@ -18,8 +18,6 @@ public class MapModel
   public int calrpmin;
   public int calrssc;
   public int calgssc;
-  public int calvssc;
-  public int calfsc;
   public int minVerBeads;
   public string caltime;
   public string valtime;

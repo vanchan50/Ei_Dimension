@@ -291,14 +291,8 @@ public class HardwareInterface
           case Channel.RedD:
             commandCode = 0x2F;
             break;
-          case Channel.VioletA:
-            commandCode = 0x25;
-            break;
-          case Channel.VioletB:
+          case Channel.GreenD:
             commandCode = 0x26;
-            break;
-          case Channel.ForwardScatter:
-            commandCode = 0x24;
             break;
           default:
             throw new NotImplementedException();
@@ -423,10 +417,7 @@ public class HardwareInterface
           case Channel.RedD:
             commandCode = 0x9F;
             break;
-          case Channel.VioletA:
-            commandCode = 0xA1;
-            break;
-          case Channel.VioletB:
+          case Channel.GreenD:
             commandCode = 0x91;
             break;
           default:
@@ -825,8 +816,8 @@ public class HardwareInterface
           case ChannelConfiguration.Standard:
             param = (ushort)ChannelConfiguration.Standard;
             break;
-          case ChannelConfiguration.Cells:
-            param = (ushort)ChannelConfiguration.Cells;
+          case ChannelConfiguration.StandardSpectraplex:
+            param = (ushort)ChannelConfiguration.StandardSpectraplex;
             break;
           case ChannelConfiguration.FM3D:
             param = (ushort)ChannelConfiguration.FM3D;
@@ -837,8 +828,8 @@ public class HardwareInterface
           case ChannelConfiguration.OEMA:
             param = (ushort)ChannelConfiguration.OEMA;
             break;
-          case ChannelConfiguration.OEMPMT:
-            param = (ushort)ChannelConfiguration.OEMPMT;
+          case ChannelConfiguration.OEMSpectraplex:
+            param = (ushort)ChannelConfiguration.OEMSpectraplex;
             break;
           default:
             throw new NotImplementedException();
@@ -1255,14 +1246,8 @@ public class HardwareInterface
           case Channel.RedD:
             commandCode = 0x2F;
             break;
-          case Channel.VioletA:
-            commandCode = 0x25;
-            break;
-          case Channel.VioletB:
+          case Channel.GreenD:
             commandCode = 0x26;
-            break;
-          case Channel.ForwardScatter:
-            commandCode = 0x24;
             break;
           default:
             throw new NotImplementedException();
@@ -1295,14 +1280,8 @@ public class HardwareInterface
           case Channel.RedD:
             commandCode = 0x96;
             break;
-          case Channel.VioletA:
-            commandCode = 0x95;
-            break;
-          case Channel.VioletB:
+          case Channel.GreenD:
             commandCode = 0x94;
-            break;
-          case Channel.ForwardScatter:
-            commandCode = 0x93;
             break;
           default:
             throw new NotImplementedException();
@@ -1332,14 +1311,8 @@ public class HardwareInterface
           case Channel.RedD:
             commandCode = 0xB6;
             break;
-          case Channel.VioletA:
-            commandCode = 0x80;
-            break;
-          case Channel.VioletB:
-            commandCode = 0x81;
-            break;
-          case Channel.ForwardScatter:
-            commandCode = 0x84;
+          case Channel.GreenD:
+            commandCode = 0xB7;
             break;
           default:
             throw new NotImplementedException();
@@ -1369,10 +1342,7 @@ public class HardwareInterface
           case Channel.RedD:
             commandCode = 0x9F;
             break;
-          case Channel.VioletA:
-            commandCode = 0xA1;
-            break;
-          case Channel.VioletB:
+          case Channel.GreenD:
             commandCode = 0x91;
             break;
           default:

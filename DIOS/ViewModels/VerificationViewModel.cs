@@ -68,16 +68,14 @@ public class VerificationViewModel
 
     var res = App.DiosApp.MapController.SaveCalValsToCurrentMap(new MapCalParameters
     {
-      TempCl0 = -1,
+      TempGreenD = -1,
       TempCl1 = -1,
       TempCl2 = -1,
       TempCl3 = -1,
       TempRedSsc = -1,
       TempGreenSsc = -1,
-      TempVioletSsc = -1,
       TempRpMaj = -1,
       TempRpMin = -1,
-      TempFsc = -1,
       Compensation = -1,
       Gating = -1,
       Height = -1,
@@ -109,16 +107,14 @@ public class VerificationViewModel
   {
     App.DiosApp.MapController.SaveCalValsToCurrentMap(new MapCalParameters
     {
-      TempCl0 = -1,
+      TempGreenD = -1,
       TempCl1 = -1,
       TempCl2 = -1,
       TempCl3 = -1,
       TempRedSsc = -1,
       TempGreenSsc = -1,
-      TempVioletSsc = -1,
       TempRpMaj = -1,
       TempRpMin = -1,
-      TempFsc = -1,
       Compensation = -1,
       Gating = -1,
       Height = -1,

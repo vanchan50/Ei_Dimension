@@ -67,7 +67,7 @@ public static class LanguageSwap
 
 
       ComponentsVM.ChConfigItems[0].Content = _rm.GetString(nameof(Language.Resources.Dropdown_Standard), _curCulture);
-      ComponentsVM.ChConfigItems[1].Content = _rm.GetString(nameof(Language.Resources.Dropdown_Cells), _curCulture);
+      ComponentsVM.ChConfigItems[1].Content = _rm.GetString(nameof(Language.Resources.Dropdown_StandardSpectraplex), _curCulture);
       ComponentsVM.ChConfigItems[2].Content = _rm.GetString(nameof(Language.Resources.Dropdown_FM3D), _curCulture);
       ComponentsVM.ChConfigItems[3].Content = _rm.GetString(nameof(Language.Resources.Dropdown_StandardPlusFSC), _curCulture);
       //intentionally skip index 4
@@ -153,9 +153,7 @@ public static class LanguageSwap
         ChannelsVM.Labels[4] = _rm.GetString(nameof(Language.Resources.Channels_Red_B), _curCulture);
         ChannelsVM.Labels[5] = _rm.GetString(nameof(Language.Resources.Channels_OEM_RedC), _curCulture);
         ChannelsVM.Labels[6] = _rm.GetString(nameof(Language.Resources.Channels_OEM_RedD), _curCulture);
-        ChannelsVM.Labels[7] = _rm.GetString(nameof(Language.Resources.Channels_OEM_VioletA), _curCulture);
-        ChannelsVM.Labels[8] = _rm.GetString(nameof(Language.Resources.Channels_OEM_VioletB), _curCulture);
-        ChannelsVM.Labels[9] = _rm.GetString(nameof(Language.Resources.Channels_ExternalPMT), _curCulture);
+        ChannelsVM.Labels[7] = _rm.GetString(nameof(Language.Resources.Channels_Green_D), _curCulture);
       }
       else
       {
@@ -166,9 +164,7 @@ public static class LanguageSwap
         ChannelsVM.Labels[4] = _rm.GetString(nameof(Language.Resources.Channels_Red_B), _curCulture);
         ChannelsVM.Labels[5] = _rm.GetString(nameof(Language.Resources.Channels_Red_C), _curCulture);
         ChannelsVM.Labels[6] = _rm.GetString(nameof(Language.Resources.Channels_Red_D), _curCulture);
-        ChannelsVM.Labels[7] = _rm.GetString(nameof(Language.Resources.Channels_Violet_A), _curCulture);
-        ChannelsVM.Labels[8] = _rm.GetString(nameof(Language.Resources.Channels_Violet_B), _curCulture);
-        ChannelsVM.Labels[9] = _rm.GetString(nameof(Language.Resources.Channels_ExternalPMT), _curCulture);
+        ChannelsVM.Labels[7] = _rm.GetString(nameof(Language.Resources.Channels_Green_D), _curCulture);
       }
     }
   }
@@ -253,9 +249,7 @@ public static class LanguageSwap
         StVM.StatisticsLabels[4] = _rm.GetString(nameof(Language.Resources.Statistics_OEM_GreenB), _curCulture);//
         StVM.StatisticsLabels[5] = _rm.GetString(nameof(Language.Resources.Statistics_OEM_GreenC), _curCulture);//
         StVM.StatisticsLabels[6] = _rm.GetString(nameof(Language.Resources.CL3), _curCulture);
-        StVM.StatisticsLabels[7] = _rm.GetString(nameof(Language.Resources.DataAn_Violet_SSC), _curCulture);
-        StVM.StatisticsLabels[8] = _rm.GetString(nameof(Language.Resources.CL0), _curCulture);
-        StVM.StatisticsLabels[9] = _rm.GetString(nameof(Language.Resources.Channels_ExternalPMT), _curCulture);
+        StVM.StatisticsLabels[7] = _rm.GetString(nameof(Language.Resources.Channels_Green_D), _curCulture);
       }
       else
       {
@@ -266,9 +260,7 @@ public static class LanguageSwap
         StVM.StatisticsLabels[4] = _rm.GetString(nameof(Language.Resources.CL1), _curCulture);
         StVM.StatisticsLabels[5] = _rm.GetString(nameof(Language.Resources.CL2), _curCulture);
         StVM.StatisticsLabels[6] = _rm.GetString(nameof(Language.Resources.CL3), _curCulture);
-        StVM.StatisticsLabels[7] = _rm.GetString(nameof(Language.Resources.DataAn_Violet_SSC), _curCulture);
-        StVM.StatisticsLabels[8] = _rm.GetString(nameof(Language.Resources.CL0), _curCulture);
-        StVM.StatisticsLabels[9] = _rm.GetString(nameof(Language.Resources.Channels_ExternalPMT), _curCulture);
+        StVM.StatisticsLabels[7] = _rm.GetString(nameof(Language.Resources.Channels_Green_D), _curCulture);
       }
     }
   }

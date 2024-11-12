@@ -170,7 +170,7 @@
                  HorizontalAlignment="Right"
                  VerticalAlignment="Top"
                  Margin="0,0,4,0"/>
-            <TextBlock Text="{lang:Loc CL1}"
+            <TextBlock Text="{lang:Loc Channels_Green_D}"
                  FontFamily="{StaticResource AppTextFont}"
                  FontSize="36"
                  FontWeight="UltraBold"
@@ -186,7 +186,7 @@
                  HorizontalAlignment="Right"
                  VerticalAlignment="Top"
                  Margin="0,5,4,0"/>
-            <TextBlock Text="{lang:Loc CL3}"
+            <TextBlock Text="{lang:Loc Channels_OEM_RedA}"
                  FontFamily="{StaticResource AppTextFont}"
                  FontSize="36"
                  FontWeight="UltraBold"

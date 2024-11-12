@@ -782,33 +782,7 @@ internal static class UserInputHandler
             {
               if ((iRes >= 0 && ((App.DiosApp.Device.BoardVersion == 0 && iRes <= 3500) || (App.DiosApp.Device.BoardVersion >= 1 && iRes <= 10000))) || _disableSanityCheck)
               {
-                App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ChannelBias30C, Channel.VioletA, iRes);
-                break;
-              }
-            }
-            failed = true;
-            ErrorMessage = App.DiosApp.Device.BoardVersion >= 1 ? "[0-10000]" : "[0-3500]";
-          }
-          if (SelectedTextBox.index == 8)
-          {
-            if (int.TryParse(_tempNewString, out iRes))
-            {
-              if ((iRes >= 0 && ((App.DiosApp.Device.BoardVersion == 0 && iRes <= 3500) || (App.DiosApp.Device.BoardVersion >= 1 && iRes <= 10000))) || _disableSanityCheck)
-              {
-                App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ChannelBias30C, Channel.VioletB, iRes);
-                break;
-              }
-            }
-            failed = true;
-            ErrorMessage = App.DiosApp.Device.BoardVersion >= 1 ? "[0-10000]" : "[0-3500]";
-          }
-          if (SelectedTextBox.index == 9)
-          {
-            if (int.TryParse(_tempNewString, out iRes))
-            {
-              if ((iRes >= 0 && ((App.DiosApp.Device.BoardVersion == 0 && iRes <= 3500) || (App.DiosApp.Device.BoardVersion >= 1 && iRes <= 10000))) || _disableSanityCheck)
-              {
-                App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ChannelBias30C, Channel.ForwardScatter, iRes);
+                App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ChannelBias30C, Channel.GreenD, iRes);
                 break;
               }
             }
@@ -928,39 +902,9 @@ internal static class UserInputHandler
             {
               if ((iRes >= 0 && ((App.DiosApp.Device.BoardVersion == 0 && iRes <= 4095) || (App.DiosApp.Device.BoardVersion >= 1 && iRes <= 65535))) || _disableSanityCheck)
               {
-                App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ChannelOffset, Channel.VioletA, iRes);
+                App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ChannelOffset, Channel.GreenD, iRes);
                 ChannelOffsetViewModel.Instance.OverrideSliderChange = true;
                 ChannelOffsetViewModel.Instance.SliderValues[7] = (double)iRes;
-                break;
-              }
-            }
-            failed = true;
-            ErrorMessage = App.DiosApp.Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
-          }
-          if (SelectedTextBox.index == 8)
-          {
-            if (int.TryParse(_tempNewString, out iRes))
-            {
-              if ((iRes >= 0 && ((App.DiosApp.Device.BoardVersion == 0 && iRes <= 4095) || (App.DiosApp.Device.BoardVersion >= 1 && iRes <= 65535))) || _disableSanityCheck)
-              {
-                App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ChannelOffset, Channel.VioletB, iRes);
-                ChannelOffsetViewModel.Instance.OverrideSliderChange = true;
-                ChannelOffsetViewModel.Instance.SliderValues[8] = (double)iRes;
-                break;
-              }
-            }
-            failed = true;
-            ErrorMessage = App.DiosApp.Device.BoardVersion >= 1 ? "[0-65535]" : "[0-4095]";
-          }
-          if (SelectedTextBox.index == 9)
-          {
-            if (int.TryParse(_tempNewString, out iRes))
-            {
-              if ((iRes >= 0 && ((App.DiosApp.Device.BoardVersion == 0 && iRes <= 4095) || (App.DiosApp.Device.BoardVersion >= 1 && iRes <= 65535))) || _disableSanityCheck)
-              {
-                App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ChannelOffset, Channel.GreenC, iRes);
-                ChannelOffsetViewModel.Instance.OverrideSliderChange = true;
-                ChannelOffsetViewModel.Instance.SliderValues[9] = (double)iRes;
                 break;
               }
             }

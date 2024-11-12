@@ -13,7 +13,6 @@ namespace Ei_Dimension.ViewModels;
 public class ChannelOffsetViewModel
 {
   public virtual ObservableCollection<string> ChannelsOffsetParameters { get; set; } = new ();
-  //public virtual ObservableCollection<string> ChannelsBaseline { get; set; }
   public virtual ObservableCollection<string> GreenAVoltage { get; set; } = new() { "" };
   public virtual ObservableCollection<string> AverageBg { get; set; } = new ();
   public virtual ObservableCollection<object> SliderValues { get; set; } = new ();
@@ -30,17 +29,16 @@ public class ChannelOffsetViewModel
   public double SliderLowLimit => Settings.Default.SanityCheckEnabled ? 40000 : 0;
   public double SliderHighLimit => Settings.Default.SanityCheckEnabled ? 50000 : 65535;
   public static ChannelOffsetViewModel Instance { get; private set; }
-    
-
+  
   protected ChannelOffsetViewModel()
   {
-    //ChannelsBaseline = new ObservableCollection<string>();
     ReporterScale = new ObservableCollection<string> { Settings.Default.ReporterScaling.ToString($"{0:0.000}") };
     MainViewModel.Instance.SetScalingMarker(Settings.Default.ReporterScaling);
-    for (var i = 0; i < 10; i++)
+    for (var i = 0; i < 8; i++)
     {
-      //ChannelsBaseline.Add("");
       AverageBg.Add("");
+      ChannelsOffsetParameters.Add("");
+      SliderValues.Add(new object());
     }
       
     var RM = Language.Resources.ResourceManager;
@@ -53,11 +51,6 @@ public class ChannelOffsetViewModel
     SelectedSensitivityIndex = Settings.Default.SensitivityChannelB ? (byte)0 : (byte)1;
     SelectedSensitivityContent = SensitivityItems[SelectedSensitivityIndex].Content;
 
-    for (var i = 0; i < 9; i++)
-    {
-      ChannelsOffsetParameters.Add("");
-      SliderValues.Add(new object());
-    }
     Instance = this;
   }
 
@@ -110,10 +103,7 @@ public class ChannelOffsetViewModel
         channel = Channel.RedD;
         break;
       case 7:
-        channel = Channel.VioletA;
-        break;
-      case 8:
-        channel = Channel.VioletB;
+        channel = Channel.GreenD;
         break;
       default:
         throw new NotImplementedException();
@@ -125,16 +115,14 @@ public class ChannelOffsetViewModel
 
   public void DecodeBackgroundStats(ChannelsAveragesStats Stats)
   {
-    AverageBg[0] = Stats.Greenssc.ToString($"{0:0.00}");
+    AverageBg[0] = Stats.GreenA.ToString($"{0:0.00}");
     AverageBg[1] = Stats.GreenB.ToString($"{0:0.00}");
     AverageBg[2] = Stats.GreenC.ToString($"{0:0.00}");
-    AverageBg[3] = Stats.Cl3.ToString($"{0:0.00}");
-    AverageBg[4] = Stats.Redssc.ToString($"{0:0.00}");
+    AverageBg[3] = Stats.RedA.ToString($"{0:0.00}");
+    AverageBg[4] = Stats.RedB.ToString($"{0:0.00}");
     AverageBg[5] = Stats.Cl1.ToString($"{0:0.00}");
     AverageBg[6] = Stats.Cl2.ToString($"{0:0.00}");
-    AverageBg[7] = Stats.Violetssc.ToString($"{0:0.00}");
-    AverageBg[8] = Stats.Cl0.ToString($"{0:0.00}");
-    AverageBg[9] = Stats.Fsc.ToString($"{0:0.00}");
+    AverageBg[7] = Stats.GreenD.ToString($"{0:0.00}");
   }
 
   public void FocusedBox(int num)
@@ -175,56 +163,10 @@ public class ChannelOffsetViewModel
         UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsOffsetParameters)), this, 7, (TextBox)Stackpanel[7]);
         MainViewModel.Instance.NumpadToggleButton((TextBox)Stackpanel[7]);
         break;
-      case 8:
-        UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsOffsetParameters)), this, 8, (TextBox)Stackpanel[8]);
-        MainViewModel.Instance.NumpadToggleButton((TextBox)Stackpanel[8]);
-        break;
       case 10:
         UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(SiPMTempCoeff)), this, 0, Views.ChannelOffsetView.Instance.CoefTB);
         MainViewModel.Instance.NumpadToggleButton(Views.ChannelOffsetView.Instance.CoefTB);
         break;
-      /*
-      case 11:
-        UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsBaseline)), this, 0, (TextBox)BaselineStackpanel[0]);
-        MainViewModel.Instance.NumpadToggleButton((TextBox)BaselineStackpanel[0]);
-        break;
-      case 12:
-        UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsBaseline)), this, 1, (TextBox)BaselineStackpanel[1]);
-        MainViewModel.Instance.NumpadToggleButton((TextBox)BaselineStackpanel[1]);
-        break;
-      case 13:
-        UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsBaseline)), this, 2, (TextBox)BaselineStackpanel[2]);
-        MainViewModel.Instance.NumpadToggleButton((TextBox)BaselineStackpanel[2]);
-        break;
-      case 14:
-        UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsBaseline)), this, 3, (TextBox)BaselineStackpanel[3]);
-        MainViewModel.Instance.NumpadToggleButton((TextBox)BaselineStackpanel[3]);
-        break;
-      case 15:
-        UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsBaseline)), this, 4, (TextBox)BaselineStackpanel[4]);
-        MainViewModel.Instance.NumpadToggleButton((TextBox)BaselineStackpanel[4]);
-        break;
-      case 16:
-        UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsBaseline)), this, 5, (TextBox)BaselineStackpanel[5]);
-        MainViewModel.Instance.NumpadToggleButton((TextBox)BaselineStackpanel[5]);
-        break;
-      case 17:
-        UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsBaseline)), this, 6, (TextBox)BaselineStackpanel[6]);
-        MainViewModel.Instance.NumpadToggleButton((TextBox)BaselineStackpanel[6]);
-        break;
-      case 18:
-        UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsBaseline)), this, 7, (TextBox)BaselineStackpanel[7]);
-        MainViewModel.Instance.NumpadToggleButton((TextBox)BaselineStackpanel[7]);
-        break;
-      case 19:
-        UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsBaseline)), this, 8, (TextBox)BaselineStackpanel[8]);
-        MainViewModel.Instance.NumpadToggleButton((TextBox)BaselineStackpanel[8]);
-        break;
-      case 20:
-        UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(ChannelsBaseline)), this, 9, (TextBox)BaselineStackpanel[9]);
-        MainViewModel.Instance.NumpadToggleButton((TextBox)BaselineStackpanel[9]);
-        break;
-      */
       case 21:
         UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(CalibrationMargin)), this, 0, Views.ChannelOffsetView.Instance.CalMarginTB);
         MainViewModel.Instance.NumpadToggleButton(Views.ChannelOffsetView.Instance.CalMarginTB);

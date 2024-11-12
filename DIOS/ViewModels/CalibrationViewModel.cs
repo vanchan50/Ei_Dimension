@@ -75,16 +75,14 @@ public class CalibrationViewModel
     {
       var res = App.DiosApp.MapController.SaveCalValsToCurrentMap(new MapCalParameters
       {
-        TempCl0 = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[8]),
+        TempGreenD = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[7]),
         TempCl1 = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[5]),
         TempCl2 = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[6]),
         TempCl3 = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[3]),
         TempRedSsc = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[4]),
         TempGreenSsc = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[0]),
-        TempVioletSsc = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[7]),
         TempRpMaj = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[1]),
         TempRpMin = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[2]),
-        TempFsc = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[9]),
         Compensation = float.Parse(CompensationPercentageContent[0]),
         Gating = SelectedGatingIndex,
         Height = short.Parse(EventTriggerContents[0]),
@@ -145,9 +143,7 @@ public class CalibrationViewModel
     App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.RedB);
     App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.RedC);
     App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.RedD);
-    App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.VioletA);
-    App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.VioletB);
-    App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.ForwardScatter);
+    App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.GreenD);
     App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.DNRCoefficient);
 
     DoPostCalibrationRun = true;
@@ -277,22 +273,18 @@ public class CalibrationViewModel
     App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.RedB);
     App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.RedC);
     App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.RedD);
-    App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.VioletA);
-    App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.VioletB);
-    App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.ForwardScatter);
+    App.DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.GreenD);
     System.Threading.Thread.Sleep(1000);
     var res = App.DiosApp.MapController.SaveCalValsToCurrentMap(new MapCalParameters
     {
-      TempCl0 = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[8]),
+      TempGreenD = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[7]),
       TempCl1 = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[5]),
       TempCl2 = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[6]),
       TempCl3 = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[3]),
       TempRedSsc = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[4]),
       TempGreenSsc = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[0]),
-      TempVioletSsc = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[7]),
       TempRpMaj = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[1]),
       TempRpMin = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[2]),
-      TempFsc = int.Parse(ChannelsViewModel.Instance.Bias30Parameters[9]),
       Compensation = float.Parse(CompensationPercentageContent[0]),
       Gating = SelectedGatingIndex,
       Height = short.Parse(EventTriggerContents[0]),

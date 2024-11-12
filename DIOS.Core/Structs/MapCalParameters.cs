@@ -3,16 +3,14 @@ namespace DIOS.Core;
 
 public struct MapCalParameters
 {
-  public int TempCl0;
+  public int TempGreenD;
   public int TempCl1;
   public int TempCl2;
   public int TempCl3;
   public int TempRedSsc;
   public int TempGreenSsc;
-  public int TempVioletSsc;
   public int TempRpMaj;
   public int TempRpMin;
-  public int TempFsc;
   public float Compensation;
   public short Gating;
   public short Height;

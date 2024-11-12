@@ -24,7 +24,7 @@ namespace Ei_Dimension.ViewModels
 
     protected StatisticsTableViewModel()
     {
-      for (var i = 0; i < 10; i++)
+      for (var i = 0; i < 8; i++)
       {
         CurrentMfiItems.Add("");
         CurrentMedianItems.Add("");
@@ -49,9 +49,7 @@ namespace Ei_Dimension.ViewModels
         Language.Resources.CL1,
         Language.Resources.CL2,
         Language.Resources.CL3,
-        Language.Resources.DataAn_Violet_SSC,
-        Language.Resources.CL0,
-        Language.Resources.Channels_ExternalPMT
+        Language.Resources.Channels_Green_D
       };
       Instance = this;
     }
@@ -123,25 +121,15 @@ namespace Ei_Dimension.ViewModels
       peakItems[5] = peaks.Cl2;
       cvItems[5] = stats.Cl2.CoeffVar.ToString("F2");
 
-      mfiItems[6] = stats.Cl3.Mean.ToString("F1");
-      medianItems[6] = stats.Cl3.Median.ToString("F1");
+      mfiItems[6] = stats.RedA.Mean.ToString("F1");
+      medianItems[6] = stats.RedA.Median.ToString("F1");
       peakItems[6] = peaks.Cl3;
-      cvItems[6] = stats.Cl3.CoeffVar.ToString("F2");
+      cvItems[6] = stats.RedA.CoeffVar.ToString("F2");
 
-      mfiItems[7] = stats.Violetssc.Mean.ToString("F1");
-      medianItems[7] = stats.Violetssc.Median.ToString("F1");
-      peakItems[7] = peaks.Violetssc;
-      cvItems[7] = stats.Violetssc.CoeffVar.ToString("F2");
-
-      mfiItems[8] = stats.Cl0.Mean.ToString("F1");
-      medianItems[8] = stats.Cl0.Median.ToString("F1");
-      peakItems[8] = peaks.Cl0;
-      cvItems[8] = stats.Cl0.CoeffVar.ToString("F2");
-
-      mfiItems[9] = stats.Fsc.Mean.ToString("F1");
-      medianItems[9] = stats.Fsc.Median.ToString("F1");
-      peakItems[9] = peaks.Fsc;
-      cvItems[9] = stats.Fsc.CoeffVar.ToString("F2");
+      mfiItems[7] = stats.GreenD.Mean.ToString("F1");
+      medianItems[7] = stats.GreenD.Median.ToString("F1");
+      peakItems[7] = peaks.GreenD;
+      cvItems[7] = stats.GreenD.CoeffVar.ToString("F2");
     }
 
     public void DisplayStatsTypeChange(int type)

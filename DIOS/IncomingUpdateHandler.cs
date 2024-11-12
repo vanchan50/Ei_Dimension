@@ -150,14 +150,8 @@ internal class IncomingUpdateHandler
           case Channel.RedD:
             pos = 6;
             break;
-          case Channel.VioletA:
+          case Channel.GreenD:
             pos = 7;
-            break;
-          case Channel.VioletB:
-            pos = 8;
-            break;
-          case Channel.ForwardScatter:
-            pos = 9;
             break;
         }
         update = () => ChannelsViewModel.Instance.Bias30Parameters[pos] = Math.Round(parameter.FloatParameter).ToString(FormatWithNoFloatingDedcimals);
@@ -450,14 +444,8 @@ internal class IncomingUpdateHandler
           case Channel.RedD:
             pos10 = 6;
             break;
-          case Channel.VioletA:
+          case Channel.GreenD:
             pos10 = 7;
-            break;
-          case Channel.VioletB:
-            pos10 = 8;
-            break;
-          case Channel.ForwardScatter:
-            pos10 = 9;
             break;
         }
         update = () => ChannelsViewModel.Instance.TempParameters[pos10] = parameter.FloatParameter.ToString(FormatWith1FloatingDedcimals);
@@ -488,14 +476,8 @@ internal class IncomingUpdateHandler
           case Channel.RedD:
             pos11 = 6;
             break;
-          case Channel.VioletA:
+          case Channel.GreenD:
             pos11 = 7;
-            break;
-          case Channel.VioletB:
-            pos11 = 8;
-            break;
-          case Channel.ForwardScatter:
-            pos11 = 9;
             break;
         }
         update = () => ChannelsViewModel.Instance.TcompBiasParameters[pos11] = parameter.FloatParameter.ToString(FormatWithNoFloatingDedcimals);
@@ -526,11 +508,8 @@ internal class IncomingUpdateHandler
           case Channel.RedD:
             pos12 = 6;
             break;
-          case Channel.VioletA:
+          case Channel.GreenD:
             pos12 = 7;
-            break;
-          case Channel.VioletB:
-            pos12 = 8;
             break;
           default:
             throw new NotImplementedException();

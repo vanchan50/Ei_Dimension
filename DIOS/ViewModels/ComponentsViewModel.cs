@@ -100,11 +100,11 @@ public class ComponentsViewModel
     ChConfigItems = new ObservableCollection<DropDownButtonContents>
     {
       new(RM.GetString(nameof(Language.Resources.Dropdown_Standard), curCulture), this),
-      new(RM.GetString(nameof(Language.Resources.Dropdown_Cells), curCulture), this),
+      new(RM.GetString(nameof(Language.Resources.Dropdown_StandardSpectraplex), curCulture), this),
       new(RM.GetString(nameof(Language.Resources.Dropdown_FM3D), curCulture), this),
       new(RM.GetString(nameof(Language.Resources.Dropdown_StandardPlusFSC), curCulture), this),
       new(RM.GetString(nameof(Language.Resources.Dropdown_OEMA), curCulture), this, 5),//intentionally skipping index = 4
-      new(RM.GetString(nameof(Language.Resources.Dropdown_OEMPMT), curCulture), this, 6)
+      new(RM.GetString(nameof(Language.Resources.Dropdown_OEMSpectraplex), curCulture), this, 6)
     };
     SelectedChConfigContent = ChConfigItems[(int)SelectedChConfigIndex].Content;
     DropDownButtonContents.ResetIndex();

@@ -9,7 +9,5 @@ public enum Channel
   RedB,
   RedC,
   RedD,
-  VioletA,
-  VioletB,
-  ForwardScatter
+  GreenD
 }

@@ -214,9 +214,6 @@ To Current Map</value>
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
-  <data name="ChannelOffsets_Forward_Scatter" xml:space="preserve">
-    <value>Forward Scatter</value>
-  </data>
   <data name="ChannelOffsets_Green_A" xml:space="preserve">
     <value>Green A</value>
   </data>
@@ -238,12 +235,6 @@ To Current Map</value>
   <data name="ChannelOffsets_Red_D" xml:space="preserve">
     <value>Red D</value>
   </data>
-  <data name="ChannelOffsets_Violet_A" xml:space="preserve">
-    <value>Violet A</value>
-  </data>
-  <data name="ChannelOffsets_Violet_B" xml:space="preserve">
-    <value>Violet B</value>
-  </data>
   <data name="Channels_Average_BG" xml:space="preserve">
     <value>Average BG</value>
   </data>
@@ -256,9 +247,6 @@ To Current Map</value>
   <data name="Channels_Calibration_Margin" xml:space="preserve">
     <value>Calibration Margin</value>
   </data>
-  <data name="Channels_ExternalPMT" xml:space="preserve">
-    <value>External PMT</value>
-  </data>
   <data name="Channels_Forward_Scatter" xml:space="preserve">
     <value>Forward Scatter</value>
   </data>
@@ -270,6 +258,9 @@ To Current Map</value>
   </data>
   <data name="Channels_Green_C" xml:space="preserve">
     <value>Green C</value>
+  </data>
+  <data name="Channels_Green_D" xml:space="preserve">
+    <value>Green D</value>
   </data>
   <data name="Channels_Hi_Sens_Chan" xml:space="preserve">
     <value>Hi Sensitivity
@@ -289,12 +280,6 @@ To Current Map</value>
   </data>
   <data name="Channels_OEM_RedD" xml:space="preserve">
     <value>Red D</value>
-  </data>
-  <data name="Channels_OEM_VioletA" xml:space="preserve">
-    <value>Violet A</value>
-  </data>
-  <data name="Channels_OEM_VioletB" xml:space="preserve">
-    <value>Violet B</value>
   </data>
   <data name="Channels_Offset_Header" xml:space="preserve">
     <value>Offset</value>
@@ -347,12 +332,6 @@ Coefficient</value>
   <data name="Channels_Update_Bias" xml:space="preserve">
     <value>Update
    DAC</value>
-  </data>
-  <data name="Channels_Violet_A" xml:space="preserve">
-    <value>Violet A (SSC)</value>
-  </data>
-  <data name="Channels_Violet_B" xml:space="preserve">
-    <value>Violet B (CL0)</value>
   </data>
   <data name="Ch_Offset_Ch_Offset" xml:space="preserve">
     <value>Channel Offset</value>
@@ -530,9 +509,6 @@ Warnings</value>
   <data name="DataAn_Red_SSC" xml:space="preserve">
     <value>Red SSC</value>
   </data>
-  <data name="DataAn_Violet_SSC" xml:space="preserve">
-    <value>Violet SSC</value>
-  </data>
   <data name="DefaultTemplateName" xml:space="preserve">
     <value>TemplateName</value>
   </data>
@@ -563,9 +539,6 @@ Value</value>
   </data>
   <data name="Dropdown_Boot" xml:space="preserve">
     <value>Boot</value>
-  </data>
-  <data name="Dropdown_Cells" xml:space="preserve">
-    <value>Cells</value>
   </data>
   <data name="Dropdown_FM3D" xml:space="preserve">
     <value>FM3D</value>
@@ -612,8 +585,9 @@ Value</value>
   <data name="Dropdown_OEMA" xml:space="preserve">
     <value>OEM A</value>
   </data>
-  <data name="Dropdown_OEMPMT" xml:space="preserve">
-    <value>OEM PMT</value>
+  <data name="Dropdown_OEMSpectraplex" xml:space="preserve">
+    <value>     OEM
++ Spectraplex</value>
   </data>
   <data name="Dropdown_Pickup" xml:space="preserve">
     <value>Pickup</value>
@@ -645,6 +619,10 @@ Value</value>
   <data name="Dropdown_StandardPlusFSC" xml:space="preserve">
     <value>Standard
    + FSC</value>
+  </data>
+  <data name="Dropdown_StandardSpectraplex" xml:space="preserve">
+    <value>    Standard
++ Spectraplex</value>
   </data>
   <data name="Dropdown_Valve_Left" xml:space="preserve">
     <value>Valve Left</value>

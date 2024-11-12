@@ -4,60 +4,52 @@ namespace DIOS.Application;
 
 public class StatsAccumulator
 {
-  protected readonly List<float> greenssc   =  new(MAXSIZE);
+  protected readonly List<float> greenA   =  new(MAXSIZE);
   protected readonly List<float> greenB     =  new(MAXSIZE);
   protected readonly List<float> greenC     =  new(MAXSIZE);
-  protected readonly List<float> redssc     =  new(MAXSIZE);
+  protected readonly List<float> redB     =  new(MAXSIZE);
   protected readonly List<float> cl1        =  new(MAXSIZE);
   protected readonly List<float> cl2        =  new(MAXSIZE);
-  protected readonly List<float> cl3        =  new(MAXSIZE);
-  protected readonly List<float> violetssc  =  new(MAXSIZE);
-  protected readonly List<float> cl0        =  new(MAXSIZE);
-  protected readonly List<float> fsc        =  new(MAXSIZE);
+  protected readonly List<float> redA        =  new(MAXSIZE);
+  protected readonly List<float> greenD        =  new(MAXSIZE);
   private const int MAXSIZE = 80000;
 
   public virtual void Add(in ProcessedBead bead)
   {
-    greenssc.Add(bead.greenssc);
+    greenA.Add(bead.greenssc);
     greenB.Add(bead.greenB);
     greenC.Add(bead.greenC);
-    redssc.Add(bead.redssc);
+    redB.Add(bead.redssc);
     cl1.Add(bead.cl1);
     cl2.Add(bead.cl2);
-    cl3.Add(bead.cl3);
-    violetssc.Add(bead.violetssc);
-    cl0.Add(bead.cl0);
-    fsc.Add(bead.fsc);
+    redA.Add(bead.redA);
+    greenD.Add(bead.greenD);
   }
 
   public void Reset()
   {
-    greenssc.Clear();
+    greenA.Clear();
     greenB.Clear();
     greenC.Clear();
-    redssc.Clear();
+    redB.Clear();
     cl1.Clear();
     cl2.Clear();
-    cl3.Clear();
-    violetssc.Clear();
-    cl0.Clear();
-    fsc.Clear();
+    redA.Clear();
+    greenD.Clear();
   }
 
   public ChannelsCalibrationStats CalculateStats()
   {
     return new ChannelsCalibrationStats
     (
-      greenssc.GetDistributionStatistics(),
+      greenA.GetDistributionStatistics(),
       greenB.GetDistributionStatistics(),
       greenC.GetDistributionStatistics(),
-      redssc.GetDistributionStatistics(),
+      redB.GetDistributionStatistics(),
       cl1.GetDistributionStatistics(),
       cl2.GetDistributionStatistics(),
-      cl3.GetDistributionStatistics(),
-      violetssc.GetDistributionStatistics(),
-      cl0.GetDistributionStatistics(),
-      fsc.GetDistributionStatistics()
+      redA.GetDistributionStatistics(),
+      greenD.GetDistributionStatistics()
     );
   }
 
@@ -68,24 +60,20 @@ public class StatsAccumulator
     {
       ret = new ChannelsAveragesStats
       (
-        greenssc.Average(),
+        greenA.Average(),
         greenB.Average(),
         greenC.Average(),
-        redssc.Average(),
+        redB.Average(),
         cl1.Average(),
         cl2.Average(),
-        cl3.Average(),
-        violetssc.Average(),
-        cl0.Average(),
-        fsc.Average()
+        redA.Average(),
+        greenD.Average()
       );
     }
     catch (InvalidOperationException)
     {
       ret = new ChannelsAveragesStats
       (
-        0,
-        0,
         0,
         0,
         0,

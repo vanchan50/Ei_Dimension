@@ -55,6 +55,14 @@
                      HorizontalAlignment="Right"
                      VerticalAlignment="Top"
                      Margin="0,20,4,0"/>
+          <TextBlock Text="{Binding Labels[7]}"
+                     FontFamily="{StaticResource AppTextFont}"
+                     FontSize="36"
+                     FontWeight="UltraBold"
+                     Foreground="{StaticResource AppTextColor}"
+                     HorizontalAlignment="Right"
+                     VerticalAlignment="Top"
+                     Margin="0,18,4,0"/>
           <TextBlock Text="{Binding Labels[3]}"
                      FontFamily="{StaticResource AppTextFont}"
                      FontSize="36"
@@ -87,30 +95,6 @@
                      HorizontalAlignment="Right"
                      VerticalAlignment="Top"
                      Margin="0,20,4,0"/>
-          <TextBlock Text="{Binding Labels[7]}"
-                     FontFamily="{StaticResource AppTextFont}"
-                     FontSize="36"
-                     FontWeight="UltraBold"
-                     Foreground="{StaticResource AppTextColor}"
-                     HorizontalAlignment="Right"
-                     VerticalAlignment="Top"
-                     Margin="0,18,4,0"/>
-          <TextBlock Text="{Binding Labels[8]}"
-                     FontFamily="{StaticResource AppTextFont}"
-                     FontSize="36"
-                     FontWeight="UltraBold"
-                     Foreground="{StaticResource AppTextColor}"
-                     HorizontalAlignment="Right"
-                     VerticalAlignment="Top"
-                     Margin="0,18,4,0"/>
-          <TextBlock Text="{Binding Labels[9]}"
-                     FontFamily="{StaticResource AppTextFont}"
-                     FontSize="36"
-                     FontWeight="UltraBold"
-                     Foreground="{StaticResource AppTextColor}"
-                     HorizontalAlignment="Right"
-                     VerticalAlignment="Top"
-                     Margin="0,19,4,0"/>
         </StackPanel>
         <StackPanel VerticalAlignment="Stretch"
                     Width="190">
@@ -152,6 +136,15 @@
                 </dxmvvm:Interaction.Behaviors>
               </TextBox>
               <TextBox HorizontalAlignment="Stretch"
+                       Margin="10,0,5,24"
+                       Style="{StaticResource InputFieldStyle}"
+                       Text="{Binding Bias30Parameters[7]}">
+                <dxmvvm:Interaction.Behaviors>
+                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="7"/>
+                  <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+                </dxmvvm:Interaction.Behaviors>
+              </TextBox>
+              <TextBox HorizontalAlignment="Stretch"
                       Margin="10,0,5,24"
                       Style="{StaticResource InputFieldStyle}"
                       Text="{Binding Bias30Parameters[3]}">
@@ -179,38 +172,11 @@
                 </dxmvvm:Interaction.Behaviors>
               </TextBox>
               <TextBox HorizontalAlignment="Stretch"
-                      Margin="10,0,5,24"
+                      Margin="10,0,5,10"
                       Style="{StaticResource InputFieldStyle}"
                       Text="{Binding Bias30Parameters[6]}">
                 <dxmvvm:Interaction.Behaviors>
                   <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="6"/>
-                  <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
-                </dxmvvm:Interaction.Behaviors>
-              </TextBox>
-              <TextBox HorizontalAlignment="Stretch"
-                      Margin="10,0,5,24"
-                      Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding Bias30Parameters[7]}">
-                <dxmvvm:Interaction.Behaviors>
-                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="7"/>
-                  <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
-                </dxmvvm:Interaction.Behaviors>
-              </TextBox>
-              <TextBox HorizontalAlignment="Stretch"
-                      Margin="10,0,5,24"
-                      Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding Bias30Parameters[8]}">
-                <dxmvvm:Interaction.Behaviors>
-                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="8"/>
-                  <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
-                </dxmvvm:Interaction.Behaviors>
-              </TextBox>
-              <TextBox HorizontalAlignment="Stretch"
-                      Margin="10,0,5,10"
-                      Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding Bias30Parameters[9]}">
-                <dxmvvm:Interaction.Behaviors>
-                  <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="9"/>
                   <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
                 </dxmvvm:Interaction.Behaviors>
               </TextBox>
@@ -245,6 +211,11 @@
                       Style="{StaticResource InputFieldStyle}"
                       Text="{Binding TcompBiasParameters[2]}"/>
               <TextBox HorizontalAlignment="Stretch"
+                       Margin="5,0,5,24"
+                       IsReadOnly="True"
+                       Style="{StaticResource InputFieldStyle}"
+                       Text="{Binding TcompBiasParameters[7]}"/>
+              <TextBox HorizontalAlignment="Stretch"
                       Margin="5,0,5,24"
                       IsReadOnly="True"
                       Style="{StaticResource InputFieldStyle}"
@@ -260,25 +231,10 @@
                       Style="{StaticResource InputFieldStyle}"
                       Text="{Binding TcompBiasParameters[5]}"/>
               <TextBox HorizontalAlignment="Stretch"
-                      Margin="5,0,5,24"
+                      Margin="5,0,5,10"
                       IsReadOnly="True"
                       Style="{StaticResource InputFieldStyle}"
                       Text="{Binding TcompBiasParameters[6]}"/>
-              <TextBox HorizontalAlignment="Stretch"
-                      Margin="5,0,5,24"
-                      IsReadOnly="True"
-                      Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding TcompBiasParameters[7]}"/>
-              <TextBox HorizontalAlignment="Stretch"
-                      Margin="5,0,5,24"
-                      IsReadOnly="True"
-                      Style="{StaticResource InputFieldStyle}"
-                      Text="{Binding TcompBiasParameters[8]}"/>
-              <TextBox HorizontalAlignment="Stretch"
-                       Margin="5,0,5,10"
-                       IsReadOnly="True"
-                       Style="{StaticResource InputFieldStyle}"
-                       Text="{Binding TcompBiasParameters[9]}"/>
             </StackPanel>
           </Border>
         </StackPanel>
@@ -313,6 +269,11 @@
                        Margin="5,0,5,24"
                        IsReadOnly="True"
                        Style="{StaticResource InputFieldStyle}"
+                       Text="{Binding TempParameters[7]}"/>
+              <TextBox HorizontalAlignment="Stretch"
+                       Margin="5,0,5,24"
+                       IsReadOnly="True"
+                       Style="{StaticResource InputFieldStyle}"
                        Text="{Binding TempParameters[3]}"/>
               <TextBox HorizontalAlignment="Stretch"
                        Margin="5,0,5,24"
@@ -325,25 +286,10 @@
                        Style="{StaticResource InputFieldStyle}"
                        Text="{Binding TempParameters[5]}"/>
               <TextBox HorizontalAlignment="Stretch"
-                       Margin="5,0,5,24"
-                       IsReadOnly="True"
-                       Style="{StaticResource InputFieldStyle}"
-                       Text="{Binding TempParameters[6]}"/>
-              <TextBox HorizontalAlignment="Stretch"
-                       Margin="5,0,5,24"
-                       IsReadOnly="True"
-                       Style="{StaticResource InputFieldStyle}"
-                       Text="{Binding TempParameters[7]}"/>
-              <TextBox HorizontalAlignment="Stretch"
-                       Margin="5,0,5,24"
-                       IsReadOnly="True"
-                       Style="{StaticResource InputFieldStyle}"
-                       Text="{Binding TempParameters[8]}"/>
-              <TextBox HorizontalAlignment="Stretch"
                        Margin="5,0,5,10"
                        IsReadOnly="True"
                        Style="{StaticResource InputFieldStyle}"
-                       Text="{Binding TempParameters[9]}"/>
+                       Text="{Binding TempParameters[6]}"/>
             </StackPanel>
           </Border>
         </StackPanel>

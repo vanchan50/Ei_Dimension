@@ -9,11 +9,11 @@ public class BeadEventFileWriter
   private ResultsPublisher _publisher;
   private readonly StringBuilder _dataOut = new(AVGSTRLENGTH * 2_000_000);
   private const int AVGSTRLENGTH = 110;
-  public const string HEADER = "Time(1 ms Tick),FSC bg,Viol SSC bg,CL0 bg,CL1 bg,CL2 bg,CL3 bg,Red SSC bg,Green SSC bg," +
-                               "Green B bg,Green C bg,Green B,Green C,Red-Grn Offset,Grn-Viol Offset,Region,Forward Scatter,Violet SSC,CL0," +
-                               "Red SSC,CL1,CL2,CL3,Green SSC,Reporter";
-  public const string OEMHEADER = "Time(1 ms Tick),FSC bg,Viol A bg,Viol B bg,Red C bg,Red D bg,Red A bg,Red B bg,Green A bg," +
-                                  "Green B bg,Green C bg,Red C,Red D,Red-Grn Offset,Grn-Viol Offset,Region,Forward Scatter,Violet SSC,Viol B," +
+  public const string HEADER = "Time(1 ms Tick),void 1,void 2,Green D bg,Red C bg,Red D bg,Red A bg,Red SSC bg,Green SSC bg," +
+                               "Green B bg,Green C bg,Green B,Green C,Red-Grn Offset,void 3,Region,Ratio 1,Ratio 2,Green D," +
+                               "Red SSC,Red C,Red D,Red A,Green SSC,Reporter";
+  public const string OEMHEADER = "Time(1 ms Tick),void 1,void 2,Green D bg,Red C bg,Red D bg,Red A bg,Red B bg,Green A bg," +
+                                  "Green B bg,Green C bg,Red C,Red D,Red-Grn Offset,void 3,Region,Ratio 1,Ratio 2,Green D," +
                                   "Red SSC,Green B,Green C,Red A,Green SSC,Reporter";
 
   public BeadEventFileWriter(ResultsPublisher publisher)
@@ -86,6 +86,6 @@ public class BeadEventFileWriter
 
   public static string Stringify(in ProcessedBead bead)   //setup for csv output
   {
-    return $"{bead.EventTime},{bead.fsc_bg},{bead.vssc_bg},{bead.cl0_bg},{bead.cl1_bg},{bead.cl2_bg},{bead.cl3_bg},{bead.rssc_bg},{bead.gssc_bg},{bead.greenB_bg},{bead.greenC_bg},{bead.greenB:F0},{bead.greenC:F0},{bead.l_offset_rg},{bead.l_offset_gv},{(bead.zone * ProcessedBead.ZONEOFFSET + bead.region).ToString()},{bead.fsc:F0},{bead.violetssc:F0},{bead.cl0:F0},{bead.redssc:F0},{bead.cl1:F0},{bead.cl2:F0},{bead.cl3:F0},{bead.greenssc:F0},{bead.reporter:F3}";
+    return $"{bead.EventTime},{bead.fsc_bg},{bead.vssc_bg},{bead.greenD_bg},{bead.cl1_bg},{bead.cl2_bg},{bead.redA_bg},{bead.rssc_bg},{bead.gssc_bg},{bead.greenB_bg},{bead.greenC_bg},{bead.greenB:F0},{bead.greenC:F0},{bead.l_offset_rg},{bead.l_offset_gv},{(bead.zone * ProcessedBead.ZONEOFFSET + bead.region).ToString()},{bead.ratio1:F0},{bead.ratio2:F0},{bead.greenD:F0},{bead.redssc:F0},{bead.cl1:F0},{bead.cl2:F0},{bead.redA:F0},{bead.greenssc:F0},{bead.reporter:F3}";
   }
 }

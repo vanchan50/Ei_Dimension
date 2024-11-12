@@ -187,9 +187,6 @@
   <data name="Cancel" xml:space="preserve">
     <value>取消</value>
   </data>
-  <data name="ChannelOffsets_Forward_Scatter" xml:space="preserve">
-    <value>前向散射</value>
-  </data>
   <data name="ChannelOffsets_Green_A" xml:space="preserve">
     <value>绿光 A</value>
   </data>
@@ -211,12 +208,6 @@
   <data name="ChannelOffsets_Red_D" xml:space="preserve">
     <value>红光 D</value>
   </data>
-  <data name="ChannelOffsets_Violet_A" xml:space="preserve">
-    <value>紫光 A</value>
-  </data>
-  <data name="ChannelOffsets_Violet_B" xml:space="preserve">
-    <value>紫光 B</value>
-  </data>
   <data name="Channels_Average_BG" xml:space="preserve">
     <value>平均本底</value>
   </data>
@@ -229,9 +220,6 @@
   <data name="Channels_Calibration_Margin" xml:space="preserve">
     <value>校准裕度</value>
   </data>
-  <data name="Channels_ExternalPMT" xml:space="preserve">
-    <value>外部 PMT</value>
-  </data>
   <data name="Channels_Forward_Scatter" xml:space="preserve">
     <value>前向散射</value>
   </data>
@@ -243,6 +231,9 @@
   </data>
   <data name="Channels_Green_C" xml:space="preserve">
     <value>绿光 C</value>
+  </data>
+  <data name="Channels_Green_D" xml:space="preserve">
+    <value>绿光 D</value>
   </data>
   <data name="Channels_Hi_Sens_Chan" xml:space="preserve">
     <value>高灵敏通道</value>
@@ -261,12 +252,6 @@
   </data>
   <data name="Channels_OEM_RedD" xml:space="preserve">
     <value>红光 D</value>
-  </data>
-  <data name="Channels_OEM_VioletA" xml:space="preserve">
-    <value>紫光 A</value>
-  </data>
-  <data name="Channels_OEM_VioletB" xml:space="preserve">
-    <value>紫光 B</value>
   </data>
   <data name="Channels_Offset_Header" xml:space="preserve">
     <value>基线偏移</value>
@@ -314,12 +299,6 @@
   </data>
   <data name="Channels_Update_Bias" xml:space="preserve">
     <value>更新 DAC</value>
-  </data>
-  <data name="Channels_Violet_A" xml:space="preserve">
-    <value>紫光 A (SSC)</value>
-  </data>
-  <data name="Channels_Violet_B" xml:space="preserve">
-    <value>紫光 B (CL0)</value>
   </data>
   <data name="Ch_Offset_Ch_Offset" xml:space="preserve">
     <value>基线偏移</value>
@@ -469,9 +448,6 @@
   <data name="DataAn_Red_SSC" xml:space="preserve">
     <value>红光SSC</value>
   </data>
-  <data name="DataAn_Violet_SSC" xml:space="preserve">
-    <value>紫光SSC</value>
-  </data>
   <data name="DefaultTemplateName" xml:space="preserve">
     <value>模板名称</value>
   </data>
@@ -499,9 +475,6 @@
   </data>
   <data name="Dropdown_Boot" xml:space="preserve">
     <value>启动</value>
-  </data>
-  <data name="Dropdown_Cells" xml:space="preserve">
-    <value>细胞</value>
   </data>
   <data name="Dropdown_Green_Red_Rp_bg" xml:space="preserve">
     <value>绿光+红光+RP bg</value>

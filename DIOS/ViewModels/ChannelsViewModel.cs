@@ -28,13 +28,11 @@ public class ChannelsViewModel
       App.DiosApp.MapController.ActiveMap.calrssc.ToString(),
       App.DiosApp.MapController.ActiveMap.calcl1.ToString(),
       App.DiosApp.MapController.ActiveMap.calcl2.ToString(),
-      App.DiosApp.MapController.ActiveMap.calvssc.ToString(),
-      App.DiosApp.MapController.ActiveMap.calcl0.ToString(),
-      App.DiosApp.MapController.ActiveMap.calfsc.ToString()
+      App.DiosApp.MapController.ActiveMap.calcl0.ToString()
     };
     TcompBiasParameters = new ObservableCollection<string>();
     TempParameters = new ObservableCollection<string>();
-    for(var i = 0; i < 10; i++)
+    for(var i = 0; i < 8; i++)
     {
       TcompBiasParameters.Add("0");
       TempParameters.Add("0");
@@ -49,9 +47,7 @@ public class ChannelsViewModel
       Language.Resources.Channels_Red_B,
       Language.Resources.Channels_Red_C,
       Language.Resources.Channels_Red_D,
-      Language.Resources.Channels_Violet_A,
-      Language.Resources.Channels_Violet_B,
-      Language.Resources.Channels_ExternalPMT
+      Language.Resources.Channels_Green_D
     };
     Instance = this;
   }
@@ -73,16 +69,14 @@ public class ChannelsViewModel
     UserInputHandler.InputSanityCheck();
     var writeIsSuccessful = App.DiosApp.MapController.SaveCalValsToCurrentMap(new MapCalParameters
     {
-      TempCl0 = int.Parse(Bias30Parameters[8]),
+      TempGreenD = int.Parse(Bias30Parameters[7]),
       TempCl1 = int.Parse(Bias30Parameters[5]),
       TempCl2 = int.Parse(Bias30Parameters[6]),
       TempCl3 = int.Parse(Bias30Parameters[3]),
       TempRedSsc = int.Parse(Bias30Parameters[4]),
       TempGreenSsc = int.Parse(Bias30Parameters[0]),
-      TempVioletSsc = int.Parse(Bias30Parameters[7]),
       TempRpMaj = int.Parse(Bias30Parameters[1]),
       TempRpMin = int.Parse(Bias30Parameters[2]),
-      TempFsc = int.Parse(Bias30Parameters[9]),
       Compensation = float.Parse(CalibrationViewModel.Instance.CompensationPercentageContent[0]),
       Gating = CalibrationViewModel.Instance.SelectedGatingIndex,
       Height = short.Parse(CalibrationViewModel.Instance.EventTriggerContents[0]),
@@ -146,14 +140,6 @@ public class ChannelsViewModel
         UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(Bias30Parameters)), this, 7, (TextBox)Views.ChannelsView.Instance.SP.Children[7]);
         MainViewModel.Instance.NumpadToggleButton((TextBox)Views.ChannelsView.Instance.SP.Children[7]);
         break;
-      case 8:
-        UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(Bias30Parameters)), this, 8, (TextBox)Views.ChannelsView.Instance.SP.Children[8]);
-        MainViewModel.Instance.NumpadToggleButton((TextBox)Views.ChannelsView.Instance.SP.Children[8]);
-        break;
-      case 9:
-        UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(Bias30Parameters)), this, 9, (TextBox)Views.ChannelsView.Instance.SP.Children[9]);
-        MainViewModel.Instance.NumpadToggleButton((TextBox)Views.ChannelsView.Instance.SP.Children[9]);
-        break;
     }
   }
 
@@ -171,9 +157,7 @@ public class ChannelsViewModel
     Bias30Parameters[4] = map.calrssc.ToString();
     Bias30Parameters[5] = map.calcl1.ToString();
     Bias30Parameters[6] = map.calcl2.ToString();
-    Bias30Parameters[7] = map.calvssc.ToString();
-    Bias30Parameters[8] = map.calcl0.ToString();
-    Bias30Parameters[9] = map.calfsc.ToString();
+    Bias30Parameters[7] = map.calcl0.ToString();
     App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ChannelBias30C, Channel.GreenA, map.calgssc);
     App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ChannelBias30C, Channel.GreenB, map.calrpmaj);
     App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ChannelBias30C, Channel.GreenC, map.calrpmin);
@@ -181,8 +165,6 @@ public class ChannelsViewModel
     App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ChannelBias30C, Channel.RedB, map.calrssc);
     App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ChannelBias30C, Channel.RedC, map.calcl1);
     App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ChannelBias30C, Channel.RedD, map.calcl2);
-    App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ChannelBias30C, Channel.VioletA, map.calvssc);
-    App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ChannelBias30C, Channel.VioletB, map.calcl0);
-    App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ChannelBias30C, Channel.ForwardScatter, map.calfsc);
+    App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ChannelBias30C, Channel.GreenD, map.calcl0);
   }
 }

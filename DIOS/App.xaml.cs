@@ -137,10 +137,13 @@ public partial class App : Application
   public static void SetChannelConfig(ChannelConfiguration chConfig)
   {
     var OEMMode = chConfig is ChannelConfiguration.OEMA
-                                or ChannelConfiguration.OEMPMT;
+                                or ChannelConfiguration.OEMSpectraplex;
+    var isInSpectraPlexMode = chConfig is ChannelConfiguration.StandardSpectraplex
+      or ChannelConfiguration.OEMSpectraplex;
 
     DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ChannelConfiguration, chConfig);
     SetOEMMode(OEMMode);
+    DiosApp._beadProcessor.SpectraPlexEnabled = isInSpectraPlexMode;
   }
 
   public static void Export(DevExpress.Xpf.Charts.ChartControlBase chart, in int dpi)
@@ -529,9 +532,7 @@ public partial class App : Application
           DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.RedB);
           DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.RedC);
           DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.RedD);
-          DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.VioletA);
-          DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.VioletB);
-          DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.ForwardScatter);
+          DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelBias30C, Channel.GreenD);
           DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelCompensationBias, Channel.GreenA);
           DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelCompensationBias, Channel.GreenB);
           DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelCompensationBias, Channel.GreenC);
@@ -539,9 +540,7 @@ public partial class App : Application
           DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelCompensationBias, Channel.RedB);
           DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelCompensationBias, Channel.RedC);
           DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelCompensationBias, Channel.RedD);
-          DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelCompensationBias, Channel.VioletA);
-          DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelCompensationBias, Channel.VioletB);
-          DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelCompensationBias, Channel.ForwardScatter);
+          DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelCompensationBias, Channel.GreenD);
           DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelTemperature, Channel.GreenA);
           DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelTemperature, Channel.GreenB);
           DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelTemperature, Channel.GreenC);
@@ -549,9 +548,7 @@ public partial class App : Application
           DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelTemperature, Channel.RedB);
           DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelTemperature, Channel.RedC);
           DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelTemperature, Channel.RedD);
-          DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelTemperature, Channel.VioletA);
-          DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelTemperature, Channel.VioletB);
-          DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelTemperature, Channel.ForwardScatter);
+          DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelTemperature, Channel.GreenD);
           DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelOffset, Channel.GreenA);
           DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelOffset, Channel.GreenB);
           DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelOffset, Channel.GreenC);
@@ -559,8 +556,7 @@ public partial class App : Application
           DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelOffset, Channel.RedB);
           DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelOffset, Channel.RedC);
           DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelOffset, Channel.RedD);
-          DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelOffset, Channel.VioletA);
-          DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelOffset, Channel.VioletB);
+          DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.ChannelOffset, Channel.GreenD);
           DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.CalibrationMargin);
           DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.SiPMTempCoeff);
         };

@@ -103,6 +103,11 @@ public class DIOSApp
         Logger.Log("Normalization: Disabled");
     }
 
+    if (_beadProcessor.SpectraPlexEnabled)
+      Logger.Log("SpectraPlexMode: Enabled");
+    else
+      Logger.Log("SpectraPlexMode: Disabled");
+
     Logger.Log($"SensitivityChannel: {_beadProcessor.SensitivityChannel}");
     await Device.StartOperation(wells, Results.RawBeadsCollector);
   }

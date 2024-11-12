@@ -159,7 +159,7 @@ internal class DataController
     return _outBytebuffer;
   }
 
-  private static CommandStruct ByteArrayToStruct(byte[] inmsg)
+  private static CommandStruct ByteArrayToStruct(ReadOnlySpan<byte> inmsg)
   {
     unsafe
     {
@@ -170,7 +170,7 @@ internal class DataController
     }
   }
 
-  private static RawBead BeadArrayToStruct(byte[] beadmsg, byte shift)
+  private static RawBead BeadArrayToStruct(ReadOnlySpan<byte> beadmsg, byte shift)
   {
     unsafe
     {
@@ -314,14 +314,8 @@ internal class DataController
       case 0x22:
         outParameters = new ParameterUpdateEventArgs(DeviceParameterType.Pressure, floatParameter: cs.FParameter);
         break;
-      case 0x24:
-        outParameters = new ParameterUpdateEventArgs(DeviceParameterType.ChannelBias30C, intParameter: (int)Channel.ForwardScatter, floatParameter: cs.Parameter);
-        break;
-      case 0x25:
-        outParameters = new ParameterUpdateEventArgs(DeviceParameterType.ChannelBias30C, intParameter: (int)Channel.VioletA, floatParameter: cs.Parameter);
-        break;
       case 0x26:
-        outParameters = new ParameterUpdateEventArgs(DeviceParameterType.ChannelBias30C, intParameter: (int)Channel.VioletB, floatParameter: cs.Parameter);
+        outParameters = new ParameterUpdateEventArgs(DeviceParameterType.ChannelBias30C, intParameter: (int)Channel.GreenD, floatParameter: cs.Parameter);
         break;
       case 0x28:
         outParameters = new ParameterUpdateEventArgs(DeviceParameterType.ChannelBias30C, intParameter: (int)Channel.GreenA, floatParameter: cs.Parameter);
@@ -522,15 +516,6 @@ internal class DataController
       case 0x77:
         outParameters = new ParameterUpdateEventArgs(DeviceParameterType.FluidicPathLength, intParameter: (int)FluidicPathLength.SpacerSlug, floatParameter: cs.Parameter);
         break;
-      case 0x80:
-        outParameters = new ParameterUpdateEventArgs(DeviceParameterType.ChannelTemperature, intParameter: (int)Channel.VioletA, floatParameter: cs.Parameter / 10.0f);
-        break;
-      case 0x81:
-        outParameters = new ParameterUpdateEventArgs(DeviceParameterType.ChannelTemperature, intParameter: (int)Channel.VioletB, floatParameter: cs.Parameter / 10.0f);
-        break;
-      case 0x84:
-        outParameters = new ParameterUpdateEventArgs(DeviceParameterType.ChannelTemperature, intParameter: (int)Channel.ForwardScatter, floatParameter: cs.Parameter / 10.0f);
-        break;
       case 0xA9:
         outParameters = new ParameterUpdateEventArgs(DeviceParameterType.IsWellEdgeAgitateActive, intParameter: cs.Parameter);
         break;
@@ -555,14 +540,11 @@ internal class DataController
       case 0xB6:
         outParameters = new ParameterUpdateEventArgs(DeviceParameterType.ChannelTemperature, intParameter: (int)Channel.RedD, floatParameter: cs.Parameter / 10.0f);
         break;
-      case 0x93:
-        outParameters = new ParameterUpdateEventArgs(DeviceParameterType.ChannelCompensationBias, intParameter: (int)Channel.ForwardScatter, floatParameter: cs.Parameter);
+      case 0xB7:
+        outParameters = new ParameterUpdateEventArgs(DeviceParameterType.ChannelTemperature, intParameter: (int)Channel.GreenD, floatParameter: cs.Parameter / 10.0f);
         break;
       case 0x94:
-        outParameters = new ParameterUpdateEventArgs(DeviceParameterType.ChannelCompensationBias, intParameter: (int)Channel.VioletB, floatParameter: cs.Parameter);
-        break;
-      case 0x95:
-        outParameters = new ParameterUpdateEventArgs(DeviceParameterType.ChannelCompensationBias, intParameter: (int)Channel.VioletA, floatParameter: cs.Parameter);
+        outParameters = new ParameterUpdateEventArgs(DeviceParameterType.ChannelCompensationBias, intParameter: (int)Channel.GreenD, floatParameter: cs.Parameter);
         break;
       case 0x96:
         outParameters = new ParameterUpdateEventArgs(DeviceParameterType.ChannelCompensationBias, intParameter: (int)Channel.RedD, floatParameter: cs.Parameter);
@@ -606,11 +588,8 @@ internal class DataController
       case 0x9F:
         outParameters = new ParameterUpdateEventArgs(DeviceParameterType.ChannelOffset, intParameter: (int)Channel.RedD, floatParameter: cs.Parameter);
         break;
-      case 0xA1:
-        outParameters = new ParameterUpdateEventArgs(DeviceParameterType.ChannelOffset, intParameter: (int)Channel.VioletA, floatParameter: cs.Parameter);
-        break;
       case 0x91:
-        outParameters = new ParameterUpdateEventArgs(DeviceParameterType.ChannelOffset, intParameter: (int)Channel.VioletB, floatParameter: cs.Parameter);
+        outParameters = new ParameterUpdateEventArgs(DeviceParameterType.ChannelOffset, intParameter: (int)Channel.GreenD, floatParameter: cs.Parameter);
         break;
       case 0x7F:
         outParameters = new ParameterUpdateEventArgs(DeviceParameterType.AgitateRepeatsAmount, intParameter: cs.Parameter);

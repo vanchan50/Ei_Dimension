@@ -111,10 +111,10 @@ public static class DataProcessor
     //bool failed = false;
     foreach (var processedBead in inputBeadList)
     {
-      FillBinArray(fsc, processedBead.fsc);
+      FillBinArray(fsc, processedBead.ratio1);
       FillBinArray(red, processedBead.redssc);
       FillBinArray(green, processedBead.greenssc);
-      FillBinArray(violet, processedBead.violetssc);
+      FillBinArray(violet, processedBead.ratio2);
       FillBinArray(reporter, processedBead.reporter);
 
       if (fromFile)
@@ -189,7 +189,7 @@ public static class DataProcessor
     {
       var region = beadInfoList[i].region;
 
-      int cl0 = Array.BinarySearch(bins, beadInfoList[i].cl0);
+      int cl0 = Array.BinarySearch(bins, beadInfoList[i].greenD);
       if (cl0 < 0)
         cl0 = ~cl0;
       cl0 = cl0 > boundary ? boundary : cl0;
