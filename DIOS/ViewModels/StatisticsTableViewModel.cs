@@ -21,10 +21,11 @@ namespace Ei_Dimension.ViewModels
     public virtual ObservableCollection<string> StatisticsLabels { get; set; }
     public static StatisticsTableViewModel Instance { get; private set; }
     private int _displayedStatsType = 0;
+    private const int ITEMS_AMOUNT = 8;
 
     protected StatisticsTableViewModel()
     {
-      for (var i = 0; i < 8; i++)
+      for (var i = 0; i < ITEMS_AMOUNT; i++)
       {
         CurrentMfiItems.Add("");
         CurrentMedianItems.Add("");
@@ -61,7 +62,7 @@ namespace Ei_Dimension.ViewModels
 
     public void ClearCurrentCalibrationStats()
     {
-      for (var i = 0; i < 10; i++)
+      for (var i = 0; i < ITEMS_AMOUNT; i++)
       {
         CurrentMfiItems[i] = "";
         CurrentMedianItems[i] = "";
