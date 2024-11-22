@@ -121,24 +121,24 @@ public class ChannelsViewModel
         MainViewModel.Instance.NumpadToggleButton((TextBox)Views.ChannelsView.Instance.SP.Children[2]);
         break;
       case 3:
-        UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(Bias30Parameters)), this, 3, (TextBox)Views.ChannelsView.Instance.SP.Children[3]);
-        MainViewModel.Instance.NumpadToggleButton((TextBox)Views.ChannelsView.Instance.SP.Children[3]);
-        break;
-      case 4:
-        UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(Bias30Parameters)), this, 4, (TextBox)Views.ChannelsView.Instance.SP.Children[4]);
+        UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(Bias30Parameters)), this, 3, (TextBox)Views.ChannelsView.Instance.SP.Children[4]);
         MainViewModel.Instance.NumpadToggleButton((TextBox)Views.ChannelsView.Instance.SP.Children[4]);
         break;
-      case 5:
-        UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(Bias30Parameters)), this, 5, (TextBox)Views.ChannelsView.Instance.SP.Children[5]);
+      case 4:
+        UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(Bias30Parameters)), this, 4, (TextBox)Views.ChannelsView.Instance.SP.Children[5]);
         MainViewModel.Instance.NumpadToggleButton((TextBox)Views.ChannelsView.Instance.SP.Children[5]);
         break;
-      case 6:
-        UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(Bias30Parameters)), this, 6, (TextBox)Views.ChannelsView.Instance.SP.Children[6]);
+      case 5:
+        UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(Bias30Parameters)), this, 5, (TextBox)Views.ChannelsView.Instance.SP.Children[6]);
         MainViewModel.Instance.NumpadToggleButton((TextBox)Views.ChannelsView.Instance.SP.Children[6]);
         break;
-      case 7:
-        UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(Bias30Parameters)), this, 7, (TextBox)Views.ChannelsView.Instance.SP.Children[7]);
+      case 6:
+        UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(Bias30Parameters)), this, 6, (TextBox)Views.ChannelsView.Instance.SP.Children[7]);
         MainViewModel.Instance.NumpadToggleButton((TextBox)Views.ChannelsView.Instance.SP.Children[7]);
+        break;
+      case 7:
+        UserInputHandler.SelectedTextBox = (this.GetType().GetProperty(nameof(Bias30Parameters)), this, 7, (TextBox)Views.ChannelsView.Instance.SP.Children[3]);
+        MainViewModel.Instance.NumpadToggleButton((TextBox)Views.ChannelsView.Instance.SP.Children[3]);
         break;
     }
   }
