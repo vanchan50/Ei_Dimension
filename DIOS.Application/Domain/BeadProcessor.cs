@@ -94,8 +94,8 @@ public class BeadProcessor
     var reg = (ushort)_classificationMap.ClassifyBeadToRegion(in outBead);
     var rep = CalculateReporter(reg);
     var zon = (ushort) ClassifyBeadToZone(outBead.greenD);
-    outBead.ratio1 = CalculateRatio1(in outBead);
-    outBead.ratio2 = CalculateRatio2(in outBead);
+    outBead.ratio1 = 0;
+    outBead.ratio2 = 0;
 
     //finalize outBead data
     outBead.region = reg;
@@ -252,7 +252,8 @@ public class BeadProcessor
     float basicReporter;
     if (_channelRedirectionEnabled)
     {
-      basicReporter = processedBead.cl1 + processedBead.cl2 + processedBead.redA;
+      //redB+redC+redD
+      basicReporter = processedBead.greenB + processedBead.greenC + processedBead.redA;
     }
     else
     {
@@ -274,7 +275,7 @@ public class BeadProcessor
     float ratio1;
     if (_channelRedirectionEnabled)
     {
-      ratio1 = processedBead.redA / processedBead.cl1;
+      ratio1 = processedBead.redA / processedBead.greenB;
     }
     else
     {
@@ -288,7 +289,7 @@ public class BeadProcessor
     float ratio2;
     if (_channelRedirectionEnabled)
     {
-      ratio2 = processedBead.cl2 / processedBead.cl1;
+      ratio2 = processedBead.greenC / processedBead.greenB;
     }
     else
     {

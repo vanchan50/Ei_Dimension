@@ -86,6 +86,6 @@ public class BeadEventFileWriter
 
   public static string Stringify(in ProcessedBead bead)   //setup for csv output
   {
-    return $"{bead.EventTime},{bead.fsc_bg},{bead.vssc_bg},{bead.greenD_bg},{bead.cl1_bg},{bead.cl2_bg},{bead.redA_bg},{bead.rssc_bg},{bead.gssc_bg},{bead.greenB_bg},{bead.greenC_bg},{bead.greenB:F0},{bead.greenC:F0},{bead.l_offset_rg},{bead.l_offset_gv},{(bead.zone * ProcessedBead.ZONEOFFSET + bead.region).ToString()},{bead.ratio1:F0},{bead.ratio2:F0},{bead.greenD:F0},{bead.redssc:F0},{bead.cl1:F0},{bead.cl2:F0},{bead.redA:F0},{bead.greenssc:F0},{bead.reporter:F3}";
+    return $"{bead.EventTime},{bead.fsc_bg},{bead.vssc_bg},{bead.greenD_bg},{bead.cl1_bg},{bead.cl2_bg},{bead.redA_bg},{bead.rssc_bg},{bead.gssc_bg},{bead.greenB_bg},{bead.greenC_bg},{bead.greenB:F0},{bead.greenC:F0},{bead.l_offset_rg},{bead.l_offset_gv},{(bead.zone * ProcessedBead.ZONEOFFSET + bead.region).ToString()},{bead.ratio1:F2},{bead.ratio2:F2},{bead.greenD:F0},{bead.redssc:F0},{bead.cl1:F0},{bead.cl2:F0},{bead.redA:F0},{bead.greenssc:F0},{bead.reporter:F3}";
   }
 }
