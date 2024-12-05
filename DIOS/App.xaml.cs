@@ -50,7 +50,9 @@ public partial class App : Application
   {
     var drives = DriveInfo.GetDrives();
     var appFolder = Path.Combine($"{drives[0].Name}", "Emissioninc", Environment.MachineName);
-    Logger = new Logger(appFolder);
+    Logger = new Logger(appFolder,
+      DateTime.Now.ToString("dd.MM.yyyy.HH.mm.ss"),
+      dTime => dTime.ToString("HH.mm.ss"));
     DiosApp = new(appFolder, Logger);
     Logger.Log($"Application version: {DiosApp.BUILD}");
 

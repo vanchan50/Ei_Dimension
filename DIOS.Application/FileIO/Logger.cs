@@ -10,21 +10,19 @@ public class Logger : ILogger
   private readonly FileStream _fStream;
   private readonly StreamWriter _streamWriter;
   private readonly string _logPath;
-  private readonly string _backupLogPath;
-  private string Time => DateTime.Now.ToString("HH:mm:ss", System.Globalization.CultureInfo.CreateSpecificCulture("en-GB"));
+  private readonly Func<DateTime, string> _getTimeStamp;
 
-  public Logger(string path)
+  public Logger(string path, string timeString, Func<DateTime, string> getTimeStamp)
   {
     _folder = Path.Combine(path, LOGFOLDERNAME);
     CheckDir(_folder);
 
-    _logPath = $"{_folder}\\{LOGFILENAME}.txt";
-    _backupLogPath = $"{_folder}\\{LOGFILENAME}.bak";
-    SetBackup();
+    _logPath = $"{_folder}\\{LOGFILENAME}_{timeString}.txt";
 
     _fStream = new FileStream(_logPath, FileMode.Create);
     _streamWriter = new StreamWriter(_fStream);
     _streamWriter.AutoFlush = true;
+    _getTimeStamp = getTimeStamp;
   }
 
   ~Logger()
@@ -36,7 +34,8 @@ public class Logger : ILogger
 
   public void Log(string message)
   {
-    _streamWriter.WriteLine($"{Time}\t{message}");
+    var timeStamp = _getTimeStamp.Invoke(DateTime.Now);
+    _streamWriter.WriteLine($"{timeStamp}\t{message}");
   }
 
   public void LogError(string message)
@@ -51,27 +50,9 @@ public class Logger : ILogger
       if (!Directory.Exists(folder))
         Directory.CreateDirectory(folder);
     }
-    catch(Exception e)
-    {
-      Console.Error.WriteLine($"Unable to create directory {folder}");
-      Console.Error.WriteLine($"{e.Message}");
-      Environment.Exit(1);
-    }
-  }
-
-  private void SetBackup()
-  {
-    try
-    {
-      if (File.Exists(_logPath))
-      {
-        File.Delete(_backupLogPath);
-        File.Move(_logPath, _backupLogPath);
-      }
-    }
     catch (Exception e)
     {
-      Console.Error.WriteLine($"Logger unable to SetBackup");
+      Console.Error.WriteLine($"Unable to create directory {folder}");
       Console.Error.WriteLine($"{e.Message}");
       Environment.Exit(1);
     }
