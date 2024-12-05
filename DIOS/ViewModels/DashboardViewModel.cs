@@ -351,7 +351,7 @@ public class DashboardViewModel
     if (App.DiosApp.Device.Mode == OperationMode.Normal && VerificationViewModel.Instance.ValMapInfoReady())
     {
       _dbsampleVolumeTempHolder = Volumes[0];
-      SetFixedVolumeButtonClick(25);
+      SetFixedVolumeButtonClick(50);
       App.DiosApp.Device.Mode = OperationMode.Verification;
       _dbEndReadIndexTempHolder = SelectedEndReadIndex;
       EndReadItems[2].Click(6);

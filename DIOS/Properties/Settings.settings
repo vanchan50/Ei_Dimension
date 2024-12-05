@@ -54,7 +54,7 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="TouchMode" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
+      <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="VerificationWarningIndex" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">2</Value>
@@ -72,7 +72,7 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="StatisticsTailDiscardPercentage" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">0.25</Value>
+      <Value Profile="(Default)">0.05</Value>
     </Setting>
     <Setting Name="PressureUnitsPSI" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
@@ -84,7 +84,7 @@
       <Value Profile="(Default)">60</Value>
     </Setting>
     <Setting Name="UseWashStation" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
+      <Value Profile="(Default)">1</Value>
     </Setting>
   </Settings>
 </SettingsFile>
