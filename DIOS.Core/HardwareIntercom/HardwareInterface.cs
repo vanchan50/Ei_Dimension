@@ -292,7 +292,7 @@ public class HardwareInterface
             commandCode = 0x2F;
             break;
           case Channel.GreenD:
-            commandCode = 0x26;
+            commandCode = 0x2B;
             break;
           default:
             throw new NotImplementedException();
@@ -1247,7 +1247,7 @@ public class HardwareInterface
             commandCode = 0x2F;
             break;
           case Channel.GreenD:
-            commandCode = 0x26;
+            commandCode = 0x2B;
             break;
           default:
             throw new NotImplementedException();

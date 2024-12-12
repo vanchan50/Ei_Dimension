@@ -69,6 +69,32 @@ public static class EmissionPdfUtilities
     pdf.drawTable(0, 2.8, 16.5, 1, font, format, _contents);
   }
 
+  public static void DrawVerificationChannelCount(this PdfSharpUtilities pdf, double positionY, XFont font,
+    VerificationReport report)
+  {
+    var format = XStringFormats.Center;
+    _contents.Clear();
+    _contents.Add([
+      "Region Count",
+      "Count",
+      "Min Count",
+      "Result"
+    ]);
+
+    foreach (var regionData in report.regionsData)
+    {
+      _contents.Add([
+        $"Region #{regionData.Label}",
+        regionData.Count.ToString(),
+        report.MinCount.ToString(),
+        regionData.Count >= report.MinCount ? "Passed" : "Failed"
+      ]);
+    }
+
+    var height = _contents.Count * 0.5;
+    pdf.drawTable(0, positionY, 9.9, height, font, format, _contents);
+  }
+
   public static void DrawVerificationChannelTable(this PdfSharpUtilities pdf, double positionY, XFont font,
     VerificationReport report, FieldInfo property, string label = null)
   {

@@ -314,7 +314,7 @@ internal class DataController
       case 0x22:
         outParameters = new ParameterUpdateEventArgs(DeviceParameterType.Pressure, floatParameter: cs.FParameter);
         break;
-      case 0x26:
+      case 0x2B:
         outParameters = new ParameterUpdateEventArgs(DeviceParameterType.ChannelBias30C, intParameter: (int)Channel.GreenD, floatParameter: cs.Parameter);
         break;
       case 0x28:
