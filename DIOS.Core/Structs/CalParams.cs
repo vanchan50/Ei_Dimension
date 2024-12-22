@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace DIOS.Core;
+﻿namespace DIOS.Core;
 
 [Serializable]
 public class CalParams

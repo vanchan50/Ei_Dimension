@@ -34,7 +34,7 @@ public class ResultsProcessor
       while (_resultsProcessed < size)
       {
         var bead = _results.RawBeadsCollector[_resultsProcessed++];
-        var processedBead = _beadProcessor.CalculateBeadParams(in bead);
+        var processedBead = _beadProcessor.CalculateBeadParams(ref bead);
         _results.AddProcessedBeadEvent(in processedBead);
 
         if (_resultsProcessed == 1)  //Trigger on 1st bead arrived is the simplest solution, at least for now;

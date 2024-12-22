@@ -12,7 +12,6 @@
              DataContext="{dxmvvm:ViewModelSource Type=ViewModels:NormalizationViewModel}"
              d:DesignHeight="944" d:DesignWidth="1632">
   <Grid>
-
     <TextBlock Text="{lang:Loc Maintenance_Normalization}"
                FontFamily="{StaticResource AppTextFont}"
                FontSize="50"
@@ -24,7 +23,7 @@
     <!--Table-->
     <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Margin="150,120,0,0">
+            Margin="50,120,0,0">
       <StackPanel>
         <TextBlock Text="{lang:Loc Experiment_Available_Regions}"
                    FontFamily="{StaticResource AppTextFont}"
@@ -70,7 +69,7 @@
 
     <StackPanel HorizontalAlignment="Left"
                 VerticalAlignment="Top"
-                Margin="742,130,0,0">
+                Margin="482,130,0,0">
 
       <StackPanel Orientation="Horizontal">
         <CheckBox FontFamily="{StaticResource AppTextFont}"
@@ -164,7 +163,7 @@
     </StackPanel>
 
     <Border HorizontalAlignment="Left" VerticalAlignment="Top"
-            Margin="700,410,0,0">
+            Margin="440,410,0,0">
       <StackPanel>
         <Button Width="280" Height="140"
                 HorizontalAlignment="Left"
@@ -191,5 +190,304 @@
                 Command="{Binding SaveClickCommand}"/>
       </StackPanel>
     </Border>
+
+
+    <StackPanel HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Margin="800,130,0,0">
+      <StackPanel Orientation="Horizontal"
+                  HorizontalAlignment="Center"
+                  Margin="0,0,0,20">
+        <CheckBox FontFamily="{StaticResource AppTextFont}"
+                  FontSize="30"
+                  FontWeight="UltraBold"
+                  Foreground="{StaticResource AppTextColor}"
+                  Style="{StaticResource CheckboxStyle}"
+                  IsChecked="{Binding NormalizationEnabled[0],Mode=OneWay}">
+          <dxmvvm:Interaction.Behaviors>
+            <dxmvvm:EventToCommand EventName="Checked" Command="{Binding CheckedBoxCommand}" CommandParameter="True"/>
+            <dxmvvm:EventToCommand EventName="Unchecked" Command="{Binding CheckedBoxCommand}" CommandParameter="False"/>
+          </dxmvvm:Interaction.Behaviors>
+        </CheckBox>
+        <TextBlock Text="{lang:Loc Normalization_Compensation_Matrix}"
+                   FontFamily="{StaticResource AppTextFont}"
+                   FontSize="36"
+                   FontWeight="UltraBold"
+                   Foreground="{StaticResource AppTextColor}"
+                   Margin="4,0,0,0"/>
+      </StackPanel>
+      <Grid Width="800"
+          Height="320">
+        <Grid.RowDefinitions>
+          <RowDefinition/>
+          <RowDefinition/>
+          <RowDefinition/>
+          <RowDefinition/>
+          <RowDefinition/>
+          <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition/>
+          <ColumnDefinition/>
+          <ColumnDefinition/>
+          <ColumnDefinition/>
+          <ColumnDefinition/>
+          <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Text="{lang:Loc ChannelOffsets_Green_C}"
+                 Grid.Row="0"
+                 Grid.Column="1"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="30"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Center"/>
+        <TextBlock Text="{lang:Loc Channels_Green_D}"
+                 Grid.Row="0"
+                 Grid.Column="2"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="30"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Center"/>
+        <TextBlock Text="{lang:Loc ChannelOffsets_Red_C}"
+                 Grid.Row="0"
+                 Grid.Column="3"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="30"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Center"/>
+        <TextBlock Text="{lang:Loc ChannelOffsets_Red_D}"
+                 Grid.Row="0"
+                 Grid.Column="4"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="30"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Center"/>
+        <TextBlock Text="{lang:Loc ChannelOffsets_Red_A}"
+                 Grid.Row="0"
+                 Grid.Column="5"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="30"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Center"/>
+
+        <TextBlock Text="{lang:Loc ChannelOffsets_Green_B}"
+                 Grid.Row="1"
+                 Grid.Column="0"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="30"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Center"/>
+        <TextBox HorizontalAlignment="Stretch"
+               Grid.Row="1"
+               Grid.Column="1"
+               Margin="4,0,4,0"
+               Style="{StaticResource InputFieldStyle}"
+               Text="{Binding NormalizationFactor[0]}">
+          <dxmvvm:Interaction.Behaviors>
+            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="0"/>
+            <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+          </dxmvvm:Interaction.Behaviors>
+        </TextBox>
+        <TextBox HorizontalAlignment="Stretch"
+               Grid.Row="1"
+               Grid.Column="2"
+               Margin="4,0,4,0"
+               Style="{StaticResource InputFieldStyle}"
+               Text="{Binding NormalizationFactor[0]}">
+          <dxmvvm:Interaction.Behaviors>
+            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="0"/>
+            <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+          </dxmvvm:Interaction.Behaviors>
+        </TextBox>
+        <TextBox HorizontalAlignment="Stretch"
+               Grid.Row="1"
+               Grid.Column="3"
+               Margin="4,0,4,0"
+               Style="{StaticResource InputFieldStyle}"
+               Text="{Binding NormalizationFactor[0]}">
+          <dxmvvm:Interaction.Behaviors>
+            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="0"/>
+            <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+          </dxmvvm:Interaction.Behaviors>
+        </TextBox>
+        <TextBox HorizontalAlignment="Stretch"
+               Grid.Row="1"
+               Grid.Column="4"
+               Margin="4,0,4,0"
+               Style="{StaticResource InputFieldStyle}"
+               Text="{Binding NormalizationFactor[0]}">
+          <dxmvvm:Interaction.Behaviors>
+            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="0"/>
+            <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+          </dxmvvm:Interaction.Behaviors>
+        </TextBox>
+        <TextBox HorizontalAlignment="Stretch"
+               Grid.Row="1"
+               Grid.Column="5"
+               Margin="4,0,4,0"
+               Style="{StaticResource InputFieldStyle}"
+               Text="{Binding NormalizationFactor[0]}">
+          <dxmvvm:Interaction.Behaviors>
+            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="0"/>
+            <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+          </dxmvvm:Interaction.Behaviors>
+        </TextBox>
+
+
+        <TextBlock Text="{lang:Loc ChannelOffsets_Green_C}"
+                 Grid.Row="2"
+                 Grid.Column="0"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="30"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Center"/>
+        <TextBox HorizontalAlignment="Stretch"
+               Grid.Row="2"
+               Grid.Column="2"
+               Margin="4,0,4,0"
+               Style="{StaticResource InputFieldStyle}"
+               Text="{Binding NormalizationFactor[0]}">
+          <dxmvvm:Interaction.Behaviors>
+            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="0"/>
+            <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+          </dxmvvm:Interaction.Behaviors>
+        </TextBox>
+        <TextBox HorizontalAlignment="Stretch"
+               Grid.Row="2"
+               Grid.Column="3"
+               Margin="4,0,4,0"
+               Style="{StaticResource InputFieldStyle}"
+               Text="{Binding NormalizationFactor[0]}">
+          <dxmvvm:Interaction.Behaviors>
+            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="0"/>
+            <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+          </dxmvvm:Interaction.Behaviors>
+        </TextBox>
+        <TextBox HorizontalAlignment="Stretch"
+               Grid.Row="2"
+               Grid.Column="4"
+               Margin="4,0,4,0"
+               Style="{StaticResource InputFieldStyle}"
+               Text="{Binding NormalizationFactor[0]}">
+          <dxmvvm:Interaction.Behaviors>
+            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="0"/>
+            <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+          </dxmvvm:Interaction.Behaviors>
+        </TextBox>
+        <TextBox HorizontalAlignment="Stretch"
+               Grid.Row="2"
+               Grid.Column="5"
+               Margin="4,0,4,0"
+               Style="{StaticResource InputFieldStyle}"
+               Text="{Binding NormalizationFactor[0]}">
+          <dxmvvm:Interaction.Behaviors>
+            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="0"/>
+            <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+          </dxmvvm:Interaction.Behaviors>
+        </TextBox>
+
+
+        <TextBlock Text="{lang:Loc Channels_Green_D}"
+                 Grid.Row="3"
+                 Grid.Column="0"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="30"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Center"/>
+        <TextBox HorizontalAlignment="Stretch"
+               Grid.Row="3"
+               Grid.Column="3"
+               Margin="4,0,4,0"
+               Style="{StaticResource InputFieldStyle}"
+               Text="{Binding NormalizationFactor[0]}">
+          <dxmvvm:Interaction.Behaviors>
+            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="0"/>
+            <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+          </dxmvvm:Interaction.Behaviors>
+        </TextBox>
+        <TextBox HorizontalAlignment="Stretch"
+               Grid.Row="3"
+               Grid.Column="4"
+               Margin="4,0,4,0"
+               Style="{StaticResource InputFieldStyle}"
+               Text="{Binding NormalizationFactor[0]}">
+          <dxmvvm:Interaction.Behaviors>
+            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="0"/>
+            <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+          </dxmvvm:Interaction.Behaviors>
+        </TextBox>
+        <TextBox HorizontalAlignment="Stretch"
+               Grid.Row="3"
+               Grid.Column="5"
+               Margin="4,0,4,0"
+               Style="{StaticResource InputFieldStyle}"
+               Text="{Binding NormalizationFactor[0]}">
+          <dxmvvm:Interaction.Behaviors>
+            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="0"/>
+            <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+          </dxmvvm:Interaction.Behaviors>
+        </TextBox>
+
+        <TextBlock Text="{lang:Loc ChannelOffsets_Red_C}"
+                 Grid.Row="4"
+                 Grid.Column="0"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="30"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Center"/>
+        <TextBox HorizontalAlignment="Stretch"
+               Grid.Row="4"
+               Grid.Column="4"
+               Margin="4,0,4,0"
+               Style="{StaticResource InputFieldStyle}"
+               Text="{Binding NormalizationFactor[0]}">
+          <dxmvvm:Interaction.Behaviors>
+            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="0"/>
+            <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+          </dxmvvm:Interaction.Behaviors>
+        </TextBox>
+        <TextBox HorizontalAlignment="Stretch"
+               Grid.Row="4"
+               Grid.Column="5"
+               Margin="4,0,4,0"
+               Style="{StaticResource InputFieldStyle}"
+               Text="{Binding NormalizationFactor[0]}">
+          <dxmvvm:Interaction.Behaviors>
+            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="0"/>
+            <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+          </dxmvvm:Interaction.Behaviors>
+        </TextBox>
+
+        <TextBlock Text="{lang:Loc ChannelOffsets_Red_D}"
+                 Grid.Row="5"
+                 Grid.Column="0"
+                 FontFamily="{StaticResource AppTextFont}"
+                 FontSize="30"
+                 FontWeight="UltraBold"
+                 Foreground="{StaticResource AppTextColor}"
+                 HorizontalAlignment="Center"/>
+        <TextBox HorizontalAlignment="Stretch"
+               Grid.Row="5"
+               Grid.Column="5"
+               Margin="4,0,4,0"
+               Style="{StaticResource InputFieldStyle}"
+               Text="{Binding NormalizationFactor[0]}">
+          <dxmvvm:Interaction.Behaviors>
+            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="0"/>
+            <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+          </dxmvvm:Interaction.Behaviors>
+        </TextBox>
+      </Grid>
+    </StackPanel>
   </Grid>
 </UserControl>

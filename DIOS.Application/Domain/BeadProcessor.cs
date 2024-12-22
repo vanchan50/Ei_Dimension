@@ -4,7 +4,8 @@ namespace DIOS.Application.Domain;
 
 public class BeadProcessor
 {
-  public delegate ProcessedBead ProcessBead(in RawBead rawBead);
+  public delegate ProcessedBead ProcessBead(ref RawBead rawBead);
+  public delegate void PreProcessBead(ref RawBead rawBead);
   public ProcessBead CalculateBeadParams { get; private set; }
   public NormalizationSettings Normalization { get; } = new();
   private float _greenMin;
@@ -21,6 +22,22 @@ public class BeadProcessor
       CalculateBeadParams = _spectraPlexEnabled ? CalculateBeadParamsSpectraPlex : CalculateBeadParamsRegular;
     }
   }
+  public bool BeadCompensationEnabled
+  {
+    get => _beadCompensationEnabled;
+    set
+    {
+      _beadCompensationEnabled = value;
+      if (_spectraPlexEnabled)
+      {
+        CompensateBeadParams = _beadCompensationEnabled ? PrecalculateBeadCompensationSpectraPlex : EmptyFunc;
+        return;
+      }
+      CompensateBeadParams = _beadCompensationEnabled ? PrecalculateBeadCompensationRegular : EmptyFunc;
+    }
+  }
+
+  private PreProcessBead CompensateBeadParams;
   public bool _channelRedirectionEnabled = false;
   public float HdnrTrans;
   public float HDnrCoef;
@@ -29,10 +46,12 @@ public class BeadProcessor
   internal float _actualCompensation;
 
   private bool _spectraPlexEnabled;
+  private bool _beadCompensationEnabled;
 
   public BeadProcessor()
   {
     CalculateBeadParams = CalculateBeadParamsRegular;
+    CompensateBeadParams = EmptyFunc;
   }
 
   public void SetMap(MapModel map)
@@ -41,8 +60,55 @@ public class BeadProcessor
     _classificationMap.ConstructClassificationMap(_map);
   }
 
-  private ProcessedBead CalculateBeadParamsRegular(in RawBead rawBead)
+  private void PrecalculateBeadCompensationRegular(ref RawBead rawBead)
   {
+    rawBead.greenC -= (ushort)(_map.CMatrix.GreenB1 * rawBead.greenB);
+    rawBead.greenD -=          _map.CMatrix.GreenB2 * rawBead.greenB;
+    rawBead.cl1 -=             _map.CMatrix.GreenB3 * rawBead.greenB;
+    rawBead.cl2 -=             _map.CMatrix.GreenB4 * rawBead.greenB;
+    rawBead.redA -=            _map.CMatrix.GreenB5 * rawBead.greenB;
+
+    rawBead.greenD -=          _map.CMatrix.GreenC1 * rawBead.greenC;
+    rawBead.cl1 -=             _map.CMatrix.GreenC2 * rawBead.greenC;
+    rawBead.cl2 -=             _map.CMatrix.GreenC3 * rawBead.greenC;
+    rawBead.redA -=            _map.CMatrix.GreenC4 * rawBead.greenC;
+
+    rawBead.cl1 -=             _map.CMatrix.GreenD1 * rawBead.greenD;
+    rawBead.cl2 -=             _map.CMatrix.GreenD2 * rawBead.greenD;
+    rawBead.redA -=            _map.CMatrix.GreenD3 * rawBead.greenD;
+
+    rawBead.cl2 -=             _map.CMatrix.RedC1   * rawBead.cl1;
+    rawBead.redA -=            _map.CMatrix.RedC2   * rawBead.cl1;
+
+    rawBead.redA -=            _map.CMatrix.RedD1   * rawBead.cl2;
+  }
+
+  private void PrecalculateBeadCompensationSpectraPlex(ref RawBead rawBead)
+  {
+    rawBead.greenC -= (ushort)(_map.CMatrix.GreenB1 * rawBead.greenB);
+    rawBead.greenD -= _map.CMatrix.GreenB2 * rawBead.greenB;
+    rawBead.cl1 -= _map.CMatrix.GreenB3 * rawBead.greenB;
+    rawBead.cl2 -= _map.CMatrix.GreenB4 * rawBead.greenB;
+    rawBead.redA -= _map.CMatrix.GreenB5 * rawBead.greenB;
+
+    rawBead.greenD -= _map.CMatrix.GreenC1 * rawBead.greenC;
+    rawBead.cl1 -= _map.CMatrix.GreenC2 * rawBead.greenC;
+    rawBead.cl2 -= _map.CMatrix.GreenC3 * rawBead.greenC;
+    rawBead.redA -= _map.CMatrix.GreenC4 * rawBead.greenC;
+
+    rawBead.cl1 -= _map.CMatrix.GreenD1 * rawBead.greenD;
+    rawBead.cl2 -= _map.CMatrix.GreenD2 * rawBead.greenD;
+    rawBead.redA -= _map.CMatrix.GreenD3 * rawBead.greenD;
+
+    rawBead.cl2 -= _map.CMatrix.RedC1 * rawBead.cl1;
+    rawBead.redA -= _map.CMatrix.RedC2 * rawBead.cl1;
+
+    rawBead.redA -= _map.CMatrix.RedD1 * rawBead.cl2;
+  }
+
+  private ProcessedBead CalculateBeadParamsRegular(ref RawBead rawBead)
+  {
+    CompensateBeadParams.Invoke(ref rawBead);
     var outBead = new ProcessedBead
     {
       EventTime = rawBead.EventTime,
@@ -105,8 +171,9 @@ public class BeadProcessor
     return outBead;
   } //reporter is the last calculated thing
 
-  private ProcessedBead CalculateBeadParamsSpectraPlex(in RawBead rawBead)
+  private ProcessedBead CalculateBeadParamsSpectraPlex(ref RawBead rawBead)
   {
+    CompensateBeadParams.Invoke(ref rawBead);
     var outBead = new ProcessedBead
     {
       EventTime = rawBead.EventTime,
@@ -317,5 +384,9 @@ public class BeadProcessor
       }
     }
     return 0;
+  }
+
+  private void EmptyFunc(ref RawBead rawBead)
+  {
   }
 }
