@@ -97,16 +97,18 @@ public class DIOSApp
     }
     else
     {
-      if (Normalization.IsEnabled)
-        Logger.Log("Normalization: Enabled");
-      else
-        Logger.Log("Normalization: Disabled");
+      Logger.Log(Normalization.IsEnabled
+        ? "Normalization: Enabled"
+        : "Normalization: Disabled");
     }
 
-    if (_beadProcessor.SpectraPlexEnabled)
-      Logger.Log("SpectraPlexMode: Enabled");
-    else
-      Logger.Log("SpectraPlexMode: Disabled");
+    Logger.Log(_beadProcessor.SpectraPlexEnabled
+      ? "SpectraPlexMode: Enabled"
+      : "SpectraPlexMode: Disabled");
+
+    Logger.Log(_beadProcessor.BeadCompensationEnabled
+      ? "Bead Compensation Matrix: Enabled"
+      : "Bead Compensation Matrix: Disabled");
 
     Logger.Log($"SensitivityChannel: {_beadProcessor.SensitivityChannel}");
     await Device.StartOperation(wells, Results.RawBeadsCollector);

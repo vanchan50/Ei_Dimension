@@ -203,10 +203,10 @@
                   FontWeight="UltraBold"
                   Foreground="{StaticResource AppTextColor}"
                   Style="{StaticResource CheckboxStyle}"
-                  IsChecked="{Binding NormalizationEnabled[0],Mode=OneWay}">
+                  IsChecked="{Binding CompensationEnabled[0],Mode=OneWay}">
           <dxmvvm:Interaction.Behaviors>
-            <dxmvvm:EventToCommand EventName="Checked" Command="{Binding CheckedBoxCommand}" CommandParameter="True"/>
-            <dxmvvm:EventToCommand EventName="Unchecked" Command="{Binding CheckedBoxCommand}" CommandParameter="False"/>
+            <dxmvvm:EventToCommand EventName="Checked" Command="{Binding CompensationMatrixCheckedBoxCommand}" CommandParameter="True"/>
+            <dxmvvm:EventToCommand EventName="Unchecked" Command="{Binding CompensationMatrixCheckedBoxCommand}" CommandParameter="False"/>
           </dxmvvm:Interaction.Behaviors>
         </CheckBox>
         <TextBlock Text="{lang:Loc Normalization_Compensation_Matrix}"
@@ -285,57 +285,62 @@
                  Foreground="{StaticResource AppTextColor}"
                  HorizontalAlignment="Center"/>
         <TextBox HorizontalAlignment="Stretch"
+                 Name="CMatrix0"
                Grid.Row="1"
                Grid.Column="1"
                Margin="4,0,4,0"
                Style="{StaticResource InputFieldStyle}"
-               Text="{Binding NormalizationFactor[0]}">
+               Text="{Binding CompensationMatrix[0]}">
           <dxmvvm:Interaction.Behaviors>
-            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="0"/>
+            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="10"/>
             <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
           </dxmvvm:Interaction.Behaviors>
         </TextBox>
         <TextBox HorizontalAlignment="Stretch"
+                 Name="CMatrix1"
                Grid.Row="1"
                Grid.Column="2"
                Margin="4,0,4,0"
                Style="{StaticResource InputFieldStyle}"
-               Text="{Binding NormalizationFactor[0]}">
+               Text="{Binding CompensationMatrix[1]}">
           <dxmvvm:Interaction.Behaviors>
-            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="0"/>
+            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="11"/>
             <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
           </dxmvvm:Interaction.Behaviors>
         </TextBox>
         <TextBox HorizontalAlignment="Stretch"
+                 Name="CMatrix2"
                Grid.Row="1"
                Grid.Column="3"
                Margin="4,0,4,0"
                Style="{StaticResource InputFieldStyle}"
-               Text="{Binding NormalizationFactor[0]}">
+               Text="{Binding CompensationMatrix[2]}">
           <dxmvvm:Interaction.Behaviors>
-            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="0"/>
+            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="12"/>
             <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
           </dxmvvm:Interaction.Behaviors>
         </TextBox>
         <TextBox HorizontalAlignment="Stretch"
+                 Name="CMatrix3"
                Grid.Row="1"
                Grid.Column="4"
                Margin="4,0,4,0"
                Style="{StaticResource InputFieldStyle}"
-               Text="{Binding NormalizationFactor[0]}">
+               Text="{Binding CompensationMatrix[3]}">
           <dxmvvm:Interaction.Behaviors>
-            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="0"/>
+            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="13"/>
             <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
           </dxmvvm:Interaction.Behaviors>
         </TextBox>
         <TextBox HorizontalAlignment="Stretch"
+                 Name="CMatrix4"
                Grid.Row="1"
                Grid.Column="5"
                Margin="4,0,4,0"
                Style="{StaticResource InputFieldStyle}"
-               Text="{Binding NormalizationFactor[0]}">
+               Text="{Binding CompensationMatrix[4]}">
           <dxmvvm:Interaction.Behaviors>
-            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="0"/>
+            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="14"/>
             <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
           </dxmvvm:Interaction.Behaviors>
         </TextBox>
@@ -350,46 +355,50 @@
                  Foreground="{StaticResource AppTextColor}"
                  HorizontalAlignment="Center"/>
         <TextBox HorizontalAlignment="Stretch"
+                 Name="CMatrix5"
                Grid.Row="2"
                Grid.Column="2"
                Margin="4,0,4,0"
                Style="{StaticResource InputFieldStyle}"
-               Text="{Binding NormalizationFactor[0]}">
+               Text="{Binding CompensationMatrix[5]}">
           <dxmvvm:Interaction.Behaviors>
-            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="0"/>
+            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="15"/>
             <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
           </dxmvvm:Interaction.Behaviors>
         </TextBox>
         <TextBox HorizontalAlignment="Stretch"
+                 Name="CMatrix6"
                Grid.Row="2"
                Grid.Column="3"
                Margin="4,0,4,0"
                Style="{StaticResource InputFieldStyle}"
-               Text="{Binding NormalizationFactor[0]}">
+               Text="{Binding CompensationMatrix[6]}">
           <dxmvvm:Interaction.Behaviors>
-            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="0"/>
+            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="16"/>
             <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
           </dxmvvm:Interaction.Behaviors>
         </TextBox>
         <TextBox HorizontalAlignment="Stretch"
+                 Name="CMatrix7"
                Grid.Row="2"
                Grid.Column="4"
                Margin="4,0,4,0"
                Style="{StaticResource InputFieldStyle}"
-               Text="{Binding NormalizationFactor[0]}">
+               Text="{Binding CompensationMatrix[7]}">
           <dxmvvm:Interaction.Behaviors>
-            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="0"/>
+            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="17"/>
             <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
           </dxmvvm:Interaction.Behaviors>
         </TextBox>
         <TextBox HorizontalAlignment="Stretch"
+                 Name="CMatrix8"
                Grid.Row="2"
                Grid.Column="5"
                Margin="4,0,4,0"
                Style="{StaticResource InputFieldStyle}"
-               Text="{Binding NormalizationFactor[0]}">
+               Text="{Binding CompensationMatrix[8]}">
           <dxmvvm:Interaction.Behaviors>
-            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="0"/>
+            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="18"/>
             <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
           </dxmvvm:Interaction.Behaviors>
         </TextBox>
@@ -404,35 +413,38 @@
                  Foreground="{StaticResource AppTextColor}"
                  HorizontalAlignment="Center"/>
         <TextBox HorizontalAlignment="Stretch"
+                 Name="CMatrix9"
                Grid.Row="3"
                Grid.Column="3"
                Margin="4,0,4,0"
                Style="{StaticResource InputFieldStyle}"
-               Text="{Binding NormalizationFactor[0]}">
+               Text="{Binding CompensationMatrix[9]}">
           <dxmvvm:Interaction.Behaviors>
-            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="0"/>
+            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="19"/>
             <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
           </dxmvvm:Interaction.Behaviors>
         </TextBox>
         <TextBox HorizontalAlignment="Stretch"
+                 Name="CMatrix10"
                Grid.Row="3"
                Grid.Column="4"
                Margin="4,0,4,0"
                Style="{StaticResource InputFieldStyle}"
-               Text="{Binding NormalizationFactor[0]}">
+               Text="{Binding CompensationMatrix[10]}">
           <dxmvvm:Interaction.Behaviors>
-            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="0"/>
+            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="20"/>
             <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
           </dxmvvm:Interaction.Behaviors>
         </TextBox>
         <TextBox HorizontalAlignment="Stretch"
+                 Name="CMatrix11"
                Grid.Row="3"
                Grid.Column="5"
                Margin="4,0,4,0"
                Style="{StaticResource InputFieldStyle}"
-               Text="{Binding NormalizationFactor[0]}">
+               Text="{Binding CompensationMatrix[11]}">
           <dxmvvm:Interaction.Behaviors>
-            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="0"/>
+            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="21"/>
             <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
           </dxmvvm:Interaction.Behaviors>
         </TextBox>
@@ -446,24 +458,26 @@
                  Foreground="{StaticResource AppTextColor}"
                  HorizontalAlignment="Center"/>
         <TextBox HorizontalAlignment="Stretch"
+                 Name="CMatrix12"
                Grid.Row="4"
                Grid.Column="4"
                Margin="4,0,4,0"
                Style="{StaticResource InputFieldStyle}"
-               Text="{Binding NormalizationFactor[0]}">
+               Text="{Binding CompensationMatrix[12]}">
           <dxmvvm:Interaction.Behaviors>
-            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="0"/>
+            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="22"/>
             <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
           </dxmvvm:Interaction.Behaviors>
         </TextBox>
         <TextBox HorizontalAlignment="Stretch"
+                 Name="CMatrix13"
                Grid.Row="4"
                Grid.Column="5"
                Margin="4,0,4,0"
                Style="{StaticResource InputFieldStyle}"
-               Text="{Binding NormalizationFactor[0]}">
+               Text="{Binding CompensationMatrix[13]}">
           <dxmvvm:Interaction.Behaviors>
-            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="0"/>
+            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="23"/>
             <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
           </dxmvvm:Interaction.Behaviors>
         </TextBox>
@@ -477,13 +491,14 @@
                  Foreground="{StaticResource AppTextColor}"
                  HorizontalAlignment="Center"/>
         <TextBox HorizontalAlignment="Stretch"
+                 Name="CMatrix14"
                Grid.Row="5"
                Grid.Column="5"
                Margin="4,0,4,0"
                Style="{StaticResource InputFieldStyle}"
-               Text="{Binding NormalizationFactor[0]}">
+               Text="{Binding CompensationMatrix[14]}">
           <dxmvvm:Interaction.Behaviors>
-            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="0"/>
+            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="24"/>
             <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
           </dxmvvm:Interaction.Behaviors>
         </TextBox>
