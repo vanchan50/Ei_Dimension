@@ -3,7 +3,6 @@ using System.Collections.ObjectModel;
 using System.Windows.Controls;
 using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
-using DIOS.Application;
 using DIOS.Core;
 using Ei_Dimension.Controllers;
 
@@ -75,7 +74,7 @@ public class NormalizationViewModel
     }
   }
 
-  public void SaveClick()
+  public void SaveNormalizationClick()
   {
     UserInputHandler.InputSanityCheck();
     var map = App.DiosApp.MapController.ActiveMap;
@@ -107,6 +106,50 @@ public class NormalizationViewModel
     {
       Notification.ShowError(e.Message);
     }
+  }
+
+  public void SaveCompensationClick()
+  {
+    UserInputHandler.InputSanityCheck();
+
+    try
+    {
+      var matrix = ParseMatrix();
+      App.DiosApp.MapController.SaveCompensationMatrix(matrix, CompensationEnabled[0]);
+      Notification.Show("Compensation matrix parameters Saved To Map");
+    }
+    catch (ArgumentException e)
+    {
+      Notification.ShowError(e.Message);
+    }
+  }
+
+  private BeadCompensationMatrix ParseMatrix()
+  {
+    BeadCompensationMatrix matrix = new()
+    {
+      GreenB1 = float.Parse(CompensationMatrix[0]),
+      GreenB2 = float.Parse(CompensationMatrix[1]),
+      GreenB3 = float.Parse(CompensationMatrix[2]),
+      GreenB4 = float.Parse(CompensationMatrix[3]),
+      GreenB5 = float.Parse(CompensationMatrix[4]),
+
+      GreenC1 = float.Parse(CompensationMatrix[5]),
+      GreenC2 = float.Parse(CompensationMatrix[6]),
+      GreenC3 = float.Parse(CompensationMatrix[7]),
+      GreenC4 = float.Parse(CompensationMatrix[8]),
+
+      GreenD1 = float.Parse(CompensationMatrix[9]),
+      GreenD2 = float.Parse(CompensationMatrix[10]),
+      GreenD3 = float.Parse(CompensationMatrix[11]),
+
+      RedC1 = float.Parse(CompensationMatrix[12]),
+      RedC2 = float.Parse(CompensationMatrix[13]),
+
+      RedD1 = float.Parse(CompensationMatrix[14])
+    };
+
+    return matrix;
   }
 
   public void CheckedBox(bool state)

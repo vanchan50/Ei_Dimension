@@ -187,7 +187,7 @@
                 Margin="0,16,0,0"
                 Content="{lang:Loc Normalization_Save}"
                 Style="{StaticResource ButtonStyle}"
-                Command="{Binding SaveClickCommand}"/>
+                Command="{Binding SaveNormalizationClickCommand}"/>
       </StackPanel>
     </Border>
 
@@ -503,6 +503,14 @@
           </dxmvvm:Interaction.Behaviors>
         </TextBox>
       </Grid>
+      <Button Width="280" Height="140"
+              HorizontalAlignment="Right"
+              VerticalAlignment="Top"
+              FontSize="30"
+              Margin="0,16,0,0"
+              Content="{lang:Loc Normalization_CompensationMatrixSave}"
+              Style="{StaticResource ButtonStyle}"
+              Command="{Binding SaveCompensationClickCommand}"/>
     </StackPanel>
   </Grid>
 </UserControl>

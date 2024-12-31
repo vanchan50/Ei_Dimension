@@ -1011,6 +1011,10 @@ Update the Firmware?</value>
   <data name="Normalization_Clear" xml:space="preserve">
     <value>Clear</value>
   </data>
+  <data name="Normalization_CompensationMatrixSave" xml:space="preserve">
+    <value>Save Compensation
+    Matrix To Map</value>
+  </data>
   <data name="Normalization_Compensation_Matrix" xml:space="preserve">
     <value>Compensation Matrix</value>
   </data>

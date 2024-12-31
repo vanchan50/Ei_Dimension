@@ -2638,6 +2638,16 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Save Compensation
+        ///    Matrix To Map.
+        /// </summary>
+        public static string Normalization_CompensationMatrixSave {
+            get {
+                return ResourceManager.GetString("Normalization_CompensationMatrixSave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Factor.
         /// </summary>
         public static string Normalization_Factor {

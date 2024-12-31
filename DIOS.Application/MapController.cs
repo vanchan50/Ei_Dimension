@@ -211,6 +211,20 @@ public class MapController
     return WriteToMap(map);
   }
 
+  public bool SaveCompensationMatrix(BeadCompensationMatrix newMatrix, bool isEnabled)
+  {
+    var idx = MapList.FindIndex(x => x.mapName == ActiveMap.mapName);
+    var map = MapList[idx];
+
+    map.CMatrix = newMatrix;
+    map.CMatrixEnabled = isEnabled;
+
+    MapList[idx] = map;
+    ActiveMap = MapList[idx];
+
+    return WriteToMap(map);
+  }
+
   public void LoadMaps()  //TODO: MapLoader class that returns specific map by it's name. no need to keep all of them in memory. that's another lib between gui and core
   {
     var files = Directory.GetFiles(_mapFolder, "*.dmap");
