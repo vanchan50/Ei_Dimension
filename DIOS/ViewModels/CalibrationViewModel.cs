@@ -28,6 +28,12 @@ public class CalibrationViewModel
   public byte CalFailsInARow { get; set; } = 0;
   public bool CalJustFailed { get; set; } = true;
   public bool DoPostCalibrationRun { get; set; } = false;
+  public virtual string SelectedCl1ClassificatorContent { get; set; }
+  public virtual string SelectedCl2ClassificatorContent { get; set; }
+  public byte SelectedCl1ClassificatorIndex { get; set; } = 0;
+  public byte SelectedCl2ClassificatorIndex { get; set; } = 0;
+  public virtual ObservableCollection<DropDownButtonContents> Cl1ClassificatorItems { get; }
+  public virtual ObservableCollection<DropDownButtonContents> Cl2ClassificatorItems { get; }
 
   public static CalibrationViewModel Instance { get; private set; }
 
@@ -47,6 +53,7 @@ public class CalibrationViewModel
       new(stringSource[nameof(Language.Resources.Dropdown_Green_Red_Rp_bg)], this)
     };
     SelectedGatingContent = GatingItems[SelectedGatingIndex].Content;
+    DropDownButtonContents.ResetIndex();
     EventTriggerContents = new()
     {
       "",
@@ -57,6 +64,25 @@ public class CalibrationViewModel
     CompensationPercentageContent = new(){ App.DiosApp.Device.ToString() };
 
     AttenuationBox = new(){ App.DiosApp.MapController.ActiveMap.calParams.att.ToString() };
+
+    Cl1ClassificatorItems = new ObservableCollection<DropDownButtonContents>
+    {
+      new(stringSource[nameof(Language.Resources.ChannelOffsets_Green_A)], this),
+      new(stringSource[nameof(Language.Resources.ChannelOffsets_Green_B)], this),
+      new(stringSource[nameof(Language.Resources.ChannelOffsets_Green_C)], this),
+      new(stringSource[nameof(Language.Resources.Channels_Green_D)], this)
+    };
+    SelectedCl1ClassificatorContent = Cl1ClassificatorItems[SelectedCl1ClassificatorIndex].Content;
+    DropDownButtonContents.ResetIndex();
+    Cl2ClassificatorItems = new ObservableCollection<DropDownButtonContents>
+    {
+      new(stringSource[nameof(Language.Resources.ChannelOffsets_Red_A)], this),
+      new(stringSource[nameof(Language.Resources.ChannelOffsets_Red_B)], this),
+      new(stringSource[nameof(Language.Resources.ChannelOffsets_Red_C)], this),
+      new(stringSource[nameof(Language.Resources.ChannelOffsets_Red_D)], this)
+    };
+    SelectedCl2ClassificatorContent = Cl2ClassificatorItems[SelectedCl2ClassificatorIndex].Content;
+    DropDownButtonContents.ResetIndex();
 
     Instance = this;
   }
@@ -387,7 +413,7 @@ public class CalibrationViewModel
     App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.MaxSSC, map.calParams.maxmapssc);
     App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.Attenuation, map.calParams.att);
     App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.Height, map.calParams.height);
-    GatingItems[map.calParams.gate].Click();
+    GatingItems[map.calParams.gate].Click(0);
     DNRContents[0] = map.calParams.DNRCoef.ToString();
     DNRContents[1] = map.calParams.DNRTrans.ToString();
     App.DiosApp.Compensation = map.calParams.compensation;
@@ -433,11 +459,24 @@ public class CalibrationViewModel
       Index = _nextIndex++;
     }
 
-    public void Click()
+    public void Click(int num)
     {
-      _vm.SelectedGatingContent = Content;
-      _vm.SelectedGatingIndex = Index;
-      App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.ScatterGate, (ushort)(Gate)Index);
+      switch (num)
+      {
+        case 0:
+          _vm.SelectedGatingContent = Content;
+          _vm.SelectedGatingIndex = Index;
+          App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.ScatterGate, (ushort)(Gate)Index);
+          break;
+        case 1:
+          _vm.SelectedCl1ClassificatorContent = Content;
+          _vm.SelectedCl1ClassificatorIndex = Index;
+          break;
+        case 2:
+          _vm.SelectedCl2ClassificatorContent = Content;
+          _vm.SelectedCl2ClassificatorIndex = Index;
+          break;
+      }
     }
 
     public static void ResetIndex()
