@@ -31,6 +31,8 @@ public class MapModel
   //can contain up to 6 classimaps (01,02,03,12,13,23) if necessary. possibility left for the future
   public BeadCompensationMatrix CMatrix;
   public bool CMatrixEnabled;
+  public string ClassificationParameter1 = "RedC";
+  public string ClassificationParameter2 = "RedD";
 
   [JsonIgnore]
   public SortedDictionary<int,MapRegion> Regions { get; private set; }

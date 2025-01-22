@@ -110,17 +110,16 @@ public static class LanguageSwap
       CaliVM.GatingItems[7].Content = _rm.GetString(nameof(Language.Resources.Dropdown_Green_Red_Rp_bg), _curCulture);
       CaliVM.SelectedGatingContent = CaliVM.GatingItems[CaliVM.SelectedGatingIndex].Content;
 
-      CaliVM.Cl1ClassificatorItems[0].Content = _rm.GetString(nameof(Language.Resources.ChannelOffsets_Green_A), _curCulture);
-      CaliVM.Cl1ClassificatorItems[1].Content = _rm.GetString(nameof(Language.Resources.ChannelOffsets_Green_B), _curCulture);
-      CaliVM.Cl1ClassificatorItems[2].Content = _rm.GetString(nameof(Language.Resources.ChannelOffsets_Green_C), _curCulture);
-      CaliVM.Cl1ClassificatorItems[3].Content = _rm.GetString(nameof(Language.Resources.Channels_Green_D), _curCulture);
-      CaliVM.SelectedCl1ClassificatorContent = CaliVM.Cl1ClassificatorItems[CaliVM.SelectedCl1ClassificatorIndex].Content;
-
-      CaliVM.Cl2ClassificatorItems[0].Content = _rm.GetString(nameof(Language.Resources.ChannelOffsets_Red_A), _curCulture);
-      CaliVM.Cl2ClassificatorItems[1].Content = _rm.GetString(nameof(Language.Resources.ChannelOffsets_Red_B), _curCulture);
-      CaliVM.Cl2ClassificatorItems[2].Content = _rm.GetString(nameof(Language.Resources.ChannelOffsets_Red_C), _curCulture);
-      CaliVM.Cl2ClassificatorItems[3].Content = _rm.GetString(nameof(Language.Resources.ChannelOffsets_Red_D), _curCulture);
-      CaliVM.SelectedCl2ClassificatorContent = CaliVM.Cl2ClassificatorItems[CaliVM.SelectedCl2ClassificatorIndex].Content;
+      CaliVM.ClClassificatorItems[0].Content = _rm.GetString(nameof(Language.Resources.ChannelOffsets_Red_A), _curCulture);
+      CaliVM.ClClassificatorItems[1].Content = _rm.GetString(nameof(Language.Resources.ChannelOffsets_Red_B), _curCulture);
+      CaliVM.ClClassificatorItems[2].Content = _rm.GetString(nameof(Language.Resources.ChannelOffsets_Red_C), _curCulture);
+      CaliVM.ClClassificatorItems[3].Content = _rm.GetString(nameof(Language.Resources.ChannelOffsets_Red_D), _curCulture);
+      CaliVM.ClClassificatorItems[4].Content = _rm.GetString(nameof(Language.Resources.ChannelOffsets_Green_A), _curCulture);
+      CaliVM.ClClassificatorItems[5].Content = _rm.GetString(nameof(Language.Resources.ChannelOffsets_Green_B), _curCulture);
+      CaliVM.ClClassificatorItems[6].Content = _rm.GetString(nameof(Language.Resources.ChannelOffsets_Green_C), _curCulture);
+      CaliVM.ClClassificatorItems[7].Content = _rm.GetString(nameof(Language.Resources.Channels_Green_D), _curCulture);
+      CaliVM.SelectedCl1ClassificatorContent = CaliVM.ClClassificatorItems[CaliVM.SelectedCl1ClassificatorIndex].Content;
+      CaliVM.SelectedCl2ClassificatorContent = CaliVM.ClClassificatorItems[CaliVM.SelectedCl2ClassificatorIndex].Content;
     }
   }
 

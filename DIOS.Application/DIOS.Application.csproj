@@ -6,6 +6,7 @@
     <Nullable>disable</Nullable>
     <Copyright>"Copyright ©  2023"</Copyright>
     <Platforms>AnyCPU;x64</Platforms>
+	  <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <ItemGroup>

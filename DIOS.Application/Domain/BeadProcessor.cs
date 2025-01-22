@@ -60,6 +60,11 @@ public class BeadProcessor
     _classificationMap.ConstructClassificationMap(_map);
   }
 
+  public void UpdateClassificationParameters(string param1, string param2)
+  {
+    _classificationMap.ChooseProperClassification(param1, param2);
+  }
+
   private void PrecalculateBeadCompensationRegular(ref RawBead rawBead)
   {
     rawBead.greenC -= (ushort)(_map.CMatrix.GreenB1 * rawBead.greenB);

@@ -266,7 +266,7 @@
                 <ScrollViewer MaxHeight="600">
                   <dxb:MenuBarControl>
                     <dxb:MenuBarControl.Menu>
-                      <dxb:PopupMenu ItemLinksSource="{Binding Cl1ClassificatorItems}">
+                      <dxb:PopupMenu ItemLinksSource="{Binding ClClassificatorItems}">
                         <dxb:PopupMenu.ItemTemplate>
                           <DataTemplate>
                             <ContentControl>
@@ -305,7 +305,7 @@
                 <ScrollViewer MaxHeight="600">
                   <dxb:MenuBarControl>
                     <dxb:MenuBarControl.Menu>
-                      <dxb:PopupMenu ItemLinksSource="{Binding Cl2ClassificatorItems}">
+                      <dxb:PopupMenu ItemLinksSource="{Binding ClClassificatorItems}">
                         <dxb:PopupMenu.ItemTemplate>
                           <DataTemplate>
                             <ContentControl>

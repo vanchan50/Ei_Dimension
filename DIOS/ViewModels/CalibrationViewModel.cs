@@ -11,6 +11,8 @@ using DIOS.Application.FileIO.Calibration;
 using DIOS.Core;
 using DIOS.Core.HardwareIntercom;
 using Ei_Dimension.Graphing.HeatMap;
+using System.Collections.Frozen;
+using System.Collections.Generic;
 
 namespace Ei_Dimension.ViewModels;
 
@@ -30,12 +32,22 @@ public class CalibrationViewModel
   public bool DoPostCalibrationRun { get; set; } = false;
   public virtual string SelectedCl1ClassificatorContent { get; set; }
   public virtual string SelectedCl2ClassificatorContent { get; set; }
-  public byte SelectedCl1ClassificatorIndex { get; set; } = 0;
-  public byte SelectedCl2ClassificatorIndex { get; set; } = 0;
-  public virtual ObservableCollection<DropDownButtonContents> Cl1ClassificatorItems { get; }
-  public virtual ObservableCollection<DropDownButtonContents> Cl2ClassificatorItems { get; }
+  public byte SelectedCl1ClassificatorIndex { get; set; } = 2;
+  public byte SelectedCl2ClassificatorIndex { get; set; } = 3;
+  public virtual ObservableCollection<DropDownButtonContents> ClClassificatorItems { get; }
 
   public static CalibrationViewModel Instance { get; private set; }
+  private static readonly FrozenDictionary<byte, string> _paramsDict = new Dictionary<byte, string>()
+  {
+    [0] = "RedA",
+    [1] = "RedB",
+    [2] = "RedC",
+    [3] = "RedD",
+    [4] = "GreenA",
+    [5] = "GreenB",
+    [6] = "GreenC",
+    [7] = "GreenD"
+  }.ToFrozenDictionary();
 
 
   protected CalibrationViewModel()
@@ -65,23 +77,20 @@ public class CalibrationViewModel
 
     AttenuationBox = new(){ App.DiosApp.MapController.ActiveMap.calParams.att.ToString() };
 
-    Cl1ClassificatorItems = new ObservableCollection<DropDownButtonContents>
+    ClClassificatorItems = new ObservableCollection<DropDownButtonContents>
     {
+      new(stringSource[nameof(Language.Resources.ChannelOffsets_Red_A)], this),
+      new(stringSource[nameof(Language.Resources.ChannelOffsets_Red_B)], this),
+      new(stringSource[nameof(Language.Resources.ChannelOffsets_Red_C)], this),
+      new(stringSource[nameof(Language.Resources.ChannelOffsets_Red_D)], this),
       new(stringSource[nameof(Language.Resources.ChannelOffsets_Green_A)], this),
       new(stringSource[nameof(Language.Resources.ChannelOffsets_Green_B)], this),
       new(stringSource[nameof(Language.Resources.ChannelOffsets_Green_C)], this),
       new(stringSource[nameof(Language.Resources.Channels_Green_D)], this)
     };
-    SelectedCl1ClassificatorContent = Cl1ClassificatorItems[SelectedCl1ClassificatorIndex].Content;
+    SelectedCl1ClassificatorContent = ClClassificatorItems[SelectedCl1ClassificatorIndex].Content;
     DropDownButtonContents.ResetIndex();
-    Cl2ClassificatorItems = new ObservableCollection<DropDownButtonContents>
-    {
-      new(stringSource[nameof(Language.Resources.ChannelOffsets_Red_A)], this),
-      new(stringSource[nameof(Language.Resources.ChannelOffsets_Red_B)], this),
-      new(stringSource[nameof(Language.Resources.ChannelOffsets_Red_C)], this),
-      new(stringSource[nameof(Language.Resources.ChannelOffsets_Red_D)], this)
-    };
-    SelectedCl2ClassificatorContent = Cl2ClassificatorItems[SelectedCl2ClassificatorIndex].Content;
+    SelectedCl2ClassificatorContent = ClClassificatorItems[SelectedCl2ClassificatorIndex].Content;
     DropDownButtonContents.ResetIndex();
 
     Instance = this;
@@ -333,6 +342,15 @@ public class CalibrationViewModel
         Notification.Show("Save failed"));
       return;
     }
+
+    res = App.DiosApp.MapController.SaveClassificationParametersToCurrentMap(
+      _paramsDict[SelectedCl1ClassificatorIndex], _paramsDict[SelectedCl2ClassificatorIndex]);
+    if (!res)
+    {
+      App.Current.Dispatcher.Invoke(() =>
+        Notification.Show("Save failed"));
+      return;
+    }
     var msg = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Messages_CalParameters_Saved),
       Language.TranslationSource.Instance.CurrentCulture);
     Notification.Show($"{msg} {App.DiosApp.MapController.ActiveMap.mapName}");
@@ -414,6 +432,8 @@ public class CalibrationViewModel
     App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.Attenuation, map.calParams.att);
     App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.Height, map.calParams.height);
     GatingItems[map.calParams.gate].Click(0);
+    ClClassificatorItems[FindDictKey(map.ClassificationParameter1)].Click(1);
+    ClClassificatorItems[FindDictKey(map.ClassificationParameter2)].Click(2);
     DNRContents[0] = map.calParams.DNRCoef.ToString();
     DNRContents[1] = map.calParams.DNRTrans.ToString();
     App.DiosApp.Compensation = map.calParams.compensation;
@@ -432,6 +452,16 @@ public class CalibrationViewModel
     App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.CalibrationTarget, CalibrationTarget.CL2, map.calParams.CL2);
     App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.CalibrationTarget, CalibrationTarget.CL3, map.calParams.CL3);
     App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.CalibrationTarget, CalibrationTarget.RP1, map.calParams.RP1);
+  }
+
+  private int FindDictKey(string param)
+  {
+    var index = _paramsDict.Values.IndexOf(param);
+    if (index < 0)
+    {
+      return-1;
+    }
+    return _paramsDict.Keys[index];
   }
 
   public class DropDownButtonContents : Core.ObservableObject
@@ -471,10 +501,12 @@ public class CalibrationViewModel
         case 1:
           _vm.SelectedCl1ClassificatorContent = Content;
           _vm.SelectedCl1ClassificatorIndex = Index;
+          App.DiosApp._beadProcessor.UpdateClassificationParameters(_paramsDict[Index], _paramsDict[_vm.SelectedCl2ClassificatorIndex]);
           break;
         case 2:
           _vm.SelectedCl2ClassificatorContent = Content;
           _vm.SelectedCl2ClassificatorIndex = Index;
+          App.DiosApp._beadProcessor.UpdateClassificationParameters(_paramsDict[_vm.SelectedCl1ClassificatorIndex], _paramsDict[Index]);
           break;
       }
     }

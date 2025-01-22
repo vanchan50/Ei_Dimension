@@ -1,5 +1,8 @@
-﻿namespace DIOS.Core;
+﻿using System.Runtime.InteropServices;
 
+namespace DIOS.Core;
+
+[StructLayout(LayoutKind.Sequential)]
 public struct ProcessedBead
 {
   public uint EventTime;

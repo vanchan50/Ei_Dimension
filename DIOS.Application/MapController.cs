@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using DIOS.Core;
+using DIOS.Application.Domain;
 
 namespace DIOS.Application;
 
@@ -166,6 +167,21 @@ public class MapController
       map.caltime = param.Caldate;
     if (param.Valdate != null)
       map.valtime = param.Valdate;
+
+    MapList[idx] = map;
+    ActiveMap = MapList[idx];
+
+    return WriteToMap(map);
+  }
+
+  public bool SaveClassificationParametersToCurrentMap(string param1, string param2)
+  {
+    var idx = MapList.FindIndex(x => x.mapName == ActiveMap.mapName);
+    var map = MapList[idx];
+    if(ClassificationMap._shiftData.ContainsKey(param1))
+      map.ClassificationParameter1 = param1;
+    if (ClassificationMap._shiftData.ContainsKey(param2))
+      map.ClassificationParameter2 = param2;
 
     MapList[idx] = map;
     ActiveMap = MapList[idx];
