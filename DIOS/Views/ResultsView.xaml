@@ -407,7 +407,8 @@
                    HorizontalAlignment="Left"
                    VerticalAlignment="Top"
                    Content="CL0" 
-                   FontSize="35" Cursor="Hand"
+                   FontSize="35"
+                   Visibility="Hidden"
                    IsChecked="{Binding CLButtonsChecked[0], Mode=OneWay}"
                    Style="{StaticResource RadioButtonHorizontalThemeStyle}"
                    Command="{Binding CLButtonClickCommand}">
@@ -420,7 +421,7 @@
                    HorizontalAlignment="Left"
                    VerticalAlignment="Top"
                    Content="{Binding XYPlot_DataChannel1Name}"
-                   FontSize="35" Cursor="Hand"
+                   FontSize="35"
                    IsChecked="{Binding CLButtonsChecked[1], Mode=OneWay}"
                    Style="{StaticResource RadioButtonHorizontalThemeStyle}"
                    Command="{Binding CLButtonClickCommand}">
@@ -433,7 +434,7 @@
                    HorizontalAlignment="Left"
                    VerticalAlignment="Top"
                    Content="{Binding XYPlot_DataChannel2Name}"
-                   FontSize="35" Cursor="Hand"
+                   FontSize="35"
                    IsChecked="{Binding CLButtonsChecked[2], Mode=OneWay}"
                    Style="{StaticResource RadioButtonHorizontalThemeStyle}"
                    Command="{Binding CLButtonClickCommand}">
@@ -446,7 +447,8 @@
                    HorizontalAlignment="Left"
                    VerticalAlignment="Top"
                    Content="CL3"
-                   FontSize="35" Cursor="Hand"
+                   Visibility="Hidden"
+                   FontSize="35"
                    IsChecked="{Binding CLButtonsChecked[3], Mode=OneWay}"
                    Style="{StaticResource RadioButtonHorizontalThemeStyle}"
                    Command="{Binding CLButtonClickCommand}">
@@ -464,7 +466,8 @@
                    HorizontalAlignment="Left"
                    VerticalAlignment="Top"
                    Content="CL0"
-                   FontSize="35" Cursor="Hand"
+                   Visibility="Hidden"
+                   FontSize="35"
                    IsChecked="{Binding CLButtonsChecked[4], Mode=OneWay}"
                    Style="{StaticResource RadioButtonHorizontalThemeStyle}"
                    Command="{Binding CLButtonClickCommand}">
@@ -503,7 +506,8 @@
                    HorizontalAlignment="Left"
                    VerticalAlignment="Top"
                    Content="CL3"
-                   FontSize="35" Cursor="Hand"
+                   Visibility="Hidden"
+                   FontSize="35"
                    IsChecked="{Binding CLButtonsChecked[7], Mode=OneWay}"
                    Style="{StaticResource RadioButtonHorizontalThemeStyle}"
                    Command="{Binding CLButtonClickCommand}">

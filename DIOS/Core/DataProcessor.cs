@@ -189,16 +189,18 @@ public static class DataProcessor
     {
       var region = beadInfoList[i].region;
 
-      int cl0 = Array.BinarySearch(bins, beadInfoList[i].greenD);
-      if (cl0 < 0)
-        cl0 = ~cl0;
-      cl0 = cl0 > boundary ? boundary : cl0;
-
-      int cl1 = Array.BinarySearch(bins, beadInfoList[i].cl1);
+      //int cl0 = Array.BinarySearch(bins, beadInfoList[i].greenD);
+      //if (cl0 < 0)
+      //  cl0 = ~cl0;
+      //cl0 = cl0 > boundary ? boundary : cl0;
+      
+      int cl1 = Array.BinarySearch(bins,
+        App.DiosApp._beadProcessor._classificationMap.GetClassificationParam1(beadInfoList[i]));
       if (cl1 < 0)
         cl1 = ~cl1;
       cl1 = cl1 > boundary ? boundary : cl1;
-      int cl2 = Array.BinarySearch(bins, beadInfoList[i].cl2);
+      int cl2 = Array.BinarySearch(bins,
+        App.DiosApp._beadProcessor._classificationMap.GetClassificationParam2(beadInfoList[i]));
       if (cl2 < 0)
         cl2 = ~cl2;
       cl2 = cl2 > boundary ? boundary : cl2;
@@ -213,8 +215,9 @@ public static class DataProcessor
       //{
       //  HeatMap.AddPoint((cl1, cl2), bins, mapIndex, current);
       //}
-      HeatMapAPI.API.AddDataPoint((cl0, cl1), bins, MapIndex.CL01, current);
-      HeatMapAPI.API.AddDataPoint((cl0, cl2), bins, MapIndex.CL02, current);
+
+      //HeatMapAPI.API.AddDataPoint((cl0, cl1), bins, MapIndex.CL01, current);
+      //HeatMapAPI.API.AddDataPoint((cl0, cl2), bins, MapIndex.CL02, current);
       HeatMapAPI.API.AddDataPoint((cl1, cl2), bins, MapIndex.CL12, current);
 
       //More weight to points on 100Plex lowerleft regions

@@ -3,7 +3,7 @@ using DIOS.Core;
 
 namespace DIOS.Application.Domain;
 
-internal class ClassificationMap
+public class ClassificationMap
 {
   private int[,] _classificationMap = new int[CLASSIFICATIONMAPSIZE, CLASSIFICATIONMAPSIZE];
   private byte _actPrimaryIndex;
@@ -91,7 +91,7 @@ internal class ClassificationMap
     }
   }
 
-  private float GetClassificationParam2(in ProcessedBead bead)
+  public float GetClassificationParam2(in ProcessedBead bead)
   {
     unsafe
     {

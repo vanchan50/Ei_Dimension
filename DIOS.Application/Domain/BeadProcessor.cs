@@ -10,7 +10,7 @@ public class BeadProcessor
   public NormalizationSettings Normalization { get; } = new();
   private float _greenMin;
   private float _greenMaj;
-  private readonly ClassificationMap _classificationMap = new();
+  public readonly ClassificationMap _classificationMap = new();
   internal MapModel _map;
   public HiSensitivityChannel SensitivityChannel { get; set; }
   public bool SpectraPlexEnabled
