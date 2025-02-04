@@ -839,9 +839,6 @@ public class HardwareInterface
       case DeviceParameterType.LaserPower:
         switch (subParameter)
         {
-          case LaserType.Violet:
-            commandCode = 0xC7;
-            break;
           case LaserType.Green:
             commandCode = 0xC8;
             break;
@@ -1725,6 +1722,36 @@ public class HardwareInterface
     {
       Monitor.Wait(_dataController.SystemActivityNotBusyNotificationLock);
     }
+  }
+
+  public void SetClassificationChannels(Channel cl1, Channel cl2)
+  {
+    static ushort FindParam(Channel chan)
+    {
+      switch (chan)
+      {
+        case Channel.GreenA:
+          return 0b1000_0000;
+        case Channel.GreenB:
+          return 0b0100_0000;
+        case Channel.GreenC:
+          return 0b0010_0000;
+        case Channel.GreenD:
+          return 0b0001_0000;
+        case Channel.RedA:
+          return 0b0000_1000;
+        case Channel.RedB:
+          return 0b0000_0100;
+        case Channel.RedC:
+          return 0b0000_0010;
+        case Channel.RedD:
+          return 0b0000_0001;
+        default:
+          throw new Exception();
+      }
+    }
+    var param = (ushort)(FindParam(cl2) + (FindParam(cl1) << 8));
+    MainCommand(code: 0xC7, parameter: param, cmd: 0x02);
   }
 
   private void MainCommand(byte cmd = 0, byte code = 0, ushort parameter = 0, float fparameter = 0)

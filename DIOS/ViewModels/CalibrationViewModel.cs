@@ -48,8 +48,18 @@ public class CalibrationViewModel
     [6] = "GreenC",
     [7] = "GreenD"
   }.ToFrozenDictionary();
-
-
+  private static readonly FrozenDictionary<int, Channel> _channelsDict = new Dictionary<int, Channel>()
+  {
+    [0] = Channel.RedA,
+    [1] = Channel.RedB,
+    [2] = Channel.RedC,
+    [3] = Channel.RedD,
+    [4] = Channel.GreenA,
+    [5] = Channel.GreenB,
+    [6] = Channel.GreenC,
+    [7] = Channel.GreenD
+  }.ToFrozenDictionary();
+  
   protected CalibrationViewModel()
   {
     var stringSource = Language.TranslationSource.Instance;
@@ -502,11 +512,13 @@ public class CalibrationViewModel
           _vm.SelectedCl1ClassificatorContent = Content;
           _vm.SelectedCl1ClassificatorIndex = Index;
           App.DiosApp._beadProcessor.UpdateClassificationParameters(_paramsDict[Index], _paramsDict[_vm.SelectedCl2ClassificatorIndex]);
+          App.DiosApp.Device.Hardware.SetClassificationChannels(_channelsDict[Index], _channelsDict[_vm.SelectedCl2ClassificatorIndex]);
           break;
         case 2:
           _vm.SelectedCl2ClassificatorContent = Content;
           _vm.SelectedCl2ClassificatorIndex = Index;
           App.DiosApp._beadProcessor.UpdateClassificationParameters(_paramsDict[_vm.SelectedCl1ClassificatorIndex], _paramsDict[Index]);
+          App.DiosApp.Device.Hardware.SetClassificationChannels(_channelsDict[_vm.SelectedCl1ClassificatorIndex], _channelsDict[Index]);
           break;
       }
     }
