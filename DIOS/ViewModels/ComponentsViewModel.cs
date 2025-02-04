@@ -17,10 +17,9 @@ public class ComponentsViewModel
 
   public virtual ObservableCollection<bool> ValvesStates { get; set; } = new(){ false, false, false, false };
 
-  public virtual ObservableCollection<bool> LasersActive { get; set; } = new(){ true, true, true };
+  public virtual ObservableCollection<bool> LasersActive { get; set; } = new(){ true, true };
   public virtual ObservableCollection<string> LaserRedPowerValue { get; set; } = new(){ "" };
   public virtual ObservableCollection<string> LaserGreenPowerValue { get; set; } = new(){ "" };
-  public virtual ObservableCollection<string> LaserVioletPowerValue { get; set; } = new(){ "" };
 
   public virtual ObservableCollection<DropDownButtonContents> SyringeControlItems { get; set; }
   public virtual string SelectedSheathContent { get; set; }
@@ -217,13 +216,6 @@ public class ComponentsViewModel
           _activeLasers += 2;
         else
           _activeLasers -= 2;
-        break;
-      case 3:
-        LasersActive[2] = !LasersActive[2];
-        if (LasersActive[2])
-          _activeLasers += 4;
-        else
-          _activeLasers -= 4;
         break;
     }
     App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.IsLaserActive, _activeLasers);

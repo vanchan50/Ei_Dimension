@@ -607,7 +607,6 @@ public partial class App : Application
           DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.IsInputSelectorAtPickup);
           DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.Pressure);
           DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.IsLaserActive);
-          DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.LaserPower, LaserType.Violet);
           DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.LaserPower, LaserType.Green);
           DiosApp.Device.Hardware.RequestParameter(DeviceParameterType.LaserPower, LaserType.Red);
         };

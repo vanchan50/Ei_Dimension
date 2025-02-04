@@ -1613,9 +1613,6 @@ public class HardwareInterface
       case DeviceParameterType.LaserPower:
         switch (subParameter)
         {
-          case LaserType.Violet:
-            commandCode = 0xC7;
-            break;
           case LaserType.Green:
             commandCode = 0xC8;
             break;

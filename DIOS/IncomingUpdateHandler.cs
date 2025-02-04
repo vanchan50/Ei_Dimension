@@ -545,12 +545,11 @@ internal class IncomingUpdateHandler
         update = () => ChannelOffsetViewModel.Instance.GreenAVoltage[0] = parameter.FloatParameter.ToString(FormatWith3FloatingDecimals);
         break;
       case DeviceParameterType.IsLaserActive:
-        //0Red 1Green 2Violet
+        //0Red 1Green
         update = () =>
         {
           ComponentsViewModel.Instance.LasersActive[0] = (parameter.Parameter & 0x01) == 1;
           ComponentsViewModel.Instance.LasersActive[1] = (parameter.Parameter & 0x02) == 2;
-          ComponentsViewModel.Instance.LasersActive[2] = (parameter.Parameter & 0x04) == 4;
         };
         break;
       case DeviceParameterType.LaserPower:
@@ -562,9 +561,6 @@ internal class IncomingUpdateHandler
             break;
           case LaserType.Green:
             update = () => ComponentsViewModel.Instance.LaserGreenPowerValue[0] = parameter.FloatParameter.ToString(FormatWith1FloatingDedcimals) + " mw";
-            break;
-          case LaserType.Violet:
-            update = () => ComponentsViewModel.Instance.LaserVioletPowerValue[0] = parameter.FloatParameter.ToString(FormatWith1FloatingDedcimals) + " mw";
             break;
         }
         break;

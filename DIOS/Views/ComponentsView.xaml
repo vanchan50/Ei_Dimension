@@ -229,7 +229,6 @@
             </Border>
             <Border BorderThickness="2"
                     BorderBrush="{StaticResource AppTextColor}"
-                    Margin="0,0,0,13"
                     CornerRadius="5"
                     Width="200">
               <Grid>
@@ -261,42 +260,6 @@
                          VerticalAlignment="Bottom"
                          Style="{StaticResource InputFieldStyle}"
                          Text="{Binding LaserGreenPowerValue[0]}">
-                </TextBox>
-              </Grid>
-            </Border>
-            <Border BorderThickness="2"
-                    BorderBrush="{StaticResource AppTextColor}"
-                    CornerRadius="5"
-                    Width="200">
-              <Grid>
-
-                <ToggleButton Style="{StaticResource ToggleButtonThemeStyle}"
-                              Height="60" Width="200"
-                              Content="{lang:Loc Violet}"
-                              IsChecked="{Binding LasersActive[2], Mode=OneWay}"
-                              VerticalAlignment="Top"
-                              HorizontalAlignment="Center"
-                              Command="{Binding LasersButtonClickCommand}">
-                  <ToggleButton.CommandParameter>
-                    <system:Int32>3</system:Int32>
-                  </ToggleButton.CommandParameter>
-                </ToggleButton>
-                <TextBlock Text="{lang:Loc Power}"
-                           FontFamily="{StaticResource AppTextFont}"
-                           FontSize="24"
-                           FontWeight="UltraBold"
-                           Foreground="{StaticResource AppTextColor}"
-                           HorizontalAlignment="Left"
-                           VerticalAlignment="Bottom"
-                           Margin="10,0,0,15"/>
-
-                <TextBox Width="80"
-                         IsReadOnly="True"
-                         Margin="96,68,0,8"
-                         HorizontalAlignment="Left"
-                         VerticalAlignment="Bottom"
-                         Style="{StaticResource InputFieldStyle}"
-                         Text="{Binding LaserVioletPowerValue[0]}">
                 </TextBox>
               </Grid>
             </Border>

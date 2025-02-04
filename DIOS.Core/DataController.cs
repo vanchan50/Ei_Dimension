@@ -654,9 +654,6 @@ internal class DataController
       case 0xC2:
         outParameters = new ParameterUpdateEventArgs(DeviceParameterType.ChannelConfiguration, intParameter: (int)(ChannelConfiguration)cs.Parameter);
         break;
-      case 0xC7:
-        outParameters = new ParameterUpdateEventArgs(DeviceParameterType.LaserPower, intParameter: (int)LaserType.Violet, floatParameter: cs.Parameter / 4096.0f / 0.040f * 3.3f);
-        break;
       case 0xC8:
         outParameters = new ParameterUpdateEventArgs(DeviceParameterType.LaserPower, intParameter: (int)LaserType.Green, floatParameter: cs.Parameter / 4096.0f / 0.040f * 3.3f);
         break;

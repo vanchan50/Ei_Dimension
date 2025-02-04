@@ -3,6 +3,5 @@
 public enum LaserType
 {
   Red,
-  Green,
-  Violet
+  Green
 }
