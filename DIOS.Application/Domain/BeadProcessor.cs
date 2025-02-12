@@ -57,12 +57,12 @@ public class BeadProcessor
   public void SetMap(MapModel map)
   {
     _map = map;
-    _classificationMap.ConstructClassificationMap(_map);
+    _classificationMap.ConstructClassificationMap(_map, _channelRedirectionEnabled);
   }
 
   public void UpdateClassificationParameters(string param1, string param2)
   {
-    _classificationMap.ChooseProperClassification(param1, param2);
+    _classificationMap.ChooseProperClassification(param1, param2, _channelRedirectionEnabled);
   }
 
   private void PrecalculateBeadCompensationRegular(ref RawBead rawBead)

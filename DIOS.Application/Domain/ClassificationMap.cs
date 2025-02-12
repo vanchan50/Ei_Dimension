@@ -23,13 +23,20 @@ public class ClassificationMap
     ["RedC"] = 56,
     ["RedD"] = 60,
   }.ToFrozenDictionary();
+  internal static readonly FrozenDictionary<string, string> _swapData = new Dictionary<string, string>()
+  {
+    ["GreenB"] = "RedC",
+    ["GreenC"] = "RedD",
+    ["RedC"] = "GreenB",
+    ["RedD"] = "GreenC",
+  }.ToFrozenDictionary();
 
   static ClassificationMap()
   {
     ClassificationBins = GenerateLogSpace(1, 60000, CLASSIFICATIONMAPSIZE);
   }
 
-  public void ConstructClassificationMap(MapModel cMap)
+  public void ConstructClassificationMap(MapModel cMap, bool isChannelSwapped)
   {
     _actPrimaryIndex = (byte)cMap.midorderidx; //what channel cl0 - cl3?
     _actSecondaryIndex = (byte)cMap.loworderidx;
@@ -42,7 +49,7 @@ public class ClassificationMap
         _classificationMap[point.x, point.y] = region.Key;
       }
     }
-    ChooseProperClassification(cMap.ClassificationParameter1, cMap.ClassificationParameter2);
+    ChooseProperClassification(cMap.ClassificationParameter1, cMap.ClassificationParameter2, isChannelSwapped);
   }
 
   public int ClassifyBeadToRegion(in ProcessedBead bead)
@@ -60,8 +67,21 @@ public class ClassificationMap
     return _classificationMap[x, y];
   }
 
-  public void ChooseProperClassification(string param1, string param2)
+  public void ChooseProperClassification(string param1, string param2, bool isChannelSwapped)
   {
+    //OEM channel swap substitution
+    if (isChannelSwapped)
+    {
+      if (_swapData.TryGetValue(param1, out var temp))
+      {
+        param1 = temp;
+      }
+      if (_swapData.TryGetValue(param2, out var temp2))
+      {
+        param2 = temp2;
+      }
+    }
+
     try
     {
       _param1Shift = _shiftData[param1];

@@ -1,7 +1,13 @@
 ﻿using System.Runtime.InteropServices;
 
 namespace DIOS.Core;
-
+/// <summary>
+/// OEM channel swap is: we put RedC and RedD into GreenB and GreenC, and vice versa.
+/// The header reflects the same, so it works.
+/// The fields retain their "wrong/swapped" names.
+/// The problem is that when addressing any of those, need knowledge about "isChannelSwapActive",
+/// otherwise the accessed field contains wrong info
+/// </summary>
 [StructLayout(LayoutKind.Sequential)]
 public struct ProcessedBead
 {

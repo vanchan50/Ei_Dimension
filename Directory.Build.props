@@ -6,8 +6,8 @@
   <PropertyGroup>
     <Company>Dimension Inc.</Company>
 	  <Authors>Dimension Inc.</Authors>
-    <AssemblyVersion>1.8.1.2</AssemblyVersion>
-    <FileVersion>1.8.1.2</FileVersion>
-    <Version>1.8.1.2</Version>
+    <AssemblyVersion>1.8.1.3</AssemblyVersion>
+    <FileVersion>1.8.1.3</FileVersion>
+    <Version>1.8.1.3</Version>
   </PropertyGroup>
 </Project>
