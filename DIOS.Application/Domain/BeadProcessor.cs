@@ -309,7 +309,8 @@ public class BeadProcessor
   private float CalculateReporter(ushort region)
   {
     var basicReporter = _greenMin > HdnrTrans ? _greenMaj * HDnrCoef : _greenMin;
-    var scaledReporter = (basicReporter * _inverseReporterScaling);
+    var scaledReporter = basicReporter * _inverseReporterScaling;
+
     if (!Normalization.IsEnabled || region == 0)
       return scaledReporter;
     var rep = _map.GetFactorizedNormalizationForRegion(region);

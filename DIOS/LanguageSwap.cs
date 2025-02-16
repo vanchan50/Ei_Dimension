@@ -24,7 +24,6 @@ public static class LanguageSwap
       TranslateCalibrationVM();
       TranslateDashboardVM();
       TranslateChannelsVM();
-      TranslateChannelsOffsetVM();
       TranslateVerificationVM();
       TranslateTemplateSelectVM();
       TranslateExperimentVM();
@@ -121,6 +120,7 @@ public static class LanguageSwap
       CaliVM.SelectedCl1ClassificatorContent = CaliVM.ClClassificatorItems[CaliVM.SelectedCl1ClassificatorIndex].Content;
       CaliVM.SelectedCl2ClassificatorContent = CaliVM.ClClassificatorItems[CaliVM.SelectedCl2ClassificatorIndex].Content;
     }
+    TranslateChannelSensitivity();
   }
 
   public static void TranslateDashboardVM()
@@ -180,23 +180,23 @@ public static class LanguageSwap
     }
   }
 
-  public static void TranslateChannelsOffsetVM()
+  public static void TranslateChannelSensitivity()
   {
-    var ChannelsOffsetVM = ChannelOffsetViewModel.Instance;
-    if (ChannelsOffsetVM != null)
+    var CaliVM = CalibrationViewModel.Instance;
+    if (CaliVM != null)
     {
       if (App.ChannelRedirectionEnabled)
       {
-        ChannelsOffsetVM.SensitivityItems[0].Content = _rm.GetString(nameof(Language.Resources.Channels_Sens_RedC), _curCulture);
-        ChannelsOffsetVM.SensitivityItems[1].Content = _rm.GetString(nameof(Language.Resources.Channels_Sens_RedD), _curCulture);
+        CaliVM.SensitivityItems[0].Content = _rm.GetString(nameof(Language.Resources.Channels_Sens_RedC), _curCulture);
+        CaliVM.SensitivityItems[1].Content = _rm.GetString(nameof(Language.Resources.Channels_Sens_RedD), _curCulture);
       }
       else
       {
-        ChannelsOffsetVM.SensitivityItems[0].Content = _rm.GetString(nameof(Language.Resources.Channels_Sens_GreenB), _curCulture);
-        ChannelsOffsetVM.SensitivityItems[1].Content = _rm.GetString(nameof(Language.Resources.Channels_Sens_GreenC), _curCulture);
+        CaliVM.SensitivityItems[0].Content = _rm.GetString(nameof(Language.Resources.Channels_Sens_GreenB), _curCulture);
+        CaliVM.SensitivityItems[1].Content = _rm.GetString(nameof(Language.Resources.Channels_Sens_GreenC), _curCulture);
       }
 
-      ChannelsOffsetVM.SelectedSensitivityContent = ChannelsOffsetVM.SensitivityItems[ChannelsOffsetVM.SelectedSensitivityIndex].Content;
+      CaliVM.SelectedSensitivityContent = CaliVM.SensitivityItems[CaliVM.SelectedSensitivityIndex].Content;
     }
   }
 

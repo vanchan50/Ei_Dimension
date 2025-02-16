@@ -4,7 +4,6 @@ using DevExpress.Mvvm.POCO;
 using System.Collections.ObjectModel;
 using System.Windows.Controls;
 using DIOS.Application;
-using DIOS.Core;
 using DIOS.Core.HardwareIntercom;
 
 namespace Ei_Dimension.ViewModels;
@@ -21,9 +20,6 @@ public class ChannelOffsetViewModel
   public virtual ObservableCollection<string> CalibrationMargin { get; set; } = new() { "" };
   public virtual ObservableCollection<string> ReporterScale { get; set; }
   //public virtual ObservableCollection<bool> Checkbox { get; set; }
-  public virtual string SelectedSensitivityContent { get; set; }
-  public virtual ObservableCollection<DropDownButtonContents> SensitivityItems { get; set; }
-  public byte SelectedSensitivityIndex { get; set; }
   public double SliderLowLimitGreen => Settings.Default.SanityCheckEnabled ? 21000 : 0;
   public double SliderHighLimitGreen => Settings.Default.SanityCheckEnabled ? 24000 : 65535;
   public double SliderLowLimit => Settings.Default.SanityCheckEnabled ? 40000 : 0;
@@ -40,16 +36,6 @@ public class ChannelOffsetViewModel
       ChannelsOffsetParameters.Add("");
       SliderValues.Add(new object());
     }
-      
-    var RM = Language.Resources.ResourceManager;
-    var curCulture = Language.TranslationSource.Instance.CurrentCulture;
-    SensitivityItems = new ObservableCollection<DropDownButtonContents>
-    {
-      new(RM.GetString(nameof(Language.Resources.Channels_Sens_GreenB), curCulture), this),
-      new(RM.GetString(nameof(Language.Resources.Channels_Sens_GreenC), curCulture), this)
-    };
-    SelectedSensitivityIndex = Settings.Default.SensitivityChannelB ? (byte)0 : (byte)1;
-    SelectedSensitivityContent = SensitivityItems[SelectedSensitivityIndex].Content;
 
     Instance = this;
   }
@@ -186,51 +172,5 @@ public class ChannelOffsetViewModel
   public void DropPress()
   {
     UserInputHandler.InputSanityCheck();
-  }
-
-  private void SetSensitivityChannel(byte num)
-  {
-    App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.HiSensitivityChannel, (HiSensitivityChannel)num);
-    App.DiosApp._beadProcessor.SensitivityChannel = (HiSensitivityChannel)num;
-    Settings.Default.SensitivityChannelB = num == (byte)HiSensitivityChannel.GreenB;
-    Settings.Default.Save();
-  }
-
-  public class DropDownButtonContents : Core.ObservableObject
-  {
-    public string Content
-    {
-      get => _content;
-      set
-      {
-        _content = value;
-        OnPropertyChanged();
-      }
-    }
-    public byte Index { get; set; }
-    private static byte _nextIndex = 0;
-    private string _content;
-    private static ChannelOffsetViewModel _vm;
-    public DropDownButtonContents(string content, ChannelOffsetViewModel vm = null)
-    {
-      if (_vm == null)
-      {
-        _vm = vm;
-      }
-      Content = content;
-      Index = _nextIndex++;
-    }
-
-    public void Click()
-    {
-      _vm.SelectedSensitivityContent = Content;
-      _vm.SelectedSensitivityIndex = Index;
-      _vm.SetSensitivityChannel(Index);
-    }
-
-    public static void ResetIndex()
-    {
-      _nextIndex = 0;
-    }
   }
 }

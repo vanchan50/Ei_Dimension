@@ -35,6 +35,9 @@ public class CalibrationViewModel
   public byte SelectedCl1ClassificatorIndex { get; set; } = 2;
   public byte SelectedCl2ClassificatorIndex { get; set; } = 3;
   public virtual ObservableCollection<DropDownButtonContents> ClClassificatorItems { get; }
+  public virtual string SelectedSensitivityContent { get; set; }
+  public byte SelectedSensitivityIndex { get; set; }
+  public virtual ObservableCollection<DropDownButtonContents> SensitivityItems { get; set; }
 
   public static CalibrationViewModel Instance { get; private set; }
   private static readonly FrozenDictionary<byte, string> _paramsDict = new Dictionary<byte, string>()
@@ -102,6 +105,14 @@ public class CalibrationViewModel
     DropDownButtonContents.ResetIndex();
     SelectedCl2ClassificatorContent = ClClassificatorItems[SelectedCl2ClassificatorIndex].Content;
     DropDownButtonContents.ResetIndex();
+
+    SensitivityItems = new ObservableCollection<DropDownButtonContents>
+    {
+      new(stringSource[nameof(Language.Resources.Channels_Sens_GreenB)], this),
+      new(stringSource[nameof(Language.Resources.Channels_Sens_GreenC)], this),
+    };
+    SelectedSensitivityIndex = Settings.Default.SensitivityChannelB ? (byte)0 : (byte)1;
+    SelectedSensitivityContent = SensitivityItems[SelectedSensitivityIndex].Content;
 
     Instance = this;
   }
@@ -431,6 +442,14 @@ public class CalibrationViewModel
     UserInputHandler.InputSanityCheck();
   }
 
+  private void SetSensitivityChannel(byte num)
+  {
+    App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.HiSensitivityChannel, (HiSensitivityChannel)num);
+    App.DiosApp._beadProcessor.SensitivityChannel = (HiSensitivityChannel)num;
+    Settings.Default.SensitivityChannelB = num == (byte)HiSensitivityChannel.GreenB;
+    Settings.Default.Save();
+  }
+
   public void OnMapChanged(MapModel map)
   {
     EventTriggerContents[1] = map.calParams.minmapssc.ToString();
@@ -519,6 +538,11 @@ public class CalibrationViewModel
           _vm.SelectedCl2ClassificatorIndex = Index;
           App.DiosApp._beadProcessor.UpdateClassificationParameters(_paramsDict[_vm.SelectedCl1ClassificatorIndex], _paramsDict[Index]);
           App.DiosApp.Device.Hardware.SetClassificationChannels(_channelsDict[_vm.SelectedCl1ClassificatorIndex], _channelsDict[Index]);
+          break;
+        case 3:
+          _vm.SelectedSensitivityContent = Content;
+          _vm.SelectedSensitivityIndex = Index;
+          _vm.SetSensitivityChannel(Index);
           break;
       }
     }

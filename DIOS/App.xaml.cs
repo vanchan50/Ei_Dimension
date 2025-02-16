@@ -195,7 +195,7 @@ public partial class App : Application
   {
     DiosApp._beadProcessor._channelRedirectionEnabled = On;
     ChannelRedirectionEnabled = On;
-    LanguageSwap.TranslateChannelsOffsetVM();//swaps between red <-> green
+    LanguageSwap.TranslateChannelSensitivity();//swaps between red <-> green
     LanguageSwap.TranslateChannelsVM();
     LanguageSwap.TranslateResultsVM();
     LanguageSwap.TranslateStatisticsTableVM();
