@@ -360,60 +360,10 @@
         </TextBox>
       </StackPanel>
     </Border>
-    <!--DNR-->
-    <Border HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Margin="320,580,0,0">
-      <Grid>
-        <StackPanel Width="400"
-                    HorizontalAlignment="Left">
-          <TextBlock Text="{lang:Loc Calibration_High_DNR_Coeff}"
-                   FontFamily="{StaticResource AppTextFont}"
-                   FontSize="36"
-                   FontWeight="UltraBold"
-                   Foreground="{StaticResource AppTextColor}"
-                   HorizontalAlignment="Right"
-                   Margin="0,0,0,3"/>
-          <TextBlock Text="{lang:Loc Calibration_High_DNR_Trans}"
-                   FontFamily="{StaticResource AppTextFont}"
-                   FontSize="36"
-                   FontWeight="UltraBold"
-                   Foreground="{StaticResource AppTextColor}"
-                   HorizontalAlignment="Right"
-                   Margin="0,2,0,0"/>
-        </StackPanel>
-        <Border Background="{StaticResource RibbonBackgroundActive}"
-                HorizontalAlignment="Left"
-                Margin="410,0,0,0">
-            <StackPanel>
-            <TextBox Width="150" Name="TB4"
-                     HorizontalAlignment="Center"
-                     Margin="10,10,10,0"
-                     Style="{StaticResource InputFieldStyle}"
-                     Text="{Binding DNRContents[0]}">
-              <dxmvvm:Interaction.Behaviors>
-                <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="4"/>
-                <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
-              </dxmvvm:Interaction.Behaviors>
-            </TextBox>
-            <TextBox Width="150" Name="TB5"
-                     HorizontalAlignment="Center"
-                     Margin="10,8,10,10"
-                     Style="{StaticResource InputFieldStyle}"
-                     Text="{Binding DNRContents[1]}">
-              <dxmvvm:Interaction.Behaviors>
-                <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="5"/>
-                <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
-              </dxmvvm:Interaction.Behaviors>
-            </TextBox>
-          </StackPanel>
-          </Border>
-        </Grid>
-    </Border>
 
     <StackPanel HorizontalAlignment="Left"
                 VerticalAlignment="Top"
-                Margin="1045,560,0,0">
+                Margin="1245,560,0,0">
       <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"
             x:Name="clmap">
@@ -470,7 +420,7 @@
 
     <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Margin="1065,485,0,0">
+            Margin="1265,485,0,0">
       <StackPanel>
         <TextBlock Text="{lang:Loc Calibration_Attenuation}"
                    FontFamily="{StaticResource AppTextFont}"
@@ -493,17 +443,19 @@
 
     <Border HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Margin="60,530,0,0">
+            Margin="60,380,0,0">
       <Button Content="{lang:Loc Calibration_Save_Calibration_To_Map}"
               Command="{Binding SaveCalButtonClickCommand}"
               Style="{StaticResource ButtonStyle}"
               Height="150" Width="240"/>
     </Border>
 
-    <StackPanel HorizontalAlignment="Left"
+    <StackPanel Orientation="Horizontal"
+                HorizontalAlignment="Left"
                 VerticalAlignment="Top"
-                Margin="60,730,0,0">
-      <TextBlock Text="{lang:Loc Channels_Hi_Sens_Chan}"
+                Margin="60,580,0,0">
+      <StackPanel>
+        <TextBlock Text="{lang:Loc Channels_Hi_Sens_Chan}"
                    FontFamily="{StaticResource AppTextFont}"
                    FontSize="36"
                    Height="100"
@@ -511,35 +463,117 @@
                    Foreground="{StaticResource AppTextColor}"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Top"
-                   Margin="0,16,0,3"/>
-      <dx:DropDownButton Height="50" Cursor="Hand"
-                         FontSize="25" Command="{Binding DropPressCommand}"
-                         dxb:BarManager.ShowGlyphsInPopupMenus="False"
-                         FontFamily="{StaticResource AppTextFont}"
-                         Foreground="{StaticResource AppTextColor}"
-                         Content="{Binding SelectedSensitivityContent}">
-        <dxb:PopupMenu ItemLinksSource="{Binding SensitivityItems}">
-          <dxb:PopupMenu.ItemTemplate>
-            <DataTemplate>
-              <ContentControl>
-                <dxb:BarButtonItem Content="{Binding Content}"  
-                                   ItemClick="{DXEvent Click((int)3)}">
-                  <dxb:BarButtonItem.ContentTemplate>
-                    <DataTemplate>
-                      <Grid Width="180">
-                        <TextBlock Text="{Binding}" HorizontalAlignment="Center"
-                                   FontFamily="{StaticResource AppTextFont}"
-                                   Foreground="{StaticResource AppTextColor}"
-                                   FontSize="25"/>
-                      </Grid>
-                    </DataTemplate>
-                  </dxb:BarButtonItem.ContentTemplate>
-                </dxb:BarButtonItem>
-              </ContentControl>
-            </DataTemplate>
-          </dxb:PopupMenu.ItemTemplate>
-        </dxb:PopupMenu>
-      </dx:DropDownButton>
+                   Margin="0,0,0,0"/>
+        <dx:DropDownButton Height="50" Cursor="Hand"
+                           FontSize="25" Command="{Binding DropPressCommand}"
+                           dxb:BarManager.ShowGlyphsInPopupMenus="False"
+                           FontFamily="{StaticResource AppTextFont}"
+                           Foreground="{StaticResource AppTextColor}"
+                           Content="{Binding SelectedSensitivityContent}">
+          <dxb:PopupMenu ItemLinksSource="{Binding ClClassificatorItems}">
+            <dxb:PopupMenu.ItemTemplate>
+              <DataTemplate>
+                <ContentControl>
+                  <dxb:BarButtonItem Content="{Binding Content}"  
+                                     ItemClick="{DXEvent Click((int)3)}">
+                    <dxb:BarButtonItem.ContentTemplate>
+                      <DataTemplate>
+                        <Grid Width="180">
+                          <TextBlock Text="{Binding}" HorizontalAlignment="Center"
+                                     FontFamily="{StaticResource AppTextFont}"
+                                     Foreground="{StaticResource AppTextColor}"
+                                     FontSize="25"/>
+                        </Grid>
+                      </DataTemplate>
+                    </dxb:BarButtonItem.ContentTemplate>
+                  </dxb:BarButtonItem>
+                </ContentControl>
+              </DataTemplate>
+            </dxb:PopupMenu.ItemTemplate>
+          </dxb:PopupMenu>
+        </dx:DropDownButton>
+      </StackPanel>
+
+      <StackPanel Margin="20,0,0,0">
+        <TextBlock Text="{lang:Loc Calibration_High_DNR_Trans}"
+                   FontFamily="{StaticResource AppTextFont}"
+                   FontSize="36"
+                   Height="100"
+                   FontWeight="UltraBold"
+                   Foreground="{StaticResource AppTextColor}"
+                   HorizontalAlignment="Center"
+                   Margin="0,0,0,0"/>
+        <TextBox Width="150" Name="TB5"
+                 HorizontalAlignment="Center"
+                 Style="{StaticResource InputFieldStyle}"
+                 Text="{Binding DNRContents[1]}">
+          <dxmvvm:Interaction.Behaviors>
+            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="5"/>
+            <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+          </dxmvvm:Interaction.Behaviors>
+        </TextBox>
+      </StackPanel>
+
+      <StackPanel Margin="20,0,0,0">
+        <TextBlock Text="{lang:Loc Channels_Extended_Chan}"
+                   FontFamily="{StaticResource AppTextFont}"
+                   FontSize="36"
+                   Height="100"
+                   FontWeight="UltraBold"
+                   Foreground="{StaticResource AppTextColor}"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Top"
+                   Margin="0,0,0,0"/>
+        <dx:DropDownButton Height="50" Cursor="Hand"
+                           FontSize="25" Command="{Binding DropPressCommand}"
+                           dxb:BarManager.ShowGlyphsInPopupMenus="False"
+                           FontFamily="{StaticResource AppTextFont}"
+                           Foreground="{StaticResource AppTextColor}"
+                           Content="{Binding SelectedExChannelContent}">
+          <dxb:PopupMenu ItemLinksSource="{Binding ClClassificatorItems}">
+            <dxb:PopupMenu.ItemTemplate>
+              <DataTemplate>
+                <ContentControl>
+                  <dxb:BarButtonItem Content="{Binding Content}"  
+                                     ItemClick="{DXEvent Click((int)4)}">
+                    <dxb:BarButtonItem.ContentTemplate>
+                      <DataTemplate>
+                        <Grid Width="180">
+                          <TextBlock Text="{Binding}" HorizontalAlignment="Center"
+                                     FontFamily="{StaticResource AppTextFont}"
+                                     Foreground="{StaticResource AppTextColor}"
+                                     FontSize="25"/>
+                        </Grid>
+                      </DataTemplate>
+                    </dxb:BarButtonItem.ContentTemplate>
+                  </dxb:BarButtonItem>
+                </ContentControl>
+              </DataTemplate>
+            </dxb:PopupMenu.ItemTemplate>
+          </dxb:PopupMenu>
+        </dx:DropDownButton>
+      </StackPanel>
+
+      <StackPanel Margin="20,0,0,0">
+        <TextBlock Text="{lang:Loc Calibration_High_DNR_Coeff}"
+                   FontFamily="{StaticResource AppTextFont}"
+                   FontSize="36"
+                   Height="100"
+                   FontWeight="UltraBold"
+                   Foreground="{StaticResource AppTextColor}"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Top"
+                   Margin="0,0,0,0"/>
+        <TextBox Width="150" Name="TB4"
+                 HorizontalAlignment="Center"
+                 Style="{StaticResource InputFieldStyle}"
+                 Text="{Binding DNRContents[0]}">
+          <dxmvvm:Interaction.Behaviors>
+            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="4"/>
+            <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+          </dxmvvm:Interaction.Behaviors>
+        </TextBox>
+      </StackPanel>
     </StackPanel>
   </Grid>
 </UserControl>

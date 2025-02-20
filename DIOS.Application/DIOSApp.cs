@@ -110,7 +110,6 @@ public class DIOSApp
       ? "Bead Compensation Matrix: Enabled"
       : "Bead Compensation Matrix: Disabled");
 
-    Logger.Log($"SensitivityChannel: {_beadProcessor.SensitivityChannel}");
     await Device.StartOperation(wells, Results.RawBeadsCollector);
   }
 

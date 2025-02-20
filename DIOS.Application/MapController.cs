@@ -178,10 +178,25 @@ public class MapController
   {
     var idx = MapList.FindIndex(x => x.mapName == ActiveMap.mapName);
     var map = MapList[idx];
-    if(ClassificationMap._shiftData.ContainsKey(param1))
+    if(BeadParamsHelper._shiftData.ContainsKey(param1))
       map.ClassificationParameter1 = param1;
-    if (ClassificationMap._shiftData.ContainsKey(param2))
+    if (BeadParamsHelper._shiftData.ContainsKey(param2))
       map.ClassificationParameter2 = param2;
+
+    MapList[idx] = map;
+    ActiveMap = MapList[idx];
+
+    return WriteToMap(map);
+  }
+
+  public bool SaveSensitivityChannelsToCurrentMap(string hiSensChannel, string extendedChannel)
+  {
+    var idx = MapList.FindIndex(x => x.mapName == ActiveMap.mapName);
+    var map = MapList[idx];
+    if (BeadParamsHelper._shiftData.ContainsKey(hiSensChannel))
+      map.calParams.HiSensChannel = hiSensChannel;
+    if (BeadParamsHelper._shiftData.ContainsKey(extendedChannel))
+      map.calParams.ExtendedDNRChannel = extendedChannel;
 
     MapList[idx] = map;
     ActiveMap = MapList[idx];

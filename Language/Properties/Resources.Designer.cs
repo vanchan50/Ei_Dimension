@@ -239,7 +239,7 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to High DNR Coefficient.
+        ///   Looks up a localized string similar to Coefficient.
         /// </summary>
         public static string Calibration_High_DNR_Coeff {
             get {
@@ -248,7 +248,7 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to High DNR Transition.
+        ///   Looks up a localized string similar to Crossover.
         /// </summary>
         public static string Calibration_High_DNR_Trans {
             get {
@@ -460,6 +460,15 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Extended Channel.
+        /// </summary>
+        public static string Channels_Extended_Chan {
+            get {
+                return ResourceManager.GetString("Channels_Extended_Chan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Forward Scatter.
         /// </summary>
         public static string Channels_Forward_Scatter {
@@ -621,24 +630,6 @@ namespace Ei_Dimension.Language {
         public static string Channels_Save_Bias_To_Map {
             get {
                 return ResourceManager.GetString("Channels_Save_Bias_To_Map", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Green B.
-        /// </summary>
-        public static string Channels_Sens_GreenB {
-            get {
-                return ResourceManager.GetString("Channels_Sens_GreenB", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Green C.
-        /// </summary>
-        public static string Channels_Sens_GreenC {
-            get {
-                return ResourceManager.GetString("Channels_Sens_GreenC", resourceCulture);
             }
         }
         

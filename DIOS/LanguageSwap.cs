@@ -119,8 +119,9 @@ public static class LanguageSwap
       CaliVM.ClClassificatorItems[7].Content = _rm.GetString(nameof(Language.Resources.Channels_Green_D), _curCulture);
       CaliVM.SelectedCl1ClassificatorContent = CaliVM.ClClassificatorItems[CaliVM.SelectedCl1ClassificatorIndex].Content;
       CaliVM.SelectedCl2ClassificatorContent = CaliVM.ClClassificatorItems[CaliVM.SelectedCl2ClassificatorIndex].Content;
+      CaliVM.SelectedSensitivityContent = CaliVM.ClClassificatorItems[CaliVM.SelectedSensitivityIndex].Content;
+      CaliVM.SelectedExChannelContent = CaliVM.ClClassificatorItems[CaliVM.SelectedExChannelIndex].Content;
     }
-    TranslateChannelSensitivity();
   }
 
   public static void TranslateDashboardVM()
@@ -177,26 +178,6 @@ public static class LanguageSwap
         ChannelsVM.Labels[6] = _rm.GetString(nameof(Language.Resources.Channels_Red_D), _curCulture);
         ChannelsVM.Labels[7] = _rm.GetString(nameof(Language.Resources.Channels_Green_D), _curCulture);
       }
-    }
-  }
-
-  public static void TranslateChannelSensitivity()
-  {
-    var CaliVM = CalibrationViewModel.Instance;
-    if (CaliVM != null)
-    {
-      if (App.ChannelRedirectionEnabled)
-      {
-        CaliVM.SensitivityItems[0].Content = _rm.GetString(nameof(Language.Resources.Channels_Sens_RedC), _curCulture);
-        CaliVM.SensitivityItems[1].Content = _rm.GetString(nameof(Language.Resources.Channels_Sens_RedD), _curCulture);
-      }
-      else
-      {
-        CaliVM.SensitivityItems[0].Content = _rm.GetString(nameof(Language.Resources.Channels_Sens_GreenB), _curCulture);
-        CaliVM.SensitivityItems[1].Content = _rm.GetString(nameof(Language.Resources.Channels_Sens_GreenC), _curCulture);
-      }
-
-      CaliVM.SelectedSensitivityContent = CaliVM.SensitivityItems[CaliVM.SelectedSensitivityIndex].Content;
     }
   }
 

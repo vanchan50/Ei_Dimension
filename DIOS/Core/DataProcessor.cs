@@ -7,6 +7,7 @@ using Ei_Dimension.Controllers;
 using Ei_Dimension.ViewModels;
 using Ei_Dimension.Graphing.HeatMap;
 using System.Linq;
+using DIOS.Application.Domain;
 
 namespace Ei_Dimension.Core;
 
@@ -195,12 +196,12 @@ public static class DataProcessor
       //cl0 = cl0 > boundary ? boundary : cl0;
       
       int cl1 = Array.BinarySearch(bins,
-        App.DiosApp._beadProcessor._classificationMap.GetClassificationParam1(beadInfoList[i]));
+        BeadParamsHelper.GetClassificationParam1(beadInfoList[i]));
       if (cl1 < 0)
         cl1 = ~cl1;
       cl1 = cl1 > boundary ? boundary : cl1;
       int cl2 = Array.BinarySearch(bins,
-        App.DiosApp._beadProcessor._classificationMap.GetClassificationParam2(beadInfoList[i]));
+        BeadParamsHelper.GetClassificationParam2(beadInfoList[i]));
       if (cl2 < 0)
         cl2 = ~cl2;
       cl2 = cl2 > boundary ? boundary : cl2;

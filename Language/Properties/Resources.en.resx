@@ -182,10 +182,10 @@ Compensation
     <value>Height</value>
   </data>
   <data name="Calibration_High_DNR_Coeff" xml:space="preserve">
-    <value>High DNR Coefficient</value>
+    <value>Coefficient</value>
   </data>
   <data name="Calibration_High_DNR_Trans" xml:space="preserve">
-    <value>High DNR Transition</value>
+    <value>Crossover</value>
   </data>
   <data name="Calibration_in_Progress" xml:space="preserve">
     <value>Calibration still in progress.
@@ -247,6 +247,9 @@ To Current Map</value>
   <data name="Channels_Calibration_Margin" xml:space="preserve">
     <value>Calibration Margin</value>
   </data>
+  <data name="Channels_Extended_Chan" xml:space="preserve">
+    <value>Extended Channel</value>
+  </data>
   <data name="Channels_Forward_Scatter" xml:space="preserve">
     <value>Forward Scatter</value>
   </data>
@@ -303,12 +306,6 @@ To Current Map</value>
     <value> Save Bias
 To Current
      Map</value>
-  </data>
-  <data name="Channels_Sens_GreenB" xml:space="preserve">
-    <value>Green B</value>
-  </data>
-  <data name="Channels_Sens_GreenC" xml:space="preserve">
-    <value>Green C</value>
   </data>
   <data name="Channels_Sens_RedC" xml:space="preserve">
     <value>Red C</value>

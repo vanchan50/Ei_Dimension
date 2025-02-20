@@ -10,6 +10,8 @@ public class CalParams
   public ushort maxmapssc;
   public float DNRCoef;
   public float DNRTrans;
+  public string HiSensChannel = "GreenC";
+  public string ExtendedDNRChannel = "GreenB";
   public int att;
   public int CL0;
   public int CL1;

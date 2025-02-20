@@ -38,9 +38,6 @@
     <Setting Name="BeadsToCapture" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">500</Value>
     </Setting>
-    <Setting Name="SensitivityChannelB" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
-    </Setting>
     <Setting Name="LastTemplate" Type="System.String" Scope="User">
       <Value Profile="(Default)">None</Value>
     </Setting>

@@ -275,12 +275,6 @@
     <value>保存偏压到
   当前珠图</value>
   </data>
-  <data name="Channels_Sens_GreenB" xml:space="preserve">
-    <value>绿光 B</value>
-  </data>
-  <data name="Channels_Sens_GreenC" xml:space="preserve">
-    <value>绿光 C</value>
-  </data>
   <data name="Channels_Sens_RedC" xml:space="preserve">
     <value>红光 C</value>
   </data>

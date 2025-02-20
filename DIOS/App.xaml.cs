@@ -194,8 +194,8 @@ public partial class App : Application
   public static void SetOEMMode(bool On)
   {
     DiosApp._beadProcessor._channelRedirectionEnabled = On;
+    BeadParamsHelper.ChooseOEMMode(On);
     ChannelRedirectionEnabled = On;
-    LanguageSwap.TranslateChannelSensitivity();//swaps between red <-> green
     LanguageSwap.TranslateChannelsVM();
     LanguageSwap.TranslateResultsVM();
     LanguageSwap.TranslateStatisticsTableVM();

@@ -129,9 +129,8 @@ internal static class StartupFinalizer
     App.DiosApp.Terminator.TotalBeadsToCapture = Settings.Default.BeadsToCapture;
     App.DiosApp.Terminator.TerminationTime = Settings.Default.TerminationTimer;
     App.DiosApp.ReporterScaling = Settings.Default.ReporterScaling;
-    var hiSensChannel = Settings.Default.SensitivityChannelB ? HiSensitivityChannel.GreenB : HiSensitivityChannel.GreenC;
+    var hiSensChannel = HiSensitivityChannel.GreenC;
     App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.HiSensitivityChannel, hiSensChannel);
-    App.DiosApp._beadProcessor.SensitivityChannel = hiSensChannel;
     var map = App.DiosApp.MapController.ActiveMap;
     App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.Attenuation, map.calParams.att);
     App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.CalibrationParameter, CalibrationParameter.DNRTransition, map.calParams.DNRTrans);

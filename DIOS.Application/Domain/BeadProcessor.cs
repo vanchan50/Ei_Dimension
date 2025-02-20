@@ -8,11 +8,10 @@ public class BeadProcessor
   public delegate void PreProcessBead(ref RawBead rawBead);
   public ProcessBead CalculateBeadParams { get; private set; }
   public NormalizationSettings Normalization { get; } = new();
-  private float _greenMin;
-  private float _greenMaj;
+  private float _hiSensDNRChannel;
+  private float _extendedDNRChannel;
   public readonly ClassificationMap _classificationMap = new();
   internal MapModel _map;
-  public HiSensitivityChannel SensitivityChannel { get; set; }
   public bool SpectraPlexEnabled
   {
     get => _spectraPlexEnabled;
@@ -57,12 +56,7 @@ public class BeadProcessor
   public void SetMap(MapModel map)
   {
     _map = map;
-    _classificationMap.ConstructClassificationMap(_map, _channelRedirectionEnabled);
-  }
-
-  public void UpdateClassificationParameters(string param1, string param2)
-  {
-    _classificationMap.ChooseProperClassification(param1, param2, _channelRedirectionEnabled);
+    _classificationMap.ConstructClassificationMap(_map);
   }
 
   private void PrecalculateBeadCompensationRegular(ref RawBead rawBead)
@@ -150,11 +144,13 @@ public class BeadProcessor
       outBead.greenC = rawBead.cl2;
       //red channels are processed, and are written in the finalization part
 
+      AssignSensitivityChannels(in outBead);
       ChannelRedirection(in rawBead);
     }
     else
     {
       //normal case
+      AssignSensitivityChannels(in outBead);
       CalculateCompensatedCoordinates(in rawBead);
     }
     //finalize outBead data
@@ -243,19 +239,10 @@ public class BeadProcessor
     return outBead;
   }
 
-  private void AssignSensitivityChannels(in RawBead rawBead)
+  private void AssignSensitivityChannels(in ProcessedBead outBead)
   {
-    //greenMaj is the hi dyn range channel,
-    //greenMin is the high sensitivity channel(depends on filter placement)
-      
-    if (SensitivityChannel == HiSensitivityChannel.GreenB)
-    {
-      _greenMaj = rawBead.greenC;
-      _greenMin = rawBead.greenB;
-      return;
-    }
-    _greenMaj = rawBead.greenB;
-    _greenMin = rawBead.greenC;
+    _extendedDNRChannel = BeadParamsHelper.GetExtendedChannelValue(in outBead);
+    _hiSensDNRChannel = BeadParamsHelper.GetHiSensitivityChannelValue(in outBead);
   }
 
   private void CalculateCompensatedCoordinates(in RawBead rawBead)
@@ -264,8 +251,7 @@ public class BeadProcessor
     //we subtract a fraction of the reporter signal from CL1 and CL2,
     //so really bright reporter signals don’t push the cl1 and cl2 coordinates out of the region
     //there is about 1% excitation of the reporter fluorophore by the red laser and that causes the shift
-    AssignSensitivityChannels(in rawBead);
-    var cl1Comp = _greenMaj * _actualCompensation;  //also called adjust
+    var cl1Comp = _extendedDNRChannel * _actualCompensation;  //also called adjust
     var cl2Comp = cl1Comp * 0.25f;
 
     var compensatedCl1 = rawBead.cl1 - cl1Comp;
@@ -280,20 +266,7 @@ public class BeadProcessor
 
   private void ChannelRedirection(in RawBead rawBead)
   {
-    //greenMaj is the hi dyn range channel,
-    //greenMin is the high sensitivity channel(depends on filter placement)
-
-    if (SensitivityChannel == HiSensitivityChannel.GreenB)
-    {
-      _greenMaj = rawBead.cl2;
-      _greenMin = rawBead.cl1;
-      return;
-    }
-    _greenMaj = rawBead.cl1;
-    _greenMin = rawBead.cl2;
-
-
-    var cl1Comp = _greenMaj * _actualCompensation;  //also called adjust
+    var cl1Comp = _extendedDNRChannel * _actualCompensation;  //also called adjust
     var cl2Comp = cl1Comp * 0.25f;
     
     var compensatedCl1 = rawBead.greenB - cl1Comp;
@@ -308,7 +281,7 @@ public class BeadProcessor
 
   private float CalculateReporter(ushort region)
   {
-    var basicReporter = _greenMin > HdnrTrans ? _greenMaj * HDnrCoef : _greenMin;
+    var basicReporter = _hiSensDNRChannel > HdnrTrans ? _extendedDNRChannel * HDnrCoef : _hiSensDNRChannel;
     var scaledReporter = basicReporter * _inverseReporterScaling;
 
     if (!Normalization.IsEnabled || region == 0)
