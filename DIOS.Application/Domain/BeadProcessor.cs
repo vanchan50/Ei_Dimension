@@ -295,17 +295,10 @@ public class BeadProcessor
 
   private float CalculateSpectraPlexReporter(in ProcessedBead processedBead)
   {
-    float basicReporter;
-    if (_channelRedirectionEnabled)
-    {
-      //redB+redC+redD
-      basicReporter = processedBead.greenB + processedBead.greenC + processedBead.redA;
-    }
-    else
-    {
-      basicReporter = processedBead.greenB + processedBead.greenC + processedBead.greenD;
-    }
-    return basicReporter;
+    return BeadParamsHelper.GetReporter1ChannelValue(in processedBead)
+          + BeadParamsHelper.GetReporter2ChannelValue(in processedBead)
+          + BeadParamsHelper.GetReporter3ChannelValue(in processedBead)
+          + BeadParamsHelper.GetReporter4ChannelValue(in processedBead);
     //var scaledReporter = (basicReporter * _inverseReporterScaling);
     //if (!Normalization.IsEnabled || region == 0)
     //  return scaledReporter;

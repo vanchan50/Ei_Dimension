@@ -121,6 +121,20 @@ public static class LanguageSwap
       CaliVM.SelectedCl2ClassificatorContent = CaliVM.ClClassificatorItems[CaliVM.SelectedCl2ClassificatorIndex].Content;
       CaliVM.SelectedSensitivityContent = CaliVM.ClClassificatorItems[CaliVM.SelectedSensitivityIndex].Content;
       CaliVM.SelectedExChannelContent = CaliVM.ClClassificatorItems[CaliVM.SelectedExChannelIndex].Content;
+
+      CaliVM.ReporterItems[0].Content = _rm.GetString(nameof(Language.Resources.ChannelOffsets_Red_A), _curCulture);
+      CaliVM.ReporterItems[1].Content = _rm.GetString(nameof(Language.Resources.ChannelOffsets_Red_B), _curCulture);
+      CaliVM.ReporterItems[2].Content = _rm.GetString(nameof(Language.Resources.ChannelOffsets_Red_C), _curCulture);
+      CaliVM.ReporterItems[3].Content = _rm.GetString(nameof(Language.Resources.ChannelOffsets_Red_D), _curCulture);
+      CaliVM.ReporterItems[4].Content = _rm.GetString(nameof(Language.Resources.ChannelOffsets_Green_A), _curCulture);
+      CaliVM.ReporterItems[5].Content = _rm.GetString(nameof(Language.Resources.ChannelOffsets_Green_B), _curCulture);
+      CaliVM.ReporterItems[6].Content = _rm.GetString(nameof(Language.Resources.ChannelOffsets_Green_C), _curCulture);
+      CaliVM.ReporterItems[7].Content = _rm.GetString(nameof(Language.Resources.Channels_Green_D), _curCulture);
+      CaliVM.ReporterItems[8].Content = _rm.GetString(nameof(Language.Resources.Channels_None), _curCulture);
+      CaliVM.SelectedReporterContent[0] = CaliVM.ReporterItems[CaliVM.SelectedReporterIndex[0]].Content;
+      CaliVM.SelectedReporterContent[1] = CaliVM.ReporterItems[CaliVM.SelectedReporterIndex[1]].Content;
+      CaliVM.SelectedReporterContent[2] = CaliVM.ReporterItems[CaliVM.SelectedReporterIndex[2]].Content;
+      CaliVM.SelectedReporterContent[3] = CaliVM.ReporterItems[CaliVM.SelectedReporterIndex[3]].Content;
     }
   }
 

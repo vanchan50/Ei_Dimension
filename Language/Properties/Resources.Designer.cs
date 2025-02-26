@@ -524,6 +524,15 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to None.
+        /// </summary>
+        public static string Channels_None {
+            get {
+                return ResourceManager.GetString("Channels_None", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Green B (CL1).
         /// </summary>
         public static string Channels_OEM_Green_B {

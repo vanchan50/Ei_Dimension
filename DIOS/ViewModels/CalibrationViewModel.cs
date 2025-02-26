@@ -35,11 +35,14 @@ public class CalibrationViewModel
   public virtual string SelectedCl2ClassificatorContent { get; set; }
   public byte SelectedCl1ClassificatorIndex { get; set; } = 2;
   public byte SelectedCl2ClassificatorIndex { get; set; } = 3;
-  public virtual ObservableCollection<DropDownButtonContents> ClClassificatorItems { get; }
+  public ObservableCollection<DropDownButtonContents> ClClassificatorItems { get; }
+  public ObservableCollection<DropDownButtonContents> ReporterItems { get; }
   public virtual string SelectedSensitivityContent { get; set; }
   public byte SelectedSensitivityIndex { get; set; } = 6;
   public virtual string SelectedExChannelContent { get; set; }
   public byte SelectedExChannelIndex { get; set; } = 5;
+  public ObservableCollection<string> SelectedReporterContent { get; set; } = new(){string.Empty, string.Empty, string.Empty, string.Empty, };
+  public byte[] SelectedReporterIndex { get; set; } = [8, 8, 8, 8];
 
   public static CalibrationViewModel Instance { get; private set; }
   private static readonly FrozenDictionary<byte, string> _paramsDict = new Dictionary<byte, string>()
@@ -51,7 +54,8 @@ public class CalibrationViewModel
     [4] = "GreenA",
     [5] = "GreenB",
     [6] = "GreenC",
-    [7] = "GreenD"
+    [7] = "GreenD",
+    [8] = "None"
   }.ToFrozenDictionary();
   private static readonly FrozenDictionary<int, Channel> _channelsDict = new Dictionary<int, Channel>()
   {
@@ -110,6 +114,27 @@ public class CalibrationViewModel
     SelectedSensitivityContent = ClClassificatorItems[SelectedSensitivityIndex].Content;
     DropDownButtonContents.ResetIndex();
     SelectedExChannelContent = ClClassificatorItems[SelectedExChannelIndex].Content;
+    DropDownButtonContents.ResetIndex();
+
+    ReporterItems = new ObservableCollection<DropDownButtonContents>
+    {
+      new(stringSource[nameof(Language.Resources.ChannelOffsets_Red_A)], this),
+      new(stringSource[nameof(Language.Resources.ChannelOffsets_Red_B)], this),
+      new(stringSource[nameof(Language.Resources.ChannelOffsets_Red_C)], this),
+      new(stringSource[nameof(Language.Resources.ChannelOffsets_Red_D)], this),
+      new(stringSource[nameof(Language.Resources.ChannelOffsets_Green_A)], this),
+      new(stringSource[nameof(Language.Resources.ChannelOffsets_Green_B)], this),
+      new(stringSource[nameof(Language.Resources.ChannelOffsets_Green_C)], this),
+      new(stringSource[nameof(Language.Resources.Channels_Green_D)], this),
+      new(stringSource[nameof(Language.Resources.Channels_None)], this)
+    };
+    SelectedReporterContent[0] = ReporterItems[SelectedReporterIndex[0]].Content;
+    DropDownButtonContents.ResetIndex();
+    SelectedReporterContent[1] = ReporterItems[SelectedReporterIndex[1]].Content;
+    DropDownButtonContents.ResetIndex();
+    SelectedReporterContent[2] = ReporterItems[SelectedReporterIndex[2]].Content;
+    DropDownButtonContents.ResetIndex();
+    SelectedReporterContent[3] = ReporterItems[SelectedReporterIndex[3]].Content;
     DropDownButtonContents.ResetIndex();
 
     Instance = this;
@@ -379,6 +404,16 @@ public class CalibrationViewModel
         Notification.Show("Save failed"));
       return;
     }
+
+    res = App.DiosApp.MapController.SaveReporterChannelsToCurrentMap(
+      _paramsDict[SelectedReporterIndex[0]], _paramsDict[SelectedReporterIndex[1]],
+      _paramsDict[SelectedReporterIndex[2]], _paramsDict[SelectedReporterIndex[3]]);
+    if (!res)
+    {
+      App.Current.Dispatcher.Invoke(() =>
+        Notification.Show("Save failed"));
+      return;
+    }
     var msg = Language.Resources.ResourceManager.GetString(nameof(Language.Resources.Messages_CalParameters_Saved),
       Language.TranslationSource.Instance.CurrentCulture);
     Notification.Show($"{msg} {App.DiosApp.MapController.ActiveMap.mapName}");
@@ -464,6 +499,10 @@ public class CalibrationViewModel
     ClClassificatorItems[FindDictKey(map.ClassificationParameter2)].Click(2);
     ClClassificatorItems[FindDictKey(map.calParams.HiSensChannel)].Click(3);
     ClClassificatorItems[FindDictKey(map.calParams.ExtendedDNRChannel)].Click(4);
+    ReporterItems[FindDictKey(map.calParams.SPReporterChannel1)].Click(5);
+    ReporterItems[FindDictKey(map.calParams.SPReporterChannel2)].Click(6);
+    ReporterItems[FindDictKey(map.calParams.SPReporterChannel3)].Click(7);
+    ReporterItems[FindDictKey(map.calParams.SPReporterChannel4)].Click(8);
     DNRContents[0] = map.calParams.DNRCoef.ToString();
     DNRContents[1] = map.calParams.DNRTrans.ToString();
     App.DiosApp.Compensation = map.calParams.compensation;
@@ -489,7 +528,7 @@ public class CalibrationViewModel
     var index = _paramsDict.Values.IndexOf(param);
     if (index < 0)
     {
-      return-1;
+      throw new ArgumentOutOfRangeException($"\"{param}\" is not found in the channels list");
     }
     return _paramsDict.Keys[index];
   }
@@ -557,6 +596,30 @@ public class CalibrationViewModel
           //App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.HiSensitivityChannel, (HiSensitivityChannel)Index);
           BeadParamsHelper.ChooseProperSensitivityChannels(_paramsDict[_vm.SelectedSensitivityIndex],
             _paramsDict[Index]);
+          break;
+        case 5:
+          _vm.SelectedReporterContent[0] = Content;
+          _vm.SelectedReporterIndex[0] = Index;
+          BeadParamsHelper.ChooseProperReporterChannels(_paramsDict[Index], _paramsDict[_vm.SelectedReporterIndex[1]],
+            _paramsDict[_vm.SelectedReporterIndex[2]], _paramsDict[_vm.SelectedReporterIndex[3]]);
+          break;
+        case 6:
+          _vm.SelectedReporterContent[1] = Content;
+          _vm.SelectedReporterIndex[1] = Index;
+          BeadParamsHelper.ChooseProperReporterChannels(_paramsDict[0], _paramsDict[Index],
+            _paramsDict[_vm.SelectedReporterIndex[2]], _paramsDict[_vm.SelectedReporterIndex[3]]);
+          break;
+        case 7:
+          _vm.SelectedReporterContent[2] = Content;
+          _vm.SelectedReporterIndex[2] = Index;
+          BeadParamsHelper.ChooseProperReporterChannels(_paramsDict[0], _paramsDict[_vm.SelectedReporterIndex[1]],
+            _paramsDict[Index], _paramsDict[_vm.SelectedReporterIndex[3]]);
+          break;
+        case 8:
+          _vm.SelectedReporterContent[3] = Content;
+          _vm.SelectedReporterIndex[3] = Index;
+          BeadParamsHelper.ChooseProperReporterChannels(_paramsDict[0], _paramsDict[_vm.SelectedReporterIndex[1]],
+            _paramsDict[_vm.SelectedReporterIndex[2]], _paramsDict[Index]);
           break;
       }
     }

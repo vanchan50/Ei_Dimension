@@ -203,6 +203,25 @@ public class MapController
 
     return WriteToMap(map);
   }
+
+  public bool SaveReporterChannelsToCurrentMap(string reporter1, string reporter2, string reporter3, string reporter4)
+  {
+    var idx = MapList.FindIndex(x => x.mapName == ActiveMap.mapName);
+    var map = MapList[idx];
+    if (reporter1 is "None" || BeadParamsHelper._shiftData.ContainsKey(reporter1))
+      map.calParams.SPReporterChannel1 = reporter1;
+    if (reporter2 is "None" || BeadParamsHelper._shiftData.ContainsKey(reporter2))
+      map.calParams.SPReporterChannel2 = reporter2;
+    if (reporter3 is "None" || BeadParamsHelper._shiftData.ContainsKey(reporter3))
+      map.calParams.SPReporterChannel3 = reporter3;
+    if (reporter4 is "None" || BeadParamsHelper._shiftData.ContainsKey(reporter4))
+      map.calParams.SPReporterChannel4 = reporter4;
+
+    MapList[idx] = map;
+    ActiveMap = MapList[idx];
+
+    return WriteToMap(map);
+  }
   /// <summary>
   /// 
   /// </summary>

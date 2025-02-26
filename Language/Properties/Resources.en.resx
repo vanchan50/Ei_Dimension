@@ -269,6 +269,9 @@ To Current Map</value>
     <value>Hi Sensitivity
     Channel</value>
   </data>
+  <data name="Channels_None" xml:space="preserve">
+    <value>None</value>
+  </data>
   <data name="Channels_OEM_Green_B" xml:space="preserve">
     <value>Green B (CL1)</value>
   </data>

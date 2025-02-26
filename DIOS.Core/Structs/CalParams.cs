@@ -18,4 +18,8 @@ public class CalParams
   public int CL2;
   public int CL3;
   public int RP1;
+  public string SPReporterChannel1 = "None";
+  public string SPReporterChannel2 = "None";
+  public string SPReporterChannel3 = "None";
+  public string SPReporterChannel4 = "None";
 }
