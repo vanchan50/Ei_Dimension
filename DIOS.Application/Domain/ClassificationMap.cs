@@ -30,6 +30,8 @@ public class ClassificationMap
     }
     BeadParamsHelper.ChooseProperClassification(cMap.ClassificationParameter1, cMap.ClassificationParameter2);
     BeadParamsHelper.ChooseProperSensitivityChannels(cMap.calParams.HiSensChannel, cMap.calParams.ExtendedDNRChannel);
+    BeadParamsHelper.ChooseProperReporterChannels(cMap.calParams.SPReporterChannel1, cMap.calParams.SPReporterChannel2,
+      cMap.calParams.SPReporterChannel3, cMap.calParams.SPReporterChannel4);
   }
 
   public int ClassifyBeadToRegion(in ProcessedBead bead)

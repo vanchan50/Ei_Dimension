@@ -22,4 +22,5 @@ public class CalParams
   public string SPReporterChannel2 = "None";
   public string SPReporterChannel3 = "None";
   public string SPReporterChannel4 = "None";
+  public bool SpectraplexReporterMode = false;
 }

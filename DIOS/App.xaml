@@ -2,6 +2,7 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:system="clr-namespace:System;assembly=System.Runtime"
+             xmlns:help="clr-namespace:Ei_Dimension"
              StartupUri="MainWindow.xaml">
   <Application.Resources>
 
@@ -20,6 +21,10 @@
       <FontFamily x:Key="AppTextFont">Segoe UI Semilight</FontFamily>
       <system:Double x:Key="Table96Width">80</system:Double>
       <system:Double x:Key="Table384Width">42</system:Double>
+
+      <help:InverseBooleanConverter x:Key="InverseBooleanConverter"/>
+      <help:CollapsedVisibleConverter x:Key="CollapsedVisibleConverter"/>
+      <help:InverseCollapsedVisibleConverter x:Key="InverseCollapsedVisibleConverter"/>
       <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/Styles/HeatmapSelectorStyle.xaml"/>
         <ResourceDictionary Source="/Styles/RadioButtonThemeStyle.xaml"/>

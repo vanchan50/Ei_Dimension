@@ -43,6 +43,8 @@ public class CalibrationViewModel
   public byte SelectedExChannelIndex { get; set; } = 5;
   public ObservableCollection<string> SelectedReporterContent { get; set; } = new(){string.Empty, string.Empty, string.Empty, string.Empty, };
   public byte[] SelectedReporterIndex { get; set; } = [8, 8, 8, 8];
+  public virtual ObservableCollection<bool> SpectraplexReporterEnabledButtonsChecked { get; set; } =
+    new() {true, false};
 
   public static CalibrationViewModel Instance { get; private set; }
   private static readonly FrozenDictionary<byte, string> _paramsDict = new Dictionary<byte, string>()
@@ -57,7 +59,7 @@ public class CalibrationViewModel
     [7] = "GreenD",
     [8] = "None"
   }.ToFrozenDictionary();
-  private static readonly FrozenDictionary<int, Channel> _channelsDict = new Dictionary<int, Channel>()
+  private static readonly FrozenDictionary<int, Channel?> _channelsDict = new Dictionary<int, Channel?>()
   {
     [0] = Channel.RedA,
     [1] = Channel.RedB,
@@ -66,7 +68,8 @@ public class CalibrationViewModel
     [4] = Channel.GreenA,
     [5] = Channel.GreenB,
     [6] = Channel.GreenC,
-    [7] = Channel.GreenD
+    [7] = Channel.GreenD,
+    [8] = null
   }.ToFrozenDictionary();
   
   protected CalibrationViewModel()
@@ -407,7 +410,8 @@ public class CalibrationViewModel
 
     res = App.DiosApp.MapController.SaveReporterChannelsToCurrentMap(
       _paramsDict[SelectedReporterIndex[0]], _paramsDict[SelectedReporterIndex[1]],
-      _paramsDict[SelectedReporterIndex[2]], _paramsDict[SelectedReporterIndex[3]]);
+      _paramsDict[SelectedReporterIndex[2]], _paramsDict[SelectedReporterIndex[3]],
+      SpectraplexReporterEnabledButtonsChecked[1]);
     if (!res)
     {
       App.Current.Dispatcher.Invoke(() =>
@@ -499,6 +503,7 @@ public class CalibrationViewModel
     ClClassificatorItems[FindDictKey(map.ClassificationParameter2)].Click(2);
     ClClassificatorItems[FindDictKey(map.calParams.HiSensChannel)].Click(3);
     ClClassificatorItems[FindDictKey(map.calParams.ExtendedDNRChannel)].Click(4);
+    SelectReporterCalculationMode(map.calParams.SpectraplexReporterMode ? 1 : 0);
     ReporterItems[FindDictKey(map.calParams.SPReporterChannel1)].Click(5);
     ReporterItems[FindDictKey(map.calParams.SPReporterChannel2)].Click(6);
     ReporterItems[FindDictKey(map.calParams.SPReporterChannel3)].Click(7);
@@ -521,6 +526,13 @@ public class CalibrationViewModel
     App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.CalibrationTarget, CalibrationTarget.CL2, map.calParams.CL2);
     App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.CalibrationTarget, CalibrationTarget.CL3, map.calParams.CL3);
     App.DiosApp.Device.Hardware.SetParameter(DeviceParameterType.CalibrationTarget, CalibrationTarget.RP1, map.calParams.RP1);
+  }
+
+  public void SelectReporterCalculationMode(int mode)
+  {
+    App.DiosApp._beadProcessor.SpectraPlexEnabled = mode is 1;
+    SpectraplexReporterEnabledButtonsChecked[0] = mode is 0;
+    SpectraplexReporterEnabledButtonsChecked[1] = mode is 1;
   }
 
   private int FindDictKey(string param)
@@ -572,16 +584,16 @@ public class CalibrationViewModel
           _vm.SelectedCl1ClassificatorIndex = Index;
           BeadParamsHelper.ChooseProperClassification(_paramsDict[Index],
             _paramsDict[_vm.SelectedCl2ClassificatorIndex]);
-          App.DiosApp.Device.Hardware.SetClassificationChannels(_channelsDict[Index],
-            _channelsDict[_vm.SelectedCl2ClassificatorIndex]);
+          App.DiosApp.Device.Hardware.SetClassificationChannels(_channelsDict[Index].Value,
+            _channelsDict[_vm.SelectedCl2ClassificatorIndex].Value);
           break;
         case 2:
           _vm.SelectedCl2ClassificatorContent = Content;
           _vm.SelectedCl2ClassificatorIndex = Index;
           BeadParamsHelper.ChooseProperClassification(_paramsDict[_vm.SelectedCl1ClassificatorIndex],
             _paramsDict[Index]);
-          App.DiosApp.Device.Hardware.SetClassificationChannels(_channelsDict[_vm.SelectedCl1ClassificatorIndex],
-            _channelsDict[Index]);
+          App.DiosApp.Device.Hardware.SetClassificationChannels(_channelsDict[_vm.SelectedCl1ClassificatorIndex].Value,
+            _channelsDict[Index].Value);
           break;
         case 3:
           _vm.SelectedSensitivityContent = Content;
@@ -602,24 +614,32 @@ public class CalibrationViewModel
           _vm.SelectedReporterIndex[0] = Index;
           BeadParamsHelper.ChooseProperReporterChannels(_paramsDict[Index], _paramsDict[_vm.SelectedReporterIndex[1]],
             _paramsDict[_vm.SelectedReporterIndex[2]], _paramsDict[_vm.SelectedReporterIndex[3]]);
+          App.DiosApp.Device.Hardware.SetSpectraplexReporterChannels(_channelsDict[Index], _channelsDict[_vm.SelectedReporterIndex[1]],
+            _channelsDict[_vm.SelectedReporterIndex[2]], _channelsDict[_vm.SelectedReporterIndex[3]]);
           break;
         case 6:
           _vm.SelectedReporterContent[1] = Content;
           _vm.SelectedReporterIndex[1] = Index;
-          BeadParamsHelper.ChooseProperReporterChannels(_paramsDict[0], _paramsDict[Index],
+          BeadParamsHelper.ChooseProperReporterChannels(_paramsDict[_vm.SelectedReporterIndex[0]], _paramsDict[Index],
             _paramsDict[_vm.SelectedReporterIndex[2]], _paramsDict[_vm.SelectedReporterIndex[3]]);
+          App.DiosApp.Device.Hardware.SetSpectraplexReporterChannels(_channelsDict[_vm.SelectedReporterIndex[0]], _channelsDict[Index],
+            _channelsDict[_vm.SelectedReporterIndex[2]], _channelsDict[_vm.SelectedReporterIndex[3]]);
           break;
         case 7:
           _vm.SelectedReporterContent[2] = Content;
           _vm.SelectedReporterIndex[2] = Index;
-          BeadParamsHelper.ChooseProperReporterChannels(_paramsDict[0], _paramsDict[_vm.SelectedReporterIndex[1]],
+          BeadParamsHelper.ChooseProperReporterChannels(_paramsDict[_vm.SelectedReporterIndex[0]], _paramsDict[_vm.SelectedReporterIndex[1]],
             _paramsDict[Index], _paramsDict[_vm.SelectedReporterIndex[3]]);
+          App.DiosApp.Device.Hardware.SetSpectraplexReporterChannels(_channelsDict[_vm.SelectedReporterIndex[0]], _channelsDict[_vm.SelectedReporterIndex[1]],
+            _channelsDict[Index], _channelsDict[_vm.SelectedReporterIndex[3]]);
           break;
         case 8:
           _vm.SelectedReporterContent[3] = Content;
           _vm.SelectedReporterIndex[3] = Index;
-          BeadParamsHelper.ChooseProperReporterChannels(_paramsDict[0], _paramsDict[_vm.SelectedReporterIndex[1]],
+          BeadParamsHelper.ChooseProperReporterChannels(_paramsDict[_vm.SelectedReporterIndex[0]], _paramsDict[_vm.SelectedReporterIndex[1]],
             _paramsDict[_vm.SelectedReporterIndex[2]], _paramsDict[Index]);
+          App.DiosApp.Device.Hardware.SetSpectraplexReporterChannels(_channelsDict[_vm.SelectedReporterIndex[0]], _channelsDict[_vm.SelectedReporterIndex[1]],
+            _channelsDict[_vm.SelectedReporterIndex[2]], _channelsDict[Index]);
           break;
       }
     }

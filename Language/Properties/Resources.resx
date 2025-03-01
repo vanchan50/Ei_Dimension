@@ -172,6 +172,9 @@ Compensation
   <data name="Calibration_Event_Trigger" xml:space="preserve">
     <value>Event Trigger</value>
   </data>
+  <data name="Calibration_ExtendDnr" xml:space="preserve">
+    <value>Extend Dynamic Range</value>
+  </data>
   <data name="Calibration_Fail" xml:space="preserve">
     <value>Calibration Failed!</value>
   </data>
@@ -210,6 +213,9 @@ To Current Map</value>
   </data>
   <data name="Calibration_Success" xml:space="preserve">
     <value>Calibration Succesful!</value>
+  </data>
+  <data name="Calibration_Sum_Channels" xml:space="preserve">
+    <value>Sum Channels</value>
   </data>
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>

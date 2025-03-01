@@ -212,6 +212,15 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Extend Dynamic Range.
+        /// </summary>
+        public static string Calibration_ExtendDnr {
+            get {
+                return ResourceManager.GetString("Calibration_ExtendDnr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Calibration Failed!.
         /// </summary>
         public static string Calibration_Fail {
@@ -319,6 +328,15 @@ namespace Ei_Dimension.Language {
         public static string Calibration_Success {
             get {
                 return ResourceManager.GetString("Calibration_Success", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sum Channels.
+        /// </summary>
+        public static string Calibration_Sum_Channels {
+            get {
+                return ResourceManager.GetString("Calibration_Sum_Channels", resourceCulture);
             }
         }
         

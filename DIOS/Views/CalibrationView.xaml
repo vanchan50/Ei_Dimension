@@ -450,39 +450,271 @@
               Height="150" Width="240"/>
     </Border>
 
-    <StackPanel Orientation="Horizontal"
-                HorizontalAlignment="Left"
+    <StackPanel HorizontalAlignment="Left"
                 VerticalAlignment="Top"
-                Margin="60,580,0,0">
-      <StackPanel>
-        <TextBlock Text="{lang:Loc Channels_Hi_Sens_Chan}"
-                   FontFamily="{StaticResource AppTextFont}"
-                   FontSize="36"
-                   Height="100"
-                   FontWeight="UltraBold"
-                   Foreground="{StaticResource AppTextColor}"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Top"
-                   Margin="0,0,0,0"/>
-        <dx:DropDownButton Height="50" Cursor="Hand"
-                           FontSize="25" Command="{Binding DropPressCommand}"
-                           dxb:BarManager.ShowGlyphsInPopupMenus="False"
-                           FontFamily="{StaticResource AppTextFont}"
-                           Foreground="{StaticResource AppTextColor}"
-                           Content="{Binding SelectedSensitivityContent}">
-          <dxb:PopupMenu ItemLinksSource="{Binding ClClassificatorItems}">
+                Margin="50,600,0,0">
+      <StackPanel Orientation="Vertical"
+                  HorizontalAlignment="Left"
+                  Height="100"
+                  Width="400">
+        <RadioButton Content="{lang:Loc Calibration_ExtendDnr}"
+                     Style="{StaticResource RadioButtonVerticalThemeStyle}"
+                     IsChecked="{Binding SpectraplexReporterEnabledButtonsChecked[0], Mode=OneWay}"
+                     Command="{Binding SelectReporterCalculationModeCommand}"
+                     CommandParameter="0">
+        </RadioButton>
+        <RadioButton Content="{lang:Loc Calibration_Sum_Channels}"
+                     Name="SpectraPlexEnabledButton"
+                     Style="{StaticResource RadioButtonVerticalThemeStyle}"
+                     IsChecked="{Binding SpectraplexReporterEnabledButtonsChecked[1], Mode=OneWay}"
+                     Command="{Binding SelectReporterCalculationModeCommand}"
+                     CommandParameter="1">
+        </RadioButton>
+      </StackPanel>
+      <StackPanel Orientation="Horizontal"
+                  Visibility="{Binding ElementName=SpectraPlexEnabledButton,
+                  Path=IsChecked,
+                  Converter={StaticResource InverseCollapsedVisibleConverter}}">
+        <StackPanel>
+          <TextBlock Text="{lang:Loc Channels_Hi_Sens_Chan}"
+               FontFamily="{StaticResource AppTextFont}"
+               FontSize="36"
+               Height="100"
+               FontWeight="UltraBold"
+               Foreground="{StaticResource AppTextColor}"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Top"
+               Margin="0,0,0,0"/>
+          <dx:DropDownButton Height="50" Cursor="Hand"
+                       FontSize="25" Command="{Binding DropPressCommand}"
+                       dxb:BarManager.ShowGlyphsInPopupMenus="False"
+                       FontFamily="{StaticResource AppTextFont}"
+                       Foreground="{StaticResource AppTextColor}"
+                       Content="{Binding SelectedSensitivityContent}">
+            <dxb:PopupMenu ItemLinksSource="{Binding ClClassificatorItems}">
+              <dxb:PopupMenu.ItemTemplate>
+                <DataTemplate>
+                  <ContentControl>
+                    <dxb:BarButtonItem Content="{Binding Content}"  
+                                 ItemClick="{DXEvent Click((int)3)}">
+                      <dxb:BarButtonItem.ContentTemplate>
+                        <DataTemplate>
+                          <Grid Width="180">
+                            <TextBlock Text="{Binding}" HorizontalAlignment="Center"
+                                 FontFamily="{StaticResource AppTextFont}"
+                                 Foreground="{StaticResource AppTextColor}"
+                                 FontSize="25"/>
+                          </Grid>
+                        </DataTemplate>
+                      </dxb:BarButtonItem.ContentTemplate>
+                    </dxb:BarButtonItem>
+                  </ContentControl>
+                </DataTemplate>
+              </dxb:PopupMenu.ItemTemplate>
+            </dxb:PopupMenu>
+          </dx:DropDownButton>
+        </StackPanel>
+
+        <StackPanel Margin="20,0,0,0">
+          <TextBlock Text="{lang:Loc Calibration_High_DNR_Trans}"
+               FontFamily="{StaticResource AppTextFont}"
+               FontSize="36"
+               Height="100"
+               FontWeight="UltraBold"
+               Foreground="{StaticResource AppTextColor}"
+               HorizontalAlignment="Center"
+               Margin="0,0,0,0"/>
+          <TextBox Width="150" Name="TB5"
+             HorizontalAlignment="Center"
+             Style="{StaticResource InputFieldStyle}"
+             Text="{Binding DNRContents[1]}">
+            <dxmvvm:Interaction.Behaviors>
+              <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="5"/>
+              <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+            </dxmvvm:Interaction.Behaviors>
+          </TextBox>
+        </StackPanel>
+
+        <StackPanel Margin="20,0,0,0">
+          <TextBlock Text="{lang:Loc Channels_Extended_Chan}"
+               FontFamily="{StaticResource AppTextFont}"
+               FontSize="36"
+               Height="100"
+               FontWeight="UltraBold"
+               Foreground="{StaticResource AppTextColor}"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Top"
+               Margin="0,0,0,0"/>
+          <dx:DropDownButton Height="50" Cursor="Hand"
+                       FontSize="25" Command="{Binding DropPressCommand}"
+                       dxb:BarManager.ShowGlyphsInPopupMenus="False"
+                       FontFamily="{StaticResource AppTextFont}"
+                       Foreground="{StaticResource AppTextColor}"
+                       Content="{Binding SelectedExChannelContent}">
+            <dxb:PopupMenu ItemLinksSource="{Binding ClClassificatorItems}">
+              <dxb:PopupMenu.ItemTemplate>
+                <DataTemplate>
+                  <ContentControl>
+                    <dxb:BarButtonItem Content="{Binding Content}"  
+                                 ItemClick="{DXEvent Click((int)4)}">
+                      <dxb:BarButtonItem.ContentTemplate>
+                        <DataTemplate>
+                          <Grid Width="180">
+                            <TextBlock Text="{Binding}" HorizontalAlignment="Center"
+                                 FontFamily="{StaticResource AppTextFont}"
+                                 Foreground="{StaticResource AppTextColor}"
+                                 FontSize="25"/>
+                          </Grid>
+                        </DataTemplate>
+                      </dxb:BarButtonItem.ContentTemplate>
+                    </dxb:BarButtonItem>
+                  </ContentControl>
+                </DataTemplate>
+              </dxb:PopupMenu.ItemTemplate>
+            </dxb:PopupMenu>
+          </dx:DropDownButton>
+        </StackPanel>
+
+        <StackPanel Margin="20,0,0,0">
+          <TextBlock Text="{lang:Loc Calibration_High_DNR_Coeff}"
+               FontFamily="{StaticResource AppTextFont}"
+               FontSize="36"
+               Height="100"
+               FontWeight="UltraBold"
+               Foreground="{StaticResource AppTextColor}"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Top"
+               Margin="0,0,0,0"/>
+          <TextBox Width="150" Name="TB4"
+             HorizontalAlignment="Center"
+             Style="{StaticResource InputFieldStyle}"
+             Text="{Binding DNRContents[0]}">
+            <dxmvvm:Interaction.Behaviors>
+              <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="4"/>
+              <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
+            </dxmvvm:Interaction.Behaviors>
+          </TextBox>
+        </StackPanel>
+      </StackPanel>
+      <StackPanel Orientation="Horizontal"
+            HorizontalAlignment="Left"
+            Margin="0,100,0,0"
+            Visibility="{Binding ElementName=SpectraPlexEnabledButton,
+                  Path=IsChecked,
+                  Converter={StaticResource CollapsedVisibleConverter}}">
+        <dx:DropDownButton Height="50" Width="200"
+                     Cursor="Hand"
+                     FontSize="25" Command="{Binding DropPressCommand}"
+                     dxb:BarManager.ShowGlyphsInPopupMenus="False"
+                     FontFamily="{StaticResource AppTextFont}"
+                     Foreground="{StaticResource AppTextColor}"
+                     Content="{Binding SelectedReporterContent[0]}">
+          <dxb:PopupMenu ItemLinksSource="{Binding ReporterItems}">
             <dxb:PopupMenu.ItemTemplate>
               <DataTemplate>
                 <ContentControl>
                   <dxb:BarButtonItem Content="{Binding Content}"  
-                                     ItemClick="{DXEvent Click((int)3)}">
+                               ItemClick="{DXEvent Click((int)5)}">
                     <dxb:BarButtonItem.ContentTemplate>
                       <DataTemplate>
                         <Grid Width="180">
                           <TextBlock Text="{Binding}" HorizontalAlignment="Center"
-                                     FontFamily="{StaticResource AppTextFont}"
-                                     Foreground="{StaticResource AppTextColor}"
-                                     FontSize="25"/>
+                               FontFamily="{StaticResource AppTextFont}"
+                               Foreground="{StaticResource AppTextColor}"
+                               FontSize="25"/>
+                        </Grid>
+                      </DataTemplate>
+                    </dxb:BarButtonItem.ContentTemplate>
+                  </dxb:BarButtonItem>
+                </ContentControl>
+              </DataTemplate>
+            </dxb:PopupMenu.ItemTemplate>
+          </dxb:PopupMenu>
+        </dx:DropDownButton>
+
+        <dx:DropDownButton Height="50" Width="200"
+                     Margin="20,0,0,0"
+                     Cursor="Hand"
+                     FontSize="25" Command="{Binding DropPressCommand}"
+                     dxb:BarManager.ShowGlyphsInPopupMenus="False"
+                     FontFamily="{StaticResource AppTextFont}"
+                     Foreground="{StaticResource AppTextColor}"
+                     Content="{Binding SelectedReporterContent[1]}">
+          <dxb:PopupMenu ItemLinksSource="{Binding ReporterItems}">
+            <dxb:PopupMenu.ItemTemplate>
+              <DataTemplate>
+                <ContentControl>
+                  <dxb:BarButtonItem Content="{Binding Content}"  
+                               ItemClick="{DXEvent Click((int)6)}">
+                    <dxb:BarButtonItem.ContentTemplate>
+                      <DataTemplate>
+                        <Grid Width="180">
+                          <TextBlock Text="{Binding}" HorizontalAlignment="Center"
+                               FontFamily="{StaticResource AppTextFont}"
+                               Foreground="{StaticResource AppTextColor}"
+                               FontSize="25"/>
+                        </Grid>
+                      </DataTemplate>
+                    </dxb:BarButtonItem.ContentTemplate>
+                  </dxb:BarButtonItem>
+                </ContentControl>
+              </DataTemplate>
+            </dxb:PopupMenu.ItemTemplate>
+          </dxb:PopupMenu>
+        </dx:DropDownButton>
+
+        <dx:DropDownButton Height="50" Width="200"
+                     Margin="20,0,0,0"
+                     Cursor="Hand"
+                     FontSize="25" Command="{Binding DropPressCommand}"
+                     dxb:BarManager.ShowGlyphsInPopupMenus="False"
+                     FontFamily="{StaticResource AppTextFont}"
+                     Foreground="{StaticResource AppTextColor}"
+                     Content="{Binding SelectedReporterContent[2]}">
+          <dxb:PopupMenu ItemLinksSource="{Binding ReporterItems}">
+            <dxb:PopupMenu.ItemTemplate>
+              <DataTemplate>
+                <ContentControl>
+                  <dxb:BarButtonItem Content="{Binding Content}"  
+                               ItemClick="{DXEvent Click((int)7)}">
+                    <dxb:BarButtonItem.ContentTemplate>
+                      <DataTemplate>
+                        <Grid Width="180">
+                          <TextBlock Text="{Binding}" HorizontalAlignment="Center"
+                               FontFamily="{StaticResource AppTextFont}"
+                               Foreground="{StaticResource AppTextColor}"
+                               FontSize="25"/>
+                        </Grid>
+                      </DataTemplate>
+                    </dxb:BarButtonItem.ContentTemplate>
+                  </dxb:BarButtonItem>
+                </ContentControl>
+              </DataTemplate>
+            </dxb:PopupMenu.ItemTemplate>
+          </dxb:PopupMenu>
+        </dx:DropDownButton>
+
+        <dx:DropDownButton Height="50" Width="200"
+                     Margin="20,0,0,0"
+                     Cursor="Hand"
+                     FontSize="25" Command="{Binding DropPressCommand}"
+                     dxb:BarManager.ShowGlyphsInPopupMenus="False"
+                     FontFamily="{StaticResource AppTextFont}"
+                     Foreground="{StaticResource AppTextColor}"
+                     Content="{Binding SelectedReporterContent[3]}">
+          <dxb:PopupMenu ItemLinksSource="{Binding ReporterItems}">
+            <dxb:PopupMenu.ItemTemplate>
+              <DataTemplate>
+                <ContentControl>
+                  <dxb:BarButtonItem Content="{Binding Content}"  
+                               ItemClick="{DXEvent Click((int)8)}">
+                    <dxb:BarButtonItem.ContentTemplate>
+                      <DataTemplate>
+                        <Grid Width="180">
+                          <TextBlock Text="{Binding}" HorizontalAlignment="Center"
+                               FontFamily="{StaticResource AppTextFont}"
+                               Foreground="{StaticResource AppTextColor}"
+                               FontSize="25"/>
                         </Grid>
                       </DataTemplate>
                     </dxb:BarButtonItem.ContentTemplate>
@@ -493,216 +725,7 @@
           </dxb:PopupMenu>
         </dx:DropDownButton>
       </StackPanel>
-
-      <StackPanel Margin="20,0,0,0">
-        <TextBlock Text="{lang:Loc Calibration_High_DNR_Trans}"
-                   FontFamily="{StaticResource AppTextFont}"
-                   FontSize="36"
-                   Height="100"
-                   FontWeight="UltraBold"
-                   Foreground="{StaticResource AppTextColor}"
-                   HorizontalAlignment="Center"
-                   Margin="0,0,0,0"/>
-        <TextBox Width="150" Name="TB5"
-                 HorizontalAlignment="Center"
-                 Style="{StaticResource InputFieldStyle}"
-                 Text="{Binding DNRContents[1]}">
-          <dxmvvm:Interaction.Behaviors>
-            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="5"/>
-            <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
-          </dxmvvm:Interaction.Behaviors>
-        </TextBox>
-      </StackPanel>
-
-      <StackPanel Margin="20,0,0,0">
-        <TextBlock Text="{lang:Loc Channels_Extended_Chan}"
-                   FontFamily="{StaticResource AppTextFont}"
-                   FontSize="36"
-                   Height="100"
-                   FontWeight="UltraBold"
-                   Foreground="{StaticResource AppTextColor}"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Top"
-                   Margin="0,0,0,0"/>
-        <dx:DropDownButton Height="50" Cursor="Hand"
-                           FontSize="25" Command="{Binding DropPressCommand}"
-                           dxb:BarManager.ShowGlyphsInPopupMenus="False"
-                           FontFamily="{StaticResource AppTextFont}"
-                           Foreground="{StaticResource AppTextColor}"
-                           Content="{Binding SelectedExChannelContent}">
-          <dxb:PopupMenu ItemLinksSource="{Binding ClClassificatorItems}">
-            <dxb:PopupMenu.ItemTemplate>
-              <DataTemplate>
-                <ContentControl>
-                  <dxb:BarButtonItem Content="{Binding Content}"  
-                                     ItemClick="{DXEvent Click((int)4)}">
-                    <dxb:BarButtonItem.ContentTemplate>
-                      <DataTemplate>
-                        <Grid Width="180">
-                          <TextBlock Text="{Binding}" HorizontalAlignment="Center"
-                                     FontFamily="{StaticResource AppTextFont}"
-                                     Foreground="{StaticResource AppTextColor}"
-                                     FontSize="25"/>
-                        </Grid>
-                      </DataTemplate>
-                    </dxb:BarButtonItem.ContentTemplate>
-                  </dxb:BarButtonItem>
-                </ContentControl>
-              </DataTemplate>
-            </dxb:PopupMenu.ItemTemplate>
-          </dxb:PopupMenu>
-        </dx:DropDownButton>
-      </StackPanel>
-
-      <StackPanel Margin="20,0,0,0">
-        <TextBlock Text="{lang:Loc Calibration_High_DNR_Coeff}"
-                   FontFamily="{StaticResource AppTextFont}"
-                   FontSize="36"
-                   Height="100"
-                   FontWeight="UltraBold"
-                   Foreground="{StaticResource AppTextColor}"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Top"
-                   Margin="0,0,0,0"/>
-        <TextBox Width="150" Name="TB4"
-                 HorizontalAlignment="Center"
-                 Style="{StaticResource InputFieldStyle}"
-                 Text="{Binding DNRContents[0]}">
-          <dxmvvm:Interaction.Behaviors>
-            <dxmvvm:EventToCommand EventName="GotFocus" Command="{Binding FocusedBoxCommand}" CommandParameter="4"/>
-            <dxmvvm:EventToCommand EventName="TextChanged" Command="{Binding TextChangedCommand}" PassEventArgsToCommand="True"/>
-          </dxmvvm:Interaction.Behaviors>
-        </TextBox>
-      </StackPanel>
     </StackPanel>
 
-
-    <StackPanel Orientation="Horizontal"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Top"
-                Margin="60,780,0,0">
-      <dx:DropDownButton Height="50" Width="200"
-                         Cursor="Hand"
-                         FontSize="25" Command="{Binding DropPressCommand}"
-                         dxb:BarManager.ShowGlyphsInPopupMenus="False"
-                         FontFamily="{StaticResource AppTextFont}"
-                         Foreground="{StaticResource AppTextColor}"
-                         Content="{Binding SelectedReporterContent[0]}">
-        <dxb:PopupMenu ItemLinksSource="{Binding ReporterItems}">
-          <dxb:PopupMenu.ItemTemplate>
-            <DataTemplate>
-              <ContentControl>
-                <dxb:BarButtonItem Content="{Binding Content}"  
-                                   ItemClick="{DXEvent Click((int)5)}">
-                  <dxb:BarButtonItem.ContentTemplate>
-                    <DataTemplate>
-                      <Grid Width="180">
-                        <TextBlock Text="{Binding}" HorizontalAlignment="Center"
-                                   FontFamily="{StaticResource AppTextFont}"
-                                   Foreground="{StaticResource AppTextColor}"
-                                   FontSize="25"/>
-                      </Grid>
-                    </DataTemplate>
-                  </dxb:BarButtonItem.ContentTemplate>
-                </dxb:BarButtonItem>
-              </ContentControl>
-            </DataTemplate>
-          </dxb:PopupMenu.ItemTemplate>
-        </dxb:PopupMenu>
-      </dx:DropDownButton>
-
-      <dx:DropDownButton Height="50" Width="200"
-                         Margin="20,0,0,0"
-                         Cursor="Hand"
-                         FontSize="25" Command="{Binding DropPressCommand}"
-                         dxb:BarManager.ShowGlyphsInPopupMenus="False"
-                         FontFamily="{StaticResource AppTextFont}"
-                         Foreground="{StaticResource AppTextColor}"
-                         Content="{Binding SelectedReporterContent[1]}">
-        <dxb:PopupMenu ItemLinksSource="{Binding ReporterItems}">
-          <dxb:PopupMenu.ItemTemplate>
-            <DataTemplate>
-              <ContentControl>
-                <dxb:BarButtonItem Content="{Binding Content}"  
-                                   ItemClick="{DXEvent Click((int)6)}">
-                  <dxb:BarButtonItem.ContentTemplate>
-                    <DataTemplate>
-                      <Grid Width="180">
-                        <TextBlock Text="{Binding}" HorizontalAlignment="Center"
-                                   FontFamily="{StaticResource AppTextFont}"
-                                   Foreground="{StaticResource AppTextColor}"
-                                   FontSize="25"/>
-                      </Grid>
-                    </DataTemplate>
-                  </dxb:BarButtonItem.ContentTemplate>
-                </dxb:BarButtonItem>
-              </ContentControl>
-            </DataTemplate>
-          </dxb:PopupMenu.ItemTemplate>
-        </dxb:PopupMenu>
-      </dx:DropDownButton>
-
-      <dx:DropDownButton Height="50" Width="200"
-                         Margin="20,0,0,0"
-                         Cursor="Hand"
-                         FontSize="25" Command="{Binding DropPressCommand}"
-                         dxb:BarManager.ShowGlyphsInPopupMenus="False"
-                         FontFamily="{StaticResource AppTextFont}"
-                         Foreground="{StaticResource AppTextColor}"
-                         Content="{Binding SelectedReporterContent[2]}">
-        <dxb:PopupMenu ItemLinksSource="{Binding ReporterItems}">
-          <dxb:PopupMenu.ItemTemplate>
-            <DataTemplate>
-              <ContentControl>
-                <dxb:BarButtonItem Content="{Binding Content}"  
-                                   ItemClick="{DXEvent Click((int)7)}">
-                  <dxb:BarButtonItem.ContentTemplate>
-                    <DataTemplate>
-                      <Grid Width="180">
-                        <TextBlock Text="{Binding}" HorizontalAlignment="Center"
-                                   FontFamily="{StaticResource AppTextFont}"
-                                   Foreground="{StaticResource AppTextColor}"
-                                   FontSize="25"/>
-                      </Grid>
-                    </DataTemplate>
-                  </dxb:BarButtonItem.ContentTemplate>
-                </dxb:BarButtonItem>
-              </ContentControl>
-            </DataTemplate>
-          </dxb:PopupMenu.ItemTemplate>
-        </dxb:PopupMenu>
-      </dx:DropDownButton>
-
-      <dx:DropDownButton Height="50" Width="200"
-                         Margin="20,0,0,0"
-                         Cursor="Hand"
-                         FontSize="25" Command="{Binding DropPressCommand}"
-                         dxb:BarManager.ShowGlyphsInPopupMenus="False"
-                         FontFamily="{StaticResource AppTextFont}"
-                         Foreground="{StaticResource AppTextColor}"
-                         Content="{Binding SelectedReporterContent[3]}">
-        <dxb:PopupMenu ItemLinksSource="{Binding ReporterItems}">
-          <dxb:PopupMenu.ItemTemplate>
-            <DataTemplate>
-              <ContentControl>
-                <dxb:BarButtonItem Content="{Binding Content}"  
-                                   ItemClick="{DXEvent Click((int)8)}">
-                  <dxb:BarButtonItem.ContentTemplate>
-                    <DataTemplate>
-                      <Grid Width="180">
-                        <TextBlock Text="{Binding}" HorizontalAlignment="Center"
-                                   FontFamily="{StaticResource AppTextFont}"
-                                   Foreground="{StaticResource AppTextColor}"
-                                   FontSize="25"/>
-                      </Grid>
-                    </DataTemplate>
-                  </dxb:BarButtonItem.ContentTemplate>
-                </dxb:BarButtonItem>
-              </ContentControl>
-            </DataTemplate>
-          </dxb:PopupMenu.ItemTemplate>
-        </dxb:PopupMenu>
-      </dx:DropDownButton>
-    </StackPanel>
   </Grid>
 </UserControl>

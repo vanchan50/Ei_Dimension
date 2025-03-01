@@ -140,12 +140,9 @@ public partial class App : Application
   {
     var OEMMode = chConfig is ChannelConfiguration.OEMA
                                 or ChannelConfiguration.OEMSpectraplex;
-    var isInSpectraPlexMode = chConfig is ChannelConfiguration.StandardSpectraplex
-      or ChannelConfiguration.OEMSpectraplex;
 
     DiosApp.Device.Hardware.SetParameter(DeviceParameterType.ChannelConfiguration, chConfig);
     SetOEMMode(OEMMode);
-    DiosApp._beadProcessor.SpectraPlexEnabled = isInSpectraPlexMode;
   }
 
   public static void Export(DevExpress.Xpf.Charts.ChartControlBase chart, in int dpi)

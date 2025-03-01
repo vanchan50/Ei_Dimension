@@ -6,6 +6,7 @@ public class BeadProcessor
 {
   public delegate ProcessedBead ProcessBead(ref RawBead rawBead);
   public delegate void PreProcessBead(ref RawBead rawBead);
+  public delegate float ReporterDelegate(in ProcessedBead bead);
   public ProcessBead CalculateBeadParams { get; private set; }
   public NormalizationSettings Normalization { get; } = new();
   private float _hiSensDNRChannel;
@@ -19,6 +20,7 @@ public class BeadProcessor
     {
       _spectraPlexEnabled = value;
       CalculateBeadParams = _spectraPlexEnabled ? CalculateBeadParamsSpectraPlex : CalculateBeadParamsRegular;
+      _calculateReporter = _spectraPlexEnabled ? CalculateSpectraPlexReporter : CalculateReporterRegular;
     }
   }
   public bool BeadCompensationEnabled
@@ -37,6 +39,7 @@ public class BeadProcessor
   }
 
   private PreProcessBead CompensateBeadParams;
+  private ReporterDelegate _calculateReporter;
   public bool _channelRedirectionEnabled = false;
   public float HdnrTrans;
   public float HDnrCoef;
@@ -51,12 +54,14 @@ public class BeadProcessor
   {
     CalculateBeadParams = CalculateBeadParamsRegular;
     CompensateBeadParams = EmptyFunc;
+    _calculateReporter = CalculateReporterRegular;
   }
 
   public void SetMap(MapModel map)
   {
     _map = map;
     _classificationMap.ConstructClassificationMap(_map);
+    SpectraPlexEnabled = _map.calParams.SpectraplexReporterMode;
   }
 
   private void PrecalculateBeadCompensationRegular(ref RawBead rawBead)
@@ -159,13 +164,13 @@ public class BeadProcessor
     outBead.cl2 = _compensatedCoordinatesCache[2];
     outBead.redA = _compensatedCoordinatesCache[3];
     var reg = (ushort)_classificationMap.ClassifyBeadToRegion(in outBead);
-    var rep = CalculateReporter(reg);
+    outBead.region = reg;
+    var rep = _calculateReporter(in outBead);
     var zon = (ushort) ClassifyBeadToZone(outBead.greenD);
     outBead.ratio1 = 0;
     outBead.ratio2 = 0;
 
     //finalize outBead data
-    outBead.region = reg;
     outBead.reporter = rep;
     outBead.zone = zon;
 
@@ -226,7 +231,7 @@ public class BeadProcessor
     }
     //finalize outBead data
     var reg = (ushort)_classificationMap.ClassifyBeadToRegion(in outBead);
-    var rep = CalculateSpectraPlexReporter(in outBead);
+    var rep = _calculateReporter(in outBead);
     var zon = (ushort)ClassifyBeadToZone(outBead.greenD);
     outBead.ratio1 = CalculateRatio1(in outBead);
     outBead.ratio2 = CalculateRatio2(in outBead);
@@ -279,14 +284,14 @@ public class BeadProcessor
     _compensatedCoordinatesCache[3] = rawBead.redA;
   }
 
-  private float CalculateReporter(ushort region)
+  private float CalculateReporterRegular(in ProcessedBead processedBead)
   {
     var basicReporter = _hiSensDNRChannel > HdnrTrans ? _extendedDNRChannel * HDnrCoef : _hiSensDNRChannel;
     var scaledReporter = basicReporter * _inverseReporterScaling;
 
-    if (!Normalization.IsEnabled || region == 0)
+    if (!Normalization.IsEnabled || processedBead.region == 0)
       return scaledReporter;
-    var rep = _map.GetFactorizedNormalizationForRegion(region);
+    var rep = _map.GetFactorizedNormalizationForRegion((ushort)processedBead.region);
     scaledReporter -= rep;
     if (scaledReporter < 0)
       return 0;

@@ -204,7 +204,8 @@ public class MapController
     return WriteToMap(map);
   }
 
-  public bool SaveReporterChannelsToCurrentMap(string reporter1, string reporter2, string reporter3, string reporter4)
+  public bool SaveReporterChannelsToCurrentMap(string reporter1, string reporter2,
+    string reporter3, string reporter4, bool isSpectraplexEnabled)
   {
     var idx = MapList.FindIndex(x => x.mapName == ActiveMap.mapName);
     var map = MapList[idx];
@@ -216,6 +217,8 @@ public class MapController
       map.calParams.SPReporterChannel3 = reporter3;
     if (reporter4 is "None" || BeadParamsHelper._shiftData.ContainsKey(reporter4))
       map.calParams.SPReporterChannel4 = reporter4;
+
+    map.calParams.SpectraplexReporterMode = isSpectraplexEnabled;
 
     MapList[idx] = map;
     ActiveMap = MapList[idx];

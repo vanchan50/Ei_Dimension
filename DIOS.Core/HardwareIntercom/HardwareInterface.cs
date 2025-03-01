@@ -1751,7 +1751,40 @@ public class HardwareInterface
       }
     }
     var param = (ushort)(FindParam(cl2) + (FindParam(cl1) << 8));
+    _logger.Log($"0xC7 {param:b16}");
     MainCommand(code: 0xC7, parameter: param, cmd: 0x02);
+  }
+  public void SetSpectraplexReporterChannels(Channel? ch1, Channel? ch2, Channel? ch3, Channel? ch4)
+  {
+    static ushort FindParam(Channel? chan)
+    {
+      switch (chan)
+      {
+        case Channel.GreenA:
+          return 0b1000_0000;
+        case Channel.GreenB:
+          return 0b0100_0000;
+        case Channel.GreenC:
+          return 0b0010_0000;
+        case Channel.GreenD:
+          return 0b0001_0000;
+        case Channel.RedA:
+          return 0b0000_1000;
+        case Channel.RedB:
+          return 0b0000_0100;
+        case Channel.RedC:
+          return 0b0000_0010;
+        case Channel.RedD:
+          return 0b0000_0001;
+        case null:
+          return 0;
+        default:
+          throw new Exception();
+      }
+    }
+    var param = (ushort)(FindParam(ch1) | FindParam(ch2) | FindParam(ch3) | FindParam(ch4));
+    _logger.Log($"0xC6 {param:b16}");
+    MainCommand(code: 0xC6, parameter: param, cmd: 0x02);
   }
 
   private void MainCommand(byte cmd = 0, byte code = 0, ushort parameter = 0, float fparameter = 0)
