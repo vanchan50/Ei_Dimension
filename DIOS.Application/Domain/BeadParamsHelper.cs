@@ -31,10 +31,12 @@ public static class BeadParamsHelper
   private static byte _reporter2Shift;
   private static byte _reporter3Shift;
   private static byte _reporter4Shift;
+  private static byte _cl3rShift;
   private static ReporterGetter _reporter1Func;
   private static ReporterGetter _reporter2Func;
   private static ReporterGetter _reporter3Func;
   private static ReporterGetter _reporter4Func;
+  private static ReporterGetter _cl3rFunc;
 
   private delegate float ReporterGetter(in ProcessedBead bead, byte shift);
 
@@ -171,6 +173,28 @@ public static class BeadParamsHelper
 
   }
 
+  public static void ChooseProperCl3rChannels(string cl3rChannel)
+  {
+    _cl3rFunc = UnsafeBeadParamAcquisition;
+    //OEM channel swap substitution
+    if (_isOEM)
+    {
+      if (_swapData.TryGetValue(cl3rChannel, out var temp1))
+      {
+        cl3rChannel = temp1;
+      }
+    }
+
+    try
+    {
+      _cl3rShift = _shiftData[cl3rChannel];
+    }
+    catch
+    {
+      _cl3rFunc = NullFunc;
+    }
+  }
+
   public static float GetClassificationParam1(in ProcessedBead bead)
   {
     return UnsafeBeadParamAcquisition(bead, _param1Shift);
@@ -209,6 +233,11 @@ public static class BeadParamsHelper
   public static float GetReporter4ChannelValue(in ProcessedBead bead)
   {
     return _reporter4Func.Invoke(bead, _reporter4Shift);
+  }
+
+  public static float GetCl3rChannelValue(in ProcessedBead bead)
+  {
+    return _cl3rFunc.Invoke(bead, _cl3rShift);
   }
 
   private static float UnsafeBeadParamAcquisition(in ProcessedBead bead, byte paramShift)

@@ -225,6 +225,25 @@ public class MapController
 
     return WriteToMap(map);
   }
+
+
+  public bool SaveCl3rChannelsToCurrentMap(string cl3rChannel, int level1,
+    int level2)
+  {
+    var idx = MapList.FindIndex(x => x.mapName == ActiveMap.mapName);
+    var map = MapList[idx];
+    if (cl3rChannel is "None" || BeadParamsHelper._shiftData.ContainsKey(cl3rChannel))
+      map.calParams.Cl3rChannel = cl3rChannel;
+    if (level1 >= 0)
+      map.calParams.Cl3rL1 = level1;
+    if (level2 >= 0)
+      map.calParams.Cl3rL2 = level2;
+
+    MapList[idx] = map;
+    ActiveMap = MapList[idx];
+
+    return WriteToMap(map);
+  }
   /// <summary>
   /// 
   /// </summary>

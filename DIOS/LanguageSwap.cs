@@ -135,6 +135,7 @@ public static class LanguageSwap
       CaliVM.SelectedReporterContent[1] = CaliVM.ReporterItems[CaliVM.SelectedReporterIndex[1]].Content;
       CaliVM.SelectedReporterContent[2] = CaliVM.ReporterItems[CaliVM.SelectedReporterIndex[2]].Content;
       CaliVM.SelectedReporterContent[3] = CaliVM.ReporterItems[CaliVM.SelectedReporterIndex[3]].Content;
+      CaliVM.SelectedCl3rContent = CaliVM.ReporterItems[CaliVM.SelectedCl3rIndex].Content;
     }
   }
 

@@ -172,6 +172,24 @@ namespace Ei_Dimension.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to L1.
+        /// </summary>
+        public static string Calibration_Cl3r_Level1 {
+            get {
+                return ResourceManager.GetString("Calibration_Cl3r_Level1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to L2.
+        /// </summary>
+        public static string Calibration_Cl3r_Level2 {
+            get {
+                return ResourceManager.GetString("Calibration_Cl3r_Level2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Calibration
         ///   Targets.
         /// </summary>

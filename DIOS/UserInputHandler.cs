@@ -1903,6 +1903,35 @@ internal static class UserInputHandler
           failed = true;
           ErrorMessage = "[0-50000]";
           break;
+        case nameof(CalibrationViewModel.Cl3rLevels):
+
+          if (SelectedTextBox.index == 0)
+          {
+            if (int.TryParse(_tempNewString, out iRes))
+            {
+              if (iRes is >= 0 and <= 30000 || _disableSanityCheck)
+              {
+                App.DiosApp._beadProcessor._cl3rLevel1 = iRes;
+                break;
+              }
+            }
+            failed = true;
+            ErrorMessage = "[0-30000]";
+          }
+          if (SelectedTextBox.index == 1)
+          {
+            if (int.TryParse(_tempNewString, out iRes))
+            {
+              if (iRes is >= 0 and <= 30000 || _disableSanityCheck)
+              {
+                App.DiosApp._beadProcessor._cl3rLevel2 = iRes;
+                break;
+              }
+            }
+            failed = true;
+            ErrorMessage = "[0-30000]";
+          }
+          break;
       }
       Settings.Default.Save();
       if (failed)

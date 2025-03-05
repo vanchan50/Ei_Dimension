@@ -11,6 +11,8 @@ public class BeadProcessor
   public NormalizationSettings Normalization { get; } = new();
   private float _hiSensDNRChannel;
   private float _extendedDNRChannel;
+  public int _cl3rLevel1;
+  public int _cl3rLevel2;
   public readonly ClassificationMap _classificationMap = new();
   internal MapModel _map;
   public bool SpectraPlexEnabled
@@ -62,6 +64,10 @@ public class BeadProcessor
     _map = map;
     _classificationMap.ConstructClassificationMap(_map);
     SpectraPlexEnabled = _map.calParams.SpectraplexReporterMode;
+    _cl3rLevel1 = map.calParams.Cl3rL1;
+    _cl3rLevel2 = map.calParams.Cl3rL2;
+    HDnrCoef = map.calParams.DNRCoef;
+    HdnrTrans = map.calParams.DNRTrans;
   }
 
   private void PrecalculateBeadCompensationRegular(ref RawBead rawBead)
@@ -163,7 +169,9 @@ public class BeadProcessor
     outBead.cl1 = _compensatedCoordinatesCache[1];
     outBead.cl2 = _compensatedCoordinatesCache[2];
     outBead.redA = _compensatedCoordinatesCache[3];
-    var reg = (ushort)_classificationMap.ClassifyBeadToRegion(in outBead);
+    var cl3rAdjustment = CalculateCl3rRegionAdjustment(in outBead);
+    var reg = (ushort)_classificationMap.ClassifyBeadToRegion(in outBead) + cl3rAdjustment;
+
     outBead.region = reg;
     var rep = _calculateReporter(in outBead);
     var zon = (ushort) ClassifyBeadToZone(outBead.greenD);
@@ -230,7 +238,8 @@ public class BeadProcessor
       outBead.cl2 = rawBead.cl2;
     }
     //finalize outBead data
-    var reg = (ushort)_classificationMap.ClassifyBeadToRegion(in outBead);
+    var cl3rAdjustment = CalculateCl3rRegionAdjustment(in outBead);
+    var reg = (ushort)_classificationMap.ClassifyBeadToRegion(in outBead) + cl3rAdjustment;
     var rep = _calculateReporter(in outBead);
     var zon = (ushort)ClassifyBeadToZone(outBead.greenD);
     outBead.ratio1 = CalculateRatio1(in outBead);
@@ -296,6 +305,20 @@ public class BeadProcessor
     if (scaledReporter < 0)
       return 0;
     return scaledReporter;
+  }
+
+  public int CalculateCl3rRegionAdjustment(in ProcessedBead processedBead)
+  {
+    var cl3rValue = BeadParamsHelper.GetCl3rChannelValue(in processedBead);
+    if (cl3rValue > _cl3rLevel2)
+    {
+      return 400;
+    }
+    if (cl3rValue > _cl3rLevel1)
+    {
+      return 200;
+    }
+    return 0;
   }
 
   private float CalculateSpectraPlexReporter(in ProcessedBead processedBead)

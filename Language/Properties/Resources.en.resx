@@ -156,6 +156,12 @@ Align Motor</value>
     <value>   Cancel
 Calibration</value>
   </data>
+  <data name="Calibration_Cl3r_Level1" xml:space="preserve">
+    <value>L1</value>
+  </data>
+  <data name="Calibration_Cl3r_Level2" xml:space="preserve">
+    <value>L2</value>
+  </data>
   <data name="Calibration_Classification_targets" xml:space="preserve">
     <value>Calibration
    Targets</value>

@@ -1754,7 +1754,8 @@ public class HardwareInterface
     _logger.Log($"0xC7 {param:b16}");
     MainCommand(code: 0xC7, parameter: param, cmd: 0x02);
   }
-  public void SetSpectraplexReporterChannels(Channel? ch1, Channel? ch2, Channel? ch3, Channel? ch4)
+
+  public void SetSpectraplexReporterChannels(Channel? ch1, Channel? ch2, Channel? ch3, Channel? ch4, Channel? cl3r)
   {
     static ushort FindParam(Channel? chan)
     {
@@ -1782,7 +1783,7 @@ public class HardwareInterface
           throw new Exception();
       }
     }
-    var param = (ushort)(FindParam(ch1) | FindParam(ch2) | FindParam(ch3) | FindParam(ch4));
+    var param = (ushort)(FindParam(ch1) | FindParam(ch2) | FindParam(ch3) | FindParam(ch4) | FindParam(cl3r) << 8);
     _logger.Log($"0xC6 {param:b16}");
     MainCommand(code: 0xC6, parameter: param, cmd: 0x02);
   }
